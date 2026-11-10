@@ -223,7 +223,12 @@
   // New Project starts on your usual settings; the moment chooses Like tastebook for you, to show Advanced (the strip says so)
   /* tastebook also uses a Copilot seat tied to this Mac here, so the copy to Home NAS shows the real cannot_move result
      (guided flows 3.12): it stays the intended choice and nothing replaces it */
-  M['copy-new'] = async () => { if (!PSX.W.uses.tastebook.includes('copilot')) PSX.W.uses.tastebook = PSX.W.uses.tastebook.concat('copilot'); PSX.copy.open({ mode: 'new', comp: 'homenas', advanced: true, src: 'tastebook' }); };
+  M['copy-new'] = async () => {
+    const w = PSX.W, added = !w.uses.tastebook.includes('copilot');
+    if (added) w.uses.tastebook = w.uses.tastebook.concat('copilot');
+    // the demo world is put back when the sheet closes, so a later copy or the accounts page sees tastebook as it was
+    PSX.copy.open({ mode: 'new', comp: 'homenas', advanced: true, src: 'tastebook', onClose: () => { if (added && w.uses && w.uses.tastebook) w.uses.tastebook = w.uses.tastebook.filter((k) => k !== 'copilot'); } });
+  };
 
   /* ------------------------------------------------------------------ 11.5 Move where your settings are kept
      An owner choice (7.2): YOLO never moves it. The variants (a change in flight, Home NAS gone for good) are moments of
@@ -498,7 +503,7 @@
     const ids = Object.keys(PSX.W.project.tastebook).filter((id) => DEF[id] && !DEF[id].home);
     PSX.sheet({
       title: 'Copy tastebook’s settings to other projects', kicker: 'Settings Transfer · Advanced', sub: `${ids.length} of tastebook’s own settings, into each project you tick.`,
-      body: `<ul class="psx-list">${targets.map((p) => `<li class="psx-li"><label class="psx-check"><input type="checkbox" checked value="${p}"><span>${esc(p)}<small>works on ${esc(placeName('computer', PSX.projectById(p).home))}${p === 'lighting-rig' ? ' · Studio Mac is off' : ''}</small></span></label></li>`).join('')}</ul><p class="psx-p psx-muted" style="margin-top:10px">One batch with one receipt and one Undo. A part whose computer is off is not changed and not queued.</p>`,
+      body: `<ul class="psx-list">${targets.map((p) => `<li class="psx-li"><label class="psx-check"><input type="checkbox" checked value="${p}"><span>${esc(p)}<small>Auto → ${esc(placeName('computer', PSX.projectById(p).home))}${p === 'lighting-rig' ? ' · Studio Mac is off' : ''}</small></span></label></li>`).join('')}</ul><p class="psx-p psx-muted" style="margin-top:10px">One batch with one receipt and one Undo. A part whose computer is off is not changed and not queued.</p>`,
       actions: [{ label: 'Cancel', run: (s) => s.close() }, { spacer: true }, { label: 'Copy into 5 projects', primary: true, run: (s) => {
         const picked = [...s.body.querySelectorAll('input:checked')].map((x) => x.value);
         s.close();
@@ -541,7 +546,7 @@
     { id: 'test', what: 'Run npm test', cmd: 'npm test', kind: 'tool', path: false, yolo: 'run', report: 'Ran npm test: 214 passed.',
       patterns: [['npm test', 'exactly this command'], ['npm test *', 'npm test with any arguments'], ['npm *', 'every npm command, publish too']],
       samples: ['npm test', 'npm test -- --watch', 'npm run build', 'npm publish'] },
-    { id: 'release', what: 'Run the release script', cmd: './scripts/release.sh v1.4.0', kind: 'tool', path: false, yolo: 'run', report: 'Ran ./scripts/release.sh v1.4.0: tagged v1.4.0.',
+    { id: 'release', what: 'Run the release script', cmd: './scripts/release.sh v1.4.0', kind: 'tool', path: true, yolo: 'run', report: 'Ran ./scripts/release.sh v1.4.0: tagged v1.4.0.',
       patterns: [['./scripts/release.sh v1.4.0', 'exactly this command'], ['./scripts/release.sh *', 'this script with any arguments'], ['./scripts/*', 'every script in that folder']],
       samples: ['./scripts/release.sh v1.4.0', './scripts/release.sh v1.5.0', './scripts/deploy.sh', 'npm test'] },
     { id: 'push', what: 'Push to GitHub', cmd: 'git push origin feature/tags', kind: 'push', yolo: 'run', report: 'Pushed 3 commits to origin/feature/tags. A push can’t be undone exactly; a later push can change it back.' },
@@ -554,10 +559,16 @@
   /* a rule is host-dependent when what it allows depends on one computer: a file, a folder, a program's location, a
      script by path, the root. Such a rule never offers Everywhere (Permissions_System, guided-flows 8.04): it is hidden,
      not greyed, with one line saying why */
-  const hostDependent = (pattern, a) => !!(a && a.path) || /(^|\s)(~|\.{1,2}\/|\/|[A-Za-z]:\\)/.test(pattern) || /\.(sh|ps1|bat|cmd|exe|py)\b/.test(pattern);
+  /* review A-r1 finding 6: host-dependence comes from the request target (the step's own command) as well as from the
+     typed pattern, so your own pattern can never bring Everywhere back on a step about a script, a folder or a path */
+  const hostText = (t) => /(^|\s)(~|\.{1,2}\/|\/|[A-Za-z]:\\)/.test(t) || /\.(sh|ps1|bat|cmd|exe|py)\b/.test(t);
+  const hostDependent = (pattern, a) => !!(a && a.path) || (!!a && !!a.cmd && hostText(a.cmd)) || hostText(String(pattern || ''));
+  /* broad: a bare *, a shell or an interpreter followed by * (it runs anything), or the third suggestion */
+  const SHELLS = /^(sudo\s+)?(bash|sh|zsh|fish|dash|ksh|csh|tcsh|pwsh|powershell|cmd(\.exe)?|env|eval|exec|xargs|python[0-9.]*|node|deno|bun|ruby|perl|php|lua|osascript)\b/i;
+  const isBroad = (pattern, a) => { const p = String(pattern || '').trim(); return p === '*' || /^\*(\s|$)/.test(p) || (SHELLS.test(p) && /\*/.test(p)) || (!!a && !!a.patterns && !!a.patterns[2] && p === a.patterns[2][0]); };
   const globRe = (p) => new RegExp('^' + p.trim().split('*').map((x) => x.replace(/[.+?^${}()|[\]\\]/g, '\\$&')).join('.*') + '$');
   function approvals() {
-    const st = { done: {}, rules: [], edit: null };
+    const st = { done: {}, rules: [], edit: null, session: [] };
     const yolo = () => S.runMode === 'yolo';
     /* Always allow: you choose the exact pattern (a suggestion, or your own words) and where it applies; nothing is
        chosen for you, the preview says what it matches, and only then is the rule written (guided-flows 8.03) */
@@ -567,7 +578,7 @@
       if (host && e.where === 'everywhere') e.where = null;
       let matches = [], misses = [];
       if (pat.trim()) { try { const re = globRe(pat); a.samples.forEach((x) => (re.test(x) ? matches : misses).push(x)); } catch (er) { /* a half-typed pattern */ } }
-      const broad = pat && a.patterns && a.patterns[2] && pat.trim() === a.patterns[2][0];
+      const broad = !!pat && isBroad(pat, a);
       const radios = a.patterns.map(([p, what], i) => `<label class="psx-radio${pat === p && !e.own ? ' is-on' : ''}"><input type="radio" name="psx-pat-${a.id}" value="${i}" data-pat="${i}"${pat === p && !e.own ? ' checked' : ''}><span><b><code>${esc(p)}</code></b><small>${esc(what)}</small></span></label>`).join('')
         + `<label class="psx-radio${e.own ? ' is-on' : ''}"><input type="radio" name="psx-pat-${a.id}" value="own" data-pat="own"${e.own ? ' checked' : ''}><span><b>Your own pattern</b><small>* matches anything</small></span></label>`
         + (e.own ? `<input class="psx-input" data-pat-own="1" value="${esc(pat)}" aria-label="Your own pattern" spellcheck="false" autocomplete="off">` : '');
@@ -589,7 +600,9 @@
           let end = '';
           if (d) end = PSX.st(d.mark, d.word);
           else if (yolo() && a.yolo === 'run') end = PSX.st('working', 'Runs without asking');
-          else end = `<button type="button" class="psx-tb is-primary" data-ask="${a.id}" data-a="once">Allow once</button>${a.patterns ? `<button type="button" class="psx-tb" data-ask="${a.id}" data-a="always" aria-expanded="${st.edit && st.edit.id === a.id ? 'true' : 'false'}">Always allow…</button>` : ''}<button type="button" class="psx-tb" data-ask="${a.id}" data-a="no">Don’t allow</button>`;
+          // the four answers Permissions_System 6.1 keeps: once, for this session (ephemeral), always (a durable rule you
+          // shape), and don't allow; a deletion on the remote is answered one at a time
+          else end = `<button type="button" class="psx-tb is-primary" data-ask="${a.id}" data-a="once">Allow once</button>${a.kind !== 'remote-delete' ? `<button type="button" class="psx-tb" data-ask="${a.id}" data-a="session">For this session</button>` : ''}${a.patterns ? `<button type="button" class="psx-tb" data-ask="${a.id}" data-a="always" aria-expanded="${st.edit && st.edit.id === a.id ? 'true' : 'false'}">Always allow…</button>` : ''}<button type="button" class="psx-tb" data-ask="${a.id}" data-a="no">Don’t allow</button>`;
           const sub = d ? d.text : yolo() && a.yolo === 'ask' ? `YOLO still asks: ${a.why}` : yolo() ? 'No yes needed in YOLO; the chat reports what ran.' : a.kind === 'push' || a.kind === 'publish' ? 'Regular asks before a push or a publish.' : 'Regular asks before it runs.';
           const row = `<li class="psx-li"><span><span class="psx-li-name">${esc(a.what)}</span><span class="psx-li-sub" style="display:block"><code>${esc(a.cmd)}</code> · ${esc(sub)}</span></span><span class="psx-li-end">${end}</span></li>`;
           return row + (st.edit && st.edit.id === a.id && !d ? editor(a) : '');
@@ -598,6 +611,7 @@
       s.body.querySelectorAll('[data-ask]').forEach((b) => b.addEventListener('click', () => {
         const a = ASKS.find((x) => x.id === b.dataset.ask);
         if (b.dataset.a === 'once') { st.done[a.id] = { mark: 'complete', word: 'Allowed once', text: a.report || 'Allowed once.' }; st.edit = null; draw(s); }
+        else if (b.dataset.a === 'session') { st.done[a.id] = { mark: 'complete', word: 'Allowed for this session', text: `${a.report || 'Allowed.'} Allowed until this chat session ends; no rule is kept.` }; st.session.push(a.cmd); st.edit = null; draw(s); }
         else if (b.dataset.a === 'no') { st.done[a.id] = { mark: 'off', word: 'Not allowed', text: 'Not run. The assistant stops at this step and says why.' }; st.edit = null; draw(s); }
         else { st.edit = st.edit && st.edit.id === a.id ? null : { id: a.id, pattern: null, own: false, where: null }; draw(s); focusIn(s, a.id); }
       }));
@@ -622,8 +636,11 @@
     const s = PSX.sheet({ title: 'What asks you', kicker: 'loom’s chat · one run', sub: 'Approvals in Regular and in YOLO.', size: 'wide', body: '' });
     // in YOLO the steps that don't ask have run by the time you look: the chat shows the report for each. A new run
     // mode is a new run, so the strip's switch shows the other mode's answers at once
-    const start = () => { st.done = {}; st.edit = null; if (yolo()) ASKS.filter((a) => a.yolo === 'run').forEach((a) => { st.done[a.id] = { mark: 'complete', word: 'Ran, not asked', text: a.report }; }); draw(s); };
-    PSX.approvals = { sheet: s, draw: () => { if (s.back.isConnected) start(); }, st, hostDependent };
+    const start = () => { st.done = {}; st.edit = null;
+      // a run later in the same session doesn't ask again for what you allowed for this session
+      ASKS.filter((x) => st.session.includes(x.cmd)).forEach((x) => { st.done[x.id] = { mark: 'complete', word: 'Allowed for this session', text: `${x.report || 'Allowed.'} Allowed earlier in this session, so it didn’t ask again.` }; });
+      if (yolo()) ASKS.filter((a) => a.yolo === 'run').forEach((a) => { st.done[a.id] = { mark: 'complete', word: 'Ran, not asked', text: a.report }; }); draw(s); };
+    PSX.approvals = { sheet: s, draw: () => { if (s.back.isConnected) start(); }, st, hostDependent, isBroad };
     start();
   }
 

@@ -108,7 +108,7 @@
   function pickProjects(kind, id, done, set, anchor) {
     const t = things()[kind][id];
     const cur = new Set(t.reach === 'only' ? t.projects || [] : []);
-    const body = `<p class="psx-p">${esc(t.name)} can be used in the projects you tick, and nowhere else.</p>` + PROJECTS.map((p) => `<label class="psx-check"><input type="checkbox" value="${p.id}"${cur.has(p.id) ? ' checked' : ''}><span>${esc(p.id)}<small>works on ${esc(placeName('computer', p.home))}</small></span></label>`).join('');
+    const body = `<p class="psx-p">${esc(t.name)} can be used in the projects you tick, and nowhere else.</p>` + PROJECTS.map((p) => `<label class="psx-check"><input type="checkbox" value="${p.id}"${cur.has(p.id) ? ' checked' : ''}><span>${esc(p.id)}<small>Auto → ${esc(placeName('computer', p.home))}</small></span></label>`).join('');
     const key = anchor && anchor.getAttribute('data-psx-key');
     PSX.sheet({
       title: `Where ${t.name} is available`, kicker: 'Only these projects', body,
@@ -219,7 +219,7 @@
       thingWrite('mcp', id, rec, `${t.name} in ${proj}: ${label2}`, (tx) => { redo(); PSX.note({ title: `Saved for ${proj}.`, body: `${t.name}: ${label2}.`, actions: [{ label: 'Undo', run: () => { PSX.undoTx(tx.id); redo(); } }] }); });
     };
     if (a === 'reach') reachMenu(b, 'mcp', id, redo);
-    else if (a === 'proj') PSX.menu(b, PROJECTS.map((p) => ({ label: p.id, meta: `works on ${placeName('computer', p.home)}`, run: () => { S.mcpProject = p.id; redo(); } })), { label: 'Choose a project', search: true, width: 260 });
+    else if (a === 'proj') PSX.menu(b, PROJECTS.map((p) => ({ label: p.id, meta: `Auto → ${placeName('computer', p.home)}`, run: () => { S.mcpProject = p.id; redo(); } })), { label: 'Choose a project', search: true, width: 260 });
     else if (a === 'on') PSX.menu(b, [{ label: 'Same as everywhere · On', run: () => setIp({ on: undefined }, 'same as everywhere') }, { label: 'On', run: () => setIp({ on: true }, 'on') }, { label: 'Off', run: () => setIp({ on: false }, 'off') }], { label: 'On or off', width: 260 });
     else if (a === 'may') PSX.menu(b, [{ label: 'Same as everywhere · Ask before it changes things', run: () => setIp({ may: undefined }, 'same as everywhere') }, { label: 'Ask before it changes things', run: () => setIp({ may: 'Ask before it changes things' }, 'ask before it changes things') }, { label: 'Read only', run: () => setIp({ may: 'Read only' }, 'read only') }, { label: 'Protected files only', run: () => setIp({ may: 'Protected files only' }, 'protected files only') }], { label: 'What it may do', width: 300 });
     // a sign-in is a person's step on the device in front of them, kept on the computer that runs the server
