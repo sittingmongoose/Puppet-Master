@@ -3350,7 +3350,6 @@
     "DL-016",
     "DL-084",
     "GRS-064",
-    "ATS-260",
     "DL-409",
     "DL-448",
     "DL-089",
@@ -6421,25 +6420,6 @@
     "SP-277",
     "GRS-075",
     "SP-281",
-    "CV-520",
-    "CV-521",
-    "CV-522",
-    "CV-523",
-    "CV-524",
-    "CV-525",
-    "CV-526",
-    "CV-527",
-    "CV-528",
-    "CV-529",
-    "CV-530",
-    "CV-531",
-    "CV-532",
-    "CV-533",
-    "CV-534",
-    "CV-535",
-    "CV-536",
-    "CV-537",
-    "CV-538",
     "SMPFS-036",
     "SMPFS-101",
     "SP-280",
@@ -6982,6 +6962,7 @@
     "APR-074",
     "CS-113",
     "F3-672",
+    "ATS-260",
     "F3-512",
     "SMPFS-150",
     "SMPFS-154",
@@ -6992,6 +6973,25 @@
     "CS-114",
     "F3-674",
     "UCC-218",
+    "CV-520",
+    "CV-521",
+    "CV-522",
+    "CV-523",
+    "CV-524",
+    "CV-525",
+    "CV-526",
+    "CV-527",
+    "CV-528",
+    "CV-529",
+    "CV-530",
+    "CV-531",
+    "CV-532",
+    "CV-533",
+    "CV-534",
+    "CV-535",
+    "CV-536",
+    "CV-537",
+    "CV-538",
     "RAP-021",
     "SMPFS-151",
     "SIR-023",
@@ -15658,12 +15658,32 @@
     {
       "edge_type": "depends_on",
       "from": "ATS-260",
+      "to": "CV-1100"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-260",
+      "to": "CV-1101"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-260",
       "to": "DL-045"
     },
     {
       "edge_type": "depends_on",
       "from": "ATS-260",
       "to": "DL-075"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-260",
+      "to": "SP-1100"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-260",
+      "to": "SP-1101"
     },
     {
       "edge_type": "depends_on",
@@ -118686,7 +118706,7 @@
       "to": "PWIZ-035"
     }
   ],
-  "generated_at_utc": "2026-11-10T22:18:05Z",
+  "generated_at_utc": "2026-11-10T23:00:20Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -247028,9 +247048,9 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 19016,
+    "depends_on_edge_count": 19020,
     "downstream_blocked_node_count": 0,
-    "edge_count": 22226,
+    "edge_count": 22230,
     "node_count": 7549,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3210,

@@ -1993,7 +1993,7 @@
         "tests/test_pm_evidence_artifact_binding_modes.py",
         "tests/test_pm_working_notebook_contracts.py"
       ],
-      "line_count": 7276,
+      "line_count": 7282,
       "path": "Plans/Automated_Testing_System.md",
       "plan_unit_count": 78,
       "plan_unit_ids": [
@@ -2146,7 +2146,7 @@
         "wonderer_grilling_contract_coverage",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "94ca89af157936e376d660672c594f6446a691fc627fb617f0b78138b5beb682",
+      "sha256": "c546b6c34db00719b0d21f858774356d53d8c6b0e5624ee3f9fcd4e816516eb4",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 77,
@@ -2288,6 +2288,7 @@
         "python3 scripts/pm-platform-execution-policy-verify.py",
         "python3 scripts/pm-runtime-artifact-event-drafts.py",
         "python3 scripts/pm-runtime-artifact-guard-tables.py --out <evidence directory>",
+        "python3 scripts/pm-runtime-artifact-number-corpus.py",
         "python3 scripts/pm-runtime-artifact-standing-checks.py",
         "python3 scripts/pm-server-command-gap-verify.py --json",
         "python3 scripts/pm-shard-plans.py --check",
@@ -2302,6 +2303,7 @@
         "python3 scripts/pm-working-notebook-contracts.py",
         "python3 scripts/pm7-canon-check.py",
         "python3 scripts/pm_coordination_events.py",
+        "python3 scripts/pm_event_numbers.py --self-test --scope numbers",
         "reports/event-authority-20260911/step-08-current-child-scope-validation.md",
         "scratchpad/pm-integration-20260831/audits/onboarding-doctor-128-current-runner/audit_runner.py",
         "scripts/pm-assistant-contract-check.py",
@@ -21718,7 +21720,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-10T22:18:05Z",
+  "generated_at_utc": "2026-11-10T23:00:20Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
