@@ -151,6 +151,12 @@ add('orig-producer-integral-float', R, 'orig_envelope_numbers', 'Storage origina
     lambda c: (orig(c).__setitem__('producer_sequence_id', 1.0), L.sync_original(c)))
 add('orig-sequence-u64', R, 'orig_sequence_u64', 'Storage original sequence_id 2^64 (receipt copy moves with it)',
     lambda c: (orig(c).__setitem__('sequence_id', 2**64), L.sync_original(c)))
+add('orig-sequence-integral-float', R, 'orig_envelope_numbers', 'Storage original sequence_id spelled 1.0 with the receipt copy alike (CV-1100)',
+    lambda c: (orig(c).__setitem__('sequence_id', float(orig(c)['sequence_id'])), L.sync_original(c)))
+add('history-sequence-integral-float', 'browser.session.created/project/history', 'cand_envelope_numbers',
+    'retained event sequence_id spelled 1.0 in the event, Storage record, receipt and reader alike (CV-1100)',
+    lambda c: (c['event'].__setitem__('sequence_id', float(c['event']['sequence_id'])), L.sync_candidate(c),
+               c['reader'].__setitem__('sequence_id', float(c['reader']['sequence_id']))))
 add('orig-producer-2^60', R, 'orig_producer_route', 'Storage original producer_sequence_id 2^60 cannot be qualified (CV-1100)',
     lambda c: (orig(c).__setitem__('producer_sequence_id', 2**60), L.sync_original(c)))
 add('orig-pack-size-float', PACK_RETRY, 'orig_payload_numbers', 'Storage original descriptor size_bytes spelled as a float',

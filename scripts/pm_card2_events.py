@@ -423,8 +423,11 @@ def row(table, rid, code, field, words, fn, paths=EVENT_PATHS):
         TABLES.append(table)
     if any([r['id'] == rid for r in ROWS]):
         raise ValueError('duplicate row ' + rid)
+    frame = sys._getframe(1)
+    while frame is not None and not (frame.f_code.co_filename == __file__ and frame.f_code.co_name == '<module>'):
+        frame = frame.f_back
     ROWS.append({'table': table, 'id': rid, 'code': code, 'field': field, 'words': words,
-                 'fn': fn, 'paths': frozenset(paths.split())})
+                 'fn': fn, 'paths': frozenset(paths.split()), 'line': frame.f_lineno if frame else None})
 
 
 def entailed(rid, code, field, words, fn, paths, first, proof):
@@ -1398,6 +1401,17 @@ for view in ['cand', 'orig']:
     first, proof = ENTAILED[view + '_verification_evidence']
     ENTAILED[view + '_verification_evidence'] = (tuple(first) + tuple('memory_after_' + k for k in MEMORY_SHAPE) +
                                                  ('record_resolution_after',), proof)
+
+
+# Every entailed row is also refused first by the structural rows that own a malformed event,
+# payload or Storage original before any of its named joins can be read.
+STRUCTURAL = ('envelope_schema', 'envelope_numbers', 'payload_schema', 'payload_numbers', 'scope_partition')
+for _rid, (_first, _proof) in list(ENTAILED.items()):
+    _extra = ['cand_' + f for f in STRUCTURAL] + (['orig_' + f for f in STRUCTURAL] + ['orig_family'] if _rid.startswith('orig_') or
+                                                  _rid.startswith('storage_format') else [])
+    if _rid.startswith(('token_', 'storage_format')):
+        _extra += ['historical_record', 'storage_authentic', 'token_observation', 'token_schema_index_read_token']
+    ENTAILED[_rid] = (tuple(dict.fromkeys(tuple(_first) + tuple(_extra))), _proof)
 
 
 # ---------------------------------------------------------------------------

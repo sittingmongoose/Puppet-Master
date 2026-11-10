@@ -271,6 +271,52 @@
       ]
     },
     {
+      "id": "p2a/orig-sequence-integral-float",
+      "base": "browser.session.state_changed/project/retry",
+      "target": "orig_envelope_numbers",
+      "guard": "current_integer",
+      "defect": "Storage original sequence_id spelled 1.0 with the receipt copy alike (CV-1100)",
+      "changes": [
+        [
+          "/storage/event/sequence_id",
+          1.0
+        ],
+        [
+          "/storage/receipt/sequence_id",
+          1.0
+        ],
+        [
+          "/retry/original_event/sequence_id",
+          1.0
+        ]
+      ]
+    },
+    {
+      "id": "p2a/history-sequence-integral-float",
+      "base": "browser.session.created/project/history",
+      "target": "cand_envelope_numbers",
+      "guard": "current_integer",
+      "defect": "retained event sequence_id spelled 1.0 in the event, Storage record, receipt and reader alike (CV-1100)",
+      "changes": [
+        [
+          "/event/sequence_id",
+          1.0
+        ],
+        [
+          "/storage/event/sequence_id",
+          1.0
+        ],
+        [
+          "/storage/receipt/sequence_id",
+          1.0
+        ],
+        [
+          "/reader/sequence_id",
+          1.0
+        ]
+      ]
+    },
+    {
       "id": "p2a/orig-producer-2^60",
       "base": "browser.session.state_changed/project/retry",
       "target": "orig_producer_route",
