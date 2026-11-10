@@ -127,6 +127,14 @@ function o55PickCommit(id, raw) {
   if (o55SameValue(settingValue(found.setting), raw)) return;
   if (!commitSettingValue(id, raw)) return;
   saveState(); o55InspRefresh(id); o55Changed(found.setting, raw);
+  /* a pick hands focus back to the picker, as a select does; a model change can re-render the page in place
+     (28-in-place.js lets the focused control go), so the new trigger takes it back if it was dropped */
+  const back = () => {
+    const act = document.activeElement; if (act && act !== document.body && act.isConnected) return;
+    const t = document.querySelector(`#panel-settings .detail-inspector [data-action="o55-insp-pick"][data-setting="${cssEscape(id)}"]`);
+    if (t) { try { t.focus({ preventScroll: true }); } catch (e) { t.focus(); } }
+  };
+  back(); requestAnimationFrame(() => requestAnimationFrame(back));
 }
 const o55PickOptions = pm => { const o = []; pm.items.forEach(it => { o[it.index] = { value: it.raw, label: it.name, disabled: !!it.why, reason: it.why || '' }; }); return o; };
 const o55PickBrands = (pm, size, cls) => [`<button type="button" class="${cls} is-on" data-brand="" aria-pressed="true" tabindex="-1" aria-label="All makers" data-pm-hover-label="All makers">${icon('users')}</button>`]
@@ -199,7 +207,6 @@ function o55InlineOpen(trigger, setting, pm) {
   entry.searchInput.addEventListener('input', () => o55PickFilter(entry, list));
   box.addEventListener('keydown', e => {
     const k = e.key, stop = () => { e.preventDefault(); e.stopPropagation(); };
-    if (k === 'Escape') { stop(); o55InlineClose(true); return; }
     if (e.target.closest('.o55-pick-chip') && (k === 'Enter' || k === ' ')) return;
     if (k === 'ArrowDown' || k === 'ArrowUp' || k === 'PageDown' || k === 'PageUp') { stop(); moveActive(entry, { ArrowDown: 1, ArrowUp: -1, PageDown: 8, PageUp: -8 }[k]); return; }
     if ((k === 'Home' || k === 'End') && e.target !== entry.searchInput) { stop(); moveActive(entry, 0, k === 'Home' ? 'home' : 'end'); return; }
@@ -210,6 +217,12 @@ function o55InlineOpen(trigger, setting, pm) {
   if (!o55Still()) box.classList.add('is-entering');
 }
 document.addEventListener('pointerdown', e => { const p = o55Inline; if (!p) return; if (p.box.contains(e.target) || p.trigger.contains(e.target)) return; o55InlineClose(false); }, true);
+/* Escape folds the unfolded list (b) and nothing else: registered at load, ahead of the Details panel's own Escape
+   (onDetailEsc, a later capture listener), as kit.js's popout keys are */
+document.addEventListener('keydown', e => {
+  const p = o55Inline; if (!p || e.key !== 'Escape' || !(p.box.contains(e.target) || p.trigger.contains(e.target))) return;
+  e.preventDefault(); e.stopImmediatePropagation(); o55InlineClose(true);
+}, true);
 /* the trigger is a combobox: Arrow Down (or Alt+Arrow Down) opens it, as it does a Settings dropdown */
 document.addEventListener('keydown', e => {
   const t = e.target && e.target.closest && e.target.closest('.o55-pick-trigger'); if (!t || e.key !== 'ArrowDown' || t.getAttribute('aria-expanded') === 'true') return;
