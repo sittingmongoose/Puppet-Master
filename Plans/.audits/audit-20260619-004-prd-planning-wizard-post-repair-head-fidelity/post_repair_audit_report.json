@@ -1,0 +1,32 @@
+{
+  "actionable_closure_rows": 5,
+  "audit_correction": "audit_correction-20261108.json",
+  "audit_id": "audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity",
+  "baseline_ref": "98b13fb77685649a0a27e75caf4ec6a9c1d49d14",
+  "closure_rows": 21,
+  "decision_ref": "Plans/Decision_Log.md#DL-470",
+  "generated_at_utc": "2026-11-08T23:20:01Z",
+  "historical_audit_report": "audit_report.json",
+  "historical_non_actionable_closure_rows": 16,
+  "ledger_id": "pldg-20260618-001-prd-planning-wizard",
+  "limits": [
+    "This bounded current check supplies the missing terminal projection; the June repair reports remain historical.",
+    "Existing registry hash staleness is not cleared by this report or correction. PLS-025 separately reviewed append-only re-audits remain required.",
+    "No governance seal, full-repository pass, runtime or build certification is asserted."
+  ],
+  "observation_ref": "78a1fd64cd30468f21b450dc9b39583a6a1fbc8f",
+  "original_repair_required_count": 5,
+  "repair_checks": {
+    "planunit_source_claims.jsonl:31": "Same PNC-014 repair as semantic risk 2; supplemental matrix line 21 reuses registry row 262.",
+    "semantic_risks.jsonl:1": "Both older evidence bundles retain explicit global-current-snapshot labels and historical_snapshot bindings.",
+    "semantic_risks.jsonl:2": "PNC-014 owner metadata and generated index carry the same eight source_atom_ids; normalize_unit preserves the metadata.",
+    "semantic_risks.jsonl:3": "Structured registry and ledger-health counts remain 62; the later audit-010 handoff summary contains no stale 61 count.",
+    "semantic_risks.jsonl:4": "Current and handoff projections name audit-010 and offer only requested post-commit review or a fresh audit; no request to commit an already committed package."
+  },
+  "repair_closure_matrix": "repair_closure_matrix.jsonl",
+  "repair_required_count": 0,
+  "schema_id": "pm.semantic_post_repair_audit_report.v1",
+  "status": "PASS_WITH_WARNINGS",
+  "subject_ref": "20f6850c04637bc207860ded49e6e66738cf2183",
+  "verification_record": "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/owner-answers/q2-audit004/REPORT.md"
+}

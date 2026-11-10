@@ -2722,7 +2722,8 @@ def build_effective_status_projection(audit_dir: Path, audit_validation: dict[st
         repair_required_count = 0 if not isinstance(open_count, int) else open_count
 
     superseded: list[str] = []
-    audit_status = str(audit_report.get("status") or "").upper()
+    correction = audit_validation.get("audit_correction")
+    audit_status = str(correction["corrected_status"] if correction else audit_report.get("status") or "").upper()
     if audit_report and audit_status == "BLOCKED" and effective_status != "BLOCKED":
         superseded.append("audit_report.json")
     if final_status.get("status") == "BLOCKED" and effective_status != "BLOCKED":
@@ -2752,6 +2753,9 @@ def build_effective_status_projection(audit_dir: Path, audit_validation: dict[st
         },
         "notes": [],
     }
+    if correction:
+        projection["status_sources"]["corrected_audit_report_status"] = correction["corrected_status"]
+        projection["status_sources"]["audit_correction"] = correction["path"]
     if superseded:
         projection["notes"].append("Historical status artifacts are preserved but superseded by this effective status projection.")
     if effective_status == "BLOCKED":
@@ -2935,6 +2939,37 @@ def actionable_warning_rows(
     return rows
 
 
+def validator_has_side_effects(record: dict[str, Any]) -> bool:
+    """Classify direct mutation fields; a present count must be a JSON integer zero."""
+    count = record.get("side_effect_count", 0)
+    return bool(record.get("non_audit_side_effects")) or bool(record.get("side_effects")) \
+        or type(count) is not int or count != 0
+
+
+def validator_result_passed(record: dict[str, Any]) -> bool:
+    return record.get("status") == "pass" or (
+        "status" not in record and type(record.get("exit_code")) is int and record["exit_code"] == 0
+    )
+
+
+VALIDATOR_FINDING_CHILDREN = ("findings", "warnings", "semantic_risks")
+
+
+def actionable_validator_finding_rows(
+    data: dict[str, Any], artifact: str, errors: list[str], inferred_out: set[str] | None = None,
+    explicit_out: set[str] | None = None, compat_words: bool = False,
+) -> list[str]:
+    """Use ordinary finding classification, retaining error levels and mutations even with false flags."""
+    rows = actionable_warning_rows(data, artifact, errors, inferred_out, explicit_out, compat_words)
+    for field in VALIDATOR_FINDING_CHILDREN:
+        for index, item in enumerate(data.get(field, []) if isinstance(data.get(field), list) else []):
+            key = f"{field}[{index}]"
+            if isinstance(item, dict) and (item.get("finding_level") in ("error", "blocker")
+                                          or validator_has_side_effects(item)) and key not in rows:
+                rows.append(key)
+    return rows
+
+
 def actionable_json_rows(
     path: Path, artifact: str, errors: list[str], inferred_out: set[str] | None = None,
     explicit_out: set[str] | None = None, compat_words: bool = False,
@@ -2954,7 +2989,7 @@ def actionable_json_rows(
         explicit = explicit_repair_required(data, rel(path), errors)
         if explicit is True:
             rows.append("$")
-        elif explicit is False:
+        elif explicit is False and artifact != "validator_results.json":
             return rows
 
     if artifact == "ledger_consistency.json":
@@ -2972,25 +3007,29 @@ def actionable_json_rows(
         if questions:
             rows.append("sealed_ledger_open_item_policy.open_questions")
     elif artifact == "validator_results.json":
-        if data.get("non_audit_side_effects"):
-            rows.append("non_audit_side_effects")
-        for result in data.get("results", []):
-            name = str(result.get("name", "unnamed"))
-            _note_classification(result, f"results.{name}", inferred_out, explicit_out)
-            explicit = explicit_repair_required(result, f"{rel(path)}:results.{name}", errors)
-            if explicit is True:
-                rows.append(f"results.{name}")
-                continue
-            if explicit is False:
-                continue
-            status = result.get("status")
-            passed = status == "pass" or (status is None and result.get("exit_code") == 0) or (
-                compat_words and status == "expected_fail"
-                and result.get("command") in LEGACY_COMPAT_EXPECTED_FAIL_COMMANDS
-            )
-            side_effect_count = result.get("side_effect_count", 0)
-            if not passed or (isinstance(side_effect_count, int) and side_effect_count > 0):
-                rows.append(f"results.{name}")
+        rows.extend(actionable_validator_finding_rows(data, artifact, errors, inferred_out, explicit_out, compat_words))
+        for field in ("non_audit_side_effects", "side_effects", "side_effect_count"):
+            if field in data and validator_has_side_effects({field: data[field]}):
+                rows.append(field)
+        for group in ("results", "invalid_invocations"):
+            for result in data.get(group, []):
+                name = str(result.get("name", "unnamed"))
+                key = f"{group}.{name}"
+                _note_classification(result, key, inferred_out, explicit_out)
+                explicit = explicit_repair_required(result, f"{rel(path)}:{key}", errors)
+                if explicit is True or result.get("finding_level") in ("error", "blocker") \
+                        or validator_has_side_effects(result):
+                    rows.append(key)
+                    continue
+                # An invalid invocation is historical context; whether it never needed a
+                # repair is an owner judgment, rather than a passing-rerun proof here.
+                if group == "results":
+                    passed = validator_result_passed(result) or (
+                        compat_words and result.get("status") == "expected_fail"
+                        and result.get("command") in LEGACY_COMPAT_EXPECTED_FAIL_COMMANDS
+                    )
+                    if not passed:
+                        rows.append(key)
     return rows
 
 
@@ -3253,7 +3292,8 @@ def classify_legacy_format_errors(
     symbolic link (`symlinked_inputs`, which keeps every error), whether a companion file was
     requested as a source artifact (`reserved_source_inputs`, which also keeps every error), and whether every
     non-actionable row a historical closure covers was judged by the compatibility inference
-    (`extra_coverage_all_inferred`)."""
+    (`extra_coverage_all_inferred`). A correction file disables over-coverage demotion,
+    even when that correction is invalid."""
     meta = list(getattr(errors, "meta", None) or [])
     if len(meta) != len(errors) or context.get("symlinked_inputs") or context.get("reserved_source_inputs") \
             or reserved_source_names(audit_dir, context.get("source_artifacts")):
@@ -3322,7 +3362,8 @@ def classify_legacy_format_errors(
                 if name == report_name and name in frozen and info.get("status_stated") is False:
                     kind = "report_field_predates_schema"
             elif k == "over_coverage":
-                if name == matrix_name and name in frozen and context.get("extra_coverage_all_inferred"):
+                if name == matrix_name and name in frozen and context.get("extra_coverage_all_inferred") \
+                        and not any(audit_dir.glob("audit_correction-*.json")):
                     kind = "inferred_actionability_over_coverage"
         if kind is None:
             kept.append(message)
@@ -3353,6 +3394,216 @@ def apply_legacy_format_rule(audit_dir: Path, report: dict[str, Any], context: d
             "it never excuses a missing closure row or any other substantive gap"
         )
     return report
+
+
+AUDIT_CORRECTION_SCHEMA = "pm.audit_closure.audit_correction.v1"
+
+
+def validator_record_sha256(record: dict[str, Any]) -> str:
+    """Pin one JSON record using the shared canonical JSON form, encoded as UTF-8."""
+    return sha256_text(canonical_json(record))
+
+
+def audit_correction_owner_pins(decision_ref: str, audit_id: str) -> dict[tuple[str, str], str]:
+    """Read the cited accepted decision's exact validator-record authorizations."""
+    path, unit_id = decision_ref.split("#", 1)
+    canonical, _ = AnchorResolver().content(f"{path}#unit={unit_id}")
+    decision = strict_json_loads(canonical)
+    if decision.get("unit_type") != "decision" or decision.get("status") != "accepted":
+        raise ValueError("decision_ref must resolve to one accepted decision")
+    rows = decision.get("owner_named_rows", [])
+    if not isinstance(rows, list):
+        raise ValueError("decision owner_named_rows must be a list")
+    pins: dict[tuple[str, str], str] = {}
+    seen: set[tuple[str, str, str]] = set()
+    fields = {"audit_id", "source_artifact", "source_row", "record_sha256"}
+    for row in rows:
+        if not isinstance(row, dict) or set(row) != fields:
+            raise ValueError(f"decision owner_named_rows fields must be exactly {sorted(fields)}")
+        if not isinstance(row["audit_id"], str) or not row["audit_id"].strip() \
+                or row["source_artifact"] != "validator_results.json" \
+                or not isinstance(row["source_row"], str) \
+                or not re.fullmatch(r"(?:results|invalid_invocations)\..+", row["source_row"]) \
+                or not isinstance(row["record_sha256"], str) \
+                or not re.fullmatch(r"[0-9a-f]{64}", row["record_sha256"]):
+            raise ValueError("decision owner_named_rows must name validator rows with exact SHA-256 pins")
+        key = (row["audit_id"], row["source_artifact"], row["source_row"])
+        if key in seen:
+            raise ValueError(f"decision owner_named_rows duplicates {key}")
+        seen.add(key)
+        if row["audit_id"] == audit_id:
+            pins[key[1:]] = row["record_sha256"]
+    return pins
+
+
+def validate_audit_correction(
+    audit_dir: Path,
+    audit_report: dict[str, Any] | None,
+    actionable_rows: set[tuple[str, str]],
+    covered: set[tuple[str, str]],
+    requested_artifacts: list[str],
+    errors: list[str],
+) -> dict[str, Any] | None:
+    """Validate one additive receipt; apply nothing unless the entire receipt is valid.
+
+    The receipt can only correct the original status or explain existing over-coverage.
+    It never changes source classification, coverage requirements, matrix or registry rows.
+    All standard source inputs are hash-bound so a partial source selection cannot redefine
+    the original repair count or silently skip the classification of a listed source row.
+    """
+    paths = sorted(audit_dir.glob("audit_correction-*.json"))
+    if not paths:
+        return None
+    start = len(errors)
+    if len(paths) != 1:
+        errors.append(f"{rel(audit_dir)}: audit correction requires exactly one correction file")
+        return None
+    path = paths[0]
+    label = rel(path)
+
+    def fail(message: str) -> None:
+        errors.append(f"{label}: audit correction {message}")
+
+    def strict_object(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
+        result: dict[str, Any] = {}
+        for key, value in pairs:
+            if key in result:
+                raise ValueError(f"duplicate field {key!r}")
+            result[key] = value
+        return result
+
+    try:
+        if path_has_symlink(path):
+            raise ValueError("file must not be reached through a symlink")
+        data = json.loads(path.read_text(encoding="utf-8"), object_pairs_hook=strict_object)
+    except (OSError, ValueError) as exc:
+        fail(f"cannot be read: {exc}")
+        return None
+    fields = {"schema_id", "audit_id", "decision_ref", "date", "bound_sha256", "historical_status", "non_actionable_rows"}
+    if not isinstance(data, dict) or set(data) != fields:
+        fail(f"fields must be exactly {sorted(fields)}")
+        return None
+    if data["schema_id"] != AUDIT_CORRECTION_SCHEMA:
+        fail(f"schema_id must be {AUDIT_CORRECTION_SCHEMA}")
+    if audit_report is None or data["audit_id"] != audit_dir.name or data["audit_id"] != audit_report.get("audit_id"):
+        fail("audit_id must match the directory and audit_report.json")
+    if not isinstance(data["decision_ref"], str) or not re.fullmatch(r"Plans/Decision_Log\.md#DL-[0-9]{3,}", data["decision_ref"]):
+        fail("decision_ref must name a Decision_Log.md DL unit")
+    try:
+        date = datetime.strptime(data["date"], "%Y-%m-%d").strftime("%Y-%m-%d")
+        if data["date"] != date or path.name != f"audit_correction-{date.replace('-', '')}.json":
+            raise ValueError("date and filename disagree")
+    except (TypeError, ValueError):
+        fail("date must be YYYY-MM-DD and match audit_correction-<YYYYMMDD>.json")
+
+    sources = {name for name in DEFAULT_AUDIT_SOURCE_ARTIFACTS if (audit_dir / name).exists()}
+    if set(requested_artifacts) != sources:
+        fail("requires the complete standard source-artifact selection")
+    required_bindings = sources | {"audit_report.json", "repair_closure_matrix.jsonl"}
+    bindings = data["bound_sha256"]
+    if not isinstance(bindings, dict) or set(bindings) != required_bindings:
+        fail(f"bound_sha256 must bind exactly {sorted(required_bindings)}")
+    else:
+        for name, digest in bindings.items():
+            target = audit_dir / name
+            try:
+                if path_has_symlink(target) or not target.is_file():
+                    raise ValueError("must be a regular file without symlinks")
+                if not isinstance(digest, str) or not re.fullmatch(r"[0-9a-f]{64}", digest) or sha256_file(target) != digest:
+                    raise ValueError("SHA-256 does not match")
+            except (OSError, ValueError) as exc:
+                fail(f"bound hash for {name}: {exc}")
+
+    status = data["historical_status"]
+    if status is not None:
+        if not isinstance(status, dict) or set(status) != {"from", "to", "reason"}:
+            fail("historical_status must be null or contain only from, to, reason")
+        elif not isinstance(status["reason"], str) or not status["reason"].strip():
+            fail("historical_status reason must be non-empty")
+        elif not audit_report or status["from"] != audit_report.get("status") or status["from"] == "BLOCKED" \
+                or status["to"] != "BLOCKED" or not actionable_rows:
+            fail("historical_status may only change the recorded status to BLOCKED with original repair_required_count > 0")
+
+    entries = data["non_actionable_rows"]
+    accepted: set[tuple[str, str]] = set()
+    validator_pins: dict[tuple[str, str], str] = {}
+    if not isinstance(entries, list):
+        fail("non_actionable_rows must be a list")
+    else:
+        for index, entry in enumerate(entries):
+            fields = {"source_artifact", "source_row", "reason"}
+            if isinstance(entry, dict) and entry.get("source_artifact") == "validator_results.json":
+                fields.add("record_sha256")
+            if not isinstance(entry, dict) or set(entry) != fields:
+                fail(f"non_actionable_rows[{index}] fields must be exactly {sorted(fields)}")
+                continue
+            artifact, row = entry["source_artifact"], entry["source_row"]
+            if not isinstance(artifact, str) or artifact not in sources or isinstance(row, bool) \
+                    or not isinstance(row, (str, int)) or (isinstance(row, str) and not row.strip()):
+                fail(f"non_actionable_rows[{index}] must identify a standard source row")
+                continue
+            key = (artifact, str(row))
+            if key in accepted:
+                fail(f"duplicates source row {key}")
+            accepted.add(key)
+            if artifact == "validator_results.json":
+                digest = entry["record_sha256"]
+                if not isinstance(digest, str) or not re.fullmatch(r"[0-9a-f]{64}", digest):
+                    fail(f"source row {key} record_sha256 must be an exact SHA-256")
+                else:
+                    validator_pins[key] = digest
+            if not isinstance(entry["reason"], str) or not entry["reason"].strip():
+                fail(f"source row {key} reason must be non-empty")
+            if key in actionable_rows or (artifact, "$") in actionable_rows:
+                fail(f"source row {key} is actionable; correction cannot excuse missing coverage")
+            if key not in covered:
+                fail(f"source row {key} is not covered by the matrix")
+            # A fabricated matrix key is not a source row, even if inference did not list it.
+            try:
+                source = strict_json_loads((audit_dir / artifact).read_text(encoding="utf-8")) if artifact.endswith(".json") else None
+                if artifact.endswith(".jsonl"):
+                    lines = _lines((audit_dir / artifact).read_text(encoding="utf-8"))
+                    if not str(row).isdigit() or str(row) != str(int(row)) or not 0 < int(row) <= len(lines)                             or not lines[int(row) - 1].strip():
+                        raise ValueError("JSONL row does not exist or is not a canonical positive line number")
+                elif artifact == "validator_results.json" and str(row).startswith(("results.", "invalid_invocations.")):
+                    group, name = str(row).split(".", 1)
+                    matches = [item for item in source.get(group, []) if isinstance(item, dict) and item.get("name") == name]
+                    if not matches:
+                        raise ValueError("validator source row does not exist")
+                    if len(matches) != 1:
+                        raise ValueError("validator source row name is ambiguous; expected exactly one record")
+                    if validator_record_sha256(matches[0]) != entry["record_sha256"]:
+                        raise ValueError("record_sha256 does not match the canonical JSON record")
+                else:
+                    # v1 admits only physical JSONL rows and named validator-result rows.
+                    raise ValueError("unsupported source-row address")
+            except (OSError, ValueError, TypeError, AttributeError) as exc:
+                fail(f"source row {key}: {exc}")
+    required_validator_rows = {key for key in covered - actionable_rows if key[0] == "validator_results.json"}
+    if set(validator_pins) != required_validator_rows:
+        fail("every over-covered validator_results.json row must carry record_sha256 in the receipt "
+             "and be authorized by decision owner_named_rows")
+    if isinstance(data["decision_ref"], str) and re.fullmatch(r"Plans/Decision_Log\.md#DL-[0-9]{3,}", data["decision_ref"]):
+        try:
+            owner_pins = audit_correction_owner_pins(data["decision_ref"], audit_dir.name)
+            if validator_pins != owner_pins:
+                fail("validator-row pins must equal decision owner_named_rows for this audit exactly")
+        except (OSError, ValueError, TypeError) as exc:
+            fail(f"decision owner_named_rows cannot authorize validator rows: {exc}")
+    if status is None and not accepted:
+        fail("must correct a status or at least one existing non-actionable matrix row")
+    if len(errors) != start:
+        return None
+    return {
+        "path": label,
+        "schema_id": AUDIT_CORRECTION_SCHEMA,
+        "decision_ref": data["decision_ref"],
+        "date": data["date"],
+        "historical_status": audit_report.get("status"),
+        "corrected_status": status["to"] if status is not None else audit_report.get("status"),
+        "status_reason": status["reason"] if status is not None else None,
+        "non_actionable_rows": entries,
+    }
 
 
 def validate_audit_dir(
@@ -3432,8 +3683,20 @@ def validate_audit_dir(
     }
 
     impact_report = validate_repair_impact_matrix(audit_dir, audit_refs, actionable_rows, errors)
+    rows = read_jsonl(matrix_path, errors, required=True) if matrix_path.exists() else []
+    matrix_keys = {
+        key for row in rows
+        if isinstance(row.get("source_artifact"), str)
+        and (key := source_row_key(row["source_artifact"], row.get("source_row"))) is not None
+    }
+    correction = validate_audit_correction(audit_dir, audit_report, actionable_rows, matrix_keys, requested_artifacts, errors)
+    corrected_rows = {
+        (row["source_artifact"], str(row["source_row"])) for row in correction["non_actionable_rows"]
+    } if correction else set()
+    status_report = dict(audit_report, status=correction["corrected_status"]) \
+        if correction and correction["status_reason"] is not None else audit_report
     validate_audit_report_status(
-        audit_report,
+        status_report,
         audit_dir,
         repair_required_count=len(actionable_rows),
         finding_count=int(source_report.get("finding_count", 0)),
@@ -3479,7 +3742,6 @@ def validate_audit_dir(
             report["effective_status_projection"] = effective_status_report
         return apply_legacy_format_rule(audit_dir, report, legacy_context)
 
-    rows = read_jsonl(matrix_path, errors, required=True)
     registry_by_id = registry_lookup(registry_path, errors)
     covered: set[tuple[str, str]] = set()
     cover_lines: dict[tuple[str, str], list[int]] = {}
@@ -3567,7 +3829,7 @@ def validate_audit_dir(
     if missing_coverage:
         errors.append(f"{rel(matrix_path)}: missing closure rows for {len(missing_coverage)} source rows")
 
-    extra_coverage = sorted(covered - actionable_rows)
+    extra_coverage = sorted(covered - actionable_rows - corrected_rows)
     if extra_coverage:
         _diag(errors, f"{rel(matrix_path)}: closure rows present for {len(extra_coverage)} non-actionable source rows",
               origin=matrix_path, kind="over_coverage")
@@ -3602,6 +3864,7 @@ def validate_audit_dir(
             "original_repair_required_count": len(actionable_rows),
             "repair_required_count": open_repair_required_count,
             "terminal_repair_state": terminal_repair_state,
+            "audit_correction": correction,
         },
         errors,
         required=require_effective_status,
@@ -3634,6 +3897,8 @@ def validate_audit_dir(
         report["terminal_state_projection"] = terminal_state_report
     if effective_status_report is not None:
         report["effective_status_projection"] = effective_status_report
+    if correction is not None:
+        report["audit_correction"] = correction
     return apply_legacy_format_rule(audit_dir, report, legacy_context)
 
 
@@ -4157,7 +4422,7 @@ def _self_test_registry_row(**overrides: Any) -> dict[str, Any]:
 
 
 def cmd_self_test(args: argparse.Namespace) -> int:
-    """Fail-closed checks of anchor.v1 hashing and append-only re-audit supersession."""
+    """Fail-closed checks of anchor.v1, re-audit supersession and audit corrections."""
     import contextlib  # noqa: PLC0415
     import io  # noqa: PLC0415
     import shutil  # noqa: PLC0415
@@ -5517,6 +5782,654 @@ def cmd_self_test(args: argparse.Namespace) -> int:
             check("compat_words_off_through_a_symlink", any("missing closure rows for 9 source rows" in e for e in compat_missing()), compat_missing())
             (fifth / "planunit_source_claims.jsonl").unlink()
             moved.rename(fifth / "planunit_source_claims.jsonl")
+        finally:
+            LEGACY_INVENTORY_SHA256 = saved_pin
+            _LEGACY_INVENTORY_CACHE.clear()
+        def write_owner_decision(data: dict[str, Any], *, root: Path = tmp,
+                                 rows: list[dict[str, Any]] | None = None) -> None:
+            if rows is None:
+                rows = [dict(audit_id=data["audit_id"], **{field: entry[field] for field in (
+                    "source_artifact", "source_row", "record_sha256")})
+                    for entry in data["non_actionable_rows"] if entry["source_artifact"] == "validator_results.json"]
+            unit = dict(plan_unit_id="DL-470", unit_type="decision", status="accepted", owner_named_rows=rows)
+            (root / "Plans/Decision_Log.md").write_text(
+                "```yaml\n" + _yaml_module().safe_dump(unit, sort_keys=False) + "```\n", encoding="utf-8")
+
+        write_owner_decision(dict(audit_id="fixture", non_actionable_rows=[]))
+        # PLS-027 / DL-470: corrections are atomic, hash-bound explanations, never coverage.
+        correction_dir = tmp / "Plans/.audits/audit-correction-fixture"
+        correction_dir.mkdir()
+        correction_path = correction_dir / "audit_correction-20261108.json"
+        correction_registry = correction_dir / "registry.jsonl"
+        refs = {field: "fixture-ref" for field in AUDIT_REF_FIELDS}
+        refs.update(audit_id=correction_dir.name, ledger_id="fixture-ledger")
+        source_rows = [dict(_self_test_registry_row(detail_keys=[f"finding-{n}"]), **refs,
+                            repair_required=n == 1, finding_level="warning") for n in (1, 2)]
+        write_jsonl(correction_dir / "semantic_risks.jsonl", source_rows)
+        write_json(correction_dir / "audit_report.json", dict(refs, status="PASS_WITH_WARNINGS", repair_required_count=1))
+        matrices = [dict(r, source_artifact="semantic_risks.jsonl", source_row=n,
+                         registry_closure_id=f"correction-closure-{n}") for n, r in enumerate(source_rows, 1)]
+        write_jsonl(correction_dir / "repair_closure_matrix.jsonl", matrices)
+        write_jsonl(correction_registry, [dict(r, closure_id=m["registry_closure_id"], audit_ids=[correction_dir.name],
+                                              closed_by_audit_id=correction_dir.name) for r, m in zip(source_rows, matrices)])
+        scope = []
+        for family in sorted(SCOPE_REQUIRED_FAMILIES):
+            r = dict(refs, check_family=family, source_atom_ids=[], plan_unit_ids=[], owner_docs=[], detail_keys=[family],
+                     exact_tokens=[], covered_artifacts=["semantic_risks.jsonl"], classification="exact_present",
+                     repair_required=False, finding_level="info")
+            r["check_id"] = compute_check_id(r)
+            scope.append(r)
+        write_jsonl(correction_dir / SCOPE_MANIFEST, scope)
+        impact = dict(refs, source_artifact="semantic_risks.jsonl", source_row=1, finding_key=source_rows[0]["finding_key"],
+                      **{field: [] for field in IMPACT_LIST_FIELDS}, post_repair_semantic_audit={
+                          "status": "PASS", "repair_required_count": 0, "covered_original_scope": True,
+                          "covered_impact_rows": True, "drift": {field: False for field in POST_REPAIR_DRIFT_FIELDS}})
+        impact["impact_id"] = compute_impact_id(impact)
+        write_jsonl(correction_dir / IMPACT_MATRIX, [impact])
+
+        def correction_fixture() -> dict[str, Any]:
+            return {"schema_id": AUDIT_CORRECTION_SCHEMA, "audit_id": correction_dir.name,
+                    "decision_ref": "Plans/Decision_Log.md#DL-470", "date": "2026-11-08",
+                    "bound_sha256": {name: sha256_file(correction_dir / name) for name in (
+                        "audit_report.json", "repair_closure_matrix.jsonl", "semantic_risks.jsonl")},
+                    "historical_status": {"from": "PASS_WITH_WARNINGS", "to": "BLOCKED", "reason": "One original repair."},
+                    "non_actionable_rows": [{"source_artifact": "semantic_risks.jsonl", "source_row": 2,
+                                             "reason": "Explicitly repair_required=false."}]}
+
+        def run_correction(data: Any, sources: list[str] | None = None) -> dict[str, Any]:
+            write_json(correction_path, data)
+            return validate_audit_dir(correction_dir, require_matrix=True, require_effective_status=False,
+                                      source_artifacts=sources, registry_path=correction_registry)
+
+        before = validate_audit_dir(correction_dir, require_matrix=True, require_effective_status=False,
+                                    source_artifacts=None, registry_path=correction_registry)
+        check("correction_absent_keeps_status_and_overcoverage_errors", len(before["errors"]) == 2
+              and has(before, "status must be BLOCKED") and has(before, "non-actionable source rows"), before["errors"])
+        original_bytes = {name: (correction_dir / name).read_bytes() for name in correction_fixture()["bound_sha256"]}
+        report = run_correction(correction_fixture())
+        check("correction_valid_exposes_both_statuses_and_preserves_bytes", not report["errors"]
+              and report["audit_correction"]["historical_status"] == "PASS_WITH_WARNINGS"
+              and report["audit_correction"]["corrected_status"] == "BLOCKED"
+              and report["original_repair_required_count"] == 1 and not report["missing_coverage"]
+              and all((correction_dir / name).read_bytes() == raw for name, raw in original_bytes.items()), report["errors"])
+        status_only = correction_fixture()
+        status_only["non_actionable_rows"] = []
+        report = run_correction(status_only)
+        check("correction_status_only_keeps_unlisted_overcoverage", has(report, "non-actionable source rows")
+              and not has(report, "status must be BLOCKED"), report["errors"])
+        rows_only = correction_fixture()
+        rows_only["historical_status"] = None
+        report = run_correction(rows_only)
+        check("correction_rows_only_keeps_wrong_status", has(report, "status must be BLOCKED")
+              and not has(report, "non-actionable source rows"), report["errors"])
+        for name, mutate, expected in (
+            ("hash_mismatch", lambda d: d["bound_sha256"].update({"audit_report.json": "0" * 64}), "bound hash"),
+            ("missing_binding", lambda d: d["bound_sha256"].pop("repair_closure_matrix.jsonl"), "bound_sha256"),
+            ("unknown_binding", lambda d: d["bound_sha256"].update({"other.json": "0" * 64}), "bound_sha256"),
+            ("unknown_schema", lambda d: d.update(schema_id="pm.audit_closure.audit_correction.v2"), "schema_id"),
+            ("unknown_field", lambda d: d.update(repair_required_count=0), "fields must be exactly"),
+            ("other_status", lambda d: d["historical_status"].update(to="PASS"), "may only change"),
+            ("wrong_from_status", lambda d: d["historical_status"].update({"from": "PASS"}), "may only change"),
+            ("nested_status_field", lambda d: d["historical_status"].update(repair_required_count=0), "historical_status must"),
+            ("nested_row_field", lambda d: d["non_actionable_rows"][0].update(closure_status="repaired"), "fields must be exactly"),
+            ("actionable_row", lambda d: d["non_actionable_rows"][0].update(source_row=1), "is actionable"),
+            ("uncovered_row", lambda d: d["non_actionable_rows"][0].update(source_row=3), "not covered by the matrix"),
+            ("empty_status_reason", lambda d: d["historical_status"].update(reason=" "), "reason must be non-empty"),
+            ("empty_row_reason", lambda d: d["non_actionable_rows"][0].update(reason=""), "reason must be non-empty"),
+            ("duplicate_row", lambda d: d["non_actionable_rows"].append(dict(d["non_actionable_rows"][0])), "duplicates source row"),
+            ("boolean_row", lambda d: d["non_actionable_rows"][0].update(source_row=True), "must identify"),
+            ("wrong_audit", lambda d: d.update(audit_id="other"), "audit_id"),
+            ("bad_date", lambda d: d.update(date="2026-02-30"), "date must"),
+            ("date_filename_mismatch", lambda d: d.update(date="2026-11-09"), "date must"),
+            ("missing_decision", lambda d: d.update(decision_ref=""), "decision_ref"),
+            ("empty_correction", lambda d: d.update(historical_status=None, non_actionable_rows=[]), "must correct"),
+        ):
+            data = correction_fixture()
+            mutate(data)
+            report = run_correction(data)
+            check(f"correction_{name}_fails_atomically", has(report, expected) and "audit_correction" not in report
+                  and has(report, "status must be BLOCKED") and has(report, "non-actionable source rows"), report["errors"])
+        report = run_correction(correction_fixture(), [])
+        check("correction_partial_source_selection_fails", has(report, "complete standard source-artifact selection"), report["errors"])
+        run_correction(correction_fixture())
+        duplicate = correction_dir / "audit_correction-20261109.json"
+        duplicate.write_bytes(correction_path.read_bytes())
+        report = validate_audit_dir(correction_dir, require_matrix=True, require_effective_status=False,
+                                    source_artifacts=None, registry_path=correction_registry)
+        check("correction_multiple_files_fail", has(report, "exactly one correction file") and "audit_correction" not in report, report["errors"])
+        duplicate.unlink()
+        correction_path.write_text(correction_path.read_text().replace('"schema_id":', '"schema_id": "duplicate", "schema_id":', 1))
+        errors = []
+        result = validate_audit_correction(correction_dir, {}, set(), set(), [], errors)
+        check("correction_duplicate_json_field_fails", result is None and any("duplicate field" in e for e in errors), errors)
+        correction_path.write_text("{")
+        errors = []
+        result = validate_audit_correction(correction_dir, {}, set(), set(), [], errors)
+        check("correction_invalid_json_fails", result is None and bool(errors), errors)
+        # Removing real coverage and rebinding the receipt cannot excuse the missing actionable row.
+        write_jsonl(correction_dir / "repair_closure_matrix.jsonl", matrices[1:])
+        report = run_correction(correction_fixture())
+        check("correction_cannot_excuse_missing_coverage", has(report, "missing closure rows for 1 source rows")
+              and report["missing_coverage"] == [{"source_artifact": "semantic_risks.jsonl", "source_row": "1"}], report["errors"])
+        write_jsonl(correction_dir / "repair_closure_matrix.jsonl", matrices)
+        # A source edit, matrix edit or symlink invalidates the binding before any exemption.
+        data = correction_fixture()
+        for filename in data["bound_sha256"]:
+            target = correction_dir / filename
+            raw = target.read_bytes()
+            target.write_bytes(raw + b"\n")
+            report = run_correction(data)
+            check(f"correction_edited_{filename}_fails", has(report, f"bound hash for {filename}")
+                  and "audit_correction" not in report, report["errors"])
+            target.write_bytes(raw)
+        data = correction_fixture()
+        correction_path.unlink()
+        duplicate.write_text(json.dumps(data))
+        correction_path.symlink_to(duplicate)
+        # Use a non-correction filename for the symlink target so cardinality is not the failure.
+        target = correction_dir / "receipt.json"
+        duplicate.rename(target)
+        correction_path.unlink()
+        correction_path.symlink_to(target)
+        report = validate_audit_dir(correction_dir, require_matrix=True, require_effective_status=False,
+                                    source_artifacts=None, registry_path=correction_registry)
+        check("correction_symlink_file_fails", has(report, "symlink") and "audit_correction" not in report, report["errors"])
+        correction_path.unlink()
+        target.unlink()
+        # Corrected history participates in the effective projection without losing the raw value.
+        write_json(correction_dir / "post_repair_audit_report.json", {"status": "PASS_WITH_WARNINGS", "repair_required_count": 0})
+        report = run_correction(correction_fixture())
+        projection = build_effective_status_projection(correction_dir, report)
+        check("correction_effective_projection_keeps_history", projection["effective_terminal_report"] == "post_repair_audit_report.json"
+              and projection["effective_status"] == "PASS_WITH_WARNINGS" and projection["terminal_repair_state"] == "repair_validated"
+              and projection["superseded_historical_reports"] == ["audit_report.json"]
+              and projection["status_sources"]["audit_report_status"] == "PASS_WITH_WARNINGS"
+              and projection["status_sources"]["corrected_audit_report_status"] == "BLOCKED", projection)
+        # Both JSON result addresses used by audit-004 must be checked against real source rows.
+        validator_source = dict(refs, results=[{"name": "passing", "status": "pass", "cmd": "validator --run-dir fixture"}],
+                                invalid_invocations=[{"name": "superseded", "status": "invalid_invocation", "cmd": "validator",
+                                                      "superseded_by": "passing with --run-dir fixture"}])
+        write_json(correction_dir / "validator_results.json", validator_source)
+        all_sources = ["semantic_risks.jsonl", "validator_results.json"]
+        json_keys = {("validator_results.json", "results.passing"), ("validator_results.json", "invalid_invocations.superseded")}
+        all_covered = {("semantic_risks.jsonl", "1"), ("semantic_risks.jsonl", "2")} | json_keys
+        all_actionable = {("semantic_risks.jsonl", "1")}
+
+        def json_correction() -> dict[str, Any]:
+            data = correction_fixture()
+            data["bound_sha256"]["validator_results.json"] = sha256_file(correction_dir / "validator_results.json")
+            source = optional_json_object(correction_dir / "validator_results.json")
+            for artifact, row in sorted(json_keys):
+                group, name = row.split(".", 1)
+                record = next(item for item in source[group] if item["name"] == name)
+                data["non_actionable_rows"].append(dict(source_artifact=artifact, source_row=row,
+                    reason="The owner judged this record never needed a fix.", record_sha256=validator_record_sha256(record)))
+            write_owner_decision(data)
+            return data
+
+        def evaluate_receipt(data: dict[str, Any], covered: set[tuple[str, str]] = all_covered) -> tuple[Any, list[str]]:
+            write_json(correction_path, data)
+            errors: list[str] = []
+            classified = set(all_actionable)
+            classified.update(("validator_results.json", r) for r in actionable_json_rows(
+                correction_dir / "validator_results.json", "validator_results.json", errors))
+            result = validate_audit_correction(correction_dir, optional_json_object(correction_dir / "audit_report.json"),
+                                               classified, covered, all_sources, errors)
+            return result, errors
+
+        # Owner authorization and exact record identity replace the former clean-file proof.
+        data = json_correction()
+        result, errors = evaluate_receipt(data)
+        check("correction_owner_named_pinned_json_rows_pass", result is not None and not errors, errors)
+        for name, mutate, expected in (
+            ("missing_record_sha256", lambda d: d["non_actionable_rows"][1].pop("record_sha256"), "record_sha256"),
+            ("wrong_record_sha256", lambda d: d["non_actionable_rows"][1].update(record_sha256="0" * 64), "record_sha256 does not match"),
+            ("malformed_record_sha256", lambda d: d["non_actionable_rows"][1].update(record_sha256=True), "record_sha256 must"),
+            ("unknown_validator_row_field", lambda d: d["non_actionable_rows"][1].update(extra=True), "fields must be exactly"),
+            ("atom_record_sha256", lambda d: d["non_actionable_rows"][0].update(record_sha256="0" * 64), "fields must be exactly"),
+        ):
+            data = json_correction()
+            mutate(data)
+            result, errors = evaluate_receipt(data)
+            check(f"correction_{name}_refused", result is None and any(expected in e for e in errors), errors)
+        for name, mutate in (
+            ("unnamed_validator_row", lambda rows: rows.clear()),
+            ("decision_lacks_row", lambda rows: rows.pop()),
+            ("decision_wrong_hash", lambda rows: rows[0].update(record_sha256="f" * 64)),
+            ("decision_wrong_audit", lambda rows: rows[0].update(audit_id="other-audit")),
+            ("decision_duplicate_row", lambda rows: rows.append(dict(rows[0]))),
+            ("decision_unknown_field", lambda rows: rows[0].update(reason="not in pin schema")),
+        ):
+            data = json_correction()
+            rows = [dict(audit_id=data["audit_id"], **{f: entry[f] for f in (
+                "source_artifact", "source_row", "record_sha256")}) for entry in data["non_actionable_rows"][1:]]
+            mutate(rows)
+            write_owner_decision(data, rows=rows)
+            result, errors = evaluate_receipt(data)
+            check(f"correction_{name}_refused", result is None and any("owner_named_rows" in e for e in errors), errors)
+        data = json_correction()
+        data["non_actionable_rows"] = data["non_actionable_rows"][:1]
+        result, errors = evaluate_receipt(data)
+        check("correction_all_validator_pins_omitted_refused", result is None
+              and any("owner_named_rows" in e for e in errors), errors)
+        data = json_correction()
+        data["non_actionable_rows"].pop()
+        result, errors = evaluate_receipt(data)
+        check("correction_subset_of_owner_pins_refused", result is None
+              and any("owner_named_rows" in e for e in errors), errors)
+        data = json_correction()
+        decision_path = tmp / "Plans/Decision_Log.md"
+        decision_raw = decision_path.read_text()
+        for name, replacement in (
+            ("missing_unit", decision_raw.replace("DL-470", "DL-471")),
+            ("unaccepted_unit", decision_raw.replace("status: accepted", "status: pending")),
+            ("duplicate_unit", decision_raw + decision_raw),
+            ("duplicate_yaml_key", decision_raw.replace("plan_unit_id: DL-470", "plan_unit_id: DL-470\nplan_unit_id: DL-470")),
+        ):
+            decision_path.write_text(replacement)
+            result, errors = evaluate_receipt(data)
+            check(f"correction_decision_{name}_refused", result is None
+                  and any("decision owner_named_rows" in e for e in errors), errors)
+        decision_path.write_text(decision_raw)
+        result, errors = evaluate_receipt(json_correction(), all_covered - {("validator_results.json", "results.passing")})
+        check("correction_pinned_validator_still_requires_coverage", result is None
+              and any("not covered by the matrix" in e for e in errors), errors)
+        # These legacy-shaped receipts were false accepts at 3a1775369a. Refuse
+        # missing pins for either group, including an otherwise-passing duplicate.
+        for name, duplicate_group in (("unpinned_result", None), ("unpinned_invalid_invocation", None),
+                                      ("unpinned_ambiguous_duplicate_result", "results")):
+            source = dict(validator_source)
+            if duplicate_group is not None:
+                source[duplicate_group] = [dict(validator_source[duplicate_group][0]) for _ in range(2)]
+            write_json(correction_dir / "validator_results.json", source)
+            data = json_correction()
+            target = "invalid_invocations" if name == "unpinned_invalid_invocation" else "results"
+            entry = next(row for row in data["non_actionable_rows"]
+                         if str(row["source_row"]).startswith(target + "."))
+            entry.pop("record_sha256")
+            result, errors = evaluate_receipt(data)
+            check(f"correction_{name}_refused", result is None
+                  and any("record_sha256" in e for e in errors), errors)
+        write_json(correction_dir / "validator_results.json", validator_source)
+        # Canonical pins ignore whitespace/key order and preserve Unicode exactly.
+        unicode_record = dict(validator_source["results"][0], notes="owner says café / 日本語")
+        reordered = dict(reversed(list(unicode_record.items())))
+        check("validator_record_pin_canonical_utf8", validator_record_sha256(unicode_record) == validator_record_sha256(reordered)
+              == hashlib.sha256(json.dumps(unicode_record, sort_keys=True, separators=(",", ":"),
+                  ensure_ascii=False).encode("utf-8")).hexdigest())
+        for group, record in (("results", validator_source["results"][0]),
+                              ("invalid_invocations", validator_source["invalid_invocations"][0])):
+            duplicate_source = dict(validator_source, **{group: [record, dict(record)]})
+            write_json(correction_dir / "validator_results.json", duplicate_source)
+            result, errors = evaluate_receipt(json_correction())
+            check(f"correction_ambiguous_{group}_pin_refused", result is None
+                  and any("name is ambiguous" in e for e in errors), errors)
+        write_json(correction_dir / "validator_results.json", validator_source)
+        # Reading the real receipt also checks all 16 rows and the unchanged June sources.
+        real_dir = saved_root / "Plans/.audits/audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity"
+        ROOT = saved_root
+        try:
+            real_sources = [name for name in DEFAULT_AUDIT_SOURCE_ARTIFACTS if (real_dir / name).exists()]
+            real_errors: list[str] = []
+            real_actionable = {(artifact, row) for artifact in real_sources for row in actionable_artifact_rows(
+                real_dir / artifact, artifact, real_errors, compat_words=True)}
+            real_covered = {source_row_key(row["source_artifact"], row["source_row"]) for row in read_jsonl(
+                real_dir / "repair_closure_matrix.jsonl", real_errors, required=True)}
+            real_result = validate_audit_correction(real_dir, optional_json_object(real_dir / "audit_report.json"),
+                real_actionable, real_covered, real_sources, real_errors)
+            check("correction_real_audit004_receipt_passes", real_result is not None and not real_errors
+                  and len(real_result["non_actionable_rows"]) == 16, real_errors)
+            # Run the final legacy classifier on frozen audit-004, not just the receipt helper.
+            # Only scratch copies of the receipt and decision change; all bound bytes stay real.
+            real_root = tmp / "real-audit004"
+            copied_dir = real_root / real_dir.relative_to(saved_root)
+            shutil.copytree(real_dir, copied_dir)
+
+            def copy_real_file(path: Path) -> None:
+                target = real_root / path.relative_to(saved_root)
+                if not target.exists():
+                    target.parent.mkdir(parents=True, exist_ok=True)
+                    shutil.copyfile(path, target)
+
+            for name in (LEGACY_INVENTORY, "Plans/Decision_Log.md", "Plans/.audits/_semantic_closure_registry.jsonl"):
+                copy_real_file(saved_root / name)
+            for row in read_jsonl(real_dir / "repair_closure_matrix.jsonl", [], required=True):
+                for ref in row["closure_evidence"]:
+                    evidence = evidence_path_from_ref(ref)
+                    if evidence is not None:
+                        copy_real_file(evidence)
+            ROOT = real_root
+            copied_receipt = copied_dir / "audit_correction-20261108.json"
+            copied_decision = real_root / "Plans/Decision_Log.md"
+            original_decision = copied_decision.read_bytes()
+            real_data = optional_json_object(copied_receipt)
+
+            def run_real_correction(data: dict[str, Any], *, match_owner_rows: bool = False) -> dict[str, Any]:
+                write_json(copied_receipt, data)
+                copied_decision.write_bytes(original_decision)
+                if match_owner_rows:
+                    write_owner_decision(data, root=real_root)
+                return validate_audit_dir(copied_dir, require_matrix=True, require_effective_status=True,
+                    source_artifacts=None, registry_path=real_root / "Plans/.audits/_semantic_closure_registry.jsonl")
+
+            report = run_real_correction(real_data)
+            check("correction_real_audit004_full_validation_passes", not report["errors"]
+                  and legacy_audit_state(copied_dir) is not None and not report["extra_coverage"], report["errors"])
+            for name, decision_ref, keep, match_owner in (
+                # Exact Sol max 2 reproduction: no validator pins, existing accepted DL-334.
+                ("reviewer_dl334_omitted_validator_rows", "Plans/Decision_Log.md#DL-334", 0, False),
+                ("decision_without_owner_named_rows", "Plans/Decision_Log.md#DL-334", 2, False),
+                ("empty_owner_list_and_omitted_validator_rows", "Plans/Decision_Log.md#DL-470", 0, True),
+                ("one_validator_row_and_matching_owner_list", "Plans/Decision_Log.md#DL-470", 1, True),
+                ("one_validator_row", "Plans/Decision_Log.md#DL-470", 1, False),
+            ):
+                data = json.loads(json.dumps(real_data))
+                data["decision_ref"] = decision_ref
+                validator_rows = [r for r in data["non_actionable_rows"] if r["source_artifact"] == "validator_results.json"]
+                data["non_actionable_rows"] = [r for r in data["non_actionable_rows"]
+                    if r["source_artifact"] != "validator_results.json"] + validator_rows[:keep]
+                report = run_real_correction(data, match_owner_rows=match_owner)
+                check(f"correction_real_audit004_{name}_refused", bool(report["errors"])
+                      and "audit_correction" not in report and has(report, "owner_named_rows")
+                      and has(report, "non-actionable source rows")
+                      and not report["legacy_format_rule"]["demoted_by_kind"].get("inferred_actionability_over_coverage"),
+                      report["errors"])
+            # A valid receipt must not legacy-demote any leftover row, including non-validator rows.
+            data = json.loads(json.dumps(real_data))
+            omitted_row = data["non_actionable_rows"].pop(0)
+            report = run_real_correction(data)
+            check("correction_real_audit004_unlisted_atom_over_coverage_is_error", "audit_correction" in report
+                  and has(report, "non-actionable source rows")
+                  and report["extra_coverage"] == [{"source_artifact": omitted_row["source_artifact"],
+                                                     "source_row": str(omitted_row["source_row"])}]
+                  and not report["legacy_format_rule"]["demoted_by_kind"].get("inferred_actionability_over_coverage"),
+                  report["errors"])
+            data = dict(real_data, unknown_field=True)
+            report = run_real_correction(data)
+            check("correction_real_audit004_invalid_receipt_keeps_over_coverage", "audit_correction" not in report
+                  and has(report, "fields must be exactly") and has(report, "non-actionable source rows")
+                  and not report["legacy_format_rule"]["demoted_by_kind"].get("inferred_actionability_over_coverage"),
+                  report["errors"])
+            copied_receipt.unlink()
+            report = validate_audit_dir(copied_dir, require_matrix=True, require_effective_status=False,
+                source_artifacts=None, registry_path=real_root / "Plans/.audits/_semantic_closure_registry.jsonl")
+            check("correction_real_audit004_without_receipt_keeps_legacy_demotion",
+                  report["legacy_format_rule"]["demoted_by_kind"].get("inferred_actionability_over_coverage") == 1
+                  and len(report["extra_coverage"]) == 16 and not has(report, "non-actionable source rows"), report["errors"])
+        finally:
+            ROOT = tmp
+        result, errors = evaluate_receipt(json_correction())
+        check("correction_named_json_rows_pass", result is not None and not errors, errors)
+        for name, update in (
+            ("failed_result", {"results": [{"name": "passing", "status": "fail"}]}),
+            ("explicit_result", {"results": [{"name": "passing", "status": "pass", "repair_required": True, "finding_level": "warning"}]}),
+            ("duplicate_explicit_name", {"results": [{"name": "passing", "status": "pass"},
+                                                     {"name": "passing", "repair_required": True, "finding_level": "warning"}]}),
+            ("artifact_explicit", {"repair_required": True, "finding_level": "warning"}),
+            ("explicit_invalid_invocation", {"invalid_invocations": [
+                {"name": "superseded", "status": "invalid_invocation", "repair_required": True, "finding_level": "warning"}]}),
+            ("duplicate_explicit_invalid_invocation", {"invalid_invocations": [
+                {"name": "superseded", "status": "invalid_invocation"},
+                {"name": "superseded", "status": "invalid_invocation", "repair_required": True, "finding_level": "warning"}]}),
+            ("invalid_invocation_side_effect", {"invalid_invocations": [
+                {"name": "superseded", "status": "invalid_invocation", "side_effect_count": 1}]}),
+            ("artifact_false_child_explicit", {"repair_required": False, "finding_level": "info", "results": [
+                {"name": "passing", "status": "pass", "repair_required": True, "finding_level": "warning"}]}),
+            ("artifact_false_child_failed", {"repair_required": False, "finding_level": "info", "results": [
+                {"name": "passing", "status": "fail"}]}),
+            ("result_side_effect", {"results": [{"name": "passing", "status": "pass", "side_effect_count": 1}]}),
+        ):
+            write_json(correction_dir / "validator_results.json", dict(validator_source, **update))
+            result, errors = evaluate_receipt(json_correction())
+            check(f"correction_{name}_is_actionable", result is None and any("is actionable" in e for e in errors), errors)
+        write_json(correction_dir / "validator_results.json", validator_source)
+        # Integration (review r1 F1): a receipt that would exempt an explicitly repair-required
+        # invalid invocation is refused whole, and the historical errors stay.
+        explicit_invalid = dict(validator_source, invalid_invocations=[dict(
+            validator_source["invalid_invocations"][0], repair_required=True, finding_level="warning")])
+        write_json(correction_dir / "validator_results.json", explicit_invalid)
+        write_jsonl(correction_dir / "repair_closure_matrix.jsonl",
+                    matrices + [dict(matrices[1], source_artifact=a, source_row=r) for a, r in sorted(json_keys)])
+        write_json(correction_path, json_correction())
+        probe_report = validate_audit_dir(correction_dir, require_matrix=True, require_effective_status=False,
+                                          source_artifacts=None, registry_path=correction_registry)
+        check("correction_explicit_invalid_invocation_fails_atomically",
+              has(probe_report, "is actionable") and "audit_correction" not in probe_report
+              and has(probe_report, "status must be BLOCKED"), probe_report["errors"])
+        # Integration (review r2 F1): an artifact-level false must not hide an explicitly
+        # repair-required child result from the correction's guard.
+        write_json(correction_dir / "validator_results.json", dict(
+            validator_source, repair_required=False, finding_level="info",
+            results=[{"name": "passing", "status": "pass", "repair_required": True, "finding_level": "warning"}]))
+        write_json(correction_path, json_correction())
+        probe_report = validate_audit_dir(correction_dir, require_matrix=True, require_effective_status=False,
+                                          source_artifacts=None, registry_path=correction_registry)
+        check("correction_artifact_false_child_explicit_fails_atomically",
+              has(probe_report, "is actionable") and "audit_correction" not in probe_report
+              and has(probe_report, "status must be BLOCKED"), probe_report["errors"])
+        write_json(correction_dir / "validator_results.json", validator_source)
+        write_jsonl(correction_dir / "repair_closure_matrix.jsonl", matrices)
+        for address in ("results.nonexistent", "warnings[0]"):
+            data = json_correction()
+            data["non_actionable_rows"][1]["source_row"] = address
+            result, errors = evaluate_receipt(data, all_covered | {("validator_results.json", address)})
+            check(f"correction_invalid_json_address_{address}_fails", result is None
+                  and any("does not exist" in e or "unsupported source-row address" in e for e in errors), errors)
+        data = json_correction()
+        data["non_actionable_rows"][0]["source_row"] = 999
+        result, errors = evaluate_receipt(data, all_covered | {("semantic_risks.jsonl", "999")})
+        check("correction_fabricated_matrix_source_row_fails", result is None and any("does not exist" in e for e in errors), errors)
+        data = json_correction()
+        data["non_actionable_rows"][0]["source_row"] = "01"
+        result, errors = evaluate_receipt(data, all_covered | {("semantic_risks.jsonl", "01")})
+        check("correction_noncanonical_actionable_row_alias_fails", result is None
+              and any("canonical positive line number" in e for e in errors), errors)
+        # Hash-valid status correction is still invalid when the original source count is zero.
+        data = json_correction()
+        write_json(correction_path, data)
+        errors = []
+        result = validate_audit_correction(correction_dir, optional_json_object(correction_dir / "audit_report.json"),
+                                           set(), all_covered, all_sources, errors)
+        check("correction_without_original_repairs_fails", result is None and any("original repair_required_count > 0" in e for e in errors), errors)
+        # Inferred actionability has the same force as an explicit field.
+        inferred = {"classification": "missing_or_drift"}
+        write_jsonl(correction_dir / "semantic_risks.jsonl", [inferred, inferred])
+        data = json_correction()
+        write_json(correction_path, data)
+        errors = []
+        inferred_keys = set(("semantic_risks.jsonl", r) for r in actionable_jsonl_rows(
+            correction_dir / "semantic_risks.jsonl", "semantic_risks.jsonl", errors))
+        result = validate_audit_correction(correction_dir, optional_json_object(correction_dir / "audit_report.json"),
+                                           inferred_keys, all_covered, all_sources, errors)
+        check("correction_inferred_actionable_row_fails", result is None and any("is actionable" in e for e in errors), errors)
+        write_jsonl(correction_dir / "semantic_risks.jsonl", source_rows)
+        # Binding via a symlink is refused even when the referenced bytes match.
+        bound = correction_dir / "semantic_risks.jsonl"
+        moved_bound = correction_dir / "moved-source.jsonl"
+        moved_bound.write_bytes(bound.read_bytes())
+        bound.unlink()
+        bound.symlink_to(moved_bound)
+        result, errors = evaluate_receipt(json_correction())
+        check("correction_symlink_bound_source_fails", result is None and any("without symlinks" in e for e in errors), errors)
+        bound.unlink()
+        moved_bound.rename(bound)
+        # Full CLI regressions use a valid registry and current effective projection.
+        cli_root = tmp / "correction-cli"
+        cli_script = cli_root / "scripts/pm-audit-closure.py"
+        cli_script.parent.mkdir(parents=True)
+        cli_script.write_bytes(Path(__file__).read_bytes())
+        (cli_root / "Plans/.audits").mkdir(parents=True)
+        cli_owner = cli_root / "Plans/Fixture.md"
+        cli_owner.write_text("The fixture repair is present.\n", encoding="utf-8")
+        family_types: dict[str, str] = {}
+        for typ, family in CURRENT_SCOPE_ROW_TYPE_FAMILIES.items():
+            family_types.setdefault(family, typ)
+        r4_finding = dict(_self_test_registry_row(), repair_required=True, finding_level="error")
+        invalid = {"status": "invalid_invocation", "cmd": "validator",
+                   "superseded_by": "rerun with --run-dir fixture"}
+        rerun = {"name": "rerun", "status": "pass", "cmd": "validator --run-dir fixture"}
+        cli_cases = [
+            ("failed_explicit_false", "results", {"status": "fail", "returncode": 1,
+                "repair_required": False, "finding_level": "info"}, {}, [], False),
+            ("artifact_mutation", "results", {"status": "pass"}, {"repair_required": False,
+                "finding_level": "info", "non_audit_side_effects": ["Plans/Fixture.md"]}, [], False),
+            ("missing_status", "results", {}, {}, [], False),
+            ("blocked_status", "results", {"status": "blocked"}, {}, [], False),
+            ("unknown_status", "results", {"status": "unknown"}, {}, [], False),
+            ("wrong_type_status", "results", {"status": 0}, {}, [], False),
+            ("null_status", "results", {"status": None, "exit_code": 0}, {}, [], False),
+            ("zero_count", "results", {"status": "pass", "side_effect_count": 0}, {}, [], True),
+            ("absent_count", "results", {"status": "pass"}, {}, [], True),
+            ("exit_zero", "results", {"exit_code": 0}, {}, [], True),
+            ("bool_exit_code", "results", {"exit_code": False}, {}, [], False),
+            ("float_exit_code", "results", {"exit_code": 0.0}, {}, [], False),
+            ("invalid_without_rerun_owner_judgment", "invalid_invocations", invalid, {}, [], True),
+            ("invalid_with_rerun", "invalid_invocations", invalid, {}, [rerun], True),
+            ("invalid_without_link_owner_judgment", "invalid_invocations", {"status": "invalid_invocation", "cmd": "validator"},
+                {}, [], True),
+            ("owner_judged_freeform_fields", "results", {"status": "pass", "notes": "Owner assessed the run.",
+                "unmodeled_record_context": {"text": "not classified by the validator"}},
+                {"unmodeled_file_context": {"text": "not a cleanliness proof"}}, [], True),
+            ("duplicate_same_result", "results", {"status": "pass"}, {},
+                [{"name": "subject", "status": "pass"}], False),
+            ("duplicate_failed_result", "results", {"status": "pass"}, {},
+                [{"name": "subject", "status": "fail"}], False),
+            ("r4_actionable_findings", "results", {"status": "pass"}, {"findings": [r4_finding]}, [], False),
+        ]
+        cli_cases.extend((name, "results", {"status": "pass"}, {}, [], False) for name in (
+            "missing_record_sha256", "wrong_record_sha256", "unnamed_validator_row", "decision_lacks_row",
+            "decision_wrong_hash", "extra_owner_row"))
+        for field, value in (("side_effect_count", 1.0), ("side_effect_count", "1"), ("side_effect_count", -1),
+                             ("side_effect_count", False), ("side_effect_count", 1),
+                             ("side_effects", ["Plans/Fixture.md"]), ("repair_required", True)):
+            extra = {field: value}
+            if field == "repair_required":
+                extra["finding_level"] = "warning"
+            for group in ("results", "invalid_invocations"):
+                cli_cases.append((f"record_{group}_{field}_{value!r}", group,
+                    dict(status="pass" if group == "results" else "invalid_invocation", **extra), {}, [], False))
+            cli_cases.append((f"file_{field}_{value!r}", "results", {"status": "pass"}, extra, [], False))
+        # Finding children use the same classifier with and without a correction. A false
+        # artifact flag never hides a child; error levels and mutation evidence remain binding.
+        for field in VALIDATOR_FINDING_CHILDREN:
+            for suffix, child in (
+                ("explicit", r4_finding),
+                ("error_level", dict(r4_finding, repair_required=False)),
+                ("side_effect", dict(r4_finding, repair_required=False, finding_level="info", side_effect_count=1)),
+                ("inferred", {"classification": "missing_or_drift"}),
+            ):
+                probe = tmp / "validator-child.json"
+                write_json(probe, {"repair_required": False, "finding_level": "info", field: [child]})
+                child_errors: list[str] = []
+                child_rows = actionable_json_rows(probe, "validator_results.json", child_errors)
+                check(f"validator_child_{field}_{suffix}_classified", child_rows == [f"{field}[0]"] and not child_errors,
+                      {"rows": child_rows, "errors": child_errors})
+        for case_index, (name, group, item, extra, reruns, accepted) in enumerate(cli_cases):
+            d = cli_root / "Plans/.audits" / f"case-{case_index}"
+            d.mkdir()
+            refs = {field: "fixture-ref" for field in AUDIT_REF_FIELDS}
+            refs.update(audit_id=d.name, ledger_id="fixture-ledger")
+            write_json(d / "audit_report.json", dict(refs, status="PASS_WITH_WARNINGS", repair_required_count=0))
+            source = dict(refs, results=list(reruns), invalid_invocations=[])
+            source[group].append(dict(name="subject", **item))
+            source.update(extra)
+            write_json(d / "validator_results.json", source)
+            write_jsonl(d / SCOPE_MANIFEST, [dict(refs, schema_id="pm.audit_scope_manifest.row.v1",
+                row_type=typ, check_id=f"check-{family}") for family, typ in family_types.items()])
+            reg = _self_test_registry_row(audit_ids=[d.name], closed_by_audit_id=d.name,
+                hashes={"owner_evidence_hashes": {"Plans/Fixture.md": sha256_file(cli_owner)}})
+            registry_path = d / "registry.jsonl"
+            write_jsonl(registry_path, [reg])
+            address = f"{group}.subject"
+            write_jsonl(d / "repair_closure_matrix.jsonl", [dict(reg, **refs, source_artifact="validator_results.json",
+                source_row=address, registry_closure_id=reg["closure_id"])])
+            receipt = dict(schema_id=AUDIT_CORRECTION_SCHEMA, audit_id=d.name,
+                decision_ref="Plans/Decision_Log.md#DL-470", date="2026-11-08", historical_status=None,
+                bound_sha256={f: sha256_file(d / f) for f in (
+                    "audit_report.json", "repair_closure_matrix.jsonl", "validator_results.json")},
+                non_actionable_rows=[dict(source_artifact="validator_results.json", source_row=address,
+                                         reason="The owner judged this record never needed a fix.",
+                                         record_sha256=validator_record_sha256(dict(name="subject", **item)))])
+            write_owner_decision(receipt, root=cli_root)
+            if name == "missing_record_sha256":
+                receipt["non_actionable_rows"][0].pop("record_sha256")
+            elif name == "wrong_record_sha256":
+                receipt["non_actionable_rows"][0]["record_sha256"] = "0" * 64
+            elif name in ("unnamed_validator_row", "decision_lacks_row"):
+                write_owner_decision(receipt, root=cli_root, rows=[])
+            elif name == "decision_wrong_hash":
+                owner_row = dict(audit_id=d.name, **{f: receipt["non_actionable_rows"][0][f] for f in (
+                    "source_artifact", "source_row", "record_sha256")})
+                write_owner_decision(receipt, root=cli_root, rows=[dict(owner_row, record_sha256="f" * 64)])
+            elif name == "extra_owner_row":
+                owner_row = dict(audit_id=d.name, **{f: receipt["non_actionable_rows"][0][f] for f in (
+                    "source_artifact", "source_row", "record_sha256")})
+                write_owner_decision(receipt, root=cli_root, rows=[owner_row, dict(owner_row, source_row="results.other")])
+            # Projection generation and both CLI calls use the same isolated repository.
+            ROOT = cli_root
+            try:
+                audit = validate_audit_dir(d, require_matrix=True, require_effective_status=False,
+                                            source_artifacts=None, registry_path=registry_path)
+                write_json(d / EFFECTIVE_STATUS, build_effective_status_projection(d, audit))
+            finally:
+                ROOT = tmp
+            argv = [sys.executable, "-B", str(cli_script), "validate", "--registry", str(registry_path),
+                    "--audit-dir", str(d), "--require-closure-matrix", "--require-effective-status"]
+            outputs = []
+            for corrected in (False, True):
+                if corrected:
+                    write_json(d / "audit_correction-20261108.json", receipt)
+                proc = subprocess.run(argv, capture_output=True, text=True)
+                out = json.loads(proc.stdout)
+                outputs.append((proc.returncode, out))
+            before_code, before = outputs[0]
+            after_code, after = outputs[1]
+            after_audit = after["audit_dirs"][0]
+            okay = before_code == 1 and not before["registry"]["errors"] and not after["registry"]["errors"]
+            if accepted:
+                okay = okay and after_code == 0 and after["status"] == "pass" and not after["errors"] \
+                    and "audit_correction" in after_audit
+            elif name in {"artifact_mutation", "r4_actionable_findings"} or name.startswith("file_side_effect"):
+                # A different actionable file row still needs closure. Accepting the
+                # owner's named record does not excuse that row's missing coverage.
+                okay = okay and after_code == 1 and after["status"] == "fail" \
+                    and "audit_correction" in after_audit and bool(after_audit["missing_coverage"]) \
+                    and all(row["source_row"] != address for row in after_audit["missing_coverage"])
+            else:
+                okay = okay and after_code == 1 and after["status"] == "fail" \
+                    and "audit_correction" not in after_audit and any("audit correction" in e for e in after["errors"])
+            if name == "r4_actionable_findings":
+                check("validator_findings_need_closure_without_correction",
+                      {"source_artifact": "validator_results.json", "source_row": "findings[0]"}
+                      in before["audit_dirs"][0]["missing_coverage"], before["audit_dirs"][0])
+            check(f"correction_cli_{name}", okay, {"before_exit": before_code, "after_exit": after_code,
+                                                  "registry_errors": after["registry"]["errors"], "errors": after["errors"]})
+        # A row-only correction on a frozen June audit must preserve omitted status.
+        saved_pin = LEGACY_INVENTORY_SHA256
+        try:
+            omitted = tmp / "Plans/.audits/audit-20260617-004-orchestrator-goal-runtime-flow-post-repair-semantic-fidelity"
+            omitted.mkdir(exist_ok=True)
+            write_json(omitted / "audit_report.json", {"audit_id": omitted.name, "repair_required_count": 1})
+            write_jsonl(omitted / "semantic_risks.jsonl", [{"severity": "high"}, {"severity": "low"}])
+            # The matrix-covered non-actionable row uses a valid closed registry identity.
+            reg = _self_test_registry_row(audit_ids=[omitted.name], closed_by_audit_id=omitted.name)
+            write_jsonl(omitted / "repair_closure_matrix.jsonl", [dict(reg, source_artifact="semantic_risks.jsonl",
+                source_row=2, registry_closure_id=reg["closure_id"])])
+            write_jsonl(omitted / "registry.jsonl", [reg])
+            freeze(omitted)
+            before = validate_audit_dir(omitted, require_matrix=True, require_effective_status=False,
+                                        source_artifacts=None, registry_path=omitted / "registry.jsonl")
+            write_json(omitted / "audit_correction-20261108.json", dict(schema_id=AUDIT_CORRECTION_SCHEMA,
+                audit_id=omitted.name, decision_ref="Plans/Decision_Log.md#DL-470", date="2026-11-08",
+                historical_status=None, bound_sha256={f: sha256_file(omitted / f) for f in (
+                    "audit_report.json", "repair_closure_matrix.jsonl", "semantic_risks.jsonl")},
+                non_actionable_rows=[dict(source_artifact="semantic_risks.jsonl", source_row=2, reason="No repair.")]))
+            after = validate_audit_dir(omitted, require_matrix=True, require_effective_status=False,
+                                       source_artifacts=None, registry_path=omitted / "registry.jsonl")
+            check("correction_row_only_preserves_omitted_status", "audit_correction" in after
+                  and after["original_repair_required_count"] == 1 and not has(before, "status must be")
+                  and not has(after, "status must be") and "status" not in optional_json_object(omitted / "audit_report.json"),
+                  {"before": before["errors"], "after": after["errors"]})
         finally:
             LEGACY_INVENTORY_SHA256 = saved_pin
             _LEGACY_INVENTORY_CACHE.clear()

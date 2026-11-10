@@ -743,6 +743,8 @@ ContractRef: ContractName:Plans/Crosswalk.md
 
 #### 5.5.2 Resubmit with Annotations: targeted revision contract
 
+> Live owner: `Plans/PRD_Builder.md#PRDB-014`, per DL-472; the text below is retained as retired history.
+
 **Input:**
 - Current doc contents for docs with open durable annotations, or a user-selected subset
 - All open durable annotations in deterministic order by `doc_id`, source start offset, and `annotation_id`
@@ -1330,6 +1332,8 @@ ContractRef: ContractName:Plans/Project_Output_Artifacts.md, SchemaID:pm.project
 ContractRef: Gate:GATE-001, ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/DRY_Rules.md, PolicyRule:Decision_Policy.md§2
 
 ## 12. Auditor Invariant Loop (Mandatory Invariant Sweep)
+
+> Live owner: `Plans/assistant-chat-design.md §26 (ACD-269)`, per DL-472; the text below is retained as retired history.
 
 ### 12.1 Context
 

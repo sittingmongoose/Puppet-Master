@@ -5809,6 +5809,17 @@ canonical_text: >-
   cmd.git.worktree.open records the assistant alias cmd.chat.worktree.open_files (CV-160).
   create records the compatibility spelling cmd.worktree.provision and release records cmd.worktree.release,
   the two worktree compatibility intents of CS-066 and UCC-145.
+  Amended 2026-11-09 (DL-471): the same block also defines the external-list commands
+  cmd.git.worktree.merge (UCC-132), cmd.git.worktree.open_topology and cmd.git.worktree.repair
+  (UCC-231). Merge retains W-081/W-082/W-084 exact-result, lease and independent protection fences.
+  The topology view is decided by DL-471 Q-ID6; DL-471 Q-ID7b decides to keep repair unavailable until its exact operation is defined. An undefined repair returns handler_unavailable without mutation, never an inferred destructive action.
+  Plans/Decision_Log.md#DL-471, Q-ID5d decided by the owner: [cmd.git.worktree.merge], owner_request = "none". the typed UI args cross the owner boundary directly.
+  Plans/Decision_Log.md#DL-471, Q-ID6 decided by the owner: [cmd.git.worktree.open_topology], command_kind = "shell_view". reveal this repository's existing topology projection.
+  Plans/Decision_Log.md#DL-471, Q-ID6 decided by the owner: [cmd.git.worktree.open_topology], response_kind = "local_projection". existing topology projection and dispatch receipt only.
+  Plans/Decision_Log.md#DL-471, Q-ID6 decided by the owner: [cmd.git.worktree.open_topology], disabled_reason_codes = ["not_configured"]. not_configured for missing repository tooling.
+  Plans/Decision_Log.md#DL-471, Q-ID7b decided by the owner: [cmd.git.worktree.repair], command_kind = "domain_action". conservatively mutation-capable; refuse handler_unavailable without mutation until its exact owner repair operation is admitted.
+  Plans/Decision_Log.md#DL-471, Q-ID7b decided by the owner: [cmd.git.worktree.repair], disabled_reason_codes = ["blocked_state_required", "stale_projection", "permission_required"]. reuse the existing UCC-230 worktree state mappings and stale/permission fences.
+  Plans/Decision_Log.md#DL-471, Q-ID7b decided by the owner: [cmd.git.worktree.repair], owner_request = "none". no fabricated owner request; return handler_unavailable until an admitted exact repair operation exists.
 gui_related: true
 gui_classification_reason: Defines the arguments of user-visible project-scope worktree commands (Worktrees rows, Review mode, destructive confirmations, lock actions).
 depends_on: [UCC-230, UCC-054, UCC-055, UCC-058, GI-041, W-007, W-075, W-077, W-078, W-082, W-084, CV-160, CS-066, UCC-145, DL-333, DL-341]
@@ -5829,7 +5840,7 @@ node_compile_hint: {mode: command_payload_definitions, create_worknodes: false, 
 source_lineage:
   - "T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521, 2026-11-05T02:48:03Z: Jared's answer \"approve all\" to Q5"
   - "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/owner-answers/q5/inventory.jsonl"
-preserved_exact_tokens: [cmd.git.worktree.list, cmd.git.worktree.select, cmd.git.worktree.open, cmd.git.worktree.compare, cmd.git.worktree.create, cmd.git.worktree.remove, cmd.git.worktree.prune, cmd.git.worktree.request_prune, cmd.git.worktree.reuse, cmd.git.worktree.recover, cmd.git.worktree.focus_lineage, cmd.git.worktree.release, cmd.git.worktree.lock, cmd.git.worktree.unlock]
+preserved_exact_tokens: [cmd.git.worktree.list, cmd.git.worktree.select, cmd.git.worktree.open, cmd.git.worktree.compare, cmd.git.worktree.create, cmd.git.worktree.remove, cmd.git.worktree.prune, cmd.git.worktree.request_prune, cmd.git.worktree.reuse, cmd.git.worktree.recover, cmd.git.worktree.focus_lineage, cmd.git.worktree.release, cmd.git.worktree.lock, cmd.git.worktree.unlock, cmd.git.worktree.merge, cmd.git.worktree.open_topology, cmd.git.worktree.repair]
 negative_constraints:
   - Do not add payload fields to UI_Command_Catalog command rows.
   - Do not define a payload for an alias, retired, non-alias or source-lineage token (cmd.git.worktree.open_files, cmd.git.worktree.switch, cmd.chat.worktree.open_files, cmd.worktree.provision, cmd.worktree.release, retired cmd.git.worktree.open_other).
@@ -5844,6 +5855,91 @@ command_payload_definitions:
   owner_unit: W-095
   overlay: Plans/UI_Command_Catalog.md#UCC-230
   definitions:
+    - command_id: cmd.git.worktree.merge
+      ucc_units: [UCC-132]
+      command_kind: domain_action
+      response_kind: owner_operation
+      args:
+        project_id: {type: id, required: true, default: none, provenance: canon, source: "W-084 requires a real destination Project for PM Project worktree commands; UCC-230 common project_id type id"}
+        repo_id: {type: id, required: true, default: none, provenance: canon, source: "UCC-230 project-scope worktree identity repo_id, always"}
+        worktree_id: {type: id, required: true, default: none, provenance: canon, source: "UCC-132 Merge Worktree requires worktree_selected; UCC-230 types worktree_id as id"}
+        worktree_lifecycle_state: {type: string, required: true, default: none, provenance: canon, constraints: {min_length: 1, max_length: 256}, source: 'Plans/Decision_Log.md#DL-471, Q-ID5a decided by the owner: nonempty owner state string of at most 256 characters, rechecked at dispatch.'}
+        result_ref: {type: ref, required: true, default: none, provenance: canon, source: 'Plans/Decision_Log.md#DL-471, Q-ID5b decided by the owner: required result_ref identifies the immutable result, full OID, patch or verified-empty receipt and digest.'}
+        baseline_ref: {type: ref, required: true, default: none, provenance: canon, source: 'Plans/Decision_Log.md#DL-471, Q-ID5b decided by the owner: required baseline_ref to the immutable baseline.'}
+        target_observation_ref: {type: ref, required: true, default: none, provenance: canon, source: 'Plans/Decision_Log.md#DL-471, Q-ID5b decided by the owner: required ref bound to the exact target and generation, freshness rechecked.'}
+        approval_ref: {type: ref, required: true, default: none, provenance: canon, source: 'Plans/Decision_Log.md#DL-471, Q-ID5b decided by the owner: required immutable approval ref tied to this result, baseline and target.'}
+        permission_snapshot_id: {type: id, required: true, default: none, provenance: canon, source: 'Plans/Decision_Log.md#DL-471, Q-ID5b decided by the owner: require that id and independently re-admit Permissions at the exact target/generation.'}
+        confirmation_ref: {type: ref, required: true, default: none, provenance: canon, source: "UCC-132 merge registration requires two_step confirmation; UCC-230 common confirmation_ref is ref"}
+        protection_receipt_ref: {type: ref, required: true, default: none, provenance: canon, source: 'Plans/Decision_Log.md#DL-471, Q-ID5b decided by the owner: required exact-target protection receipt revalidated by FileSafe.'}
+        expected_lease: {type: contract, ref: Plans/shared_runtime_contracts.schema.json#/$defs/runtime_resource_lease, required: false, default: none, provenance: canon, source: 'Plans/Decision_Log.md#DL-471, Q-ID5c decided by the owner: optional full typed observed lease record; owner requires it whenever its selected worktree has a lease and compares lease_id, holder, generation, epoch, topology generation and Source Location, refusing absent/mismatched fences without mutation.'}
+        topology_generation:
+          type: integer
+          required: false
+          default: none
+          constraints: {minimum: 0}
+          provenance: canon
+          source: >-
+            W-082 requires comparison of the caller's observed topology generation whenever the selected
+            worktree has a lease; the name and type follow W-095's topology_generation fence and
+            Plans/shared_runtime_command_contracts.schema.json#/$defs/command_request_envelope. Placement is
+            decided by DL-471 Q-ID5e (Jared, 2026-11-09, "Two separate fields (Recommended)"): a sibling arg
+            beside the complete expected_lease. The owner requires it whenever the selected worktree has a
+            lease, independently of caller omission of expected_lease; absent or unequal observed/current
+            fences refuse merge without mutation.
+        source_location_id:
+          type: id
+          required: false
+          default: none
+          provenance: canon
+          source: >-
+            W-082 requires comparison of the caller's observed Source Location whenever the selected worktree
+            has a lease; the name and type follow W-095's source_location_id fence and the UCC-230 id rule.
+            Placement is decided by DL-471 Q-ID5e (Jared, 2026-11-09, "Two separate fields (Recommended)"): a
+            sibling arg beside the complete expected_lease. The owner requires it whenever the selected
+            worktree has a lease, independently of caller omission of expected_lease; absent or unequal
+            observed/current fences refuse merge without mutation. Compare the full lease's lease_id,
+            holder_identity_ref, generation and epoch plus these two observed extension fences against the
+            same current owner observation before mutation.
+      owner_request: none
+      result:
+        response: Plans/ui_command_response.schema.json
+        owner_result: local:WorktreeMergeResultV1
+      error_codes: [invalid_args, permission_denied, blocked_state_required, stale_projection, handler_unavailable, internal_error]
+      disabled_reason_codes: [blocked_state_required, stale_projection, permission_required]
+      aliases: []
+    - command_id: cmd.git.worktree.open_topology
+      ucc_units: [UCC-231]
+      command_kind: shell_view
+      response_kind: local_projection
+      args:
+        repo_id: {type: id, required: true, default: none, provenance: canon, source: "UCC-230 project-scope worktree identity repo_id, always; GitHub_Integration Worktree Topology Commands registers open_topology"}
+      owner_request: none
+      result:
+        response: Plans/ui_command_response.schema.json
+        owner_result: none
+      error_codes: [invalid_args, permission_denied, handler_unavailable, internal_error]
+      disabled_reason_codes: [not_configured]
+      aliases: []
+    - command_id: cmd.git.worktree.repair
+      ucc_units: [UCC-231]
+      command_kind: domain_action
+      response_kind: owner_operation
+      args:
+        repo_id: {type: id, required: true, default: none, provenance: canon, source: "UCC-230 project-scope worktree identity repo_id, always"}
+        worktree_id: {type: id, required: true, default: none, provenance: canon, source: 'Plans/Decision_Log.md#DL-471, Q-ID7a decided by the owner: require the exact selected worktree id.'}
+        worktree_lifecycle_state: {type: string, required: true, default: none, constraints: {min_length: 1, max_length: 256}, provenance: canon, source: 'Plans/Decision_Log.md#DL-471, Q-ID7a decided by the owner: bounded nonempty owner state string, rechecked.'}
+        target_worktree_id: {type: id, required: true, default: none, provenance: canon, source: 'Plans/Decision_Log.md#DL-471, Q-ID7a decided by the owner: required id equal to worktree_id.'}
+        expected_path: {type: path, required: true, default: none, provenance: canon, source: 'Plans/Decision_Log.md#DL-471, Q-ID7a decided by the owner: required FileSafe-normalized path, equality rechecked by the owner.'}
+        expected_branch: {type: string, required: true, default: none, constraints: {min_length: 1, max_length: 256}, provenance: canon, source: 'Plans/Decision_Log.md#DL-471, Q-ID7a decided by the owner: required bounded branch identity; detached worktrees remain refused pending an exact representation.'}
+        confirmation_text: {type: string, required: true, default: none, constraints: {min_length: 1, max_length: 256}, provenance: canon, source: 'Plans/Decision_Log.md#DL-471, Q-ID7a decided by the owner: required bounded exact-target confirmation string checked by the owner.'}
+        permission_snapshot_id: {type: id, required: true, default: none, provenance: canon, source: 'Plans/Decision_Log.md#DL-471, Q-ID7a decided by the owner: required id with fresh independent Permissions and FileSafe admission.'}
+      owner_request: none
+      result:
+        response: Plans/ui_command_response.schema.json
+        owner_result: local:WorktreeRepairResultV1
+      error_codes: [invalid_args, permission_denied, blocked_state_required, stale_projection, handler_unavailable, internal_error]
+      disabled_reason_codes: [blocked_state_required, stale_projection, permission_required]
+      aliases: []
     - command_id: cmd.git.worktree.list
       ucc_units: [UCC-054]
       command_kind: shell_view
@@ -7619,6 +7715,12 @@ command_payload_definitions:
     WorktreeLockResultV1:
       fields:
         receipt_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: "dispatch receipt (catalog.git_worktree_lock)"}
+    WorktreeMergeResultV1:
+      fields:
+        receipt_ref: {type: ref, required: true, default: none, provenance: canon, source: 'Plans/Decision_Log.md#DL-471, Q-ID5d decided by the owner: required custody-preserving operation receipt identifying the verified outcome, approved result and exact target. Failure preserves W-081 result custody, never a success-shaped receipt.'}
+    WorktreeRepairResultV1:
+      fields:
+        receipt_ref: {type: ref, required: true, default: none, provenance: canon, source: 'Plans/Decision_Log.md#DL-471, Q-ID7b decided by the owner: operation receipt on an admitted successful repair only; handler_unavailable is a UICommandResponse error with no fabricated owner result.'}
     WorktreeUnlockResultV1:
       fields:
         receipt_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: "dispatch receipt (catalog.git_worktree_unlock)"}

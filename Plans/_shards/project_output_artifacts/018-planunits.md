@@ -4,7 +4,7 @@ Source: `Plans/Project_Output_Artifacts.md`
 
 Source lines: L847-L3158
 
-Source SHA256: `e1d796098e6ac6f42202fed33903fe8c953025b0a15fc8de08abd58ae6f8b07e`
+Source SHA256: `3b89a7e92f66f70f55c50364d1ba222597a7e7e07b9fe17aa4f2d56c51a8b1bd`
 
 ---
 
@@ -1458,7 +1458,7 @@ negative_constraints:
 preserved_contractrefs:
   - "ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Runtime_Artifacts_Panel.md"
   - "ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Contracts_V0.md"
-  - "ContractRef: Plans/Contracts_V0.md#3.3 Requirements quality events, Plans/chain-wizard-flexibility.md#12. Auditor Invariant Loop (Mandatory Invariant Sweep)"
+  - "ContractRef: Plans/Contracts_V0.md#3.3 Requirements quality events, Plans/assistant-chat-design.md#26. Auditor Audit-To-Repair Loop Model/Provider Settings (Invariant Sweep) And Loop Specification"
 owner_hints:
   - "Plans/Project_Output_Artifacts.md"
 ```

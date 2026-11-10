@@ -1717,3 +1717,75 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Planning_Ledger_System.md#PLS-026, ContractName:Plans/Plan_Document_System.md#PDS-014, ContractName:Plans/Planning_Ledger_System.md#PLS-025, ContractName:Plans/Decision_Log.md#DL-334
+
+### PLS-027 - Append-Only Audit Correction Records
+
+```yaml
+plan_unit_id: PLS-027
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Planning_Ledger_System.md
+canonical_text: >-
+  An audit may add one audit_correction-<YYYYMMDD>.json with schema_id
+  pm.audit_closure.audit_correction.v1 under DL-470. The receipt names its audit, date and Decision Log
+  reference, binds audit_report.json, repair_closure_matrix.jsonl and every standard source artifact by SHA-256,
+  and gives a reason for each correction. It may only correct the historical status to BLOCKED when the original
+  computed repair_required_count is positive, or identify matrix-covered source rows that never needed repair.
+  historical_status is null or contains from, to and reason; a row-only correction leaves the report's status
+  field exactly as recorded, including an omitted field. In non_actionable_rows, atom-matrix and other non-validator
+  JSONL rows carry only source_artifact, source_row and reason and keep the automatic non-actionability and matrix-coverage check.
+  For validator_results.json results.<name> and invalid_invocations.<name>, "never needed a fix" is an owner
+  judgment, per record, named in the cited accepted Decision Log unit's owner_named_rows list and pinned in both
+  that list and the receipt by record_sha256. The receipt's validator-row pins must equal the decision's list for
+  that audit exactly. Each pin is the SHA-256 of canonical JSON encoded as UTF-8:
+  json.dumps(record, sort_keys=True, separators=(",", ":"), ensure_ascii=False), with no trailing newline;
+  duplicate JSON keys and non-finite numbers are refused. A named record must exist exactly once; duplicate names
+  are refused as ambiguous. The code checks the pin, matrix coverage and its own classifier; it does not prove
+  cleanliness from free-form fields or snapshots. The validator requires the complete standard source selection,
+  independently computes actionability, rejects actionable, nonexistent, uncovered or duplicate listed rows, and
+  applies nothing on any invalid receipt. v1 JSONL addresses are canonical positive physical line numbers.
+  Unknown receipt schemas or fields, mismatched or missing hashes, symlinked bound inputs or receipts, invalid dates,
+  other corrections and multiple correction files fail closed. Only the listed non-actionable over-coverage is
+  excused; missing coverage and every matrix, evidence, registry and legacy-format check keep their force.
+  The presence of a correction file removes PLS-026's legacy over-coverage demotion for that audit.
+  Validation shows both the historical and corrected status. Corrected history participates in the effective
+  status projection while its recorded value remains visible. The receipt rewrites no historical file, source
+  classification, closure status, registry row or evidence hash and grants no semantic closure. Real repairs and
+  terminal projections are checked separately; registry supersession still requires PLS-025.
+gui_related: false
+gui_classification_reason: Audit correction receipts and validation have no GUI surface.
+depends_on: [PLS-012, PLS-025, PLS-026]
+unblocks: []
+acceptance_criteria:
+- self-test covers valid status and row corrections, unchanged historical bytes, each fail-closed rule, missing coverage,
+  unlisted over-coverage, partial source selection and historical versus effective status.
+- audit-20260619-004 preserves its June files and all 21 matrix rows, corrects its original status to BLOCKED,
+  identifies exactly 16 owner-judged rows that never needed a fix and still requires the five actionable closures.
+validation_surfaces:
+- python3 scripts/pm-audit-closure.py self-test
+- python3 scripts/pm-audit-closure.py validate
+risk_class: governance_integrity
+reasoning_tier: high
+context_scope: semantic_audit_closure
+implementation_surfaces:
+- scripts/pm-audit-closure.py
+- Plans/.audits/audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity/audit_correction-20261108.json
+node_compile_hint:
+  mode: contract_specification
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-470
+preserved_exact_tokens:
+- pm.audit_closure.audit_correction.v1
+- audit_correction-<YYYYMMDD>.json
+- BLOCKED
+- non_actionable_rows
+negative_constraints:
+- No correction excuses missing coverage or supersedes a registry row.
+- No historical file or evidence hash is rewritten by a correction.
+owner_hints:
+- Plans/Planning_Ledger_System.md
+```
+
+ContractRef: ContractName:Plans/Planning_Ledger_System.md#PLS-027, ContractName:Plans/Decision_Log.md#DL-470

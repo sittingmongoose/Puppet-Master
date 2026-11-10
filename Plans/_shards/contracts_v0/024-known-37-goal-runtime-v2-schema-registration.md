@@ -4,7 +4,7 @@ Source: `Plans/Contracts_V0.md`
 
 Source lines: L3688-L17653
 
-Source SHA256: `0a3e0bf0b32bc41c17138244a37a26b68f04df953ce71ea50d6ed22bd884b443`
+Source SHA256: `974b4a737050357f760deafa8f6247c7679b93d6352a1c45684f72d219510105`
 
 ---
 
@@ -4465,7 +4465,7 @@ context_scope: auditor_cycle_report_event_payload
 implementation_surfaces:
   - Plans/Contracts_V0.md
   - Plans/Project_Output_Artifacts.md
-  - Plans/chain-wizard-flexibility.md
+  - Plans/assistant-chat-design.md
 node_compile_hint:
   mode: validation_pass_event_contract
   create_worknodes: false
@@ -4482,7 +4482,7 @@ preserved_exact_tokens:
   - "`phase_plan_ref`"
   - "`staged_bundle_ref`"
   - "`requirements_quality_report_ref`"
-  - "ContractRef: Plans/Project_Output_Artifacts.md#POA-045, Plans/chain-wizard-flexibility.md#12. Auditor Invariant Loop (Mandatory Invariant Sweep)"
+  - "ContractRef: Plans/Project_Output_Artifacts.md#POA-045, Plans/assistant-chat-design.md#26. Auditor Audit-To-Repair Loop Model/Provider Settings (Invariant Sweep) And Loop Specification"
 negative_constraints:
   - "Pass reports must stay upstream artifacts rather than masquerading as runtime attempts."
   - "validation_pass_report must not become an active fixed-pass scheduler or model-setting contract."

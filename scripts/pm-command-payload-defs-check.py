@@ -71,6 +71,8 @@ PLAN_UNIT_FENCE_PATTERN: re.Pattern[str] = _PLAN_INDEX.PLAN_UNIT_FENCE_PATTERN
 UniqueKeySafeLoader = _PLAN_INDEX.UniqueKeySafeLoader
 
 FORMAT = "pm.command_payload_definitions.v1"
+TYPED_FORMAT = "pm.typed_contracts.v1"
+TYPED_ROOT_KEY = "typed_contracts"
 CATALOG = "Plans/UI_Command_Catalog.md"
 MAP_UNIT = "UCC-230"
 MAP_KEY = "command_payload_definition_map"
@@ -111,8 +113,8 @@ RUNTIME_GROUP = "UCC-089..UCC-095"
 ROUTE_ARGS = ("route_target", "OpenSubject")
 
 FIELD_KEYS = {"type", "required", "default", "values", "value", "item", "fields", "ref", "constraints",
-              "required_when", "forbidden_when", "provenance", "source", "gap_note", "nullable"}
-ITEM_KEYS = {"type", "values", "value", "item", "fields", "ref", "constraints"}
+              "required_when", "forbidden_when", "provenance", "source", "gap_note", "nullable", "discriminator_source"}
+ITEM_KEYS = {"type", "values", "value", "item", "fields", "ref", "constraints", "discriminator_source"}
 DEFINITION_KEYS = {"command_id", "ucc_units", "command_kind", "response_kind", "args", "owner_request", "result",
                    "error_codes", "disabled_reason_codes", "aliases", "identity_exemptions", "narrowing_gap_note",
                    "judgments", "owner_state_codes"}
@@ -175,6 +177,7 @@ def _decoded_for_key_search(block: str) -> str:
     return YAML_ESCAPE_RE.sub(_decode_escape, text)
 JSON_DEF_REF_RE = re.compile(r"^(Plans/[A-Za-z0-9_.\-/]+\.json)#/\$defs/([A-Za-z0-9_]+)$")
 DOC_UNIT_REF_RE = re.compile(r"^(Plans/[A-Za-z0-9_.\-]+\.md)#([A-Z][A-Z0-9]*-\d+)$")
+TYPED_REF_RE = re.compile(r"^(Plans/[A-Za-z0-9_.\-]+\.md)#([A-Z][A-Z0-9]*-\d+)/([A-Za-z][A-Za-z0-9_]*)$")
 LOCAL_REF_RE = re.compile(r"^local:([A-Za-z][A-Za-z0-9_]*)$")
 DL_RE = re.compile(r"^DL-\d+$")
 AMENDED_PREFIX_RE = re.compile(r"^Amended \d{4}-\d{2}-\d{2} \([^)]*\):\s*")
@@ -316,7 +319,7 @@ def line_of(text: str, offset: int) -> int:
     return text.count("\n", 0, offset) + 1
 
 
-def _root_key_by_tokens(block: str) -> tuple[bool, bool]:
+def _root_key_by_tokens(block: str, root_key: str = DEFS_ROOT_KEY) -> tuple[bool, bool]:
     """(found, scanner_failed): whether a top-level mapping key spelled command_payload_definitions
     occurs before the YAML scanner stops, in any quoting, flow or explicit-key form."""
     depth, key_next, pending_anchor = 0, False, None
@@ -338,13 +341,13 @@ def _root_key_by_tokens(block: str) -> tuple[bool, bool]:
             elif kind == "TagToken":
                 continue  # a node property: the key may still follow
             elif kind == "AliasToken":
-                if key_next and anchors.get(token.value) == DEFS_ROOT_KEY:
+                if key_next and anchors.get(token.value) == root_key:
                     return True, False
             elif kind == "ScalarToken":
                 if pending_anchor is not None:
                     anchors[pending_anchor] = token.value
                     pending_anchor = None
-                if key_next and token.value == DEFS_ROOT_KEY:
+                if key_next and token.value == root_key:
                     return True, False
             key_next = False
     except Exception:  # noqa: BLE001 - the scanner stopped; report what it saw
@@ -352,7 +355,7 @@ def _root_key_by_tokens(block: str) -> tuple[bool, bool]:
     return False, False
 
 
-def is_definitions_block(block: str) -> bool:
+def is_definitions_block(block: str, root_key: str = DEFS_ROOT_KEY) -> bool:
     """A yaml fence is a definitions block when its YAML root mapping has the key
     command_payload_definitions, in any spelling YAML allows (plain, quoted, indented, flow or
     explicit key), whatever its value. The composer decides for well-formed YAML, so the key text
@@ -367,15 +370,15 @@ def is_definitions_block(block: str) -> bool:
         # decoded. The reader and scanner may stop before yielding any key (an unterminated or
         # badly escaped flow value, a NUL or other forbidden character), so text presence alone
         # suffices: a malformed fence that mentions the key gets C14 instead of a silent pass.
-        found, _scanner_failed = _root_key_by_tokens(block)
+        found, _scanner_failed = _root_key_by_tokens(block, root_key)
         if found:
             return True
         try:
-            return DEFS_ROOT_KEY in _decoded_for_key_search(block)
+            return root_key in _decoded_for_key_search(block)
         except Exception:  # noqa: BLE001 - discovery never raises; fall back to the raw text
-            return DEFS_ROOT_KEY in block
+            return root_key in block
     for node in nodes:
-        if isinstance(node, yaml.MappingNode) and _mapping_has_root_key(node, set()):
+        if isinstance(node, yaml.MappingNode) and _mapping_has_root_key(node, set(), root_key):
             return True
     return False
 
@@ -389,7 +392,7 @@ def _is_merge_key(key: Any) -> bool:
     return isinstance(key, yaml.ScalarNode) and key.tag == YAML_MERGE_TAG
 
 
-def _mapping_has_root_key(node: yaml.MappingNode, seen: set[int]) -> bool:
+def _mapping_has_root_key(node: yaml.MappingNode, seen: set[int], root_key: str = DEFS_ROOT_KEY) -> bool:
     """Whether a mapping node has the root key, literally or through YAML merge keys (`<<`), whose
     merged mappings and aliases are followed with cycle protection (Q5 Astra r1)."""
     if id(node) in seen:
@@ -397,11 +400,11 @@ def _mapping_has_root_key(node: yaml.MappingNode, seen: set[int]) -> bool:
     seen.add(id(node))
     for key, value in node.value:
         # The literal key counts whatever tag it carries, before any merge is followed (Sol r9).
-        if isinstance(key, yaml.ScalarNode) and key.value == DEFS_ROOT_KEY:
+        if isinstance(key, yaml.ScalarNode) and key.value == root_key:
             return True
         if _is_merge_key(key):
             targets = value.value if isinstance(value, yaml.SequenceNode) else [value]
-            if any(isinstance(t, yaml.MappingNode) and _mapping_has_root_key(t, seen) for t in targets):
+            if any(isinstance(t, yaml.MappingNode) and _mapping_has_root_key(t, seen, root_key) for t in targets):
                 return True
     return False
 
@@ -466,7 +469,7 @@ def parse_units(text: str, rel: str, *, strict: bool) -> tuple[dict[str, Unit], 
     errors: list[str] = []
     for match in PLAN_UNIT_FENCE_PATTERN.finditer(text):
         block = match.group(1)
-        if is_definitions_block(block) or "plan_unit_id:" not in block:
+        if is_definitions_block(block) or is_definitions_block(block, TYPED_ROOT_KEY) or "plan_unit_id:" not in block:
             continue
         line = line_of(text, match.start())
         try:
@@ -490,11 +493,11 @@ def parse_units(text: str, rel: str, *, strict: bool) -> tuple[dict[str, Unit], 
     return units, errors
 
 
-def find_blocks(text: str, rel: str) -> list[Block]:
+def find_blocks(text: str, rel: str, root_key: str = DEFS_ROOT_KEY) -> list[Block]:
     blocks = []
     for match in PLAN_UNIT_FENCE_PATTERN.finditer(text):
         block = match.group(1)
-        if not is_definitions_block(block):
+        if not is_definitions_block(block, root_key):
             continue
         item = Block(rel, line_of(text, match.start()), match.start(), block)
         try:
@@ -701,6 +704,8 @@ class Context:
     wiring_requests: dict[str, set[str]] = field(default_factory=dict)
     catalog_kinds: dict[str, set[tuple[str, int]]] = field(default_factory=dict)
     gap_fields: dict[str, int] = field(default_factory=dict)
+    external_commands: dict[str, dict[str, Any]] = field(default_factory=dict)
+    typed_contracts: dict[str, dict[str, Any]] = field(default_factory=dict)
 
 
 def as_list(value: Any) -> list[Any]:
@@ -923,6 +928,40 @@ def check_map(ctx: Context) -> None:
             continue
         ctx.exceptions[str(entry["command_id"])] = str(entry["unit"])
 
+    # DL-471: only this closed list extends command coverage beyond the range's tokens.
+    for entry in as_list(mp.get("outside_range_commands")):
+        if (not isinstance(entry, dict) or not CONCRETE_RE.fullmatch(str(entry.get("command_id", "")))
+                or entry.get("owner_unit") not in ctx.owner_units
+                or entry.get("catalog_unit") not in ctx.catalog_units
+                or entry.get("row_group") not in ctx.row_groups
+                or not evidence_usable(entry.get("evidence"))):
+            rep.add("C03", "map_external_command_malformed", CATALOG, unit=MAP_UNIT)
+            continue
+        cmd = entry["command_id"]
+        if cmd in ctx.external_commands:
+            rep.add("C03", "map_external_command_duplicate", CATALOG, unit=MAP_UNIT, command_id=cmd)
+        ctx.external_commands[cmd] = entry
+        registration = ctx.catalog_units[entry["catalog_unit"]]
+        if (cmd not in as_list(registration.data.get("preserved_exact_tokens"))
+                or entry["evidence"].get("doc") != CATALOG
+                or entry["evidence"].get("unit") != entry["catalog_unit"]
+                or cmd not in str(entry["evidence"].get("quote"))
+                or not evidence_found(ctx, entry["evidence"], outside_map=True)):
+            rep.add("C03", "map_external_registration_not_found", CATALOG,
+                    unit=MAP_UNIT, command_id=cmd)
+    unresolved_seen: set[str] = set()
+    for entry in as_list(mp.get("unresolved_tokens")):
+        if (not isinstance(entry, dict) or not CONCRETE_RE.fullmatch(str(entry.get("token", "")))
+                or not entry.get("question_id") or not entry.get("judgment") or not entry.get("alternative")
+                or not evidence_usable(entry.get("evidence"))
+                or not evidence_found(ctx, entry["evidence"], outside_map=True)):
+            rep.add("C04", "map_unresolved_token_malformed", CATALOG, unit=MAP_UNIT)
+            continue
+        token = entry["token"]
+        if token in unresolved_seen or token in ctx.external_commands:
+            rep.add("C04", "map_unresolved_token_duplicate_or_routed", CATALOG, unit=MAP_UNIT, command_id=token)
+        unresolved_seen.add(token)
+
     # Exemptions, contested, owner-state map.
     for entry in as_list(mp.get("identity_exemptions")):
         if not isinstance(entry, dict) or not DL_RE.match(str(entry.get("decision", ""))) or not entry.get("command_id") or not entry.get("field"):
@@ -1058,6 +1097,14 @@ def compute_expected(ctx: Context) -> None:
     for cmd in sorted(prose_covers):
         if cmd not in ctx.expected:
             rep.add("C02", "map_prose_cover_not_expected", CATALOG, unit=MAP_UNIT, command_id=cmd)
+    for cmd, entry in sorted(ctx.external_commands.items()):
+        if cmd in ctx.expected or cmd in ctx.non_def or cmd in ctx.excluded:
+            rep.add("C02", "map_external_command_already_scoped_or_excluded", CATALOG, unit=MAP_UNIT, command_id=cmd)
+            continue
+        ctx.expected.add(cmd)
+        ctx.primary[cmd] = entry["catalog_unit"]
+        ctx.covering[cmd] = {entry["catalog_unit"]}
+        ctx.group_of[cmd] = entry["row_group"]
     for cmd in sorted(set(marked) & candidates):
         if cmd not in ctx.non_def:
             rep.add("C04", "marked_token_not_in_non_definition_tokens", CATALOG, unit=MAP_UNIT, command_id=cmd,
@@ -1086,6 +1133,8 @@ def compute_expected(ctx: Context) -> None:
 
 
 def route_for(ctx: Context, cmd: str) -> str | None:
+    if cmd in ctx.external_commands:
+        return ctx.external_commands[cmd]["owner_unit"]
     if cmd in ctx.exceptions:
         return ctx.exceptions[cmd]
     group = ctx.group_of.get(cmd)
@@ -1101,7 +1150,7 @@ def route_for(ctx: Context, cmd: str) -> str | None:
 # ---- field specs
 
 
-def resolve_ref(ctx: Context, ref: Any, results: dict[str, Any]) -> bool:
+def resolve_ref(ctx: Context, ref: Any, results: dict[str, Any], *, owner_boundary: bool = False) -> bool:
     if not isinstance(ref, str):
         return False
     if ref in PRIMITIVE_REFS:
@@ -1113,9 +1162,11 @@ def resolve_ref(ctx: Context, ref: Any, results: dict[str, Any]) -> bool:
     if json_ref:
         document = ctx.corpus.json(json_ref.group(1))
         return isinstance(document, dict) and isinstance(document.get("$defs"), dict) and json_ref.group(2) in document["$defs"]
-    doc_ref = DOC_UNIT_REF_RE.match(ref)
+    doc_ref = TYPED_REF_RE.fullmatch(ref)
     if doc_ref:
-        return doc_ref.group(2) in ctx.corpus.units(doc_ref.group(1))
+        contract = ctx.typed_contracts.get(ref)
+        # Scalar owner carriers cannot declare the source required by an external union.
+        return contract is not None and not (owner_boundary and contract.get("discriminator_source") == "external")
     return False
 
 
@@ -1315,7 +1366,38 @@ def literal_ok(spec: dict[str, Any], value: Any, inherited: dict[str, Any] | Non
     return False
 
 
-def check_type_spec(ctx: Context, spec: Any, where: dict[str, str], name: str, results: dict[str, Any], *, item: bool, siblings: set[str]) -> None:
+def selector_supplied(selector: Any, profile: dict[str, Any], fields: dict[str, Any]) -> bool:
+    """Prove non-null supply: required, checked literal default, or covering condition."""
+    if not isinstance(selector, dict) or selector.get("nullable") is True:
+        return False
+    if selector.get("required") is True:
+        return True
+    default = selector.get("default", "none")
+    if default != "none" and default is not None and literal_ok(selector, default):
+        return True
+    condition = selector.get("required_when")
+    if (not isinstance(condition, dict) or set(condition) != {"field", "in"}
+            or not isinstance(condition["field"], str) or not isinstance(condition["in"], list) or not condition["in"]):
+        return False
+    controller = fields.get(condition["field"])
+    if not isinstance(controller, dict):
+        return False
+    values = controller.get("values") if controller.get("type") == "enum" else [controller.get("value")] if controller.get("type") == "const" else None
+    if not isinstance(values, list) or not values or not all(any(json_equal(v, c) for c in values) for v in condition["in"]):
+        return False
+    # required_when alone does not forbid the profile in other cases. Only an explicit
+    # forbidden_when can remove controller values from its possible presence domain.
+    if controller.get("required") is not True or controller.get("nullable") is True:
+        return False
+    forbidden = profile.get("forbidden_when")
+    if (isinstance(forbidden, dict) and set(forbidden) == {"field", "in"}
+            and forbidden["field"] == condition["field"] and isinstance(forbidden["in"], list)):
+        values = [v for v in values if not any(json_equal(v, f) for f in forbidden["in"])]
+    return all(any(json_equal(v, c) for c in condition["in"]) for v in values)
+
+
+def check_type_spec(ctx: Context, spec: Any, where: dict[str, str], name: str, results: dict[str, Any], *, item: bool, siblings: set[str],
+                    scope_fields: dict[str, Any], presence_spec: dict[str, Any] | None = None) -> None:
     rep = ctx.report
     if not isinstance(spec, dict):
         rep.add("C05", "field_spec_not_mapping", field=name, **where)
@@ -1342,7 +1424,8 @@ def check_type_spec(ctx: Context, spec: Any, where: dict[str, str], name: str, r
         if "item" not in spec:
             rep.add("C05", "list_without_item", field=name, **where)
         else:
-            check_type_spec(ctx, spec["item"], where, f"{name}[]", results, item=True, siblings=set())
+            check_type_spec(ctx, spec["item"], where, f"{name}[]", results, item=True, siblings=siblings,
+                            scope_fields=scope_fields, presence_spec=presence_spec or spec)
     elif kind == "object":
         fields = spec.get("fields")
         if not isinstance(fields, dict) or not fields:
@@ -1351,7 +1434,38 @@ def check_type_spec(ctx: Context, spec: Any, where: dict[str, str], name: str, r
             check_fields(ctx, fields, where, results, prefix=f"{name}.")
     elif kind == "contract":
         if not resolve_ref(ctx, spec.get("ref"), results):
-            rep.add("C05", "contract_ref_unresolved", field=name, detail=str(spec.get("ref")), **where)
+            finding = "named_contract_not_found" if isinstance(spec.get("ref"), str) and TYPED_REF_RE.fullmatch(spec["ref"]) else "contract_ref_unresolved"
+            rep.add("C05", finding, field=name, detail=str(spec.get("ref")), **where)
+    contract = ctx.typed_contracts.get(spec.get("ref")) if isinstance(spec.get("ref"), str) else None
+    external = kind == "contract" and isinstance(contract, dict) and contract.get("discriminator_source") == "external"
+    supply = spec.get("discriminator_source")
+    if kind == "contract" and isinstance(contract, dict) and not external:
+        selector_spec = scope_fields.get(contract.get("discriminator"))
+        if selector_spec is not None and (not isinstance(selector_spec, dict) or selector_spec.get("type") != "enum"
+                or set(as_list(selector_spec.get("values"))) != set(contract.get("branches", {}))):
+            rep.add("C05", "contract_discriminator_values_mismatch", field=name, **where)
+    if external:
+        selector = contract.get("discriminator")
+        valid = isinstance(supply, dict) and len(supply) == 1
+        if valid and "arg" in supply:
+            valid = isinstance(supply["arg"], str) and supply["arg"] == selector and supply["arg"] in siblings
+            if valid:
+                selector_spec = scope_fields[supply["arg"]]
+                if (not isinstance(selector_spec, dict) or selector_spec.get("type") != "enum"
+                        or set(as_list(selector_spec.get("values"))) != set(contract.get("branches", {}))):
+                    rep.add("C05", "contract_discriminator_values_mismatch", field=name, **where)
+                if not selector_supplied(selector_spec, presence_spec or spec, scope_fields):
+                    rep.add("C05", "external_discriminator_not_guaranteed", field=name, **where)
+        elif valid and "owner" in supply:
+            value = supply["owner"]
+            valid = (isinstance(value, str) and re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]*(?:\.[A-Za-z_][A-Za-z0-9_]*)+", value)
+                     is not None and value.rsplit(".", 1)[-1] == selector)
+        else:
+            valid = False
+        if not valid:
+            rep.add("C05", "external_discriminator_source_missing_or_invalid", field=name, **where)
+    elif "discriminator_source" in spec:
+        rep.add("C05", "unexpected_discriminator_source", field=name, **where)
     constraints = spec.get("constraints")
     if constraints is not None:
         if not isinstance(constraints, dict):
@@ -1388,7 +1502,7 @@ def check_fields(ctx: Context, fields: dict[str, Any], where: dict[str, str], re
     for raw_name in sorted(fields, key=str):
         name = f"{prefix}{raw_name}"
         spec = fields[raw_name]
-        check_type_spec(ctx, spec, where, name, results, item=False, siblings=siblings)
+        check_type_spec(ctx, spec, where, name, results, item=False, siblings=siblings, scope_fields=fields)
         if not isinstance(spec, dict):
             continue
         # A restated common optional field keeps the constraints UCC-230 gives it and may only
@@ -1880,13 +1994,13 @@ def check_definition(ctx: Context, block: Block, owner_unit: str, definition: An
         else:
             if response_kind == "local_projection":
                 rep.add("C10", "local_projection_with_owner_result", detail=str(owner_result), **where)
-            if not resolve_ref(ctx, owner_result, results):
+            if not resolve_ref(ctx, owner_result, results, owner_boundary=True):
                 rep.add("C10", "owner_result_unresolved", detail=str(owner_result), **where)
 
     # owner_request resolves (C05) and agrees with wiring (C13 warning).
     owner_request = definition.get("owner_request")
     if owner_request != "none":
-        if not resolve_ref(ctx, owner_request, results):
+        if not resolve_ref(ctx, owner_request, results, owner_boundary=True):
             rep.add("C05", "owner_request_unresolved", detail=str(owner_request), **where)
         wired = ctx.wiring_requests.get(cmd, set())
         if wired and owner_request not in wired:
@@ -2046,6 +2160,85 @@ def check_review_references(ctx: Context, block: Block, base: dict[str, str]) ->
                        detail=f"line {block.line}: names {', '.join(names)}", **base)
 
 
+def check_typed_blocks(ctx: Context) -> None:
+    """Discover all named contracts first, then validate them, including forward references.
+
+    A bare unit id is never a type. Discriminated contracts are closed unions of named records
+    in the same unit. Supply is explicitly in_record (required branch const) or external
+    (every use site names its arg or owner-held selector).
+    """
+    pending: list[tuple[Block, dict[str, Any], dict[str, Any]]] = []
+    seen: set[tuple[str, str]] = set()
+    for doc in ctx.corpus.top_level_docs():
+        text = ctx.corpus.text(doc) or ""
+        for block in find_blocks(text, doc, TYPED_ROOT_KEY):
+            base = {"path": doc, "unit": ""}
+            check_evidence_lines(ctx, block.data, doc)
+            if block.error:
+                ctx.report.add("C14", "typed_block_yaml_error", detail=block.error, **base)
+                continue
+            if (not isinstance(block.data, dict) or set(block.data) != {TYPED_ROOT_KEY}
+                    or not isinstance(block.data[TYPED_ROOT_KEY], dict)):
+                ctx.report.add("C14", "typed_block_top_level_malformed", **base)
+                continue
+            body = block.data[TYPED_ROOT_KEY]
+            uid = str(body.get("owner_unit", ""))
+            base["unit"] = uid
+            if (_has_key_anywhere(block.data, "plan_unit_id") or _block_uses_merge(block.text)
+                    or set(body) != {"format", "owner_unit", "vocabulary", "contracts"}
+                    or body.get("format") != TYPED_FORMAT or body.get("vocabulary") != OVERLAY_REF):
+                ctx.report.add("C14", "typed_block_format", **base)
+            check_block_comments(ctx, block, base)
+            check_review_references(ctx, block, base)
+            unit = ctx.corpus.units(doc).get(uid)
+            if (unit is None or unit.data.get("unit_type") != "schema_contract"
+                    or unit.data.get("owner_doc") != doc or block.start < unit.end
+                    or text[unit.end:block.start].strip()):
+                ctx.report.add("C03", "typed_block_owner_or_placement", **base)
+            if (doc, uid) in seen:
+                ctx.report.add("C03", "second_typed_block_for_owner_unit", **base)
+            seen.add((doc, uid))
+            contracts = body.get("contracts")
+            if not isinstance(contracts, dict) or not contracts:
+                ctx.report.add("C05", "typed_contracts_not_mapping", **base)
+                continue
+            for name, contract in contracts.items():
+                ref = f"{doc}#{uid}/{name}"
+                if not re.fullmatch(r"[A-Za-z][A-Za-z0-9_]*", str(name)) or not isinstance(contract, dict):
+                    ctx.report.add("C05", "typed_contract_malformed", field=str(name), **base)
+                    continue
+                ctx.typed_contracts[ref] = contract
+            pending.append((block, base, contracts))
+    for block, base, contracts in pending:
+        for name, contract in contracts.items():
+            where = {**base, "command_id": f"contract:{name}"}
+            if not isinstance(contract, dict):
+                continue
+            if set(contract) == {"fields"} and isinstance(contract["fields"], dict) and contract["fields"]:
+                check_fields(ctx, contract["fields"], where, {})
+            elif set(contract) == {"discriminator", "discriminator_source", "branches"}:
+                selector, branches = contract["discriminator"], contract["branches"]
+                if (contract["discriminator_source"] not in ("in_record", "external")
+                        or not isinstance(selector, str) or not IDENTIFIER_RE.fullmatch(selector)
+                        or not isinstance(branches, dict) or not branches):
+                    ctx.report.add("C05", "typed_discriminator_malformed", **where)
+                    continue
+                for value, target in branches.items():
+                    branch = contracts.get(target) if isinstance(target, str) else None
+                    if (not isinstance(value, str) or not value or value != value.strip()
+                            or not isinstance(branch, dict) or set(branch) != {"fields"}
+                            or not isinstance(branch["fields"], dict) or not branch["fields"]):
+                        ctx.report.add("C05", "typed_discriminator_branch_unresolved", field=str(value), **where)
+                        continue
+                    discriminator = branch["fields"].get(selector)
+                    if (contract["discriminator_source"] == "in_record" or discriminator is not None) and (not isinstance(discriminator, dict)
+                            or discriminator.get("type") != "const" or discriminator.get("value") != value
+                            or discriminator.get("required") is not True or discriminator.get("nullable") is True):
+                        ctx.report.add("C05", "typed_discriminator_branch_value_mismatch", field=str(value), **where)
+            else:
+                ctx.report.add("C05", "typed_contract_shape", **where)
+
+
 def check_blocks(ctx: Context) -> dict[str, list[tuple[str, str]]]:
     rep = ctx.report
     defined: dict[str, list[tuple[str, str]]] = defaultdict(list)
@@ -2058,6 +2251,7 @@ def check_blocks(ctx: Context) -> dict[str, list[tuple[str, str]]]:
         # YAML of every fence (Sol r5).
         for block in find_blocks(text, doc):
             base = {"path": doc}
+            check_evidence_lines(ctx, block.data, doc)
             if block.error is not None:
                 rep.add("C14", "block_yaml_error", detail=f"line {block.line}: {block.error}", **base)
                 continue
@@ -2140,16 +2334,75 @@ def internal_detail(check: str, exc: BaseException) -> str:
     return f"{check}: {type(exc).__name__}: {' '.join(str(exc).split())}"
 
 
+def check_evidence_lines(ctx: Context, value: Any = None, doc: str = CATALOG) -> None:
+    """Check all evidence records with line hints, including nested definition records."""
+    outside_map = value is None
+    spans: dict[tuple[str, str, str], list[tuple[int, int]]] = {}
+
+    def source_spans(evidence: dict[str, Any], text: str) -> list[tuple[int, int]]:
+        target = str(evidence["doc"])
+        uid = str(evidence.get("unit", ""))
+        field = str(evidence.get("field", "canonical_text"))
+        key = (target, uid, field)
+        if key not in spans:
+            allowed = [(0, len(text))]
+            if uid:
+                allowed = []
+                unit = ctx.corpus.units(target).get(uid)
+                if unit:
+                    match = PLAN_UNIT_FENCE_PATTERN.match(text, unit.start)
+                    root = yaml.compose(match.group(1), Loader=yaml.SafeLoader) if match else None
+                    if isinstance(root, yaml.MappingNode):
+                        for name, node in root.value:
+                            if name.value == field:
+                                allowed.append((match.start(1) + node.start_mark.index,
+                                                match.start(1) + node.end_mark.index))
+            map_unit = ctx.catalog_units.get(MAP_UNIT)
+            if outside_map and target == CATALOG and map_unit:
+                allowed = [(left, right) for start, end in allowed
+                           for left, right in ((start, min(end, map_unit.start)),
+                                               (max(start, map_unit.end), end)) if left < right]
+            spans[key] = allowed
+        return spans[key]
+
+    def walk(value: Any, doc: str) -> None:
+        if isinstance(value, list):
+            for child in value:
+                walk(child, doc)
+        elif isinstance(value, dict):
+            if "line" in value and "doc" in value and "quote" in value:
+                text = ctx.corpus.text(str(value["doc"]))
+                line = value["line"]
+                valid = isinstance(line, int) and not isinstance(line, bool) and line > 0
+                words = str(value["quote"]).split()
+                matches = re.finditer(r"\s+".join(re.escape(word) for word in words), text or "") if words else []
+                allowed = source_spans(value, text or "")
+                if not valid or not any(line_of(text or "", match.start()) == line
+                                        and any(start <= match.start() and match.end() <= end for start, end in allowed)
+                                        for match in matches):
+                    ctx.report.add("C05", "evidence_line_mismatch", path=doc,
+                                   detail=f"{value['doc']}:{line}: {value['quote']}")
+            for child in value.values():
+                walk(child, doc)
+    walk(ctx.map if value is None else value, doc)
+
+
 def run_check(corpus: Corpus) -> dict[str, Any]:
     report = Report()
     ctx = load_context(corpus, report)
-    for phase in (check_map, compute_expected):
+    for phase in (check_evidence_lines, check_map, compute_expected):
         try:
             phase(ctx)
         except ParseError:
             raise
         except Exception as exc:  # noqa: BLE001 - a deterministic finding, never a traceback
             report.add("C00", "internal_error", CATALOG, detail=internal_detail(phase.__name__, exc))
+    try:
+        check_typed_blocks(ctx)
+    except ParseError:
+        raise
+    except Exception as exc:  # noqa: BLE001 - deterministic, never a traceback
+        report.add("C00", "internal_error", "", detail=internal_detail("check_typed_blocks", exc))
     defined: dict[str, list[tuple[str, str]]] = {}
     try:
         defined = check_blocks(ctx)
@@ -2209,12 +2462,16 @@ def run_check(corpus: Corpus) -> dict[str, Any]:
             "judgments": sum(ctx.judgments.values()),
             "errors": len(errors),
             "warnings": len(warnings),
+            "outside_range_commands": len(ctx.external_commands),
+            "typed_contracts": len(ctx.typed_contracts),
+            "unresolved_tokens": len(as_list(ctx.map.get("unresolved_tokens"))),
         },
         "findings_by_code": dict(sorted(by_code.items())),
         "missing_by_owner_unit": dict(sorted(missing_by_unit.items())),
         "gap_fields_by_doc": dict(sorted(ctx.gap_fields.items())),
         "judgments_by_doc": dict(sorted(ctx.judgments.items())),
         "contested": contested,
+        "unresolved_tokens": as_list(ctx.map.get("unresolved_tokens")),
         "errors": errors,
         "warnings": warnings,
     }
@@ -2477,7 +2734,7 @@ def fixture_definitions() -> dict[str, dict[str, Any]]:
                 "attempt_id": {"type": "id", "required": False, "default": "none", **canon()},
             },
             "owner_request": "none",
-            "result": {"response": RESPONSE_SCHEMA, "owner_result": "Plans/Executor_Protocol.md#EP-200"},
+            "result": {"response": RESPONSE_SCHEMA, "owner_result": "Plans/fixture_contracts.schema.json#/$defs/DockerRunResultV1"},
             "error_codes": std + ["stale_projection", "blocked_state_required"], "disabled_reason_codes": ["blocked_state_required"], "aliases": [],
             "identity_exemptions": [
                 {"field": "blocked_sequence", "decision": "DL-341", "reason": "fixture"},
@@ -2497,7 +2754,7 @@ def fixture_definitions() -> dict[str, dict[str, Any]]:
                 "idempotency_key": {"type": "string", "required": True, "default": "none", "constraints": {"max_length": 256}, **canon()},
             },
             "owner_request": "none",
-            "result": {"response": RESPONSE_SCHEMA, "owner_result": "Plans/Executor_Protocol.md#EP-200"},
+            "result": {"response": RESPONSE_SCHEMA, "owner_result": "Plans/fixture_contracts.schema.json#/$defs/DockerRunResultV1"},
             "error_codes": std + ["stale_projection", "blocked_state_required"], "disabled_reason_codes": ["blocked_state_required"], "aliases": [],
         },
         "cmd.runtime.open_queue_analysis": {
@@ -2535,7 +2792,7 @@ def fixture_definitions() -> dict[str, dict[str, Any]]:
                                              "required": True, "default": "none", **canon()},
             },
             "owner_request": "none",
-            "result": {"response": RESPONSE_SCHEMA, "owner_result": "Plans/Executor_Protocol.md#EP-200"},
+            "result": {"response": RESPONSE_SCHEMA, "owner_result": "Plans/fixture_contracts.schema.json#/$defs/DockerRunResultV1"},
             "error_codes": std + ["stale_projection"], "disabled_reason_codes": ["not_configured"], "aliases": [],
         },
         "cmd.git.worktree.request_prune": {
@@ -2546,7 +2803,7 @@ def fixture_definitions() -> dict[str, dict[str, Any]]:
                 "worktree_id": {"type": "id", "required": True, "default": "none", **canon()},
             },
             "owner_request": "none",
-            "result": {"response": RESPONSE_SCHEMA, "owner_result": "Plans/Executor_Protocol.md#EP-200"},
+            "result": {"response": RESPONSE_SCHEMA, "owner_result": "Plans/fixture_contracts.schema.json#/$defs/DockerRunResultV1"},
             "error_codes": std + ["stale_projection"], "disabled_reason_codes": ["not_configured"], "aliases": [],
         },
         "cmd.chat.memory.verify": {
@@ -2557,7 +2814,7 @@ def fixture_definitions() -> dict[str, dict[str, Any]]:
                 "gist_id": {"type": "id", "required": True, "default": "none", **canon()},
             },
             "owner_request": "none",
-            "result": {"response": RESPONSE_SCHEMA, "owner_result": "Plans/Executor_Protocol.md#EP-200"},
+            "result": {"response": RESPONSE_SCHEMA, "owner_result": "Plans/fixture_contracts.schema.json#/$defs/DockerRunResultV1"},
             "error_codes": std + ["stale_projection"], "disabled_reason_codes": ["not_configured"], "aliases": [],
         },
     }
@@ -2608,7 +2865,7 @@ class Fixture:
             data = {"plan_unit_id": uid, "unit_type": "requirement", "owner_doc": CATALOG, "preserved_exact_tokens": []}
             data.update(copy.deepcopy(self.units.get(uid, {})))
             parts += [f"### {uid} - fixture", "", fence(data)]
-        out[CATALOG] = "\n".join(parts)
+        out[CATALOG] = "\n".join(parts) + self.doc_suffix.get(CATALOG, "")
 
         docs: dict[str, list[str]] = defaultdict(list)
         docs["Plans/Executor_Protocol.md"] += ["# Executor (fixture)", "", "### EP-200 - recovery result", "",
@@ -2950,7 +3207,7 @@ def build_cases() -> tuple[list[tuple[str, Callable[[Fixture], None], int, set[s
 
     @case("fail C10: local_projection with an owner result", 1, {"C10"})
     def _(fx: Fixture) -> None:
-        _defs(fx, "cmd.chat.copy_message")["result"]["owner_result"] = "Plans/Executor_Protocol.md#EP-200"
+        _defs(fx, "cmd.chat.copy_message")["result"]["owner_result"] = "Plans/fixture_contracts.schema.json#/$defs/DockerRunResultV1"
 
     @case("fail C10: catalogued domain_action declares local_projection with owner_result none", 1, {"C10"})
     def _(fx: Fixture) -> None:
@@ -3879,6 +4136,370 @@ def build_cases() -> tuple[list[tuple[str, Callable[[Fixture], None], int, set[s
     def _(fx: Fixture) -> None:
         fx.owner_unit_overrides["CRAU-115"] = {"source_lineage": [
             "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/owner-answers/q5/defs-review/r1-opus-S1.md (review r1 finding 9)"]}
+
+    def external(fx: Fixture, defined: bool = True) -> None:
+        cmd = "cmd.docker.container.stats"
+        fx.doc_suffix[CATALOG] = fence({"plan_unit_id": "UCC-231", "unit_type": "requirement",
+            "canonical_text": f"{cmd} shows container stats", "preserved_exact_tokens": [cmd]})
+        fx.map["outside_range_commands"] = [{"command_id": cmd, "catalog_unit": "UCC-231",
+            "owner_unit": "CRAU-115", "row_group": "UCC-049..UCC-053",
+            "evidence": {"doc": CATALOG, "unit": "UCC-231", "field": "canonical_text",
+                         "quote": f"{cmd} shows container stats"}}]
+        if defined:
+            definition = copy.deepcopy(_defs(fx, "cmd.docker.image.tag"))
+            definition.update(command_id=cmd, ucc_units=["UCC-231"], aliases=[])
+            fx.definitions[cmd] = definition
+            fx.blocks["CRAU-115"][1].append(cmd)
+
+    @case("pass Q5b: closed external route gets the ordinary definition rules", 0, set())
+    def _(fx: Fixture) -> None:
+        external(fx)
+
+    @case("fail Q5b: missing external definition", 1, {"C02"}, kinds={"missing_definition"})
+    def _(fx: Fixture) -> None:
+        external(fx, False)
+
+    @case("fail Q5b: duplicate external route", 1, {"C03"}, kinds={"map_external_command_duplicate"})
+    def _(fx: Fixture) -> None:
+        external(fx)
+        fx.map["outside_range_commands"] *= 2
+
+    @case("fail Q5b: external registration quote is false", 1, {"C03"}, kinds={"map_external_registration_not_found"})
+    def _(fx: Fixture) -> None:
+        external(fx)
+        fx.map["outside_range_commands"][0]["evidence"]["quote"] += " invented"
+
+    @case("fail Q5b: malformed external route", 1, {"C03"}, kinds={"map_external_command_malformed"})
+    def _(fx: Fixture) -> None:
+        external(fx, False)
+        fx.map["outside_range_commands"][0].pop("owner_unit")
+
+    @case("fail Q5b: scoped command cannot be smuggled into external list", 1, {"C02", "C03"},
+          kinds={"map_external_command_already_scoped_or_excluded"})
+    def _(fx: Fixture) -> None:
+        external(fx, False)
+        fx.map["outside_range_commands"][0]["command_id"] = "cmd.docker.image.tag"
+
+    @case("fail Q5b: duplicate external definition gets ordinary coverage rule", 1, {"C02"},
+          kinds={"duplicate_definition"})
+    def _(fx: Fixture) -> None:
+        external(fx)
+        fx.blocks["CRAU-115"][1].append("cmd.docker.container.stats")
+
+    @case("fail Q5b: external field still needs provenance", 1, {"C11"}, kinds={"canon_without_source"})
+    def _(fx: Fixture) -> None:
+        external(fx)
+        fx.definitions["cmd.docker.container.stats"]["args"]["image_ref"].pop("source")
+
+    @case("pass Q5b: unresolved token stays a question without expanding scope", 0, set())
+    def _(fx: Fixture) -> None:
+        fx.map["unresolved_tokens"] = [{"token": "cmd.docker.remove", "question_id": "Q-ID1",
+            "judgment": "propose an alias", "alternative": "retire",
+            "evidence": {"doc": CATALOG, "quote": "cmd.docker.image.tag"}}]
+
+    @case("fail Q5b: unresolved standing without an alternative", 1, {"C04"}, kinds={"map_unresolved_token_malformed"})
+    def _(fx: Fixture) -> None:
+        fx.map["unresolved_tokens"] = [{"token": "cmd.docker.remove", "question_id": "Q-ID1",
+            "judgment": "propose an alias", "evidence": {"doc": CATALOG, "quote": "cmd.docker.image.tag"}}]
+
+    @case("fail Q5b: unresolved standing duplicated", 1, {"C04"}, kinds={"map_unresolved_token_duplicate_or_routed"})
+    def _(fx: Fixture) -> None:
+        entry = {"token": "cmd.docker.remove", "question_id": "Q-ID1", "judgment": "propose alias",
+                 "alternative": "retire", "evidence": {"doc": CATALOG, "quote": "cmd.docker.image.tag"}}
+        fx.map["unresolved_tokens"] = [entry, copy.deepcopy(entry)]
+
+    def typed(fx: Fixture) -> dict[str, Any]:
+        body = {"format": TYPED_FORMAT, "owner_unit": "CV-369", "vocabulary": OVERLAY_REF,
+                "contracts": {
+                    "SlackDestinationProfileV1": {"fields": {
+                        "credential_ref": {"type": "secret_ref", "required": True, "default": "none", **canon()}}},
+                    "NotificationDestinationProfileV1": {"discriminator": "provider", "discriminator_source": "external",
+                        "branches": {"slack": "SlackDestinationProfileV1"}}}}
+        fx.doc_suffix["Plans/Contracts_V0.md"] = fence({"plan_unit_id": "CV-369", "unit_type": "schema_contract",
+            "owner_doc": "Plans/Contracts_V0.md"}) + fence({TYPED_ROOT_KEY: body})
+        _defs(fx, "cmd.docker.image.tag")["args"].update({
+            "provider": {"type": "enum", "values": ["slack"], "required": True, "default": "none", **canon()},
+            "profile": {"type": "contract", "ref": "Plans/Contracts_V0.md#CV-369/NotificationDestinationProfileV1",
+                        "discriminator_source": {"arg": "provider"},
+                        "required": True, "default": "none", **canon()}})
+        return body
+
+    def replace_typed(fx: Fixture, body: dict[str, Any]) -> None:
+        fx.doc_suffix["Plans/Contracts_V0.md"] = fence({"plan_unit_id": "CV-369", "unit_type": "schema_contract",
+            "owner_doc": "Plans/Contracts_V0.md"}) + fence({TYPED_ROOT_KEY: body})
+
+    @case("pass Q5b: named typed contract and provider discriminator", 0, set())
+    def _(fx: Fixture) -> None:
+        typed(fx)
+
+    for carrier in ("owner_request", "owner_result"):
+        @case(f"fail ASTRA: external union as {carrier}", 1, {"C05" if carrier == "owner_request" else "C10"},
+              kinds={f"{carrier}_unresolved"})
+        def _(fx: Fixture, carrier=carrier) -> None:
+            typed(fx)
+            definition = _defs(fx, "cmd.docker.image.tag")
+            target = definition if carrier == "owner_request" else definition["result"]
+            target[carrier] = "Plans/Contracts_V0.md#CV-369/NotificationDestinationProfileV1"
+            definition["judgments"] = [entry for entry in definition["judgments"] if entry["key"] != carrier]
+
+    @case("pass ASTRA: in-record union as owner_result", 0, set())
+    def _(fx: Fixture) -> None:
+        body = internal_typed(fx)
+        replace_typed(fx, body)
+        _defs(fx, "cmd.docker.image.tag")["result"]["owner_result"] = (
+            "Plans/Contracts_V0.md#CV-369/NotificationDestinationProfileV1")
+
+    @case("fail Q5b: bare unit reference is not a typed contract", 1, {"C05"}, kinds={"contract_ref_unresolved"})
+    def _(fx: Fixture) -> None:
+        _defs(fx, "cmd.docker.image.tag")["args"]["profile"] = {
+            "type": "contract", "ref": "Plans/Executor_Protocol.md#EP-200", "required": True, "default": "none", **canon()}
+
+    @case("fail Q5b: missing named contract", 1, {"C05"}, kinds={"named_contract_not_found"})
+    def _(fx: Fixture) -> None:
+        typed(fx)
+        _defs(fx, "cmd.docker.image.tag")["args"]["profile"]["ref"] = "Plans/Contracts_V0.md#CV-369/Missing"
+
+    @case("fail Q5b: typed field obeys required default and provenance rules", 1, {"C05", "C06", "C11"},
+          kinds={"type_not_in_vocabulary", "required_field_has_literal_default", "provenance_missing"})
+    def _(fx: Fixture) -> None:
+        body = typed(fx)
+        body["contracts"]["SlackDestinationProfileV1"]["fields"]["credential_ref"] = {
+            "type": "untyped", "required": True, "default": "raw"}
+        replace_typed(fx, body)
+
+    @case("fail Q5b: unknown discriminator branch", 1, {"C05"}, kinds={"typed_discriminator_branch_unresolved"})
+    def _(fx: Fixture) -> None:
+        body = typed(fx)
+        body["contracts"]["NotificationDestinationProfileV1"]["branches"]["slack"] = "Missing"
+        replace_typed(fx, body)
+
+    @case("fail Q5b: discriminator differs from provider enum", 1, {"C05"}, kinds={"contract_discriminator_values_mismatch"})
+    def _(fx: Fixture) -> None:
+        typed(fx)
+        _defs(fx, "cmd.docker.image.tag")["args"]["provider"]["values"] = ["discord"]
+
+    @case("pass Q5b: internal discriminator uses required const values", 0, set())
+    def _(fx: Fixture) -> None:
+        body = typed(fx)
+        body["contracts"]["NotificationDestinationProfileV1"]["discriminator_source"] = "in_record"
+        _defs(fx, "cmd.docker.image.tag")["args"]["profile"].pop("discriminator_source")
+        body["contracts"]["SlackDestinationProfileV1"]["fields"]["provider"] = {
+            "type": "const", "value": "slack", "required": True, "default": "none", **canon()}
+        replace_typed(fx, body)
+
+    @case("fail Q5b: internal discriminator const mismatch", 1, {"C05"}, kinds={"typed_discriminator_branch_value_mismatch"})
+    def _(fx: Fixture) -> None:
+        body = typed(fx)
+        body["contracts"]["NotificationDestinationProfileV1"]["discriminator_source"] = "in_record"
+        _defs(fx, "cmd.docker.image.tag")["args"]["profile"].pop("discriminator_source")
+        body["contracts"]["SlackDestinationProfileV1"]["fields"]["provider"] = {
+            "type": "const", "value": "discord", "required": True, "default": "none", **canon()}
+        replace_typed(fx, body)
+
+    def internal_typed(fx: Fixture) -> dict[str, Any]:
+        body = typed(fx)
+        body["contracts"]["NotificationDestinationProfileV1"]["discriminator_source"] = "in_record"
+        _defs(fx, "cmd.docker.image.tag")["args"]["profile"].pop("discriminator_source")
+        body["contracts"]["SlackDestinationProfileV1"]["fields"]["provider"] = {
+            "type": "const", "value": "slack", "required": True, "default": "none", **canon()}
+        return body
+
+    @case("fail R2: nullable in-record const", 1, {"C05"}, kinds={"typed_discriminator_branch_value_mismatch"})
+    def _(fx: Fixture) -> None:
+        body = internal_typed(fx)
+        body["contracts"]["SlackDestinationProfileV1"]["fields"]["provider"]["nullable"] = True
+        replace_typed(fx, body)
+
+    for mode in ("nullable", "optional", "omitted"):
+        @case(f"fail R2: {mode} external selector", 1, {"C05"},
+              kinds={"external_discriminator_source_missing_or_invalid"} if mode == "omitted" else {"external_discriminator_not_guaranteed"})
+        def _(fx: Fixture, mode=mode) -> None:
+            typed(fx)
+            args = _defs(fx, "cmd.docker.image.tag")["args"]
+            if mode == "omitted":
+                del args["provider"]
+            elif mode == "optional":
+                args["provider"]["required"] = False
+            else:
+                args["provider"]["nullable"] = True
+
+    for location in ("nested", "list", "nested_list"):
+        for supplied in (True, False):
+            @case(f"{'pass' if supplied else 'fail'} R2: {location} selector supply {supplied}",
+                  0 if supplied else 1, set() if supplied else {"C05"},
+                  kinds=set() if supplied else {"external_discriminator_not_guaranteed"})
+            def _(fx: Fixture, location=location, supplied=supplied) -> None:
+                typed(fx)
+                args = _defs(fx, "cmd.docker.image.tag")["args"]
+                provider, profile = args.pop("provider"), args.pop("profile")
+                provider["required"] = supplied
+                if "list" in location:
+                    item = {k: v for k, v in profile.items() if k not in ("required", "default", "provenance", "source")}
+                    profile = {"type": "list", "item": item, "required": True, "default": "none", **canon()}
+                if "nested" in location:
+                    args["bundle"] = {"type": "object", "fields": {"provider": provider, "profile": profile},
+                                      "required": True, "default": "none", **canon()}
+                else:
+                    args.update(provider=provider, profile=profile)
+
+    @case("pass R2: external selector checked default", 0, set())
+    def _(fx: Fixture) -> None:
+        typed(fx)
+        _defs(fx, "cmd.docker.image.tag")["args"]["provider"].update(required=False, default="slack")
+
+    for covered in (True, False):
+        @case(f"{'pass' if covered else 'fail'} R2: conditional selector coverage {covered}",
+              0 if covered else 1, set() if covered else {"C05"},
+              kinds=set() if covered else {"external_discriminator_not_guaranteed"})
+        def _(fx: Fixture, covered=covered) -> None:
+            typed(fx)
+            args = _defs(fx, "cmd.docker.image.tag")["args"]
+            args["mode"] = {"type": "enum", "values": ["a", "b"], "required": True, "default": "none", **canon()}
+            args["provider"].update(required=False, required_when={"field": "mode", "in": ["a"]})
+            args["profile"].update(required=False, required_when={"field": "mode", "in": ["a"]},
+                                   forbidden_when={"field": "mode", "in": ["b"]} if covered else {"field": "mode", "in": ["a"]})
+
+    for correct in (True, False):
+        @case(f"{'pass' if correct else 'fail'} R2: evidence line {correct}",
+              0 if correct else 1, set() if correct else {"C05"},
+              kinds=set() if correct else {"evidence_line_mismatch"})
+        def _(fx: Fixture, correct=correct) -> None:
+            evidence = fx.map["non_definition_tokens"][0]["evidence"]
+            fx.doc_suffix["Plans/LineHint.md"] = evidence["quote"] + "\n"
+            evidence["doc"] = "Plans/LineHint.md"
+            evidence.pop("unit", None)
+            evidence.pop("field", None)
+            evidence["line"] = 2 if correct else 3
+
+    for location in ("correct", "map", "other_unit", "other_field", "doc_map"):
+        @case(f"{'pass' if location == 'correct' else 'fail'} ASTRA: evidence hint {location}",
+              0 if location == "correct" else 1, set() if location == "correct" else {"C05"},
+              kinds=set() if location == "correct" else {"evidence_line_mismatch"})
+        def _(fx: Fixture, location=location) -> None:
+            external(fx)
+            evidence = fx.map["outside_range_commands"][0]["evidence"]
+            quote = evidence["quote"]
+            fx.doc_suffix[CATALOG] += fence({"plan_unit_id": "UCC-232", "canonical_text": quote})
+            # Also duplicate the quote in a different field of the correctly named unit.
+            fx.doc_suffix[CATALOG] = fx.doc_suffix[CATALOG].replace(
+                "preserved_exact_tokens:", f"other_field: {quote}\npreserved_exact_tokens:", 1)
+            if location == "doc_map":
+                evidence = fx.map["non_definition_tokens"][0]["evidence"]
+                quote = evidence["quote"]
+                evidence.pop("unit")
+                evidence.pop("field")
+            evidence["line"] = 1
+            text = fx.files()[CATALOG]
+            occurrences = list(re.finditer(re.escape(quote), text))
+            selected = {"map": 0, "doc_map": 0, "correct": 1, "other_field": 2, "other_unit": 3}[location]
+            evidence["line"] = line_of(text, occurrences[selected].start())
+
+    @case("fail MAX1: deleted in-record discriminator", 1, {"C05"}, kinds={"typed_discriminator_branch_value_mismatch"})
+    def _(fx: Fixture) -> None:
+        body = internal_typed(fx)
+        del body["contracts"]["SlackDestinationProfileV1"]["fields"]["provider"]
+        replace_typed(fx, body)
+
+    @case("fail MAX1: optional in-record discriminator", 1, {"C05"}, kinds={"typed_discriminator_branch_value_mismatch"})
+    def _(fx: Fixture) -> None:
+        body = internal_typed(fx)
+        body["contracts"]["SlackDestinationProfileV1"]["fields"]["provider"]["required"] = False
+        replace_typed(fx, body)
+
+    @case("fail MAX1: missing union supply declaration", 1, {"C05"}, kinds={"typed_contract_shape"})
+    def _(fx: Fixture) -> None:
+        body = typed(fx)
+        del body["contracts"]["NotificationDestinationProfileV1"]["discriminator_source"]
+        replace_typed(fx, body)
+
+    @case("fail MAX1: missing external use-site source", 1, {"C05"}, kinds={"external_discriminator_source_missing_or_invalid"})
+    def _(fx: Fixture) -> None:
+        typed(fx)
+        _defs(fx, "cmd.docker.image.tag")["args"]["profile"].pop("discriminator_source")
+
+    @case("fail MAX1: external source names absent arg", 1, {"C05"}, kinds={"external_discriminator_source_missing_or_invalid"})
+    def _(fx: Fixture) -> None:
+        typed(fx)
+        del _defs(fx, "cmd.docker.image.tag")["args"]["provider"]
+
+    @case("pass MAX1: external owner selector", 0, set())
+    def _(fx: Fixture) -> None:
+        typed(fx)
+        args = _defs(fx, "cmd.docker.image.tag")["args"]
+        del args["provider"]
+        args["profile"]["discriminator_source"] = {"owner": "stored_destination.provider"}
+
+    @case("fail Q5b: typed block format and owner placement", 1, {"C03", "C14"},
+          kinds={"typed_block_format", "typed_block_owner_or_placement"})
+    def _(fx: Fixture) -> None:
+        body = typed(fx)
+        body["format"] = "unknown"
+        replace_typed(fx, body)
+        fx.doc_suffix["Plans/Contracts_V0.md"] = fx.doc_suffix["Plans/Contracts_V0.md"].replace("schema_contract", "requirement")
+
+    @case("fail Q5b: typed contract unknown shape", 1, {"C05"}, kinds={"typed_contract_shape"})
+    def _(fx: Fixture) -> None:
+        body = typed(fx)
+        body["contracts"]["SlackDestinationProfileV1"]["extra"] = True
+        replace_typed(fx, body)
+
+    @case("fail Q5b: typed discriminator malformed", 1, {"C05"}, kinds={"typed_discriminator_malformed"})
+    def _(fx: Fixture) -> None:
+        body = typed(fx)
+        body["contracts"]["NotificationDestinationProfileV1"]["discriminator"] = "not a field"
+        replace_typed(fx, body)
+
+    @case("fail Q5b: typed block cannot contain plan_unit_id", 1, {"C14"}, kinds={"typed_block_format"})
+    def _(fx: Fixture) -> None:
+        body = typed(fx)
+        body["contracts"]["SlackDestinationProfileV1"]["fields"]["plan_unit_id"] = {
+            "type": "string", "required": False, "default": "none", **canon()}
+        replace_typed(fx, body)
+
+    @case("fail Q5b: typed block must be adjacent to its unit", 1, {"C03"}, kinds={"typed_block_owner_or_placement"})
+    def _(fx: Fixture) -> None:
+        typed(fx)
+        fx.doc_suffix["Plans/Contracts_V0.md"] = fx.doc_suffix["Plans/Contracts_V0.md"].replace(
+            "\n```yaml\ntyped_contracts:", "\nintervening prose\n```yaml\ntyped_contracts:")
+
+    @case("fail Q5b: duplicate typed block", 1, {"C03"}, kinds={"second_typed_block_for_owner_unit"})
+    def _(fx: Fixture) -> None:
+        body = typed(fx)
+        fx.doc_suffix["Plans/Contracts_V0.md"] += fence({TYPED_ROOT_KEY: body})
+
+    @case("fail Q5b: typed contracts needs a nonempty mapping", 1, {"C05"}, kinds={"typed_contracts_not_mapping"})
+    def _(fx: Fixture) -> None:
+        body = typed(fx)
+        body["contracts"] = {}
+        replace_typed(fx, body)
+
+    @case("fail Q5b: typed contract name malformed", 1, {"C05"}, kinds={"typed_contract_malformed"})
+    def _(fx: Fixture) -> None:
+        body = typed(fx)
+        body["contracts"]["invalid name"] = {"fields": {"ok": {"type": "boolean", "required": True, "default": "none", **canon()}}}
+        replace_typed(fx, body)
+
+    @case("fail Q5b: typed root has an extra top-level key", 1, {"C05", "C14"}, kinds={"typed_block_top_level_malformed"})
+    def _(fx: Fixture) -> None:
+        typed(fx)
+        fx.doc_suffix["Plans/Contracts_V0.md"] = fx.doc_suffix["Plans/Contracts_V0.md"].replace(
+            "\ntyped_contracts:\n", "\nextra: true\ntyped_contracts:\n")
+
+    @case("fail Q5b: typed YAML comment", 1, {"C11"}, kinds={"yaml_comment_in_definitions_block"})
+    def _(fx: Fixture) -> None:
+        typed(fx)
+        fx.doc_suffix["Plans/Contracts_V0.md"] = fx.doc_suffix["Plans/Contracts_V0.md"].replace(
+            "\ntyped_contracts:\n", "\ntyped_contracts: # invisible choice\n")
+
+    @case("fail Q5b: typed evidence reference", 1, {"C11"}, kinds={"review_reference_in_definitions_block"})
+    def _(fx: Fixture) -> None:
+        body = typed(fx)
+        body["contracts"]["SlackDestinationProfileV1"]["fields"]["credential_ref"]["source"] = "owner-answers/q5"
+        replace_typed(fx, body)
+
+    @case("fail Q5b: malformed quoted typed block is discovered", 1, {"C14"}, kinds={"typed_block_yaml_error"})
+    def _(fx: Fixture) -> None:
+        fx.doc_suffix["Plans/Contracts_V0.md"] = '\n```yaml\n"typed_contracts": [broken\n```\n'
 
     return cases, cli_cases, post_checks
 

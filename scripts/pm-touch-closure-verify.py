@@ -1986,7 +1986,10 @@ def verify() -> tuple[list[str], dict[str, Any]]:
         # cmd.chat.worktree.bind_existing, so it is retired as a non-alias. Its Touch row
         # TOUCH-FB-162 stays under TCP-FB-259, now blocked, so row and profile counts and
         # every TCP-FB number are unchanged; Touch exclusions and aliases are unchanged.
-        "production_wiring_entry_count": 1331,
+        # Q5c / DL-471 Q-ID6/Q-ID7b: +2 production-intent rows (1331 -> 1333):
+        # existing-topology shell_view and Repair unavailable until its operation is defined.
+        # No Touch row, profile, alias, exclusion, native handler or proof is added.
+        "production_wiring_entry_count": 1333,
     }
     observed_resolved_denominators = {
         "row_count": len(rows),
