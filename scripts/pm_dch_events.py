@@ -261,13 +261,21 @@ def _record_number_rule(provenance):
     store = provenance.get('storage_instance_id') if is_dict else None
     digest = provenance.get('source_value_sha256') if is_dict else None
     keyed = type(store) is str and type(digest) is str
+    descriptor_valid = keyed and STORAGE_INSTANCE_VALIDATOR.is_valid(store)
     in_custody = store in CUSTODY_STORES if keyed else None
-    recipe = RECIPE_RECEIPTS.get((store, digest), CUSTODY['current_recipe']) if in_custody else None
+    if in_custody:
+        recipe = RECIPE_RECEIPTS.get((store, digest), CUSTODY['current_recipe'])
+    elif keyed and not descriptor_valid:
+        # Not a Store at all: TY02 refuses the malformed descriptor in the next
+        # phase. The provisional current rule only parameterizes that type walk.
+        recipe = CURRENT_RULE
+    else:
+        recipe = None  # RN02/RN03 (not keyed) or RN05 (valid Store outside custody) refuse
     claim_present = is_dict and 'recipe_id' in provenance
     require('rn_recipe', dict(provenance_type=type_name(provenance), store_type=type_name(store),
                               digest_type=type_name(digest), claim_present=claim_present,
                               claim=provenance['recipe_id'] if claim_present else None, receipt_recipe=recipe,
-                              store_descriptor_valid=keyed and STORAGE_INSTANCE_VALIDATOR.is_valid(store),
+                              store_descriptor_valid=descriptor_valid,
                               store_in_custody=in_custody, recipe_installed=recipe in RECIPE_TUPLES if in_custody else None))
     return recipe
 
@@ -330,12 +338,12 @@ def original_binding(record, store, digest):
     elif not ((scope_kind == 'application' and project_id is None) or
               (scope_kind == 'project' and type(project_id) is str and project_id)):
         scope_kind, project_id = 'project', 'malformed:' + type_name(get('scope_kind')) + ':' + type_name(get('project_id'))
-    return OriginalBinding(storage_instance_id=store, scope_kind=scope_kind, server_id=DCH_SERVER, project_id=project_id,
+    return OriginalBinding(storage_instance_id=_binding_text(store), scope_kind=scope_kind, server_id=DCH_SERVER, project_id=project_id,
                            event_type=_binding_text(get('event_type')),
                            event_id=_binding_text(get('event_id') if 'event_id' in record else get('last_event_id')) if is_dict else 'malformed:record',
                            idempotency_key=_binding_text(get('idempotency_key') if 'idempotency_key' in record else get('publication_id')) if is_dict else 'malformed:record',
                            owner_operation_id=_binding_text(get('correlation_id') if 'correlation_id' in record else get('consumer_id')) if is_dict else 'malformed:record',
-                           source_commitment=digest)
+                           source_commitment=_binding_text(digest))
 
 
 class DchOriginalOwner:
