@@ -93,7 +93,9 @@
   /* ------------------------------------------------------------------ decorating one end button */
   function rowOf(btn) { return btn.closest('.setting-row, .o55-field'); }
   function decorateButton(btn, o) {
-    const sync = !!(o && o.sync);
+    // the immediate pass (redrawNow) defers only Changed, and only while a change is on its way; otherwise it draws
+    // everything, so the next frame's pass finds the row done and does nothing
+    const sync = !!(o && o.sync) && inFlight(btn.getAttribute('data-setting') || '');
     const id = btn.getAttribute('data-setting'); if (!id) return;
     const row = rowOf(btn); if (!row) return;
     const kind = row.classList.contains('o55-field') ? 'field' : row.classList.contains('o55-scoped') ? 'scoped' : 'row';
@@ -193,8 +195,15 @@
      comes from" differs from the inventory's, and a value pushed from the world is not a change made here) */
   /* a change on its way: the base page holds a value the layer hasn't routed yet (the world takes it when its save
      reports back). Until then Changed stays as the base page drew it from the control's value */
+  let engSt = null;   // the base page's settings, read once per task (getState copies the whole state)
+  function engineSettings() {
+    if (!engSt) { try { const K = W.PM12_KIMI; engSt = (K && K.getState().settings) || {}; } catch (e) { engSt = {}; } Promise.resolve().then(() => { engSt = null; }); }
+    return engSt;
+  }
   function inFlight(id) {
-    try { const K = W.PM12_KIMI, st = K && K.getState().settings; return !!(st && PSX.last && Object.prototype.hasOwnProperty.call(PSX.last, id) && JSON.stringify(st[id]) !== JSON.stringify(PSX.last[id])); } catch (e) { return false; }
+    if (!PSX.last || !Object.prototype.hasOwnProperty.call(PSX.last, id)) return false;
+    const st = engineSettings();
+    return JSON.stringify(st[id]) !== JSON.stringify(PSX.last[id]);
   }
   function syncChanged(row, id, changed, demo) {
     if (!demo || row.classList.contains('o55-field')) return;
