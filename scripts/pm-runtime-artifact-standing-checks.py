@@ -56,11 +56,16 @@ def memory_check():
     return available
 
 
+ONLY_FAMILIES = None  # --family: run the trials over these families only (reported as such)
+
+
 def family_checkers(m):
     """Execute every full family checker sequentially, with a RAM gate per family."""
     failures, counts, runs = [], {}, []
     for row in m.load('Plans/runtime_artifact_event_drafts.json')['rows']:
         family = row['event_type']
+        if ONLY_FAMILIES is not None and family not in ONLY_FAMILIES:
+            continue
         available = memory_check()
         stream = io.StringIO()
         with contextlib.redirect_stdout(stream):
@@ -96,7 +101,7 @@ def run(name, standing, configure=None, source=None, selected=None):
     started = time.monotonic()
     code, report = family_checkers(m)
     failed = {f: [x.split(':', 1)[1] for x in report['failures'] if x.startswith(f + ':')] for f in families}
-    targets = selected or families
+    targets = [f for f in (selected or families) if ONLY_FAMILIES is None or f in ONLY_FAMILIES]
     return dict(case=name, standing_check=standing, exit_code=code, status=report['status'],
                 trial_source_sha256=hashlib.sha256(source.encode()).hexdigest(),
                 cases=report['cases'], elapsed_seconds=round(time.monotonic()-started,3),
@@ -185,7 +190,10 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', type=Path)
     parser.add_argument('--case', action='append', help='Run only case names containing this text (repeatable)')
+    parser.add_argument('--family', action='append', help='Run every trial over these families only (repeatable)')
     args = parser.parse_args()
+    global ONLY_FAMILIES
+    ONLY_FAMILIES = set(args.family) if args.family else None
     source = CHECKER.read_text()
     cases = [
         ('S1_remove_policy_before_dedupe',1,cut('A03a_replay_only','A03b_policy'),None),
@@ -246,6 +254,7 @@ def main():
         results.append(result)
         print(name + ': ' + ('caught' if result['caught'] else 'SURVIVED'), file=sys.stderr, flush=True)
     report = dict(status='pass' if results and all(r['caught'] for r in results) else 'fail',
+                  families=sorted(ONLY_FAMILIES) if ONLY_FAMILIES else 'all',
                   checker_sha256=hashlib.sha256(CHECKER.read_bytes()).hexdigest(),
                   trials=len(results), results=results, native_execution='NOT_RUN', admission='NONE')
     body = json.dumps(report,indent=2)+'\n'
