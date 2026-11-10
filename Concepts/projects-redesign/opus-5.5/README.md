@@ -10,6 +10,38 @@ onboarding wizard without its theatrics; account for every way a project can be 
 control. The review behind these concepts (Opus 5.5, GPT-6 Astra, Muse Wonder Full) is in
 `/mnt/Cursor/share/puppet-master/2026-10-30-projects-refresh/`.
 
+## Split v3 (2026-11-10): Split v2, easier to read
+
+Jared, 2026-11-10: "I like the new split design it made. However, one issue I have with it is its a little hard to
+read, my eyes tend to glaze over when i look at it. So I think it needs some mild adjustments to make it easier to
+parse ... The content is good and the layout is pretty good, its just the details, spacing, etc that need help."
+
+Split v3 is Split v2 with the same parts, the same words and the same layout, set differently. It is not a second
+renderer: `concepts/c.js` draws both, `concepts/c-v3.css` restyles it while `<html>` carries `data-pjx-read="v3"`, and
+`concepts/c-v3.js` only sets that attribute (and marks long values, below). So every fix made to Split is in v3 too, and
+switching between **C · Split v3** (key 4) and **C · Split v2** (key 3) keeps the chosen Project, an open New Project
+and every answer where they were. The page opens on v3; `index.html?split=v2` opens on v2.
+
+What made v2 tiring, and what v3 changes:
+
+| In v2 | In v3 |
+|---|---|
+| Every value was bold and sat at the far right of its plate, a long way from its label. | Each value sits beside its label, left-aligned on one edge per plate. Labels are quiet, values are regular weight, and only a value that says something is wrong keeps weight and colour. |
+| A sentence or a long path wrapped into a narrow right-hand column, three to five lines deep. | A value of 36 characters or more goes under its label, the plate wide (`data-v3-long`, set by `c-v3.js`). |
+| A dashed rule under every row. | Rows are separated by space; a rule is kept for groups. |
+| A list of choices (folders, what happened, likely places) was a stack of bordered boxes. | One ruled list, the chosen row filled with a hairline ring. |
+| The same distance between everything. | More room between plates and between the library's machines than inside them; each machine's group is ruled off. |
+| Small capital labels in the code face on every field of New Project. | Kept for dividers (the library's machines, the Review's groups, the repair plate's groups); a field's own label is in the text face. |
+| Nine underlined "Change" links down the Review; answered questions as loud as the open one. | "Change" stays, quiet, underlined when pointed at; answered questions fold to a lighter line, ruled apart. |
+| "What's in it" in a box of its own, inside the question's box, inside the card. | Its lines sit under their label with no box. |
+
+Two things v3 also repairs because they are about reading: on the chosen library row in Basic Light the second line
+was dark blue on the blue fill (it now takes the row's ink), and Retro and NieR, which rule their group heads
+themselves, get no second rule.
+
+It was looked at in all ten looks, at 1280, 1024, 860 and 640 px, with 40 projects and on first run, and browser-check's
+audit (overflow, clipped text, covered controls) passes in the same states it passes in v2.
+
 ## Split v2 (pass 2, 2026-11-02): the chosen concept
 
 Jared chose C: "I am leaning towards the Split option. Lets just focus on that for future passes." Split v2 keeps the
@@ -90,8 +122,8 @@ differ only in layout and presentation:
 
 The strip under PMConcept7 is for reviewing and is not part of the design.
 
-- **Concept**: C · Split v2 and Today; A and B (pass 1, frozen) sit behind **More concepts** (keys 1, 2, 3 and 0 still work).
-  The strip opens on C.
+- **Concept**: C · Split v3, C · Split v2 and Today; A and B (pass 1, frozen) sit behind **More concepts** (keys 1, 2, 3,
+  4 and 0). The strip opens on C · Split v3.
 - **Look**: all ten, switched through PMConcept7's own theme menu.
 - **Projects**: the demo set, first run with none yet, or 40 projects.
 - **Window width**: full, 1280, 1024, 860 or 640 px.
@@ -113,7 +145,7 @@ The strip under PMConcept7 is for reviewing and is not part of the design.
 ## How it reaches PMConcept7
 
 `index.html` adds, in order: `layer/core.css`, `layer/np.css`, `layer/core.js`, `layer/words.js`, `layer/rules.js`,
-`layer/flow.js`, `layer/np.js`, `layer/parts.js`, `layer/np-ui.js`, each concept's CSS and JS, and `layer/boot.js`. The page and PMConcept7 talk only by `postMessage` (`{source: 'pjx-host', cmd}` in,
+`layer/flow.js`, `layer/np.js`, `layer/parts.js`, `layer/np-ui.js`, each concept's CSS and JS (Split v3's after Split's), and `layer/boot.js`. The page and PMConcept7 talk only by `postMessage` (`{source: 'pjx-host', cmd}` in,
 `{source: 'pjx', type, state}` out), so the strip also works in a sandboxed preview.
 
 | File | What |
@@ -128,6 +160,7 @@ The strip under PMConcept7 is for reviewing and is not part of the design.
 | `layer/np-ui.js` | `PJX.npui`: one renderer per guided section and the parts they share (the look inside, connect a device, sign in, the service cards, copy settings, backup, protect steps), also drawn inside the Project page's plates. |
 | `layer/np.css` | The guided sections and their parts, in Usage's and Home's material. |
 | `concepts/a|b|c.*` | Each concept's layout (C is Split v2). |
+| `concepts/c-v3.css`, `concepts/c-v3.js` | Split v3: the stylesheet that sets Split's page for reading, and the switch (`PJX.read.get()`, `PJX.read.set('v3' \| 'v2')`; messages `{ source: 'pjx-host', cmd: 'read', read }` in and `{ source: 'pjx', type: 'read', read }` out). |
 
 ## What it would touch in Plans
 
