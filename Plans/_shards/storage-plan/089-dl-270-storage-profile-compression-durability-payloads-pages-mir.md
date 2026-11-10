@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L28295-L30376
+Source lines: L28295-L30424
 
-Source SHA256: `e49711dad02cb4b57afbe8b3732e0c5f53e1c7953fc9ec73e9327ff956ae3897`
+Source SHA256: `be51dacede69010d8fcbe99de558a371a062d1e088dcdbf393520fd8f912ebc1`
 
 ---
 
@@ -1501,6 +1501,14 @@ canonical_text: 'Newly authored Storage owner contract for exactly browser.sessi
   capture and disclosure tokens agree. Source adapters, frame validation, complete coverage and authentic generation
   admission remain native obligations; synthetic fixture bytes are explicit owner-codec witnesses, never production
   control encodings. Do not require obsolete birth CURRENT/manifest files to survive beyond SP-278 custody.
+
+  Numbers, sweep 2026-11-10 (SP-1100 beside the unchanged SP-026/SP-236 and SP-278 profiles):
+  browser.session.created sequence_id in the EventRecord, the receipt and every join is exact uint64
+  (storage_uint64), never capped at 2^53 and never part of producer semantics. Joins compare typed values exactly:
+  an integer never equals a float and signed zero is kept. The browser_session_state.v1 source facts keep their
+  physical domains: viewport width and height are u32, scroll position and zoom are finite f64 (an integer only
+  when exactly representable). SP-278 binding values stay uint-only. Retained-original recipe selection under
+  SP-1101 is still to be adopted, with the CV-1101 timestamp profile in the same recipe tuple.
 '
 gui_related: false
 gui_classification_reason: Defines event semantics, metadata and custody for existing behavior; no visual presentation.
@@ -1609,6 +1617,14 @@ canonical_text: 'Newly authored Storage owner contract for exactly browser.sessi
   capture and disclosure tokens agree. Source adapters, frame validation, complete coverage and authentic generation
   admission remain native obligations; synthetic fixture bytes are explicit owner-codec witnesses, never production
   control encodings. Do not require obsolete birth CURRENT/manifest files to survive beyond SP-278 custody.
+
+  Numbers, sweep 2026-11-10 (SP-1100 beside the unchanged SP-026/SP-236 and SP-278 profiles):
+  browser.session.state_changed sequence_id in the EventRecord, the receipt and every join is exact uint64
+  (storage_uint64), never capped at 2^53 and never part of producer semantics. Joins compare typed values exactly:
+  an integer never equals a float and signed zero is kept. The browser_session_state.v1 source facts keep their
+  physical domains: viewport width and height are u32, scroll position and zoom are finite f64 (an integer only
+  when exactly representable). SP-278 binding values stay uint-only. Retained-original recipe selection under
+  SP-1101 is still to be adopted, with the CV-1101 timestamp profile in the same recipe tuple.
 '
 gui_related: false
 gui_classification_reason: Defines event semantics, metadata and custody for existing behavior; no visual presentation.
@@ -1717,6 +1733,14 @@ canonical_text: 'Newly authored Storage owner contract for exactly browser.sessi
   capture and disclosure tokens agree. Source adapters, frame validation, complete coverage and authentic generation
   admission remain native obligations; synthetic fixture bytes are explicit owner-codec witnesses, never production
   control encodings. Do not require obsolete birth CURRENT/manifest files to survive beyond SP-278 custody.
+
+  Numbers, sweep 2026-11-10 (SP-1100 beside the unchanged SP-026/SP-236 and SP-278 profiles):
+  browser.session.closed sequence_id in the EventRecord, the receipt and every join is exact uint64
+  (storage_uint64), never capped at 2^53 and never part of producer semantics. Joins compare typed values exactly:
+  an integer never equals a float and signed zero is kept. The browser_session_state.v1 source facts keep their
+  physical domains: viewport width and height are u32, scroll position and zoom are finite f64 (an integer only
+  when exactly representable). SP-278 binding values stay uint-only. Retained-original recipe selection under
+  SP-1101 is still to be adopted, with the CV-1101 timestamp profile in the same recipe tuple.
 '
 gui_related: false
 gui_classification_reason: Defines event semantics, metadata and custody for existing behavior; no visual presentation.
@@ -1825,6 +1849,14 @@ canonical_text: 'Newly authored Storage owner contract for exactly browser.sessi
   capture and disclosure tokens agree. Source adapters, frame validation, complete coverage and authentic generation
   admission remain native obligations; synthetic fixture bytes are explicit owner-codec witnesses, never production
   control encodings. Do not require obsolete birth CURRENT/manifest files to survive beyond SP-278 custody.
+
+  Numbers, sweep 2026-11-10 (SP-1100 beside the unchanged SP-026/SP-236 and SP-278 profiles):
+  browser.session.promoted sequence_id in the EventRecord, the receipt and every join is exact uint64
+  (storage_uint64), never capped at 2^53 and never part of producer semantics. Joins compare typed values exactly:
+  an integer never equals a float and signed zero is kept. The browser_session_state.v1 source facts keep their
+  physical domains: viewport width and height are u32, scroll position and zoom are finite f64 (an integer only
+  when exactly representable). SP-278 binding values stay uint-only. Retained-original recipe selection under
+  SP-1101 is still to be adopted, with the CV-1101 timestamp profile in the same recipe tuple.
 '
 gui_related: false
 gui_classification_reason: Defines event semantics, metadata and custody for existing behavior; no visual presentation.
@@ -1934,6 +1966,14 @@ canonical_text: 'Newly authored Storage owner contract for exactly browser.sessi
   capture and disclosure tokens agree. Source adapters, frame validation, complete coverage and authentic generation
   admission remain native obligations; synthetic fixture bytes are explicit owner-codec witnesses, never production
   control encodings. Do not require obsolete birth CURRENT/manifest files to survive beyond SP-278 custody.
+
+  Numbers, sweep 2026-11-10 (SP-1100 beside the unchanged SP-026/SP-236 and SP-278 profiles):
+  browser.session.takeover_state_changed sequence_id in the EventRecord, the receipt and every join is exact
+  uint64 (storage_uint64), never capped at 2^53 and never part of producer semantics. Joins compare typed values
+  exactly: an integer never equals a float and signed zero is kept. The browser_session_state.v1 source facts keep
+  their physical domains: viewport width and height are u32, scroll position and zoom are finite f64 (an integer
+  only when exactly representable). SP-278 binding values stay uint-only. Retained-original recipe selection under
+  SP-1101 is still to be adopted, with the CV-1101 timestamp profile in the same recipe tuple.
 '
 gui_related: false
 gui_classification_reason: Defines event semantics, metadata and custody for existing behavior; no visual presentation.
@@ -2050,6 +2090,14 @@ canonical_text: 'Newly authored Storage owner contract for exactly memory.gist_s
   capture and disclosure tokens agree. Source adapters, frame validation, complete coverage and authentic generation
   admission remain native obligations; synthetic fixture bytes are explicit owner-codec witnesses, never production
   control encodings. Do not require obsolete birth CURRENT/manifest files to survive beyond SP-278 custody.
+
+  Numbers, sweep 2026-11-10 (SP-1100 beside the unchanged SP-026/SP-236 and SP-278 profiles):
+  memory.gist_state_changed sequence_id in the EventRecord, the receipt and every join is exact uint64
+  (storage_uint64), never capped at 2^53 and never part of producer semantics. Joins compare typed values exactly:
+  an integer never equals a float and signed zero is kept. The memory source facts keep their exact integer
+  domains: access_count is a current integer of at least 0 and half_life_days null or a current integer of at
+  least 1. SP-278 binding values stay uint-only. Retained-original recipe selection under SP-1101 is still to be
+  adopted, with the CV-1101 timestamp profile in the same recipe tuple.
 '
 gui_related: false
 gui_classification_reason: Defines event semantics, metadata and custody for existing behavior; no visual presentation.

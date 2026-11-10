@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L6713-L7304
+Source lines: L6713-L7313
 
-Source SHA256: `11ab27eb4c7d21e23068deebf14110c9c4bbd35dfb309358b6c474d6384498ea`
+Source SHA256: `bf5abdf8ca2eb428dc249086d76b4dbf02834b98b9e48fd7d714b4cccca0e7f5`
 
 ---
 
@@ -543,9 +543,14 @@ status: accepted
 owner_doc: Plans/Automated_Testing_System.md
 canonical_text: The six exact DCN families have per-family positive, negative and retained-read oracles in Plans/card2_event_fixtures.json,
   checked by python3 scripts/pm_card2_events.py. Every negative is derived from a valid base and changes one logical
-  defect; observational copies are updated together. It must fail exactly its intended guard. The checker removes
-  each real guard independently, requires all and only that guard's negatives to pass, requires every other negative
-  still fail for its own reason, and then restores it. Unresolved schema references fail closed and the command
+  defect; observational copies are updated together. It must fail exactly its intended guard. Since the 2026-11-10
+  sweep every refusal is one named row of a generated Method B guard table (scripts/pm_card2_table_*.py, generator
+  scripts/pm-card2-table-generate.py), each one predicate over one subject (the candidate or the Storage original, the
+  before or the after record). Check 11 is proved by the shared tool scripts/pm_guard_isolation.py through python3
+  scripts/pm-card2-guard-tables.py. Each row needs a single-defect witness refused first at exactly that row, from
+  the fixtures or the coherent witnesses in Plans/card2_event_p2a_cases.json (python3 scripts/pm-card2-p2a-cases.py);
+  a row that an earlier row always refuses first sits alone in an entailed table with its written proof. The shared
+  number corpus runs through the complete checker (python3 scripts/pm-card2-number-corpus.py). Unresolved schema references fail closed and the command
   exits nonzero on any failure or exception; failure-oracle testing rejects an exit code of zero. Native execution,
   source authentication, redb snapshot/CAS, wire durability, first-receipt issuance, crash/restore and actual deletion/access
   enforcement remain NOT_RUN. Synthetic owner/authenticity observations test contract predicates and cannot admit
@@ -560,10 +565,9 @@ canonical_text: The six exact DCN families have per-family positive, negative an
   CURRENT/manifest byte hashes and SP-278 binding commitments. Exact memory before/after semantic deltas cover
   every successful command and automatic mutation; requested/failed/unchanged verifies retain command results only.
   Retained-read positives include replay-only and other originally valid policies after a changed stop generation
-  or absent live subject. Current policy guards never reach those historical originals. Remove each real predicate,
-  prove all its isolated negatives flip, prove all other negatives retain their own refusal, then restore it.
-  Intentional duplicate schema/format/value guards are named and removed together, with an explicit reason;
-  unrelated stale copies or post-state contradictions are never accepted as a duplicate proof.
+  or absent live subject. Current policy guards never reach those historical originals. The shared tool cuts each
+  row alone and requires its own witnesses to pass and every other witness to keep its exact refusal, then restores
+  it; unrelated stale copies or post-state contradictions are never accepted as a witness.
 
 gui_related: false
 gui_classification_reason: Defines event semantics, metadata and custody for existing behavior; no visual presentation.
@@ -573,12 +577,17 @@ depends_on:
 - CV-339
 unblocks: []
 acceptance_criteria:
-- All family/scope positives pass, every negative has one failure, and every removed guard flips only its own negatives.
+- All family/scope positives pass, every negative is refused first at its own row with no other non-entailed row,
+  and every guard-table row is proved by the shared tool or entailed with a written proof.
 - Requested/failed/no-change verification emits no history, and changed live state does not invalidate retained
   genuine history.
 validation_surfaces:
 - python3 scripts/pm_card2_events.py
+- python3 scripts/pm-card2-guard-tables.py --out <dir>
+- python3 scripts/pm-card2-p2a-cases.py --check
+- python3 scripts/pm-card2-number-corpus.py
 - Plans/card2_event_fixtures.json
+- Plans/card2_event_p2a_cases.json
 - Plans/card2_event_payloads.schema.json
 risk_class: duplicate_or_unauthenticated_card2_event_history
 reasoning_tier: high

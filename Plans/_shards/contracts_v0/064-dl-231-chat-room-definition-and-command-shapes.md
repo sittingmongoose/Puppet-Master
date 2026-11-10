@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L24092-L25173
+Source lines: L24092-L25239
 
-Source SHA256: `fad909b75afaa8b8adeaeb9b93fe188224b42158e5a5adf2480b0f56f60d9dfc`
+Source SHA256: `49fadea756be894cd95f3148482f3d1b5fbab406def6445b7792c019ceefe02a`
 
 ---
 
@@ -583,6 +583,17 @@ canonical_text: 'Newly authored owner contract, exactly browser.session.created@
   accepted schema/policy, including genuine compatibility replay-only history, without current live-state or
   current-writer policy guards. Current candidate append/retry still refuses replay_only_not_appendable, and
   withdrawn, forged, foreign or unavailable custody refuses on every path.
+
+  Numbers, sweep 2026-11-10 (CV-1100 beside the unchanged CV-317 and CV-366 recipes): browser.session.created
+  current inputs enter only as exact integer tokens (a -0 token is refused at parsing), and every EventRecord and
+  payload integer slot admits only an exact current integer, so an integral float such as 1.0, 1e0 or -0.0 is
+  refused at the slot. The retry comparison is the shared qualified producer projection (producer_semantic_bytes /
+  producer_semantic_digest); a projection that RFC 8785 cannot carry exactly, for example producer_sequence_id
+  2^53+1, 2^60 or 2^64-1, is refused before any append or owner effect, while 2^53 encodes exactly. Storage-
+  assigned sequence_id follows SP-1100 and stays outside producer semantics. The idempotency, event_id and CV-366
+  key recipes are unchanged. Authenticated selection of a retained original''s write-time recipe under SP-1101,
+  together with the CV-1101 date-time profiles, is still to be adopted; until then this family''s timestamp checks
+  keep their interim grammar.
 '
 gui_related: false
 gui_classification_reason: Defines event semantics, metadata and custody for existing behavior; no visual presentation.
@@ -677,6 +688,17 @@ canonical_text: 'Newly authored owner contract, exactly browser.session.state_ch
   accepted schema/policy, including genuine compatibility replay-only history, without current live-state or
   current-writer policy guards. Current candidate append/retry still refuses replay_only_not_appendable, and
   withdrawn, forged, foreign or unavailable custody refuses on every path.
+
+  Numbers, sweep 2026-11-10 (CV-1100 beside the unchanged CV-317 and CV-366 recipes):
+  browser.session.state_changed current inputs enter only as exact integer tokens (a -0 token is refused at
+  parsing), and every EventRecord and payload integer slot admits only an exact current integer, so an integral
+  float such as 1.0, 1e0 or -0.0 is refused at the slot. The retry comparison is the shared qualified producer
+  projection (producer_semantic_bytes / producer_semantic_digest); a projection that RFC 8785 cannot carry
+  exactly, for example producer_sequence_id 2^53+1, 2^60 or 2^64-1, is refused before any append or owner effect,
+  while 2^53 encodes exactly. Storage-assigned sequence_id follows SP-1100 and stays outside producer semantics.
+  The idempotency, event_id and CV-366 key recipes are unchanged. Authenticated selection of a retained
+  original''s write-time recipe under SP-1101, together with the CV-1101 date-time profiles, is still to be
+  adopted; until then this family''s timestamp checks keep their interim grammar.
 '
 gui_related: false
 gui_classification_reason: Defines event semantics, metadata and custody for existing behavior; no visual presentation.
@@ -771,6 +793,17 @@ canonical_text: 'Newly authored owner contract, exactly browser.session.closed@1
   accepted schema/policy, including genuine compatibility replay-only history, without current live-state or
   current-writer policy guards. Current candidate append/retry still refuses replay_only_not_appendable, and
   withdrawn, forged, foreign or unavailable custody refuses on every path.
+
+  Numbers, sweep 2026-11-10 (CV-1100 beside the unchanged CV-317 and CV-366 recipes): browser.session.closed
+  current inputs enter only as exact integer tokens (a -0 token is refused at parsing), and every EventRecord and
+  payload integer slot admits only an exact current integer, so an integral float such as 1.0, 1e0 or -0.0 is
+  refused at the slot. The retry comparison is the shared qualified producer projection (producer_semantic_bytes /
+  producer_semantic_digest); a projection that RFC 8785 cannot carry exactly, for example producer_sequence_id
+  2^53+1, 2^60 or 2^64-1, is refused before any append or owner effect, while 2^53 encodes exactly. Storage-
+  assigned sequence_id follows SP-1100 and stays outside producer semantics. The idempotency, event_id and CV-366
+  key recipes are unchanged. Authenticated selection of a retained original''s write-time recipe under SP-1101,
+  together with the CV-1101 date-time profiles, is still to be adopted; until then this family''s timestamp checks
+  keep their interim grammar.
 '
 gui_related: false
 gui_classification_reason: Defines event semantics, metadata and custody for existing behavior; no visual presentation.
@@ -865,6 +898,17 @@ canonical_text: 'Newly authored owner contract, exactly browser.session.promoted
   accepted schema/policy, including genuine compatibility replay-only history, without current live-state or
   current-writer policy guards. Current candidate append/retry still refuses replay_only_not_appendable, and
   withdrawn, forged, foreign or unavailable custody refuses on every path.
+
+  Numbers, sweep 2026-11-10 (CV-1100 beside the unchanged CV-317 and CV-366 recipes): browser.session.promoted
+  current inputs enter only as exact integer tokens (a -0 token is refused at parsing), and every EventRecord and
+  payload integer slot admits only an exact current integer, so an integral float such as 1.0, 1e0 or -0.0 is
+  refused at the slot. The retry comparison is the shared qualified producer projection (producer_semantic_bytes /
+  producer_semantic_digest); a projection that RFC 8785 cannot carry exactly, for example producer_sequence_id
+  2^53+1, 2^60 or 2^64-1, is refused before any append or owner effect, while 2^53 encodes exactly. Storage-
+  assigned sequence_id follows SP-1100 and stays outside producer semantics. The idempotency, event_id and CV-366
+  key recipes are unchanged. Authenticated selection of a retained original''s write-time recipe under SP-1101,
+  together with the CV-1101 date-time profiles, is still to be adopted; until then this family''s timestamp checks
+  keep their interim grammar.
 '
 gui_related: false
 gui_classification_reason: Defines event semantics, metadata and custody for existing behavior; no visual presentation.
@@ -959,6 +1003,17 @@ canonical_text: 'Newly authored owner contract, exactly browser.session.takeover
   accepted schema/policy, including genuine compatibility replay-only history, without current live-state or
   current-writer policy guards. Current candidate append/retry still refuses replay_only_not_appendable, and
   withdrawn, forged, foreign or unavailable custody refuses on every path.
+
+  Numbers, sweep 2026-11-10 (CV-1100 beside the unchanged CV-317 and CV-366 recipes):
+  browser.session.takeover_state_changed current inputs enter only as exact integer tokens (a -0 token is refused
+  at parsing), and every EventRecord and payload integer slot admits only an exact current integer, so an integral
+  float such as 1.0, 1e0 or -0.0 is refused at the slot. The retry comparison is the shared qualified producer
+  projection (producer_semantic_bytes / producer_semantic_digest); a projection that RFC 8785 cannot carry
+  exactly, for example producer_sequence_id 2^53+1, 2^60 or 2^64-1, is refused before any append or owner effect,
+  while 2^53 encodes exactly. Storage-assigned sequence_id follows SP-1100 and stays outside producer semantics.
+  The idempotency, event_id and CV-366 key recipes are unchanged. Authenticated selection of a retained
+  original''s write-time recipe under SP-1101, together with the CV-1101 date-time profiles, is still to be
+  adopted; until then this family''s timestamp checks keep their interim grammar.
 '
 gui_related: false
 gui_classification_reason: Defines event semantics, metadata and custody for existing behavior; no visual presentation.
@@ -1053,6 +1108,17 @@ canonical_text: 'Newly authored owner contract, exactly memory.gist_state_change
   accepted schema/policy, including genuine compatibility replay-only history, without current live-state or
   current-writer policy guards. Current candidate append/retry still refuses replay_only_not_appendable, and
   withdrawn, forged, foreign or unavailable custody refuses on every path.
+
+  Numbers, sweep 2026-11-10 (CV-1100 beside the unchanged CV-317 and CV-366 recipes): memory.gist_state_changed
+  current inputs enter only as exact integer tokens (a -0 token is refused at parsing), and every EventRecord and
+  payload integer slot admits only an exact current integer, so an integral float such as 1.0, 1e0 or -0.0 is
+  refused at the slot. The retry comparison is the shared qualified producer projection (producer_semantic_bytes /
+  producer_semantic_digest); a projection that RFC 8785 cannot carry exactly, for example producer_sequence_id
+  2^53+1, 2^60 or 2^64-1, is refused before any append or owner effect, while 2^53 encodes exactly. Storage-
+  assigned sequence_id follows SP-1100 and stays outside producer semantics. The idempotency, event_id and CV-366
+  key recipes are unchanged. Authenticated selection of a retained original''s write-time recipe under SP-1101,
+  together with the CV-1101 date-time profiles, is still to be adopted; until then this family''s timestamp checks
+  keep their interim grammar.
 '
 gui_related: false
 gui_classification_reason: Defines event semantics, metadata and custody for existing behavior; no visual presentation.
