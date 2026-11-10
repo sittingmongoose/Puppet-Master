@@ -1,0 +1,83 @@
+{
+  "method": "B: guard tables",
+  "overall": "PARTIAL",
+  "base": "df1306222bf9efe556bd34726a378177493e28ee",
+  "criteria": [
+    {
+      "criterion": "guard_table_api",
+      "grade": "PASS",
+      "basis": "Unique named rows; predicates return None or their exact refusal code; only active table issuance can refuse."
+    },
+    {
+      "criterion": "python_cut_isolation",
+      "grade": "PASS",
+      "basis": "A cut swaps one table entry. Python source, code objects, functions, defaults, globals, closures and model state are never rewritten or cloned."
+    },
+    {
+      "criterion": "runtime_no_hidden_guards",
+      "grade": "PASS",
+      "basis": "Targeted PASS: exact operation/span exception allowances and verified propagation; registered predicate entry by known identity. B1/B5 probes fail with their specific runtime/protocol failures and zero credit."
+    },
+    {
+      "criterion": "static_no_hidden_guards",
+      "grade": "PARTIAL",
+      "basis": "PARTIAL capability: the outside-predicate scan is an explicit allowlist in which each automatic form has a written totality reason and everything else is an obligation. Name reads follow the language scope rules; module reads are certified from the syntax alone (one top-level unconditional binding before the read), never from the live namespace; class-body name operations are automatic only in a plain class. Exact plumbing declarations still need review."
+    },
+    {
+      "criterion": "guard_negative_matrix",
+      "grade": "PASS",
+      "basis": "Bounded PASS: direct pair enumeration with independently rebuilt equal case graphs and original state snapshots; all tested diagonal/off-diagonal regressions withhold credit correctly."
+    },
+    {
+      "criterion": "per_guard_and_duplicates",
+      "grade": "PASS",
+      "basis": "Bounded PASS: table swaps, peer preservation and restoration operate on certified initial state, and every cut row is checked by guard-call trace: the two uncut runs must agree, and a credited flip must repeat its baseline path through the cut guard. A source that is stable within one process but differs across runs stays a review item."
+    },
+    {
+      "criterion": "state_reset",
+      "grade": "PARTIAL",
+      "basis": "PARTIAL capability: factory/adapter namespaces, function metadata, closure cells and classes are fingerprinted, each case build is certified together with them as one graph, and every module the scan covers must be named so that it is watched. Shared writes require exact reviewed reset seams."
+    },
+    {
+      "criterion": "schema_inventory_and_cuts",
+      "grade": "PARTIAL",
+      "basis": "PARTIAL: schema code is unchanged from the reviewed base; schema traps pass, and the 768-cell inventory replay keeps its 139/530/99 census. These are inventory cells, not full-path proofs."
+    },
+    {
+      "criterion": "corpus",
+      "grade": "PASS",
+      "basis": "266/266 expected observations; all 225 prior traps are byte-equal, plus 41 cycle-7 regressions and controls. 323 evidence assertions pass."
+    },
+    {
+      "criterion": "dg6b_example",
+      "grade": "PARTIAL",
+      "basis": "PARTIAL: checked-in extracted flag phase passes 7/7 guards and 49 cells in normal and optimized Python. Complete DG6B/lane adoption was not rerun or graded."
+    },
+    {
+      "criterion": "adoption",
+      "grade": "NOT_RUN",
+      "basis": "Guide names all 19 lane interfaces; no complete lane adoption, independent clearance, admission or family grade."
+    },
+    {
+      "criterion": "resources_and_scope",
+      "grade": "PASS",
+      "basis": "PASS: serial bounded scratch runs, 1 GiB address-space caps, 1536 MiB RSS gates and fresh 6 GiB available-memory checks. Only tool/traps/example/README/guide/report paths change."
+    },
+    {
+      "criterion": "input_purity",
+      "grade": "PASS",
+      "basis": "Bounded supported data graph: order/alias/identity-aware witnesses plus static mutation/uncertified-call refusal and runtime instruction checkpoints. Both B4 state observations preserved with purity/protocol failure and zero credit."
+    }
+  ],
+  "checks": "reports/event-authority-20261104/GUARDTOOL.checks.json",
+  "family_grades": "NOT_APPLICABLE",
+  "ids_used": [],
+  "evidence": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/B-fix5",
+  "open_soundness_boundary": [
+    "Independent review remains required for predicate honesty, complete paths/consumer bindings, every non-guard reason and duplicate semantic equality.",
+    "Unknown imports, state graphs and predicate effects require explicit reviewed supported seams; they receive no automatic credit.",
+    "No complete DG6B/lane adoption, event-family grade, independent review clearance or governance reseal is claimed."
+  ],
+  "review": "Tool batch 1, Opus pre-check cycle 7",
+  "implementation": "56aa137071b06eb44fa2f62e14e7e9c66017ec93"
+}
