@@ -506,7 +506,9 @@
         const v = rot([(t[0] - tieMid[0]) * sc, (t[1] - tieMid[1]) * sc], pr.a), end = [hang[0] + v[0], hang[1] + v[1] - ease(off) * 70];
         /* the anchor stands over the pivot the prop swings from (pr.ax, with the destination's fit offset): a prop
            kept from the last screen travels to its new slot on that pivot's spring, and its strings travel with it
-           instead of jumping to the new slot's anchor in one frame (r-pick to r-preview's restore) */
+           instead of jumping to the new slot's anchor in one frame (r-pick to r-preview's restore). The painted
+           prop eases its own copy of that offset (aimDx/aimDy); the string stays on this rest suspension, which
+           QA-6 requires the drawn line to pass through. */
         const anch = [pr.ax + (rp.ax - tg.ax) + (t[0] - tieMid[0]) * rp.sc, Lay.anchorY + rp.dy];
         const av = [anch[0] - end[0], anch[1] - end[1]], al = Math.hypot(av[0], av[1]);
         const top = al > 1 ? [anch[0] + av[0] / al * 200, anch[1] + av[1] / al * 200] : [anch[0], anch[1] - 200];
@@ -576,7 +578,12 @@
            their entry opacity or progress cannot change this prop's landing place halfway down. */
         const fit = this.restPose(pr);
         lo *= fit.f; hi *= fit.f; tp *= fit.f; bt *= fit.f;
-        let dx = fit.dx, dy = fit.dy;
+        /* The destination offset is where the prop will hang, not where it hangs this frame. Painting a newly
+           fitted offset in one frame snaps it while the spring is still at the old length: the head corridor
+           (88f885da8e) lifts Glass Light's house about 170px when its slot lengthens, and that lift was applied
+           as a position. step() eases aimDx/aimDy on the prop spring; this frame keeps the offset already under way. */
+        if (pr.aimDx == null) { pr.aimDx = fit.dx; pr.aimDy = fit.dy; pr.aimDxv = 0; pr.aimDyv = 0; }
+        let dx = pr.aimDx, dy = pr.aimDy;
         // A swing still stays inside the pane; the incoming prop may pass its top edge on its strings.
         if (hx + hi + dx > v.x1 - pad) dx = v.x1 - pad - (hx + hi);
         if (hx + lo + dx < v.x0 + pad) dx = v.x0 + pad - (hx + lo);
@@ -1285,7 +1292,10 @@
       this.props.forEach((pr, id) => {
         const tg = this.propTarget(pr);
         if (pr.state === 'out' && !red) this.holdUnder(pr, tg);
-        if (red) { pr.ax = tg.ax; pr.len = tg.len; pr.a = 0; pr.av = 0; pr.op = tg.op; pr.scale = (pr.spec.scale || 1); }
+        if (red) {
+          pr.ax = tg.ax; pr.len = tg.len; pr.a = 0; pr.av = 0; pr.op = tg.op; pr.scale = (pr.spec.scale || 1);
+          if (pr.state !== 'out' && pr.spec.stack == null) { const pose = this.restPose(pr); pr.aimDx = pose.dx; pr.aimDy = pose.dy; pr.aimDxv = 0; pr.aimDyv = 0; }
+        }
         else {
           const axA = F.pk * (tg.ax - pr.ax) - F.pc * pr.axv; pr.axv += axA * dt; pr.ax += pr.axv * dt;
           // a block set on the stack is lowered, not dropped: a softer, critically damped spring, so it slows into
@@ -1302,8 +1312,23 @@
           const qA = -340 * (pr.sq || 0) - 17 * (pr.sqv || 0); pr.sqv = (pr.sqv || 0) + qA * dt; pr.sq = (pr.sq || 0) + pr.sqv * dt;
           const sA = 260 * ((pr.spec.scale || 1) - pr.scale) - 16 * pr.sv; pr.sv += sA * dt; pr.scale += pr.sv * dt;
           pr.op += (tg.op - pr.op) * Math.min(1, dt * 8);
+          /* A refitted destination moves this offset on the same spring as the slot. The painted prop
+             follows aimDx/aimDy, so a target change re-aims instead of teleporting. */
+          if (pr.state !== 'out' && pr.spec.stack == null) {
+            const pose = this.restPose(pr);
+            if (pr.aimDx == null) { pr.aimDx = pose.dx; pr.aimDy = pose.dy; pr.aimDxv = 0; pr.aimDyv = 0; }
+            else {
+              const dxA = F.pk * (pose.dx - pr.aimDx) - F.pc * pr.aimDxv; pr.aimDxv += dxA * dt; pr.aimDx += pr.aimDxv * dt;
+              const dyA = F.pk * (pose.dy - pr.aimDy) - F.pc * pr.aimDyv; pr.aimDyv += dyA * dt; pr.aimDy += pr.aimDyv * dt;
+            }
+          }
         }
-        if (!pr.settled && pr.state !== 'out' && Math.abs(pr.len - tg.len) < 2.5 && Math.abs(pr.lenv) < 30 && Math.abs(pr.ax - tg.ax) < 2.5 && Math.abs(pr.axv) < 30) this.settle(pr);
+        let arrived = Math.abs(pr.len - tg.len) < 2.5 && Math.abs(pr.lenv) < 30 && Math.abs(pr.ax - tg.ax) < 2.5 && Math.abs(pr.axv) < 30;
+        if (arrived && pr.aimDx != null && pr.spec.stack == null) {
+          const pose = this.restPose(pr);
+          arrived = Math.abs(pr.aimDx - pose.dx) < 2.5 && Math.abs(pr.aimDy - pose.dy) < 2.5 && Math.abs(pr.aimDxv) < 30 && Math.abs(pr.aimDyv) < 30;
+        }
+        if (!pr.settled && pr.state !== 'out' && arrived) this.settle(pr);
         if (pr.spec.ground && !pr.landed && (red || (Math.abs(pr.len - tg.len) < 1.6 && Math.abs(pr.lenv) < 22))) { pr.landed = true; pr.landT = this.t; this.touchdown(pr); if (this.onLanded) this.onLanded(pr); }
         if (pr.state === 'out' && (pr.len < 0 || pr.held) && (red || pr.op < .05)) { pr.el.remove(); pr.strs.forEach((s) => s.remove()); this.props.delete(id); }
       });
