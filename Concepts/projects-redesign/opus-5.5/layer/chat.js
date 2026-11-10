@@ -34,6 +34,7 @@
   /* ------------------------------------------------------------------ going to a conversion (concept C draws both paths) */
   function go(kind, id) {
     if (!id) return;
+    flyMenuClose(); closeFlyout();
     // the chooser and both paths live on the Projects page, in Split v2
     if (W.PM_PAGES && W.PM_PAGES.current !== 'projects') W.PM_PAGES.go('projects');
     const send = () => PJX.emit('need-chat', { id, kind });
@@ -56,13 +57,30 @@
       { label: w('nc.new.cap'), items: [
         { label: w('nc.new.here', { project: here }), icon: 'folder', meta: w('nc.new.hereMeta'), run: () => newThreadHere() },
         { label: w('nc.new.none'), icon: 'chat', meta: w('nc.new.noneMeta', { computer: comp('here').name }), run: () => newDraft() }] },
-      { label: w('nc.new.other'), items: others.map((p) => ({ label: p.name, icon: p.glyph || 'folder', meta: p.where.label, run: () => PJX.toast(w('nc.new.otherToast', { project: p.name }), w('nc.new.otherToastText', { project: p.name }), 'info') })) }
+      { label: w('nc.new.other'), items: others.map((p) => ({ label: p.name, icon: p.glyph || 'folder', meta: p.where.label, run: () => openOther(p) })) }
     ], { label: w('nc.new.menu'), align: 'start' });
+  }
+
+  /* (ACD-508) another Project: switch to it through PMConcept7's own project switcher, then its own New thread opens an
+     empty chat there (the concept has one project tab, the title-bar box, so the switch happens in it) */
+  function openOther(p) {
+    close();
+    PJX.setActive(p.id);
+    setTimeout(() => {
+      showChat();
+      const b = ROOT() && ROOT().querySelector('.chat-header [data-action="new-thread"]');
+      if (b) b.click();
+      PJX.toast(w('nc.new.otherDone', { project: p.name }), w('nc.new.otherDoneText', { project: p.name }), 'success');
+    }, 250);
   }
 
   /* ------------------------------------------------------------------ the chat view, drawn over the chat stage */
   let V = null;   // { id, draft, comp, notice, text }
   function openChat(id) { if (!chatOf(id)) return; V = { id, draft: false, notice: null, text: '' }; showChat(); closeFlyout(); paint(); later(() => focusIn('.pjx-npc-title')); }
+  /* (ACD-511) a chat that was made a project or moved into one opens in its new place: a message or an edited message
+     there ends Undo, as the report says */
+  function openMoved(id) { if (!chatOf(id)) return; V = { id, draft: false, moved: true, notice: null, text: '' }; showChat(); closeFlyout(); paint(); later(() => focusIn('.pjx-npc-input')); }
+  const movedRec = (id) => { const m = (F().moved || {})[id]; if (m) return { rec: m, project: PJX.get(m.into) }; const pid = (F().converted || {})[id], p = pid && PJX.get(pid); return p && p.fromChatRec ? { rec: p.fromChatRec, project: p } : null; };
   function newDraft() { V = { id: null, draft: true, comp: 'here', notice: null, text: '' }; showChat(); closeFlyout(); paint(); later(() => focusIn('.pjx-npc-input')); }
   /* History is a flyout in the chat's overlay layer: it closes when a chat is chosen from it, unless it is pinned */
   const flyout = () => D.querySelector('#pmOverlayRoot .history-flyout, .history-flyout');
@@ -142,7 +160,11 @@
       h('div.pjx-notice-acts', null, ...acts, not)));
   }
   function send() {
-    const inp = ROOT() && ROOT().querySelector('.pjx-npc-input'); const t = String((inp && inp.value) || '').trim(); if (!t) return;
+    if (!V || V.sending) return;
+    const inp = D.querySelector('.pjx-npc .pjx-npc-input');
+    const t = String(V.text != null && V.text !== '' ? V.text : (inp && inp.value) || '').trim(); if (!t) return;
+    // cleared before anything redraws, so the words can't come back and can't be sent twice
+    V.sending = true; V.text = ''; if (inp) inp.value = '';
     if (V.draft) {
       // the first message mints the chat and fixes its Computer (ACD-508); talk-only, so no folder yet
       const n = (F().chats || []).length + 1, title = t.split(/\s+/).slice(0, 5).join(' ').replace(/[.?!,]+$/, '');
@@ -150,13 +172,18 @@
         messages: 2, attachments: 0, first: t, last: w('nc.reply', { computer: comp(V.comp).name }), fileList: [], workedIn: null, outside: [], folders: [], prefs: { mode: 'Agent', persona: 'Product Manager', model: 'Claude Sonnet 4.6' }, accounts: ['claude'], grants: [], goals: [], schedules: [], approvals: [],
         transcript: [['user', t], ['assistant', w('nc.reply', { computer: comp(V.comp).name })]] };
       F().chats = (F().chats || []).concat([c]);
-      V = { id: c.id, draft: false, notice: null };
+      V = { id: c.id, draft: false, notice: null, text: '', focusInput: true };
       PJX.emit('change', { why: 'chat-new' });
     } else {
-      const c = chatOf(V.id); c.transcript = (c.transcript || []).concat([['user', t], ['assistant', w('nc.replyMore')]]); c.messages = (c.messages || 0) + 2; c.last = t; c.when = 'just now';
-      // a new message ends Undo for a chat moved back out of a project (ACD-511); here it only counts the turn
+      const c = chatOf(V.id), editing = V.editIdx != null;
+      if (editing) { c.transcript = c.transcript.slice(0, V.editIdx).concat([['user', t], ['assistant', w('nc.replyMore')]]); V.editIdx = null; }
+      else { c.transcript = (c.transcript || []).concat([['user', t], ['assistant', w('nc.replyMore')]]); c.messages = (c.messages || 0) + 2; }
+      c.last = t; c.when = 'just now';
+      // in its project, the first new message (or an edited one) ends Undo, enforced here and shown on the report (ACD-511)
+      const mr = V.moved && movedRec(c.id);
+      if (mr && !mr.rec.ended) { mr.rec.ended = editing ? w('cv.undo.editMsg', { chat: c.title }) : w('cv.undo.newMsg', { chat: c.title }); PJX.emit('change', { why: 'undo-ended' }); }
+      V.sending = false; V.focusInput = true;
     }
-    if (inp) inp.value = '';
     paint(); later(() => focusIn('.pjx-npc-input'));
   }
   function paint() {
@@ -165,7 +192,9 @@
     let el = D.querySelector('.pjx-npc');
     if (!V || (!V.draft && !chatOf(V.id))) { if (el) el.remove(); r.removeAttribute('data-pjx-npc'); V = null; return; }
     const c = V.draft ? null : chatOf(V.id);
-    if (c && gone(c)) { V = null; if (el) el.remove(); r.removeAttribute('data-pjx-npc'); return; }
+    if (c && gone(c) && !V.moved) { V = null; if (el) el.remove(); r.removeAttribute('data-pjx-npc'); return; }
+    if (c && V.moved && !gone(c)) V.moved = false;
+    const mr = c && V.moved ? movedRec(c.id) : null;
     // a narrow window folds PMConcept7's chat to a sliver: then the chat opens as a panel over the page's right side
     const floating = r.getBoundingClientRect().width < 300, host = floating ? D.body : stage;
     if (el && el.parentElement !== host) { host.appendChild(el); }
@@ -183,16 +212,16 @@
     const back = h('button.icon-button.pjx-npc-back', { type: 'button', 'data-c-key': 'npc:back', html: icon('chevron-left', 16) });
     tip(back, w('nc.back', { project: projectName() }), 'Esc');
     back.addEventListener('click', () => close());
-    const place = h('button.pjx-npc-place', { type: 'button', 'data-c-key': 'npc:place', 'aria-haspopup': 'menu', 'data-cmd': V.draft ? 'cmd.chat.place.select (ACD-508)' : 'Where: the two conversions (ACD-510)' },
-      h('span', { html: icon('chat', 13), 'aria-hidden': 'true' }), h('span', { text: placeWord(c) }), h('span', { html: icon('chevron-down', 12), 'aria-hidden': 'true' }));
-    tip(place, w('nc.whereTip'), V.draft ? w('nc.whereDraft') : w('nc.whereFixed', { computer: comp(c.runsOn).name }));
-    place.addEventListener('click', () => placeMenu(place));
+    const place = h('button.pjx-npc-place', { type: 'button', 'data-c-key': 'npc:place', 'aria-haspopup': mr ? null : 'menu', 'data-cmd': V.draft ? 'cmd.chat.place.select (ACD-508)' : 'Where: the two conversions (ACD-510)' },
+      h('span', { html: icon(mr ? 'folder' : 'chat', 13), 'aria-hidden': 'true' }), h('span', { text: mr && mr.project ? w('nc.placeIn', { project: mr.project.name, computer: comp(mr.project.home || 'here').name }) : placeWord(c) }), mr ? null : h('span', { html: icon('chevron-down', 12), 'aria-hidden': 'true' }));
+    tip(place, w('nc.whereTip'), mr ? w('nc.whereMoved') : V.draft ? w('nc.whereDraft') : w('nc.whereFixed', { computer: comp(c.runsOn).name }));
+    place.addEventListener('click', () => { if (mr && mr.project) { if (W.PM_PAGES) W.PM_PAGES.go('projects'); setTimeout(() => PJX.emit('need-chat', { id: c.id, kind: 'project', project: mr.project.id }), 60); } else placeMenu(place); });
     // History stays one press away while a no-project chat is open (its flyout opens over this view)
     const hist = h('button.icon-button.pjx-npc-history', { type: 'button', 'data-c-key': 'npc:history', html: icon('history', 16) });
     tip(hist, w('nc.history'), w('nc.historyTip'));
     hist.addEventListener('click', () => { const t = ROOT() && ROOT().querySelector('.chat-header [data-action="toggle-history"]'); if (t) t.click(); });
     const kids = [back, hist, h('div.chat-title.pjx-npc-titles', null, h('span.pmx-chat-title.pjx-npc-title', { tabindex: '-1', text: c ? c.title : w('nc.draftTitle') }), place), h('span.chat-head-spacer')];
-    if (c) {
+    if (c && !mr) {
       const make = h('button.pjx-btn.pjx-npc-make', { type: 'button', 'data-c-key': 'npc:make', 'aria-label': w('nc.chooser'), 'data-cmd': 'ACD-510 chooser (neither preselected)' }, h('span.pjx-np-bico', { html: icon('folder-plus', 14), 'aria-hidden': 'true' }), h('span', { text: w('nc.chooser') }));
       tip(make, w('nc.chooser'), w('nc.chooserTip'));
       make.addEventListener('click', () => go('chooser', c.id));
@@ -202,30 +231,82 @@
       kids.push(make, more);
     }
     const head = h('div.chat-header.pjx-npc-head', null, ...kids);
-    const folder = c ? (c.folder ? h('div.pjx-npc-folder', null, h('span', { html: icon('folder', 13), 'aria-hidden': 'true' }), h('span.pjx-np-code', { text: c.folder, 'data-pmh-tag': 'literal' }), h('span', { text: ' · ' + w('nc.files', { n: c.files, computer: comp(c.runsOn).name }) }))
+    const folder = mr ? h('div.pjx-npc-folder', { 'data-undo': mr.rec.ended ? 'ended' : 'open' }, h('span', { html: icon('history', 13), 'aria-hidden': 'true' }), h('span', { text: mr.rec.ended ? w('cv.undo.ended', { reason: mr.rec.ended }) : w('nc.movedLine', { until: mr.rec.until }) }))
+      : c ? (c.folder ? h('div.pjx-npc-folder', null, h('span', { html: icon('folder', 13), 'aria-hidden': 'true' }), h('span.pjx-np-code', { text: c.folder, 'data-pmh-tag': 'literal' }), h('span', { text: ' · ' + w('nc.files', { n: c.files, computer: comp(c.runsOn).name }) }))
       : h('div.pjx-npc-folder', null, h('span', { html: icon('chat', 13), 'aria-hidden': 'true' }), h('span', { text: w('nc.talkOnly', { slug: c.slug, computer: comp(c.runsOn).name }) })))
       : h('div.pjx-npc-folder', null, h('span', { html: icon('info', 13), 'aria-hidden': 'true' }), h('span', { text: w('nc.draftLine', { computer: comp(V.comp).name }) }));
     const inner = h('div.transcript-inner.pjx-npc-inner');
     if (c) {
-      (c.transcript || []).forEach(([role, text]) => inner.appendChild(msg(role, text)));
+      const lastUser = (c.transcript || []).map((x) => x[0]).lastIndexOf('user');
+      (c.transcript || []).forEach(([role, text], i) => {
+        const m = msg(role, text);
+        // an edit of your last message, in the moved chat: it ends Undo too
+        if (mr && i === lastUser) { const eb = h('button.pjx-link.pjx-npc-edit', { type: 'button', 'data-c-key': 'npc:edit', text: w('nc.edit') }); eb.addEventListener('click', () => { V.editIdx = i; V.text = text; V.focusInput = true; paint(); }); m.appendChild(eb); }
+        inner.appendChild(m);
+      });
       (c.approvals || []).forEach((a) => inner.appendChild(approvalCard(c, a)));
       (c.goals || []).forEach((g) => inner.appendChild(h('div.pjx-npc-divider', { role: 'note' }, h('span', { text: w('nc.goal', { goal: g.title }) }))));
       (c.schedules || []).forEach((s) => inner.appendChild(h('div.pjx-npc-divider', { role: 'note' }, h('span', { text: w('nc.schedule', { what: s.title, when: s.when }) }))));
+      if (mr) inner.appendChild(msg('system', w('cv.rep.divider', { project: mr.project ? mr.project.name : '', when: mr.rec.at || '' }).replace(/^In the chat: |[“”]/g, '')));
       if (c.back) inner.appendChild(msg('system', c.back));
     } else inner.appendChild(h('div.pjx-npc-empty', null, h('b', { text: w('nc.draftEmpty') }), h('span', { text: w('nc.draftEmptySub', { computer: comp(V.comp).name }) })));
     const tx = h('div.transcript.pjx-npc-tx', null, inner);
     // (its own classes: PMConcept7's chat claims its composer classes for its own state)
     const ta = h('textarea.pjx-npc-input', { rows: '2', 'aria-label': w('nc.composer'), placeholder: c ? w('nc.composerPh', { chat: c.title }) : w('nc.composerDraft') });
+    ta.value = V.text || '';
+    ta.addEventListener('input', () => { V.text = ta.value; });
+    ta.addEventListener('focus', () => { V.focusInput = true; });
+    ta.addEventListener('blur', () => { V.focusInput = false; });
     ta.addEventListener('keydown', (e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); } });
     const sendB = h('button.pjx-btn.is-primary.pjx-npc-send', { type: 'button', 'data-c-key': 'npc:send' }, h('span.pjx-np-bico', { html: icon('send', 14), 'aria-hidden': 'true' }), h('span', { text: w('nc.send') }));
     sendB.addEventListener('click', () => send());
-    const composer = h('div.pjx-npc-comp', null, c ? needsRow(c) : null, h('div.pjx-npc-box', null, h('div.pjx-npc-field', null, ta), h('div.pjx-npc-tools', null, h('span.pjx-npc-hint', { text: c ? w('nc.composerHint', { computer: comp(c.runsOn).name }) : w('nc.composerHintDraft') }), sendB)));
-    const prevText = (el.querySelector('.pjx-npc-input') || {}).value;
+    const composer = h('div.pjx-npc-comp', null, c && !mr ? needsRow(c) : null, h('div.pjx-npc-box', null, h('div.pjx-npc-field', null, ta), h('div.pjx-npc-tools', null, h('span.pjx-npc-hint', { text: c ? w('nc.composerHint', { computer: comp(c.runsOn).name }) : w('nc.composerHintDraft') }), sendB)));
     const hadFocus = el.contains(D.activeElement) && D.activeElement.getAttribute && D.activeElement.getAttribute('data-c-key');
     el.replaceChildren(h('div.pmu-shell.pjx-npc-shell', null, head, folder, tx, composer));
-    if (prevText) ta.value = prevText;
-    if (hadFocus) { const f = el.querySelector('[data-c-key="' + hadFocus + '"]'); if (f) f.focus({ preventScroll: true }); }
+    // the words and the caret survive a redraw (and a re-mount, when PMConcept7 redraws its chat stage)
+    if (V.focusInput) { try { ta.focus({ preventScroll: true }); ta.setSelectionRange(ta.value.length, ta.value.length); } catch (e) { /* not focusable yet */ } }
+    else if (hadFocus) { const f = el.querySelector('[data-c-key="' + hadFocus + '"]'); if (f) f.focus({ preventScroll: true }); }
     tx.scrollTop = tx.scrollHeight;
+  }
+
+  /* ------------------------------------------------------------------ a menu that lives inside the History flyout
+     (the shared menu layer sits under the chat's overlay layer, so a menu from a flyout row is drawn in the flyout) */
+  let FM = null;
+  function flyMenuClose(refocus) {
+    if (!FM) return;
+    const a = FM.anchor; FM.el.remove(); D.removeEventListener('pointerdown', FM.out, true); a.setAttribute('aria-expanded', 'false'); FM = null;
+    if (refocus && a.isConnected) a.focus({ preventScroll: true });
+  }
+  function flyMenu(anchor, items, label) {
+    if (FM && FM.anchor === anchor) { flyMenuClose(true); return; }
+    flyMenuClose();
+    const fl = anchor.closest('.history-flyout') || D.body;
+    const el = h('div.pjx-flymenu.pmw-scope', { role: 'menu', 'aria-label': label });
+    const btns = items.map((it, i) => {
+      const b = h('button.pjx-flymenu-item', { type: 'button', role: 'menuitem', tabindex: '-1', 'data-c-key': 'npg:mi:' + i }, h('span.pjx-flymenu-ico', { html: icon(it.icon || 'chat', 14), 'aria-hidden': 'true' }), h('span.pjx-flymenu-text', null, h('b', { text: it.label }), it.meta ? h('span', { text: it.meta }) : null));
+      b.addEventListener('click', (e) => { e.stopPropagation(); flyMenuClose(); it.run(); });
+      return b;
+    });
+    btns.forEach((b) => el.appendChild(b));
+    el.addEventListener('keydown', (e) => {
+      const i = btns.indexOf(D.activeElement);
+      if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); e.stopPropagation(); btns[(i + (e.key === 'ArrowDown' ? 1 : btns.length - 1)) % btns.length].focus(); }
+      else if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); flyMenuClose(true); }
+      else if (e.key === 'Tab') flyMenuClose();
+    });
+    fl.appendChild(el);
+    const fixed = fl === D.body || getComputedStyle(fl).position === 'static';
+    const fr = fixed ? { left: 0, top: 0, bottom: W.innerHeight } : fl.getBoundingClientRect(), ar = anchor.getBoundingClientRect(), mw = el.offsetWidth, mh = el.offsetHeight;
+    let top = ar.bottom - fr.top + 4;
+    if (ar.bottom + 4 + mh > fr.bottom - 6) top = ar.top - fr.top - mh - 4;
+    el.style.position = fixed ? 'fixed' : 'absolute';
+    el.style.left = Math.max(6, ar.right - fr.left - mw) + 'px';
+    el.style.top = Math.max(6, top) + 'px';
+    anchor.setAttribute('aria-expanded', 'true');
+    const out = (e) => { if (!el.contains(e.target) && e.target !== anchor) flyMenuClose(); };
+    D.addEventListener('pointerdown', out, true);
+    FM = { el, anchor, out };
+    btns[0].focus({ preventScroll: true });
   }
 
   /* ------------------------------------------------------------------ History: the No project group */
@@ -245,7 +326,7 @@
       row.addEventListener('click', () => openChat(c.id));
       const more = h('button.icon-button.pjx-npg-more', { type: 'button', 'data-c-key': 'npg:more:' + c.id, 'aria-haspopup': 'menu', html: icon('more', 14) });
       tip(more, w('nc.more.label'), c.title);
-      more.addEventListener('click', (e) => { e.stopPropagation(); PJX.menu(more, [{ items: [{ label: w('nc.open'), icon: 'chat', run: () => openChat(c.id) }] }, { items: named(c.id) }], { label: w('nc.more.menu', { chat: c.title }) }); });
+      more.addEventListener('click', (e) => { e.stopPropagation(); flyMenu(more, [{ label: w('nc.open'), icon: 'chat', run: () => openChat(c.id) }].concat(named(c.id)), w('nc.more.menu', { chat: c.title })); });
       sec.appendChild(h('div.pjx-npg-item', null, row, more));
     });
     return sec;
@@ -355,5 +436,5 @@
   }
   start(0);
 
-  PJX.chat = { list, chatOf, openChat, newDraft, close, go, newMenu, ensure, view: () => V };
+  PJX.chat = { list, chatOf, openChat, openMoved, newDraft, close, go, newMenu, ensure, view: () => V };
 })(window);

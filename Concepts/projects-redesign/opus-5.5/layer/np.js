@@ -487,8 +487,13 @@
   /* only picked content moves (ACD-510, GUIDED-FLOWS 7.05): every file starts picked, each can be left in the chat folder */
   const chatPicked = (s) => { const c = chatOf(s.d.chat.id), pk = s.d.chat.pick; return c ? (c.fileList || []).filter((f) => !pk || pk[f] !== false) : []; };
   const waitingApprovals = (c) => (c && c.approvals ? c.approvals.filter((a) => ((F().approvals || {})[a.id] || a.state) === 'waiting') : []);
-  const untilWord = () => { const t = new Date(Date.now() + 7 * 864e5); return t.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) + ', ' + t.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }); };
-  const nowWord = () => new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+  /* the concept's clock: the demo can move it forward to pass an Undo deadline (ACD-511) */
+  const clockNow = () => Date.now() + ((F() && F().clockDays) || 0) * 864e5;
+  const untilTs = () => clockNow() + 7 * 864e5;
+  const untilWord = (ts) => { const t = new Date(ts || untilTs()); return t.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) + ', ' + t.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }); };
+  const nowWord = () => new Date(clockNow()).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+  /* why Undo has ended, or null: the first new message, work or changed moved file, or the deadline passing */
+  const undoEnded = (rec) => (!rec ? null : rec.ended ? rec.ended : rec.untilTs && clockNow() > rec.untilTs ? w('cv.undo.expired', { until: rec.until }) : null);
   /* the live preview of a conversion, family by family (ACD-510; GUIDED-FLOWS 7.10, 7.11): settings, AI accounts, permissions,
      active work, online effects and the Undo boundary. dest: { project (an existing one) or name, computer, like, remote } */
   function convEffects(c, dest) {
@@ -498,7 +503,9 @@
     const set = [];
     if (p) { const own = ((ENV.projectSettings[p.id] || {}).own || []).slice(0, 3); if (own.length) own.forEach((r) => set.push({ key: 'info', text: w('cv.set.diff', { label: r[2], value: r[4], project: pn, usual: r[3] }) })); else set.push({ key: 'complete', text: w('cv.set.same', { project: pn }) }); }
     else set.push({ key: 'info', text: w('cv.set.usual', { like: dest.like ? ' like ' + dest.like : '', prefs }) });
-    const acc = (c.accounts || []).map((id) => { const a = ENV.accounts.find((x) => x.id === id); if (!a) return null; const on = a.on[cid] || 'none'; return on === 'ready' ? { key: 'complete', text: w('cv.acc.ready', { name: a.name, computer: cn }) } : { key: 'waiting', text: w('cv.acc.signin', { name: a.name, computer: cn }) }; }).filter(Boolean);
+    const hosts = p ? (PJX.work ? PJX.work.policy(p).allowed : [cid]) : (dest.allowed || [cid]);
+    const acc = [];
+    (c.accounts || []).forEach((id) => { const a = ENV.accounts.find((x) => x.id === id); if (!a) return; hosts.forEach((h0) => { const on = a.on[h0] || 'none', hn = comp(h0).name; acc.push(on === 'ready' ? { key: 'complete', text: w('cv.acc.ready', { name: a.name, computer: hn }) } : { key: 'waiting', text: w('cv.acc.signin', { name: a.name, computer: hn }) }); }); });
     const perms = (c.grants || []).map((g) => ({ key: 'info', text: w('cv.perm.stay', { grant: g, project: pn }) }));
     const work = [];
     (c.goals || []).forEach((g) => work.push({ key: 'paused', text: w('cv.work.goal', { goal: g.title, project: pn }) }));
@@ -710,12 +717,24 @@
      checked first on another computer, keys never sent (S11) */
   function accountRows(s) {
     const p = likeSrc(s); if (!p) return [];
-    const S = settingsOf(p.id), L = s.d.like, c = s.d.runsOn, same = c === (p.runsOn || 'here'), cn = comp(c).name;
+    const S = settingsOf(p.id), L = s.d.like;
+    const hosts = PJX.work ? PJX.work.npAllowed(s) : [s.d.runsOn];
     const ids = S.uses.slice();
     if (S.things.some((t) => t.kind === 'mcp' && picked(L.things, t.id))) S.things.filter((t) => t.kind === 'mcp').forEach((t) => { if (ENV.accounts.some((a) => a.id === t.id)) ids.push(t.id); });
+    const RANK = { cannot_move: 0, sign_in_there: 1, key_needed: 1, expired: 2, not_installed: 3, check_there: 4, key_sent: 5, ready_here: 6, later: 7 };
     return ids.map((id) => {
       const a = ENV.accounts.find((x) => x.id === id); if (!a) return null;
-      const choice = L.per[id] || 'same', on = a.on[c] || 'none';
+      const choice = L.per[id] || 'same';
+      // one readiness per allowed Computer; the row says the worst first and names every Computer that needs something
+      const per = hosts.map((c) => Object.assign({ c }, oneAccount(a, choice, c, c === (p.runsOn || 'here'), comp(c).name, L)));
+      per.sort((x, y) => RANK[x.state] - RANK[y.state]);
+      const out = Object.assign({}, per[0]);
+      if (hosts.length > 1 && choice !== 'later') { const need = per.filter((x) => x.state !== 'ready_here' && x.state !== 'check_there'); out.word = need.length ? need.map((x) => x.word).join(' · ') : w('np.acct.allReady', { n: hosts.length }); out.per = per; }
+      return Object.assign({ id, name: a.name, account: a.account, kind: a.kind, choice, mcp: S.things.some((t) => t.id === id) }, out);
+    }).filter(Boolean);
+  }
+  function oneAccount(a, choice, c, same, cn, L) {
+      const on = a.on[c] || 'none';
       let out;
       if (choice === 'later') out = { key: 'off', state: 'later', word: w('np.like.acctLaterRow') };
       else if (on === 'expired') out = { key: 'warning', state: 'expired', word: w('np.acct.expired', { computer: cn }) };
@@ -724,8 +743,7 @@
       else if (on === 'ready') out = same ? { key: 'complete', state: 'ready_here', word: w('np.acct.ready', { computer: cn }), why: w('np.acct.readyWhy') } : { key: 'reviewing', state: 'check_there', word: w('np.acct.checked', { computer: cn }), why: w('np.acct.checkedWhy', { computer: cn }) };
       else if (a.kind === 'key') out = SETTINGS.sendKeys && L.sendKeys ? { key: 'info', state: 'key_sent', word: w('np.acct.keySend', { computer: cn }) } : { key: 'waiting', state: 'key_needed', word: w('np.acct.key', { computer: cn }), why: w('np.acct.keyWhy', { computer: cn }) };
       else out = { key: 'waiting', state: 'sign_in_there', word: w('np.acct.signin', { computer: cn }), why: w('np.acct.signinWhy', { computer: cn }) };
-      return Object.assign({ id, name: a.name, account: a.account, kind: a.kind, choice, mcp: S.things.some((t) => t.id === id) }, out);
-    }).filter(Boolean);
+      return out;
   }
   const needsAfter = (s) => (s.d.like.accounts ? accountRows(s).filter((r) => /sign_in_there|key_needed|expired|not_installed/.test(r.state)).length : 0);
 
@@ -1331,7 +1349,7 @@
     const inside0 = d.way === 'online' ? (inside(s) || {}).result || {} : info || {};
     return {
       id: slugId + '-' + PJX.uid('n').split('-').pop(), name, glyph, active: false, lifecycle, order: PJX.all().length, runsOn: d.runsOn,
-      home: d.runsOn, work: { mode: (d.work && d.work.mode) || 'auto', by: d.work && d.work.mode === 'chosen' ? 'Jared' : null, allowed: PJX.work ? PJX.work.npAllowed(s) : [d.runsOn] }, workers: [],
+      home: d.runsOn, work: { mode: (d.work && d.work.mode) || 'auto', chosen: d.work && d.work.mode === 'chosen' && PJX.work ? PJX.work.npChosen(s) : null, by: d.work && d.work.mode === 'chosen' ? 'Jared' : null, allowed: PJX.work ? PJX.work.npAllowed(s) : [d.runsOn] }, workers: [],
       stack: (info && info.stack) || [], where, opened: 'Just added', openedRank: -0.5,
       activity: listed ? { key: 'idle', word: 'Ready', text: d.way === 'restore' ? 'Restored from a backup · plan or open it' : 'Ready to plan in the Planning Wizard', at: 'just now', runs: 0 } : { key: 'waiting', word: 'Setup didn’t finish', text: '', at: 'just now', runs: 0 },
       history: { backend, branch, defaultBranch: it0 === 'contribute' || it0 === 'offer' ? 'main' : null, worktrees: listed ? 1 : 0, changed: (info && info.changed) || 0, submodules: inside0.submodules || null, lfs: inside0.lfs || null, hooks: inside0.hooks || null, filesafe: d.filesafe },
@@ -1340,7 +1358,7 @@
       copied: src ? { from: src.name, settings: counts.own, things: counts.things, accounts: counts.accounts, headers: counts.headers, files: counts.files, sel: counts.sel } : null,
       needsSignin: listed ? needsAfter(s) : 0,
       fromChat: d.way === 'chat' && c ? c.title : null,
-      fromChatRec: d.way === 'chat' && c ? { chat: c.id, title: c.title, at: nowWord(), until: untilWord(), ended: null, files: chatFiles(s) === 'move' ? chatPicked(s) : [], held: (c.goals || []).map((g) => g.title).concat((c.schedules || []).map((x) => x.title)) } : null
+      fromChatRec: d.way === 'chat' && c ? { chat: c.id, title: c.title, at: nowWord(), untilTs: untilTs(), until: untilWord(), ended: null, files: chatFiles(s) === 'move' ? chatPicked(s) : [], held: (c.goals || []).map((g) => g.title).concat((c.schedules || []).map((x) => x.title)) } : null
     };
   }
 
@@ -1365,7 +1383,7 @@
       backup_destination: d.backup.dest === 'none' ? null : bkFamily(s), backup_place: d.backup.dest === 'none' ? null : bkPlace(s),
       backup_include: d.backup.dest === 'none' ? null : d.backup.include, backup_leave_out: d.backup.include === 'some' ? Object.keys(d.backup.leaveOut).filter((k) => d.backup.leaveOut[k]) : [],
       backup_retention: d.backup.dest === 'none' ? null : d.backup.keep === 'custom' ? Object.assign({ kind: 'custom' }, d.backup.keepCustom) : { kind: 'standard' }, secrets_in_draft: false,
-      work_placement: (d.work && d.work.mode) || 'auto', default_execution_host: d.runsOn, allowed_execution_hosts: PJX.work ? PJX.work.npAllowed(s) : [d.runsOn], records_home: d.runsOn
+      work_placement: (d.work && d.work.mode) || 'auto', chosen_execution_host: d.work && d.work.mode === 'chosen' && PJX.work ? PJX.work.npChosen(s) : null, default_execution_host: d.runsOn, allowed_execution_hosts: PJX.work ? PJX.work.npAllowed(s) : [d.runsOn], records_home: d.runsOn
     };
   }
 
@@ -1511,7 +1529,7 @@
     // a partial result is still a result: what moved, what stayed, what was held and what didn't move (ACD-511, 7.13)
     const moving = moveMoving(m), failed = m.demoPartial && moving.length > 1 ? [moving.indexOf('label-template.svg') >= 0 ? 'label-template.svg' : moving[moving.length - 1]] : [];
     const rec = { chat: c.id, title: c.title, into: p.id, files: moving.filter((f) => failed.indexOf(f) < 0), failed, place: movePlace(m), branch: m.branch, folder: moveFolder(m), chatOnly: m.chatOnly, computer: (p.home || 'here') !== c.runsOn ? comp(p.home || 'here').name : null, by: opts.yolo ? 'yolo' : 'you',
-      at: nowWord(), until: untilWord(), ended: null, stayed: (c.fileList || []).length - movePicked(m).length + c.outside.length, held: (c.goals || []).map((g) => g.title).concat((c.schedules || []).map((x) => x.title)) };
+      at: nowWord(), untilTs: untilTs(), until: untilWord(), ended: null, stayed: (c.fileList || []).length - movePicked(m).length + c.outside.length, held: (c.goals || []).map((g) => g.title).concat((c.schedules || []).map((x) => x.title)) };
     F().moved = F().moved || {}; F().moved[c.id] = rec;
     return { ok: true, project: p, rec };
   }
@@ -1531,7 +1549,7 @@
 
   PJX.np = {
     SETTINGS, WAYS, VERB, SECTIONS, start, set, enforce, chooseWay, wayLoss, startOver, sections, problem, summary, state, enter, open, fold, cont, allDone, firstProblem, firstNotDone,
-    moveStart, moveBlocker, chatPicked, waitingApprovals, convEffects, untilWord, nowWord, moveTargets, moveMark, moveHist, movePlace, movePicked, moveSame, moveConflicts, moveMoving, moveProblem, moveStatement, moveLabel, movePhases, moveCommit, moveUndoStatement, moveUndo, moved,
+    moveStart, moveBlocker, chatPicked, waitingApprovals, convEffects, untilWord, nowWord, clockNow, undoEnded, moveTargets, moveMark, moveHist, movePlace, movePicked, moveSame, moveConflicts, moveMoving, moveProblem, moveStatement, moveLabel, movePhases, moveCommit, moveUndoStatement, moveUndo, moved,
     volOfPath, netCheck, netSignIn, bkHost, bkOnNas, likeSel, takenFor, forkNameCheck, visWord, restoredHist, kindWord, needsAccount, dropUi, onSettled: null,
     op, peek, retry, look, lookDone, lookTarget, limits, inspectAt, trusted, devicesFor, lookFor, addKey, resolveShare, smbShareKey, nfsShareKey, smbOk, nfsOk, volOk, dev, share, vol, comp, chatOf, chatFiles, serverOn,
     forgeRec, signedIn, signIn, signinOp, serverCheck, addrOk, srcRec, repoOf, findAnyone, access, accessDone, inside, gitAddressCheck, gitAddrValid, intentOf, intentDefault, forkName, forkOwner, knownFor,

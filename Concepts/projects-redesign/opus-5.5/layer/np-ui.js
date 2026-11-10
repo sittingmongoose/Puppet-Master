@@ -793,7 +793,7 @@
     put(box, lookView(s, NP().look(s), { other: () => NP().set(s, 'chat.files', c.files ? 'move' : 'empty') }));
     // the live preview, family by family (7.10, 7.11), for the Project this draft would make
     const like = NP().likeSrc(s), m = NP().onlineMode(s), svc = /make|instead/.test(m) && R().service(d.online.service) ? R().service(d.online.service).name : null;
-    put(box, convPreview(NP().convEffects(c, { name: NP().nameOf(s), computer: d.runsOn, like: like ? like.name : null, remote: svc })));
+    put(box, convPreview(NP().convEffects(c, { name: NP().nameOf(s), computer: d.runsOn, allowed: PJX.work ? PJX.work.npAllowed(s) : [d.runsOn], like: like ? like.name : null, remote: svc })));
     return box;
   }
   /* the conversion preview's families as small groups of facts (shared by both paths) */
