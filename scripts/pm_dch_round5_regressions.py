@@ -25,6 +25,15 @@ def run(name, family=None):
     m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m)
     m.SELECTED_FAMILY=family
     overrides = {}
+    restore = []
+    try:
+        return _run(m, name, family, overrides, restore)
+    finally:
+        for undo in restore:
+            undo()
+
+
+def _run(m, name, family, overrides, restore):
     def replace(function, old, new):
         source = inspect.getsource(getattr(m,function)); assert source.count(old) == 1, (function,old)
         exec(source.replace(old,new),m.__dict__)
@@ -68,6 +77,22 @@ def run(name, family=None):
         overrides['Plans/storage_value_registry.json']=stored
     elif name == 'C4-B3_terminal_source_identity':
         cut(('tj_start', 'TJ01_payload_started_id'))
+    elif name == 'CV1101_shared_predicate_removed':
+        # Sweep part 2B: every current validator loses the shared CV-1101 predicate
+        # and its CV-253 composition (a stock validator that skips date-time).
+        from jsonschema import Draft202012Validator
+        import pm_dch_formats as formats
+        saved = formats.datetime_validator
+        formats.datetime_validator = lambda schema, **kwargs: Draft202012Validator(schema, format_checker=formats.skipped_checker())
+        formats._CACHE.clear()
+        restore.append(lambda: (setattr(formats, 'datetime_validator', saved), formats._CACHE.clear()))
+    elif name == 'SP1101_retained_format_skipped':
+        # Sweep part 2B: the frozen verifier keeps the recipes' recorded skipped
+        # format check, so owner-invalid retained timestamps would read as valid.
+        from jsonschema import Draft202012Validator
+        import pm_dch_formats as formats
+        m.retained_validator = lambda schema, current_schema=None: formats.Composite(
+            schema, (Draft202012Validator(schema, format_checker=formats.skipped_checker()),))
     else: raise ValueError(name)
     text_inputs={str(ROOT/p):json.dumps(v) for p,v in overrides.items()}
     read=Path.read_text
@@ -90,7 +115,8 @@ def main():
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--out',type=Path,required=True);p.add_argument('--workers',type=int,default=1);args=p.parse_args()
     names=['C5-B1_default_instance','C5-B2_oversized_checkpoint_inline','C5-B2_checkpoint_reference_custody',
            'C5-B3_C4-B2_original_edition','C5-B3_writer_policy_on_original','C5-B3_no_referenced_original',
-           'N1_Astra10_numeric_encoding','Astra11_exact_types','C4-B1_history_limit','C4-B3_terminal_source_identity']
+           'N1_Astra10_numeric_encoding','Astra11_exact_types','C4-B1_history_limit','C4-B3_terminal_source_identity',
+           'CV1101_shared_predicate_removed','SP1101_retained_format_skipped']
     with ProcessPoolExecutor(max_workers=args.workers) as pool:
         results=[]
         for result in pool.map(run,names):

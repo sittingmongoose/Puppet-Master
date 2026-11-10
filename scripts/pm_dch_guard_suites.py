@@ -58,7 +58,8 @@ EXCLUDED = [
      'prove each row alone'),
     ('hr_flags', ('HR02_envelope_schema', 'HR03_payload_schema'),
      'round7 current_history_format/ts puts the malformed timestamp in both occurred_at_utc and the payload ts (the joins '
-     'require them equal); the envelope-only and payload-only history witnesses prove each row alone'),
+     'require them equal), and so does each owner-invalid retained strict-v3 original (sweep part 2B: its timestamp is '
+     'refused by CV-1101 in both fields); the envelope-only and payload-only history witnesses prove each row alone'),
     ('cp_store', ('CP04_value_store', 'CP05_token_store', 'CP06_selection_store', 'CP07_root_store'),
      'the join oracle source_storage_instance changes the actual Store under every copy at once; outer/token/selection_'
      'storage_instance and the table witness CP07_root_store change one copy each'),

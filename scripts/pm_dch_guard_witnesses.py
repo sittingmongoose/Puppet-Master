@@ -14,14 +14,18 @@ directly: at the full oracle boundary the payload/checkpoint schemas also
 refuse these values (defence in depth).
 """
 import copy
+import hashlib
 import json
 from pathlib import Path
 from jsonschema import Draft202012Validator
-from pm_dch_formats import FormatChecker
+from pm_dch_formats import validator as current_validator
 from pm_dch_round5_oracles import Case
 
 ROOT = Path(__file__).resolve().parents[1]
 FOREIGN_STORE = '00000000-0000-4000-8000-000000000099'
+# Plans/dch_write_recipe_receipts.json holds a sealed raw-v0 (unsupported) receipt for
+# each fixture record carrying this Storage observation time (sweep part 2B, S4).
+UNSUPPORTED_OBSERVED = '2026-11-04T00:00:42Z'
 OTHER_GENERATION = 'eig_' + 'c' * 64
 OTHER_DATASET = 'event_record_index.v2@eig_' + 'd' * 64
 TOO_LARGE = 1 << 64
@@ -67,6 +71,20 @@ def cases(m, Case=Case):
             # hr_encode: a retained record whose producer integer has no encoding.
             record = {**copy.deepcopy(f['record']), 'producer_sequence_id': TOO_LARGE}
             add(p+'HR01_record_encodable', 'history', record, row, f['historical_source'], payload_schema)
+            # rn_recipe (SP-1101, sweep part 2B): a coherent original of a valid Store
+            # outside the sealed custody (RN05 alone: the same original keyed for a
+            # custody Store reads as valid), and an original whose sealed receipt names
+            # a recipe with no installed frozen verifier (RN06 alone).
+            foreign = copy.deepcopy(f['record'])
+            foreign['event_id'] = m.identity(event, f['valid'], FOREIGN_STORE)
+            foreign['idempotency_key'] = m.idempotency_key(event, f['valid'], FOREIGN_STORE)
+            witness = {**copy.deepcopy(f['historical_source']), 'storage_instance_id': FOREIGN_STORE,
+                       'source_value_sha256': hashlib.sha256(m.body_bytes(foreign)).hexdigest()}
+            add(p+'RN05_custody_store', 'history', foreign, row, witness, payload_schema)
+            unsupported = {**copy.deepcopy(f['record']), 'observed_at_utc': UNSUPPORTED_OBSERVED}
+            witness = {**copy.deepcopy(f['historical_source']),
+                       'source_value_sha256': hashlib.sha256(m.body_bytes(unsupported)).hexdigest()}
+            add(p+'RN06_recipe_installed', 'history', unsupported, row, witness, payload_schema)
             # rt_schema_file: a retained original naming a family with no payload schema.
             original = {**copy.deepcopy(f['record']), 'event_type': 'chat.unknown_family'}
             add(p+'RT06_original_schema', 'retry', original, original, True, f['historical_source'],
@@ -162,7 +180,7 @@ def evaluate(m, c, envelope):
     if c.surface == 'retry':
         return m.retry_outcome(*a)
     if c.surface == 'history':
-        return m.historical_read_valid(a[0], a[1], a[2], envelope, Draft202012Validator(a[3], format_checker=FormatChecker()))
+        return m.historical_read_valid(a[0], a[1], a[2], envelope, current_validator(a[3]))
     if c.surface == 'test_direct':
         return m.test_joins(*a)
     if c.surface == 'archive_direct':
@@ -221,4 +239,17 @@ def stop_cases(fixture):
         [(('source', 'current_source_selection', 'current_bytes_sha256'), 'c' * 64)])
     add('IX19_node_dataset', 'index', index, [(node + ('index_dataset_name',), OTHER_DATASET)])
     add('IX20_source_dataset', 'index', index, [(('source', 'dataset_name'), OTHER_DATASET)])
+    # CV-1101 (sweep part 2B): owner-valid forms the pre-CV-1101 DCH grammar refused are
+    # accepted at the DCH-owned terminal-Z fields, and the shared predicate's own
+    # Refusal is the cause of a refusal through the Stop validators.
+    for field, surface, base_id in [('ts', 'schema_request', 'DCH9-0529'), ('outcome_at_utc', 'schema_outcome', 'DCH9-0329')]:
+        for value in ['2016-12-31T23:59:60Z', '2026-11-05t00:00:00Z', '0000-11-05T00:00:00Z']:
+            data = changed(bases[base_id], (field,), value)
+            out.append({'id': 'DCH9-W' + str(len(out) + 1).zfill(3), 'name': 'cv1101/valid/' + field + '/' + value,
+                        'surface': surface, 'input': data, 'expected': True})
+        for value, reason in [('2026-11-05T24:00:00Z', 'date_time_hour'), ('2026-11-05T00:00:60Z', 'date_time_leap_second'),
+                              ('2026-11-05T00:00:00Z\n', 'date_time_syntax')]:
+            data = changed(bases[base_id], (field,), value)
+            out.append({'id': 'DCH9-W' + str(len(out) + 1).zfill(3), 'name': 'cv1101/predicate/' + field + '/' + reason,
+                        'surface': surface + '_predicate', 'input': data, 'reason': reason, 'expected': True})
     return out

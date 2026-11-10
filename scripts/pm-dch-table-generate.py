@@ -54,6 +54,15 @@ phase('rn_recipe', 'record_number_rule: retained-original recipe selection from 
     ('RN04_recipe_claim', '/provenance/recipe_id', 'a claimed recipe equals the receipt-selected recipe; it never selects one', RECIPE,
      "value['store_type'] == 'str' and value['digest_type'] == 'str' and value['claim_present'] is True "
      "and value['claim'] != value['receipt_recipe']"),
+    # SP-1101 (sweep part 2B, S4): an original outside the sealed write custody is
+    # unavailable, and a receipt whose recipe has no installed frozen verifier is
+    # unsupported; neither falls back to another recipe.
+    ('RN05_custody_store', '/provenance/storage_instance_id',
+     'a retained original belongs to a Store whose write custody the sealed receipt catalogue holds', 'original_unavailable',
+     "value['store_descriptor_valid'] is True and value['store_in_custody'] is not True"),
+    ('RN06_recipe_installed', '/provenance/source_value_sha256',
+     'the receipt-selected recipe has an installed frozen verifier', 'recipe_unsupported',
+     "value['store_in_custody'] is True and value['recipe_installed'] is not True"),
 ])
 
 # --------------------------------------------------------------- input types

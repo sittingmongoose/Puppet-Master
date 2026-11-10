@@ -12,7 +12,7 @@ import json
 import msgpack
 from pathlib import Path
 from jsonschema import Draft202012Validator
-from pm_dch_formats import FormatChecker
+from pm_dch_formats import validator as current_validator
 from pm_dch_round5_oracles import checkpoint_source, reference_storage, evaluate as evaluate5
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -83,8 +83,13 @@ def cases(m, Case=Case):
             for field in ['producer_sequence_id','sequence_id']:
                 for n in [MAX, MAX+1, (1<<64)-1, 1<<64, 1<<100]:
                     record = copy.deepcopy(f['record']); record[field] = n
+                    # The generic EventRecord schema (CV-317/SP-026) declares no maximum for
+                    # either field; sweep part 2B removed DCH's family-conditioned schema
+                    # maximum (NUMRULE-ADOPTION DCH; the CV-1101 inventory pins the envelope
+                    # bytes). Storage's uint64 range stays enforced by TY04 (shared
+                    # storage_uint64) on the writer path, as writer_integer below shows.
                     add(prefix+'envelope_integer/'+field+'/'+str(n), 'payload',
-                        json.loads((ROOT/'Plans/event_record.schema.json').read_text()), record, expected=n<(1<<64) if field=='sequence_id' else True)
+                        json.loads((ROOT/'Plans/event_record.schema.json').read_text()), record, expected=True)
                     add(prefix+'writer_integer/'+field+'/'+str(n), 'acceptance_result', 'joins', (record,event), n<(1<<64) if field=='sequence_id' else True, expected=True)
                     # CV-1100 producer JCS route: exact binary64 integers up to 2^53
                     # qualify (2^53 included); larger producer integers are refused
@@ -185,5 +190,5 @@ def evaluate(m, c, envelope):
         except ValueError:return False
         return True
     if c.surface=='test':
-        return Draft202012Validator(a[3],format_checker=FormatChecker()).is_valid(a[0]) and m.test_joins(*a[:3])
+        return current_validator(a[3]).is_valid(a[0]) and m.test_joins(*a[:3])
     return evaluate5(m,c,envelope)

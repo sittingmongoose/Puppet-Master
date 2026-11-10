@@ -16,10 +16,11 @@ from urllib.parse import unquote, urlparse
 import blake3
 import msgpack
 from jsonschema import Draft202012Validator
-from pm_dch_formats import FormatChecker, legacy_format_checker
-# CV-1100 / SP-1100 shared number recipes (gated number scope a16f67c1ef).
-# The date-time scope (pm_event_datetime, CV-1101) is deliberately not imported.
-from pm_event_numbers import (EVENT_VALUE, Refusal, current_integer, producer_semantic_digest, qualified_jcs,
+from pm_dch_formats import retained_validator, validator as current_validator
+# CV-1100 / SP-1100 shared number recipes (gated number scope a16f67c1ef) and,
+# through pm_dch_formats, the shared CV-1101 date-time check (gated 58c2816ff3).
+from pm_event_numbers import (EVENT_VALUE, FrozenRecipe, OriginalBinding, OriginalCustody, RecipeTuple, Refusal,
+                              RetainedDispatcher, current_integer, producer_semantic_digest, qualified_jcs,
                               storage_uint64, storage_value_bytes)
 from jsonschema.exceptions import SchemaError
 from referencing import Registry, Resource
@@ -33,7 +34,7 @@ UINT64_MAX = (1 << 64) - 1
 SELECTED_FAMILY = None
 # Reuse Storage's own instance descriptor, including its UUID format.
 STORAGE_INSTANCE_DESCRIPTOR = json.loads((ROOT/'Plans/event_record_index_checkpoint.schema.json').read_text())['$defs']['checkpoint']['properties']['storage_instance_id']
-STORAGE_INSTANCE_VALIDATOR = Draft202012Validator(STORAGE_INSTANCE_DESCRIPTOR, format_checker=FormatChecker())
+STORAGE_INSTANCE_VALIDATOR = current_validator(STORAGE_INSTANCE_DESCRIPTOR)
 # Exact EventRecord owner commitment. event_id has a separate integrity check.
 SEMANTIC_FIELDS = (
     'event_type', 'scope_kind', 'project_id', 'thread_id', 'run_id', 'node_id',
@@ -109,8 +110,14 @@ CURRENT_RULE = 'strict-v4'
 RETAINED_RECIPES = json.loads((ROOT/'Plans/dch_retained_recipes.json').read_text())['recipes']
 # This is the static adapter's independent Storage write-receipt catalogue,
 # never an input accepted from an event, caller, pack or checkpoint candidate.
-RECIPE_RECEIPTS = {(r['storage_instance_id'], r['source_value_sha256']): r['recipe_id']
-                  for r in json.loads((ROOT/'Plans/dch_write_recipe_receipts.json').read_text())['receipts']}
+CUSTODY = json.loads((ROOT/'Plans/dch_write_recipe_receipts.json').read_text())
+RECIPE_RECEIPTS = {(r['storage_instance_id'], r['source_value_sha256']): r['recipe_id'] for r in CUSTODY['receipts']}
+# SP-1101 (sweep part 2B, S4): the Stores whose complete write custody the sealed
+# catalogue models. An original of any other Store is unavailable (RN05); within a
+# custody Store a receipt names the write-time recipe, and an original without a
+# legacy receipt was written by the current strict-v4 writer (the catalogue's own
+# declared current_recipe), never a weaker one.
+CUSTODY_STORES = frozenset(CUSTODY['custody_stores'])
 
 # Method B guard tables (sweep part 2A). Every product refusal of this checker
 # and of pm_dch_stop.py is one named row of one phase table (scripts/
@@ -228,11 +235,15 @@ def encoded(value, rule=CURRENT_RULE):
 
 
 def record_number_rule(provenance=None):
-    """Sole recipe selector for numbers, physical bytes and schema formats.
+    """Sole recipe selector for numbers, physical bytes and schema/format editions.
 
     No provenance means a new write/current identity input: strict-v4. A retained
-    source uses the recipe bound to its independently read Store + exact source
-    commitment. Missing legacy provenance fails closed to the current recipe.
+    source uses the recipe its sealed write receipt binds to the independently
+    read Store + exact source commitment (SP-1101). An original of a Store outside
+    the sealed custody is unavailable (RN05) and a receipt whose recipe has no
+    installed frozen verifier is unsupported (RN06); neither falls back. Within a
+    custody Store, an original without a legacy receipt was written by the
+    catalogue's declared current writer (strict-v4), never a weaker recipe.
     A claimed recipe is only checked against that authority; it never selects it.
     Production must read this mapping from protected original write receipts;
     this catalogue models those observations, not receipt authenticity execution.
@@ -250,20 +261,122 @@ def _record_number_rule(provenance):
     store = provenance.get('storage_instance_id') if is_dict else None
     digest = provenance.get('source_value_sha256') if is_dict else None
     keyed = type(store) is str and type(digest) is str
-    recipe = RECIPE_RECEIPTS.get((store, digest), CURRENT_RULE) if keyed else None
+    in_custody = store in CUSTODY_STORES if keyed else None
+    recipe = RECIPE_RECEIPTS.get((store, digest), CUSTODY['current_recipe']) if in_custody else None
     claim_present = is_dict and 'recipe_id' in provenance
     require('rn_recipe', dict(provenance_type=type_name(provenance), store_type=type_name(store),
                               digest_type=type_name(digest), claim_present=claim_present,
-                              claim=provenance['recipe_id'] if claim_present else None, receipt_recipe=recipe))
+                              claim=provenance['recipe_id'] if claim_present else None, receipt_recipe=recipe,
+                              store_descriptor_valid=keyed and STORAGE_INSTANCE_VALIDATOR.is_valid(store),
+                              store_in_custody=in_custody, recipe_installed=recipe in RECIPE_TUPLES if in_custody else None))
     return recipe
+
+
+# SP-1101 composition (sweep part 2B, S4). Each frozen recipe is one immutable
+# RecipeTuple whose resource manifest pins the recipe's recorded original schema
+# hashes (Plans/dch_retained_recipes.json, schema_sha256 at its source commit) or,
+# for strict-v4, the current schema files. The tuple covers the recipe's complete
+# DCH payload/checkpoint schema set; the frozen verifier dispatches the exact
+# edition. RetainedDispatcher resolves one owner selection, refuses a caller
+# override and an unknown tuple, and runs the frozen verifier of the selected
+# tuple; native custody, durability and authentication remain NOT_RUN.
+DCH_SERVER = 'dch-static-oracle'
+DCH_SCHEMA_PATHS = tuple(sorted(next(iter(RETAINED_RECIPES.values()))['schema_sha256']))
+
+
+def _manifest(hashes):
+    return hashlib.sha256(qualified_jcs([[path, hashes[path]] for path in sorted(hashes)])).hexdigest()
+
+
+def _recipe_tuple(rule, hashes):
+    recipe = RETAINED_RECIPES.get(rule, {})
+    return RecipeTuple(
+        envelope_schema_id='pm.event.v0', envelope_schema_version='2.0.0',
+        payload_schema_id='pm.dch_event.* and pm.storage_value.dch_*_checkpoint (34 DCH editions)',
+        payload_schema_version='1.0.0', owner_source_id='Plans/dch_retained_recipes.json#/recipes/' + rule
+        if rule in RETAINED_RECIPES else 'Plans/dch_event_contracts.json', owner_edition=rule,
+        registry_revision=recipe.get('source_commit', 'prepared-unadmitted:dch'),
+        identity_recipe='DCH event identity and CV-366 idempotency key (CV-630..646)',
+        producer_recipe='CV-317 producer projection' + (' (CV-1100 qualified JCS)' if rule == CURRENT_RULE else ''),
+        physical_profile=EVENT_VALUE if rule == CURRENT_RULE else 'dch-retained-msgpack:' + rule,
+        full_value_profile='SP-236 physical EventRecord value', local_source_profile='none (the DCH payload is the source)',
+        payload_profile='SP-337 payload:v1 application/msgpack', resource_manifest_sha256=_manifest(hashes))
+
+
+RECIPE_TUPLES = {rule: _recipe_tuple(rule, recipe['schema_sha256']) for rule, recipe in RETAINED_RECIPES.items()}
+RECIPE_TUPLES[CURRENT_RULE] = _recipe_tuple(CURRENT_RULE, {path: hashlib.sha256((ROOT/path).read_bytes()).hexdigest()
+                                                           for path in DCH_SCHEMA_PATHS})
+
+
+def _binding_text(value):
+    return value if type(value) is str and value else 'malformed:' + type_name(value)
+
+
+def original_binding(record, store, digest):
+    """SP-1101 binding of one original, projected from the original read once.
+
+    In this static model the owner and the reader identify the original by the
+    same independently read Store, commitment and identity fields, so binding
+    equality is structural; a malformed field is carried as an explicit marker
+    and frozen verification refuses it at its own row.
+    """
+    is_dict = type(record) is dict
+    get = record.get if is_dict else (lambda key: None)
+    scope_kind, project_id = get('scope_kind'), get('project_id')
+    if not is_dict or 'scope_kind' not in record:
+        # A checkpoint value: identified by its partition, family and last event.
+        scope_kind = 'application' if get('scope_partition') == 'app' else 'project'
+        project_id = None if scope_kind == 'application' else _binding_text(get('scope_partition'))
+    elif not ((scope_kind == 'application' and project_id is None) or
+              (scope_kind == 'project' and type(project_id) is str and project_id)):
+        scope_kind, project_id = 'project', 'malformed:' + type_name(get('scope_kind')) + ':' + type_name(get('project_id'))
+    return OriginalBinding(storage_instance_id=store, scope_kind=scope_kind, server_id=DCH_SERVER, project_id=project_id,
+                           event_type=_binding_text(get('event_type')),
+                           event_id=_binding_text(get('event_id') if 'event_id' in record else get('last_event_id')) if is_dict else 'malformed:record',
+                           idempotency_key=_binding_text(get('idempotency_key') if 'idempotency_key' in record else get('publication_id')) if is_dict else 'malformed:record',
+                           owner_operation_id=_binding_text(get('correlation_id') if 'correlation_id' in record else get('consumer_id')) if is_dict else 'malformed:record',
+                           source_commitment=digest)
+
+
+class DchOriginalOwner:
+    """Static original owner over the sealed write-receipt catalogue, never request data.
+
+    It returns the selection record_number_rule made from that catalogue (the
+    rn_recipe rows) for one original; it holds the sealed commitment and receipt,
+    not native original bytes.
+    """
+
+    def __init__(self, record, store, digest, rule):
+        self.record, self.store, self.digest, self.rule = record, store, digest, rule
+
+    def authenticated_original(self, original_ref):
+        if original_ref != self.store + '/' + self.digest:
+            raise Refusal('original_missing')
+        receipt = qualified_jcs([self.store, self.digest, self.rule])
+        return OriginalCustody(binding=original_binding(self.record, self.store, self.digest),
+                               recipe=RECIPE_TUPLES[self.rule], record_bytes=self.digest.encode('utf-8'),
+                               result_bytes=receipt, receipt_bytes=receipt)
+
+
+def resolve_original(provenance, record, rule, verify):
+    """Resolve one retained original through RetainedDispatcher; verify() is its frozen verifier.
+
+    verify() runs the selected recipe's complete original checks and either
+    returns True or raises the TableRefusal of its own row. A dispatcher refusal
+    is not reachable after the rn_recipe rows (defence in depth) and propagates.
+    """
+    store, digest = provenance['storage_instance_id'], provenance['source_value_sha256']
+    frozen = FrozenRecipe(lambda custody: verify() is True)
+    installed = {RECIPE_TUPLES[name]: frozen for name in RECIPE_TUPLES}
+    RetainedDispatcher(DchOriginalOwner(record, store, digest, rule), installed).resolve(
+        store + '/' + digest, original_binding(record, store, digest), disclose=lambda binding: True)
 
 
 def stored_validator(current, path, rule):
     """Use the entire original schema/format edition, not relaxed current prose."""
     if rule == CURRENT_RULE:
         return current
-    return Draft202012Validator(RETAINED_RECIPES[rule]['schemas'][path],
-                                format_checker=legacy_format_checker())
+    return retained_validator(RETAINED_RECIPES[rule]['schemas'][path], json.loads((ROOT/path).read_text()))
 
 
 def historical_read_valid(record, row, witness, envelope, payload_validator):
@@ -280,24 +393,30 @@ def historical_read_valid(record, row, witness, envelope, payload_validator):
 
 
 def _historical_read(record, row, witness, envelope, payload_validator):
+    # SP-1101: one selection from the sealed custody (rn_recipe), then the frozen
+    # verifier of that exact recipe tuple, composed through RetainedDispatcher.
     rule = _record_number_rule(witness)
     _input_types({'record': record, 'witness': witness}, rule)
-    envelope = stored_validator(envelope, 'Plans/event_record.schema.json', rule)
-    path = row.get('payload_schema_ref', 'Plans/dch_event_payloads/'+row['event_type'].replace('.', '_')+'.schema.json')
-    payload_validator = stored_validator(payload_validator, path, rule)
-    error, raw = encoded(record, rule)
-    require('hr_encode', dict(record_encoding_error=error))
-    source_commitment = hashlib.sha256(raw).hexdigest()
-    body = _resolve_body(record, witness.get('payload_source'), witness['storage_instance_id'], rule)
-    require('hr_flags', dict(envelope_valid=envelope.is_valid(record), payload_valid=payload_validator.is_valid(body),
-                             retained=witness['retained'], authorized=witness['authorized'],
-                             hold_access_allowed=witness['hold_access_allowed'], deleted=witness['deleted'],
-                             event_withdrawn=witness['event_withdrawn']))
-    require('hr_source', dict(source_commitment=source_commitment, witness_commitment=witness['source_value_sha256'],
-                              replay_policy=record['replay_policy']))
-    # Compatibility-reader policy never calls the current append/retry oracle.
-    original = {**record, 'replay_policy': 'dedupe_by_idempotency_key'}
-    _joins(original, row['event_type'], witness.get('payload_source'), witness['storage_instance_id'], rule)
+
+    def verify():
+        frozen_envelope = stored_validator(envelope, 'Plans/event_record.schema.json', rule)
+        path = row.get('payload_schema_ref', 'Plans/dch_event_payloads/'+row['event_type'].replace('.', '_')+'.schema.json')
+        frozen_payload = stored_validator(payload_validator, path, rule)
+        error, raw = encoded(record, rule)
+        require('hr_encode', dict(record_encoding_error=error))
+        source_commitment = hashlib.sha256(raw).hexdigest()
+        body = _resolve_body(record, witness.get('payload_source'), witness['storage_instance_id'], rule)
+        require('hr_flags', dict(envelope_valid=frozen_envelope.is_valid(record), payload_valid=frozen_payload.is_valid(body),
+                                 retained=witness['retained'], authorized=witness['authorized'],
+                                 hold_access_allowed=witness['hold_access_allowed'], deleted=witness['deleted'],
+                                 event_withdrawn=witness['event_withdrawn']))
+        require('hr_source', dict(source_commitment=source_commitment, witness_commitment=witness['source_value_sha256'],
+                                  replay_policy=record['replay_policy']))
+        # Compatibility-reader policy never calls the current append/retry oracle.
+        original = {**record, 'replay_policy': 'dedupe_by_idempotency_key'}
+        _joins(original, row['event_type'], witness.get('payload_source'), witness['storage_instance_id'], rule)
+        return True
+    resolve_original(witness, record, rule, verify)
 
 
 def body_bytes(value, rule=CURRENT_RULE):
@@ -596,8 +715,8 @@ def _retry_outcome(original, retry, available, original_provenance):
         row = {'event_type': original['event_type']}
         path = 'Plans/dch_event_payloads/'+original['event_type'].replace('.', '_')+'.schema.json'
         try:
-            envelope = Draft202012Validator(json.loads((ROOT/'Plans/event_record.schema.json').read_text()), format_checker=FormatChecker())
-            payload_validator = Draft202012Validator(json.loads((ROOT/path).read_text()), format_checker=FormatChecker())
+            envelope = current_validator(json.loads((ROOT/'Plans/event_record.schema.json').read_text()))
+            payload_validator = current_validator(json.loads((ROOT/path).read_text()))
         except (OSError, ValueError):
             envelope = payload_validator = None
         require('rt_schema_file', dict(schemas_loaded=payload_validator is not None))
@@ -657,8 +776,8 @@ def _test_joins(payload, source, event):
     witness = source['started_access']
     started_row = {'event_type': 'chat.thread_worktree_pre_merge_test_started'}
     _historical_read(started, started_row, witness,
-                     Draft202012Validator(envelope, format_checker=FormatChecker()),
-                     Draft202012Validator(schema, format_checker=FormatChecker()))
+                     current_validator(envelope),
+                     current_validator(schema))
     # The retained start has just been read and verified with these exact
     # inputs, so this resolution cannot refuse (it is the same table path).
     p = _resolve_body(started, witness.get('payload_source'), witness['storage_instance_id'], _record_number_rule(witness))
@@ -688,72 +807,83 @@ def checkpoint_joins(value, source, row, key):
 
 
 def _checkpoint_joins(value, source, row, key):
-    rule = _record_number_rule(source.get('checkpoint_access'))
+    # A stored checkpoint with write provenance is a retained original (SP-1101):
+    # one selection (rn_recipe), then its frozen verifier through RetainedDispatcher.
+    provenance = source.get('checkpoint_access')
+    rule = _record_number_rule(provenance)
     current_source = {k:v for k,v in source.items() if k not in ['event_record','event_access','payload_source','index_row','checkpoint_storage']}
     index_metadata = {k:v for k,v in source['index_row'].items() if k != 'sequence_id'}
     _input_types(value, rule)
     _input_types({'source': current_source, 'index_row': index_metadata})
-    schema_path = 'Plans/dch_event_payloads/dch_'+row['event_type'].replace('.', '_')+'_checkpoint.schema.json'
-    schema = Draft202012Validator(json.loads((ROOT/schema_path).read_text()), format_checker=FormatChecker())
-    require('cp_schema', dict(checkpoint_schema_valid=stored_validator(schema, schema_path, rule).is_valid(value)))
-    token = value['source_token']
-    store = source['storage_instance_id']
-    generation = token['generation_id']
-    root = source['checkpoint']
-    node = root['generations'].get(generation)
-    event = source['event_record']
-    envelope = Draft202012Validator(json.loads((ROOT/'Plans/event_record.schema.json').read_text()), format_checker=FormatChecker())
-    payload_validator = Draft202012Validator(json.loads((ROOT/row['payload_schema_ref']).read_text()), format_checker=FormatChecker())
-    witness = {**source['event_access'], 'storage_instance_id': store,
-               'source_value_sha256': source['index_row']['source_value_sha256'],
-               'payload_source': source.get('payload_source')}
-    _historical_read(event, row, witness, envelope, payload_validator)
-    p = _resolve_body(event, source.get('payload_source'), store, _record_number_rule(witness))
-    generic_key = 'event_record_index_checkpoint.v1:' + store
-    index = source['index_row']
-    require('cp_node', dict(node_present=bool(node), index_sequence_type=type_name(index['sequence_id']),
-                            event_sequence_type=type_name(event['sequence_id'])))
-    expected_ref = generic_key + '#/generations/' + generation
-    expected_dataset = 'event_record_index.v2@' + generation
-    require('cp_store', dict(value_store=value['storage_instance_id'], token_store=token['storage_instance_id'],
-                             selection_store=token['source_selection']['storage_instance_id'],
-                             root_store=root['storage_instance_id'], store=store))
-    require('cp_generation', dict(current_generation=root['current_generation_id'], generation=generation,
-                                  node_state=node['state'], token_key=token['checkpoint_key'],
-                                  source_key=source['checkpoint_key'], generic_key=generic_key,
-                                  token_ref=token['checkpoint_ref'], expected_ref=expected_ref))
-    require('cp_frontier', dict(token_anchor=token['generation_anchor_sha256'], node_anchor=node['anchor_sha256'],
-                                token_frontier_revision=token['frontier_revision'],
-                                node_frontier_revision=node['frontier_revision'],
-                                token_frontier_sha256=token['frontier_sha256'], node_frontier_sha256=node['frontier_sha256'],
-                                token_selection=token['source_selection'], node_selection=node['source_selection'],
-                                current_selection=source['current_source_selection']))
-    require('cp_dataset', dict(token_dataset=token['index_dataset_name'], node_dataset=node['index_dataset_name'],
-                               source_dataset=source['dataset_name'], expected_dataset=expected_dataset,
-                               index_ref=index['checkpoint_ref'], expected_ref=expected_ref))
-    require('cp_event', dict(index_event_id=index['event_id'], last_event_id=value['last_event_id'],
-                             event_id=event['event_id'], index_sequence_id=index['sequence_id'],
-                             last_sequence_id=value['last_sequence_id'], event_sequence_id=event['sequence_id'],
-                             index_partition=index['scope_partition'], value_partition=value['scope_partition'],
-                             body_partition=p['scope']['scope_partition']))
-    require('cp_family', dict(index_event_type=index['event_type'], family=row['event_type'], key=key,
-                              expected_key=row['domain_checkpoint_key'].format(
-                                  storage_instance_id=store, scope_partition=p['scope']['scope_partition'])))
-    require('cp_family_entailed', dict(value_event_type=value['event_type'], event_event_type=event['event_type'],
-                                       family=row['event_type'], consumer_id=value['consumer_id'], reader=row['reader'],
-                                       projector_id=value['projector_id'], domain_projector=row['domain_projector']))
-    publication = source['publication']
-    require('cp_publication', dict(projection_refs=value['projection_refs'],
-                                   publication_projection_refs=publication['projection_refs'],
-                                   publication_id=value['publication_id'],
-                                   publication_publication_id=publication['publication_id'],
-                                   revision=value['revision'], publication_revision=publication['revision'],
-                                   publication_token=publication['source_token'], token=token,
-                                   publication_thread_id=publication['thread_id'], body_thread_id=p['thread_id'],
-                                   publication_computer_id=publication['computer_id'], body_computer_id=p['computer_id'],
-                                   publication_scope=publication['scope'], body_scope=p['scope']))
-    require('cp_state', dict(state=value['state']))
-    _checkpoint_storage(value, source, row, key)
+
+    def verify():
+        schema_path = 'Plans/dch_event_payloads/dch_'+row['event_type'].replace('.', '_')+'_checkpoint.schema.json'
+        schema = current_validator(json.loads((ROOT/schema_path).read_text()))
+        require('cp_schema', dict(checkpoint_schema_valid=stored_validator(schema, schema_path, rule).is_valid(value)))
+        token = value['source_token']
+        store = source['storage_instance_id']
+        generation = token['generation_id']
+        root = source['checkpoint']
+        node = root['generations'].get(generation)
+        event = source['event_record']
+        envelope = current_validator(json.loads((ROOT/'Plans/event_record.schema.json').read_text()))
+        payload_validator = current_validator(json.loads((ROOT/row['payload_schema_ref']).read_text()))
+        witness = {**source['event_access'], 'storage_instance_id': store,
+                   'source_value_sha256': source['index_row']['source_value_sha256'],
+                   'payload_source': source.get('payload_source')}
+        _historical_read(event, row, witness, envelope, payload_validator)
+        p = _resolve_body(event, source.get('payload_source'), store, _record_number_rule(witness))
+        generic_key = 'event_record_index_checkpoint.v1:' + store
+        index = source['index_row']
+        require('cp_node', dict(node_present=bool(node), index_sequence_type=type_name(index['sequence_id']),
+                                event_sequence_type=type_name(event['sequence_id'])))
+        expected_ref = generic_key + '#/generations/' + generation
+        expected_dataset = 'event_record_index.v2@' + generation
+        require('cp_store', dict(value_store=value['storage_instance_id'], token_store=token['storage_instance_id'],
+                                 selection_store=token['source_selection']['storage_instance_id'],
+                                 root_store=root['storage_instance_id'], store=store))
+        require('cp_generation', dict(current_generation=root['current_generation_id'], generation=generation,
+                                      node_state=node['state'], token_key=token['checkpoint_key'],
+                                      source_key=source['checkpoint_key'], generic_key=generic_key,
+                                      token_ref=token['checkpoint_ref'], expected_ref=expected_ref))
+        require('cp_frontier', dict(token_anchor=token['generation_anchor_sha256'], node_anchor=node['anchor_sha256'],
+                                    token_frontier_revision=token['frontier_revision'],
+                                    node_frontier_revision=node['frontier_revision'],
+                                    token_frontier_sha256=token['frontier_sha256'], node_frontier_sha256=node['frontier_sha256'],
+                                    token_selection=token['source_selection'], node_selection=node['source_selection'],
+                                    current_selection=source['current_source_selection']))
+        require('cp_dataset', dict(token_dataset=token['index_dataset_name'], node_dataset=node['index_dataset_name'],
+                                   source_dataset=source['dataset_name'], expected_dataset=expected_dataset,
+                                   index_ref=index['checkpoint_ref'], expected_ref=expected_ref))
+        require('cp_event', dict(index_event_id=index['event_id'], last_event_id=value['last_event_id'],
+                                 event_id=event['event_id'], index_sequence_id=index['sequence_id'],
+                                 last_sequence_id=value['last_sequence_id'], event_sequence_id=event['sequence_id'],
+                                 index_partition=index['scope_partition'], value_partition=value['scope_partition'],
+                                 body_partition=p['scope']['scope_partition']))
+        require('cp_family', dict(index_event_type=index['event_type'], family=row['event_type'], key=key,
+                                  expected_key=row['domain_checkpoint_key'].format(
+                                      storage_instance_id=store, scope_partition=p['scope']['scope_partition'])))
+        require('cp_family_entailed', dict(value_event_type=value['event_type'], event_event_type=event['event_type'],
+                                           family=row['event_type'], consumer_id=value['consumer_id'], reader=row['reader'],
+                                           projector_id=value['projector_id'], domain_projector=row['domain_projector']))
+        publication = source['publication']
+        require('cp_publication', dict(projection_refs=value['projection_refs'],
+                                       publication_projection_refs=publication['projection_refs'],
+                                       publication_id=value['publication_id'],
+                                       publication_publication_id=publication['publication_id'],
+                                       revision=value['revision'], publication_revision=publication['revision'],
+                                       publication_token=publication['source_token'], token=token,
+                                       publication_thread_id=publication['thread_id'], body_thread_id=p['thread_id'],
+                                       publication_computer_id=publication['computer_id'], body_computer_id=p['computer_id'],
+                                       publication_scope=publication['scope'], body_scope=p['scope']))
+        require('cp_state', dict(state=value['state']))
+        _checkpoint_storage(value, source, row, key)
+        return True
+
+    if provenance is None:
+        verify()
+    else:
+        resolve_original(provenance, value, rule, verify)
 
 
 def checkpoint_storage_valid(value, source, row, key):
@@ -763,7 +893,12 @@ def checkpoint_storage_valid(value, source, row, key):
     Every physically inline part, including the pointer, is byte measured.
     """
     try:
-        _checkpoint_storage(value, source, row, key)
+        provenance = source.get('checkpoint_access')
+        if provenance is None:
+            _checkpoint_storage(value, source, row, key)
+        else:
+            resolve_original(provenance, value, _record_number_rule(provenance),
+                             lambda: _checkpoint_storage(value, source, row, key) is None)
     except TableRefusal:
         return False
     return True
@@ -854,7 +989,7 @@ def semantic_body_mutation(record, event):
     """One schema-valid result fact, preserving all envelope identity copies."""
     schema = json.loads((ROOT/'Plans/dch_event_payloads'/
                          (event.replace('.', '_')+'.schema.json')).read_text())
-    validator = Draft202012Validator(schema, format_checker=FormatChecker())
+    validator = current_validator(schema)
     p = record['payload']
     baseline_valid = validator.is_valid(p)
     fields = schema['$defs'][p['scope']['scope_kind']]['properties']
@@ -872,7 +1007,7 @@ def semantic_body_mutation(record, event):
             # A regression campaign may deliberately invalidate the positive.
             # Preserve that defect for the ordinary positive check; the helper
             # still changes exactly one independently valid result field.
-            if (Draft202012Validator(definition, format_checker=FormatChecker()).is_valid(value)
+            if (current_validator(definition).is_valid(value)
                     and (not baseline_valid or validator.is_valid(candidate))):
                 return candidate
     raise AssertionError('No independent semantic-body fixture for '+event)
@@ -991,7 +1126,7 @@ def main():
         if row['outcome']=='blocked_on_Jared':
             continue
         schema = json.loads((ROOT/row['payload_schema_ref']).read_text())
-        validator = Draft202012Validator(schema, format_checker=FormatChecker())
+        validator = current_validator(schema)
         cases = [f for f in fixtures if f['event_type']==event]
         check(len(cases)==2, event+': two editions')
         ids = []
@@ -1033,7 +1168,7 @@ def main():
         storage=(ROOT/'Plans/storage-plan.md').read_text().split('### '+row['storage_unit']+' — ',1)[1].split('```yaml',1)[0]
         for token in ['SP-278','SP-286','PENDING_RETENTION_DECISION',row['reader'],row['projector'],'Withdrawal']:
             check(token in storage,event+': adoption '+token)
-    envelope=Draft202012Validator(json.loads((ROOT/'Plans/event_record.schema.json').read_text()), format_checker=FormatChecker())
+    envelope=current_validator(json.loads((ROOT/'Plans/event_record.schema.json').read_text()))
     for case in fixtures:
         record=case['record']; event=case['event_type']
         check(case['storage_instance_id']==STORAGE_INSTANCE,event+': actual Storage fixture instance')
@@ -1083,7 +1218,7 @@ def main():
             retry=copy.deepcopy(record);retry[key]=value
             check(retry_outcome(record,retry)=='original_result',event+': excluded Storage metadata '+key)
         schema=json.loads((ROOT/next(r['payload_schema_ref'] for r in contracts if r['event_type']==event)).read_text())
-        validator=Draft202012Validator(schema,format_checker=FormatChecker())
+        validator=current_validator(schema)
         row=next(r for r in contracts if r['event_type']==event)
         for oracle in case['historical_oracles']:
             combined={'record':record,'witness':case['historical_source']}
@@ -1108,7 +1243,7 @@ def main():
         if 'test_source' in case:
             source=case['test_source']
             started_schema=json.loads((ROOT/'Plans/dch_event_payloads/chat_thread_worktree_pre_merge_test_started.schema.json').read_text())
-            check(Draft202012Validator(started_schema,format_checker=FormatChecker()).is_valid(source['started']['payload'])
+            check(current_validator(started_schema).is_valid(source['started']['payload'])
                   and envelope.is_valid(source['started']) and test_joins(record['payload'],source,event),event+': original test outcome join')
             for oracle in case['test_oracles']:
                 combined={'payload':record['payload'],'source':source}
@@ -1133,7 +1268,7 @@ def main():
                 check(not joins(invalid,event),event+': reject self-consistent wrong partition '+oracle['name'])
         if event=='chat.thread_archived':
             check(archive_joins(record['payload'],case['archive_source']),event+': archive original source joins')
-            validator=Draft202012Validator(json.loads((ROOT/'Plans/dch_event_payloads/chat_thread_archived.schema.json').read_text()),format_checker=FormatChecker())
+            validator=current_validator(json.loads((ROOT/'Plans/dch_event_payloads/chat_thread_archived.schema.json').read_text()))
             for oracle in case['archive_oracles']:
                 p=copy.deepcopy(record['payload']); source=copy.deepcopy(case['archive_source'])
                 for path,value in oracle['changes'].items():
@@ -1143,14 +1278,14 @@ def main():
                 check((validator.is_valid(p) and archive_joins(p,source))==oracle['expected_valid'],event+': archive '+oracle['name'])
     for case in checkpoints:
         schema=json.loads((ROOT/case['schema_ref'].split('#')[0]).read_text())
-        validator=Draft202012Validator(schema, format_checker=FormatChecker())
+        validator=current_validator(schema)
         row=next(r for r in contracts if r['event_type']==case['event_type'])
         check(validator.is_valid(case['valid']) and checkpoint_joins(case['valid'],case['source'],row,case['key']), case['event_type']+': checkpoint positive')
         entry=next(s for s in stored if s['value_schema_id']==schema['$id'])
         # Both real definitions, and both empty and populated histories, are
         # exercised independently even though preflight also requires equality.
         for kind, definition in [('selected',schema),('registered',entry['value_schema'])]:
-            actual=Draft202012Validator(definition,format_checker=FormatChecker())
+            actual=current_validator(definition)
             for name,value in [('current',case['valid']),('populated history',case['with_history']),('maximum history',case['maximum_history'])]:
                 check(actual.is_valid(value) and checkpoint_joins(value,case['source'],row,case['key']),
                       case['event_type']+': '+kind+' checkpoint '+name+' positive')

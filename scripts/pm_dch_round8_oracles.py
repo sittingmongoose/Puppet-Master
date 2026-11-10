@@ -12,7 +12,7 @@ import json
 import sys
 from pathlib import Path
 from jsonschema import Draft202012Validator
-from pm_dch_formats import FormatChecker
+from pm_dch_formats import validator as current_validator
 from pm_dch_round5_oracles import Case, checkpoint_source, reference_storage, evaluate as evaluate5
 from pm_dch_round6_oracles import integer_paths, replaced
 
@@ -24,7 +24,7 @@ NEGATIVE = [('2^64', 1 << 64), ('-1', -1), ('false', False), ('true', True),
 
 def checkpoint_admission(m, value, schema):
     """The production pre-join type/schema and physical pack boundaries."""
-    if not m.input_types_valid(value) or not Draft202012Validator(schema, format_checker=FormatChecker()).is_valid(value):
+    if not m.input_types_valid(value) or not current_validator(schema).is_valid(value):
         return False
     try:
         m.body_bytes(value)
@@ -126,7 +126,7 @@ def evaluate(m,c,envelope):
         record,row = c.args
         schema = json.loads((ROOT/row['payload_schema_ref']).read_text())
         return (envelope.is_valid(record)
-                and Draft202012Validator(schema,format_checker=FormatChecker()).is_valid(record['payload'])
+                and current_validator(schema).is_valid(record['payload'])
                 and m.joins(record,row['event_type']))
     if c.surface == 'checkpoint_admission':
         return checkpoint_admission(m,*c.args)

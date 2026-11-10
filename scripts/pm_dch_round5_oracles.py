@@ -12,7 +12,7 @@ import hashlib
 import json
 from pathlib import Path
 from jsonschema import Draft202012Validator
-from pm_dch_formats import FormatChecker
+from pm_dch_formats import validator as current_validator
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -237,7 +237,7 @@ def cases(m, Case=Case):
 
 def evaluate(m, c, envelope):
     a, surface = c.args, c.surface
-    validator = lambda schema: Draft202012Validator(schema, format_checker=FormatChecker())
+    validator = lambda schema: current_validator(schema)
     if surface == 'history': return m.historical_read_valid(a[0], a[1], a[2], envelope, validator(a[3]))
     if surface == 'checkpoint': return validator(a[4]).is_valid(a[0]) and m.checkpoint_joins(*a[:4])
     if surface == 'resolve': return m.resolve_body(*a) is not None

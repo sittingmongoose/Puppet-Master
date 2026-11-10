@@ -7,7 +7,7 @@ from pathlib import Path
 
 from jsonschema import Draft202012Validator
 import pm_dch_events as shared
-from pm_dch_formats import FormatChecker
+from pm_dch_formats import refused_by_predicate, validator as current_validator
 
 ROOT = Path(__file__).resolve().parents[1]
 EVENT = 'chat.response_stop_requested'
@@ -15,10 +15,10 @@ REQUEST_PATH = 'Plans/dch_stop_request.schema.json'
 OUTCOME_PATH = 'Plans/dch_stop_outcome.schema.json'
 REQUEST_SCHEMA = json.loads((ROOT / REQUEST_PATH).read_text())
 OUTCOME_SCHEMA = json.loads((ROOT / OUTCOME_PATH).read_text())
-REQUEST = Draft202012Validator(REQUEST_SCHEMA, format_checker=FormatChecker())
-OUTCOME = Draft202012Validator(OUTCOME_SCHEMA, format_checker=FormatChecker())
+REQUEST = current_validator(REQUEST_SCHEMA)
+OUTCOME = current_validator(OUTCOME_SCHEMA)
 ENVELOPE_SCHEMA = json.loads((ROOT / 'Plans/event_record.schema.json').read_text())
-ENVELOPE = Draft202012Validator(ENVELOPE_SCHEMA, format_checker=FormatChecker())
+ENVELOPE = current_validator(ENVELOPE_SCHEMA)
 JOIN_FIELDS = ('scope', 'computer_id', 'thread_id', 'assistant_turn_id', 'target_work')
 ACCEPTED_FIELDS = JOIN_FIELDS + ('operation_id', 'actor_ref', 'ts', 'stop_reason_code')
 
@@ -253,6 +253,10 @@ def evaluate(case):
         return REQUEST.is_valid(data)
     if surface == 'schema_outcome':
         return OUTCOME.is_valid(data)
+    if surface in ('schema_request_predicate', 'schema_outcome_predicate'):
+        # CV-1101: the shared predicate's own Refusal caused the refusal, through the validator.
+        validator = REQUEST if surface == 'schema_request_predicate' else OUTCOME
+        return refused_by_predicate(validator, data, case['reason'])
     if surface == 'request':
         return request_valid(**data)
     if surface == 'outcome':
