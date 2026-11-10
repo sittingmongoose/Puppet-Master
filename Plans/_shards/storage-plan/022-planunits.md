@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L2402-L15247
+Source lines: L2402-L15248
 
-Source SHA256: `1d844648d4f6b363a9674529f9758ed796d61299afcb0e725d527b247e0a28c1`
+Source SHA256: `e49711dad02cb4b57afbe8b3732e0c5f53e1c7953fc9ec73e9327ff956ae3897`
 
 ---
 
@@ -1575,6 +1575,7 @@ canonical_text: >-
   separate reader/source-lineage compatibility; JSON diagnostics remain non-authoritative mirrors. Amended
   2026-10-31 (DL-270): SP-335 compresses sealed segments as whole blocks in a sealed container (SP-346), SP-347 adds the group commit control frame, and SP-339 retires the always-on JSON
   mirrors; the active segment keeps flags zero.
+  SP-1100 preserves the exact physical numeric/profile domain and original payload bytes; CV-1100 qualifies only the selected semantic preimage, and SP-1101 authenticates frozen original-recipe selection for retained reads and retries.
 gui_related: false
 gui_classification_reason: "This unit preserves backend on-disk seglog wire-format requirements."
 split_recommended: false

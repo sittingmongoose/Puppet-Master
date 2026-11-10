@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L20531-L21388
+Source lines: L20590-L21448
 
-Source SHA256: `1d844648d4f6b363a9674529f9758ed796d61299afcb0e725d527b247e0a28c1`
+Source SHA256: `e49711dad02cb4b57afbe8b3732e0c5f53e1c7953fc9ec73e9327ff956ae3897`
 
 ---
 
@@ -800,6 +800,7 @@ owner_doc: Plans/storage-plan.md
 canonical_text: Storage materializes one generic EventRecord index checkpoint whose immutable generation
   anchors resolve existing row publication references and whose atomic advancing frontier proves complete
   CURRENT-selected canonical coverage, with exact rebuild, translation and retention semantics.
+  SP-1100 preserves the exact physical numeric/profile domain and original payload bytes; CV-1100 qualifies only the selected semantic preimage, and SP-1101 authenticates frozen original-recipe selection for retained reads and retries.
 gui_related: false
 gui_classification_reason: Defines backend derived custody, source coverage and durable publication.
 depends_on:
