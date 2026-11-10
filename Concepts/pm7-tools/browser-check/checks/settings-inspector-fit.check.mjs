@@ -3,7 +3,10 @@
 // stretching or overflow, in every inspector the page opens, in all ten looks and both surfaces; and the AI &
 // Providers account order controls use icons of their own (not the accordion's expand chevron) while keeping
 // their accessible names and their order logic. Geometry only: every judgement here is a measured box
-// (getBoundingClientRect plus the svg's own getBBox and stroke), never an eye.
+// (getBoundingClientRect plus the svg's own getBBox and stroke), never an eye. Each look is chosen through the
+// Theme and Theme Mode rows' own dropdowns — the settings engine re-applies the saved look pair on every render
+// (applyPaint), so a theme painted without saving (t.app.look) is reset to Basic Dark when an inspector opens —
+// and html[data-theme] is asserted at measurement time (sol-recheck-b10's false pass).
 //   browser-check run Concepts/pm7-tools/browser-check/checks/settings-inspector-fit.check.mjs --set page=<build>
 // --set looks=a,b,c narrows the looks; --set widths=1280,740 narrows the width pass; --set move=0 skips FO-125.
 import { LOOKS } from '../browser-check.config.mjs';
@@ -131,6 +134,47 @@ async function openInspector(t, f, setting) {
   await t.settle();
   return true;
 }
+
+/* The look is set the way a person sets it — through the Theme and Theme Mode rows' own dropdowns — never by
+   painting `data-theme` directly. The settings engine re-applies the saved look pair on every render
+   (`applyPaint`, base/script/pm4-settings-js.js), so a theme painted without saving (t.app.look, persist:false)
+   is reset to Basic Dark the moment an inspector opens and every "look" pass would measure the same one
+   (sol-recheck-b10's false pass). */
+async function setLookBySetting(t, f, look) {
+  const [family, mode] = look.split('-');
+  for (const [setting, value] of [
+    ['general.visual.theme', family === 'nier' ? 'NieR' : family[0].toUpperCase() + family.slice(1)],
+    ['general.visual.theme-mode', mode === 'light' ? 'Light' : 'Dark']
+  ]) {
+    const trigger = f.locator(`select[data-setting="${setting}"]`).locator('..').locator('.pm51-dd-trigger');
+    const labels = await f.locator(`select[data-setting="${setting}"] option`).allTextContents();
+    const name = labels.includes(value) ? value : `${value} ${mode === 'light' ? 'Light' : 'Dark'}`;
+    await trigger.first().scrollIntoViewIfNeeded();
+    await trigger.first().click();
+    await f.getByRole('option', { name, exact: true }).click({ timeout: 8000 });
+    await f.locator('.pm51-dd-list').waitFor({ state: 'hidden', timeout: 8000 }).catch(() => {});
+    /* a family pick can start a look transition (NieR's wipe): let it finish before the next pick, or its
+       layer swallows the click and the popout never opens */
+    await f.waitForFunction(() => !(window.PM_LOOK_COVERED && PM_LOOK_COVERED()) && !(window.PM_THEME_TRANSITION && PM_THEME_TRANSITION.busy && PM_THEME_TRANSITION.busy()), null, { timeout: 15000 }).catch(() => {});
+    await t.page.waitForTimeout(400);
+  }
+  await f.waitForFunction(([fam, m]) => {
+    const theme = document.documentElement.getAttribute('data-theme') || '';
+    const nier = !!(window.PM_NIER && PM_NIER.on()) || theme.startsWith('nier');
+    return fam === 'nier' ? nier && theme.endsWith('-' + m) : !nier && theme === fam + '-' + m;
+  }, [family, mode], { timeout: 20000 }).catch(() => { /* the guard fails each of this look's cells with the painted theme */ });
+  await t.page.waitForTimeout(500);
+}
+
+/* Measured only under the look the cell names: read back the painted theme at measurement time and fail the
+   cell if the product's own render moved it (the reset sol-recheck-b10 witnessed). */
+async function guardLook(t, f, look, where) {
+  const [family, mode] = look.split('-');
+  const got = await f.evaluate(() => ({ theme: document.documentElement.getAttribute('data-theme') || '', nier: !!(window.PM_NIER && PM_NIER.on()) || (document.documentElement.getAttribute('data-theme') || '').startsWith('nier') }));
+  const ok = family === 'nier' ? got.nier && got.theme.endsWith('-' + mode) : !got.nier && got.theme === look;
+  await t.check(`${where}: measured under ${look} (painted ${got.theme}${got.nier ? ', NieR on' : ''})`, ok, 'the inspector opened on a different look than the cell names');
+  return ok;
+}
 export const tests = {
   /* FO-122: every tick centred within 0.5 px of its mark's centre, the tile's svg at its designed size, square,
      wholly inside the tile, and its glyph centred in the tile, across the ten looks and a width pass. Three
@@ -146,10 +190,10 @@ export const tests = {
     await t.settle();
 
     for (const look of looks) {
-      const okLook = await t.app.look(t, look);
-      if (!okLook) continue;
+      await setLookBySetting(t, f, look);
       for (const setting of ['general.visual.theme', 'general.interaction.question-cards', 'general.interaction.spellcheck-languages']) {
         if (!(await openInspector(t, f, setting))) continue;
+        await guardLook(t, f, look, `${look} · ${setting}`);
         await measurePanel(t, f, `${look} · ${setting}`, saw);
         await f.locator('#panel-settings .detail-inspector [data-action="close-details"]').click().catch(() => {});
         await t.page.waitForTimeout(350);
@@ -158,12 +202,13 @@ export const tests = {
     await t.check(`FO-122: both choice roles were measured (radio ${saw.radio}, checkbox ${saw.checkbox}, ${saw.panels} panels, ${saw.ticks} ticks)`, saw.radio > 0 && saw.checkbox > 0, 'the multiselect row must still open its inspector');
 
     /* the width pass: the boxes are px-fixed, but the panel's own width and the row it opens from are not */
-    await t.app.look(t, looks[0]);
+    await setLookBySetting(t, f, looks[0]);
     await f.locator('#pm-settings-root [data-action="navigate-domain"][data-domain="general"]').first().click();
     await t.settle();
     for (const w of widths) {
       await t.viewport(w, w === 740 ? 900 : 1080);
       if (!(await openInspector(t, f, 'general.visual.theme'))) continue;
+      await guardLook(t, f, looks[0], `width ${w} · general.visual.theme`);
       await measurePanel(t, f, `width ${w} · general.visual.theme`, null);
       await f.locator('#panel-settings .detail-inspector [data-action="close-details"]').click().catch(() => {});
       await t.page.waitForTimeout(350);
@@ -233,10 +278,14 @@ export const tests = {
     }
 
     /* a scoped account row's inspector on this page: the AI tile glyph, and its ticks, measured like the rest.
-       The rows live inside each account's accordion, so the first account opens first. */
+       The rows live inside each account's accordion, so the first account opens first. The painted look is
+       read before opening and asserted unchanged after: a saved look must survive an inspector opening. */
     const accToggle = f.locator('#panel-settings .pm51-acc-item .pm51-acc-toggle').first();
     if (await accToggle.count() && (await accToggle.getAttribute('aria-expanded')) !== 'true') { await accToggle.scrollIntoViewIfNeeded(); await accToggle.click(); await t.settle(); }
+    const beforeTheme = await f.evaluate(() => document.documentElement.getAttribute('data-theme') || '');
     if (await openInspector(t, f, 'ai.accounts.account-roles')) {
+      const keptTheme = await f.evaluate(() => document.documentElement.getAttribute('data-theme') || '');
+      await t.check('providers · the painted look survives the inspector opening', keptTheme === beforeTheme, `before ${beforeTheme}, after ${keptTheme}`);
       await measurePanel(t, f, 'providers · ai.accounts.account-roles', null);
       await f.locator('#panel-settings .detail-inspector [data-action="close-details"]').click().catch(() => {});
     }
