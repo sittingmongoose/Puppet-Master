@@ -1306,7 +1306,7 @@ The last review's family grades are carried unchanged; this pass re-graded nothi
 
 Sweep part 2A re-graded the `positive_negative_oracles` cell of all 25 families to PARTIAL, the cycle-8 grade; the reasons are in "Sweep part 2A: findings and responses".
 
-This lane's own review of its timestamp fields is interim only until the shared date-time gate passes.
+_Superseded by sweep part 2B (below): every DO timestamp field is now on the shared CV-1101 predicate with its owner's profile; the review is no longer interim._ (Part 2A wording: this lane's own review of its timestamp fields was interim only until the shared date-time gate passed.)
 
 ---
 
@@ -1390,7 +1390,7 @@ No `Plans/*.md` document changed, so no shard or index regeneration was needed a
 
 Class 8 (masked negatives) is this round's subject: the matrix and the tool now show it row by row. The restructure changes no comparison: typed comparisons stay typed (`typed_text` is `typed_tree` serialized), Python comparisons stay Python, and the differential runs show identical outputs. Exact types come before values in every predicate (class 11). Schema references still resolve eagerly (`append_schema_references`, `successor_schema_references`, class 5). Classes 10, 10a and 12 are part 2B. The other classes are unchanged by this round.
 
-**This lane's own review of its timestamp fields is interim only** (pm7-build, 2026-11-05 16:50Z), until the shared date-time gate passes.
+_Superseded by sweep part 2B (below): the timestamp review is no longer interim._ (Part 2A wording, pm7-build 2026-11-05 16:50Z: this lane's own review of its timestamp fields was interim only until the shared date-time gate passed.)
 
 ### Part 2B items
 
@@ -1421,3 +1421,154 @@ Totals: self-grade **250 PASS / 25 PARTIAL / 25 ABSENT → 225 PASS / 50 PARTIAL
 - **TOOL-ISSUES candidates (not filed: the brief allows no mail).** (1) The scan treats every function of a scanned file as checker code unless the suite's table holds it, so a lane must split its predicates into one file per suite. (2) The purity snapshot at every predicate instruction makes a real lane value cost about 3 s per evaluation, so suites must be small and projected. (3) A Duplicate needs one refusal code, so a runtime row that repeats a schema assertion under its own code cannot be proved as a pair.
 - The guard-tool controls per suite are the controls its negatives need, not every positive; the complete checker runs every positive through every row.
 - Retention integration, linked-successor physical and admission work, Q1/Q3 and the native NOT_RUN facets carry unchanged.
+
+---
+
+# DO — sweep part 2B: the gated shared number and date-time rules (2026-11-10)
+
+Task: `lanes/SWEEP-P2B.md` with its addendum "two allowed merge resolutions" (lead, 2026-11-10 20:18Z). This is the rerun after `drafts/DO/sweep-p2b/MERGE-STOP.md`. Branch `plans/ea-w2-orchestrator-20261104`, start head `cecdc5bb5b` (part 2A), no rebase. Worker: Opus 5.5, T3 delegate. Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DO/sweep-p2b/` (`SHA256SUMS`). No Decision Log entry, registry append, admission, seal or reseal. `Plans/Spec_Lock.json`, `Plans/.evidence/**`, `Plans/auto_decisions.jsonl`, `.gitignore`, the guard tool's files and every NUMRULE file are unchanged.
+
+**Result.** The merge `ec3f56e84d` takes the gated NUMRULE head with the two allowed resolutions, and DO's checker against the gated helper is unchanged (212,259 checks). The adoption commit `4800b84dc2` puts every DO timestamp field on the shared CV-1101 predicate with its owner's profile, replaces the lane's number surrogates with the shared CV-1100/SP-1100 calls, and resolves retained originals through SP-1101's `RetainedDispatcher` over sealed custody; `d4eb7f41f7` corrects the owner text. The complete checker exits 0 with **222,702 checks**; `--self-test --scope numbers` passes 580/580; the shared corpus runs through the complete append and retry routes with 0 disagreements; the 4,400-digit integer is refused with a code everywhere. The guard-table matrix is diagonal over **415 rows** (one new: `recipe_disclosed`), and the gated tool proves all 37 rows of the 12 suites part 2B touched. **Not done in this tree:** the shared date-time inventory gate fails on 9 resource hashes DO's earlier edits drifted, so `datetime_validator` cannot be built and `pm_event_numbers.py --self-test` (`--scope all`) refuses before running a case; refreshing the inventory is a NUMRULE-file change, filed as TOOL-ISSUES T198 and asked of the lead below. Family grades are unchanged: 225 PASS / 50 PARTIAL / 25 ABSENT.
+
+## Sweep part 2B: findings and responses
+
+### Step 1: the merge and its two allowed resolutions
+
+`ec3f56e84d` merges exactly `58c2816ff33365384d4039553f5efdb5370930e6` (`--no-ff`; parents `cecdc5bb5b`, `58c2816ff3`). It conflicted in the same 168 paths as the stopped run: 163 under `Plans/_shards/**` and `Plans/.plan_index/**`, plus five others, resolved as the addendum allows.
+
+| Resolution | What was done | Proof |
+|---|---|---|
+| **1. Old NUMRULE copies** (`scripts/pm_event_numbers.py`, `scripts/pm_event_numbers_corpus.py`, `Plans/event_number_recipe_corpus.json`, `scripts/pm_event_datetime.py`) | Condition checked first: each DO blob equals the blob at NUMRULE `64778f641b` (an ancestor of `58c2816ff3`), and the lane has exactly one commit touching each, the one that added it (`0a27411bf1` for the first three, `17a2a73958` for the date-time module). Took the gated side with `git checkout --theirs`. | Each file's blob, SHA-256 and `cmp` equal `git show 58c2816ff3:<path>`: blobs `828449a760`, `342563de59`, `7e49207c77`, `2b3a5b589e` (`numrule-theirs-proof.txt`). |
+| **2. CV-366 `canonical_text`** (`Plans/Contracts_V0.md`) | Both sides only appended one closing sentence after the developer-session line: DO's three-line CV-740 sentence (`8b1db698e8`) and NUMRULE's CV-1100/SP-1101 sentence (`e20fa723c1`). Kept both, DO's first, neither reworded. | The resolved file is byte-identical to `git merge-file --union` of ours, base `fb441b27fd` and theirs (SHA-256 `facb2865…6fc5e9`). Base→ours, base→theirs and base→resolved over the CV-366 block are each one pure insertion at the same point, and resolved = DO lines + NUMRULE line (`cv366-union-proof.txt`). |
+| **3. Shards and index** | Regenerated. Shards changed only for `contracts_v0` and `storage-plan`, the two documents the merge changes. Plan units = ours ∪ theirs (7,519 + CV-1100, CV-1101, SP-1100, SP-1101 = 7,523); the readiness delta is exactly those four units. | `pm-shard-plans.py --check`: pass, 99 sources. `pm-plan-index.py validate` at `origin/main` `47d9dc7655`: exit 1 with 59 findings, all fork drift (38 `plan_unit_removed_without_ledger_decision` for units that exist only on main, 21 `plan_unit_removal_ledger_invalid` on ledgers the merge does not touch); none names a merged unit. |
+
+The merge was pushed alone first (`cecdc5bb5b..ec3f56e84d` on both push URLs).
+
+**DO's checker against the gated helper.** DO imports `JsonNumber`, `Refusal` and `storage_uint64` from `pm_event_numbers` (`scripts/pm_orchestrator_event_oracles.py:26` at `ec3f56e84d`). Between `64778f641b` and `58c2816ff3` those three definitions, and `_refuse` and `current_integer` that they call, are source-identical; only `qualified_jcs`, a new `_declared_numeric_kind`, `self_test` and `main` changed (`helper-symbols-proof.txt`). The complete checker at the merge, before any part 2B edit: **exit 0, 25 families, 212,259 checks** (25 m 17 s), the same count as part 2A. **No behaviour change.**
+
+### Step 2: the adoption guide
+
+Read `reports/event-authority-20261105/NUMRULE-ADOPTION.md`: "Shared calls", "Number-only adoption", "Authority boundary", "### DO", "Validation and limits".
+
+### Step 3: timestamps
+
+**The shared check now in force.** `pm_event_datetime.date_time` replaces the lane's uppercase-Z grammar (`utc`, removed) at every `format: date-time` the lane validates (`event_record_date_time`, `scripts/pm_orchestrator_event_oracles.py:67`): a value the validator treats as a string reaches it (a `str` subclass refuses, `date_time_type`), and a non-string is left to `type`, as in the shared `format_checker`. Storage-assigned fields take CV-253's profile on top (`storage_timestamp_errors` `:104`, `StorageRecordValidator` `:136`).
+
+| Field | Owner | Shared check and profile | Where |
+|---|---|---|---|
+| Payload `occurred_at_utc`, all 25 families | DO (OSI-680..704), equal to the envelope's | `date_time`, EVENT_RECORD (RFC 3339: offsets, lowercase `t`/`z`, real leap seconds, any fraction length) | every payload validator (`UTC_FORMAT`) |
+| `read_at_utc` (crew.board_message_read), `archived_before_utc` (crew.board_messages_archived) | DO | `date_time`, EVENT_RECORD | same |
+| `AgentMessageApplicationV2.created_at` | DO (CV-740 app board V2) | `date_time`, EVENT_RECORD | `selected_validators` `input_v2`, `source_v2` |
+| Project adapter `created_at` | Projects (OSI-247), read by DO's adapter | `date_time`, EVENT_RECORD (no stricter owner rule) | `project_original_input_errors`, row `project_created_at_value` |
+| Envelope `occurred_at_utc` | EventRecord (CV-317/CV-1101) | `date_time`, EVENT_RECORD | `selected_validators['event']`, `retry_schemas` |
+| Envelope `observed_at_utc`, `persisted_at_utc` (current and frozen 1.0.0 reader) | Storage (CV-253) | `date_time`, STORAGE_UTC_Z (terminal uppercase `Z` only) | `StorageRecordValidator` around both envelope validators |
+| Index row `persisted_at_utc` | Storage (SP-278 row, `storage_value_registry.json` /families/8) | `date_time`, STORAGE_UTC_Z | `index_row_validator` `:2749` |
+| Checkpoint `indexed_at_utc`, `first_prepared_at_utc`, `activated_at_utc`, `retired_at_utc` | SP-278 (read, not owned) | `date_time`, EVENT_RECORD | `selected_validators['checkpoint']` |
+
+The three Storage sites are exactly the inventory's Storage nodes among the resources DO validates; `storage_profile_sites_errors` (`:3343`) reads `Plans/event_datetime_inventory.json` as data and fails if that set changes.
+
+**Witnesses** (`datetime_profile_checks`, `:3372`, 5,574 checks in the complete checker): for every payload date-time field of every event case, 7 accepted forms (lowercase, `+05:30`, `-05:00`, `2016-12-31T23:59:60Z`, the same leap second at `+05:30`, a 21-digit fraction, year 0000) and 11 refused forms (`24:00:00Z`, trailing LF, `00:00:60Z` on a non-leap day, comma fraction, `+24:00`, `+05:60`, no zone, 29 February 2026, a leap second at the wrong offset, a leading space, an empty fraction), through the payload validator and `retry_shape_valid`; a `str` subclass refuses; an envelope and payload both at `+05:30` append with no error; for both Storage fields on the envelope and `persisted_at_utc` on the row, 3 accepted and 6 refused forms (`+00:00`, `-00:00`, lowercase `z`, `+05:30`, `24:00:00Z`, trailing LF), each through the envelope validator, `event_errors` (exactly `['event_schema']`) and `retry_shape_valid`; and the Project adapter's `created_at` with the same 18 payload forms.
+
+**Lane-local leaks.** DO's earlier reviews recorded none (its old grammar refused `24:00:00Z`, `:60` seconds and a trailing LF by full match). The old grammar was instead too strict for the owners: it refused every valid offset, lowercase and leap-second form at EventRecord fields. Those forms are now accepted where the EventRecord profile applies and refused where CV-253 applies.
+
+**Fixture expectations that changed.** The 57 `format_cases` whose value is `2026-11-04T00:00:00+00:00` at a payload date-time field (53 `occurred_at_utc`, 2 `read_at_utc`, 2 `archived_before_utc`) were expected invalid; the lane grammar refused them by requiring `Z`. CV-1101's EventRecord profile admits RFC 3339 offsets, so each is now `valid: true` (refusing row before: the payload schema verdict, `logical_payload_schema`; now accepted).
+
+**The date-time inventory gate and `datetime_validator`: blocked, question for the lead.**
+- `python3 scripts/pm_event_datetime_inventory.py` exits **1** in this tree with **9 `inventory_node_changed`**, all on `resource_sha256` only (each `node_sha256` unchanged): 6 coordination nodes in `Plans/coordination_event_payloads.schema.json` and 3 in `Plans/storage_value_registry.json` /families/35. Their resources changed when DO's DO-P1F-03 board-member join (`ad933eede3`) edited those files, before NUMRULE's base. Credited exactly: **the gate fails** (`dt-inventory-merge.json`).
+- Because `StorageSelection()` validates the whole inventory first, `datetime_validator` cannot be constructed anywhere in this tree (`DatetimeAdmissionError: datetime_inventory_invalid`), so DO calls `date_time` with each owner's profile at the sites above, as the guide allows ("or call `date_time` at a separately enforced boundary").
+- `python3 scripts/pm_event_numbers.py --self-test` (`--scope all`, the date-time suite) exits **1**: `case_execution: NOT_RUN_ADMISSION_REFUSED`, the only failing check `datetime_inventory_complete_and_classified`.
+- `python3 scripts/pm_event_datetime.py --self-test`, the command the brief names, exits 0 but prints nothing: that module has no `__main__`, so the exit is vacuous and is not credited.
+- In a hardlinked scratch copy (never committed), refreshing the 9 hashes then needs the inventory's own exclusion pin refreshed (`inventory_derived_source_pin_changed`), and the full scan then reports 225 more failures: stale exclusion pins and unclassified containers in the regenerated `Plans/_shards`, `.plan_index`, `.plan_migration`, `Decision_Log.md` and `usage-feature.md` (`invcopy-gate.json`). Both files are NUMRULE's. Filed as **TOOL-ISSUES T198** (adoption blocker, no false pass).
+
+### Step 4: SP-1101 retained-record dispatch (DO-C8-N4)
+
+A retained original's recipe is now selected by its sealed custody, never by the case (`scripts/pm_orchestrator_event_oracles.py`, section "SP-1101 retained-original dispatch", from `:898`):
+- **Composition.** `install_original_custody` (`:1029`) installs the frozen recipe map, one `FrozenRecipe` per family × envelope edition × identity recipe (`recipe_tuple`, `install_recipe_verifiers`), and seals the committed positive originals (event, retained and compatibility cases) plus the writer-built originals that appear only inside negatives (the new `sealed_originals` fixture section, 25 selector controls). The checker calls it once in `main` before any read; the guard-proof script calls it in `fixtures_now`. The case under check never adds to it; only the lane's writer builders seal what they write (`seal_original` `:1009`: `numeric_history_case`, the resequenced and migrated-row controls, the stored-header board original).
+- **Resolution.** `resolve_original` (`:1042`) asks the shared `RetainedDispatcher` for the original at its seglog ref, with the binding computed from the case. `DOOriginalOwner` (`:948`) returns custody only for bytes sealed at that ref (EVENT_VALUE bytes of the event, the logical payload as the result bytes). The frozen verifier (`frozen_verifier` `:965`) decodes the sealed bytes and recomputes the payload join, the identity under that recipe and the source commitment. Current disclosure stays with the DO disclosure rows (`disclose` passes).
+- **Rows** (`scripts/do-guards/do_recipe_1.py`): `recipe_supported` now refuses any dispatcher refusal (`original_query`, `original_authority`, `original_binding`, `recipe_unknown`, `original_verification`); new `recipe_disclosed` refuses a label that differs from custody's recipe; the four evidence rows compare the disclosed evidence with the witness recomputed from custody's recipe. A label or `verified` flag selects nothing.
+- **Witnesses** (`dispatch_checks` `:3561`, 362 checks): for 40 retained originals, a flipped label is refused by `recipe_disclosed` alone and custody's recipe still selects; the label and its whole evidence rewritten coherently by the writer's own `record_recipe` still refuse; a coherent forgery of the original's bytes (observed time moved, every copy and self-hash rewritten, nothing sealed) is refused `original_authority` by `recipe_supported` alone, in history and checkpoint reads; sealing those same bytes makes them read; a custody tuple with no frozen verifier refuses `recipe_unknown`.
+
+**Fixture expectations that changed.** The 212 `retained_history_negatives` of kinds `forged_id` (106) and `forged_key` (106) are coherent forgeries of an original's identity. Custody now refuses them first (`historical_original_recipe`, row `recipe_supported`: the forged ref has no sealed original, or the forged key's bytes were never sealed) before the event joins they reached before (`event_join_event_id`, `event_join_idempotency_key`).
+
+### Step 5: numbers (DO-C8-N1, N2, N3, N5, DO-P1F4-S1, typed copies)
+
+| Item | Result | Where |
+|---|---|---|
+| **N1 integer slots** | The blanket `number_domain_errors` walk (every number refused unless RFC 8785 took it and an integral value was an int, a lane-wide safe-integer cap) is removed. `integer_slots` / `integer_slot_errors` call the shared `current_integer` at every schema integer slot with that slot's own bounds, following `$ref`, `allOf`, nullable `anyOf`, properties, pattern and additional properties and items: the payload's definition slots (`payload_number_errors`), the envelope's `producer_sequence_id` (`envelope_number_errors`; Storage `sequence_id` keeps `storage_uint64`). The append stage also qualifies the producer projection and the identity preimage (`append_number_view` `:1198`, `identity_number_errors`). Retry candidates and board payloads and envelopes use the same calls (`record_number_errors`, `board_number_view` in the contracts checker). Fractional values keep the owner's `number` type: `progress_pct: 50.0` is no longer refused. | `scripts/pm_orchestrator_event_oracles.py:196`, `:239`, `:253`, `:260`, `:1198`; `scripts/pm-orchestrator-event-contracts.py:85` |
+| **N1 raw ingress** | `number_token_errors`, `canonical_loads` and the fixture loader's current roots go through the shared `loads_current_json` (`-0`, `01`, non-finite, malformed, duplicate keys and lone surrogates refuse); every integer token becomes an exact int of any length (`exact_number`, through `JsonNumber.exact`, never Python's 4,300-digit `int()`). `1.0` and `1e0` are JSON numbers that the occurrence slot refuses (`integer_type`); the number-case check now says which refusal applies to which token. | `:326`, `:338`, `:346`, `:354` |
+| **N2 qualified JCS** | `semantic_digest` is the shared `producer_semantic_digest` over the CV-317 projection (asserted equal to `PRODUCER_FIELDS`); `payload_digest` and the identity and CV-366 observation preimages use `qualified_jcs`. A value the shared serializer cannot encode exactly refuses (`Refusal`) or has no digest (None, which every reader compares with a string and refuses). The frozen legacy recipe `ea-do-json-v1` keeps its own `json.dumps` bytes; an integer it cannot render refuses instead of raising. Bytes are unchanged for every existing value. | `:454`, `:1473`; `scripts/pm-orchestrator-event-contracts.py:18`, `:24`, `:39` |
+| **N3 physical profiles** | `packed` is the shared `storage_value_bytes` with EVENT_VALUE (event values, inline payload sizes, SP-337 `application/msgpack` pack bytes, source hashes); `app_packed` is APP_PHYSICAL (application wrapper bytes and their physical digest). The lane's msgpack call wrote every float as float64, so the integral-float history originals had noncanonical value bytes: 471 originals and one pack get new canonical bytes and every derived copy was regenerated (below). | `:439`, `:448` |
+| **DO-P1F4-S1** | Every integer slot of the SP-278 checkpoint, read token and index row is an exact uint64 through `current_integer` inside that record's schema verdict (`StorageIntegerValidator` `:118`), so an integral-float copy is refused with `checkpoint_schema` (or `index_row_schema` with the copy's own code) instead of making the binding codec raise; the join views take binding digests through `binding_or_none` (`:1087`). The three lane checks that asserted the `TypeError` now assert the coded refusal. | `:118`, `:1087` |
+| **N5 coordination helper** | `canonical`, `idempotency_key` and `event_id_preimage` in DO's copy of `scripts/pm_coordination_events.py` are now byte-identical to DCO's part 2B edition (`plans/ea-w2-coordination-20261104` at `2ec9d21d70`), with DCO's `scripts/pm_coordination_numbers.py` copied byte for byte (SHA-256 `5ebebaab…d0499`); `producer_digest` was already identical. The rest of the carried file (DO's board-member rows, DCO's guard bridge) reconciles once at batch-2 integration. Coordination results are unchanged: `pm_coordination_events.py` the same 2 failures, its tests the same 14. | `scripts/pm_coordination_events.py:35`, `:170`, `:213`, `:232` |
+| **Typed copies** | `typed_tree` (Projects) is unchanged; its integers are exact decimals and floats IEEE bytes. No lane serializer was added. | — |
+
+**Shared corpus through the complete checker** (`number_corpus_checks` `:3477`). Every number-scope value of `Plans/event_number_recipe_corpus.json` (53 distinct raw spellings from `token`, `parse`, `parse_token`, `slot` and `json_number` cases and 9 distinct exact integers from `integer` and `uint64` cases, plus three 4,400-digit integers, two raw and one exact) is written as raw JSON text at the `occurrence` slot of one inline case per family (25) and parsed by the checker's own raw ingress, then run through the complete append route (`event_errors`) and the retry route (`retry_outcome`). Expectations are composed from the shared helpers only (`loads_current_json`, `current_integer(minimum=1)`, the identity's `qualified_jcs`). The 10 exact integers also run at the Storage `sequence_id` with `storage_uint64` as the expectation. **1,875 inputs, 3,750 route runs. Occurrence slot: 825 `number_domain`, 225 accepted, 575 refused at the raw parse. Sequence: 175 accepted, 75 refused at the raw parse. 0 disagreements, 0 crashes.**
+
+**The 4,400-digit integer** (`long_integer_checks` `:3526`, 42 checks). DO had the crash class: the old loader's `json.loads` of a 4,400-digit token raised `ValueError` (Python's 4,300-digit limit), as did the legacy identity recipe's `json.dumps`. Now `±10^4399` at the occurrence slot refuses `number_domain` through append, retry and board joins; a retained original holding one is refused with a code by history and checkpoint reads; both identity recipes refuse with `Refusal`. No route raises.
+
+**Self-test.** `python3 scripts/pm_event_numbers.py --self-test --scope numbers`: **exit 0, `"status": "pass"`, 580/580 cases (276 positives, 304 labelled negatives)**. Credited exactly: number recipes only.
+
+**Fixture regeneration** (`tools/regen_p2b_fixtures.py`, extending DO-P1F06's tool and driving the same lane builders; nothing edited by hand). Gates: the base builders replay the base file byte for byte; no original value changes (event, logical payload, context and pack values identical; the one repacked original's `payload_ref` and pack id are SP-337 copies of its new bytes); every positive is a builder fixpoint whose custody resolves and which passes checkpoint and history reads; every rebuilt negative gives exactly its expected error. Changed: 372 retained and 100 compatibility positives, 530 retained and 400 compatibility history negatives (derived copies only), 57 format cases, 212 expectations (above), new `sealed_originals` (25). File SHA-256 `13028aa2…29137b` → `f4a5cbdb…4c87` (`regen-manifest.json`).
+
+### Step 6: guard tables
+
+Rows: **415** (part 2A's 414 plus `recipe_disclosed`). Changed predicates: `recipe_1` only (`recipe_supported` now reads the dispatcher's refusal; `recipe_disclosed` is new; the evidence rows compare with custody's witness). Changed verdicts or views, predicates unchanged: the number rows (slot-directed views), the envelope, retry, checkpoint, token and row schema verdicts (Storage profile, shared date-time, uint64 slots), the Project `created_at` value, and the pack and inline sizes (EVENT_VALUE bytes). New single-defect negatives: `recipe_custody` (a coherent forgery of the original's bytes) and `recipe_label`; the board number negatives now put an integral float at a declared integer slot (`occurrence`, `producer_sequence_id`) instead of an undeclared probe field.
+
+| Check | Result |
+|---|---|
+| Whole-table matrix (`pm-orchestrator-guard-proof.py check-all`) | exit 0: 0 errors; 415 rows, 7,723 negatives, 7,264 single-defect; unwitnessed rows exactly the 27 declared unprovable (unchanged list) |
+| Adapters (`check`) | exit 0: 118 adapters current (`generate` rewrote only `do_recipe_1.py`) |
+| Gated tool (`run`) on the 12 suites: `recipe_1`, `append_number_1`, `retry_number_1`, `board_number_1`, `append_shape_1`, `retry_shape_1`, `checkpoint_schema_1`, `checkpoint_join_7`, `project_input_value_1`, `pack_encoding_1`, `pack_integrity_1`, `transport_inline_1` | **12 PASS: 37/37 rows proved**, 68 own negatives all flipped, 216 kept, 0 masked, 0 unrelated, static scan PASS; 1,270 evaluations in 186 s (`guard-tool-p2b.tar.gz`) |
+| The other 106 suites | predicates and inputs unchanged; part 2A's results stand (351 rows proved, 27 declared unprovable) |
+
+Totals credited exactly: **388 rows proved by the tool, 27 unprovable by construction** (each with part 2A's reason), of 415. `reports/event-authority-20261104/DO.guard-tables.md` carries the six `recipe_*` rows' new results.
+
+### Steps 7 and 8: grades
+
+| Cell | Before (part 2A) | After | Why |
+|---|---|---|---|
+| `positive_negative_oracles`, all 25 | PARTIAL | **PARTIAL** | Number rows are now on the shared calls, but the schema keywords are still not cut per keyword, 27 rows stay unprovable by construction, and the shared date-time inventory gate and `datetime_validator` do not run in this tree (T198). |
+| `replay_idempotency`, all 25 | PASS | PASS | Identity, observation and producer digests now through `qualified_jcs` / `producer_semantic_digest`; the corpus, long-integer and retry witnesses above. |
+| `closed_payload_schema`, all 25 | PASS | PASS | Payload timestamps now through the shared predicate with the EventRecord profile; integer slots through `current_integer`. |
+| `compatibility_withdrawal`, all 25 | PASS | PASS | Historical recipe selection now SP-1101 custody; label and coherent-forgery witnesses above. |
+| `retention`, all 25 | PARTIAL | PARTIAL | Storage integration, Q1/Q3. |
+| `membership_version`, all 25 | ABSENT | ABSENT | No admission. |
+| the other six cells, all 25 | PASS | PASS | Unchanged. |
+
+Totals unchanged: **225 PASS / 50 PARTIAL / 25 ABSENT**; every family 9 PASS / 2 PARTIAL / 1 ABSENT. Timestamps were never the reason for a PARTIAL cell. Self-grade: `do_sweep_p2b_regrade`, `sweep_p2b_closed_items`, `sweep_p2b_open_items`; all 537 evidence quotes re-found at their lines (31 unchanged, 506 line numbers refreshed, 25 quotes updated to the rewritten OSI sentence, 0 missing).
+
+**This lane's timestamp review is no longer interim.** Each field above is covered by the shared CV-1101 predicate `pm_event_datetime.date_time` with its owner's profile. What does not yet run in this tree is the shared inventory gate and the `datetime_validator` boundary, which wait for the inventory refresh (T198).
+
+### Owner text
+
+`Plans/orchestrator-subagent-integration.md`: in each of OSI-680..704, the "Identity and replay" paragraph's number-domain sentences (an RFC 8785 safe-integer domain, raw-token refusals, recipe selection from recorded evidence) contradicted CV-1100 and SP-1101 and are replaced: the shared rules CV-1100, SP-1100, SP-1101 and CV-1101 beside the existing owners; raw parse and slot admission; qualification; physical profiles and uint64 metadata; the date-time profiles per field; SP-1101 custody selection with the disclosed label and evidence as joined copies. `Plans/Automated_Testing_System.md` ATS-360: the two matching validation sentences now name the shared calls, the custody dispatch, the corpus run, the profile witnesses and the number self-test. Shards regenerated only for these two documents; plan units changed only in them (`source_doc_sha256`); the readiness delta is the expected staleness of `Plans/Automated_Testing_System.md`. Shard check: pass.
+
+### Checks, before and after
+
+| Command | `cecdc5bb5b` (part 2A) | `ec3f56e84d` (merge) | `d4eb7f41f7` |
+|---|---|---|---|
+| `python3 scripts/pm-orchestrator-event-contracts.py` | 0: 212,259 checks | 0: 212,259 checks (25 m 17 s) | **0: 25 families, 222,702 checks** (32 m 07 s) |
+| `python3 scripts/pm-orchestrator-guard-proof.py check-all` | 0 | — | 0: 415 rows, 0 errors |
+| `python3 scripts/pm-orchestrator-guard-proof.py check` | 0: 118 | — | 0: 118 |
+| guard tool, 12 affected suites | 12 PASS (36 rows) | — | 12 PASS (37 rows) |
+| `python3 scripts/pm_event_numbers.py --self-test --scope numbers` | not run | — | **0, `"status": "pass"`, 580/580** |
+| `python3 scripts/pm_event_numbers.py --self-test` (scope all) | not run | — | 1: `NOT_RUN_ADMISSION_REFUSED` (inventory, T198) |
+| `python3 scripts/pm_event_datetime_inventory.py` | not run | 1: 9 `inventory_node_changed` | 1: the same 9 |
+| `python3 scripts/pm_event_datetime.py --self-test` | — | — | 0 with no output (no entry point; not credited) |
+| `python3 scripts/pm_coordination_events.py` | 1: 2 baseline failures | — | 1: the same 2 (`payload_schema`, `storage_value_registry`) |
+| `python3 -m unittest discover -s tests -p test_pm_coordination_events.py` | 1: 14 failures | — | 1: the same 14 tests |
+| `python3 -m unittest tests.test_shared_runtime_storage_contracts` / `tests.test_pm_event_index_binding` | 0 / 0 | — | 0 / 0 |
+| `python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json` | 0 | 0 | 0: 99 sources |
+| `python3 scripts/pm-plan-index.py validate` (origin/main `47d9dc7655`) | — | 1: 59 fork-drift findings | 1: the same 59 fork-drift findings, none naming an edited document or unit (index regenerated with the hash-verified currentness edition present) |
+
+
+### Readiness
+
+Part 2B is done for DO except the shared date-time inventory gate and the `datetime_validator` boundary, which cannot run on this tree until `Plans/event_datetime_inventory.json` and its exclusion pins are refreshed (T198, the lead's call). Everything else in the brief ran and passed at `d4eb7f41f7`. The lane is ready for the batch-2 integration and its Sol max and Astra max review, with the T198 refresh and the rest of N5 as integration items; membership stays ABSENT (no admission), retention PARTIAL, native NOT_RUN.
+
+### Open items and questions
+
+- **For the lead (not decided here): the date-time inventory refresh (TOOL-ISSUES T198).** Who refreshes `Plans/event_datetime_inventory.json` and `scripts/pm_event_datetime_exclusions.json` for a lane or batch tree, and when? Both are NUMRULE files this brief forbids editing. Until then neither the inventory gate nor `datetime_validator` runs on DO's tree, and `pm_event_numbers.py --self-test` (`--scope all`) refuses before running a case.
+- **The brief's date-time self-test command** `python3 scripts/pm_event_datetime.py --self-test` has no entry point and exits 0 vacuously; the date-time suite is `pm_event_numbers.py --self-test` (`--scope all`).
+- **N5** beyond the three number functions reconciles once at batch-2 integration.
+- Nothing needs Jared (no DL-045/093/096 choice).

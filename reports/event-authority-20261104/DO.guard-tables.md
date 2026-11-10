@@ -1,16 +1,19 @@
-# DO guard tables: per-row result (sweep part 2A)
+# DO guard tables: per-row result (sweep part 2A; recipe rows sweep part 2B)
 
 Head `4220875d8eb2eac5c98d5ddd0566c8a1119eba8a`. One row per guard. **Matrix**: single-defect negatives in the whole-table matrix that only this row refuses (`scripts/pm-orchestrator-guard-proof.py check-all`). **Tool**: the gated guard tool (`004bdedd63`) on the row's suite: proved, or the suite's failure kind; **own/flips**: the row's own negatives in the suite and how many its cut accepted; **stays**: the suite's other cases that kept their exact result under the cut; **masked/unrelated**: always 0 when proved.
 
-## checkpoint (98 rows, 97 proved)
+_Sweep part 2B (2026-11-10): the six `recipe_*` rows are SP-1101's (custody resolution, the disclosed label, the four evidence joins); rerun with the gated tool in `drafts/DO/sweep-p2b/guard-tool-p2b.tar.gz` with 11 other suites whose verdicts or views part 2B changed (12 suites, 37/37 rows proved, 68 flips, 216 stays, 0 masked, 0 unrelated). Every other row's result is part 2A's, unchanged._
+
+## checkpoint (99 rows, 98 proved)
 
 | Row | Code | Where | Matrix | Tool | own/flips | stays | masked/unrelated |
 |---|---|---|---:|---|---:|---:|---:|
-| `recipe_supported` | `historical_original_recipe` | `scripts/do-guards/do_recipe_1.py:13` | 2 | proved | 2/2 | 8 | 0/0 |
-| `recipe_evidence_verified` | `historical_original_recipe` | `scripts/do-guards/do_recipe_1.py:17` | 2 | proved | 2/2 | 8 | 0/0 |
-| `recipe_evidence_value` | `historical_original_recipe` | `scripts/do-guards/do_recipe_1.py:22` | 2 | proved | 2/2 | 8 | 0/0 |
-| `recipe_evidence_source_ref` | `historical_original_recipe` | `scripts/do-guards/do_recipe_1.py:29` | 2 | proved | 2/2 | 8 | 0/0 |
-| `recipe_evidence_source_sha256` | `historical_original_recipe` | `scripts/do-guards/do_recipe_1.py:36` | 2 | proved | 2/2 | 8 | 0/0 |
+| `recipe_supported` | `historical_original_recipe` | `scripts/do-guards/do_recipe_1.py:13` | 2 | proved | 2/2 | 10 | 0/0 |
+| `recipe_disclosed` | `historical_original_recipe` | `scripts/do-guards/do_recipe_1.py:19` | 2 | proved | 2/2 | 10 | 0/0 |
+| `recipe_evidence_verified` | `historical_original_recipe` | `scripts/do-guards/do_recipe_1.py:27` | 2 | proved | 2/2 | 10 | 0/0 |
+| `recipe_evidence_value` | `historical_original_recipe` | `scripts/do-guards/do_recipe_1.py:32` | 2 | proved | 2/2 | 10 | 0/0 |
+| `recipe_evidence_source_ref` | `historical_original_recipe` | `scripts/do-guards/do_recipe_1.py:39` | 2 | proved | 2/2 | 10 | 0/0 |
+| `recipe_evidence_source_sha256` | `historical_original_recipe` | `scripts/do-guards/do_recipe_1.py:46` | 2 | proved | 2/2 | 10 | 0/0 |
 | `checkpoint_value_schema` | `checkpoint_schema` | `scripts/do-guards/do_checkpoint_schema_1.py:10` | 6 | proved | 2/2 | 2 | 0/0 |
 | `read_token_value_schema` | `checkpoint_schema` | `scripts/do-guards/do_checkpoint_schema_1.py:14` | 2 | proved | 2/2 | 2 | 0/0 |
 | `checkpoint_storage_identity` | `checkpoint_storage_identity` | `scripts/do-guards/do_checkpoint_identity_1.py:10` | 2 | proved | 2/2 | 2 | 0/0 |
