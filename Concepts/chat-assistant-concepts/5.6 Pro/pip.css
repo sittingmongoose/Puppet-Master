@@ -172,12 +172,10 @@ html[data-motion="reduced"] .pmx-pip-host .pmx-pip-host-svg :is(.pmx-pip-rig, .p
 .pmx-pip-lift-copy { position: fixed; z-index: 2147483000; pointer-events: none; margin: 0; }
 
 /* ---------------------------------------------------------------- where Pip stands in for a glyph */
-/* the Orbit's centre (PC4): Pip, with the live subject's glyph as a badge at its foot; its thinking dots bob while the
+/* the Orbit's centre (PC4, FO-120): Pip alone; its thinking dots bob while the
    run runs (the reply's one moving Pip: the thinking placeholder's loader hands over to it) */
 .orbit-core-face { position: relative; display: block; width: 40px; height: 40px; margin-top: -6px; flex: none; }
 .orbit-core-face > .pmx-pip-mk { width: 40px; height: 40px; }
-.orbit-core-face > .orbit-core-icon { position: absolute; right: -9px; bottom: -3px; width: 17px; height: 17px; border-radius: 50%; background: var(--nx-disc); box-shadow: 0 0 0 1px var(--pm-step, var(--accent)); }
-.orbit-core-face > .orbit-core-icon svg { width: 12px; height: 12px; }
 /* the core is the live subject's dark puck in every look but NieR, so on a light look Pip's ink control and strings
    take the puck's own ink (Friendly's lilac control reads on it as it is) */
 html:not([data-o55-nier="on"]) body:is([data-theme="basic-light"], [data-theme="glass-light"], [data-theme="retro-light"]) .orbit-core-face {
@@ -185,12 +183,8 @@ html:not([data-o55-nier="on"]) body:is([data-theme="basic-light"], [data-theme="
   --pip-back: color-mix(in srgb, var(--nx-disc-text) 58%, var(--nx-disc)); --pip-pin: color-mix(in srgb, var(--nx-disc-text) 60%, var(--nx-disc));
   --pip-str: color-mix(in srgb, var(--nx-disc-text) 55%, var(--nx-disc));
 }
-/* NieR and Retro square the badge off, as their nodes are */
-html[data-o55-nier="on"] .orbit-core-face > .orbit-core-icon { border-radius: 0; background: var(--o55-nier-raised, var(--surface)); box-shadow: 0 0 0 1px var(--o55-nier-ink, var(--text)); }
-body[data-theme^="retro"] .orbit-core-face > .orbit-core-icon { border-radius: 0; }
 @container orbitdial (max-width: 150px) {
   .orbit-core-face, .orbit-core-face > .pmx-pip-mk { width: 32px; height: 32px; }
-  .orbit-core-face > .orbit-core-icon svg { width: 11px; height: 11px; }
 }
 .orbit-core-face.is-live :is(.pmx-pip-dot2, .pmx-pip-dot3, .pmx-pip-dot4) { animation-name: pmx-pip-dot; animation-duration: 1.15s; animation-timing-function: ease-in-out; animation-iteration-count: infinite; }
 .orbit-core-face.is-live .pmx-pip-dot3 { animation-delay: .16s; }

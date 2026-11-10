@@ -345,8 +345,8 @@
   function syncThinking() {
     var slots = D.querySelectorAll('.tx-pending-pip');
     if (!slots.length) return;
-    /* the Orbit's Pip is drawn for a running run (its badge is live), whether or not its thinking dots move */
-    var orbit = !!D.querySelector('.orbit-core-face > .orbit-core-icon.is-live');
+    /* The Orbit's Pip is drawn for a running run, whether or not its thinking dots move (FO-120). */
+    var orbit = !!D.querySelector('.orbit-core-face[data-work-running="1"]');
     slots.forEach(function (s) {
       if (!s.firstElementChild) { var l = loaderHtml(); if (!l) return; s.innerHTML = l; }
       var ld = s.firstElementChild;
