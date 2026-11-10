@@ -44,7 +44,10 @@
     computerOnly: ['system.advanced.auto-update', 'system.advanced.update-frequency', 'system.advanced.release-channel', 'system.advanced.catalog-updates'],
     /* Jared #8: libraries were on the device rule, which offered "Set for a device" on rows that are not about a screen.
        A library (your own themes, your sounds) is the same everywhere, kept with your settings */
-    library: ['general.visual.manage-custom-themes', 'general.visual.custom-theme-base', 'general.interaction.sound-catalog', 'general.interaction.sound-management'],
+    library: ['general.visual.custom-theme-base'],
+    /* review A-r1 finding 5: these three open a library (a button, not a value), so they stay off the ladder and their
+       panel says where the library lives, with no value line and no Change (panel.js offWhere) */
+    libraryAction: ['general.visual.manage-custom-themes', 'general.interaction.sound-catalog', 'general.interaction.sound-management'],
     ceiling: ['branching.subagents.provider-concurrency-cap', 'memory.assembly.memory-capsule-budget']
   };
   /* a safety answer's careful order, most careful first, from its choices; a row whose order can't be told keeps the
@@ -59,7 +62,7 @@
   }
   function classify(ref, s) {
     const id = ref.id, sc = ref.scope || [];
-    if (REVIEWED.thing.includes(id)) return null;
+    if (REVIEWED.thing.includes(id) || REVIEWED.libraryAction.includes(id)) return null;
     /* Jared #8: a row the reference marks only "for a single run" still holds the value each run starts with, so it
        follows the ladder like every other row; its panel says a run can choose its own (it was off the ladder and showed
        the base page's own Where it applies) */
@@ -336,7 +339,7 @@
       if (c.device === S.actor) acts.push({ label: 'Just this screen for now', primary: true, run: () => commit(id, nv, ov, { level: 'device', key: c.device }, { offline: true }) });
     } else if ((def.may || []).includes('computer')) {
       if (PSX.answering(c.on)) acts.push({ label: c.on === 'here' ? 'Just this computer for now' : `Just ${placeName('computer', c.on)} for now`, primary: true, run: () => commit(id, nv, ov, { level: 'computer', key: c.on }, { offline: true }) });
-      else body += ` ${c.project || 'This chat'} works on ${placeName('computer', c.on)}, which isn’t answering either, so nothing can change for it now.`;
+      else body += ` ${c.project ? `${c.project}’s default computer, ${placeName('computer', c.on)},` : `${placeName('computer', c.on)}, where this chat runs,`} isn’t answering either, so nothing can change for it now.`;
     }
     acts.push({ label: `Change it when ${home} is back`, hover: `Nothing is saved or queued now. Change it again once ${home} answers.`, run: () => {} });
     PSX.note({ title: 'Not changed everywhere', body, mark: 'offline', actions: acts, kind: 'offline', ms: 9000 });
@@ -467,5 +470,5 @@
   };
 
   PSX.on('world', () => { if (!feeding) PSX.emit('redraw'); });
-  Object.assign(PSX, { offLadder: { look: SKIP, credential: CRED, thing: REVIEWED.thing }, feed: { full, push, verify, writeSnapshots, engineValues, wrapNotify, watchTitleMenu, hook, captureCurrent, adoptAll, diff, ENGINE_IDS, NONE }, router, route, commit, sayWhere, onlyFor, undoTx, targetFor });
+  Object.assign(PSX, { offLadder: { look: SKIP, credential: CRED, thing: REVIEWED.thing, library: REVIEWED.libraryAction }, feed: { full, push, verify, writeSnapshots, engineValues, wrapNotify, watchTitleMenu, hook, captureCurrent, adoptAll, diff, ENGINE_IDS, NONE }, router, route, commit, sayWhere, onlyFor, undoTx, targetFor });
 })(window);

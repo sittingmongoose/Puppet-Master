@@ -248,6 +248,8 @@
   function offWhere(body, now, id) {
     const off = PSX.offLadder || {};
     const look = off.look && off.look.test(id), cred = !look && off.credential && off.credential.test(id);
+    const lib = (off.library || []).includes(id);
+    if (lib) { libraryWhere(body, now, id); return; }
     if (!look && !cred) {
       // a row that belongs to one thing but is drawn as a plain row: the same three parts as an account's own rows
       const eng = [...body.querySelectorAll(':scope > section.o55-insp-block')].find((x) => /^Where it applies$/i.test(((x.querySelector('h4') || {}).textContent || '').trim()));
@@ -279,6 +281,28 @@
     if (now) now.after(sec); else body.insertBefore(sec, body.firstChild);
   }
 
+  /* a library (your own themes, your sounds): a button that opens it, not a value. Now says what it is and Where it
+     applies has the three parts with their reasons only: no value line and no Change (review A-r1 finding 5) */
+  function libraryWhere(body, now, id) {
+    body.querySelectorAll(':scope > [data-psx-block="where"]').forEach((n) => n.remove());
+    hideEngineWhere(body);
+    if (now) {
+      const l = now.querySelector('.o55-insp-now-label'), v = now.querySelector('.o55-insp-now-value'), f = now.querySelector('.o55-insp-now-foot');
+      if (l) l.textContent = 'Your library';
+      if (v) v.textContent = 'Kept with your settings';
+      if (f && !f.hasAttribute('data-psx-hidden')) { f.hidden = true; f.setAttribute('data-psx-hidden', ''); }
+      now.classList.remove('is-changed');
+    }
+    const sec = D.createElement('section');
+    sec.className = 'o55-insp-block psx-where'; sec.setAttribute('data-psx-block', 'where'); sec.setAttribute('data-psx-key', 'where');
+    sec.innerHTML = `<h4>Where it applies</h4><p class="psx-where-sentence">Same everywhere.</p>`;
+    const slot = (title, slotKey, text, bare) => sec.insertAdjacentHTML('beforeend', `<div class="psx-group is-not" role="group" aria-label="${esc(title)}" data-psx-slot="${slotKey}">${bare ? '' : `<div class="psx-ghead">${esc(title)}</div>`}<div class="psx-wnot">${bare ? `<span class="psx-wname">${esc(title)}</span>` : ''}<span class="psx-wnot-why">${esc(text)}</span></div></div>`);
+    slot('Everywhere', 'everywhere', 'One library for every project and computer: it’s kept with your settings.', true);
+    slot('Computers', 'computer', 'Not per computer: every computer uses the same library.');
+    slot('Projects', 'project', 'Not per project, for the same reason.');
+    if (now) now.after(sec); else body.insertBefore(sec, body.firstChild);
+  }
+
   /* ------------------------------------------------------------------ Now */
   function ctxLine(id, r) {
     const c = PSX.ctxFull(S.ctx), def = DEF[id];
@@ -286,7 +310,10 @@
     if (def.home === 'computer') return `On ${placeName('computer', c.host || c.on)}`;
     if (!c.project) return `With no project, on ${placeName('computer', c.on)}`;
     if (def.screen) return `In ${c.project} · on this screen`;
-    return `In ${c.project} · works on ${placeName('computer', c.on)}`;
+    // the where-work-runs wording (SIR-056, Auto by default): your own view names the default computer Auto starts from;
+    // looking at another computer names that one
+    const p0 = PSX.projectById(c.project), viewingComp = !!S.ctx.on && p0 && S.ctx.on !== p0.home;
+    return viewingComp ? `In ${c.project} · on ${placeName('computer', c.on)}` : `In ${c.project} · Auto → ${placeName('computer', c.on)}`;
   }
   function fromLine(id, r) {
     const c = PSX.ctxFull(S.ctx);
@@ -654,7 +681,7 @@
     const def = DEF[id];
     const have = new Set(r.varies.filter((v) => v.level === level).map((v) => v.key));
     let items;
-    if (level === 'project') items = PROJECTS.map((p) => ({ label: p.id, meta: have.has(p.id) ? 'has its own already' : `works on ${placeName('computer', p.home)}`, disabled: have.has(p.id) ? 'Has its own already' : blockedWrite({ level: 'project', key: p.id }), run: () => startNew(id, 'project', p.id) }));
+    if (level === 'project') items = PROJECTS.map((p) => ({ label: p.id, meta: have.has(p.id) ? 'has its own already' : `Auto → ${placeName('computer', p.home)}`, disabled: have.has(p.id) ? 'Has its own already' : blockedWrite({ level: 'project', key: p.id }), run: () => startNew(id, 'project', p.id) }));
     else if (level === 'device') items = Object.keys(DEVICES).map((k) => ({ label: DEVICES[k].name, meta: have.has(k) ? 'has its own already' : 'its screen', disabled: have.has(k) ? 'Has its own already' : null, run: () => startNew(id, 'device', k) }));
     else items = PSX.computerIds().map((k) => ({ label: COMPUTERS[k].name, meta: have.has(k) ? 'has its own already' : (k === 'studio' && !PSX.W.studioJoined ? 'not joined yet' : COMPUTERS[k].detail.split(' · ')[0]), disabled: have.has(k) ? 'Has its own already' : blockedWrite({ level: 'computer', key: k }), run: () => startNew(id, 'computer', k) }));
     // levels the row doesn't offer stay in the menu, focusable and greyed, with their short reason

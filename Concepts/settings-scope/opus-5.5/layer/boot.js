@@ -47,6 +47,17 @@
       if (tb.getAttribute('aria-expanded') === 'true') { tb.click(); await wait(140); }
       if (W.PMR && W.PMR.menu && W.PMR.menu.isOpen()) { try { W.PMR.menu.closeAll(); } catch (e) { /* closed */ } }
       await wait(260);   // the router's diff runs after the menu's clicks; it reads reviewChange
+      /* the theme menu sits outside Settings, so a click there that changes only light or dark never reaches the router:
+         the world kept the old look and the next change of project or view painted it again (found in review round
+         A-r1). The look that is painted now is stored where the look lives, as the router would have stored it */
+      const K = W.PM12_KIMI, est = (K && K.getState && K.getState().settings) || {};
+      const famNow = String(est['general.visual.theme'] || 'Basic Dark').split(/\s+/)[0], modeNow = String(est['general.visual.theme-mode'] || mode).toLowerCase();
+      const value = `${famNow} ${modeNow === 'light' ? 'Light' : 'Dark'}`;
+      const r = PSX.resolve('general.visual.theme', S.ctx);
+      if (r && r.value !== value && PSX.targetFor) {
+        const tg = PSX.targetFor('general.visual.theme', r, S.ctx);
+        if (tg) { PSX.apply([{ level: tg.level, key: tg.key, id: 'general.visual.theme', value }], { history: false }); PSX.feed.push(); }
+      }
     } finally { S.reviewChange = false; }
     PSX.rows && PSX.rows.refreshAll();
   }

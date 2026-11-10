@@ -279,19 +279,28 @@
     const home = PSX.home(), hn = PSX.homeName();
     const proj = c.project ? c.project : 'No project';
     const using = S.actor !== 'here' && !v.dev ? `, from ${placeName('device', S.actor)}` : '';
-    const ctxHtml = `<b>${esc(proj)}</b> on <b>${esc(placeName('computer', c.on))}</b>${v.dev ? `, with <b>${esc(placeName('device', c.device))}</b>’s screen` : esc(using)}`;
     const ctxText = `${proj} on ${placeName('computer', c.on)}${v.dev ? `, with ${placeName('device', c.device)}’s screen` : using}`;
+    /* the same words, shorter each step, and the first that fits with no ellipsis is shown (fitHead): every name stays
+       whole at every width (review A-r1 finding 2); the box never changes size */
+    const B = (x) => `<b>${esc(x)}</b>`, comp = placeName('computer', c.on), dev = v.dev ? placeName('device', c.device) : '', actorName = placeName('device', S.actor);
+    const variants = [
+      { html: `${B(proj)} on ${B(comp)}${dev ? `, with ${B(dev)}’s screen` : using ? `, from ${B(actorName)}` : ''}`, label: true },
+      { html: `${B(proj)} on ${B(comp)}${dev ? `, with ${B(dev)}` : using ? `, from ${B(actorName)}` : ''}`, label: true },
+      { html: `${B(proj)} on ${B(comp)}${dev ? `, with ${B(dev)}` : using ? `, from ${B(actorName)}` : ''}`, label: false },
+      { html: `${B(proj)} · ${B(comp)}${dev ? ` · ${B(dev)}` : using ? ` · ${B(actorName)}` : ''}`, label: false }
+    ];
+    const ctxHtml = variants[0].html;
     const back = `${proj} on ${placeName('computer', ownOn(c))}`;
     const desc = v.viewing
       ? `You’re looking at ${proj}’s settings as they apply ${v.comp ? `when its work runs on ${placeName('computer', c.on)}` : `on ${placeName('computer', c.on)}`}${v.dev ? ` and on ${placeName('device', c.device)}’s screen` : ''}. Changes you make here are saved for real. Stop viewing goes back to ${back}.`
-      : c.project ? `Settings for ${proj}, as they apply on ${placeName('computer', c.on)}, the computer that does its work. Change opens another project, or lets you look at another computer or device.`
+      : c.project ? `Settings for ${proj} on ${placeName('computer', c.on)}, its default computer (work: Auto → ${placeName('computer', c.on)}). Change opens another project, or lets you look at another computer or device.`
         : `Settings for chats with no project, on ${placeName('computer', c.on)}. Changes here apply everywhere or to this computer.`;
     const lines2 = [];
     // notices that are not about the view: they are lines under the header, never a change of the header itself
     if (!PSX.answering(home)) lines2.push(`<div class="psx-head-line" data-k="offline">${mark('offline')}<span>Can’t reach ${esc(hn)}, which keeps your settings. You’re seeing them as of ${esc(PSX.W.asOf)}.</span></div>`);
     if (S.firstStart) lines2.push(`<div class="psx-head-line" data-k="first">${mark('info')}<span>Set up Puppet Master on this computer first. Until then nothing is kept, so Settings is a preview in Basic Dark.</span></div>`);
-    const dev = PSX.DEVICES[S.actor];
-    if (dev && dev.limited) lines2.push(`<div class="psx-head-line" data-k="limited">${mark('info')}<span>${esc(PSX.REASONS.limited_device[0])}</span></div>`);
+    const actorDev = PSX.DEVICES[S.actor];
+    if (actorDev && actorDev.limited) lines2.push(`<div class="psx-head-line" data-k="limited">${mark('info')}<span>${esc(PSX.REASONS.limited_device[0])}</span></div>`);
     const run = S.runMode === 'yolo' ? `<span class="psx-head-run" data-k="yolo" tabindex="0" data-pm-hover-label="YOLO" data-pm-hover-detail="Changes don’t wait for a yes. Each one is reported, with Undo; the guards YOLO never skips still ask." aria-label="YOLO: changes don’t wait for a yes. Each one is reported, with Undo; the guards YOLO never skips still ask.">${mark('info')}<span>YOLO</span></span>` : '';
     const html = `<div class="psx-head-main${v.viewing ? ' is-viewing' : ''}" data-viewing="${v.viewing ? '1' : '0'}"><span class="psx-head-view" aria-hidden="${v.viewing ? 'false' : 'true'}">${mark('info')}<span>Viewing</span></span><span class="psx-head-ctx" title="${esc(ctxText)}" aria-description="${esc(desc)}">${ctxHtml}</span><span class="psx-head-gap"></span>${run}${v.viewing ? `<button type="button" class="psx-tb is-primary psx-head-stop" data-psx-head="mine" aria-label="Stop viewing; back to ${esc(back)}">Stop viewing</button>` : ''}<button type="button" class="psx-tb psx-head-btn" data-psx-head="view" aria-haspopup="menu" aria-label="Change: another project, or look at another computer or device">Change${CHEV}</button></div>${lines2.join('')}`;
     let el = bar.querySelector(':scope > .psx-head');
@@ -303,14 +312,27 @@
     if (!el) { el = D.createElement('div'); el.className = 'psx-head'; el.setAttribute('data-o55-foreign', ''); el.setAttribute('role', 'group'); el.setAttribute('aria-label', 'Whose settings these are'); bar.insertBefore(el, bar.firstChild); }
     // keep the keyboard where it was when the header redraws (Change, Stop viewing)
     const had = D.activeElement && el.contains(D.activeElement) ? D.activeElement.getAttribute('data-psx-head') : null;
-    el.innerHTML = html; el.__html = html;
+    el.innerHTML = html; el.__html = html; el.__variants = variants;
     if (el.__pr !== pr) { el.style.paddingRight = pr + 'px'; el.__pr = pr; }
+    fitHead(el);
+    if (!el.__psxRO && W.ResizeObserver) { el.__psxRO = new W.ResizeObserver(() => fitHead(el)); el.__psxRO.observe(el); }
     if (had) { const f = el.querySelector(`[data-psx-head="${had}"]`) || el.querySelector('[data-psx-head="view"]'); if (f) try { f.focus({ preventScroll: true }); } catch (e) { /* gone */ } }
   }
+  function fitHead(el) {
+    const main = el.querySelector('.psx-head-main'), ctx = el.querySelector('.psx-head-ctx'), vs = el.__variants;
+    if (!main || !ctx || !vs) return;
+    for (let i = 0; i < vs.length; i++) {
+      if (ctx.innerHTML !== vs[i].html) ctx.innerHTML = vs[i].html;
+      main.classList.toggle('is-compact', !vs[i].label);
+      main.setAttribute('data-fit', String(i));
+      if (ctx.scrollWidth <= ctx.clientWidth + 0.5) return;
+    }
+  }
+  PSX.fitHead = () => { const el = D.querySelector('#pm-settings-root .document-toolbar > .psx-head'); if (el) fitHead(el); };
   function viewMenu(anchor) {
     const v = viewState(), c = v.c;
     // another project opens it, on its own computer, with your own device's screen (no viewing state)
-    const projects = PSX.PROJECTS.map((p) => ({ label: p.id, meta: p.id === c.project ? 'open now' : `its work runs on ${placeName('computer', p.home)}`, run: () => PSX.setCtx({ project: p.id, on: null, device: S.actor }) }))
+    const projects = PSX.PROJECTS.map((p) => ({ label: p.id, meta: p.id === c.project ? 'open now' : `work: Auto → ${placeName('computer', p.home)}`, run: () => PSX.setCtx({ project: p.id, on: null, device: S.actor }) }))
       .concat([{ label: 'No project', meta: c.project ? 'chats with no project' : 'open now', run: () => PSX.setCtx({ project: 'none', on: null, device: S.actor }) }]);
     const comps = PSX.computerIds().map((k) => ({ label: PSX.COMPUTERS[k].name, meta: k === ownOn(c) ? (c.project ? `${c.project}’s own · ` : '') + (k === c.on ? 'shown now' : 'stop viewing') : k === c.on ? 'viewing now' : c.project ? `as if ${c.project}’s work ran there` : 'chats with no project, there', disabled: PSX.W.up[k] === false ? `${PSX.COMPUTERS[k].name} isn’t answering` : null, run: () => PSX.setCtx({ on: k === ownOn(c) ? null : k }) }));
     // another device's screen values never give that device's rights: you stay on the device you're using
@@ -323,7 +345,7 @@
       { label: 'Everything at once', items: [{ label: 'All the differences…', meta: 'every project’s and computer’s own values', run: () => { if (PSX.moments) PSX.moments.differences(); } }] }
     ];
     if (v.viewing) groups.unshift({ label: 'Viewing', items: [{ label: 'Stop viewing', meta: `back to ${c.project || 'No project'} on ${placeName('computer', ownOn(c))}`, run: stopViewing }] });
-    PSX.menu(anchor, groups, { label: 'Change', search: true, width: 300 });
+    PSX.menu(anchor, groups, { label: 'Change', search: true, width: 300, placeholder: 'Find a project, computer or device' });
   }
   function stopViewing() { PSX.setCtx({ on: null, device: S.actor }); }
   PSX.stopViewing = stopViewing;
@@ -425,6 +447,36 @@
   }
   PSX.plainWords = () => plainWords(PSX.root());
 
+  /* ------------------------------------------------------------------ the end column's width (review A-r1 finding 3)
+     The column is one fixed width so every control lines up (#3), and that width comes from the widest end word the
+     concept can show, measured in the current look's own font: Retro's and NieR's faces are wider than Basic's, so a
+     fixed 124px cut "Each AI service". It is measured once per look (and again when fonts finish loading), never per
+     row, so nothing moves while you work. */
+  const END_WORDS = ['Details', 'Varies', 'More', 'This project', 'Each project', 'Each account', 'Each AI service', 'Each persona', 'Each Goal template', 'Each computer', 'Each one'];
+  let endKey = '';
+  function fitEndColumn() {
+    const host = D.getElementById('panel-settings') || PSX.root(); if (!host) return;
+    const nier = !!(W.PM_NIER && W.PM_NIER.on && W.PM_NIER.on());
+    const fontsReady = !D.fonts || D.fonts.status === 'loaded';
+    const key = [H.getAttribute('data-theme'), nier, !!S.scopeLabels, S.opt.end, fontsReady].join('|');
+    if (key === endKey) return;
+    endKey = key;
+    if (S.opt.end === 'today') return;
+    const words = END_WORDS.concat(Object.keys(PSX.COMPUTERS).map((k) => PSX.COMPUTERS[k].name), Object.keys(PSX.DEVICES).map((k) => PSX.DEVICES[k].name));
+    if (S.scopeLabels) Object.keys(PSX.COMPUTERS).forEach((k) => words.push(`Found on ${PSX.COMPUTERS[k].name}`), words.push('Everywhere', 'Default'));
+    const row = D.createElement('div'); row.className = 'setting-row o55-row psx-measure'; row.setAttribute('data-o55-foreign', ''); row.setAttribute('aria-hidden', 'true');
+    row.style.cssText = 'position:absolute;left:-9999px;top:0;visibility:hidden;display:block;width:auto';
+    const b = D.createElement('button'); b.type = 'button'; b.tabIndex = -1; b.className = 'icon-btn details-btn o55-about psx-end'; b.style.maxWidth = 'none';
+    row.appendChild(b); host.appendChild(row);
+    let max = 0;
+    words.forEach((w) => { b.innerHTML = `<span class="psx-end-word">${esc(w)}</span>${CHEV}`; max = Math.max(max, b.getBoundingClientRect().width); });
+    row.remove();
+    const px = Math.max(96, Math.min(220, Math.ceil(max) + 2));
+    H.style.setProperty('--psx-end-w', px + 'px');
+    if (!fontsReady && D.fonts && !D.__psxFontsHooked) { D.__psxFontsHooked = true; D.fonts.ready.then(() => { endKey = ''; soon(); }); }
+  }
+  PSX.fitEndColumn = () => { endKey = ''; fitEndColumn(); return H.style.getPropertyValue('--psx-end-w'); };
+
   /* ------------------------------------------------------------------ decorate everything (rAF-batched) */
   let raf = 0;
   function decorate() {
@@ -435,6 +487,7 @@
     H.setAttribute('data-psx-end', S.opt.end);
     H.setAttribute('data-psx-changed', S.opt.changed);
     H.toggleAttribute('data-psx-scope-labels', !!S.scopeLabels);
+    try { fitEndColumn(); } catch (e) { console.error('[psx end column]', e); }
     if (W.PM_PAGES && W.PM_PAGES.current === 'settings') { placeFolderRow(); headLine(); }
     rootEl.querySelectorAll('.o55-about').forEach((b) => { try { decorateButton(b); } catch (e) { console.error('[psx rows]', e); } });
     try { plainWords(rootEl); } catch (e) { console.error('[psx words]', e); }
@@ -484,5 +537,7 @@
     soon();
   }
   PSX.on('redraw', refreshAll); PSX.on('fed', refreshAll); PSX.on('ctx', refreshAll);
+  // a new look sizes the end column again (fitEndColumn), on the next frame
+  new MutationObserver(() => soon()).observe(H, { attributes: true, attributeFilter: ['data-theme', 'data-o55-nier'] });
   PSX.rows = { decorate, soon, observe, wire, where, lines, rowMenu, openPanel, refreshAll, headLine };
 })(window);

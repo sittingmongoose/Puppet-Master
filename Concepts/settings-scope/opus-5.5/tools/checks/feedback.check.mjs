@@ -4,10 +4,28 @@
 //   python3 Concepts/settings-scope/opus-5.5/tools/build_standalone.py $OUT
 //   browser-check run Concepts/settings-scope/opus-5.5/tools/checks/feedback.check.mjs \
 //     --config Concepts/pm7-tools/browser-check/browser-check.config.mjs --set page=$OUT/settings-scope-app.html
-// --set only=rows|shake|head|where|copy|always runs one part; --set looks=basic-dark,... narrows the looks (default
-// Basic Dark, Retro Light and NieR Dark); --set lookShots=1 lists the review images under LOOK.
+// --set only=strip|rows|shake|acct|head|where|copy|always runs one part; --set looks=basic-dark,... narrows the looks
+// (default Basic Dark, Retro Light and NieR Dark); --set lookShots=1 lists the review images under LOOK.
+// `strip` opens the page with the review strip (settings-scope.html beside the app page, or --set strip=<path>); the
+// account switch in `shake` is compared with bare PMConcept7 (Concepts/PMConcept7.html, or --set bare=<path>).
 // "Full" is a 2560-wide window (the review strip's Full width is whatever window holds the frame).
+import path from 'node:path';
+import { pathToFileURL } from 'node:url';
 const want = (t, part) => !t.args.only || String(t.args.only).split(',').includes(part);
+const fileUrl = (p) => (/^[a-z][a-z0-9+.-]+:/i.test(p) ? p : pathToFileURL(path.resolve(p)).href);
+/* review A-r1 tool note E: move a row into view by scrolling the Settings scroller that holds it, never with
+   scrollIntoView (that also scrolls overflow-hidden ancestors and left the whole root 67px up, a state no one reaches) */
+const HELPERS = () => {
+	window.__psxScrollTo = (el, block) => {
+		if (!el) return false;
+		let sc = el.parentElement;
+		while (sc && sc !== document.body) { const cs = getComputedStyle(sc); if (/(auto|scroll)/.test(cs.overflowY) && sc.scrollHeight > sc.clientHeight + 1) break; sc = sc.parentElement; }
+		if (!sc || sc === document.body) return false;
+		const sr = sc.getBoundingClientRect(), er = el.getBoundingClientRect();
+		sc.scrollTop += block === 'start' ? er.top - sr.top - 8 : er.top - sr.top - (sr.height - er.height) / 2;
+		return true;
+	};
+};
 const run = (t, fn, arg) => t.root.evaluate(fn, arg);
 const settle = (t, ms = 350) => t.page.waitForTimeout(ms);
 const WIDTHS = [['Full', 2560], ['1920', 1920], ['1280', 1280], ['1024', 1024], ['860', 860]];
@@ -18,15 +36,28 @@ const pic = async (t, name, why, target) => {
 	else await t.snap(name, target || undefined);
 };
 async function look(t, name) {
-	await run(t, (n) => window.PSX.setLook(n), name);
-	await t.root.waitForFunction((n) => { const th = document.documentElement.getAttribute('data-theme') || ''; return /^nier/.test(n) ? th.endsWith(n.slice(4)) && (th.startsWith('nier') || !!(window.PM_NIER && window.PM_NIER.on && window.PM_NIER.on())) : th === n; }, name, { timeout: 8000 }).catch(() => {});
-	await settle(t, 300);
+	// a demo reset repaints its opening look a moment later; a look set inside that moment is set again
+	const isOn = (n) => { const th = document.documentElement.getAttribute('data-theme') || ''; return /^nier/.test(n) ? th.endsWith(n.slice(4)) && (th.startsWith('nier') || !!(window.PM_NIER && window.PM_NIER.on && window.PM_NIER.on())) : th === n; };
+	for (let i = 0; i < 3; i++) {
+		await run(t, (n) => window.PSX.setLook(n), name);
+		await t.root.waitForFunction(isOn, name, { timeout: 8000 }).catch(() => {});
+		await settle(t, 300);
+		// painted and kept: the demo world holds it too, so a later project switch paints the same look
+		const kept = await run(t, (n) => { const v = String(window.PSX.resolve('general.visual.theme', window.PSX.S.ctx).value || ''); return v.toLowerCase().replace(/\s+/g, '-') === n; }, name);
+		if (await run(t, isOn, name) && kept) break;
+	}
 	const got = await run(t, () => ({ theme: document.documentElement.getAttribute('data-theme') || '', nier: !!(window.PM_NIER && window.PM_NIER.on && window.PM_NIER.on()) }));
 	const [fam, mode] = name.split('-');
 	await t.check(`look ${name} applied`, fam === 'nier' ? (got.nier || got.theme.startsWith('nier')) && got.theme.endsWith('-' + mode) : !got.nier && got.theme === name, JSON.stringify(got));
 	await run(t, () => window.PSX.hideNote());
 }
-async function reset(t) { await run(t, () => window.PSX.command({ cmd: 'reset' })); await settle(t, 700); }
+/* a demo reset reloads the base page with the demo's opening look; wait until that has painted, so a look set next
+   isn't half-applied over the reload (one click landing before it, one after) */
+async function reset(t) {
+	await run(t, () => window.PSX.command({ cmd: 'reset' }));
+	await t.root.waitForFunction(() => { const v = window.PSX.resolve('general.visual.theme', window.PSX.S.ctx).value; const want = String(v || 'Basic Dark').toLowerCase().replace(/\s+/g, '-'); return (document.documentElement.getAttribute('data-theme') || '') === want; }, null, { timeout: 8000 }).catch(() => {});
+	await settle(t, 500);
+}
 async function opt(t, end, changed) { await run(t, async (o) => { await window.PSX.command({ cmd: 'opt', end: o[0], changed: o[1] }); }, [end, changed]); await settle(t, 250); }
 async function page(t, which) {
 	await run(t, async (w) => {
@@ -35,7 +66,7 @@ async function page(t, which) {
 		K.dispatchAction('pm51-tab', { manager: 'providers', tab: w === 'services' ? 'services' : 'models' }); await wait(650);
 		// on Services, the selected service's account rows ("Each account") are the ones Jared's screen 03 shows
 		const sc = document.querySelector(w === 'services' ? '#pm-settings-root .setting-row.o55-scoped' : '#pm-settings-root .setting-row.o55-row');
-		if (sc) sc.scrollIntoView({ block: w === 'services' ? 'center' : 'start' });
+		if (sc) window.__psxScrollTo(sc, w === 'services' ? 'center' : 'start');
 		await wait(200);
 	}, which);
 }
@@ -62,6 +93,9 @@ const ROWS = () => {
 			if (Math.max(...kb.map((b) => b.right)) > rb.right + 1) out.bad.push(`${r.id}: control runs past its row`);
 			const e = [...r.querySelectorAll('.o55-about')].find((x) => x.closest('.setting-row') === r);
 			if (e && e.getClientRects().length) ends.push({ id: r.id, x: e.getBoundingClientRect().left });
+			// review A-r1 finding 3: no end word is cut ("Each AI ser…")
+			const w = e && e.querySelector('.psx-end-word');
+			if (w && w.getClientRects().length && w.scrollWidth > w.clientWidth + 0.5) out.bad.push(`${r.id}: its end word “${w.textContent.trim()}” is cut (${w.scrollWidth} > ${w.clientWidth}px)`);
 		}
 		const spread = (a) => (a.length ? Math.max(...a.map((v) => v.x)) - Math.min(...a.map((v) => v.x)) : 0);
 		const name = (list.closest('section, .o55-group') && (list.closest('section, .o55-group').querySelector('h3, h2, .o55-group-title') || {}).textContent || '').trim().slice(0, 40);
@@ -78,7 +112,7 @@ const ROWS = () => {
    requestAnimationFrame), so it sees what was on screen, not a state another frame callback fixed before the paint */
 const TOGGLE = async (sel) => {
 	const tg = document.querySelector(sel); if (!tg) return { missing: sel };
-	tg.scrollIntoView({ block: 'center' });
+	window.__psxScrollTo(tg, 'center');
 	await new Promise((r) => setTimeout(r, 600));
 	const row = tg.closest('.setting-row'), lab = row.querySelector('.setting-label');
 	const end = [...row.querySelectorAll('.o55-about')].find((x) => x.closest('.setting-row') === row);
@@ -92,15 +126,23 @@ const TOGGLE = async (sel) => {
 	const vh = innerHeight, decided = document.documentElement.getAttribute('data-psx-end') !== 'today';
 	const bare = () => (decided ? [...document.querySelectorAll('#pm-settings-root .setting-row.o55-row > .o55-about')].filter((b) => { const r = b.getBoundingClientRect(); return r.height && r.bottom > 0 && r.top < vh && !b.querySelector('.psx-end-word'); }).length : 0);
 	const ch = new MessageChannel();
-	ch.port1.onmessage = () => { samples.push({ tg: r1(tg), end: r1(end), row: r1(row), next: r1(next), bar: r1(bar), ch: lab ? lab.querySelectorAll('.o55-changed:not(.o55-needed)').length : 0, q: bare() }); if (go) requestAnimationFrame(() => ch.port2.postMessage(0)); };
+	const t0 = performance.now();
+	ch.port1.onmessage = () => { samples.push({ t: Math.round(performance.now() - t0), conn: row.isConnected, tg: r1(tg), end: r1(end), row: r1(row), next: r1(next), bar: r1(bar), ch: lab ? lab.querySelectorAll('.o55-changed:not(.o55-needed)').length : 0, q: bare() }); if (go) requestAnimationFrame(() => ch.port2.postMessage(0)); };
 	requestAnimationFrame(() => ch.port2.postMessage(0));
 	await new Promise((r) => setTimeout(r, 200));
+	const clickAt = Math.round(performance.now() - t0);
 	tg.click();
 	await new Promise((r) => setTimeout(r, 1600));
 	go = false; po.disconnect();
-	const moved = (k, i) => samples.some((s) => JSON.stringify(s[k] && (i == null ? s[k] : s[k][i])) !== JSON.stringify(samples[0][k] && (i == null ? samples[0][k] : samples[0][k][i])));
-	const chs = samples.map((x) => x.ch); const flips = chs.filter((v, i) => i && v !== chs[i - 1]).length;
-	return { id: row.id, frames: samples.length, toggleX: moved('tg', 0), endX: moved('end', 0), endW: moved('end', 2), rowY: moved('row', 1), rowH: moved('row', 3), nextY: moved('next', 1), bar: moved('bar'), changedFlips: flips, maxChanged: Math.max(...chs), bareEnds: Math.max(...samples.map((x) => x.q)), shifts };
+	// the frames while the row the click landed in is still the page's own: a whole-page redraw replaces it, and what
+	// follows is a new page, judged separately (rerender)
+	// judged from the last frame before the click: anything that settled before it isn't the toggle's
+	const first = Math.max(0, samples.findIndex((x) => x.t >= clickAt) - 1);
+	const after = samples.slice(first);
+	const rerender = after.findIndex((x) => !x.conn), live = rerender < 0 ? after : after.slice(0, rerender);
+	const moved = (k, i) => live.some((s) => JSON.stringify(s[k] && (i == null ? s[k] : s[k][i])) !== JSON.stringify(live[0][k] && (i == null ? live[0][k] : live[0][k][i])));
+	const chs = live.map((x) => x.ch); const flips = chs.filter((v, i) => i && v !== chs[i - 1]).length;
+	return { id: row.id, clickAt, frames: samples.length, liveFrames: live.length, rerenderAt: rerender < 0 ? null : after[rerender].t, rowYs: live.map((x) => [x.t, x.row && x.row[1]]).filter((x, i, a) => !i || x[1] !== a[i - 1][1]), toggleX: moved('tg', 0), endX: moved('end', 0), endW: moved('end', 2), rowY: moved('row', 1), rowH: moved('row', 3), nextY: moved('next', 1), bar: moved('bar'), changedFlips: flips, maxChanged: Math.max(...chs), bareEnds: Math.max(...live.map((x) => x.q)), shifts };
 };
 
 /* the header: its box and the page under it, in one view */
@@ -116,7 +158,10 @@ const HEAD = () => {
 		bar: r(bar), main: r(main), change: r(chg), first: r(first), viewing: main ? main.getAttribute('data-viewing') : null,
 		text: txt, projCount: txt.split(proj).length - 1, myView: /my view/i.test(document.getElementById('pm-settings-root').innerText),
 		pill: visible('#pm-settings-root .document-toolbar .project-pill'), rail: visible('#pm-settings-root .rail-project'),
-		stop: !!(bar && bar.querySelector('[data-psx-head="mine"]')), wraps: main ? main.scrollWidth > main.clientWidth + 1 && getComputedStyle(main.querySelector('.psx-head-ctx')).textOverflow !== 'ellipsis' : false
+		stop: !!(bar && bar.querySelector('[data-psx-head="mine"]')),
+		// review A-r1 finding 2 and tool note C: the words saying what you see never overflow, ellipsis or not
+		ctxOverflow: (() => { const c = bar && bar.querySelector('.psx-head-ctx'); return c ? c.scrollWidth > c.clientWidth + 0.5 : true; })(),
+		ctxText: ((bar && bar.querySelector('.psx-head-ctx')) || {}).textContent || '', fit: main ? main.getAttribute('data-fit') : null
 	};
 };
 
@@ -125,6 +170,7 @@ export default async function (t) {
 	const has = await run(t, () => document.documentElement.hasAttribute('data-psx-layer'));
 	if (!has) { await t.check('not a settings-scope build, skipped (build it with tools/build_standalone.py)', true); return; }
 	await t.until('the layer is booted', () => !!(window.PSX && window.PSX.booted && window.PSX.lastReport), null, { timeout: 60000, hard: true });
+	await run(t, HELPERS);
 	await settle(t, 800);
 
 	/* ------------------------------------------------------------------ #3 rows line up */
@@ -187,6 +233,47 @@ export default async function (t) {
 			await t.check(`${r.id}: nothing moves but the switch${reflows ? ' (its new wording may move the rows below)' : ''}`, !r.toggleX && !r.endX && !r.endW && !r.rowY && !r.bar && !r.bareEnds && r.changedFlips <= 1 && (reflows || (!r.rowH && !r.nextY && r.shifts.length === 0)), JSON.stringify(r));
 		}
 		await t.check('no row ever shows Changed twice', () => run(t, () => [...document.querySelectorAll('#pm-settings-root .setting-label')].every((l) => l.querySelectorAll('.o55-changed:not(.o55-needed)').length <= 1)));
+
+		await t.viewport(1920, 1080);
+	});
+
+	/* ------------------------------------------------------------------ #4 on Services: an account's own switch */
+	if (want(t, 'acct')) await t.step('#4 on Services: an account switch, with the layer and on bare PMConcept7', async () => {
+		/* review A-r1 finding 4 and tool note B: an account's own switch on Services (Jared's screen 03). PMConcept7
+		   redraws the whole Settings page after it, with a fade and a small drop; that is the base page's own (stream F).
+		   The layer must add nothing before that redraw, and the redraw must happen on bare PMConcept7 too. */
+		const ACCT = async () => {
+			const K = window.PM12_KIMI, wait = (ms) => new Promise((r) => setTimeout(r, ms));
+			if (window.PM_PAGES && window.PM_PAGES.current !== 'settings') { window.PM_PAGES.go('settings'); await wait(1500); }
+			K.navigate('ai', 'providers'); await wait(500);
+			K.dispatchAction('pm51-tab', { manager: 'providers', tab: 'services' }); await wait(900);
+			document.querySelectorAll('[data-psx-probe]').forEach((n) => n.removeAttribute('data-psx-probe'));
+			const row = [...document.querySelectorAll('#pm-settings-root .setting-row')].find((r) => r.getClientRects().length && /^Use this (service|account)/.test(((r.querySelector('.setting-label') || {}).textContent || '').trim()) && r.querySelector('.toggle'));
+			if (!row) return false;
+			row.setAttribute('data-psx-probe', 'acct');
+			return ((row.querySelector('.setting-label') || {}).textContent || '').trim();
+		};
+		for (const [wname, w] of [['1920', 1920], ['860', 860]]) {
+			await t.viewport(w, w >= 1920 ? 1080 : 900);
+			await reset(t); await run(t, HELPERS);
+			const which = await run(t, ACCT);
+			const lay = which ? await run(t, TOGGLE, '[data-psx-probe="acct"] .toggle') : { missing: true };
+			await t.check(`${wname} · Services · ${which || 'an account switch'}, with the layer: until the base page redraws the page, the switch and the end word stay put, no “?” shows, Changed changes at most once`, !lay.missing && !lay.toggleX && !lay.endX && !lay.endW && !lay.bareEnds && lay.changedFlips <= 1, JSON.stringify(lay));
+			// the same click on bare PMConcept7
+			const bareUrl = fileUrl(t.args.bare || new URL('../../../../PMConcept7.html', import.meta.url).pathname);
+			await t.goto(`${bareUrl}${bareUrl.includes('?') ? '&' : '?'}o55=off&cb=${Date.now()}`);
+			await t.until('bare PMConcept7 is ready', () => document.documentElement.getAttribute('data-pmr-ready') === '1' && !!window.PM12_KIMI, null, { timeout: 60000 });
+			await run(t, HELPERS); await settle(t, 1200);
+			const whichBare = await run(t, ACCT);
+			const bare = whichBare ? await run(t, TOGGLE, '[data-psx-probe="acct"] .toggle') : { missing: true };
+			// the row and the rows under it may move before the redraw only as they do on bare PMConcept7 (its own fade and drop)
+			await t.check(`${wname} · Services · account switch: the row moves before the redraw only if it does on bare PMConcept7 too`, !lay.rowY || !!bare.rowY, JSON.stringify({ layer: lay.rowYs, bare: bare.rowYs, layerRedraw: lay.rerenderAt, bareRedraw: bare.rerenderAt }));
+			await t.check(`${wname} · Services · account switch: ${lay.rerenderAt != null ? `the whole-page redraw (at ${lay.rerenderAt} ms with the layer) happens on bare PMConcept7 too (at ${bare.rerenderAt} ms): the base page’s own, handed to stream F` : 'no whole-page redraw with the layer'}`, lay.rerenderAt == null || (!bare.missing && bare.rerenderAt != null), JSON.stringify({ layer: lay, bare }));
+			await t.app.open();
+			await t.until('the layer is booted again', () => !!(window.PSX && window.PSX.booted && window.PSX.lastReport), null, { timeout: 60000, hard: true });
+			await run(t, HELPERS); await settle(t, 800);
+		}
+		await t.viewport(1920, 1080);
 	});
 
 	/* ------------------------------------------------------------------ #11 the header */
@@ -210,12 +297,16 @@ export default async function (t) {
 				const seen = [];
 				for (const [name, ctx] of VIEWS) {
 					if (ctx.cmd) { await reset(t); await look(t, lk); await page(t, 'models'); } else { await run(t, (c) => window.PSX.setCtx(c), ctx); await settle(t, 600); }
+					// a look's own font may still be arriving: measure once it has, two frames later
+					await run(t, async () => { if (document.fonts) await document.fonts.ready; await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))); });
 					const h = await run(t, HEAD);
 					seen.push([name, h]);
 					const viewing = /Home NAS|iPhone|Studio Mac/.test(name);
 					await t.check(`${lk} · ${wname} · ${name}: the project is named once`, h.projCount === 1, h.text);
 					await t.check(`${lk} · ${wname} · ${name}: viewing is ${viewing ? 'shown, with Stop viewing' : 'not shown'}`, (h.viewing === '1') === viewing && h.stop === viewing, JSON.stringify([h.viewing, h.stop, h.text]));
 					await t.check(`${lk} · ${wname} · ${name}: no “my view”, no second project button, no rail project line`, !h.myView && !h.pill && !h.rail, JSON.stringify(h));
+					const names = [ctx.project && ctx.project !== 'none' ? ctx.project : name === 'no project' ? 'No project' : 'tastebook', ctx.on === 'homenas' ? 'Home NAS' : ctx.on === 'studio' ? 'Studio Mac' : 'This computer'].concat(ctx.device === 'iphone' ? ['iPhone'] : []);
+					await t.check(`${lk} · ${wname} · ${name}: every name shows whole, nothing cut (wording ${h.fit})`, !h.ctxOverflow && names.every((n) => h.ctxText.includes(n)), JSON.stringify([h.ctxText, names, h.ctxOverflow]));
 				}
 				const base = seen[0][1];
 				for (const [name, h] of seen.slice(1)) {
@@ -278,7 +369,7 @@ export default async function (t) {
 			const P = window.PSX, off = P.offLadder;
 			return Object.keys(window.PM51.placement.byId).filter((id) => {
 				const s = window.PM51.setting(id); if (!s || /^(resource|action)$/.test(String(s.control || ''))) return false;
-				if (P.DEF[id] || off.look.test(id) || off.credential.test(id) || off.thing.includes(id)) return false;
+				if (P.DEF[id] || off.look.test(id) || off.credential.test(id) || off.thing.includes(id) || (off.library || []).includes(id)) return false;
 				const sc = ((P.REF || {})[id] || {}).scope || [];
 				return !(sc.length && sc.some((x) => ['account', 'provider', 'persona'].includes(x)) && !sc.includes('global'));
 			});
@@ -317,6 +408,19 @@ export default async function (t) {
 		});
 		await t.check('an account’s own row: one Where it applies, in the same three parts', !!per && per.per && per.heads === 1 && JSON.stringify(per.slots) === JSON.stringify(['everywhere', 'computer', 'project']), JSON.stringify(per));
 		if (per) await pic(t, 'where-per-account', 'An account’s own row (Each account): the base page’s list, then the same three parts', '#pm-settings-root .detail-inspector');
+		await run(t, () => { const b = document.querySelector('#pm-settings-root .detail-inspector .pm51-panel-close'); if (b) b.click(); });
+		// review A-r1 finding 5: a library (a button, not a value) has the three parts with reasons only
+		for (const id of ['general.visual.manage-custom-themes', 'general.interaction.sound-catalog', 'general.interaction.sound-management']) {
+			const lib = await run(t, async (i) => {
+				window.PM51.revealSetting(i, { detail: true });
+				for (let k = 0; k < 30; k++) { await new Promise((r) => setTimeout(r, 150)); const c = document.querySelector('#pm-settings-root .detail-inspector .o55-insp-tech code'); if (c && c.textContent.trim() === i && document.querySelector('#pm-settings-root .detail-inspector [data-psx-block="where"] [data-psx-slot]')) break; }
+				const insp = document.querySelector('#pm-settings-root .detail-inspector'), w = insp && insp.querySelector('[data-psx-block="where"]');
+				const code = (insp.querySelector('.o55-insp-tech code') || {}).textContent;
+				return { code, slots: w ? [...w.querySelectorAll(':scope > [data-psx-slot]')].map((g) => g.getAttribute('data-psx-slot')) : [], lines: w ? w.querySelectorAll('.psx-wline, .psx-wval').length : -1, change: w ? [...w.querySelectorAll('button')].map((x) => x.textContent.trim()) : [], now: ((insp.querySelector('.o55-insp-now') || {}).innerText || '').replace(/\s+/g, ' ').trim(), heads: [...insp.querySelectorAll('.o55-insp-block h4')].filter((h) => h.offsetParent && /^Where it applies$/.test(h.textContent.trim())).length };
+			}, id);
+			await t.check(`library ${id}: three parts with reasons only, no value line, no Change, Now says it is your library`, lib.code === id && lib.heads === 1 && JSON.stringify(lib.slots) === JSON.stringify(['everywhere', 'computer', 'project']) && lib.lines === 0 && lib.change.length === 0 && /^Your library Kept with your settings$/.test(lib.now), JSON.stringify(lib));
+			if (id === 'general.visual.manage-custom-themes') await pic(t, 'where-library', 'Your own themes: Your library, kept with your settings; the three parts with their reasons, no value and no Change', '#pm-settings-root .detail-inspector');
+		}
 		await run(t, () => { const b = document.querySelector('#pm-settings-root .detail-inspector .pm51-panel-close'); if (b) b.click(); });
 		// the base page's own scope words where the layer has its block: MCP servers
 		const mcp = await run(t, async () => {
@@ -424,14 +528,61 @@ export default async function (t) {
 			if (id === 'release') await pic(t, 'always-host', 'Always allow for ./scripts/release.sh: Everywhere is not offered, with the reason', '.psx-sheet');
 			await t.root.locator(`${sh} [data-always-cancel="${id}"]`).click(); await settle(t, 200);
 		}
-		// your own pattern naming a program's location is host-dependent too
-		await t.root.locator(`${sh} [data-ask="test"][data-a="always"]`).count().then(async (n) => { if (n) { await t.root.locator(`${sh} [data-ask="test"][data-a="always"]`).click(); await settle(t, 200); } });
-		const own = await run(t, () => window.PSX.approvals.hostDependent('/usr/local/bin/npm test', { path: false }) && !window.PSX.approvals.hostDependent('npm test *', { path: false }));
-		await t.check('8.04: a pattern that names a program’s location is host-dependent; npm test * is not', own);
+		// review A-r1 finding 6: your own pattern on the release step keeps Everywhere hidden, and a bare * is broad
+		await t.root.locator(`${sh} [data-ask="release"][data-a="always"]`).click(); await settle(t, 300);
+		await t.root.locator(`${sh} [data-always="release"] [data-pat="own"]`).check(); await settle(t, 250);
+		await t.root.locator(`${sh} [data-always="release"] [data-pat-own]`).fill('*'); await settle(t, 300);
+		e = await ed('release');
+		await t.check('8.04: your own pattern * on the release step still never offers Everywhere, and says why', !!e && !e.where.some((x) => /^everywhere/.test(x)) && e.note, JSON.stringify(e));
+		await t.check('8.03: * is flagged as broad', /This one is broad/.test(e.preview), e.preview);
+		await pic(t, 'always-own-star', 'Always allow for the release script with your own pattern *: Everywhere stays hidden and * is flagged broad', '.psx-sheet');
+		await t.root.locator(`${sh} [data-always-cancel="release"]`).click(); await settle(t, 200);
+		const units = await run(t, () => {
+			const A = window.PSX.approvals, test = { cmd: 'npm test', path: false, patterns: [['npm test'], ['npm test *'], ['npm *']] }, rel = { cmd: './scripts/release.sh v1.4.0', path: true };
+			return { progLoc: A.hostDependent('/usr/local/bin/npm test', test), npmNot: !A.hostDependent('npm test *', test), relStar: A.hostDependent('*', rel),
+				star: A.isBroad('*', test), bash: A.isBroad('bash -c *', test), py: A.isBroad('python3 *', test), node: A.isBroad('node *', test), npmStar: A.isBroad('npm *', test), narrow: !A.isBroad('npm test *', test) };
+		});
+		await t.check('8.04: host-dependence comes from the step’s target and from the pattern (a program’s location yes, npm test * no, * on the release step yes)', units.progLoc && units.npmNot && units.relStar, JSON.stringify(units));
+		await t.check('8.03: broad = a bare *, a shell or an interpreter followed by *, or the broad suggestion; npm test * is not', units.star && units.bash && units.py && units.node && units.npmStar && units.narrow, JSON.stringify(units));
+		// Permissions_System 6.1: deny, once, for this session and always. For this session is ephemeral and makes no rule
+		await t.root.locator(`${sh} [data-ask="outside"][data-a="session"]`).click(); await settle(t, 300);
+		const sess = await run(t, () => { const s = document.querySelector('.psx-sheet'); const st = window.PSX.approvals.st; return { word: /Read a folder outside loom[\s\S]*Allowed for this session/.test(s.innerText), rules: st.rules.length, session: st.session.slice() }; });
+		await t.check('For this session allows it until the session ends and makes no Always rule', sess.word && sess.rules === 1 && sess.session.includes('read ~/Documents/taxes'), JSON.stringify(sess));
+		await run(t, () => window.PSX.approvals.draw()); await settle(t, 300);
+		await t.check('a run later in the same session doesn’t ask again for it', () => run(t, () => /Read a folder outside loom[\s\S]*Allowed for this session/.test(document.querySelector('.psx-sheet').innerText)));
+		await t.check('a deletion on the remote is answered one at a time (no For this session)', () => run(t, () => !document.querySelector('.psx-sheet [data-ask="delete"][data-a="session"]') && !!document.querySelector('.psx-sheet [data-ask="delete"][data-a="once"]')));
 		// YOLO: ordinary push and publish run without asking, and no Always rule is made
 		await run(t, async () => { await window.PSX.command({ cmd: 'runmode', mode: 'yolo' }); }); await settle(t, 500);
 		const y = await run(t, () => { const s = document.querySelector('.psx-sheet'); const tx = s ? s.innerText : ''; return { push: /Push to GitHub[\s\S]*Ran, not asked/.test(tx), publish: /Publish the image[\s\S]*Ran, not asked/.test(tx), rules: window.PSX.approvals.st.rules.length, none: /None made/.test(tx) }; });
 		await t.check('8.05-8.06: YOLO pushes and publishes without asking and makes no Always rule of its own', y.push && y.publish && y.rules === 1, JSON.stringify(y));
 		await run(t, async () => { await window.PSX.command({ cmd: 'runmode', mode: 'regular' }); window.PSX.closeSheets(); });
+	});
+
+	/* ------------------------------------------------------------------ the page Jared opens: the review strip
+	   (review A-r1 finding 1 and tool note A: a script error in the strip passed every check that loaded only the app) */
+	if (want(t, 'strip')) await t.step('the review strip on settings-scope.html works', async () => {
+		const stripPath = t.args.strip || String(t.args.page || '').replace(/settings-scope-app\.html$/, 'settings-scope.html');
+		if (!stripPath || !/settings-scope\.html$/.test(stripPath)) { await t.check('the strip page is given (--set strip=<path to settings-scope.html>)', false, stripPath); return; }
+		const errors = [];
+		const onErr = (e) => errors.push(String(e && e.message || e));
+		t.page.on('pageerror', onErr);
+		await t.goto(`${fileUrl(stripPath)}?cb=${Date.now()}`);
+		await t.until('the strip says what is shown', () => /The decided design/.test((document.getElementById('note') || {}).textContent || ''), null, { timeout: 30000 });
+		const frame = t.page.frames().find((f) => f !== t.page.mainFrame());
+		await t.check('the strip frames PMConcept7', !!frame);
+		if (frame) await frame.waitForFunction(() => !!(window.PSX && window.PSX.booted && window.PSX.lastReport), null, { timeout: 90000 }).catch(() => {});
+		await t.check('the layer is booted inside the strip’s frame', !!frame && await frame.evaluate(() => !!(window.PSX && window.PSX.booted)).catch(() => false));
+		await t.page.selectOption('#moment', '11.18');
+		await t.until('Moments › 11.18 shows its caption', () => /11\.18 What asks you/.test((document.getElementById('note') || {}).textContent || ''), null, { timeout: 10000 });
+		const sheet = frame ? await frame.waitForFunction(() => { const s = document.querySelector('.psx-sheet'); return !!s && /What asks you/.test(s.textContent); }, null, { timeout: 15000 }).then(() => true).catch(() => false) : false;
+		await t.check('Moments › 11.18 opens its sheet in the frame', sheet);
+		await t.page.click('#compareopts'); await settle(t, 300);
+		await t.check('Compare options opens its row', () => t.page.evaluate(() => !document.getElementById('comparebar').hidden));
+		await t.page.selectOption('#width', '860');
+		// the frame animates its width (0.2s): wait for it to arrive rather than for a fixed time
+		await t.until('Window width sets the frame to 860px', () => Math.round(document.getElementById('pm7').getBoundingClientRect().width) === 860, null, { timeout: 5000 });
+		t.page.off('pageerror', onErr);
+		await t.check('no uncaught error on the strip page', errors.length === 0, errors.join(' | '));
+		await pic(t, 'strip-11-18', 'The strip page with Moments › 11.18 open, its caption and its sheet', null);
 	});
 }

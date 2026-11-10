@@ -214,6 +214,38 @@ items 3, 4, 8 and 11) and the guided-flows check named what this concept must ch
   why; the run now has a release script to show that. Ordinary YOLO git push and publish still run without asking and
   never become an Always rule (NEW CANON: Permissions_System's Always and YOLO rules).
 
+## Fix round A-r1 (2026-11-10)
+
+A blind review of the branch (`REVIEW-concept-A-r1-opus-high.md` in the share folder) found these; each is fixed:
+
+- **The strip's script** died on two captions that used a plain apostrophe inside single-quoted strings (`index.html`
+  11.5 and 11.16); every caption now uses ’, and `feedback.check.mjs --set only=strip` opens `settings-scope.html`,
+  picks Moments › 11.18, Compare options and a window width, and fails on any uncaught error.
+- **The viewing header** cut the device's name at 1280 and 860. The header now has shorter wordings, tried in order
+  until one fits with nothing cut: "harbor on Studio Mac, with iPhone’s screen", "…, with iPhone", the same without
+  the word Viewing (the frame, the tint and Stop viewing still say it), then "harbor · Studio Mac · iPhone". It refits
+  when the window changes; the box never changes size.
+- **The end column** is sized from the widest end word the concept can show, measured in the current look's own font
+  once per look (Retro's monospace cut "Each AI service" at 124px). Every control in a section still lines up.
+- **Libraries** (Your own themes, Sound library, Add a sound) open a library; they are not values. Their panel says
+  "Your library · Kept with your settings", and Where it applies has the three parts with their reasons only, with no
+  value line and no Change. "Start custom themes from" has a value and stays same-everywhere.
+- **Always allow:** whether Everywhere is offered comes from the step's own target (a script or a folder) as well as
+  from the pattern, so your own pattern never brings it back on the release step; a bare `*`, and a shell or an
+  interpreter followed by `*`, are flagged broad. Each ask also offers **For this session** (Permissions_System 6.1
+  keeps deny, once, for this session and always): it lasts until the chat session ends and makes no rule; a deletion
+  on the remote is answered one at a time.
+- **Where work runs:** the panel's Now card, the Change menu and the project lists say "Auto → This computer" (each
+  Project has a default computer and its work is Auto by default, SIR-056 on `plans/where-work-runs-20261109`), not
+  "works on This computer". The Change menu's search reads "Find a project, computer or device".
+- **The New Project moment** puts tastebook's accounts back when its sheet closes.
+- **The strip's Look** now always stores the look it paints. Choosing only light or dark (the family already chosen)
+  happened in the theme menu, outside Settings, so the router never heard it and the next change of project or view
+  painted the old look again. `setLook` now writes the painted look where the look lives.
+- **Account switches on Services** redraw the whole Settings page on bare PMConcept7 too: that is the base page's
+  (stream F's). `--set only=shake` now checks an account switch, with the layer and on bare PMConcept7, and moves rows
+  into view by scrolling the Settings scroller itself, never with `scrollIntoView`.
+
 ## Fix pass (2026-11-03)
 
 Five reviews (`pass2/reviews/settings-full-{astra,sol}.md`, `REVIEW-settings-full-wonder.md`, `settings-{astra,sol}.md`)
