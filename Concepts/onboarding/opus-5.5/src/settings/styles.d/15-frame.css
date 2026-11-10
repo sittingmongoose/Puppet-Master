@@ -70,7 +70,7 @@
   #panel-settings .page-index-title { padding-left: 5px; padding-right: 5px; }
   #panel-settings .domain-document { padding-left: 12px; padding-right: 12px; }
   #panel-settings .o55-group-head { padding-left: 16px; padding-right: 16px; }
-  #panel-settings .o55-group > .setting-list { padding-left: 16px; padding-right: 12px; }
+  #panel-settings .o55-group > .setting-list { --o55-list-inset-l: 16px; --o55-list-inset-r: 12px; padding-left: 16px; padding-right: 12px; }
   /* Jared #10 (2026-10-14, pm7-liquid-glass): the page ends near the chat column, as the other pages do. The landing kept
      its 4 % right padding, 38-42 px from the chat in every look; it now keeps the document's 12. Liquid Glass gives
      both back to 4 px (its sheets carry their own bevel), so its settings sit about 10 px from the chat, as on Home. */

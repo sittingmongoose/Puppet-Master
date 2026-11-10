@@ -2565,12 +2565,8 @@
   }
 
   /* ---- light: the press ------------------------------------------------------------------------------------------
-     The pointer's light is the shared hover light only (18-hover.js, 22-hover.css): a sheen and an edge catch on the
-     hovered card, tile or row, as in Basic and Friendly. Glass also lit whatever sheet was under the pointer (#lg-shine,
-     a 96 px disc added over Glass Dark's panels, bars and dialogs, and Glass Light's --lg-glow under their words), so the
-     circle followed the pointer across panels with no edge light and doubled the sheen on the Usage widgets; it is gone
-     (Jared, QA round 2 Q20, 2026-10-30: "The hover glow circle around the mouse ... should be toned down. It also should be
-     on objects that have the edge glow like the usage widgets. Similar to how the friendly and basic theme does it."). */
+     FO-121: pointer light is confined to the shared hover layer's box edges (18-hover.js, 22-hover.css).
+     The press bloom below is a separate click interaction, not a pointer-following light. */
   /* the press: buttons flex and a small light blooms under the finger. Strip items and rail icons get neither: their
      lens is the answer to a press (the white bloom read as a flash in the films). A wizard choice card or tile flexes
      its content inside its stationary face (FO-49): flexing the button itself moved the box under a held pointer, so
@@ -2993,7 +2989,7 @@
     }, 140);
   }
   var HOT = '#pm-o55-onboarding .o55-pane > .o55-layer, [data-lg-surface], .page-tab, #pmuRange > button, .pmu-navbtn, .pm-segtab-item, #activityBar .icon, .side-panel-view, .pmu-pop, .pmr-menu-list, .pmr-menu-group, .pm6-tb-menu, .o55-railitem, .o55-seg button, #pm-settings-root .segmented > button, .o55-win, .o55t-callout, .o55t-bar';
-  var GENERATED = '#lg-optics, #lg-lenses, .lg-lenses-local, .lg-lenses-under, .lg-hops, #lg-shine, .lg-press, .pm-segtab-track, #lg-post, #lg-shown, lg-warm';
+  var GENERATED = '#lg-optics, #lg-lenses, .lg-lenses-local, .lg-lenses-under, .lg-hops, .lg-press, .pm-segtab-track, #lg-post, #lg-shown, lg-warm';
   /* menus that pour out of their control (morph) or hide the hover tag sync inside the click's task, so the spring's
      first frame is the menu's first frame. Any other floating sheet ([data-lg-surface], the onboarding window, the tour)
      is mounted after the frame's own layout, still before that frame is painted, instead of forcing the app's style for
@@ -3005,7 +3001,7 @@
     if (rec.type !== 'childList') return false;
     /* app replacement can remove a persistent output layer; let that schedule its reconstruction */
     for (var i = 0; i < rec.removedNodes.length; i++) {
-      var n = rec.removedNodes[i]; if (n.nodeType !== 1 || !n.matches('#lg-shine, .lg-press, .lg-hops, lg-warm')) return false;
+      var n = rec.removedNodes[i]; if (n.nodeType !== 1 || !n.matches('.lg-press, .lg-hops, lg-warm')) return false;
     }
     var nodes = Array.prototype.slice.call(rec.addedNodes).concat(Array.prototype.slice.call(rec.removedNodes));
     return nodes.length > 0 && nodes.every(function (n) { return n.nodeType === 1 && n.matches(GENERATED); });

@@ -48,7 +48,7 @@ html[data-o55-nier="on"] #panel-usage .pmu-shell { --pmu-plate-rest: none; --pmu
 #panel-usage .pmu-card[data-head="band"]::before { display: none; }
 /* ---- hover: the merged hover system PMH (Concepts/onboarding/opus-5.5 src/js/18-hover.js and src/css/22-hover.css) ----
    A plate takes its family's PMH look, as a dashboard card does (Jared's items 10 and 11, 2026-10-09):
-     Basic, Friendly, Glass: a small soft light at the pointer and a faint line where the edge catches it, both on the
+     Basic, Friendly, Glass: a faint line and soft inset band where the edge catches the pointer, on the
        ::before light below, revealed by one radial mask at PMH's --pmh-x/-y and at the field's intensity --pmh-i (so a
        neighbour across the 8 px gap catches the same light on its near edge); and the plate's short elevation shadow
        with half a bloom, pre-painted on PMH's rest-rect proxy (#pmh-glow), which only fades;

@@ -64,6 +64,24 @@
   const copyText = (text, what) => { const done = () => PM51.toast(`${what} copied`, text); try { navigator.clipboard.writeText(text).then(done, () => PM51.toast(what, text, 'info')); } catch (e) { PM51.toast(what, text, 'info'); } };
   const forgeUrl = f => f.id === 'github' ? `https://github.com/${connected(f) ? f.defaultAccount : ''}` : f.instanceUrl || (API[f.id] ? 'https://' + API[f.id].split('/')[0].replace(/^api\./, '') : '');
   const connected = f => f.status === 'active';
+  /* every signed-in account of a service, by name (FO-126, Jared 2026-11-09 #10: "shows 2 accounts signed in, but
+     I cant see the second one"). The connect wizard keeps the names; the count row and the list are drawn from this
+     one list, so they can never disagree. A saved state from before names were kept (a count above the names it has,
+     often no accountNames at all) keeps every slot, placeholder names included ("Account 2"), and an add appends
+     after those slots. Reading that state writes the slots back, so a later add cannot drop one or lower the count. */
+  const accountList = f => {
+    if (!connected(f)) return [];
+    const names = (Array.isArray(f.accountNames) ? f.accountNames.filter(Boolean) : []).filter((x, i, arr) => arr.indexOf(x) === i);
+    const known = names.length ? names.slice() : [f.defaultAccount].filter(x => x && x !== 'None');
+    const n = Math.max(1, known.length, Number(f.accounts) || 0);
+    const out = known.slice();
+    while (out.length < n) out.push(`Account ${out.length + 1}`);
+    if (Number(f.accounts) !== out.length || names.length !== out.length || names.some((x, i) => x !== out[i])) {
+      f.accountNames = out.slice();
+      f.accounts = out.length;
+    }
+    return out.slice();
+  };
   const statusLabel = f => connected(f) ? 'Connected' : f.status === 'needs-signin' ? 'Needs sign-in' : 'Not connected';
   const statusTone = f => connected(f) ? 'ready' : f.status === 'needs-signin' ? 'attention' : 'off';
   const hasSignIn = f => /oauth|sign-in|entra|app/i.test(f.auth || '');
@@ -105,11 +123,20 @@
       { label: 'Connection', help: f.instanceUrl ? (f.lastCheck ? `Checked ${f.lastCheck}` : 'Not checked yet') : 'Enter an address first', action: { label: 'Check connection', icon: 'test', action: 'pm51-source-check', data: { id: f.id } } }
     ] : [
       { label: 'Signed in as', value: on ? f.defaultAccount : 'Nobody yet', muted: !on },
-      { label: 'Accounts', help: 'You can sign in with more than one.', value: f.accounts ? String(f.accounts) : 'None', muted: !f.accounts },
+      { label: 'Accounts', help: 'You can sign in with more than one.', value: on ? String(accountList(f).length) : 'None', muted: !on },
       { label: 'Reviews are called', help: 'What this service names a code review.', value: f.reviewLabel },
       { label: 'Automation', help: 'What runs builds and tests on this service.', value: f.automationLabel },
       { label: 'Connection', help: on ? (f.lastCheck ? `Checked ${f.lastCheck}` : 'Not checked yet') : 'Nothing to check until it is connected', action: { label: 'Check connection', icon: 'test', action: 'pm51-source-check', data: { id: f.id } } }
     ];
+    /* FO-126: with more than one account signed in, every one of them is listed, each with its own Disconnect */
+    const accs = accountList(f);
+    const accountsSection = accs.length > 1 ? PM51.section({
+      title: 'Signed-in accounts', help: `${accs.length} accounts. ${f.defaultAccount} is used by default.`,
+      body: PM51.list(accs.map(name => ({
+        title: name, meta: name === f.defaultAccount ? 'Used by default' : 'Also signed in',
+        end: PM51.btn({ label: 'Disconnect', small: true, icon: 'close', action: 'pm51-source-account-disconnect', data: { id: f.id, name } })
+      })), { cls: 'pm51-source-accounts' })
+    }) : '';
     const account = on ? f.defaultAccount : 'you';
     const gh = f.id === 'github' || f.id === 'github-enterprise';
     const blocked = f.id === 'github-enterprise' && ghOnly();
@@ -119,7 +146,7 @@
         + PM51.home('ai.accounts.github-connect', PM51.rows([{ label: 'GitHub account', help: on ? `Signed in as ${f.defaultAccount}.` : 'Nobody is signed in.', action: on ? { label: 'Disconnect', icon: 'close', action: 'pm51-source-gh-disconnect', data: { id: f.id } } : { label: VERB[f.id] || 'Connect', icon: 'link', action: 'pm51-source-connect', data: { id: f.id }, disabled: blocked, reason: 'Allow company servers first.' } }]))
         + PM51.bound.rows(['ai.accounts.github-token', 'ai.accounts.github-host-policy'])
     }) : GH.reduce((html, id) => PM51.home(id, html), '');
-    const body = setupSteps(f) + PM51.rows(rows) + signIn + PM51.advanced([
+    const body = setupSteps(f) + PM51.rows(rows) + accountsSection + signIn + PM51.advanced([
       PM51.section({ title: 'Technical details', body: PM51.kv([
         ['Sign-in method', f.auth],
         ['API address', API[f.id] || (f.instanceUrl ? f.instanceUrl.replace(/\/$/, '') + '/api' : 'Known once the address is entered')],
@@ -174,8 +201,9 @@
     connectWizard(f, reauth);
   }
   function disconnect(f) {
-    PM51.confirm(`Disconnect ${f.name}?`, `Puppet Master forgets the ${f.defaultAccount} account. Your repositories on ${f.name} are not touched.`, 'Disconnect', () => {
-      Object.assign(f, { status: 'not-connected', accounts: 0, defaultAccount: 'None', scopes: [], ssh: 'Not tested', lastTest: 'Not run', pushAccess: 'Not set up', lastCheck: '' });
+    const accs = accountList(f);
+    PM51.confirm(`Disconnect ${f.name}?`, `Puppet Master forgets the ${accs.length > 1 ? `${accs.length} accounts` : `${f.defaultAccount} account`} signed in here. Your repositories on ${f.name} are not touched.`, 'Disconnect', () => {
+      Object.assign(f, { status: 'not-connected', accounts: 0, accountNames: [], defaultAccount: 'None', scopes: [], ssh: 'Not tested', lastTest: 'Not run', pushAccess: 'Not set up', lastCheck: '' });
       if (cfg().service === f.name) cfg().service = 'None';
       saveState(); refresh(); PM51.toast('Disconnected', f.name, 'warning');
     }, true);
@@ -437,6 +465,16 @@
 
   PM51.on('source-gh-connect', () => { const f = byId('github'); if (!f) return; PM51.setSel(ID, f.id); PM51.setTab(ID, 'services'); if (connected(f)) disconnect(f); else connectPanel(f, false); });
   PM51.on('source-gh-disconnect', el => { const f = byId(ds(el, 'id')); if (f) disconnect(f); });
+  /* one account of a service signed out on its own row; the last one disconnects the service (FO-126) */
+  PM51.on('source-account-disconnect', el => {
+    const f = byId(ds(el, 'id')), name = ds(el, 'name');
+    if (!f || !name) return;
+    const names = accountList(f).filter(x => x !== name);
+    if (!names.length) { disconnect(f); return; }
+    Object.assign(f, { accountNames: names, accounts: names.length, defaultAccount: f.defaultAccount === name ? names[0] : f.defaultAccount });
+    saveState(); refresh();
+    PM51.toast('Account disconnected', `${name} is signed out of ${f.name}. ${names.length} account${names.length === 1 ? '' : 's'} left.`, 'warning');
+  });
 
   /* ---------- guided: a new repository, or contributing to someone else's --------------------------- */
   const LICENSES = [['None', 'No license', 'All rights reserved'], ['MIT', 'MIT', 'Short and permissive'], ['Apache-2.0', 'Apache 2.0', 'Permissive, with a patent grant'], ['GPL-3.0', 'GPL 3.0', 'Changes must stay open']];
@@ -531,7 +569,13 @@
       onFinish: d => {
         const keyId = d.via === 'ssh' && S ? S.commitKey(d) : '';
         if (d.address) f.instanceUrl = d.address;
-        Object.assign(f, { status: 'active', accounts: on && !reauth ? (f.accounts || 1) + 1 : Math.max(1, f.accounts || 0), defaultAccount: on && !reauth ? f.defaultAccount : d.account, scopes: ['Repository', 'Reviews', 'Automation'], ssh: d.via === 'ssh' ? 'Healthy' : 'Not used', lastTest: 'Passed', pushAccess: 'Ready', pushVia: d.via, pushKeyId: keyId, lastCheck: 'Just now' });
+        /* FO-126: every signed-in account is kept by name — an add or a reauthorize joins the list, a first connect
+           starts it — and the count is drawn from the list, so the count and the names can never disagree.
+           A legacy count (accounts: 2, no accountNames) already shows a placeholder slot; the add starts from
+           those slots and appends. It never replaces them with defaultAccount alone, and never lowers the count. */
+        const prior = on ? accountList(f) : [];
+        const names = !on ? (d.account ? [d.account] : []) : (d.account && !prior.includes(d.account) ? prior.concat(d.account) : prior.slice());
+        Object.assign(f, { status: 'active', accountNames: names, accounts: names.length, defaultAccount: on && !reauth ? (names.includes(f.defaultAccount) && f.defaultAccount ? f.defaultAccount : names[0]) : (d.account || f.defaultAccount), scopes: ['Repository', 'Reviews', 'Automation'], ssh: d.via === 'ssh' ? 'Healthy' : 'Not used', lastTest: 'Passed', pushAccess: 'Ready', pushVia: d.via, pushKeyId: keyId, lastCheck: 'Just now' });
         if (!cfg().service || cfg().service === 'None') cfg().service = f.name;
         PM51.setSel(ID, f.id); saveState(); refresh();
         PM51.toast(`${f.name} connected`, `Signed in as ${d.account}. Example only: nothing was sent to ${f.name}.`, 'info');

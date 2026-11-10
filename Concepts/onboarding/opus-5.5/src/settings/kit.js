@@ -240,17 +240,73 @@ function sproutCorner(el, anchor) {
 }
 function sproutOpen(el, anchor) { window.PM6_SPROUT.open(el, null, null, { origin: sproutCorner(el, anchor) }); }
 function sproutClose(el, done) { window.PM6_SPROUT.close(el, done); }
-function positionPopout(pop, anchor, { align = 'left', width = 0 } = {}) {
+function popoutFrame() {
   const vw = window.innerWidth, vh = window.innerHeight;
+  let top = 8, bottom = vh - 8;
+  /* The global status bar is position:fixed at z-index above every popout, 25px along the bottom. A box pinned to
+     the viewport's edge draws under that bar, so its last rows cannot be hit (FO-123, the short preview pane). */
+  const bar = document.querySelector('.pm7-statusbar');
+  if (bar) {
+    const b = bar.getBoundingClientRect();
+    if (b.height > 0 && b.bottom > vh - 2 && b.top < vh) bottom = Math.min(bottom, Math.round(b.top) - 8);
+  }
+  return { vw, vh, top, bottom };
+}
+/* The width a menu needs so every item's label and hint are one full line. Children are width:100% and labels
+   ellipsize, so the popout's own scrollWidth stays at the narrow box; each child's scrollWidth is the unclipped text. */
+function menuContentWidth(pop) {
+  let need = 210;
+  pop.querySelectorAll('.pm51-menu-item, .pm51-popout-title').forEach(item => {
+    if (item.classList.contains('pm51-popout-title')) { need = Math.max(need, Math.ceil(item.scrollWidth) + 8); return; }
+    const cs = getComputedStyle(item);
+    const pad = (parseFloat(cs.paddingLeft) || 0) + (parseFloat(cs.paddingRight) || 0);
+    const gap = parseFloat(cs.columnGap || cs.gap) || 0;
+    const kids = [...item.children];
+    const sum = kids.reduce((s, k) => s + Math.ceil(Math.max(k.scrollWidth, k.getBoundingClientRect().width)), 0);
+    need = Math.max(need, Math.ceil(pad + gap * Math.max(0, kids.length - 1) + sum));
+  });
+  const pcs = getComputedStyle(pop);
+  const pad = (parseFloat(pcs.paddingLeft) || 0) + (parseFloat(pcs.paddingRight) || 0);
+  const border = (parseFloat(pcs.borderLeftWidth) || 0) + (parseFloat(pcs.borderRightWidth) || 0);
+  return Math.ceil(need + pad + border + 2);
+}
+function positionPopout(pop, anchor, { align = 'left', width = 0 } = {}) {
+  const { vw, vh, top: frameTop, bottom: frameBottom } = popoutFrame();
   const r = anchor && anchor.getBoundingClientRect ? anchor.getBoundingClientRect() : { left: vw - 240, right: vw - 16, top: 16, bottom: 16, width: 224 };
-  pop.style.display = 'block'; pop.style.top = ''; pop.style.bottom = ''; pop.style.maxHeight = '';
-  const w = Math.min(vw - 16, Math.max(width || 0, align === 'right' ? 210 : r.width, 200));
+  pop.style.display = 'block'; pop.style.top = ''; pop.style.bottom = ''; pop.style.height = '';
+  /* The stylesheet caps every popout at min(420px, 70vh). Measuring under that cap reports the clamped box, so a
+     menu that fits the screen was then given that clamped height back and its last rows stayed cut (FO-123). */
+  pop.style.maxHeight = 'none';
+  /* FO-123, the words (Jared's screen 04): a menu was fixed at 210px, and at most 320px, so "Use the sign-in
+     already on the server" ellipsized. The box follows the text, and stops at the viewport; only a line that
+     cannot fit the viewport wraps, still in full. */
+  const cap = vw - 16;
+  let w;
+  if (pop.classList.contains('pm51-menu') && !width) {
+    const need = menuContentWidth(pop);
+    pop.classList.toggle('is-wrapped', need > cap);
+    w = Math.max(210, Math.min(cap, need));
+    pop.style.maxWidth = cap + 'px';
+  } else w = Math.min(cap, Math.max(width || 0, align === 'right' ? 210 : r.width, 200));
   pop.style.width = w + 'px';
   const ph = pop.offsetHeight;
   let left = align === 'right' ? r.right - w : r.left; left = Math.max(8, Math.min(vw - w - 8, left));
-  const below = vh - r.bottom - 8, above = r.top - 8;
+  const below = frameBottom - r.bottom, above = r.top - frameTop;
   const placeBelow = below >= Math.min(ph, 240) || below >= above;
-  if (placeBelow) { pop.style.top = Math.round(r.bottom + 6) + 'px'; pop.style.maxHeight = Math.max(120, Math.min(420, below - 6)) + 'px'; }
+  const fitsBelow = placeBelow && below - 6 >= ph, fitsAbove = !placeBelow && above - 6 >= ph;
+  if (fitsBelow) { pop.style.top = Math.round(r.bottom + 6) + 'px'; pop.style.maxHeight = Math.max(120, Math.min(420, below - 6)) + 'px'; }
+  else if (fitsAbove) { pop.style.bottom = Math.round(vh - r.top + 6) + 'px'; pop.style.maxHeight = Math.max(120, Math.min(420, above - 6)) + 'px'; }
+  /* FO-123 (Jared 2026-11-09 #5, "adding accounts has the drop down cut off"): a short viewport with the trigger near
+     its edge leaves neither side room for the whole box, and clamping the height to the room beside the trigger cut
+     the last rows off a box that fits the screen. When the content fits the open area above the status bar, the box
+     takes that room against the open area's edge, covering the trigger if it must, instead of cutting its rows;
+     a box too tall for the screen at all still scrolls inside the clamp below. */
+  else if (ph <= frameBottom - frameTop) {
+    if (below >= above) pop.style.bottom = Math.round(vh - frameBottom) + 'px';
+    else pop.style.top = frameTop + 'px';
+    pop.style.maxHeight = ph + 'px';
+  }
+  else if (placeBelow) { pop.style.top = Math.round(r.bottom + 6) + 'px'; pop.style.maxHeight = Math.max(120, Math.min(420, below - 6)) + 'px'; }
   else { pop.style.bottom = Math.round(vh - r.top + 6) + 'px'; pop.style.maxHeight = Math.max(120, Math.min(420, above - 6)) + 'px'; }
   pop.style.left = Math.round(left) + 'px';
   pop.dataset.sprout = (placeBelow ? 't' : 'b') + (align === 'right' ? 'r' : 'l');
