@@ -6,7 +6,6 @@ import hashlib
 import importlib.util
 import json
 import re
-import rfc8785
 import sys
 from pathlib import Path
 from jsonschema import Draft202012Validator
@@ -17,8 +16,9 @@ UTC_FORMAT = oracles.UTC_FORMAT
 
 
 def observation_component(family, payload):
-    return rfc8785.dumps(['ea-do-observation-v1', payload['operation_id'], payload['thread_id'],
-                          payload['run_id'], family, payload['occurrence']]).decode('utf-8')
+    # CV-366 application key component: actual RFC 8785 JCS through the shared qualified serializer (CV-1100).
+    return oracles.qualified_jcs(['ea-do-observation-v1', payload['operation_id'], payload['thread_id'],
+                                  payload['run_id'], family, payload['occurrence']]).decode('utf-8')
 
 
 def identity(family, payload):
@@ -26,8 +26,9 @@ def identity(family, payload):
     if payload['scope'] == 'project':
         partition = 'project~' + base64.urlsafe_b64encode(payload['project_id'].encode()).decode().rstrip('=')
     parts = ['ea-do-v1', partition, payload['server_id'], payload['thread_id'], payload['run_id'], family, payload['operation_id'], payload['occurrence']]
-    # Use the specified serializer for every accepted numeric/string representation.
-    digest = hashlib.sha256(rfc8785.dumps(parts)).hexdigest()
+    # The specified serializer, RFC 8785 JCS, through the shared qualified call (CV-1100): an integer it cannot
+    # encode exactly refuses (`Refusal`) instead of becoming another spelling. Same bytes for every other value.
+    digest = hashlib.sha256(oracles.qualified_jcs(parts)).hexdigest()
     key = 'do1:' + digest
     if payload['scope'] == 'application':
         key = ('application@1:' + payload['server_id'].encode().hex() + ':'
@@ -40,7 +41,13 @@ def historical_identity(family, payload, recipe):
         return identity(family, payload)
     if recipe != oracles.LEGACY_RECIPE:
         raise ValueError('unsupported original identity recipe')
-    encode = lambda value: json.dumps(value, separators=(',', ':'), ensure_ascii=False).encode('utf-8')
+    # The frozen legacy recipe's own bytes (compact JSON), unchanged; an integer Python cannot render exactly (past
+    # its 4300-digit limit) refuses instead of raising (sweep part 2B).
+    def encode(value):
+        try:
+            return json.dumps(value, separators=(',', ':'), ensure_ascii=False).encode('utf-8')
+        except ValueError as error:
+            raise oracles.Refusal('legacy_recipe_unencodable') from error
     parts = ['ea-do-v1', oracles.partition(payload), payload['server_id'], payload['thread_id'],
              payload['run_id'], family, payload['operation_id'], payload['occurrence']]
     digest = hashlib.sha256(encode(parts)).hexdigest()
@@ -75,11 +82,18 @@ def board_join_view(case):
             'expected_idempotency_key': key, 'expected_event_id': event_id, 'terminal_run': case.get('terminal_run')}
 
 
+def board_number_view(case):
+    """Sweep part 2B (CV-1100): the board payload's definition integer slots and qualification, and the envelope's
+    producer integer slots and qualification, through the shared calls."""
+    definition = case['event_type'].replace('.', '_') if type(case.get('event_type')) is str else None
+    return {'payload_number_errors': oracles.payload_number_errors(definition, case['payload']),
+            'envelope_number_errors': oracles.envelope_number_errors(case['envelope'])}
+
+
 def board_join_errors(case):
     """Exact source/append/run joins, using supplied canonical-source fixtures only; through the BOARD_NUMBER, BOARD
     source and BOARD_JOIN tables (sweep part 2A)."""
-    numbers = {'payload_number_errors': oracles.record_number_errors(case['payload']),
-               'envelope_number_errors': oracles.record_number_errors(case['envelope'])}
+    numbers = board_number_view(case)
     errors = oracles.run_rows(oracles.guards.BOARD_NUMBER_ROWS, numbers)
     if errors:
         return errors
@@ -167,7 +181,8 @@ def board_member_refusal_checks(schema, fixtures, row, coordination):
         assert list(stored_validator.iter_errors(stored)), base['case_id']
         # Append, retry and history refuse it, with the digests kept in step so that is the only defect.
         bad = copy.deepcopy(base); bad['logical_payload'] = stored; bad['event']['payload'] = copy.deepcopy(stored)
-        bad = oracles.recapture_history(bad)
+        # The writer wrote this original, so Storage sealed it (SP-1101): history refuses it by its schema alone.
+        bad = oracles.seal_original(oracles.recapture_history(bad))
         assert oracles.event_errors(bad, schema, identity, retry_allowed, ROOT, UTC_FORMAT) == ['logical_payload_schema'], base['case_id']
         assert oracles.historical_read_errors(bad, schema, sys.modules[__name__]) == ['logical_payload_schema'], base['case_id']
         assert oracles.retry_outcome(base['event'], bad['event'])['status'] == 'retry_value_schema', base['case_id']
@@ -303,6 +318,8 @@ def guard_table_checks(fixtures):
 def main():
     schema = json.loads((ROOT / 'Plans/orchestrator_event_payloads.schema.json').read_text())
     fixtures = oracles.fixture_loads((ROOT / 'Plans/orchestrator_event_contract_fixtures.json').read_text())
+    # SP-1101 composition: sealed custody and the frozen recipe map, installed before any read (sweep part 2B).
+    oracles.install_original_custody(fixtures, sys.modules[__name__])
     owner = (ROOT / 'Plans/orchestrator-subagent-integration.md').read_text()
     registry = json.loads((ROOT / 'Plans/event_family_registry.json').read_text())
     storage = json.loads((ROOT / 'Plans/storage_value_registry.json').read_text())
@@ -410,6 +427,7 @@ def main():
         assert oracles.event_errors(bad, schema, identity, retry_allowed, ROOT, UTC_FORMAT) == ['event_join_payload_schema_id'], base['case_id']
         checks += 1
     checks += oracles.check_oracles(fixtures, schema, sys.modules[__name__])
+    checks += oracles.part_2b_checks(fixtures, schema, sys.modules[__name__])
     checks += guard_table_checks(fixtures)
     print(json.dumps({'status': 'pass', 'families': len(fixtures['contracts']), 'checks': checks, 'native': 'NOT_RUN', 'stopped_facets': []}))
 

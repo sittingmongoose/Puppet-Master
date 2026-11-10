@@ -4,18 +4,18 @@ Fixtures assume a verified source adapter and an admitted generic publication.
 They test joins, not native CRC, custody authentication, redb CAS or durability.
 """
 import base64
+import collections
 import copy
+from decimal import Decimal
 import hashlib
 import json
 import re
 import sys
 from functools import lru_cache
 from pathlib import Path
-from datetime import datetime
 
 import blake3
 import msgpack
-import rfc8785
 from jsonschema import Draft202012Validator, FormatChecker, ValidationError, validators
 from referencing import Registry, Resource
 from referencing.jsonschema import DRAFT202012
@@ -23,7 +23,11 @@ from referencing.exceptions import Unresolvable
 
 from pm_event_index_binding import binding_digest
 from pm_projects_refresh_contracts import semantic_hash, scope_failures, typed_tree
-from pm_event_numbers import JsonNumber, Refusal, storage_uint64
+from pm_event_numbers import (
+    APP_PHYSICAL, EVENT_VALUE, PRODUCER_FIELDS, FrozenRecipe, JsonNumber, OriginalBinding, OriginalCustody,
+    RecipeTuple, Refusal, RetainedDispatcher, decode_storage_value, current_integer, current_integer_token, loads_current_json,
+    producer_semantic_digest, qualified_jcs, storage_uint64, storage_value_bytes)
+from pm_event_datetime import EVENT_RECORD, STORAGE_UTC_Z, date_time
 import pm_orchestrator_event_guards as guards
 
 
@@ -34,6 +38,8 @@ SEMANTIC_FIELDS = (
     'parent_event_id', 'idempotency_key', 'payload_schema_id', 'payload', 'payload_ref',
     'redaction_profile', 'migration',
 )
+# CV-317: the producer projection is the shared helper's, field for field.
+assert SEMANTIC_FIELDS == PRODUCER_FIELDS
 LIMIT = 16384
 LEGACY_RECIPE = 'ea-do-json-v1'
 CURRENT_RECIPE = 'ea-do-rfc8785-v2'
@@ -57,15 +63,16 @@ PROJECT_SOURCE_FIELDS = frozenset((
 UTC_FORMAT = FormatChecker()
 
 
-@UTC_FORMAT.checks('date-time', raises=(ValueError, TypeError))
-def utc(value):
-    # RFC3339 UTC, preserving arbitrary decimal precision and original bytes.
-    if type(value) is not str or re.fullmatch(
-            r'[0-9]{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12][0-9]|3[01])T'
-            r'(?:[01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](?:\.[0-9]+)?Z', value) is None:
-        return False
-    datetime.fromisoformat(value[:-1] + '+00:00')
-    return True
+@UTC_FORMAT.checks('date-time', raises=Refusal)
+def event_record_date_time(value):
+    """CV-1101 (sweep part 2B): the shared date-time predicate, `pm_event_datetime.date_time` with the EventRecord
+    profile, at every `format: date-time` this lane validates. It replaces the lane's own uppercase-Z grammar.
+
+    As in the shared `format_checker`, every value the validator treats as a string reaches the predicate (a str
+    subclass refuses, `date_time_type`); a non-string is left to `type`. The original string is never rewritten.
+    Storage-assigned fields take the stricter CV-253 profile on top of this (`storage_timestamp_errors`).
+    """
+    return True if not isinstance(value, str) else date_time(value, profile=EVENT_RECORD) == value
 
 
 @UTC_FORMAT.checks('pm-utf8-body-16k', raises=(ValueError, TypeError, UnicodeError))
@@ -85,24 +92,200 @@ def exact_pattern(validator, pattern, instance, schema):
 
 StrictValidator = validators.extend(Draft202012Validator, {'pattern': exact_pattern})
 
+# CV-253 / CV-1101 (sweep part 2B): Storage-assigned `observed_at_utc` and `persisted_at_utc` take the strict
+# `storage_utc_z` profile. Among the resources this lane validates, `Plans/event_datetime_inventory.json` classifies
+# exactly three Storage nodes: the EventRecord envelope and its frozen 1.0.0 compatibility reader
+# (`Plans/event_record.schema.json`, classification EventRecord) and the event_record_index row
+# (`Plans/storage_value_registry.json` /families/8/value_schema, classification event_record_index). The validators
+# for those two records are wrapped below; `storage_profile_sites_errors` checks the inventory still says so.
+STORAGE_TIMESTAMP_FIELDS = ('observed_at_utc', 'persisted_at_utc')
 
-def number_domain_errors(value):
-    """Current producer inputs only, never Storage metadata or typed originals.
 
-    RFC8785 finite numbers only; integral values use safe integers, never a
-    float64 alias. Fractional floats retain the original typed source domain.
+def storage_timestamp_errors(record):
+    """Each Storage timestamp the record holds as a string that `date_time(..., profile=STORAGE_UTC_Z)` refuses."""
+    if type(record) is not dict:
+        return []
+    errors = []
+    for field in STORAGE_TIMESTAMP_FIELDS:
+        if field in record and isinstance(record[field], str):
+            try:
+                date_time(record[field], profile=STORAGE_UTC_Z)
+            except Refusal as refusal:
+                errors.append(field + ':' + refusal.reason)
+    return errors
+
+
+class StorageIntegerValidator:
+    """SP-1100 / CV-1100 (sweep part 2B, DO-P1F4-S1): every integer slot of a Storage record (the SP-278 checkpoint,
+    read token and index row) is an exact uint64 through the shared `current_integer`, inside the schema verdict.
+    JSON Schema's `integer` admits an integral float such as 1344.0, which SP-278's binding codec cannot encode; this
+    refuses it at the schema boundary, with that record's own schema code, before any binding digest is taken."""
+
+    def __init__(self, inner, node, defs):
+        self.inner, self.node, self.defs = inner, node, defs
+
+    def iter_errors(self, instance):
+        yield from self.inner.iter_errors(instance)
+        for reason in integer_slot_errors(self.node, instance, self.defs, storage=True):
+            yield ValidationError('storage_uint64 ' + reason)
+
+    def is_valid(self, instance):
+        return next(iter(self.iter_errors(instance)), None) is None
+
+
+class StorageRecordValidator:
+    """A record validator plus CV-253's Storage profile at the record's own observed/persisted fields."""
+
+    def __init__(self, inner):
+        self.inner = inner
+
+    def iter_errors(self, instance):
+        yield from self.inner.iter_errors(instance)
+        for error in storage_timestamp_errors(instance):
+            yield ValidationError('storage_utc_z ' + error)
+
+    def is_valid(self, instance):
+        return next(iter(self.iter_errors(instance)), None) is None
+
+
+# ---- CV-1100 / SP-1100 number adoption (sweep part 2B) ---------------------------------------------------------
+# The lane's blanket walk (every number anywhere refused unless RFC 8785 accepted it and an integral value was an int)
+# is gone. Current inputs are checked where their owners declare them: `current_integer` at every schema integer slot
+# with that slot's own bounds, and the CV-317 producer projection and the identity preimage qualified by the shared
+# `qualified_jcs` before any effect. Fractional numbers keep the owner's `number` type; Storage uint64 metadata uses
+# `storage_uint64`; retained originals never pass through a current gate (their recipe is SP-1101's).
+PLANS = Path(__file__).resolve().parents[1] / 'Plans'
+UINT64_MAX = (1 << 64) - 1
+
+
+@lru_cache(maxsize=1)
+def payload_definitions():
+    return json.loads((PLANS / 'orchestrator_event_payloads.schema.json').read_text())['$defs']
+
+
+@lru_cache(maxsize=1)
+def envelope_document():
+    return json.loads((PLANS / 'event_record.schema.json').read_text())
+
+
+def numeric_value(value):
+    """A JSON number as this lane holds one: int, float, an exact Decimal carrier or a raw token. Not a bool."""
+    return type(value) in (int, float, JsonNumber) or isinstance(value, Decimal)
+
+
+def declares_integer(node):
+    kind = node.get('type') if type(node) is dict else None
+    return kind == 'integer' or (type(kind) is list and 'integer' in kind and 'number' not in kind)
+
+
+def integer_bounds(node):
+    minimum, maximum = node.get('minimum'), node.get('maximum')
+    minimum = minimum if type(minimum) is int else None
+    maximum = maximum if type(maximum) is int else None
+    if type(node.get('exclusiveMinimum')) is int:
+        low = node['exclusiveMinimum'] + 1
+        minimum = low if minimum is None else max(minimum, low)
+    if type(node.get('exclusiveMaximum')) is int:
+        high = node['exclusiveMaximum'] - 1
+        maximum = high if maximum is None else min(maximum, high)
+    if type(node.get('const')) is int:
+        minimum = maximum = node['const']
+    return minimum, maximum
+
+
+def integer_slots(node, value, defs, path=()):
+    """Every present JSON number at a schema-declared integer slot: (path, value, minimum, maximum).
+
+    Follows local `$ref`, `allOf`, the first integer branch of `anyOf`/`oneOf` (a nullable integer is
+    `anyOf: [integer, null]`), `properties` and `items`. A non-number at an integer slot is the schema's `type` defect,
+    not a number one, so it is left there.
     """
-    if isinstance(value, dict):
-        return [error for child in value.values() for error in number_domain_errors(child)]
-    if isinstance(value, list):
-        return [error for child in value for error in number_domain_errors(child)]
-    if type(value) in (int, float):
+    if type(node) is not dict:
+        return
+    ref = node.get('$ref')
+    if type(ref) is str and ref.startswith('#/$defs/'):
+        yield from integer_slots(defs.get(ref[len('#/$defs/'):]), value, defs, path)
+    for branch in node.get('allOf') or ():
+        yield from integer_slots(branch, value, defs, path)
+    for keyword in ('anyOf', 'oneOf'):
+        branches = [b for b in node.get(keyword) or () if type(b) is dict]
+        integer_branch = next((b for b in branches if declares_integer(b)), None)
+        if integer_branch is not None and numeric_value(value):
+            yield from integer_slots(integer_branch, value, defs, path)
+        elif type(value) is dict:
+            for branch in branches:
+                if branch.get('type') == 'object' or 'properties' in branch:
+                    yield from integer_slots(branch, value, defs, path)
+    if declares_integer(node) and numeric_value(value):
+        minimum, maximum = integer_bounds(node)
+        yield path, value, minimum, maximum
+    if type(value) is dict:
+        properties = node.get('properties') if type(node.get('properties')) is dict else {}
+        patterns = node.get('patternProperties') if type(node.get('patternProperties')) is dict else {}
+        for key, child in properties.items():
+            if key in value:
+                yield from integer_slots(child, value[key], defs, path + (key,))
+        for key in value:
+            matched = [child for pattern, child in patterns.items() if re.search(pattern, key)]
+            for child in matched:
+                yield from integer_slots(child, value[key], defs, path + (key,))
+            if key not in properties and not matched and type(node.get('additionalProperties')) is dict:
+                yield from integer_slots(node['additionalProperties'], value[key], defs, path + (key,))
+    if type(value) is list and type(node.get('items')) is dict:
+        for index, child in enumerate(value):
+            yield from integer_slots(node['items'], child, defs, path + (index,))
+
+
+def integer_slot_errors(node, value, defs, *, storage=False):
+    """`current_integer` at each integer slot, with the slot's bounds (Storage uint64 slots also cap at 2^64-1)."""
+    errors = []
+    for _path, number, minimum, maximum in integer_slots(node, value, defs):
+        if storage:
+            minimum = 0 if minimum is None else max(minimum, 0)
+            maximum = UINT64_MAX if maximum is None else min(maximum, UINT64_MAX)
         try:
-            rfc8785.dumps(value)
-            if type(value) is float and value.is_integer():
-                return ['number_domain']
-        except (ValueError, OverflowError):
-            return ['number_domain']
+            current_integer(number, minimum=minimum, maximum=maximum)
+        except Refusal as refusal:
+            errors.append(refusal.reason)
+    return errors
+
+
+def payload_number_errors(definition, payload):
+    """A current logical payload: its definition's integer slots, then the producer JCS qualification of the payload."""
+    node = payload_definitions().get(definition) if type(definition) is str else None
+    errors = integer_slot_errors(node, payload, payload_definitions()) if node is not None else []
+    return errors or jcs_errors(payload)
+
+
+def envelope_number_errors(event):
+    """A current EventRecord envelope: its integer slots other than Storage's sequence_id (SP-026/SP-236 uint64, read
+    by `storage_sequence_valid`), then the CV-317 producer projection's qualification (the fields it holds)."""
+    if type(event) is not dict:
+        return []
+    document = envelope_document()
+    properties = {k: v for k, v in document['properties'].items() if k != 'sequence_id'}
+    errors = integer_slot_errors({'properties': properties}, event, document['$defs'])
+    return errors or jcs_errors({k: event[k] for k in SEMANTIC_FIELDS if k in event})
+
+
+def jcs_errors(value):
+    """CV-1100: the shared qualified RFC 8785 serialization refuses a number it cannot encode exactly."""
+    try:
+        qualified_jcs(value)
+    except Refusal as refusal:
+        return [refusal.reason]
+    return []
+
+
+def identity_number_errors(identity, family, payload):
+    """The identity preimage is actual JCS (`qualified_jcs` in the owner's identity recipe): its refusal is a number
+    refusal before any effect, never an exception."""
+    try:
+        identity(family, payload)
+    except Refusal as refusal:
+        return [refusal.reason]
+    except (KeyError, TypeError, AttributeError):
+        return []
     return []
 
 
@@ -117,10 +300,10 @@ def storage_sequence_valid(event):
 def number_rule_for_record(case=None, *, retained=False):
     """Select the write-time rule; a caller's recipe label alone grants nothing.
 
-    Current inputs always use the strict domain. Both supported original
-    editions keep their originally valid number types. The verified adapter
-    binds the edition to this exact original receipt, never to live state.
-    Sweep part 2A: the five recipe clauses are rows of `guards.RECIPE_ROWS`.
+    Current inputs use the current gates (CV-1100 slots and qualification). A retained original's recipe is its
+    sealed custody's, resolved through the SP-1101 `RetainedDispatcher` (sweep part 2B, `recipe_view`); both supported
+    original editions keep their originally valid number types. The RECIPE rows refuse a custody refusal and join
+    the disclosed label and evidence against custody, never against live state.
     """
     if not retained:
         return CURRENT_NUMBER_RULE, []
@@ -129,28 +312,43 @@ def number_rule_for_record(case=None, *, retained=False):
 
 
 def record_number_errors(value, case=None, *, retained=False):
+    """A current EventRecord's number errors (sweep part 2B: slot-directed, see `envelope_number_errors`); a retained
+    original takes its own write-time recipe instead (SP-1101, `number_rule_for_record`)."""
     rule, errors = number_rule_for_record(case, retained=retained)
-    return errors or (list(dict.fromkeys(number_domain_errors(value)))
-                      if rule == CURRENT_NUMBER_RULE else [])
+    if errors or rule != CURRENT_NUMBER_RULE:
+        return errors
+    definition = value.get('event_type', '').replace('.', '_') if type(value) is dict and type(value.get('event_type')) is str else None
+    payload = value.get('payload') if type(value) is dict else None
+    return list(dict.fromkeys(envelope_number_errors(value) or (
+        payload_number_errors(definition, payload) if type(payload) is dict and payload else [])))
 
 
 def number_token_errors(token):
+    """A raw current number token, through the shared parser: `loads_current_json` refuses `-0`, `01`, non-finite
+    and malformed tokens (and an integer token becomes an exact int, any length). A fraction or exponent token
+    (`1.0`, `1e0`) is a valid JSON number; whether it may stand at a slot is that slot's question
+    (`current_integer` at integer slots)."""
     try:
-        value = json.loads(token)
-        if record_number_errors(value) or rfc8785.dumps(value).decode('utf-8') != token:
-            return ['number_token_canonical']
-    except (ValueError, OverflowError):
-        return ['number_token_canonical']
+        loads_current_json(token)
+    except Refusal as refusal:
+        return ['number_token:' + refusal.reason]
     return []
 
 
 def canonical_loads(text):
-    def parse(token):
-        errors = number_token_errors(token)
-        if errors:
-            raise ValueError(errors[0] + ':' + token)
-        return json.loads(token)
-    return json.loads(text, parse_int=parse, parse_float=parse, parse_constant=parse)
+    """A current raw JSON document, parsed by the shared `loads_current_json` (sweep part 2B)."""
+    try:
+        return loads_current_json(text)
+    except Refusal as refusal:
+        raise ValueError('number_token:' + refusal.reason) from refusal
+
+
+def exact_number(token):
+    """A number token as the lane holds it: an integer token as an exact int of any length (never Python's
+    4300-digit `int()` limit), a fraction or exponent token as the float json.loads gives."""
+    if not any(c in token for c in '.eE'):
+        return JsonNumber(token, True).exact()
+    return json.loads(token)
 
 
 def fixture_loads(text):
@@ -158,17 +356,39 @@ def fixture_loads(text):
 
     Retained events, Storage receipts and typed sources are observations, not
     current writer input. No recursive key-name or numeric-rewriting exemption.
+    Sweep part 2B: current tokens go through the shared parser (`number_token_errors`); every integer token becomes
+    an exact int of any length; a duplicate key anywhere refuses, as `loads_current_json` refuses one.
     """
     class Number:
         def __init__(self, token):
             self.token = token
+
+    def unique(pairs):
+        result = {}
+        for key, value in pairs:
+            if key in result:
+                raise ValueError('duplicate_key:' + key)
+            result[key] = value
+        return result
     current = {
         'valid_payloads': {'payload'}, 'event_cases': {'event', 'logical_payload', 'producer_context'},
         'body_cases': {'payload'}, 'board_storage_cases': {'payload', 'envelope'},
         'retry_cases': {'candidate'}, 'retry_transition_cases': {'context'},
     }
-    raw = json.loads(text, parse_int=Number, parse_float=Number, parse_constant=Number)
+    raw = json.loads(text, parse_int=Number, parse_float=Number, parse_constant=Number, object_pairs_hook=unique)
+
+    def scalar(text, path):
+        # The shared parser's `unicode_scalar` refusal (a lone surrogate) at a current input, for strings and keys.
+        if len(path) >= 3 and path[0] in current and path[2] in current[path[0]]:
+            try:
+                text.encode('utf-8')
+            except UnicodeError:
+                raise ValueError('number_token:unicode_scalar') from None
+        return text
+
     def decode(value, path=()):
+        if isinstance(value, str):
+            return scalar(value, path)
         if isinstance(value, Number):
             is_current = (len(path) >= 3 and path[0] in current and path[2] in current[path[0]])
             storage_sequence = (len(path) == 4 and path[3] == 'sequence_id'
@@ -177,10 +397,10 @@ def fixture_loads(text):
                 # Field-owner dispatch; never round-trip Storage uint64 through JCS.
                 storage_uint64(JsonNumber(value.token, not any(c in value.token for c in '.eE')))
             elif is_current and number_token_errors(value.token):
-                raise ValueError('number_token_canonical:' + value.token)
-            return json.loads(value.token)
+                raise ValueError(number_token_errors(value.token)[0] + ':' + value.token)
+            return exact_number(value.token)
         if isinstance(value, dict):
-            return {key: decode(child, path + (key,)) for key, child in value.items()}
+            return {scalar(key, path + (key,)): decode(child, path + (key,)) for key, child in value.items()}
         if isinstance(value, list):
             return [decode(child, path + (index,)) for index, child in enumerate(value)]
         return value
@@ -217,18 +437,31 @@ def stage_witness_value(case, name):
 
 
 def packed(value):
-    """Complete canonical MessagePack payload bytes, including every member/list."""
-    def ordered(v):
-        if isinstance(v, dict):
-            return {k: ordered(v[k]) for k in sorted(v, key=lambda k: k.encode('utf-8'))}
-        if isinstance(v, list):
-            return [ordered(x) for x in v]
-        return v
-    return msgpack.packb(ordered(value), use_bin_type=True)
+    """SP-236 / SP-1100 (sweep part 2B): the EventRecord value bytes, the shared `storage_value_bytes` with the
+    EVENT_VALUE profile (canonical MessagePack: UTF-8 key order, minimal integers, a float as float32 when that is
+    exact and float64 otherwise). It replaces the lane's msgpack call, which wrote every float as float64. Used for
+    event values, their inline payloads and SP-337 `application/msgpack` payload bytes. An unencodable value refuses
+    (`Refusal`, a ValueError)."""
+    return storage_value_bytes(value, profile=EVENT_VALUE)
+
+
+def app_packed(value):
+    """CV-366 / SP-1100: an application physical wrapper's bytes (`pm.application.physical_messagepack.v1`, the shared
+    APP_PHYSICAL profile: every float as float64)."""
+    return storage_value_bytes(value, profile=APP_PHYSICAL)
 
 
 def semantic_digest(event):
-    return hashlib.sha256(rfc8785.dumps({k: event[k] for k in SEMANTIC_FIELDS})).hexdigest()
+    """CV-317 producer semantic digest through the shared `producer_semantic_digest` (CV-1100 qualified RFC 8785).
+
+    A missing field is a KeyError, as before. A projection the shared serializer cannot encode exactly has no digest
+    (None): every reader compares it with a recorded or recomputed string, so it refuses there, never as an exception.
+    """
+    projection = {k: event[k] for k in SEMANTIC_FIELDS}
+    try:
+        return producer_semantic_digest(projection)
+    except Refusal:
+        return None
 
 
 def partition(payload):
@@ -414,6 +647,10 @@ def selected_validators(root, format_checker):
             raise ValueError(errors)
         uri = documents[name]['$id'] + (pointer or '')
         result[key] = StrictValidator({'$ref': uri}, registry=registry, format_checker=format_checker)
+    result['event'] = StorageRecordValidator(result['event'])
+    checkpoint_defs = documents['event_record_index_checkpoint']['$defs']
+    for key in ('checkpoint', 'read_token'):
+        result[key] = StorageIntegerValidator(result[key], checkpoint_defs[key], checkpoint_defs)
     return result
 
 
@@ -432,7 +669,7 @@ def event_errors(case, schema, identity, retry_allowed, root, formats, *, histor
     if historical:
         numeric_errors = number_rule_for_record(case, retained=True)[1]
     else:
-        numeric_errors = run_rows(guards.APPEND_NUMBER_ROWS, append_number_view(case))
+        numeric_errors = run_rows(guards.APPEND_NUMBER_ROWS, append_number_view(case, identity))
     if numeric_errors:
         return numeric_errors
     view = append_reference_view(case, schema, root)
@@ -525,7 +762,8 @@ def successor_errors(root):
 @lru_cache(maxsize=1)
 def retry_schemas():
     plans = Path(__file__).resolve().parents[1] / 'Plans'
-    event = StrictValidator(json.loads((plans / 'event_record.schema.json').read_text()), format_checker=UTC_FORMAT)
+    event = StorageRecordValidator(StrictValidator(json.loads((plans / 'event_record.schema.json').read_text()),
+                                                   format_checker=UTC_FORMAT))
     payloads = json.loads((plans / 'orchestrator_event_payloads.schema.json').read_text())
     return event, {name: StrictValidator(value, format_checker=UTC_FORMAT) for name, value in payloads['$defs'].items()}
 
@@ -657,13 +895,174 @@ def typed_text(value):
     return json.dumps(typed_tree(value), ensure_ascii=False, separators=(',', ':'))
 
 
+# ---- SP-1101 retained-original dispatch (sweep part 2B, DO-C8-N4) ----------------------------------------------
+# A retained original's identity recipe is selected by its sealed custody, never by the case: the reader asks the
+# composition-installed `RetainedDispatcher` for the original at its seglog ref. The owner (`DOOriginalOwner`) returns
+# custody only for bytes Storage sealed at that ref, with the recipe tuple recorded when they were written; the frozen
+# verifier for that tuple recomputes the event's identity, payload join and source commitment from the bytes. The
+# case's own label (`original_identity_recipe`) and evidence are disclosed copies, joined against custody by the
+# RECIPE rows; a label or a `verified` flag grants nothing. Current disclosure stays with the disclosure rows.
+#
+# The static stand-in for Storage's sealed custody is `ORIGINAL_CUSTODY`: `install_original_custody` seals the
+# committed positive originals at composition (event, retained and compatibility cases) and the lane's writer
+# builders seal what they write (`seal_original`). The case under check never adds to it. Native custody NOT_RUN.
+ORIGINAL_CUSTODY = {}
+RECIPE_PRODUCER = 'cv317-producer-semantic-qualified-rfc8785-v1'
+RECIPE_FULL_VALUE = 'pm.storage.original_event_value_commitment.v1'
+RECIPE_LOCAL_SOURCE = 'do-original-source-sha256-of-event-value-bytes-v1'
+RECIPE_PAYLOAD = 'sp337-application-msgpack-event-value-v1'
+ENVELOPE_EDITIONS = (('pm.event.v0', '2.0.0'), ('pm.event.v0', '1.0.0'))
+
+
+@lru_cache(maxsize=1)
+def recipe_resource_manifest():
+    """SHA-256 of the frozen resources a DO recipe tuple names: the EventRecord and DO payload schema documents."""
+    digests = [hashlib.sha256((PLANS / name).read_bytes()).hexdigest()
+               for name in ('event_record.schema.json', 'orchestrator_event_payloads.schema.json')]
+    return hashlib.sha256(json.dumps(digests, separators=(',', ':')).encode('ascii')).hexdigest()
+
+
+def recipe_tuple(event, identity_recipe):
+    """The write-time recipe tuple of a DO original (the event's own editions and the identity recipe)."""
+    payload_schema_id, _, payload_schema_version = str(event.get('payload_schema_id')).partition('@')
+    return RecipeTuple(
+        envelope_schema_id=str(event.get('schema_id')), envelope_schema_version=str(event.get('schema_version')),
+        payload_schema_id=payload_schema_id or 'missing', payload_schema_version=payload_schema_version or 'missing',
+        owner_source_id='Plans/orchestrator-subagent-integration.md#' + str(event.get('event_type')),
+        owner_edition='1.0.0', registry_revision='prepared_without_admission', identity_recipe=identity_recipe,
+        producer_recipe=RECIPE_PRODUCER, physical_profile=EVENT_VALUE, full_value_profile=RECIPE_FULL_VALUE,
+        local_source_profile=RECIPE_LOCAL_SOURCE, payload_profile=RECIPE_PAYLOAD,
+        resource_manifest_sha256=recipe_resource_manifest())
+
+
+def original_binding(case):
+    """The binding the reader expects, from the case it was asked about."""
+    event, payload = case['event'], case['logical_payload']
+    return OriginalBinding(
+        storage_instance_id=payload['storage_instance_id'], scope_kind=event['scope_kind'], server_id=payload['server_id'],
+        project_id=event['project_id'], event_type=event['event_type'], event_id=event['event_id'],
+        idempotency_key=event['idempotency_key'], owner_operation_id=payload['operation_id'],
+        source_commitment=hashlib.sha256(packed(event)).hexdigest())
+
+
+class DOOriginalOwner:
+    """Storage's custody at one seglog ref (static stand-in): it authenticates the bytes the reader fetched there
+    against what was sealed at write time, and returns them with the sealed recipe tuple."""
+
+    def __init__(self, record_bytes, result_bytes):
+        self.record_bytes, self.result_bytes = record_bytes, result_bytes
+
+    def authenticated_original(self, original_ref):
+        sealed = ORIGINAL_CUSTODY.get(original_ref)
+        if not sealed:
+            raise Refusal('original_query')
+        entry = sealed.get(hashlib.sha256(self.record_bytes).hexdigest())
+        if entry is None:
+            raise Refusal('original_authority')
+        return OriginalCustody(entry['binding'], entry['recipe'], self.record_bytes, self.result_bytes, self.record_bytes)
+
+
+def frozen_verifier(identity_recipe, historical_identity):
+    """The frozen verifier of one DO identity recipe: recompute the original's identity, payload join and source
+    commitment from its sealed bytes (no current writer gate, no live state)."""
+    def verify(custody):
+        event = decode_storage_value(custody.record_bytes, profile=EVENT_VALUE)
+        payload = decode_storage_value(custody.result_bytes, profile=EVENT_VALUE)
+        binding = custody.binding
+        if type(event) is not dict or type(payload) is not dict:
+            return False
+        if event.get('payload') != payload and not (event.get('payload_ref') is not None and event.get('payload') == {}):
+            return False
+        try:
+            key, event_id = historical_identity(event['event_type'], payload, identity_recipe)
+        except (Refusal, ValueError, KeyError, TypeError):
+            return False
+        return (key == event['idempotency_key'] == binding.idempotency_key and event_id == event['event_id'] == binding.event_id
+                and hashlib.sha256(custody.record_bytes).hexdigest() == binding.source_commitment
+                and custody.recipe == recipe_tuple(event, identity_recipe))
+    return FrozenRecipe(verify)
+
+
+RECIPE_VERIFIERS = {}
+
+
+def install_recipe_verifiers(owner_module):
+    """Composition: the frozen recipe map, one FrozenRecipe per (family, envelope edition, identity recipe)."""
+    if RECIPE_VERIFIERS:
+        return
+    for event_type, definition in family_definitions().items():
+        for schema_id, schema_version in ENVELOPE_EDITIONS:
+            probe = {'schema_id': schema_id, 'schema_version': schema_version, 'event_type': event_type,
+                     'payload_schema_id': member_payload_schema_id(definition, '1.0.0')}
+            for identity_recipe in (LEGACY_RECIPE, CURRENT_RECIPE):
+                RECIPE_VERIFIERS[recipe_tuple(probe, identity_recipe)] = frozen_verifier(
+                    identity_recipe, owner_module.historical_identity)
+
+
+@lru_cache(maxsize=1)
+def family_definitions():
+    """event_type -> payload definition, from the committed contracts list of the fixture file."""
+    contracts = json.loads((PLANS / 'orchestrator_event_contract_fixtures.json').read_text())['contracts']
+    return {c['event_type']: c['definition'] for c in contracts}
+
+
+def seal_original(case, identity_recipe=None):
+    """The writer's side (static stand-in): Storage seals an original's bytes at its seglog ref with its write-time
+    recipe. Only the lane's own writer builders and composition call this, never a reader."""
+    event = case['event']
+    recipe = identity_recipe or case['historical_reader_state']['original_identity_recipe']
+    binding = original_binding(case)
+    ORIGINAL_CUSTODY.setdefault('seglog:' + event['event_id'], {})[binding.source_commitment] = {
+        'binding': binding, 'recipe': recipe_tuple(event, recipe)}
+    return case
+
+
+def sealed_original_entry(case, identity_recipe):
+    """The custody record the writer keeps for one original (the `sealed_originals` fixture rows): its seglog ref,
+    binding, recipe editions and write-time recipe. Written by the writer, read only at composition."""
+    event, binding = case['event'], original_binding(case)
+    return {'original_ref': 'seglog:' + event['event_id'], 'identity_recipe': identity_recipe,
+            'binding': {name: getattr(binding, name) for name in OriginalBinding.__dataclass_fields__},
+            'editions': {key: event[key] for key in ('schema_id', 'schema_version', 'event_type', 'payload_schema_id')}}
+
+
+def install_original_custody(fixtures, owner_module):
+    """Composition: seal the committed positive originals, and the writer-built originals that appear only inside
+    negative cases (`sealed_originals`), and install the frozen recipe map."""
+    install_recipe_verifiers(owner_module)
+    for key in ('event_cases', 'retained_event_cases', 'compatibility_event_cases'):
+        for case in fixtures[key]:
+            seal_original(case)
+    for entry in fixtures.get('sealed_originals', ()):
+        binding = OriginalBinding(**entry['binding'])
+        ORIGINAL_CUSTODY.setdefault(entry['original_ref'], {})[binding.source_commitment] = {
+            'binding': binding, 'recipe': recipe_tuple(entry['editions'], entry['identity_recipe'])}
+
+
+def resolve_original(case):
+    """The SP-1101 resolution: (custody, None) or (None, refusal reason). Never raises."""
+    try:
+        event = case['event']
+        record_bytes, result_bytes = packed(event), packed(case['logical_payload'])
+        dispatcher = RetainedDispatcher(DOOriginalOwner(record_bytes, result_bytes), RECIPE_VERIFIERS)
+        custody = dispatcher.resolve(case['historical_reader_state']['original_source_ref'], original_binding(case),
+                                     disclose=lambda binding: True)
+        return custody, None
+    except Refusal as refusal:
+        return None, refusal.reason
+    except (KeyError, TypeError, AttributeError, ValueError):
+        return None, 'original_query'
+
+
 def recipe_view(case):
     state = case['historical_reader_state']
-    recipe = state['original_identity_recipe']
-    expected = recipe_witness_value(case, recipe)
-    return {'recipe': recipe, 'recipe_evidence': state['original_recipe_evidence'], 'recipe_expected_value': expected,
+    custody, refusal = resolve_original(case)
+    recipe = custody.recipe.identity_recipe if custody is not None else None
+    expected = recipe_witness_value(case, recipe) if custody is not None else None
+    return {'custody_refusal': refusal, 'recipe': recipe, 'disclosed_recipe': state['original_identity_recipe'],
+            'recipe_evidence': state['original_recipe_evidence'], 'recipe_expected_value': expected,
             'recipe_expected_source_ref': 'writer-recipe:' + case['event']['event_id'],
-            'recipe_expected_source_sha256': hashlib.sha256(packed(expected)).hexdigest()}
+            'recipe_expected_source_sha256': hashlib.sha256(packed(expected)).hexdigest() if expected is not None else None}
 
 
 def checkpoint_schema_view(case, root, formats):
@@ -685,6 +1084,15 @@ def checkpoint_current_view(case):
             'generation_states': {key: node['state'] for key, node in cp['generations'].items()}}
 
 
+def binding_or_none(value):
+    """An SP-278 binding digest, or None when the value holds what the uint-only codec cannot encode (an integral float
+    copy, DO-P1F4-S1): the copy's own row and its record's schema verdict refuse it, and no view raises."""
+    try:
+        return binding_digest(value)
+    except (TypeError, ValueError, OverflowError):
+        return None
+
+
 def checkpoint_join_view(case, root, formats):
     read, event = case['read'], case['event']
     cp, token, row = read['checkpoint'], read['read_token'], read['row']
@@ -695,8 +1103,8 @@ def checkpoint_join_view(case, root, formats):
     key = 'event_record_index_checkpoint.v1:' + storage_id
     expected = {'storage_instance_id': storage_id, 'checkpoint_key': key,
         'checkpoint_ref': key + '#/generations/' + generation_id, 'generation_id': generation_id,
-        'generation_anchor_sha256': binding_digest(node['anchor']),
-        'frontier_revision': frontier['publication_revision'], 'frontier_sha256': binding_digest(frontier),
+        'generation_anchor_sha256': binding_or_none(node['anchor']),
+        'frontier_revision': frontier['publication_revision'], 'frontier_sha256': binding_or_none(frontier),
         'index_dataset_name': 'event_record_index.v2@' + generation_id,
         'source_selection': frontier['source_selection'], 'redb_snapshot_id': read['snapshot_id']}
     typed_token_selection = typed_text(token['source_selection'])
@@ -705,10 +1113,10 @@ def checkpoint_join_view(case, root, formats):
     expected_row = expected_row_copies(case)
     row_key = f"event_record_index.v2:{case['scope_partition']}:{event['sequence_id']:020}:{event['event_id']}"
     source_value_sha256 = hashlib.sha256(packed(event)).hexdigest()
-    row_schema_valid = not list(StrictValidator(index_row_schema(root), format_checker=formats).iter_errors(row))
-    expected_set = binding_digest({'domain': 'pm.event_index.row_set.v1', 'entries': [{'key': read['row_key'], 'value': row}]})
+    row_schema_valid = not list(index_row_validator(root, formats).iter_errors(row))
+    expected_set = binding_or_none({'domain': 'pm.event_index.row_set.v1', 'entries': [{'key': read['row_key'], 'value': row}]})
     # The prefix is recomputed from the event's own bytes, not from the read's copy of their hash.
-    expected_prefix = binding_digest({'domain': 'pm.event_index.retained_prefix.v1', 'entries': [{
+    expected_prefix = binding_or_none({'domain': 'pm.event_index.retained_prefix.v1', 'entries': [{
         'sequence_id': event['sequence_id'], 'event_id': event['event_id'],
         'scope_partition': case['scope_partition'], 'source_value_sha256': source_value_sha256}]})
     return {'expected_read_token': expected, 'typed_read_token_source_selection': typed_token_selection,
@@ -745,7 +1153,7 @@ def generation_view(storage_instance_id, generations):
                                         'origin': node['origin'], 'translation': node['translation']}
                                   for key, node in generations.items()},
             'generation_recipe_ids': {key: generation_identity(storage_instance_id, node) for key, node in generations.items()},
-            'generation_birth_selection_sha256': {key: binding_digest(node['anchor']['source_selection'])
+            'generation_birth_selection_sha256': {key: binding_or_none(node['anchor']['source_selection'])
                                                   for key, node in generations.items()}}
 
 
@@ -787,10 +1195,16 @@ def pack_view(entry):
         return {'expected_entry': None, 'pack_encoding_failed': True}
 
 
-def append_number_view(case):
+def append_number_view(case, identity=None):
+    """Sweep part 2B (CV-1100): the current append's number refusals, from the shared calls at the slots their owners
+    declare: the envelope's integer slots and producer-projection qualification (`envelope_number_errors`), the
+    logical payload's definition slots and qualification (`payload_number_errors`) and the identity preimage's
+    qualification. The producer context is the owner's transition facts, whose types the context rows refuse."""
     event = case['event']
-    return {'number_domain_errors': list(dict.fromkeys(number_domain_errors([
-        {k: value for k, value in event.items() if k in SEMANTIC_FIELDS}, case['logical_payload'], case['producer_context']])))}
+    errors = envelope_number_errors(event) or payload_number_errors(case['definition'], case['logical_payload'])
+    if not errors and identity is not None:
+        errors = identity_number_errors(identity, case['event_type'], case['logical_payload'])
+    return {'number_domain_errors': list(dict.fromkeys(errors))}
 
 
 def append_reference_view(case, schema, root):
@@ -824,7 +1238,7 @@ def append_join_view(case, identity):
 def append_full_view(case, schema, identity, retry_allowed, root, formats, historical=False):
     """Every append view key the case can give, for the guard matrix and the guard tool (stops where the checker
     stops: a number-domain or reference refusal, or a payload the closed schema refuses)."""
-    view = {} if historical else append_number_view(case)
+    view = {} if historical else append_number_view(case, identity)
     for build in (lambda: append_reference_view(case, schema, root),
                   lambda: append_shape_view(case, schema, root, formats, historical),
                   lambda: append_join_view(case, identity)):
@@ -991,7 +1405,7 @@ def board_application_view(case):
     # Reached only after the three application shape rows passed.
     return {'payload': payload, 'source': source, 'message': message, 'wrapper': wrapper, 'event_type': case['event_type'],
             'board_branch': 'application', 'application_shape_valid': True, 'project_input_valid': False,
-            'wrapper_packed_size': len(packed(wrapper)),
+            'wrapper_packed_size': len(app_packed(wrapper)),
             'source_scope_failures': scope_failures(source), 'wrapper_scope_failures': scope_failures(wrapper),
             'typed_wrapper_record': typed_text(wrapper['record']), 'typed_message': typed_text(message),
             'expected_input_digest': semantic_hash('accepted_source', message),
@@ -1001,7 +1415,7 @@ def board_application_view(case):
             'witness': witness, 'typed_witness_value': typed_text(witness.get('value')),
             'expected_accepted_sha256': semantic_hash('accepted_source', witness.get('value')),
             'physical_record_sha256': case.get('physical_record_sha256'),
-            'expected_physical_sha256': hashlib.sha256(packed(wrapper)).hexdigest(),
+            'expected_physical_sha256': hashlib.sha256(app_packed(wrapper)).hexdigest(),
             'stage_witnesses': witnesses, 'stage_expected': stage_expected,
             'payload_message_ids': payload.get('message_ids', [payload.get('message_id')]),
             'wrapper_key': case['wrapper_key'],
@@ -1063,7 +1477,10 @@ def payload_digest(event):
     payloads) and the readiness projector's (`hashlib.sha256(jcs_bytes(payload))`). Number spellings inside the
     payload follow the shared number rule (part 2, DO-C8-N2), not a lane-local serializer.
     """
-    return hashlib.sha256(rfc8785.dumps(event.get('payload'))).hexdigest()
+    try:
+        return hashlib.sha256(qualified_jcs(event.get('payload'))).hexdigest()
+    except Refusal:
+        return None
 
 
 def row_source_schema(event):
@@ -1345,15 +1762,13 @@ def coverage_copy_checks(fixtures, schema, owner_module):
                     frontier = bad['read']['checkpoint']['generations'][bad['read']['checkpoint']['current_generation_id']]['frontier']
                     bad['read']['read_token']['frontier_sha256'] = binding_digest(frontier)
                 except TypeError:
-                    # The checkpoint schema's integer type admits 1344.0, but SP-278's binding codec takes no
-                    # float, so checkpoint_errors cannot digest the frontier and refuses by raising.
+                    # DO-P1F4-S1 (sweep part 2B): SP-278's binding codec takes no float, so the builder cannot digest
+                    # the frontier; the reader refuses the copy with a code at the checkpoint schema boundary (the
+                    # shared uint64 slot gate), never by raising.
                     assert form == 'float', (case['case_id'], field, form)
-                    try:
-                        checkpoint_errors(bad, root, formats)
-                    except TypeError:
-                        checks += 1
-                        continue
-                    raise AssertionError(('float_copy_digested', case['case_id'], field))
+                    assert checkpoint_errors(bad, root, formats) == ['checkpoint_schema'], (case['case_id'], field)
+                    checks += 1
+                    continue
                 assert checkpoint_errors(bad, root, formats) == ['checkpoint_schema'], (case['case_id'], field, form)
                 checks += 1
     return checks
@@ -1516,7 +1931,7 @@ def sequence_copy_checks(fixtures, schema, owner_module):
     for case in fixtures['event_cases']:
         moved = copy.deepcopy(case)
         moved['event']['sequence_id'] += 1
-        recapture_history(moved)
+        seal_original(recapture_history(moved))  # the writer's resequenced original, sealed as written
         assert checkpoint_errors(moved, root, formats) == [], (case['case_id'], 'resequenced')
         assert historical_read_errors(moved, schema, owner_module) == [], (case['case_id'], 'resequenced')
         assert recover_original(moved, schema, owner_module)['status'] == 'original_result', case['case_id']
@@ -1536,13 +1951,12 @@ def sequence_copy_checks(fixtures, schema, owner_module):
                 try:
                     redigest(bad)
                 except TypeError:
+                    # DO-P1F4-S1 (sweep part 2B): refused with a code at the record's schema boundary, never raised.
                     assert form == 'float', (case['case_id'], field, form)
-                    try:
-                        checkpoint_errors(bad, root, formats)
-                    except TypeError:
-                        checks += 1
-                        continue
-                    raise AssertionError(('float_copy_digested', case['case_id'], field))
+                    errors = checkpoint_errors(bad, root, formats)
+                    assert errors and set(errors) & {'checkpoint_schema', 'index_row_schema'}, (case['case_id'], field, errors)
+                    checks += 1
+                    continue
                 expected = [code] if form in admitted else ['checkpoint_schema']
                 assert checkpoint_errors(bad, root, formats) == expected, (case['case_id'], field, form)
                 assert historical_read_errors(bad, schema, owner_module) == expected, (case['case_id'], field, form)
@@ -2007,7 +2421,7 @@ def p1f06_type_form_checks(fixtures, schema, owner_module):
     guard's own code, and an integral float makes the binding codec raise (DO-P1F4-S1, part 2)."""
     root, formats = owner_module.ROOT, owner_module.UTC_FORMAT
     v = selected_validators(root, formats)
-    row_validator = StrictValidator(index_row_schema(root), format_checker=formats)
+    row_validator = index_row_validator(root, formats)
     checks = 0
     for case in fixtures['event_cases']:
         for code, path, forms in P1F06_TYPE_FORMS:
@@ -2018,13 +2432,12 @@ def p1f06_type_form_checks(fixtures, schema, owner_module):
                 try:
                     redigest(bad)
                 except (TypeError, ValueError):
+                    # DO-P1F4-S1 (sweep part 2B): refused with a code at the record's schema boundary, never raised.
                     assert form == 'float', (case['case_id'], path, form)
-                    try:
-                        checkpoint_errors(bad, root, formats)
-                    except TypeError:
-                        checks += 1
-                        continue
-                    raise AssertionError(('float_copy_digested', case['case_id'], path))
+                    errors = checkpoint_errors(bad, root, formats)
+                    assert errors and set(errors) & {'checkpoint_schema', 'index_row_schema'}, (case['case_id'], path, errors)
+                    checks += 1
+                    continue
                 read = bad['read']
                 if list(v['checkpoint'].iter_errors(read['checkpoint'])) or list(v['read_token'].iter_errors(read['read_token'])):
                     expected = ['checkpoint_schema']
@@ -2044,7 +2457,7 @@ def migrated_row_control(case):
     control = copy.deepcopy(case)
     control['event']['migration'] = {'migrated_from_schema_id': 'pm.event.envelope_v1', 'migrated_from_schema_version': None,
         'migration_id': 'event-envelope-v1-to-event-record-v2@1', 'compatibility_event_type': control['event']['event_type']}
-    return recapture_history(control)
+    return seal_original(recapture_history(control))  # the writer's migrated original, sealed as written
 
 
 def identity_copy_checks(fixtures, schema, owner_module):
@@ -2332,6 +2745,14 @@ def index_row_schema(root):
     return next(row['value_schema'] for row in registry['families'] if row['family_id'] == 'event_record_index')
 
 
+@lru_cache(maxsize=4)
+def index_row_validator(root, formats):
+    """The event_record_index row validator, with CV-253's Storage profile at its persisted_at_utc (sweep part 2B)."""
+    schema = index_row_schema(root)
+    return StorageRecordValidator(StorageIntegerValidator(StrictValidator(schema, format_checker=formats), schema,
+                                                          schema.get('$defs', {})))
+
+
 def failure_oracle_errors(test):
     return [] if type(test.get('expected_exit_code')) is int and test['expected_exit_code'] == 1 else ['failure_oracle_success_code']
 
@@ -2363,7 +2784,7 @@ def custody_case(base, test):
             value = float(original) if type(original) is int else int(original)
         target[test['path'][-1]] = value
     if test.get('sync_physical_record'):
-        case['physical_record_sha256'] = hashlib.sha256(packed(case['wrapper'])).hexdigest()
+        case['physical_record_sha256'] = hashlib.sha256(app_packed(case['wrapper'])).hexdigest()
     if test.get('sync_stage_witnesses'):
         refresh_stage_witnesses(case)
     else:
@@ -2381,7 +2802,7 @@ def numeric_board_original_case(base):
     source['original_input_semantic_sha256'] = semantic_hash('accepted_source', source['original_input'])
     source['accepted_source_sha256'] = source['original_input_semantic_sha256']
     case['accepted_source_witness']['value'] = copy.deepcopy(source['original_input'])
-    case['physical_record_sha256'] = hashlib.sha256(packed(case['wrapper'])).hexdigest()
+    case['physical_record_sha256'] = hashlib.sha256(app_packed(case['wrapper'])).hexdigest()
     refresh_stage_witnesses(case)
     return case
 
@@ -2552,7 +2973,7 @@ def numeric_history_case(base, token, owner_module=None, recipe=CURRENT_RECIPE):
         event['idempotency_key'], event['event_id'] = owner_module.historical_identity(
             case['event_type'], case['logical_payload'], recipe)
     case['historical_reader_state']['original_identity_recipe'] = recipe
-    return recapture_history(case)
+    return seal_original(recapture_history(case), recipe)
 
 
 def check_oracles(fixtures, schema, owner_module):
@@ -2640,12 +3061,16 @@ def check_oracles(fixtures, schema, owner_module):
     for test in fixtures['number_cases']:
         base = by_id[test['case_id']]
         token = test['token']
+        # Sweep part 2B (CV-1100): the shared parser refuses `-0` and `01`; `1.0` and `1e0` are JSON numbers, which
+        # the occurrence integer slot refuses (`current_integer`, integer_type). Either way the token never lands.
         try:
-            canonical_loads('{"occurrence":' + token + '}')
+            document = canonical_loads('{"occurrence":' + token + '}')
         except ValueError:
-            pass
+            assert token in ('-0', '01'), ('parser_refused_valid_number', test['name'])
         else:
-            raise AssertionError(('accepted_noncanonical_number', test['name']))
+            assert token in ('1.0', '1e0'), ('accepted_noncanonical_number', test['name'])
+            assert integer_slot_errors(payload_definitions()[base['definition']], document, payload_definitions()) == [
+                'integer_type'], ('slot_accepted_number', test['name'])
         checks += 1
         if token in ('1.0', '1e0'):
             bad = copy.deepcopy(base)
@@ -2897,4 +3322,317 @@ def check_oracles(fixtures, schema, owner_module):
     checks += coverage_copy_checks(fixtures, schema, owner_module)
     checks += sequence_copy_checks(fixtures, schema, owner_module)
     checks += identity_copy_checks(fixtures, schema, owner_module)
+    return checks
+
+
+# ---- Sweep part 2B witnesses (CV-1101 date-time profiles, CV-1100 numbers, SP-1101 dispatch) --------------------
+
+# The inventory's Storage nodes among the resources this lane validates (see `storage_timestamp_errors`).
+DO_VALIDATED_RESOURCES = (
+    'Plans/event_record.schema.json', 'Plans/event_record_index_checkpoint.schema.json',
+    'Plans/orchestrator_event_payloads.schema.json', 'Plans/orchestrator_historical_read.schema.json',
+    'Plans/application_board_message_v2.schema.json', 'Plans/application_workflow_contracts.schema.json',
+    'Plans/application_workflow_sources.schema.json', 'Plans/shared_integration_runtime.schema.json',
+    'Plans/coordination_projection_contracts.schema.json')
+DO_STORAGE_SITES = {
+    ('Plans/event_record.schema.json', ''), ('Plans/event_record.schema.json', '/$defs/event_record_1_0_0_compatibility_reader'),
+    ('Plans/storage_value_registry.json', '/families/8/value_schema')}
+STORAGE_CLASSES = ('EventRecord', 'event_record_index', 'original_storage_fields', 'Storage issued original fields')
+
+
+def storage_profile_sites_errors(root):
+    """The Storage sites this lane wraps are exactly the inventory's Storage nodes among its validated resources (the
+    inventory is read as data; its whole-tree gate is `pm_event_datetime_inventory.py`)."""
+    inventory = json.loads((root / 'Plans/event_datetime_inventory.json').read_text())
+    sites = {(row['path'], row['pointer']) for row in inventory['nodes'] if row['classification'] in STORAGE_CLASSES
+             and (row['path'] in DO_VALIDATED_RESOURCES or (row['path'], row['pointer']) in DO_STORAGE_SITES)}
+    registry = json.loads((root / 'Plans/storage_value_registry.json').read_text())
+    errors = [] if sites == DO_STORAGE_SITES else ['storage_sites:' + json.dumps(sorted(sites ^ DO_STORAGE_SITES))]
+    if registry['families'][8]['family_id'] != 'event_record_index':
+        errors.append('storage_sites:families/8 is not event_record_index')
+    return errors
+
+
+PAYLOAD_TIME_ACCEPTED = (
+    '2026-11-04t00:00:00z', '2026-11-04T05:30:00+05:30', '2026-11-03T19:00:00-05:00', '2016-12-31T23:59:60Z',
+    '2017-01-01T05:29:60+05:30', '2026-11-04T00:00:00.000000000000000000001Z', '0000-01-01T00:00:00Z')
+PAYLOAD_TIME_REFUSED = (
+    '2026-11-04T24:00:00Z', '2026-11-04T00:00:00Z\n', '2026-11-04T00:00:60Z', '2026-11-04T00:00:00,5Z',
+    '2026-11-04T00:00:00+24:00', '2026-11-04T00:00:00+05:60', '2026-11-04T00:00:00', '2026-02-29T00:00:00Z',
+    '2016-12-31T23:59:60+01:00', ' 2026-11-04T00:00:00Z', '2026-11-04T00:00:00.Z')
+STORAGE_TIME_ACCEPTED = ('2026-11-04T00:00:00Z', '2016-12-31T23:59:60Z', '2026-11-04t00:00:00.123456789012Z')
+STORAGE_TIME_REFUSED = ('2026-11-04T00:00:00+00:00', '2026-11-04T00:00:00-00:00', '2026-11-04T00:00:00z',
+                        '2026-11-04T05:30:00+05:30', '2026-11-04T24:00:00Z', '2026-11-04T00:00:00Z\n')
+
+
+class StrSubclass(str):
+    pass
+
+
+def datetime_profile_checks(fixtures, schema, owner_module):
+    """CV-1101 / CV-253 witnesses, each one change from a valid case."""
+    root, formats = owner_module.ROOT, owner_module.UTC_FORMAT
+    checks = 0
+    assert not storage_profile_sites_errors(root), storage_profile_sites_errors(root)
+    checks += 1
+    v = selected_validators(root, formats)
+    payload_fields = {(c['definition'], field) for c in fixtures['event_cases']
+                      for field, node in schema['$defs'][c['definition']]['properties'].items() if node.get('format') == 'date-time'}
+    assert {f for _, f in payload_fields} == {'occurred_at_utc', 'read_at_utc', 'archived_before_utc'}, payload_fields
+    for case in fixtures['event_cases']:
+        validator = StrictValidator(schema['$defs'][case['definition']], format_checker=formats)
+        for field in [f for d, f in payload_fields if d == case['definition']]:
+            for value, valid in [(x, True) for x in PAYLOAD_TIME_ACCEPTED] + [(x, False) for x in PAYLOAD_TIME_REFUSED]:
+                payload = dict(case['logical_payload'], **{field: value})
+                assert validator.is_valid(payload) is valid, (case['case_id'], field, value)
+                event = dict(case['event'], payload=payload) if case['event']['payload_ref'] is None else case['event']
+                if case['event']['payload_ref'] is None:
+                    assert retry_shape_valid(event) is valid, (case['case_id'], field, value)
+                checks += 2
+            payload = dict(case['logical_payload'], **{field: StrSubclass(case['logical_payload'][field])})
+            assert not validator.is_valid(payload), (case['case_id'], field, 'str subclass')
+            checks += 1
+        # The envelope's source time takes the broad profile; with the payload's copy equal, the append is valid.
+        moved = copy.deepcopy(case)
+        moved['logical_payload']['occurred_at_utc'] = moved['event']['occurred_at_utc'] = '2026-11-04T05:30:00+05:30'
+        if moved['event']['payload_ref'] is None:
+            moved['event']['payload'] = copy.deepcopy(moved['logical_payload'])
+            assert event_errors(moved, schema, owner_module.identity, owner_module.retry_allowed, root, formats) == [], case['case_id']
+            checks += 1
+        # Storage-assigned fields take storage_utc_z, on the envelope and the index row.
+        for field in STORAGE_TIMESTAMP_FIELDS:
+            for value, valid in [(x, True) for x in STORAGE_TIME_ACCEPTED] + [(x, False) for x in STORAGE_TIME_REFUSED]:
+                bad = copy.deepcopy(case); bad['event'][field] = value
+                assert v['event'].is_valid(bad['event']) is valid, (case['case_id'], field, value)
+                assert event_errors(bad, schema, owner_module.identity, owner_module.retry_allowed, root, formats) == (
+                    [] if valid else ['event_schema']), (case['case_id'], field, value)
+                assert retry_shape_valid(bad['event']) is valid, (case['case_id'], field, value)
+                checks += 3
+        row = case['read']['row']
+        for value, valid in [(x, True) for x in STORAGE_TIME_ACCEPTED] + [(x, False) for x in STORAGE_TIME_REFUSED]:
+            assert index_row_validator(root, formats).is_valid(dict(row, persisted_at_utc=value)) is valid, (case['case_id'], value)
+            checks += 1
+    for base in fixtures['board_storage_cases']:
+        if base['payload']['scope'] == 'project':
+            for value, valid in [(x, True) for x in PAYLOAD_TIME_ACCEPTED] + [(x, False) for x in PAYLOAD_TIME_REFUSED]:
+                bad = {'source': copy.deepcopy(base['source'])}
+                bad['source']['original_input']['created_at'] = value
+                assert (project_original_input_errors(bad, formats) == []) is valid, value
+                checks += 1
+    return checks
+
+
+def corpus_number_values(root):
+    """The number-scope values of the shared corpus: raw spellings (token, parse, parse_token, slot, json_number) and
+    exact integers (integer, uint64), plus three 4,400-digit integers."""
+    corpus = json.loads((root / 'Plans/event_number_recipe_corpus.json').read_text())
+    raws, ints = [], []
+    for case in corpus['cases']:
+        if case.get('date_time_profile'):
+            continue
+        if case.get('op') in ('token', 'parse', 'parse_token', 'slot') and type(case.get('raw')) is str:
+            raws.append(case['raw'])
+        if case.get('op') == 'json_number' and type(case.get('token')) is str:
+            raws.append(case['token'])
+        if case.get('op') in ('integer', 'uint64') and type(case.get('value')) is dict and '@int' in case['value']:
+            ints.append(case['value']['@int'])
+    long = '1' + '0' * 4399
+    raws += [long, '-' + long]
+    ints += [long, str((1 << 64) - 1), str(1 << 64)]
+    return list(dict.fromkeys(raws)), list(dict.fromkeys(ints))
+
+
+def raw_case_text(case, slot_token, sequence_token=None):
+    """The case as raw fixture text, with a raw number token written at the payload's `occurrence` slot (and, given,
+    at the event's Storage sequence_id), so it enters through the checker's own raw ingress (`fixture_loads`)."""
+    marker, sequence_marker = '"__DO_P2B_SLOT__"', '"__DO_P2B_SEQUENCE__"'
+    case = copy.deepcopy(case)
+    case['logical_payload']['occurrence'] = '__DO_P2B_SLOT__'
+    if case['event']['payload_ref'] is None:
+        case['event']['payload'] = copy.deepcopy(case['logical_payload'])
+    if sequence_token is not None:
+        case['event']['sequence_id'] = '__DO_P2B_SEQUENCE__'
+    text = json.dumps({'event_cases': [case]}).replace(marker, slot_token)
+    return text.replace(sequence_marker, sequence_token) if sequence_token is not None else text
+
+
+def expected_slot_outcome(token, family, payload, identity):
+    """The outcome composed from the shared helpers alone: the raw parse, then `current_integer` at the slot with its
+    bounds (occurrence: minimum 1), then the identity preimage's qualified JCS."""
+    try:
+        value = loads_current_json(token)
+    except Refusal:
+        return 'load_refused'
+    try:
+        current_integer(value, minimum=1)
+    except Refusal:
+        return 'number_domain'
+    try:
+        identity(family, dict(payload, occurrence=value))
+    except Refusal:
+        return 'number_domain'
+    return 'accepted'
+
+
+def number_corpus_checks(fixtures, schema, owner_module):
+    """The shared number corpus through the complete append and retry routes of one case per family, with
+    expectations composed from the shared helpers (not from this lane)."""
+    root, formats = owner_module.ROOT, owner_module.UTC_FORMAT
+    raws, ints = corpus_number_values(root)
+    seen, bases = set(), []
+    for case in fixtures['event_cases']:
+        if case['event_type'] not in seen and case['event']['payload_ref'] is None:
+            seen.add(case['event_type']); bases.append(case)
+    totals = collections.Counter()
+    for base in bases:
+        family = base['event_type']
+        for token in raws + ints:
+            expected = expected_slot_outcome(token, family, base['logical_payload'], owner_module.identity)
+            try:
+                loaded = fixture_loads(raw_case_text(base, token))['event_cases'][0]
+            except ValueError:
+                assert expected == 'load_refused', (family, token[:40], expected)
+                totals['load_refused'] += 1
+                continue
+            assert expected != 'load_refused', (family, token[:40])
+            if expected == 'accepted':
+                key, event_id = owner_module.identity(family, loaded['logical_payload'])
+                loaded['event'].update(idempotency_key=key, event_id=event_id)
+            errors = event_errors(loaded, schema, owner_module.identity, owner_module.retry_allowed, root, formats)
+            assert errors == ([] if expected == 'accepted' else ['number_domain']), (family, token[:40], errors)
+            status = retry_outcome(base['event'], loaded['event'])['status']
+            assert (status == 'number_domain') is (expected == 'number_domain'), (family, token[:40], status)
+            totals[expected] += 1
+        for token in ints:
+            try:
+                expected_valid = storage_uint64(current_integer_token(token)) is not None
+            except Refusal:
+                expected_valid = False
+            loaded = None
+            try:
+                loaded = fixture_loads(raw_case_text(base, json.dumps(base['logical_payload']['occurrence']), token))['event_cases'][0]
+            except ValueError:
+                assert not expected_valid, (family, 'sequence', token[:40])
+                totals['sequence_load_refused'] += 1
+                continue
+            errors = event_errors(loaded, schema, owner_module.identity, owner_module.retry_allowed, root, formats)
+            assert errors == ([] if expected_valid else ['event_storage_sequence']), (family, 'sequence', token[:40], errors)
+            retry = retry_outcome(base['event'], loaded['event'])
+            assert (retry['status'] == 'original_result') is expected_valid, (family, 'sequence', token[:40], retry['status'])
+            totals['sequence_accepted' if expected_valid else 'sequence_refused'] += 1
+    return sum(totals.values()) * 2, dict(totals), len(raws), len(ints)
+
+
+def long_integer_checks(fixtures, schema, owner_module):
+    """The 4,400-digit integer (DX/DS15/DF/DM class): every DO route refuses it with a code, none raises."""
+    root, formats = owner_module.ROOT, owner_module.UTC_FORMAT
+    long = JsonNumber('1' + '0' * 4399, True).exact()
+    checks = 0
+    for case in fixtures['event_cases'][:5]:
+        for value in (long, -long):
+            bad = copy.deepcopy(case); bad['logical_payload']['occurrence'] = value
+            if bad['event']['payload_ref'] is None:
+                bad['event']['payload'] = copy.deepcopy(bad['logical_payload'])
+            assert event_errors(bad, schema, owner_module.identity, owner_module.retry_allowed, root, formats) == ['number_domain']
+            assert retry_outcome(case['event'], bad['event'])['status'] == 'number_domain'
+            checks += 2
+        # A retained original holding one is read through custody (unsealed here) and refused with a code.
+        retained = copy.deepcopy(case); retained['logical_payload']['occurrence'] = long
+        if retained['event']['payload_ref'] is None:
+            retained['event']['payload'] = copy.deepcopy(retained['logical_payload'])
+        assert historical_read_errors(retained, schema, owner_module) == ['historical_original_recipe']
+        assert checkpoint_errors(retained, root, formats) == ['historical_original_recipe']
+        checks += 2
+        # The legacy and current identity recipes refuse it (Refusal), never raise another exception.
+        for recipe in (LEGACY_RECIPE, CURRENT_RECIPE):
+            try:
+                owner_module.historical_identity(case['event_type'], retained['logical_payload'], recipe)
+            except Refusal:
+                checks += 1
+            else:
+                raise AssertionError(('long_identity', recipe))
+    for base in fixtures['board_storage_cases'][:2]:
+        bad = copy.deepcopy(base); bad['payload']['occurrence'] = long
+        assert owner_module.board_join_errors(bad) == ['number_domain'], base['event_type']
+        checks += 1
+    return checks
+
+
+def dispatch_checks(fixtures, schema, owner_module):
+    """SP-1101: custody selects the recipe; a label, a self-hash or a coherent forgery selects nothing."""
+    root, formats = owner_module.ROOT, owner_module.UTC_FORMAT
+    checks = 0
+    for case in fixtures['retained_event_cases'][:40]:
+        custody, refusal = resolve_original(case)
+        assert refusal is None and custody.recipe.identity_recipe == case['historical_reader_state']['original_identity_recipe']
+        # The label alone names the other recipe: refused, and the custody recipe still selects.
+        flipped = copy.deepcopy(case); state = flipped['historical_reader_state']
+        state['original_identity_recipe'] = LEGACY_RECIPE if state['original_identity_recipe'] == CURRENT_RECIPE else CURRENT_RECIPE
+        assert resolve_original(flipped)[0].recipe.identity_recipe == case['historical_reader_state']['original_identity_recipe']
+        assert historical_read_errors(flipped, schema, owner_module) == ['historical_original_recipe']
+        assert run_rows(guards.RECIPE_ROWS, recipe_view(flipped)) == ['historical_original_recipe']
+        assert refusing_rows(guards.RECIPE_ROWS, recipe_view(flipped)) == ['recipe_disclosed']
+        # The label and its whole evidence rewritten coherently by the writer's own disclosure builder: still refused.
+        coherent = copy.deepcopy(flipped); record_recipe(coherent, coherent['historical_reader_state']['original_identity_recipe'])
+        assert historical_read_errors(coherent, schema, owner_module) == ['historical_original_recipe']
+        # A coherent forgery of the original's bytes (every copy and self-hash rewritten, nothing sealed).
+        forged = copy.deepcopy(case); forged['event']['observed_at_utc'] = '2026-11-04T05:06:07.123456789Z'
+        recapture_history(forged)
+        assert resolve_original(forged)[1] == 'original_authority'
+        assert refusing_rows(guards.RECIPE_ROWS, recipe_view(forged)) == ['recipe_supported']
+        assert historical_read_errors(forged, schema, owner_module) == ['historical_original_recipe']
+        assert checkpoint_errors(forged, root, formats) == ['historical_original_recipe']
+        # The same bytes sealed by the writer read normally (the seal is withdrawn again afterwards).
+        sealed = ORIGINAL_CUSTODY['seglog:' + forged['event']['event_id']]
+        commitment = hashlib.sha256(packed(forged['event'])).hexdigest()
+        assert commitment not in sealed
+        try:
+            assert historical_read_errors(seal_original(copy.deepcopy(forged)), schema, owner_module) == []
+        finally:
+            sealed.pop(commitment, None)
+        checks += 9
+    # A recipe tuple with no frozen verifier, and a verifier that cannot recompute, refuse through the dispatcher.
+    case = fixtures['retained_event_cases'][0]
+    entry = ORIGINAL_CUSTODY['seglog:' + case['event']['event_id']][hashlib.sha256(packed(case['event'])).hexdigest()]
+    saved = entry['recipe']
+    try:
+        entry['recipe'] = recipe_tuple(dict(case['event'], schema_version='9.9.9'), saved.identity_recipe)
+        assert resolve_original(case)[1] == 'recipe_unknown'
+        other = LEGACY_RECIPE if saved.identity_recipe == CURRENT_RECIPE else CURRENT_RECIPE
+        entry['recipe'] = recipe_tuple(case['event'], other)
+        assert resolve_original(case)[1] in ('original_verification', None)
+    finally:
+        entry['recipe'] = saved
+    checks += 2
+    return checks
+
+
+def physical_profile_checks(fixtures):
+    """SP-236 / CV-366 / SP-1100: the lane's bytes are the shared profiles' and decode canonically."""
+    checks = 0
+    assert packed(1.0) == b'\xca\x3f\x80\x00\x00' and app_packed(1.0) == b'\xcb\x3f\xf0\x00\x00\x00\x00\x00\x00'
+    checks += 1
+    for key in ('event_cases', 'retained_event_cases', 'compatibility_event_cases'):
+        for case in fixtures[key]:
+            data = packed(case['event'])
+            assert decode_storage_value(data, profile=EVENT_VALUE) == case['event'], case['case_id']
+            for entry in case['payload_packs'].values():
+                if entry['media_type'] == 'application/msgpack':
+                    assert pack_entry(entry['value'])['blake3_id'] == entry['blake3_id'], case['case_id']
+            checks += 1
+    for case in fixtures['board_storage_cases']:
+        if 'wrapper' in case:
+            assert hashlib.sha256(app_packed(case['wrapper'])).hexdigest() == case['physical_record_sha256']
+            checks += 1
+    return checks
+
+
+def part_2b_checks(fixtures, schema, owner_module):
+    checks = datetime_profile_checks(fixtures, schema, owner_module)
+    corpus_checks, totals, raws, ints = number_corpus_checks(fixtures, schema, owner_module)
+    print(json.dumps({'number_corpus': totals, 'raw_spellings': raws, 'exact_integers': ints}), file=sys.stderr)
+    checks += corpus_checks
+    checks += long_integer_checks(fixtures, schema, owner_module)
+    checks += dispatch_checks(fixtures, schema, owner_module)
+    checks += physical_profile_checks(fixtures)
     return checks

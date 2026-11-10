@@ -45,12 +45,26 @@ def checkpoint_tables():
 
 
 def recipe_negatives(case):
-    """One single-defect negative per recipe row, from a valid retained case: each changes one evidence field, and
-    the unsupported label is recorded with a witness for that label, so only the label is wrong."""
+    """One single-defect negative per recipe row, from a valid retained case (sweep part 2B: SP-1101 custody).
+
+    - recipe_custody: a coherent forgery: the original's Storage-assigned observed_at_utc moves and every copy and
+      self-hash is rewritten by the builder (no seal), so only custody, which never sealed these bytes, refuses.
+    - recipe_label: the disclosed label names the other supported recipe and nothing else changes.
+    - the evidence rows: one evidence field each."""
     def evidence(c):
         return c['historical_reader_state']['original_recipe_evidence']
+
+    def forged(c):
+        c['event']['observed_at_utc'] = '2026-11-04T05:06:07.123456789Z'
+        oracles.recapture_history(c)
+
+    def label(c):
+        state = c['historical_reader_state']
+        state['original_identity_recipe'] = (oracles.LEGACY_RECIPE if state['original_identity_recipe'] == oracles.CURRENT_RECIPE
+                                             else oracles.CURRENT_RECIPE)
     changes = (
-        ('recipe_unsupported', 'recipe_supported', lambda c: oracles.record_recipe(c, 'ea-do-unsupported-v0')),
+        ('recipe_custody', 'recipe_supported', forged),
+        ('recipe_label', 'recipe_disclosed', label),
         ('recipe_unverified', 'recipe_evidence_verified', lambda c: evidence(c).update(verified=False)),
         ('recipe_value', 'recipe_evidence_value', lambda c: evidence(c)['value'].update(event_type='parser.error.foreign')),
         ('recipe_source_ref', 'recipe_evidence_source_ref', lambda c: evidence(c).update(
@@ -495,7 +509,7 @@ def resync_application(case, keep_record=False):
     source['original_input_semantic_sha256'] = oracles.semantic_hash('accepted_source', message)
     source['accepted_source_sha256'] = source['original_input_semantic_sha256']
     case['accepted_source_witness']['value'] = copy.deepcopy(message)
-    case['physical_record_sha256'] = hashlib.sha256(oracles.packed(case['wrapper'])).hexdigest()
+    case['physical_record_sha256'] = hashlib.sha256(oracles.app_packed(case['wrapper'])).hexdigest()
     case['wrapper_key'] = oracles.board_application_view(case)['expected_wrapper_key']
     oracles.refresh_stage_witnesses(case)
     return case
@@ -546,8 +560,9 @@ def board_inputs(fixtures):
             for field in ('scope', 'storage_instance_id', 'server_id', 'thread_id', 'crew_id', 'run_id', 'project_id'):
                 change('anchor_' + field, lambda c, f=field: c['terminal_run'].update({f: str(c['terminal_run'].get(f)) + '-foreign'}))
             change('anchor_kind', lambda c: c['terminal_run'].update(kind='foreign'))
-        change('payload_number', lambda c: c['payload'].update(probe_number=1.0))
-        change('envelope_number', lambda c: c['envelope'].update(probe_number=1.0))
+        # CV-1100 integer slots (sweep part 2B): an integral float at a declared integer slot, nothing else changed.
+        change('payload_number', lambda c: c['payload'].update(occurrence=float(c['payload']['occurrence'])))
+        change('envelope_number', lambda c: c['envelope'].update(producer_sequence_id=1.0))
 
         def foreign_family(c):
             # Another (non-board) family, with the envelope ids recomputed for it, so only the family is foreign.
@@ -770,8 +785,7 @@ BOUNDARIES.update({
 
 
 def board_full_view(case, root, formats):
-    view = {'payload_number_errors': oracles.record_number_errors(case['payload']),
-            'envelope_number_errors': oracles.record_number_errors(case['envelope'])}
+    view = contracts.board_number_view(case)
     try:
         if case['payload']['scope'] != 'application':
             view.update(board_branch='project', project_input_valid=not oracles.project_original_input_errors(case, formats))
@@ -930,7 +944,9 @@ def boundary_matrix(name, fixtures):
 
 
 def fixtures_now():
-    return oracles.fixture_loads((ROOT / 'Plans/orchestrator_event_contract_fixtures.json').read_text())
+    fixtures = oracles.fixture_loads((ROOT / 'Plans/orchestrator_event_contract_fixtures.json').read_text())
+    oracles.install_original_custody(fixtures, contracts)
+    return fixtures
 
 
 def command_check_all(args):

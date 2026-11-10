@@ -23,12 +23,19 @@ import hashlib
 import importlib.util
 import json
 import re
+import sys
 from functools import lru_cache
 from pathlib import Path
 from typing import Any
 
 from jsonschema import Draft202012Validator, FormatChecker
 from referencing import Registry, Resource
+
+# DO-C8-N5 (sweep part 2B): `canonical`, `idempotency_key` and `event_id_preimage` are DCO's part 2B edition,
+# byte for byte (plans/ea-w2-coordination-20261104 at 2ec9d21d70), with its `pm_coordination_numbers` helper.
+if str(Path(__file__).resolve().parent) not in sys.path:  # loaded by file path (tests): find the sibling helper
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+from pm_coordination_numbers import decimal_integer  # noqa: E402
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -161,8 +168,17 @@ def load(path: str, root: Path = ROOT) -> Any:
 
 
 def canonical(value: Any) -> str:
-    """The DL-077 canonical JSON: keys sorted, ',' and ':' separators, ensure_ascii=False."""
-    return json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
+    """The DL-077 canonical JSON: keys sorted, ',' and ':' separators, ensure_ascii=False.
+
+    This is the local payload hash text, not CV-317 producer JCS. Integer rendering allows
+    the full token, including values past the process default of 4300 digits.
+    """
+    previous = sys.get_int_max_str_digits()
+    sys.set_int_max_str_digits(0)
+    try:
+        return json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
+    finally:
+        sys.set_int_max_str_digits(previous)
 
 
 def row_sha256(value: Any) -> str:
@@ -199,7 +215,10 @@ def idempotency_key(event_type: str, project_id: str, agent_id: str, recovery_ep
 
     The recovery epoch is the one the prepared event keeps for every retry, the same one its event ID uses
     (review repair CP-02)."""
-    return f"coordination:{event_type}:{project_id}:{agent_id}:{recovery_epoch}:{agent_revision}"
+    from pm_coordination_numbers import exact_decimal
+    epoch = exact_decimal(recovery_epoch) if type(recovery_epoch) is int else str(recovery_epoch)
+    revision = exact_decimal(agent_revision) if type(agent_revision) is int else str(agent_revision)
+    return f"coordination:{event_type}:{project_id}:{agent_id}:{epoch}:{revision}"
 
 
 def key_recovery_epoch(key: str) -> int | None:
@@ -212,8 +231,14 @@ def key_recovery_epoch(key: str) -> int | None:
 
 def event_id_preimage(storage_instance_id: str, recovery_epoch: int, project_id: str, event_type: str,
                       agent_id: str, agent_revision: int) -> str:
-    """RFC 8785 form of a JSON array of strings (equal to this json.dumps form for strings)."""
-    return json.dumps([storage_instance_id, str(recovery_epoch), project_id, event_type, agent_id, str(agent_revision)],
+    """SP-320 string-array preimage. Epoch and revision are exact integers, then decimal strings.
+
+    The array contains only strings, so this json.dumps form is the RFC 8785 form. It is not rewritten
+    as generic producer JCS and it is not given a lane-local digit cap.
+    """
+    epoch = decimal_integer(recovery_epoch, minimum=0)
+    revision = decimal_integer(agent_revision, minimum=0)
+    return json.dumps([storage_instance_id, epoch, project_id, event_type, agent_id, revision],
                       separators=(",", ":"), ensure_ascii=False)
 
 
