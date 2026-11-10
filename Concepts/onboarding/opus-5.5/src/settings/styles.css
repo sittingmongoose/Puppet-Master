@@ -481,7 +481,7 @@ html[data-theme^="glass"] #panel-settings :is(.pm51-stat, .pm51-advanced, .pm51-
 #panel-settings .pm51-mgr .pm51-settings-inline .section-description { margin: 3px 0 0; font-size: 11.5px; line-height: 1.45; color: var(--k3-text-3); max-width: 70ch; }
 #panel-settings .pm51-mgr .pm51-settings-inline .section-heading-row > .btn { display: none; }
 #panel-settings .pm51-mgr .pm51-settings-inline .owner-redirects { margin: 0 16px 8px; }
-#panel-settings .pm51-mgr .pm51-settings-inline .setting-list { border: 0; border-top: 1px solid var(--k3-line); border-radius: 0; background: transparent; box-shadow: none; padding: 4px 16px 6px; }
+#panel-settings .pm51-mgr .pm51-settings-inline .setting-list { border: 0; border-top: 1px solid var(--k3-line); border-radius: 0; background: transparent; box-shadow: none; padding: 4px 16px 6px; --o55-list-inset-l: 16px; --o55-list-inset-r: 16px; }
 #panel-settings .pm51-mgr .pm51-settings-inline .setting-row { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) auto auto; align-items: center; gap: 8px 14px; min-height: 46px; height: auto; margin: 0; padding: 8px 0; border: 0; border-top: 1px solid var(--k3-line); background: transparent; box-shadow: none; overflow: visible; transition: background 170ms ease; }
 #panel-settings .pm51-mgr .pm51-settings-inline .setting-row:first-child { border-top: 0; }
 #panel-settings .pm51-mgr .pm51-settings-inline .setting-row:hover { background: rgba(var(--accent-primary-rgb), .035); }
