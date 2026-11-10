@@ -5,6 +5,11 @@ Run --self-test (rfc8785==0.1.4 and msgpack==1.1.2 required). The corpus
 also cross-checks CV-366 and SP-337 with blake3. These are read-only fixture
 codecs. Production composition supplies genuine original-owner custody and
 its frozen validators; no request, boolean or self-hash authenticates it.
+
+--self-test --scope numbers runs the number cases and number owner checks with
+no date-time code imported. The default --scope all adds the date-time gate.
+--self-test --scope numbers --mutations also replays the committed mutation set
+(pm_event_numbers_mutations.json), in memory; each mutation must fail the corpus.
 """
 from __future__ import annotations
 
@@ -199,6 +204,24 @@ def loads_current_json(raw, *, numeric_kinds=None):
     return materialize(loads_exact(raw))
 
 
+def _declared_numeric_kind(value, path, *, type_sensitive_paths=frozenset(), numeric_kinds=None):
+    """Numeric-kind admission alone: one declared or carried kind, or refusal.
+
+    Whether the emitted JCS token preserves that kind is a separate predicate,
+    enforced later by qualified_jcs. A bare Decimal carries no kind.
+    """
+    kind = (numeric_kinds or {}).get(path)
+    inferred_kind = ("integer" if type(value) is int else "float" if type(value) is float else
+                     value.numeric_kind if type(value) is ParsedDecimal else
+                     ("integer" if value.integer else "float") if type(value) is JsonNumber else None)
+    kind = kind if kind is not None else inferred_kind
+    if kind not in (None, "integer", "float", "decimal"):
+        _refuse("jcs_numeric_kind")
+    if path in type_sensitive_paths and kind is None:
+        _refuse("jcs_kind_undeclared")
+    return kind
+
+
 def qualified_jcs(value, *, type_sensitive_paths=frozenset(),
                   sign_sensitive_paths=frozenset(), numeric_kinds=None) -> bytes:
     """Actual RFC8785, qualified against original integers/output decimals.
@@ -215,19 +238,12 @@ def qualified_jcs(value, *, type_sensitive_paths=frozenset(),
     import rfc8785
 
     def number(v, path):
-        kind = (numeric_kinds or {}).get(path)
-        inferred_kind = ("integer" if type(v) is int else "float" if type(v) is float else
-                         v.numeric_kind if type(v) is ParsedDecimal else None)
+        kind = _declared_numeric_kind(v, path, type_sensitive_paths=type_sensitive_paths,
+                                      numeric_kinds=numeric_kinds)
         source_negative_zero = False
         if type(v) is JsonNumber:
-            inferred_kind = "integer" if v.integer else "float"
             source_negative_zero = v.token.startswith("-") and Decimal(v.token).is_zero()
             v = v.exact()
-        kind = kind if kind is not None else inferred_kind
-        if kind not in (None, "integer", "float", "decimal"):
-            _refuse("jcs_numeric_kind")
-        if path in type_sensitive_paths and kind is None:
-            _refuse("jcs_kind_undeclared")
         source_integer = type(v) is int
         if type(v) is int:
             exact = Decimal(v)
@@ -529,17 +545,29 @@ class RetainedDispatcher:
         return original
 
 
-def self_test(corpus: Path) -> dict:
+def self_test(corpus: Path, *, scope: str = "all") -> dict:
     from pm_event_numbers_corpus import run_corpus
-    return run_corpus(corpus)
+    return run_corpus(corpus, scope=scope)
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--self-test", action="store_true", required=True)
     parser.add_argument("--corpus", type=Path, default=Path(__file__).resolve().parents[1] / "Plans/event_number_recipe_corpus.json")
+    parser.add_argument("--scope", choices=("all", "numbers"), default="all",
+                        help="numbers: number cases and owner checks only, importing no date-time code")
+    parser.add_argument("--mutations", action="store_true",
+                        help="with --scope numbers: replay the mutation set; each mutation must fail the corpus")
+    parser.add_argument("--mutation-set", type=Path,
+                        default=Path(__file__).resolve().parent / "pm_event_numbers_mutations.json")
     args = parser.parse_args()
-    result = self_test(args.corpus)
+    if args.mutations:
+        if args.scope != "numbers":
+            parser.error("--mutations runs with --scope numbers")
+        from pm_event_numbers_corpus import run_mutations
+        result = run_mutations(args.corpus, args.mutation_set)
+    else:
+        result = self_test(args.corpus, scope=args.scope)
     print(json.dumps(result, indent=2, sort_keys=True))
     return 0 if result["status"] == "pass" else 1
 

@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L23969-L24523
+Source lines: L24092-L24647
 
-Source SHA256: `64d37a9d65681484c25faf765bb90deadea6adb71e813113135f05d204b4ecf2`
+Source SHA256: `facb2865349a23c6d26a14093fb85ed11b6e681341bceaf761f6c0c37f6fc5e9`
 
 ---
 
@@ -160,6 +160,7 @@ canonical_text: |-
   CV-740 explicitly selects the separate header-bearing app board V2 whole source/message/wrapper graph
   for current posts and V2 original-message consumers. The frozen V1 table remains exact for supported
   historical V1 selection; this narrow successor never rebinds a frozen literal URI or Project codec.
+  CV-1100 and SP-1101 govern exact input and authenticated original-recipe dispatch; this unit retains its typed semantic tree, app float64/binary physical profile, closed kinds, exact prefixes and original Project codecs.
 gui_related: false
 gui_classification_reason: Defines data, identity, custody, version or source contracts; no presentation ownership.
 depends_on:
