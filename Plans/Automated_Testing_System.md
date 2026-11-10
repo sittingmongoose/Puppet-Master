@@ -7280,12 +7280,17 @@ canonical_text: >-
   Admission-dependent event append/first receipt stays not_reached until actual admission.
   Every family/scope runs 1.0, -0, 1e0 and 01 number-input refusals, synchronized event/retry controls,
   actual RFC8785 identity/observation preimages and equal-semantic JCS digest checks.
-  Apply the canonical numeric domain only at current input boundaries before schema, identity,
-  source hash and retry comparison. The fixture loader preserves retained EventRecords, receipts and
+  Apply the shared CV-1100 calls only at current input boundaries before schema, identity, source
+  hash and retry comparison: `loads_current_json` at raw ingress, `current_integer` at every schema
+  integer slot with its own bounds, and `qualified_jcs` on the producer projection and identity preimage. The fixture loader preserves retained EventRecords, receipts and
   typed source/wrapper values under their original selected codec without rewriting their numbers.
-  For every family, file-backed retained originals select verified ea-do-json-v1 or ea-do-rfc8785-v2
-  writing-recipe evidence bound to the exact original receipt bytes, family/schema/Storage/partition
-  and lifetime key/ID. Recompute with that recipe only; unknown or unproven fallback refuses.
+  For every family, file-backed retained originals resolve through the SP-1101 RetainedDispatcher:
+  sealed custody authenticates the exact original bytes and selects ea-do-json-v1 or ea-do-rfc8785-v2,
+  whose frozen verifier recomputes key/ID and source commitment; the disclosed recipe label and evidence
+  are joined against custody, and a coherent forgery of the original's bytes refuses. Recompute with that
+  recipe only; unknown or unproven fallback refuses. The shared number corpus runs through the complete
+  append and retry routes, CV-1101 profiles are witnessed per payload and Storage timestamp field, and
+  `python3 scripts/pm_event_numbers.py --self-test --scope numbers` passes.
   Exercise old 1.0, 1e0 and 1e20 originals, both recipes and compatibility reads through complete main,
   exact original-result recovery/retry bytes, and forged IDs/keys with every Storage observation synced.
   Foreign/unverified recipe evidence, withdrawn readers and invalid current number inputs still refuse.
