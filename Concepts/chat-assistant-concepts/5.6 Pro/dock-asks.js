@@ -72,10 +72,12 @@
     };
     var allow = row ? 'Allow' : null;
     return [
-      b('deny', 'Deny', '', 'Don’t ' + (a.tool === 'bash' ? 'run it' : 'allow it') + '. The agent is told.'),
-      b('once', row ? 'Once' : 'Allow once', row ? 'Allow once' : '', 'Only this ' + t.noun + ', this one time.', allow),
-      b('session', row ? 'For session' : 'Allow for this session', row ? 'Allow for this session' : '', 'Allows ' + code(p) + ' until this chat session ends.', allow),
-      b('always', row ? 'Always…' : 'Always allow…', row ? 'Always allow…' : '', 'Makes a rule for ' + code(p) + '. You choose where.', allow)
+      /* 'row' keeps canon's short labels (6.1: Deny, Once, For session, Always) so the ladder fits a 400 px chat; 'list'
+         has the room for Settings' own words for the same ladder (safety.approvals.approval-ladder-default) */
+      b('deny', row ? 'Deny' : 'Don’t approve', '', 'Don’t ' + (a.tool === 'bash' ? 'run it' : 'allow it') + '. The agent is told.'),
+      b('once', row ? 'Once' : 'Just this once', row ? 'Allow once' : '', 'Only this ' + t.noun + ', this one time.', allow),
+      b('session', row ? 'For session' : 'For this session', row ? 'Allow for this session' : '', 'Allows ' + code(p) + ' until this chat session ends.', allow),
+      b('always', 'Always…', row ? 'Always allow…' : '', 'Makes a rule for ' + code(p) + '. You choose where.', allow)
     ];
   }
   function chooser(a) {
