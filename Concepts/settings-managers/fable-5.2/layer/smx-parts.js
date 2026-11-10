@@ -1,0 +1,207 @@
+/* Settings managers, rethought (Fable 5.2): the parts pages are made of, search, and the two review panels.
+   Every part returns HTML. Parts that hold a real control use the Settings kit's own builders (PM51), so the control is
+   PMConcept7's and follows every look. */
+(function (W) {
+  'use strict';
+  const SMX = W.SMX; if (!SMX || SMX.ui) return;
+  const kit = () => W.PM51;
+  const h = SMX.h, data = SMX.data;
+  const ui = SMX.ui = {};
+
+  /* ------------------------------------------------------------------ buttons and links
+     action: one of PMConcept7's own actions (the Settings engine handles the click). go: a page of the redesign.
+     do: one of this concept's handlers (SMX.act). */
+  const target = (o) => (o.action ? ` data-action="${h(o.action)}"${data(o.data)}` : o.go ? ` data-smx-go="${h(o.go)}"${o.reveal ? ` data-smx-reveal="${h(o.reveal)}"` : ''}${o.anchor ? ` data-smx-anchor-to="${h(o.anchor)}"` : ''}` : o.do ? ` data-smx-do="${h(o.do)}"${data(o.data)}` : '');
+  ui.btn = (o) => {
+    if (o.disabled) return `<button type="button" class="btn pm51-btn${o.small === false ? '' : ' small'}${o.ghost ? ' ghost' : ''}${o.label ? '' : ' smx-icon-only'}" data-action="pm51-disabled" aria-disabled="true" data-pm51-disabled="1" data-disabled-reason="${h(o.reason || 'Not available here.')}" data-pm-hover-label="${h(o.label || o.label2 || '')}" data-pm-hover-detail="${h(o.reason || 'Not available here.')}"${o.label2 ? ` aria-label="${h(o.label2)}"` : ''}>${o.icon ? SMX.icon(o.icon) : ''}${o.label ? `<span>${h(o.label)}</span>` : ''}</button>`;
+    return `<button type="button" class="btn pm51-btn${o.primary ? ' primary' : ''}${o.small === false ? '' : ' small'}${o.ghost ? ' ghost' : ''}${o.danger ? ' danger' : ''}${o.label ? '' : ' smx-icon-only'}${o.cls ? ' ' + o.cls : ''}"${target(o)}${o.key ? ` data-smx-key="${h(o.key)}"` : ''}${o.label2 ? ` aria-label="${h(o.label2)}" data-pm-hover-label="${h(o.label2)}"` : ''}>${o.icon ? SMX.icon(o.icon) : ''}${o.label ? `<span>${h(o.label)}</span>` : ''}</button>`;
+  };
+  ui.link = (o) => `<button type="button" class="pm51-link"${target(o)}>${h(o.label)}</button>`;
+  ui.links = (items) => `<div class="pm51-quiet smx-links">${items.filter(Boolean).map(ui.link).join('')}</div>`;
+  ui.status = (text, tone) => { try { return kit().status(text, tone ? SMX.tone(tone) : undefined); } catch (e) { return h(text); } };
+  ui.note = (text, tone) => { try { return kit().note(text, tone); } catch (e) { return `<p>${h(text)}</p>`; } };
+  ui.facts = (pairs) => { try { return kit().kv(pairs); } catch (e) { return ''; } };
+  ui.meter = (o) => { try { return kit().meter(o); } catch (e) { return ''; } };
+  ui.tag = (text) => `<span class="pm51-tag">${h(text)}</span>`;
+
+  /* ------------------------------------------------------------------ cards and rows (the kit's own section and row shapes) */
+  ui.card = ({ title, help, side, body, cls, anchor, tone }) => `<section class="panel-card pm51-section${cls ? ' ' + cls : ''}${tone ? ' tone-' + h(tone) : ''}"${anchor ? ` data-smx-anchor="${h(anchor)}"` : ''}>${title || side ? `<div class="pm51-section-head"><div class="pm51-section-copy">${title ? `<h3 class="pm51-section-title">${h(title)}</h3>` : ''}${help ? `<p class="pm51-section-help">${h(help)}</p>` : ''}</div>${side || ''}</div>` : ''}${body ? `<div class="pm51-section-body">${body}</div>` : ''}</section>`;
+  ui.rows = (rows) => `<div class="pm51-rows">${rows.filter(Boolean).map((r) => `<div class="pm51-row${r.cls ? ' ' + r.cls : ''}"${r.covers ? ` data-smx-covers="${h(r.covers)}"` : ''}><div class="pm51-row-copy"><div class="pm51-row-label">${h(r.label)}${r.status ? ' ' + r.status : ''}</div>${r.help ? `<div class="pm51-row-help">${h(r.help)}</div>` : ''}</div><div class="pm51-row-control">${r.value != null ? `<span class="pm51-row-value${r.muted ? ' is-muted' : ''}">${h(String(r.value))}</span>` : ''}${r.control || ''}</div></div>`).join('')}</div>`;
+  /* the kit's own rows for setting ids, as one card */
+  ui.settings = (ids, o = {}) => { try { return kit().settingRows(ids.filter(SMX.has), { title: o.title || '', help: o.help || '' }); } catch (e) { return ''; } };
+  ui.setting = (id, o) => { try { return kit().bound.row(id, o || {}); } catch (e) { return ''; } };
+  ui.select = (id, o) => { try { return kit().bound.select(id, o || {}); } catch (e) { return ''; } };
+  ui.toggle = (id, o) => { try { return kit().bound.toggle(id, o || {}); } catch (e) { return ''; } };
+
+  /* ------------------------------------------------------------------ the summary: what is set up, in a sentence or two */
+  ui.summary = ({ icon, tone, lines, side }) => `<section class="smx-summary tone-${SMX.tone(tone || 'ready')}">${icon ? `<div class="smx-summary-icon">${SMX.icon(icon)}</div>` : ''}<div class="smx-summary-copy">${lines.filter(Boolean).map((l, i) => `<p class="${i === 0 ? 'smx-summary-lead' : 'smx-summary-line'}">${l}</p>`).join('')}</div>${side ? `<div class="smx-summary-side">${side}</div>` : ''}</section>`;
+  /* a word inside a sentence that takes you to where it is changed */
+  ui.word = (text, o) => `<button type="button" class="smx-word"${target(o)}>${h(text)}</button>`;
+  ui.b = (text) => `<strong>${h(text)}</strong>`;
+
+  /* ------------------------------------------------------------------ what needs you: one line and one way forward each */
+  ui.needs = (items) => {
+    const list = items.filter(Boolean); if (!list.length) return '';
+    return `<section class="smx-needs" aria-label="Needs you"><h3 class="smx-needs-title">${SMX.icon('alert')}<span>${list.length === 1 ? 'One thing needs you' : `${list.length} things need you`}</span></h3>${list.map((n) => `<div class="smx-need tone-${SMX.tone(n.tone || 'attention')}"><div class="smx-need-copy"><div class="smx-need-title">${h(n.title)}</div>${n.detail ? `<div class="smx-need-detail">${h(n.detail)}</div>` : ''}</div>${n.fix ? ui.btn(Object.assign({ primary: true }, n.fix)) : ''}${n.also ? ui.btn(n.also) : ''}</div>`).join('')}</section>`;
+  };
+
+  /* ------------------------------------------------------------------ tasks: the few things people come here to do */
+  ui.tasks = (items, o = {}) => {
+    const list = items.filter(Boolean); if (!list.length) return '';
+    return `<section class="smx-tasks"${o.anchor ? ` data-smx-anchor="${h(o.anchor)}"` : ''}>${o.title ? `<h3 class="smx-kicker">${h(o.title)}</h3>` : ''}<div class="smx-task-grid cols-${Math.min(4, o.cols || list.length)}">${list.map((t) => `<button type="button" class="smx-task"${target(t)}><span class="smx-task-icon">${SMX.icon(t.icon || 'arrowRight')}</span><span class="smx-task-copy"><span class="smx-task-title">${h(t.title)}</span>${t.sub ? `<span class="smx-task-sub">${h(t.sub)}</span>` : ''}</span><span class="smx-task-go">${SMX.icon('arrowRight')}</span></button>`).join('')}</div></section>`;
+  };
+
+  /* ------------------------------------------------------------------ things: the list of what you have
+     item: {icon | initials, name, tag, sub, sub2, status: {text, tone}, meters: html, go | action+data, side: html} */
+  ui.things = ({ title, help, add, items, empty, anchor, cls }) => {
+    const list = (items || []).filter(Boolean);
+    const body = list.length ? `<div class="smx-things${cls ? ' ' + cls : ''}">${list.map((it) => {
+      const open = it.go || it.action || it.do;
+      const head = `<span class="smx-thing-avatar${it.icon ? '' : ' is-initials'}">${it.icon ? SMX.icon(it.icon) : h(it.initials || '?')}</span><span class="smx-thing-copy"><span class="smx-thing-name">${h(it.name)}${it.tag ? ` <span class="smx-thing-tag">${h(it.tag)}</span>` : ''}</span>${it.sub ? `<span class="smx-thing-sub">${h(it.sub)}</span>` : ''}${it.sub2 ? `<span class="smx-thing-sub">${h(it.sub2)}</span>` : ''}${it.meters ? `<span class="smx-thing-meters">${it.meters}</span>` : ''}</span>`;
+      const end = `<span class="smx-thing-end">${it.status ? ui.status(it.status.text, it.status.tone) : ''}${it.side || ''}${open ? `<span class="smx-thing-go">${SMX.icon('go')}</span>` : ''}</span>`;
+      return open ? `<div class="smx-thing is-clickable" role="button" tabindex="0"${target(it)}>${head}${end}</div>` : `<div class="smx-thing">${head}${end}</div>`;
+    }).join('')}</div>` : (empty ? `<div class="smx-empty">${SMX.icon(empty.icon || 'info')}<div class="smx-empty-title">${h(empty.title)}</div>${empty.text ? `<div class="smx-empty-text">${h(empty.text)}</div>` : ''}${empty.fix ? ui.btn(Object.assign({ primary: true }, empty.fix)) : ''}</div>` : '');
+    return ui.card({ title, help, side: add ? ui.btn(Object.assign({ icon: 'plus' }, add)) : '', body, anchor, cls: 'smx-things-card' });
+  };
+
+  /* ------------------------------------------------------------------ a chapter's pages, as described rows */
+  ui.pages = (chapterId, ctx, o = {}) => {
+    const pages = SMX.pages.filter((p) => p.chapter === chapterId && p.nav && p.id !== chapterId && !p.id.includes(':'));
+    if (!pages.length) return '';
+    return `<section class="smx-pages">${o.title ? `<h3 class="smx-kicker">${h(o.title)}</h3>` : ''}<div class="smx-page-list">${pages.map((p) => {
+      let st = null; try { st = p.status ? p.status(ctx) : null; } catch (e) { st = null; }
+      const blurb = typeof p.blurb === 'function' ? p.blurb(ctx) : (p.blurb || p.purpose || '');
+      return `<button type="button" class="smx-page-row" data-smx-go="${h(p.id)}"><span class="smx-page-icon">${SMX.icon(p.icon || 'arrowRight')}</span><span class="smx-page-copy"><span class="smx-page-name">${h(typeof p.nav === 'function' ? p.nav(ctx) : p.nav)}</span><span class="smx-page-blurb">${h(typeof blurb === 'function' ? blurb(ctx) : blurb)}</span></span><span class="smx-page-end">${st ? ui.status(st.text, st.tone) : ''}<span class="smx-thing-go">${SMX.icon('go')}</span></span></button>`;
+    }).join('')}</div></section>`;
+  };
+
+  /* a line of text that reads as a sentence and holds real controls */
+  ui.sentence = (html, o = {}) => `<div class="smx-sentence${o.cls ? ' ' + o.cls : ''}">${html}</div>`;
+  ui.kicker = (text) => `<h3 class="smx-kicker">${h(text)}</h3>`;
+
+  /* ------------------------------------------------------------------ search: pages, settings and things, by everyday words */
+  const SYN = {
+    password: ['sign-in', 'key', 'token', 'credential'], login: ['sign-in', 'account'], 'log in': ['sign-in'], signin: ['sign-in'],
+    phone: ['device', 'pair', 'notification', 'away'], mobile: ['device', 'pair'], tablet: ['device', 'pair'], ipad: ['device'],
+    remote: ['away', 'tailscale', 'vpn', 'remote link'], anywhere: ['away'], outside: ['away'], vpn: ['away', 'tailscale'],
+    dark: ['light or dark', 'theme'], 'dark mode': ['light or dark'], color: ['theme', 'accent', 'colors'], colour: ['theme', 'accent', 'colors'],
+    font: ['text size', 'font'], bigger: ['text size', 'size of everything'], zoom: ['size of everything'],
+    ai: ['service', 'model', 'account'], provider: ['service'], claude: ['service'], chatgpt: ['service'], gpt: ['service'], openai: ['service'],
+    cost: ['spending', 'budget', 'limit'], money: ['spending', 'budget'], bill: ['spending', 'billed'], price: ['spending'],
+    server: ['computer', 'server'], nas: ['computer', 'server'], machine: ['computer'], pc: ['computer'], laptop: ['computer', 'device'],
+    backup: ['backup', 'restore'], save: ['backup', 'autosave'], undo: ['restore', 'history'], delete: ['cleanup', 'keep'],
+    git: ['source control', 'version history'], github: ['source control', 'code service'], sound: ['sound', 'bell'], mute: ['sound', 'quiet'],
+    alert: ['notification'], notify: ['notification'], permission: ['allow', 'ask', 'approval'], safe: ['protect', 'filesafe', 'approval'],
+    shortcut: ['keyboard', 'keys'], hotkey: ['keyboard'], update: ['update'], broken: ['checkup', 'doctor'], problem: ['checkup', 'doctor'], fix: ['checkup']
+  };
+  let INDEX = null;
+  function buildIndex() {
+    const idx = [];
+    const ctx = { st: SMX.st(), local: SMX.local };
+    const chTitle = (id) => { const c = SMX.chapters.find((x) => x.id === id); return c ? c.title : ''; };
+    for (const p of SMX.pages) {
+      if (p.id.includes(':')) continue;
+      const title = typeof p.title === 'function' ? p.title(ctx) : p.title;
+      const nav = typeof p.nav === 'function' ? p.nav(ctx) : (p.nav || title);
+      idx.push({ kind: 'page', title: p.id === p.chapter ? title : nav, sub: p.id === p.chapter || p.id === 'home' ? (typeof p.purpose === 'function' ? p.purpose(ctx) : (p.purpose || '')) : `${chTitle(p.chapter)}`, route: p.id, text: [title, nav, typeof p.purpose === 'string' ? p.purpose : '', (p.keywords || []).join(' ')].join(' ').toLowerCase(), weight: 3 });
+    }
+    const place = SMX.placement();
+    for (const [id, rec] of place.claimed) {
+      const s = kit().setting(id); if (!s) continue;
+      let label = s.label, help = s.description || '';
+      try { label = kit().rowLabel(s) || label; help = kit().rowHelp(s) || help; } catch (e) { /* inventory words */ }
+      const m = SMX.match(rec.route); const pg = m ? m.page : null;
+      const pTitle = pg ? (typeof pg.nav === 'function' ? pg.nav(ctx) : (pg.nav || (typeof pg.title === 'function' ? pg.title(ctx) : pg.title))) : '';
+      idx.push({ kind: 'setting', title: label, sub: `${pg ? chTitle(pg.chapter) : ''}${pTitle && pg && pg.id !== pg.chapter ? ' › ' + pTitle : ''}${rec.section ? ' › ' + rec.section : ''}`, route: rec.route, reveal: id, text: [label, s.label, help, id.replace(/[.\-]/g, ' ')].join(' ').toLowerCase(), weight: rec.level === 'main' || rec.level === 'drawn' ? 2 : 1 });
+    }
+    for (const f of (SMX.thingSources || [])) { try { for (const t of f(ctx.st)) idx.push(Object.assign({ kind: 'thing', weight: 3, text: [t.title, t.sub || ''].join(' ').toLowerCase() }, t)); } catch (e) { /* skip a source that fails */ } }
+    INDEX = idx; return idx;
+  }
+  function find(q) {
+    const words = q.toLowerCase().split(/\s+/).filter(Boolean); if (!words.length) return [];
+    const idx = INDEX || buildIndex();
+    const out = [];
+    for (const it of idx) {
+      let score = 0, ok = true;
+      const title = it.title.toLowerCase();
+      for (const w of words) {
+        let s = 0;
+        if (title === w) s = 12; else if (title.startsWith(w)) s = 9; else if (new RegExp('\\b' + w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).test(title)) s = 7; else if (title.includes(w)) s = 5; else if (it.text.includes(w)) s = 2;
+        if (!s && SYN[w]) for (const alt of SYN[w]) { if (title.includes(alt)) { s = 4; break; } if (it.text.includes(alt)) s = Math.max(s, 1.5); }
+        if (!s) { ok = false; break; }
+        score += s;
+      }
+      if (ok) out.push([score * it.weight, it]);
+    }
+    out.sort((a, b) => b[0] - a[0]);
+    return out.slice(0, 40).map((x) => x[1]);
+  }
+  let sel = 0, results = [];
+  SMX.search = {
+    find,
+    reset() { INDEX = null; },
+    show(q) {
+      if (!q || !q.trim()) { SMX.closeLayer(); return; }
+      results = find(q); sel = 0;
+      const group = (kind, title) => { const list = results.filter((r) => r.kind === kind).slice(0, kind === 'setting' ? 12 : 6); if (!list.length) return ''; return `<div class="smx-find-group">${h(title)}</div>${list.map((r) => `<button type="button" class="smx-find-row" data-smx-go="${h(r.route)}"${r.reveal ? ` data-smx-reveal="${h(r.reveal)}"` : ''} data-smx-find="${results.indexOf(r)}"><span class="smx-find-title">${h(r.title)}</span><span class="smx-find-sub">${h(r.sub || '')}</span></button>`).join('')}`; };
+      const body = results.length ? group('page', 'Pages') + group('thing', 'Your things') + group('setting', 'Settings') : `<div class="smx-find-none">Nothing matches “${h(q)}”. Try an everyday word, like “phone”, “dark” or “spending”.</div>`;
+      SMX.openLayer('find', `<div class="smx-find" role="listbox" aria-label="Search results">${body}</div>`, 'smx-layer-find');
+      this.mark();
+    },
+    mark() { const L = SMX.layer(); if (!L) return; L.querySelectorAll('.smx-find-row').forEach((b, i) => b.classList.toggle('is-sel', i === sel)); },
+    key(e) {
+      const L = SMX.layer(); const rows = L ? [...L.querySelectorAll('.smx-find-row')] : [];
+      if (!rows.length) return;
+      if (e.key === 'ArrowDown') { sel = Math.min(rows.length - 1, sel + 1); this.mark(); rows[sel].scrollIntoView({ block: 'nearest' }); e.preventDefault(); }
+      else if (e.key === 'ArrowUp') { sel = Math.max(0, sel - 1); this.mark(); rows[sel].scrollIntoView({ block: 'nearest' }); e.preventDefault(); }
+      else if (e.key === 'Enter') { rows[sel].click(); SMX.query = ''; e.preventDefault(); }
+    }
+  };
+
+  /* ------------------------------------------------------------------ review panels (for the person judging the concept; not part of the design) */
+  const OLD = {
+    domains: { general: 'General', ai: 'AI & Providers', code: 'Code & Tools', memory: 'Memory & Automation', planning: 'Planning', source: 'Source Control', projects: 'Projects & Sync', safety: 'Safety & Permissions', system: 'System' },
+    ws: { 'app-input': 'App & Input', notifications: 'Notifications & Sounds', providers: 'Providers & Accounts', web: 'Web & Research', media: 'Media & Output', bsd: 'Back Seat Driver', 'editor-runtime': 'Editor & Terminal', toolchain: 'Toolchain', skills: 'Skills', plugins: 'Plugins', mcp: 'MCP Servers', commands: 'Commands & Shortcuts', testing: 'Testing & Debug', 'code-reference': 'Containers', 'context-memory': 'Context & Memory', goals: 'Goals & Automation', personas: 'Personas & Crews', 'planning-reference': 'Planning & Interviews', 'source-manager': 'Source Control', 'browser-scm': 'Browser & SCM', 'project-settings': 'All Project Settings', 'project-history': 'History & Artifacts', permissions: 'Permissions & Safety', 'settings-transfer': 'Settings Transfer', servers: 'Server & Project Location', backup: 'Backup & Restore', doctor: 'Readiness & Doctor', updates: 'App Updates', advanced: 'Advanced Settings' }
+  };
+  SMX.oldNames = OLD;
+  const pageName = (route) => { const m = SMX.match(route); if (!m) return route; const p = m.page; const c = SMX.chapters.find((x) => x.id === p.chapter); const ctx = { st: SMX.st(), local: SMX.local }; const nav = typeof p.nav === 'function' ? p.nav(ctx) : (p.nav || (typeof p.title === 'function' ? p.title(ctx) : p.title)); return p.id === p.chapter ? (c ? c.title : nav) : `${c ? c.title : ''} › ${nav}`; };
+  SMX.pageName = pageName;
+  SMX.movedList = () => {
+    const place = SMX.placement(); const rows = [];
+    for (const [id, rec] of place.claimed) {
+      const old = SMX.oldHome(id); if (!old) continue;
+      const s = kit().setting(id); let label = s ? s.label : id; try { label = kit().rowLabel(s) || label; } catch (e) { /* keep */ }
+      const oldName = `${OLD.ws[old.workspace] || old.workspace}${old.tab ? ' › ' + old.tab : ''}`;
+      const m = SMX.match(rec.route); const lg = m && m.page.legacy ? m.page.legacy : [];
+      const samePage = lg.some((l) => l[1] === old.workspace && (!l[2] || !old.tab || l[2] === old.tab));
+      const oldLevel = old.advanced ? 'folded' : 'shown'; const newLevel = rec.level === 'more' || rec.level === 'expert' ? 'folded' : 'shown';
+      rows.push({ id, label, oldWs: old.workspace, oldName, oldSection: old.section, oldLevel, route: rec.route, newName: pageName(rec.route), newSection: rec.section, level: rec.level, moved: !samePage, refolded: oldLevel !== newLevel });
+    }
+    return rows;
+  };
+  SMX.showChanges = () => {
+    if (SMX.layerOpen === 'changes') { SMX.closeLayer(); return; }
+    const m = SMX.match(SMX.route); if (!m) return;
+    const p = m.page; const ctx = { st: SMX.st(), local: SMX.local, params: m.params };
+    const list = typeof p.changes === 'function' ? p.changes(ctx) : (p.changes || []);
+    const title = typeof p.title === 'function' ? p.title(ctx) : p.title;
+    const moved = SMX.movedList().filter((r) => r.route === p.id && r.moved);
+    const body = (list.length ? `<ol class="smx-rv-list">${list.map((c) => `<li>${typeof c === 'string' ? `<div class="smx-rv-now">${c}</div>` : `<div class="smx-rv-was"><b>Today</b> ${c.was}</div><div class="smx-rv-now"><b>Here</b> ${c.now}</div>`}</li>`).join('')}</ol>` : '<p class="smx-rv-none">This page keeps what PMConcept7 has, in the new page shape.</p>')
+      + (moved.length ? `<h4 class="smx-rv-sub">Settings that came here from somewhere else (${moved.length})</h4><ul class="smx-rv-moved">${moved.slice(0, 80).map((r) => `<li><span>${h(r.label)}</span><small>from ${h(r.oldName)}${r.oldSection ? ' › ' + h(r.oldSection) : ''}</small></li>`).join('')}</ul>` : '');
+    SMX.openLayer('changes', `<aside class="smx-rv" aria-label="What changed on this page"><header><div><div class="smx-rv-eyebrow">Review notes · not part of the design</div><h3>What changed on “${h(title)}”</h3></div><button type="button" class="btn small pm51-btn" data-smx-do="close-layer">Close</button></header><div class="smx-rv-body">${body}</div></aside>`, 'smx-layer-rv');
+  };
+  SMX.showMoved = () => {
+    if (SMX.layerOpen === 'moved') { SMX.closeLayer(); return; }
+    const rows = SMX.movedList(); const cov = SMX.coverage();
+    const moved = rows.filter((r) => r.moved);
+    const byOld = {};
+    for (const r of moved) (byOld[r.oldName] = byOld[r.oldName] || []).push(r);
+    const groups = Object.keys(byOld).sort().map((k) => `<details class="smx-rv-group"><summary><span>${h(k)}</span><small>${byOld[k].length} moved</small></summary><table class="smx-rv-table"><tbody>${byOld[k].map((r) => `<tr><td>${h(r.label)}<small>${h(r.id)}</small></td><td>${h(r.oldSection || '')}</td><td><button type="button" class="pm51-link" data-smx-go="${h(r.route)}" data-smx-reveal="${h(r.id)}">${h(r.newName)}</button>${r.newSection ? `<small>${h(r.newSection)}${r.level === 'more' ? ' · More options' : r.level === 'expert' ? ' · For experts' : ''}</small>` : ''}</td></tr>`).join('')}</tbody></table></details>`).join('');
+    const refold = rows.filter((r) => !r.moved && r.refolded).length;
+    const head = `<p class="smx-rv-totals"><b>${cov.total}</b> settings in PMConcept7. <b>${cov.placed}</b> have a place in the redesign${cov.missing.length ? `, <em>${cov.missing.length} still have none</em>` : ', none are missing'}${cov.twice.length ? `, <em>${cov.twice.length} are drawn twice</em>` : ''}. <b>${moved.length}</b> moved to a different page; <b>${refold}</b> stayed on their page but changed between shown and folded away.</p>`;
+    const miss = cov.missing.length ? `<details class="smx-rv-group" open><summary><span>Not placed yet</span><small>${cov.missing.length}</small></summary><ul class="smx-rv-moved">${cov.missing.map((id) => `<li><span>${h(id)}</span></li>`).join('')}</ul></details>` : '';
+    SMX.openLayer('moved', `<aside class="smx-rv smx-rv-wide" aria-label="Everything that moved"><header><div><div class="smx-rv-eyebrow">Review notes · not part of the design</div><h3>Everything that moved</h3></div><button type="button" class="btn small pm51-btn" data-smx-do="close-layer">Close</button></header><div class="smx-rv-body">${head}${miss}${groups}</div></aside>`, 'smx-layer-rv');
+  };
+  SMX.act('close-layer', () => SMX.closeLayer());
+  SMX.act('toggle', (el) => { const k = el.getAttribute('data-flag'); SMX.local.flags[k] = !SMX.local.flags[k]; });
+})(window);

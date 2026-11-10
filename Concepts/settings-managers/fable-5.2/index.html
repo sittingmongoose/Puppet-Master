@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en" data-theme="basic-dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Settings managers, rethought · Fable 5.2</title>
+<link rel="icon" href="data:,">
+<style>
+  html, body { margin: 0; height: 100%; background: #101012; overflow: hidden; font: 500 12px/1.2 Inter, system-ui, sans-serif; color: #e6e6ea; }
+  :root { --dock-h: 92px; }
+  /* the review strip sits under PMConcept7, so the page being judged keeps the whole window above it */
+  .rv-dock { position: fixed; inset: auto 0 0 0; height: var(--dock-h); box-sizing: border-box; display: grid; grid-template-rows: 42px 1fr; background: #18181b; border-top: 1px solid #2a2a30; z-index: 3; }
+  .rv-bar { display: flex; align-items: center; gap: 8px; padding: 0 12px; white-space: nowrap; overflow-x: auto; scrollbar-width: none; }
+  .rv-bar b { font-weight: 650; }
+  .rv-lab { color: #9a9aa4; font-weight: 550; }
+  .rv-model { padding: 3px 6px; border-radius: 6px; background: rgba(255, 255, 255, .08); color: #b9b9c2; }
+  .rv-sep { width: 1px; align-self: stretch; margin: 10px 2px; background: #2e2e35; flex: none; }
+  .rv-seg { display: inline-flex; padding: 2px; gap: 2px; border-radius: 8px; background: #222226; border: 1px solid #2e2e35; }
+  .rv-seg button { font: inherit; color: #c9c9d1; background: transparent; border: 0; border-radius: 6px; padding: 5px 9px; cursor: pointer; }
+  .rv-seg button:hover { background: rgba(255, 255, 255, .07); color: #fff; }
+  .rv-seg button[aria-pressed="true"] { background: #e6e6ea; color: #111; }
+  .rv-seg button kbd { font: 600 10px/1 ui-monospace, monospace; opacity: .55; margin-left: 4px; }
+  .rv-bar select, .rv-bar .rv-btn { font: inherit; color: inherit; background: #222226; border: 1px solid #2e2e35; border-radius: 7px; padding: 5px 8px; cursor: pointer; }
+  .rv-bar select:hover, .rv-bar .rv-btn:hover { background: #2a2a2f; }
+  .rv-bar .rv-btn[aria-expanded="true"] { background: #e6e6ea; color: #111; }
+  .rv-bar select:disabled { opacity: .6; cursor: progress; }
+  #goto { width: 232px; }
+  .rv-bar label.rv-check { display: inline-flex; align-items: center; gap: 5px; color: #c9c9d1; cursor: pointer; }
+  .rv-bar :focus-visible { outline: 2px solid #7aa7ff; outline-offset: 1px; }
+  .rv-note { padding: 7px 14px 0; color: #b4b4bd; line-height: 1.45; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; border-top: 1px solid #222228; }
+  .rv-note b { color: #fff; font-weight: 650; }
+  .rv-note em { font-style: normal; color: #ffd27a; }
+  .rv-stage { position: fixed; inset: 0 0 var(--dock-h) 0; display: flex; justify-content: center; background: #0b0b0d; }
+  #pm7 { display: block; height: 100%; width: 100%; border: 0; background: #1e1e1e; transition: width .2s ease; }
+  .rv-wait { position: fixed; inset: 0 0 var(--dock-h) 0; display: grid; place-items: center; color: #8d8d96; pointer-events: none; z-index: 2; }
+  @media (prefers-reduced-motion: reduce) { #pm7 { transition: none; } }
+</style>
+</head>
+<body>
+<div class="rv-stage"><iframe id="pm7" title="PMConcept7 with the redesigned Settings managers" src="../../PMConcept7.html?o55=off"></iframe></div>
+<div class="rv-wait" id="wait">Loading PMConcept7…</div>
+<div class="rv-dock">
+  <div class="rv-bar" role="toolbar" aria-label="The review">
+    <b>Settings managers, rethought</b><span class="rv-model" data-concept-model="Fable 5.2">Fable 5.2</span>
+    <span class="rv-sep" aria-hidden="true"></span>
+    <div class="rv-seg" id="view" role="group" aria-label="Which Settings to show">
+      <button type="button" data-v="new" aria-pressed="true">Redesign<kbd>R</kbd></button>
+      <button type="button" data-v="today" aria-pressed="false">Today<kbd>T</kbd></button>
+    </div>
+    <span class="rv-sep" aria-hidden="true"></span>
+    <span class="rv-lab">Go to</span>
+    <select id="goto" aria-label="Go to a page of the redesign"><option value="">Pages…</option></select>
+    <button type="button" class="rv-btn" id="changes" aria-expanded="false">What changed here</button>
+    <button type="button" class="rv-btn" id="moved" aria-expanded="false">Everything that moved</button>
+    <span class="rv-sep" aria-hidden="true"></span>
+    <span class="rv-lab">Look</span>
+    <select id="look" aria-label="Look">
+      <option value="basic-dark">Basic Dark</option><option value="basic-light">Basic Light</option>
+      <option value="friendly-dark">Friendly Dark</option><option value="friendly-light">Friendly Light</option>
+      <option value="retro-dark">Retro Dark</option><option value="retro-light">Retro Light</option>
+      <option value="glass-dark">Glass Dark</option><option value="glass-light">Glass Light</option>
+      <option value="nier-dark">NieR Dark</option><option value="nier-light">NieR Light</option>
+    </select>
+    <span class="rv-lab">Window</span>
+    <select id="width" aria-label="Window width">
+      <option value="">Full</option><option value="1920">1920</option><option value="1280">1280</option><option value="1024">1024</option><option value="860">860</option>
+    </select>
+    <label class="rv-check"><input type="checkbox" id="reduced"> Reduced motion</label>
+    <span class="rv-sep" aria-hidden="true"></span>
+    <button type="button" class="rv-btn" id="reset">Reset demo</button>
+  </div>
+  <div class="rv-note" id="note" aria-live="polite"></div>
+</div>
+<script src="concept-hub-bridge.js"></script>
+<script>
+(function () {
+  'use strict';
+  /* This page and PMConcept7 talk only by message. Served (the Concept Hub, a local server), the two share an origin and
+     this page also adds the layer to PMConcept7. In the single file the layer is already inside, and a sandboxed preview
+     (T3's file preview) gives PMConcept7 an origin of its own, where reaching into it fails; messages cross that line. */
+  const frame = document.getElementById('pm7');
+  const base = new URL('./', location.href);
+  const STEPS = [
+    ['css', 'layer/smx.css'], ['js', 'layer/smx-core.js'], ['js', 'layer/smx-parts.js'], ['js', 'layer/smx-ia.js'], ['js', 'layer/smx-plan.js'],
+    ['js', 'layer/pages/home.js'], ['js', 'layer/pages/computers.js'], ['js', 'layer/pages/ai.js'],
+    ['js', 'layer/pages/look.js'], ['js', 'layer/pages/assistant.js'], ['js', 'layer/pages/notifications.js'],
+    ['js', 'layer/pages/memory.js'], ['js', 'layer/pages/code.js'], ['js', 'layer/pages/source.js'],
+    ['js', 'layer/pages/safety.js'], ['js', 'layer/pages/keeping.js'], ['js', 'layer/pages/system.js'],
+    ['css', 'layer/smx-customizers.css'], ['js', 'layer/smx-customizers.js'],
+    ['js', 'layer/smx-boot.js']
+  ].map(([k, p]) => [k, new URL(p, base).href]);
+
+  const UI = { view: 'new', route: '', note: '' };
+  const $ = (id) => document.getElementById(id);
+  let live = false;
+  const send = (msg) => { try { frame.contentWindow.postMessage(Object.assign({ source: 'smx-host' }, msg), '*'); } catch (e) { /* not there yet */ } };
+
+  const TODAY_NOTE = '<b>Today.</b> PMConcept7’s own Settings, untouched, for comparison. Press <b>R</b> or pick Redesign to come back to the same place.';
+  function paint() {
+    document.querySelectorAll('#view button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.v === UI.view)));
+    $('note').innerHTML = UI.view === 'today' ? TODAY_NOTE : (UI.note || '<b>The redesign.</b> Every manager opens on a plain summary, the things you have, and the few tasks people come for. Nothing was removed: “Everything that moved” lists where each setting and action went.');
+    $('goto').disabled = UI.view === 'today';
+    $('changes').disabled = UI.view === 'today';
+  }
+
+  /* PMConcept7 keeps the project's Settings in localStorage and the demo changes them, so the values found on arrival
+     are put back when this page closes. */
+  const KEY = /^pm7:settings:|^pm\.o55\.onboarding\.v1$|^pm7:|^pm6:|^pm:/;
+  const SNAP = {};
+  try { for (let i = 0; i < localStorage.length; i++) { const k = localStorage.key(i); if (KEY.test(k)) SNAP[k] = localStorage.getItem(k); } } catch (e) { /* storage may be off */ }
+  window.addEventListener('pagehide', () => {
+    try {
+      const now = []; for (let i = 0; i < localStorage.length; i++) now.push(localStorage.key(i));
+      now.forEach((k) => { if (KEY.test(k) && !(k in SNAP)) localStorage.removeItem(k); });
+      Object.keys(SNAP).forEach((k) => { if (localStorage.getItem(k) !== SNAP[k]) localStorage.setItem(k, SNAP[k]); });
+    } catch (e) { /* ignore */ }
+  });
+
+  // served: add the layer to PMConcept7 once its shell is there (skipped when the layer is inside already, or out of reach)
+  function inject() {
+    let d = null;
+    try { d = frame.contentDocument; } catch (e) { d = null; }
+    if (!d || !d.documentElement || d.documentElement.hasAttribute('data-smx-layer')) return;
+    const W = frame.contentWindow;
+    if (!(W.PMG && W.PM_PAGES && W.PM51 && W.PM12_KIMI && d.getElementById('panel-settings') && d.getElementById('pm-settings-root'))) { setTimeout(inject, 150); return; }
+    d.documentElement.setAttribute('data-smx-layer', 'loading');
+    let i = 0;
+    const next = () => {
+      if (i >= STEPS.length) return;
+      const [kind, url] = STEPS[i++];
+      const el = d.createElement(kind === 'css' ? 'link' : 'script');
+      if (kind === 'css') { el.rel = 'stylesheet'; el.href = url; } else el.src = url;
+      el.onload = next;
+      el.onerror = () => { console.error('Settings managers concept: could not load', url); next(); };
+      (kind === 'css' ? d.head : d.body).appendChild(el);
+    };
+    next();
+  }
+  frame.addEventListener('load', () => { live = false; inject(); });
+
+  // until the layer answers, ask every 300 ms whether it is there (it may have spoken before this page was listening)
+  setInterval(() => { if (!live) send({ cmd: 'hello' }); }, 300);
+
+  window.addEventListener('message', (ev) => {
+    const m = ev.data;
+    if (!m || typeof m !== 'object') return;
+    if (m.source === 'smx' && ev.source === frame.contentWindow) {
+      if (m.type === 'ready' && !live) {
+        live = true;
+        const w = $('wait'); if (w) w.remove();
+        if (m.pages) {
+          const sel = $('goto'); sel.length = 1;
+          let group = null, last = '';
+          m.pages.forEach((p) => { if (p.group !== last) { group = document.createElement('optgroup'); group.label = p.group; sel.appendChild(group); last = p.group; } const o = document.createElement('option'); o.value = p.route; o.textContent = p.title; group.appendChild(o); });
+        }
+        if ($('reduced').checked) send({ cmd: 'motion', reduced: true });
+        if ($('look').value !== 'basic-dark' && m.state && m.state.look !== $('look').value) send({ cmd: 'look', look: $('look').value });
+      }
+      const s = m.state;
+      if (s) {
+        if (s.look && m.type !== 'look-done' && !$('look').disabled) $('look').value = s.look;
+        if (s.view) UI.view = s.view;
+        if (typeof s.note === 'string') UI.note = s.note;
+        if (typeof s.route === 'string') UI.route = s.route;
+        $('changes').setAttribute('aria-expanded', String(!!s.changesOpen));
+        $('moved').setAttribute('aria-expanded', String(!!s.movedOpen));
+        paint();
+        if (m.type === 'look-done') { $('look').disabled = false; if (s.look) $('look').value = s.look; }
+      }
+      return;
+    }
+    // the Concept Hub's look and reduced motion reach PMConcept7 inside
+    if (m.source === 'pm-concept-hub' && m.type === 'pm-concept-state' && m.state) {
+      $('reduced').checked = !!m.state.reducedMotion;
+      send({ cmd: 'motion', reduced: !!m.state.reducedMotion });
+      if (m.state.theme && m.state.theme !== $('look').value) { $('look').value = m.state.theme; send({ cmd: 'look', look: m.state.theme }); }
+    }
+  });
+
+  $('view').addEventListener('click', (e) => { const b = e.target.closest('button[data-v]'); if (!b) return; UI.view = b.dataset.v; paint(); send({ cmd: 'view', view: UI.view }); });
+  $('goto').addEventListener('change', (e) => { const v = e.target.value; if (!v) return; send({ cmd: 'go', route: v }); setTimeout(() => { e.target.value = ''; }, 0); });
+  $('changes').addEventListener('click', () => send({ cmd: 'changes' }));
+  $('moved').addEventListener('click', () => send({ cmd: 'moved' }));
+  $('reset').addEventListener('click', () => send({ cmd: 'reset' }));
+  $('look').addEventListener('change', (e) => { e.target.disabled = true; send({ cmd: 'look', look: e.target.value }); setTimeout(() => { e.target.disabled = false; }, 6000); });
+  $('width').addEventListener('change', (e) => { frame.style.width = e.target.value ? e.target.value + 'px' : '100%'; });
+  $('reduced').addEventListener('change', (e) => send({ cmd: 'motion', reduced: e.target.checked }));
+  document.addEventListener('keydown', (e) => {
+    if (e.ctrlKey || e.metaKey || e.altKey || /input|select|textarea/i.test((e.target && e.target.tagName) || '')) return;
+    if (e.key === 'r' || e.key === 'R') { UI.view = 'new'; paint(); send({ cmd: 'view', view: 'new' }); }
+    if (e.key === 't' || e.key === 'T') { UI.view = 'today'; paint(); send({ cmd: 'view', view: 'today' }); }
+  });
+  paint();
+  window.SMX_HOST = { frame, UI, send, isLive: () => live };
+})();
+</script>
+</body>
+</html>

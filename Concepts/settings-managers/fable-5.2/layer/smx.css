@@ -1,0 +1,281 @@
+/* Settings managers, rethought (Fable 5.2): styles of the redesigned Settings view.
+   Colours, radii, shadows and motion come only from the Settings tokens of the look in use (--k3-*), so all ten looks
+   follow without a rule per look. Shapes keep PMConcept7's rules: no pills, no one-sided stripes, a word beside every
+   status mark, text at least 11px. Layout answers to the width of the Settings area (container queries), never to the
+   window. */
+
+/* ---- the two views ------------------------------------------------------------------------------------------- */
+#pm-settings-root.smx-on { position: relative; }
+#pm-settings-root.smx-on > .pm-shell { visibility: hidden; pointer-events: none; }
+#pm-settings-root:not(.smx-on) > #smx-root { display: none; }
+
+#smx-root { position: absolute; inset: 0; z-index: 3; display: grid; grid-template-columns: 252px minmax(0, 1fr); container: smx / inline-size;
+  color: var(--k3-text-1); font-size: 12.5px; line-height: 1.45; text-align: left; }
+#smx-root *, #smx-root *::before, #smx-root *::after { box-sizing: border-box; }
+#smx-root button { font: inherit; }
+
+/* ---- navigation: one column, chapters with their pages ------------------------------------------------------- */
+#smx-root .smx-nav { position: relative; width: auto; height: 100%; min-height: 0; display: flex; flex-direction: column; gap: 0; overflow: hidden; padding: 0; margin: 0; }
+#smx-root .smx-nav-head { padding: 14px 16px 8px; }
+#smx-root .smx-nav-title { font-size: 18px; font-weight: 700; letter-spacing: -.01em; color: var(--k3-text-1); }
+#smx-root .smx-nav-sub { margin-top: 2px; font-size: 11.5px; color: var(--k3-text-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#smx-root .smx-search { display: flex; align-items: center; gap: 8px; margin: 4px 12px 8px; padding: 0 10px; height: 34px; border: 1px solid var(--k3-line); border-radius: var(--k3-radius-md); background: var(--k3-surface-1); color: var(--k3-text-3); }
+#smx-root .smx-search:focus-within { border-color: var(--k3-accent); }
+#smx-root .smx-search .icon { width: 15px; height: 15px; flex: none; }
+#smx-root .smx-search .icon svg { width: 15px; height: 15px; stroke: currentColor; }
+#smx-root .smx-search input { flex: 1; min-width: 0; height: 100%; border: 0; outline: 0; background: transparent; color: var(--k3-text-1); font: inherit; }
+#smx-root .smx-search input::placeholder { color: var(--k3-text-3); opacity: 1; }
+#smx-root .smx-nav-list { flex: 1; min-height: 0; overflow-y: auto; padding: 2px 8px 18px; scrollbar-width: thin; }
+#smx-root .smx-nav-group { margin: 14px 8px 4px; font-size: 11px; font-weight: 650; letter-spacing: .06em; text-transform: uppercase; color: var(--k3-text-3); }
+#smx-root .smx-nav-item { display: flex; align-items: center; gap: 10px; width: 100%; min-height: 34px; padding: 6px 8px; border: 0; border-radius: var(--k3-radius-md); background: transparent; color: var(--k3-text-2); text-align: left; cursor: pointer; }
+#smx-root .smx-nav-item > span:not(.icon):not(.smx-nav-mark) { flex: 1; min-width: 0; font-size: 13px; font-weight: 550; }
+#smx-root .smx-nav-item .icon, #smx-root .smx-nav-item .icon svg { width: 17px; height: 17px; flex: none; }
+#smx-root .smx-nav-item .icon svg { stroke: currentColor; }
+#smx-root .smx-nav-item:hover { background: var(--k3-accent-soft-2); color: var(--k3-text-1); }
+#smx-root .smx-nav-item.is-open { color: var(--k3-text-1); }
+#smx-root .smx-nav-item.is-current { background: var(--k3-accent-soft); color: var(--k3-text-1); }
+#smx-root .smx-nav-item.is-current > span:not(.icon):not(.smx-nav-mark) { font-weight: 650; }
+#smx-root .smx-nav-mark { width: 7px; height: 7px; flex: none; border-radius: 50%; background: var(--k3-amber); }
+#smx-root .smx-nav-mark.tone-blocked { background: var(--k3-red); }
+#smx-root .smx-nav-mark.tone-info { background: var(--k3-blue, var(--k3-accent)); }
+#smx-root .smx-nav-pages { display: grid; gap: 1px; margin: 2px 0 6px 17px; padding-left: 10px; border-left: 1px solid var(--k3-line); }
+#smx-root .smx-nav-page { display: block; width: 100%; padding: 5px 8px; border: 0; border-radius: var(--k3-radius-sm); background: transparent; color: var(--k3-text-2); font-size: 12.5px; text-align: left; cursor: pointer; }
+#smx-root .smx-nav-page:hover { background: var(--k3-accent-soft-2); color: var(--k3-text-1); }
+#smx-root .smx-nav-page.is-current { background: var(--k3-accent-soft); color: var(--k3-text-1); font-weight: 650; }
+#smx-root :is(.smx-nav-item, .smx-nav-page, .smx-task, .smx-thing, .smx-page-row, .smx-word, .smx-crumb, .smx-back, .smx-find-row):focus-visible { outline: 2px solid var(--k3-accent); outline-offset: 1px; }
+
+/* ---- the page -------------------------------------------------------------------------------------------------- */
+#smx-root .smx-main { position: relative; min-width: 0; height: 100%; min-height: 0; display: block; padding: 0; margin: 0; overflow: hidden; }
+#smx-root .smx-scroll { height: 100%; overflow-y: auto; overflow-x: hidden; padding: 18px 28px 72px; scrollbar-gutter: stable; outline: 0; }
+#smx-root .smx-page { width: 100%; max-width: 940px; margin: 0 auto; display: block; height: auto; min-height: 0; background: transparent; color: var(--k3-text-1); font-size: 12.5px; }
+#smx-root .smx-page.is-wide { max-width: 1180px; }
+#smx-root .smx-crumbs { display: flex; align-items: center; flex-wrap: wrap; gap: 4px; margin: 0 0 8px -6px; font-size: 12px; color: var(--k3-text-3); }
+#smx-root .smx-back { display: inline-grid; place-items: center; width: 28px; height: 28px; border: 1px solid var(--k3-line); border-radius: var(--k3-radius-sm); background: var(--k3-surface-1); color: var(--k3-text-2); cursor: pointer; margin-right: 4px; }
+#smx-root .smx-back:hover { color: var(--k3-text-1); border-color: var(--k3-line-strong); background: var(--k3-accent-soft-2); }
+#smx-root .smx-back .icon, #smx-root .smx-back svg { width: 15px; height: 15px; stroke: currentColor; }
+#smx-root .smx-crumb { border: 0; background: transparent; color: var(--k3-accent-ink, var(--k3-accent)); padding: 2px 4px; border-radius: var(--k3-radius-sm); cursor: pointer; }
+#smx-root .smx-crumb:hover { text-decoration: underline; }
+#smx-root .smx-crumb-here { padding: 2px 4px; color: var(--k3-text-2); }
+#smx-root .smx-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin: 2px 0 16px; }
+#smx-root .smx-title { margin: 0; font-size: 22px; line-height: 1.2; font-weight: 700; letter-spacing: -.015em; color: var(--k3-text-1); }
+#smx-root .smx-purpose { margin: 5px 0 0; max-width: 68ch; font-size: 13px; color: var(--k3-text-2); }
+#smx-root .smx-head-side { flex: none; display: flex; align-items: center; gap: 8px; }
+#smx-root .smx-blocks { display: grid; gap: 14px; }
+#smx-root .smx-block { min-width: 0; }
+#smx-root .smx-block > div[data-smx-anchor] { display: grid; gap: 14px; }
+#smx-root .smx-kicker { margin: 4px 0 8px; font-size: 11px; font-weight: 650; letter-spacing: .06em; text-transform: uppercase; color: var(--k3-text-3); }
+#smx-root .smx-flash { animation: smxFlash 1.6s var(--k3-ease-out, ease-out) 1; }
+@keyframes smxFlash { 0%, 55% { background: var(--k3-accent-soft); } 100% { background: transparent; } }
+
+/* the kit's cards and rows inside the redesigned page: they bring their own look; these only settle spacing */
+#smx-root .smx-page .panel-card.pm51-section { margin: 0; }
+#smx-root .smx-page .pm51-quiet.smx-links { margin-top: 2px; }
+
+/* ---- the summary: what is set up, in a sentence or two --------------------------------------------------------- */
+#smx-root .smx-summary { display: flex; align-items: flex-start; gap: 14px; padding: 16px 18px; border: 1px solid var(--k3-line); border-radius: var(--k3-radius-lg); background: var(--k3-surface-1); }
+#smx-root .smx-summary-icon { flex: none; display: grid; place-items: center; width: 40px; height: 40px; border-radius: var(--k3-radius-md); background: var(--k3-accent-soft); color: var(--k3-accent-ink, var(--k3-accent)); }
+#smx-root .smx-summary.tone-attention .smx-summary-icon { background: var(--k3-amber-soft, var(--k3-accent-soft)); color: var(--k3-amber); }
+#smx-root .smx-summary.tone-blocked .smx-summary-icon { background: var(--k3-red-soft, var(--k3-accent-soft)); color: var(--k3-red); }
+#smx-root .smx-summary-icon .icon, #smx-root .smx-summary-icon svg { width: 21px; height: 21px; stroke: currentColor; }
+#smx-root .smx-summary-copy { flex: 1; min-width: 0; }
+#smx-root .smx-summary-lead { margin: 0; font-size: 15px; line-height: 1.5; color: var(--k3-text-1); }
+#smx-root .smx-summary-line { margin: 5px 0 0; font-size: 13px; line-height: 1.5; color: var(--k3-text-2); }
+#smx-root .smx-summary strong { font-weight: 650; color: var(--k3-text-1); }
+#smx-root .smx-summary-side { flex: none; display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+#smx-root .smx-word { display: inline; padding: 0 1px; border: 0; background: transparent; color: var(--k3-accent-ink, var(--k3-accent)); font: inherit; font-weight: 650; text-decoration: underline; text-decoration-style: dotted; text-underline-offset: 3px; cursor: pointer; border-radius: 3px; }
+#smx-root .smx-word:hover { text-decoration-style: solid; background: var(--k3-accent-soft-2); }
+
+/* ---- what needs you ---------------------------------------------------------------------------------------------- */
+#smx-root .smx-needs { border: 1px solid var(--k3-line-strong); border-radius: var(--k3-radius-lg); background: var(--k3-surface-1); overflow: hidden; }
+#smx-root .smx-needs-title { display: flex; align-items: center; gap: 8px; margin: 0; padding: 11px 16px; font-size: 13px; font-weight: 650; color: var(--k3-amber); border-bottom: 1px solid var(--k3-line); }
+#smx-root .smx-needs-title .icon, #smx-root .smx-needs-title svg { width: 16px; height: 16px; stroke: currentColor; }
+#smx-root .smx-need { display: flex; align-items: center; gap: 12px; padding: 11px 16px; }
+#smx-root .smx-need + .smx-need { border-top: 1px solid var(--k3-line); }
+#smx-root .smx-need-copy { flex: 1; min-width: 0; }
+#smx-root .smx-need-title { font-size: 13px; font-weight: 600; color: var(--k3-text-1); }
+#smx-root .smx-need-detail { margin-top: 2px; font-size: 12px; color: var(--k3-text-2); }
+
+/* ---- tasks ------------------------------------------------------------------------------------------------------- */
+#smx-root .smx-task-grid { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+#smx-root .smx-task { display: flex; align-items: center; gap: 12px; min-height: 62px; padding: 11px 12px; border: 1px solid var(--k3-line); border-radius: var(--k3-radius-lg); background: var(--k3-surface-1); color: var(--k3-text-1); text-align: left; cursor: pointer; transition: border-color var(--k3-dur-fast, .12s), background var(--k3-dur-fast, .12s); }
+#smx-root .smx-task:hover { border-color: var(--k3-accent); background: var(--k3-accent-soft-2); }
+#smx-root .smx-task-icon { flex: none; display: grid; place-items: center; width: 34px; height: 34px; border-radius: var(--k3-radius-md); background: var(--k3-accent-soft); color: var(--k3-accent-ink, var(--k3-accent)); }
+#smx-root .smx-task-icon .icon, #smx-root .smx-task-icon svg { width: 18px; height: 18px; stroke: currentColor; }
+#smx-root .smx-task-copy { flex: 1; min-width: 0; display: grid; gap: 1px; }
+#smx-root .smx-task-title { font-size: 13px; font-weight: 600; }
+#smx-root .smx-task-sub { font-size: 11.5px; color: var(--k3-text-3); }
+#smx-root .smx-task-go { flex: none; color: var(--k3-text-3); }
+#smx-root .smx-task-go .icon, #smx-root .smx-task-go svg { width: 15px; height: 15px; stroke: currentColor; }
+#smx-root .smx-task:hover .smx-task-go { color: var(--k3-accent-ink, var(--k3-accent)); }
+
+/* ---- things and pages: lists you can open ------------------------------------------------------------------------ */
+#smx-root .smx-things-card > .pm51-section-body { padding-top: 0; }
+#smx-root .smx-things, #smx-root .smx-page-list { display: grid; }
+#smx-root .smx-page-list { border: 1px solid var(--k3-line); border-radius: var(--k3-radius-lg); background: var(--k3-surface-1); overflow: hidden; }
+#smx-root .smx-thing, #smx-root .smx-page-row { display: flex; align-items: center; gap: 12px; width: 100%; min-height: 54px; padding: 9px 4px; border: 0; background: transparent; color: var(--k3-text-1); text-align: left; }
+#smx-root .smx-page-row { padding: 10px 14px; cursor: pointer; }
+#smx-root .smx-thing + .smx-thing, #smx-root .smx-page-row + .smx-page-row { border-top: 1px solid var(--k3-line); }
+#smx-root .smx-thing.is-clickable { cursor: pointer; border-radius: var(--k3-radius-sm); }
+#smx-root .smx-thing.is-clickable:hover, #smx-root .smx-page-row:hover { background: var(--k3-accent-soft-2); }
+#smx-root .smx-thing-avatar, #smx-root .smx-page-icon { flex: none; display: grid; place-items: center; width: 36px; height: 36px; border: 1px solid var(--k3-line); border-radius: var(--k3-radius-md); background: var(--k3-surface-0, transparent); color: var(--k3-accent-ink, var(--k3-accent)); font-size: 12px; font-weight: 700; }
+#smx-root .smx-thing-avatar .icon, #smx-root .smx-thing-avatar svg, #smx-root .smx-page-icon .icon, #smx-root .smx-page-icon svg { width: 18px; height: 18px; stroke: currentColor; }
+#smx-root .smx-thing-copy, #smx-root .smx-page-copy { flex: 1; min-width: 0; display: grid; gap: 1px; }
+#smx-root .smx-thing-name, #smx-root .smx-page-name { font-size: 13px; font-weight: 600; color: var(--k3-text-1); }
+#smx-root .smx-thing-tag { margin-left: 6px; font-size: 11px; font-weight: 550; color: var(--k3-text-3); }
+#smx-root .smx-thing-sub, #smx-root .smx-page-blurb { font-size: 11.5px; color: var(--k3-text-3); overflow: hidden; text-overflow: ellipsis; }
+#smx-root .smx-thing-meters { display: grid; gap: 6px; margin-top: 6px; max-width: 420px; }
+#smx-root .smx-thing-end, #smx-root .smx-page-end { flex: none; display: flex; align-items: center; gap: 10px; color: var(--k3-text-3); }
+#smx-root .smx-thing-go .icon, #smx-root .smx-thing-go svg { width: 15px; height: 15px; stroke: currentColor; }
+#smx-root .smx-empty { display: grid; justify-items: center; gap: 6px; padding: 22px 12px; text-align: center; color: var(--k3-text-3); }
+#smx-root .smx-empty .icon, #smx-root .smx-empty svg { width: 20px; height: 20px; stroke: currentColor; }
+#smx-root .smx-empty-title { font-size: 13px; font-weight: 600; color: var(--k3-text-1); }
+#smx-root .smx-empty-text { font-size: 12px; max-width: 52ch; }
+
+/* ---- a sentence that holds real controls ------------------------------------------------------------------------- */
+#smx-root .smx-sentence { display: flex; align-items: center; flex-wrap: wrap; gap: 6px 8px; font-size: 13.5px; line-height: 1.6; color: var(--k3-text-1); }
+#smx-root .smx-sentence .o55-bound-select { display: inline-flex; }
+#smx-root .smx-sentence + .smx-sentence { margin-top: 10px; }
+#smx-root .smx-sentence-note { margin: 8px 0 0; font-size: 12px; color: var(--k3-text-3); }
+
+/* ---- folded-away settings (the kit's own "More options" shape) ---------------------------------------------------- */
+#smx-root details.smx-fold { border: 1px dashed var(--k3-line-strong); border-radius: var(--k3-radius-lg); background: transparent; }
+#smx-root details.smx-fold > summary { display: flex; align-items: center; gap: 10px; min-height: 44px; padding: 8px 14px; cursor: pointer; list-style: none; color: var(--k3-text-2); }
+#smx-root details.smx-fold > summary::-webkit-details-marker { display: none; }
+#smx-root details.smx-fold > summary .icon, #smx-root details.smx-fold > summary svg { width: 15px; height: 15px; stroke: currentColor; }
+#smx-root details.smx-fold > summary .icon { transition: transform var(--k3-dur-fast, .12s); }
+#smx-root details.smx-fold[open] > summary .icon { transform: rotate(90deg); }
+#smx-root .smx-fold-label { font-size: 13px; font-weight: 600; color: var(--k3-text-1); }
+#smx-root .smx-fold-help { font-size: 12px; color: var(--k3-text-3); }
+#smx-root .smx-fold-body { display: grid; gap: 14px; padding: 4px 12px 14px; }
+#smx-root details.smx-fold-expert > summary .smx-fold-label::after { content: ''; }
+
+/* ---- the layer above the page: search results and the review panels ------------------------------------------------ */
+#smx-root .smx-layer { position: absolute; inset: 0; z-index: 8; pointer-events: none; display: none; }
+#smx-root .smx-layer.is-open { display: block; }
+#smx-root .smx-layer > * { pointer-events: auto; }
+#smx-root .smx-find { position: absolute; top: 96px; left: 12px; width: min(440px, calc(100% - 24px)); max-height: min(560px, calc(100% - 120px)); overflow-y: auto; padding: 6px; border: 1px solid var(--k3-line-strong); border-radius: var(--k3-radius-lg); background: var(--k3-surface-1); box-shadow: var(--k3-shadow-lg, var(--k3-shadow-md)); }
+html[data-theme^="glass"] #smx-root .smx-find, html[data-theme^="glass"] #smx-root .smx-rv { background: var(--k3-bg-0); }
+#smx-root .smx-find-group { padding: 8px 8px 4px; font-size: 11px; font-weight: 650; letter-spacing: .06em; text-transform: uppercase; color: var(--k3-text-3); }
+#smx-root .smx-find-row { display: grid; gap: 1px; width: 100%; padding: 7px 8px; border: 0; border-radius: var(--k3-radius-sm); background: transparent; color: var(--k3-text-1); text-align: left; cursor: pointer; }
+#smx-root .smx-find-row:hover, #smx-root .smx-find-row.is-sel { background: var(--k3-accent-soft); }
+#smx-root .smx-find-title { font-size: 13px; font-weight: 600; }
+#smx-root .smx-find-sub { font-size: 11.5px; color: var(--k3-text-3); }
+#smx-root .smx-find-none { padding: 16px 12px; font-size: 12.5px; color: var(--k3-text-2); }
+
+#smx-root .smx-layer-rv { background: color-mix(in srgb, var(--k3-bg-0) 55%, transparent); pointer-events: auto; }
+#smx-root .smx-rv { position: absolute; top: 0; right: 0; bottom: 0; width: min(460px, 100%); display: flex; flex-direction: column; border-left: 1px solid var(--k3-line-strong); background: var(--k3-surface-1); box-shadow: var(--k3-shadow-lg, var(--k3-shadow-md)); }
+#smx-root .smx-rv.smx-rv-wide { width: min(860px, 100%); }
+#smx-root .smx-rv > header { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; padding: 14px 16px; border-bottom: 1px solid var(--k3-line); }
+#smx-root .smx-rv-eyebrow { font-size: 11px; font-weight: 650; letter-spacing: .06em; text-transform: uppercase; color: var(--k3-amber); }
+#smx-root .smx-rv h3 { margin: 3px 0 0; font-size: 16px; font-weight: 700; color: var(--k3-text-1); }
+#smx-root .smx-rv-body { flex: 1; min-height: 0; overflow-y: auto; padding: 12px 16px 28px; font-size: 12.5px; color: var(--k3-text-2); }
+#smx-root .smx-rv-list { margin: 0; padding: 0 0 0 20px; display: grid; gap: 12px; }
+#smx-root .smx-rv-list li::marker { color: var(--k3-text-3); font-weight: 650; }
+#smx-root .smx-rv-was, #smx-root .smx-rv-now { line-height: 1.5; }
+#smx-root .smx-rv-was { color: var(--k3-text-3); }
+#smx-root .smx-rv-now { color: var(--k3-text-1); }
+#smx-root .smx-rv-was b, #smx-root .smx-rv-now b { display: inline-block; min-width: 46px; font-size: 11px; letter-spacing: .05em; text-transform: uppercase; color: var(--k3-text-3); }
+#smx-root .smx-rv-now b { color: var(--k3-accent-ink, var(--k3-accent)); }
+#smx-root .smx-rv-sub { margin: 18px 0 6px; font-size: 12px; font-weight: 650; color: var(--k3-text-1); }
+#smx-root .smx-rv-moved { margin: 0; padding: 0; list-style: none; display: grid; gap: 4px; }
+#smx-root .smx-rv-moved li { display: flex; justify-content: space-between; gap: 12px; padding: 4px 0; border-bottom: 1px solid var(--k3-line); }
+#smx-root .smx-rv-moved small, #smx-root .smx-rv-table small { display: block; font-size: 11px; color: var(--k3-text-3); }
+#smx-root .smx-rv-totals { margin: 0 0 12px; line-height: 1.6; color: var(--k3-text-1); }
+#smx-root .smx-rv-totals em { font-style: normal; color: var(--k3-amber); font-weight: 650; }
+#smx-root .smx-rv-group { border: 1px solid var(--k3-line); border-radius: var(--k3-radius-md); margin-bottom: 8px; }
+#smx-root .smx-rv-group > summary { display: flex; justify-content: space-between; gap: 12px; padding: 8px 12px; cursor: pointer; font-weight: 600; color: var(--k3-text-1); }
+#smx-root .smx-rv-group > summary small { font-weight: 500; color: var(--k3-text-3); }
+#smx-root .smx-rv-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+#smx-root .smx-rv-table td { vertical-align: top; padding: 6px 12px; border-top: 1px solid var(--k3-line); color: var(--k3-text-1); }
+#smx-root .smx-rv-table td:nth-child(2) { color: var(--k3-text-3); width: 24%; }
+#smx-root .smx-rv-table td:nth-child(3) { width: 36%; }
+#smx-root .smx-rv-none { color: var(--k3-text-3); }
+
+/* ---- narrow Settings areas: the navigation folds to a strip above the page ----------------------------------------- */
+@container smx (max-width: 760px) {
+  #smx-root { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr); }
+  #smx-root .smx-nav { height: auto; max-height: 42%; border-bottom: 1px solid var(--k3-line); }
+  #smx-root .smx-nav-head { display: none; }
+  #smx-root .smx-search { margin-top: 10px; }
+  #smx-root .smx-nav-list { display: flex; flex-wrap: wrap; align-content: flex-start; gap: 2px 4px; padding-bottom: 8px; }
+  #smx-root .smx-nav-group { display: none; }
+  #smx-root .smx-nav-ch { display: contents; }
+  #smx-root .smx-nav-item { width: auto; min-height: 30px; }
+  #smx-root .smx-nav-pages { flex-basis: 100%; display: flex; flex-wrap: wrap; margin: 2px 0 4px; padding-left: 6px; border-left: 0; }
+  #smx-root .smx-nav-page { width: auto; }
+  #smx-root .smx-scroll { padding: 14px 14px 56px; }
+  #smx-root .smx-find { top: 52px; }
+  #smx-root .smx-head { flex-direction: column; align-items: flex-start; }
+  #smx-root .smx-summary { flex-direction: column; }
+  #smx-root .smx-summary-side { align-items: flex-start; }
+  #smx-root .smx-need { flex-wrap: wrap; }
+}
+
+/* ---- reduced motion: the system's, the app's own setting, or the review strip's box -------------------------------- */
+html[data-motion="reduced"] #smx-root *, html[data-reduced-motion="1"] #smx-root * { animation: none !important; transition: none !important; }
+@media (prefers-reduced-motion: reduce) { #smx-root * { animation: none !important; transition: none !important; } }
+
+/* ---- buttons that are only an icon ---------------------------------------------------------------------------------- */
+#smx-root .btn.smx-icon-only { width: 28px; min-width: 28px; padding: 0; justify-content: center; }
+#smx-root .smx-quiet-line { margin: 0; font-size: 12px; color: var(--k3-text-3); }
+#smx-root .smx-thing-end .btn + .btn { margin-left: 0; }
+
+/* ---- the picture of the setup (Computers) ---------------------------------------------------------------------------- */
+#smx-root .smx-map { display: grid; grid-template-columns: minmax(0, 1fr) minmax(70px, .5fr) minmax(0, 1.15fr) minmax(70px, .5fr) minmax(0, 1fr); align-items: stretch; gap: 0; padding: 16px; border: 1px solid var(--k3-line); border-radius: var(--k3-radius-lg); background: var(--k3-surface-1); }
+#smx-root .smx-map-node { display: grid; justify-items: center; align-content: start; gap: 3px; padding: 14px 10px; border: 1px solid var(--k3-line); border-radius: var(--k3-radius-lg); background: var(--k3-surface-0, transparent); color: var(--k3-text-1); text-align: center; cursor: pointer; transition: border-color var(--k3-dur-fast, .12s), background var(--k3-dur-fast, .12s); }
+#smx-root .smx-map-node:hover { border-color: var(--k3-accent); background: var(--k3-accent-soft-2); }
+#smx-root .smx-map-node:focus-visible { outline: 2px solid var(--k3-accent); outline-offset: 1px; }
+#smx-root .smx-map-node.is-home { border-color: var(--k3-line-strong); }
+#smx-root .smx-map-icon { display: grid; place-items: center; width: 44px; height: 44px; margin-bottom: 4px; border-radius: var(--k3-radius-md); background: var(--k3-accent-soft); color: var(--k3-accent-ink, var(--k3-accent)); }
+#smx-root .smx-map-icon .icon, #smx-root .smx-map-icon svg { width: 23px; height: 23px; stroke: currentColor; }
+#smx-root .smx-map-name { font-size: 13.5px; font-weight: 650; }
+#smx-root .smx-map-role { font-size: 11.5px; color: var(--k3-text-3); max-width: 22ch; }
+#smx-root .smx-map-status { margin-top: 5px; font-size: 12px; }
+#smx-root .smx-map-link { display: flex; align-items: center; gap: 6px; padding: 0 6px; color: var(--k3-text-3); }
+#smx-root .smx-map-line { flex: 1; height: 0; border-top: 2px solid var(--k3-green); }
+#smx-root .smx-map-link.tone-off .smx-map-line { border-top: 2px dashed var(--k3-line-strong); }
+#smx-root .smx-map-how { flex: none; font-size: 11px; font-weight: 600; color: var(--k3-text-2); text-align: center; max-width: 12ch; line-height: 1.25; }
+#smx-root .smx-map-also { margin: 8px 2px 0; font-size: 12px; color: var(--k3-text-3); }
+
+/* ---- ways in (Away from home): order number and the two order buttons ------------------------------------------------ */
+#smx-root .smx-route-n { flex: none; display: grid; place-items: center; width: 22px; font-size: 12px; font-weight: 700; color: var(--k3-text-3); }
+#smx-root .smx-route-n .icon, #smx-root .smx-route-n svg { width: 13px; height: 13px; stroke: currentColor; }
+#smx-root .smx-order { display: inline-flex; gap: 2px; }
+#smx-root .smx-order .icon, #smx-root .smx-order svg { width: 14px; height: 14px; }
+
+/* ---- something the approved plans add that PMConcept7 does not have yet ------------------------------------------------ */
+#smx-root .smx-new-note { display: flex; gap: 8px; align-items: flex-start; margin: 12px 0 0; padding-top: 10px; border-top: 1px dashed var(--k3-line-strong); font-size: 12px; color: var(--k3-text-3); }
+#smx-root .smx-new-note .icon, #smx-root .smx-new-note svg { width: 14px; height: 14px; flex: none; margin-top: 2px; stroke: currentColor; }
+
+@container smx (max-width: 900px) {
+  #smx-root .smx-map { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+  #smx-root .smx-map-link { min-height: 30px; flex-direction: column; gap: 2px; }
+  #smx-root .smx-map-line { flex: none; width: 0; height: 9px; border-top: 0; border-left: 2px solid var(--k3-green); }
+  #smx-root .smx-map-link.tone-off .smx-map-line { border-top: 0; border-left: 2px dashed var(--k3-line-strong); }
+  #smx-root .smx-map-how { max-width: none; }
+  #smx-root .smx-thing { flex-wrap: wrap; }
+  #smx-root .smx-thing-end { flex-basis: 100%; justify-content: flex-end; }
+}
+
+/* ---- Settings Home: chapters with their state ---------------------------------------------------------------------- */
+#smx-root .smx-chapter-grid { display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+#smx-root .smx-chapter { display: grid; grid-template-columns: auto minmax(0, 1fr); grid-template-rows: auto auto; gap: 2px 12px; align-items: start; padding: 12px; border: 1px solid var(--k3-line); border-radius: var(--k3-radius-lg); background: var(--k3-surface-1); color: var(--k3-text-1); text-align: left; cursor: pointer; transition: border-color var(--k3-dur-fast, .12s), background var(--k3-dur-fast, .12s); }
+#smx-root .smx-chapter:hover { border-color: var(--k3-accent); background: var(--k3-accent-soft-2); }
+#smx-root .smx-chapter:focus-visible { outline: 2px solid var(--k3-accent); outline-offset: 1px; }
+#smx-root .smx-chapter-icon { grid-row: 1 / span 2; display: grid; place-items: center; width: 34px; height: 34px; border-radius: var(--k3-radius-md); background: var(--k3-accent-soft); color: var(--k3-accent-ink, var(--k3-accent)); }
+#smx-root .smx-chapter-icon .icon, #smx-root .smx-chapter-icon svg { width: 18px; height: 18px; stroke: currentColor; }
+#smx-root .smx-chapter-copy { display: grid; gap: 2px; min-width: 0; }
+#smx-root .smx-chapter-name { font-size: 13px; font-weight: 650; }
+#smx-root .smx-chapter-blurb { font-size: 11.5px; color: var(--k3-text-3); }
+#smx-root .smx-chapter-status { grid-column: 2; margin-top: 4px; font-size: 12px; }
+#smx-root .smx-btn-row { display: flex; flex-wrap: wrap; gap: 8px; }
+
+/* ---- accounts, meters and small spacing helpers (AI providers) -------------------------------------------------------- */
+#smx-root .smx-meters { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+#smx-root .smx-thing-meters .pm51-meter-value { white-space: normal; }
+#smx-root .smx-accounts .smx-thing-avatar.is-initials { font-size: 13px; color: var(--k3-text-2); }
+#smx-root .smx-pad { padding-top: 12px; }
+#smx-root .smx-fold-body > .panel-card.smx-things-card { border: 0; background: transparent; }
+#smx-root .smx-fold-body > .panel-card.smx-things-card > .pm51-section-body { padding: 0 6px; }
+#smx-root .smx-why { margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--k3-line-strong); }
+#smx-root .smx-sentence-note .pm51-link { margin-left: 4px; }
