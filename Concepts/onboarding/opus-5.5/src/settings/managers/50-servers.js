@@ -44,6 +44,12 @@
   const serverById = id => sp().servers.find(s => s.id === id);
   const homeServer = () => serverById(sp().homeServer) || sp().servers[0];
   const isClaimed = s => s.claimed !== false;
+  /* A server's role is the kind of computer it is; being the home server is a separate fact that follows the Home server
+     choice. The example and onboarding stored "Home server" as the role itself, so after the home server was changed
+     the roster still called the old one "Home server" and two servers claimed it (N-1). */
+  const KIND_ROLE = { nas: 'NAS', cloud: 'Cloud computer', network: 'Computer on your network', computer: 'Computer on your network' };
+  const baseRole = s => s.role !== 'Home server' ? s.role : (/\bnas\b|container|truenas|synology|unraid|qnap/i.test(`${s.deployment || ''} ${s.name || ''}`) ? 'NAS' : 'Server');
+  const roleLabel = s => s.id === sp().homeServer ? `${baseRole(s)} · Home server` : baseRole(s);
   /* ---------- Away From Home: route model (Plans/Remote_Access_System.md RAS-002) ---------- */
   /* Routes are tried in a private-first order; the user may reorder within policy (Local network is
      always first) and the route actually in use is always shown. Plain status words below; Advanced
@@ -116,7 +122,7 @@
     const me = r.client || {}, srv = r.server && r.server.role !== 'this_device' ? r.server : null, route = r.route || {};
     const here = SP.servers.find(s => s.id === 'this') || {};
     const local = Object.assign({}, here, { id: 'this', name: me.name || here.name || 'This computer', role: 'This computer', address: 'localhost', state: 'Connected', lastCheck: 'Now', default: !srv });
-    SP.servers = srv ? [{ id: srv.server_id, name: srv.name, role: 'Home server', address: srv.address_label || '', state: 'Connected', version: 'Not checked yet', updateReady: false, runsWork: true, default: true, lastCheck: 'During setup', deployment: srv.role === 'new_server' ? (srv.kind === 'nas' ? 'Container' : 'Standalone') : undefined, environments: [] }, local] : [local];
+    SP.servers = srv ? [{ id: srv.server_id, name: srv.name, role: KIND_ROLE[srv.kind] || 'Server', address: srv.address_label || '', state: 'Connected', version: 'Not checked yet', updateReady: false, runsWork: true, default: true, lastCheck: 'During setup', deployment: srv.role === 'new_server' ? (srv.kind === 'nas' ? 'Container' : 'Standalone') : undefined, environments: [] }, local] : [local];
     SP.homeServer = srv ? srv.server_id : 'this';
     SP.devices = [{ id: me.client_id || 'this-device', name: me.name || 'This device', platform: me.platform || '', role: srv ? 'Client' : 'Client + runs work', state: 'Connected', lastSeen: 'Now', trust: 'Owner', current: true }];
     const R = SP.remoteAccess, pick = ROUTE_OF[route.mode] && ROUTE_OF[route.mode](route);
@@ -472,7 +478,7 @@
   const signInText = s => { const si = s.signIn || { method: s.role === 'This computer' ? 'local' : 'pair' }, k = keyById(si.keyId); if (si.method === 'local') return 'Nothing needed: it is this computer'; if (si.method === 'ssh') return k ? `SSH key ${k.name}, as ${si.user || 'you'}` : 'SSH, but no key is attached'; return `Paired with Puppet Master${k ? ` · SSH key ${k.name} for files and repairs` : '; no key needed'}`; };
   function attachServerKey(srv) {
     const si = srv.signIn || {};
-    keyWizard({ target: { kind: 'ssh', name: srv.name, user: si.user || (/nas/i.test(srv.role) ? 'admin' : 'you'), address: srv.address, port: si.port || '22' }, keyId: si.keyId, onDone: id => { srv.signIn = Object.assign({ method: srv.role === 'This computer' ? 'local' : 'pair' }, si, { keyId: id }); if (srv.signIn.method === 'ssh' && srv.state === 'Needs attention') srv.state = 'Connected'; } });
+    keyWizard({ target: { kind: 'ssh', name: srv.name, user: si.user || (/nas/i.test(baseRole(srv)) ? 'admin' : 'you'), address: srv.address, port: si.port || '22' }, keyId: si.keyId, onDone: id => { srv.signIn = Object.assign({ method: srv.role === 'This computer' ? 'local' : 'pair' }, si, { keyId: id }); if (srv.signIn.method === 'ssh' && srv.state === 'Needs attention') srv.state = 'Connected'; } });
   }
 
   /* ---------- Away from home, step by step ------------------------------------------------------------------------ */
@@ -582,7 +588,7 @@
   function moveTo(d) {
     if (d.task === 'import') return `<div class="o55-setup-fields">${PM51.field('Name of the new workspace', `<input class="text-control o55-mv-name" value="${a(d.newName)}" autocomplete="off"/>`)}</div>` + PM51.panelSection('It will live on', PM51.kv([['Server', homeServer().name], ['Folder', `/mnt/data/projects/${slugHost(d.newName || 'imported')}`]]), '', { icon: 'server' });
     const S = sp(), list = S.servers.filter(s => isClaimed(s) && (d.task === 'copy' || s.id !== S.homeServer));
-    return PM51.tiles(list.map(s => ({ title: s.name, text: `${s.role} · ${s.address}`, meta: s.id === S.homeServer ? 'Where it lives now' : '', icon: 'server', selected: d.dest === s.id, data: { dest: s.id } })).concat([{ title: 'Another server', text: 'Type its address.', icon: 'plus', selected: d.dest === 'other', data: { dest: 'other' } }]), { action: 'pm51-servers-w-dest' })
+    return PM51.tiles(list.map(s => ({ title: s.name, text: `${roleLabel(s)} · ${s.address}`, meta: s.id === S.homeServer ? 'Where it lives now' : '', icon: 'server', selected: d.dest === s.id, data: { dest: s.id } })).concat([{ title: 'Another server', text: 'Type its address.', icon: 'plus', selected: d.dest === 'other', data: { dest: 'other' } }]), { action: 'pm51-servers-w-dest' })
       + `<div class="o55-setup-fields">${d.dest === 'other' ? PM51.field('Its address', `<input class="text-control o55-mv-addr o55-setup-mono" value="${a(d.destAddress)}" placeholder="nas.local" autocomplete="off" spellcheck="false"/>`) : ''}${d.task === 'copy' ? PM51.field('Name of the copy', `<input class="text-control o55-mv-name" value="${a(d.newName)}" autocomplete="off"/>`) : ''}${PM51.field('Folder there', `<input class="text-control o55-mv-dfolder o55-setup-mono" value="${a(d.destFolder)}" autocomplete="off" spellcheck="false"/>`)}</div>`;
   }
   function moveCollect(w, d) {
@@ -658,7 +664,7 @@
         { label: 'File authority', help: 'Which copy of the files wins when they differ.', value: P.fileAuthority || 'Server host' },
         { label: 'Sync mode', value: P.syncMode || 'Continuous metadata + on-demand artifacts' }
       ]),
-      PM51.section({ title: 'Technical details', body: PM51.kv([['Server identity', fingerprint(home)], ['Home server address', home.address], ['Project path', S.sourceLocation.path], ['Diagnostics', 'Reachability, identity, file authority, continuity']]) + `<div class="pm51-servers-actions" style="margin-top:10px">${pm7ConsumerButton('local', 'ui.project.open_details', 'Project details')}${pm7ConsumerButton('local', 'ui.project.source_location.open_details', 'Where the files are')}</div>` })
+      PM51.section({ title: 'Technical details', body: PM51.kv([['Server identity', fingerprint(home)], ['Home server address', home.address], ['Project path', S.sourceLocation.path], ['Diagnostics', 'Reachability, identity, file authority, continuity']]) + `<div class="pm51-servers-actions" style="margin-top:10px">${PM51.btn({ label: 'Project details', small: true, icon: 'info', action: 'pm51-servers-project-details', ui: 'ui.project.open_details' })}${PM51.btn({ label: 'Where the files are', small: true, icon: 'folder', action: 'pm51-servers-files-details', ui: 'ui.project.source_location.open_details' })}</div>` })
     ].join(''));
     return workspace + status + advanced;
   }
@@ -668,7 +674,7 @@
     const S = sp();
     const selId = PM51.sel(ID, S.homeServer);
     const srv = serverById(selId) || S.servers[0];
-    const items = S.servers.map(s => ({ id: s.id, title: s.name, meta: `${s.role} · ${s.state}`, tone: PM51.tone(s.state), selected: s.id === srv.id }));
+    const items = S.servers.map(s => ({ id: s.id, title: s.name, meta: `${roleLabel(s)} · ${s.state}`, tone: PM51.tone(s.state), selected: s.id === srv.id }));
     let body;
     if (!isClaimed(srv)) {
       const cs = srv.claimSteps || {};
@@ -685,7 +691,7 @@
       body = PM51.section({
         title: 'Details',
         body: PM51.rows([
-          { label: 'Role', value: srv.id === S.homeServer && srv.role !== 'Home server' ? `${srv.role} · Home server` : srv.role },
+          { label: 'Role', value: roleLabel(srv) },
           { label: 'Address', value: srv.address },
           { label: 'Version', value: srv.version, pill: srv.updateReady ? PM51.status('Update ready') : '', action: srv.updateReady ? { label: 'App Updates', action: 'pm51-go', data: { domain: 'system', workspace: 'updates' }, icon: 'arrowRight' } : null },
           { label: 'Runs work', help: 'Allow Goals and tasks to run on this server.', control: PM51.toggle(!!srv.runsWork, { action: 'pm51-servers-runs', data: { id: srv.id }, label: 'Runs work' }) },
@@ -707,10 +713,10 @@
       add: { action: 'pm51-servers-add', label: 'Add a server', data: { 'command-id': 'cmd.server.claim' } },
       items,
       detail: {
-        title: srv.name, subtitle: `${srv.role} · ${srv.address}`, pill: srv.state === 'Checking' ? PM51.waiting('Checking') : PM51.status(srv.state),
+        title: srv.name, subtitle: `${roleLabel(srv)} · ${srv.address}`, pill: srv.state === 'Checking' ? PM51.waiting('Checking') : PM51.status(srv.state),
         primary: { label: 'Open web UI', icon: 'external', action: 'pm51-servers-webui', data: { id: srv.id } },
         menu: anchor => PM51.menu(anchor, [
-          { label: 'Connect', icon: 'network', disabled: srv.state === 'Connected', meta: srv.state === 'Connected' ? 'Already connected' : '', onClick: () => { srv.state = 'Checking'; refresh(); setTimeout(() => { srv.state = 'Needs attention'; srv.lastCheck = 'Just now'; refresh(); PM51.toast('Could not confirm the connection', 'Example data only. Run Test connection to see what was checked.', 'info'); }, 600); } },
+          { label: 'Connect', icon: 'network', disabled: srv.state === 'Connected' || srv.state === 'Checking' || !isClaimed(srv), meta: !isClaimed(srv) ? 'Claim it first' : srv.state === 'Connected' ? 'Already connected' : srv.state === 'Checking' ? 'Checking now' : '', onClick: () => connectServer(srv.id) },
           { label: 'Rename', icon: 'edit', onClick: () => renameServer(srv) },
           { label: 'Restart', icon: 'refresh', onClick: () => PM51.confirm(`Restart ${srv.name}?`, 'Running work pauses and resumes after the restart. Devices reconnect on their own.', 'Restart', () => PM51.toast('Restart not sent', 'Example data only. Nothing restarted in this preview.', 'info')) },
           { label: 'Update…', icon: 'download', meta: srv.updateReady ? '0.8.1 ready' : 'Up to date', disabled: !srv.updateReady, onClick: () => PM51.go('system', 'updates') },
@@ -788,7 +794,10 @@
         title: r.name, pill: r.recommended ? PM51.tag('Recommended') : '',
         meta: r.locked ? `Always first · ${r.description}` : r.description,
         avatar: PM51.order(i + 1, { locked: !!r.locked }),
-        end: routeRowEnd(r, i, sorted), cls: 'pm51-servers-route', data: { route: r.id, status: r.status }
+        /* the row opens what its own button opens, as a device row does (B-4: the row body did nothing). The row is
+           clickable by pointer only: its buttons (Set Up, Manage, More › Details) are the keyboard way to the same
+           place, and a row that is itself a button may not hold other buttons. */
+        end: routeRowEnd(r, i, sorted), cls: 'pm51-servers-route is-clickable', data: { route: r.id, status: r.status, action: 'pm51-servers-remote', id: r.id }
       });
       if (r.kind === 'domain' && R.funnel && R.funnel.enabled) items.push({
         title: 'Public browser access', pill: PM51.tag('Funnel'), meta: 'Anyone with the address can reach the sign-in page. Turn it off under Advanced.',
@@ -1117,6 +1126,29 @@
       { label: 'Path or address', name: 'path', value: S.sourceLocation.path, autofocus: true, full: true, help: 'For a code service or SSH computer, paste the address.' }
     ]), saveLabel: 'Use this location', onSave: data => { const path = String(data.path || '').trim(); if (!path) return false; S.sourceLocation = { kind: String(data.kind), path }; if (state.projectSync) state.projectSync.location = path; refresh(); } });
   });
+  /* Project details and Where the files are say what this workspace is and where its files live, in the page's own
+     words (N-2: they opened the concept's typed-consumer stub, "Typed owner-local projection only…", EventRecord and
+     runtime-receipt lines, with nothing for a person). */
+  const PLAIN_AUTHORITY = { 'Server host': 'The home server’s copy', 'Server': 'The home server’s copy', 'This device': 'This device’s copy' };
+  const PLAIN_SYNC = { 'Continuous metadata + on-demand artifacts': 'Changes are kept in step all the time; large files come down when you open them' };
+  PM51.on('servers-project-details', () => {
+    const S = sp(), home = homeServer(), P = state.projectSync || {}, last = (S.move.history || [])[0], pref = preferredRoute();
+    const thisDevice = S.devices.find(d => d.current || d.thisDevice) || S.devices.find(d => d.name === 'Windows Workstation') || S.devices[0];
+    const name = (typeof projectDisplayName === 'function' ? projectDisplayName() : '') || 'This workspace';
+    PM51.panel({ title: name, subtitle: 'This workspace', icon: 'folder', facts: [{ label: 'Lives on', value: home.name }, { label: 'Runs on', value: runLabel() }, { label: 'Devices', value: String(S.devices.length) }],
+      body: PM51.panelSection('Where it lives', PM51.kv([['Home server', `${home.name} · ${home.address}`], ['Runs on', runLabel()], ['Files', `${S.sourceLocation.kind} · ${S.sourceLocation.path}`], ['Which copy wins', PLAIN_AUTHORITY[P.fileAuthority] || P.fileAuthority || 'The home server’s copy'], ['This device', thisDevice ? thisDevice.name : 'Unknown']]), '', { icon: 'server' })
+        + PM51.panelSection('Reaching it', PM51.kv([['Right now', `Connected · ${actualRoute().name}`], ['Away from home', pref ? pref.name : 'None set up yet'], ['Paired devices', S.devices.map(d => d.name).join(', ') || 'None']]), '', { icon: 'route' })
+        + PM51.panelSection('Changes', PM51.kv([['Last change', S.status.lastChange], ['Work in progress', S.status.work ? 'Saved from this device' : 'None'], ['Last move or copy', last ? `${last.kind || 'Move'} · ${last.destination} · ${last.time}` : 'None yet'], ['Open conflicts', String(S.conflicts.open || 0)]]), '', { icon: 'history' })
+        + `<div class="pm51-servers-actions">${PM51.btn({ label: 'Change where the files are…', small: true, icon: 'folder', action: 'pm51-servers-files' })}${PM51.btn({ label: 'Move or copy…', small: true, icon: 'copy', action: 'pm51-servers-goto-move' })}</div>` });
+  });
+  PM51.on('servers-files-details', () => {
+    const S = sp(), home = homeServer(), P = state.projectSync || {};
+    PM51.panel({ title: 'Where the files are', subtitle: `${S.sourceLocation.kind} · ${S.sourceLocation.path}`, icon: 'folder',
+      body: PM51.panelSection('This workspace’s files', PM51.kv([['Kind', S.sourceLocation.kind], ['Folder', S.sourceLocation.path], ['On', `${home.name} · ${home.address}`], ['Which copy wins', PLAIN_AUTHORITY[P.fileAuthority] || P.fileAuthority || 'The home server’s copy'], ['Keeping in step', PLAIN_SYNC[P.syncMode] || P.syncMode || PLAIN_SYNC['Continuous metadata + on-demand artifacts']], ['Open conflicts', String(S.conflicts.open || 0)]]), '', { icon: 'folder' })
+        + PM51.note('Your devices open these files through the home server. Changing the place does not move the files; Move & Copy does that.', 'info')
+        + `<div class="pm51-servers-actions">${PM51.btn({ label: 'Change…', small: true, icon: 'edit', action: 'pm51-servers-files', data: { 'command-id': 'cmd.project.source_location.update' } })}</div>` });
+  });
+  PM51.on('servers-goto-move', () => { closeOverlay(); PM51.setTab(ID, 'move'); refresh(); });
   PM51.on('servers-conflict-policy', conflictPolicyDialog);
   PM51.on('servers-diagnostics', el => diagnostics(ds(el, 'scope') || 'home'));
   PM51.on('servers-help', () => PM51.panel({
@@ -1166,15 +1198,37 @@
   PM51.on('servers-test', el => {
     const id = ds(el, 'id'); if (!serverById(id) || testing.has(id)) return;
     testing.add(id); PM51.waitOn(el, true, 'Checking…');
-    setTimeout(() => { testing.delete(id); if (el && el.isConnected) PM51.waitOn(el, false); else refresh(); const s = serverById(id); if (s) reportServerCheck(s); }, 700);
+    setTimeout(() => { testing.delete(id); if (el && el.isConnected) PM51.waitOn(el, false); const s = serverById(id); if (s) recordServerCheck(s); refresh(); if (s) reportServerCheck(s); }, 700);
   });
-  function reportServerCheck(s) {
-    PM51.check({ title: `Test connection · ${s.name}`, steps: [
+  /* Connect and Test connection run the same checks, and the server's state and last check follow what they found
+     (B-3: Connect always ended in "Needs attention", whatever was checked, and a passing Test connection left the state
+     and "Checked …" as they were). The one failure this preview can know about is a server that signs in over SSH with
+     no key attached; everything else answers as the example data does. */
+  function serverChecks(s) {
+    const si = s.signIn || {}, noKey = si.method === 'ssh' && !keyById(si.keyId);
+    return [
       { title: 'Address resolves', desc: s.address },
       { title: 'Server answers', desc: 'Puppet Master service' },
       { title: 'Identity matches', desc: fingerprint(s) },
+      noKey ? { title: 'Signs in', desc: 'It signs in over SSH, but no key is attached. Attach a key, then try again.', tone: 'attention', status: 'Needs a key', blocks: true } : { title: 'Signs in', desc: signInText(s) },
       { title: 'Version compatible', desc: s.version === '—' ? 'Unknown until claimed' : s.version, tone: s.version === '—' ? 'attention' : 'ready', status: s.version === '—' ? 'Unknown' : 'Checked' }
-    ] });
+    ];
+  }
+  function recordServerCheck(s) { const ok = !serverChecks(s).some(x => x.blocks); s.state = ok ? 'Connected' : 'Needs attention'; s.lastCheck = 'Just now'; return ok; }
+  function reportServerCheck(s) {
+    const steps = serverChecks(s), ok = !steps.some(x => x.blocks);
+    PM51.check({ title: `Test connection · ${s.name}`, steps, outcome: ok ? 'Connected · example data' : 'Needs attention · example data', tone: ok ? 'info' : 'attention' });
+  }
+  const connecting = new Set();
+  function connectServer(id) {
+    const srv = serverById(id); if (!srv || connecting.has(id)) return;
+    connecting.add(id); srv.state = 'Checking'; refresh();
+    setTimeout(() => {
+      connecting.delete(id); const s = serverById(id); if (!s) return;
+      const ok = recordServerCheck(s); refresh();
+      if (ok) PM51.toast(`Connected to ${s.name}`, 'Example data only. Test connection shows what was checked.', 'success');
+      else PM51.toast(`Could not connect to ${s.name}`, 'It signs in over SSH, but no key is attached. Attach a key, then connect again.', 'warning');
+    }, 600);
   }
   PM51.on('servers-claim-identity', el => {
     const s = serverById(ds(el, 'id')); if (!s) return;
@@ -1190,26 +1244,42 @@
   PM51.on('servers-pair-copy', () => { const link = sp().pairing.link; try { const p = navigator.clipboard && navigator.clipboard.writeText(link); if (p && p.catch) p.catch(() => {}); } catch (_e) {} PM51.toast('Link copied', link, 'info'); });
   PM51.on('servers-pair-new', () => { const S = sp(); S.pairing.code = newCode(); S.pairing.expiresIn = '10:00'; saveState(); const holder = portalRoot().querySelector('[data-pairing-dialog]'); if (holder) holder.innerHTML = pairingBody(); });
   PM51.on('servers-device', el => devicePanel(ds(el, 'id')));
+  /* A device's own actions (Rename, Review Access, Check device, Revoke) open in place of its panel; when one closes,
+     saved or not, the device's panel comes back with what changed (B-5: Rename replaced the panel, and after Save or
+     Escape nothing was open any more). It does not come back over something else opened meanwhile, or for a device
+     that was revoked. */
+  function backToDevice(id, el) {
+    if (!el) return;
+    const root = portalRoot();
+    const watch = new MutationObserver(() => {
+      if (el.isConnected) return;
+      watch.disconnect();
+      if (root.querySelector('.overlay, .drawer-wrap:not([data-closing="1"])')) return;
+      if (sp().devices.some(x => x.id === id)) devicePanel(id);
+    });
+    watch.observe(root, { childList: true, subtree: true });
+  }
   PM51.on('servers-device-rename', el => {
     const d = sp().devices.find(x => x.id === ds(el, 'id')); if (!d) return;
-    openDialog({ title: `Rename ${d.name}`, body: PM51.form([{ label: 'Name', name: 'name', value: d.name, autofocus: true }]), saveLabel: 'Save', onSave: data => { const name = String(data.name || '').trim(); if (!name) return false; d.name = name; refresh(); } });
+    backToDevice(d.id, openDialog({ title: `Rename ${d.name}`, body: PM51.form([{ label: 'Name', name: 'name', value: d.name, autofocus: true }]), saveLabel: 'Save', onSave: data => { const name = String(data.name || '').trim(); if (!name) return false; d.name = name; refresh(); } }));
   });
   PM51.on('servers-device-access', el => {
     const d = sp().devices.find(x => x.id === ds(el, 'id')); if (!d) return;
     const owner = d.trust === 'Owner';
-    PM51.panel({ title: `Access · ${d.name}`, subtitle: 'What this device is allowed to do.', icon: 'shield', eyebrow: (d.trust || 'Member') + ' role',
+    backToDevice(d.id, PM51.panel({ title: `Access · ${d.name}`, subtitle: 'What this device is allowed to do.', icon: 'shield', eyebrow: (d.trust || 'Member') + ' role',
       body: PM51.panelSection('Allowed', PM51.kv([['Open this workspace', 'Yes'], ['Run work', /runs work/i.test(d.role) ? 'Yes' : 'No'], ['Change servers', owner ? 'Yes' : 'No'], ['Pair or revoke devices', owner ? 'Yes' : 'No'], ['Restore backups', owner ? 'Yes' : 'No']]))
         + PM51.panelSection('Role', PM51.field('Trust role', PM51.select(d.trust || 'Member', ['Owner', 'Member'], { action: 'pm51-servers-device-trust', data: { id: d.id }, label: 'Trust role' }), 'Owners can manage servers and other devices.')),
-      primaryLabel: 'Done', onPrimary: () => refresh() });
+      primaryLabel: 'Done', onPrimary: () => refresh() }));
   });
   PM51.onChange('servers-device-trust', el => { const d = sp().devices.find(x => x.id === ds(el, 'id')); if (d) { d.trust = el.value; saveState(); } });
   PM51.on('servers-device-check', el => {
     const d = sp().devices.find(x => x.id === ds(el, 'id')); if (!d) return;
-    PM51.check({ title: `Check device · ${d.name}`, steps: [{ title: 'Device reachable', desc: `Last seen ${d.lastSeen}` }, { title: 'Pairing still valid', desc: `Trust: ${d.trust || 'Member'}` }, { title: 'App version compatible', desc: d.platform }] });
+    backToDevice(d.id, PM51.check({ title: `Check device · ${d.name}`, steps: [{ title: 'Device reachable', desc: `Last seen ${d.lastSeen}` }, { title: 'Pairing still valid', desc: `Trust: ${d.trust || 'Member'}` }, { title: 'App version compatible', desc: d.platform }] }));
   });
   PM51.on('servers-device-revoke', el => {
     const S = sp(), d = S.devices.find(x => x.id === ds(el, 'id')); if (!d) return;
     PM51.confirm(`Revoke ${d.name}?`, 'The device loses access right away. It can pair again later with a new code.', 'Revoke Device', () => { S.devices = S.devices.filter(x => x.id !== d.id); closeOverlay(); refresh(); }, true);
+    const asked = [...portalRoot().querySelectorAll('.overlay')].pop(); backToDevice(d.id, asked);
   });
   PM51.on('servers-revoke-all', () => PM51.confirm('Revoke all devices?', 'Every device, including this one, must pair again with a new code.', 'Revoke all devices', () => { const S = sp(); S.devices = []; S.pairing.code = ''; refresh(); }, true));
   PM51.on('servers-approve', el => { const S = sp(), p = S.pending.find(x => x.id === ds(el, 'id')); if (!p) return; S.pending = S.pending.filter(x => x.id !== p.id); S.devices.push({ id: p.id, name: p.name, platform: p.platform, role: 'Client', state: 'Connected', lastSeen: 'Now', trust: 'Member' }); refresh(); });
