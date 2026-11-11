@@ -113,7 +113,7 @@ html[data-pjx-read="v3"] #pjxc .pjxc-try:hover, html[data-pjx-read="v3"] #pjxc .
 /* ------------------------------------------------------------------ New Project: the guided page */
 html[data-pjx-read="v3"] #pjxc .pjxc-begins { padding: 16px 18px 14px; }
 /* "Begins as" and a field's own label: the text face, in sentence case. The small capitals stay for dividers. */
-html[data-pjx-read="v3"] #pjxc .pjxc-begins .pjxc-cap, html[data-pjx-read="v3"] #pjxc .pjx-np-cap { font-family: inherit; font-size: 12.5px; line-height: 17px; font-weight: 600; letter-spacing: 0; text-transform: none; color: var(--pmu-ink-2); }
+html[data-pjx-read="v3"] #pjxc .pjxc-begins .pjxc-cap, html[data-pjx-read="v3"] :is(#pjxc, .pjx-dlg-back[data-concept="c"]) .pjx-np-cap { font-family: inherit; font-size: 12.5px; line-height: 17px; font-weight: 600; letter-spacing: 0; text-transform: none; color: var(--pmu-ink-2); }
 html[data-pjx-read="v3"] #pjxc .pjxc-begins .pjxc-cap { font-weight: 450; color: var(--pmu-ink-3); }
 html[data-pjx-read="v3"] #pjxc .pjxc-stepsin { padding: 8px 16px 18px; }
 /* answered questions fold to one quiet line each, ruled apart; the open question is the one loud thing */
@@ -146,22 +146,25 @@ html[data-pjx-read="v3"] #pjxc .pjxc-rrows dt .pjx-link:hover, html[data-pjx-rea
 
 /* ------------------------------------------------------------------ the 2026-11-10 fix pass's parts
    Where work runs: each piece of work is a row in one lightly ruled list. Where it went is a value, so it is regular
-   weight, and only a Computer somebody chose keeps weight and colour. "Why this computer" is on every row, so it stays
-   a link by its colour and takes its underline when pointed at or focused. */
+   weight, and only a Computer somebody chose keeps weight and colour. "Run this on…" and "Why this computer" are on
+   every row, so each stays a link by its colour and takes its underline when pointed at or focused (the line is kept
+   and only its colour goes, so an off "Run this on…", which fix.css sets with no line at all, still reads as off). */
 html[data-pjx-read="v3"] #pjxc .pjx-wk-rows { margin-top: 2px; border-top-color: var(--v3-rule); }
 html[data-pjx-read="v3"] #pjxc .pjx-wk-row { column-gap: 10px; padding: 10px 0; border-bottom-color: var(--v3-rule); font-size: 13px; line-height: 19px; }
 html[data-pjx-read="v3"] #pjxc .pjx-wk-row:last-child { padding-bottom: 2px; border-bottom-color: transparent; }
 html[data-pjx-read="v3"] #pjxc .pjx-wk-where { font-size: 12.5px; line-height: 18px; }
 html[data-pjx-read="v3"] #pjxc .pjx-wk-to { font-weight: 480; }
 html[data-pjx-read="v3"] #pjxc .pjx-wk-row[data-mode="chosen"] .pjx-wk-to { font-weight: 620; }
-html[data-pjx-read="v3"] #pjxc .pjx-wk-why { font-weight: 450; text-decoration-color: transparent; }
-html[data-pjx-read="v3"] #pjxc .pjx-wk-why:hover, html[data-pjx-read="v3"] #pjxc .pjx-wk-why:focus-visible { text-decoration-color: currentColor; }
+html[data-pjx-read="v3"] #pjxc .pjx-wk-acts { column-gap: 18px; margin-top: 3px; }
+html[data-pjx-read="v3"] #pjxc :is(.pjx-wk-why, .pjx-wk-pin) { font-weight: 450; text-decoration-color: transparent; }
+html[data-pjx-read="v3"] #pjxc :is(.pjx-wk-why, .pjx-wk-pin):hover, html[data-pjx-read="v3"] #pjxc :is(.pjx-wk-why, .pjx-wk-pin):focus-visible { text-decoration-color: currentColor; }
 /* New Project's "Where its work runs": the block keeps its frame, as light as the page's other rules */
 html[data-pjx-read="v3"] #pjxc .pjx-wk-np { gap: 12px; padding: 14px; border-color: var(--v3-rule); }
 html[data-pjx-read="v3"] #pjxc .pjx-wk-allowed { gap: 9px 16px; }
 
-/* the dialogs Split opens (Settle the clash, Why this computer, and the ones it had): the page's reading size, and
-   more room between a dialog's groups than inside them. Their lists of choices are ruled by the rules above. */
+/* the dialogs Split opens (Settle the clash, Why this computer, Start a run, and the ones it had): the page's reading
+   size, more room between a dialog's groups than inside them, and a field's own label in the text face as on the
+   page. Their lists of choices are ruled by the rules above. */
 html[data-pjx-read="v3"] .pjx-dlg-back[data-concept="c"] .pjx-dlg { --v3-rule: var(--pmu-rule-2, var(--pmu-rule)); }
 html[data-pjx-read="v3"] .pjx-dlg-back[data-concept="c"] .pjx-q-lead { line-height: 19px; text-wrap: pretty; }
 html[data-pjx-read="v3"] .pjx-dlg-back[data-concept="c"] :is(.pjx-fact, .pjx-np-line, .pjx-np-text) { font-size: 13px; line-height: 19px; }

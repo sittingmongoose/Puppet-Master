@@ -169,15 +169,19 @@ export const tests = {
 		const rows = () => f.evaluate(() => {
 			const cs = (s) => { const e = document.querySelector(s); return e ? getComputedStyle(e) : null; };
 			const to = cs('#pjxc .pjx-wk-row:not([data-mode="chosen"]) .pjx-wk-to'), ch = cs('#pjxc .pjx-wk-row[data-mode="chosen"] .pjx-wk-to'), why = cs('#pjxc .pjx-wk-why');
-			return { to: to && Number(to.fontWeight), chosen: ch && Number(ch.fontWeight), underline: !!why && why.textDecorationColor === why.color };
+			// Run this on…: a live one (work that hasn't started) and an off one (started work keeps its Computer)
+			const live = cs('#pjxc .pjx-wk-pin:not([aria-disabled="true"])'), off = cs('#pjxc .pjx-wk-pin[aria-disabled="true"]');
+			return { to: to && Number(to.fontWeight), chosen: ch && Number(ch.fontWeight), underline: !!why && why.textDecorationColor === why.color,
+				pinUnderline: !!live && live.textDecorationColor === live.color, pinIsLink: !!live && !!why && live.color === why.color && live.textDecorationLine !== 'none',
+				offIsOff: !!off && !!live && off.textDecorationLine === 'none' && off.color !== live.color };
 		});
 		const dialog = () => f.evaluate(() => {
 			const d = document.querySelector('.pjx-dlg-back[data-concept="c"]'); if (!d) return null;
-			const list = d.querySelector('.pjx-choices-list'), mid = list && list.children[1], fact = d.querySelector('.pjx-fact, .pjx-np-line');
+			const list = d.querySelector('.pjx-choices-list'), mid = list && list.children[1], fact = d.querySelector('.pjx-fact, .pjx-np-line'), cap = d.querySelector('.pjx-np-cap');
 			const on = list && list.querySelector('.pjx-choice.is-on'), off = list && list.querySelector('.pjx-choice:not(.is-on)');
 			return {
 				gap: list ? getComputedStyle(list).rowGap : null, midRadius: mid ? getComputedStyle(mid).borderTopLeftRadius : null, midRule: mid ? getComputedStyle(mid).borderTopWidth : null,
-				fact: fact ? getComputedStyle(fact).fontSize + '/' + getComputedStyle(fact).lineHeight : null,
+				fact: fact ? getComputedStyle(fact).fontSize + '/' + getComputedStyle(fact).lineHeight : null, cap: cap ? getComputedStyle(cap).textTransform : null,
 				chosenShows: !!on && !!off && (getComputedStyle(on).backgroundColor !== getComputedStyle(off).backgroundColor || getComputedStyle(on).boxShadow !== getComputedStyle(off).boxShadow)
 			};
 		});
@@ -194,6 +198,8 @@ export const tests = {
 		await t.check('v3: where work went is regular weight', r.to > 0 && r.to < 500, String(r.to));
 		await t.check('v3: a chosen Computer keeps its weight', r.chosen >= 600, String(r.chosen));
 		await t.check('v3: Why this computer has no underline at rest', !r.underline);
+		await t.check('v3: a live Run this on… is a link like it, with no underline at rest', r.pinIsLink && !r.pinUnderline, JSON.stringify(r));
+		await t.check('v3: an off Run this on… still reads as off', r.offIsOff, JSON.stringify(r));
 		// the keyboard reaches it and it shows its underline with the focus
 		await f.locator('#pjxc .pjx-wk-why').first().focus();
 		await t.page.keyboard.press('Shift+Tab');
@@ -206,6 +212,14 @@ export const tests = {
 		await t.equal('v3: Why this computer reads at the page’s size', d && d.fact, '13px/19px');
 		await t.audit('v3 Why this computer');
 		await t.shot('v3-why', 'Split v3, Why this computer (LOOK)');
+		await closeDialog();
+		// Start a run…: its list of choices is ruled, and its fields' labels are in the text face
+		await t.app.click(t, f, '[data-plate="work"] [data-c-key="p:startrun"]', { wait: 400 });
+		d = await dialog();
+		await t.equal('v3: Start a run’s choices are one ruled list', d && d.gap + ' ' + d.midRule + ' ' + d.midRadius, '0px 1px 0px');
+		await t.equal('v3: its fields’ labels are in sentence case', d && d.cap, 'none');
+		await t.audit('v3 Start a run');
+		await t.shot('v3-start-run', 'Split v3, Start a run (LOOK)');
 		await closeDialog();
 		// getting the latest pauses on a clash: the plate says so as a status, and the dialog's choices are one ruled list
 		await f.evaluate(() => window.PJX.split.select('photo-sorter'));
@@ -250,6 +264,11 @@ export const tests = {
 		r = await rows();
 		await t.check('v2: where work went is bold as before', r.to >= 600, String(r.to));
 		await t.check('v2: Why this computer is underlined as before', r.underline);
+		await t.check('v2: a live Run this on… is underlined as before, an off one is off', r.pinUnderline && r.offIsOff, JSON.stringify(r));
+		await t.app.click(t, f, '[data-plate="work"] [data-c-key="p:startrun"]', { wait: 400 });
+		d = await dialog();
+		await t.equal('v2: Start a run keeps its boxes and its small capitals', d && d.gap + ' ' + d.cap, '4px uppercase');
+		await closeDialog();
 		await t.app.click(t, f, '[data-plate="work"] [data-c-key="wk:why:1"]', { wait: 400 });
 		d = await dialog();
 		await t.equal('v2: Why this computer keeps its size', d && d.fact, '12.5px/17px');
