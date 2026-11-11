@@ -3935,6 +3935,8 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     openModel:(button,value,change)=>beginScopedPicker('model',button,value,change),
     openPersona:(button,value,change)=>beginScopedPicker('persona',button,value,change),
     personas:()=>PERSONA_CATALOG.map(([name,description])=>({name,description})),
+    /* FO-127: the picker's maker marks, so Settings' model choices draw the same marks as this menu */
+    providerMark:(provider,size=16)=>providerMark(provider,size),
     modelButton(action,anchor,modelId,extra=''){
       const m=D.models.find(x=>x.id===modelId);
       return `<button type="button" class="shared-picker-button" data-action="${esc(action)}" data-menu-anchor="${esc(anchor)}" ${pickerExpandedAttr(anchor)} ${extra}><span class="provider-mark">${m?providerMark(m.provider,16):icon('sparkles',16)}</span><span class="shared-picker-copy"><strong>${esc(m?m.name:'Default model')}</strong><small>${esc(m?D.accountNick(m.accountId,m.account):'Use the configured default')}</small></span>${icon('down',11)}</button>`;

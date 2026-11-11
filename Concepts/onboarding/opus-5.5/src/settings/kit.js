@@ -609,7 +609,7 @@ openDrawer = function ({ title, subtitle = '', pill = '', status = null, eyebrow
   const px = Number(width) || PANEL_SIZES[size] || 0;
   wrap.innerHTML = `<aside class="drawer pm51-panel${cls ? ' ' + cls : ''}${tone ? ' tone-' + a(tone) : ''}" role="dialog" aria-modal="true" aria-label="${a(title)}" data-mode="${a(panelMode)}" data-size="${a(size || 'default')}" ${px ? `style="width:${px}px"` : ''}>
     <header class="pm51-panel-head pm51-hero${tone ? ' tone-' + a(tone) : ''}">
-      <div class="pm51-hero-top"><span class="pm51-hero-icon">${icon(iconName)}</span><div class="pm51-panel-copy">${eyebrow ? `<div class="pm51-hero-eyebrow">${h(eyebrow)}</div>` : ''}<div class="pm51-panel-title">${h(title)}</div>${subtitle ? `<div class="pm51-panel-sub">${h(subtitle)}</div>` : ''}</div><button type="button" class="icon-btn pm51-panel-close" data-action="close-overlay" aria-label="Close">${icon('close')}</button></div>
+      <div class="pm51-hero-top"><span class="pm51-hero-icon">${PM51.headGlyph ? PM51.headGlyph(iconName, 22) : icon(iconName)}</span><div class="pm51-panel-copy">${eyebrow ? `<div class="pm51-hero-eyebrow">${h(eyebrow)}</div>` : ''}<div class="pm51-panel-title">${h(title)}</div>${subtitle ? `<div class="pm51-panel-sub">${h(subtitle)}</div>` : ''}</div><button type="button" class="icon-btn pm51-panel-close" data-action="close-overlay" aria-label="Close">${icon('close')}</button></div>
       ${statusHtml ? `<div class="pm51-hero-status">${statusHtml}</div>` : ''}${summary ? `<p class="pm51-hero-summary">${h(summary)}</p>` : ''}${factsHtml}${railHtml}
     </header>
     <div class="pm51-panel-body">${body}</div>
