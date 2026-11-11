@@ -41,7 +41,7 @@ def case(value):
         g.Guard('command_only_before_claim_shape', g.Invariant('/before_facts', 'every claim is an object with its typed required fields'), 'command_only_source_shape', command_only_before_claim_shape),
         g.Guard('command_only_before_claim_id', g.Invariant('/before_facts', 'every claim_id is nonempty'), 'command_only_source_shape', command_only_before_claim_id),
         g.Guard('command_only_before_claim_text', g.Invariant('/before_facts', 'every claim text is nonempty'), 'command_only_source_shape', command_only_before_claim_text),
-        g.Guard('command_only_before_claim_created_at', g.Invariant('/before_facts', 'every claim created_at is a date-time (interim grammar)'), 'command_only_source_shape', command_only_before_claim_created_at),
+        g.Guard('command_only_before_claim_created_at', g.Invariant('/before_facts', 'every claim created_at passes the shared CV-1101 date_time (event_record profile)'), 'command_only_source_shape', command_only_before_claim_created_at),
         g.Guard('command_only_before_claim_scope', g.Invariant('/before_facts', 'every support_scope is nonblank'), 'command_only_source_shape', command_only_before_claim_scope),
         g.Guard('command_only_before_claim_currentness', g.Invariant('/before_facts', 'every claim currentness is in its owner domain'), 'command_only_source_shape', command_only_before_claim_currentness),
     ])

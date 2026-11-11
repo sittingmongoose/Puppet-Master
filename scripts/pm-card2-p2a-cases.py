@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-"""Build Plans/card2_event_p2a_cases.json: the DCN sweep part 2A witnesses and controls.
+"""Build Plans/card2_event_p2a_cases.json: the DCN sweep part 2A and part 2B witnesses and controls.
+
+Part 2B cases (ids ``p2b/...``, appended after every part 2A case) cover the CV-1101
+date-time profiles and the SP-1101 retained-original dispatch.
 
 Each witness starts from a named valid positive (a retry or history control is that
 append positive with only its path changed, which the checker accepts), changes one
@@ -27,6 +30,7 @@ FIXTURES = dcn.load('card2_event_fixtures.json')
 BASES = {c['id']: c for c in FIXTURES['positives'] + FIXTURES['no_event_cases']}
 CASES = []
 FAILURES = []
+PREFIX = 'p2a/'     # sweep part 2B witnesses below switch it to 'p2b/'
 
 BROWSER = ['browser.session.created', 'browser.session.state_changed', 'browser.session.closed',
            'browser.session.promoted', 'browser.session.takeover_state_changed']
@@ -51,7 +55,7 @@ def add(cid, base, target, defect, fn, control=None):
         c['path'] = control
     fn(c)
     changes = L.diff(BASES[base], c)
-    case = {'id': 'p2a/' + cid, 'base': base, 'target': target, 'guard': dcn.ROW_BY_ID[target]['code'], 'defect': defect,
+    case = {'id': PREFIX + cid, 'base': base, 'target': target, 'guard': dcn.ROW_BY_ID[target]['code'], 'defect': defect,
             'changes': changes}
     if control:
         case['control'] = 'p2a/control/' + base + '/' + control
@@ -75,7 +79,7 @@ def control(base, path, note):
 def accept(cid, base, note, fn):
     c = copy.deepcopy(BASES[base]); fn(c)
     changes = L.diff(BASES[base], c)
-    case = {'id': 'p2a/' + cid, 'base': base, 'expect': 'accept', 'defect': note, 'changes': changes}
+    case = {'id': PREFIX + cid, 'base': base, 'expect': 'accept', 'defect': note, 'changes': changes}
     first, rows = dcn.evaluate(dcn.mutate(BASES[base], changes))
     if rows:
         FAILURES.append({'case': case['id'], 'verdict': 'control refused', 'rows': rows})
@@ -460,9 +464,233 @@ for name, mutate in SHAPE:
             lambda c, g=getter, s=setter, m=mutate: s(c, m(copy.deepcopy(g(c)))))
 
 
+# ================================================================ sweep part 2B (CV-1101 date-time, SP-1101 dispatch)
+PREFIX = 'p2b/'
+CRR = 'browser.session.created/project/retry'
+CRH = 'browser.session.created/project/history'
+CRA = 'browser.session.created/application/history'
+MEMH = 'memory.gist_state_changed/project/history'
+STORE = '11111111-1111-4111-8111-111111111111'
+UNSEALED = '33333333-3333-4333-8333-333333333333'
+# Owner-valid under CV-1101's event_record profile, and refused by the old lane grammar except the plain form.
+BROAD_VALID = [('lower-t-z', '2026-11-04t00:00:00z'), ('offset', '2026-11-04T05:30:00+05:30'),
+               ('plus-zero', '2026-11-04T00:00:00+00:00'), ('minus-zero', '2026-11-04T00:00:00-00:00'),
+               ('leap-second', '2016-12-31T23:59:60Z'), ('leap-second-offset', '2017-01-01T00:59:60+01:00'),
+               ('year-0000', '0000-01-01T00:00:00Z'), ('fraction-12', '2026-11-04T00:00:00.123456789012Z')]
+# Owner-valid under CV-253's storage_utc_z profile too (terminal uppercase Z).
+STORAGE_VALID = [('lower-t', '2026-11-04t00:00:00Z'), ('leap-second', '2016-12-31T23:59:60Z'),
+                 ('year-0000', '0000-01-01T00:00:00Z'), ('fraction-12', '2026-11-04T00:00:00.123456789012Z')]
+# Valid for event_record, refused by storage_utc_z (date_time_utc_z).
+STORAGE_REFUSED = [('lower-z', '2026-11-04T00:00:00z'), ('plus-zero', '2026-11-04T00:00:00+00:00'),
+                   ('minus-zero', '2026-11-04T00:00:00-00:00'), ('offset', '2026-11-04T01:00:00+01:00')]
+# Refused by the shared predicate under every profile (with the shared reason).
+ALL_REFUSED = [('hour-24', '2026-11-04T24:00:00Z', 'date_time_hour'), ('trailing-lf', '2026-11-04T00:00:00Z\n', 'date_time_syntax'),
+               ('bad-leap-second', '2026-11-04T23:59:60Z', 'date_time_leap_second'), ('feb-29', '2026-02-29T00:00:00Z', 'date_time_day'),
+               ('space', '2026-11-04 00:00:00Z', 'date_time_syntax'), ('no-zone', '2026-11-04T00:00:00', 'date_time_syntax'),
+               ('offset-hour-24', '2026-11-04T00:00:00+24:00', 'date_time_offset_hour'), ('minute-60', '2026-11-04T00:60:00Z', 'date_time_minute')]
+
+
+def both_retry(field, value):
+    """Retry: candidate and Storage original carry the same value (producer digests still agree)."""
+    def fn(c):
+        c['event'][field] = value
+        orig(c)[field] = value
+        L.sync_original(c)
+        L.sync_candidate(c)
+    return fn
+
+
+def both_retry_ts(value):
+    def fn(c):
+        pl(c)['ts'] = value
+        orig(c)['payload']['ts'] = value
+        L.sync_original(c)
+        L.sync_candidate(c)
+    return fn
+
+
+def history_field(field, value):
+    def fn(c):
+        c['event'][field] = value
+        L.sync_candidate(c)
+    return fn
+
+
+def history_ts(value):
+    def fn(c):
+        pl(c)['ts'] = value
+        L.sync_candidate(c)
+    return fn
+
+
+# ---- CV-1101 controls: owner-valid forms the interim lane grammar refused are accepted at the right profile
+for label, value in BROAD_VALID:
+    accept('cv1101/append/occurred_at_utc/' + label, CR, 'occurred_at_utc ' + repr(value) + ' is valid under the CV-1101 event_record '
+           'profile; accepted', lambda c, v=value: c['event'].__setitem__('occurred_at_utc', v))
+    accept('cv1101/append/ts/' + label, CR, 'payload ts ' + repr(value) + ' is valid under the CV-1101 event_record profile; accepted',
+           lambda c, v=value: pl(c).__setitem__('ts', v))
+    accept('cv1101/retry/occurred_at_utc/' + label, CRR, 'retry: candidate and retained original both carry occurred_at_utc ' +
+           repr(value) + ' (event_record profile); the producer digests agree; accepted', both_retry('occurred_at_utc', value))
+    accept('cv1101/history/occurred_at_utc/' + label, CRH, 'retained history read of an original whose occurred_at_utc is ' +
+           repr(value) + ' (event_record profile, exact spelling kept); accepted', history_field('occurred_at_utc', value))
+    accept('cv1101/history/ts/' + label, CRH, 'retained history read of an original whose payload ts is ' + repr(value) +
+           ' (event_record profile); accepted', history_ts(value))
+for label, value in STORAGE_VALID:
+    for key in dcn.STORAGE_TIMESTAMPS:
+        accept('cv1101/append/' + key + '/' + label, CR, key + ' ' + repr(value) + ' is valid under CV-253 storage_utc_z; accepted',
+               lambda c, v=value, k=key: c['event'].__setitem__(k, v))
+        accept('cv1101/history/' + key + '/' + label, CRH, 'retained original whose Storage ' + key + ' is ' + repr(value) +
+               ' (storage_utc_z); accepted', history_field(key, value))
+accept('cv1101/retry/ts/lower-t-z', CRR, 'retry: candidate and original payload ts both lowercase; accepted',
+       both_retry_ts('2026-11-04t00:00:00z'))
+accept('cv1101/retry/orig-observed-lower-t', CRR, 'retry: only the original\'s Storage observed_at_utc uses a lowercase t (Storage '
+       'metadata, outside producer semantics); accepted', O(lambda s, c: s.__setitem__('observed_at_utc', '2026-11-04t00:00:00Z')))
+accept('cv1101/application-history/occurred_at_utc/lower-t-z', CRA, 'application retained original with lowercase occurred_at_utc; '
+       'accepted', history_field('occurred_at_utc', '2026-11-04t00:00:00z'))
+for label, value in BROAD_VALID[:2]:
+    def mem_times(c, v=value):
+        for side in (0, 1):
+            f = rec(c, side)['facts']
+            f['created_at'] = v
+            f['claims'][0]['created_at'] = v
+        memory_delta(c)
+    accept('cv1101/memory/created_at/' + label, MEM, 'memory before and after records both carry created_at and claim created_at ' +
+           repr(value) + ' (event_record profile; no delta); accepted', mem_times)
+
+# ---- CV-253: the Storage-assigned fields refuse what the broad profile admits, one row per field and view
+for label, value in STORAGE_REFUSED:
+    for key in dcn.STORAGE_TIMESTAMPS:
+        add('cv253/append/' + key + '/' + label, CR, 'cand_storage_utc_z_' + key,
+            key + ' ' + repr(value) + ' passes the event_record verdict but not CV-253 storage_utc_z (date_time_utc_z)',
+            lambda c, v=value, k=key: c['event'].__setitem__(k, v))
+        add('cv253/history/' + key + '/' + label, CRH, 'cand_storage_utc_z_' + key,
+            'retained original whose Storage ' + key + ' is ' + repr(value) + ': a skipped format check never authorizes '
+            'offset or lowercase-z Storage history (CV-1101, SP-1101)', history_field(key, value))
+        add('cv253/retry-original/' + key + '/' + label, CRR, 'orig_storage_utc_z_' + key,
+            'retry: the Storage original\'s ' + key + ' is ' + repr(value) + ' (receipt copies moved); the candidate keeps Z',
+            O(lambda s, c, v=value, k=key: s.__setitem__(k, v)))
+
+# ---- the shared predicate refuses every lane-recorded leak, at every timestamp field (reason checked by the checker)
+for label, value, reason in ALL_REFUSED:
+    add('cv1101/occurred_at_utc/' + label, CR, 'cand_envelope_schema', 'occurred_at_utc ' + repr(value) + ': shared date_time ' +
+        reason, lambda c, v=value: c['event'].__setitem__('occurred_at_utc', v))
+    for key in dcn.STORAGE_TIMESTAMPS:
+        add('cv1101/' + key + '/' + label, CR, 'cand_envelope_schema', key + ' ' + repr(value) + ': shared date_time ' + reason,
+            lambda c, v=value, k=key: c['event'].__setitem__(k, v))
+    add('cv1101/ts/' + label, CR, 'cand_payload_schema', 'payload ts ' + repr(value) + ': shared date_time ' + reason,
+        lambda c, v=value: pl(c).__setitem__('ts', v))
+    add('cv1101/history/occurred_at_utc/' + label, CRH, 'cand_envelope_schema', 'retained original occurred_at_utc ' + repr(value) +
+        ': owner-invalid history refuses (shared date_time ' + reason + ')', history_field('occurred_at_utc', value))
+    add('cv1101/retry-original/occurred_at_utc/' + label, CRR, 'orig_envelope_schema', 'retry: the Storage original\'s '
+        'occurred_at_utc ' + repr(value) + ' (shared date_time ' + reason + ')',
+        O(lambda s, c, v=value: s.__setitem__('occurred_at_utc', v)))
+    for name, target in [('created_at', 'timestamps'), ('claim-created_at', 'claim_created_at')]:
+        for side, prefix in [(0, 'memory_before'), (1, 'memory_after')]:
+            def mem_bad(c, v=value, n=name, s=side):
+                f = rec(c, s)['facts']
+                if n == 'created_at':
+                    f['created_at'] = v
+                else:
+                    f['claims'][0]['created_at'] = v
+            add('cv1101/' + prefix.replace('_', '-') + '/' + name + '/' + label, MEM, prefix + '_' + target,
+                'memory ' + ('before' if side == 0 else 'after') + ' record ' + name + ' ' + repr(value) + ': shared date_time ' +
+                reason, mem_bad)
+
+
+# ---- SP-1101 dispatch: an original outside the sealed custody, and one sealed under an unsupported recipe
+def replace_strings(value, old, new):
+    if type(value) is str:
+        return value.replace(old, new)
+    if type(value) is list:
+        return [replace_strings(v, old, new) for v in value]
+    if type(value) is dict:
+        return {k: replace_strings(v, old, new) for k, v in value.items()}
+    return value
+
+
+def rebuild_reader(c):
+    """Recompute every reader copy and SP-278 digest from its sources (coherent, as Storage would issue them)."""
+    r = c['reader']
+    tok = r['index_read_token']
+    for k, raw in list(r['source_bytes'].items()):
+        r['source_bytes'][k] = replace_strings(bytes.fromhex(raw).decode(), STORE, UNSEALED).encode().hex()
+        tok['source_selection'][k] = __import__('hashlib').sha256(bytes.fromhex(r['source_bytes'][k])).hexdigest()
+    for k in dcn.SOURCE_VALUES:
+        tok['source_selection'][k] = dcn.binding_digest(r['source_values'][k])
+    r['anchor']['source_selection'] = copy.deepcopy(tok['source_selection'])
+    r['frontier']['source_selection'] = copy.deepcopy(tok['source_selection'])
+    tok['generation_anchor_sha256'] = dcn.binding_digest(r['anchor'])
+    tok['generation_id'] = 'eig_' + dcn.binding_digest(dcn.generation_source(r))
+    tok['checkpoint_key'] = 'event_record_index_checkpoint.v1:' + tok['storage_instance_id']
+    tok['checkpoint_ref'] = tok['checkpoint_key'] + '#/generations/' + tok['generation_id']
+    tok['index_dataset_name'] = 'event_record_index.v2@' + tok['generation_id']
+    tok['frontier_sha256'] = dcn.binding_digest(r['frontier'])
+    r['current_index_read_token'] = copy.deepcopy(tok)
+
+
+def at_store(new_store):
+    """The same original at another Store: every copy of the Store moves and every identity and digest is recomputed."""
+    def fn(c):
+        moved = replace_strings(c, STORE, new_store)
+        c.clear(); c.update(moved)
+        L.refresh_identity(c['event'])
+        if c['path'] == 'retry':
+            L.sync_original(c)
+        else:
+            L.sync_candidate(c)
+            c['reader']['event_id'] = c['event']['event_id']
+            rebuild_reader(c)
+    return fn
+
+
+def at_operation(op):
+    """The same change recorded under another original operation id (owner, payload, identities and copies)."""
+    def fn(c):
+        c['owner']['operation_id'] = op
+        pl(c)['owner_operation_id'] = op
+        L.refresh_identity(c['event'])
+        if c['path'] == 'retry':
+            orig(c)['payload']['owner_operation_id'] = op
+            L.sync_original(c)
+        else:
+            L.sync_candidate(c)
+            c['reader']['event_id'] = c['event']['event_id']
+    return fn
+
+
+for base in [CRR, MEM_RETRY, CRH, MEMH]:
+    where = 'retry' if base.endswith('retry') else 'history'
+    family = base.split('/')[0]
+    add('sp1101/unsealed-store/' + family + '/' + where, base, 'recipe_custody',
+        'a coherent original at Store ' + UNSEALED + ', which Storage\'s sealed custody does not hold, though the case says '
+        'storage.authentic is true: original_unavailable, with no fallback', at_store(UNSEALED))
+    add('sp1101/unsupported-recipe/' + family + '/' + where, base, 'recipe_installed',
+        'a coherent original (operation-unregistered) whose sealed receipt names card2@0-unregistered, a recipe with no '
+        'installed frozen verifier: recipe_unknown, with no fallback or probing', at_operation('operation-unregistered'))
+    accept('sp1101/other-operation-control/' + family + '/' + where, base, 'the same coherent change under another original '
+           'operation id with no sealed receipt: the Store\'s sealed card2@1 recipe; accepted', at_operation('operation-other'))
+
+
+def history_sequence(value):
+    def fn(c):
+        c['event']['sequence_id'] = value
+        L.sync_candidate(c)
+        c['reader']['sequence_id'] = value
+    return fn
+
+
+accept('sp1101/large-sequence/history', CRH, 'retained history read of an original whose Storage sequence_id is 2^64-1 (SP-1100 '
+       'uint64; event, Storage record, receipt and reader copies alike): resolved through custody and readable; accepted',
+       history_sequence(2**64 - 1))
+accept('sp1101/large-sequence/retry-original', CRR, 'retry whose Storage original carries sequence_id 2^64-1 (receipt copies moved; '
+       'outside producer semantics): resolved through custody; accepted', O(lambda s, c: s.__setitem__('sequence_id', 2**64 - 1)))
+accept('sp1101/case-recipe-label-ignored', CRH, 'a case-supplied recipe name and verified flag on the Storage view select nothing; '
+       'accepted through custody', lambda c: c['storage'].update({'recipe': 'card2@0-unregistered', 'verified': True}))
+
+
 def build():
     return {'schema_id': 'pm.card2.event_p2a_cases.v1', 'schema_version': '1.0.0',
-            'claim_boundary': 'Sweep part 2A witnesses and controls for the DCN guard tables. Synthetic owner/Storage adapter records only; '
+            'claim_boundary': 'Sweep part 2A and part 2B (p2b/...) witnesses and controls for the DCN guard tables. Synthetic owner/Storage adapter records only; '
                               'native authentication NOT_RUN. One defect per witness relative to its named positive (or the path-only '
                               'retry control of that positive); every copy that follows the defect moves with it.',
             'cases': CASES}

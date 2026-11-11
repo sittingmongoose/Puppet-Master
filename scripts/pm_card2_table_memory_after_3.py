@@ -41,7 +41,7 @@ def case(value):
         g.Guard('memory_after_claim_shape', g.Invariant('/source_records/after/facts', 'every claim is an object with its typed required fields'), 'memory_source_shape', memory_after_claim_shape),
         g.Guard('memory_after_claim_id', g.Invariant('/source_records/after/facts', 'every claim_id is nonempty'), 'memory_source_shape', memory_after_claim_id),
         g.Guard('memory_after_claim_text', g.Invariant('/source_records/after/facts', 'every claim text is nonempty'), 'memory_source_shape', memory_after_claim_text),
-        g.Guard('memory_after_claim_created_at', g.Invariant('/source_records/after/facts', 'every claim created_at is a date-time (interim grammar)'), 'memory_source_shape', memory_after_claim_created_at),
+        g.Guard('memory_after_claim_created_at', g.Invariant('/source_records/after/facts', 'every claim created_at passes the shared CV-1101 date_time (event_record profile)'), 'memory_source_shape', memory_after_claim_created_at),
         g.Guard('memory_after_claim_scope', g.Invariant('/source_records/after/facts', 'every support_scope is nonblank'), 'memory_source_shape', memory_after_claim_scope),
         g.Guard('memory_after_claim_currentness', g.Invariant('/source_records/after/facts', 'every claim currentness is in its owner domain'), 'memory_source_shape', memory_after_claim_currentness),
     ])

@@ -225469,7 +225469,12 @@
           "/retry/original_event/event_id",
           "forged-id"
         ]
-      ]
+      ],
+      "guards": [
+        "event_identity",
+        "original_dispatch"
+      ],
+      "duplicate_reason": "Sweep part 2B (SP-1101): the shared RetainedDispatcher compares the original's binding with the request, so the entailed recipe_resolved row (code original_dispatch) also refuses an original whose event_id differs; orig_event_identity refuses first and names it."
     },
     {
       "id": "browser.session.created/application/illegal-browser-transition",
@@ -225624,7 +225629,12 @@
           "/retry/original_event/event_id",
           "forged-id"
         ]
-      ]
+      ],
+      "guards": [
+        "event_identity",
+        "original_dispatch"
+      ],
+      "duplicate_reason": "Sweep part 2B (SP-1101): the shared RetainedDispatcher compares the original's binding with the request, so the entailed recipe_resolved row (code original_dispatch) also refuses an original whose event_id differs; orig_event_identity refuses first and names it."
     },
     {
       "id": "browser.session.state_changed/project/retry/invalid-authenticated-original-persisted_at_utc-invalid-offset",
@@ -225755,7 +225765,12 @@
           "/retry/original_event/event_id",
           "forged-id"
         ]
-      ]
+      ],
+      "guards": [
+        "event_identity",
+        "original_dispatch"
+      ],
+      "duplicate_reason": "Sweep part 2B (SP-1101): the shared RetainedDispatcher compares the original's binding with the request, so the entailed recipe_resolved row (code original_dispatch) also refuses an original whose event_id differs; orig_event_identity refuses first and names it."
     },
     {
       "id": "browser.session.state_changed/application/retry/invalid-authenticated-original-persisted_at_utc-invalid-offset",
@@ -225886,7 +225901,12 @@
           "/retry/original_event/event_id",
           "forged-id"
         ]
-      ]
+      ],
+      "guards": [
+        "event_identity",
+        "original_dispatch"
+      ],
+      "duplicate_reason": "Sweep part 2B (SP-1101): the shared RetainedDispatcher compares the original's binding with the request, so the entailed recipe_resolved row (code original_dispatch) also refuses an original whose event_id differs; orig_event_identity refuses first and names it."
     },
     {
       "id": "browser.session.closed/project/illegal-browser-transition",
@@ -226063,7 +226083,12 @@
           "/retry/original_event/event_id",
           "forged-id"
         ]
-      ]
+      ],
+      "guards": [
+        "event_identity",
+        "original_dispatch"
+      ],
+      "duplicate_reason": "Sweep part 2B (SP-1101): the shared RetainedDispatcher compares the original's binding with the request, so the entailed recipe_resolved row (code original_dispatch) also refuses an original whose event_id differs; orig_event_identity refuses first and names it."
     },
     {
       "id": "browser.session.closed/application/illegal-browser-transition",
@@ -226240,7 +226265,12 @@
           "/retry/original_event/event_id",
           "forged-id"
         ]
-      ]
+      ],
+      "guards": [
+        "event_identity",
+        "original_dispatch"
+      ],
+      "duplicate_reason": "Sweep part 2B (SP-1101): the shared RetainedDispatcher compares the original's binding with the request, so the entailed recipe_resolved row (code original_dispatch) also refuses an original whose event_id differs; orig_event_identity refuses first and names it."
     },
     {
       "id": "browser.session.promoted/project/illegal-browser-transition",
@@ -226417,7 +226447,12 @@
           "/retry/original_event/event_id",
           "forged-id"
         ]
-      ]
+      ],
+      "guards": [
+        "event_identity",
+        "original_dispatch"
+      ],
+      "duplicate_reason": "Sweep part 2B (SP-1101): the shared RetainedDispatcher compares the original's binding with the request, so the entailed recipe_resolved row (code original_dispatch) also refuses an original whose event_id differs; orig_event_identity refuses first and names it."
     },
     {
       "id": "browser.session.promoted/application/illegal-browser-transition",
@@ -226594,7 +226629,12 @@
           "/retry/original_event/event_id",
           "forged-id"
         ]
-      ]
+      ],
+      "guards": [
+        "event_identity",
+        "original_dispatch"
+      ],
+      "duplicate_reason": "Sweep part 2B (SP-1101): the shared RetainedDispatcher compares the original's binding with the request, so the entailed recipe_resolved row (code original_dispatch) also refuses an original whose event_id differs; orig_event_identity refuses first and names it."
     },
     {
       "id": "browser.session.takeover_state_changed/project/illegal-browser-transition",
@@ -226771,7 +226811,12 @@
           "/retry/original_event/event_id",
           "forged-id"
         ]
-      ]
+      ],
+      "guards": [
+        "event_identity",
+        "original_dispatch"
+      ],
+      "duplicate_reason": "Sweep part 2B (SP-1101): the shared RetainedDispatcher compares the original's binding with the request, so the entailed recipe_resolved row (code original_dispatch) also refuses an original whose event_id differs; orig_event_identity refuses first and names it."
     },
     {
       "id": "browser.session.takeover_state_changed/application/illegal-browser-transition",
@@ -226948,7 +226993,12 @@
           "/retry/original_event/event_id",
           "forged-id"
         ]
-      ]
+      ],
+      "guards": [
+        "event_identity",
+        "original_dispatch"
+      ],
+      "duplicate_reason": "Sweep part 2B (SP-1101): the shared RetainedDispatcher compares the original's binding with the request, so the entailed recipe_resolved row (code original_dispatch) also refuses an original whose event_id differs; orig_event_identity refuses first and names it."
     },
     {
       "id": "memory.gist_state_changed/project/retry/invalid-authenticated-original-persisted_at_utc-invalid-offset",
@@ -227079,7 +227129,12 @@
           "/retry/original_event/event_id",
           "forged-id"
         ]
-      ]
+      ],
+      "guards": [
+        "event_identity",
+        "original_dispatch"
+      ],
+      "duplicate_reason": "Sweep part 2B (SP-1101): the shared RetainedDispatcher compares the original's binding with the request, so the entailed recipe_resolved row (code original_dispatch) also refuses an original whose event_id differs; orig_event_identity refuses first and names it."
     },
     {
       "id": "memory.gist_state_changed/application/missing-private-thread",
@@ -227238,7 +227293,12 @@
           "/retry/original_event/event_id",
           "forged-id"
         ]
-      ]
+      ],
+      "guards": [
+        "event_identity",
+        "original_dispatch"
+      ],
+      "duplicate_reason": "Sweep part 2B (SP-1101): the shared RetainedDispatcher compares the original's binding with the request, so the entailed recipe_resolved row (code original_dispatch) also refuses an original whose event_id differs; orig_event_identity refuses first and names it."
     },
     {
       "id": "browser.session.created/project/invalid-scenario-path",

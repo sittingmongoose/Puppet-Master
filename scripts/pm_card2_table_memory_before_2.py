@@ -36,7 +36,7 @@ def memory_before_support_pattern(value, context):
 def case(value):
     context = None
     table = g.GuardTable([
-        g.Guard('memory_before_timestamps', g.Invariant('/source_records/before/facts', 'created/updated/last-access are date-times (interim grammar)'), 'memory_source_shape', memory_before_timestamps),
+        g.Guard('memory_before_timestamps', g.Invariant('/source_records/before/facts', 'created/updated/last-access pass the shared CV-1101 date_time (event_record profile)'), 'memory_source_shape', memory_before_timestamps),
         g.Guard('memory_before_hashes', g.Invariant('/source_records/before/facts', 'both text hashes are 64 lowercase hex'), 'memory_source_shape', memory_before_hashes),
         g.Guard('memory_before_embedding_version', g.Invariant('/source_records/before/facts', 'embedding_version is nonempty'), 'memory_source_shape', memory_before_embedding_version),
         g.Guard('memory_before_claims_nonempty', g.Invariant('/source_records/before/facts', 'there is at least one claim'), 'memory_source_shape', memory_before_claims_nonempty),

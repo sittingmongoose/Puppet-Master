@@ -1,7 +1,7 @@
 {
   "schema_id": "pm.card2.event_p2a_cases.v1",
   "schema_version": "1.0.0",
-  "claim_boundary": "Sweep part 2A witnesses and controls for the DCN guard tables. Synthetic owner/Storage adapter records only; native authentication NOT_RUN. One defect per witness relative to its named positive (or the path-only retry control of that positive); every copy that follows the defect moves with it.",
+  "claim_boundary": "Sweep part 2A and part 2B (p2b/...) witnesses and controls for the DCN guard tables. Synthetic owner/Storage adapter records only; native authentication NOT_RUN. One defect per witness relative to its named positive (or the path-only retry control of that positive); every copy that follows the defect moves with it.",
   "cases": [
     {
       "id": "p2a/control/memory/pin/retry",
@@ -11107,7 +11107,7 @@
       "base": "memory.gist_state_changed/project",
       "target": "memory_before_timestamps",
       "guard": "memory_source_shape",
-      "defect": "the before record: created/updated/last-access are date-times (interim grammar) is broken by one change",
+      "defect": "the before record: created/updated/last-access pass the shared CV-1101 date_time (event_record profile) is broken by one change",
       "changes": [
         [
           "/source_records/record:before/facts/created_at",
@@ -11120,7 +11120,7 @@
       "base": "memory.gist_state_changed/project",
       "target": "memory_after_timestamps",
       "guard": "memory_source_shape",
-      "defect": "the after record: created/updated/last-access are date-times (interim grammar) is broken by one change",
+      "defect": "the after record: created/updated/last-access pass the shared CV-1101 date_time (event_record profile) is broken by one change",
       "changes": [
         [
           "/source_records/record:after/facts/created_at",
@@ -11133,7 +11133,7 @@
       "base": "memory/requested",
       "target": "command_only_before_timestamps",
       "guard": "command_only_source_shape",
-      "defect": "the no-event before facts: created/updated/last-access are date-times (interim grammar) is broken by one change",
+      "defect": "the no-event before facts: created/updated/last-access pass the shared CV-1101 date_time (event_record profile) is broken by one change",
       "changes": [
         [
           "/before_facts/created_at",
@@ -11146,7 +11146,7 @@
       "base": "memory/requested",
       "target": "command_only_after_timestamps",
       "guard": "command_only_source_shape",
-      "defect": "the no-event after facts: created/updated/last-access are date-times (interim grammar) is broken by one change",
+      "defect": "the no-event after facts: created/updated/last-access pass the shared CV-1101 date_time (event_record profile) is broken by one change",
       "changes": [
         [
           "/after_facts/created_at",
@@ -11839,7 +11839,7 @@
       "base": "memory.gist_state_changed/project",
       "target": "memory_before_claim_created_at",
       "guard": "memory_source_shape",
-      "defect": "the before record: every claim created_at is a date-time (interim grammar) is broken by one change",
+      "defect": "the before record: every claim created_at passes the shared CV-1101 date_time (event_record profile) is broken by one change",
       "changes": [
         [
           "/source_records/record:before/facts/claims/0/created_at",
@@ -11852,7 +11852,7 @@
       "base": "memory.gist_state_changed/project",
       "target": "memory_after_claim_created_at",
       "guard": "memory_source_shape",
-      "defect": "the after record: every claim created_at is a date-time (interim grammar) is broken by one change",
+      "defect": "the after record: every claim created_at passes the shared CV-1101 date_time (event_record profile) is broken by one change",
       "changes": [
         [
           "/source_records/record:after/facts/claims/0/created_at",
@@ -11865,7 +11865,7 @@
       "base": "memory/requested",
       "target": "command_only_before_claim_created_at",
       "guard": "command_only_source_shape",
-      "defect": "the no-event before facts: every claim created_at is a date-time (interim grammar) is broken by one change",
+      "defect": "the no-event before facts: every claim created_at passes the shared CV-1101 date_time (event_record profile) is broken by one change",
       "changes": [
         [
           "/before_facts/claims/0/created_at",
@@ -11878,7 +11878,7 @@
       "base": "memory/requested",
       "target": "command_only_after_claim_created_at",
       "guard": "command_only_source_shape",
-      "defect": "the no-event after facts: every claim created_at is a date-time (interim grammar) is broken by one change",
+      "defect": "the no-event after facts: every claim created_at passes the shared CV-1101 date_time (event_record profile) is broken by one change",
       "changes": [
         [
           "/after_facts/claims/0/created_at",
@@ -12307,6 +12307,3790 @@
               "currentness": "current"
             }
           ]
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/append/occurred_at_utc/lower-t-z",
+      "base": "browser.session.created/project",
+      "expect": "accept",
+      "defect": "occurred_at_utc '2026-11-04t00:00:00z' is valid under the CV-1101 event_record profile; accepted",
+      "changes": [
+        [
+          "/event/occurred_at_utc",
+          "2026-11-04t00:00:00z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/append/ts/lower-t-z",
+      "base": "browser.session.created/project",
+      "expect": "accept",
+      "defect": "payload ts '2026-11-04t00:00:00z' is valid under the CV-1101 event_record profile; accepted",
+      "changes": [
+        [
+          "/event/payload/ts",
+          "2026-11-04t00:00:00z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/retry/occurred_at_utc/lower-t-z",
+      "base": "browser.session.created/project/retry",
+      "expect": "accept",
+      "defect": "retry: candidate and retained original both carry occurred_at_utc '2026-11-04t00:00:00z' (event_record profile); the producer digests agree; accepted",
+      "changes": [
+        [
+          "/event/occurred_at_utc",
+          "2026-11-04t00:00:00z"
+        ],
+        [
+          "/storage/event/occurred_at_utc",
+          "2026-11-04t00:00:00z"
+        ],
+        [
+          "/retry/original_event/occurred_at_utc",
+          "2026-11-04t00:00:00z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/history/occurred_at_utc/lower-t-z",
+      "base": "browser.session.created/project/history",
+      "expect": "accept",
+      "defect": "retained history read of an original whose occurred_at_utc is '2026-11-04t00:00:00z' (event_record profile, exact spelling kept); accepted",
+      "changes": [
+        [
+          "/event/occurred_at_utc",
+          "2026-11-04t00:00:00z"
+        ],
+        [
+          "/storage/event/occurred_at_utc",
+          "2026-11-04t00:00:00z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/history/ts/lower-t-z",
+      "base": "browser.session.created/project/history",
+      "expect": "accept",
+      "defect": "retained history read of an original whose payload ts is '2026-11-04t00:00:00z' (event_record profile); accepted",
+      "changes": [
+        [
+          "/event/payload/ts",
+          "2026-11-04t00:00:00z"
+        ],
+        [
+          "/storage/event/payload/ts",
+          "2026-11-04t00:00:00z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/append/occurred_at_utc/offset",
+      "base": "browser.session.created/project",
+      "expect": "accept",
+      "defect": "occurred_at_utc '2026-11-04T05:30:00+05:30' is valid under the CV-1101 event_record profile; accepted",
+      "changes": [
+        [
+          "/event/occurred_at_utc",
+          "2026-11-04T05:30:00+05:30"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/append/ts/offset",
+      "base": "browser.session.created/project",
+      "expect": "accept",
+      "defect": "payload ts '2026-11-04T05:30:00+05:30' is valid under the CV-1101 event_record profile; accepted",
+      "changes": [
+        [
+          "/event/payload/ts",
+          "2026-11-04T05:30:00+05:30"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/retry/occurred_at_utc/offset",
+      "base": "browser.session.created/project/retry",
+      "expect": "accept",
+      "defect": "retry: candidate and retained original both carry occurred_at_utc '2026-11-04T05:30:00+05:30' (event_record profile); the producer digests agree; accepted",
+      "changes": [
+        [
+          "/event/occurred_at_utc",
+          "2026-11-04T05:30:00+05:30"
+        ],
+        [
+          "/storage/event/occurred_at_utc",
+          "2026-11-04T05:30:00+05:30"
+        ],
+        [
+          "/retry/original_event/occurred_at_utc",
+          "2026-11-04T05:30:00+05:30"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/history/occurred_at_utc/offset",
+      "base": "browser.session.created/project/history",
+      "expect": "accept",
+      "defect": "retained history read of an original whose occurred_at_utc is '2026-11-04T05:30:00+05:30' (event_record profile, exact spelling kept); accepted",
+      "changes": [
+        [
+          "/event/occurred_at_utc",
+          "2026-11-04T05:30:00+05:30"
+        ],
+        [
+          "/storage/event/occurred_at_utc",
+          "2026-11-04T05:30:00+05:30"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/history/ts/offset",
+      "base": "browser.session.created/project/history",
+      "expect": "accept",
+      "defect": "retained history read of an original whose payload ts is '2026-11-04T05:30:00+05:30' (event_record profile); accepted",
+      "changes": [
+        [
+          "/event/payload/ts",
+          "2026-11-04T05:30:00+05:30"
+        ],
+        [
+          "/storage/event/payload/ts",
+          "2026-11-04T05:30:00+05:30"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/append/occurred_at_utc/plus-zero",
+      "base": "browser.session.created/project",
+      "expect": "accept",
+      "defect": "occurred_at_utc '2026-11-04T00:00:00+00:00' is valid under the CV-1101 event_record profile; accepted",
+      "changes": [
+        [
+          "/event/occurred_at_utc",
+          "2026-11-04T00:00:00+00:00"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/append/ts/plus-zero",
+      "base": "browser.session.created/project",
+      "expect": "accept",
+      "defect": "payload ts '2026-11-04T00:00:00+00:00' is valid under the CV-1101 event_record profile; accepted",
+      "changes": [
+        [
+          "/event/payload/ts",
+          "2026-11-04T00:00:00+00:00"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/retry/occurred_at_utc/plus-zero",
+      "base": "browser.session.created/project/retry",
+      "expect": "accept",
+      "defect": "retry: candidate and retained original both carry occurred_at_utc '2026-11-04T00:00:00+00:00' (event_record profile); the producer digests agree; accepted",
+      "changes": [
+        [
+          "/event/occurred_at_utc",
+          "2026-11-04T00:00:00+00:00"
+        ],
+        [
+          "/storage/event/occurred_at_utc",
+          "2026-11-04T00:00:00+00:00"
+        ],
+        [
+          "/retry/original_event/occurred_at_utc",
+          "2026-11-04T00:00:00+00:00"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/history/occurred_at_utc/plus-zero",
+      "base": "browser.session.created/project/history",
+      "expect": "accept",
+      "defect": "retained history read of an original whose occurred_at_utc is '2026-11-04T00:00:00+00:00' (event_record profile, exact spelling kept); accepted",
+      "changes": [
+        [
+          "/event/occurred_at_utc",
+          "2026-11-04T00:00:00+00:00"
+        ],
+        [
+          "/storage/event/occurred_at_utc",
+          "2026-11-04T00:00:00+00:00"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/history/ts/plus-zero",
+      "base": "browser.session.created/project/history",
+      "expect": "accept",
+      "defect": "retained history read of an original whose payload ts is '2026-11-04T00:00:00+00:00' (event_record profile); accepted",
+      "changes": [
+        [
+          "/event/payload/ts",
+          "2026-11-04T00:00:00+00:00"
+        ],
+        [
+          "/storage/event/payload/ts",
+          "2026-11-04T00:00:00+00:00"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/append/occurred_at_utc/minus-zero",
+      "base": "browser.session.created/project",
+      "expect": "accept",
+      "defect": "occurred_at_utc '2026-11-04T00:00:00-00:00' is valid under the CV-1101 event_record profile; accepted",
+      "changes": [
+        [
+          "/event/occurred_at_utc",
+          "2026-11-04T00:00:00-00:00"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/append/ts/minus-zero",
+      "base": "browser.session.created/project",
+      "expect": "accept",
+      "defect": "payload ts '2026-11-04T00:00:00-00:00' is valid under the CV-1101 event_record profile; accepted",
+      "changes": [
+        [
+          "/event/payload/ts",
+          "2026-11-04T00:00:00-00:00"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/retry/occurred_at_utc/minus-zero",
+      "base": "browser.session.created/project/retry",
+      "expect": "accept",
+      "defect": "retry: candidate and retained original both carry occurred_at_utc '2026-11-04T00:00:00-00:00' (event_record profile); the producer digests agree; accepted",
+      "changes": [
+        [
+          "/event/occurred_at_utc",
+          "2026-11-04T00:00:00-00:00"
+        ],
+        [
+          "/storage/event/occurred_at_utc",
+          "2026-11-04T00:00:00-00:00"
+        ],
+        [
+          "/retry/original_event/occurred_at_utc",
+          "2026-11-04T00:00:00-00:00"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/history/occurred_at_utc/minus-zero",
+      "base": "browser.session.created/project/history",
+      "expect": "accept",
+      "defect": "retained history read of an original whose occurred_at_utc is '2026-11-04T00:00:00-00:00' (event_record profile, exact spelling kept); accepted",
+      "changes": [
+        [
+          "/event/occurred_at_utc",
+          "2026-11-04T00:00:00-00:00"
+        ],
+        [
+          "/storage/event/occurred_at_utc",
+          "2026-11-04T00:00:00-00:00"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/history/ts/minus-zero",
+      "base": "browser.session.created/project/history",
+      "expect": "accept",
+      "defect": "retained history read of an original whose payload ts is '2026-11-04T00:00:00-00:00' (event_record profile); accepted",
+      "changes": [
+        [
+          "/event/payload/ts",
+          "2026-11-04T00:00:00-00:00"
+        ],
+        [
+          "/storage/event/payload/ts",
+          "2026-11-04T00:00:00-00:00"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/append/occurred_at_utc/leap-second",
+      "base": "browser.session.created/project",
+      "expect": "accept",
+      "defect": "occurred_at_utc '2016-12-31T23:59:60Z' is valid under the CV-1101 event_record profile; accepted",
+      "changes": [
+        [
+          "/event/occurred_at_utc",
+          "2016-12-31T23:59:60Z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/append/ts/leap-second",
+      "base": "browser.session.created/project",
+      "expect": "accept",
+      "defect": "payload ts '2016-12-31T23:59:60Z' is valid under the CV-1101 event_record profile; accepted",
+      "changes": [
+        [
+          "/event/payload/ts",
+          "2016-12-31T23:59:60Z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/retry/occurred_at_utc/leap-second",
+      "base": "browser.session.created/project/retry",
+      "expect": "accept",
+      "defect": "retry: candidate and retained original both carry occurred_at_utc '2016-12-31T23:59:60Z' (event_record profile); the producer digests agree; accepted",
+      "changes": [
+        [
+          "/event/occurred_at_utc",
+          "2016-12-31T23:59:60Z"
+        ],
+        [
+          "/storage/event/occurred_at_utc",
+          "2016-12-31T23:59:60Z"
+        ],
+        [
+          "/retry/original_event/occurred_at_utc",
+          "2016-12-31T23:59:60Z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/history/occurred_at_utc/leap-second",
+      "base": "browser.session.created/project/history",
+      "expect": "accept",
+      "defect": "retained history read of an original whose occurred_at_utc is '2016-12-31T23:59:60Z' (event_record profile, exact spelling kept); accepted",
+      "changes": [
+        [
+          "/event/occurred_at_utc",
+          "2016-12-31T23:59:60Z"
+        ],
+        [
+          "/storage/event/occurred_at_utc",
+          "2016-12-31T23:59:60Z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/history/ts/leap-second",
+      "base": "browser.session.created/project/history",
+      "expect": "accept",
+      "defect": "retained history read of an original whose payload ts is '2016-12-31T23:59:60Z' (event_record profile); accepted",
+      "changes": [
+        [
+          "/event/payload/ts",
+          "2016-12-31T23:59:60Z"
+        ],
+        [
+          "/storage/event/payload/ts",
+          "2016-12-31T23:59:60Z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/append/occurred_at_utc/leap-second-offset",
+      "base": "browser.session.created/project",
+      "expect": "accept",
+      "defect": "occurred_at_utc '2017-01-01T00:59:60+01:00' is valid under the CV-1101 event_record profile; accepted",
+      "changes": [
+        [
+          "/event/occurred_at_utc",
+          "2017-01-01T00:59:60+01:00"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/append/ts/leap-second-offset",
+      "base": "browser.session.created/project",
+      "expect": "accept",
+      "defect": "payload ts '2017-01-01T00:59:60+01:00' is valid under the CV-1101 event_record profile; accepted",
+      "changes": [
+        [
+          "/event/payload/ts",
+          "2017-01-01T00:59:60+01:00"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/retry/occurred_at_utc/leap-second-offset",
+      "base": "browser.session.created/project/retry",
+      "expect": "accept",
+      "defect": "retry: candidate and retained original both carry occurred_at_utc '2017-01-01T00:59:60+01:00' (event_record profile); the producer digests agree; accepted",
+      "changes": [
+        [
+          "/event/occurred_at_utc",
+          "2017-01-01T00:59:60+01:00"
+        ],
+        [
+          "/storage/event/occurred_at_utc",
+          "2017-01-01T00:59:60+01:00"
+        ],
+        [
+          "/retry/original_event/occurred_at_utc",
+          "2017-01-01T00:59:60+01:00"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/history/occurred_at_utc/leap-second-offset",
+      "base": "browser.session.created/project/history",
+      "expect": "accept",
+      "defect": "retained history read of an original whose occurred_at_utc is '2017-01-01T00:59:60+01:00' (event_record profile, exact spelling kept); accepted",
+      "changes": [
+        [
+          "/event/occurred_at_utc",
+          "2017-01-01T00:59:60+01:00"
+        ],
+        [
+          "/storage/event/occurred_at_utc",
+          "2017-01-01T00:59:60+01:00"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/history/ts/leap-second-offset",
+      "base": "browser.session.created/project/history",
+      "expect": "accept",
+      "defect": "retained history read of an original whose payload ts is '2017-01-01T00:59:60+01:00' (event_record profile); accepted",
+      "changes": [
+        [
+          "/event/payload/ts",
+          "2017-01-01T00:59:60+01:00"
+        ],
+        [
+          "/storage/event/payload/ts",
+          "2017-01-01T00:59:60+01:00"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/append/occurred_at_utc/year-0000",
+      "base": "browser.session.created/project",
+      "expect": "accept",
+      "defect": "occurred_at_utc '0000-01-01T00:00:00Z' is valid under the CV-1101 event_record profile; accepted",
+      "changes": [
+        [
+          "/event/occurred_at_utc",
+          "0000-01-01T00:00:00Z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/append/ts/year-0000",
+      "base": "browser.session.created/project",
+      "expect": "accept",
+      "defect": "payload ts '0000-01-01T00:00:00Z' is valid under the CV-1101 event_record profile; accepted",
+      "changes": [
+        [
+          "/event/payload/ts",
+          "0000-01-01T00:00:00Z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/retry/occurred_at_utc/year-0000",
+      "base": "browser.session.created/project/retry",
+      "expect": "accept",
+      "defect": "retry: candidate and retained original both carry occurred_at_utc '0000-01-01T00:00:00Z' (event_record profile); the producer digests agree; accepted",
+      "changes": [
+        [
+          "/event/occurred_at_utc",
+          "0000-01-01T00:00:00Z"
+        ],
+        [
+          "/storage/event/occurred_at_utc",
+          "0000-01-01T00:00:00Z"
+        ],
+        [
+          "/retry/original_event/occurred_at_utc",
+          "0000-01-01T00:00:00Z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/history/occurred_at_utc/year-0000",
+      "base": "browser.session.created/project/history",
+      "expect": "accept",
+      "defect": "retained history read of an original whose occurred_at_utc is '0000-01-01T00:00:00Z' (event_record profile, exact spelling kept); accepted",
+      "changes": [
+        [
+          "/event/occurred_at_utc",
+          "0000-01-01T00:00:00Z"
+        ],
+        [
+          "/storage/event/occurred_at_utc",
+          "0000-01-01T00:00:00Z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/history/ts/year-0000",
+      "base": "browser.session.created/project/history",
+      "expect": "accept",
+      "defect": "retained history read of an original whose payload ts is '0000-01-01T00:00:00Z' (event_record profile); accepted",
+      "changes": [
+        [
+          "/event/payload/ts",
+          "0000-01-01T00:00:00Z"
+        ],
+        [
+          "/storage/event/payload/ts",
+          "0000-01-01T00:00:00Z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/append/occurred_at_utc/fraction-12",
+      "base": "browser.session.created/project",
+      "expect": "accept",
+      "defect": "occurred_at_utc '2026-11-04T00:00:00.123456789012Z' is valid under the CV-1101 event_record profile; accepted",
+      "changes": [
+        [
+          "/event/occurred_at_utc",
+          "2026-11-04T00:00:00.123456789012Z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/append/ts/fraction-12",
+      "base": "browser.session.created/project",
+      "expect": "accept",
+      "defect": "payload ts '2026-11-04T00:00:00.123456789012Z' is valid under the CV-1101 event_record profile; accepted",
+      "changes": [
+        [
+          "/event/payload/ts",
+          "2026-11-04T00:00:00.123456789012Z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/retry/occurred_at_utc/fraction-12",
+      "base": "browser.session.created/project/retry",
+      "expect": "accept",
+      "defect": "retry: candidate and retained original both carry occurred_at_utc '2026-11-04T00:00:00.123456789012Z' (event_record profile); the producer digests agree; accepted",
+      "changes": [
+        [
+          "/event/occurred_at_utc",
+          "2026-11-04T00:00:00.123456789012Z"
+        ],
+        [
+          "/storage/event/occurred_at_utc",
+          "2026-11-04T00:00:00.123456789012Z"
+        ],
+        [
+          "/retry/original_event/occurred_at_utc",
+          "2026-11-04T00:00:00.123456789012Z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/history/occurred_at_utc/fraction-12",
+      "base": "browser.session.created/project/history",
+      "expect": "accept",
+      "defect": "retained history read of an original whose occurred_at_utc is '2026-11-04T00:00:00.123456789012Z' (event_record profile, exact spelling kept); accepted",
+      "changes": [
+        [
+          "/event/occurred_at_utc",
+          "2026-11-04T00:00:00.123456789012Z"
+        ],
+        [
+          "/storage/event/occurred_at_utc",
+          "2026-11-04T00:00:00.123456789012Z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/history/ts/fraction-12",
+      "base": "browser.session.created/project/history",
+      "expect": "accept",
+      "defect": "retained history read of an original whose payload ts is '2026-11-04T00:00:00.123456789012Z' (event_record profile); accepted",
+      "changes": [
+        [
+          "/event/payload/ts",
+          "2026-11-04T00:00:00.123456789012Z"
+        ],
+        [
+          "/storage/event/payload/ts",
+          "2026-11-04T00:00:00.123456789012Z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/append/observed_at_utc/lower-t",
+      "base": "browser.session.created/project",
+      "expect": "accept",
+      "defect": "observed_at_utc '2026-11-04t00:00:00Z' is valid under CV-253 storage_utc_z; accepted",
+      "changes": [
+        [
+          "/event/observed_at_utc",
+          "2026-11-04t00:00:00Z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/history/observed_at_utc/lower-t",
+      "base": "browser.session.created/project/history",
+      "expect": "accept",
+      "defect": "retained original whose Storage observed_at_utc is '2026-11-04t00:00:00Z' (storage_utc_z); accepted",
+      "changes": [
+        [
+          "/event/observed_at_utc",
+          "2026-11-04t00:00:00Z"
+        ],
+        [
+          "/storage/event/observed_at_utc",
+          "2026-11-04t00:00:00Z"
+        ],
+        [
+          "/storage/receipt/observed_at_utc",
+          "2026-11-04t00:00:00Z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/append/persisted_at_utc/lower-t",
+      "base": "browser.session.created/project",
+      "expect": "accept",
+      "defect": "persisted_at_utc '2026-11-04t00:00:00Z' is valid under CV-253 storage_utc_z; accepted",
+      "changes": [
+        [
+          "/event/persisted_at_utc",
+          "2026-11-04t00:00:00Z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/history/persisted_at_utc/lower-t",
+      "base": "browser.session.created/project/history",
+      "expect": "accept",
+      "defect": "retained original whose Storage persisted_at_utc is '2026-11-04t00:00:00Z' (storage_utc_z); accepted",
+      "changes": [
+        [
+          "/event/persisted_at_utc",
+          "2026-11-04t00:00:00Z"
+        ],
+        [
+          "/storage/event/persisted_at_utc",
+          "2026-11-04t00:00:00Z"
+        ],
+        [
+          "/storage/receipt/persisted_at_utc",
+          "2026-11-04t00:00:00Z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/append/observed_at_utc/leap-second",
+      "base": "browser.session.created/project",
+      "expect": "accept",
+      "defect": "observed_at_utc '2016-12-31T23:59:60Z' is valid under CV-253 storage_utc_z; accepted",
+      "changes": [
+        [
+          "/event/observed_at_utc",
+          "2016-12-31T23:59:60Z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/history/observed_at_utc/leap-second",
+      "base": "browser.session.created/project/history",
+      "expect": "accept",
+      "defect": "retained original whose Storage observed_at_utc is '2016-12-31T23:59:60Z' (storage_utc_z); accepted",
+      "changes": [
+        [
+          "/event/observed_at_utc",
+          "2016-12-31T23:59:60Z"
+        ],
+        [
+          "/storage/event/observed_at_utc",
+          "2016-12-31T23:59:60Z"
+        ],
+        [
+          "/storage/receipt/observed_at_utc",
+          "2016-12-31T23:59:60Z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/append/persisted_at_utc/leap-second",
+      "base": "browser.session.created/project",
+      "expect": "accept",
+      "defect": "persisted_at_utc '2016-12-31T23:59:60Z' is valid under CV-253 storage_utc_z; accepted",
+      "changes": [
+        [
+          "/event/persisted_at_utc",
+          "2016-12-31T23:59:60Z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/history/persisted_at_utc/leap-second",
+      "base": "browser.session.created/project/history",
+      "expect": "accept",
+      "defect": "retained original whose Storage persisted_at_utc is '2016-12-31T23:59:60Z' (storage_utc_z); accepted",
+      "changes": [
+        [
+          "/event/persisted_at_utc",
+          "2016-12-31T23:59:60Z"
+        ],
+        [
+          "/storage/event/persisted_at_utc",
+          "2016-12-31T23:59:60Z"
+        ],
+        [
+          "/storage/receipt/persisted_at_utc",
+          "2016-12-31T23:59:60Z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/append/observed_at_utc/year-0000",
+      "base": "browser.session.created/project",
+      "expect": "accept",
+      "defect": "observed_at_utc '0000-01-01T00:00:00Z' is valid under CV-253 storage_utc_z; accepted",
+      "changes": [
+        [
+          "/event/observed_at_utc",
+          "0000-01-01T00:00:00Z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/history/observed_at_utc/year-0000",
+      "base": "browser.session.created/project/history",
+      "expect": "accept",
+      "defect": "retained original whose Storage observed_at_utc is '0000-01-01T00:00:00Z' (storage_utc_z); accepted",
+      "changes": [
+        [
+          "/event/observed_at_utc",
+          "0000-01-01T00:00:00Z"
+        ],
+        [
+          "/storage/event/observed_at_utc",
+          "0000-01-01T00:00:00Z"
+        ],
+        [
+          "/storage/receipt/observed_at_utc",
+          "0000-01-01T00:00:00Z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/append/persisted_at_utc/year-0000",
+      "base": "browser.session.created/project",
+      "expect": "accept",
+      "defect": "persisted_at_utc '0000-01-01T00:00:00Z' is valid under CV-253 storage_utc_z; accepted",
+      "changes": [
+        [
+          "/event/persisted_at_utc",
+          "0000-01-01T00:00:00Z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/history/persisted_at_utc/year-0000",
+      "base": "browser.session.created/project/history",
+      "expect": "accept",
+      "defect": "retained original whose Storage persisted_at_utc is '0000-01-01T00:00:00Z' (storage_utc_z); accepted",
+      "changes": [
+        [
+          "/event/persisted_at_utc",
+          "0000-01-01T00:00:00Z"
+        ],
+        [
+          "/storage/event/persisted_at_utc",
+          "0000-01-01T00:00:00Z"
+        ],
+        [
+          "/storage/receipt/persisted_at_utc",
+          "0000-01-01T00:00:00Z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/append/observed_at_utc/fraction-12",
+      "base": "browser.session.created/project",
+      "expect": "accept",
+      "defect": "observed_at_utc '2026-11-04T00:00:00.123456789012Z' is valid under CV-253 storage_utc_z; accepted",
+      "changes": [
+        [
+          "/event/observed_at_utc",
+          "2026-11-04T00:00:00.123456789012Z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/history/observed_at_utc/fraction-12",
+      "base": "browser.session.created/project/history",
+      "expect": "accept",
+      "defect": "retained original whose Storage observed_at_utc is '2026-11-04T00:00:00.123456789012Z' (storage_utc_z); accepted",
+      "changes": [
+        [
+          "/event/observed_at_utc",
+          "2026-11-04T00:00:00.123456789012Z"
+        ],
+        [
+          "/storage/event/observed_at_utc",
+          "2026-11-04T00:00:00.123456789012Z"
+        ],
+        [
+          "/storage/receipt/observed_at_utc",
+          "2026-11-04T00:00:00.123456789012Z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/append/persisted_at_utc/fraction-12",
+      "base": "browser.session.created/project",
+      "expect": "accept",
+      "defect": "persisted_at_utc '2026-11-04T00:00:00.123456789012Z' is valid under CV-253 storage_utc_z; accepted",
+      "changes": [
+        [
+          "/event/persisted_at_utc",
+          "2026-11-04T00:00:00.123456789012Z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/history/persisted_at_utc/fraction-12",
+      "base": "browser.session.created/project/history",
+      "expect": "accept",
+      "defect": "retained original whose Storage persisted_at_utc is '2026-11-04T00:00:00.123456789012Z' (storage_utc_z); accepted",
+      "changes": [
+        [
+          "/event/persisted_at_utc",
+          "2026-11-04T00:00:00.123456789012Z"
+        ],
+        [
+          "/storage/event/persisted_at_utc",
+          "2026-11-04T00:00:00.123456789012Z"
+        ],
+        [
+          "/storage/receipt/persisted_at_utc",
+          "2026-11-04T00:00:00.123456789012Z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/retry/ts/lower-t-z",
+      "base": "browser.session.created/project/retry",
+      "expect": "accept",
+      "defect": "retry: candidate and original payload ts both lowercase; accepted",
+      "changes": [
+        [
+          "/event/payload/ts",
+          "2026-11-04t00:00:00z"
+        ],
+        [
+          "/storage/event/payload/ts",
+          "2026-11-04t00:00:00z"
+        ],
+        [
+          "/retry/original_event/payload/ts",
+          "2026-11-04t00:00:00z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/retry/orig-observed-lower-t",
+      "base": "browser.session.created/project/retry",
+      "expect": "accept",
+      "defect": "retry: only the original's Storage observed_at_utc uses a lowercase t (Storage metadata, outside producer semantics); accepted",
+      "changes": [
+        [
+          "/storage/event/observed_at_utc",
+          "2026-11-04t00:00:00Z"
+        ],
+        [
+          "/storage/receipt/observed_at_utc",
+          "2026-11-04t00:00:00Z"
+        ],
+        [
+          "/retry/original_event/observed_at_utc",
+          "2026-11-04t00:00:00Z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/application-history/occurred_at_utc/lower-t-z",
+      "base": "browser.session.created/application/history",
+      "expect": "accept",
+      "defect": "application retained original with lowercase occurred_at_utc; accepted",
+      "changes": [
+        [
+          "/event/occurred_at_utc",
+          "2026-11-04t00:00:00z"
+        ],
+        [
+          "/storage/event/occurred_at_utc",
+          "2026-11-04t00:00:00z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/memory/created_at/lower-t-z",
+      "base": "memory.gist_state_changed/project",
+      "expect": "accept",
+      "defect": "memory before and after records both carry created_at and claim created_at '2026-11-04t00:00:00z' (event_record profile; no delta); accepted",
+      "changes": [
+        [
+          "/source_records/record:before/facts/claims/0/created_at",
+          "2026-11-04t00:00:00z"
+        ],
+        [
+          "/source_records/record:before/facts/created_at",
+          "2026-11-04t00:00:00z"
+        ],
+        [
+          "/source_records/record:after/facts/claims/0/created_at",
+          "2026-11-04t00:00:00z"
+        ],
+        [
+          "/source_records/record:after/facts/created_at",
+          "2026-11-04t00:00:00z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/memory/created_at/offset",
+      "base": "memory.gist_state_changed/project",
+      "expect": "accept",
+      "defect": "memory before and after records both carry created_at and claim created_at '2026-11-04T05:30:00+05:30' (event_record profile; no delta); accepted",
+      "changes": [
+        [
+          "/source_records/record:before/facts/claims/0/created_at",
+          "2026-11-04T05:30:00+05:30"
+        ],
+        [
+          "/source_records/record:before/facts/created_at",
+          "2026-11-04T05:30:00+05:30"
+        ],
+        [
+          "/source_records/record:after/facts/claims/0/created_at",
+          "2026-11-04T05:30:00+05:30"
+        ],
+        [
+          "/source_records/record:after/facts/created_at",
+          "2026-11-04T05:30:00+05:30"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv253/append/observed_at_utc/lower-z",
+      "base": "browser.session.created/project",
+      "target": "cand_storage_utc_z_observed_at_utc",
+      "guard": "storage_utc_z",
+      "defect": "observed_at_utc '2026-11-04T00:00:00z' passes the event_record verdict but not CV-253 storage_utc_z (date_time_utc_z)",
+      "changes": [
+        [
+          "/event/observed_at_utc",
+          "2026-11-04T00:00:00z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv253/history/observed_at_utc/lower-z",
+      "base": "browser.session.created/project/history",
+      "target": "cand_storage_utc_z_observed_at_utc",
+      "guard": "storage_utc_z",
+      "defect": "retained original whose Storage observed_at_utc is '2026-11-04T00:00:00z': a skipped format check never authorizes offset or lowercase-z Storage history (CV-1101, SP-1101)",
+      "changes": [
+        [
+          "/event/observed_at_utc",
+          "2026-11-04T00:00:00z"
+        ],
+        [
+          "/storage/event/observed_at_utc",
+          "2026-11-04T00:00:00z"
+        ],
+        [
+          "/storage/receipt/observed_at_utc",
+          "2026-11-04T00:00:00z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv253/retry-original/observed_at_utc/lower-z",
+      "base": "browser.session.created/project/retry",
+      "target": "orig_storage_utc_z_observed_at_utc",
+      "guard": "storage_utc_z",
+      "defect": "retry: the Storage original's observed_at_utc is '2026-11-04T00:00:00z' (receipt copies moved); the candidate keeps Z",
+      "changes": [
+        [
+          "/storage/event/observed_at_utc",
+          "2026-11-04T00:00:00z"
+        ],
+        [
+          "/storage/receipt/observed_at_utc",
+          "2026-11-04T00:00:00z"
+        ],
+        [
+          "/retry/original_event/observed_at_utc",
+          "2026-11-04T00:00:00z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv253/append/persisted_at_utc/lower-z",
+      "base": "browser.session.created/project",
+      "target": "cand_storage_utc_z_persisted_at_utc",
+      "guard": "storage_utc_z",
+      "defect": "persisted_at_utc '2026-11-04T00:00:00z' passes the event_record verdict but not CV-253 storage_utc_z (date_time_utc_z)",
+      "changes": [
+        [
+          "/event/persisted_at_utc",
+          "2026-11-04T00:00:00z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv253/history/persisted_at_utc/lower-z",
+      "base": "browser.session.created/project/history",
+      "target": "cand_storage_utc_z_persisted_at_utc",
+      "guard": "storage_utc_z",
+      "defect": "retained original whose Storage persisted_at_utc is '2026-11-04T00:00:00z': a skipped format check never authorizes offset or lowercase-z Storage history (CV-1101, SP-1101)",
+      "changes": [
+        [
+          "/event/persisted_at_utc",
+          "2026-11-04T00:00:00z"
+        ],
+        [
+          "/storage/event/persisted_at_utc",
+          "2026-11-04T00:00:00z"
+        ],
+        [
+          "/storage/receipt/persisted_at_utc",
+          "2026-11-04T00:00:00z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv253/retry-original/persisted_at_utc/lower-z",
+      "base": "browser.session.created/project/retry",
+      "target": "orig_storage_utc_z_persisted_at_utc",
+      "guard": "storage_utc_z",
+      "defect": "retry: the Storage original's persisted_at_utc is '2026-11-04T00:00:00z' (receipt copies moved); the candidate keeps Z",
+      "changes": [
+        [
+          "/storage/event/persisted_at_utc",
+          "2026-11-04T00:00:00z"
+        ],
+        [
+          "/storage/receipt/persisted_at_utc",
+          "2026-11-04T00:00:00z"
+        ],
+        [
+          "/retry/original_event/persisted_at_utc",
+          "2026-11-04T00:00:00z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv253/append/observed_at_utc/plus-zero",
+      "base": "browser.session.created/project",
+      "target": "cand_storage_utc_z_observed_at_utc",
+      "guard": "storage_utc_z",
+      "defect": "observed_at_utc '2026-11-04T00:00:00+00:00' passes the event_record verdict but not CV-253 storage_utc_z (date_time_utc_z)",
+      "changes": [
+        [
+          "/event/observed_at_utc",
+          "2026-11-04T00:00:00+00:00"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv253/history/observed_at_utc/plus-zero",
+      "base": "browser.session.created/project/history",
+      "target": "cand_storage_utc_z_observed_at_utc",
+      "guard": "storage_utc_z",
+      "defect": "retained original whose Storage observed_at_utc is '2026-11-04T00:00:00+00:00': a skipped format check never authorizes offset or lowercase-z Storage history (CV-1101, SP-1101)",
+      "changes": [
+        [
+          "/event/observed_at_utc",
+          "2026-11-04T00:00:00+00:00"
+        ],
+        [
+          "/storage/event/observed_at_utc",
+          "2026-11-04T00:00:00+00:00"
+        ],
+        [
+          "/storage/receipt/observed_at_utc",
+          "2026-11-04T00:00:00+00:00"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv253/retry-original/observed_at_utc/plus-zero",
+      "base": "browser.session.created/project/retry",
+      "target": "orig_storage_utc_z_observed_at_utc",
+      "guard": "storage_utc_z",
+      "defect": "retry: the Storage original's observed_at_utc is '2026-11-04T00:00:00+00:00' (receipt copies moved); the candidate keeps Z",
+      "changes": [
+        [
+          "/storage/event/observed_at_utc",
+          "2026-11-04T00:00:00+00:00"
+        ],
+        [
+          "/storage/receipt/observed_at_utc",
+          "2026-11-04T00:00:00+00:00"
+        ],
+        [
+          "/retry/original_event/observed_at_utc",
+          "2026-11-04T00:00:00+00:00"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv253/append/persisted_at_utc/plus-zero",
+      "base": "browser.session.created/project",
+      "target": "cand_storage_utc_z_persisted_at_utc",
+      "guard": "storage_utc_z",
+      "defect": "persisted_at_utc '2026-11-04T00:00:00+00:00' passes the event_record verdict but not CV-253 storage_utc_z (date_time_utc_z)",
+      "changes": [
+        [
+          "/event/persisted_at_utc",
+          "2026-11-04T00:00:00+00:00"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv253/history/persisted_at_utc/plus-zero",
+      "base": "browser.session.created/project/history",
+      "target": "cand_storage_utc_z_persisted_at_utc",
+      "guard": "storage_utc_z",
+      "defect": "retained original whose Storage persisted_at_utc is '2026-11-04T00:00:00+00:00': a skipped format check never authorizes offset or lowercase-z Storage history (CV-1101, SP-1101)",
+      "changes": [
+        [
+          "/event/persisted_at_utc",
+          "2026-11-04T00:00:00+00:00"
+        ],
+        [
+          "/storage/event/persisted_at_utc",
+          "2026-11-04T00:00:00+00:00"
+        ],
+        [
+          "/storage/receipt/persisted_at_utc",
+          "2026-11-04T00:00:00+00:00"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv253/retry-original/persisted_at_utc/plus-zero",
+      "base": "browser.session.created/project/retry",
+      "target": "orig_storage_utc_z_persisted_at_utc",
+      "guard": "storage_utc_z",
+      "defect": "retry: the Storage original's persisted_at_utc is '2026-11-04T00:00:00+00:00' (receipt copies moved); the candidate keeps Z",
+      "changes": [
+        [
+          "/storage/event/persisted_at_utc",
+          "2026-11-04T00:00:00+00:00"
+        ],
+        [
+          "/storage/receipt/persisted_at_utc",
+          "2026-11-04T00:00:00+00:00"
+        ],
+        [
+          "/retry/original_event/persisted_at_utc",
+          "2026-11-04T00:00:00+00:00"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv253/append/observed_at_utc/minus-zero",
+      "base": "browser.session.created/project",
+      "target": "cand_storage_utc_z_observed_at_utc",
+      "guard": "storage_utc_z",
+      "defect": "observed_at_utc '2026-11-04T00:00:00-00:00' passes the event_record verdict but not CV-253 storage_utc_z (date_time_utc_z)",
+      "changes": [
+        [
+          "/event/observed_at_utc",
+          "2026-11-04T00:00:00-00:00"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv253/history/observed_at_utc/minus-zero",
+      "base": "browser.session.created/project/history",
+      "target": "cand_storage_utc_z_observed_at_utc",
+      "guard": "storage_utc_z",
+      "defect": "retained original whose Storage observed_at_utc is '2026-11-04T00:00:00-00:00': a skipped format check never authorizes offset or lowercase-z Storage history (CV-1101, SP-1101)",
+      "changes": [
+        [
+          "/event/observed_at_utc",
+          "2026-11-04T00:00:00-00:00"
+        ],
+        [
+          "/storage/event/observed_at_utc",
+          "2026-11-04T00:00:00-00:00"
+        ],
+        [
+          "/storage/receipt/observed_at_utc",
+          "2026-11-04T00:00:00-00:00"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv253/retry-original/observed_at_utc/minus-zero",
+      "base": "browser.session.created/project/retry",
+      "target": "orig_storage_utc_z_observed_at_utc",
+      "guard": "storage_utc_z",
+      "defect": "retry: the Storage original's observed_at_utc is '2026-11-04T00:00:00-00:00' (receipt copies moved); the candidate keeps Z",
+      "changes": [
+        [
+          "/storage/event/observed_at_utc",
+          "2026-11-04T00:00:00-00:00"
+        ],
+        [
+          "/storage/receipt/observed_at_utc",
+          "2026-11-04T00:00:00-00:00"
+        ],
+        [
+          "/retry/original_event/observed_at_utc",
+          "2026-11-04T00:00:00-00:00"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv253/append/persisted_at_utc/minus-zero",
+      "base": "browser.session.created/project",
+      "target": "cand_storage_utc_z_persisted_at_utc",
+      "guard": "storage_utc_z",
+      "defect": "persisted_at_utc '2026-11-04T00:00:00-00:00' passes the event_record verdict but not CV-253 storage_utc_z (date_time_utc_z)",
+      "changes": [
+        [
+          "/event/persisted_at_utc",
+          "2026-11-04T00:00:00-00:00"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv253/history/persisted_at_utc/minus-zero",
+      "base": "browser.session.created/project/history",
+      "target": "cand_storage_utc_z_persisted_at_utc",
+      "guard": "storage_utc_z",
+      "defect": "retained original whose Storage persisted_at_utc is '2026-11-04T00:00:00-00:00': a skipped format check never authorizes offset or lowercase-z Storage history (CV-1101, SP-1101)",
+      "changes": [
+        [
+          "/event/persisted_at_utc",
+          "2026-11-04T00:00:00-00:00"
+        ],
+        [
+          "/storage/event/persisted_at_utc",
+          "2026-11-04T00:00:00-00:00"
+        ],
+        [
+          "/storage/receipt/persisted_at_utc",
+          "2026-11-04T00:00:00-00:00"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv253/retry-original/persisted_at_utc/minus-zero",
+      "base": "browser.session.created/project/retry",
+      "target": "orig_storage_utc_z_persisted_at_utc",
+      "guard": "storage_utc_z",
+      "defect": "retry: the Storage original's persisted_at_utc is '2026-11-04T00:00:00-00:00' (receipt copies moved); the candidate keeps Z",
+      "changes": [
+        [
+          "/storage/event/persisted_at_utc",
+          "2026-11-04T00:00:00-00:00"
+        ],
+        [
+          "/storage/receipt/persisted_at_utc",
+          "2026-11-04T00:00:00-00:00"
+        ],
+        [
+          "/retry/original_event/persisted_at_utc",
+          "2026-11-04T00:00:00-00:00"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv253/append/observed_at_utc/offset",
+      "base": "browser.session.created/project",
+      "target": "cand_storage_utc_z_observed_at_utc",
+      "guard": "storage_utc_z",
+      "defect": "observed_at_utc '2026-11-04T01:00:00+01:00' passes the event_record verdict but not CV-253 storage_utc_z (date_time_utc_z)",
+      "changes": [
+        [
+          "/event/observed_at_utc",
+          "2026-11-04T01:00:00+01:00"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv253/history/observed_at_utc/offset",
+      "base": "browser.session.created/project/history",
+      "target": "cand_storage_utc_z_observed_at_utc",
+      "guard": "storage_utc_z",
+      "defect": "retained original whose Storage observed_at_utc is '2026-11-04T01:00:00+01:00': a skipped format check never authorizes offset or lowercase-z Storage history (CV-1101, SP-1101)",
+      "changes": [
+        [
+          "/event/observed_at_utc",
+          "2026-11-04T01:00:00+01:00"
+        ],
+        [
+          "/storage/event/observed_at_utc",
+          "2026-11-04T01:00:00+01:00"
+        ],
+        [
+          "/storage/receipt/observed_at_utc",
+          "2026-11-04T01:00:00+01:00"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv253/retry-original/observed_at_utc/offset",
+      "base": "browser.session.created/project/retry",
+      "target": "orig_storage_utc_z_observed_at_utc",
+      "guard": "storage_utc_z",
+      "defect": "retry: the Storage original's observed_at_utc is '2026-11-04T01:00:00+01:00' (receipt copies moved); the candidate keeps Z",
+      "changes": [
+        [
+          "/storage/event/observed_at_utc",
+          "2026-11-04T01:00:00+01:00"
+        ],
+        [
+          "/storage/receipt/observed_at_utc",
+          "2026-11-04T01:00:00+01:00"
+        ],
+        [
+          "/retry/original_event/observed_at_utc",
+          "2026-11-04T01:00:00+01:00"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv253/append/persisted_at_utc/offset",
+      "base": "browser.session.created/project",
+      "target": "cand_storage_utc_z_persisted_at_utc",
+      "guard": "storage_utc_z",
+      "defect": "persisted_at_utc '2026-11-04T01:00:00+01:00' passes the event_record verdict but not CV-253 storage_utc_z (date_time_utc_z)",
+      "changes": [
+        [
+          "/event/persisted_at_utc",
+          "2026-11-04T01:00:00+01:00"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv253/history/persisted_at_utc/offset",
+      "base": "browser.session.created/project/history",
+      "target": "cand_storage_utc_z_persisted_at_utc",
+      "guard": "storage_utc_z",
+      "defect": "retained original whose Storage persisted_at_utc is '2026-11-04T01:00:00+01:00': a skipped format check never authorizes offset or lowercase-z Storage history (CV-1101, SP-1101)",
+      "changes": [
+        [
+          "/event/persisted_at_utc",
+          "2026-11-04T01:00:00+01:00"
+        ],
+        [
+          "/storage/event/persisted_at_utc",
+          "2026-11-04T01:00:00+01:00"
+        ],
+        [
+          "/storage/receipt/persisted_at_utc",
+          "2026-11-04T01:00:00+01:00"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv253/retry-original/persisted_at_utc/offset",
+      "base": "browser.session.created/project/retry",
+      "target": "orig_storage_utc_z_persisted_at_utc",
+      "guard": "storage_utc_z",
+      "defect": "retry: the Storage original's persisted_at_utc is '2026-11-04T01:00:00+01:00' (receipt copies moved); the candidate keeps Z",
+      "changes": [
+        [
+          "/storage/event/persisted_at_utc",
+          "2026-11-04T01:00:00+01:00"
+        ],
+        [
+          "/storage/receipt/persisted_at_utc",
+          "2026-11-04T01:00:00+01:00"
+        ],
+        [
+          "/retry/original_event/persisted_at_utc",
+          "2026-11-04T01:00:00+01:00"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/occurred_at_utc/hour-24",
+      "base": "browser.session.created/project",
+      "target": "cand_envelope_schema",
+      "guard": "envelope_schema",
+      "defect": "occurred_at_utc '2026-11-04T24:00:00Z': shared date_time date_time_hour",
+      "changes": [
+        [
+          "/event/occurred_at_utc",
+          "2026-11-04T24:00:00Z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/observed_at_utc/hour-24",
+      "base": "browser.session.created/project",
+      "target": "cand_envelope_schema",
+      "guard": "envelope_schema",
+      "defect": "observed_at_utc '2026-11-04T24:00:00Z': shared date_time date_time_hour",
+      "changes": [
+        [
+          "/event/observed_at_utc",
+          "2026-11-04T24:00:00Z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/persisted_at_utc/hour-24",
+      "base": "browser.session.created/project",
+      "target": "cand_envelope_schema",
+      "guard": "envelope_schema",
+      "defect": "persisted_at_utc '2026-11-04T24:00:00Z': shared date_time date_time_hour",
+      "changes": [
+        [
+          "/event/persisted_at_utc",
+          "2026-11-04T24:00:00Z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/ts/hour-24",
+      "base": "browser.session.created/project",
+      "target": "cand_payload_schema",
+      "guard": "payload_schema",
+      "defect": "payload ts '2026-11-04T24:00:00Z': shared date_time date_time_hour",
+      "changes": [
+        [
+          "/event/payload/ts",
+          "2026-11-04T24:00:00Z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/history/occurred_at_utc/hour-24",
+      "base": "browser.session.created/project/history",
+      "target": "cand_envelope_schema",
+      "guard": "envelope_schema",
+      "defect": "retained original occurred_at_utc '2026-11-04T24:00:00Z': owner-invalid history refuses (shared date_time date_time_hour)",
+      "changes": [
+        [
+          "/event/occurred_at_utc",
+          "2026-11-04T24:00:00Z"
+        ],
+        [
+          "/storage/event/occurred_at_utc",
+          "2026-11-04T24:00:00Z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/retry-original/occurred_at_utc/hour-24",
+      "base": "browser.session.created/project/retry",
+      "target": "orig_envelope_schema",
+      "guard": "envelope_schema",
+      "defect": "retry: the Storage original's occurred_at_utc '2026-11-04T24:00:00Z' (shared date_time date_time_hour)",
+      "changes": [
+        [
+          "/storage/event/occurred_at_utc",
+          "2026-11-04T24:00:00Z"
+        ],
+        [
+          "/retry/original_event/occurred_at_utc",
+          "2026-11-04T24:00:00Z"
+        ],
+        [
+          "/retry/result",
+          "idempotency_conflict"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/memory-before/created_at/hour-24",
+      "base": "memory.gist_state_changed/project",
+      "target": "memory_before_timestamps",
+      "guard": "memory_source_shape",
+      "defect": "memory before record created_at '2026-11-04T24:00:00Z': shared date_time date_time_hour",
+      "changes": [
+        [
+          "/source_records/record:before/facts/created_at",
+          "2026-11-04T24:00:00Z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/memory-after/created_at/hour-24",
+      "base": "memory.gist_state_changed/project",
+      "target": "memory_after_timestamps",
+      "guard": "memory_source_shape",
+      "defect": "memory after record created_at '2026-11-04T24:00:00Z': shared date_time date_time_hour",
+      "changes": [
+        [
+          "/source_records/record:after/facts/created_at",
+          "2026-11-04T24:00:00Z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/memory-before/claim-created_at/hour-24",
+      "base": "memory.gist_state_changed/project",
+      "target": "memory_before_claim_created_at",
+      "guard": "memory_source_shape",
+      "defect": "memory before record claim-created_at '2026-11-04T24:00:00Z': shared date_time date_time_hour",
+      "changes": [
+        [
+          "/source_records/record:before/facts/claims/0/created_at",
+          "2026-11-04T24:00:00Z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/memory-after/claim-created_at/hour-24",
+      "base": "memory.gist_state_changed/project",
+      "target": "memory_after_claim_created_at",
+      "guard": "memory_source_shape",
+      "defect": "memory after record claim-created_at '2026-11-04T24:00:00Z': shared date_time date_time_hour",
+      "changes": [
+        [
+          "/source_records/record:after/facts/claims/0/created_at",
+          "2026-11-04T24:00:00Z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/occurred_at_utc/trailing-lf",
+      "base": "browser.session.created/project",
+      "target": "cand_envelope_schema",
+      "guard": "envelope_schema",
+      "defect": "occurred_at_utc '2026-11-04T00:00:00Z\\n': shared date_time date_time_syntax",
+      "changes": [
+        [
+          "/event/occurred_at_utc",
+          "2026-11-04T00:00:00Z\n"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/observed_at_utc/trailing-lf",
+      "base": "browser.session.created/project",
+      "target": "cand_envelope_schema",
+      "guard": "envelope_schema",
+      "defect": "observed_at_utc '2026-11-04T00:00:00Z\\n': shared date_time date_time_syntax",
+      "changes": [
+        [
+          "/event/observed_at_utc",
+          "2026-11-04T00:00:00Z\n"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/persisted_at_utc/trailing-lf",
+      "base": "browser.session.created/project",
+      "target": "cand_envelope_schema",
+      "guard": "envelope_schema",
+      "defect": "persisted_at_utc '2026-11-04T00:00:00Z\\n': shared date_time date_time_syntax",
+      "changes": [
+        [
+          "/event/persisted_at_utc",
+          "2026-11-04T00:00:00Z\n"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/ts/trailing-lf",
+      "base": "browser.session.created/project",
+      "target": "cand_payload_schema",
+      "guard": "payload_schema",
+      "defect": "payload ts '2026-11-04T00:00:00Z\\n': shared date_time date_time_syntax",
+      "changes": [
+        [
+          "/event/payload/ts",
+          "2026-11-04T00:00:00Z\n"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/history/occurred_at_utc/trailing-lf",
+      "base": "browser.session.created/project/history",
+      "target": "cand_envelope_schema",
+      "guard": "envelope_schema",
+      "defect": "retained original occurred_at_utc '2026-11-04T00:00:00Z\\n': owner-invalid history refuses (shared date_time date_time_syntax)",
+      "changes": [
+        [
+          "/event/occurred_at_utc",
+          "2026-11-04T00:00:00Z\n"
+        ],
+        [
+          "/storage/event/occurred_at_utc",
+          "2026-11-04T00:00:00Z\n"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/retry-original/occurred_at_utc/trailing-lf",
+      "base": "browser.session.created/project/retry",
+      "target": "orig_envelope_schema",
+      "guard": "envelope_schema",
+      "defect": "retry: the Storage original's occurred_at_utc '2026-11-04T00:00:00Z\\n' (shared date_time date_time_syntax)",
+      "changes": [
+        [
+          "/storage/event/occurred_at_utc",
+          "2026-11-04T00:00:00Z\n"
+        ],
+        [
+          "/retry/original_event/occurred_at_utc",
+          "2026-11-04T00:00:00Z\n"
+        ],
+        [
+          "/retry/result",
+          "idempotency_conflict"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/memory-before/created_at/trailing-lf",
+      "base": "memory.gist_state_changed/project",
+      "target": "memory_before_timestamps",
+      "guard": "memory_source_shape",
+      "defect": "memory before record created_at '2026-11-04T00:00:00Z\\n': shared date_time date_time_syntax",
+      "changes": [
+        [
+          "/source_records/record:before/facts/created_at",
+          "2026-11-04T00:00:00Z\n"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/memory-after/created_at/trailing-lf",
+      "base": "memory.gist_state_changed/project",
+      "target": "memory_after_timestamps",
+      "guard": "memory_source_shape",
+      "defect": "memory after record created_at '2026-11-04T00:00:00Z\\n': shared date_time date_time_syntax",
+      "changes": [
+        [
+          "/source_records/record:after/facts/created_at",
+          "2026-11-04T00:00:00Z\n"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/memory-before/claim-created_at/trailing-lf",
+      "base": "memory.gist_state_changed/project",
+      "target": "memory_before_claim_created_at",
+      "guard": "memory_source_shape",
+      "defect": "memory before record claim-created_at '2026-11-04T00:00:00Z\\n': shared date_time date_time_syntax",
+      "changes": [
+        [
+          "/source_records/record:before/facts/claims/0/created_at",
+          "2026-11-04T00:00:00Z\n"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/memory-after/claim-created_at/trailing-lf",
+      "base": "memory.gist_state_changed/project",
+      "target": "memory_after_claim_created_at",
+      "guard": "memory_source_shape",
+      "defect": "memory after record claim-created_at '2026-11-04T00:00:00Z\\n': shared date_time date_time_syntax",
+      "changes": [
+        [
+          "/source_records/record:after/facts/claims/0/created_at",
+          "2026-11-04T00:00:00Z\n"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/occurred_at_utc/bad-leap-second",
+      "base": "browser.session.created/project",
+      "target": "cand_envelope_schema",
+      "guard": "envelope_schema",
+      "defect": "occurred_at_utc '2026-11-04T23:59:60Z': shared date_time date_time_leap_second",
+      "changes": [
+        [
+          "/event/occurred_at_utc",
+          "2026-11-04T23:59:60Z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/observed_at_utc/bad-leap-second",
+      "base": "browser.session.created/project",
+      "target": "cand_envelope_schema",
+      "guard": "envelope_schema",
+      "defect": "observed_at_utc '2026-11-04T23:59:60Z': shared date_time date_time_leap_second",
+      "changes": [
+        [
+          "/event/observed_at_utc",
+          "2026-11-04T23:59:60Z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/persisted_at_utc/bad-leap-second",
+      "base": "browser.session.created/project",
+      "target": "cand_envelope_schema",
+      "guard": "envelope_schema",
+      "defect": "persisted_at_utc '2026-11-04T23:59:60Z': shared date_time date_time_leap_second",
+      "changes": [
+        [
+          "/event/persisted_at_utc",
+          "2026-11-04T23:59:60Z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/ts/bad-leap-second",
+      "base": "browser.session.created/project",
+      "target": "cand_payload_schema",
+      "guard": "payload_schema",
+      "defect": "payload ts '2026-11-04T23:59:60Z': shared date_time date_time_leap_second",
+      "changes": [
+        [
+          "/event/payload/ts",
+          "2026-11-04T23:59:60Z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/history/occurred_at_utc/bad-leap-second",
+      "base": "browser.session.created/project/history",
+      "target": "cand_envelope_schema",
+      "guard": "envelope_schema",
+      "defect": "retained original occurred_at_utc '2026-11-04T23:59:60Z': owner-invalid history refuses (shared date_time date_time_leap_second)",
+      "changes": [
+        [
+          "/event/occurred_at_utc",
+          "2026-11-04T23:59:60Z"
+        ],
+        [
+          "/storage/event/occurred_at_utc",
+          "2026-11-04T23:59:60Z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/retry-original/occurred_at_utc/bad-leap-second",
+      "base": "browser.session.created/project/retry",
+      "target": "orig_envelope_schema",
+      "guard": "envelope_schema",
+      "defect": "retry: the Storage original's occurred_at_utc '2026-11-04T23:59:60Z' (shared date_time date_time_leap_second)",
+      "changes": [
+        [
+          "/storage/event/occurred_at_utc",
+          "2026-11-04T23:59:60Z"
+        ],
+        [
+          "/retry/original_event/occurred_at_utc",
+          "2026-11-04T23:59:60Z"
+        ],
+        [
+          "/retry/result",
+          "idempotency_conflict"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/memory-before/created_at/bad-leap-second",
+      "base": "memory.gist_state_changed/project",
+      "target": "memory_before_timestamps",
+      "guard": "memory_source_shape",
+      "defect": "memory before record created_at '2026-11-04T23:59:60Z': shared date_time date_time_leap_second",
+      "changes": [
+        [
+          "/source_records/record:before/facts/created_at",
+          "2026-11-04T23:59:60Z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/memory-after/created_at/bad-leap-second",
+      "base": "memory.gist_state_changed/project",
+      "target": "memory_after_timestamps",
+      "guard": "memory_source_shape",
+      "defect": "memory after record created_at '2026-11-04T23:59:60Z': shared date_time date_time_leap_second",
+      "changes": [
+        [
+          "/source_records/record:after/facts/created_at",
+          "2026-11-04T23:59:60Z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/memory-before/claim-created_at/bad-leap-second",
+      "base": "memory.gist_state_changed/project",
+      "target": "memory_before_claim_created_at",
+      "guard": "memory_source_shape",
+      "defect": "memory before record claim-created_at '2026-11-04T23:59:60Z': shared date_time date_time_leap_second",
+      "changes": [
+        [
+          "/source_records/record:before/facts/claims/0/created_at",
+          "2026-11-04T23:59:60Z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/memory-after/claim-created_at/bad-leap-second",
+      "base": "memory.gist_state_changed/project",
+      "target": "memory_after_claim_created_at",
+      "guard": "memory_source_shape",
+      "defect": "memory after record claim-created_at '2026-11-04T23:59:60Z': shared date_time date_time_leap_second",
+      "changes": [
+        [
+          "/source_records/record:after/facts/claims/0/created_at",
+          "2026-11-04T23:59:60Z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/occurred_at_utc/feb-29",
+      "base": "browser.session.created/project",
+      "target": "cand_envelope_schema",
+      "guard": "envelope_schema",
+      "defect": "occurred_at_utc '2026-02-29T00:00:00Z': shared date_time date_time_day",
+      "changes": [
+        [
+          "/event/occurred_at_utc",
+          "2026-02-29T00:00:00Z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/observed_at_utc/feb-29",
+      "base": "browser.session.created/project",
+      "target": "cand_envelope_schema",
+      "guard": "envelope_schema",
+      "defect": "observed_at_utc '2026-02-29T00:00:00Z': shared date_time date_time_day",
+      "changes": [
+        [
+          "/event/observed_at_utc",
+          "2026-02-29T00:00:00Z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/persisted_at_utc/feb-29",
+      "base": "browser.session.created/project",
+      "target": "cand_envelope_schema",
+      "guard": "envelope_schema",
+      "defect": "persisted_at_utc '2026-02-29T00:00:00Z': shared date_time date_time_day",
+      "changes": [
+        [
+          "/event/persisted_at_utc",
+          "2026-02-29T00:00:00Z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/ts/feb-29",
+      "base": "browser.session.created/project",
+      "target": "cand_payload_schema",
+      "guard": "payload_schema",
+      "defect": "payload ts '2026-02-29T00:00:00Z': shared date_time date_time_day",
+      "changes": [
+        [
+          "/event/payload/ts",
+          "2026-02-29T00:00:00Z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/history/occurred_at_utc/feb-29",
+      "base": "browser.session.created/project/history",
+      "target": "cand_envelope_schema",
+      "guard": "envelope_schema",
+      "defect": "retained original occurred_at_utc '2026-02-29T00:00:00Z': owner-invalid history refuses (shared date_time date_time_day)",
+      "changes": [
+        [
+          "/event/occurred_at_utc",
+          "2026-02-29T00:00:00Z"
+        ],
+        [
+          "/storage/event/occurred_at_utc",
+          "2026-02-29T00:00:00Z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/retry-original/occurred_at_utc/feb-29",
+      "base": "browser.session.created/project/retry",
+      "target": "orig_envelope_schema",
+      "guard": "envelope_schema",
+      "defect": "retry: the Storage original's occurred_at_utc '2026-02-29T00:00:00Z' (shared date_time date_time_day)",
+      "changes": [
+        [
+          "/storage/event/occurred_at_utc",
+          "2026-02-29T00:00:00Z"
+        ],
+        [
+          "/retry/original_event/occurred_at_utc",
+          "2026-02-29T00:00:00Z"
+        ],
+        [
+          "/retry/result",
+          "idempotency_conflict"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/memory-before/created_at/feb-29",
+      "base": "memory.gist_state_changed/project",
+      "target": "memory_before_timestamps",
+      "guard": "memory_source_shape",
+      "defect": "memory before record created_at '2026-02-29T00:00:00Z': shared date_time date_time_day",
+      "changes": [
+        [
+          "/source_records/record:before/facts/created_at",
+          "2026-02-29T00:00:00Z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/memory-after/created_at/feb-29",
+      "base": "memory.gist_state_changed/project",
+      "target": "memory_after_timestamps",
+      "guard": "memory_source_shape",
+      "defect": "memory after record created_at '2026-02-29T00:00:00Z': shared date_time date_time_day",
+      "changes": [
+        [
+          "/source_records/record:after/facts/created_at",
+          "2026-02-29T00:00:00Z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/memory-before/claim-created_at/feb-29",
+      "base": "memory.gist_state_changed/project",
+      "target": "memory_before_claim_created_at",
+      "guard": "memory_source_shape",
+      "defect": "memory before record claim-created_at '2026-02-29T00:00:00Z': shared date_time date_time_day",
+      "changes": [
+        [
+          "/source_records/record:before/facts/claims/0/created_at",
+          "2026-02-29T00:00:00Z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/memory-after/claim-created_at/feb-29",
+      "base": "memory.gist_state_changed/project",
+      "target": "memory_after_claim_created_at",
+      "guard": "memory_source_shape",
+      "defect": "memory after record claim-created_at '2026-02-29T00:00:00Z': shared date_time date_time_day",
+      "changes": [
+        [
+          "/source_records/record:after/facts/claims/0/created_at",
+          "2026-02-29T00:00:00Z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/occurred_at_utc/space",
+      "base": "browser.session.created/project",
+      "target": "cand_envelope_schema",
+      "guard": "envelope_schema",
+      "defect": "occurred_at_utc '2026-11-04 00:00:00Z': shared date_time date_time_syntax",
+      "changes": [
+        [
+          "/event/occurred_at_utc",
+          "2026-11-04 00:00:00Z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/observed_at_utc/space",
+      "base": "browser.session.created/project",
+      "target": "cand_envelope_schema",
+      "guard": "envelope_schema",
+      "defect": "observed_at_utc '2026-11-04 00:00:00Z': shared date_time date_time_syntax",
+      "changes": [
+        [
+          "/event/observed_at_utc",
+          "2026-11-04 00:00:00Z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/persisted_at_utc/space",
+      "base": "browser.session.created/project",
+      "target": "cand_envelope_schema",
+      "guard": "envelope_schema",
+      "defect": "persisted_at_utc '2026-11-04 00:00:00Z': shared date_time date_time_syntax",
+      "changes": [
+        [
+          "/event/persisted_at_utc",
+          "2026-11-04 00:00:00Z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/ts/space",
+      "base": "browser.session.created/project",
+      "target": "cand_payload_schema",
+      "guard": "payload_schema",
+      "defect": "payload ts '2026-11-04 00:00:00Z': shared date_time date_time_syntax",
+      "changes": [
+        [
+          "/event/payload/ts",
+          "2026-11-04 00:00:00Z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/history/occurred_at_utc/space",
+      "base": "browser.session.created/project/history",
+      "target": "cand_envelope_schema",
+      "guard": "envelope_schema",
+      "defect": "retained original occurred_at_utc '2026-11-04 00:00:00Z': owner-invalid history refuses (shared date_time date_time_syntax)",
+      "changes": [
+        [
+          "/event/occurred_at_utc",
+          "2026-11-04 00:00:00Z"
+        ],
+        [
+          "/storage/event/occurred_at_utc",
+          "2026-11-04 00:00:00Z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/retry-original/occurred_at_utc/space",
+      "base": "browser.session.created/project/retry",
+      "target": "orig_envelope_schema",
+      "guard": "envelope_schema",
+      "defect": "retry: the Storage original's occurred_at_utc '2026-11-04 00:00:00Z' (shared date_time date_time_syntax)",
+      "changes": [
+        [
+          "/storage/event/occurred_at_utc",
+          "2026-11-04 00:00:00Z"
+        ],
+        [
+          "/retry/original_event/occurred_at_utc",
+          "2026-11-04 00:00:00Z"
+        ],
+        [
+          "/retry/result",
+          "idempotency_conflict"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/memory-before/created_at/space",
+      "base": "memory.gist_state_changed/project",
+      "target": "memory_before_timestamps",
+      "guard": "memory_source_shape",
+      "defect": "memory before record created_at '2026-11-04 00:00:00Z': shared date_time date_time_syntax",
+      "changes": [
+        [
+          "/source_records/record:before/facts/created_at",
+          "2026-11-04 00:00:00Z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/memory-after/created_at/space",
+      "base": "memory.gist_state_changed/project",
+      "target": "memory_after_timestamps",
+      "guard": "memory_source_shape",
+      "defect": "memory after record created_at '2026-11-04 00:00:00Z': shared date_time date_time_syntax",
+      "changes": [
+        [
+          "/source_records/record:after/facts/created_at",
+          "2026-11-04 00:00:00Z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/memory-before/claim-created_at/space",
+      "base": "memory.gist_state_changed/project",
+      "target": "memory_before_claim_created_at",
+      "guard": "memory_source_shape",
+      "defect": "memory before record claim-created_at '2026-11-04 00:00:00Z': shared date_time date_time_syntax",
+      "changes": [
+        [
+          "/source_records/record:before/facts/claims/0/created_at",
+          "2026-11-04 00:00:00Z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/memory-after/claim-created_at/space",
+      "base": "memory.gist_state_changed/project",
+      "target": "memory_after_claim_created_at",
+      "guard": "memory_source_shape",
+      "defect": "memory after record claim-created_at '2026-11-04 00:00:00Z': shared date_time date_time_syntax",
+      "changes": [
+        [
+          "/source_records/record:after/facts/claims/0/created_at",
+          "2026-11-04 00:00:00Z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/occurred_at_utc/no-zone",
+      "base": "browser.session.created/project",
+      "target": "cand_envelope_schema",
+      "guard": "envelope_schema",
+      "defect": "occurred_at_utc '2026-11-04T00:00:00': shared date_time date_time_syntax",
+      "changes": [
+        [
+          "/event/occurred_at_utc",
+          "2026-11-04T00:00:00"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/observed_at_utc/no-zone",
+      "base": "browser.session.created/project",
+      "target": "cand_envelope_schema",
+      "guard": "envelope_schema",
+      "defect": "observed_at_utc '2026-11-04T00:00:00': shared date_time date_time_syntax",
+      "changes": [
+        [
+          "/event/observed_at_utc",
+          "2026-11-04T00:00:00"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/persisted_at_utc/no-zone",
+      "base": "browser.session.created/project",
+      "target": "cand_envelope_schema",
+      "guard": "envelope_schema",
+      "defect": "persisted_at_utc '2026-11-04T00:00:00': shared date_time date_time_syntax",
+      "changes": [
+        [
+          "/event/persisted_at_utc",
+          "2026-11-04T00:00:00"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/ts/no-zone",
+      "base": "browser.session.created/project",
+      "target": "cand_payload_schema",
+      "guard": "payload_schema",
+      "defect": "payload ts '2026-11-04T00:00:00': shared date_time date_time_syntax",
+      "changes": [
+        [
+          "/event/payload/ts",
+          "2026-11-04T00:00:00"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/history/occurred_at_utc/no-zone",
+      "base": "browser.session.created/project/history",
+      "target": "cand_envelope_schema",
+      "guard": "envelope_schema",
+      "defect": "retained original occurred_at_utc '2026-11-04T00:00:00': owner-invalid history refuses (shared date_time date_time_syntax)",
+      "changes": [
+        [
+          "/event/occurred_at_utc",
+          "2026-11-04T00:00:00"
+        ],
+        [
+          "/storage/event/occurred_at_utc",
+          "2026-11-04T00:00:00"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/retry-original/occurred_at_utc/no-zone",
+      "base": "browser.session.created/project/retry",
+      "target": "orig_envelope_schema",
+      "guard": "envelope_schema",
+      "defect": "retry: the Storage original's occurred_at_utc '2026-11-04T00:00:00' (shared date_time date_time_syntax)",
+      "changes": [
+        [
+          "/storage/event/occurred_at_utc",
+          "2026-11-04T00:00:00"
+        ],
+        [
+          "/retry/original_event/occurred_at_utc",
+          "2026-11-04T00:00:00"
+        ],
+        [
+          "/retry/result",
+          "idempotency_conflict"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/memory-before/created_at/no-zone",
+      "base": "memory.gist_state_changed/project",
+      "target": "memory_before_timestamps",
+      "guard": "memory_source_shape",
+      "defect": "memory before record created_at '2026-11-04T00:00:00': shared date_time date_time_syntax",
+      "changes": [
+        [
+          "/source_records/record:before/facts/created_at",
+          "2026-11-04T00:00:00"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/memory-after/created_at/no-zone",
+      "base": "memory.gist_state_changed/project",
+      "target": "memory_after_timestamps",
+      "guard": "memory_source_shape",
+      "defect": "memory after record created_at '2026-11-04T00:00:00': shared date_time date_time_syntax",
+      "changes": [
+        [
+          "/source_records/record:after/facts/created_at",
+          "2026-11-04T00:00:00"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/memory-before/claim-created_at/no-zone",
+      "base": "memory.gist_state_changed/project",
+      "target": "memory_before_claim_created_at",
+      "guard": "memory_source_shape",
+      "defect": "memory before record claim-created_at '2026-11-04T00:00:00': shared date_time date_time_syntax",
+      "changes": [
+        [
+          "/source_records/record:before/facts/claims/0/created_at",
+          "2026-11-04T00:00:00"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/memory-after/claim-created_at/no-zone",
+      "base": "memory.gist_state_changed/project",
+      "target": "memory_after_claim_created_at",
+      "guard": "memory_source_shape",
+      "defect": "memory after record claim-created_at '2026-11-04T00:00:00': shared date_time date_time_syntax",
+      "changes": [
+        [
+          "/source_records/record:after/facts/claims/0/created_at",
+          "2026-11-04T00:00:00"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/occurred_at_utc/offset-hour-24",
+      "base": "browser.session.created/project",
+      "target": "cand_envelope_schema",
+      "guard": "envelope_schema",
+      "defect": "occurred_at_utc '2026-11-04T00:00:00+24:00': shared date_time date_time_offset_hour",
+      "changes": [
+        [
+          "/event/occurred_at_utc",
+          "2026-11-04T00:00:00+24:00"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/observed_at_utc/offset-hour-24",
+      "base": "browser.session.created/project",
+      "target": "cand_envelope_schema",
+      "guard": "envelope_schema",
+      "defect": "observed_at_utc '2026-11-04T00:00:00+24:00': shared date_time date_time_offset_hour",
+      "changes": [
+        [
+          "/event/observed_at_utc",
+          "2026-11-04T00:00:00+24:00"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/persisted_at_utc/offset-hour-24",
+      "base": "browser.session.created/project",
+      "target": "cand_envelope_schema",
+      "guard": "envelope_schema",
+      "defect": "persisted_at_utc '2026-11-04T00:00:00+24:00': shared date_time date_time_offset_hour",
+      "changes": [
+        [
+          "/event/persisted_at_utc",
+          "2026-11-04T00:00:00+24:00"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/ts/offset-hour-24",
+      "base": "browser.session.created/project",
+      "target": "cand_payload_schema",
+      "guard": "payload_schema",
+      "defect": "payload ts '2026-11-04T00:00:00+24:00': shared date_time date_time_offset_hour",
+      "changes": [
+        [
+          "/event/payload/ts",
+          "2026-11-04T00:00:00+24:00"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/history/occurred_at_utc/offset-hour-24",
+      "base": "browser.session.created/project/history",
+      "target": "cand_envelope_schema",
+      "guard": "envelope_schema",
+      "defect": "retained original occurred_at_utc '2026-11-04T00:00:00+24:00': owner-invalid history refuses (shared date_time date_time_offset_hour)",
+      "changes": [
+        [
+          "/event/occurred_at_utc",
+          "2026-11-04T00:00:00+24:00"
+        ],
+        [
+          "/storage/event/occurred_at_utc",
+          "2026-11-04T00:00:00+24:00"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/retry-original/occurred_at_utc/offset-hour-24",
+      "base": "browser.session.created/project/retry",
+      "target": "orig_envelope_schema",
+      "guard": "envelope_schema",
+      "defect": "retry: the Storage original's occurred_at_utc '2026-11-04T00:00:00+24:00' (shared date_time date_time_offset_hour)",
+      "changes": [
+        [
+          "/storage/event/occurred_at_utc",
+          "2026-11-04T00:00:00+24:00"
+        ],
+        [
+          "/retry/original_event/occurred_at_utc",
+          "2026-11-04T00:00:00+24:00"
+        ],
+        [
+          "/retry/result",
+          "idempotency_conflict"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/memory-before/created_at/offset-hour-24",
+      "base": "memory.gist_state_changed/project",
+      "target": "memory_before_timestamps",
+      "guard": "memory_source_shape",
+      "defect": "memory before record created_at '2026-11-04T00:00:00+24:00': shared date_time date_time_offset_hour",
+      "changes": [
+        [
+          "/source_records/record:before/facts/created_at",
+          "2026-11-04T00:00:00+24:00"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/memory-after/created_at/offset-hour-24",
+      "base": "memory.gist_state_changed/project",
+      "target": "memory_after_timestamps",
+      "guard": "memory_source_shape",
+      "defect": "memory after record created_at '2026-11-04T00:00:00+24:00': shared date_time date_time_offset_hour",
+      "changes": [
+        [
+          "/source_records/record:after/facts/created_at",
+          "2026-11-04T00:00:00+24:00"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/memory-before/claim-created_at/offset-hour-24",
+      "base": "memory.gist_state_changed/project",
+      "target": "memory_before_claim_created_at",
+      "guard": "memory_source_shape",
+      "defect": "memory before record claim-created_at '2026-11-04T00:00:00+24:00': shared date_time date_time_offset_hour",
+      "changes": [
+        [
+          "/source_records/record:before/facts/claims/0/created_at",
+          "2026-11-04T00:00:00+24:00"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/memory-after/claim-created_at/offset-hour-24",
+      "base": "memory.gist_state_changed/project",
+      "target": "memory_after_claim_created_at",
+      "guard": "memory_source_shape",
+      "defect": "memory after record claim-created_at '2026-11-04T00:00:00+24:00': shared date_time date_time_offset_hour",
+      "changes": [
+        [
+          "/source_records/record:after/facts/claims/0/created_at",
+          "2026-11-04T00:00:00+24:00"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/occurred_at_utc/minute-60",
+      "base": "browser.session.created/project",
+      "target": "cand_envelope_schema",
+      "guard": "envelope_schema",
+      "defect": "occurred_at_utc '2026-11-04T00:60:00Z': shared date_time date_time_minute",
+      "changes": [
+        [
+          "/event/occurred_at_utc",
+          "2026-11-04T00:60:00Z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/observed_at_utc/minute-60",
+      "base": "browser.session.created/project",
+      "target": "cand_envelope_schema",
+      "guard": "envelope_schema",
+      "defect": "observed_at_utc '2026-11-04T00:60:00Z': shared date_time date_time_minute",
+      "changes": [
+        [
+          "/event/observed_at_utc",
+          "2026-11-04T00:60:00Z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/persisted_at_utc/minute-60",
+      "base": "browser.session.created/project",
+      "target": "cand_envelope_schema",
+      "guard": "envelope_schema",
+      "defect": "persisted_at_utc '2026-11-04T00:60:00Z': shared date_time date_time_minute",
+      "changes": [
+        [
+          "/event/persisted_at_utc",
+          "2026-11-04T00:60:00Z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/ts/minute-60",
+      "base": "browser.session.created/project",
+      "target": "cand_payload_schema",
+      "guard": "payload_schema",
+      "defect": "payload ts '2026-11-04T00:60:00Z': shared date_time date_time_minute",
+      "changes": [
+        [
+          "/event/payload/ts",
+          "2026-11-04T00:60:00Z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/history/occurred_at_utc/minute-60",
+      "base": "browser.session.created/project/history",
+      "target": "cand_envelope_schema",
+      "guard": "envelope_schema",
+      "defect": "retained original occurred_at_utc '2026-11-04T00:60:00Z': owner-invalid history refuses (shared date_time date_time_minute)",
+      "changes": [
+        [
+          "/event/occurred_at_utc",
+          "2026-11-04T00:60:00Z"
+        ],
+        [
+          "/storage/event/occurred_at_utc",
+          "2026-11-04T00:60:00Z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/retry-original/occurred_at_utc/minute-60",
+      "base": "browser.session.created/project/retry",
+      "target": "orig_envelope_schema",
+      "guard": "envelope_schema",
+      "defect": "retry: the Storage original's occurred_at_utc '2026-11-04T00:60:00Z' (shared date_time date_time_minute)",
+      "changes": [
+        [
+          "/storage/event/occurred_at_utc",
+          "2026-11-04T00:60:00Z"
+        ],
+        [
+          "/retry/original_event/occurred_at_utc",
+          "2026-11-04T00:60:00Z"
+        ],
+        [
+          "/retry/result",
+          "idempotency_conflict"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/memory-before/created_at/minute-60",
+      "base": "memory.gist_state_changed/project",
+      "target": "memory_before_timestamps",
+      "guard": "memory_source_shape",
+      "defect": "memory before record created_at '2026-11-04T00:60:00Z': shared date_time date_time_minute",
+      "changes": [
+        [
+          "/source_records/record:before/facts/created_at",
+          "2026-11-04T00:60:00Z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/memory-after/created_at/minute-60",
+      "base": "memory.gist_state_changed/project",
+      "target": "memory_after_timestamps",
+      "guard": "memory_source_shape",
+      "defect": "memory after record created_at '2026-11-04T00:60:00Z': shared date_time date_time_minute",
+      "changes": [
+        [
+          "/source_records/record:after/facts/created_at",
+          "2026-11-04T00:60:00Z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/memory-before/claim-created_at/minute-60",
+      "base": "memory.gist_state_changed/project",
+      "target": "memory_before_claim_created_at",
+      "guard": "memory_source_shape",
+      "defect": "memory before record claim-created_at '2026-11-04T00:60:00Z': shared date_time date_time_minute",
+      "changes": [
+        [
+          "/source_records/record:before/facts/claims/0/created_at",
+          "2026-11-04T00:60:00Z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/cv1101/memory-after/claim-created_at/minute-60",
+      "base": "memory.gist_state_changed/project",
+      "target": "memory_after_claim_created_at",
+      "guard": "memory_source_shape",
+      "defect": "memory after record claim-created_at '2026-11-04T00:60:00Z': shared date_time date_time_minute",
+      "changes": [
+        [
+          "/source_records/record:after/facts/claims/0/created_at",
+          "2026-11-04T00:60:00Z"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/sp1101/unsealed-store/browser.session.created/retry",
+      "base": "browser.session.created/project/retry",
+      "target": "recipe_custody",
+      "guard": "original_unavailable",
+      "defect": "a coherent original at Store 33333333-3333-4333-8333-333333333333, which Storage's sealed custody does not hold, though the case says storage.authentic is true: original_unavailable, with no fallback",
+      "changes": [
+        [
+          "/event/event_id",
+          "card2:33333333333333332d333333332d343333332d383333332d333333333333333333333333:7365727665722d41:6f7065726174696f6e2d41:62726f777365722e73657373696f6e2e63726561746564"
+        ],
+        [
+          "/event/payload/storage_instance_id",
+          "33333333-3333-4333-8333-333333333333"
+        ],
+        [
+          "/owner/storage_instance_id",
+          "33333333-3333-4333-8333-333333333333"
+        ],
+        [
+          "/source_records/record:after/storage_instance_id",
+          "33333333-3333-4333-8333-333333333333"
+        ],
+        [
+          "/storage/event/event_id",
+          "card2:33333333333333332d333333332d343333332d383333332d333333333333333333333333:7365727665722d41:6f7065726174696f6e2d41:62726f777365722e73657373696f6e2e63726561746564"
+        ],
+        [
+          "/storage/event/payload/storage_instance_id",
+          "33333333-3333-4333-8333-333333333333"
+        ],
+        [
+          "/storage/receipt/event_id",
+          "card2:33333333333333332d333333332d343333332d383333332d333333333333333333333333:7365727665722d41:6f7065726174696f6e2d41:62726f777365722e73657373696f6e2e63726561746564"
+        ],
+        [
+          "/retry/original_event/event_id",
+          "card2:33333333333333332d333333332d343333332d383333332d333333333333333333333333:7365727665722d41:6f7065726174696f6e2d41:62726f777365722e73657373696f6e2e63726561746564"
+        ],
+        [
+          "/retry/original_event/payload/storage_instance_id",
+          "33333333-3333-4333-8333-333333333333"
+        ],
+        [
+          "/reader/index_read_token/storage_instance_id",
+          "33333333-3333-4333-8333-333333333333"
+        ],
+        [
+          "/reader/index_read_token/checkpoint_key",
+          "event_record_index_checkpoint.v1:33333333-3333-4333-8333-333333333333"
+        ],
+        [
+          "/reader/index_read_token/checkpoint_ref",
+          "event_record_index_checkpoint.v1:33333333-3333-4333-8333-333333333333#/generations/eig_6c54104fbc9d7e74e4b502ac78b574a810441d47caf2091cd26e647d10935440"
+        ],
+        [
+          "/reader/index_read_token/source_selection/storage_instance_id",
+          "33333333-3333-4333-8333-333333333333"
+        ],
+        [
+          "/reader/current_index_read_token/storage_instance_id",
+          "33333333-3333-4333-8333-333333333333"
+        ],
+        [
+          "/reader/current_index_read_token/checkpoint_key",
+          "event_record_index_checkpoint.v1:33333333-3333-4333-8333-333333333333"
+        ],
+        [
+          "/reader/current_index_read_token/checkpoint_ref",
+          "event_record_index_checkpoint.v1:33333333-3333-4333-8333-333333333333#/generations/eig_6c54104fbc9d7e74e4b502ac78b574a810441d47caf2091cd26e647d10935440"
+        ],
+        [
+          "/reader/current_index_read_token/source_selection/storage_instance_id",
+          "33333333-3333-4333-8333-333333333333"
+        ],
+        [
+          "/reader/source_values/manifest_survivor_prefix_sha256",
+          [
+            "33333333-3333-4333-8333-333333333333",
+            "manifest_survivor_prefix_sha256"
+          ]
+        ],
+        [
+          "/reader/source_values/retained_inventory_sha256",
+          [
+            "33333333-3333-4333-8333-333333333333",
+            "retained_inventory_sha256"
+          ]
+        ],
+        [
+          "/reader/source_values/durable_watermarks_sha256",
+          [
+            "33333333-3333-4333-8333-333333333333",
+            "durable_watermarks_sha256"
+          ]
+        ],
+        [
+          "/reader/source_values/excluded_ranges_sha256",
+          [
+            "33333333-3333-4333-8333-333333333333",
+            "excluded_ranges_sha256"
+          ]
+        ],
+        [
+          "/reader/source_values/retired_inputs_sha256",
+          [
+            "33333333-3333-4333-8333-333333333333",
+            "retired_inputs_sha256"
+          ]
+        ],
+        [
+          "/reader/anchor/source_selection/storage_instance_id",
+          "33333333-3333-4333-8333-333333333333"
+        ],
+        [
+          "/reader/frontier/source_selection/storage_instance_id",
+          "33333333-3333-4333-8333-333333333333"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/sp1101/unsupported-recipe/browser.session.created/retry",
+      "base": "browser.session.created/project/retry",
+      "target": "recipe_installed",
+      "guard": "recipe_unsupported",
+      "defect": "a coherent original (operation-unregistered) whose sealed receipt names card2@0-unregistered, a recipe with no installed frozen verifier: recipe_unknown, with no fallback or probing",
+      "changes": [
+        [
+          "/event/event_id",
+          "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d756e72656769737465726564:62726f777365722e73657373696f6e2e63726561746564"
+        ],
+        [
+          "/event/idempotency_key",
+          "card2@1:7365727665722d41:62726f777365722e73657373696f6e2e637265617465643a6f7065726174696f6e2d756e72656769737465726564"
+        ],
+        [
+          "/event/payload/owner_operation_id",
+          "operation-unregistered"
+        ],
+        [
+          "/owner/operation_id",
+          "operation-unregistered"
+        ],
+        [
+          "/storage/event/event_id",
+          "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d756e72656769737465726564:62726f777365722e73657373696f6e2e63726561746564"
+        ],
+        [
+          "/storage/event/idempotency_key",
+          "card2@1:7365727665722d41:62726f777365722e73657373696f6e2e637265617465643a6f7065726174696f6e2d756e72656769737465726564"
+        ],
+        [
+          "/storage/event/payload/owner_operation_id",
+          "operation-unregistered"
+        ],
+        [
+          "/storage/receipt/event_id",
+          "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d756e72656769737465726564:62726f777365722e73657373696f6e2e63726561746564"
+        ],
+        [
+          "/retry/original_event/event_id",
+          "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d756e72656769737465726564:62726f777365722e73657373696f6e2e63726561746564"
+        ],
+        [
+          "/retry/original_event/idempotency_key",
+          "card2@1:7365727665722d41:62726f777365722e73657373696f6e2e637265617465643a6f7065726174696f6e2d756e72656769737465726564"
+        ],
+        [
+          "/retry/original_event/payload/owner_operation_id",
+          "operation-unregistered"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/sp1101/other-operation-control/browser.session.created/retry",
+      "base": "browser.session.created/project/retry",
+      "expect": "accept",
+      "defect": "the same coherent change under another original operation id with no sealed receipt: the Store's sealed card2@1 recipe; accepted",
+      "changes": [
+        [
+          "/event/event_id",
+          "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d6f74686572:62726f777365722e73657373696f6e2e63726561746564"
+        ],
+        [
+          "/event/idempotency_key",
+          "card2@1:7365727665722d41:62726f777365722e73657373696f6e2e637265617465643a6f7065726174696f6e2d6f74686572"
+        ],
+        [
+          "/event/payload/owner_operation_id",
+          "operation-other"
+        ],
+        [
+          "/owner/operation_id",
+          "operation-other"
+        ],
+        [
+          "/storage/event/event_id",
+          "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d6f74686572:62726f777365722e73657373696f6e2e63726561746564"
+        ],
+        [
+          "/storage/event/idempotency_key",
+          "card2@1:7365727665722d41:62726f777365722e73657373696f6e2e637265617465643a6f7065726174696f6e2d6f74686572"
+        ],
+        [
+          "/storage/event/payload/owner_operation_id",
+          "operation-other"
+        ],
+        [
+          "/storage/receipt/event_id",
+          "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d6f74686572:62726f777365722e73657373696f6e2e63726561746564"
+        ],
+        [
+          "/retry/original_event/event_id",
+          "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d6f74686572:62726f777365722e73657373696f6e2e63726561746564"
+        ],
+        [
+          "/retry/original_event/idempotency_key",
+          "card2@1:7365727665722d41:62726f777365722e73657373696f6e2e637265617465643a6f7065726174696f6e2d6f74686572"
+        ],
+        [
+          "/retry/original_event/payload/owner_operation_id",
+          "operation-other"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/sp1101/unsealed-store/memory.gist_state_changed/retry",
+      "base": "memory.gist_state_changed/project/retry",
+      "target": "recipe_custody",
+      "guard": "original_unavailable",
+      "defect": "a coherent original at Store 33333333-3333-4333-8333-333333333333, which Storage's sealed custody does not hold, though the case says storage.authentic is true: original_unavailable, with no fallback",
+      "changes": [
+        [
+          "/event/event_id",
+          "card2:33333333333333332d333333332d343333332d383333332d333333333333333333333333:7365727665722d41:6f7065726174696f6e2d41:6d656d6f72792e676973745f73746174655f6368616e676564"
+        ],
+        [
+          "/event/payload/storage_instance_id",
+          "33333333-3333-4333-8333-333333333333"
+        ],
+        [
+          "/owner/storage_instance_id",
+          "33333333-3333-4333-8333-333333333333"
+        ],
+        [
+          "/source_records/record:before/storage_instance_id",
+          "33333333-3333-4333-8333-333333333333"
+        ],
+        [
+          "/source_records/record:after/storage_instance_id",
+          "33333333-3333-4333-8333-333333333333"
+        ],
+        [
+          "/storage/event/event_id",
+          "card2:33333333333333332d333333332d343333332d383333332d333333333333333333333333:7365727665722d41:6f7065726174696f6e2d41:6d656d6f72792e676973745f73746174655f6368616e676564"
+        ],
+        [
+          "/storage/event/payload/storage_instance_id",
+          "33333333-3333-4333-8333-333333333333"
+        ],
+        [
+          "/storage/receipt/event_id",
+          "card2:33333333333333332d333333332d343333332d383333332d333333333333333333333333:7365727665722d41:6f7065726174696f6e2d41:6d656d6f72792e676973745f73746174655f6368616e676564"
+        ],
+        [
+          "/retry/original_event/event_id",
+          "card2:33333333333333332d333333332d343333332d383333332d333333333333333333333333:7365727665722d41:6f7065726174696f6e2d41:6d656d6f72792e676973745f73746174655f6368616e676564"
+        ],
+        [
+          "/retry/original_event/payload/storage_instance_id",
+          "33333333-3333-4333-8333-333333333333"
+        ],
+        [
+          "/reader/index_read_token/storage_instance_id",
+          "33333333-3333-4333-8333-333333333333"
+        ],
+        [
+          "/reader/index_read_token/checkpoint_key",
+          "event_record_index_checkpoint.v1:33333333-3333-4333-8333-333333333333"
+        ],
+        [
+          "/reader/index_read_token/checkpoint_ref",
+          "event_record_index_checkpoint.v1:33333333-3333-4333-8333-333333333333#/generations/eig_6c54104fbc9d7e74e4b502ac78b574a810441d47caf2091cd26e647d10935440"
+        ],
+        [
+          "/reader/index_read_token/source_selection/storage_instance_id",
+          "33333333-3333-4333-8333-333333333333"
+        ],
+        [
+          "/reader/current_index_read_token/storage_instance_id",
+          "33333333-3333-4333-8333-333333333333"
+        ],
+        [
+          "/reader/current_index_read_token/checkpoint_key",
+          "event_record_index_checkpoint.v1:33333333-3333-4333-8333-333333333333"
+        ],
+        [
+          "/reader/current_index_read_token/checkpoint_ref",
+          "event_record_index_checkpoint.v1:33333333-3333-4333-8333-333333333333#/generations/eig_6c54104fbc9d7e74e4b502ac78b574a810441d47caf2091cd26e647d10935440"
+        ],
+        [
+          "/reader/current_index_read_token/source_selection/storage_instance_id",
+          "33333333-3333-4333-8333-333333333333"
+        ],
+        [
+          "/reader/source_values/manifest_survivor_prefix_sha256",
+          [
+            "33333333-3333-4333-8333-333333333333",
+            "manifest_survivor_prefix_sha256"
+          ]
+        ],
+        [
+          "/reader/source_values/retained_inventory_sha256",
+          [
+            "33333333-3333-4333-8333-333333333333",
+            "retained_inventory_sha256"
+          ]
+        ],
+        [
+          "/reader/source_values/durable_watermarks_sha256",
+          [
+            "33333333-3333-4333-8333-333333333333",
+            "durable_watermarks_sha256"
+          ]
+        ],
+        [
+          "/reader/source_values/excluded_ranges_sha256",
+          [
+            "33333333-3333-4333-8333-333333333333",
+            "excluded_ranges_sha256"
+          ]
+        ],
+        [
+          "/reader/source_values/retired_inputs_sha256",
+          [
+            "33333333-3333-4333-8333-333333333333",
+            "retired_inputs_sha256"
+          ]
+        ],
+        [
+          "/reader/anchor/source_selection/storage_instance_id",
+          "33333333-3333-4333-8333-333333333333"
+        ],
+        [
+          "/reader/frontier/source_selection/storage_instance_id",
+          "33333333-3333-4333-8333-333333333333"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/sp1101/unsupported-recipe/memory.gist_state_changed/retry",
+      "base": "memory.gist_state_changed/project/retry",
+      "target": "recipe_installed",
+      "guard": "recipe_unsupported",
+      "defect": "a coherent original (operation-unregistered) whose sealed receipt names card2@0-unregistered, a recipe with no installed frozen verifier: recipe_unknown, with no fallback or probing",
+      "changes": [
+        [
+          "/event/event_id",
+          "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d756e72656769737465726564:6d656d6f72792e676973745f73746174655f6368616e676564"
+        ],
+        [
+          "/event/idempotency_key",
+          "card2@1:7365727665722d41:6d656d6f72792e676973745f73746174655f6368616e6765643a6f7065726174696f6e2d756e72656769737465726564"
+        ],
+        [
+          "/event/payload/owner_operation_id",
+          "operation-unregistered"
+        ],
+        [
+          "/owner/operation_id",
+          "operation-unregistered"
+        ],
+        [
+          "/storage/event/event_id",
+          "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d756e72656769737465726564:6d656d6f72792e676973745f73746174655f6368616e676564"
+        ],
+        [
+          "/storage/event/idempotency_key",
+          "card2@1:7365727665722d41:6d656d6f72792e676973745f73746174655f6368616e6765643a6f7065726174696f6e2d756e72656769737465726564"
+        ],
+        [
+          "/storage/event/payload/owner_operation_id",
+          "operation-unregistered"
+        ],
+        [
+          "/storage/receipt/event_id",
+          "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d756e72656769737465726564:6d656d6f72792e676973745f73746174655f6368616e676564"
+        ],
+        [
+          "/retry/original_event/event_id",
+          "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d756e72656769737465726564:6d656d6f72792e676973745f73746174655f6368616e676564"
+        ],
+        [
+          "/retry/original_event/idempotency_key",
+          "card2@1:7365727665722d41:6d656d6f72792e676973745f73746174655f6368616e6765643a6f7065726174696f6e2d756e72656769737465726564"
+        ],
+        [
+          "/retry/original_event/payload/owner_operation_id",
+          "operation-unregistered"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/sp1101/other-operation-control/memory.gist_state_changed/retry",
+      "base": "memory.gist_state_changed/project/retry",
+      "expect": "accept",
+      "defect": "the same coherent change under another original operation id with no sealed receipt: the Store's sealed card2@1 recipe; accepted",
+      "changes": [
+        [
+          "/event/event_id",
+          "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d6f74686572:6d656d6f72792e676973745f73746174655f6368616e676564"
+        ],
+        [
+          "/event/idempotency_key",
+          "card2@1:7365727665722d41:6d656d6f72792e676973745f73746174655f6368616e6765643a6f7065726174696f6e2d6f74686572"
+        ],
+        [
+          "/event/payload/owner_operation_id",
+          "operation-other"
+        ],
+        [
+          "/owner/operation_id",
+          "operation-other"
+        ],
+        [
+          "/storage/event/event_id",
+          "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d6f74686572:6d656d6f72792e676973745f73746174655f6368616e676564"
+        ],
+        [
+          "/storage/event/idempotency_key",
+          "card2@1:7365727665722d41:6d656d6f72792e676973745f73746174655f6368616e6765643a6f7065726174696f6e2d6f74686572"
+        ],
+        [
+          "/storage/event/payload/owner_operation_id",
+          "operation-other"
+        ],
+        [
+          "/storage/receipt/event_id",
+          "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d6f74686572:6d656d6f72792e676973745f73746174655f6368616e676564"
+        ],
+        [
+          "/retry/original_event/event_id",
+          "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d6f74686572:6d656d6f72792e676973745f73746174655f6368616e676564"
+        ],
+        [
+          "/retry/original_event/idempotency_key",
+          "card2@1:7365727665722d41:6d656d6f72792e676973745f73746174655f6368616e6765643a6f7065726174696f6e2d6f74686572"
+        ],
+        [
+          "/retry/original_event/payload/owner_operation_id",
+          "operation-other"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/sp1101/unsealed-store/browser.session.created/history",
+      "base": "browser.session.created/project/history",
+      "target": "recipe_custody",
+      "guard": "original_unavailable",
+      "defect": "a coherent original at Store 33333333-3333-4333-8333-333333333333, which Storage's sealed custody does not hold, though the case says storage.authentic is true: original_unavailable, with no fallback",
+      "changes": [
+        [
+          "/event/event_id",
+          "card2:33333333333333332d333333332d343333332d383333332d333333333333333333333333:7365727665722d41:6f7065726174696f6e2d41:62726f777365722e73657373696f6e2e63726561746564"
+        ],
+        [
+          "/event/payload/storage_instance_id",
+          "33333333-3333-4333-8333-333333333333"
+        ],
+        [
+          "/owner/storage_instance_id",
+          "33333333-3333-4333-8333-333333333333"
+        ],
+        [
+          "/source_records/record:after/storage_instance_id",
+          "33333333-3333-4333-8333-333333333333"
+        ],
+        [
+          "/storage/event/event_id",
+          "card2:33333333333333332d333333332d343333332d383333332d333333333333333333333333:7365727665722d41:6f7065726174696f6e2d41:62726f777365722e73657373696f6e2e63726561746564"
+        ],
+        [
+          "/storage/event/payload/storage_instance_id",
+          "33333333-3333-4333-8333-333333333333"
+        ],
+        [
+          "/storage/receipt/event_id",
+          "card2:33333333333333332d333333332d343333332d383333332d333333333333333333333333:7365727665722d41:6f7065726174696f6e2d41:62726f777365722e73657373696f6e2e63726561746564"
+        ],
+        [
+          "/retry/original_event/payload/storage_instance_id",
+          "33333333-3333-4333-8333-333333333333"
+        ],
+        [
+          "/reader/index_read_token/storage_instance_id",
+          "33333333-3333-4333-8333-333333333333"
+        ],
+        [
+          "/reader/index_read_token/checkpoint_key",
+          "event_record_index_checkpoint.v1:33333333-3333-4333-8333-333333333333"
+        ],
+        [
+          "/reader/index_read_token/checkpoint_ref",
+          "event_record_index_checkpoint.v1:33333333-3333-4333-8333-333333333333#/generations/eig_54af109486961267046182e2068957658a60c02d39a8948e66141a6790c3ca8a"
+        ],
+        [
+          "/reader/index_read_token/generation_id",
+          "eig_54af109486961267046182e2068957658a60c02d39a8948e66141a6790c3ca8a"
+        ],
+        [
+          "/reader/index_read_token/generation_anchor_sha256",
+          "f7159bdc51601b7a4cd6461ff32f5d8351f5e1cc0d2b435d1eb835cac4eefaae"
+        ],
+        [
+          "/reader/index_read_token/frontier_sha256",
+          "502d27b9432bb8d7e1ebff6a40229e0ff19af47ea30eafe579d0ffdbd3675020"
+        ],
+        [
+          "/reader/index_read_token/index_dataset_name",
+          "event_record_index.v2@eig_54af109486961267046182e2068957658a60c02d39a8948e66141a6790c3ca8a"
+        ],
+        [
+          "/reader/index_read_token/source_selection/storage_instance_id",
+          "33333333-3333-4333-8333-333333333333"
+        ],
+        [
+          "/reader/index_read_token/source_selection/current_bytes_sha256",
+          "ad2946c45ee74aa5720c75726f003a2a749189ea8c08ce102744668feca2e357"
+        ],
+        [
+          "/reader/index_read_token/source_selection/manifest_bytes_sha256",
+          "ed13a6ab28b74d45ec69a76525fa790c23851b44ee7c0e1c1895eadf8140bb67"
+        ],
+        [
+          "/reader/index_read_token/source_selection/manifest_survivor_prefix_sha256",
+          "b47383dc15b45378082c7bd6ef0bcfa09d030fee3f4eb3fc0902cfb87803eb6f"
+        ],
+        [
+          "/reader/index_read_token/source_selection/retained_inventory_sha256",
+          "dc458198d92c019f0b69f470aa7032464a1b8f2587660080ac4d117c7ea6bd35"
+        ],
+        [
+          "/reader/index_read_token/source_selection/durable_watermarks_sha256",
+          "f0409e5b7d252cf50caf9ce8fb09c72897b22a3c86e1bfcf86d92c549f8014c4"
+        ],
+        [
+          "/reader/index_read_token/source_selection/excluded_ranges_sha256",
+          "e745580883fb4abdefd47142b1e9ad146ba81d2c59a71dc7f17a35092bdb7492"
+        ],
+        [
+          "/reader/index_read_token/source_selection/retired_inputs_sha256",
+          "be744d80b412870560e014f477813164c4de4f4dd850668443f764d4487f0780"
+        ],
+        [
+          "/reader/current_index_read_token/storage_instance_id",
+          "33333333-3333-4333-8333-333333333333"
+        ],
+        [
+          "/reader/current_index_read_token/checkpoint_key",
+          "event_record_index_checkpoint.v1:33333333-3333-4333-8333-333333333333"
+        ],
+        [
+          "/reader/current_index_read_token/checkpoint_ref",
+          "event_record_index_checkpoint.v1:33333333-3333-4333-8333-333333333333#/generations/eig_54af109486961267046182e2068957658a60c02d39a8948e66141a6790c3ca8a"
+        ],
+        [
+          "/reader/current_index_read_token/generation_id",
+          "eig_54af109486961267046182e2068957658a60c02d39a8948e66141a6790c3ca8a"
+        ],
+        [
+          "/reader/current_index_read_token/generation_anchor_sha256",
+          "f7159bdc51601b7a4cd6461ff32f5d8351f5e1cc0d2b435d1eb835cac4eefaae"
+        ],
+        [
+          "/reader/current_index_read_token/frontier_sha256",
+          "502d27b9432bb8d7e1ebff6a40229e0ff19af47ea30eafe579d0ffdbd3675020"
+        ],
+        [
+          "/reader/current_index_read_token/index_dataset_name",
+          "event_record_index.v2@eig_54af109486961267046182e2068957658a60c02d39a8948e66141a6790c3ca8a"
+        ],
+        [
+          "/reader/current_index_read_token/source_selection/storage_instance_id",
+          "33333333-3333-4333-8333-333333333333"
+        ],
+        [
+          "/reader/current_index_read_token/source_selection/current_bytes_sha256",
+          "ad2946c45ee74aa5720c75726f003a2a749189ea8c08ce102744668feca2e357"
+        ],
+        [
+          "/reader/current_index_read_token/source_selection/manifest_bytes_sha256",
+          "ed13a6ab28b74d45ec69a76525fa790c23851b44ee7c0e1c1895eadf8140bb67"
+        ],
+        [
+          "/reader/current_index_read_token/source_selection/manifest_survivor_prefix_sha256",
+          "b47383dc15b45378082c7bd6ef0bcfa09d030fee3f4eb3fc0902cfb87803eb6f"
+        ],
+        [
+          "/reader/current_index_read_token/source_selection/retained_inventory_sha256",
+          "dc458198d92c019f0b69f470aa7032464a1b8f2587660080ac4d117c7ea6bd35"
+        ],
+        [
+          "/reader/current_index_read_token/source_selection/durable_watermarks_sha256",
+          "f0409e5b7d252cf50caf9ce8fb09c72897b22a3c86e1bfcf86d92c549f8014c4"
+        ],
+        [
+          "/reader/current_index_read_token/source_selection/excluded_ranges_sha256",
+          "e745580883fb4abdefd47142b1e9ad146ba81d2c59a71dc7f17a35092bdb7492"
+        ],
+        [
+          "/reader/current_index_read_token/source_selection/retired_inputs_sha256",
+          "be744d80b412870560e014f477813164c4de4f4dd850668443f764d4487f0780"
+        ],
+        [
+          "/reader/event_id",
+          "card2:33333333333333332d333333332d343333332d383333332d333333333333333333333333:7365727665722d41:6f7065726174696f6e2d41:62726f777365722e73657373696f6e2e63726561746564"
+        ],
+        [
+          "/reader/source_bytes/current_bytes_sha256",
+          "73796e7468657469632d6f776e65722d636f6e74726f6c3a33333333333333332d333333332d343333332d383333332d3333333333333333333333333a63757272656e745f62797465735f736861323536"
+        ],
+        [
+          "/reader/source_bytes/manifest_bytes_sha256",
+          "73796e7468657469632d6f776e65722d636f6e74726f6c3a33333333333333332d333333332d343333332d383333332d3333333333333333333333333a6d616e69666573745f62797465735f736861323536"
+        ],
+        [
+          "/reader/source_values/manifest_survivor_prefix_sha256",
+          [
+            "33333333-3333-4333-8333-333333333333",
+            "manifest_survivor_prefix_sha256"
+          ]
+        ],
+        [
+          "/reader/source_values/retained_inventory_sha256",
+          [
+            "33333333-3333-4333-8333-333333333333",
+            "retained_inventory_sha256"
+          ]
+        ],
+        [
+          "/reader/source_values/durable_watermarks_sha256",
+          [
+            "33333333-3333-4333-8333-333333333333",
+            "durable_watermarks_sha256"
+          ]
+        ],
+        [
+          "/reader/source_values/excluded_ranges_sha256",
+          [
+            "33333333-3333-4333-8333-333333333333",
+            "excluded_ranges_sha256"
+          ]
+        ],
+        [
+          "/reader/source_values/retired_inputs_sha256",
+          [
+            "33333333-3333-4333-8333-333333333333",
+            "retired_inputs_sha256"
+          ]
+        ],
+        [
+          "/reader/anchor/source_selection/storage_instance_id",
+          "33333333-3333-4333-8333-333333333333"
+        ],
+        [
+          "/reader/anchor/source_selection/current_bytes_sha256",
+          "ad2946c45ee74aa5720c75726f003a2a749189ea8c08ce102744668feca2e357"
+        ],
+        [
+          "/reader/anchor/source_selection/manifest_bytes_sha256",
+          "ed13a6ab28b74d45ec69a76525fa790c23851b44ee7c0e1c1895eadf8140bb67"
+        ],
+        [
+          "/reader/anchor/source_selection/manifest_survivor_prefix_sha256",
+          "b47383dc15b45378082c7bd6ef0bcfa09d030fee3f4eb3fc0902cfb87803eb6f"
+        ],
+        [
+          "/reader/anchor/source_selection/retained_inventory_sha256",
+          "dc458198d92c019f0b69f470aa7032464a1b8f2587660080ac4d117c7ea6bd35"
+        ],
+        [
+          "/reader/anchor/source_selection/durable_watermarks_sha256",
+          "f0409e5b7d252cf50caf9ce8fb09c72897b22a3c86e1bfcf86d92c549f8014c4"
+        ],
+        [
+          "/reader/anchor/source_selection/excluded_ranges_sha256",
+          "e745580883fb4abdefd47142b1e9ad146ba81d2c59a71dc7f17a35092bdb7492"
+        ],
+        [
+          "/reader/anchor/source_selection/retired_inputs_sha256",
+          "be744d80b412870560e014f477813164c4de4f4dd850668443f764d4487f0780"
+        ],
+        [
+          "/reader/frontier/source_selection/storage_instance_id",
+          "33333333-3333-4333-8333-333333333333"
+        ],
+        [
+          "/reader/frontier/source_selection/current_bytes_sha256",
+          "ad2946c45ee74aa5720c75726f003a2a749189ea8c08ce102744668feca2e357"
+        ],
+        [
+          "/reader/frontier/source_selection/manifest_bytes_sha256",
+          "ed13a6ab28b74d45ec69a76525fa790c23851b44ee7c0e1c1895eadf8140bb67"
+        ],
+        [
+          "/reader/frontier/source_selection/manifest_survivor_prefix_sha256",
+          "b47383dc15b45378082c7bd6ef0bcfa09d030fee3f4eb3fc0902cfb87803eb6f"
+        ],
+        [
+          "/reader/frontier/source_selection/retained_inventory_sha256",
+          "dc458198d92c019f0b69f470aa7032464a1b8f2587660080ac4d117c7ea6bd35"
+        ],
+        [
+          "/reader/frontier/source_selection/durable_watermarks_sha256",
+          "f0409e5b7d252cf50caf9ce8fb09c72897b22a3c86e1bfcf86d92c549f8014c4"
+        ],
+        [
+          "/reader/frontier/source_selection/excluded_ranges_sha256",
+          "e745580883fb4abdefd47142b1e9ad146ba81d2c59a71dc7f17a35092bdb7492"
+        ],
+        [
+          "/reader/frontier/source_selection/retired_inputs_sha256",
+          "be744d80b412870560e014f477813164c4de4f4dd850668443f764d4487f0780"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/sp1101/unsupported-recipe/browser.session.created/history",
+      "base": "browser.session.created/project/history",
+      "target": "recipe_installed",
+      "guard": "recipe_unsupported",
+      "defect": "a coherent original (operation-unregistered) whose sealed receipt names card2@0-unregistered, a recipe with no installed frozen verifier: recipe_unknown, with no fallback or probing",
+      "changes": [
+        [
+          "/event/event_id",
+          "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d756e72656769737465726564:62726f777365722e73657373696f6e2e63726561746564"
+        ],
+        [
+          "/event/idempotency_key",
+          "card2@1:7365727665722d41:62726f777365722e73657373696f6e2e637265617465643a6f7065726174696f6e2d756e72656769737465726564"
+        ],
+        [
+          "/event/payload/owner_operation_id",
+          "operation-unregistered"
+        ],
+        [
+          "/owner/operation_id",
+          "operation-unregistered"
+        ],
+        [
+          "/storage/event/event_id",
+          "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d756e72656769737465726564:62726f777365722e73657373696f6e2e63726561746564"
+        ],
+        [
+          "/storage/event/idempotency_key",
+          "card2@1:7365727665722d41:62726f777365722e73657373696f6e2e637265617465643a6f7065726174696f6e2d756e72656769737465726564"
+        ],
+        [
+          "/storage/event/payload/owner_operation_id",
+          "operation-unregistered"
+        ],
+        [
+          "/storage/receipt/event_id",
+          "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d756e72656769737465726564:62726f777365722e73657373696f6e2e63726561746564"
+        ],
+        [
+          "/reader/event_id",
+          "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d756e72656769737465726564:62726f777365722e73657373696f6e2e63726561746564"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/sp1101/other-operation-control/browser.session.created/history",
+      "base": "browser.session.created/project/history",
+      "expect": "accept",
+      "defect": "the same coherent change under another original operation id with no sealed receipt: the Store's sealed card2@1 recipe; accepted",
+      "changes": [
+        [
+          "/event/event_id",
+          "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d6f74686572:62726f777365722e73657373696f6e2e63726561746564"
+        ],
+        [
+          "/event/idempotency_key",
+          "card2@1:7365727665722d41:62726f777365722e73657373696f6e2e637265617465643a6f7065726174696f6e2d6f74686572"
+        ],
+        [
+          "/event/payload/owner_operation_id",
+          "operation-other"
+        ],
+        [
+          "/owner/operation_id",
+          "operation-other"
+        ],
+        [
+          "/storage/event/event_id",
+          "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d6f74686572:62726f777365722e73657373696f6e2e63726561746564"
+        ],
+        [
+          "/storage/event/idempotency_key",
+          "card2@1:7365727665722d41:62726f777365722e73657373696f6e2e637265617465643a6f7065726174696f6e2d6f74686572"
+        ],
+        [
+          "/storage/event/payload/owner_operation_id",
+          "operation-other"
+        ],
+        [
+          "/storage/receipt/event_id",
+          "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d6f74686572:62726f777365722e73657373696f6e2e63726561746564"
+        ],
+        [
+          "/reader/event_id",
+          "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d6f74686572:62726f777365722e73657373696f6e2e63726561746564"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/sp1101/unsealed-store/memory.gist_state_changed/history",
+      "base": "memory.gist_state_changed/project/history",
+      "target": "recipe_custody",
+      "guard": "original_unavailable",
+      "defect": "a coherent original at Store 33333333-3333-4333-8333-333333333333, which Storage's sealed custody does not hold, though the case says storage.authentic is true: original_unavailable, with no fallback",
+      "changes": [
+        [
+          "/event/event_id",
+          "card2:33333333333333332d333333332d343333332d383333332d333333333333333333333333:7365727665722d41:6f7065726174696f6e2d41:6d656d6f72792e676973745f73746174655f6368616e676564"
+        ],
+        [
+          "/event/payload/storage_instance_id",
+          "33333333-3333-4333-8333-333333333333"
+        ],
+        [
+          "/owner/storage_instance_id",
+          "33333333-3333-4333-8333-333333333333"
+        ],
+        [
+          "/source_records/record:before/storage_instance_id",
+          "33333333-3333-4333-8333-333333333333"
+        ],
+        [
+          "/source_records/record:after/storage_instance_id",
+          "33333333-3333-4333-8333-333333333333"
+        ],
+        [
+          "/storage/event/event_id",
+          "card2:33333333333333332d333333332d343333332d383333332d333333333333333333333333:7365727665722d41:6f7065726174696f6e2d41:6d656d6f72792e676973745f73746174655f6368616e676564"
+        ],
+        [
+          "/storage/event/payload/storage_instance_id",
+          "33333333-3333-4333-8333-333333333333"
+        ],
+        [
+          "/storage/receipt/event_id",
+          "card2:33333333333333332d333333332d343333332d383333332d333333333333333333333333:7365727665722d41:6f7065726174696f6e2d41:6d656d6f72792e676973745f73746174655f6368616e676564"
+        ],
+        [
+          "/retry/original_event/payload/storage_instance_id",
+          "33333333-3333-4333-8333-333333333333"
+        ],
+        [
+          "/reader/index_read_token/storage_instance_id",
+          "33333333-3333-4333-8333-333333333333"
+        ],
+        [
+          "/reader/index_read_token/checkpoint_key",
+          "event_record_index_checkpoint.v1:33333333-3333-4333-8333-333333333333"
+        ],
+        [
+          "/reader/index_read_token/checkpoint_ref",
+          "event_record_index_checkpoint.v1:33333333-3333-4333-8333-333333333333#/generations/eig_54af109486961267046182e2068957658a60c02d39a8948e66141a6790c3ca8a"
+        ],
+        [
+          "/reader/index_read_token/generation_id",
+          "eig_54af109486961267046182e2068957658a60c02d39a8948e66141a6790c3ca8a"
+        ],
+        [
+          "/reader/index_read_token/generation_anchor_sha256",
+          "96afd79a00d17fc17a9263c12ee44c0dfdf6f81a2d4cbc5ed380e4e563376cb2"
+        ],
+        [
+          "/reader/index_read_token/frontier_sha256",
+          "6c4cbb776e2c29f64d5d1136e2e58136f162865a5877218ddc871b30d0417549"
+        ],
+        [
+          "/reader/index_read_token/index_dataset_name",
+          "event_record_index.v2@eig_54af109486961267046182e2068957658a60c02d39a8948e66141a6790c3ca8a"
+        ],
+        [
+          "/reader/index_read_token/source_selection/storage_instance_id",
+          "33333333-3333-4333-8333-333333333333"
+        ],
+        [
+          "/reader/index_read_token/source_selection/current_bytes_sha256",
+          "ad2946c45ee74aa5720c75726f003a2a749189ea8c08ce102744668feca2e357"
+        ],
+        [
+          "/reader/index_read_token/source_selection/manifest_bytes_sha256",
+          "ed13a6ab28b74d45ec69a76525fa790c23851b44ee7c0e1c1895eadf8140bb67"
+        ],
+        [
+          "/reader/index_read_token/source_selection/manifest_survivor_prefix_sha256",
+          "b47383dc15b45378082c7bd6ef0bcfa09d030fee3f4eb3fc0902cfb87803eb6f"
+        ],
+        [
+          "/reader/index_read_token/source_selection/retained_inventory_sha256",
+          "dc458198d92c019f0b69f470aa7032464a1b8f2587660080ac4d117c7ea6bd35"
+        ],
+        [
+          "/reader/index_read_token/source_selection/durable_watermarks_sha256",
+          "f0409e5b7d252cf50caf9ce8fb09c72897b22a3c86e1bfcf86d92c549f8014c4"
+        ],
+        [
+          "/reader/index_read_token/source_selection/excluded_ranges_sha256",
+          "e745580883fb4abdefd47142b1e9ad146ba81d2c59a71dc7f17a35092bdb7492"
+        ],
+        [
+          "/reader/index_read_token/source_selection/retired_inputs_sha256",
+          "be744d80b412870560e014f477813164c4de4f4dd850668443f764d4487f0780"
+        ],
+        [
+          "/reader/current_index_read_token/storage_instance_id",
+          "33333333-3333-4333-8333-333333333333"
+        ],
+        [
+          "/reader/current_index_read_token/checkpoint_key",
+          "event_record_index_checkpoint.v1:33333333-3333-4333-8333-333333333333"
+        ],
+        [
+          "/reader/current_index_read_token/checkpoint_ref",
+          "event_record_index_checkpoint.v1:33333333-3333-4333-8333-333333333333#/generations/eig_54af109486961267046182e2068957658a60c02d39a8948e66141a6790c3ca8a"
+        ],
+        [
+          "/reader/current_index_read_token/generation_id",
+          "eig_54af109486961267046182e2068957658a60c02d39a8948e66141a6790c3ca8a"
+        ],
+        [
+          "/reader/current_index_read_token/generation_anchor_sha256",
+          "96afd79a00d17fc17a9263c12ee44c0dfdf6f81a2d4cbc5ed380e4e563376cb2"
+        ],
+        [
+          "/reader/current_index_read_token/frontier_sha256",
+          "6c4cbb776e2c29f64d5d1136e2e58136f162865a5877218ddc871b30d0417549"
+        ],
+        [
+          "/reader/current_index_read_token/index_dataset_name",
+          "event_record_index.v2@eig_54af109486961267046182e2068957658a60c02d39a8948e66141a6790c3ca8a"
+        ],
+        [
+          "/reader/current_index_read_token/source_selection/storage_instance_id",
+          "33333333-3333-4333-8333-333333333333"
+        ],
+        [
+          "/reader/current_index_read_token/source_selection/current_bytes_sha256",
+          "ad2946c45ee74aa5720c75726f003a2a749189ea8c08ce102744668feca2e357"
+        ],
+        [
+          "/reader/current_index_read_token/source_selection/manifest_bytes_sha256",
+          "ed13a6ab28b74d45ec69a76525fa790c23851b44ee7c0e1c1895eadf8140bb67"
+        ],
+        [
+          "/reader/current_index_read_token/source_selection/manifest_survivor_prefix_sha256",
+          "b47383dc15b45378082c7bd6ef0bcfa09d030fee3f4eb3fc0902cfb87803eb6f"
+        ],
+        [
+          "/reader/current_index_read_token/source_selection/retained_inventory_sha256",
+          "dc458198d92c019f0b69f470aa7032464a1b8f2587660080ac4d117c7ea6bd35"
+        ],
+        [
+          "/reader/current_index_read_token/source_selection/durable_watermarks_sha256",
+          "f0409e5b7d252cf50caf9ce8fb09c72897b22a3c86e1bfcf86d92c549f8014c4"
+        ],
+        [
+          "/reader/current_index_read_token/source_selection/excluded_ranges_sha256",
+          "e745580883fb4abdefd47142b1e9ad146ba81d2c59a71dc7f17a35092bdb7492"
+        ],
+        [
+          "/reader/current_index_read_token/source_selection/retired_inputs_sha256",
+          "be744d80b412870560e014f477813164c4de4f4dd850668443f764d4487f0780"
+        ],
+        [
+          "/reader/event_id",
+          "card2:33333333333333332d333333332d343333332d383333332d333333333333333333333333:7365727665722d41:6f7065726174696f6e2d41:6d656d6f72792e676973745f73746174655f6368616e676564"
+        ],
+        [
+          "/reader/source_bytes/current_bytes_sha256",
+          "73796e7468657469632d6f776e65722d636f6e74726f6c3a33333333333333332d333333332d343333332d383333332d3333333333333333333333333a63757272656e745f62797465735f736861323536"
+        ],
+        [
+          "/reader/source_bytes/manifest_bytes_sha256",
+          "73796e7468657469632d6f776e65722d636f6e74726f6c3a33333333333333332d333333332d343333332d383333332d3333333333333333333333333a6d616e69666573745f62797465735f736861323536"
+        ],
+        [
+          "/reader/source_values/manifest_survivor_prefix_sha256",
+          [
+            "33333333-3333-4333-8333-333333333333",
+            "manifest_survivor_prefix_sha256"
+          ]
+        ],
+        [
+          "/reader/source_values/retained_inventory_sha256",
+          [
+            "33333333-3333-4333-8333-333333333333",
+            "retained_inventory_sha256"
+          ]
+        ],
+        [
+          "/reader/source_values/durable_watermarks_sha256",
+          [
+            "33333333-3333-4333-8333-333333333333",
+            "durable_watermarks_sha256"
+          ]
+        ],
+        [
+          "/reader/source_values/excluded_ranges_sha256",
+          [
+            "33333333-3333-4333-8333-333333333333",
+            "excluded_ranges_sha256"
+          ]
+        ],
+        [
+          "/reader/source_values/retired_inputs_sha256",
+          [
+            "33333333-3333-4333-8333-333333333333",
+            "retired_inputs_sha256"
+          ]
+        ],
+        [
+          "/reader/anchor/source_selection/storage_instance_id",
+          "33333333-3333-4333-8333-333333333333"
+        ],
+        [
+          "/reader/anchor/source_selection/current_bytes_sha256",
+          "ad2946c45ee74aa5720c75726f003a2a749189ea8c08ce102744668feca2e357"
+        ],
+        [
+          "/reader/anchor/source_selection/manifest_bytes_sha256",
+          "ed13a6ab28b74d45ec69a76525fa790c23851b44ee7c0e1c1895eadf8140bb67"
+        ],
+        [
+          "/reader/anchor/source_selection/manifest_survivor_prefix_sha256",
+          "b47383dc15b45378082c7bd6ef0bcfa09d030fee3f4eb3fc0902cfb87803eb6f"
+        ],
+        [
+          "/reader/anchor/source_selection/retained_inventory_sha256",
+          "dc458198d92c019f0b69f470aa7032464a1b8f2587660080ac4d117c7ea6bd35"
+        ],
+        [
+          "/reader/anchor/source_selection/durable_watermarks_sha256",
+          "f0409e5b7d252cf50caf9ce8fb09c72897b22a3c86e1bfcf86d92c549f8014c4"
+        ],
+        [
+          "/reader/anchor/source_selection/excluded_ranges_sha256",
+          "e745580883fb4abdefd47142b1e9ad146ba81d2c59a71dc7f17a35092bdb7492"
+        ],
+        [
+          "/reader/anchor/source_selection/retired_inputs_sha256",
+          "be744d80b412870560e014f477813164c4de4f4dd850668443f764d4487f0780"
+        ],
+        [
+          "/reader/frontier/source_selection/storage_instance_id",
+          "33333333-3333-4333-8333-333333333333"
+        ],
+        [
+          "/reader/frontier/source_selection/current_bytes_sha256",
+          "ad2946c45ee74aa5720c75726f003a2a749189ea8c08ce102744668feca2e357"
+        ],
+        [
+          "/reader/frontier/source_selection/manifest_bytes_sha256",
+          "ed13a6ab28b74d45ec69a76525fa790c23851b44ee7c0e1c1895eadf8140bb67"
+        ],
+        [
+          "/reader/frontier/source_selection/manifest_survivor_prefix_sha256",
+          "b47383dc15b45378082c7bd6ef0bcfa09d030fee3f4eb3fc0902cfb87803eb6f"
+        ],
+        [
+          "/reader/frontier/source_selection/retained_inventory_sha256",
+          "dc458198d92c019f0b69f470aa7032464a1b8f2587660080ac4d117c7ea6bd35"
+        ],
+        [
+          "/reader/frontier/source_selection/durable_watermarks_sha256",
+          "f0409e5b7d252cf50caf9ce8fb09c72897b22a3c86e1bfcf86d92c549f8014c4"
+        ],
+        [
+          "/reader/frontier/source_selection/excluded_ranges_sha256",
+          "e745580883fb4abdefd47142b1e9ad146ba81d2c59a71dc7f17a35092bdb7492"
+        ],
+        [
+          "/reader/frontier/source_selection/retired_inputs_sha256",
+          "be744d80b412870560e014f477813164c4de4f4dd850668443f764d4487f0780"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/sp1101/unsupported-recipe/memory.gist_state_changed/history",
+      "base": "memory.gist_state_changed/project/history",
+      "target": "recipe_installed",
+      "guard": "recipe_unsupported",
+      "defect": "a coherent original (operation-unregistered) whose sealed receipt names card2@0-unregistered, a recipe with no installed frozen verifier: recipe_unknown, with no fallback or probing",
+      "changes": [
+        [
+          "/event/event_id",
+          "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d756e72656769737465726564:6d656d6f72792e676973745f73746174655f6368616e676564"
+        ],
+        [
+          "/event/idempotency_key",
+          "card2@1:7365727665722d41:6d656d6f72792e676973745f73746174655f6368616e6765643a6f7065726174696f6e2d756e72656769737465726564"
+        ],
+        [
+          "/event/payload/owner_operation_id",
+          "operation-unregistered"
+        ],
+        [
+          "/owner/operation_id",
+          "operation-unregistered"
+        ],
+        [
+          "/storage/event/event_id",
+          "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d756e72656769737465726564:6d656d6f72792e676973745f73746174655f6368616e676564"
+        ],
+        [
+          "/storage/event/idempotency_key",
+          "card2@1:7365727665722d41:6d656d6f72792e676973745f73746174655f6368616e6765643a6f7065726174696f6e2d756e72656769737465726564"
+        ],
+        [
+          "/storage/event/payload/owner_operation_id",
+          "operation-unregistered"
+        ],
+        [
+          "/storage/receipt/event_id",
+          "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d756e72656769737465726564:6d656d6f72792e676973745f73746174655f6368616e676564"
+        ],
+        [
+          "/reader/event_id",
+          "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d756e72656769737465726564:6d656d6f72792e676973745f73746174655f6368616e676564"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/sp1101/other-operation-control/memory.gist_state_changed/history",
+      "base": "memory.gist_state_changed/project/history",
+      "expect": "accept",
+      "defect": "the same coherent change under another original operation id with no sealed receipt: the Store's sealed card2@1 recipe; accepted",
+      "changes": [
+        [
+          "/event/event_id",
+          "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d6f74686572:6d656d6f72792e676973745f73746174655f6368616e676564"
+        ],
+        [
+          "/event/idempotency_key",
+          "card2@1:7365727665722d41:6d656d6f72792e676973745f73746174655f6368616e6765643a6f7065726174696f6e2d6f74686572"
+        ],
+        [
+          "/event/payload/owner_operation_id",
+          "operation-other"
+        ],
+        [
+          "/owner/operation_id",
+          "operation-other"
+        ],
+        [
+          "/storage/event/event_id",
+          "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d6f74686572:6d656d6f72792e676973745f73746174655f6368616e676564"
+        ],
+        [
+          "/storage/event/idempotency_key",
+          "card2@1:7365727665722d41:6d656d6f72792e676973745f73746174655f6368616e6765643a6f7065726174696f6e2d6f74686572"
+        ],
+        [
+          "/storage/event/payload/owner_operation_id",
+          "operation-other"
+        ],
+        [
+          "/storage/receipt/event_id",
+          "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d6f74686572:6d656d6f72792e676973745f73746174655f6368616e676564"
+        ],
+        [
+          "/reader/event_id",
+          "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d6f74686572:6d656d6f72792e676973745f73746174655f6368616e676564"
+        ]
+      ]
+    },
+    {
+      "id": "p2b/sp1101/large-sequence/history",
+      "base": "browser.session.created/project/history",
+      "expect": "accept",
+      "defect": "retained history read of an original whose Storage sequence_id is 2^64-1 (SP-1100 uint64; event, Storage record, receipt and reader copies alike): resolved through custody and readable; accepted",
+      "changes": [
+        [
+          "/event/sequence_id",
+          18446744073709551615
+        ],
+        [
+          "/storage/event/sequence_id",
+          18446744073709551615
+        ],
+        [
+          "/storage/receipt/sequence_id",
+          18446744073709551615
+        ],
+        [
+          "/reader/sequence_id",
+          18446744073709551615
+        ]
+      ]
+    },
+    {
+      "id": "p2b/sp1101/large-sequence/retry-original",
+      "base": "browser.session.created/project/retry",
+      "expect": "accept",
+      "defect": "retry whose Storage original carries sequence_id 2^64-1 (receipt copies moved; outside producer semantics): resolved through custody; accepted",
+      "changes": [
+        [
+          "/storage/event/sequence_id",
+          18446744073709551615
+        ],
+        [
+          "/storage/receipt/sequence_id",
+          18446744073709551615
+        ],
+        [
+          "/retry/original_event/sequence_id",
+          18446744073709551615
+        ]
+      ]
+    },
+    {
+      "id": "p2b/sp1101/case-recipe-label-ignored",
+      "base": "browser.session.created/project/history",
+      "expect": "accept",
+      "defect": "a case-supplied recipe name and verified flag on the Storage view select nothing; accepted through custody",
+      "changes": [
+        [
+          "/storage/recipe",
+          "card2@0-unregistered"
+        ],
+        [
+          "/storage/verified",
+          true
         ]
       ]
     }

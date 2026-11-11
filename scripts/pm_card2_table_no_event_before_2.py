@@ -36,7 +36,7 @@ def command_only_before_support_pattern(value, context):
 def case(value):
     context = None
     table = g.GuardTable([
-        g.Guard('command_only_before_timestamps', g.Invariant('/before_facts', 'created/updated/last-access are date-times (interim grammar)'), 'command_only_source_shape', command_only_before_timestamps),
+        g.Guard('command_only_before_timestamps', g.Invariant('/before_facts', 'created/updated/last-access pass the shared CV-1101 date_time (event_record profile)'), 'command_only_source_shape', command_only_before_timestamps),
         g.Guard('command_only_before_hashes', g.Invariant('/before_facts', 'both text hashes are 64 lowercase hex'), 'command_only_source_shape', command_only_before_hashes),
         g.Guard('command_only_before_embedding_version', g.Invariant('/before_facts', 'embedding_version is nonempty'), 'command_only_source_shape', command_only_before_embedding_version),
         g.Guard('command_only_before_claims_nonempty', g.Invariant('/before_facts', 'there is at least one claim'), 'command_only_source_shape', command_only_before_claims_nonempty),

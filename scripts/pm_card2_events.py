@@ -16,8 +16,23 @@ Numbers (sweep part 2B numbers): fixture text is parsed with the shared
 ``current_integer`` (CV-1100); schema integer slots are admitted through
 ``current_integer``; Storage ``sequence_id`` through ``storage_uint64`` (SP-1100);
 the retry comparison uses the shared ``producer_semantic_digest`` (CV-317/CV-1100),
-qualified before any effect. Timestamps keep the interim lane grammar below
-(``timestamp_valid``); CV-1101 adoption is part 2B.
+qualified before any effect.
+
+Timestamps (sweep part 2B, CV-1101): every timestamp field is checked by the shared
+predicate ``pm_event_datetime.date_time`` with the explicit profile its owner names
+(``TIMESTAMP_PROFILES``): the broad ``event_record`` profile for EventRecord
+``occurred_at_utc``, family payload ``ts`` and the memory record times, and CV-253's
+``storage_utc_z`` for Storage-assigned ``observed_at_utc``/``persisted_at_utc``. The
+schema verdicts use the shared ``format_checker(profile=EVENT_RECORD)``; the CV-253
+restriction is its own row per field and view. Lead addendum 2 (2026-11-10): in this
+lane tree ``datetime_validator`` and the whole-``Plans/`` inventory gate are not called;
+they run at batch-2 integration.
+
+Retained originals (sweep part 2B, SP-1101): a retry original and a retained history
+read resolve once through the shared ``RetainedDispatcher``. ``Card2OriginalOwner`` is
+the static stand-in for Storage's sealed write custody (``Plans/card2_original_custody.json``,
+never the case under check), and ``FROZEN_RECIPES`` is the composition-installed map
+from each exact ``RecipeTuple`` to its frozen verifier. Native custody is NOT_RUN.
 """
 from __future__ import annotations
 import argparse
@@ -31,34 +46,53 @@ import sys
 import ast
 import blake3
 import msgpack
-from datetime import datetime
 import re
 from functools import lru_cache
 from contextlib import contextmanager
 from pathlib import Path
-from jsonschema import Draft202012Validator, FormatChecker, validators
+from jsonschema import Draft202012Validator, validators
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from pm_event_index_binding import binding_digest, binding_bytes  # noqa: E402
 from pm_event_numbers import (  # noqa: E402
-    JsonNumber, Refusal, current_integer, loads_exact, producer_semantic_bytes,
-    producer_semantic_digest, storage_uint64,
+    EVENT_VALUE, FrozenRecipe, JsonNumber, OriginalBinding, OriginalCustody, RecipeTuple, Refusal,
+    RetainedDispatcher, current_integer, decode_storage_value, loads_exact, producer_semantic_bytes,
+    producer_semantic_digest, storage_uint64, storage_value_bytes,
 )
+from pm_event_datetime import EVENT_RECORD, STORAGE_UTC_Z, date_time, format_checker  # noqa: E402
 
 
-# Interim timestamp grammar (part 2B adopts CV-1101 datetime_validator/date_time).
-def timestamp_valid(value):
-    if type(value) is not str or re.fullmatch(r"[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\.[0-9]+)?(?:Z|[+-](?:[01][0-9]|2[0-3]):[0-5][0-9])",value) is None:
-        return False
+# CV-1101 timestamp profiles, one per owned field (sweep part 2B). The predicate is the
+# shared pm_event_datetime.date_time; nothing here is a lane grammar.
+#   EventRecord/CV-317/CV-1101: occurred_at_utc and broad family ts take event_record
+#     (RFC 3339 5.6/5.7: T or t, Z or z or an offset, legitimate leap seconds, any fraction).
+#   CV-253: Storage-assigned observed_at_utc and persisted_at_utc take storage_utc_z
+#     (terminal uppercase Z only), composed on top of the envelope verdict.
+#   Memory record times (AMS 3.1 created_at/updated_at/last_access_at and claim created_at)
+#     name no stricter owner profile, so the broad RFC 3339 event_record profile applies.
+TIMESTAMP_PROFILES = {
+    'envelope/occurred_at_utc': EVENT_RECORD,
+    'envelope/observed_at_utc': STORAGE_UTC_Z,
+    'envelope/persisted_at_utc': STORAGE_UTC_Z,
+    'payload/ts': EVENT_RECORD,
+    'memory/created_at': EVENT_RECORD,
+    'memory/updated_at': EVENT_RECORD,
+    'memory/last_access_at': EVENT_RECORD,
+    'memory/claims/created_at': EVENT_RECORD,
+}
+STORAGE_TIMESTAMPS = ('observed_at_utc', 'persisted_at_utc')
+# The schema verdicts use the shared checker installed explicitly (never a mutated
+# global FormatChecker table): every format: date-time in the EventRecord and family
+# payload schemas reaches date_time(..., profile=event_record).
+DATETIME_FORMATS = format_checker(profile=EVENT_RECORD)
+
+
+def date_time_ok(value, field):
+    """The shared CV-1101 predicate at one owned field, with that field's profile."""
     try:
-        return datetime.fromisoformat(value.replace('Z','+00:00')).tzinfo is not None
-    except ValueError:
+        return date_time(value, profile=TIMESTAMP_PROFILES[field]) == value
+    except Refusal:
         return False
-
-
-# jsonschema's optional RFC3339 dependency is absent on some workers. Never
-# silently accept every timestamp because a FormatChecker plugin is missing.
-FormatChecker.checkers['date-time'] = (timestamp_valid, ValueError)
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -171,12 +205,12 @@ def payload_schema(event_type):
 
 @lru_cache(maxsize=None)
 def payload_validator(event_type):
-    return Draft202012Validator(payload_schema(event_type), format_checker=FormatChecker())
+    return Draft202012Validator(payload_schema(event_type), format_checker=DATETIME_FORMATS)
 
 
 @lru_cache(maxsize=None)
 def event_validator():
-    return Draft202012Validator(load('event_record.schema.json'), format_checker=FormatChecker())
+    return Draft202012Validator(load('event_record.schema.json'), format_checker=DATETIME_FORMATS)
 
 
 @lru_cache(maxsize=None)
@@ -188,7 +222,7 @@ def token_schema():
 
 @lru_cache(maxsize=None)
 def token_validator():
-    return Draft202012Validator(token_schema(), format_checker=FormatChecker())
+    return Draft202012Validator(token_schema(), format_checker=DATETIME_FORMATS)
 
 
 # CV-1100 integer slots: the stock Draft 2020-12 'integer' type also admits an
@@ -508,6 +542,14 @@ view_rule('schema', 'inline_size', 'inline_size', '/payload', 'the inline payloa
           lambda e, c: not payload_ready(e) or len(binding_bytes(e['payload'])) <= 16384)
 view_rule('schema', 'inline_reference', 'inline_reference', '/payload_ref', 'payload_ref is null for the inline body',
           lambda e, c: e['payload_ref'] is None, structural=True)
+
+# timestamps group (CV-1101 with CV-253, sweep part 2B). The envelope verdict above runs every
+# envelope date-time through the shared predicate with the broad event_record profile; CV-253 adds
+# the terminal-uppercase-Z restriction on exactly the two Storage-assigned fields, one row each.
+for key in STORAGE_TIMESTAMPS:
+    view_rule('timestamps', 'storage_utc_z_' + key, 'storage_utc_z', '/' + key,
+              'Storage-assigned ' + key + ' passes the shared date_time with the CV-253 storage_utc_z profile',
+              lambda e, c, k=key: not schema_valid(e) or date_time_ok(e[k], 'envelope/' + k), structural=True)
 
 # scope group
 for key in ['scope_kind', 'project_id', 'thread_id']:
@@ -958,7 +1000,7 @@ MEMORY_SHAPE = {
     current_integer(f['half_life_days'], minimum=1) is not None,
     'enums': lambda f: not facts_dict(f) or all([f[k] in domain for k, domain in MEMORY_ENUMS.items() if memory_typed(f, k)]),
     'currentness': lambda f: not facts_dict(f) or not memory_typed(f, 'currentness') or f['currentness'] in CURRENTNESS,
-    'timestamps': lambda f: not facts_dict(f) or all([timestamp_valid(f[k]) for k in ['created_at', 'updated_at', 'last_access_at']
+    'timestamps': lambda f: not facts_dict(f) or all([date_time_ok(f[k], 'memory/' + k) for k in ['created_at', 'updated_at', 'last_access_at']
                                                       if memory_typed(f, k)]),
     'hashes': lambda f: not facts_dict(f) or all([re.fullmatch('[0-9a-f]{64}', f[k]) is not None
                                                   for k in ['embed_text_hash', 'text_hash'] if memory_typed(f, k)]),
@@ -980,7 +1022,7 @@ MEMORY_SHAPE = {
     all([type(cl) is dict and all([type(cl.get(k)) is kind for k, kind in CLAIM_REQUIRED.items()]) for cl in f['claims']]),
     'claim_id': lambda f: not facts_dict(f) or all([bool(cl['claim_id']) for cl in claims_of(f)]),
     'claim_text': lambda f: not facts_dict(f) or all([bool(cl['text']) for cl in claims_of(f)]),
-    'claim_created_at': lambda f: not facts_dict(f) or all([timestamp_valid(cl['created_at']) for cl in claims_of(f)]),
+    'claim_created_at': lambda f: not facts_dict(f) or all([date_time_ok(cl['created_at'], 'memory/claims/created_at') for cl in claims_of(f)]),
     'claim_scope': lambda f: not facts_dict(f) or all([bool(cl['support_scope'].strip()) for cl in claims_of(f)]),
     'claim_currentness': lambda f: not facts_dict(f) or all([cl['currentness'] in CURRENTNESS for cl in claims_of(f)]),
     'claim_evidence_pattern': lambda f: not facts_dict(f) or all([
@@ -1000,14 +1042,16 @@ MEMORY_SHAPE_WORDS = {
     'known': 'no undeclared fact is present', 'types': 'every present fact has its declared exact type',
     'access_count': 'access_count is a current integer at least 0', 'half_life': 'half_life_days is null or a current integer at least 1',
     'enums': 'kind, status, verification_state and source are in their owner domains',
-    'currentness': 'currentness is in its owner domain', 'timestamps': 'created/updated/last-access are date-times (interim grammar)',
+    'currentness': 'currentness is in its owner domain',
+    'timestamps': 'created/updated/last-access pass the shared CV-1101 date_time (event_record profile)',
     'hashes': 'both text hashes are 64 lowercase hex', 'embedding_version': 'embedding_version is nonempty',
     'claims_nonempty': 'there is at least one claim', 'string_members': 'tags, evidence_refs and claim_support members are strings',
     'evidence_pattern': 'evidence_refs match the pointer grammar', 'evidence_unique': 'evidence_refs are unique',
     'support_pattern': 'claim_support matches the pointer grammar', 'support_unique': 'claim_support is unique',
     'support_subset': 'claim_support is within evidence_refs', 'claim_shape': 'every claim is an object with its typed required fields',
     'claim_id': 'every claim_id is nonempty', 'claim_text': 'every claim text is nonempty',
-    'claim_created_at': 'every claim created_at is a date-time (interim grammar)', 'claim_scope': 'every support_scope is nonblank',
+    'claim_created_at': 'every claim created_at passes the shared CV-1101 date_time (event_record profile)',
+    'claim_scope': 'every support_scope is nonblank',
     'claim_currentness': 'every claim currentness is in its owner domain',
     'claim_evidence_pattern': 'every claim evidence_support entry matches the pointer grammar',
     'claim_evidence_unique': 'every claim evidence_support is unique',
@@ -1078,6 +1122,168 @@ for key in ['event_id', 'sequence_id', 'observed_at_utc', 'persisted_at_utc']:
         lambda c, k=key: strict_equal(c['storage']['receipt'][k], c['storage']['event'][k]), 'retry history')
 row('storage', 'storage_receipt_issued', 'storage_receipt_issued', '/storage/receipt/issued', 'Storage issued the first receipt',
     lambda c: c['storage']['receipt']['issued'] is True, 'retry history')
+
+
+# SP-1101 retained-original dispatch (sweep part 2B) ---------------------------------------
+# A retry original and a retained history read are resolved once through the shared
+# RetainedDispatcher before their original is verified. The query names the original the
+# request asks for (Store, scope, family, event_id). Card2OriginalOwner is the static
+# stand-in for Storage's sealed write custody: it answers only from CUSTODY (the separate
+# file Plans/card2_original_custody.json, written on the writer side) and never from the
+# case, so a case's own authentic/verified flags, labels or recipe names select nothing.
+# FROZEN_RECIPES is the composition-installed map from each exact RecipeTuple to its frozen
+# verifier. DCN has one write-time recipe, card2@1, which is also its current writer recipe;
+# its frozen verification is the complete set of retained-view rows (orig_* on retry; cand_*
+# and historical_record on history), which read card2@1's pinned resources (the schema files
+# whose SHA-256 the tuple's resource manifest pins) and its CV-1101 field profiles
+# (TIMESTAMP_PROFILES). The FrozenRecipe itself confirms that custody named exactly its tuple
+# and that the custody bytes are canonical SP-236 EVENT_VALUE values. A changed resource or
+# profile changes the manifest, so no verifier is installed for the sealed tuple and every
+# retained read refuses (recipe_installed); nothing falls back to another recipe.
+CUSTODY_FILE = 'card2_original_custody.json'
+SUPPORTED_RECIPES = ('card2@1',)
+SCOPES = ('application', 'project')
+RECIPE_PROFILE_FIELDS = ('envelope/occurred_at_utc', 'envelope/observed_at_utc', 'envelope/persisted_at_utc', 'payload/ts')
+
+
+def custody():
+    return load(CUSTODY_FILE)
+
+
+def resource_manifest(resources, profiles):
+    """SHA-256 of a recipe's pinned resource digests and CV-1101 field profiles."""
+    return hashlib.sha256(json.dumps({'resources': resources, 'timestamp_profiles': profiles}, sort_keys=True,
+                                     separators=(',', ':')).encode('ascii')).hexdigest()
+
+
+def family_edition(event_type, scope):
+    f = next(f for f in load('card2_event_contracts.json')['families'] if f['event_type'] == event_type)
+    return f['application_payload_schema_id' if scope == 'application' else 'payload_schema_id'], f['contract_unit']
+
+
+def recipe_tuple(recipe_id, event_type, scope, manifest=None):
+    """The exact tuple of one family edition written under recipe_id, as the custody describes it."""
+    r = custody()['recipes'][recipe_id]
+    payload_schema_id, unit = family_edition(event_type, scope)
+    return RecipeTuple(
+        envelope_schema_id=r['envelope']['schema_id'], envelope_schema_version=r['envelope']['schema_version'],
+        payload_schema_id=payload_schema_id, payload_schema_version=r['payload_schema_version'],
+        owner_source_id='Plans/Contracts_V0.md#' + unit, owner_edition=r['owner_edition'],
+        registry_revision=r['registry_revision'], identity_recipe=r['identity_recipe'][scope],
+        producer_recipe=r['producer_recipe'], physical_profile=r['physical_profile'],
+        full_value_profile=r['full_value_profile'], local_source_profile=r['local_source_profile'],
+        payload_profile=r['payload_profile'],
+        resource_manifest_sha256=manifest or resource_manifest(r['resources'], r['timestamp_profiles']))
+
+
+def file_bytes(name):
+    return (ROOT / name).read_bytes()
+
+
+def frozen_verifier(expected_tuple):
+    def verify(original):
+        try:
+            record = decode_storage_value(original.record_bytes, profile=EVENT_VALUE)
+            decode_storage_value(original.result_bytes, profile=EVENT_VALUE)
+            decode_storage_value(original.receipt_bytes, profile=EVENT_VALUE)
+        except Refusal:
+            return False
+        return original.recipe == expected_tuple and type(record) is dict
+    return FrozenRecipe(verify)
+
+
+def install_frozen_recipes(read=file_bytes, profiles=None):
+    """Composition: one frozen verifier per family edition of each supported recipe, keyed by the
+    tuple recomputed from this reader's own resource bytes and field profiles."""
+    installed = {}
+    profiles = profiles if profiles is not None else {k: TIMESTAMP_PROFILES[k] for k in RECIPE_PROFILE_FIELDS}
+    for recipe_id in SUPPORTED_RECIPES:
+        names = sorted(custody()['recipes'][recipe_id]['resources'])
+        manifest = resource_manifest({n: hashlib.sha256(read(n)).hexdigest() for n in names}, profiles)
+        for f in load('card2_event_contracts.json')['families']:
+            for scope in SCOPES:
+                key = recipe_tuple(recipe_id, f['event_type'], scope, manifest)
+                installed[key] = frozen_verifier(key)
+    return installed
+
+
+FROZEN_RECIPES = install_frozen_recipes()
+
+
+def hexed(*parts):
+    return ':'.join(str(x).encode().hex() for x in parts)
+
+
+def original_ref(e):
+    p = e['payload']
+    return 'seglog:' + hexed(p['storage_instance_id'], e['scope_kind'], e['event_type'], e['event_id'])
+
+
+def binding_of(e, record_bytes):
+    p = e['payload']
+    return OriginalBinding(storage_instance_id=p['storage_instance_id'], scope_kind=e['scope_kind'], server_id=p['server_id'],
+                           project_id=e['project_id'], event_type=e['event_type'], event_id=e['event_id'],
+                           idempotency_key=e['idempotency_key'], owner_operation_id=p['owner_operation_id'],
+                           source_commitment=hashlib.sha256(record_bytes).hexdigest())
+
+
+class Card2OriginalOwner:
+    """Storage's sealed custody at the requested Store (static stand-in). It answers from CUSTODY only:
+    the Store must be sealed, the write-time recipe is the Store's sealed receipt for that original or
+    its sealed default, and the binding is computed from the original record Storage holds."""
+
+    def __init__(self, record, receipt):
+        self.record, self.receipt = record, receipt
+
+    def authenticated_original(self, ref):
+        try:
+            store, scope, event_type, event_id = [bytes.fromhex(x).decode() for x in ref[len('seglog:'):].split(':')]
+        except (ValueError, UnicodeDecodeError):
+            raise Refusal('original_query')
+        sealed = custody()['stores'].get(store)
+        if sealed is None:
+            raise Refusal('original_unavailable')
+        recipe_id = next((r['recipe'] for r in custody()['sealed_receipts']
+                          if r['storage_instance_id'] == store and r['event_id'] == event_id), sealed['default_recipe'])
+        record_bytes = storage_value_bytes(self.record, profile=EVENT_VALUE)
+        return OriginalCustody(binding_of(self.record, record_bytes), recipe_tuple(recipe_id, event_type, scope),
+                               record_bytes, record_bytes, storage_value_bytes(self.receipt, profile=EVENT_VALUE))
+
+
+FAMILY_TYPES = frozenset(f['event_type'] for f in load('card2_event_contracts.json')['families'])
+
+
+def recipe_request(c):
+    """The request the query is built from is readable and names the owner's Store (rows of the
+    candidate envelope, payload and source joins own every other request defect)."""
+    e = c['event']
+    return (type(e) is dict and type(e.get('payload')) is dict and e.get('event_type') in FAMILY_TYPES and
+            e.get('scope_kind') in SCOPES and type(e['payload'].get('storage_instance_id')) is str and
+            type(e.get('event_id')) is str and e['payload']['storage_instance_id'] == c['owner']['storage_instance_id'])
+
+
+def dispatch(c, recipes=None, **resolve):
+    """One SP-1101 resolution of the original this retry or retained read asks for: 'ok' or the
+    shared refusal reason. Never raises; current disclosure stays with the reader_access rows."""
+    try:
+        request, original = c['event'], c['storage']['event']
+        owner = Card2OriginalOwner(original, c['storage']['receipt'])
+        expected = binding_of(request, storage_value_bytes(original, profile=EVENT_VALUE))
+        RetainedDispatcher(owner, FROZEN_RECIPES if recipes is None else recipes).resolve(
+            original_ref(request), expected, disclose=lambda binding: True, **resolve)
+        return 'ok'
+    except Refusal as refusal:
+        return refusal.reason
+    except CAUGHT:
+        return 'original_query'
+
+
+row('recipe', 'recipe_custody', 'original_unavailable', '/storage/event',
+    'Storage\'s sealed write custody holds the requested original\'s Store (SP-1101 owner; no case flag counts)',
+    lambda c: not recipe_request(c) or dispatch(c) != 'original_unavailable', 'retry history')
+row('recipe', 'recipe_installed', 'recipe_unsupported', '/storage/event',
+    'the sealed write-time recipe tuple has an installed frozen verifier (SP-1101; no fallback, no probing)',
+    lambda c: not recipe_request(c) or dispatch(c) not in ('recipe_unknown', 'recipe_selection'), 'retry history')
 
 
 # retry ------------------------------------------------------------------------------------
@@ -1270,15 +1476,55 @@ for key, first in [('index_read_token', ['token_schema_index_read_token', 'front
              lambda c, k=key: not token_ready(c['reader'][k]) or integer_slots_exact('token', c['reader'][k]),
              'history', first, TOKEN_NUMBERS_PROOF + (' For the current token, token_observation also refuses any difference '
                                                       'from the read token first.' if key.startswith('current') else ''))
-for key in ['observed_at_utc', 'persisted_at_utc']:
+for key in STORAGE_TIMESTAMPS:
     entailed('storage_format_' + key, 'storage_format_' + key, '/storage/event/' + key,
-             'Storage\'s ' + key + ' is a date-time string (interim grammar; part 2B adopts CV-1101 storage_utc_z)',
-             lambda c, k=key: isinstance(c['storage']['event'][k], str) and FormatChecker().conforms(c['storage']['event'][k], 'date-time'),
-             'retry history', ['orig_envelope_schema', 'cand_envelope_schema', 'historical_record'],
-             'Plans/event_record.schema.json properties.' + key + ' -> $defs/date_time_string (type string, format date-time) with '
-             'the same registered FormatChecker. On retry the Storage record is the original view, so orig_envelope_schema refuses '
-             'first. On history the retained event equals the Storage record (historical_record) or historical_record refuses; '
-             'when equal, cand_envelope_schema refuses the same value first.')
+             'Storage\'s ' + key + ' passes the shared date_time with the CV-253 storage_utc_z profile',
+             lambda c, k=key: type(c['storage']['event'][k]) is str and date_time_ok(c['storage']['event'][k], 'envelope/' + k),
+             'retry history', ['orig_envelope_schema', 'orig_storage_utc_z_' + key, 'cand_envelope_schema',
+                               'cand_storage_utc_z_' + key, 'historical_record'],
+             'Plans/event_record.schema.json properties.' + key + ' -> $defs/date_time_string (type string, format date-time), '
+             'checked by the envelope verdict with the shared event_record predicate, and the storage_utc_z_' + key + ' row applies '
+             'the same shared predicate with the CV-253 storage_utc_z profile to the same field once the verdict holds. On retry '
+             'the Storage record is the original view: a value the verdict refuses refuses at orig_envelope_schema; otherwise '
+             'orig_storage_utc_z_' + key + ' refuses it, unless the candidate row on the same predicate already refuses (the '
+             'original row is then gated off and cand_storage_utc_z_' + key + ' is the earlier refusal) or the original is of '
+             'another family (orig_family). On history the retained event equals the Storage record (historical_record) or '
+             'historical_record refuses; when equal, cand_envelope_schema or cand_storage_utc_z_' + key + ' refuses the same '
+             'value first.')
+
+
+RESOLVED_FIRST = (
+    ['recipe_custody', 'recipe_installed', 'historical_record', 'orig_family', 'cand_source_storage_instance_id',
+     'orig_source_storage_instance_id', 'cand_source_server_id', 'orig_source_server_id', 'cand_source_owner_operation_id',
+     'orig_source_owner_operation_id', 'cand_idempotency', 'orig_idempotency', 'cand_event_identity', 'orig_event_identity',
+     'cand_scope_scope_kind', 'orig_scope_scope_kind', 'cand_source_scope_kind', 'cand_scope_project_id', 'orig_scope_project_id',
+     'cand_source_project_id', 'cand_scope_schema_family', 'orig_scope_schema_family', 'orig_scope_partition',
+     'cand_sequence_u64', 'orig_sequence_u64', 'cand_producer_route', 'orig_producer_route', 'storage_event_id',
+     'storage_sequence_id', 'storage_observed_at_utc', 'storage_persisted_at_utc', 'storage_receipt_issued'] +
+    ['orig_' + f for f in ('envelope_schema', 'envelope_numbers', 'payload_schema', 'payload_numbers')])
+entailed('recipe_resolved', 'original_dispatch', '/storage/event',
+         'the shared RetainedDispatcher resolves the requested original once, to an installed frozen recipe (SP-1101)',
+         lambda c: dispatch(c) == 'ok', 'retry history', RESOLVED_FIRST,
+         'dispatch() returns a reason other than ok only in these cases. (1) The request is unreadable or names another '
+         'Store than its owner (recipe_request false): the candidate envelope/payload verdicts (an object payload, a family '
+         'event_type and scope_kind are schema constants) or cand_source_storage_instance_id refuse. (2) original_unavailable '
+         'with a readable request: recipe_custody. (3) recipe_unknown/recipe_selection with a readable request: '
+         'recipe_installed. (4) original_binding: the shared dispatcher compares the binding computed from Storage\'s original '
+         'with the one computed from the request, field by field. On history the request is the retained event, which equals '
+         'Storage\'s record or historical_record refuses. On retry: storage_instance_id, server_id and owner_operation_id of '
+         'both are joined to the shared owner (cand_/orig_source_* rows); event_type differs only for an original of another '
+         'family (orig_family); scope_kind and project_id are joined through scope_scope_kind, source_scope_kind, '
+         'scope_project_id, source_project_id and the partition rows (orig_source_scope_kind and orig_source_project_id are '
+         'themselves entailed by those rows); idempotency_key and event_id are each recomputed from those joined fields '
+         '(cand_/orig_idempotency, cand_/orig_event_identity); source_commitment is computed from the same original bytes on '
+         'both sides, so it never differs. (5) A physical_* refusal: the original or receipt is not an SP-236 EVENT_VALUE '
+         'value. Every original integer slot is admitted by its envelope/payload verdict, CV-1100 slot rows, sequence_u64 '
+         '(at most 2^64-1) and the producer route; every original string either lies in the qualified producer projection '
+         '(producer_route refuses a lone surrogate) or is fixed by a schema pattern, enum, const or date-time, or by the '
+         'event_identity row; a receipt leaf is joined exactly to the record or must be true (storage_* rows). (6) '
+         'original_verification cannot follow a successful encoding: the bytes are canonical by construction and custody '
+         'names the tuple the verifier was installed for. (7) original_query: only an unreadable request, case (1). '
+         'current_disclosure never refuses here (disclosure stays with the reader_access rows).')
 
 
 # Storage-original rows that never refuse first. Each runs only when the candidate row on the
@@ -1576,6 +1822,99 @@ def _check_parse_rejections(fixtures, errors):
         errors.append({'case': case['id'], 'error': 'non-JSON or non-current number accepted'})
 
 
+# CV-1101 probes (sweep part 2B): each value must be refused through the shared predicate with
+# exactly this reason, as the validator's error cause; a pattern or type refusal never counts.
+DATETIME_REFUSED = [('2026-11-04T24:00:00Z', 'date_time_hour'), ('2026-11-04T00:00:00Z\n', 'date_time_syntax'),
+                    ('2026-11-04T23:59:60Z', 'date_time_leap_second'), ('2026-02-29T00:00:00Z', 'date_time_day'),
+                    ('2026-11-04 00:00:00Z', 'date_time_syntax'), ('2026-11-04T00:00:00', 'date_time_syntax'),
+                    ('2026-11-04T00:00:00+24:00', 'date_time_offset_hour'), ('2026-11-04T00:60:00Z', 'date_time_minute')]
+DATETIME_BROAD_ONLY = ['2026-11-04T00:00:00z', '2026-11-04T00:00:00+00:00', '2026-11-04T00:00:00-00:00', '2026-11-04T01:00:00+01:00']
+DATETIME_VALID = ['2026-11-04t00:00:00Z', '2016-12-31T23:59:60Z', '0000-01-01T00:00:00Z', '2026-11-04T00:00:00.123456789012Z']
+
+
+def refusal_reasons(validator, instance):
+    """The shared Refusal reasons behind a validator's errors, searched through anyOf/oneOf contexts."""
+    reasons = []
+
+    def walk(errors):
+        for error in errors:
+            if isinstance(error.cause, Refusal):
+                reasons.append(error.cause.reason)
+            walk(error.context)
+    walk(validator.iter_errors(instance))
+    return reasons
+
+
+def datetime_probe_errors(base):
+    """Every owned timestamp field, through the validator or predicate the rows use, with its profile."""
+    errors = []
+    event = base['event']
+    for value, reason in DATETIME_REFUSED:
+        for key in ['occurred_at_utc'] + list(STORAGE_TIMESTAMPS):
+            if refusal_reasons(event_validator(), dict(event, **{key: value})) != [reason]:
+                errors.append({'datetime_probe': ['envelope', key, value, reason]})
+        payload = dict(event['payload'], ts=value)
+        if refusal_reasons(payload_validator(event['event_type']), payload) != [reason]:
+            errors.append({'datetime_probe': ['payload', 'ts', value, reason]})
+        for field in [k for k in TIMESTAMP_PROFILES if k.startswith('memory/')]:
+            try:
+                date_time(value, profile=TIMESTAMP_PROFILES[field])
+                errors.append({'datetime_probe': [field, value, 'accepted']})
+            except Refusal as refusal:
+                if refusal.reason != reason:
+                    errors.append({'datetime_probe': [field, value, refusal.reason]})
+    for value in DATETIME_BROAD_ONLY:
+        for key in ['occurred_at_utc'] + list(STORAGE_TIMESTAMPS):
+            if list(event_validator().iter_errors(dict(event, **{key: value}))):
+                errors.append({'datetime_probe': ['envelope verdict', key, value, 'refused']})
+        for key in STORAGE_TIMESTAMPS:
+            if date_time_ok(value, 'envelope/' + key):
+                errors.append({'datetime_probe': ['storage_utc_z', key, value, 'accepted']})
+    for value in DATETIME_VALID:
+        for field in TIMESTAMP_PROFILES:
+            if not date_time_ok(value, field):
+                errors.append({'datetime_probe': [field, value, 'refused']})
+    return errors
+
+
+def recipe_composition_errors(bases):
+    """SP-1101 composition trials: replaced resources or weakened profiles install no verifier for the sealed
+    tuple, a caller override refuses, and the installed map holds exactly card2@1's family editions."""
+    errors = []
+    retained = [c for c in bases.values() if c.get('path') in ('retry', 'history')]
+    sample = [next(c for c in retained if c['path'] == path) for path in ('retry', 'history')]
+    families = load('card2_event_contracts.json')['families']
+    if len(FROZEN_RECIPES) != len(families) * len(SCOPES):
+        errors.append({'recipe_composition': 'installed map size ' + str(len(FROZEN_RECIPES))})
+    for f in families:
+        for scope in SCOPES:
+            if recipe_tuple('card2@1', f['event_type'], scope) not in FROZEN_RECIPES:
+                errors.append({'recipe_composition': ['sealed card2@1 tuple not installed', f['event_type'], scope]})
+            if recipe_tuple('card2@0-unregistered', f['event_type'], scope) in FROZEN_RECIPES:
+                errors.append({'recipe_composition': ['unregistered tuple installed', f['event_type'], scope]})
+    trials = {
+        'replaced_payload_schema': install_frozen_recipes(
+            read=lambda n: file_bytes(n) + (b' ' if n.endswith('card2_event_payloads.schema.json') else b'')),
+        'replaced_envelope_schema': install_frozen_recipes(
+            read=lambda n: file_bytes(n) + (b' ' if n.endswith('event_record.schema.json') else b'')),
+        'storage_profile_weakened': install_frozen_recipes(
+            profiles=dict({k: TIMESTAMP_PROFILES[k] for k in RECIPE_PROFILE_FIELDS},
+                          **{'envelope/' + k: EVENT_RECORD for k in STORAGE_TIMESTAMPS})),
+    }
+    result = {}
+    for c in sample:
+        if dispatch(c) != 'ok':
+            errors.append({'recipe_composition': ['retained positive not resolved', c['id'], dispatch(c)]})
+        for name, recipes in trials.items():
+            result[name + '/' + c['path']] = dispatch(c, recipes)
+            if result[name + '/' + c['path']] != 'recipe_unknown':
+                errors.append({'recipe_composition': [name, c['id'], result[name + '/' + c['path']]]})
+        result['caller_override/' + c['path']] = dispatch(c, recipe_override=next(iter(FROZEN_RECIPES)))
+        if result['caller_override/' + c['path']] != 'caller_recipe_override':
+            errors.append({'recipe_composition': ['caller override', c['id'], result['caller_override/' + c['path']]]})
+    return errors, result
+
+
 def _run(fixtures=None, event_type=None, p2a=None):
     for name in ['card2_event_payloads.schema.json', 'event_record.schema.json', 'event_record_index_checkpoint.schema.json']:
         local_refs_resolve(load(name))
@@ -1590,6 +1929,9 @@ def _run(fixtures=None, event_type=None, p2a=None):
         fixtures['negative_cases'] = [c for c in fixtures['negative_cases'] if c['base'] in selected]
     _check_parse_rejections(fixtures, errors)
     bases = {c['id']: c for c in fixtures['positives'] + fixtures['no_event_cases']}
+    errors += datetime_probe_errors(next(c for c in fixtures['positives'] if c.get('path') == 'append'))
+    composition_errors, composition = recipe_composition_errors(bases)
+    errors += composition_errors
     refused_rows = set()
     for c in bases.values():
         first, failing = evaluate(c)
@@ -1627,7 +1969,8 @@ def _run(fixtures=None, event_type=None, p2a=None):
     return {'status': 'FAIL' if errors else 'PASS', 'native_execution': 'NOT_RUN', 'admission': 'ABSENT',
             'positives': len(bases), 'p2a_controls': controls, 'negatives': len(witnesses), 'rows': len(ROWS),
             'tables': len(TABLES), 'entailed_rows': sorted(ENTAILED), 'rows_refused_first': len(refused_rows),
-            'rows_without_first_refusal_in_this_run': without, 'errors': errors}
+            'rows_without_first_refusal_in_this_run': without, 'recipe_composition': composition,
+            'frozen_recipes': len(FROZEN_RECIPES), 'errors': errors}
 
 
 def run(fixtures=None, event_type=None, p2a=None):
