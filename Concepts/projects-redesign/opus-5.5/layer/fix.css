@@ -164,3 +164,6 @@ html[data-theme$="-light"]:not([data-theme^="retro"]):not([data-o55-nier="on"]) 
 .pjx-npc .pjx-npc-edit { margin-left: 8px; font-size: 11.5px; }
 .pjx-npc .pjx-npc-folder[data-undo="ended"] { opacity: 1; color: var(--pmg-ink-attention, inherit); }
 html[data-theme^="retro"] .pjx-flymenu, html[data-o55-nier="on"] .pjx-flymenu, html[data-theme^="retro"] .pjx-flymenu-item, html[data-o55-nier="on"] .pjx-flymenu-item { border-radius: 0; }
+
+/* a fact line placed straight in a form keeps its mark beside its words (np.css stacks a form's direct children) */
+.pjxc-form > div.pjx-np-line { display: grid; flex-direction: initial; grid-template-columns: 14px minmax(0, 1fr) auto; gap: 8px; }
