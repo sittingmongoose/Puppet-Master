@@ -491,7 +491,10 @@
   white-space: normal; overflow-wrap: anywhere;
 }
 .orbit-core-icon {
-  display: grid; place-items: center;
+  /* a block centring its one block glyph (align-content and auto inline margins) rather than a grid: the same box,
+     but the svg is not a grid item, so its live act lays out the glyph alone instead of the whole document (pm7-perf
+     lane F2). The work phase tiles below take the same treatment. */
+  display: block; align-content: center;
   color: var(--pm-step, var(--accent));
   /* pm-disc-in blurs 2px on this box; orbit-core-in is blur-free AND starts at
      opacity .35 rather than 0. The contact sheet showed the stock keyframe
@@ -499,6 +502,10 @@
      rotation, which reads as a glitch rather than as a handover. */
   animation: orbit-core-in var(--pm-t-icon) var(--pm-ease-pop) both;
 }
+.orbit-core-icon > svg { display: block; margin-inline: auto; }
+/* a finished or waiting core shows a status mark in its wrapper (.nx-st, an inline-block): a block of its own width
+   here, as the grid made it, so no line box adds height round it */
+.orbit-core-icon > .nx-st { display: block; width: fit-content; margin-inline: auto; }
 @keyframes orbit-core-in {
   from { opacity: .35; transform: scale(.78); }
   to   { opacity: 1;   transform: scale(1); }
@@ -1006,6 +1013,11 @@ html:not([data-o55-nier="on"]) body[data-theme="retro-light"] .orbit-core { --po
    reference and receipt tiles are keyed by step). A finished history step is
    lit green. The card head's tile is neon-icons.css section 12's; a finished
    card's tiles are turn-stage.css's. */
+/* Every phase tile (styles.css: 28 px, a grid centring its glyph) is a block centring its one block glyph instead, so
+   the breathing status mark in a working card's head is not a grid item: its ticks lay out the glyph alone, not the
+   whole document. The same box and offset (pm7-perf lane F2, as .orbit-core-icon above). */
+.work-phase-icon { display: block; align-content: center; }
+.work-phase-icon > svg { display: block; margin-inline: auto; }
 .working-card .work-phase-icon { background: var(--surface-3); color: var(--muted); box-shadow: none; }
 .working-variant-0 .reference-stage .work-phase-icon, .receipt-building .work-phase-icon, .stack-card.current .work-phase-icon {
   background: var(--nx-disc); color: var(--pm-step, var(--accent));
