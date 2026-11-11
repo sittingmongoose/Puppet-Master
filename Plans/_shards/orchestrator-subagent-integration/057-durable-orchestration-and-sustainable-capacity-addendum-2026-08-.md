@@ -4,7 +4,7 @@ Source: `Plans/orchestrator-subagent-integration.md`
 
 Source lines: L31765-L31897
 
-Source SHA256: `410585f7494171b7a082f4305c1ee2a997406c2b381728716841c5f58fa09c24`
+Source SHA256: `e1b57f1eac9ff87964edd227ba9d4de690bc5bb9b49b9da4f591aadd6907d44c`
 
 ---
 
@@ -78,7 +78,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: |-
-  Orchestrator admits sustainable capacity below hard concurrency ceilings, holds provider permits only around requests, reserves interactive control plus parent synthesis/testing/verification/repair, and runs required specialists in waves rather than dropping them. It consumes typed leases, compact OperationalAwarenessService projections, and ObservableWork without creating parallel owners or exposing raw registries to prompts.
+  Orchestrator admits sustainable concurrency below hard concurrency ceilings, holds provider permits only around requests, and reserves interactive control plus parent synthesis/testing/verification/repair; required specialists run in waves rather than being dropped. It consumes typed leases, compact OperationalAwarenessService projections, and ObservableWork without creating parallel owners or exposing raw registries to prompts. BSD and conditional rules remain read-only, cannot access protected AuthBrowserSession content and cannot satisfy required specialist roles.
 
   For each independently dispatchable task, WorkNode and child the existing scheduler consumes SIR-056 placement, using Auto by default for new Project work and host-local governor admission. Snapshot requested/effective placement and the current policy/allowed-set evidence, but do not freeze future human additions for a whole build. Tasks add OS/GPU/memory/disk and work-family minimums, never priority. Preserve bound branch/worktree/scratch chains and hysteresis for related follow-ups. Freeze each actual attempt's exact Computer/Environment/source/owner epoch before effects. On Computer loss, started work waits/resumes there; only checkpointed, reconciled, fenced later attempts can move. Unstarted independent Auto work may be reevaluated. Existing retry execution-policy/model fallback and worker identity remain distinct from Computer placement; neither is permission to migrate running work.
 gui_related: true

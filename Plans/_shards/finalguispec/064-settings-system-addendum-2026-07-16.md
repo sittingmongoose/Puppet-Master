@@ -4,7 +4,7 @@ Source: `Plans/FinalGUISpec.md`
 
 Source lines: L31348-L32258
 
-Source SHA256: `fd939cf0de65ae396d67c78b2a3bb4fe29c32ca25709fb9fd9115cfc1b60f1bd`
+Source SHA256: `47bdc54078fbaccc26be55db33e7ef25785c8f170d671be0fa69ddd2375af69c`
 
 ---
 
@@ -637,7 +637,7 @@ depends_on: []
 unblocks: []
 acceptance_criteria:
   - "Plans/settings_inventory.json parses as JSON and conforms to Plans/settings_inventory.schema.json (schema_id pm.settings_inventory.v1); schema conformance is enforced by this unit's acceptance criteria, not a machine gate."
-  - "The registry contains 1010 settings across 12 categories, including the exact seven Case L Storage & Retention rows; rows carry id, label, desc, type, options, default, scope, tier, recommended, curated, search, badges, and related_features, and provenance pins the concept sidecar at sha256 9b24e5bcf7f3dae8f0251215eb113c357d1a0ee22f185ac035e8969fd76b5c8d."
+  - "The registry contains the complete unique live setting IDs counted from Plans/settings_inventory.json across 12 categories, including the exact seven Case L Storage & Retention rows; rows carry id, label, desc, type, options, default, scope, tier, recommended, curated, search, badges, and related_features, and provenance pins the concept sidecar at sha256 9b24e5bcf7f3dae8f0251215eb113c357d1a0ee22f185ac035e8969fd76b5c8d."
   - "The demo runtime fields value, status, and src appear in no registry row and are excluded by the schema."
   - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:

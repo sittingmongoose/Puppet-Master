@@ -221,7 +221,7 @@
         "visible_source_control_surface_routing",
         "web_firecrawl_owner_set"
       ],
-      "sha256": "5466826b89fbf926dc6617fdc15e90402df21ad440998f2c2329ca3ce506b4aa",
+      "sha256": "c306c44aa0e561c7768e4661d95b1a9fafe19159026bf6d1e69cdec9a9e336bb",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 69
@@ -5783,9 +5783,9 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 109,
-        "True": 229
+        "True": 230
       },
-      "heading_count": 566,
+      "heading_count": 567,
       "implementation_surfaces": [
         ".claude/CLAUDE.md",
         ".gitignore",
@@ -5917,9 +5917,9 @@
         "scripts/pm_wiring_inventory.py",
         "tests/test_pm_wiring_vocabulary.py"
       ],
-      "line_count": 29651,
+      "line_count": 29713,
       "path": "Plans/Decision_Log.md",
-      "plan_unit_count": 338,
+      "plan_unit_count": 339,
       "plan_unit_ids": [
         "DL-400",
         "DL-401",
@@ -6258,7 +6258,8 @@
         "DL-471",
         "DL-472",
         "DL-470",
-        "DL-473"
+        "DL-473",
+        "DL-474"
       ],
       "reasoning_tiers": [
         "high",
@@ -6408,6 +6409,7 @@
         "section_number_canonical_drift",
         "section_proliferation_or_unstated_enforcement",
         "self_approval",
+        "settings_owner_default_scope_and_presentation_drift",
         "shared_sound_material",
         "silent_no_op_or_undisclosed_build_cancellation",
         "silently_transferred_approval_evidence",
@@ -6448,15 +6450,15 @@
         "workflow_verification_exception_route_drift",
         "working_activity_behaviour_drift"
       ],
-      "sha256": "4158de76cefb0b0e91ff5931bae97f0171bfd78cfd25fad36f109c8f310ebb44",
+      "sha256": "cf11fc3dfc8ae2151ad7688ed5162bfd89108b797c34e5419309e0e1184dfc72",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 338
+        "accepted": 339
       },
       "title": "Decision Log",
       "unit_type_counts": {
         "compatibility_disposition": 1,
-        "decision": 222,
+        "decision": 223,
         "decision_record": 24,
         "requirement": 91
       },
@@ -6488,6 +6490,7 @@
         "exact Case L 76-decision set-equality check",
         "exact supplemental nine-packet set-equality check",
         "exact supplemental three-packet set-equality check",
+        "future native Settings/owner search, Details, Reset and readiness evidence; not_run",
         "future placement gate/ranking/pin/recovery fixtures",
         "python3 -m unittest tests.test_event_authority_holding_bucket",
         "python3 -m unittest tests.test_pm_jujutsu_closure_semantics",
@@ -6541,7 +6544,10 @@
         "reports/event-authority-20260911/step-08-compaction-detail-cleanup-presentation.json",
         "reports/event-authority-20260911/step-08-platform-lifetime-presentation.json",
         "reports/event-authority-20260911/step-09-procedure-20260924.md",
-        "scripts/pm-plan-index.py"
+        "scripts/pm-plan-index.py",
+        "scripts/pm-settings-layering-check.py",
+        "scripts/pm7-build-check.py",
+        "scripts/pm7-canon-check.py"
       ]
     },
     {
@@ -7230,7 +7236,7 @@
         "unverified_execution_completion",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "8c2019ea0a0c658e9129cd91e0f5da6fb4b2c44ac43518735a72ac1a1008e7c5",
+      "sha256": "61d2b00bc963a1e65481a07917b65eab4f24f3d7f783d8142f5bba85efec0a64",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 130
@@ -8912,7 +8918,7 @@
         "wand_sheet_presentation_drift",
         "web_client_stack_or_parity_drift"
       ],
-      "sha256": "fd939cf0de65ae396d67c78b2a3bb4fe29c32ca25709fb9fd9115cfc1b60f1bd",
+      "sha256": "47bdc54078fbaccc26be55db33e7ef25785c8f170d671be0fa69ddd2375af69c",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 656,
@@ -13657,7 +13663,7 @@
         "wake_reason_cascade_semantics",
         "worktree_native_conflict_control_observability"
       ],
-      "sha256": "410585f7494171b7a082f4305c1ee2a997406c2b381728716841c5f58fa09c24",
+      "sha256": "e1b57f1eac9ff87964edd227ba9d4de690bc5bb9b49b9da4f591aadd6907d44c",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 440,
@@ -14325,7 +14331,7 @@
         "team_persona_identity_drift",
         "wonderer_persona_converges"
       ],
-      "sha256": "bb302a4ed23c3031347fe6dc2c6b9e371e054e2b59c4e239aeee0c564c32070e",
+      "sha256": "cd438fbaf62d1893eebc40ee97d6a2a1ec1a6fddae929a1db9522a8060b59af8",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 59,
@@ -17901,7 +17907,7 @@
         "future shared Rust interface model and sole owner services; no implementation claimed",
         "future typed Settings owner projections"
       ],
-      "line_count": 5765,
+      "line_count": 5767,
       "path": "Plans/Settings_System.md",
       "plan_unit_count": 61,
       "plan_unit_ids": [
@@ -18024,7 +18030,7 @@
         "theme_or_layout_cross_project_leak",
         "unowned_preference_or_scope_drift"
       ],
-      "sha256": "adc2f52e8ca1153890d0122fcd180341e49714f0796b2d76256fd46f0fb6fe4a",
+      "sha256": "4cf4e0ed41c7977c8c52e49885763240bd71ca30bf35cd379877dc6c071eb068",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 61
@@ -21762,7 +21768,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-11T16:37:08Z",
+  "generated_at_utc": "2026-11-11T17:29:07Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -21771,12 +21777,12 @@
     "docs_without_plan_units": 0,
     "gui_related_counts": {
       "False": 3687,
-      "True": 3841
+      "True": 3842
     },
-    "plan_unit_count": 7528,
+    "plan_unit_count": 7529,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 7309,
+      "accepted": 7310,
       "retired": 196,
       "superseded": 23
     },
@@ -21809,7 +21815,7 @@
       "contract": 5,
       "contract_requirement": 3,
       "data_contract": 8,
-      "decision": 245,
+      "decision": 246,
       "decision_record": 24,
       "deferred_enhancement": 8,
       "delta_contract": 1,

@@ -9,12 +9,12 @@
 Settings is one system with three coordinated parts. Ordinary values use the settings ladder in SSYS-002/059:
 
 1. the K3 Tome Tabs Settings shell;
-2. the 1010 ordinary setting rows in `Plans/settings_inventory.json`; and
+2. the ordinary setting rows in `Plans/settings_inventory.json`; and
 3. the full manager system for setup, policy, defaults, human-readable status, diagnostics, repair entry points, and owner-routed operational work.
 
 `Plans/settings_system_contracts.schema.json` is the strict Draft 2020-12 shape owner for Settings-owned records. `Plans/settings_system_contract_fixtures.json` freezes the five Settings command contracts, six route-only Onboarding/Guided Tour/Doctor UI actions, the 38-entry manager registry, three named visible-state projections, exact dispositions for all 80 older-packet command tokens, and positive/negative contract fixtures. Those machine files are canonical Plans contracts but remain schema/fixture evidence only; they do not prove a registered handler, production wiring, persistence execution, native rendering, or certification.
 
-This owner supersedes prior Settings presentation and ordinary-persistence clauses in `Plans/FinalGUISpec.md`, including the visible search-first shelves/bloom shell in F3-432 and the universal/global or inheritance implications in F3-438, F3-440, F3-442, F3-510, and F3-511. It retains the canonical 1010-ID inventory, the useful F3-433 fuzzy matching behavior, live owner-derived status, typed row renderers, ten built-in themes, and owner-routed deep links where this document incorporates them.
+This owner supersedes prior Settings presentation and ordinary-persistence clauses in `Plans/FinalGUISpec.md`, including the visible search-first shelves/bloom shell in F3-432 and the universal/global or inheritance implications in F3-438, F3-440, F3-442, F3-510, and F3-511. It retains the canonical inventory in `Plans/settings_inventory.json`, the useful F3-433 fuzzy matching behavior, live owner-derived status, typed row renderers, ten built-in themes, and owner-routed deep links where this document incorporates them.
 
 SSYS-002 owns Default → Everywhere → Computer (Device for screen rows) → optional Project → existing owner/chat/run/tab rungs, with Managed above them. SSYS-059 declares exceptions and combine rules; no-Project offered shared/Computer/Device writes work. Basic Dark is bundled fallback or pre-claim ephemeral only. Existing explicit choices and detached copied own values are never overwritten by a fresh seed. Manager objects and operational records remain with their owners.
 
@@ -42,7 +42,7 @@ ContractRef: ContractName:Plans/DRY_Rules.md, ContractName:Plans/Plan_Document_S
 
 | Domain | Canonical owner consumed by Settings | Settings role |
 |---|---|---|
-| Inventory IDs and row metadata | `Plans/settings_inventory.json` and `Plans/settings_inventory.schema.json` | Render and search all 1010 IDs; do not hardcode a second inventory. |
+| Inventory IDs and row metadata | `Plans/settings_inventory.json` and `Plans/settings_inventory.schema.json` | Render and search every live inventory ID; do not hardcode a second inventory. |
 | Theme palettes and shared GUI tokens | `Plans/FinalGUISpec.md` | Select and preview the ten built-in themes; do not fork palette truth. |
 | Physical persistence, recovery, and secret-store split | `Plans/storage-plan.md` | Submit exact level-bound settings transactions and show receipts; do not own storage engines. |
 | Permissions, FileSafe, and secret custody policy | `Plans/Permissions_System.md`, `Plans/FileSafe.md`, `Plans/Multi-Account.md` | Show policy/effective state and non-secret references; never hold raw credentials. |
@@ -223,7 +223,7 @@ canonical_text: >-
   (DL-257): the current family/variant and inventory census supersede earlier counts. Historical census token
   1011 is retained solely as pre-Q22 lineage. Q22/QA2 registry join (DL-257/DL-258): settings_inventory.retired_input_ids
   names migration-only historical keys outside the active settings array. It contains general.visual.nier-mode,
-  is disjoint from active row IDs, adds no ordinary row/control/writer and does not count in the 1010-row census.
+  is disjoint from active row IDs, adds no ordinary row/control/writer and does not count in the live inventory census.
   Placement retirement validation may consume this explicit catalog; arbitrary unknown IDs remain errors, and
   current Settings request IDs still reject the retired key.
 gui_related: true
@@ -234,7 +234,7 @@ acceptance_criteria:
 - A registry census finds the recomputed unique live ID count across 12 categories, including only admitted additions.
 - The rendered ordinary-setting denominator matches the registry exactly.
 - Manager/action/status/diagnostic/setup/unavailable results carry a non-setting result type and do not inflate
-  1010.
+  the live inventory census.
 validation_surfaces: [jq and schema census over Plans/settings_inventory.json, future result-type fixtures]
 risk_class: settings_inventory_or_denominator_drift
 reasoning_tier: high
@@ -968,7 +968,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Settings_System.md
 canonical_text: >-
-  Settings ships as a full manager system rather than a 1010-row form or provider-only demo. The manager registry
+  Settings ships as a full manager system rather than an inventory-only form or provider-only demo. The manager registry
   is frozen as the exact 38-key machine registry in Plans/settings_system_contract_fixtures.json and includes
   General Desktop and Appearance; Providers, Accounts, Models, and Installations; Web Routes; Media Routes; Back
   Seat Driver; Memory and Context; Goals, Crew, Personas, and Owners; Permissions and FileSafe; Commands and Shortcuts;
@@ -997,7 +997,7 @@ acceptance_criteria:
   - "The exact 38-entry manager registry covers every named family with stable identity and an explicit retained owner or named owner-gap disposition."
   - "Settings Home hydrates compact summaries first and one selected manager lazily; hidden managers release heavy state."
   - "Every manager action resolves to a registered owner command or remains unavailable with the exact reason."
-  - "Search can find all managers without counting them among the 1010 ordinary settings."
+  - "Search can find all managers without counting them among the ordinary settings in the inventory."
 validation_surfaces: [Plans/settings_system_contracts.schema.json, Plans/settings_system_contract_fixtures.json, future lazy-hydration tests, future owner-route coverage matrix]
 risk_class: incomplete_or_parallel_settings_manager_system
 reasoning_tier: high
@@ -1571,6 +1571,8 @@ canonical_text: |-
   SIR-056 adds seven reviewed code.execution rows, for 1024 inventory rows with the same 12 categories and 38 manager keys. auto-preset is Everywhere with optional Project override, default balanced (Balanced), alternatives fastest (Fastest) and keep_my_computer_free (Keep my computer free); it has no Computer or Device rung, avoiding candidate-dependent resolution. auto-weights is Everywhere-only, default balanced, with Advanced measure weights; has_the_files_already defaults to 0. in-use-less-often is Everywhere-only, default true. computer-level is Computer-only, computer_key=execution_host, default normal, choices prefer, normal, less_often and only_when_i_choose_it. work-placement is Project-only, default auto, alternatives auto and chosen; chosen is a person's scoped pin to that Project's default-computer and does not imply a single worker for all work. allowed-computers is Project-only, a person-edited set of stable execution_host_id bindings, default empty pending the registration decision; default-computer is Project-only, a stable execution_host_id, default null until registration records its reviewed value. An incomplete Project may remain pending, but executable Project work cannot dispatch without that allowed/default binding. The default is a tie-break in Auto and a pin only when chosen is requested. Registration never admits discovered Computers automatically.
 
   All seven use most_specific for sparse own values and the same owner transaction path. auto-preset offers Everywhere/Project and omits Computer/Device with same_for_you/not_about_the_screen; auto-weights and in-use-less-often offer only Everywhere and omit Computer/Project as same_for_you and Device as not_about_the_screen. computer-level omits Everywhere/Project/Device as about_hardware; the three Project-only rows omit Everywhere/Computer/Device as about_this_project. Device is not a placement level and Environment remains exact runtime context. Every effective read uses SSYS-002/059; a task adds only minimums and its existing bounded pin state, never priority weights or persistent defaults. Computer levels are keyed to the resource Host, not the viewing Client or a display name. The no-project starter row and SRV-017 are unchanged. Allowed-Computer and default/pin edits use the topology owner with current authority/generations; Settings storage alone cannot grant trust, widen authority or start work.
+
+  DL-474 admits the intent to expose the Memory and new-Goal page choices through Settings search, Details and Reset. Each row still requires its semantic owner's values, default, scope and offered levels before registration. Q2 supplies no missing defaults or levels and does not supersede AMS-026/054 memory isolation, Goal V2's caller-owned completion evidence or ordinary Assistant Persona/Crew ownership. A page-only control or demo value is not a row contract; unresolved admissions are recorded for owner adjudication rather than assigned invented null/default values.
 gui_related: true
 gui_classification_reason: Defines user-visible Settings, Computer, panel or work-state behavior.
 depends_on:
@@ -2369,7 +2371,7 @@ ContractRef: ContractName:Plans/settings_system_contracts.schema.json, ContractN
 Minimum production coverage includes:
 
 - Draft 2020-12 meta-schema validation, fixture-pack validation, every positive record, every negative rejection, exact five-command/five-route-action registries, exact 38-manager census, three named visible-state projections, and exact 80-token command-disposition census;
-- inventory/schema census: 1010 unique IDs, 12 categories, no demo `value`, `status`, or `src` fields;
+- inventory/schema census: unique live IDs counted from `Plans/settings_inventory.json`, 12 categories, no demo `value`, `status`, or `src` fields;
 - exact wide and responsive host geometry at and around 1180, 960, 720, and 320 pixels;
 - level isolation, resolved first paint, saved/copy own-value precedence, pre-claim ephemeral Basic Dark, zero-Project shared/device writes, and exact missing-Project-target rejection;
 - fuzzy search, facet combinations, keyboard/pointer parity, match highlighting, and stable variable-height anchors;
@@ -2448,8 +2450,8 @@ ContractRef: ContractName:Plans/Document_Packaging_Policy.md, ContractName:Plans
 ## Forge/Backup/tsnet Settings consumer addendum - 2026-09-01
 
 The K3 Tome Tabs shell geometry and the exact 38-manager registry remain authoritative. This addendum changes dynamic
-owner content, grouping, and routes only. It does not revive a Settings bakeoff, change the 1010-ID ordinary-setting
-inventory, create a manager, or promote PMConcept7 fixtures into a native/runtime claim.
+owner content, grouping, and routes only. It does not revive a Settings bakeoff, change the ordinary-setting
+inventory in `Plans/settings_inventory.json`, create a manager, or promote PMConcept7 fixtures into a native/runtime claim.
 
 ### SSYS-026 - Provider, backup, and connector owner projections
 
@@ -2474,7 +2476,7 @@ canonical_text: >-
   generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI,
   auth or mirror authority. SSYS-002/059 supply the shared level context; route-only managers retain their actual
   owner records and authority. FO-20 guided setup windows keep their current Glass material, family tokens, protected-auth
-  wording and return semantics while showing the exact Computer/Device/Project target.
+  wording and return semantics while showing the exact Computer/Device/Project target. AI service roster readiness follows F3-108 and DL-474: no chosen model shows Needs attention.
 gui_related: true
 gui_classification_reason: This unit defines visible K3 manager grouping, cards, actions, disabled states, exact routing,
   and protected handoff presentation.
@@ -3889,7 +3891,7 @@ that would reach an outside computer or service says so and, in the concept, is 
   `code.execution.ssh-keys` and `code.execution.server-sign-in`. The managers draw them in their own controls; the
   stored value is the inventory row's, so search, Details, All Settings and Settings Transfer reach them. A key row
   names a key in the SSH key list and never holds a private half.
-- Q22, Jared 2026-10-30 (DL-257), supersedes the 2026-09-28 three-row override admission: general.visual.nier-mode is retired and migrated on load; family nier and its two variants use general.visual.theme. The retained parts/background Adjust rows show only while a NieR theme is selected and use the existing editor. Current inventory count is 1010. Section 4.4 and SSYS-043 own migration, palette/font ownership and transition direction.
+- Q22, Jared 2026-10-30 (DL-257), supersedes the 2026-09-28 three-row override admission: general.visual.nier-mode is retired and migrated on load; family nier and its two variants use general.visual.theme. The retained parts/background Adjust rows show only while a NieR theme is selected and use the existing editor. The current inventory census is computed from the live IDs in `Plans/settings_inventory.json`. Section 4.4 and SSYS-043 own migration, palette/font ownership and transition direction.
 
 ```yaml
 plan_unit_id: SSYS-040
@@ -4166,7 +4168,7 @@ canonical_text: >-
   NieR only; title-menu Adjust NieR… and Customize Pip… are ordinary aligned rows. NieR Mode is retired user-facing
   wording, retained only as source lineage. Q22/QA2 registry join (DL-257/DL-258): settings_inventory.retired_input_ids
   names migration-only historical keys outside the active settings array. It contains general.visual.nier-mode,
-  is disjoint from active row IDs, adds no ordinary row/control/writer and does not count in the 1010-row census.
+  is disjoint from active row IDs, adds no ordinary row/control/writer and does not count in the live inventory census.
   Placement retirement validation may consume this explicit catalog; arbitrary unknown IDs remain errors, and
   current Settings request IDs still reject the retired key. Live look selectors use the exact level/key resolver
   and single atomic pair; Q22 still has five families/ten variants and a tombstoned general.visual.nier-mode,

@@ -4,7 +4,7 @@ Source: `Plans/Executor_Protocol.md`
 
 Source lines: L1004-L5942
 
-Source SHA256: `8c2019ea0a0c658e9129cd91e0f5da6fb4b2c44ac43518735a72ac1a1008e7c5`
+Source SHA256: `61d2b00bc963a1e65481a07917b65eab4f24f3d7f783d8142f5bba85efec0a64`
 
 ---
 
@@ -4471,7 +4471,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Executor_Protocol.md
 canonical_text: |-
-  Orchestrator sets worktree execution fields when launching a DAE in a lane-owned worktree, Assistant Chat sets them for bound-thread agent-mode or plan-mode work, and execution defaults to the verified project root on the chosen Computer when execution_unit_context.worktree_id is absent and no bound worktree context is present. That Project-root fallback applies only to a real Project context. EP-132 app requests freeze the owned chat folder or explicitly granted root on the actual Computer; absent worktree never resolves to current focus, home or a main Project.
+  Orchestrator sets worktree execution fields when launching a DAE in a lane-owned worktree. When the active thread has a bound worktree, Assistant Chat sets them for agent-mode or plan-mode work. Execution defaults to the verified project root on the chosen Computer when execution_unit_context.worktree_id is absent and no bound worktree context is present. That Project-root fallback applies only to a real Project context. EP-132 app requests freeze the owned chat folder or explicitly granted root on the actual Computer; absent worktree never resolves to current focus, home or a main Project.
 
   Each new independently dispatchable task/WorkNode/child resolves SIR-056 placement before Executor attachment. host_assignment_id references the owner decision with requested/effective Computer, actor/pin, requirements and policy/allowed-set/source evidence; do not add fields to execution_unit_context 1.0.0. The selected Computer must materialize and verify the exact approved baseline and required isolated worktree under W-080 before launch. Absent worktree never substitutes a same-named directory on another Computer. Agent pins apply to that work only, inside the person's constraint and current allowed set; they cannot alter shared defaults. New required transport/context fields require a governed successor, with original historical readers retained.
 gui_related: false
@@ -4530,7 +4530,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Executor_Protocol.md
 canonical_text: |-
-  Assistant Chat turn-start resolves thread_state:{thread_id}:worktree_binding, freezes execution_unit_context.worktree_id and working_directory for that turn, applies mid-turn unbinds only to later turns or rotated follow-ups, and propagates the frozen cwd to FileSafe, tools, shell cwd, MCP, @file, auto-retrieval, provider CLI, and DAE execution-context payloads. EP-132 app execution selects an explicit scope-aware sibling of the context/source/identity contract, real thread/Computer/roots and Stop/writer/permission evidence. Original Project exact context, hash/idempotency/accepted-source and passive replay resources remain valid; no null Project is cast into an existing Project-only identity recipe.
+  Assistant Chat turn-start resolves thread_state:{thread_id}:worktree_binding, freezes execution_unit_context.worktree_id and working_directory for that turn, applies mid-turn unbinds only to later turns or rotated follow-ups, and propagates the frozen cwd to FileSafe checks, tools, bash/shell `cwd`, MCP tools, @file, auto-retrieval scope context, provider CLI, and DAE execution-context JSON payloads. EP-132 app execution selects an explicit scope-aware sibling of the context/source/identity contract, real thread/Computer/roots and Stop/writer/permission evidence. Original Project exact context, hash/idempotency/accepted-source and passive replay resources remain valid; no null Project is cast into an existing Project-only identity recipe.
 
   Freeze the turn/attempt's one exact Computer/Host/Environment/source/worktree/account/route and owner epoch before the first effect, retaining current policy/allowed-set, Plan/build/grant/permission/Stop/revocation evidence through host_assignment_id. Policy changes apply to unstarted work, never rewrite that binding. Keep context-dependent follow-ups on their bound worker; offline started work waits and resumes there. A safe retry elsewhere requires an admitted checkpoint, outcome reconciliation, old-owner fencing and a fresh exact attempt/authority check. Route or Client loss and lease expiry cannot prove the old worker stopped; the Home Server never automatically fails over.
 gui_related: false

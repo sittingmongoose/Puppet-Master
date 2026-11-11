@@ -29649,3 +29649,65 @@ negative_constraints:
 - No placement widens authority or changes the Project Home Server.
 - No native readiness or governance seal is inferred from accepted prose.
 ```
+
+### DL-474 - Settings Admission, Free Persona Tags And Truthful Service Readiness
+
+```yaml
+plan_unit_id: DL-474
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: |-
+  Jared answered Q2, Q3 and Q4 on 2026-11-11 at 17:08:56 UTC. Each signed answer records choice ["A"] and an empty note. The selected card labels, verbatim, are:
+  - Q2: "Make them real settings".
+  - Q3: "Free tags, with suggestions".
+  - Q4: "Keep 'Needs attention'".
+
+  Q2 approves making Prefer pinned memories, When memories disagree, Crews can read project memories, the four memory source switches (Project files, Plans, Tool output and Manager records), a new Goal's Persona, a new Goal's Crew, Run test profile and Ask me to confirm searchable, explainable and resettable Settings choices. Admission must carry the semantic owner's actual values, default, scope and offered levels through SSYS-004/059 and the existing writer. The answer supplies no missing value/default/level rules and cannot by itself invent them or override AMS-026/054 memory isolation or Goal V2 ownership. Owner gaps must be adjudicated before the affected rows are registered; demo defaults and page-local state are source lineage only. Chat history already has memory.retention.history-retention and is not a fifth new source row.
+
+  Q3 follows Personas P-010: personas.library.persona-tags is a free string tag input with suggested kinds phase, task, subtask, iteration, cross-phase, language, domain and framework, plus arbitrary freeform tags. The inventory's old seam/package/lane/node/cross-seam choices are replaced as suggestions, not migrated into a closed enum or used to rewrite existing free tags. Persona-owned scope, default empty list and existing layering remain.
+
+  Q4 keeps Needs attention for AI roster services with no model chosen. F3-108 and SSYS-026 consume actual owner readiness; this records the existing behavior rather than introducing a second status engine or a new setting.
+
+  The How runs pause option is labelled Without pausing; its stored value hands-off, default and behavior remain. The Hands-off development permission profile keeps its distinct name. Current census prose refers to the unique live IDs in Plans/settings_inventory.json; historical admission counts remain lineage.
+gui_related: true
+gui_classification_reason: Records Settings search/reset admission, free tag input and visible roster/option labels.
+depends_on: [SSYS-004, SSYS-059, P-010, F3-108, SSYS-026]
+unblocks: []
+acceptance_criteria:
+- The signed A choices and exact selected labels are preserved with source hashes.
+- Inventory admission uses owner-defined values/defaults/levels; unresolved owners do not acquire invented policy.
+- Persona tags remain free input with the owner suggestions and existing record ownership.
+- No chosen model renders Needs attention from owner readiness.
+- Without pausing retains the stored value hands-off and does not rename the permission profile.
+validation_surfaces:
+- scripts/pm-settings-layering-check.py
+- scripts/pm7-build-check.py
+- scripts/pm7-canon-check.py
+- future native Settings/owner search, Details, Reset and readiness evidence; not_run
+risk_class: settings_owner_default_scope_and_presentation_drift
+reasoning_tier: high
+context_scope: settings_canon_batch_20261111
+implementation_surfaces: [Plans/settings_inventory.json, Plans/Settings_System.md, Plans/Personas.md, Plans/FinalGUISpec.md]
+node_compile_hint: {mode: owner_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+- "/mnt/Cursor/agent-reports/v1/answers/vm.pm7-build--Q2.json; SHA-256 c06a7ce177aa44ede2f3b875bf2b7462815558344a34c33f6a85290875336950; answered 2026-11-11T17:08:56.662Z; choice A"
+- "/mnt/Cursor/agent-reports/v1/writers/vm.pm7-build/cards/vm.pm7-build--Q2.json; SHA-256 09f6c10d2b01830210cb3e635fd5dbca911ca76a8df1b415487db2f412763afe; selected label: Make them real settings"
+- "/mnt/Cursor/agent-reports/v1/answers/vm.pm7-build--Q3.json; SHA-256 3da29e33a83120b34ab8c3509372e2eb27f7d89b9d55f1ec63774f58653e6d76; answered 2026-11-11T17:08:56.685Z; choice A"
+- "/mnt/Cursor/agent-reports/v1/writers/vm.pm7-build/cards/vm.pm7-build--Q3.json; SHA-256 4fbdf63b756d689e3c19a62f1e8ea0e1050f97a383617cb1fed224e2997b200d; selected label: Free tags, with suggestions"
+- "/mnt/Cursor/agent-reports/v1/answers/vm.pm7-build--Q4.json; SHA-256 c645fa80be83f6013d0e52dbc79b845c39a354149bc0a764962088ea9067d36f; answered 2026-11-11T17:08:56.754Z; choice A"
+- "/mnt/Cursor/agent-reports/v1/writers/vm.pm7-build/cards/vm.pm7-build--Q4.json; SHA-256 13eb1adbd7b3a66da20cd406e5e2bbce067687e57453d46bb60842a9a0a68265; selected label: Keep 'Needs attention'"
+- "share/puppet-master/2026-11-09-settings-feedback/BRIEF-plans-settings-canon-batch.md"
+preserved_exact_tokens:
+- Make them real settings
+- Free tags, with suggestions
+- Keep 'Needs attention'
+- personas.library.persona-tags
+- Without pausing
+- hands-off
+negative_constraints:
+- Do not derive owner policy or offered levels from concept demo defaults.
+- Do not expand Crew memory access, Goal V2 fields or runtime authority from Settings admission intent.
+- Do not infer native implementation, readiness or a governance seal from this decision.
+owner_hints: [Plans/Settings_System.md, Plans/assistant-memory-subsystem.md, Plans/Goal_Runtime_System.md, Plans/Personas.md, Plans/FinalGUISpec.md]
+```

@@ -11,7 +11,7 @@
   "provenance": {
     "source_path": "Concepts/pm6-build/sidecar/pm_settings_data.json",
     "source_sha256": "9b24e5bcf7f3dae8f0251215eb113c357d1a0ee22f185ac035e8969fd76b5c8d",
-    "disposition": "source-lineage-only concept demo baseline; this registry is the canonical restatement and may contain later owner-approved rows. Demo runtime fields (value, static status, src attributions) are excluded: status is derived from live subsystem state per F3-435 and never authored here. Q22, Jared 2026-10-30 (DL-257): NieR is the fifth family; retired nier-mode is migration-only, not an inventory row. Current census 1010."
+    "disposition": "source-lineage-only concept demo baseline; this registry is the canonical restatement and may contain later owner-approved rows. Demo runtime fields (value, static status, src attributions) are excluded: status is derived from live subsystem state per F3-435 and never authored here. Q22, Jared 2026-10-30 (DL-257): NieR is the fifth family; retired nier-mode is migration-only, not an inventory row. The live census is the unique IDs in settings, including later owner-approved additions; dated admission counts are historical."
   },
   "related_features_vocabulary": [
     "assistant_memory",
@@ -9095,7 +9095,7 @@
         "ask-me-first"
       ],
       "option_labels": {
-        "hands-off": "Hands-off",
+        "hands-off": "Without pausing",
         "ask-me-first": "Ask at checkpoints"
       },
       "default": "hands-off",
@@ -30325,31 +30325,27 @@
     {
       "id": "personas.library.persona-tags",
       "label": "Tags",
-      "desc": "Help search and automatic picking find this persona.",
+      "desc": "Free tags for filtering and search, with suggested kinds. Type any tag.",
       "type": "list",
       "options": [
-        "seam",
-        "package",
-        "lane",
-        "node",
+        "phase",
+        "task",
+        "subtask",
         "iteration",
-        "cross-seam",
+        "cross-phase",
         "language",
         "domain",
-        "framework",
-        "freeform"
+        "framework"
       ],
       "option_labels": {
-        "seam": "Seam",
-        "package": "Package",
-        "lane": "Lane",
-        "node": "Step",
+        "phase": "Phase",
+        "task": "Task",
+        "subtask": "Subtask",
         "iteration": "Iteration",
-        "cross-seam": "Across seams",
+        "cross-phase": "Across phases",
         "language": "Language",
         "domain": "Domain",
-        "framework": "Framework",
-        "freeform": "Other"
+        "framework": "Framework"
       },
       "default": [],
       "scope": [
@@ -30363,7 +30359,12 @@
         "node",
         "task",
         "subtask",
-        "Persona Tags"
+        "Persona Tags",
+        "phase",
+        "cross-phase",
+        "free tags",
+        "freeform",
+        "suggested kinds"
       ],
       "related_features": [
         "personas"
@@ -30380,7 +30381,8 @@
           "device": "set_inside_a_thing",
           "project": "set_inside_a_thing"
         }
-      }
+      },
+      "presentation_contract": "Plans/Personas.md#P-010 and DL-474: free string tag input. options are suggestions only, not an allowed-value list; arbitrary freeform tags remain valid. Tags belong to the Persona record and keep its existing owner scope and layering."
     },
     {
       "id": "personas.library.persona-aliases",
