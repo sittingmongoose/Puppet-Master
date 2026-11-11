@@ -36,9 +36,11 @@ html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] .pm56-host .pmx-tabs > .
 html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] .pm56-host .pmx-tabs > .pmx-tab[aria-selected="true"] {
   background: var(--o55-nier-ink); color: var(--o55-nier-on-ink);
 }
-html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] .pm56-host .pmx-tabs > .pmx-tab:hover > small,
-html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] .pm56-host .pmx-tabs > .pmx-tab.active > small,
-html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] .pm56-host .pmx-tabs > .pmx-tab[aria-selected="true"] > small { color: inherit; opacity: .78; }
+/* the count is named by its class (module-shell.js tabs(): small.pmx-tab-n), not the tag, so :hover, .active and
+   aria-selected do not restyle every small below a changed element page-wide; :where(.pmx-tabs) keeps the specificity */
+html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] .pm56-host :where(.pmx-tabs) > .pmx-tab:hover > small.pmx-tab-n,
+html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] .pm56-host :where(.pmx-tabs) > .pmx-tab.active > small.pmx-tab-n,
+html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] .pm56-host :where(.pmx-tabs) > .pmx-tab[aria-selected="true"] > small.pmx-tab-n { color: inherit; opacity: .78; }
 /* the block is the chosen mark: the underline would double it */
 html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] .pm56-host .pmx-tabs > .pmx-tab.active::after { display: none; }
 

@@ -71,7 +71,7 @@
  function wand(c){
   const r=resolve(c.thread.id),now=onOff(r.effective)+(r.source==='conversation'?' · this chat':'');
   /* the .menu-copy span becomes the row's hover text (delivery-polish); the state stays visible in .shortcut */
-  return '<button class="menu-item af-wand-row" data-action="eli5-open"><span class="menu-icon">'+kindMark(c,13)+'</span><span class="menu-copy"><strong>ELI5 · Explain simply</strong><span>Answers use everyday words and explain terms. Your code and files never change. To explain just one reply, use Explain this reply simply in its More menu.</span></span><span class="shortcut">'+c.esc(now)+'</span></button>';
+  return '<button class="menu-item af-wand-row" data-action="eli5-open"><span class="menu-icon">'+kindMark(c,13)+'</span><span class="menu-copy"><strong>ELI5 · Explain simply</strong><span class="menu-sub">Answers use everyday words and explain terms. Your code and files never change. To explain just one reply, use Explain this reply simply in its More menu.</span></span><span class="shortcut">'+c.esc(now)+'</span></button>';
  }
 
  /* ------------------------------------------------------------------ the sheet */

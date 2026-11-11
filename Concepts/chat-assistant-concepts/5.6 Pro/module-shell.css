@@ -387,7 +387,8 @@ body[data-theme^="retro"] .pmx-sheet .pmx-roster :is(.pmx-roster-head, .pmx-row)
 .pmx-sheet .pmx-roster-foot > .pmx-fine{min-width:0;}
 .pmx-sheet .pmx-addrow{display:inline-flex;align-items:center;gap:6px;height:32px;min-height:32px;padding:0 10px;margin-left:-10px;border:0;background:none;color:var(--accent);font:600 12.5px/17px var(--font-ui);white-space:nowrap;}
 .pmx-sheet .pmx-addrow:hover{background:none;}
-.pmx-sheet .pmx-addrow:hover > span{text-decoration:underline;text-underline-offset:3px;}
+/* the words by class-first name (same specificity as `> span`; a bare tag after :hover went into Chrome's page-wide set) */
+.pmx-sheet .pmx-addrow:hover > :where(.pmx-addrow-l):is(span){text-decoration:underline;text-underline-offset:3px;}
 .pmx-sheet .pmx-addrow[disabled]{color:var(--subtle);}
 
 /* ================================================================ A7 stand-in sentence */
@@ -437,7 +438,7 @@ html[data-o55-nier="on"] .pmx-sheet .pmx-shelf > .pmx-q-head + .pmx-help + .pmx-
 .pmx-sheet .pmx-spec[data-state="disabled"] .pmx-reason{margin:0;max-width:170px;text-align:right;}
 .pmx-sheet .pmx-spec .pmx-add{position:relative;display:inline-flex;align-items:center;gap:5px;height:32px;padding:0 10px;font:600 12.5px/17px var(--font-ui);color:var(--accent);cursor:pointer;white-space:nowrap;}
 .pmx-sheet .pmx-spec .pmx-add[data-on="1"]{color:var(--muted);}
-.pmx-sheet .pmx-spec .pmx-add:hover > span{text-decoration:underline;text-underline-offset:3px;}
+.pmx-sheet .pmx-spec .pmx-add:hover > :where(.pmx-add-word):is(span), .pmx-sheet .pmx-spec .pmx-add:hover > :where(.pmx-add-short):is(span){text-decoration:underline;text-underline-offset:3px;}
 .pmx-sheet .pmx-add-input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer;}
 /* the input is invisible, so its keyboard focus shows on the visible control (R11) */
 .pmx-sheet .pmx-spec .pmx-add:has(> .pmx-add-input:focus-visible){outline:2px solid var(--pmx-focus-outline, var(--accent));outline-offset:2px;border-radius:6px;}

@@ -139,8 +139,10 @@ html[data-ab-ready] .activity-item[data-hover-domain]::after {
 }
 /* Hover and press must still read as hover and press: the inner band brightens
    a step while the button takes its own background. */
-html[data-ab-ready] .activity-item:hover svg,
-html[data-ab-ready] .activity-item.active svg { --nx-hi-a: calc(var(--ab-hi, var(--nx-h-quiet-i)) + .06); }
+/* the glyph named class-first, `:where(.nx):is(svg)` (the same specificity as svg; --nx-hi-a is read only inside a neon
+   glyph): a bare svg after :hover / .active put the tag into Chrome's page-wide sets (lane J, 2026-11-11) */
+html[data-ab-ready] .activity-item:hover :where(.nx):is(svg),
+html[data-ab-ready] .activity-item.active :where(.nx):is(svg) { --nx-hi-a: calc(var(--ab-hi, var(--nx-h-quiet-i)) + .06); }
 
 @keyframes ab-breathe { 0%, 100% { opacity: 1; } 50% { opacity: .48; } }
 /* Deliberately NOT the same shape as ab-breathe: a hard double blink, so a
@@ -514,7 +516,7 @@ html[data-ab-ready] .activity-wrap.is-ab-icon-only > .activity-bar[data-variant=
   stroke-linecap: round;
   stroke-linejoin: round;
 }
-.jump-bottom:not(.is-working):is(:hover, :focus-visible) > svg {
+.jump-bottom:not(.is-working):is(:hover, :focus-visible) > :where(.nx):is(svg) {
   --nx-hiv: visible; --nx-hi-a: var(--nx-h-hover-i);
   --nx-1: var(--nx-d1) var(--nx-ease) backwards;
 }
