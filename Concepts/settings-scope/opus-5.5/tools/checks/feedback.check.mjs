@@ -237,8 +237,10 @@ const DETAIL = async (arg) => {
 	};
 	const out = { n: 0, items: 0, bad: [], all: [], unsettled: [] };
 	// the tab must be current and its own panel drawn first: until then the panes and picks are still the last tab's
-	const tabOn = () => { const te = tabEl(); return !!te && te.getAttribute('aria-selected') === 'true' && !!panelNow(); };
-	const openTab = async () => { window.PM12_KIMI.dispatchAction('pm51-tab', { manager, tab }); return settled(tabOn); };
+	const tabOn = () => { const te = tabEl(); return !!te && te.getAttribute('aria-selected') === 'true'; };
+	/* the panel labelled for this tab; a manager whose panel isn't labelled per tab (Back Seat Driver's stages, the
+	   toolchain's formatters and others) gets 600ms after its tab is current, then the same three still frames */
+	const openTab = async () => { window.PM12_KIMI.dispatchAction('pm51-tab', { manager, tab }); const t0 = performance.now(); return settled(() => tabOn() && (!!panelNow() || performance.now() - t0 > 600)); };
 	if (!(await openTab())) { out.unsettled.push(`${mt} (the tab never became current)`); return out; }
 	const cv = window.__psxCv || (window.__psxCv = document.createElement('canvas').getContext('2d'));
 	const measure = (label, item) => {
