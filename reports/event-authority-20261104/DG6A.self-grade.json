@@ -207,8 +207,8 @@
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "retained_retry_observation",
-              "line_start": 241,
-              "line_end": 241,
+              "line_start": 243,
+              "line_end": 243,
               "quote": "def retained_retry_observation("
             }
           ],
@@ -261,8 +261,8 @@
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "append_result_errors",
-              "line_start": 347,
-              "line_end": 347,
+              "line_start": 349,
+              "line_end": 349,
               "quote": "def append_result_errors"
             },
             {
@@ -337,7 +337,7 @@
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "SP-660 retains exact original identity, payload and result custody. Restored schema ranges admit earlier valid revisions; independent admission evidence selects the existing exact MessagePack retry recipe. Edition/source forgeries refuse; current writer guards remain.",
+          "finding": "SP-660 retains exact original identity, payload and result custody. Restored schema ranges admit earlier valid revisions; independent admission evidence selects the existing exact MessagePack retry recipe. Edition/source forgeries refuse; current writer guards remain. Sweep part 2B (gated NUMRULE head 58c2816ff3): the retained edition and its exact frozen validator are selected by SP-1101 custody (RetainedDispatcher over Storage's sealed original, exact binding, installed recipe tuple pinning the edition's schema bytes, recomputed commitment/family/identity), never by caller evidence; unavailable, unsealed, foreign or unsupported originals refuse without fallback, and a skipped format check never authenticates invalid history (CV-1101).",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -356,9 +356,16 @@
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "historical_guards",
-              "line_start": 802,
-              "line_end": 802,
+              "line_start": 836,
+              "line_end": 836,
               "quote": "schema_key = (original['payload'].get('schema_id')"
+            },
+            {
+              "path": "scripts/pm_dg6a_custody.py",
+              "unit": "resolve",
+              "line_start": 322,
+              "line_end": 322,
+              "quote": "def resolve(original):"
             }
           ],
           "prior": {
@@ -366,12 +373,12 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
+          "change_reason": "Sweep part 2B (gated NUMRULE head 58c2816ff3): SP-1101 dispatch composed; status unchanged."
         },
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "SP-660 binds authored oracles and the family checker passes. Nine history_shape counterfactual rows remain unproved across the lane (cycle-8 B2); adopt the shared guard-isolation tool in the sweep. Native NOT_RUN. Round 10 reruns the complete exact-family entry point; S1/S2 remain sweep items.",
+          "finding": "The family checker passes with every refusal reached through guard-table rows proved by the gated guard tool (sweep part 2A, rerun in part 2B). Sweep part 2B (gated NUMRULE head 58c2816ff3): every DG6A timestamp is checked by the shared CV-1101 date_time predicate with its field profile (EventRecord for payload/occurred_at_utc/acknowledged_at_utc, CV-253 storage_utc_z for observed_at_utc/persisted_at_utc), with negatives that show the shared Refusal as the validation cause; retained reads and retries resolve through the shared SP-1101 RetainedDispatcher, with custody, binding, recipe and identity negatives and legacy-recipe positives. Timestamps are no longer a reason for PARTIAL. It stays PARTIAL because JSON Schema keyword cuts are not ported to the tool, CV-1101 datetime_validator and the whole-Plans inventory gate run at batch-2 integration (they refuse in a lane tree on hash drift alone), and the batch Sol/Astra review has not run. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -390,8 +397,8 @@
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "historical_reader_cases",
-              "line_start": 905,
-              "line_end": 905,
+              "line_start": 943,
+              "line_end": 943,
               "quote": "def historical_reader_cases"
             },
             {
@@ -404,8 +411,8 @@
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "append_result_errors",
-              "line_start": 347,
-              "line_end": 347,
+              "line_start": 349,
+              "line_end": 349,
               "quote": "def append_result_errors"
             },
             {
@@ -425,16 +432,51 @@
             {
               "path": "scripts/pm-dg6a-domain.py",
               "unit": "validator",
-              "line_start": 93,
-              "line_end": 93,
+              "line_start": 116,
+              "line_end": 116,
               "quote": "kwargs['format_checker'] = FORMATS"
             },
             {
               "path": "scripts/pm-dg6a-domain-check.py",
               "unit": "run",
-              "line_start": 96,
-              "line_end": 96,
+              "line_start": 103,
+              "line_end": 103,
               "quote": "def run(kind, m, family, fixture):"
+            },
+            {
+              "path": "scripts/pm_dg6a_custody.py",
+              "unit": "resolve",
+              "line_start": 322,
+              "line_end": 322,
+              "quote": "def resolve(original):"
+            },
+            {
+              "path": "scripts/pm-alert-event-contracts-check.py",
+              "unit": "historical_refusals",
+              "line_start": 878,
+              "line_end": 878,
+              "quote": "custody_facts, original_custody = custody.resolve(expected['event'])"
+            },
+            {
+              "path": "scripts/pm_dg6a_p2b_witnesses.py",
+              "unit": "history_custody",
+              "line_start": 110,
+              "line_end": 110,
+              "quote": "def history_custody("
+            },
+            {
+              "path": "scripts/pm-dg6a-domain.py",
+              "unit": "event_record_date_time",
+              "line_start": 64,
+              "line_end": 64,
+              "quote": "return True if not isinstance(value, str) else date_time(value, profile=EVENT_RECORD) == value"
+            },
+            {
+              "path": "scripts/pm_dg6a_p2b_witnesses.py",
+              "unit": "datetime_payload",
+              "line_start": 55,
+              "line_end": 55,
+              "quote": "def datetime_payload("
             }
           ],
           "prior": {
@@ -442,15 +484,14 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
+          "change_reason": "Sweep part 2B (gated NUMRULE head 58c2816ff3): S-FMT1 and S-N2 closed; status PARTIAL kept for the reasons in the finding."
         }
       },
       "remaining_gaps": [
         "Exact event membership/admission absent.",
         "Retention remains PENDING_RETENTION_DECISION for event, operation and checkpoint.",
         "Native execution, actual OS/storage recovery and source/receipt authentication NOT_RUN.",
-        "Sweep part 2A: guard isolation runs on the gated tool (scripts/pm-dg6a-guard-tables.py); every reachable row has a single-row witness and the unreachable rows sit in their own entailed tables. C12 remains PARTIAL: CV-1101 date-time and SP-1101 authenticated retained dispatch are part 2B, and the timestamp review is interim only.",
-        "Part 2B: SP-1101 authenticated retained-recipe dispatch (RetainedDispatcher) and CV-1101 date-time profiles; the CV-1100/SP-1100 number scope is adopted (sweep part 2B numbers)."
+        "Sweep part 2A/2B: guard isolation runs on the gated tool; every reachable row has a single-row witness and the by-construction rows sit in their own entailed tables. CV-1101 (shared date_time, per-field profiles) and SP-1101 (RetainedDispatcher) are adopted. C12 remains PARTIAL: JSON Schema keyword cuts are not ported, datetime_validator and the inventory gate run at batch-2 integration, and the batch review has not run."
       ],
       "static_checks_seen": [
         "scripts/pm-alert-event-contracts-check.py",
@@ -517,8 +558,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-681",
-              "line_start": 24663,
-              "line_end": 24663,
+              "line_start": 24668,
+              "line_end": 24668,
               "quote": "alert.dismissed exact payload and storage route"
             }
           ],
@@ -578,8 +619,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-681",
-              "line_start": 24663,
-              "line_end": 24663,
+              "line_start": 24668,
+              "line_end": 24668,
               "quote": "alert.dismissed exact payload and storage route"
             }
           ],
@@ -646,8 +687,8 @@
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "retained_retry_observation",
-              "line_start": 241,
-              "line_end": 241,
+              "line_start": 243,
+              "line_end": 243,
               "quote": "def retained_retry_observation("
             }
           ],
@@ -700,8 +741,8 @@
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "append_result_errors",
-              "line_start": 347,
-              "line_end": 347,
+              "line_start": 349,
+              "line_end": 349,
               "quote": "def append_result_errors"
             },
             {
@@ -776,7 +817,7 @@
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "SP-661 retains exact original identity, payload and result custody. Restored schema ranges admit earlier valid revisions; independent admission evidence selects the existing exact MessagePack retry recipe. Edition/source forgeries refuse; current writer guards remain.",
+          "finding": "SP-661 retains exact original identity, payload and result custody. Restored schema ranges admit earlier valid revisions; independent admission evidence selects the existing exact MessagePack retry recipe. Edition/source forgeries refuse; current writer guards remain. Sweep part 2B (gated NUMRULE head 58c2816ff3): the retained edition and its exact frozen validator are selected by SP-1101 custody (RetainedDispatcher over Storage's sealed original, exact binding, installed recipe tuple pinning the edition's schema bytes, recomputed commitment/family/identity), never by caller evidence; unavailable, unsealed, foreign or unsupported originals refuse without fallback, and a skipped format check never authenticates invalid history (CV-1101).",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -795,9 +836,16 @@
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "historical_guards",
-              "line_start": 802,
-              "line_end": 802,
+              "line_start": 836,
+              "line_end": 836,
               "quote": "schema_key = (original['payload'].get('schema_id')"
+            },
+            {
+              "path": "scripts/pm_dg6a_custody.py",
+              "unit": "resolve",
+              "line_start": 322,
+              "line_end": 322,
+              "quote": "def resolve(original):"
             }
           ],
           "prior": {
@@ -805,12 +853,12 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
+          "change_reason": "Sweep part 2B (gated NUMRULE head 58c2816ff3): SP-1101 dispatch composed; status unchanged."
         },
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "SP-661 binds authored oracles and the family checker passes. Nine history_shape counterfactual rows remain unproved across the lane (cycle-8 B2); adopt the shared guard-isolation tool in the sweep. Native NOT_RUN. Round 10 reruns the complete exact-family entry point; S1/S2 remain sweep items.",
+          "finding": "The family checker passes with every refusal reached through guard-table rows proved by the gated guard tool (sweep part 2A, rerun in part 2B). Sweep part 2B (gated NUMRULE head 58c2816ff3): every DG6A timestamp is checked by the shared CV-1101 date_time predicate with its field profile (EventRecord for payload/occurred_at_utc/acknowledged_at_utc, CV-253 storage_utc_z for observed_at_utc/persisted_at_utc), with negatives that show the shared Refusal as the validation cause; retained reads and retries resolve through the shared SP-1101 RetainedDispatcher, with custody, binding, recipe and identity negatives and legacy-recipe positives. Timestamps are no longer a reason for PARTIAL. It stays PARTIAL because JSON Schema keyword cuts are not ported to the tool, CV-1101 datetime_validator and the whole-Plans inventory gate run at batch-2 integration (they refuse in a lane tree on hash drift alone), and the batch Sol/Astra review has not run. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -829,8 +877,8 @@
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "historical_reader_cases",
-              "line_start": 905,
-              "line_end": 905,
+              "line_start": 943,
+              "line_end": 943,
               "quote": "def historical_reader_cases"
             },
             {
@@ -843,8 +891,8 @@
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "append_result_errors",
-              "line_start": 347,
-              "line_end": 347,
+              "line_start": 349,
+              "line_end": 349,
               "quote": "def append_result_errors"
             },
             {
@@ -864,16 +912,51 @@
             {
               "path": "scripts/pm-dg6a-domain.py",
               "unit": "validator",
-              "line_start": 93,
-              "line_end": 93,
+              "line_start": 116,
+              "line_end": 116,
               "quote": "kwargs['format_checker'] = FORMATS"
             },
             {
               "path": "scripts/pm-dg6a-domain-check.py",
               "unit": "run",
-              "line_start": 96,
-              "line_end": 96,
+              "line_start": 103,
+              "line_end": 103,
               "quote": "def run(kind, m, family, fixture):"
+            },
+            {
+              "path": "scripts/pm_dg6a_custody.py",
+              "unit": "resolve",
+              "line_start": 322,
+              "line_end": 322,
+              "quote": "def resolve(original):"
+            },
+            {
+              "path": "scripts/pm-alert-event-contracts-check.py",
+              "unit": "historical_refusals",
+              "line_start": 878,
+              "line_end": 878,
+              "quote": "custody_facts, original_custody = custody.resolve(expected['event'])"
+            },
+            {
+              "path": "scripts/pm_dg6a_p2b_witnesses.py",
+              "unit": "history_custody",
+              "line_start": 110,
+              "line_end": 110,
+              "quote": "def history_custody("
+            },
+            {
+              "path": "scripts/pm-dg6a-domain.py",
+              "unit": "event_record_date_time",
+              "line_start": 64,
+              "line_end": 64,
+              "quote": "return True if not isinstance(value, str) else date_time(value, profile=EVENT_RECORD) == value"
+            },
+            {
+              "path": "scripts/pm_dg6a_p2b_witnesses.py",
+              "unit": "datetime_payload",
+              "line_start": 55,
+              "line_end": 55,
+              "quote": "def datetime_payload("
             }
           ],
           "prior": {
@@ -881,15 +964,14 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
+          "change_reason": "Sweep part 2B (gated NUMRULE head 58c2816ff3): S-FMT1 and S-N2 closed; status PARTIAL kept for the reasons in the finding."
         }
       },
       "remaining_gaps": [
         "Exact event membership/admission absent.",
         "Retention remains PENDING_RETENTION_DECISION for event, operation and checkpoint.",
         "Native execution, actual OS/storage recovery and source/receipt authentication NOT_RUN.",
-        "Sweep part 2A: guard isolation runs on the gated tool (scripts/pm-dg6a-guard-tables.py); every reachable row has a single-row witness and the unreachable rows sit in their own entailed tables. C12 remains PARTIAL: CV-1101 date-time and SP-1101 authenticated retained dispatch are part 2B, and the timestamp review is interim only.",
-        "Part 2B: SP-1101 authenticated retained-recipe dispatch (RetainedDispatcher) and CV-1101 date-time profiles; the CV-1100/SP-1100 number scope is adopted (sweep part 2B numbers)."
+        "Sweep part 2A/2B: guard isolation runs on the gated tool; every reachable row has a single-row witness and the by-construction rows sit in their own entailed tables. CV-1101 (shared date_time, per-field profiles) and SP-1101 (RetainedDispatcher) are adopted. C12 remains PARTIAL: JSON Schema keyword cuts are not ported, datetime_validator and the inventory gate run at batch-2 integration, and the batch review has not run."
       ],
       "static_checks_seen": [
         "scripts/pm-alert-event-contracts-check.py",
@@ -956,8 +1038,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-682",
-              "line_start": 24714,
-              "line_end": 24714,
+              "line_start": 24724,
+              "line_end": 24724,
               "quote": "alert.rule_muted exact payload and storage route"
             }
           ],
@@ -1017,8 +1099,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-682",
-              "line_start": 24714,
-              "line_end": 24714,
+              "line_start": 24724,
+              "line_end": 24724,
               "quote": "alert.rule_muted exact payload and storage route"
             }
           ],
@@ -1085,8 +1167,8 @@
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "retained_retry_observation",
-              "line_start": 241,
-              "line_end": 241,
+              "line_start": 243,
+              "line_end": 243,
               "quote": "def retained_retry_observation("
             }
           ],
@@ -1139,8 +1221,8 @@
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "append_result_errors",
-              "line_start": 347,
-              "line_end": 347,
+              "line_start": 349,
+              "line_end": 349,
               "quote": "def append_result_errors"
             },
             {
@@ -1215,7 +1297,7 @@
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "SP-662 retains exact original identity, payload and result custody. Restored schema ranges admit earlier valid revisions; independent admission evidence selects the existing exact MessagePack retry recipe. Edition/source forgeries refuse; current writer guards remain.",
+          "finding": "SP-662 retains exact original identity, payload and result custody. Restored schema ranges admit earlier valid revisions; independent admission evidence selects the existing exact MessagePack retry recipe. Edition/source forgeries refuse; current writer guards remain. Sweep part 2B (gated NUMRULE head 58c2816ff3): the retained edition and its exact frozen validator are selected by SP-1101 custody (RetainedDispatcher over Storage's sealed original, exact binding, installed recipe tuple pinning the edition's schema bytes, recomputed commitment/family/identity), never by caller evidence; unavailable, unsealed, foreign or unsupported originals refuse without fallback, and a skipped format check never authenticates invalid history (CV-1101).",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -1234,9 +1316,16 @@
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "historical_guards",
-              "line_start": 802,
-              "line_end": 802,
+              "line_start": 836,
+              "line_end": 836,
               "quote": "schema_key = (original['payload'].get('schema_id')"
+            },
+            {
+              "path": "scripts/pm_dg6a_custody.py",
+              "unit": "resolve",
+              "line_start": 322,
+              "line_end": 322,
+              "quote": "def resolve(original):"
             }
           ],
           "prior": {
@@ -1244,12 +1333,12 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
+          "change_reason": "Sweep part 2B (gated NUMRULE head 58c2816ff3): SP-1101 dispatch composed; status unchanged."
         },
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "SP-662 binds authored oracles and the family checker passes. Nine history_shape counterfactual rows remain unproved across the lane (cycle-8 B2); adopt the shared guard-isolation tool in the sweep. Native NOT_RUN. Round 10 reruns the complete exact-family entry point; S1/S2 remain sweep items.",
+          "finding": "The family checker passes with every refusal reached through guard-table rows proved by the gated guard tool (sweep part 2A, rerun in part 2B). Sweep part 2B (gated NUMRULE head 58c2816ff3): every DG6A timestamp is checked by the shared CV-1101 date_time predicate with its field profile (EventRecord for payload/occurred_at_utc/acknowledged_at_utc, CV-253 storage_utc_z for observed_at_utc/persisted_at_utc), with negatives that show the shared Refusal as the validation cause; retained reads and retries resolve through the shared SP-1101 RetainedDispatcher, with custody, binding, recipe and identity negatives and legacy-recipe positives. Timestamps are no longer a reason for PARTIAL. It stays PARTIAL because JSON Schema keyword cuts are not ported to the tool, CV-1101 datetime_validator and the whole-Plans inventory gate run at batch-2 integration (they refuse in a lane tree on hash drift alone), and the batch Sol/Astra review has not run. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -1268,8 +1357,8 @@
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "historical_reader_cases",
-              "line_start": 905,
-              "line_end": 905,
+              "line_start": 943,
+              "line_end": 943,
               "quote": "def historical_reader_cases"
             },
             {
@@ -1282,8 +1371,8 @@
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "append_result_errors",
-              "line_start": 347,
-              "line_end": 347,
+              "line_start": 349,
+              "line_end": 349,
               "quote": "def append_result_errors"
             },
             {
@@ -1303,16 +1392,51 @@
             {
               "path": "scripts/pm-dg6a-domain.py",
               "unit": "validator",
-              "line_start": 93,
-              "line_end": 93,
+              "line_start": 116,
+              "line_end": 116,
               "quote": "kwargs['format_checker'] = FORMATS"
             },
             {
               "path": "scripts/pm-dg6a-domain-check.py",
               "unit": "run",
-              "line_start": 96,
-              "line_end": 96,
+              "line_start": 103,
+              "line_end": 103,
               "quote": "def run(kind, m, family, fixture):"
+            },
+            {
+              "path": "scripts/pm_dg6a_custody.py",
+              "unit": "resolve",
+              "line_start": 322,
+              "line_end": 322,
+              "quote": "def resolve(original):"
+            },
+            {
+              "path": "scripts/pm-alert-event-contracts-check.py",
+              "unit": "historical_refusals",
+              "line_start": 878,
+              "line_end": 878,
+              "quote": "custody_facts, original_custody = custody.resolve(expected['event'])"
+            },
+            {
+              "path": "scripts/pm_dg6a_p2b_witnesses.py",
+              "unit": "history_custody",
+              "line_start": 110,
+              "line_end": 110,
+              "quote": "def history_custody("
+            },
+            {
+              "path": "scripts/pm-dg6a-domain.py",
+              "unit": "event_record_date_time",
+              "line_start": 64,
+              "line_end": 64,
+              "quote": "return True if not isinstance(value, str) else date_time(value, profile=EVENT_RECORD) == value"
+            },
+            {
+              "path": "scripts/pm_dg6a_p2b_witnesses.py",
+              "unit": "datetime_payload",
+              "line_start": 55,
+              "line_end": 55,
+              "quote": "def datetime_payload("
             }
           ],
           "prior": {
@@ -1320,15 +1444,14 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
+          "change_reason": "Sweep part 2B (gated NUMRULE head 58c2816ff3): S-FMT1 and S-N2 closed; status PARTIAL kept for the reasons in the finding."
         }
       },
       "remaining_gaps": [
         "Exact event membership/admission absent.",
         "Retention remains PENDING_RETENTION_DECISION for event, operation and checkpoint.",
         "Native execution, actual OS/storage recovery and source/receipt authentication NOT_RUN.",
-        "Sweep part 2A: guard isolation runs on the gated tool (scripts/pm-dg6a-guard-tables.py); every reachable row has a single-row witness and the unreachable rows sit in their own entailed tables. C12 remains PARTIAL: CV-1101 date-time and SP-1101 authenticated retained dispatch are part 2B, and the timestamp review is interim only.",
-        "Part 2B: SP-1101 authenticated retained-recipe dispatch (RetainedDispatcher) and CV-1101 date-time profiles; the CV-1100/SP-1100 number scope is adopted (sweep part 2B numbers)."
+        "Sweep part 2A/2B: guard isolation runs on the gated tool; every reachable row has a single-row witness and the by-construction rows sit in their own entailed tables. CV-1101 (shared date_time, per-field profiles) and SP-1101 (RetainedDispatcher) are adopted. C12 remains PARTIAL: JSON Schema keyword cuts are not ported, datetime_validator and the inventory gate run at batch-2 integration, and the batch review has not run."
       ],
       "static_checks_seen": [
         "scripts/pm-alert-event-contracts-check.py",
@@ -1395,8 +1518,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-683",
-              "line_start": 24765,
-              "line_end": 24765,
+              "line_start": 24780,
+              "line_end": 24780,
               "quote": "alert.snoozed exact payload and storage route"
             }
           ],
@@ -1456,8 +1579,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-683",
-              "line_start": 24765,
-              "line_end": 24765,
+              "line_start": 24780,
+              "line_end": 24780,
               "quote": "alert.snoozed exact payload and storage route"
             }
           ],
@@ -1524,8 +1647,8 @@
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "retained_retry_observation",
-              "line_start": 241,
-              "line_end": 241,
+              "line_start": 243,
+              "line_end": 243,
               "quote": "def retained_retry_observation("
             }
           ],
@@ -1578,8 +1701,8 @@
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "append_result_errors",
-              "line_start": 347,
-              "line_end": 347,
+              "line_start": 349,
+              "line_end": 349,
               "quote": "def append_result_errors"
             },
             {
@@ -1654,7 +1777,7 @@
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "SP-663 retains exact original identity, payload and result custody. Restored schema ranges admit earlier valid revisions; independent admission evidence selects the existing exact MessagePack retry recipe. Edition/source forgeries refuse; current writer guards remain.",
+          "finding": "SP-663 retains exact original identity, payload and result custody. Restored schema ranges admit earlier valid revisions; independent admission evidence selects the existing exact MessagePack retry recipe. Edition/source forgeries refuse; current writer guards remain. Sweep part 2B (gated NUMRULE head 58c2816ff3): the retained edition and its exact frozen validator are selected by SP-1101 custody (RetainedDispatcher over Storage's sealed original, exact binding, installed recipe tuple pinning the edition's schema bytes, recomputed commitment/family/identity), never by caller evidence; unavailable, unsealed, foreign or unsupported originals refuse without fallback, and a skipped format check never authenticates invalid history (CV-1101).",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -1673,9 +1796,16 @@
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "historical_guards",
-              "line_start": 802,
-              "line_end": 802,
+              "line_start": 836,
+              "line_end": 836,
               "quote": "schema_key = (original['payload'].get('schema_id')"
+            },
+            {
+              "path": "scripts/pm_dg6a_custody.py",
+              "unit": "resolve",
+              "line_start": 322,
+              "line_end": 322,
+              "quote": "def resolve(original):"
             }
           ],
           "prior": {
@@ -1683,12 +1813,12 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
+          "change_reason": "Sweep part 2B (gated NUMRULE head 58c2816ff3): SP-1101 dispatch composed; status unchanged."
         },
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "SP-663 binds authored oracles and the family checker passes. Nine history_shape counterfactual rows remain unproved across the lane (cycle-8 B2); adopt the shared guard-isolation tool in the sweep. Native NOT_RUN. Round 10 reruns the complete exact-family entry point; S1/S2 remain sweep items.",
+          "finding": "The family checker passes with every refusal reached through guard-table rows proved by the gated guard tool (sweep part 2A, rerun in part 2B). Sweep part 2B (gated NUMRULE head 58c2816ff3): every DG6A timestamp is checked by the shared CV-1101 date_time predicate with its field profile (EventRecord for payload/occurred_at_utc/acknowledged_at_utc, CV-253 storage_utc_z for observed_at_utc/persisted_at_utc), with negatives that show the shared Refusal as the validation cause; retained reads and retries resolve through the shared SP-1101 RetainedDispatcher, with custody, binding, recipe and identity negatives and legacy-recipe positives. Timestamps are no longer a reason for PARTIAL. It stays PARTIAL because JSON Schema keyword cuts are not ported to the tool, CV-1101 datetime_validator and the whole-Plans inventory gate run at batch-2 integration (they refuse in a lane tree on hash drift alone), and the batch Sol/Astra review has not run. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -1707,8 +1837,8 @@
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "historical_reader_cases",
-              "line_start": 905,
-              "line_end": 905,
+              "line_start": 943,
+              "line_end": 943,
               "quote": "def historical_reader_cases"
             },
             {
@@ -1721,8 +1851,8 @@
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "append_result_errors",
-              "line_start": 347,
-              "line_end": 347,
+              "line_start": 349,
+              "line_end": 349,
               "quote": "def append_result_errors"
             },
             {
@@ -1742,16 +1872,51 @@
             {
               "path": "scripts/pm-dg6a-domain.py",
               "unit": "validator",
-              "line_start": 93,
-              "line_end": 93,
+              "line_start": 116,
+              "line_end": 116,
               "quote": "kwargs['format_checker'] = FORMATS"
             },
             {
               "path": "scripts/pm-dg6a-domain-check.py",
               "unit": "run",
-              "line_start": 96,
-              "line_end": 96,
+              "line_start": 103,
+              "line_end": 103,
               "quote": "def run(kind, m, family, fixture):"
+            },
+            {
+              "path": "scripts/pm_dg6a_custody.py",
+              "unit": "resolve",
+              "line_start": 322,
+              "line_end": 322,
+              "quote": "def resolve(original):"
+            },
+            {
+              "path": "scripts/pm-alert-event-contracts-check.py",
+              "unit": "historical_refusals",
+              "line_start": 878,
+              "line_end": 878,
+              "quote": "custody_facts, original_custody = custody.resolve(expected['event'])"
+            },
+            {
+              "path": "scripts/pm_dg6a_p2b_witnesses.py",
+              "unit": "history_custody",
+              "line_start": 110,
+              "line_end": 110,
+              "quote": "def history_custody("
+            },
+            {
+              "path": "scripts/pm-dg6a-domain.py",
+              "unit": "event_record_date_time",
+              "line_start": 64,
+              "line_end": 64,
+              "quote": "return True if not isinstance(value, str) else date_time(value, profile=EVENT_RECORD) == value"
+            },
+            {
+              "path": "scripts/pm_dg6a_p2b_witnesses.py",
+              "unit": "datetime_payload",
+              "line_start": 55,
+              "line_end": 55,
+              "quote": "def datetime_payload("
             }
           ],
           "prior": {
@@ -1759,15 +1924,14 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
+          "change_reason": "Sweep part 2B (gated NUMRULE head 58c2816ff3): S-FMT1 and S-N2 closed; status PARTIAL kept for the reasons in the finding."
         }
       },
       "remaining_gaps": [
         "Exact event membership/admission absent.",
         "Retention remains PENDING_RETENTION_DECISION for event, operation and checkpoint.",
         "Native execution, actual OS/storage recovery and source/receipt authentication NOT_RUN.",
-        "Sweep part 2A: guard isolation runs on the gated tool (scripts/pm-dg6a-guard-tables.py); every reachable row has a single-row witness and the unreachable rows sit in their own entailed tables. C12 remains PARTIAL: CV-1101 date-time and SP-1101 authenticated retained dispatch are part 2B, and the timestamp review is interim only.",
-        "Part 2B: SP-1101 authenticated retained-recipe dispatch (RetainedDispatcher) and CV-1101 date-time profiles; the CV-1100/SP-1100 number scope is adopted (sweep part 2B numbers)."
+        "Sweep part 2A/2B: guard isolation runs on the gated tool; every reachable row has a single-row witness and the by-construction rows sit in their own entailed tables. CV-1101 (shared date_time, per-field profiles) and SP-1101 (RetainedDispatcher) are adopted. C12 remains PARTIAL: JSON Schema keyword cuts are not ported, datetime_validator and the inventory gate run at batch-2 integration, and the batch review has not run."
       ],
       "static_checks_seen": [
         "scripts/pm-alert-event-contracts-check.py",
@@ -1999,7 +2163,7 @@
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "historical_only_disposition",
-          "finding": "Authenticated original editions remain read-only and retain their meaning; current-writer cutoff, in-flight settlement, publication withdrawal and rebuild fences are explicit.",
+          "finding": "Authenticated original editions remain read-only and retain their meaning; current-writer cutoff, in-flight settlement, publication withdrawal and rebuild fences are explicit. Sweep part 2B (gated NUMRULE head 58c2816ff3): the retained edition and its exact frozen validator are selected by SP-1101 custody (RetainedDispatcher over Storage's sealed original, exact binding, installed recipe tuple pinning the edition's schema bytes, recomputed commitment/family/identity), never by caller evidence; unavailable, unsealed, foreign or unsupported originals refuse without fallback, and a skipped format check never authenticates invalid history (CV-1101).",
           "evidence": [
             {
               "path": "Plans/FinalGUISpec.md",
@@ -2007,6 +2171,13 @@
               "line_start": 51041,
               "line_end": 51041,
               "quote": "Close exact-family writer admission first"
+            },
+            {
+              "path": "scripts/pm_dg6a_custody.py",
+              "unit": "resolve",
+              "line_start": 322,
+              "line_end": 322,
+              "quote": "def resolve(original):"
             }
           ],
           "prior": {
@@ -2014,26 +2185,61 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
+          "change_reason": "Sweep part 2B (gated NUMRULE head 58c2816ff3): SP-1101 dispatch composed; status unchanged."
         },
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "historical_only_disposition",
-          "finding": "B1 repaired: the exact family loads and eagerly validates every declared registered Storage schema, checks its identity/content against its tested companion, and uses the authoritative stored copies. Missing/duplicate rows, metadata drift, invalid metaschemas, unused dangling refs and schema drift refuse with precise diagnostics. Generic history remains checkpoint-only. Complete shared isolation/number adoption remains pending; native NOT_RUN.",
+          "finding": "The family checker passes with every refusal reached through guard-table rows proved by the gated guard tool (sweep part 2A, rerun in part 2B). Sweep part 2B (gated NUMRULE head 58c2816ff3): every DG6A timestamp is checked by the shared CV-1101 date_time predicate with its field profile (EventRecord for payload/occurred_at_utc/acknowledged_at_utc, CV-253 storage_utc_z for observed_at_utc/persisted_at_utc), with negatives that show the shared Refusal as the validation cause; retained reads and retries resolve through the shared SP-1101 RetainedDispatcher, with custody, binding, recipe and identity negatives and legacy-recipe positives. Timestamps are no longer a reason for PARTIAL. It stays PARTIAL because JSON Schema keyword cuts are not ported to the tool, CV-1101 datetime_validator and the whole-Plans inventory gate run at batch-2 integration (they refuse in a lane tree on hash drift alone), and the batch Sol/Astra review has not run. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-708",
               "line_start": 51043,
               "line_end": 51043,
-              "quote": "C12 remains PARTIAL pending the shared isolation/number-domain sweep."
+              "quote": "C12 remains PARTIAL: JSON Schema keyword cuts are not ported to that tool,"
             },
             {
               "path": "scripts/pm-card5-event-contracts-check.py",
               "unit": "registered Storage schema oracle",
-              "line_start": 103,
-              "line_end": 103,
+              "line_start": 104,
+              "line_end": 104,
               "quote": "def storage_schema_errors(registry, family, schemas):"
+            },
+            {
+              "path": "scripts/pm_dg6a_custody.py",
+              "unit": "resolve",
+              "line_start": 322,
+              "line_end": 322,
+              "quote": "def resolve(original):"
+            },
+            {
+              "path": "scripts/pm-alert-event-contracts-check.py",
+              "unit": "historical_refusals",
+              "line_start": 878,
+              "line_end": 878,
+              "quote": "custody_facts, original_custody = custody.resolve(expected['event'])"
+            },
+            {
+              "path": "scripts/pm_dg6a_p2b_witnesses.py",
+              "unit": "history_custody",
+              "line_start": 110,
+              "line_end": 110,
+              "quote": "def history_custody("
+            },
+            {
+              "path": "scripts/pm-dg6a-domain.py",
+              "unit": "event_record_date_time",
+              "line_start": 64,
+              "line_end": 64,
+              "quote": "return True if not isinstance(value, str) else date_time(value, profile=EVENT_RECORD) == value"
+            },
+            {
+              "path": "scripts/pm_dg6a_p2b_witnesses.py",
+              "unit": "datetime_payload",
+              "line_start": 55,
+              "line_end": 55,
+              "quote": "def datetime_payload("
             }
           ],
           "prior": {
@@ -2041,7 +2247,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
+          "change_reason": "Sweep part 2B (gated NUMRULE head 58c2816ff3): S-FMT1 and S-N2 closed; status PARTIAL kept for the reasons in the finding."
         }
       },
       "remaining_gaps": [
@@ -2049,7 +2255,8 @@
         "PENDING_RETENTION_DECISION for event/original operation or mapping custody/History checkpoint.",
         "Guard isolation (gated tool) and the CV-1100/SP-1100 number scope are adopted; SP-1101 retained dispatch and CV-1101 date-time remain part 2B. C12 remains PARTIAL.",
         "Native execution NOT_RUN.",
-        "Document/Storage owners must produce and approve actual original-inventory mapping proof before split-writer activation; ambiguous originals remain in read-only inspection quarantine. This is an existing approved release gate, not an unanswered product choice."
+        "Document/Storage owners must produce and approve actual original-inventory mapping proof before split-writer activation; ambiguous originals remain in read-only inspection quarantine. This is an existing approved release gate, not an unanswered product choice.",
+        "Sweep part 2A/2B: guard isolation runs on the gated tool; every reachable row has a single-row witness and the by-construction rows sit in their own entailed tables. CV-1101 (shared date_time, per-field profiles) and SP-1101 (RetainedDispatcher) are adopted. C12 remains PARTIAL: JSON Schema keyword cuts are not ported, datetime_validator and the inventory gate run at batch-2 integration, and the batch review has not run."
       ],
       "static_checks_seen": [
         "scripts/pm-card5-event-contracts-check.py --family bundle.annotation_state_changed"
@@ -2286,7 +2493,7 @@
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Authenticated original editions remain read-only and retain their meaning; current-writer cutoff, in-flight settlement, publication withdrawal and rebuild fences are explicit.",
+          "finding": "Authenticated original editions remain read-only and retain their meaning; current-writer cutoff, in-flight settlement, publication withdrawal and rebuild fences are explicit. Sweep part 2B (gated NUMRULE head 58c2816ff3): the retained edition and its exact frozen validator are selected by SP-1101 custody (RetainedDispatcher over Storage's sealed original, exact binding, installed recipe tuple pinning the edition's schema bytes, recomputed commitment/family/identity), never by caller evidence; unavailable, unsealed, foreign or unsupported originals refuse without fallback, and a skipped format check never authenticates invalid history (CV-1101).",
           "evidence": [
             {
               "path": "Plans/FinalGUISpec.md",
@@ -2294,6 +2501,13 @@
               "line_start": 50905,
               "line_end": 50905,
               "quote": "Close exact-family writer admission first"
+            },
+            {
+              "path": "scripts/pm_dg6a_custody.py",
+              "unit": "resolve",
+              "line_start": 322,
+              "line_end": 322,
+              "quote": "def resolve(original):"
             }
           ],
           "prior": {
@@ -2301,26 +2515,61 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
+          "change_reason": "Sweep part 2B (gated NUMRULE head 58c2816ff3): SP-1101 dispatch composed; status unchanged."
         },
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "B1 repaired: the exact family loads and eagerly validates every declared registered Storage schema, checks its identity/content against its tested companion, and uses the authoritative stored copies. Missing/duplicate rows, metadata drift, invalid metaschemas, unused dangling refs and schema drift refuse with precise diagnostics. Generic history remains checkpoint-only. Complete shared isolation/number adoption remains pending; native NOT_RUN.",
+          "finding": "The family checker passes with every refusal reached through guard-table rows proved by the gated guard tool (sweep part 2A, rerun in part 2B). Sweep part 2B (gated NUMRULE head 58c2816ff3): every DG6A timestamp is checked by the shared CV-1101 date_time predicate with its field profile (EventRecord for payload/occurred_at_utc/acknowledged_at_utc, CV-253 storage_utc_z for observed_at_utc/persisted_at_utc), with negatives that show the shared Refusal as the validation cause; retained reads and retries resolve through the shared SP-1101 RetainedDispatcher, with custody, binding, recipe and identity negatives and legacy-recipe positives. Timestamps are no longer a reason for PARTIAL. It stays PARTIAL because JSON Schema keyword cuts are not ported to the tool, CV-1101 datetime_validator and the whole-Plans inventory gate run at batch-2 integration (they refuse in a lane tree on hash drift alone), and the batch Sol/Astra review has not run. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-706",
               "line_start": 50907,
               "line_end": 50907,
-              "quote": "C12 remains PARTIAL pending the shared isolation/number-domain sweep."
+              "quote": "C12 remains PARTIAL: JSON Schema keyword cuts are not ported to that tool,"
             },
             {
               "path": "scripts/pm-card5-event-contracts-check.py",
               "unit": "registered Storage schema oracle",
-              "line_start": 103,
-              "line_end": 103,
+              "line_start": 104,
+              "line_end": 104,
               "quote": "def storage_schema_errors(registry, family, schemas):"
+            },
+            {
+              "path": "scripts/pm_dg6a_custody.py",
+              "unit": "resolve",
+              "line_start": 322,
+              "line_end": 322,
+              "quote": "def resolve(original):"
+            },
+            {
+              "path": "scripts/pm-alert-event-contracts-check.py",
+              "unit": "historical_refusals",
+              "line_start": 878,
+              "line_end": 878,
+              "quote": "custody_facts, original_custody = custody.resolve(expected['event'])"
+            },
+            {
+              "path": "scripts/pm_dg6a_p2b_witnesses.py",
+              "unit": "history_custody",
+              "line_start": 110,
+              "line_end": 110,
+              "quote": "def history_custody("
+            },
+            {
+              "path": "scripts/pm-dg6a-domain.py",
+              "unit": "event_record_date_time",
+              "line_start": 64,
+              "line_end": 64,
+              "quote": "return True if not isinstance(value, str) else date_time(value, profile=EVENT_RECORD) == value"
+            },
+            {
+              "path": "scripts/pm_dg6a_p2b_witnesses.py",
+              "unit": "datetime_payload",
+              "line_start": 55,
+              "line_end": 55,
+              "quote": "def datetime_payload("
             }
           ],
           "prior": {
@@ -2328,14 +2577,15 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
+          "change_reason": "Sweep part 2B (gated NUMRULE head 58c2816ff3): S-FMT1 and S-N2 closed; status PARTIAL kept for the reasons in the finding."
         }
       },
       "remaining_gaps": [
         "Membership ABSENT: integration alone may admit this exact family.",
         "PENDING_RETENTION_DECISION for event/original operation or mapping custody/History checkpoint.",
         "Guard isolation (gated tool) and the CV-1100/SP-1100 number scope are adopted; SP-1101 retained dispatch and CV-1101 date-time remain part 2B. C12 remains PARTIAL.",
-        "Native execution NOT_RUN."
+        "Native execution NOT_RUN.",
+        "Sweep part 2A/2B: guard isolation runs on the gated tool; every reachable row has a single-row witness and the by-construction rows sit in their own entailed tables. CV-1101 (shared date_time, per-field profiles) and SP-1101 (RetainedDispatcher) are adopted. C12 remains PARTIAL: JSON Schema keyword cuts are not ported, datetime_validator and the inventory gate run at batch-2 integration, and the batch review has not run."
       ],
       "static_checks_seen": [
         "scripts/pm-card5-event-contracts-check.py --family bundle.note_created"
@@ -2572,7 +2822,7 @@
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Authenticated original editions remain read-only and retain their meaning; current-writer cutoff, in-flight settlement, publication withdrawal and rebuild fences are explicit.",
+          "finding": "Authenticated original editions remain read-only and retain their meaning; current-writer cutoff, in-flight settlement, publication withdrawal and rebuild fences are explicit. Sweep part 2B (gated NUMRULE head 58c2816ff3): the retained edition and its exact frozen validator are selected by SP-1101 custody (RetainedDispatcher over Storage's sealed original, exact binding, installed recipe tuple pinning the edition's schema bytes, recomputed commitment/family/identity), never by caller evidence; unavailable, unsealed, foreign or unsupported originals refuse without fallback, and a skipped format check never authenticates invalid history (CV-1101).",
           "evidence": [
             {
               "path": "Plans/FinalGUISpec.md",
@@ -2580,6 +2830,13 @@
               "line_start": 50973,
               "line_end": 50973,
               "quote": "Close exact-family writer admission first"
+            },
+            {
+              "path": "scripts/pm_dg6a_custody.py",
+              "unit": "resolve",
+              "line_start": 322,
+              "line_end": 322,
+              "quote": "def resolve(original):"
             }
           ],
           "prior": {
@@ -2587,26 +2844,61 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
+          "change_reason": "Sweep part 2B (gated NUMRULE head 58c2816ff3): SP-1101 dispatch composed; status unchanged."
         },
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "B1 repaired: the exact family loads and eagerly validates every declared registered Storage schema, checks its identity/content against its tested companion, and uses the authoritative stored copies. Missing/duplicate rows, metadata drift, invalid metaschemas, unused dangling refs and schema drift refuse with precise diagnostics. Generic history remains checkpoint-only. Complete shared isolation/number adoption remains pending; native NOT_RUN.",
+          "finding": "The family checker passes with every refusal reached through guard-table rows proved by the gated guard tool (sweep part 2A, rerun in part 2B). Sweep part 2B (gated NUMRULE head 58c2816ff3): every DG6A timestamp is checked by the shared CV-1101 date_time predicate with its field profile (EventRecord for payload/occurred_at_utc/acknowledged_at_utc, CV-253 storage_utc_z for observed_at_utc/persisted_at_utc), with negatives that show the shared Refusal as the validation cause; retained reads and retries resolve through the shared SP-1101 RetainedDispatcher, with custody, binding, recipe and identity negatives and legacy-recipe positives. Timestamps are no longer a reason for PARTIAL. It stays PARTIAL because JSON Schema keyword cuts are not ported to the tool, CV-1101 datetime_validator and the whole-Plans inventory gate run at batch-2 integration (they refuse in a lane tree on hash drift alone), and the batch Sol/Astra review has not run. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-707",
               "line_start": 50975,
               "line_end": 50975,
-              "quote": "C12 remains PARTIAL pending the shared isolation/number-domain sweep."
+              "quote": "C12 remains PARTIAL: JSON Schema keyword cuts are not ported to that tool,"
             },
             {
               "path": "scripts/pm-card5-event-contracts-check.py",
               "unit": "registered Storage schema oracle",
-              "line_start": 103,
-              "line_end": 103,
+              "line_start": 104,
+              "line_end": 104,
               "quote": "def storage_schema_errors(registry, family, schemas):"
+            },
+            {
+              "path": "scripts/pm_dg6a_custody.py",
+              "unit": "resolve",
+              "line_start": 322,
+              "line_end": 322,
+              "quote": "def resolve(original):"
+            },
+            {
+              "path": "scripts/pm-alert-event-contracts-check.py",
+              "unit": "historical_refusals",
+              "line_start": 878,
+              "line_end": 878,
+              "quote": "custody_facts, original_custody = custody.resolve(expected['event'])"
+            },
+            {
+              "path": "scripts/pm_dg6a_p2b_witnesses.py",
+              "unit": "history_custody",
+              "line_start": 110,
+              "line_end": 110,
+              "quote": "def history_custody("
+            },
+            {
+              "path": "scripts/pm-dg6a-domain.py",
+              "unit": "event_record_date_time",
+              "line_start": 64,
+              "line_end": 64,
+              "quote": "return True if not isinstance(value, str) else date_time(value, profile=EVENT_RECORD) == value"
+            },
+            {
+              "path": "scripts/pm_dg6a_p2b_witnesses.py",
+              "unit": "datetime_payload",
+              "line_start": 55,
+              "line_end": 55,
+              "quote": "def datetime_payload("
             }
           ],
           "prior": {
@@ -2614,14 +2906,15 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
+          "change_reason": "Sweep part 2B (gated NUMRULE head 58c2816ff3): S-FMT1 and S-N2 closed; status PARTIAL kept for the reasons in the finding."
         }
       },
       "remaining_gaps": [
         "Membership ABSENT: integration alone may admit this exact family.",
         "PENDING_RETENTION_DECISION for event/original operation or mapping custody/History checkpoint.",
         "Guard isolation (gated tool) and the CV-1100/SP-1100 number scope are adopted; SP-1101 retained dispatch and CV-1101 date-time remain part 2B. C12 remains PARTIAL.",
-        "Native execution NOT_RUN."
+        "Native execution NOT_RUN.",
+        "Sweep part 2A/2B: guard isolation runs on the gated tool; every reachable row has a single-row witness and the by-construction rows sit in their own entailed tables. CV-1101 (shared date_time, per-field profiles) and SP-1101 (RetainedDispatcher) are adopted. C12 remains PARTIAL: JSON Schema keyword cuts are not ported, datetime_validator and the inventory gate run at batch-2 integration, and the batch review has not run."
       ],
       "static_checks_seen": [
         "scripts/pm-card5-event-contracts-check.py --family bundle.note_status_changed"
@@ -2858,7 +3151,7 @@
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Authenticated original editions remain read-only and retain their meaning; current-writer cutoff, in-flight settlement, publication withdrawal and rebuild fences are explicit.",
+          "finding": "Authenticated original editions remain read-only and retain their meaning; current-writer cutoff, in-flight settlement, publication withdrawal and rebuild fences are explicit. Sweep part 2B (gated NUMRULE head 58c2816ff3): the retained edition and its exact frozen validator are selected by SP-1101 custody (RetainedDispatcher over Storage's sealed original, exact binding, installed recipe tuple pinning the edition's schema bytes, recomputed commitment/family/identity), never by caller evidence; unavailable, unsealed, foreign or unsupported originals refuse without fallback, and a skipped format check never authenticates invalid history (CV-1101).",
           "evidence": [
             {
               "path": "Plans/FinalGUISpec.md",
@@ -2866,6 +3159,13 @@
               "line_start": 51109,
               "line_end": 51109,
               "quote": "Close exact-family writer admission first"
+            },
+            {
+              "path": "scripts/pm_dg6a_custody.py",
+              "unit": "resolve",
+              "line_start": 322,
+              "line_end": 322,
+              "quote": "def resolve(original):"
             }
           ],
           "prior": {
@@ -2873,26 +3173,61 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
+          "change_reason": "Sweep part 2B (gated NUMRULE head 58c2816ff3): SP-1101 dispatch composed; status unchanged."
         },
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "B1 repaired: the exact family loads and eagerly validates every declared registered Storage schema, checks its identity/content against its tested companion, and uses the authoritative stored copies. Missing/duplicate rows, metadata drift, invalid metaschemas, unused dangling refs and schema drift refuse with precise diagnostics. Generic history remains checkpoint-only. Complete shared isolation/number adoption remains pending; native NOT_RUN.",
+          "finding": "The family checker passes with every refusal reached through guard-table rows proved by the gated guard tool (sweep part 2A, rerun in part 2B). Sweep part 2B (gated NUMRULE head 58c2816ff3): every DG6A timestamp is checked by the shared CV-1101 date_time predicate with its field profile (EventRecord for payload/occurred_at_utc/acknowledged_at_utc, CV-253 storage_utc_z for observed_at_utc/persisted_at_utc), with negatives that show the shared Refusal as the validation cause; retained reads and retries resolve through the shared SP-1101 RetainedDispatcher, with custody, binding, recipe and identity negatives and legacy-recipe positives. Timestamps are no longer a reason for PARTIAL. It stays PARTIAL because JSON Schema keyword cuts are not ported to the tool, CV-1101 datetime_validator and the whole-Plans inventory gate run at batch-2 integration (they refuse in a lane tree on hash drift alone), and the batch Sol/Astra review has not run. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-709",
               "line_start": 51111,
               "line_end": 51111,
-              "quote": "C12 remains PARTIAL pending the shared isolation/number-domain sweep."
+              "quote": "C12 remains PARTIAL: JSON Schema keyword cuts are not ported to that tool,"
             },
             {
               "path": "scripts/pm-card5-event-contracts-check.py",
               "unit": "registered Storage schema oracle",
-              "line_start": 103,
-              "line_end": 103,
+              "line_start": 104,
+              "line_end": 104,
               "quote": "def storage_schema_errors(registry, family, schemas):"
+            },
+            {
+              "path": "scripts/pm_dg6a_custody.py",
+              "unit": "resolve",
+              "line_start": 322,
+              "line_end": 322,
+              "quote": "def resolve(original):"
+            },
+            {
+              "path": "scripts/pm-alert-event-contracts-check.py",
+              "unit": "historical_refusals",
+              "line_start": 878,
+              "line_end": 878,
+              "quote": "custody_facts, original_custody = custody.resolve(expected['event'])"
+            },
+            {
+              "path": "scripts/pm_dg6a_p2b_witnesses.py",
+              "unit": "history_custody",
+              "line_start": 110,
+              "line_end": 110,
+              "quote": "def history_custody("
+            },
+            {
+              "path": "scripts/pm-dg6a-domain.py",
+              "unit": "event_record_date_time",
+              "line_start": 64,
+              "line_end": 64,
+              "quote": "return True if not isinstance(value, str) else date_time(value, profile=EVENT_RECORD) == value"
+            },
+            {
+              "path": "scripts/pm_dg6a_p2b_witnesses.py",
+              "unit": "datetime_payload",
+              "line_start": 55,
+              "line_end": 55,
+              "quote": "def datetime_payload("
             }
           ],
           "prior": {
@@ -2900,14 +3235,15 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
+          "change_reason": "Sweep part 2B (gated NUMRULE head 58c2816ff3): S-FMT1 and S-N2 closed; status PARTIAL kept for the reasons in the finding."
         }
       },
       "remaining_gaps": [
         "Membership ABSENT: integration alone may admit this exact family.",
         "PENDING_RETENTION_DECISION for event/original operation or mapping custody/History checkpoint.",
         "Guard isolation (gated tool) and the CV-1100/SP-1100 number scope are adopted; SP-1101 retained dispatch and CV-1101 date-time remain part 2B. C12 remains PARTIAL.",
-        "Native execution NOT_RUN."
+        "Native execution NOT_RUN.",
+        "Sweep part 2A/2B: guard isolation runs on the gated tool; every reachable row has a single-row witness and the by-construction rows sit in their own entailed tables. CV-1101 (shared date_time, per-field profiles) and SP-1101 (RetainedDispatcher) are adopted. C12 remains PARTIAL: JSON Schema keyword cuts are not ported, datetime_validator and the inventory gate run at batch-2 integration, and the batch review has not run."
       ],
       "static_checks_seen": [
         "scripts/pm-card5-event-contracts-check.py --family concern.assigned"
@@ -2988,8 +3324,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-686",
-              "line_start": 24930,
-              "line_end": 24930,
+              "line_start": 24960,
+              "line_end": 24960,
               "quote": "concern.created closed current payload and authority route"
             }
           ],
@@ -3049,8 +3385,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-686",
-              "line_start": 24930,
-              "line_end": 24930,
+              "line_start": 24960,
+              "line_end": 24960,
               "quote": "concern.created closed current payload and authority route"
             }
           ],
@@ -3117,8 +3453,8 @@
             {
               "path": "scripts/pm-concern-created-contracts-check.py",
               "unit": "caller_body",
-              "line_start": 41,
-              "line_end": 41,
+              "line_start": 42,
+              "line_end": 42,
               "quote": "def caller_body"
             }
           ],
@@ -3171,8 +3507,8 @@
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "append_result_errors",
-              "line_start": 347,
-              "line_end": 347,
+              "line_start": 349,
+              "line_end": 349,
               "quote": "def append_result_errors"
             },
             {
@@ -3247,7 +3583,7 @@
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact version dispatch and writer-cutoff/original-obligation/checkpoint-reader withdrawal fences are explicit; unknown or stale originals remain unavailable.",
+          "finding": "Exact version dispatch and writer-cutoff/original-obligation/checkpoint-reader withdrawal fences are explicit; unknown or stale originals remain unavailable. Sweep part 2B (gated NUMRULE head 58c2816ff3): the retained edition and its exact frozen validator are selected by SP-1101 custody (RetainedDispatcher over Storage's sealed original, exact binding, installed recipe tuple pinning the edition's schema bytes, recomputed commitment/family/identity), never by caller evidence; unavailable, unsealed, foreign or unsupported originals refuse without fallback, and a skipped format check never authenticates invalid history (CV-1101).",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -3262,6 +3598,13 @@
               "line_start": 30751,
               "line_end": 30751,
               "quote": "withdrawn publication or missing coverage is unavailable. Source-generation change requires"
+            },
+            {
+              "path": "scripts/pm_dg6a_custody.py",
+              "unit": "resolve",
+              "line_start": 322,
+              "line_end": 322,
+              "quote": "def resolve(original):"
             }
           ],
           "prior": {
@@ -3269,12 +3612,12 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
+          "change_reason": "Sweep part 2B (gated NUMRULE head 58c2816ff3): SP-1101 dispatch composed; status unchanged."
         },
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "B2 repaired: first-validator timestamp/number probes mutate a genuine standalone payload, leaving all frozen operation command/record/digest copies unchanged. Twenty-five malformed timestamp CLI cases refuse; exact timestamp-predicate cuts admit only the standalone defect. Shared guard-isolation/number-rule sweep remains pending. Native NOT_RUN.",
+          "finding": "The family checker passes with every refusal reached through guard-table rows proved by the gated guard tool (sweep part 2A, rerun in part 2B). Sweep part 2B (gated NUMRULE head 58c2816ff3): every DG6A timestamp is checked by the shared CV-1101 date_time predicate with its field profile (EventRecord for payload/occurred_at_utc/acknowledged_at_utc, CV-253 storage_utc_z for observed_at_utc/persisted_at_utc), with negatives that show the shared Refusal as the validation cause; retained reads and retries resolve through the shared SP-1101 RetainedDispatcher, with custody, binding, recipe and identity negatives and legacy-recipe positives. Timestamps are no longer a reason for PARTIAL. It stays PARTIAL because JSON Schema keyword cuts are not ported to the tool, CV-1101 datetime_validator and the whole-Plans inventory gate run at batch-2 integration (they refuse in a lane tree on hash drift alone), and the batch Sol/Astra review has not run. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -3293,8 +3636,8 @@
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "historical_reader_cases",
-              "line_start": 905,
-              "line_end": 905,
+              "line_start": 943,
+              "line_end": 943,
               "quote": "def historical_reader_cases"
             },
             {
@@ -3307,8 +3650,8 @@
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "append_result_errors",
-              "line_start": 347,
-              "line_end": 347,
+              "line_start": 349,
+              "line_end": 349,
               "quote": "def append_result_errors"
             },
             {
@@ -3328,23 +3671,58 @@
             {
               "path": "scripts/pm-dg6a-domain.py",
               "unit": "validator",
-              "line_start": 93,
-              "line_end": 93,
+              "line_start": 116,
+              "line_end": 116,
               "quote": "kwargs['format_checker'] = FORMATS"
             },
             {
               "path": "scripts/pm-dg6a-domain-check.py",
               "unit": "run",
-              "line_start": 96,
-              "line_end": 96,
+              "line_start": 103,
+              "line_end": 103,
               "quote": "def run(kind, m, family, fixture):"
             },
             {
               "path": "scripts/pm-concern-created-contracts-check.py",
               "unit": "standalone payload oracle",
-              "line_start": 246,
-              "line_end": 246,
+              "line_start": 247,
+              "line_end": 247,
               "quote": "for case in fixture['payload_cases']:"
+            },
+            {
+              "path": "scripts/pm_dg6a_custody.py",
+              "unit": "resolve",
+              "line_start": 322,
+              "line_end": 322,
+              "quote": "def resolve(original):"
+            },
+            {
+              "path": "scripts/pm-alert-event-contracts-check.py",
+              "unit": "historical_refusals",
+              "line_start": 878,
+              "line_end": 878,
+              "quote": "custody_facts, original_custody = custody.resolve(expected['event'])"
+            },
+            {
+              "path": "scripts/pm_dg6a_p2b_witnesses.py",
+              "unit": "history_custody",
+              "line_start": 110,
+              "line_end": 110,
+              "quote": "def history_custody("
+            },
+            {
+              "path": "scripts/pm-dg6a-domain.py",
+              "unit": "event_record_date_time",
+              "line_start": 64,
+              "line_end": 64,
+              "quote": "return True if not isinstance(value, str) else date_time(value, profile=EVENT_RECORD) == value"
+            },
+            {
+              "path": "scripts/pm_dg6a_p2b_witnesses.py",
+              "unit": "datetime_payload",
+              "line_start": 55,
+              "line_end": 55,
+              "quote": "def datetime_payload("
             }
           ],
           "prior": {
@@ -3352,14 +3730,14 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
+          "change_reason": "Sweep part 2B (gated NUMRULE head 58c2816ff3): S-FMT1 and S-N2 closed; status PARTIAL kept for the reasons in the finding."
         }
       },
       "remaining_gaps": [
         "Membership remains ABSENT until independent admission.",
         "Event/operation/checkpoint retention PENDING_RETENTION_DECISION; the existing concern_record RP-AUTHORITY-INDEFINITE policy/profile is preserved.",
         "Native execution NOT_RUN; no sibling action or extra direct creator is authorized.",
-        "Sweep part 2A: guard isolation runs on the gated tool (scripts/pm-dg6a-guard-tables.py); every reachable row has a single-row witness and the unreachable rows sit in their own entailed tables. C12 remains PARTIAL: CV-1101 date-time and SP-1101 authenticated retained dispatch are part 2B, and the timestamp review is interim only."
+        "Sweep part 2A/2B: guard isolation runs on the gated tool; every reachable row has a single-row witness and the by-construction rows sit in their own entailed tables. CV-1101 (shared date_time, per-field profiles) and SP-1101 (RetainedDispatcher) are adopted. C12 remains PARTIAL: JSON Schema keyword cuts are not ported, datetime_validator and the inventory gate run at batch-2 integration, and the batch review has not run."
       ],
       "static_checks_seen": [
         "scripts/pm-concern-created-contracts-check.py",
@@ -3596,7 +3974,7 @@
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Authenticated original editions remain read-only and retain their meaning; current-writer cutoff, in-flight settlement, publication withdrawal and rebuild fences are explicit.",
+          "finding": "Authenticated original editions remain read-only and retain their meaning; current-writer cutoff, in-flight settlement, publication withdrawal and rebuild fences are explicit. Sweep part 2B (gated NUMRULE head 58c2816ff3): the retained edition and its exact frozen validator are selected by SP-1101 custody (RetainedDispatcher over Storage's sealed original, exact binding, installed recipe tuple pinning the edition's schema bytes, recomputed commitment/family/identity), never by caller evidence; unavailable, unsealed, foreign or unsupported originals refuse without fallback, and a skipped format check never authenticates invalid history (CV-1101).",
           "evidence": [
             {
               "path": "Plans/FinalGUISpec.md",
@@ -3604,6 +3982,13 @@
               "line_start": 51177,
               "line_end": 51177,
               "quote": "Close exact-family writer admission first"
+            },
+            {
+              "path": "scripts/pm_dg6a_custody.py",
+              "unit": "resolve",
+              "line_start": 322,
+              "line_end": 322,
+              "quote": "def resolve(original):"
             }
           ],
           "prior": {
@@ -3611,26 +3996,61 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
+          "change_reason": "Sweep part 2B (gated NUMRULE head 58c2816ff3): SP-1101 dispatch composed; status unchanged."
         },
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "B1 repaired: the exact family loads and eagerly validates every declared registered Storage schema, checks its identity/content against its tested companion, and uses the authoritative stored copies. Missing/duplicate rows, metadata drift, invalid metaschemas, unused dangling refs and schema drift refuse with precise diagnostics. Generic history remains checkpoint-only. Complete shared isolation/number adoption remains pending; native NOT_RUN.",
+          "finding": "The family checker passes with every refusal reached through guard-table rows proved by the gated guard tool (sweep part 2A, rerun in part 2B). Sweep part 2B (gated NUMRULE head 58c2816ff3): every DG6A timestamp is checked by the shared CV-1101 date_time predicate with its field profile (EventRecord for payload/occurred_at_utc/acknowledged_at_utc, CV-253 storage_utc_z for observed_at_utc/persisted_at_utc), with negatives that show the shared Refusal as the validation cause; retained reads and retries resolve through the shared SP-1101 RetainedDispatcher, with custody, binding, recipe and identity negatives and legacy-recipe positives. Timestamps are no longer a reason for PARTIAL. It stays PARTIAL because JSON Schema keyword cuts are not ported to the tool, CV-1101 datetime_validator and the whole-Plans inventory gate run at batch-2 integration (they refuse in a lane tree on hash drift alone), and the batch Sol/Astra review has not run. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-710",
               "line_start": 51179,
               "line_end": 51179,
-              "quote": "C12 remains PARTIAL pending the shared isolation/number-domain sweep."
+              "quote": "C12 remains PARTIAL: JSON Schema keyword cuts are not ported to that tool,"
             },
             {
               "path": "scripts/pm-card5-event-contracts-check.py",
               "unit": "registered Storage schema oracle",
-              "line_start": 103,
-              "line_end": 103,
+              "line_start": 104,
+              "line_end": 104,
               "quote": "def storage_schema_errors(registry, family, schemas):"
+            },
+            {
+              "path": "scripts/pm_dg6a_custody.py",
+              "unit": "resolve",
+              "line_start": 322,
+              "line_end": 322,
+              "quote": "def resolve(original):"
+            },
+            {
+              "path": "scripts/pm-alert-event-contracts-check.py",
+              "unit": "historical_refusals",
+              "line_start": 878,
+              "line_end": 878,
+              "quote": "custody_facts, original_custody = custody.resolve(expected['event'])"
+            },
+            {
+              "path": "scripts/pm_dg6a_p2b_witnesses.py",
+              "unit": "history_custody",
+              "line_start": 110,
+              "line_end": 110,
+              "quote": "def history_custody("
+            },
+            {
+              "path": "scripts/pm-dg6a-domain.py",
+              "unit": "event_record_date_time",
+              "line_start": 64,
+              "line_end": 64,
+              "quote": "return True if not isinstance(value, str) else date_time(value, profile=EVENT_RECORD) == value"
+            },
+            {
+              "path": "scripts/pm_dg6a_p2b_witnesses.py",
+              "unit": "datetime_payload",
+              "line_start": 55,
+              "line_end": 55,
+              "quote": "def datetime_payload("
             }
           ],
           "prior": {
@@ -3638,14 +4058,15 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
+          "change_reason": "Sweep part 2B (gated NUMRULE head 58c2816ff3): S-FMT1 and S-N2 closed; status PARTIAL kept for the reasons in the finding."
         }
       },
       "remaining_gaps": [
         "Membership ABSENT: integration alone may admit this exact family.",
         "PENDING_RETENTION_DECISION for event/original operation or mapping custody/History checkpoint.",
         "Guard isolation (gated tool) and the CV-1100/SP-1100 number scope are adopted; SP-1101 retained dispatch and CV-1101 date-time remain part 2B. C12 remains PARTIAL.",
-        "Native execution NOT_RUN."
+        "Native execution NOT_RUN.",
+        "Sweep part 2A/2B: guard isolation runs on the gated tool; every reachable row has a single-row witness and the by-construction rows sit in their own entailed tables. CV-1101 (shared date_time, per-field profiles) and SP-1101 (RetainedDispatcher) are adopted. C12 remains PARTIAL: JSON Schema keyword cuts are not ported, datetime_validator and the inventory gate run at batch-2 integration, and the batch review has not run."
       ],
       "static_checks_seen": [
         "scripts/pm-card5-event-contracts-check.py --family concern.evidence_linked"
@@ -3882,7 +4303,7 @@
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Authenticated original editions remain read-only and retain their meaning; current-writer cutoff, in-flight settlement, publication withdrawal and rebuild fences are explicit.",
+          "finding": "Authenticated original editions remain read-only and retain their meaning; current-writer cutoff, in-flight settlement, publication withdrawal and rebuild fences are explicit. Sweep part 2B (gated NUMRULE head 58c2816ff3): the retained edition and its exact frozen validator are selected by SP-1101 custody (RetainedDispatcher over Storage's sealed original, exact binding, installed recipe tuple pinning the edition's schema bytes, recomputed commitment/family/identity), never by caller evidence; unavailable, unsealed, foreign or unsupported originals refuse without fallback, and a skipped format check never authenticates invalid history (CV-1101).",
           "evidence": [
             {
               "path": "Plans/FinalGUISpec.md",
@@ -3890,6 +4311,13 @@
               "line_start": 51245,
               "line_end": 51245,
               "quote": "Close exact-family writer admission first"
+            },
+            {
+              "path": "scripts/pm_dg6a_custody.py",
+              "unit": "resolve",
+              "line_start": 322,
+              "line_end": 322,
+              "quote": "def resolve(original):"
             }
           ],
           "prior": {
@@ -3897,26 +4325,61 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
+          "change_reason": "Sweep part 2B (gated NUMRULE head 58c2816ff3): SP-1101 dispatch composed; status unchanged."
         },
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "B1 repaired: the exact family loads and eagerly validates every declared registered Storage schema, checks its identity/content against its tested companion, and uses the authoritative stored copies. Missing/duplicate rows, metadata drift, invalid metaschemas, unused dangling refs and schema drift refuse with precise diagnostics. Generic history remains checkpoint-only. Complete shared isolation/number adoption remains pending; native NOT_RUN.",
+          "finding": "The family checker passes with every refusal reached through guard-table rows proved by the gated guard tool (sweep part 2A, rerun in part 2B). Sweep part 2B (gated NUMRULE head 58c2816ff3): every DG6A timestamp is checked by the shared CV-1101 date_time predicate with its field profile (EventRecord for payload/occurred_at_utc/acknowledged_at_utc, CV-253 storage_utc_z for observed_at_utc/persisted_at_utc), with negatives that show the shared Refusal as the validation cause; retained reads and retries resolve through the shared SP-1101 RetainedDispatcher, with custody, binding, recipe and identity negatives and legacy-recipe positives. Timestamps are no longer a reason for PARTIAL. It stays PARTIAL because JSON Schema keyword cuts are not ported to the tool, CV-1101 datetime_validator and the whole-Plans inventory gate run at batch-2 integration (they refuse in a lane tree on hash drift alone), and the batch Sol/Astra review has not run. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-711",
               "line_start": 51247,
               "line_end": 51247,
-              "quote": "C12 remains PARTIAL pending the shared isolation/number-domain sweep."
+              "quote": "C12 remains PARTIAL: JSON Schema keyword cuts are not ported to that tool,"
             },
             {
               "path": "scripts/pm-card5-event-contracts-check.py",
               "unit": "registered Storage schema oracle",
-              "line_start": 103,
-              "line_end": 103,
+              "line_start": 104,
+              "line_end": 104,
               "quote": "def storage_schema_errors(registry, family, schemas):"
+            },
+            {
+              "path": "scripts/pm_dg6a_custody.py",
+              "unit": "resolve",
+              "line_start": 322,
+              "line_end": 322,
+              "quote": "def resolve(original):"
+            },
+            {
+              "path": "scripts/pm-alert-event-contracts-check.py",
+              "unit": "historical_refusals",
+              "line_start": 878,
+              "line_end": 878,
+              "quote": "custody_facts, original_custody = custody.resolve(expected['event'])"
+            },
+            {
+              "path": "scripts/pm_dg6a_p2b_witnesses.py",
+              "unit": "history_custody",
+              "line_start": 110,
+              "line_end": 110,
+              "quote": "def history_custody("
+            },
+            {
+              "path": "scripts/pm-dg6a-domain.py",
+              "unit": "event_record_date_time",
+              "line_start": 64,
+              "line_end": 64,
+              "quote": "return True if not isinstance(value, str) else date_time(value, profile=EVENT_RECORD) == value"
+            },
+            {
+              "path": "scripts/pm_dg6a_p2b_witnesses.py",
+              "unit": "datetime_payload",
+              "line_start": 55,
+              "line_end": 55,
+              "quote": "def datetime_payload("
             }
           ],
           "prior": {
@@ -3924,14 +4387,15 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
+          "change_reason": "Sweep part 2B (gated NUMRULE head 58c2816ff3): S-FMT1 and S-N2 closed; status PARTIAL kept for the reasons in the finding."
         }
       },
       "remaining_gaps": [
         "Membership ABSENT: integration alone may admit this exact family.",
         "PENDING_RETENTION_DECISION for event/original operation or mapping custody/History checkpoint.",
         "Guard isolation (gated tool) and the CV-1100/SP-1100 number scope are adopted; SP-1101 retained dispatch and CV-1101 date-time remain part 2B. C12 remains PARTIAL.",
-        "Native execution NOT_RUN."
+        "Native execution NOT_RUN.",
+        "Sweep part 2A/2B: guard isolation runs on the gated tool; every reachable row has a single-row witness and the by-construction rows sit in their own entailed tables. CV-1101 (shared date_time, per-field profiles) and SP-1101 (RetainedDispatcher) are adopted. C12 remains PARTIAL: JSON Schema keyword cuts are not ported, datetime_validator and the inventory gate run at batch-2 integration, and the batch review has not run."
       ],
       "static_checks_seen": [
         "scripts/pm-card5-event-contracts-check.py --family concern.promoted"
@@ -4168,7 +4632,7 @@
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Authenticated original editions remain read-only and retain their meaning; current-writer cutoff, in-flight settlement, publication withdrawal and rebuild fences are explicit.",
+          "finding": "Authenticated original editions remain read-only and retain their meaning; current-writer cutoff, in-flight settlement, publication withdrawal and rebuild fences are explicit. Sweep part 2B (gated NUMRULE head 58c2816ff3): the retained edition and its exact frozen validator are selected by SP-1101 custody (RetainedDispatcher over Storage's sealed original, exact binding, installed recipe tuple pinning the edition's schema bytes, recomputed commitment/family/identity), never by caller evidence; unavailable, unsealed, foreign or unsupported originals refuse without fallback, and a skipped format check never authenticates invalid history (CV-1101).",
           "evidence": [
             {
               "path": "Plans/FinalGUISpec.md",
@@ -4176,6 +4640,13 @@
               "line_start": 51245,
               "line_end": 51245,
               "quote": "Close exact-family writer admission first"
+            },
+            {
+              "path": "scripts/pm_dg6a_custody.py",
+              "unit": "resolve",
+              "line_start": 322,
+              "line_end": 322,
+              "quote": "def resolve(original):"
             }
           ],
           "prior": {
@@ -4183,26 +4654,61 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
+          "change_reason": "Sweep part 2B (gated NUMRULE head 58c2816ff3): SP-1101 dispatch composed; status unchanged."
         },
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "B1 repaired: the exact family loads and eagerly validates every declared registered Storage schema, checks its identity/content against its tested companion, and uses the authoritative stored copies. Missing/duplicate rows, metadata drift, invalid metaschemas, unused dangling refs and schema drift refuse with precise diagnostics. Generic history remains checkpoint-only. Complete shared isolation/number adoption remains pending; native NOT_RUN.",
+          "finding": "The family checker passes with every refusal reached through guard-table rows proved by the gated guard tool (sweep part 2A, rerun in part 2B). Sweep part 2B (gated NUMRULE head 58c2816ff3): every DG6A timestamp is checked by the shared CV-1101 date_time predicate with its field profile (EventRecord for payload/occurred_at_utc/acknowledged_at_utc, CV-253 storage_utc_z for observed_at_utc/persisted_at_utc), with negatives that show the shared Refusal as the validation cause; retained reads and retries resolve through the shared SP-1101 RetainedDispatcher, with custody, binding, recipe and identity negatives and legacy-recipe positives. Timestamps are no longer a reason for PARTIAL. It stays PARTIAL because JSON Schema keyword cuts are not ported to the tool, CV-1101 datetime_validator and the whole-Plans inventory gate run at batch-2 integration (they refuse in a lane tree on hash drift alone), and the batch Sol/Astra review has not run. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-712",
               "line_start": 51247,
               "line_end": 51247,
-              "quote": "C12 remains PARTIAL pending the shared isolation/number-domain sweep."
+              "quote": "C12 remains PARTIAL: JSON Schema keyword cuts are not ported to that tool,"
             },
             {
               "path": "scripts/pm-card5-event-contracts-check.py",
               "unit": "registered Storage schema oracle",
-              "line_start": 103,
-              "line_end": 103,
+              "line_start": 104,
+              "line_end": 104,
               "quote": "def storage_schema_errors(registry, family, schemas):"
+            },
+            {
+              "path": "scripts/pm_dg6a_custody.py",
+              "unit": "resolve",
+              "line_start": 322,
+              "line_end": 322,
+              "quote": "def resolve(original):"
+            },
+            {
+              "path": "scripts/pm-alert-event-contracts-check.py",
+              "unit": "historical_refusals",
+              "line_start": 878,
+              "line_end": 878,
+              "quote": "custody_facts, original_custody = custody.resolve(expected['event'])"
+            },
+            {
+              "path": "scripts/pm_dg6a_p2b_witnesses.py",
+              "unit": "history_custody",
+              "line_start": 110,
+              "line_end": 110,
+              "quote": "def history_custody("
+            },
+            {
+              "path": "scripts/pm-dg6a-domain.py",
+              "unit": "event_record_date_time",
+              "line_start": 64,
+              "line_end": 64,
+              "quote": "return True if not isinstance(value, str) else date_time(value, profile=EVENT_RECORD) == value"
+            },
+            {
+              "path": "scripts/pm_dg6a_p2b_witnesses.py",
+              "unit": "datetime_payload",
+              "line_start": 55,
+              "line_end": 55,
+              "quote": "def datetime_payload("
             }
           ],
           "prior": {
@@ -4210,14 +4716,15 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
+          "change_reason": "Sweep part 2B (gated NUMRULE head 58c2816ff3): S-FMT1 and S-N2 closed; status PARTIAL kept for the reasons in the finding."
         }
       },
       "remaining_gaps": [
         "Membership ABSENT: integration alone may admit this exact family.",
         "PENDING_RETENTION_DECISION for event/original operation or mapping custody/History checkpoint.",
         "Guard isolation (gated tool) and the CV-1100/SP-1100 number scope are adopted; SP-1101 retained dispatch and CV-1101 date-time remain part 2B. C12 remains PARTIAL.",
-        "Native execution NOT_RUN."
+        "Native execution NOT_RUN.",
+        "Sweep part 2A/2B: guard isolation runs on the gated tool; every reachable row has a single-row witness and the by-construction rows sit in their own entailed tables. CV-1101 (shared date_time, per-field profiles) and SP-1101 (RetainedDispatcher) are adopted. C12 remains PARTIAL: JSON Schema keyword cuts are not ported, datetime_validator and the inventory gate run at batch-2 integration, and the batch review has not run."
       ],
       "static_checks_seen": [
         "scripts/pm-card5-event-contracts-check.py --family concern.reopened"
@@ -4454,7 +4961,7 @@
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Authenticated original editions remain read-only and retain their meaning; current-writer cutoff, in-flight settlement, publication withdrawal and rebuild fences are explicit.",
+          "finding": "Authenticated original editions remain read-only and retain their meaning; current-writer cutoff, in-flight settlement, publication withdrawal and rebuild fences are explicit. Sweep part 2B (gated NUMRULE head 58c2816ff3): the retained edition and its exact frozen validator are selected by SP-1101 custody (RetainedDispatcher over Storage's sealed original, exact binding, installed recipe tuple pinning the edition's schema bytes, recomputed commitment/family/identity), never by caller evidence; unavailable, unsealed, foreign or unsupported originals refuse without fallback, and a skipped format check never authenticates invalid history (CV-1101).",
           "evidence": [
             {
               "path": "Plans/FinalGUISpec.md",
@@ -4462,6 +4969,13 @@
               "line_start": 51245,
               "line_end": 51245,
               "quote": "Close exact-family writer admission first"
+            },
+            {
+              "path": "scripts/pm_dg6a_custody.py",
+              "unit": "resolve",
+              "line_start": 322,
+              "line_end": 322,
+              "quote": "def resolve(original):"
             }
           ],
           "prior": {
@@ -4469,26 +4983,61 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
+          "change_reason": "Sweep part 2B (gated NUMRULE head 58c2816ff3): SP-1101 dispatch composed; status unchanged."
         },
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "B1 repaired: the exact family loads and eagerly validates every declared registered Storage schema, checks its identity/content against its tested companion, and uses the authoritative stored copies. Missing/duplicate rows, metadata drift, invalid metaschemas, unused dangling refs and schema drift refuse with precise diagnostics. Generic history remains checkpoint-only. Complete shared isolation/number adoption remains pending; native NOT_RUN.",
+          "finding": "The family checker passes with every refusal reached through guard-table rows proved by the gated guard tool (sweep part 2A, rerun in part 2B). Sweep part 2B (gated NUMRULE head 58c2816ff3): every DG6A timestamp is checked by the shared CV-1101 date_time predicate with its field profile (EventRecord for payload/occurred_at_utc/acknowledged_at_utc, CV-253 storage_utc_z for observed_at_utc/persisted_at_utc), with negatives that show the shared Refusal as the validation cause; retained reads and retries resolve through the shared SP-1101 RetainedDispatcher, with custody, binding, recipe and identity negatives and legacy-recipe positives. Timestamps are no longer a reason for PARTIAL. It stays PARTIAL because JSON Schema keyword cuts are not ported to the tool, CV-1101 datetime_validator and the whole-Plans inventory gate run at batch-2 integration (they refuse in a lane tree on hash drift alone), and the batch Sol/Astra review has not run. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-713",
               "line_start": 51247,
               "line_end": 51247,
-              "quote": "C12 remains PARTIAL pending the shared isolation/number-domain sweep."
+              "quote": "C12 remains PARTIAL: JSON Schema keyword cuts are not ported to that tool,"
             },
             {
               "path": "scripts/pm-card5-event-contracts-check.py",
               "unit": "registered Storage schema oracle",
-              "line_start": 103,
-              "line_end": 103,
+              "line_start": 104,
+              "line_end": 104,
               "quote": "def storage_schema_errors(registry, family, schemas):"
+            },
+            {
+              "path": "scripts/pm_dg6a_custody.py",
+              "unit": "resolve",
+              "line_start": 322,
+              "line_end": 322,
+              "quote": "def resolve(original):"
+            },
+            {
+              "path": "scripts/pm-alert-event-contracts-check.py",
+              "unit": "historical_refusals",
+              "line_start": 878,
+              "line_end": 878,
+              "quote": "custody_facts, original_custody = custody.resolve(expected['event'])"
+            },
+            {
+              "path": "scripts/pm_dg6a_p2b_witnesses.py",
+              "unit": "history_custody",
+              "line_start": 110,
+              "line_end": 110,
+              "quote": "def history_custody("
+            },
+            {
+              "path": "scripts/pm-dg6a-domain.py",
+              "unit": "event_record_date_time",
+              "line_start": 64,
+              "line_end": 64,
+              "quote": "return True if not isinstance(value, str) else date_time(value, profile=EVENT_RECORD) == value"
+            },
+            {
+              "path": "scripts/pm_dg6a_p2b_witnesses.py",
+              "unit": "datetime_payload",
+              "line_start": 55,
+              "line_end": 55,
+              "quote": "def datetime_payload("
             }
           ],
           "prior": {
@@ -4496,14 +5045,15 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
+          "change_reason": "Sweep part 2B (gated NUMRULE head 58c2816ff3): S-FMT1 and S-N2 closed; status PARTIAL kept for the reasons in the finding."
         }
       },
       "remaining_gaps": [
         "Membership ABSENT: integration alone may admit this exact family.",
         "PENDING_RETENTION_DECISION for event/original operation or mapping custody/History checkpoint.",
         "Guard isolation (gated tool) and the CV-1100/SP-1100 number scope are adopted; SP-1101 retained dispatch and CV-1101 date-time remain part 2B. C12 remains PARTIAL.",
-        "Native execution NOT_RUN."
+        "Native execution NOT_RUN.",
+        "Sweep part 2A/2B: guard isolation runs on the gated tool; every reachable row has a single-row witness and the by-construction rows sit in their own entailed tables. CV-1101 (shared date_time, per-field profiles) and SP-1101 (RetainedDispatcher) are adopted. C12 remains PARTIAL: JSON Schema keyword cuts are not ported, datetime_validator and the inventory gate run at batch-2 integration, and the batch review has not run."
       ],
       "static_checks_seen": [
         "scripts/pm-card5-event-contracts-check.py --family concern.resolved"
@@ -4740,7 +5290,7 @@
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Authenticated original editions remain read-only and retain their meaning; current-writer cutoff, in-flight settlement, publication withdrawal and rebuild fences are explicit.",
+          "finding": "Authenticated original editions remain read-only and retain their meaning; current-writer cutoff, in-flight settlement, publication withdrawal and rebuild fences are explicit. Sweep part 2B (gated NUMRULE head 58c2816ff3): the retained edition and its exact frozen validator are selected by SP-1101 custody (RetainedDispatcher over Storage's sealed original, exact binding, installed recipe tuple pinning the edition's schema bytes, recomputed commitment/family/identity), never by caller evidence; unavailable, unsealed, foreign or unsupported originals refuse without fallback, and a skipped format check never authenticates invalid history (CV-1101).",
           "evidence": [
             {
               "path": "Plans/FinalGUISpec.md",
@@ -4748,6 +5298,13 @@
               "line_start": 51245,
               "line_end": 51245,
               "quote": "Close exact-family writer admission first"
+            },
+            {
+              "path": "scripts/pm_dg6a_custody.py",
+              "unit": "resolve",
+              "line_start": 322,
+              "line_end": 322,
+              "quote": "def resolve(original):"
             }
           ],
           "prior": {
@@ -4755,26 +5312,61 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
+          "change_reason": "Sweep part 2B (gated NUMRULE head 58c2816ff3): SP-1101 dispatch composed; status unchanged."
         },
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "B1 repaired: the exact family loads and eagerly validates every declared registered Storage schema, checks its identity/content against its tested companion, and uses the authoritative stored copies. Missing/duplicate rows, metadata drift, invalid metaschemas, unused dangling refs and schema drift refuse with precise diagnostics. Generic history remains checkpoint-only. Complete shared isolation/number adoption remains pending; native NOT_RUN.",
+          "finding": "The family checker passes with every refusal reached through guard-table rows proved by the gated guard tool (sweep part 2A, rerun in part 2B). Sweep part 2B (gated NUMRULE head 58c2816ff3): every DG6A timestamp is checked by the shared CV-1101 date_time predicate with its field profile (EventRecord for payload/occurred_at_utc/acknowledged_at_utc, CV-253 storage_utc_z for observed_at_utc/persisted_at_utc), with negatives that show the shared Refusal as the validation cause; retained reads and retries resolve through the shared SP-1101 RetainedDispatcher, with custody, binding, recipe and identity negatives and legacy-recipe positives. Timestamps are no longer a reason for PARTIAL. It stays PARTIAL because JSON Schema keyword cuts are not ported to the tool, CV-1101 datetime_validator and the whole-Plans inventory gate run at batch-2 integration (they refuse in a lane tree on hash drift alone), and the batch Sol/Astra review has not run. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/FinalGUISpec.md",
               "unit": "F3-714",
               "line_start": 51247,
               "line_end": 51247,
-              "quote": "C12 remains PARTIAL pending the shared isolation/number-domain sweep."
+              "quote": "C12 remains PARTIAL: JSON Schema keyword cuts are not ported to that tool,"
             },
             {
               "path": "scripts/pm-card5-event-contracts-check.py",
               "unit": "registered Storage schema oracle",
-              "line_start": 103,
-              "line_end": 103,
+              "line_start": 104,
+              "line_end": 104,
               "quote": "def storage_schema_errors(registry, family, schemas):"
+            },
+            {
+              "path": "scripts/pm_dg6a_custody.py",
+              "unit": "resolve",
+              "line_start": 322,
+              "line_end": 322,
+              "quote": "def resolve(original):"
+            },
+            {
+              "path": "scripts/pm-alert-event-contracts-check.py",
+              "unit": "historical_refusals",
+              "line_start": 878,
+              "line_end": 878,
+              "quote": "custody_facts, original_custody = custody.resolve(expected['event'])"
+            },
+            {
+              "path": "scripts/pm_dg6a_p2b_witnesses.py",
+              "unit": "history_custody",
+              "line_start": 110,
+              "line_end": 110,
+              "quote": "def history_custody("
+            },
+            {
+              "path": "scripts/pm-dg6a-domain.py",
+              "unit": "event_record_date_time",
+              "line_start": 64,
+              "line_end": 64,
+              "quote": "return True if not isinstance(value, str) else date_time(value, profile=EVENT_RECORD) == value"
+            },
+            {
+              "path": "scripts/pm_dg6a_p2b_witnesses.py",
+              "unit": "datetime_payload",
+              "line_start": 55,
+              "line_end": 55,
+              "quote": "def datetime_payload("
             }
           ],
           "prior": {
@@ -4782,14 +5374,15 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
+          "change_reason": "Sweep part 2B (gated NUMRULE head 58c2816ff3): S-FMT1 and S-N2 closed; status PARTIAL kept for the reasons in the finding."
         }
       },
       "remaining_gaps": [
         "Membership ABSENT: integration alone may admit this exact family.",
         "PENDING_RETENTION_DECISION for event/original operation or mapping custody/History checkpoint.",
         "Guard isolation (gated tool) and the CV-1100/SP-1100 number scope are adopted; SP-1101 retained dispatch and CV-1101 date-time remain part 2B. C12 remains PARTIAL.",
-        "Native execution NOT_RUN."
+        "Native execution NOT_RUN.",
+        "Sweep part 2A/2B: guard isolation runs on the gated tool; every reachable row has a single-row witness and the by-construction rows sit in their own entailed tables. CV-1101 (shared date_time, per-field profiles) and SP-1101 (RetainedDispatcher) are adopted. C12 remains PARTIAL: JSON Schema keyword cuts are not ported, datetime_validator and the inventory gate run at batch-2 integration, and the batch review has not run."
       ],
       "static_checks_seen": [
         "scripts/pm-card5-event-contracts-check.py --family concern.updated"
@@ -4861,8 +5454,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-684",
-              "line_start": 24816,
-              "line_end": 24816,
+              "line_start": 24836,
+              "line_end": 24836,
               "quote": "panel.redocked current payload and historical reader"
             }
           ],
@@ -4922,8 +5515,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-684",
-              "line_start": 24816,
-              "line_end": 24816,
+              "line_start": 24836,
+              "line_end": 24836,
               "quote": "panel.redocked current payload and historical reader"
             }
           ],
@@ -4990,8 +5583,8 @@
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "retained_retry_observation",
-              "line_start": 241,
-              "line_end": 241,
+              "line_start": 243,
+              "line_end": 243,
               "quote": "def retained_retry_observation("
             }
           ],
@@ -5044,8 +5637,8 @@
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "append_result_errors",
-              "line_start": 347,
-              "line_end": 347,
+              "line_start": 349,
+              "line_end": 349,
               "quote": "def append_result_errors"
             },
             {
@@ -5120,7 +5713,7 @@
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "SP-664 retains exact original identity, payload and result custody. Restored schema ranges admit earlier valid revisions; independent admission evidence selects the existing exact MessagePack retry recipe. Edition/source forgeries refuse; current writer guards remain.",
+          "finding": "SP-664 retains exact original identity, payload and result custody. Restored schema ranges admit earlier valid revisions; independent admission evidence selects the existing exact MessagePack retry recipe. Edition/source forgeries refuse; current writer guards remain. Sweep part 2B (gated NUMRULE head 58c2816ff3): the retained edition and its exact frozen validator are selected by SP-1101 custody (RetainedDispatcher over Storage's sealed original, exact binding, installed recipe tuple pinning the edition's schema bytes, recomputed commitment/family/identity), never by caller evidence; unavailable, unsealed, foreign or unsupported originals refuse without fallback, and a skipped format check never authenticates invalid history (CV-1101).",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -5139,9 +5732,16 @@
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "historical_guards",
-              "line_start": 802,
-              "line_end": 802,
+              "line_start": 836,
+              "line_end": 836,
               "quote": "schema_key = (original['payload'].get('schema_id')"
+            },
+            {
+              "path": "scripts/pm_dg6a_custody.py",
+              "unit": "resolve",
+              "line_start": 322,
+              "line_end": 322,
+              "quote": "def resolve(original):"
             }
           ],
           "prior": {
@@ -5149,12 +5749,12 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
+          "change_reason": "Sweep part 2B (gated NUMRULE head 58c2816ff3): SP-1101 dispatch composed; status unchanged."
         },
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "SP-664 binds authored oracles and the family checker passes. Nine history_shape counterfactual rows remain unproved across the lane (cycle-8 B2); adopt the shared guard-isolation tool in the sweep. Native NOT_RUN. Round 10 reruns the complete exact-family entry point; S1/S2 remain sweep items.",
+          "finding": "The family checker passes with every refusal reached through guard-table rows proved by the gated guard tool (sweep part 2A, rerun in part 2B). Sweep part 2B (gated NUMRULE head 58c2816ff3): every DG6A timestamp is checked by the shared CV-1101 date_time predicate with its field profile (EventRecord for payload/occurred_at_utc/acknowledged_at_utc, CV-253 storage_utc_z for observed_at_utc/persisted_at_utc), with negatives that show the shared Refusal as the validation cause; retained reads and retries resolve through the shared SP-1101 RetainedDispatcher, with custody, binding, recipe and identity negatives and legacy-recipe positives. Timestamps are no longer a reason for PARTIAL. It stays PARTIAL because JSON Schema keyword cuts are not ported to the tool, CV-1101 datetime_validator and the whole-Plans inventory gate run at batch-2 integration (they refuse in a lane tree on hash drift alone), and the batch Sol/Astra review has not run. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -5173,8 +5773,8 @@
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "historical_reader_cases",
-              "line_start": 905,
-              "line_end": 905,
+              "line_start": 943,
+              "line_end": 943,
               "quote": "def historical_reader_cases"
             },
             {
@@ -5187,8 +5787,8 @@
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "append_result_errors",
-              "line_start": 347,
-              "line_end": 347,
+              "line_start": 349,
+              "line_end": 349,
               "quote": "def append_result_errors"
             },
             {
@@ -5208,16 +5808,51 @@
             {
               "path": "scripts/pm-dg6a-domain.py",
               "unit": "validator",
-              "line_start": 93,
-              "line_end": 93,
+              "line_start": 116,
+              "line_end": 116,
               "quote": "kwargs['format_checker'] = FORMATS"
             },
             {
               "path": "scripts/pm-dg6a-domain-check.py",
               "unit": "run",
-              "line_start": 96,
-              "line_end": 96,
+              "line_start": 103,
+              "line_end": 103,
               "quote": "def run(kind, m, family, fixture):"
+            },
+            {
+              "path": "scripts/pm_dg6a_custody.py",
+              "unit": "resolve",
+              "line_start": 322,
+              "line_end": 322,
+              "quote": "def resolve(original):"
+            },
+            {
+              "path": "scripts/pm-alert-event-contracts-check.py",
+              "unit": "historical_refusals",
+              "line_start": 878,
+              "line_end": 878,
+              "quote": "custody_facts, original_custody = custody.resolve(expected['event'])"
+            },
+            {
+              "path": "scripts/pm_dg6a_p2b_witnesses.py",
+              "unit": "history_custody",
+              "line_start": 110,
+              "line_end": 110,
+              "quote": "def history_custody("
+            },
+            {
+              "path": "scripts/pm-dg6a-domain.py",
+              "unit": "event_record_date_time",
+              "line_start": 64,
+              "line_end": 64,
+              "quote": "return True if not isinstance(value, str) else date_time(value, profile=EVENT_RECORD) == value"
+            },
+            {
+              "path": "scripts/pm_dg6a_p2b_witnesses.py",
+              "unit": "datetime_payload",
+              "line_start": 55,
+              "line_end": 55,
+              "quote": "def datetime_payload("
             }
           ],
           "prior": {
@@ -5225,15 +5860,14 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
+          "change_reason": "Sweep part 2B (gated NUMRULE head 58c2816ff3): S-FMT1 and S-N2 closed; status PARTIAL kept for the reasons in the finding."
         }
       },
       "remaining_gaps": [
         "Exact event membership/admission absent.",
         "Retention remains PENDING_RETENTION_DECISION for event, operation and checkpoint.",
         "Native execution, actual OS/storage recovery and source/receipt authentication NOT_RUN.",
-        "Sweep part 2A: guard isolation runs on the gated tool (scripts/pm-dg6a-guard-tables.py); every reachable row has a single-row witness and the unreachable rows sit in their own entailed tables. C12 remains PARTIAL: CV-1101 date-time and SP-1101 authenticated retained dispatch are part 2B, and the timestamp review is interim only.",
-        "Part 2B: SP-1101 authenticated retained-recipe dispatch (RetainedDispatcher) and CV-1101 date-time profiles; the CV-1100/SP-1100 number scope is adopted (sweep part 2B numbers)."
+        "Sweep part 2A/2B: guard isolation runs on the gated tool; every reachable row has a single-row witness and the by-construction rows sit in their own entailed tables. CV-1101 (shared date_time, per-field profiles) and SP-1101 (RetainedDispatcher) are adopted. C12 remains PARTIAL: JSON Schema keyword cuts are not ported, datetime_validator and the inventory gate run at batch-2 integration, and the batch review has not run."
       ],
       "static_checks_seen": [
         "scripts/pm-panel-event-contracts-check.py",
@@ -5300,8 +5934,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-685",
-              "line_start": 24873,
-              "line_end": 24873,
+              "line_start": 24898,
+              "line_end": 24898,
               "quote": "panel.undocked current payload and historical reader"
             }
           ],
@@ -5361,8 +5995,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-685",
-              "line_start": 24873,
-              "line_end": 24873,
+              "line_start": 24898,
+              "line_end": 24898,
               "quote": "panel.undocked current payload and historical reader"
             }
           ],
@@ -5429,8 +6063,8 @@
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "retained_retry_observation",
-              "line_start": 241,
-              "line_end": 241,
+              "line_start": 243,
+              "line_end": 243,
               "quote": "def retained_retry_observation("
             }
           ],
@@ -5483,8 +6117,8 @@
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "append_result_errors",
-              "line_start": 347,
-              "line_end": 347,
+              "line_start": 349,
+              "line_end": 349,
               "quote": "def append_result_errors"
             },
             {
@@ -5559,7 +6193,7 @@
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "SP-665 retains exact original identity, payload and result custody. Restored schema ranges admit earlier valid revisions; independent admission evidence selects the existing exact MessagePack retry recipe. Edition/source forgeries refuse; current writer guards remain.",
+          "finding": "SP-665 retains exact original identity, payload and result custody. Restored schema ranges admit earlier valid revisions; independent admission evidence selects the existing exact MessagePack retry recipe. Edition/source forgeries refuse; current writer guards remain. Sweep part 2B (gated NUMRULE head 58c2816ff3): the retained edition and its exact frozen validator are selected by SP-1101 custody (RetainedDispatcher over Storage's sealed original, exact binding, installed recipe tuple pinning the edition's schema bytes, recomputed commitment/family/identity), never by caller evidence; unavailable, unsealed, foreign or unsupported originals refuse without fallback, and a skipped format check never authenticates invalid history (CV-1101).",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -5578,9 +6212,16 @@
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "historical_guards",
-              "line_start": 802,
-              "line_end": 802,
+              "line_start": 836,
+              "line_end": 836,
               "quote": "schema_key = (original['payload'].get('schema_id')"
+            },
+            {
+              "path": "scripts/pm_dg6a_custody.py",
+              "unit": "resolve",
+              "line_start": 322,
+              "line_end": 322,
+              "quote": "def resolve(original):"
             }
           ],
           "prior": {
@@ -5588,12 +6229,12 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
+          "change_reason": "Sweep part 2B (gated NUMRULE head 58c2816ff3): SP-1101 dispatch composed; status unchanged."
         },
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "SP-665 binds authored oracles and the family checker passes. Nine history_shape counterfactual rows remain unproved across the lane (cycle-8 B2); adopt the shared guard-isolation tool in the sweep. Native NOT_RUN. Round 10 reruns the complete exact-family entry point; S1/S2 remain sweep items.",
+          "finding": "The family checker passes with every refusal reached through guard-table rows proved by the gated guard tool (sweep part 2A, rerun in part 2B). Sweep part 2B (gated NUMRULE head 58c2816ff3): every DG6A timestamp is checked by the shared CV-1101 date_time predicate with its field profile (EventRecord for payload/occurred_at_utc/acknowledged_at_utc, CV-253 storage_utc_z for observed_at_utc/persisted_at_utc), with negatives that show the shared Refusal as the validation cause; retained reads and retries resolve through the shared SP-1101 RetainedDispatcher, with custody, binding, recipe and identity negatives and legacy-recipe positives. Timestamps are no longer a reason for PARTIAL. It stays PARTIAL because JSON Schema keyword cuts are not ported to the tool, CV-1101 datetime_validator and the whole-Plans inventory gate run at batch-2 integration (they refuse in a lane tree on hash drift alone), and the batch Sol/Astra review has not run. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -5612,8 +6253,8 @@
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "historical_reader_cases",
-              "line_start": 905,
-              "line_end": 905,
+              "line_start": 943,
+              "line_end": 943,
               "quote": "def historical_reader_cases"
             },
             {
@@ -5626,8 +6267,8 @@
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "append_result_errors",
-              "line_start": 347,
-              "line_end": 347,
+              "line_start": 349,
+              "line_end": 349,
               "quote": "def append_result_errors"
             },
             {
@@ -5647,16 +6288,51 @@
             {
               "path": "scripts/pm-dg6a-domain.py",
               "unit": "validator",
-              "line_start": 93,
-              "line_end": 93,
+              "line_start": 116,
+              "line_end": 116,
               "quote": "kwargs['format_checker'] = FORMATS"
             },
             {
               "path": "scripts/pm-dg6a-domain-check.py",
               "unit": "run",
-              "line_start": 96,
-              "line_end": 96,
+              "line_start": 103,
+              "line_end": 103,
               "quote": "def run(kind, m, family, fixture):"
+            },
+            {
+              "path": "scripts/pm_dg6a_custody.py",
+              "unit": "resolve",
+              "line_start": 322,
+              "line_end": 322,
+              "quote": "def resolve(original):"
+            },
+            {
+              "path": "scripts/pm-alert-event-contracts-check.py",
+              "unit": "historical_refusals",
+              "line_start": 878,
+              "line_end": 878,
+              "quote": "custody_facts, original_custody = custody.resolve(expected['event'])"
+            },
+            {
+              "path": "scripts/pm_dg6a_p2b_witnesses.py",
+              "unit": "history_custody",
+              "line_start": 110,
+              "line_end": 110,
+              "quote": "def history_custody("
+            },
+            {
+              "path": "scripts/pm-dg6a-domain.py",
+              "unit": "event_record_date_time",
+              "line_start": 64,
+              "line_end": 64,
+              "quote": "return True if not isinstance(value, str) else date_time(value, profile=EVENT_RECORD) == value"
+            },
+            {
+              "path": "scripts/pm_dg6a_p2b_witnesses.py",
+              "unit": "datetime_payload",
+              "line_start": 55,
+              "line_end": 55,
+              "quote": "def datetime_payload("
             }
           ],
           "prior": {
@@ -5664,15 +6340,14 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Cycle 9 status retained; current evidence rechecked. Round 10 repairs local oracle blockers without claiming completed shared isolation or number adoption."
+          "change_reason": "Sweep part 2B (gated NUMRULE head 58c2816ff3): S-FMT1 and S-N2 closed; status PARTIAL kept for the reasons in the finding."
         }
       },
       "remaining_gaps": [
         "Exact event membership/admission absent.",
         "Retention remains PENDING_RETENTION_DECISION for event, operation and checkpoint.",
         "Native execution, actual OS/storage recovery and source/receipt authentication NOT_RUN.",
-        "Sweep part 2A: guard isolation runs on the gated tool (scripts/pm-dg6a-guard-tables.py); every reachable row has a single-row witness and the unreachable rows sit in their own entailed tables. C12 remains PARTIAL: CV-1101 date-time and SP-1101 authenticated retained dispatch are part 2B, and the timestamp review is interim only.",
-        "Part 2B: SP-1101 authenticated retained-recipe dispatch (RetainedDispatcher) and CV-1101 date-time profiles; the CV-1100/SP-1100 number scope is adopted (sweep part 2B numbers)."
+        "Sweep part 2A/2B: guard isolation runs on the gated tool; every reachable row has a single-row witness and the by-construction rows sit in their own entailed tables. CV-1101 (shared date_time, per-field profiles) and SP-1101 (RetainedDispatcher) are adopted. C12 remains PARTIAL: JSON Schema keyword cuts are not ported, datetime_validator and the inventory gate run at batch-2 integration, and the batch review has not run."
       ],
       "static_checks_seen": [
         "scripts/pm-panel-event-contracts-check.py",
@@ -5693,5 +6368,26 @@
     "S1": "PENDING_SHARED_GUARD_TOOL: scripts/pm_guard_isolation.py; full field/predicate isolation and exact duplicate proofs across all sixteen remain sweep work. Old 509-row machinery is not credited as complete proof.",
     "S2": "PENDING_SHARED_NUMBER_RULE: CV-1100/SP-1100/SP-1101, historical recipe selection, physical number bytes/ranges and stale domain-driver expectations. No new lane caps or serializers.",
     "prepared_verdict": "PASS AS PREPARED for all sixteen, subject to S1/S2, admission ABSENT, retention PARTIAL and native NOT_RUN."
+  },
+  "sweep_p2b": {
+    "merge": "d3fd87730a (58c2816ff33365384d4039553f5efdb5370930e6, --no-ff, clean)",
+    "items": {
+      "S-FMT1": "closed: shared CV-1101 date_time with per-field profiles",
+      "S-N2": "closed: SP-1101 RetainedDispatcher composition (scripts/pm_dg6a_custody.py)",
+      "F3-706..714 C12 wording": "closed: names only what stays open"
+    },
+    "grades": "unchanged: 144 PASS / 32 PARTIAL / 16 ABSENT",
+    "start_head": "e5df77bb7e1cdeac42d7088a51b2523c8679060d",
+    "commits": [
+      "d3fd87730a (merge)",
+      "f587c80cd8 (scripts)",
+      "a041faf303 (owner text, shards, index)",
+      "98760da363 (witness)",
+      "3fc13d0ccc (PD04 fix)",
+      "ffc43eae22 (owner text rewording, shards, index)"
+    ],
+    "guard_tables": "99 tables, 518 rows, 498 proved; 20 by construction in 9 entailed tables; 0 masked, 0 unrelated (run at 3fc13d0ccc)",
+    "datetime": "shared pm_event_datetime.date_time with per-field profiles (EventRecord; CV-253 storage_utc_z for the two Storage instants); datetime_validator and the inventory gate run at batch-2 integration",
+    "timestamp_review": "no longer interim"
   }
 }

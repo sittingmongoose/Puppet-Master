@@ -1,3 +1,299 @@
+# DG6A — sweep part 2B (CV-1101 date-time, SP-1101 retained dispatch)
+
+**Branch:** `plans/ea-w2-gui-concerns-20261104`. Start: the part 2A head `e5df77bb7e`. Gated NUMRULE merge `d3fd87730a` (exactly `58c2816ff3`, `--no-ff`). It merged clean: no conflict, so neither addendum-1 resolution was needed. It brings only the seven date-time and report files; the number-scope files at `58c2816ff3` are byte-identical to the `a16f67c1ef` merged in part 2A. No NUMRULE file is edited. Implementation commits `f587c80cd8` (scripts), `a041faf303` (owner text, shards, index), `98760da363` (one more witness). The report commit is in the external `HEAD.txt`. No rebase.
+
+**All sixteen families keep 9 PASS / 2 PARTIAL / 1 ABSENT.** Every DG6A timestamp now goes through the shared CV-1101 predicate `pm_event_datetime.date_time` with the explicit owner profile of its field (lead addendum 2). SP-1101 retained dispatch (part 2A item S-N2) is composed through the shared `RetainedDispatcher` for every retained read and every retained retry. **My timestamp review is no longer interim:** the table "Timestamp fields and the shared check that covers each" names the check and profile for each field. `datetime_validator` and the whole-Plans inventory gate are not called in this lane tree; they run at batch-2 integration (addendum 2), and their failure rows here are recorded below. `positive_negative_oracles` stays PARTIAL, but timestamps are no longer among its reasons. Membership stays ABSENT. Native execution is NOT_RUN.
+
+**Readiness: NOT_READY** (prepared for the batch-2 review; nothing is admitted). This section and `DG6A.self-grade.json` supersede every status below, including every "interim only" statement in the part 2A section.
+
+## Sweep part 2B: findings and responses
+
+| Item | Disposition and change | Where | Verify |
+|---|---|---|---|
+| **Merge the gated NUMRULE head** | `git merge --no-ff 58c2816ff33365384d4039553f5efdb5370930e6` gave `d3fd87730a`, clean. The branch head was the part 2A head `e5df77bb7e` beforehand. The merge brings `scripts/pm_event_datetime{,_inventory,_mutations,_selfcheck}.py`, `pm_event_datetime_mutations.json`, `pm_event_datetime_node_controls.json` and `reports/event-authority-20261104/NUMRULE.md`. DG6A had never edited any of them since `a16f67c1ef`, so there was no add/add or owner-text conflict and neither addendum-1 resolution was used. No derived file conflicted. | merge commit | `git log --format=%P -1 d3fd87730a` gives `e5df77bb7e 58c2816ff3`; `git diff --stat d3fd87730a^1 d3fd87730a` lists 7 files; for each, `git rev-parse d3fd87730a:<path>` equals `git rev-parse 58c2816ff3:<path>` (all 7 same). |
+| **S-FMT1: shared CV-1101 predicate** (fixed, `f587c80cd8`) | The lane grammar (`INSTANT_PATTERN`, `datetime.fromisoformat`) is gone. Every JSON Schema `format: date-time` the lane validates runs the shared `pm_event_datetime.date_time` with the EventRecord profile through the lane format checker (`raises=Refusal`, so the shared Refusal is the validation error's cause). Named semantic timestamps in recipe preimages use `semantic_formats`, which picks the field profile (`profile_of`). This follows lead addendum 2: `datetime_validator` and the inventory gate are not called in the lane tree. | `scripts/pm-dg6a-domain.py:33` (`FIELD_PROFILES`), `:36` (`profile_of`), `:41` (`instant_refusal`), `:58` (`event_record_date_time`), `:192` (`semantic_formats`) | `grep -n "fromisoformat\|INSTANT_PATTERN" scripts/pm-dg6a-domain.py` finds nothing; all sixteen family checkers pass. |
+| **CV-253 Storage profile** (fixed, `f587c80cd8`, `3fc13d0ccc`) | Storage-assigned `observed_at_utc`/`persisted_at_utc` take `storage_utc_z` wherever DG6A reads them: the retained event's instants (HG05), recipe preimages (`semantic_formats`), and the producer route's record (new row **PD04**, `invalid Storage timestamp`). `3fc13d0ccc` fixes a crash I introduced in `f587c80cd8`: PD04 read the two fields unconditionally, and the shared number corpus's producer-only record has neither, so it raised `KeyError`. PD04 now checks only the fields a record carries; the producer projection excludes them. | `scripts/pm-alert-event-contracts-check.py:609` (`producer_observation`), `:620` (PD04 fact), `scripts/pm_dg6a_table_producer_route.py` | `producer_cases` refuses each `STORAGE_REFUSALS` value at PD04; the number corpus runs clean (below). |
+| **Exact instant order** (fixed, `f587c80cd8`) | `instant_key` no longer uses host `datetime`. It applies offsets in integer proleptic-Gregorian arithmetic (year 0000 included) and keeps every fractional digit. A legitimate leap second sorts after `23:59:59.x` and before the next `00:00:00`. AP06/CS06 (`snooze_until` after `ts`) use it. | `scripts/pm-dg6a-domain.py:167` (`instant_key`), `:185` (`instant_le`) | Domain-check records `leap second order`, `year 0000 order`, `extreme calendar offsets`, `fraction precision`, all pass. |
+| **Lane-local leaks** | DG6A's interim grammar already refused `24:00:00Z`, a trailing LF and lowercase-`t` errors such as hour 24. One real leak was found and closed: the old format check `type(v) is not str or instant(v)` passed a `str` subclass without checking it. The shared predicate refuses it as `date_time_type`. New witness at every payload timestamp field of all sixteen families (`98760da363`). The leaks other lanes recorded all refuse here through the shared check, each with the shared Refusal as cause: `24:00:00Z` → `date_time_hour`, trailing LF → `date_time_syntax`, a space separator → `date_time_syntax`, a missing zone → `date_time_syntax`, an illegitimate second 60 → `date_time_leap_second`, offset hour 24 → `date_time_offset_hour`. | `scripts/pm_dg6a_p2b_witnesses.py:23` (`DATETIME_REFUSALS`), `:55` (`datetime_payload`) | All sixteen family checkers pass. |
+| **Widening, stated plainly** | CV-1101 makes two forms owner-valid that DG6A's grammar refused: year 0000 and a real (offset-adjusted) leap second. CV-680..686 said "no leap seconds"; that sentence is replaced by CV-1101's grammar ("Every lane adopts this check at its timestamp boundaries using the relevant existing owner profile, not a new local regex"). Lowercase `t`/`z` and offsets were already accepted by DG6A and stay accepted (EventRecord profile). No DG6A field owner sets a stricter profile, so no field takes `coordination_utc_z` or `legacy_normalization_output`. The adoption guide's authority boundary assigns the grammar to CV-1101/CV-253, so no Jared choice is involved. | `Plans/Contracts_V0.md:24628` (CV-680) … `:24986` (CV-686) | Domain-check `GOOD_DATES` and witness `DATETIME_ACCEPTS`. |
+| **The shared predicate runs through the validator** (new witnesses, `f587c80cd8`, `98760da363`) | CV-1101 requires negatives that show the installed predicate refusing through the validator. For every DG6A family, at every timestamp field of its standalone payload: each of 11 malformed values is refused by the complete payload check (the `sch_*_payload` verdict row), and the cause of the lane validator's error is exactly the shared Refusal reason; a `str` subclass gives `date_time_type`; 8 owner-valid values are accepted (leap second, offset leap second, fractional leap second, year 0000, lowercase `t`/`z`, 12-digit fraction, `-05:30`, 29 February). The producer route adds 11 `occurred_at_utc` refusals (PD01) and 12 Storage refusals (PD04), plus 14 acceptances. | `scripts/pm_dg6a_p2b_witnesses.py:44` (`causes`), `:55`; `scripts/pm-alert-event-contracts-check.py` `producer_cases` | Family checkers; standing trial `CV1101_predicate_removed` (below). |
+| **S-N2: SP-1101 retained dispatch** (fixed, `f587c80cd8`) | Every retained read (all sixteen families, via `historical_refusals`) and every retained retry (alert ×4, panel ×2, via `retained_retry_observation`) first resolves its original through the shared `RetainedDispatcher`, which is composed in `scripts/pm_dg6a_custody.py`. `DG6AOriginalOwner` authenticates the fetched original's SP-1100 `EVENT_VALUE` bytes against Storage's sealed custody at its `event_ref` and returns the sealed binding and `RecipeTuple`. The dispatcher joins the binding, looks up the installed `FrozenRecipe` (no caller override, no current-then-legacy probing), and runs its verifier. The verifier recomputes the source commitment, checks the family, and recomputes the event identity of the family's owner unit. The custody-selected recipe also selects the frozen payload validator (HG15, RR04). Composition seals the committed positive originals of the sixteen fixture files; tests that model another Storage history declare it with `written(...)`; no reader seals. Native custody stays NOT_RUN. New rows: **HC01–HC05** (`history_custody`: `original_unavailable`, `original_authority`, `original_binding`, `recipe_unsupported`, `original_verification`) and **RQ01–RQ05** (retry, family retry code). | `scripts/pm_dg6a_custody.py:157` (`_verifier`), `:192` (`recipe_of`), `:218` (`binding_of`), `:283` (`written`), `:304` (`DG6AOriginalOwner`), `:322` (`resolve`); `scripts/pm-alert-event-contracts-check.py:243`, `:260`, `:815`, `:878`; `scripts/pm_dg6a_table_history_custody.py` | Witnesses below; trial `SP1101_owner_authentication_removed`. |
+| **Frozen recipes** (`f587c80cd8`) | 24 installed editions, each pinned by the SHA-256 of its exact schema bytes. The DG6A prepared editions (alert ×4 1.0.0, panel ×2 2.0.0, concern.created 1.0.0, Card 5 ×9 current) had no earlier writer, so their recipe is the current one: lane validator (CV-1100 exact integers, CV-1101 EventRecord predicate) and recomputed identity (`evt_<family>_` + H over the owner unit's array). The panel v1 1.0.0 editions and the Card 5 concern legacy v1 1.0.0 editions predate the lane (unchanged since 2026-09-02). Their recipe is the original schema's own Draft 2020-12 type and number validation, with the CV-1101 predicate installed and the original event id retained exactly, as NUMRULE-ADOPTION's DG6A section asks ("Retain original schema type/format/number validation on history, with new current guards excluded"). CV-684/685 already say the "immutable v1 schema stays historical-only and dispatches by its own stored schema id/version". | `scripts/pm_dg6a_custody.py:91` (`Edition`), `:118` (`_editions`), `:145` (`expected_event_id`) | `retained_integral_float_*` witnesses; trial `SP1101_legacy_recipe_current_numbers`. |
+| **Rows moved by custody** (`f587c80cd8`) | HG14 (`edition_known`) and RR02 (`edition_known`) selected the edition from the original's own copy or its event type. The selection is now SP-1101's, so those rows became HC04 and RQ04. Under custody RR03 (`stored_object`) is entailed: every installed verifier refuses a non-object payload (RQ05) and every frozen edition schema is an object schema (RR04). It moves to the table of its own, `retry_retained_<caller>_entailed`, beside RR08. Its old witness (a string payload) now refuses at RQ04, and RR04 gets a new witness: a sealed original whose stored payload violates its edition. | `scripts/pm-dg6a-table-generate.py` (`history_custody`, `retry_retained_*`, `history_original`) | `python3 scripts/pm-dg6a-table-generate.py scripts --check`: 90 generated tables, 478 rows (+9 hand-written). |
+| **Custody witnesses** (`f587c80cd8`) | History (all sixteen): forged original (unsealed bytes) → `original_authority`; the same original declared as Storage history → readable; foreign-Store binding → `original_binding`; replaced resource → `recipe_unsupported`; another family's recipe → `original_verification`; a sealed current-edition original whose `event_id` is not its recipe identity → `original_verification`; unknown `event_ref` → `original_unavailable` (fifteen families: the HISTORICAL_ONLY mapping joins the original ref). Downgrade: a panel v2 or Card 5 concern v2 original sealed under its family's v1 tuple resolves, and the frozen v1 edition refuses the current payload (HG15). The request never picks an edition. Retry (alert ×4, panel ×2): forged, unknown ref, foreign binding, replaced resource and foreign recipe each refuse with the family retry code; the declared-history control returns the original. | `scripts/pm_dg6a_p2b_witnesses.py:110` (`history_custody`), `:187` (`history_downgrade`), `:203` (`retry_all`) | Family checkers. |
+| **Retained timestamps, numbers and metadata** (`f587c80cd8`) | Each original is Storage history (`written`). Owner-valid retained timestamps (the 8 accepts) are readable with exact strings. Owner-invalid ones (the 11 refusals) refuse at HG15, because a writer that skipped format checks does not make history owner-valid (CV-1101, SP-1101). `acknowledged_at_utc` with lowercase `z` or an offset is readable (its owner schemas declare broad `format: date-time`). Retained `observed_at_utc`/`persisted_at_utc` take `storage_utc_z`: 3 accepted and 6 refused per field (HG05). An integral float in an integer slot is readable under a legacy recipe and refused under a current one (HG15). A retained original at sequence 2^64−1 under a checkpoint through 2^64−1 is readable. | `scripts/pm_dg6a_p2b_witnesses.py:138` (`history_retained`) | Family checkers; trials `CV253_storage_profile_removed`, `SP1101_legacy_recipe_current_numbers`. |
+| **Owner text** (`a041faf303`, `ffc43eae22`) | CV-680..686: the lane grammar sentence is replaced by CV-1101 through the shared predicate with each field's owner profile and exact instant order. SP-660..666: one added sentence states the RetainedDispatcher composition and the unavailable/unsupported refusals without fallback. F3-706..714: "remain a sweep dependency"/"remains a sweep item" now state the adopted CV-1100/CV-1101/SP-1101 rules, and the C12 sentence names only what stays open (part 2A's F3 C12 item). `ffc43eae22` rewords the same sentences so they no longer spell the two CV-253 field names. As first written, each edited unit fence became a new container the date-time inventory gate must classify (22 new `unreadable_mentioning_container` rows). All 23 edited YAML blocks parse. | `Plans/Contracts_V0.md:24628`…`:24986`; `Plans/storage-plan.md:29830`, `:29978`, `:30125`, `:30272`, `:30426`, `:30588`, `:30768`; `Plans/FinalGUISpec.md:50709`…`:51247` | Shards and index regenerated twice; only these three documents' outputs and the index changed; shard check pass. |
+| **Standing trials** (`f587c80cd8`) | `scripts/pm-dg6a-p2b-trials.py` removes one adopted mechanism per run, and the complete checker must fail: `CV1101_predicate_removed`, `CV253_storage_profile_removed`, `SP1101_owner_authentication_removed`, `SP1101_identity_not_recomputed` (each on alert.snoozed, panel.undocked, concern.created, concern.resolved), and `SP1101_legacy_recipe_current_numbers` (panel.undocked, concern.resolved). | `scripts/pm-dg6a-p2b-trials.py` | **18 of 18 caught**, each by an assertion naming its witness. |
+| **Inventory gate and `datetime_validator`** | Not called by any lane check (addendum 2). The gate refuses in this tree on Plans drift alone; its rows are below. They run at batch-2 integration. The inventory and exclusions files are not edited. | — | Section "Self-tests and the inventory gate". |
+| **Part 2A item: F3-706..714 C12 wording** | Closed by `a041faf303` (row "Owner text"). | — | — |
+
+**Disputed:** none. **Stopped for Jared:** none. **IDs used:** none new. CV-680..686, SP-660..666 and F3-706..714 change in place; the new guard rows (HC01–HC05, RQ01–RQ05, PD04) are table row names, not PlanUnit IDs.
+
+## Timestamp fields and the shared check that covers each
+
+| Field | Owner | Shared check and profile | Where validated |
+|---|---|---|---|
+| alert payload `ts`, `snooze_until` (snoozed), `mute_expires_at` (rule_muted), and the same fields in the operation `original_command`/payload and the shared alert/rule state schemas | CV-680..683 | `date_time`, **EventRecord** profile, through the lane format checker | `sch_alert_payload`, `sch_alert_operation`, state schemas; retained HG15 and retry RR04 under the custody-selected frozen edition |
+| panel v2 `settled_at_utc` (payload and operation) | CV-684/685 | `date_time`, **EventRecord** | `sch_panel_payload`, `sch_panel_operation`; HG15, RR04 |
+| panel v1 `settled_at_utc` (retained only) | CV-684/685 (immutable v1 schema) | `date_time`, **EventRecord**, in the frozen v1 recipe | HG15 (legacy recipe) |
+| concern.created payload `ts`; concern record `created_at`, `updated_at`, `resolved_at` (nullable) | CV-686 | `date_time`, **EventRecord** | `sch_concern_payload`, `sch_concern_operation`, record schema; HG15 |
+| Card 5 payload `ts` (nine families, current and concern legacy v1 editions) | F3-706..714 | `date_time`, **EventRecord** | `sch_c5_payload`, `sch_c5_operation`, `sch_c5_field`; HG15 |
+| EventRecord `occurred_at_utc` (producer route) | EventRecord, CV-317/CV-1101 | `date_time`, **EventRecord** | PD01 |
+| `observed_at_utc`, `persisted_at_utc` (producer record, retained event, recipe preimages) | Storage, CV-253 | `date_time`, **storage_utc_z** | PD04, HG05, `semantic_formats` |
+| first-receipt `acknowledged_at_utc` (retained receipt, recipe preimages) | CV-339/SP-286 AppendReceipt; owner schemas declare `format: date-time` | `date_time`, **EventRecord** | HG17, `semantic_formats` |
+| exact order `snooze_until` > `ts` | CV-682/683 | the shared predicate first, then the lane's exact `instant_le` (CV-1101 keeps comparison with its owners) | AP06, CS06 |
+
+Every field above is checked by the shared predicate with the named profile. The review is no longer interim.
+
+## Fixture expectations that changed
+
+No committed fixture file changed, and no committed fixture case changed its expected result: none uses a leap second, year 0000 or a forged retained original. The changes are in the lane's own drivers:
+
+| Case | Before → now | Refusing row / reason |
+|---|---|---|
+| p2a witness `history_edition_unknown` (an original declaring `9.0.0`, now declared as Storage history) | `['historical_payload']` (HG14) → `['recipe_unsupported']` | HC04: Storage's tuple for that original names no installed verifier |
+| p2a witness `retry_unknown_edition` | `[retry code, append code]`, unchanged; row RR02 → RQ04 | RQ04 |
+| p2a witness `retry_stored_not_object` | replaced by `retry_stored_invalid` (`correlation_id` 7) | RR03 is entailed (own table); RR04 is the new witness's row |
+| alert `retained_revision_cases` `unsupported_original_edition` | `[retry code]`, unchanged; row RR02 → RQ04 | RQ04 |
+| alert/panel `retained_revision_cases` (all) | unchanged results; their driver-built originals are now declared as Storage history | — |
+| domain-check `BAD_DATES` | `0000-01-01T00:00:00Z` moved to `GOOD_DATES` (refused → accepted at every `format: date-time` leaf and composed context); `2016-12-31T23:59:60+01:00` and `2026-06-30T23:59:60Z` added | shared predicate: year 0000 is RFC 3339; the two seconds 60 are not real leap seconds (`date_time_leap_second`) |
+| domain-check `GOOD_DATES` | added `2016-12-31T23:59:60Z`, `2017-01-01T01:59:60+02:00`, `2016-12-31T23:59:60.999Z` | — |
+| domain-check coherent retained timestamp negatives | unchanged guards (`historical_payload`/`original_receipt`); the malformed original is now declared as Storage history, so custody resolves it and the timestamp row refuses | HG15 / HG17 |
+| final-regression B2 (one CLI case per payload timestamp field per `BAD_DATES` value) | +1 per field (−1 year 0000, +2 seconds 60): alert 25→26 (snoozed 50→52), panel 25→26, concern 28→29 | — |
+
+Counts: family checkers alert 522/525/526/539 → 635/638/639/667, panel 504/503 → 666/665, concern.created 639 → 745, Card 5 annotation 354 → 380, note_created 955 → 1,024, note_status_changed 962 → 1,031, assigned 989 → 1,107, evidence_linked 968 → 1,086, promoted 990 → 1,108, reopened 969 → 1,087, resolved 1,015 → 1,133, updated 969 → 1,087. Domain-check 8,909/9,035/9,218/9,760/11,095/11,084/11,762 → 8,965/9,091/9,289/9,850/11,125/11,114/11,834. Final regression 128/128/128/153/166/166/128 → 129/129/129/155/167/167/129.
+
+## Guard-table result (gated tool `004bdedd63`, rerun at `3fc13d0ccc`)
+
+Part 2B changes guarded predicates in several ways. The shared date-time predicate sits inside every schema verdict row and inside PD01, HG05, HG17, AP06, CS06 and RC01. The custody rows HC01–HC05, RQ01–RQ05 and PD04 are new. HG14 and RR02 became custody rows, and RR03 moved to an entailed table. So I reran the tool on every table: one collection run of all sixteen complete family suites (suite counts as in the family checkers), then the tool per table. **99 tables, 518 rows: 498 proved; 20 unprovable by construction**, each in one of the nine tables of its own that have no negative (tool `NOT_RUN`). The 90 tables that have a negative all `PASS`. 521 tool negatives and 143 controls; 14,764 tool evaluations. Masked: 0. Unrelated changes: 0. Lane-matrix problems: 0. Credit is the tool's own `rows[].proved`. Long-job `dg6a-p2b-vg2` at `3fc13d0ccc`, `guard/summary.json`; it started at 17.7 GiB available, and the tool's MemoryGate paused 52 times below 10 GiB, resuming at 11. The later commit `ffc43eae22` changes only owner text and its derived files, which no table or witness reads.
+
+Part 2A was 98 tables, 505 rows and 487 proved. The change is +5 HC rows, +4 net per retry table (RQ01–RQ05 less RR02), +1 PD04 and −1 HG14. RR03 ×2 joins the unproved by-construction rows; its proof is below.
+
+| Checker part | Tables | Rows | Proved | Unproved (own tables) | Tool negatives / controls | Cut: own flips | Cut: stays | Masked | Unrelated changes |
+|---|---:|---:|---:|---|---:|---:|---:|---:|---:|
+| Hand-written first-pass tables (Card 5, alert, panel, concern) | 9 | 40 | 40 | none | 41 / 9 | 41 | 217 | 0 | 0 |
+| Schema documents and schema occurrences (verdict rows) | 13 | 15 | 14 | CONCERN_OPERATION_PAYLOAD_schema | 17 / 12 | 17 | 6 | 0 | 0 |
+| Alert payload and operation (shared library) | 11 | 67 | 64 | OK07_command_id, OK12_handler_target, OK16_mute_scope | 73 / 20 | 73 | 472 | 0 | 0 |
+| Checkpoint, producer route, protocol shape, retries and append evidence (shared) | 12 | 57 | 52 | CZ00_encodable, RR03_stored_object, RR08_digest, RR03_stored_object, RR08_digest | 58 / 19 | 58 | 386 | 0 | 0 |
+| Retained-history reader, SP-1101 custody and bounded read-through (shared) | 8 | 43 | 43 | none | 45 / 19 | 45 | 282 | 0 | 0 |
+| Panel (pm-panel-event-contracts-check.py) | 12 | 52 | 49 | PK03_command_id, PK07_panel_id, PK13_target_host | 50 / 20 | 50 | 273 | 0 | 0 |
+| concern.created (pm-concern-created-contracts-check.py) | 12 | 78 | 76 | CK03_command_id, CK07_handler_target | 77 / 24 | 77 | 603 | 0 | 0 |
+| Card 5 operations, mapping and history mapping (pm-card5-event-contracts-check.py) | 22 | 166 | 160 | G_after_bundle_id, G_after_doc_id, G_after_annotation_id, G_after_note_id, G_after_provenance_ref, HN09_after_present | 160 / 20 | 160 | 1334 | 0 | 0 |
+| **Total** | 99 | 518 | 498 | 20 | 521 / 143 | 521 | 3573 | 0 | 0 |
+
+**Rows unprovable by construction.** Each sits in a table of its own, so the other rows keep their credit. The tool reports these tables `NOT_RUN` (no negative): no input reaches their rows first. Line numbers are current at the final head.
+
+| Table | Rows | Why no input reaches the row first (path:line) |
+|---|---|---|
+| `alert_command_keys_entailed` | OK07 `command_id`, OK12 `handler_target`, OK16 `mute_scope` | the operation schema fixes both copies to the same const, so `sch_alert_operation` refuses any other value first: `Plans/alert_event_contracts/alert_acknowledged_operation.schema.json:136`/`:388` (`command_id`), `:133`/`:385` (`handler_target`); `alert_dismissed_operation.schema.json:138`/`:392`, `:135`/`:389`; `alert_rule_muted_operation.schema.json:145`/`:398`, `:142`/`:395`, `:129`/`:382` (`mute_scope`); `alert_snoozed_operation.schema.json:142`/`:400`, `:139`/`:397` (payload/command); files unchanged since part 2A |
+| `panel_command_keys_entailed` | PK03 `command_id`, PK07 `panel_id`, PK13 `target_host` | same: `Plans/panel_event_contracts/panel_redocked_operation.schema.json:192`/`:403`, `:189`/`:406`, `:204`/`:424`; `panel_undocked_operation.schema.json:192`/`:403`, `:189`/`:406` (its command declares no `target_host`) |
+| `concern_command_keys_entailed` | CK03 `command_id`, CK07 `handler_target` | same: `Plans/concern_created_contracts/concern_created_operation.schema.json:106`/`:410`, `:109`/`:407` |
+| `sch_concern_operation_payload` | `CONCERN_OPERATION_PAYLOAD_schema` | the operation schema embeds the payload schema (its `payload_*` `$defs` renamed), so `sch_concern_operation` refuses every payload defect first; `payload_schema_entailment` (`scripts/pm-concern-created-contracts-check.py:148`, called at `:401`) checks the two are equal on every run |
+| `checkpoint_encoding_entailed` | CZ00 `encodable` | every checkpoint integer slot is a Storage sequence bounded 0..2^64-1 (SP-1100) and no slot admits a fractional number, so `sch_checkpoint` refuses every value the recipe cannot encode; `checkpoint_encoding_entailment` (`scripts/pm-alert-event-contracts-check.py:475`) checks each family's checkpoint schema on every run (alert `:1330`, panel `scripts/pm-panel-event-contracts-check.py:308`, concern `scripts/pm-concern-created-contracts-check.py:374`, Card 5 `scripts/pm-card5-event-contracts-check.py:689`) |
+| `retry_retained_alert_entailed`, `retry_retained_panel_entailed` | RR08 `digest` | RR06 (`scripts/pm-alert-event-contracts-check.py:273`) equates the earlier-recipe digest of the stored body with the operation's `request_digest`; RR07 (`:274`) makes the retry body exactly that stored body; both call sites pass the original operation's `request_digest` as the comparison digest (`:342`, `scripts/pm-panel-event-contracts-check.py:189`) |
+| `retry_retained_alert_entailed`, `retry_retained_panel_entailed` | **RR03 `stored_object` (new in part 2B)** | under SP-1101 a custody-verified original's payload is an object. Every installed frozen verifier returns False for a non-object payload (`scripts/pm_dg6a_custody.py:169`, giving RQ05), and every one of the 24 frozen edition schemas has root `"type": "object"`, so RR04 (`scripts/pm-alert-event-contracts-check.py:266`) refuses such a payload as well. Row spec: `scripts/pm-dg6a-table-generate.py:215`. Part 2A's RR03 witness (a string payload) is now RQ04's witness, because no edition is installed for it |
+| `c5_after_note_entailed` | `after_bundle_id`, `after_doc_id`, `after_annotation_id`, `after_note_id`, `after_provenance_ref` | the expected post-state value is the before record's field, and `note_after_<field>`/`note_before_<field>` (`scripts/pm-card5-event-contracts-check.py:280`, `:282`) join both records to the payload field first; the fields are string-typed, so exact and `==` agree |
+| `c5_history_mapping_after_entailed` | HN09 `after_present` | `mapping_errors` refuses a non-object `after` first (`after_object`, `scripts/pm-card5-event-contracts-check.py:550`) |
+
+**Two-row witnesses excluded** (the same sets as part 2A, by construction): `checkpoint_token` (CT01+CT03, one changed token Store read by both) and `c5_concern_a` (two recorder-role pairs).
+
+**New and changed tables:**
+
+| Table | Rows | Proved | Tool | Negatives / controls | Evaluations |
+|---|---:|---:|---|---:|---:|
+| `history_custody` (HC01–HC05) | 5 | 5 | PASS | 5 / 1 | 96 |
+| `retry_retained_alert` (RR01, RQ01–RQ05, RR04–RR07) | 10 | 10 | PASS | 10 / 1 | 341 |
+| `retry_retained_panel` | 10 | 10 | PASS | 10 / 1 | 341 |
+| `producer_route` (PD01, PD04, PD02, PD03) | 4 | 4 | PASS | 4 / 1 | 65 |
+| `history_original` (HG15–HG21) | 7 | 7 | PASS | 8 / 1 | 198 |
+| `history_event` (HG05–HG15 event members) | 11 | 11 | PASS | 11 / 1 | 408 |
+| `retry_retained_{alert,panel}_entailed` (RR03, RR08) | 2 + 2 | 0 | NOT_RUN (no negative, by construction) | 0 / 0 | 0 |
+
+Per table (credit as the tool reports it; flips and stays summed over rows; report SHA-256 prefix of `guard/<table>.json`):
+
+| Table | Rows | Proved | Tool | Negatives / controls (tool) | Distinct single-row negatives | Flips | Stays | Two-row witnesses excluded | Report SHA-256 (12) |
+|---|---:|---:|---|---:|---:|---:|---:|---:|---|
+| `alert_candidate_state` | 6 | 6 | PASS | 6 / 1 | 6 | 6 | 30 | 0 | `52c78bb160b3` |
+| `alert_command_keys_a` | 11 | 11 | PASS | 11 / 1 | 11 | 11 | 110 | 0 | `ed1055291e48` |
+| `alert_command_keys_b` | 12 | 12 | PASS | 12 / 1 | 12 | 12 | 132 | 0 | `77c713956f79` |
+| `alert_command_keys_entailed` | 3 | 0 | NOT_RUN (no negative) | 0 / 0 | 0 | 0 | 0 | 0 | `` |
+| `alert_operation_identity` | 4 | 4 | PASS | 4 / 1 | 4 | 4 | 12 | 0 | `1617bd1d902c` |
+| `alert_operation_joins` | 3 | 3 | PASS | 3 / 1 | 3 | 3 | 6 | 0 | `7734986e1051` |
+| `alert_operation_size` | 2 | 2 | PASS | 6 / 10 | 6 | 6 | 6 | 0 | `2173674904c4` |
+| `alert_owner_candidate` | 7 | 7 | PASS | 7 / 1 | 7 | 7 | 42 | 0 | `6d8ef5cea16e` |
+| `alert_owner_prior` | 7 | 7 | PASS | 7 / 1 | 7 | 7 | 42 | 0 | `48d4e91d4f1b` |
+| `alert_payload` | 7 | 7 | PASS | 12 / 2 | 12 | 12 | 72 | 0 | `a0ba26432e0c` |
+| `alert_protocol` | 5 | 5 | PASS | 5 / 1 | 5 | 5 | 20 | 0 | `181da1f69bb5` |
+| `append_result` | 11 | 11 | PASS | 13 / 2 | 13 | 13 | 130 | 0 | `04071b98e578` |
+| `c5_after` | 11 | 11 | PASS | 11 / 1 | 11 | 11 | 110 | 0 | `2bc298153373` |
+| `c5_after_note_entailed` | 5 | 0 | NOT_RUN (no negative) | 0 / 0 | 0 | 0 | 0 | 0 | `` |
+| `c5_assessment` | 2 | 2 | PASS | 2 / 1 | 2 | 2 | 2 | 0 | `9886e36ed559` |
+| `c5_before` | 3 | 3 | PASS | 3 / 1 | 3 | 3 | 6 | 0 | `93cdb571bf2b` |
+| `c5_concern_a` | 12 | 12 | PASS | 12 / 1 | 12 | 12 | 132 | 2 | `41f0e052e3cf` |
+| `c5_concern_b` | 6 | 6 | PASS | 6 / 1 | 6 | 6 | 30 | 0 | `7fed8a46e5cf` |
+| `c5_concern_c` | 6 | 6 | PASS | 6 / 1 | 6 | 6 | 30 | 0 | `3bb33327f782` |
+| `c5_core_a` | 9 | 9 | PASS | 9 / 1 | 9 | 9 | 72 | 0 | `83d0d40f7415` |
+| `c5_core_b` | 9 | 9 | PASS | 9 / 1 | 9 | 9 | 72 | 0 | `7c72ce694f7e` |
+| `c5_history_mapping_after` | 9 | 9 | PASS | 9 / 1 | 9 | 9 | 72 | 0 | `861bc0c4130c` |
+| `c5_history_mapping_after_entailed` | 1 | 0 | NOT_RUN (no negative) | 0 / 0 | 0 | 0 | 0 | 0 | `` |
+| `c5_history_mapping_before` | 9 | 9 | PASS | 9 / 1 | 9 | 9 | 72 | 0 | `6af08a761728` |
+| `c5_history_mapping_object` | 2 | 2 | PASS | 2 / 1 | 2 | 2 | 2 | 0 | `a332070b1028` |
+| `c5_history_mapping_payload` | 8 | 8 | PASS | 8 / 1 | 8 | 8 | 56 | 0 | `a2241ba20bca` |
+| `c5_mapping` | 11 | 11 | PASS | 11 / 1 | 11 | 11 | 110 | 0 | `553d390f58d4` |
+| `c5_mapping_shape` | 8 | 8 | PASS | 8 / 1 | 8 | 8 | 56 | 0 | `177a4079a032` |
+| `c5_note_ids` | 10 | 10 | PASS | 10 / 1 | 10 | 10 | 90 | 0 | `49067cddb83b` |
+| `c5_note_state` | 8 | 8 | PASS | 8 / 1 | 8 | 8 | 56 | 0 | `cba02de148c3` |
+| `c5_outgoing` | 9 | 9 | PASS | 9 / 1 | 9 | 9 | 72 | 0 | `34a1d2e7da58` |
+| `c5_phase` | 4 | 4 | PASS | 4 / 1 | 4 | 4 | 12 | 0 | `404e5c35359c` |
+| `c5_receiving` | 9 | 9 | PASS | 9 / 1 | 9 | 9 | 72 | 0 | `dead47997ec5` |
+| `c5_resolution` | 15 | 15 | PASS | 15 / 1 | 15 | 15 | 210 | 0 | `c92ce078b50f` |
+| `checkpoint_encoding_entailed` | 1 | 0 | NOT_RUN (no negative) | 0 / 0 | 0 | 0 | 0 | 0 | `` |
+| `checkpoint_size` | 1 | 1 | PASS | 5 / 10 | 8 | 5 | 0 | 0 | `c0c7ef642e6b` |
+| `checkpoint_token` | 6 | 6 | PASS | 6 / 1 | 6 | 6 | 30 | 1 | `49d7ac10f604` |
+| `concern_authority` | 7 | 7 | PASS | 7 / 1 | 7 | 7 | 42 | 0 | `05d9365e53be` |
+| `concern_command_keys_a` | 7 | 7 | PASS | 7 / 1 | 7 | 7 | 42 | 0 | `8ec9d899d360` |
+| `concern_command_keys_b` | 8 | 8 | PASS | 8 / 1 | 8 | 8 | 56 | 0 | `c7e6cf8b7537` |
+| `concern_command_keys_entailed` | 2 | 0 | NOT_RUN (no negative) | 0 / 0 | 0 | 0 | 0 | 0 | `` |
+| `concern_creator` | 6 | 6 | PASS | 6 / 1 | 6 | 6 | 30 | 0 | `c8e130a7df21` |
+| `concern_existence` | 4 | 4 | PASS | 5 / 5 | 5 | 5 | 15 | 0 | `d47aeefb1fed` |
+| `concern_identity` | 5 | 5 | PASS | 5 / 1 | 5 | 5 | 20 | 0 | `dbc244e17d0c` |
+| `concern_operation_joins` | 5 | 5 | PASS | 5 / 1 | 5 | 5 | 20 | 0 | `d9c7ac7e48f5` |
+| `concern_operation_size` | 2 | 2 | PASS | 2 / 10 | 2 | 2 | 2 | 0 | `a4f612385e35` |
+| `concern_protocol_flags` | 4 | 4 | PASS | 4 / 1 | 4 | 4 | 12 | 0 | `b16700d5dbcc` |
+| `concern_record_a` | 14 | 14 | PASS | 14 / 1 | 14 | 14 | 182 | 0 | `4453125e1e11` |
+| `concern_record_b` | 14 | 14 | PASS | 14 / 1 | 14 | 14 | 182 | 0 | `9bd59fba928e` |
+| `concern_scope` | 1 | 1 | PASS | 1 / 1 | 1 | 1 | 0 | 0 | `b95b81a91c16` |
+| `current_context` | 11 | 11 | PASS | 11 / 1 | 11 | 11 | 110 | 0 | `7b6619172437` |
+| `current_header` | 4 | 4 | PASS | 5 / 1 | 5 | 5 | 15 | 0 | `1bc8419940ed` |
+| `cursor` | 5 | 5 | PASS | 5 / 1 | 5 | 5 | 20 | 0 | `6f289b5e7af7` |
+| `decision_citation` | 5 | 5 | PASS | 5 / 1 | 5 | 5 | 20 | 0 | `8aaeec5fb720` |
+| `history_checkpoint` | 4 | 4 | PASS | 4 / 1 | 4 | 4 | 12 | 0 | `e7615ef4ab50` |
+| `history_custody` | 5 | 5 | PASS | 5 / 1 | 5 | 5 | 20 | 0 | `7ac89b9c3d18` |
+| `history_disclosure` | 5 | 5 | PASS | 5 / 1 | 5 | 5 | 20 | 0 | `6f6dc7fa8248` |
+| `history_event` | 11 | 11 | PASS | 11 / 1 | 11 | 11 | 110 | 0 | `b4416d6b1bb0` |
+| `history_original` | 7 | 7 | PASS | 8 / 1 | 8 | 8 | 48 | 0 | `556915906ce5` |
+| `history_page_bytes` | 1 | 1 | PASS | 2 / 10 | 2 | 2 | 0 | 0 | `ad8b801b9c93` |
+| `history_page_ref` | 1 | 1 | PASS | 1 / 3 | 1 | 1 | 0 | 0 | `8d247d25cfe8` |
+| `history_shape` | 9 | 9 | PASS | 9 / 1 | 9 | 9 | 72 | 0 | `28dc1150df21` |
+| `panel_command_keys` | 12 | 12 | PASS | 12 / 1 | 12 | 12 | 132 | 0 | `d07a0e3466c9` |
+| `panel_command_keys_entailed` | 3 | 0 | NOT_RUN (no negative) | 0 / 0 | 0 | 0 | 0 | 0 | `` |
+| `panel_host_candidate` | 4 | 4 | PASS | 4 / 1 | 4 | 4 | 12 | 0 | `de1a2a5cd73d` |
+| `panel_host_prior` | 4 | 4 | PASS | 4 / 1 | 4 | 4 | 12 | 0 | `f7805a1836fb` |
+| `panel_identity` | 2 | 2 | PASS | 2 / 1 | 2 | 2 | 2 | 0 | `f4be05d96726` |
+| `panel_operation_joins` | 7 | 7 | PASS | 7 / 1 | 7 | 7 | 42 | 0 | `2a661cea0c4b` |
+| `panel_operation_size` | 2 | 2 | PASS | 3 / 10 | 3 | 3 | 3 | 0 | `21ad2f632807` |
+| `panel_payload` | 5 | 5 | PASS | 5 / 1 | 5 | 5 | 20 | 0 | `6e0bc642d9e1` |
+| `panel_protocol` | 7 | 7 | PASS | 7 / 1 | 7 | 7 | 42 | 0 | `865f670e0766` |
+| `panel_publication` | 2 | 2 | PASS | 2 / 1 | 2 | 2 | 2 | 0 | `f6213e67cd15` |
+| `panel_request` | 1 | 1 | PASS | 1 / 1 | 1 | 1 | 0 | 0 | `11eb25120043` |
+| `panel_result_refs` | 3 | 3 | PASS | 3 / 1 | 3 | 3 | 6 | 0 | `433d745421d7` |
+| `panel_scope` | 1 | 1 | PASS | 1 / 1 | 1 | 1 | 0 | 0 | `21c23d260471` |
+| `producer_route` | 4 | 4 | PASS | 4 / 1 | 4 | 4 | 12 | 0 | `2e79df9aef55` |
+| `profile` | 5 | 5 | PASS | 5 / 1 | 5 | 5 | 20 | 0 | `c7cff6a61c5e` |
+| `protocol_shape` | 6 | 6 | PASS | 6 / 1 | 6 | 6 | 30 | 0 | `5f7127d33c13` |
+| `retry_current_alert` | 2 | 2 | PASS | 2 / 1 | 2 | 2 | 2 | 0 | `7a3785f07c50` |
+| `retry_current_panel` | 2 | 2 | PASS | 2 / 1 | 2 | 2 | 2 | 0 | `2f43db3b77d7` |
+| `retry_retained_alert` | 10 | 10 | PASS | 10 / 1 | 10 | 10 | 90 | 0 | `8fc65b35d0f4` |
+| `retry_retained_alert_entailed` | 2 | 0 | NOT_RUN (no negative) | 0 / 0 | 0 | 0 | 0 | 0 | `` |
+| `retry_retained_panel` | 10 | 10 | PASS | 10 / 1 | 10 | 10 | 90 | 0 | `dcdb5594276a` |
+| `retry_retained_panel_entailed` | 2 | 0 | NOT_RUN (no negative) | 0 / 0 | 0 | 0 | 0 | 0 | `` |
+| `sch_alert_operation` | 1 | 1 | PASS | 2 / 1 | 2 | 2 | 0 | 0 | `3bf4347b1a68` |
+| `sch_alert_payload` | 1 | 1 | PASS | 1 / 1 | 1 | 1 | 0 | 0 | `5d3c1cc8dd4b` |
+| `sch_c5_field` | 1 | 1 | PASS | 1 / 1 | 1 | 1 | 0 | 0 | `5ed4a4499139` |
+| `sch_c5_operation` | 1 | 1 | PASS | 1 / 1 | 1 | 1 | 0 | 0 | `2ffd868fa6fe` |
+| `sch_c5_payload` | 1 | 1 | PASS | 1 / 1 | 1 | 1 | 0 | 0 | `876101c07650` |
+| `sch_checkpoint` | 1 | 1 | PASS | 1 / 1 | 1 | 1 | 0 | 0 | `8e527440cdfe` |
+| `sch_concern_operation` | 1 | 1 | PASS | 2 / 1 | 2 | 2 | 0 | 0 | `83f68debea6b` |
+| `sch_concern_operation_payload` | 1 | 0 | NOT_RUN (no negative) | 0 / 0 | 0 | 0 | 0 | 0 | `` |
+| `sch_concern_payload` | 1 | 1 | PASS | 1 / 1 | 1 | 1 | 0 | 0 | `f022f672e2e1` |
+| `sch_panel_operation` | 1 | 1 | PASS | 2 / 1 | 2 | 2 | 0 | 0 | `107aa65d709a` |
+| `sch_panel_payload` | 1 | 1 | PASS | 1 / 1 | 1 | 1 | 0 | 0 | `2fc7fbe24513` |
+| `schema_document` | 1 | 1 | PASS | 1 / 1 | 1 | 1 | 0 | 0 | `e927e3d56662` |
+| `schema_ref` | 3 | 3 | PASS | 3 / 1 | 3 | 3 | 6 | 0 | `291174db1e8f` |
+| `storage_schema` | 6 | 6 | PASS | 6 / 1 | 6 | 6 | 30 | 0 | `94d9851befba` |
+| `writer_policy` | 2 | 2 | PASS | 2 / 1 | 2 | 2 | 2 | 0 | `e1bd8029ce92` |
+
+## Self-tests and the inventory gate
+
+| Command | Exit | Credited result |
+|---|---:|---|
+| `python3 scripts/pm_event_numbers.py --self-test --scope numbers` | 0 | `"status": "pass"`, 580 of 580 cases (304 negatives), 0 failures |
+| `python3 scripts/pm_event_numbers.py --self-test` (scope all) | 1 | `"status": "fail"`, `case_execution: NOT_RUN_ADMISSION_REFUSED`: the inventory gate refuses before any of the 13,626 cases runs (`datetime_inventory_complete_and_classified`). Recorded, as addendum 2 asks; not a lane result. |
+| `python3 scripts/pm_event_datetime_inventory.py` (final head `ffc43eae22`) | 1 | `"status": "fail"`, 233 nodes, 0 unclassified nodes, 0 `inventory_node_changed`, 234 scan rows: 139 `unclassified_mentioning_container`, 48 `stale_scan_exclusion`, 47 `unreadable_mentioning_container` |
+| the same at `3fc13d0ccc` (before the owner-text rewording) | 1 | 300 scan rows; the 22 extra were my edited CV/SP/F3 unit fences, removed by `ffc43eae22` |
+| the same gate on the lane tree before any part 2B edit (the merge `d3fd87730a`, a scratch sparse worktree) | 1 | 230 scan rows. The final head has exactly those 230 plus the 4 rows from the local ignored currentness copy: **part 2B adds no gate row** |
+| `python3 scripts/pm_event_datetime.py --self-test` | 0 | **not credited**: the module has no entry point and runs nothing (addendum 2 correction) |
+
+Scan rows at the final head, by source: 213 derived (regenerated `_shards`, `.plan_index` and migration outputs whose exclusion pins went stale); 7 DG6A fixture files (alert ×4, panel ×2, concern.created), whose `semantic_digest_cases` and retry metadata spell `observed_at_utc` as data; 4 in the git-ignored currentness copy, which `pm-plan-index.py generate` needs locally; 4 `Plans/Decision_Log.md` and 4 `Plans/usage-feature.md` fences (DL-028, DL-054, DL-418, DL-450, UF-079, UF-085, UF-087, UF-088); 2 `Plans/Contracts_V0.md` fences (CV-317, CV-318). None of the last ten is a DG6A unit. No row is a false pass: the gate fails closed. The inventory and exclusions files are NUMRULE's and were not edited. The batch-2 integration refresh owns these rows. **`datetime_validator` and the inventory gate run at batch-2 integration.**
+
+## Family grades before and after
+
+P=PASS, Q=PARTIAL, A=ABSENT. "Before" is the part 2A self-grade; "after" is this self-grade.
+
+| Family | Before → after |
+|---|---|
+| `alert.acknowledged`, `alert.dismissed`, `alert.rule_muted`, `alert.snoozed` | 9P / 2Q / 1A → 9P / 2Q / 1A (each) |
+| `panel.redocked`, `panel.undocked` | 9P / 2Q / 1A → 9P / 2Q / 1A (each) |
+| `concern.created` | 9P / 2Q / 1A → 9P / 2Q / 1A |
+| `bundle.note_created`, `bundle.note_status_changed`, `bundle.annotation_state_changed` | 9P / 2Q / 1A → 9P / 2Q / 1A (each) |
+| `concern.assigned`, `concern.evidence_linked`, `concern.promoted`, `concern.reopened`, `concern.resolved`, `concern.updated` | 9P / 2Q / 1A → 9P / 2Q / 1A (each) |
+
+**144 PASS / 32 PARTIAL / 16 ABSENT, unchanged.** No cell changes status.
+- **C12 `positive_negative_oracles` stays PARTIAL.** Timestamps are no longer a reason: every field is checked by the shared CV-1101 predicate with its profile, and witnesses show the shared Refusal as the validation cause. Part 2A's S-FMT1 and S-N2 are closed. It stays PARTIAL because JSON Schema keyword cuts are not ported to the tool (schema occurrences are verdict rows), because `datetime_validator` and the whole-Plans inventory gate run at batch-2 integration (they refuse in a lane tree on drift alone), and because the batch Sol/Astra review has not run.
+- **`compatibility_withdrawal` stays PASS.** Its finding now cites the SP-1101 composition, with the edition selected by custody rather than caller evidence.
+- C7 retention stays PARTIAL (PENDING_RETENTION_DECISION); C1 membership stays ABSENT.
+
+Self-grade changes: the C12 and `compatibility_withdrawal` findings and evidence (custody `resolve`, the custody call in `historical_refusals`, `history_custody` and `datetime_payload` witnesses, the shared predicate in the lane format checker), `remaining_gaps`, and a `sweep_p2b` record. Every quote was re-checked at its line: 309 at their line, 70 relocated by line number inside their own unit section or file, and 9 re-pointed to the successor sentence in F3-706..714 ("C12 remains PARTIAL: JSON Schema keyword cuts are not ported to that tool,"). `--audit-grade-only`: pass, 16 families, 475 citations.
+
+## What Astra keeps finding, probed (part 2B deltas)
+
+- **Class 1, forged or contradictory inputs:** a retained original's bytes must be the ones Storage sealed at its ref (HC02/RQ02). Its binding must equal the sealed binding (HC03/RQ03). Its identity is recomputed by the frozen verifier (HC05). A coherent forgery of candidate and original together now refuses; before part 2B it was accepted.
+- **Class 2, Storage metadata:** Storage instants take CV-253's strict profile at every read site (PD04, HG05, preimages).
+- **Class 3, historical readers:** owner-valid retained history stays readable after the grammar change. That covers leap seconds, lowercase/offset timestamps, legacy integral floats and 2^64−1 metadata. Owner-invalid, unsealed, foreign-bound, unsupported or foreign-recipe originals refuse. Current writer rows never run on a retained original.
+- **Class 4, one field read two ways:** timestamps are validated once by the shared predicate and compared only by the lane's exact `instant_le`; strings are never rewritten.
+- **Class 7, custody:** both retained paths (read and retry) run the dispatcher; custody is never taken from a caller flag.
+- **Class 10a, history after a tightened rule:** the frozen recipe comes from sealed custody, never from request data; downgrade and replaced-resource selections refuse.
+- **Class 11, exact types:** a `str`-subclass timestamp refuses (`date_time_type`).
+- **Class 12, skipped formats:** the predicate is installed explicitly in the lane format checker. The witnesses read the shared Refusal as the error cause, and the trial `CV1101_predicate_removed` is caught.
+- The other classes are unchanged from part 2A.
+
+## Commands and evidence
+
+Heavy runs went one at a time on the VM's local disk. Two gated long-jobs ran: `dg6a-p2b-vg` at `98760da363` and `dg6a-p2b-vg2` at `3fc13d0ccc`. Each started only at ≥13.5 GiB available and paused below 10 GiB, resuming at 11; the guard tool has its own MemoryGate (10/11). Three slips, stated plainly:
+- the collect-only guard pass started at 15 GiB, but a first verification job started at 9 GiB and was stopped after 8 s (one family checker had run);
+- four single-family smoke runs (about 30 s each) ran at 10 GiB;
+- the first gated run found the PD04 crash and a stale self-grade line. It was stopped between stages, never mid-mutation: final-regression writes fixtures in place. Both were fixed (`3fc13d0ccc`) and everything was rerun at `3fc13d0ccc`.
+
+No browser was used. PM7 work was not touched.
+
+| Command (at `3fc13d0ccc` unless noted) | Exit | Outcome |
+|---|---:|---|
+| `git merge --no-ff 58c2816ff33365384d4039553f5efdb5370930e6` | 0 | clean (`d3fd87730a`), 7 files, each equal to `58c2816ff3` |
+| sixteen family checkers | 0 each | `pass`: alert 635/638/639/667, panel 666/665, concern.created 745, Card 5 annotation 380, note_created 1,024, note_status_changed 1,031, assigned 1,107, evidence_linked 1,086, promoted 1,108, reopened 1,087, resolved 1,133, updated 1,087 |
+| `python3 scripts/pm-dg6a-domain-check.py --family F` (7 families) | 0 each | `pass`: 8,965 / 9,091 / 9,289 / 9,850 / 11,125 / 11,114 / 11,834 observations |
+| `python3 scripts/pm-dg6a-final-regression-check.py --family F` (7 families) | 0 each | `pass`: 129/129/129/155 (alert), 167/167 (panel), 129 (concern); every mutated input restored |
+| `python3 scripts/pm-dg6a-final-regression-check.py --audit-grade-only` (final head) | 0 | `pass`, 16 families, 475 citations |
+| `python3 scripts/pm-dg6a-table-generate.py scripts --check` | 0 | 90 generated tables, 478 rows (+9 hand-written); no stale or extra module |
+| `python3 scripts/pm-dg6a-guard-check.py` | 0 | fixture vectors 224/224/223/232/223/223/253; `proof: none` |
+| `python3 scripts/pm-dg6a-number-corpus.py --json …` | 0 | 5,184 route runs over 81 values and 16 families, 0 disagreements (1,264 accepted, 3,920 refused). At `98760da363` it exited 1 with `KeyError: 'observed_at_utc'` from PD04; fixed in `3fc13d0ccc` |
+| `python3 scripts/pm_event_numbers.py --self-test --scope numbers` | 0 | `pass`, 580/580 (304 negatives) |
+| `python3 scripts/pm_event_numbers.py --self-test` | 1 | admission refused by the inventory gate, 0 cases run (recorded, addendum 2) |
+| `python3 scripts/pm_event_datetime_inventory.py` (final head / pre-edit merge) | 1 / 1 | 234 / 230 scan rows; the difference is the local ignored currentness copy |
+| `python3 scripts/pm_event_datetime.py --self-test` | 0 | runs nothing; not credited |
+| `python3 scripts/pm-dg6a-p2b-trials.py <trial> <checker> <family>` ×18 | 0 each | 18/18 caught |
+| `python3 scripts/pm-dg6a-guard-tables.py --out <dir>` (long-job `dg6a-p2b-vg2`) | 1 | 99 tables: 90 `PASS`, 9 entailed `NOT_RUN`; 498/518 proved; 0 masked, 0 unrelated changes, 0 lane-matrix problems (exit 1 only because the entailed tables have no negative) |
+| `python3 scripts/pm-shard-plans.py --generate --config Plans/sharding_config.json`; `python3 scripts/pm-plan-index.py generate` (currentness edition SHA-256 tree `69e5e402…` equal to the shared checkout's), twice (`a041faf303`, `ffc43eae22`) | 0 | only `Plans/_shards/{contracts_v0,storage-plan,finalguispec}` and `Plans/.plan_index` changed |
+| `python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json` | 0 | `pass` |
+| `python3 scripts/pm-plan-index.py validate` (origin/main `77bae0c636`, final head) | 1 | top-level `fail`, 59 failures, the same set as part 2A. 38 `plan_unit_removed_without_ledger_decision` are units main added after this branch's base (for example DL-470..472, F3-716..718, ACD-637..640, CV-369); 21 are `plan_unit_removal_ledger_invalid` in existing ledgers. None names a DG6A unit. The integration rebase owns them. |
+
+Commits: `d3fd87730a` (merge), `f587c80cd8` (scripts), `a041faf303` (owner text, shards, index), `98760da363` (`str`-subclass witness), `3fc13d0ccc` (PD04 fix), `ffc43eae22` (owner text rewording, shards, index), then the report commit (external `HEAD.txt`). Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/sweep-p2b/`, with SHA-256 of every file in `SHA256SUMS`. No pm-mail other than the final line, no subagent, no admission, no registry append, no Decision Log change, no governance artifact edit, no landing lock and no push to main. The worktree is removed after publication.
+
+---
+
+Everything below is **superseded source lineage**. Its "interim only" timestamp statements and its "Part 2B items" list are closed by the section above.
+
+# Earlier reports — historical; the sweep part 2B report above is current
+
 # DG6A — sweep part 2A (guard tables on the gated tool) and part 2B numbers
 
 **Branch:** `plans/ea-w2-gui-concerns-20261104`, part 2A start `2a0ceaa355`. Gated guard-tool merge `5ce68412d9` (tool `004bdedd63`, eleven files, none edited). Gated NUMRULE number-scope merge `b789fd717b` (exactly `a16f67c1ef`, never the branch head; it brings no main commit; its 163 conflicts were all in `Plans/_shards/**` and `Plans/.plan_index/**` and were resolved by regeneration, never by hand). Implementation head `e8de3e0b52`; the delivery head (this report commit) is in the external `HEAD.txt`. No rebase onto main this round.
