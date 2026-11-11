@@ -999,6 +999,11 @@ html:not([data-o55-nier="on"]) body[data-theme="retro-light"] .orbit-core { --po
    reference and receipt tiles are keyed by step). A finished history step is
    lit green. The card head's tile is neon-icons.css section 12's; a finished
    card's tiles are turn-stage.css's. */
+/* Every phase tile (styles.css: 28 px, a grid centring its glyph) is a block centring its one block glyph instead, so
+   the breathing status mark in a working card's head is not a grid item: its ticks lay out the glyph alone, not the
+   whole document. The same box and offset (pm7-perf lane F2, as the Orbit ring's symbol, .orbit-node-symbol). */
+.work-phase-icon { display: block; align-content: center; }
+.work-phase-icon > svg { display: block; margin-inline: auto; }
 .working-card .work-phase-icon { background: var(--surface-3); color: var(--muted); box-shadow: none; }
 .working-variant-0 .reference-stage .work-phase-icon, .receipt-building .work-phase-icon, .stack-card.current .work-phase-icon {
   background: var(--nx-disc); color: var(--pm-step, var(--accent));
