@@ -255,7 +255,8 @@ for (const surface of ['normal', 'sandbox']) {
 			const tick = () => { const op = window.PM_DEMO && PM_DEMO.web && PM_DEMO.web.op('op-web-r1'); if ((op && op.state === 'completed') || Date.now() - t0 > 40000) { setTimeout(() => { if (mo) mo.disconnect(); res({ quiet, done: !!(op && op.state === 'completed') }); }, 600); } else setTimeout(tick, 200); };
 			tick();
 		}));
-		const list = await f.evaluate(() => (window.PM_TITLEBAR_NOTIFY ? PM_TITLEBAR_NOTIFY.list() : []).filter((x) => /Research/i.test(x.title)));
+		// a lasting notice stages for a few seconds, then joins the inbox (PM_TITLEBAR_NOTIFY.list)
+		const list = await f.waitForFunction(() => { const l = (window.PM_TITLEBAR_NOTIFY ? PM_TITLEBAR_NOTIFY.list() : []).filter((x) => /Research/i.test(x.title)); return l.length ? l : false; }, null, { timeout: 12000 }).then((h) => h.jsonValue()).catch(() => []);
 		await t.check('the research run completed while Settings was open', seenQuiet.done, '');
 		await t.check('no quiet toast about it (one that reads as the answer to the last click)', seenQuiet.quiet.length === 0, JSON.stringify(seenQuiet.quiet));
 		await t.check('it is a notice from the chat, kept in the inbox', list.length === 1 && list[0].level === 'notice' && list[0].source === 'agents', JSON.stringify(list));
@@ -365,8 +366,10 @@ for (const surface of ['normal', 'sandbox']) {
 		}
 		// Upload file saved with no file
 		const before = await library();
-		await NB.locator('[data-action="pm51-notifications-add-sound"]').first().scrollIntoViewIfNeeded();
-		await NB.locator('[data-action="pm51-notifications-add-sound"]').first().click();
+		// Add sound is the "general.interaction.sound-management" row's own button; it opens Upload file / Import pack
+		const addRow = NB.locator('[id="setting-general.interaction.sound-management"]').first();
+		await addRow.scrollIntoViewIfNeeded();
+		await addRow.locator('button.o55-actionbtn, button').first().click();
 		await t.page.waitForTimeout(300);
 		if (await f.locator('.pm51-menu-item', { hasText: /Upload file/ }).count()) await menuItem(t, f, 'Upload file');
 		await f.locator('.overlay .dialog').last().waitFor({ state: 'visible', timeout: 8000 });
@@ -472,10 +475,9 @@ for (const surface of ['normal', 'sandbox']) {
 
 	T('memory 10 Escape closes Tidy up memories after a chore', async (t) => {
 		const f = await settings(t, surface);
-		await go(t, f, 'memory', 'context-memory');
-		const MB = f.locator(BODY('context-memory'));
-		await tab(t, f, 'context-memory', 'Keeping & privacy');
-		const open = MB.locator('[data-action="pm51-memory-tidy"]').first();
+		// "Tidy up memories" is the memory.retention.maintenance row's own button
+		const row = await reveal(t, f, 'memory.retention.maintenance');
+		const open = row.locator('button', { hasText: /Tidy up memories/ }).first();
 		await open.scrollIntoViewIfNeeded();
 		await open.click();
 		await drawer(f).waitFor({ state: 'visible', timeout: 8000 });
