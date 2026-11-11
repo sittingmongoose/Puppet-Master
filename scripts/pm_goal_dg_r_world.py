@@ -409,9 +409,16 @@ class PhysOwner(A.TestOwner):
         self.current = {}
 
     def key(self, family, *parts):
+        """TEST_ONLY source-family key: K(storage) plus a scope/discriminator digest.
+
+        Source families keep their own original key recipes natively; these
+        test keys only need to be unique and independent of identifier length.
+        The projection and checkpoint keys use the exact SP-312 K recipe.
+        """
         w = self.world
-        return ':'.join([family, S.k_component(w.sid), S.k_component(w.scope['project_id']),
-                         S.k_component(w.scope['goal_run_id'])] + [S.k_component(str(p)) for p in parts])
+        digest = sha256(NR.binding_value_bytes([family, w.scope['project_id'], w.scope['goal_run_id']] +
+                                               [str(p) for p in parts], 'key/digest'))
+        return ':'.join([family, S.k_component(w.sid), digest])
 
     def build_wrapper(self, family, realm, root, key, overlay=(), choices=None, knob=None):
         """Seed, bind, overlay, ancillary-fill and validate one outer wrapper (no write)."""
@@ -541,7 +548,8 @@ class World:
         self.cfg = dict(cfg or {})
         self.knobs = self.cfg.get('knobs', {})
         self.tmp = Path(tempfile.mkdtemp(prefix='dgr-world-', dir=base))
-        self.storage = S.TestOwnerStorage.create(self.tmp / 'storage')
+        self.storage = S.TestOwnerStorage.create(self.tmp / 'storage', segment_target_bytes=int(
+            self.cfg.get('segment_target_bytes', 65536)))
         self.registry = A.OwnerRegistry()
         self.recorder = self.registry.recorder
         self.roots = Roots.get()
@@ -549,8 +557,9 @@ class World:
         self.clock = Clock(self.storage)
         self.sid = self.storage.storage_instance_id
         tag = uuid.uuid4().hex[:12]
-        self.scope = dict(storage_instance_id=self.sid, project_id='TEST_ONLY-project-' + tag,
-                          goal_id='TEST_ONLY-goal-' + tag, goal_run_id='TEST_ONLY-goal-run-' + tag)
+        pad = '-' + 'p' * int(self.cfg.get('id_pad', 0)) if self.cfg.get('id_pad') else ''
+        self.scope = dict(storage_instance_id=self.sid, project_id='TEST_ONLY-project-' + tag + pad,
+                          goal_id='TEST_ONLY-goal-' + tag + pad, goal_run_id='TEST_ONLY-goal-run-' + tag + pad)
         self.ids = dict(execution_owner_ref='TEST_ONLY:executor-owner:' + tag,
                         workflow_owner_ref='TEST_ONLY:workflow-owner:' + tag,
                         plan_compile_run_id='TEST_ONLY-compile-' + tag, workgraph_id='TEST_ONLY-workgraph-' + tag,
@@ -561,6 +570,8 @@ class World:
         self.issued = {}
         self.append = A.AppendOwner(self.registry, self.storage)
         self.ancillary = PhysOwner(self, 'ancillary_provenance')
+        # TEST_ONLY disclosure-permission owner state (read / project grants)
+        self.permissions = dict(read=True, project=True)
 
     def knob(self, name):
         return self.knobs.get(name)
@@ -603,7 +614,7 @@ class World:
                 else:
                     self.bind(v)
 
-    def repair_filler(self, realm, root, wrapper, owned):
+    def repair_filler(self, realm, root, wrapper, owned, allow_const=False):
         """Filler that chose a null alternative where a sibling rule needs a string.
 
         Only members the owner did not set are touched, and only from null to
@@ -611,14 +622,22 @@ class World:
         """
         for _ in range(40):
             errors = self.roots.errors(realm, root, wrapper)
-            fixable = [e for e in errors if e.instance is None and e.validator == 'type' and
-                       e.validator_value in ('string', ['string']) and
+            flat = []
+            for e in errors:
+                flat.append(e)
+                flat.extend(c for c in (e.context or []) if c.absolute_path)
+            unowned = [e for e in flat if e.absolute_path and
                        not any(('/' + '/'.join(map(str, e.absolute_path))).startswith(o) for o in owned)]
-            if not fixable:
+            fixable = [e for e in unowned if e.instance is None and e.validator == 'type' and
+                       e.validator_value in ('string', ['string'])]
+            consts = [e for e in unowned if e.validator == 'const' and allow_const]
+            if not fixable and not consts:
                 return
             for e in fixable:
                 put(wrapper, '/' + '/'.join(map(str, e.absolute_path)), 'TEST_ONLY:%s:%s' % (
                     e.absolute_path[-1], uuid.uuid4().hex[:12]))
+            for e in consts[:1]:
+                put(wrapper, '/' + '/'.join(map(str, e.absolute_path)), copy.deepcopy(e.validator_value))
 
     def autofill(self, wrapper, family):
         """Issue an ancillary provenance original for every unfilled selector."""
@@ -705,6 +724,8 @@ class CancelWorld(World):
         self.process = PhysOwner(self, 'process')
         self.d06 = PhysOwner(self, 'd06_cancel')
         self.out = {}
+        if self.knob('pre_start_events'):
+            self.knob('pre_start_events')(self)
         self._birth()
         if cfg.get('start', 'started') == 'started':
             self._start()
@@ -884,7 +905,8 @@ class CancelWorld(World):
         # The Goal-level cancellation Event is genuinely appended by Storage;
         # the control publication carries Storage's own first receipt.
         goal_event = w._goal_event(op)
-        events, reservation, _ = w.append.append_original('TEST_ONLY:append:' + op, dict(op=op), [goal_event])
+        events, reservation, _ = w.append.append_original('TEST_ONLY:append:' + op, dict(op=op), [goal_event],
+                                                          durability_class='barrier')
         custody = w.append.first_receipt(events[0])
         publication = dict(event_id=custody['event_id'], first_append_receipt=custody['first_append_receipt'],
                            original_append_result=dict(event_id=custody['event_id'],
@@ -1280,6 +1302,8 @@ class CancelWorld(World):
         op = w.ops['d06']
         owner = [('/record/workflow_owner_ref', w.ids['workflow_owner_ref']), ('/record/workflow_owner_epoch', 1)]
         scoped = [('/record/operation_id', op), ('/record/transaction_id', tx)]
+        if w.knob('pre_cancel_events'):
+            w.knob('pre_cancel_events')(w)
         before_body, before_control = w.body1, w.control1
         after_body = w.native.prepare_body(before_body, 'cancelled', knob=w.knob('native_after_body'))
         after_control = w.native.prepare_control(before_control, after_body, knob=w.knob('native_after_control'))
@@ -1459,3 +1483,23 @@ def _filesafe_kind(self, key):
 
 World.issued_by_value = _issued_by_value
 World.filesafe_kind = _filesafe_kind
+
+
+def _storage_close(self):
+    """Hand the Storage directory to another process (no in-process writes)."""
+    self._closed_storage = self.storage
+
+
+def _storage_reopen(self):
+    """Fresh-process-equivalent reopen from the durable bytes; rewire owners."""
+    storage = S.TestOwnerStorage.open(self.tmp / 'storage')
+    A.require('reopen/instance', storage.storage_instance_id == self.sid)
+    self.storage = storage
+    self.append.storage = storage
+    self.clock.storage = storage
+    self.registry.recorder.observe('storage:' + storage.storage_instance_id, storage.observe)
+    return storage
+
+
+World.storage_close = _storage_close
+World.storage_reopen = _storage_reopen

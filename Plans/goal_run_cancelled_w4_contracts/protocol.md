@@ -31,3 +31,5 @@ The exact K component recipe comes from SP-312: unpadded base64url of exact UTF-
 ## Completion accounting
 
 `pm_goal_own_c3_w34b_oracles.py` reports routing qualification separately from complete original-path tests. Schema shapes and passing inherited bounded models do not count as positive D06 issuance/publication, semantic current readers or combined-prefix transactions. Whole W4 closure stays NOT_COMPLETE until every remaining boundary in W4 and the part-2 report is executed with full coherent original tuples and isolated negatives.
+
+DG-R (2026-11-11) executes this selection through the TEST_ONLY composition named in `Plans/goal_own_c_contracts/protocol.md` W4. Its oracles report each judge group R1-R6 separately: the scoped-route qualification and its binding to this `routing.v1.json`, the positive D06 causal graph, settlements and effects, readers, the combined prefix and the projection transaction/lifecycle. Each group is COMPLETE only where `reports/event-authority-20261111/DG-R.md` says so; native evidence stays NOT_RUN and is a separate claim, and a planning PASS must never read as native proof.

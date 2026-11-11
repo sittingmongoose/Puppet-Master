@@ -198,6 +198,19 @@ def r2_cases():
         run_case(out, cid, 'R2', 'positive', world_case(cfg))
     run_case(out, 'R2/positive/read_retained_native', 'R2', 'positive', world_case(S0, read='retained'))
 
+    def order(w, r):
+        seq = [m for _, m in w.recorder.sequence(True)]
+        want = ['issue:workflow_cancel_event_candidate', 'issue:workflow_cancel_intent', 'issue:workflow_cancel_control',
+                'issue:workflow_cancel_origin', 'issue:workflow_goal_run_body', 'issue:workflow_goal_run_control',
+                'append_original', 'issue:workflow_cancel_result', 'issue:workflow_cancel_control',
+                'issue:workflow_cancel_origin', 'issue:executor_workflow_workflow_update',
+                'issue:executor_workflow_workflow_head', 'issue:executor_workflow_mutation_origin']
+        start = max(i for i, m in enumerate(seq) if m == 'issue:workflow_cancel_event_candidate')
+        tail = [m for m in seq[start:] if m in set(want)]
+        W.guard('order/original_d06_chronology', tail[:len(want)] == want)
+        return dict(chain=tail[:len(want)])
+    run_case(out, 'R2/positive/original_order_recorded', 'R2', 'positive', world_case(S0, check=order))
+
     def equal_replay(w, p, r):
         first = R.Consumer(w).read_retained_native(r, p)
         events = w.storage.observe()['events']
@@ -366,6 +379,7 @@ def r3_cases():
         ('sticky_flush_failure_mutation', dict(M, flush=['original_required_flush_failed', 'original_required_flush_durable']),
          'd05/flush_sticky'),
         ('pre_attempt_effect_mutation', knob(M, pre_attempt_effect=True), 'd05/pre_attempt_effects'),
+        ('unknown_flush_outcome', dict(M, flush=['unknown']), 'd05/flush_sticky'),
     ]
     for name, cfg, expected in negatives:
         run_case(out, 'R3/' + name, 'R3', 'negative', world_case(cfg), expected)
@@ -377,7 +391,391 @@ def r3_cases():
     return out
 
 
-GROUPS = dict(R1=r1_cases, R2=r2_cases, R3=r3_cases)
+
+# ------------------------------------------------------------------ R4-R6
+
+import pm_goal_dg_r_projector as P  # noqa: E402
+
+LONG_ACTOR = lambda n: (lambda p: p.update(actor_ref='TEST_ONLY:actor:' + 'a' * n))  # noqa: E731
+
+
+def off_run_event(w, kind='goal_run.started', same_run=False, pending=False, extra=None):
+    """Append a genuine Storage event for another (or the same) run."""
+    run = w.scope['goal_run_id'] if same_run else w.scope['goal_run_id'] + '-other'
+    tag = os.urandom(6).hex()
+    event = dict(schema_id='pm.event.v0', schema_version='2.0.0', scope_kind='project', event_id=str(__import__('uuid').uuid4()),
+                 event_type=kind, project_id=w.scope['project_id'], thread_id=None, run_id=None, node_id=None,
+                 attempt_id=None, actor_ref='TEST_ONLY:actor:other', requested_account_ref=None,
+                 effective_account_ref=None, occurred_at_utc=w.clock.now(), producer_sequence_id=None,
+                 correlation_id='TEST_ONLY:correlation:' + tag, causation_event_id=None, parent_event_id=None,
+                 idempotency_key='TEST_ONLY:%s:%s' % (kind, tag),
+                 payload_schema_id='pm.goal_runtime_event.%s.schema.v3' % kind.split('.')[1],
+                 payload=dict(goal_id=w.scope['goal_id'], payload=dict(goal_run_id=run)), payload_ref=None,
+                 redaction_profile='no_secrets', replay_policy='dedupe_by_idempotency_key',
+                 migration=dict(migrated_from_schema_id=None, migrated_from_schema_version=None, migration_id=None,
+                                compatibility_event_type=None))
+    if extra:
+        extra(event)
+    if pending:
+        handle = w.storage.reserve('TEST_ONLY:pending:' + tag, dict(tag=tag))
+        w.storage.append(handle, [event])
+        return event
+    w.append.append_original('TEST_ONLY:append:other:' + tag, dict(tag=tag), [event], durability_class='barrier')
+    return event
+
+
+def projector_case(cfg, steps, check=None):
+    """Build a world, then run projector steps; each step is fn(world, projector)."""
+    def run():
+        w = W.CancelWorld(cfg, base=BASE)
+        try:
+            w.build()
+            p = P.Projector(w)
+            value = None
+            for step in steps:
+                value = step(w, p)
+            if check is not None:
+                return check(w, p, value)
+            return value if isinstance(value, dict) and 'tx_id' not in value else dict(ok=True)
+        finally:
+            w.close()
+    return run
+
+
+def must_publish(w, p, **kw):
+    out = p.project(**kw)
+    W.guard('project/unavailable:' + str(out.get('reason')), 'reason' not in out)
+    return out
+
+
+def must_unavailable(reason):
+    def step(w, p):
+        out = p.project()
+        W.guard('project/published', 'reason' in out)
+        raise W.Refusal('unavailable/' + out['reason'] + '/' + p.last_halt[0])
+    return step
+
+
+def publish(w, p):
+    return must_publish(w, p)
+
+
+def cutover(w, p):
+    return p.cutover()
+
+
+def historical(w, p):
+    before = w.recorder.snapshot()
+    out = p.read_historical()
+    after = w.recorder.snapshot()
+    W.guard('passive/no_effect', [k for k in after if after[k]['sha256'] != before[k]['sha256']] == [])
+    return out
+
+
+def r5_cases():
+    S0, N0 = {'start': 'started'}, {'start': 'no_start'}
+    knob = lambda base, **k: dict(base, knobs=k)  # noqa: E731
+    out = []
+
+    def form(w, p, v):
+        return dict(kind=v['row']['content']['kind'], record=v['row']['content'].get('record', {}).get(
+            'status_at_original_event'), frontier=w.storage.last_sequence)
+    run_case(out, 'R5/positive/started_then_cancelled_combined', 'R5', 'positive', projector_case(S0, [publish], form))
+    run_case(out, 'R5/positive/initialized_no_start_cancellation', 'R5', 'positive', projector_case(N0, [publish], form))
+
+    def off_run_noop(w, p):
+        off_run_event(w)
+        off_run_event(w, 'goal_run.stopped')
+        return must_publish(w, p)
+    run_case(out, 'R5/positive/off_run_rows_validated_then_noop', 'R5', 'positive', projector_case(S0, [off_run_noop]))
+
+    def coverage_counts_off_run(w, p):
+        a = must_publish(w, p)
+        return dict(processed=a['checkpoint']['content'].get('checkpoint', {}).get('generations', {}) and True)
+    run_case(out, 'R5/positive/coverage_is_global_prefix', 'R5', 'positive', projector_case(dict(S0, knobs=dict(
+        pre_cancel_events=lambda w: off_run_event(w))), [publish]))
+
+    def deterministic(w, p):
+        first = must_publish(w, p)
+        again = P.Projector(w).project()
+        W.guard('determinism/replay', again.get('replay') is True and A.same(again['row'], first['row']))
+        return dict(row_sha256=W.physical_sha256(first['row']))
+    run_case(out, 'R5/positive/deterministic_reprocessing_same_row', 'R5', 'positive', projector_case(S0, [deterministic]))
+
+    def gap(w, p):
+        sealed = [s_ for s_ in w.storage.segments if s_['sealed'] and not s_['retired']]
+        W.guard('gap/sealed_segment', bool(sealed))
+        first = sealed[0]['generation']
+        disposition = w.storage.retire_segment(first, S.RetentionOwner(w.storage))
+        out_ = must_publish(w, p)
+        return dict(retired_segment=first, gap_frames=disposition['frame_count'],
+                    gap_sha=out_['checkpoint']['content'].get('checkpoint', {}).get('generations') is not None)
+    run_case(out, 'R5/positive/authenticated_retention_gap_continues', 'R5', 'positive', projector_case(
+        dict(S0, segment_target_bytes=6000, knobs=dict(pre_start_events=lambda w: [off_run_event(w) for _ in range(5)])), [gap]))
+
+    negatives = [
+        ('unsupported_same_run_row_before_cancel', knob(S0, pre_cancel_events=lambda w: off_run_event(w, 'goal_run.stopped', True)),
+         'unavailable/UNSUPPORTED_RELEVANT_EVENT/reducer/unsupported_same_run'),
+        ('unsupported_same_run_blocked', knob(S0, pre_cancel_events=lambda w: off_run_event(w, 'goal_run.blocked', True)),
+         'unavailable/UNSUPPORTED_RELEVANT_EVENT/reducer/unsupported_same_run'),
+        ('unsupported_same_run_replanned', knob(S0, pre_cancel_events=lambda w: off_run_event(w, 'goal_run.replanned', True)),
+         'unavailable/UNSUPPORTED_RELEVANT_EVENT/reducer/unsupported_same_run'),
+        ('cancel_event_without_native_cancellation', knob(S0, pre_cancel_events=lambda w: off_run_event(w, 'goal_run.cancelled', True)),
+         'unavailable/UNSUPPORTED_RELEVANT_EVENT/reducer/cancel_without_native_cancellation'),
+        ('second_start_event_same_run', knob(S0, pre_cancel_events=lambda w: off_run_event(w, 'goal_run.started', True)),
+         'unavailable/UNSUPPORTED_RELEVANT_EVENT/reducer/duplicate_start'),
+        ('pending_first_custody_off_run', knob(S0, pre_cancel_events=lambda w: off_run_event(w, pending=True)),
+         'unavailable/INCOMPLETE_GLOBAL_COVERAGE/project/pending_custody'),
+    ]
+    for name, cfg, expected in negatives:
+        run_case(out, 'R5/' + name, 'R5', 'negative', projector_case(cfg, [must_unavailable(None)]), expected)
+
+    def second_terminal(w, p):
+        off_run_event(w, 'goal_run.cancelled', True)
+        return must_unavailable(None)(w, p)
+    run_case(out, 'R5/second_cancelled_after_terminal', 'R5', 'negative', projector_case(S0, [second_terminal]),
+             'unavailable/UNSUPPORTED_RELEVANT_EVENT/reducer/second_terminal')
+
+    def corrupt_off_run(w, p):
+        event = off_run_event(w)
+        info = w.storage.events[event['event_id']]
+        path = w.storage._segment_path(info['segment_generation'])
+        raw = bytearray(path.read_bytes())
+        raw[info['offset'] + info['length'] - 2] ^= 0xFF
+        path.write_bytes(bytes(raw))
+        return must_unavailable(None)(w, p)
+    run_case(out, 'R5/malformed_off_run_frame_at_rest', 'R5', 'negative', projector_case(S0, [corrupt_off_run]),
+             'unavailable/INCOMPLETE_GLOBAL_COVERAGE/source/frame/payload_crc')
+
+    def start_commit_receipt(w, p):
+        return must_publish(w, p)
+    run_case(out, 'R5/start_commit_receipt_substituted', 'R5', 'negative', projector_case(knob(S0, start_commit=lambda wr: W.put(
+        wr, '/record/first_append_receipt/byte_offset', wr['record']['first_append_receipt']['byte_offset'] + 1)),
+        [start_commit_receipt]), 'reducer/start_receipt')
+    return out
+
+
+def r6_cases():
+    S0 = {'start': 'started'}
+    knob = lambda base, **k: dict(base, knobs=k)  # noqa: E731
+    out = []
+
+    def atomic(w, p):
+        r = must_publish(w, p)
+        row = w.storage.cell(P.dataset(r['generation_id']), P.row_key(w.scope))
+        ck = w.storage.cell('checkpoints', P.checkpoint_key(w.scope))
+        W.guard('atomic/same_transaction', row['tx'] == ck['tx'] == r['tx_id'])
+        W.guard('key/k_recipe', P.row_key(w.scope).endswith(S.k_component(w.scope['project_id']) + ':' +
+                                                          S.k_component(w.scope['goal_run_id'])))
+        return dict(tx=r['tx_id'], form=r['row']['content']['kind'])
+    run_case(out, 'R6/positive/atomic_row_and_checkpoint', 'R6', 'positive', projector_case(S0, [atomic]))
+
+    def crash(cut, expect_present):
+        def step(w, p):
+            r = p.project(cut=cut)
+            W.guard('crash/child_died', r['child_exit'] == S.CRASH_EXIT)
+            present = w.storage.cell('checkpoints', P.checkpoint_key(w.scope)) is not None
+            W.guard('crash/visibility', present is expect_present)
+            retry = must_publish(w, p)
+            if expect_present:
+                W.guard('crash/lost_ack_same_first_tx', retry.get('replay') is True)
+            return dict(child_exit=r['child_exit'], present=present, retry=retry.get('replay', False))
+        return step
+    run_case(out, 'R6/positive/crash_before_commit_neither_visible', 'R6', 'positive',
+             projector_case(S0, [crash('before_terminal', False)]))
+    run_case(out, 'R6/positive/crash_after_commit_both_visible_retry_same', 'R6', 'positive',
+             projector_case(S0, [crash('after_terminal', True)]))
+    run_case(out, 'R6/positive/staged_cutover_then_historical', 'R6', 'positive', projector_case(S0, [publish, cutover, historical]))
+    run_case(out, 'R6/positive/event_reference_form', 'R6', 'positive', projector_case(
+        knob(S0, event_payload=LONG_ACTOR(5000)), [publish, cutover, historical],
+        lambda w, p, v: dict(form=v['projection']['content']['kind'])))
+    run_case(out, 'R6/positive/record_reference_form_at_id_cap', 'R6', 'positive', projector_case(
+        dict(S0, id_pad=222, knobs=dict(event_payload=LONG_ACTOR(3000))), [publish, cutover, historical],
+        lambda w, p, v: dict(form=v['projection']['content']['kind'])))
+
+    def rebuild(w, p):
+        must_publish(w, p)
+        p.cutover()
+        must_publish(w, p, stage_only=True)
+        c = p.cutover()
+        W.guard('rebuild/retired_prior', c['retired'] is not None)
+        cell, logical = p.current_checkpoint()
+        return dict(states=sorted(g['state'] for g in logical['generations'].values()),
+                    checkpoint_form=cell['value']['content']['kind'])
+    run_case(out, 'R6/positive/fresh_rebuild_cutover_retires_prior', 'R6', 'positive', projector_case(S0, [rebuild, historical]))
+    def rebuild_twice(w, p):
+        rebuild(w, p)
+        must_publish(w, p, stage_only=True)
+        p.cutover()
+        cell, logical = p.current_checkpoint()
+        W.guard('spill/payload_reference', cell['value']['content']['kind'] == 'payload_reference')
+        return dict(generations=len(logical['generations']), checkpoint_form=cell['value']['content']['kind'])
+    run_case(out, 'R6/positive/checkpoint_spill_three_generations_at_id_cap', 'R6', 'positive',
+             projector_case(dict(S0, id_pad=222), [rebuild_twice, historical]))
+
+    def fourth_slot(w, p):
+        must_publish(w, p)
+        p.cutover()
+        for _ in range(2):
+            must_publish(w, p, stage_only=True)
+            p.cutover()
+        return must_publish(w, p, stage_only=True)
+    def withdraw_projector(w, p):
+        p.withdrawn = True
+        return p.project()
+    def withdraw_reader(w, p):
+        p.reader_withdrawn = True
+        return p.read_historical()
+    def held_reader(w, p):
+        p.hooks['after_original'] = lambda w_, p_: setattr(p_, 'reader_withdrawn', True)
+        return p.read_historical()
+    def source_lost(w, p):
+        w.d06.withdraw(w.cancellation['result'].handle)
+        return p.project()
+    def pack_withdrawn(w, p):
+        row = p.stored_projection()[3]
+        w.storage.withdraw_pack(row['content']['event_ref']['blake3'])
+        return p.read_historical()
+    def pack_corrupt(w, p):
+        row = p.stored_projection()[3]
+        path = w.storage.root / 'packs' / row['content']['event_ref']['blake3']
+        raw = bytearray(path.read_bytes())
+        raw[-1] ^= 0xFF
+        path.write_bytes(bytes(raw))
+        return p.read_historical()
+    def stale_cas(w, p):
+        p.hooks['before_commit'] = lambda w_, p_: off_run_event(w_)
+        return p.project()
+    def row_preempted(w, p):
+        def steal(w_, p_):
+            w_.storage.transact([dict(table='checkpoints', key=P.checkpoint_key(w_.scope), expected=None,
+                                      value=dict(schema_id='TEST_ONLY:concurrent', schema_version='1.0.0'))])
+        p.hooks['before_commit'] = steal
+        return p.project()
+    def premature_cutover(w, p):
+        must_publish(w, p)
+        off_run_event(w)
+        return p.cutover()
+    def forced_reference(w, p):
+        must_publish(w, p, force='event_reference')
+        p.cutover()
+        return p.read_historical()
+    def hex_key(w, p):
+        must_publish(w, p)
+        p.cutover()
+        ck, logical, gen, row = p.stored_projection()
+        bad = dict(row, physical_key=P.ROW_PREFIX + ':' + w.scope['project_id'].encode().hex() + ':' +
+                   w.scope['goal_run_id'].encode().hex())
+        return p.decode(bad, w.scope, gen['generation_id'])
+    def substituted_row(w, p):
+        ck, logical, gen, row = p.stored_projection()
+        table = P.dataset(gen['generation_id'])
+        cell = w.storage.cell(table, P.row_key(w.scope))
+        bad = copy.deepcopy(cell['value'])
+        bad['content']['record']['producer_semantic_digest'] = '5' * 64
+        w.storage.transact([dict(table=table, key=P.row_key(w.scope), expected=cell['version'], value=bad)])
+        return p.read_historical()
+    LA = knob(S0, event_payload=LONG_ACTOR(5000))
+    negatives = [
+        ('fourth_generation_slot', S0, [fourth_slot], 'generation/limit'),
+        ('projector_withdrawn', S0, [withdraw_projector], 'projector/withdrawn'),
+        ('reader_withdrawn', S0, [publish, cutover, withdraw_reader], 'reader/withdrawn'),
+        ('held_reader_withdrawn_before_release', S0, [publish, cutover, held_reader], 'reader/withdrawn'),
+        ('original_source_lost', S0, [source_lost], 'original/withdrawn'),
+        ('pack_withdrawn', LA, [publish, cutover, pack_withdrawn], 'pack/unavailable'),
+        ('pack_corrupt_at_rest', LA, [publish, cutover, pack_corrupt], 'payload/numrule/payload_digest'),
+        ('stale_source_token_at_commit', S0, [stale_cas], 'cas/source_token'),
+        ('checkpoint_cas_preempted', S0, [row_preempted], 'tx/cas_absent'),
+        ('premature_cutover_incomplete_coverage', S0, [premature_cutover], 'cutover/complete_coverage'),
+        ('reference_when_inline_fits', S0, [forced_reference], 'decode/representation_minimal'),
+        ('lower_hex_row_key', S0, [hex_key], 'decode/key'),
+        ('row_substituted_at_rest', S0, [publish, cutover, substituted_row], 'read/row_frontier'),
+        ('permission_revoked_before_commit', S0, [lambda w, p: (p.hooks.__setitem__(
+            'before_commit', lambda w_, p_: w_.permissions.__setitem__('project', False)), p.project())[1]], 'permission/project'),
+        ('permission_revoked_before_release', S0, [publish, cutover, lambda w, p: (p.hooks.__setitem__(
+            'after_original', lambda w_, p_: w_.permissions.__setitem__('read', False)), p.read_historical())[1]],
+         'permission/read'),
+    ]
+    for name, cfg, steps, expected in negatives:
+        run_case(out, 'R6/' + name, 'R6', 'negative', projector_case(cfg, steps), expected)
+    return out
+
+
+def r4_cases():
+    S0 = {'start': 'started'}
+    out = []
+    run_case(out, 'R4/positive/historical_read', 'R4', 'positive', projector_case(S0, [publish, cutover, historical]))
+
+    def advance(w, p):
+        # a lawful later native advance (new body revision by the native owner)
+        body = w.native.prepare_body(w.body2, 'cancelled')
+        control = w.native.prepare_control(w.control2, body)
+        w.body3, w.control3 = w.native.commit(body, control, w.body2, w.control2)
+        return None
+    run_case(out, 'R4/positive/historical_after_lawful_native_advance', 'R4', 'positive',
+             projector_case(S0, [publish, cutover, advance, historical]))
+    run_case(out, 'R4/positive/current_sources_fresh_at_entry_and_final', 'R4', 'positive',
+             projector_case(S0, [publish, cutover, lambda w, p: (p.current_sources(), p.current_sources())[1] and None]))
+    run_case(out, 'R4/positive/current_started_view_refuses_after_cancel', 'R4', 'positive',
+             projector_case(S0, [lambda w, p: W.guard('started/stale', p.read_current_started()['reason'] == 'STALE_NATIVE')]))
+
+    def after_decode_withdraw(w, p):
+        p.hooks['after_decode'] = lambda w_, p_: w_.d06.withdraw(w_.cancellation['intent'].handle)
+        return p.read_historical()
+    def after_original_row(w, p):
+        def swap(w_, p_):
+            ck, logical, gen, row = p_.stored_projection()
+            table = P.dataset(gen['generation_id'])
+            cell = w_.storage.cell(table, P.row_key(w_.scope))
+            bad = copy.deepcopy(cell['value'])
+            bad['content']['record']['activation_at_original_event'] = 'cancelled_before_mutation'
+            w_.storage.transact([dict(table=table, key=P.row_key(w_.scope), expected=cell['version'], value=bad)])
+        p.hooks['after_original'] = swap
+        return p.read_historical()
+    def stale_native(w, p):
+        advance(w, p)
+        return p.current_sources()
+    def newer_goal_stop(w, p):
+        other_stop_receipt(w)
+        return p.current_sources()
+    def d06_control_changed(w, p):
+        c = w.cancellation['committed_control']
+        w.d06.issue_physical(c.family, 'native_consumer', W.D06 + 'StorageControl', c.key,
+                             [('/record/operation_id', c.wrapper['record']['operation_id']), ('/record/revision', 3),
+                              ('/record/intent', c.wrapper['record']['intent']), ('/record/phase', 'committed'),
+                              ('/record/result', c.wrapper['record']['result']),
+                              ('/record/last_origin_operation_id', c.wrapper['record']['operation_id'])], mutable=True)
+        return p.current_sources()
+    def d01_head_advanced(w, p):
+        h = w.cancellation['original_d01_head']
+        w.d01.issue_physical(h.family, 'native_consumer', W.WO + 'StorageWorkflowHead', h.key,
+                             [('/record/revision', h.wrapper['record']['revision'] + 1),
+                              ('/record/last_update', h.wrapper['record']['last_update']),
+                              ('/record/current_body', h.wrapper['record']['current_body']),
+                              ('/record/current_control', h.wrapper['record']['current_control']),
+                              ('/record/previous_head', h.selector()),
+                              ('/record/activation_body', h.wrapper['record']['activation_body']),
+                              ('/record/activation_origin', h.wrapper['record']['activation_origin']),
+                              ('/record/workflow_owner_ref', h.wrapper['record']['workflow_owner_ref']),
+                              ('/record/workflow_owner_epoch', 1), ('/record/pending_operation_id', None)], mutable=True)
+        return p.current_sources()
+    def final_boundary_drift(w, p):
+        first = p.current_sources()
+        advance(w, p)
+        W.guard('final/current', A.same(p.current_sources(), first))
+    for name, steps, expected in [
+            ('helper_return_original_withdrawn', [publish, cutover, after_decode_withdraw], 'original/withdrawn'),
+            ('helper_return_row_substituted', [publish, cutover, after_original_row], 'read/row_frontier'),
+            ('current_native_advanced', [publish, cutover, stale_native], 'current/native_body'),
+            ('current_newer_goal_stop', [publish, cutover, newer_goal_stop], 'current/goal_stop'),
+            ('current_d06_control_changed', [publish, cutover, d06_control_changed], 'current/d06_control'),
+            ('current_d01_head_advanced', [publish, cutover, d01_head_advanced], 'current/d01_head'),
+            ('final_boundary_native_drift', [publish, cutover, final_boundary_drift], 'current/native_body')]:
+        run_case(out, 'R4/' + name, 'R4', 'negative', projector_case(S0, steps), expected)
+    return out
+
+
+GROUPS = dict(R1=r1_cases, R2=r2_cases, R3=r3_cases, R4=r4_cases, R5=r5_cases, R6=r6_cases)
 
 
 def main():
