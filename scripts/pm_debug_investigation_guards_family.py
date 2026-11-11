@@ -1,14 +1,12 @@
-"""DDBG guard table: Family phase: mode resolution, unchanged context state, inline body size.
+"""DDBG guard table: Family phase: mode resolution, unchanged context state.
 
 Part of the DDBG guard tables; the domain rule and phase order are in
 pm_debug_investigation_guard_constants.py. Every refusal here is a named
 predicate row; the factory builds a fresh table and Case for each candidate.
 """
-import json
-
 import pm_guard_isolation as g
 from pm_debug_investigation_guard_constants import (
-    CONTEXT_STATES, CONTEXT_STATE_EVENT, INLINE_LIMIT, STARTED_EVENT)
+    CONTEXT_STATES, CONTEXT_STATE_EVENT, STARTED_EVENT)
 
 
 def family_explicit_yolo(value, context):
@@ -50,25 +48,17 @@ def family_context_no_op(value, context):
     return 'no_op' if before == after else None
 
 
-def family_payload_size(value, context):
-    size = context['payload_bytes']
-    return 'payload_reference_required' if type(size) is int and size > INLINE_LIMIT else None
-
-
 def family_case(case_value):
-    # SP-337: encoded UTF-8 JSON bytes of the stored inline payload; the row compares them.
-    size = len(json.dumps(case_value.get('payload'), ensure_ascii=False, separators=(',', ':')).encode())
-    context = {'payload_bytes': size}
+    # The SP-337 inline size is measured in EVENT_VALUE bytes by the shared-rule phase (shared.payload_size).
+    context = None
     table = g.GuardTable([
         g.Guard('family.explicit_yolo', g.Invariant('/mode_resolution/explicit_yolo', 'is true when a started runtime_mode is yolo'), 'explicit_yolo_required', family_explicit_yolo),
         g.Guard('family.planning_approval', g.Invariant('/mode_resolution/approval_received', 'is true for a started regular/yolo run from planning'), 'planning_approval_required', family_planning_approval),
-        g.Guard('family.context_no_op', g.Invariant('/payload/state', 'differs from previous_state for context_item_state_changed'), 'no_op', family_context_no_op),
-        g.Guard('family.payload_size', g.Invariant('/payload', 'encoded UTF-8 JSON is at most 16 KiB inline (SP-337)'), 'payload_reference_required', family_payload_size)])
+        g.Guard('family.context_no_op', g.Invariant('/payload/state', 'differs from previous_state for context_item_state_changed'), 'no_op', family_context_no_op)])
 
     def check(value):
         table.require('family.explicit_yolo', value, context)
         table.require('family.planning_approval', value, context)
         table.require('family.context_no_op', value, context)
-        table.require('family.payload_size', value, context)
         return True
     return g.Case(table, check, context)

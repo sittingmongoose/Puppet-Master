@@ -38,6 +38,7 @@ import pm_debug_investigation_guards_payload_values as payload_values
 import pm_debug_investigation_guards_references as references
 import pm_debug_investigation_guards_retained as retained
 import pm_debug_investigation_guards_retry as retry
+import pm_debug_investigation_guards_shared as shared
 import pm_debug_investigation_guards_target_payload as target_payload
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -59,9 +60,34 @@ SPLIT_PAYLOADS = ('instrumentation_state_changed', 'started', 'target_bound', 's
 # payload.target_sha256_hex row plus its type and length rows.
 SUPPORTED_PATTERN = (('$defs', 'target_bound', 'properties', 'target_bindings', 'properties', 'source_sha256'),
                      '^[0-9a-f]{64}$')
+# CV-1100 (sweep part 2B): every schema integer slot of the companion schema,
+# judged by the shared current_integer with the slot's own published bounds in
+# the shared-rule phase: (view member, $defs path, family or None for the retry
+# request, where the slot sits, its member path there). The per-phase schema
+# documents drop these slots' type/minimum/maximum (as the target_bound digest
+# pattern is dropped); the lane runner checks the published schema agrees.
+INTEGER_SLOTS = (
+    ('item_count', ('exported', 'properties', 'item_count'), 'exported', 'payload', ('item_count',)),
+    ('artifact_count', ('exported', 'properties', 'artifact_count'), 'exported', 'payload', ('artifact_count',)),
+    ('binding_revision', ('target_bound', 'properties', 'target_bindings', 'properties', 'binding_revision'),
+     'target_bound', 'payload', ('target_bindings', 'binding_revision')),
+    ('retry_count_before', ('instrumentation_change_detail', 'properties', 'retry_count_before'),
+     'instrumentation_state_changed', 'detail', ('retry_count_before',)),
+    ('retry_count_after', ('instrumentation_change_detail', 'properties', 'retry_count_after'),
+     'instrumentation_state_changed', 'detail', ('retry_count_after',)),
+    ('attempt_number', ('instrumentation_change_detail', 'properties', 'attempt_number'),
+     'instrumentation_state_changed', 'detail', ('attempt_number',)),
+    ('retry_count', ('instrumentation_source', 'properties', 'retry_count'),
+     'instrumentation_state_changed', 'source', ('retry_count',)),
+    ('retries_used', ('cleanup_retry_request', 'properties', 'retries_used'), None, 'retry', ('retries_used',)))
+# The shared-rule rows that judge a payload member (the published payload schema
+# also judges these slots; the runner's agreement check names them).
+PAYLOAD_SLOT_ROWS = {'shared.item_count': ('item_count',), 'shared.artifact_count': ('artifact_count',),
+                     'shared.binding_revision': ('target_bindings', 'binding_revision')}
+EVENT_RECORD_SCHEMA = 'Plans/event_record.schema.json'
 # Fixture-suite lists ride along in each fixture case but are not part of the
 # candidate event; checkers judge the candidate without them.
-FIXTURE_SUITE_KEYS = ('negative_cases', 'retry_cases', 'transition_cases', 'native_oracles',
+FIXTURE_SUITE_KEYS = ('negative_cases', 'retry_cases', 'transition_cases', 'native_oracles', 'encoding_cases',
                       'checks', 'mode_cases', 'retry_request_cases')
 # Lane summary codes for schema rows (the row itself is reported beside it).
 SCHEMA_CODES = {
@@ -111,7 +137,14 @@ def documents(schema):
     found = patterns(schema)
     if found != [SUPPORTED_PATTERN]:
         raise ValueError('companion schema patterns changed; only the target_bound digest pattern is supported: ' + repr(found))
-    defs = schema['$defs']
+    defs = copy.deepcopy(schema['$defs'])
+    integer_slot_bounds(schema)
+    for _, path, _, _, _ in INTEGER_SLOTS:
+        parent = defs
+        for key in path[:-1]:
+            parent = parent[key]
+        # The slot's type and bounds are the shared-rule phase's (current_integer); the member stays.
+        parent[path[-1]] = {}
 
     def document(name):
         return {'$schema': DIALECT, **copy.deepcopy(defs[name])}
@@ -132,6 +165,38 @@ def documents(schema):
         else:
             result['debug.investigation.' + name] = {guards.PAYLOAD_URI: closed}
     return result
+
+
+def integer_slot_bounds(schema):
+    """{view member: (minimum, maximum or None)} from the published schema; refused unless each slot is
+    exactly an integer type with a minimum and an optional maximum, so the shared-rule phase applies the
+    owner's own bounds and nothing else."""
+    bounds = {}
+    for key, path, _, _, _ in INTEGER_SLOTS:
+        node = schema['$defs']
+        for part in path:
+            node = node[part]
+        if (type(node) is not dict or node.get('type') != 'integer' or set(node) - {'type', 'minimum', 'maximum'}
+                or type(node.get('minimum')) is not int):
+            raise ValueError('integer slot ' + key + ' is not {type: integer, minimum[, maximum]}: ' + repr(node))
+        bounds[key] = (node['minimum'], node.get('maximum'))
+    return bounds
+
+
+PUBLISHED = {}
+
+
+def published_bounds():
+    """The integer-slot bounds of the published companion schema and EventRecord's producer_sequence_id
+    minimum (nullable_non_negative_integer), read once from the repository."""
+    if 'bounds' not in PUBLISHED:
+        bounds = integer_slot_bounds(json.loads((ROOT / SCHEMA).read_text()))
+        nullable = json.loads((ROOT / EVENT_RECORD_SCHEMA).read_text())['$defs']['nullable_non_negative_integer']
+        if nullable != {'anyOf': [{'type': 'integer', 'minimum': 0}, {'type': 'null'}]}:
+            raise ValueError('EventRecord nullable_non_negative_integer changed: ' + repr(nullable))
+        bounds['producer_sequence_id'] = (0, None)
+        PUBLISHED['bounds'] = bounds
+    return PUBLISHED['bounds']
 
 
 def source_documents(source):
@@ -223,7 +288,8 @@ REUSABLE = {payload.payload_case: 'event_type', target_payload.target_payload_ca
             payload_values.payload_values_case: 'event_type',
             lifecycle.lifecycle_case: None, instrumentation_source.instrumentation_source_case: None,
             instrumentation_source_values.instrumentation_source_values_case: None,
-            retry.retry_request_case: None, admission.admission_case: None}
+            retry.retry_request_case: None, admission.admission_case: None, shared.shared_case: None,
+            retained.retained_case: None}
 BUILT = {}
 
 
@@ -276,6 +342,7 @@ def row_label(row):
 # predicates). Proof inputs are projected to these; the lane runner shows that
 # every phase gives the same row on the full candidate and on its projection.
 PHASE_MEMBERS = {
+    'shared': ('detail_records', 'envelope', 'event_type', 'instrumentation_source', 'payload'),
     'envelope': ('envelope', 'owner_record', 'payload', 'project_id', 'scope_partition'),
     'payload': ('event_type', 'payload'),
     'payload_values': ('event_type', 'payload'),
@@ -336,9 +403,22 @@ def candidate(case):
     return {key: value for key, value in case.items() if key not in FIXTURE_SUITE_KEYS}
 
 
+def family_of(case):
+    event = case.get('event_type') if type(case) is dict else None
+    prefix = 'debug.investigation.'
+    return event[len(prefix):] if type(event) is str and event.startswith(prefix) else None
+
+
+def detail_of(case):
+    """The record payload.detail_ref names in detail_records (any value), or None."""
+    payload, records = case.get('payload'), case.get('detail_records')
+    ref = payload.get('detail_ref') if type(payload) is dict else None
+    return records.get(ref) if type(ref) is str and type(records) is dict else None
+
+
 def phases(case):
     event = case.get('event_type')
-    sequence = [('envelope', envelope.envelope_case),
+    sequence = [('shared', shared.shared_case), ('envelope', envelope.envelope_case),
                 ('payload', target_payload.target_payload_case if event == TARGET_EVENT else payload.payload_case)]
     if event in tuple('debug.investigation.' + name for name in SPLIT_PAYLOADS):
         sequence.append(('payload_values', payload_values.payload_values_case))
@@ -361,60 +441,13 @@ def phases(case):
     return sequence
 
 
-def phase_results(case):
-    """Every phase of the family run on its own: [(phase, row, code)]."""
-    return [(name, *run_phase(factory, case)) for name, factory in phases(case)]
-
-
-def candidate_result(case):
-    """The complete candidate append path: the first refusing phase, or (None, None, None)."""
-    for name, factory in phases(case):
-        row, code = run_phase(factory, case)
-        if row is not None:
-            return name, row, code
-    return None, None, None
-
-
-def candidate_refusal(case):
-    return candidate_result(case)[2]
-
-
 def lifecycle_refusal(case):
     return run_phase(lifecycle.lifecycle_case, case)[1]
-
-
-def instrumentation_refusal(case):
-    for name, factory in phases(dict(case, event_type=INSTRUMENTATION_EVENT)):
-        if not name.startswith('instrumentation'):
-            continue
-        row, code = run_phase(factory, case)
-        if row is not None:
-            return code
-    return None
-
-
-def cleanup_retry_refusal(retries_used, authorized):
-    """Owner's typed initiation decision, before allocating an attempt/body."""
-    return run_phase(retry.retry_request_case, {'retries_used': retries_used, 'authorized': authorized})[1]
 
 
 def admission_refusal(case, admitted=False, retention='PENDING_RETENTION_DECISION', withdrawn=False):
     value = {'case': case, 'admitted': admitted, 'retention': retention, 'withdrawn': withdrawn}
     return run_phase(admission.admission_case, value)[1]
-
-
-def retained_value(case, original, withdrawn=False):
-    original = dict(original, original_admission=list(original['original_admission']))
-    return {'case': case, 'original': original, 'withdrawn': withdrawn}
-
-
-def retained_refusal(case, original, withdrawn=False):
-    """Read the original Storage projection, never the current owner transition.
-
-    Source authentication and historical admission/recipe custody are native
-    obligations. These vectors compare a selected original with the offered read.
-    """
-    return run_phase(retained.retained_case, retained_value(case, original, withdrawn))[1]
 
 
 def schema_reference_refusal(schema):
@@ -454,15 +487,44 @@ def admission_probes(case):
     return controls, negatives
 
 
+# The family that carries the timestamp, Storage metadata and number batteries:
+# the shared-rule and retained rows judge envelope members every family shares,
+# so one family's battery witnesses each row; every family keeps its own
+# per-row negatives elsewhere.
+BATTERY_FAMILY = 'debug.investigation.context_item_added'
+# CV-1101 / RFC 3339: forms the EventRecord profile accepts and refuses, and the
+# forms CV-253's storage_utc_z profile refuses on top (pm_event_datetime, IERS C72).
+EVENT_TIME_ACCEPTED = ('2026-11-04t00:00:00z', '2026-11-04T05:30:00+05:30', '2026-11-03T19:00:00-05:00',
+                       '2016-12-31T23:59:60Z', '2017-01-01T05:29:60+05:30',
+                       '2026-11-04T00:00:00.123456789012345678901Z', '0000-01-01T00:00:00Z')
+EVENT_TIME_REFUSED = ('2026-11-04T24:00:00Z', '2026-11-04T00:00:00Z\n', '2026-11-04T00:00:60Z', '2026-11-04T00:00:00,5Z',
+                      '2026-11-04T00:00:00+24:00', '2026-11-04T00:00:00+05:60', '2026-11-04T00:00:00',
+                      '2026-02-29T00:00:00Z', '2016-12-31T23:59:60+05:30', ' 2026-11-04T00:00:00Z',
+                      '2026-11-04T00:00:00.Z')
+NOT_A_TIME = (5, None, True, ['2026-11-04T00:00:00Z'], {'utc': '2026-11-04T00:00:00Z'})
+STORAGE_TIME_ACCEPTED = ('2016-12-31T23:59:60Z', '2026-11-04T00:00:01.123456789012345678901Z')
+STORAGE_TIME_REFUSED = ('2026-11-04T00:00:01+00:00', '2026-11-04T00:00:01-00:00', '2026-11-04T00:00:01z',
+                        '2026-11-04T05:30:01+05:30', '2026-11-04T24:00:00Z', '2026-11-04T00:00:01Z\n')
+# SP-1100 Storage uint64: exact 0..2^64-1, never capped at 2^53.
+UINT64_ACCEPTED = (0, 2 ** 53 + 1, 2 ** 64 - 1)
+UINT64_REFUSED = (-1, 2 ** 64, 7.0, '7', True)
+# Retained originals carry Storage-assigned metadata and a source time.
+ORIGINAL_METADATA = {'occurred_at_utc': '2026-11-04T00:00:00Z', 'observed_at_utc': '2026-11-04T00:00:01Z',
+                     'persisted_at_utc': '2026-11-04T00:00:02Z', 'sequence_id': 7}
+
+
 def retained_probes(case):
     """(controls, negatives) of retained-history values for one candidate.
 
-    The original is retained with the reader-only replay policy; the live
-    owner record and source state have changed since, which the historical
-    reader must ignore.
+    The original is retained with the reader-only replay policy and its
+    Storage-assigned metadata; the live owner record and source state have
+    changed since, which the historical reader must ignore. Every negative
+    changes one thing; a negative about the original's own metadata changes the
+    offered record the same way, so only that row refuses.
     """
     historical = copy.deepcopy(case)
     historical['envelope']['replay_policy'] = 'projector_replay_only'
+    historical['envelope'].update(ORIGINAL_METADATA)
     original = {'case': copy.deepcopy(historical), 'original_admission': [case['event_type'], '1.0.0'],
                 'recipe_ref': guards.RECIPE_REF}
     historical['owner_record']['investigation_id'] = 'different-live-investigation'
@@ -489,6 +551,15 @@ def retained_probes(case):
         for key in path:
             target = target.get(key) if type(target) is dict else None
         return offered(path, next(candidate for candidate in candidates if candidate != target))
+
+    def coherent(field, replacement):
+        # The original and the offered record both hold the replacement: only the original's own row judges it.
+        selected = copy.deepcopy(original)
+        selected['case']['envelope'][field] = replacement
+        return value(offered=offered(('envelope', field), replacement), selected=selected)
+
+    recorded = copy.deepcopy(original)
+    recorded['case']['expected_identity'] = ['debug:' + '0' * 64, 'evt_debug_' + '0' * 64]
     controls = [('retained original after live changes', value())]
     negatives = [
         ('withdrawn history', value(withdrawn=True), 'retained.withdrawn', 'withdrawn'),
@@ -498,8 +569,12 @@ def retained_probes(case):
          'retained.recipe', 'historical_recipe_mismatch'),
         ('offered record of another family', value(offered=offered(('event_type',), 'debug.investigation.other_family')),
          'retained.family', 'foreign_history'),
+        ("original's recorded identity is not its content's", value(selected=recorded),
+         'retained.original_identity', 'forged_history_identity'),
         ('forged Project scope changes the identity only', value(offered=offered(('project_id',), 'forged-project')),
          'retained.identity', 'forged_history_identity'),
+        ('original the at-write recipe cannot digest', coherent('producer_sequence_id', 2 ** 53 + 1),
+         'retained.original_qualified', 'unqualified_history'),
         ('forged semantic body', value(offered=offered(('payload', case['mutation_field']), case['mutation_value'])),
          'retained.body', 'forged_history_body'),
         ('forged Storage sequence', value(offered=forged(('envelope', 'sequence_id'), (999, 998))),
@@ -509,8 +584,43 @@ def retained_probes(case):
          'retained.observed', 'forged_storage_metadata'),
         ('forged Storage persisted time', value(offered=forged(('envelope', 'persisted_at_utc'),
                                                                ('2026-11-04T01:00:01Z', '2026-11-04T02:00:01Z'))),
-         'retained.persisted', 'forged_storage_metadata')]
+         'retained.persisted', 'forged_storage_metadata'),
+        ('offered Storage sequence of another number kind', value(offered=offered(('envelope', 'sequence_id'), 7.0)),
+         'retained.sequence', 'forged_storage_metadata')]
+    if case['event_type'] == BATTERY_FAMILY:
+        for text in EVENT_TIME_ACCEPTED:
+            controls.append(('original source time ' + repr(text), coherent('occurred_at_utc', text)))
+        for text in STORAGE_TIME_ACCEPTED:
+            controls.append(('original observed time ' + repr(text), coherent('observed_at_utc', text)))
+            controls.append(('original persisted time ' + repr(text), coherent('persisted_at_utc', text)))
+        for number in UINT64_ACCEPTED:
+            controls.append(('original Storage sequence ' + repr(number), coherent('sequence_id', number)))
+        for text in EVENT_TIME_REFUSED:
+            negatives.append(('original source time ' + repr(text), coherent('occurred_at_utc', text),
+                              'retained.original_occurred', 'invalid_history_timestamp'))
+        for text in STORAGE_TIME_REFUSED:
+            negatives.append(('original observed time ' + repr(text), coherent('observed_at_utc', text),
+                              'retained.original_observed', 'invalid_history_timestamp'))
+            negatives.append(('original persisted time ' + repr(text), coherent('persisted_at_utc', text),
+                              'retained.original_persisted', 'invalid_history_timestamp'))
+        for number in UINT64_REFUSED:
+            negatives.append(('original Storage sequence ' + repr(number), coherent('sequence_id', number),
+                              'retained.original_sequence', 'invalid_history_metadata'))
     return controls, negatives
+
+
+def patched(case, path, replacement):
+    result = copy.deepcopy(case)
+    target = result
+    for key in path[:-1]:
+        target = target[key]
+    target[path[-1]] = replacement
+    return result
+
+
+def float_of(value):
+    """The same integer as a binary64 float: the spelling a stock JSON Schema integer type accepts."""
+    return float(value)
 
 
 def retry_request_probes(rows):

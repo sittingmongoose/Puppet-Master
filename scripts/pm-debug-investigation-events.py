@@ -13,13 +13,17 @@ import os
 from pathlib import Path
 from jsonschema import Draft202012Validator
 from jsonschema.exceptions import SchemaError
+from pm_event_numbers import Refusal, current_integer, loads_current_json, producer_semantic_digest, storage_uint64
 import pm_debug_investigation_guard_constants as constants
-from pm_debug_investigation_guards_retained import identity, semantic_digest
+from pm_debug_investigation_shared_rules import (
+    TYPE_SENSITIVE_PATHS, digest_fields_are_producer_projection, identity, producer_projection, semantic_digest)
 from pm_debug_investigation_transitions import (
-    FAILED_REASONS, admission_probes, admission_refusal, candidate, candidate_refusal, candidate_result,
-    cleanup_retry_refusal, load_documents, phase_results, reference_probes, retained_probes, retained_refusal,
+    FAILED_REASONS, admission_probes, admission_refusal, candidate, load_documents, reference_probes, retained_probes,
     retry_request_probes, row_label, schema_reference_refusal)
 import pm_debug_investigation_transitions as production
+from pm_debug_investigation_views import (
+    candidate_refusal, candidate_result, cleanup_retry_refusal, phase_results, retained_refusal)
+import pm_debug_investigation_views as views
 
 ROOT = Path(__file__).resolve().parents[1]
 INSTRUMENTATION_EVENT = 'debug.investigation.instrumentation_state_changed'
@@ -31,6 +35,174 @@ VOCABULARIES = (
     ('CLEANUP_RESULTS', 'instrumentation_state_changed', 'rollback_state'),
     ('INSTR_STATES', 'instrumentation_source', 'state'), ('CLEANUP_RESULTS', 'instrumentation_source', 'cleanup_result'),
     ('TRANSITION_KINDS', 'instrumentation_change_detail', 'transition_kind'))
+
+
+def read_json(relative):
+    """CV-1100 raw ingress: the shared current parser (duplicate keys, lone surrogates, -0, 01 and
+    non-finite tokens refuse; integers are exact at any length; fractional tokens stay Decimal)."""
+    return loads_current_json((ROOT / relative).read_bytes())
+
+
+def integral_float(value):
+    return type(value) is float and value.is_integer()
+
+
+def member(value, path):
+    for key in path:
+        value = value.get(key) if type(value) is dict else None
+    return value
+
+
+def same_on_projection(case):
+    """Every phase gives the same result on its projected input as on the full candidate."""
+    return all(views.run_named(name, factory, production.projected(name, case)) == views.run_named(name, factory, case)
+               for name, factory in production.phases(case))
+
+
+def single_refusal(case, row, code):
+    """(ok, results): exactly one phase refuses, by the named row, with the code."""
+    results = phase_results(case)
+    refusing = [result for result in results if result[1]]
+    return (len(refusing) == 1 and row_label(refusing[0][1]) == row and refusing[0][2] == code), results
+
+
+CORPUS_RAW_OPS = ('token', 'parse', 'parse_token', 'slot')
+
+
+def typed_value(value):
+    if type(value) is dict and set(value) == {'@int'}:
+        return loads_current_json(value['@int'])
+    return value
+
+
+def corpus_values(corpus):
+    """Every number-scope value of the shared corpus: raw spellings (token, parse, parse_token, slot, json_number)
+    and exact integers (integer, uint64), plus the 4400-digit integers, raw and exact."""
+    raws, exacts = [], []
+    for case in corpus['cases']:
+        if case.get('date_time_profile'):
+            continue
+        if case.get('op') in CORPUS_RAW_OPS and type(case.get('raw')) is str:
+            raws.append(case['raw'])
+        elif case.get('op') == 'json_number' and type(case.get('token')) is str:
+            raws.append(case['token'])
+        elif case.get('op') in ('integer', 'uint64'):
+            value = typed_value(case.get('value'))
+            if type(value) is int:
+                exacts.append(value)
+    raws += ['9' * 4400, '-' + '9' * 4400]
+    exacts.append(loads_current_json('9' * 4400))
+    unique_raws = list(dict.fromkeys(raws))
+    unique_exacts = []
+    for value in exacts:
+        if not any(value == seen for seen in unique_exacts):
+            unique_exacts.append(value)
+    return unique_raws, unique_exacts
+
+
+def corpus_expectation(value, minimum, maximum, case_for_projection):
+    """Composed from the shared helpers only: the slot's current_integer, then the producer projection's
+    qualification (with the lane's type-sensitive slots)."""
+    try:
+        current_integer(value, minimum=minimum, maximum=maximum)
+    except Refusal:
+        return 'slot'
+    if case_for_projection is not None:
+        try:
+            producer_semantic_digest(producer_projection(case_for_projection), type_sensitive_paths=TYPE_SENSITIVE_PATHS)
+        except Refusal:
+            return 'producer'
+    return 'accepted'
+
+
+def corpus_checks(fixture_cases, check):
+    """The shared number corpus through the complete checker: each raw spelling written as JSON text at the
+    exported item_count slot and parsed by the lane's raw ingress, then the complete append route and the
+    digest/retry route; each exact integer at item_count, at the bounded retries_used slot (retry route), at
+    an envelope Storage sequence_id (append route) and at a retained original's sequence_id (history route)."""
+    corpus = read_json('Plans/event_number_recipe_corpus.json')
+    raws, exacts = corpus_values(corpus)
+    meta = next(m for m in fixture_cases if m['event_type'] == 'debug.investigation.exported')
+    base = candidate(meta)
+    marker = '"item_count": 0'
+    text = json.dumps(base)
+    if text.count(marker) != 1:
+        raise RuntimeError('corpus: exported base must hold item_count 0 exactly once')
+    tallies = {'raw_inputs': 0, 'exact_inputs': 0, 'route_runs': 0, 'parse_refused': 0, 'slot_refused': 0,
+               'producer_refused': 0, 'accepted': 0, 'disagreements': 0}
+    item_bounds = production.published_bounds()['item_count']
+    retry_bounds = production.published_bounds()['retries_used']
+
+    def append_route(probe, label):
+        expected = corpus_expectation(member(probe, ('payload', 'item_count')), *item_bounds, probe)
+        want = {'slot': ('shared', 'shared.item_count', 'number_domain'),
+                'producer': ('shared', 'shared.producer', 'producer_unqualified'), 'accepted': (None, None, None)}[expected]
+        got = candidate_result(probe)
+        got = (got[0], row_label(got[1]) if got[1] else None, got[2])
+        digest = semantic_digest(probe)
+        tallies['route_runs'] += 2
+        tallies[{'slot': 'slot_refused', 'producer': 'producer_refused', 'accepted': 'accepted'}[expected]] += 1
+        # The digest recipe qualifies the projection alone (CV-1100); slot bounds are the append route's.
+        try:
+            producer_semantic_digest(producer_projection(probe), type_sensitive_paths=TYPE_SENSITIVE_PATHS)
+            qualifies = True
+        except Refusal:
+            qualifies = False
+        ok = got == want and (digest is not None) == qualifies
+        if ok and expected == 'accepted':
+            # A retry of the same record keeps the original receipt; a changed count conflicts.
+            ok = semantic_digest(copy.deepcopy(probe)) == digest
+            if member(probe, ('payload', 'item_count')) != 0:
+                ok = ok and semantic_digest(base) != digest
+        if not ok:
+            tallies['disagreements'] += 1
+        check(ok, 'shared corpus through the complete checker: ' + label)
+
+    for raw in raws:
+        tallies['raw_inputs'] += 1
+        try:
+            probe = loads_current_json(text.replace(marker, '"item_count": ' + raw))
+        except Refusal:
+            tallies['parse_refused'] += 1
+            continue
+        append_route(probe, 'raw ' + raw[:24])
+    for value in exacts:
+        tallies['exact_inputs'] += 1
+        label = 'exact ' + (hex(value) if abs(value) > 10 ** 30 else str(value))
+        append_route(production.patched(base, ('payload', 'item_count'), value), label + ' at item_count')
+        request = {'retries_used': value, 'authorized': True}
+        try:
+            current_integer(value, minimum=retry_bounds[0], maximum=retry_bounds[1])
+            want_retry = 'retry_ceiling' if value >= constants.RETRY_CEILING else None
+        except Refusal:
+            want_retry = 'number_domain'
+        tallies['route_runs'] += 1
+        okay = cleanup_retry_refusal(value, True) == want_retry
+        tallies['disagreements'] += not okay
+        check(okay, 'shared corpus through the retry route: ' + label)
+        try:
+            storage_uint64(value)
+            want_storage = None
+        except Refusal:
+            want_storage = 'number_domain'
+        stored = production.patched(base, ('envelope', 'sequence_id'), value)
+        got = candidate_refusal(stored)
+        tallies['route_runs'] += 1
+        okay = got == want_storage
+        tallies['disagreements'] += not okay
+        check(okay, 'shared corpus at a Storage sequence_id (append route): ' + label)
+        controls, _ = retained_probes(base)
+        historical = controls[0][1]
+        original = copy.deepcopy(historical['original'])
+        original['case']['envelope']['sequence_id'] = value
+        offered = copy.deepcopy(historical['case'])
+        offered['envelope']['sequence_id'] = value
+        got = retained_refusal(offered, original)
+        tallies['route_runs'] += 1
+        okay = got == (None if want_storage is None else 'invalid_history_metadata')
+        tallies['disagreements'] += not okay
+        check(okay, 'shared corpus at a retained original sequence_id (history route): ' + label)
+    return tallies
 
 
 def patched_case(case, patches):
@@ -45,8 +217,8 @@ def patched_case(case, patches):
 
 
 def main():
-    schema = json.loads((ROOT/'Plans/debug_investigation_event_payloads.schema.json').read_text())
-    fixture = json.loads((ROOT/'Plans/debug_investigation_event_fixtures.json').read_text())
+    schema = read_json('Plans/debug_investigation_event_payloads.schema.json')
+    fixture = read_json('Plans/debug_investigation_event_fixtures.json')
     try:
         Draft202012Validator.check_schema(schema)
     except SchemaError as exc:
@@ -57,7 +229,7 @@ def main():
         print(json.dumps({'status': 'FAIL', 'failures': ['unresolved_schema_reference: ' + reference]}))
         return True
     load_documents(schema)
-    registry = json.loads((ROOT/'Plans/event_family_registry.json').read_text())
+    registry = read_json('Plans/event_family_registry.json')
     admitted = {r['event_type'] for r in registry['families']}
     failures = []
     rows = []
@@ -93,9 +265,7 @@ def main():
             probe = patched_case(case, transition['patches'])
             check(candidate_refusal(probe) == transition['expected_refusal'],
                   event + ': transition ' + transition['case'])
-            check(all(production.run_phase(factory, production.projected(name, probe)) == production.run_phase(factory, probe)
-                      for name, factory in production.phases(probe)),
-                  event + ': every phase gives the same result on its projected input ' + transition['case'])
+            check(same_on_projection(probe), event + ': every phase gives the same result on its projected input ' + transition['case'])
         if name in ('instrumentation_state_changed', 'state_changed'):
             check(meta.get('retention_policy_ref') == 'RP-OPERATIONAL-2555D@1.0.0',
                   event + ': exact current G02 Project policy')
@@ -107,11 +277,27 @@ def main():
                 check(cleanup_retry_refusal(request['retries_used'], request['authorized']) is None,
                       event + ': initiation ' + label)
             for label, request, row, code in negatives:
-                result, reason = production.run_phase(production.retry.retry_request_case, request)
-                check(row_label(result) == row if result else False, event + ': initiation row ' + label)
-                check(reason == code, event + ': initiation ' + label)
-                check(request_validator.is_valid(request) == (not row.startswith('cleanup_retry_request#')),
+                # Each retry negative is refused by exactly one of the two retry phases (shared rules, request).
+                results = [(name, *production.run_phase(factory, value)) for name, factory, value in (
+                    ('shared', production.shared.shared_case, views.retry_shared_view(request)),
+                    ('retry_request', production.retry.retry_request_case, request))]
+                refusing = [result for result in results if result[1]]
+                check(len(refusing) == 1, event + ': exactly one retry phase refuses ' + label)
+                check(views.retry_result(request)[1:] == refusing[0][1:] if refusing else False,
+                      event + ': the complete retry path reports that phase ' + label)
+                check(row_label(refusing[0][1]) == row if refusing else False, event + ': initiation row ' + label)
+                check(refusing[0][2] == code if refusing else False, event + ': initiation ' + label)
+                # The published schema refuses every request-schema and retries_used defect except a binary64
+                # integral value, which a stock integer type accepts and current_integer refuses.
+                published_refuses = row.startswith('cleanup_retry_request#') or (
+                    row == 'shared.retries_used' and not integral_float(request.get('retries_used')))
+                check(request_validator.is_valid(request) == (not published_refuses),
                       event + ': published retry schema agrees ' + label)
+            retry_negatives, retry_unrenderable = views.retry_shared_probes(controls[0][1])
+            for label, request, row, code in retry_negatives + retry_unrenderable:
+                result = views.retry_result(request)
+                check(result[0] == 'shared' and row_label(result[1]) == row and result[2] == code,
+                      event + ': shared-rule retry probe ' + label)
             required_kinds = set(schema['$defs']['instrumentation_change_detail']['properties']['transition_kind']['enum'])
             covered = {patched_case(case, row['patches'])['detail_records']['detail:op1']['transition_kind']
                        for row in meta['transition_cases']}
@@ -167,6 +353,34 @@ def main():
             check(validator.is_valid(oversized['payload']), event + ': oversized resolved body remains structurally valid')
             check(candidate_refusal(oversized) == 'payload_reference_required', event + ': SP-337 oversized body cannot be inline')
             checks += 2
+        # SP-1100 (sweep part 2B): bodies inline under EVENT_VALUE bytes, including former JSON-escaped
+        # oversized negatives, are accepted by the complete checker.
+        for row in meta.get('encoding_cases', []):
+            probe = patched_case(case, row['patches'])
+            check(validator.is_valid(probe['payload']), event + ': encoding case is schema-valid ' + row['case'])
+            check(candidate_result(probe) == (None, None, None) and row['expected_refusal'] is None,
+                  event + ': encoding case accepted ' + row['case'])
+            check(same_on_projection(probe), event + ': encoding case projection ' + row['case'])
+            checks += 1
+        # CV-1101 / CV-1100 / SP-1100 shared-rule probes: controls accept; each negative is refused by the
+        # shared-rule row it names alone; an unrenderable value is refused there first.
+        shared_controls, shared_negatives, shared_unrenderable = views.shared_probes(case)
+        for label, probe in shared_controls:
+            check(candidate_result(probe) == (None, None, None), event + ': shared-rule control ' + label)
+            check(same_on_projection(probe), event + ': shared-rule control projection ' + label)
+            checks += 1
+        for label, probe, row, code in shared_negatives:
+            ok, results = single_refusal(probe, row, code)
+            check(ok, event + ': shared-rule negative refused by its row alone ' + label)
+            check(all(views.run_named(name, factory, production.projected(name, probe)) == result[1:]
+                      for (name, factory), result in zip(production.phases(probe), results)),
+                  event + ': shared-rule negative projection ' + label)
+            checks += 1
+        for label, probe, row, code in shared_unrenderable:
+            result = candidate_result(probe)
+            check(result[0] == 'shared' and row_label(result[1]) == row and result[2] == code,
+                  event + ': shared-rule refuses before any later table ' + label)
+            checks += 1
         # Each fixture negative starts from a valid base, is refused by
         # exactly one phase, by the row it names, with its expected code; the
         # published schema (pattern included) agrees with the payload phase.
@@ -180,7 +394,7 @@ def main():
             bad = patched_case(negative_base, negative['patches'])
             results = phase_results(bad)
             refusing = [result for result in results if result[1]]
-            check(all(production.run_phase(factory, production.projected(name, bad)) == result[1:]
+            check(all(views.run_named(name, factory, production.projected(name, bad)) == result[1:]
                       for (name, factory), result in zip(production.phases(bad), results)),
                   event + ': every phase gives the same row on its projected input ' + negative['case'])
             # The complete path is the phases in order; its refusal is the first refusing phase.
@@ -191,7 +405,13 @@ def main():
             check(len(refusing) == 1, event + ': exactly one phase refuses ' + negative['case'])
             check(bool(refusing) and row_label(refusing[0][1]) == negative.get('guard'),
                   event + ': named row refuses ' + negative['case'])
-            check(validator.is_valid(bad['payload']) == (not refusing or refusing[0][0] not in ('payload', 'payload_values')),
+            # The published payload schema refuses what the payload phases refuse, and a payload integer-slot
+            # defect the shared-rule rows refuse, except a binary64 integral value (a stock integer type
+            # accepts it; current_integer refuses it).
+            slot_path = production.PAYLOAD_SLOT_ROWS.get(row_label(refusing[0][1])) if refusing else None
+            published_refuses = bool(refusing) and (refusing[0][0] in ('payload', 'payload_values') or (
+                slot_path is not None and not integral_float(member(bad['payload'], slot_path))))
+            check(validator.is_valid(bad['payload']) == (not published_refuses),
                   event + ': published payload schema agrees ' + negative['case'])
             checks += 5
         bad_scope = patched_case(case, {'payload.project_id': 'other-project'}) if name == 'started' else patched_case(case, {'envelope.project_id': 'other-project'})
@@ -230,7 +450,10 @@ def main():
         check(validator.is_valid(changed), event + ': changed-body vector must stay schema-valid')
         check(identity(event, case['project_id'], changed) == (original_key, original_id), event + ': retry identity')
         changed_case = dict(case, payload=changed)
-        check(semantic_digest(changed_case) != semantic_digest(case), event + ': semantic digest conflict')
+        check(digest_fields_are_producer_projection(), event + ': digest fields are the CV-317 producer projection')
+        base_digest = semantic_digest(case)
+        check(type(base_digest) is str and len(base_digest) == 64, event + ': semantic digest qualifies (CV-1100)')
+        check(semantic_digest(changed_case) != base_digest, event + ': semantic digest conflict')
         custody = {original_key:(semantic_digest(case), 'original-synced-receipt')}
         check(custody[original_key] == (semantic_digest(copy.deepcopy(case)), 'original-synced-receipt'), event + ': lost ACK original custody')
         # Field-selection probes isolate digest equality; changing a scope/key
@@ -248,12 +471,13 @@ def main():
         check(admission_refusal(case, admitted=True) == 'retention_unresolved', event + ': retention refusal')
         check(admission_refusal(case, admitted=True, retention='resolved', withdrawn=True) == 'withdrawn', event + ': withdrawal refusal')
         rows.append({'event_type':event,'schema_checks':checks,'outcome':'prepared_without_admission','native_execution':'NOT_RUN'})
+    corpus = corpus_checks(fixture['cases'], check) if only is None else None
     expected = 9 if only is None else 1
     check(len(rows) == expected and len({r['event_type'] for r in rows}) == expected, 'nine distinct prepared families')
     check(sum(r['outcome'] == 'prepared_without_admission' for r in rows) == expected, 'nine prepared families')
     check(bool(fixture.get('native_obligations')), 'shared native obligations retained, NOT_RUN')
     scope = 'Static payload/identity/refusal oracles only; native NOT_RUN.' + ('' if only is None else ' Family ' + only + ' only.')
-    print(json.dumps({'status':'FAIL' if failures else 'PASS','rows':rows,'failures':failures,'scope':scope},indent=2))
+    print(json.dumps({'status':'FAIL' if failures else 'PASS','rows':rows,'failures':failures,'shared_corpus':corpus,'scope':scope},indent=2))
     return bool(failures)
 
 if __name__ == '__main__':

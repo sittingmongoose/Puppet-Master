@@ -23,6 +23,8 @@ import copy
 import json
 from pathlib import Path
 
+import hashlib
+
 import pm_guard_isolation as g
 import pm_debug_investigation_transitions as production
 
@@ -113,20 +115,6 @@ NON_GUARDS = {
     'family': [
         ('family_case', 'return', 'return g.Case(table, check, context)',
          'Return the fresh execution object built for this candidate; it decides no acceptance.'),
-        ('family_case', 'call_review', "len(json.dumps(case_value.get('payload'), ensure_ascii=False, separators=(',', ':')).encode())",
-         'Measure the encoded UTF-8 JSON bytes of the inline payload (SP-337); family.payload_size compares them with the 16 KiB limit.'),
-        ('family_case', 'call_review', "json.dumps(case_value.get('payload'), ensure_ascii=False, separators=(',', ':')).encode()",
-         'Measure the encoded UTF-8 JSON bytes of the inline payload (SP-337); family.payload_size compares them with the 16 KiB limit.'),
-        ('family_case', 'call_review', "json.dumps(case_value.get('payload'), ensure_ascii=False, separators=(',', ':'))",
-         'Measure the encoded UTF-8 JSON bytes of the inline payload (SP-337); family.payload_size compares them with the 16 KiB limit.'),
-        ('family_case', 'call_review', "case_value.get('payload')",
-         'Measure the encoded UTF-8 JSON bytes of the inline payload (SP-337); family.payload_size compares them with the 16 KiB limit.'),
-        ('family_case', 'data_operation', "json.dumps(case_value.get('payload'), ensure_ascii=False, separators=(',', ':')).encode",
-         'Measure the encoded UTF-8 JSON bytes of the inline payload (SP-337); family.payload_size compares them with the 16 KiB limit.'),
-        ('family_case', 'data_operation', 'json.dumps',
-         'Measure the encoded UTF-8 JSON bytes of the inline payload (SP-337); family.payload_size compares them with the 16 KiB limit.'),
-        ('family_case', 'data_operation', 'case_value.get',
-         'Measure the encoded UTF-8 JSON bytes of the inline payload (SP-337); family.payload_size compares them with the 16 KiB limit.'),
     ],
     'lifecycle': [
         ('lifecycle_subject', 'return', "return value.get('lifecycle_source')",
@@ -175,8 +163,6 @@ NON_GUARDS = {
          'Return the fresh execution object built for this candidate; it decides no acceptance.'),
         ('instrumentation_detail_case', 'call_review', "g.SchemaCatalog(DOCUMENTS['instrumentation_detail'], roots=DETAIL_ROOTS)",
          'Build a fresh closed schema catalog from the per-phase documents the loader injected once before any case.'),
-        ('instrumentation_detail_case', 'call_review', "g.schema_table(catalog, {DETAIL_URI: instrumentation_detail_subject}, guards=[g.Guard('instr.detail_available', g.Invariant('/payload/detail_ref', 'names a record in detail_records'), 'detail_unavailable', instr_detail_available), g.Guard('instr.detail_size', g.Invariant('/detail_records/<detail_ref>', 'encoded UTF-8 JSON is at most 16 KiB inline (SP-337)'), 'detail_payload_reference_required', instr_detail_size)])",
-         'Build the fresh guard table: the named code rows plus one row per supported schema assertion.'),
         ('instrumentation_detail_case', 'call_review', "case_value.get('payload')",
          'Select the detail record payload.detail_ref names, only for a string ref into a dict of records; otherwise None, so the detail rows and instr.detail_available judge it.'),
         ('instrumentation_detail_case', 'call_review', "case_value.get('detail_records')",
@@ -185,14 +171,8 @@ NON_GUARDS = {
          'Select the detail record payload.detail_ref names, only for a string ref into a dict of records; otherwise None, so the detail rows and instr.detail_available judge it.'),
         ('instrumentation_detail_case', 'call_review', 'records.get(ref)',
          'Select the detail record payload.detail_ref names, only for a string ref into a dict of records; otherwise None, so the detail rows and instr.detail_available judge it.'),
-        ('instrumentation_detail_case', 'call_review', "len(json.dumps(detail, ensure_ascii=False, separators=(',', ':')).encode())",
-         'Measure the encoded UTF-8 JSON bytes of the referenced detail on its own (SP-337); instr.detail_size compares them.'),
         ('instrumentation_detail_case.check', 'call_review', 'table.validate(DETAIL_URI, value, context)',
          'Run the schema boundary through the table; the engine attributes any refusal to its schema row.'),
-        ('instrumentation_detail_case', 'call_review', "json.dumps(detail, ensure_ascii=False, separators=(',', ':')).encode()",
-         'Measure the encoded UTF-8 JSON bytes of the referenced detail on its own (SP-337); instr.detail_size compares them.'),
-        ('instrumentation_detail_case', 'call_review', "json.dumps(detail, ensure_ascii=False, separators=(',', ':'))",
-         'Measure the encoded UTF-8 JSON bytes of the referenced detail on its own (SP-337); instr.detail_size compares them.'),
         ('instrumentation_detail_subject', 'data_operation', "context['detail']",
          'Schema selector: wrap the record payload.detail_ref names (from the factory selection) so the detail rows judge it; no record means an empty wrapper, and instr.detail_available refuses.'),
         ('instrumentation_detail_subject', 'data_operation', "{} if detail is None else {'detail': detail}",
@@ -203,8 +183,6 @@ NON_GUARDS = {
          'Select the detail record payload.detail_ref names, only for a string ref into a dict of records; otherwise None, so the detail rows and instr.detail_available judge it.'),
         ('instrumentation_detail_case', 'data_operation', 'records.get(ref) if type(ref) is str and type(records) is dict else None',
          'Select the detail record payload.detail_ref names, only for a string ref into a dict of records; otherwise None, so the detail rows and instr.detail_available judge it.'),
-        ('instrumentation_detail_case', 'data_operation', "None if detail is None else len(json.dumps(detail, ensure_ascii=False, separators=(',', ':')).encode())",
-         'Measure the encoded UTF-8 JSON bytes of the referenced detail on its own (SP-337); instr.detail_size compares them.'),
         ('instrumentation_detail_case', 'data_operation', 'type(ref) is str and type(records) is dict',
          'Select the detail record payload.detail_ref names, only for a string ref into a dict of records; otherwise None, so the detail rows and instr.detail_available judge it.'),
         ('instrumentation_detail_case', 'data_operation', "DOCUMENTS['instrumentation_detail']",
@@ -217,10 +195,8 @@ NON_GUARDS = {
          'Select the detail record payload.detail_ref names, only for a string ref into a dict of records; otherwise None, so the detail rows and instr.detail_available judge it.'),
         ('instrumentation_detail_case', 'data_operation', 'records.get',
          'Select the detail record payload.detail_ref names, only for a string ref into a dict of records; otherwise None, so the detail rows and instr.detail_available judge it.'),
-        ('instrumentation_detail_case', 'data_operation', "json.dumps(detail, ensure_ascii=False, separators=(',', ':')).encode",
-         'Measure the encoded UTF-8 JSON bytes of the referenced detail on its own (SP-337); instr.detail_size compares them.'),
-        ('instrumentation_detail_case', 'data_operation', 'json.dumps',
-         'Measure the encoded UTF-8 JSON bytes of the referenced detail on its own (SP-337); instr.detail_size compares them.'),
+        ('instrumentation_detail_case', 'call_review', "g.schema_table(catalog, {DETAIL_URI: instrumentation_detail_subject}, guards=[g.Guard('instr.detail_available', g.Invariant('/payload/detail_ref', 'names a record in detail_records'), 'detail_unavailable', instr_detail_available)])",
+         'Build the fresh guard table: the named code rows plus one row per supported schema assertion.'),
     ],
     'instrumentation_detail_values_a': [
         ('instrumentation_detail_values_subject', 'return', "return {} if detail is None else {'detail': detail}",
@@ -601,90 +577,8 @@ NON_GUARDS = {
          'Return the fresh execution object built for this candidate; it decides no acceptance.'),
     ],
     'retained': [
-        ('semantic_digest', 'return', "return hashlib.sha256(json.dumps(body, ensure_ascii=False, sort_keys=True, separators=(',', ':')).encode()).hexdigest()",
-         'Recompute the producer semantic digest from the record: the caller-supplied envelope fields, event type and payload only (bounded JSON vector, not an RFC 8785 proof).'),
-        ('identity', 'return', "return ('debug:' + digest, 'evt_debug_' + digest)",
-         'Recompute the immutable identity from event type, Project and the payload investigation/operation ids (bounded JSON vector).'),
         ('retained_case', 'return', 'return g.Case(table, check, context)',
          'Return the fresh execution object built for this candidate; it decides no acceptance.'),
-        ('semantic_digest', 'call_review', "dict(pairs + [('event_type', case['event_type']), ('payload', case['payload'])])",
-         'Recompute the producer semantic digest from the record: the caller-supplied envelope fields, event type and payload only (bounded JSON vector, not an RFC 8785 proof).'),
-        ('semantic_digest', 'call_review', "hashlib.sha256(json.dumps(body, ensure_ascii=False, sort_keys=True, separators=(',', ':')).encode()).hexdigest()",
-         'Recompute the producer semantic digest from the record: the caller-supplied envelope fields, event type and payload only (bounded JSON vector, not an RFC 8785 proof).'),
-        ('identity', 'call_review', "hashlib.sha256(json.dumps(preimage, ensure_ascii=False, separators=(',', ':')).encode()).hexdigest()",
-         'Recompute the immutable identity from event type, Project and the payload investigation/operation ids (bounded JSON vector).'),
-        ('retained_case', 'call_review', "list(identity(offered['event_type'], offered['project_id'], offered['payload']))",
-         'Recompute the offered identity and both semantic digests from their records; the identity and body rows compare them, nothing is taken as supplied.'),
-        ('retained_case', 'call_review', 'semantic_digest(offered)',
-         'Recompute the offered identity and both semantic digests from their records; the identity and body rows compare them, nothing is taken as supplied.'),
-        ('retained_case', 'call_review', 'semantic_digest(frozen)',
-         'Recompute the offered identity and both semantic digests from their records; the identity and body rows compare them, nothing is taken as supplied.'),
-        ('semantic_digest', 'call_review', "case['envelope'].get(key)",
-         'Recompute the producer semantic digest from the record: the caller-supplied envelope fields, event type and payload only (bounded JSON vector, not an RFC 8785 proof).'),
-        ('semantic_digest', 'call_review', "hashlib.sha256(json.dumps(body, ensure_ascii=False, sort_keys=True, separators=(',', ':')).encode())",
-         'Recompute the producer semantic digest from the record: the caller-supplied envelope fields, event type and payload only (bounded JSON vector, not an RFC 8785 proof).'),
-        ('identity', 'call_review', "hashlib.sha256(json.dumps(preimage, ensure_ascii=False, separators=(',', ':')).encode())",
-         'Recompute the immutable identity from event type, Project and the payload investigation/operation ids (bounded JSON vector).'),
-        ('retained_case', 'call_review', "identity(offered['event_type'], offered['project_id'], offered['payload'])",
-         'Recompute the offered identity and both semantic digests from their records; the identity and body rows compare them, nothing is taken as supplied.'),
-        ('semantic_digest', 'call_review', "json.dumps(body, ensure_ascii=False, sort_keys=True, separators=(',', ':')).encode()",
-         'Recompute the producer semantic digest from the record: the caller-supplied envelope fields, event type and payload only (bounded JSON vector, not an RFC 8785 proof).'),
-        ('identity', 'call_review', "json.dumps(preimage, ensure_ascii=False, separators=(',', ':')).encode()",
-         'Recompute the immutable identity from event type, Project and the payload investigation/operation ids (bounded JSON vector).'),
-        ('semantic_digest', 'call_review', "json.dumps(body, ensure_ascii=False, sort_keys=True, separators=(',', ':'))",
-         'Recompute the producer semantic digest from the record: the caller-supplied envelope fields, event type and payload only (bounded JSON vector, not an RFC 8785 proof).'),
-        ('identity', 'call_review', "json.dumps(preimage, ensure_ascii=False, separators=(',', ':'))",
-         'Recompute the immutable identity from event type, Project and the payload investigation/operation ids (bounded JSON vector).'),
-        ('retained_case', 'data_operation', '(offered, frozen)',
-         'Recompute the offered identity and both semantic digests from their records; the identity and body rows compare them, nothing is taken as supplied.'),
-        ('semantic_digest', 'data_operation', ' for key in DIGEST_FIELDS',
-         'Recompute the producer semantic digest from the record: the caller-supplied envelope fields, event type and payload only (bounded JSON vector, not an RFC 8785 proof).'),
-        ('semantic_digest', 'data_operation', "pairs + [('event_type', case['event_type']), ('payload', case['payload'])]",
-         'Recompute the producer semantic digest from the record: the caller-supplied envelope fields, event type and payload only (bounded JSON vector, not an RFC 8785 proof).'),
-        ('semantic_digest', 'data_operation', "hashlib.sha256(json.dumps(body, ensure_ascii=False, sort_keys=True, separators=(',', ':')).encode()).hexdigest",
-         'Recompute the producer semantic digest from the record: the caller-supplied envelope fields, event type and payload only (bounded JSON vector, not an RFC 8785 proof).'),
-        ('identity', 'data_operation', "payload['investigation_id']",
-         'Recompute the immutable identity from event type, Project and the payload investigation/operation ids (bounded JSON vector).'),
-        ('identity', 'data_operation', "payload['operation_id']",
-         'Recompute the immutable identity from event type, Project and the payload investigation/operation ids (bounded JSON vector).'),
-        ('identity', 'data_operation', "hashlib.sha256(json.dumps(preimage, ensure_ascii=False, separators=(',', ':')).encode()).hexdigest",
-         'Recompute the immutable identity from event type, Project and the payload investigation/operation ids (bounded JSON vector).'),
-        ('identity', 'data_operation', "'debug:' + digest",
-         'Recompute the immutable identity from event type, Project and the payload investigation/operation ids (bounded JSON vector).'),
-        ('identity', 'data_operation', "'evt_debug_' + digest",
-         'Recompute the immutable identity from event type, Project and the payload investigation/operation ids (bounded JSON vector).'),
-        ('retained_case', 'data_operation', "case_value['case']",
-         'Recompute the offered identity and both semantic digests from their records; the identity and body rows compare them, nothing is taken as supplied.'),
-        ('retained_case', 'data_operation', "case_value['original']['case']",
-         'Recompute the offered identity and both semantic digests from their records; the identity and body rows compare them, nothing is taken as supplied.'),
-        ('retained_case', 'data_operation', "case_value['original']",
-         'Recompute the offered identity and both semantic digests from their records; the identity and body rows compare them, nothing is taken as supplied.'),
-        ('semantic_digest', 'data_operation', "case['envelope'].get",
-         'Recompute the producer semantic digest from the record: the caller-supplied envelope fields, event type and payload only (bounded JSON vector, not an RFC 8785 proof).'),
-        ('semantic_digest', 'data_operation', 'hashlib.sha256',
-         'Recompute the producer semantic digest from the record: the caller-supplied envelope fields, event type and payload only (bounded JSON vector, not an RFC 8785 proof).'),
-        ('identity', 'data_operation', 'hashlib.sha256',
-         'Recompute the immutable identity from event type, Project and the payload investigation/operation ids (bounded JSON vector).'),
-        ('retained_case', 'data_operation', "offered['event_type']",
-         'Recompute the offered identity and both semantic digests from their records; the identity and body rows compare them, nothing is taken as supplied.'),
-        ('retained_case', 'data_operation', "offered['project_id']",
-         'Recompute the offered identity and both semantic digests from their records; the identity and body rows compare them, nothing is taken as supplied.'),
-        ('retained_case', 'data_operation', "offered['payload']",
-         'Recompute the offered identity and both semantic digests from their records; the identity and body rows compare them, nothing is taken as supplied.'),
-        ('semantic_digest', 'data_operation', "case['envelope']",
-         'Recompute the producer semantic digest from the record: the caller-supplied envelope fields, event type and payload only (bounded JSON vector, not an RFC 8785 proof).'),
-        ('semantic_digest', 'data_operation', "case['event_type']",
-         'Recompute the producer semantic digest from the record: the caller-supplied envelope fields, event type and payload only (bounded JSON vector, not an RFC 8785 proof).'),
-        ('semantic_digest', 'data_operation', "case['payload']",
-         'Recompute the producer semantic digest from the record: the caller-supplied envelope fields, event type and payload only (bounded JSON vector, not an RFC 8785 proof).'),
-        ('semantic_digest', 'data_operation', "json.dumps(body, ensure_ascii=False, sort_keys=True, separators=(',', ':')).encode",
-         'Recompute the producer semantic digest from the record: the caller-supplied envelope fields, event type and payload only (bounded JSON vector, not an RFC 8785 proof).'),
-        ('identity', 'data_operation', "json.dumps(preimage, ensure_ascii=False, separators=(',', ':')).encode",
-         'Recompute the immutable identity from event type, Project and the payload investigation/operation ids (bounded JSON vector).'),
-        ('semantic_digest', 'data_operation', 'json.dumps',
-         'Recompute the producer semantic digest from the record: the caller-supplied envelope fields, event type and payload only (bounded JSON vector, not an RFC 8785 proof).'),
-        ('identity', 'data_operation', 'json.dumps',
-         'Recompute the immutable identity from event type, Project and the payload investigation/operation ids (bounded JSON vector).'),
     ],
     'references': [
         ('references_case', 'return', 'return g.Case(table, check, context)',
@@ -782,6 +676,10 @@ NON_GUARDS = {
         ('references_case', 'data_operation', 'part.replace',
          'Traverse every node of the schema document and parse each reference into string flag, base, fragment and unescaped pointer keys (selection only); the reference rows judge them.'),
     ],
+    'shared': [
+        ('shared_case', 'return', 'return g.Case(table, check, context)',
+         'Return the fresh execution object built for this candidate; it decides no acceptance.'),
+    ],
 }
 
 
@@ -797,7 +695,23 @@ def patched_case(case, patches):
 
 
 def fixture_cases():
+    # The lane runner reads the fixture with the shared current parser (CV-1100); the guard views writer
+    # checks that parser yields this same tree (the fixture holds no fractional token).
     return json.loads((ROOT / FIXTURE).read_text())['cases']
+
+
+GUARD_VIEWS = 'scripts/pm_debug_investigation_guard_views.json'
+
+
+def guard_views():
+    """The shared-rule and retained-history phase inputs, written by pm_debug_investigation_views.py (which
+    this adapter must not import: the tool's prescan follows every repository import and refuses the shared
+    helpers' reflection). Refused unless every input file still has the SHA-256 recorded with them."""
+    document = json.loads((ROOT / GUARD_VIEWS).read_text())
+    for relative, digest in document['inputs'].items():
+        if hashlib.sha256((ROOT / relative).read_bytes()).hexdigest() != digest:
+            raise ValueError('guard views are stale (' + relative + '); run python3 scripts/pm_debug_investigation_views.py --write-guard-views')
+    return document['views']
 
 
 def short(event):
@@ -1060,16 +974,31 @@ def admission_suite():
 
 
 def retained_suite():
-    probes = [(short(m['event_type']), production.retained_probes(production.candidate(m))) for m in fixture_cases()]
+    # Sweep part 2B: the retained phase judges the retained view (recomputed identities and digests, the
+    # original's metadata verdicts, type-exact Storage stand-ins) of each probe (guard_views()).
+    probes = [(prefix, ([tuple(c) for c in controls], [tuple(n) for n in negatives]))
+              for prefix, controls, negatives in guard_views()['retained_suite']]
     return probe_suite('retained-history reader', 'retained', production.retained.retained_case, probes, 'retained_history')
 
 
 def retry_request_suite():
     meta = next(m for m in fixture_cases() if 'retry_request_cases' in m)
     controls, negatives = production.retry_request_probes(meta['retry_request_cases'])
+    production.load_documents(only=('retry_request',))
+    labels = {production.row_label(row) for row in production.retry.retry_request_case(controls[0][1]).table.guards}
+    # Since sweep part 2B the retries_used slot is the shared-rule phase's (shared_suite).
     return build('cleanup retry request', 'retry', production.retry.retry_request_case, controls,
-                 [(nid, value, controls[0][0], label, nid) for nid, value, label, code in negatives], 'retry',
-                 ('retry_request',))
+                 [(nid, value, controls[0][0], label, nid) for nid, value, label, code in negatives if label in labels],
+                 'retry', ('retry_request',))
+
+
+def shared_suite():
+    """The shared-rule phase (sweep part 2B) on shared-rule views (guard_views()): every positive's view, and the
+    view of every fixture negative and shared-rule probe that names a shared-rule row (candidates, retry
+    requests, and the probes whose raw values the guard tool could not render, held here only as verdicts)."""
+    views = guard_views()['shared_suite']
+    return build('shared-rule phase', 'shared', production.shared.shared_case, [tuple(c) for c in views['controls']],
+                 [tuple(n) for n in views['negatives']], 'append')
 
 
 def references_suite():
@@ -1085,4 +1014,5 @@ SUITES = ('envelope_suite', 'family_suite', 'payload_context_item_added_suite', 
           'payload_state_changed_suite', 'lifecycle_suite', 'instrumentation_source_suite', 'instrumentation_detail_suite', 'instrumentation_detail_required_suite',
           'instrumentation_detail_values_a_suite', 'instrumentation_detail_values_b_suite', 'instrumentation_detail_values_c_suite', 'instrumentation_detail_values_d_suite',
           'instrumentation_joins_suite', 'instrumentation_suite',
-          'instrumentation_handoff_suite', 'instrumentation_retry_suite', 'retry_request_suite', 'admission_suite', 'retained_suite', 'references_suite')
+          'instrumentation_handoff_suite', 'instrumentation_retry_suite', 'retry_request_suite', 'admission_suite', 'retained_suite', 'references_suite',
+          'shared_suite')

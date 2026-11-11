@@ -1,14 +1,12 @@
-"""DDBG guard table: Instrumentation detail phase: the referenced change detail, its schema and inline size (DL-429, SP-337).
+"""DDBG guard table: Instrumentation detail phase: the referenced change detail and its schema (DL-429).
 
 Part of the DDBG guard tables; the domain rule and phase order are in
 pm_debug_investigation_guard_constants.py. Every refusal here is a named
 predicate row; the factory builds a fresh table and Case for each candidate.
 """
-import json
-
 import pm_guard_isolation as g
 from pm_debug_investigation_guard_constants import (
-    DETAIL_ROOTS, DETAIL_URI, INLINE_LIMIT)
+    DETAIL_ROOTS, DETAIL_URI)
 
 # Injected by pm_debug_investigation_transitions.load_documents() before any
 # case is built: {document key: {document_uri: schema}}.
@@ -33,26 +31,18 @@ def instr_detail_available(value, context):
     return 'detail_unavailable' if ref not in records else None
 
 
-def instr_detail_size(value, context):
-    size = context['detail_bytes']
-    return 'detail_payload_reference_required' if type(size) is int and size > INLINE_LIMIT else None
-
-
 def instrumentation_detail_case(case_value):
     payload, records = case_value.get('payload'), case_value.get('detail_records')
     ref = payload.get('detail_ref') if type(payload) is dict else None
     detail = records.get(ref) if type(ref) is str and type(records) is dict else None
-    # SP-337: the detail body is stored on its own, so its encoded bytes are measured on their own.
-    size = None if detail is None else len(json.dumps(detail, ensure_ascii=False, separators=(',', ':')).encode())
-    context = {'detail': detail, 'detail_bytes': size}
+    # The detail's SP-337 inline size is measured in EVENT_VALUE bytes by the shared-rule phase (shared.detail_size).
+    context = {'detail': detail}
     catalog = g.SchemaCatalog(DOCUMENTS['instrumentation_detail'], roots=DETAIL_ROOTS)
     table = g.schema_table(catalog, {DETAIL_URI: instrumentation_detail_subject}, guards=[
-        g.Guard('instr.detail_available', g.Invariant('/payload/detail_ref', 'names a record in detail_records'), 'detail_unavailable', instr_detail_available),
-        g.Guard('instr.detail_size', g.Invariant('/detail_records/<detail_ref>', 'encoded UTF-8 JSON is at most 16 KiB inline (SP-337)'), 'detail_payload_reference_required', instr_detail_size)])
+        g.Guard('instr.detail_available', g.Invariant('/payload/detail_ref', 'names a record in detail_records'), 'detail_unavailable', instr_detail_available)])
 
     def check(value):
         table.require('instr.detail_available', value, context)
         table.validate(DETAIL_URI, value, context)
-        table.require('instr.detail_size', value, context)
         return True
     return g.Case(table, check, context)

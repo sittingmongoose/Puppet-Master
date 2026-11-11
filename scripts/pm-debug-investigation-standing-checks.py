@@ -18,15 +18,19 @@ FIXTURE = 'Plans/debug_investigation_event_fixtures.json'
 CHECKER = 'scripts/pm-debug-investigation-events.py'
 CONSTANTS = 'scripts/pm_debug_investigation_guard_constants.py'
 RETAINED = 'scripts/pm_debug_investigation_guards_retained.py'
+SHARED_RULES = 'scripts/pm_debug_investigation_shared_rules.py'
 INPUTS = (FIXTURE, CHECKER, 'Plans/debug_investigation_event_payloads.schema.json',
           'Plans/event_family_registry.json', 'scripts/pm_debug_investigation_transitions.py',
-          'scripts/pm_guard_isolation.py', CONSTANTS, RETAINED,
+          'scripts/pm_guard_isolation.py', CONSTANTS, RETAINED, SHARED_RULES, 'scripts/pm_debug_investigation_views.py',
+          # The gated shared rules (NUMRULE 58c2816ff3) the lane now calls, and the data its runner reads.
+          'scripts/pm_event_numbers.py', 'scripts/pm_event_datetime.py', 'scripts/pm_event_index_binding.py',
+          'Plans/event_record.schema.json', 'Plans/event_number_recipe_corpus.json',
           *('scripts/pm_debug_investigation_guards_' + phase + '.py' for phase in (
               'admission', 'envelope', 'family', 'instrumentation', 'instrumentation_detail',
               'instrumentation_detail_values_a', 'instrumentation_detail_values_b', 'instrumentation_detail_values_c', 'instrumentation_detail_values_d',
               'instrumentation_detail_required', 'instrumentation_joins', 'payload_values', 'instrumentation_source_values',
               'instrumentation_handoff', 'instrumentation_retry',
-              'instrumentation_source', 'lifecycle', 'payload', 'references', 'retry', 'target_payload')))
+              'instrumentation_source', 'lifecycle', 'payload', 'references', 'retry', 'shared', 'target_payload')))
 
 
 def patch(case, patches):
@@ -48,7 +52,7 @@ def main():
             destination = scratch / relative
             destination.parent.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(ROOT / relative, destination)
-        originals = {relative: (scratch / relative).read_text() for relative in (CONSTANTS, RETAINED)}
+        originals = {relative: (scratch / relative).read_text() for relative in (CONSTANTS, RETAINED, SHARED_RULES)}
 
         def run(label, data, event=None, reject=False, mutate=None):
             # mutate: (relative source path, exact old text, new text), applied to this run only.
@@ -129,10 +133,11 @@ def main():
                 # be rejected by every family's authored retry vectors.
                 run('C6 reject digest that includes ' + key, fixture, event, reject=True,
                     mutate=(CONSTANTS, "DIGEST_FIELDS = ('scope_kind',", "DIGEST_FIELDS = ('" + key + "', 'scope_kind',"))
-            # The inverse bug (hashing only payload) must also fail each family.
+            # The inverse bug (a digest blind to the caller's envelope fields, hashing only event type and
+            # payload) must also fail each family's authored retry vectors.
             run('C6 reject payload-only semantic digest', fixture, event, reject=True,
-                mutate=(RETAINED, "body = dict(pairs + [('event_type', case['event_type']), ('payload', case['payload'])])",
-                        "body = {'payload': case['payload']}"))
+                mutate=(SHARED_RULES, "pairs = [(key, envelope.get(key)) for key in constants.DIGEST_FIELDS]",
+                        "pairs = [(key, None) for key in constants.DIGEST_FIELDS]"))
             data = copy.deepcopy(fixture)
             retry = data['cases'][index]['retry_cases'][0]
             retry['expected_result'] = 'semantic_digest_changed'
