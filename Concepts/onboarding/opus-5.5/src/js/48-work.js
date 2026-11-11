@@ -931,9 +931,21 @@
      that only moves time, output or progress patches those in place (A6) */
   const shape = () => items().map((x) => x.id + ':' + x.state + ':' + (x.stopping ? 1 : 0) + ':' + (needsYou(x) ? 1 : 0) + ':' + (x.lost ? 1 : 0) + ':' + (x.progress && isLive(x) ? 1 : 0)).join('|');
   let lastShape = '';
-  /* time, output tail and progress in place, for the panel and for the chat's Processes view */
+  /* time, output tail and progress in place, for the panel and for the chat's Processes view.
+     While the onboarding window is open over the app (html[data-o55-open]) the app beneath holds still (onboarding
+     README, Performance rules, 6): a root outside the window is not written, only remembered, and is patched the moment
+     the window goes, so its clocks are current in the first frame it shows again. Under the window these writes (the
+     chat composer's work clocks, every second) woke five of the chat's DOM watchers, a frame each (pm7-perf lane C2). */
+  const heldTicks = new Map();
+  const underWindow = (root) => doc.documentElement.hasAttribute('data-o55-open') && !(root.closest && root.closest('#pm-o55-onboarding'));
+  if (typeof MutationObserver === 'function') new MutationObserver(() => {
+    if (doc.documentElement.hasAttribute('data-o55-open') || !heldTicks.size) return;
+    const held = [...heldTicks]; heldTicks.clear();
+    held.forEach(([root, fmt]) => { if (root.isConnected) patchTicks(root, fmt); });
+  }).observe(doc.documentElement, { attributes: true, attributeFilter: ['data-o55-open'] });
   function patchTicks(root, fmt) {
     if (!root) return;
+    if (underWindow(root)) { heldTicks.set(root, fmt); return; }
     root.querySelectorAll('[data-work-time]').forEach((el) => { const it = byId(el.getAttribute('data-work-time')); if (it) { const v = (fmt || time)(it); if (el.textContent !== v) el.textContent = v; } });
     root.querySelectorAll('[data-work-prog]').forEach((el) => { const it = byId(el.getAttribute('data-work-prog')); if (it && it.progress) { const v = progText(it); if (el.innerHTML !== v) el.innerHTML = v; } });
     root.querySelectorAll('[data-work-tail]').forEach((el) => {
