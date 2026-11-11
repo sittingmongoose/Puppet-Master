@@ -45,7 +45,7 @@ async function originOf(f) {
    pointer-down landed on something else: a press not made, never counted as a lost click. sel is a selector, or
    [selector, words] for the first match whose text starts with those words */
 async function press(t, f, sel, want, hold = 45) {
-	// a person waits for what covers a control (a notification toast passing over it) before pressing: up to 4 s
+	// a person waits for what covers a control before pressing (up to 4 s), and closes a notification toast lying over it
 	let r = null;
 	for (let k = 0; k < 20; k++) {
 		r = await f.evaluate((sel) => {
@@ -56,7 +56,10 @@ async function press(t, f, sel, want, hold = 45) {
 			if (b.top < 0 || b.bottom > innerHeight) { el.scrollIntoView({ block: 'center', inline: 'nearest' }); document.documentElement.scrollTop = 0; document.body.scrollTop = 0; b = el.getBoundingClientRect(); }
 			if (b.width < 1 || b.height < 1) return null;
 			const hit = document.elementFromPoint(b.left + b.width / 2, b.top + b.height / 2);
-			return { box: [b.left, b.top, b.width, b.height], covered: hit && !el.contains(hit) ? String(hit.className || hit.tagName).slice(0, 40) : null };
+			// a PMConcept7 notification toast over the control is closed with its own dismiss button, as a person would
+			const toast = hit && !el.contains(hit) && hit.closest && hit.closest('.pmn-toast'), x = toast && toast.querySelector('.pmn-x');
+			if (x) x.click();
+			return { box: [b.left, b.top, b.width, b.height], covered: hit && !el.contains(hit) ? (toast ? 'toast (dismissed) ' : '') + String(hit.className || hit.tagName).slice(0, 40) : null };
 		}, sel).catch(() => null);
 		if (!r || !r.covered) break;
 		await t.page.waitForTimeout(200);
