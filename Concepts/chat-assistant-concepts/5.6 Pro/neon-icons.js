@@ -667,7 +667,22 @@
          non-scaling-stroke: Chromium will not composite a transform over non-scaling strokes. A context that renders
          the icon at another size sets --nx-u in its CSS, which wins over this default (the bar: 24/14). */
       var u = live.length ? ' style="--nx-u0:' + fmt(24 / size) + '"' : '';
-      var out = '<svg class="' + esc(c) + '" data-nx="' + esc(n) + '" width="' + size + '" height="' + size + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"' + u + '>' + base + moving + '</svg>';
+      var open = '<svg class="' + esc(c) + '" data-nx="' + esc(n) + '" width="' + size + '" height="' + size + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"';
+      var out = open + u + '>' + base + moving + '</svg>';
+      /* A status mark whose one moving part turns about the centre (working's bead on its still ring) draws that part in a
+         second svg of the same size laid over the first, and the svg itself turns: the same keyframes, period, easing and
+         delay (the wrapper's rule for .nx-p reaches it through its classes and --kl), so the same pose at every moment.
+         A part turning inside an svg lays that svg out on every frame it moves and each layout re-runs the hover hit test;
+         an svg element turning is a compositor transform with neither (pm7-perf lane F2: the Files footer's working mark,
+         the one glyph still laid out in every frame in Basic and Glass, 119 partial layouts and 120 hit tests a second).
+         The part inside keeps its classes and its own animation is off (neon-icons.css section 9). */
+      if (statusWrap && d.act === 'spin' && live.length === 1 && stat.length) {
+        var lm = live[0].p.m, lo = Array.isArray(lm.o) ? lm.o : (lm.o === 'c' ? null : d.origin);
+        if (lm.ar && !lm.ax && !lm.ay && !lm.cr && !lm.n && lo && +lo[0] === 12 && +lo[1] === 12) {
+          out = open + u + '>' + base + '</svg>' + open.replace('class="' + esc(c) + '"', 'class="' + esc(c + ' nx-p nx-st-move nx-st-spin') + '"') +
+            ' style="--nx-u0:' + fmt(24 / size) + ';--kl:' + kfName(n, live[0].j, 'L') + '">' + moving + '</svg>';
+        }
+      }
       if (cacheN > 4000) { cache = Object.create(null); cacheN = 0; }
       cache[key] = out; cacheN++;
       return out;
