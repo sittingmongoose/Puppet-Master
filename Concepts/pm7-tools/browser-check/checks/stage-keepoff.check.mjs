@@ -5,7 +5,13 @@
 // leaving may be under the box only while the bubble does not move (its placement, read per frame as in pip-bubble-clear,
 // within 1 px) and only until it rests or is gone; a resting prop under the box always fails, and during any entry the
 // bubble must not move within each line, covered or not. A new line may grow around the same bottom/tail anchor;
-// if its new size cannot fit at that anchor it must take its new placement on its first frame. It fails on:
+// if its new size cannot fit at that anchor it must take its new placement on its first frame. Extension of the QA-4
+// trade (lead ruling 2026-11-11, 1111220820-a32d): a settled prop that the bubble's claim re-aims (Retro Dark 740 Review:
+// 'All checked. Ready when you are.' has no clear place, claims a band and the clipboard eases out from under it in
+// about 150 ms) is making way, and may pass behind the bubble only while the bubble does not move (1 px), on the prop
+// spring's own eased path (at least 3 frames, no step over half its travel), until it rests fully clear; a prop resting
+// under the bubble still fails, and no other settled prop is allowed. --set negative=still nudges the bubble while a claim
+// band is up, to show that condition bites. It fails on:
 //  - NieR Light and Dark at 740x768 (the banner: NieR's box at the top over the props' column): a prop under the box or
 //    its PIP tab while Safe's Add one is hovered and left, Add one is pressed and Back is pressed, Safe with an online copy
 //    settles (the cloud), and Creating lowers its blocks (each went down behind the tab and the box), with three blocks
@@ -36,7 +42,7 @@ const want = (t, g) => !t.args.only || t.args.only.split(',').includes(g);
 // rig's render included) and the frame's layout, just before paint: a ResizeObserver on a 1 px element whose width an
 // animation frame toggles (a plain animation-frame read can see a state the rig rewrites before the frame is painted)
 function sampler(options) {
-	const S0 = window.__sk = { frames: 0, hits: [], rings: 0, ringOut: [], leaving: 0, blocks: 0, covered: 0, eps: new Map(), anchors: new Map(), lines: new Map() };
+	const S0 = window.__sk = { frames: 0, hits: [], rings: 0, ringOut: [], leaving: 0, blocks: 0, covered: 0, shunted: 0, eps: new Map(), shunts: new Map(), anchors: new Map(), lines: new Map() };
 	S0.trace=options?.trace?[]:null;S0.meta={mode:options?.mode,size:[innerWidth,innerHeight],start:performance.now(),timeOrigin:performance.timeOrigin};
 	const R = (e) => { const r = e.getBoundingClientRect(); return [r.left, r.top, r.right, r.bottom]; };
 	const meet = (a, b) => a[0] < b[2] - 0.5 && a[2] > b[0] + 0.5 && a[1] < b[3] - 0.5 && a[3] > b[1] + 0.5;
@@ -78,6 +84,8 @@ function sampler(options) {
 		st2.__skWrapped = true;
 	};
 	wrap();
+	// --set negative=still: the bubble nudged 3 px on alternate frames while a claim band is up (the stillness condition bites)
+	if (options?.negative === 'still') { const st3 = document.querySelector('#pm-o55-onboarding .o55-stage')?.__pipStage; const pl = st3.placeBubble; let n = 0; st3.placeBubble = function (H, ang) { const r = pl.call(this, H, ang); if (this.bubbleKeepOff) { const m = /^(-?[\d.]+)px (-?[\d.]+)px$/.exec(this.bubble.style.translate || ''); if (m) this.bubble.style.translate = `${+m[1] + (++n % 2) * 3}px ${m[2]}px`; } return r; }; }
 	const span1 = (vs, i) => vs.length ? Math.max(...vs.map((v) => v[i])) - Math.min(...vs.map((v) => v[i])) : 0;
 	const stillSpan = (ep) => Math.max(Math.min(span1(ep.rels, 0), span1(ep.trs, 0)), Math.min(span1(ep.rels, 1), span1(ep.trs, 1)));
 	const finishEp = (ep) => {
@@ -85,7 +93,21 @@ function sampler(options) {
 		if (ep.out) { if (ep.covered) S0.hits.push(`${ep.screen}: bubble moved ${stillSpan(ep).toFixed(1)} px while leaving ${ep.kind} passed behind it (${ep.covered} covered frame(s))`); }
 		else S0.hits.push(`${ep.screen}: bubble moved ${stillSpan(ep).toFixed(1)} px during ${ep.kind}'s entry (${ep.rels.length} frames${ep.covered ? `, ${ep.covered} covered` : ''})`);
 	};
-	S0.finish = () => { for (const ep of S0.eps.values()) finishEp(ep); S0.eps.clear(); for (const ep of S0.lines.values()) if (ep.rels.length > 1 && stillSpan(ep) > 1) S0.hits.push(`${ep.screen}: line '${ep.text.slice(0, 32)}' first placement strayed ${stillSpan(ep).toFixed(2)} px`); };
+	// Extension of the QA-4 trade (lead ruling 2026-11-11, 1111220820-a32d): a SETTLED prop that the bubble's claim re-aims
+	// (a claim band is up and the prop's eased offset is still travelling to the destination that band gave it) is making
+	// way, and may pass behind the bubble while: the bubble does not move (1 px, as an entry); its path is the prop
+	// spring's own eased move, no jump (at least 3 frames, no frame's step over half of the whole travel); and it comes to
+	// rest fully clear (on its next frame at rest the ordinary rule judges it, so a prop resting under the bubble fails).
+	// Only such a claim-shunted settled prop; every other settled prop under the bubble fails as before.
+	const finishShunt = (se, why) => {
+		if (!se.covered) return;
+		if (stillSpan(se) > 1) S0.hits.push(`${se.screen}: bubble moved ${stillSpan(se).toFixed(1)} px while the claim-shunted ${se.kind} passed behind it (${se.covered} covered frame(s))`);
+		const c = se.cs, total = c.length ? Math.hypot(c[c.length - 1][0] - c[0][0], c[c.length - 1][1] - c[0][1]) : 0;
+		let step = 0; for (let i = 1; i < c.length; i++) step = Math.max(step, Math.hypot(c[i][0] - c[i - 1][0], c[i][1] - c[i - 1][1]));
+		if (c.length < 3 || step > total / 2) S0.hits.push(`${se.screen}: claim-shunted ${se.kind} jumped (${c.length} frames, largest step ${step.toFixed(1)} of ${total.toFixed(1)} px)`);
+		if (why) S0.hits.push(`${se.screen}: claim-shunted ${se.kind} ${why}`);
+	};
+	S0.finish = () => { for (const se of S0.shunts.values()) finishShunt(se, 'did not come to rest before the capture ended'); S0.shunts.clear(); for (const ep of S0.eps.values()) finishEp(ep); S0.eps.clear(); for (const ep of S0.lines.values()) if (ep.rels.length > 1 && stillSpan(ep) > 1) S0.hits.push(`${ep.screen}: line '${ep.text.slice(0, 32)}' first placement strayed ${stillSpan(ep).toFixed(2)} px`); };
 	S0.finishOne = (key) => { const ep = S0.eps.get(key); if (ep) { finishEp(ep); S0.eps.delete(key); } };
 	const tick = () => {
 		if (!window.__sk) return;
@@ -160,6 +182,15 @@ function sampler(options) {
 				if (!ep) { ep = { kind, out, screen, covered: 0, settledSeen: false, rels: [], trs: [] }; S.eps.set(key, ep); }
 				if (relNow) ep.rels.push(relNow); if (trNow) ep.trs.push(trNow);
 				const hitNow = boxes.length && boxes.some(([, bx]) => meet(pb, bx));
+				const shunt = !out && pr.settled && st2.bubbleKeepOff && pr.restFit && pr.aimDx != null && Math.hypot(pr.aimDx - pr.restFit.dx, pr.aimDy - pr.restFit.dy) > .5;
+				const sk = `${id}|${screen}|${text}|shunt`;
+				if (shunt) {
+					let se = S.shunts.get(sk); if (!se) { se = { kind, screen, covered: 0, cs: [], rels: [], trs: [] }; S.shunts.set(sk, se); }
+					se.cs.push([(pb[0] + pb[2]) / 2, (pb[1] + pb[3]) / 2]);
+					if (hitNow) { se.covered++; S.shunted++; if (relNow) se.rels.push(relNow); if (trNow) se.trs.push(trNow); }
+					return;
+				}
+				if (S.shunts.has(sk)) { const se = S.shunts.get(sk); se.cs.push([(pb[0] + pb[2]) / 2, (pb[1] + pb[3]) / 2]); finishShunt(se); S.shunts.delete(sk); }
 				if (!out && pr.settled) {
 					ep.settledSeen = true;
 					if (hitNow) boxes.forEach(([n, bx]) => { if (meet(pb, bx)) S.hits.push(`${screen}: ${kind} (opacity ${pr.op.toFixed(2)}) under the ${n} at ${pb.map(Math.round)} vs ${bx.map(Math.round)}`); });
@@ -197,7 +228,7 @@ async function openAt(t, mode, look, [w, h], screen) {
 	await f.evaluate(([a, b]) => window.O55.ui.applyLook(a, b), [fam, scheme]);
 	await f.waitForTimeout(4500);
 	t.mark(`${mode} ${look} ${w}x${h} ${screen}`);
-	await f.evaluate(sampler,{trace:!!t.args.frames,mode});
+	await f.evaluate(sampler,{trace:!!t.args.frames,mode,negative:t.args.negative||null});
 	return f;
 }
 // a control of the current screen, by its action, through the real pointer (the sandbox fills the window)
@@ -222,7 +253,7 @@ async function nameIt(t, f) {
 }
 // what the sampler saw; and a clean store for the next case's fresh load (a normal page keeps the session in localStorage:
 // Safe's online copy, set below, left the next case's Review unable to create)
-const result = async (t, f) => { const S = await f.evaluate(() => { const S = window.__sk; window.__sk = null; S.finish(); return { frames: S.frames, hits: S.hits, rings: S.rings, ringOut: S.ringOut, leaving: S.leaving, blocks: S.blocks, covered: S.covered,meta:S.meta,trace:S.trace }; }); if(S.trace)fs.appendFileSync(path.join(t.run.dir,'keepoff-trace.jsonl.gz'),zlib.gzipSync(JSON.stringify(S)+'\n')); await t.app.resetLayout(t); return S; };
+const result = async (t, f) => { const S = await f.evaluate(() => { const S = window.__sk; window.__sk = null; S.finish(); return { frames: S.frames, hits: S.hits, rings: S.rings, ringOut: S.ringOut, leaving: S.leaving, blocks: S.blocks, covered: S.covered, shunted: S.shunted,meta:S.meta,trace:S.trace }; }); if(S.trace)fs.appendFileSync(path.join(t.run.dir,'keepoff-trace.jsonl.gz'),zlib.gzipSync(JSON.stringify(S)+'\n')); await t.app.resetLayout(t); return S; };
 
 async function nier(t, mode) {
 	for (const look of ['nier-light', 'nier-dark']) {
@@ -236,13 +267,13 @@ async function nier(t, mode) {
 		await f.evaluate(() => { const d = window.O55.S.sess.drafts.main; d.online_mode = 'new'; d.forge = 'github'; window.O55.ui.go('safe', { noHistory: true }); });
 		await f.waitForTimeout(3500);
 		let S = await result(t, f);
-		await t.check(`${tag}: Safe's Add one, Back and the settled cloud: no prop under the box or the PIP tab`, S.frames > 200 && S.leaving > 0 && S.hits.length === 0, `${S.frames} frames, ${S.leaving} leaving samples, ${S.hits.length} overlaps (${S.covered} frames of props passing behind a still bubble, allowed): ${S.hits.slice(0, 3).join(' ; ')}`);
+		await t.check(`${tag}: Safe's Add one, Back and the settled cloud: no prop under the box or the PIP tab`, S.frames > 200 && S.leaving > 0 && S.hits.length === 0, `${S.frames} frames, ${S.leaving} leaving samples, ${S.hits.length} overlaps (${S.covered} frames of props passing behind a still bubble, allowed, ${S.shunted} of them a claim-shunted settled prop making way): ${S.hits.slice(0, 3).join(' ; ')}`);
 		f = await openAt(t, mode, look, [740, 768], 'name');
 		await nameIt(t, f);
 		const reached = (await next(t, f, 'review')) && (await next(t, f, 'creating'));
 		await f.waitForTimeout(8000);
 		S = await result(t, f);
-		await t.check(`${tag}: Creating lowers its blocks clear of the box and the PIP tab`, reached && S.blocks > 0 && S.hits.length === 0, `${reached ? 'creating' : 'did not reach Creating'}, ${S.frames} frames, ${S.blocks} block samples, ${S.hits.length} overlaps (${S.covered} frames of props passing behind a still bubble, allowed): ${S.hits.slice(0, 3).join(' ; ')}`);
+		await t.check(`${tag}: Creating lowers its blocks clear of the box and the PIP tab`, reached && S.blocks > 0 && S.hits.length === 0, `${reached ? 'creating' : 'did not reach Creating'}, ${S.frames} frames, ${S.blocks} block samples, ${S.hits.length} overlaps (${S.covered} frames of props passing behind a still bubble, allowed, ${S.shunted} of them a claim-shunted settled prop making way): ${S.hits.slice(0, 3).join(' ; ')}`);
 		// Creating with four blocks: an online copy, signed in by the concept's stand-in owner (no real account), the whole
 		// route sampled, then the settled stack measured (the onb lane's carried 'box over the top block by 5-7 px')
 		f = await openAt(t, mode, look, [740, 768], 'name');
@@ -260,7 +291,7 @@ async function nier(t, mode) {
 			return { n: blocks.length, top, bottom, left: Math.min(box.left, tb.left) };
 		});
 		S = await result(t, f);
-		await t.check(`${tag}: Creating with an online copy (four blocks) lowers them clear of the box and the PIP tab`, ok4 && set.n >= 4 && S.hits.length === 0, `${ok4 ? 'creating' : 'the online-copy route did not reach Creating'}, ${set.n} blocks, ${S.frames} frames, ${S.hits.length} overlaps (${S.covered} frames of props passing behind a still bubble, allowed): ${S.hits.slice(0, 3).join(' ; ')}`);
+		await t.check(`${tag}: Creating with an online copy (four blocks) lowers them clear of the box and the PIP tab`, ok4 && set.n >= 4 && S.hits.length === 0, `${ok4 ? 'creating' : 'the online-copy route did not reach Creating'}, ${set.n} blocks, ${S.frames} frames, ${S.hits.length} overlaps (${S.covered} frames of props passing behind a still bubble, allowed, ${S.shunted} of them a claim-shunted settled prop making way): ${S.hits.slice(0, 3).join(' ; ')}`);
 		await t.check(`${tag}: the settled four-block stack stands below the box and its tab`, set.n >= 4 && set.top >= set.bottom - 0.5, `top block at ${set.top == null ? '-' : Math.round(set.top)} px, box and tab end at ${Math.round(set.bottom)} px`);
 	}
 }
@@ -274,7 +305,7 @@ async function leave(t, mode) {
 		await point(t, f, mode, 'online'); await point(t, f, mode, 'back');
 		await next(t, f, 'review'); await f.waitForTimeout(1500);
 		const S = await result(t, f);
-		await t.check(`${tag}: Name > Safe > Add one > Back > Review: no prop under the bubble`, ok && S.frames > 200 && S.leaving > 0 && S.hits.length === 0, `${ok ? '' : 'did not reach Safe; '}${S.frames} frames, ${S.leaving} leaving samples, ${S.hits.length} overlaps (${S.covered} frames of props passing behind a still bubble, allowed): ${S.hits.slice(0, 3).join(' ; ')}`);
+		await t.check(`${tag}: Name > Safe > Add one > Back > Review: no prop under the bubble`, ok && S.frames > 200 && S.leaving > 0 && S.hits.length === 0, `${ok ? '' : 'did not reach Safe; '}${S.frames} frames, ${S.leaving} leaving samples, ${S.hits.length} overlaps (${S.covered} frames of props passing behind a still bubble, allowed, ${S.shunted} of them a claim-shunted settled prop making way): ${S.hits.slice(0, 3).join(' ; ')}`);
 	}
 }
 
@@ -286,7 +317,7 @@ async function begin(t, mode) {
 		await point(t, f, mode, 'pick', 'new'); await point(t, f, mode, 'pick', 'existing'); await point(t, f, mode, 'pick', 'new');
 		await t.page.mouse.move(4, 4, { steps: 3 }); await f.waitForTimeout(1500);
 		const S = await result(t, f);
-		await t.check(`${tag}: Begins as, folder <> New: no prop under the bubble`, S.frames > 200 && S.leaving > 0 && S.hits.length === 0, `${S.frames} frames, ${S.leaving} leaving samples, ${S.hits.length} overlaps (${S.covered} frames of props passing behind a still bubble, allowed): ${S.hits.slice(0, 3).join(' ; ')}`);
+		await t.check(`${tag}: Begins as, folder <> New: no prop under the bubble`, S.frames > 200 && S.leaving > 0 && S.hits.length === 0, `${S.frames} frames, ${S.leaving} leaving samples, ${S.hits.length} overlaps (${S.covered} frames of props passing behind a still bubble, allowed, ${S.shunted} of them a claim-shunted settled prop making way): ${S.hits.slice(0, 3).join(' ; ')}`);
 	}
 }
 
