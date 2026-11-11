@@ -229,7 +229,11 @@
     const order = fixture.map(p => p.id);
     state.providers.sort((x, y) => (order.includes(x.id) ? order.indexOf(x.id) : 1e3) - (order.includes(y.id) ? order.indexOf(y.id) : 1e3));
     state.providers.forEach(migrateProvider);
-    const oc = find('opencode'); if (oc) recompute(oc);
+    /* A service's state is what its readiness says, never a word carried in the data: a saved list, or the Usage
+       review roster merged into the fixture (Concepts/usage-redesign/src/roster.json, which marks a service
+       'active' when it adds an account with no model on), must not leave "Ready" above "Getting it ready" or count
+       a service that cannot answer as ready (A2 B-1/B-2/B-3). recompute() keeps a service that is off as it is. */
+    state.providers.forEach(recompute);
     /* a carried value is held under the warn level (once the policy helpers below exist) and saved at once, so the old
        id never comes back from storage */
     if (carried.length) { try { holdCarried(); } catch (e) { /* at first load: holdCarried() runs after the policy block */ } }
@@ -291,6 +295,59 @@
     const ready = all().filter(p => plain(p) === 'Ready').length, attention = all().filter(p => /^Needs/.test(plain(p))).length;
     return `${ready} ready${attention ? ` · ${attention} need${attention === 1 ? 's' : ''} attention` : ''}`;
   };
+  /* Settings Home's "Needs attention" rows and the rail's "Settings health" line say what the services' own states say
+     (A2 B-3: Home read "Antigravity CLI needs sign-in" while the service was signed in and its page said Ready). The
+     base page draws them as fixed markup; the two service rows are replaced here by one row per kind of step a
+     service waits on (a seat, a sign-in, an account to turn on, a model to turn on), a kind shared by several services
+     being one row that names them. The other rows (the phone alert) stay as the base page draws them. */
+  function attentionKinds() {
+    const kinds = { seat: [], signin: [], account: [], models: [] };
+    all().forEach(p => {
+      if (!/^Needs/.test(plain(p))) return;
+      const r = p.readiness || {}, act = activeAccounts(p);
+      if (p.signedIn && act.length && act.every(seatless)) kinds.seat.push(p);
+      else if (!p.signedIn) kinds.signin.push(p);
+      else if (!r.accountChosen) kinds.account.push(p);
+      else kinds.models.push(p);
+    });
+    return kinds;
+  }
+  const ATTENTION_WORDS = {
+    seat: { one: p => [`${p.name} cannot invoke`, 'Authentication is valid, but the account has no active seat.'], many: n => `${n} services have no seat`, then: 'Each signed-in account needs a seat before its models can run.', note: (n, ps) => n === 1 && ps[0].id === 'github-copilot' ? 'a Copilot seat' : n === 1 ? 'a seat' : `${n} seats` },
+    signin: { one: p => [`${p.name} needs sign-in`, `Sign in again to use ${(p.accounts || []).length > 1 ? `its ${(p.accounts || []).length} accounts` : 'its account'}.`], many: n => `${n} services need sign-in`, then: 'Sign in again to use their accounts.', note: n => n === 1 ? 'a sign-in' : `${n} sign-ins` },
+    account: { one: p => [`${p.name} has no account in use`, 'Turn on one of its accounts, or sign in to one again.'], many: n => `${n} services have no account in use`, then: 'Turn on one of each one’s accounts.', note: n => n === 1 ? 'an account to turn on' : `${n} services with no account in use` },
+    models: { one: p => [`${p.name} has no model turned on`, 'Turn on at least one model in one of its accounts.'], many: n => `${n} services have no model turned on`, then: 'Turn on at least one model in each, or turn the service off.', note: n => n === 1 ? 'a model to turn on' : `${n} services with no model on` }
+  };
+  const namesLine = ps => ps.length <= 3 ? ps.map(p => p.name).join(', ') : `${ps.slice(0, 3).map(p => p.name).join(', ')} and ${ps.length - 3} more`;
+  function attentionRows() {
+    const kinds = attentionKinds();
+    return Object.keys(ATTENTION_WORDS).filter(k => kinds[k].length).map(k => {
+      const ps = kinds[k], w = ATTENTION_WORDS[k];
+      const [title, meta] = ps.length === 1 ? w.one(ps[0]) : [w.many(ps.length), `${namesLine(ps)}. ${w.then}`];
+      return { kind: k, ids: ps.map(p => p.id), note: w.note(ps.length, ps), html: `<button class="attention-row" data-action="select-provider" data-provider="${a(ps[0].id)}" data-attention-kind="${a(k)}"><span class="status-dot attention pm-status-mark" data-status="${k === 'seat' ? 'waiting' : 'warning'}" data-tone="attention" aria-hidden="true"></span><span class="setup-copy"><span class="setup-label">${h(title)}</span><span class="setup-meta">${h(meta)}</span></span>${icon('chevron')}</button>` };
+    });
+  }
+  window.O55ProviderAttention = attentionRows;
+  const SERVICE_ROW = /<button class="attention-row" data-action="select-provider" data-provider="[^"]*">[\s\S]*?<\/button>\s*/g;
+  const OTHER_ROWS = html => (String(html).match(/<button class="attention-row"(?! data-action="select-provider")[\s\S]*?<\/button>/g) || []).length;
+  const pm51ProvidersRenderHome = renderHome;
+  renderHome = function () {
+    const html = String(pm51ProvidersRenderHome.apply(this, arguments));
+    const rows = attentionRows();
+    let first = true;
+    const out = html.replace(SERVICE_ROW, () => { if (!first) return ''; first = false; return rows.map(r => r.html).join('\n          ') + '\n          '; });
+    const n = rows.length + OTHER_ROWS(html);
+    return out.replace(/<span class="home-panel-meta">\d+ actionable items?<\/span>/, `<span class="home-panel-meta">${n} actionable item${n === 1 ? '' : 's'}</span>`);
+  };
+  const pm51ProvidersRenderRail = renderDomainRail;
+  renderDomainRail = function () {
+    const html = String(pm51ProvidersRenderRail.apply(this, arguments));
+    const rows = attentionRows(), notes = rows.map(r => r.note).concat('a phone alert');
+    const n = notes.length;
+    const line = notes.length > 1 ? `${notes.slice(0, -1).join(', ')}${notes.length > 2 ? ',' : ''} and ${notes[notes.length - 1]}` : notes[0];
+    return html.replace(/\d+ items? needs? attention<\/div>/, `${n} item${n === 1 ? ' needs' : 's need'} attention</div>`)
+      .replace(/(<div class="side-card-note">)A sign-in, a Copilot seat, and a phone alert need review\.(<\/div>)/, (m, o, c) => `${o}${h(line.charAt(0).toUpperCase() + line.slice(1))} need${n === 1 ? 's' : ''} review.${c}`);
+  };
 
   /* ---------- pieces ------------------------------------------------------ */
   function primaryFor(p) {
@@ -307,14 +364,18 @@
     }
   }
 
+  /* Every service is in exactly one counter, so the counters add up to the list's own count (A2 B-1: a service that
+     is off was in none of them). */
   function stats() {
     const ready = all().filter(p => plain(p) === 'Ready').length;
     const attention = all().filter(p => /^Needs/.test(plain(p))).length;
     const notSet = all().filter(p => ['Not set up', 'Not installed'].includes(plain(p))).length;
+    const off = all().filter(p => plain(p) === 'Off').length;
     return PM51.stats([
       { label: 'Ready', value: ready, tone: 'ready', help: 'Signed in with models available' },
-      { label: 'Needs attention', value: attention, tone: attention ? 'attention' : undefined, help: 'A sign-in or seat to sort out' },
-      { label: 'Not set up', value: notSet, help: 'Available whenever you want them' }
+      { label: 'Needs attention', value: attention, tone: attention ? 'attention' : undefined, help: 'A sign-in, a seat or a model to sort out' },
+      { label: 'Not set up', value: notSet, help: 'Available whenever you want them' },
+      { label: 'Off', value: off, help: 'Turned off; nothing is sent to them' }
     ]);
   }
   /* One line of whole-list actions under the summary: each is a real inventory action, drawn where it is used. */
@@ -346,7 +407,9 @@
     }
     const next = off ? null : !r.installed ? 'install' : !r.signedIn ? 'signin' : !r.accountChosen ? 'account' : !r.modelsReady ? 'models' : null;
     const signInWays = (p.signIn || []).map(s => s[1]);
-    const installDesc = cli ? (r.installed ? `Version ${p.version} is installed on your server.` : 'Puppet Master installs it on your server, only from the official provider, and only when you choose Install.')
+    /* an installed program whose version is not known yet (found by onboarding or by a sign-in) says only that it is
+       installed, as the ready chip does (A2 B-4: "Version is installed") */
+    const installDesc = cli ? (r.installed ? (p.version ? `Version ${p.version} is installed on your server.` : 'Installed on your server.') : 'Puppet Master installs it on your server, only from the official provider, and only when you choose Install.')
       : server ? (r.installed ? 'A server is reachable.' : 'Let Puppet Master run one, or use a server you already run.')
       : 'Nothing to install.';
     const signInDesc = url ? (r.signedIn ? `Reaches ${p.address || 'the endpoint'}.` : 'Enter the address of the model server on your network.')
@@ -1104,6 +1167,21 @@
   const MODEL_PICKERS = ['ai.models.default-model', 'ai.models.overseer-model', 'ai.models.worker-model', 'ai.models.gui-worker-model', 'ai.models.high-effort-worker-model', 'ai.models.auditor-model', 'ai.models.goal-worker-model', 'ai.models.goal-verifier-model', 'ai.models.subagent-model', 'ai.models.teach-model', 'ai.models.thread-title-model'];
   const readyModels = () => all().filter(p => p.status === 'active').flatMap(p => enabledModels(p).map(m => ({ value: `${p.id}/${m.id}`, label: `${m.name} · ${p.name}`, meta: p.id === 'free-models' ? 'A free route' : `On your ${p.name} ${p.bill === 'use' ? 'account' : 'plan'}` })));
   MODEL_PICKERS.forEach(id => PM51.moreChoices(id, readyModels));
+  /* "Service for each lane" offers every service in the list, in its order, after "the everyday model's service"; one
+     that cannot answer now is shown with why and cannot be picked (A2 B-9: a fixed list of five old platform names, so
+     no lane could use ChatGPT / Codex or any other ready service). The five old names stay the stored values of their
+     services (rows.d keeps their labels), so a saved choice keeps its meaning. */
+  const LANE = 'ai.models.per-lane-platform';
+  const LANE_OLD = { 'claude-code': 'Claude Code', 'cursor-cli': 'Cursor', 'gemini-direct': 'Gemini Direct', antigravity: 'Antigravity CLI', opencode: 'OpenCode' };
+  const laneValue = p => LANE_OLD[p.id] || p.id;
+  const LANE_WHY = { seat: 'has no seat', signin: 'needs sign-in', account: 'has no account in use', models: 'has no model turned on' };
+  const laneWhy = p => {
+    const w = plain(p); if (w === 'Ready') return '';
+    const k = Object.entries(attentionKinds()).find(([, ps]) => ps.includes(p));
+    return `${p.name} ${k ? LANE_WHY[k[0]] : w === 'Off' ? 'is off' : `is ${w.toLowerCase()}`}. Get it ready under Services first.`;
+  };
+  PM51.moreChoices(LANE, () => all().map(p => ({ value: laneValue(p), label: p.name, meta: plain(p) === 'Ready' ? 'Ready' : plain(p) })));
+  PM51.choiceBlock(LANE, v => { const p = all().find(x => laneValue(x) === String(v)); return p ? laneWhy(p) : ''; });
   PM51.readyModels = readyModels;
   PM51.perValues('ai.models.provider-enabled', () => all().filter(p => p.status !== 'setup' && p.status !== 'not-installed').map(p => ({ name: p.name, value: p.status !== 'disabled' })));
   PM51.perValues('ai.accounts.auth-mode', () => all().filter(p => authModes(p).length > 2).map(p => ({ name: p.name, value: PM51.scopedValue(p, 'ai.accounts.auth-mode') })));
@@ -1481,6 +1559,33 @@
       { title: 'Free routes', desc: `${routesOn()} of ${routes().length} on` },
       { title: 'Keychain reachable', desc: 'On your server', status: 'Example', tone: 'info' }
     ] });
+  });
+  /* "Quota and budget console" (ai.usage.quota-management, "one place to review and adjust every quota and execution-
+     budget control together"): every switch level, budget and warning in one panel, each with its value now and a way
+     to its own row. Its row sits on Usage & budgets and routed to that same tab, so it did nothing (A2 B-7). */
+  const CONSOLE = [
+    ['When an account runs low', 'providers-switch-accounts'],
+    ['When a whole service is down', 'providers-switch-services'],
+    ['Budgets', 'providers-budgets'],
+    ['Warnings', 'providers-warnings']
+  ];
+  PM51.style(`
+    #pm-settings-portals .o55-console-row, .o55-console-row { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; align-items: center; gap: 10px; padding: 7px 0; border-top: 1px solid var(--k3-line); font-size: 12.5px; }
+    .o55-console-row:first-child { border-top: 0; }
+    .o55-console-label { color: var(--k3-text-1); min-width: 0; }
+    .o55-console-value { color: var(--k3-text-2); text-align: right; }
+  `);
+  PM51.on('providers-console', () => {
+    const byId = (PM51.placement && PM51.placement.byId) || {};
+    const own = all().reduce((n, p) => n + ((p.props && p.props[SW_ID] != null && p.props[SW_ID] !== '') ? 1 : 0), 0);
+    const ownAcc = all().reduce((n, p) => n + (p.accounts || []).filter(acc => acc.props && acc.props[SW_ID] != null && acc.props[SW_ID] !== '').length, 0);
+    const body = CONSOLE.map(([title, sid]) => {
+      const ids = Object.keys(byId).filter(id => byId[id] && byId[id].section === sid);
+      const rows = ids.map(id => { const f = findSettingGlobal(id); if (!f) return ''; const v = settingValue(f.setting);
+        return `<div class="o55-console-row" data-setting-id="${a(id)}"><span class="o55-console-label">${h(PM51.rowLabel(f.setting))}</span><span class="o55-console-value">${h(PM51.valueText(f.setting, v))}</span><button type="button" class="o55-textbtn" data-action="o55-reveal" data-setting="${a(id)}"><span>Change</span>${icon('arrowRight')}</button></div>`; }).join('');
+      return rows ? PM51.panelSection(title, rows) : '';
+    }).join('') + PM51.note(own || ownAcc ? `${own ? countText(own, 'service') : ''}${own && ownAcc ? ' and ' : ''}${ownAcc ? countText(ownAcc, 'account') : ''} switch at a level of ${own + ownAcc === 1 ? 'its' : 'their'} own, set inside ${own + ownAcc === 1 ? 'it' : 'each one'} under Services.` : 'No service or account has a switch level of its own; they all follow these.');
+    PM51.panel({ title: 'Quota and budget console', subtitle: 'Every limit, budget and warning, in one place', icon: 'gauge', body });
   });
   PM51.on('providers-reset', () => PM51.confirm('Reset services to the example defaults?', 'Accounts, model choices, and routes go back to the example defaults. Settings on the other tabs are kept.', 'Reset', () => {
     state.providers = clone(D.providers); state.freeRoutes = clone(D.freeRoutes); state.selectedProvider = state.providers[0]?.id || null; migrate(); save(); PM51.toast('Services reset', 'The example defaults are back.');
