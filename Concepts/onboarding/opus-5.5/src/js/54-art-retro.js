@@ -182,7 +182,7 @@
       for (let i = this.ghosts.length - 1; i >= 0; i--) {
         const g = this.ghosts[i], k = (this.t - g.t) / life;
         if (k >= 1) { g.e.remove(); this.ghosts.splice(i, 1); continue; }
-        g.e.setAttribute('opacity', R(peak * (1 - k)));
+        Hp.sa(g.e, 'opacity', R(peak * (1 - k)));
       }
     }
   });

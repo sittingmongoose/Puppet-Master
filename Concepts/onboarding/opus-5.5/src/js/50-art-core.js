@@ -133,6 +133,10 @@
   const H = PIP.h = {
     NS: 'http://www.w3.org/2000/svg',
     R: (v) => +(+v).toFixed(2),
+    /* a drawn value is written only when it differs from the one last written to that element (PERF-1): an identical
+       SVG attribute write still invalidates style, and a changed-looking transform sets off a whole-document
+       layerization. Only for attributes nothing else writes. */
+    sa(e, a, v) { const c = e.__pmA || (e.__pmA = {}), s = String(v); if (c[a] !== s) { c[a] = s; e.setAttribute(a, s); } },
     clamp: (v, a, b) => Math.max(a, Math.min(b, v)),
     ease: (k) => 1 - Math.pow(1 - Math.max(0, Math.min(1, k)), 3),
     rot: (p, a) => { const c = Math.cos(a), s = Math.sin(a); return [p[0] * c - p[1] * s, p[0] * s + p[1] * c]; },

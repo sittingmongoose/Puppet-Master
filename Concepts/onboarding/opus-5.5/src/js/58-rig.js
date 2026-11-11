@@ -18,7 +18,7 @@
 (function () {
   'use strict';
   const O55 = window.O55, PIP = O55.pipStage, H = PIP.h, PW = O55.pipWorlds;
-  const { R, clamp, ease, rot, el, div, T } = H;
+  const { R, clamp, ease, rot, el, div, T, sa } = H;
   const now = H.now;
   const STACK_OFFSETS = [-3, 4, -2, 3, 0, -3];
   const esc = (s) => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
@@ -194,8 +194,15 @@
          painted there, over the page leaving with the old screen, until the stage was let go: Basic Dark at 740x768,
          Begin to Away, FO-34 R1) */
       if (this.bubbleMO) this.bubbleMO.disconnect();
-      this.bubbleMO = new MutationObserver(() => { const b = this.bubble; if (!b || this.dead) return; const w = b.offsetWidth, h = b.offsetHeight; if (w !== this.bubbleW || h !== this.bubbleH) { this.bubbleW = w; this.bubbleH = h; this.frameT = -1e9; if (this.H && this.famName !== 'nier') this.placeBubble(this.H, this.ang); this.kick(); } });
+      if (this.bubbleRO) this.bubbleRO.disconnect();
+      /* (its size is kept here, read when its words or class change and when its box resizes (a font arriving), never in
+         the loop: placeBubble read offsetWidth/Height on every drawn frame, after that frame's writes, a forced layout each
+         time; PERF-1. NieR's fixed box is measured at the same moments.) */
+      this.bubbleW = this.bubbleH = 0; this.nierBox = null;
+      const sized = () => { const b = this.bubble; if (!b || this.dead) return; const w = b.offsetWidth, h = b.offsetHeight; if (this.famName === 'nier') { const nb = this.boxInScene(b, 6); if (nb) this.nierBox = nb; } if (w !== this.bubbleW || h !== this.bubbleH) { this.bubbleW = w; this.bubbleH = h; this.frameT = -1e9; if (this.H && this.famName !== 'nier') this.placeBubble(this.H, this.ang); this.kick(); } };
+      this.bubbleMO = new MutationObserver(sized);
       this.bubbleMO.observe(this.bubble, { childList: true, characterData: true, subtree: true, attributes: true, attributeFilter: ['class'] });
+      this.bubbleRO = new ResizeObserver(sized); this.bubbleRO.observe(this.bubble);
       if (this.tube === 'phosphor') div('pst-crt', this.screen, '<i class="pst-roll"></i><i class="pst-scan"></i><i class="pst-mask"></i><i class="pst-noise"></i><i class="pst-vig"></i><i class="pst-glare"></i>');
       if (this.tube === 'teletype') { div('pst-grain', this.screen); this.head = div('pst-printer', this.screen, '<i class="pst-bail"></i><i class="pst-platen"></i><i class="pst-head"><b></b></i>').querySelector('.pst-head'); }
       this.hudHtml();
@@ -491,8 +498,8 @@
       const cv = rot([-tieMid[0] * sc, -tieMid[1] * sc], pr.a);
       pr.pos = [hang[0] + cv[0], hang[1] + cv[1]];
       const sq = this.reduced ? 0 : clamp(pr.sq || 0, -.12, .12), squash = Math.abs(sq) > .002 ? ` translate(0 ${R(pr.foot)}) scale(${R(1 + sq * .6)} ${R(1 - sq)}) translate(0 ${R(-pr.foot)})` : '';
-      pr.el.setAttribute('transform', `translate(${R(hang[0])} ${R(hang[1])}) rotate(${R(pr.a * 57.3)}) scale(${R(sc)}) translate(${R(-tieMid[0])} ${R(-tieMid[1])})${squash}`);
-      pr.el.setAttribute('opacity', R(pr.op));
+      sa(pr.el, 'transform', `translate(${R(hang[0])} ${R(hang[1])}) rotate(${R(pr.a * 57.3)}) scale(${R(sc)}) translate(${R(-tieMid[0])} ${R(-tieMid[1])})${squash}`);
+      sa(pr.el, 'opacity', R(pr.op));
       // once a block is set down its strings are unhooked: they go slack, lift away and fade
       const off = pr.spec.ground && pr.landed ? clamp((this.t - pr.landT) / .55, 0, 1) : 0;
       const strOp = off ? Math.max(0, 1 - ease(off)) * pr.op : pr.op;
@@ -523,8 +530,8 @@
           top = [anch[0] + av[0] / al * 200, anch[1] + av[1] / al * 200];
           if (top[1] >= anch[1]) top = [anch[0], anch[1]];
         }
-        pr.strs[i].setAttribute('d', `M${R(top[0])} ${R(top[1])}L${R(end[0])} ${R(end[1])}`);
-        pr.strs[i].setAttribute('opacity', R(strOp));
+        sa(pr.strs[i], 'd', `M${R(top[0])} ${R(top[1])}L${R(end[0])} ${R(end[1])}`);
+        sa(pr.strs[i], 'opacity', R(strOp));
         pr.strs[i].classList.toggle('pst-dash', !!pr.spec.preview);
       });
     }
@@ -1205,8 +1212,9 @@
       const k = Math.min(1, (dt || .016) * 5); this.tipXY[0] += (goal[0] - this.tipXY[0]) * k; this.tipXY[1] += (goal[1] - this.tipXY[1]) * k;
       /* (and never past the stage's edges while it eases after Pip) */
       this.tipXY[1] = clamp(this.tipXY[1], top, Math.max(top, by - h - foot)); this.tipXY[0] = clamp(this.tipXY[0], 8, Math.max(8, bx - w - 8));
-      el.style.transform = `translate(${R(this.tipXY[0])}px, ${R(this.tipXY[1])}px)`;
-      el.style.setProperty('--tx', R(clamp(p[0] - this.tipXY[0], 14, w - 14)) + 'px');
+      const tf = `translate(${R(this.tipXY[0])}px, ${R(this.tipXY[1])}px)`, tx = R(clamp(p[0] - this.tipXY[0], 14, w - 14)) + 'px';
+      if (el._tipTf !== tf) { el._tipTf = tf; el.style.transform = tf; }
+      if (el._tipTx !== tx) { el._tipTx = tx; el.style.setProperty('--tx', tx); }
     }
     /* --------------------------------------------------------- geometry */
     /* in the stage's own, untransformed size: the window's opening scales it, and a box measured then kept the larger
@@ -1250,6 +1258,7 @@
         if (dx || dy) { ps.Ct.x += dx; ps.Ct.y += dy; ps.C.x += dx; ps.C.y += dy; }
       }
       this.nierBox = null;
+      if (this.bubble) { this.bubbleW = this.bubble.offsetWidth; this.bubbleH = this.bubble.offsetHeight; if (this.famName === 'nier') this.nierBox = this.boxInScene(this.bubble, 6); }
       this.dirty = true; this.frameT = -1e9; if (this.svg && this.kick) this.kick(); /* (a resize redraws the props in their new room, at once: past Retro's stepped gate too) */
       this.headTo();
     }
@@ -1407,6 +1416,10 @@
     }
     render() {
       const ps = this.ps, Lay = this.L, f = this.famName;
+      /* (NieR's box is fixed: its band is kept clear from when it is first seen, also while it is silent, so a stack
+         that lands before it talks is already below it. Its observers keep it; it is read here only until it is first
+         seen, before this frame's writes, so the read forces no layout; PERF-1) */
+      if (f === 'nier' && !this.nierBox) { const nb = this.boxInScene(this.bubble, 6); if (nb) this.nierBox = nb; }
       // mood: a transient feeling wins over the scene's own
       if (this.moodOverride && this.t > this.moodUntil) this.moodOverride = null;
       const base = (this.spec.pip && this.spec.pip.mood) || 'idle';
@@ -1427,13 +1440,13 @@
       // breathing: Pip's head swells a touch, slower when it sleeps
       const br = this.reduced || !PIP.h.part('idle-life') ? 0 : (this.fam.breathe || 0) * Math.sin(this.t * (this.sleepZ ? 1.5 : 2.2));
       const sx = ps.sx * (1 - br * .4), sy = ps.sy * (1 + br), s = Lay.s;
-      this.gCtl.setAttribute('transform', `translate(${R(ps.C.x)} ${R(ps.C.y)}) rotate(${R(ps.phi * 57.3)}) scale(${s}) translate(-32 -14.5)`);
-      this.gHead.setAttribute('transform', `translate(${R(H[0])} ${R(H[1])}) rotate(${R(ang * 57.3)}) scale(${s}) translate(-32 -31.5) translate(32 59.5) scale(${R(sx)} ${R(sy)}) translate(-32 -59.5)`);
+      sa(this.gCtl, 'transform', `translate(${R(ps.C.x)} ${R(ps.C.y)}) rotate(${R(ps.phi * 57.3)}) scale(${s}) translate(-32 -14.5)`);
+      sa(this.gHead, 'transform', `translate(${R(H[0])} ${R(H[1])}) rotate(${R(ang * 57.3)}) scale(${s}) translate(-32 -31.5) translate(32 59.5) scale(${R(sx)} ${R(sy)}) translate(-32 -59.5)`);
       const ends = this.solveStrings({ C: ps.C, phi: ps.phi, H, ang, sx, sy });
       ends.forEach((e, i) => {
         const l = Math.hypot(e.E[0] - e.T[0], e.E[1] - e.T[1]), slack = Math.max(0, (this.restLen[i] || l) - l);
         const d = slack > 1 ? `M${R(e.T[0])} ${R(e.T[1])}Q${R((e.T[0] + e.E[0]) / 2 + (i ? 1 : -1) * slack * .25)} ${R((e.T[1] + e.E[1]) / 2 + slack * .55)} ${R(e.E[0])} ${R(e.E[1])}` : `M${R(e.T[0])} ${R(e.T[1])}L${R(e.E[0])} ${R(e.E[1])}`;
-        this.pstrs[i].setAttribute('d', d); this.pglow[i].setAttribute('d', d);
+        sa(this.pstrs[i], 'd', d); sa(this.pglow[i], 'd', d);
       });
       // where the eyes look: at the target prop, at an idle glance, or at the pointer
       const pip = this.spec.pip || {};
@@ -1454,17 +1467,14 @@
         look = [vx / l * 2.3 * k, vy / l * 1.6 * k];
       } else if (tgt && tgt.pos) look = atTarget(tgt.pos);
       ps.lookT = look;
-      if (this.eyesEl) this.eyesEl.setAttribute('transform', `translate(${R(ps.look[0])} ${R(ps.look[1])})`);
+      if (this.eyesEl) sa(this.eyesEl, 'transform', `translate(${R(ps.look[0])} ${R(ps.look[1])})`);
       // blink
       if (this.blinkEl && !this.reduced && PIP.h.part('blinks')) {
         if (this.t > ps.nextBlink) { ps.blinkAt = this.t; ps.nextBlink = this.t + 2.2 + Math.random() * 3.4; }
         const b = ps.blinkAt != null ? this.t - ps.blinkAt : 9, k = b < .16 ? Math.max(.1, Math.abs(1 - b / .08)) : 1;
-        this.blinkEl.setAttribute('transform', `translate(0 ${this.blinkY}) scale(1 ${R(k)}) translate(0 ${-this.blinkY})`);
+        sa(this.blinkEl, 'transform', `translate(0 ${this.blinkY}) scale(1 ${R(k)}) translate(0 ${-this.blinkY})`);
       }
       // props
-      /* (NieR's box is fixed: its band is kept clear from when it is first seen, also while it is silent, so a stack
-         that lands before it talks is already below it) */
-      if (f === 'nier') { const nb = this.boxInScene(this.bubble, 6); if (nb) this.nierBox = nb; }
       this.keepOff = f === 'nier' ? this.nierBox || null : this.bubbleKeepOff || null;
       this.pipKeep = this.pipHead(null, { H, ang, sx, sy });
       this.renderN = (this.renderN || 0) + 1;
@@ -1472,11 +1482,11 @@
       // particles
       this.fx.forEach((p) => {
         const k = p.life / p.max;
-        if (p.kind === 'ripple') { const e = ease(k), m = p.small ? .45 : 1; p.e.setAttribute('rx', R(6 + e * 90 * m)); p.e.setAttribute('ry', R(1.5 + e * 12 * m)); p.e.setAttribute('stroke-opacity', R((1 - k) * .7)); return; }
+        if (p.kind === 'ripple') { const e = ease(k), m = p.small ? .45 : 1; sa(p.e, 'rx', R(6 + e * 90 * m)); sa(p.e, 'ry', R(1.5 + e * 12 * m)); sa(p.e, 'stroke-opacity', R((1 - k) * .7)); return; }
         const op = p.kind === 'conf' ? (k > .85 ? (1 - k) / .15 : 1) : p.kind === 'check' ? (k < .75 ? 1 : (1 - k) / .25) : p.kind === 'ring' ? (1 - k) * .9 : 1 - k * k;
         const sc = p.kind === 'ring' ? Math.min(1 + ease(k) * 2.2, p.room || Infinity) : p.kind === 'check' ? (k < .1 ? k / .1 * 1.18 : k < .18 ? 1.18 - (k - .1) / .08 * .18 : 1) : 1;
-        p.e.setAttribute('transform', `translate(${R(p.x)} ${R(p.y)}) rotate(${R(p.r * 57.3 / 6)}) scale(${R(sc)})`);
-        p.e.setAttribute('opacity', R(Math.max(0, op)));
+        sa(p.e, 'transform', `translate(${R(p.x)} ${R(p.y)}) rotate(${R(p.r * 57.3 / 6)}) scale(${R(sc)})`);
+        sa(p.e, 'opacity', R(Math.max(0, op)));
       });
       // sleeping z's
       if (this.sleepZ && !this.reduced && this.t - (this.lastZ || 0) > .9 && f !== 'nier') {
@@ -1513,7 +1523,7 @@
         const T = this.terrain, ph = (this.t * .55) % 1, D = T.H - T.vy;
         let d = '';
         for (let k = 1; k < 16; k++) { const z = k - ph + .6, y = T.vy + D / (z * z * .45 + .2); if (y > T.vy + 1 && y < T.H) d += `M-400 ${R(y)}H${Lay.w + 400}`; }
-        this.gTerrain.setAttribute('d', d); this.gTerrain.setAttribute('stroke-opacity', '.32');
+        sa(this.gTerrain, 'd', d); sa(this.gTerrain, 'stroke-opacity', '.32');
       }
       if (this.tube === 'phosphor') this.persist();
       // NieR: target brackets, a leader line and the lock; the glitch on a chapter change
@@ -1555,7 +1565,7 @@
       const tall = this.layoutName === 'portrait';
       const head = this.toScreen(this.headXf([32, 34], H, ang, 1, 1));
       const sp = this.toScreen(this.headXf(tall ? [44, 30] : [58, 44], H, ang, 1, 1));
-      const bw = this.bubble.offsetWidth || 160, bh = this.bubble.offsetHeight || 34, bx = this.box ? this.box.width : 400, by = this.box ? this.box.height : 560;
+      const bw = this.bubbleW || this.bubble.offsetWidth || 160, bh = this.bubbleH || this.bubble.offsetHeight || 34, bx = this.box ? this.box.width : 400, by = this.box ? this.box.height : 560;
       const pad = this.tube ? 14 : 8, top = this.tube ? (tall ? 44 : 34) : 8, foot = this.tube === 'teletype' ? (tall ? 70 : 48) : this.tube ? (tall ? 44 : 34) : 8;
       /* the bubble covers no prop and never Pip's face (FO26: the name's sign on Name; RDA-01: Pip's eyes on Review). Where
          its usual place is taken it moves to the nearest clear place inside the pane, and keeps that side while it stays
@@ -1715,10 +1725,13 @@
       if (talking) { const m = this.map || { k: 1, ox: 0, oy: 0 }, u = (px, py) => [(px - m.ox) / m.k, (py - m.oy) / m.k], a0 = u(x - gap - (tail === 'left' ? 10 : 0), y - gap - (tail === 'up' ? 10 : 0)), a1 = u(x + bw + gap + (tail === 'right' ? 10 : 0), y + bh + gap + (tail === 'down' ? 10 : 0)); this.bubbleBox = [a0[0], a0[1], a1[0], a1[1]]; } else this.bubbleBox = null;
       /* (its place as `translate`: its pop's `scale` (30-art.css pstBubble) then grows it from its tail where it stands; a
          `transform` here was scaled with it, so the bubble flew in from the stage's corner, over Pip, FO-44) */
-      this.bubble.style.translate = `${R(x)}px ${R(y)}px`;
-      this.bubble.dataset.side = tail;
-      this.bubble.style.setProperty('--tx', R(clamp(head[0] - x, 16, bw - 16)) + 'px');
-      this.bubble.style.setProperty('--ty', R(clamp(head[1] - y, 12, bh - 12)) + 'px');
+      /* (each written only when it changed: an inline style write is a mutation record and a style invalidation even when
+         it is the same; PERF-1) */
+      const bs = this.bubble.style, bk = this.bubbleW8 || (this.bubbleW8 = {}), put = (n, v) => { if (bk[n] !== v || bs.getPropertyValue(n) !== v) { bk[n] = v; bs.setProperty(n, v); } };
+      put('translate', `${R(x)}px ${R(y)}px`);
+      if (this.bubble.dataset.side !== tail) this.bubble.dataset.side = tail;
+      put('--tx', R(clamp(head[0] - x, 16, bw - 16)) + 'px');
+      put('--ty', R(clamp(head[1] - y, 12, bh - 12)) + 'px');
     }
     /* --------------------------------------------------------------- API */
     setTheme(theme) {

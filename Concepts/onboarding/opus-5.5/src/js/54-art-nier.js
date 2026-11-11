@@ -91,10 +91,11 @@
       const k = this.sliceT != null && !this.reduced ? (this.t - this.sliceT) / .42 : 1;
       if (k >= 1) { if (this.gSlice.getAttribute('display') !== 'none') this.gSlice.setAttribute('display', 'none'); return; }
       const H = this.L.h, step = [[.14, .27, -16, .55, .61], [.5, .58, 12, .3, .36], [.33, .44, -9, .7, .74], [.64, .79, 7, .2, .24], [.06, .13, -5, .46, .52], [.4, .47, 3, .82, .86]][Math.min(5, Math.floor(k * 6))];
-      this.sliceR[0].setAttribute('y', R(step[0] * H)); this.sliceR[0].setAttribute('height', R((step[1] - step[0]) * H));
-      this.sliceR[1].setAttribute('y', R(step[3] * H)); this.sliceR[1].setAttribute('height', R((step[4] - step[3]) * H));
-      this.gSlice.setAttribute('transform', `translate(${step[2]} 0)`);
-      this.gSlice.setAttribute('display', 'inline');
+      const sa = Hp.sa;
+      sa(this.sliceR[0], 'y', R(step[0] * H)); sa(this.sliceR[0], 'height', R((step[1] - step[0]) * H));
+      sa(this.sliceR[1], 'y', R(step[3] * H)); sa(this.sliceR[1], 'height', R((step[4] - step[3]) * H));
+      sa(this.gSlice, 'transform', `translate(${step[2]} 0)`);
+      if (this.gSlice.getAttribute('display') !== 'inline') this.gSlice.setAttribute('display', 'inline');
     },
     renderBrackets() {
       const id = this.target, pr = id && this.props.get(id);
