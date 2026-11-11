@@ -25,6 +25,9 @@
 //             in canon's order and on one row; For session lets the action run again and a later hold it covers runs at
 //             once with one "Allowed by this session's grant" line and no banner; Deny clears the hold with one "Denied"
 //             line and captures nothing; Always opens the chooser in the banner and Escape leaves it.
+//   compose   browser capture's grants compose (sol-review-l1c C1): Screenshots and DOM granted one at a time, For session
+//             or Always, in either order, let Send Now (which needs both) run with no new hold; Screenshots For session
+//             with DOM Once holds DOM alone, and one more Once lets Send Now run.
 //   rules     an Always rule covers by its place: This project only that project's chats (never a chat with no project
 //             or another project), This computer any ask on this computer, Everywhere any computer; and on the real path
 //             (no project passed: the asking chat's is read), a Studio rule saved in Query performance does not reach a
@@ -37,7 +40,8 @@
 //   looks     in all ten looks, at a 600 and a 400 px docked chat: every answer of every asking line (rest, and with the
 //             Always chooser open) and of the helper card's ladder is on top at its centre (native hit test), inside its
 //             line or card, at least 24 px tall, its words not clipped, the ladder one row (Deny beside the segmented
-//             control), and no asking line scrolls sideways. Each answer is
+//             control), and no asking line scrolls sideways; at 400 px also with the dock scrolling (a third asking line,
+//             its scrollbar showing) through a 1920x1080 -> 1390x900 -> back resize, the chat measured at 400 (C2). Each answer is
 //             first scrolled into the dock's view: past its height budget the dock scrolls in place (pmx-system.css).
 //             Reduced Motion alternates between reduce and no-preference by look.
 //   late      a dock provider registered after the chat's first render still shows: with every DOMContentLoaded dock
@@ -451,6 +455,79 @@ async function lateCase(t, surface) {
 	await t.check(`${surface}: a provider registered after the first render shows at once, with no other render`, probe >= 0 && probe < 1000, `${probe} ms`);
 }
 
+// Browser capture's grants compose (sol-review-l1c C1): a Screenshots grant and a DOM grant made one at a time, For
+// session or Always, in either order, together let Send Now (which needs both) run with no new hold; with Screenshots
+// For session and DOM Once, Send Now holds DOM alone (not the pair), and one more Once lets it run. Real buttons on the
+// chat page, a fresh page per case.
+async function composeCase(t, surface) {
+	if (!t.app.surfaces().includes(surface)) { t.log(`skipped: the sandbox switch leaves out the ${surface} surface`); return; }
+	await t.viewport(1440, 900);
+	await t.emulate({ reducedMotion: 'reduce' });
+	const BANNER = '[data-k="bc-allow-banner"]';
+	let f;
+	const act = (name, data = {}) => f.evaluate(([n, d]) => { const b = document.createElement('button'); b.type = 'button'; b.hidden = true; b.setAttribute('data-action', n); Object.entries(d).forEach(([k, v]) => b.setAttribute('data-' + k, v)); document.body.appendChild(b); b.click(); b.remove(); }, [name, data]);
+	const fresh = async () => {
+		const url = chatPageUrl(t);
+		f = surface === 'sandbox' ? await t.openInSandbox(url, { settleMs: 300 }) : (await t.page.goto(url), t.page);
+		await f.waitForFunction(() => window.PM56_EXT && PM56_EXT.ctx && window.PM56_ASKS && window.PM56_BROWSER, null, { timeout: 30000 });
+		await act('bc-open');
+		await f.waitForSelector('.bc-toolbar [data-action="bc-full-shot"]');
+		await f.evaluate(() => { const p = PM56_BROWSER.state(); p.policy = Object.assign({}, p.policy || {}, { screenshots: 'ask', dom: 'ask' }); PM56_EXT.ctx().renderApp(); });
+	};
+	const held = () => f.evaluate(() => { const h = PM56_BROWSER.state().pendingAllow; return h ? (h.capabilities || [h.capability]).slice().sort().join('+') : ''; });
+	const answer = async (how, name) => {
+		const b = f.locator(BANNER);
+		const ok = await b.count() === 1;
+		await t.check(`${name}: held`, ok);
+		if (!ok) return;
+		await b.locator(`[data-value="${how}"]`).click();
+		if (how === 'always') {
+			await b.locator('[data-action="perm-place"][data-value="computer"]').click();
+			await b.locator('[data-action="perm-save"]').click();
+		}
+		await t.page.waitForTimeout(300);
+	};
+	const shot = async () => { await f.locator('.bc-toolbar [data-action="bc-full-shot"]').first().click(); await t.page.waitForTimeout(300); };
+	const pick = async () => {
+		// arming toggles: arm only while no component is offered
+		if (await f.locator('[data-action="bc-pick-el"]').count() === 0) { await act('bc-arm-component'); await t.page.waitForTimeout(200); }
+		const el = f.locator('[data-action="bc-pick-el"]').first();
+		if (await el.count() === 1) await el.click();
+		await t.page.waitForTimeout(300);
+		return await el.count() === 1;
+	};
+	const sendNow = async () => {
+		const run = f.locator('[data-action="bc-prompt-run"]');
+		if (await run.count() !== 1) return { ran: false, reason: 'no Send Now' };
+		const n = await f.evaluate(() => PM56_BROWSER.state().captures.length);
+		await run.click();
+		await t.page.waitForTimeout(500);
+		return f.evaluate((n) => { const p = PM56_BROWSER.state(); return { ran: true, captured: p.captures.length - n, pending: p.pendingAllow ? (p.pendingAllow.capabilities || [p.pendingAllow.capability]).slice().sort().join('+') : '' }; }, n);
+	};
+	for (const [how, order] of [['session', ['shot', 'dom']], ['session', ['dom', 'shot']], ['always', ['shot', 'dom']], ['always', ['dom', 'shot']]]) {
+		const name = `${surface}: ${how === 'session' ? 'For session' : 'Always'}, ${order[0] === 'shot' ? 'Screenshots then DOM' : 'DOM then Screenshots'}`;
+		await fresh();
+		for (const step of order) {
+			if (step === 'shot') { await shot(); await answer(how, `${name}: Screenshots`); }
+			else { await t.check(`${name}: a real component is pickable`, await pick()); await answer(how, `${name}: DOM`); }
+		}
+		await pick();
+		const r = await sendNow();
+		await t.check(`${name}: Send Now runs on the two grants, with no new hold`, r.ran && r.captured === 1 && !r.pending, JSON.stringify(r));
+	}
+	// mixed: Screenshots For session, DOM Once
+	const mix = `${surface}: Screenshots For session with DOM Once`;
+	await fresh();
+	await shot(); await answer('session', `${mix}: Screenshots`);
+	await pick(); await answer('once', `${mix}: DOM`);
+	await pick();
+	let r = await sendNow();
+	await t.check(`${mix}: the pick spent DOM's Once, so Send Now holds DOM alone, not the pair`, r.ran && r.captured === 0 && r.pending === 'dom', JSON.stringify(r));
+	await answer('once', `${mix}: DOM again`);
+	r = await sendNow();
+	await t.check(`${mix}: one more Once lets Send Now run, and the Once is spent`, r.ran && r.captured === 1 && !r.pending && await f.evaluate(() => !(PM56_BROWSER.state().allowOnce || {}).dom), JSON.stringify(r));
+}
+
 async function helperCase(t, surface) {
 	const f = await ready(t, surface, 'recovery-collaboration'); if (!f) return;
 	await t.emulate({ reducedMotion: 'reduce' });
@@ -473,8 +550,13 @@ async function helperCase(t, surface) {
 	// out of view: the dock line carries it
 	// scrolled down past the card, its line carries the ladder
 	await wheelMessages(t, f, 400, () => !!document.querySelector('#pmRoot .composer > .pmx-dock [data-k="pmx-dock:crew-query-perf"][data-ask]'), `${surface}: the helper's line is in the dock`);
+	// one more step takes the card clearly out of view (the line shows as soon as any of the card is hidden), then the
+	// line's question row is read once it is there, without throwing
+	await t.page.mouse.wheel(0, 400);
+	await t.page.waitForTimeout(400);
+	await t.until(`${surface}: the helper's line carries its question`, () => !!document.querySelector('#pmRoot .composer > .pmx-dock [data-k="pmx-dock:crew-query-perf"] .pmx-dock-q'));
 	const ln = line(f, 'pmx-dock:crew-query-perf');
-	const lq = await ln.locator('.pmx-dock-q').innerText();
+	const lq = await f.evaluate(() => { const q = document.querySelector('#pmRoot .composer > .pmx-dock [data-k="pmx-dock:crew-query-perf"] .pmx-dock-q'); return q ? q.textContent : ''; });
 	await t.check(`${surface}: the line shows the command whole`, lq.includes('pg_restore --clean --if-exists -d tastebook_rehearsal snapshots/0007_pre.dump'), lq);
 	await ln.locator('[data-value="once"]').click();
 	await t.until(`${surface}: Once lets the helper go on`, () => !PM56_ASKS.list().some((a) => a.id.startsWith('collab:crew-query-perf:')) && !document.querySelector('#pmRoot article[data-run-id="crew-query-perf"] [data-action="perm-answer"]'));
@@ -521,7 +603,22 @@ async function looksCase(t, surface) {
 				const r = await measure('#pmRoot .composer > .pmx-dock .pmx-dock-line[data-ask]');
 				await t.check(`${surface} ${look} ${w} bar ${state}: every answer on top and whole`, r.boxes >= 2 && r.buttons >= 7 && !r.bad.length, JSON.stringify(r));
 			}
-			await f.evaluate(() => { const a = PM56_ASKS.list().find((x) => x.id === 'perm-studio-host'); if (a) a.ui.always = false; });
+			await f.evaluate(() => { const a = PM56_ASKS.list().find((x) => x.id === 'perm-studio-host'); if (a) a.ui.always = false; PM56_APP.render(); });
+			if (w === 400) {
+				// sol-review-l1c C2: the dock scrolls (a third asking line) and the window goes 1920x1080 -> 1390x900 -> back
+				// with the chat measured at 400 px: the ladder stays one row with the dock's scrollbar showing, in every look,
+				// and no scrollbar/height feedback keeps it wrapped after widening back
+				const extra = await f.evaluate(() => PM56_ASKS.ask({ tool: 'bash', target: 'pg_dump --schema-only tastebook', who: 'Schema Reviewer' }));
+				for (const [vw, vh] of [[1920, 1080], [1390, 900], [1920, 1080]]) {
+					await t.viewport(vw, vh);
+					await f.evaluate(() => PMW.chatCol.setWidth(400));
+					await t.page.waitForTimeout(600);
+					const st = await f.evaluate(() => { const d = document.querySelector('#pmRoot .composer > .pmx-dock'), p = document.getElementById('chatPanel'); return { chat: p ? Math.round(p.getBoundingClientRect().width) : null, scroll: d ? d.scrollHeight > d.clientHeight + 1 : false, bar: d ? d.offsetWidth - d.clientWidth : 0 }; });
+					const r = await measure('#pmRoot .composer > .pmx-dock .pmx-dock-line[data-ask]');
+					await t.check(`${surface} ${look} 400 at ${vw}x${vh}, dock scrolling: the ladder stays one row`, st.chat === 400 && st.scroll && !r.bad.some((b) => /ladder wraps/.test(b)), JSON.stringify({ st, wraps: r.bad.filter((b) => /ladder wraps/.test(b)) }));
+				}
+				await f.evaluate((i) => { PM56_ASKS.drop(i); PM56_APP.render(); }, extra);
+			}
 			await thread_(t, f, 'recovery-collaboration');
 			await wheelMessages(t, f, -400, cardInView, `${look} ${w}: the Crew card's ladder is in view`);
 			await t.page.waitForTimeout(150);
@@ -540,6 +637,7 @@ for (const surface of ['normal', 'sandbox']) {
 	tests[`FO-128 For session is remembered, Deny covers its ask ${surface}`] = (t) => grantsCase(t, surface);
 	tests[`FO-128 Always rules cover by their place ${surface}`] = (t) => rulesCase(t, surface);
 	tests[`FO-128 browser capture's hold has the ladder ${surface}`] = (t) => captureCase(t, surface);
+	tests[`FO-128 browser capture's grants compose ${surface}`] = (t) => composeCase(t, surface);
 	tests[`FO-128 Crew helper card and line ${surface}`] = (t) => helperCase(t, surface);
 	tests[`FO-128 ten looks, two chat widths ${surface}`] = (t) => looksCase(t, surface);
 }
