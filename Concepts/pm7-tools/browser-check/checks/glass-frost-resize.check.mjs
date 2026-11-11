@@ -3,8 +3,9 @@
 // background image that has not loaded as no image, so a frost written as soon as it was baked left the app beneath sharp
 // through the veil and the window for 17 frames on Nas1 (BD6 glass-dark-stage-860, frames 8695-8711), between the old frost
 // stretched to the new size and the new one.
-// Glass Light and Dark, the onboarding window on Name, the app beneath drawn (no solid backdrop, as on a computer that
-// composites it), the window 860x768, then 1920x900, 1390x900, 860x768, 740x768, 1280x500, then 1920x900, 1390x900 and
+// Glass Light and Dark, the onboarding window on Name, the app beneath drawn (O55.solid.set(false): since PERF-2 the
+// window hides the app beneath on every computer, so this turns that off to keep a frost over a live app covered, as
+// the Glass sheets over the app, which never had a solid backdrop, still are), the window 860x768, then 1920x900, 1390x900, 860x768, 740x768, 1280x500, then 1920x900, 1390x900 and
 // 860x768 again:
 //  - every frost the page writes (--lg-frost-heavy and --lg-frost-light) is already loaded when it is written: a fresh
 //    image of it is complete at once, from the memory cache (written straight after its bake, it never was);
@@ -35,7 +36,7 @@ async function frost(t, mode) {
 		const f = await t.app.open({ onboarding: true, query: 'o55=screen=name', sandbox: mode === 'sandbox' });
 		await f.waitForFunction(() => !!window.O55 && !!document.querySelector('#pm-o55-onboarding .o55-win'), null, { timeout: 60000 });
 		await f.evaluate((m) => window.O55.ui.applyLook('glass', m), scheme);
-		// the app beneath is drawn, as on a computer that composites it (the solid backdrop would hide what this is about)
+		// the app beneath is drawn: the solid backdrop (on every computer since PERF-2) would hide what this is about
 		await f.evaluate(() => window.O55.solid.set(false));
 		const frostOn = () => { const st = document.getElementById('lg-frost'), r = st && st.sheet && st.sheet.cssRules[0]; return !!(r && r.style.getPropertyValue('--lg-frost-heavy')); };
 		await t.until(`glass-${scheme} ${mode}: Glass has its first frost`, frostOn, null, { timeout: 30000, hard: true });
