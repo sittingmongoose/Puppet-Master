@@ -19,6 +19,9 @@ export const tests = {
 					await t.check(`${look} ${w}: work plate present`, await f.evaluate(() => !!document.querySelector('[data-plate="work"] .pjx-wk-rows')));
 					const clip = await f.evaluate(() => Array.from(document.querySelectorAll('[data-plate="work"] .pmu-factv, [data-plate="work"] .pjx-wk-to, [data-plate="work"] .pjx-wk-why, [data-plate="work"] .pjx-wk-pin')).filter((e) => e.scrollWidth > e.clientWidth + 1).map((e) => e.textContent).join(' | '));
 					await t.check(`${look} ${w}: nothing in the work plate is cut off`, !clip, clip);
+					// an off Run this on… (started work) never wears a live link's ink or underline
+					const pins = await f.evaluate(() => { const st = (k) => { const e = document.querySelector('[data-plate="work"] [data-c-key="' + k + '"]'); if (!e) return null; const c = getComputedStyle(e); return { off: e.getAttribute('aria-disabled'), color: c.color, line: c.textDecorationLine }; }; return { off: st('wk:pin:0'), live: st('wk:pin:3') }; });
+					await t.check(`${look} ${w}: an off Run this on… looks off`, !!(pins.off && pins.live && pins.off.off === 'true' && pins.live.off === null && pins.off.color !== pins.live.color && pins.off.line === 'none' && pins.live.line !== 'none'), JSON.stringify(pins));
 					if (width !== '1024') await t.crop(`work-${look}-${w}`, f.locator('[data-plate="work"]'), `Where work runs, ${look}, ${w}`);
 					await t.app.page(t, f, 'dashboard');
 					await t.app.click(t, f, '#projectMenuBtn', { noScroll: true });
