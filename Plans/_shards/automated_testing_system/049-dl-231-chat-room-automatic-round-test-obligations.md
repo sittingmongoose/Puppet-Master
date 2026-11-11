@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L6713-L7295
+Source lines: L6713-L7307
 
-Source SHA256: `bd7f58d2e8698a24f91ea6067244e6d26213b86880fff02b35ef0068608fd7d5`
+Source SHA256: `48237a57a921ec32c61628f53c943ea37cd52ce8c9b79d79630ec01e46a5eefb`
 
 ---
 
@@ -560,6 +560,18 @@ scripts/pm_guard_isolation.py: each row is cut alone, its own single-defect nega
 every other case must keep its exact refusal. Each schema occurrence is one verdict row. python3
 scripts/pm-filemanager-number-corpus.py runs the shared CV-1100/SP-1100 number corpus through the complete
 checker, and python3 scripts/pm_event_numbers.py --self-test --scope numbers must pass.
+
+Every instance schema verdict (payload, companion, receipt, EventRecord and Storage registry) passes the
+shared CV-1101 date-time predicate (scripts/pm_event_datetime.py) as its format checker and adds CV-253's storage_utc_z profile at each EventRecord's observed_at_utc and
+persisted_at_utc, located through the owner schemas' own references. Every retained original is resolved
+through the shared SP-1101 RetainedDispatcher from the fixture's sealed custody record before its frozen
+verifier runs. Plans/filemanager_event_p2a_cases.json also holds these witnesses, written by
+scripts/pm-filemanager-p2a-cases.py: each malformed RFC 3339 form at the family ts with its exact copies;
+owner-valid lowercase, offset, leap-second, long-fraction and year-zero controls on the current and retained
+routes; malformed companion, receipt and settlement timestamps; Storage-profile refusals at the original,
+retry and full-value request EventRecords; and missing, malformed, unknown-edition and replaced-resource
+custody records. The shared date-time suite, python3 scripts/pm_event_numbers.py --self-test and python3
+scripts/pm_event_datetime_inventory.py, validates the whole-Plans timestamp inventory.
 
 ```yaml
 plan_unit_id: ATS-280

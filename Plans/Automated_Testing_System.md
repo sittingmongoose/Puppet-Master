@@ -7263,6 +7263,18 @@ every other case must keep its exact refusal. Each schema occurrence is one verd
 scripts/pm-filemanager-number-corpus.py runs the shared CV-1100/SP-1100 number corpus through the complete
 checker, and python3 scripts/pm_event_numbers.py --self-test --scope numbers must pass.
 
+Every instance schema verdict (payload, companion, receipt, EventRecord and Storage registry) passes the
+shared CV-1101 date-time predicate (scripts/pm_event_datetime.py) as its format checker and adds CV-253's storage_utc_z profile at each EventRecord's observed_at_utc and
+persisted_at_utc, located through the owner schemas' own references. Every retained original is resolved
+through the shared SP-1101 RetainedDispatcher from the fixture's sealed custody record before its frozen
+verifier runs. Plans/filemanager_event_p2a_cases.json also holds these witnesses, written by
+scripts/pm-filemanager-p2a-cases.py: each malformed RFC 3339 form at the family ts with its exact copies;
+owner-valid lowercase, offset, leap-second, long-fraction and year-zero controls on the current and retained
+routes; malformed companion, receipt and settlement timestamps; Storage-profile refusals at the original,
+retry and full-value request EventRecords; and missing, malformed, unknown-edition and replaced-resource
+custody records. The shared date-time suite, python3 scripts/pm_event_numbers.py --self-test and python3
+scripts/pm_event_datetime_inventory.py, validates the whole-Plans timestamp inventory.
+
 ```yaml
 plan_unit_id: ATS-280
 unit_type: contract

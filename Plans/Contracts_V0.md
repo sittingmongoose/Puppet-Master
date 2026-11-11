@@ -24659,6 +24659,21 @@ EventRecord bodies are measured and referenced with SP-1100 EVENT_VALUE (SP-236)
 redb values keep SP-339 canonical MessagePack. A retained original is read with the recipe recorded when it
 was written (SP-1101); current integer admission never narrows it.
 
+Timestamps follow CV-1101 beside CV-253. Every format: date-time of these routes is checked by the shared
+CV-1101 predicate, and a missing zone, a space separator, a trailing LF, an impossible date or clock field
+and a false leap second refuse everywhere. The family payload ts, the companion accepted_at_utc and
+settled_at_utc, the EventRecord occurred_at_utc and the AppendReceipt acknowledged_at_utc use its
+event_record profile: lowercase t or z, offsets, real leap seconds and fractions of any length are accepted
+and never rewritten. The Storage-assigned observed_at_utc and persisted_at_utc of every EventRecord these
+routes read also take CV-253's storage_utc_z profile, so an offset, a signed zero offset or a lowercase z
+refuses there. occurred_at_utc and
+settled_at_utc still equal payload ts as exact strings. A retained original is resolved through SP-1101: its
+write-time edition and frozen resource manifest come only from Storage's sealed issuance custody, never from
+the request; an original without that record is unavailable, and an edition or resource set with no installed
+verifier is unsupported, each refused without trying the current recipe. The twelve families have one
+write-time edition. Its frozen verifier applies the same CV-1101 and CV-253 profiles, so a format check that
+was skipped in the past never admits an invalid original.
+
 ```yaml
 plan_unit_id: CV-560
 unit_type: contract
