@@ -358,6 +358,7 @@ export const tests = {
 					await t.page.keyboard.press('Enter');
 					await t.page.waitForTimeout(600);
 					await settleLook();
+					await t.page.waitForTimeout(400);
 					const after = await f.evaluate(([id]) => {
 						const sel = document.querySelector(`#pm-settings-root select[data-setting="${CSS.escape(id)}"]`);
 						const c = document.querySelector('#panel-settings .detail-inspector .o55-insp-block [role="combobox"]');
@@ -370,9 +371,12 @@ export const tests = {
 					const reset = f.locator('#panel-settings .detail-inspector [data-action="reset-setting"]').first();
 					if (b.per) await t.check(`${where}: a per-scope setting offers no single default to go back to`, !(await reset.count()), 'a reset button is shown');
 					else {
+						/* the default as the settings inventory names it (an earlier test may have left a saved value
+						   that is not the default: Theme on the last look of the all-looks pass) */
+						const def = await f.evaluate((id) => { try { const st = PM51.setting(id); return String(PM51.valueLabel(id, st.value)).split(' · ')[0]; } catch (e) { return ''; } }, id);
 						if (await reset.count()) { await reset.click(); await t.page.waitForTimeout(500); await settleLook(); }
 						const back = await f.evaluate(() => { const c = document.querySelector('#panel-settings .detail-inspector .o55-insp-block [role="combobox"]'); return c ? (((c.querySelector('strong') || c).firstChild || {}).textContent || '').trim() : ''; });
-						await t.check(`${where}: Go back to the default restores "${b.face.trim()}"`, back === b.face.trim(), `now "${back}"`);
+						await t.check(`${where}: Go back to the default restores the default ("${def}")`, !!def && back === def, `now "${back}"`);
 					}
 				}
 			}

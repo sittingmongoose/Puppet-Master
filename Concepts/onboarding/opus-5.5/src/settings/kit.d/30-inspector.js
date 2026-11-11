@@ -121,13 +121,17 @@ function o55PickCommit(id, raw) {
   if (!commitSettingValue(id, raw)) return;
   saveState(); o55InspRefresh(id); o55Changed(found.setting, raw);
   /* a pick hands focus back to the picker, as a select does; a model change can re-render the page in place
-     (28-in-place.js lets the focused control go), so the new trigger takes it back if it was dropped */
+     (28-in-place.js lets the focused control go), and a Theme pick re-renders it again when its look transition ends
+     (NieR's exit most of all), so the new trigger takes focus back whenever it was dropped, until the look is settled */
   const back = () => {
     const act = document.activeElement; if (act && act !== document.body && act.isConnected) return;
     const t = document.querySelector(`#panel-settings .detail-inspector [data-action="o55-insp-pick"][data-setting="${cssEscape(id)}"]`);
     if (t) { try { t.focus({ preventScroll: true }); } catch (e) { t.focus(); } }
   };
-  back(); requestAnimationFrame(() => requestAnimationFrame(back));
+  const busy = () => !!((window.PM_THEME_TRANSITION && PM_THEME_TRANSITION.busy && PM_THEME_TRANSITION.busy()) || (window.PM_LOOK_COVERED && PM_LOOK_COVERED()));
+  const until = Date.now() + 5000;
+  const watch = () => { back(); if (busy() && Date.now() < until) setTimeout(watch, 100); else requestAnimationFrame(() => requestAnimationFrame(back)); };
+  back(); requestAnimationFrame(() => requestAnimationFrame(watch));
 }
 const o55PickOptions = pm => { const o = []; pm.items.forEach(it => { o[it.index] = { value: it.raw, label: it.name, disabled: !!it.why, reason: it.why || '' }; }); return o; };
 const o55PickBrands = (pm, size) => [`<button type="button" class="o55-pick-chip is-on" data-brand="" aria-pressed="true" aria-label="All makers" data-pm-hover-label="All makers">${icon('users')}</button>`]
