@@ -238,6 +238,10 @@ for (const surface of ['normal', 'sandbox']) {
 		await go(t, f, 'memory', 'personas');
 		await tab(t, f, 'personas', 'Helpers');
 		seen.push(['Personas › Helpers', (await f.locator(BODY('personas')).innerText()).replace(/\s+/g, ' ')]);
+		const lease = await reveal(t, f, 'branching.subagents.child-agent-lease');
+		await lease.locator('button', { hasText: /See a helper's contract/ }).first().click();
+		await drawer(f).waitFor({ state: 'visible', timeout: 8000 });
+		await grab("See a helper's contract");
 		const bad = seen.filter(([, tx]) => /\bworkspaces?\b/i.test(tx)).map(([w, tx]) => { const i = tx.search(/\bworkspaces?\b/i); return `${w}: …${tx.slice(Math.max(0, i - 50), i + 30)}…`; });
 		await t.check(`${seen.length} panels and pages: no "workspace" for a project or a working copy`, bad.length === 0, bad.join(' | '));
 	});
