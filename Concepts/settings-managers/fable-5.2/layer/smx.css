@@ -279,3 +279,6 @@ html[data-motion="reduced"] #smx-root *, html[data-reduced-motion="1"] #smx-root
 #smx-root .smx-fold-body > .panel-card.smx-things-card > .pm51-section-body { padding: 0 6px; }
 #smx-root .smx-why { margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--k3-line-strong); }
 #smx-root .smx-sentence-note .pm51-link { margin-left: 4px; }
+
+/* a button whose menu is on its way (it is borrowed from the manager it belongs to) */
+#smx-root .btn[aria-busy="true"] { cursor: progress; opacity: .72; }

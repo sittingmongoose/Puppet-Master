@@ -18,6 +18,7 @@
     return (Array.isArray(v) ? v : []).map((x) => (typeof x === 'string' ? { name: x, address: x, user: '', folder: '' } : x));
   };
   const keyUses = (st, id) => {
+    const real = d.sshKeyUses(st, id); if (real) return real;
     const out = [];
     sshList(st).forEach((f) => { if (f.keyId === id) out.push(f.name); });
     sp(st).servers.forEach((s) => { if (s.signIn && s.signIn.keyId === id) out.push(s.name); });
@@ -101,12 +102,12 @@
     ];
   };
   const keysCard = (st) => {
-    const keys = sp(st).sshKeys || [];
+    const keys = d.sshKeys(st);
     return ui.things({ title: 'Keys these computers sign in with', help: 'A key lets Puppet Master sign in to a computer or a code service without a password. Only the public half is ever read.', add: { label: 'Add a key', action: 'pm51-servers-key-add' },
       items: keys.map((k) => { const uses = keyUses(st, k.id); return { icon: 'key', name: k.name, tag: k.old ? 'Older kind' : '', sub: `${k.type} · ${k.where} on ${k.on}`, sub2: uses.length ? `Used by ${uses.join(', ')}` : 'Not used anywhere yet', side: ui.btn({ label: 'Copy public key', icon: 'copy', action: 'pm51-servers-copy-text', data: { text: k.public, what: 'Public key' } }) + ui.btn({ icon: 'more', label2: `More for ${k.name}`, do: 'computers-key-more', data: { key: k.name }, ghost: true }) }; }),
       empty: { icon: 'key', title: 'No keys yet', text: 'You only need one when a computer or a code service asks for an SSH key. The guided steps make one for you.' } });
   };
-  SMX.act('computers-key-more', (el) => SMX.borrow(el, Object.assign({}, SRV, { tab: 'servers', find: (b) => [...b.querySelectorAll('button[aria-label]')].find((x) => x.getAttribute('aria-label') === `More for ${el.getAttribute('data-key')}`) })));
+  SMX.lends('computers-key-more', (el) => (Object.assign({}, SRV, { tab: 'servers', find: (b) => [...b.querySelectorAll('button[aria-label]')].find((x) => x.getAttribute('aria-label') === `More for ${el.getAttribute('data-key')}`) })));
   SMX.page({
     id: 'computers/list', chapter: 'computers', nav: 'Computers', icon: 'nas',
     title: 'Computers',
@@ -132,9 +133,9 @@
   });
 
   /* ------------------------------------------------------------------ one computer */
-  SMX.act('computers-server-more', (el) => SMX.borrow(el, Object.assign({}, SRV, { tab: 'servers', select: { action: 'pm51-select', data: { manager: 'servers', id: el.getAttribute('data-id') } }, find: (b) => [...b.querySelectorAll('.pm51-detail button, .manager-detail button, button')].find((x) => /^More actions$/.test((x.getAttribute('aria-label') || x.textContent || '').trim())) })));
-  SMX.act('computers-ssh-more', (el) => SMX.borrow(el, Object.assign({}, SRV, { tab: 'servers', find: (b) => [...b.querySelectorAll('button[aria-label]')].find((x) => x.getAttribute('aria-label') === `More for ${el.getAttribute('data-name')}`) })));
-  SMX.act('computers-ssh-test', (el) => SMX.borrow(el, Object.assign({}, SRV, { tab: 'servers', mode: 'click', find: (b) => { const items = [...b.querySelectorAll('.pm51-item')].filter((x) => x.textContent.includes(el.getAttribute('data-name'))); for (const it of items) { const t = [...it.querySelectorAll('button')].find((x) => x.textContent.trim() === 'Test'); if (t) return t; } return null; } })));
+  SMX.lends('computers-server-more', (el) => (Object.assign({}, SRV, { tab: 'servers', select: { action: 'pm51-select', data: { manager: 'servers', id: el.getAttribute('data-id') } }, find: (b) => [...b.querySelectorAll('.pm51-detail button, .manager-detail button, button')].find((x) => /^More actions$/.test((x.getAttribute('aria-label') || x.textContent || '').trim())) })));
+  SMX.lends('computers-ssh-more', (el) => (Object.assign({}, SRV, { tab: 'servers', find: (b) => [...b.querySelectorAll('button[aria-label]')].find((x) => x.getAttribute('aria-label') === `More for ${el.getAttribute('data-name')}`) })));
+  SMX.lends('computers-ssh-test', (el) => (Object.assign({}, SRV, { tab: 'servers', mode: 'click', find: (b) => { const items = [...b.querySelectorAll('.pm51-item')].filter((x) => x.textContent.includes(el.getAttribute('data-name'))); for (const it of items) { const t = [...it.querySelectorAll('button')].find((x) => x.textContent.trim() === 'Test'); if (t) return t; } return null; } })));
   SMX.page({
     id: 'computers/list/:id', chapter: 'computers', parent: 'computers/list',
     title: (ctx) => { const o = one(ctx); return o ? o.name : 'Computer'; },
@@ -146,7 +147,7 @@
       const o = one(ctx); const st = ctx.st, S = sp(st);
       if (!o) return [{ key: 'gone', html: ui.card({ title: 'This computer is no longer in the list', body: ui.btn({ label: 'Back to Computers', go: 'computers/list' }) }) }];
       if (o.ssh) {
-        const f = o.f; const key = (S.sshKeys || []).find((k) => k.id === f.keyId);
+        const f = o.f; const key = d.sshKeys(ctx.st).find((k) => k.id === f.keyId);
         return [{ key: 'facts', html: ui.card({ title: 'About this computer', body: ui.rows([
           { label: 'Address', value: `${f.user ? f.user + '@' : ''}${f.address}` },
           { label: 'Folder for projects', value: f.folder || 'Not chosen' },
@@ -165,7 +166,7 @@
         ]) }) },
         { key: 'signin', html: ui.card({ title: 'Getting in', body: ui.rows([
           { label: 'Address', value: s.address },
-          { label: 'Signs in with', covers: 'code.execution.server-sign-in', value: s.signIn && s.signIn.keyId ? ((S.sshKeys || []).find((k) => k.id === s.signIn.keyId) || {}).name || 'A key' : 'Paired with Puppet Master; no key needed', control: s.role === 'This computer' ? '' : ui.btn({ label: 'Attach a key', icon: 'key', action: 'pm51-servers-attach-key', data: { id: s.id } }) },
+          { label: 'Signs in with', covers: 'code.execution.server-sign-in', value: s.signIn && s.signIn.keyId ? (d.sshKeys(ctx.st).find((k) => k.id === s.signIn.keyId) || {}).name || 'A key' : 'Paired with Puppet Master; no key needed', control: s.role === 'This computer' ? '' : ui.btn({ label: 'Attach a key', icon: 'key', action: 'pm51-servers-attach-key', data: { id: s.id } }) },
           { label: 'Version', value: s.version, status: s.updateReady ? ui.status('Update ready', 'attention') : '' }
         ]) }) }
       ];

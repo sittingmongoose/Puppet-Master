@@ -8,6 +8,15 @@
   /* ------------------------------------------------------------------ readers over the Settings engine's demo state */
   const d = SMX.d = {};
   d.sp = (st) => (st.pm51 && st.pm51.serverProject) || { servers: [], devices: [], pending: [], remoteAccess: { routes: [] }, sshFolders: [], sshKeys: [], continuity: {}, conflicts: {}, status: {}, pairing: {}, move: { history: [] }, sourceLocation: {} };
+  /* The SSH keys and what uses each one come from the Servers manager's own functions (PM51.sysSsh), so these pages
+     always say what that manager says. PMConcept7 moves its example keys into the setting code.execution.ssh-keys the
+     first time they are asked for; the plain readers below are only for a build that lacks those functions. */
+  d.sshKeys = (st) => {
+    try { const k = W.PM51.sysSsh.keys(); if (Array.isArray(k)) return k; } catch (e) { /* older build */ }
+    const v = SMX.val('code.execution.ssh-keys'); if (Array.isArray(v) && v.length) return v;
+    const s = d.sp(st).sshKeys; return Array.isArray(s) ? s : [];
+  };
+  d.sshKeyUses = (st, id) => { try { const u = W.PM51.sysSsh.keyUses(id); if (Array.isArray(u)) return u; } catch (e) { /* older build */ } return null; };
   d.homeServer = (st) => { const S = d.sp(st); return S.servers.find((s) => s.id === S.homeServer) || S.servers[0] || null; };
   d.thisComputer = (st) => d.sp(st).servers.find((s) => s.role === 'This computer') || null;
   d.routes = (st) => (d.sp(st).remoteAccess.routes || []).slice().sort((a, b) => a.priority - b.priority);

@@ -81,19 +81,24 @@
 
   /* ------------------------------------------------------------------ search: pages, settings and things, by everyday words */
   const SYN = {
-    password: ['sign-in', 'key', 'token', 'credential'], login: ['sign-in', 'account'], 'log in': ['sign-in'], signin: ['sign-in'],
-    phone: ['device', 'pair', 'notification', 'away'], mobile: ['device', 'pair'], tablet: ['device', 'pair'], ipad: ['device'],
-    remote: ['away', 'tailscale', 'vpn', 'remote link'], anywhere: ['away'], outside: ['away'], vpn: ['away', 'tailscale'],
-    dark: ['light or dark', 'theme'], 'dark mode': ['light or dark'], color: ['theme', 'accent', 'colors'], colour: ['theme', 'accent', 'colors'],
+    password: ['sign-in', 'sign in', 'key', 'token'], login: ['sign-in', 'sign in', 'account'], signin: ['sign-in', 'sign in'],
+    phone: ['device', 'paired', 'pair a', 'away from home', 'notification'], mobile: ['device', 'paired', 'pair a'], tablet: ['device', 'paired', 'pair a'], ipad: ['device', 'paired'],
+    remote: ['away from home', 'tailscale', 'vpn', 'remote link'], anywhere: ['away from home'], outside: ['away from home'], vpn: ['away from home', 'tailscale'],
+    dark: ['light or dark', 'theme'], color: ['theme', 'accent', 'colors'], colour: ['theme', 'accent', 'colors'],
     font: ['text size', 'font'], bigger: ['text size', 'size of everything'], zoom: ['size of everything'],
-    ai: ['service', 'model', 'account'], provider: ['service'], claude: ['service'], chatgpt: ['service'], gpt: ['service'], openai: ['service'],
-    cost: ['spending', 'budget', 'limit'], money: ['spending', 'budget'], bill: ['spending', 'billed'], price: ['spending'],
+    ai: ['ai provider', 'model'], provider: ['ai provider'], claude: ['ai provider'], chatgpt: ['ai provider'], gpt: ['ai provider'], openai: ['ai provider'],
+    cost: ['spending', 'budget', 'limits'], money: ['spending', 'budget'], bill: ['spending', 'billed'], price: ['spending'],
     server: ['computer', 'server'], nas: ['computer', 'server'], machine: ['computer'], pc: ['computer'], laptop: ['computer', 'device'],
     backup: ['backup', 'restore'], save: ['backup', 'autosave'], undo: ['restore', 'history'], delete: ['cleanup', 'keep'],
-    git: ['source control', 'version history'], github: ['source control', 'code service'], sound: ['sound', 'bell'], mute: ['sound', 'quiet'],
-    alert: ['notification'], notify: ['notification'], permission: ['allow', 'ask', 'approval'], safe: ['protect', 'filesafe', 'approval'],
-    shortcut: ['keyboard', 'keys'], hotkey: ['keyboard'], update: ['update'], broken: ['checkup', 'doctor'], problem: ['checkup', 'doctor'], fix: ['checkup']
+    git: ['source control', 'version history'], github: ['source control', 'code service'], sound: ['sound', 'bell'], mute: ['sound', 'quiet hours'],
+    alert: ['notification'], notify: ['notification'], permission: ['allow', 'asking', 'approval'], safe: ['protect', 'filesafe', 'approval'],
+    shortcut: ['keyboard', 'shortcuts'], hotkey: ['keyboard', 'shortcuts'], broken: ['checkup', 'doctor'], problem: ['checkup', 'doctor'], fix: ['checkup']
   };
+  const esc = (w) => w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const WORD = new Map();
+  const word = (w) => { let r = WORD.get(w); if (!r) { r = new RegExp('(^|[^a-z0-9])' + esc(w)); WORD.set(w, r); } return r; };
+  const WHOLE = new Map();   // an everyday word stands for whole words only: “key” is not “keyboard”
+  const whole = (w) => { let r = WHOLE.get(w); if (!r) { r = new RegExp('(^|[^a-z0-9])' + esc(w) + '(s|es)?($|[^a-z0-9])'); WHOLE.set(w, r); } return r; };
   let INDEX = null;
   function buildIndex() {
     const idx = [];
@@ -126,8 +131,8 @@
       const title = it.title.toLowerCase();
       for (const w of words) {
         let s = 0;
-        if (title === w) s = 12; else if (title.startsWith(w)) s = 9; else if (new RegExp('\\b' + w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).test(title)) s = 7; else if (title.includes(w)) s = 5; else if (it.text.includes(w)) s = 2;
-        if (!s && SYN[w]) for (const alt of SYN[w]) { if (title.includes(alt)) { s = 4; break; } if (it.text.includes(alt)) s = Math.max(s, 1.5); }
+        if (title === w) s = 12; else if (title.startsWith(w)) s = 9; else if (word(w).test(title)) s = 7; else if (title.includes(w)) s = 5; else if (word(w).test(it.text)) s = 2; else if (w.length > 3 && it.text.includes(w)) s = 1;
+        if (!s && SYN[w]) for (const alt of SYN[w]) { if (whole(alt).test(title)) { s = 4; break; } if (whole(alt).test(it.text)) s = Math.max(s, 1.5); }
         if (!s) { ok = false; break; }
         score += s;
       }

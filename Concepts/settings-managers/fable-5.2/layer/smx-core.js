@@ -24,6 +24,13 @@
   const attrs = (o) => Object.entries(o || {}).filter(([, v]) => v !== false && v != null).map(([k, v]) => (v === true ? ` ${k}` : ` ${k}="${esc(v)}"`)).join('');
   const data = (o) => Object.entries(o || {}).filter(([, v]) => v != null && v !== false).map(([k, v]) => ` data-${k.replace(/[A-Z]/g, (m) => '-' + m.toLowerCase())}="${esc(v)}"`).join('');
   const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+  /* n painted frames (or a short timer where frames are not running, as in a tab in the background) */
+  const frames = (n) => new Promise((res) => {
+    let i = 0, done = false;
+    const end = () => { if (!done) { done = true; res(); } };
+    const f = () => (++i >= n ? end() : W.requestAnimationFrame(f));
+    W.requestAnimationFrame(f); W.setTimeout(end, 40 * n + 80);
+  });
   const fn = (v, ...a) => (typeof v === 'function' ? v(...a) : v);
   SMX.h = esc; SMX.attrs = attrs; SMX.data = data; SMX.wait = wait;
 
@@ -155,7 +162,23 @@
     host.addEventListener('change', onChange);
     host.addEventListener('keydown', onKey);
     for (const ev of ['click', 'change', 'input', 'keyup']) host.addEventListener(ev, () => soon(), true);
+    let intent = 0;
+    const warmable = (t) => { const b = t && t.closest && t.closest('[data-smx-do]'); return b && SMX.warmers[b.getAttribute('data-smx-do')] ? b : null; };
+    const warmUp = (b) => { try { SMX.warm(SMX.warmers[b.getAttribute('data-smx-do')](b)); } catch (e) { /* it opens on the click instead */ } };
+    host.addEventListener('pointerover', (e) => { W.clearTimeout(intent); const b = warmable(e.target); if (b) intent = W.setTimeout(() => { if (b.isConnected) warmUp(b); }, 70); });
+    host.addEventListener('pointerout', () => W.clearTimeout(intent));
+    host.addEventListener('focusin', (e) => { const b = warmable(e.target); if (b) warmUp(b); });
     scrollEl.addEventListener('scroll', () => { try { kit().closePopouts(); } catch (e) { /* none open */ } }, { passive: true });
+    // PMConcept7 closes an open menu when anything at all scrolls, even a list on a page that is not showing. A menu
+    // opened from these pages closes only when what scrolled moves the button it hangs from.
+    let pressed = null;
+    D.addEventListener('click', (e) => { pressed = e.target; }, true);
+    W.addEventListener('scroll', (e) => {
+      const pop = SMX.view === 'new' && menuOpen();
+      const t = e.target;
+      if (!pop || !t || t.nodeType !== 1 || pop.contains(t)) return;
+      if (pressed && pressed.isConnected && host.contains(pressed) && !t.contains(pressed)) e.stopPropagation();
+    }, true);
     const portals = D.getElementById('pm-settings-portals');
     if (portals) new W.MutationObserver(() => soon(120)).observe(portals, { childList: true, subtree: false });
     setView('new');
@@ -419,37 +442,84 @@
      PMConcept7's own. spec: {domain, ws, manager, tab, select: {action, data}, find: selector | (block) => element,
      mode: 'anchor' (default) | 'click'} */
   SMX.borrowing = false;
+  let warm = null, lendGen = 0;   // warm: a manager made ready because the pointer rests on a button that borrows from it
+  const menuOpen = () => D.querySelector('.pm51-popout.pm51-menu.is-open');
+  const specKey = (spec) => JSON.stringify([spec.ws, spec.tab || '', spec.select ? spec.select.data : '']);
+  const reach = (spec) => {
+    const st = SMX.fresh();
+    if (st.home || st.workspace !== spec.ws) eng().navigate(spec.domain, spec.ws);
+    if (spec.tab) eng().dispatchAction('pm51-tab', { manager: spec.manager, tab: spec.tab });
+    if (spec.select) eng().dispatchAction(spec.select.action, spec.select.data || {});
+  };
+  /* hand the engine back: it is parked again only once whatever opened has closed (parking closes menus and panels) */
+  const release = (ws, after) => {
+    const mine = ++lendGen;
+    const showing = () => [...D.querySelectorAll('.pm51-popout, #pm-settings-portals > *')].some((n) => { const r = n.getBoundingClientRect(); return r.width > 4 && r.height > 4 && W.getComputedStyle(n).visibility !== 'hidden'; });
+    let tries = 0;
+    const settle = () => {
+      if (mine !== lendGen) return;                                      // a newer borrow owns the engine now
+      if (showing() && tries++ < 600) { W.setTimeout(settle, 400); return; }
+      SMX.borrowing = false;
+      let st = null; try { st = SMX.fresh(); } catch (e) { st = null; }
+      if (st && !st.home && st.workspace !== ws) { soon(20); return; }   // something sent the engine elsewhere on purpose: follow it
+      park(); soon(60);
+    };
+    W.setTimeout(settle, after);
+  };
+  /* The manager a borrowed control lives in takes about half a second to draw. Resting the pointer on the button, or
+     tabbing to it, starts that early, so the menu is there at once on the click. */
+  SMX.warm = (spec) => {
+    if (SMX.borrowing || SMX.view !== 'new') return;
+    SMX.borrowing = true; lendGen++;
+    try { reach(spec); } catch (e) { SMX.borrowing = false; return; }
+    const w = warm = { key: specKey(spec), timer: W.setTimeout(() => { if (warm === w) { warm = null; release(spec.ws, 0); } }, 3500) };
+  };
   SMX.borrow = async (btn, spec) => {
-    if (SMX.borrowing) return false;
-    SMX.borrowing = true;
-    let ok = false;
+    const ready = !!(warm && warm.key === specKey(spec));
+    if (warm) { W.clearTimeout(warm.timer); warm = null; }
+    else if (SMX.borrowing) { if (menuOpen()) { try { kit().closePopouts(); } catch (e) { /* none */ } } return false; }   // pressed again: the menu closes
+    SMX.borrowing = true; lendGen++;
+    let ok = false, scrolled = 0;
+    const onScroll = () => { scrolled = W.performance.now(); };
+    D.addEventListener('scroll', onScroll, true);
+    btn.setAttribute('aria-busy', 'true');
+    // going to a manager scrolls its page a moment later; wait until two frames pass with no scrolling, not a fixed pause
+    const quiet = async () => { for (let i = 0; i < 30; i++) { await frames(2); if (W.performance.now() - scrolled > 50) return; } };
+    const find = () => {
+      const blk = [...root.querySelectorAll('.pm-shell .workspace-block')].find((b) => b.dataset.workspaceBlock === spec.ws);
+      return blk ? (typeof spec.find === 'function' ? spec.find(blk) : blk.querySelector(spec.find)) : null;
+    };
+    // the original's handler runs with the pressed button as its anchor: lend it the original's data, click, take it back
+    const lend = (orig) => {
+      const keep = {};
+      for (const a of [...btn.attributes]) if (a.name.startsWith('data-')) { keep[a.name] = a.value; btn.removeAttribute(a.name); }
+      for (const a of [...orig.attributes]) if (a.name.startsWith('data-') && !/^data-pm-hover/.test(a.name)) btn.setAttribute(a.name, a.value);
+      btn.setAttribute('data-smx-borrowed', '1');
+      btn.dispatchEvent(new W.MouseEvent('click', { bubbles: true, cancelable: true, view: W }));
+      for (const a of [...btn.attributes]) if (a.name.startsWith('data-')) btn.removeAttribute(a.name);
+      for (const [k, v] of Object.entries(keep)) btn.setAttribute(k, v);
+    };
     try {
-      let st = SMX.fresh();
-      if (st.home || st.workspace !== spec.ws) { eng().navigate(spec.domain, spec.ws); await wait(320); }
-      if (spec.tab) { eng().dispatchAction('pm51-tab', { manager: spec.manager, tab: spec.tab }); await wait(200); }
-      if (spec.select) { eng().dispatchAction(spec.select.action, spec.select.data || {}); await wait(220); }
-      let orig = null;
-      for (let i = 0; i < 12 && !orig; i++) {
-        const blk = [...root.querySelectorAll('.pm-shell .workspace-block')].find((b) => b.dataset.workspaceBlock === spec.ws);
-        if (blk) orig = typeof spec.find === 'function' ? spec.find(blk) : blk.querySelector(spec.find);
-        if (!orig) await wait(120);
-      }
+      if (!ready) reach(spec);
+      let orig = find();
+      for (let i = 0; i < 25 && !orig; i++) { await quiet(); orig = find(); }
       if (!orig) throw new Error('the original control was not found: ' + (typeof spec.find === 'string' ? spec.find : 'by function'));
       if (spec.mode === 'click') orig.click();
       else {
-        const keep = {};
-        for (const a of [...btn.attributes]) if (a.name.startsWith('data-')) { keep[a.name] = a.value; btn.removeAttribute(a.name); }
-        for (const a of [...orig.attributes]) if (a.name.startsWith('data-') && !/^data-pm-hover/.test(a.name)) btn.setAttribute(a.name, a.value);
-        btn.setAttribute('data-smx-borrowed', '1');
-        btn.dispatchEvent(new W.MouseEvent('click', { bubbles: true, cancelable: true, view: W }));
-        for (const a of [...btn.attributes]) if (a.name.startsWith('data-')) btn.removeAttribute(a.name);
-        for (const [k, v] of Object.entries(keep)) btn.setAttribute(k, v);
+        lend(orig);
+        await frames(2);
+        if (!menuOpen() && btn.isConnected) { await quiet(); orig = find(); if (orig && !menuOpen()) lend(orig); }   // closed under us: once more
       }
       ok = true;
     } catch (e) { W.console.error('SMX.borrow failed', e); SMX.toast('Not available in this preview', 'That menu could not be opened here.', 'info'); }
-    W.setTimeout(() => { SMX.borrowing = false; park(); soon(60); }, 500);
+    D.removeEventListener('scroll', onScroll, true);
+    btn.removeAttribute('aria-busy');
+    release(spec.ws, 700);
     return ok;
   };
+  /* a page names a borrowed control once: the action that runs it and the warm-up share the same description */
+  SMX.warmers = {};
+  SMX.lends = (name, specOf) => { SMX.warmers[name] = specOf; SMX.act(name, (el) => SMX.borrow(el, specOf(el))); };
 
   SMX.start = (route) => {
     if (!mount()) return false;

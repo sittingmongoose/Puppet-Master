@@ -82,10 +82,10 @@
   const base = new URL('./', location.href);
   const STEPS = [
     ['css', 'layer/smx.css'], ['js', 'layer/smx-core.js'], ['js', 'layer/smx-parts.js'], ['js', 'layer/smx-ia.js'], ['js', 'layer/smx-plan.js'],
-    ['js', 'layer/pages/home.js'], ['js', 'layer/pages/computers.js'], ['js', 'layer/pages/ai.js'],
+    ['js', 'layer/pages/home.js'], ['js', 'layer/pages/computers.js'], ['js', 'layer/pages/ai.js'], ['js', 'layer/pages/ai-more.js'],
     ['js', 'layer/pages/look.js'], ['js', 'layer/pages/assistant.js'], ['js', 'layer/pages/notifications.js'],
-    ['js', 'layer/pages/memory.js'], ['js', 'layer/pages/code.js'], ['js', 'layer/pages/source.js'],
-    ['js', 'layer/pages/safety.js'], ['js', 'layer/pages/keeping.js'], ['js', 'layer/pages/system.js'],
+    ['js', 'layer/pages/memory.js'], ['js', 'layer/pages/planning.js'], ['js', 'layer/pages/code.js'], ['js', 'layer/pages/code-work.js'],
+    ['js', 'layer/pages/source.js'], ['js', 'layer/pages/safety.js'], ['js', 'layer/pages/keeping.js'], ['js', 'layer/pages/system.js'],
     ['css', 'layer/smx-customizers.css'], ['js', 'layer/smx-customizers.js'],
     ['js', 'layer/smx-boot.js']
   ].map(([k, p]) => [k, new URL(p, base).href]);

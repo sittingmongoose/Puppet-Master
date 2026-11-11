@@ -71,7 +71,7 @@
   const sfields = (list) => { try { return kit().scoped.fields(list.filter(Boolean)); } catch (e) { return list.filter(Boolean).join(''); } };
   const pol = () => kit().providerPolicy;
   const left = (v) => { const n = Number(v); return Number.isFinite(n) ? `${n}% left` : String(v || ''); };
-  const model = (st) => String(SMX.val('ai.models.default-model') || 'the everyday model');
+  const model = (st) => { const v = SMX.val('ai.models.default-model'); if (!v) return 'the everyday model'; try { return String(kit().valueLabel('ai.models.default-model', v) || v); } catch (e) { return String(v); } };
 
   /* what needs you, for this chapter and for Settings Home */
   const needs = (st) => {
