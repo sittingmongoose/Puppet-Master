@@ -286,7 +286,12 @@ const DETAIL = async (arg) => {
 				reread = true;
 				await openTab(); await new Promise((r) => setTimeout(r, 1500)); await settled();
 				const fresh = collect();
-				if (!fresh.some((f) => f.id === p.id)) { out.transient.push(`${mt}: ${picks.filter((x) => !done.has(x.id) && !fresh.some((f) => f.id === x.id)).map((x) => x.name).join(', ')}`); picks = fresh.filter((f) => !done.has(f.id)); i = -1; continue; }
+				if (!fresh.some((f) => f.id === p.id)) {
+					out.transient.push(`${mt}: ${picks.filter((x) => !done.has(x.id) && !fresh.some((f) => f.id === x.id)).map((x) => x.name).join(', ')}`);
+					// a tab with no list of its own (Notifications › Events) is measured as it is, once
+					if (!fresh.length && !done.size && !only) measure(mt, '');
+					picks = fresh.filter((f) => !done.has(f.id)); i = -1; continue;
+				}
 			}
 			if (!retried.has(p.id)) { retried.add(p.id); i--; continue; }
 			out.unsettled.push(`${mt} › ${p.name}${b ? '' : ' (gone from the tab)'}`);
