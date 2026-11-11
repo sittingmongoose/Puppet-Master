@@ -808,7 +808,8 @@ class DS15OriginalOwner:
 def select_original_recipe(c, d):
     """Table rd_recipe: (frozen recipe, None) or (None, refusing row). One selection, from sealed custody."""
     custody = original_custody()
-    store = custody['stores'].get(d['storage_instance_id'])
+    storage_instance_id = d.get('storage_instance_id') if isinstance(d, dict) else None
+    store = custody['stores'].get(storage_instance_id) if type(storage_instance_id) is str else None
     sealed = isinstance(store, dict) and c['event_type'] in store['families']
     tuple_ = (recipe_tuple(c, store['write_recipe'], custody['manifests'][c['event_type']])
               if sealed and c['event_type'] in custody['manifests'] else None)
