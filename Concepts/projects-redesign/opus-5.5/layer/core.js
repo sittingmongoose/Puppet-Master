@@ -1007,8 +1007,16 @@
       const name = (c) => (ENV.computers.find((x) => x.id === c) || { name: c }).name;
       await run(id, 'computer', 'Changing where work runs', [{ label: 'Checking ' + pol.allowed.map(name).join(', '), ms: 700 }, { label: 'Saving the work choice', ms: 500 }], () => {
         p.runsOn = pol.def; p.work = { mode: pol.mode, by: pol.mode === 'chosen' ? 'Jared' : null, allowed: pol.allowed.slice() };
+        // work that hasn't started and follows the Project takes the new choice; a person's pin stays as it is (and waits
+        // if its Computer is no longer allowed); started work keeps its Computer
+        (p.workers || []).forEach((x) => {
+          if (!x.queued || !(x.mode === 'auto' || x.project)) return;
+          if (pol.mode === 'chosen') Object.assign(x, { mode: 'chosen', c: pol.def, by: 'Jared', project: true }); else Object.assign(x, { mode: 'auto', c: null, by: null, project: false });
+        });
       }, { cmd: 'cmd.project.execution_policy.set' });
-      toast(p.name + ': ' + (pol.mode === 'auto' ? 'Auto' : 'Chosen: ' + name(pol.def)), (pol.mode === 'auto' ? 'New work goes to the best of ' + pol.allowed.map(name).join(', ') + '; ' + name(pol.def) + ' breaks ties. ' : 'New Project work runs on ' + name(pol.def) + ', the default Computer. ') + 'Running work stays where it is, and no files moved.', 'success');
+      const waits = (p.workers || []).filter((x) => x.queued && x.mode === 'chosen' && !x.project && x.c && pol.allowed.indexOf(x.c) < 0);
+      toast(p.name + ': ' + (pol.mode === 'auto' ? 'Auto' : 'Chosen: ' + name(pol.def)), (pol.mode === 'auto' ? 'New work goes to the best of ' + pol.allowed.map(name).join(', ') + '; ' + name(pol.def) + ' breaks ties. ' : 'New Project work runs on ' + name(pol.def) + ', the default Computer. ') + 'Running work stays where it is, and no files moved.' +
+        waits.map((x) => ' ' + x.task + ' waits: it is pinned to ' + name(x.c) + ', which ' + p.name + ' no longer allows.').join(''), waits.length ? 'warning' : 'success');
     },
     moveComputer(id) { const p = get(id); if (p) toast('Move ' + p.name, 'Opens Move to take ' + p.name + ' to another computer. Its files, history and settings go with it.', 'info'); },
     /* cmd.source_control.repository.bind after the check (6.9.2); a folder with no link needs the add-remote Gap */

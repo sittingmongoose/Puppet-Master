@@ -57,6 +57,9 @@
     const free = ok.filter((c) => !(OBS[c] || {}).inUse && !(OBS[c] || {}).busy);
     return free[0] || (ok.indexOf(k.def) >= 0 ? k.def : ok[0]) || k.def;
   }
+  /* a person's pin whose Computer the Project no longer allows: requested and effective differ, so it says so. Work that
+     hasn't started waits with its reason and is never moved by itself; started work keeps its Computer (SIR-056, DL-473) */
+  const stale = (p, x) => x.mode === 'chosen' && !x.project && !!x.c && policy(p).allowed.indexOf(x.c) < 0;
   const running = (p) => (p.workers || []).filter((x) => !x.queued).length;
   const workingNow = (p) => uniq((p.workers || []).filter((x) => !x.waiting && !x.queued).map((x) => x.c));
   const homeWord = (p) => { const c = comp(p.home || 'here'); return c ? (c.id === 'here' ? c.name + ' (' + c.short + ')' : c.name) : '—'; };
@@ -87,11 +90,17 @@
       const pin = h('button.pjx-link.pjx-wk-pin', { type: 'button', 'data-c-key': 'wk:pin:' + i, 'aria-haspopup': 'menu', 'aria-disabled': x.queued ? null : 'true', 'data-cmd': 'cmd.execution_host.pin (bounded run/task pin)' }, w('wk.pin.run'));
       PJX.tip(pin, w('wk.pin.run'), x.queued ? w('wk.pin.runTip') : w('wk.pin.started', { computer: cname(x.c) }));
       pin.addEventListener('click', () => { if (x.queued) pinMenu(p, x, pin); });
-      box.appendChild(h('li.pjx-wk-row', { 'data-mode': x.mode, 'data-queued': x.queued ? '' : null },
-        h('span.pjx-st-mark', { html: x.queued ? PJX.calm('pending', 13) : PJX.mark(x.waiting ? 'pending' : 'working', 13), 'aria-hidden': 'true' }),
+      const st = stale(p, x), waits = st && x.queued;
+      const wait = waits ? w('wk.stale.wait', { computer: cname(x.c), project: p.name }) : st ? w('wk.stale.keeps', { computer: cname(x.c) }) : x.waiting;
+      // a waiting pin offers both ways on: another allowed Computer (Run this on…) or the Project's choice
+      const follow = waits ? h('button.pjx-link.pjx-wk-follow', { type: 'button', 'data-c-key': 'wk:follow:' + i, 'data-cmd': 'cmd.execution_host.pin.clear' }, w('wk.stale.follow', { choice: choiceWord(p) })) : null;
+      if (follow) follow.addEventListener('click', () => setPin(p, x, null));
+      if (waits) b.textContent = w('wk.stale.whyBtn');
+      box.appendChild(h('li.pjx-wk-row', { 'data-mode': x.mode, 'data-queued': x.queued ? '' : null, 'data-state': waits ? 'waiting' : st ? 'kept' : null },
+        h('span.pjx-st-mark', { html: waits ? PJX.calm('waiting', 13) : x.queued ? PJX.calm('pending', 13) : PJX.mark(x.waiting ? 'pending' : 'working', 13), 'aria-hidden': 'true' }),
         h('span.pjx-wk-task', { text: x.task }),
-        h('span.pjx-wk-where', null, h('span.pjx-wk-to', { text: words }), x.waiting ? h('span.pjx-wk-wait', { text: ' · ' + x.waiting }) : null),
-        h('span.pjx-wk-acts', null, pin, b)));
+        h('span.pjx-wk-where', null, h('span.pjx-wk-to', { text: words }), wait ? h('span.pjx-wk-wait', { text: ' · ' + wait }) : null),
+        h('span.pjx-wk-acts', null, pin, follow, b)));
       void o;
     });
     return box;
@@ -103,9 +112,27 @@
     const k = policy(p), u = U();
     const fl = PJX.flow;
     const body = h('div.pjx-wk-whybody');
-    if (x.mode === 'chosen') {
-      body.appendChild(h('p.pjx-q-lead', { text: x.project ? w('wk.why.projectLead', { computer: cname(x.c), project: p.name, who: x.by || 'Jared' }) : w('wk.why.chosenLead', { who: x.by || 'Jared', computer: cname(x.c), reason: x.why ? ' (' + x.why + ')' : '' }) }));
-      body.appendChild(fl.facts([x.project ? null : { key: 'complete', text: w('wk.why.pinWins') }, { key: 'info', text: w('wk.why.pinWaits', { computer: cname(x.c) }) }, { key: 'info', text: w('wk.why.pinScope', { project: p.name, choice: choiceWord(p) }) },
+    let acts = null;
+    if (stale(p, x) && x.queued) {
+      // requested and effective differ: say both, and offer both ways on; nothing moves by itself
+      body.appendChild(h('p.pjx-q-lead', { text: w('wk.why.staleLead', { who: x.by || 'Jared', computer: cname(x.c), project: p.name }) }));
+      body.appendChild(fl.facts([{ key: 'waiting', text: w('wk.why.staleNow', { computer: cname(x.c) }) }, { key: 'info', text: w('wk.why.staleNever') },
+        { key: 'info', text: w('wk.why.staleWays', { project: p.name, choice: choiceWord(p), computer: cname(x.c) }) }]));
+      acts = [{ label: w('wk.stale.follow', { choice: choiceWord(p) }), cmd: 'cmd.execution_host.pin.clear', run: (d) => { d.close('follow'); setPin(p, x, null); } },
+        { label: w('wk.stale.pinElse'), cmd: 'cmd.execution_host.pin', run: (d) => { d.close('pin'); setTimeout(() => { const a = W.document.querySelector('[data-plate="work"] [data-c-key="wk:pin:' + (p.workers || []).indexOf(x) + '"]'); if (a) pinMenu(p, x, a); }, 200); } }];
+    } else if (x.mode === 'chosen' && x.project && !x.queued) {
+      // (N3) work started under the Project's Chosen: the Computer it was sent to, and the choice in force then
+      const then = x.at || w('wk.form.chosen', { computer: cname(x.c) }), now = choiceWord(p);
+      body.appendChild(h('p.pjx-q-lead', { text: w('wk.why.projStarted', { computer: cname(x.c), project: p.name, choice: then }) }));
+      body.appendChild(fl.facts([{ key: 'info', text: w('wk.why.pinWaits', { computer: cname(x.c) }) }, now !== then ? { key: 'info', text: w('wk.why.projNow', { project: p.name, choice: now }) } : null,
+        k.allowed.indexOf(x.c) < 0 ? { key: 'info', text: w('wk.stale.keepsWhy', { computer: cname(x.c), project: p.name }) } : null].filter(Boolean)));
+    } else if (x.mode === 'chosen' && x.project) {
+      body.appendChild(h('p.pjx-q-lead', { text: w('wk.why.projQueued', { computer: cname(x.c), project: p.name, choice: choiceWord(p) }) }));
+      body.appendChild(fl.facts([{ key: 'info', text: w('wk.why.pinWaits', { computer: cname(x.c) }) }, { key: 'info', text: w('wk.why.queuedPin') }]));
+    } else if (x.mode === 'chosen') {
+      body.appendChild(h('p.pjx-q-lead', { text: w('wk.why.chosenLead', { who: x.by || 'Jared', computer: cname(x.c), reason: x.why ? ' (' + x.why + ')' : '' }) }));
+      body.appendChild(fl.facts([{ key: 'complete', text: w('wk.why.pinWins') }, { key: 'info', text: w('wk.why.pinWaits', { computer: cname(x.c) }) }, { key: 'info', text: w('wk.why.pinScope', { project: p.name, choice: choiceWord(p) }) },
+        k.allowed.indexOf(x.c) < 0 ? { key: 'info', text: w('wk.stale.keepsWhy', { computer: cname(x.c), project: p.name }) } : null,
         LEVEL[x.c] === 'Only when I choose it' ? { key: 'info', text: w('wk.why.pinLevel', { computer: cname(x.c) }) } : null].filter(Boolean)));
     } else if (x.queued) {
       body.appendChild(h('p.pjx-q-lead', { text: w('wk.why.queuedLead', { project: p.name }) }));
@@ -129,11 +156,12 @@
       body.appendChild(u.hint(w('wk.why.tie', { project: p.name, computer: cname(k.def) })));
     }
     body.appendChild(fl.group(w('wk.why.policyCap'), fl.facts([
-      { key: 'info', text: x.mode === 'chosen' ? w('wk.why.presetPinned') : w('wk.why.preset') },
+      { key: 'info', text: x.mode === 'chosen' ? (x.project ? w('wk.why.presetProject') : w('wk.why.presetPinned')) : w('wk.why.preset') },
       { key: 'info', text: w('wk.why.weights') },
       { key: 'info', text: w('wk.why.version') }, { key: 'info', text: w('wk.why.levels', { here: LEVEL.here, homenas: LEVEL.homenas, studio: LEVEL.studio }) }])));
     body.appendChild(u.line(null, w('wk.why.policy'), { icon: 'settings', after: u.link(w('wk.settingsLink'), () => goSettings(), { key: 'wk:whysettings', cmd: 'cmd.settings.open' }) }));
-    const dlg = PJX.dialog({ title: x.c ? w('wk.why.title', { computer: cname(x.c) }) : w('wk.why.titleQueued'), kicker: x.task, body, wide: true, actions: [{ spacer: true }, { label: w('np.done.ok'), primary: true, run: () => dlg.close('ok') }] });
+    const dlg = PJX.dialog({ title: stale(p, x) && x.queued ? w('wk.why.titleStale') : x.c ? w('wk.why.title', { computer: cname(x.c) }) : w('wk.why.titleQueued'), kicker: x.task, body, wide: true,
+      actions: (acts || []).concat([{ spacer: true }, { label: w('np.done.ok'), primary: true, run: () => dlg.close('ok') }]) });
     return dlg;
   }
   function goSettings() {
@@ -163,6 +191,10 @@
         { disabled: isDef ? w('wk.form.defAlways') : null, sub: isDef ? w('wk.form.defAlways') : has ? w('wk.form.hasFiles') : w('wk.form.getsCopy') }));
     });
     box.appendChild(u.group(w('wk.form.allowed'), checks, u.hint(w('wk.form.allowedHint'))));
+    // (N1) pinned work that hasn't started, on a Computer this choice would no longer allow: it would wait, never move
+    const al = allowedList();
+    (p.workers || []).filter((x) => x.queued && x.mode === 'chosen' && !x.project && x.c && al.indexOf(x.c) < 0).forEach((x) =>
+      box.appendChild(u.line('waiting', w('wk.form.staleWarn', { task: x.task, computer: cname(x.c), project: p.name }), { role: 'status' })));
     box.appendChild(u.line(null, w('wk.form.running'), { icon: 'info' }));
     box.appendChild(u.line(null, w('wk.form.presets'), { icon: 'settings', after: u.link(w('wk.settingsLink'), () => goSettings(), { key: 'wk:settings', cmd: 'cmd.settings.open' }) }));
     const yl = u.yoloLine(w('wk.yolo'), { asks: false });
@@ -204,7 +236,7 @@
       const task = (TASKS.find((t) => t[0] === what) || TASKS[0])[1];
       const pinned = where !== 'auto', c = pinned ? where : autoPick(p);
       await PJX.run(p.id, 'pin', w('wk.start.doing'), [{ label: w('wk.start.starting', { task, computer: cname(c) }), ms: 600 }], () => {
-        p.workers = (p.workers || []).concat([pinned ? { c, task, mode: 'chosen', by: 'Jared' } : k.mode === 'chosen' ? { c, task, mode: 'chosen', by: k.by || 'Jared', project: true } : { c, task, mode: 'auto' }]);
+        p.workers = (p.workers || []).concat([pinned ? { c, task, mode: 'chosen', by: 'Jared' } : k.mode === 'chosen' ? { c, task, mode: 'chosen', by: k.by || 'Jared', project: true, at: choiceWord(p) } : { c, task, mode: 'auto' }]);
       }, { cmd: 'cmd.work.start' });
       PJX.toast(w('wk.start.done', { task, computer: cname(c) }), pinned ? w('wk.pin.doneText', { project: p.name, choice: choiceWord(p) }) : '', 'success');
     };
@@ -214,7 +246,9 @@
 
   /* New Project › Where it lives: Auto by default, the default Computer (the draft's runsOn: it sets the Project up and
      breaks ties), and the person's allowed set, which registration must record (SIR-056: never every Computer found) */
-  function npAllowed(s) { const d = s.d, a = (d.work && d.work.allowed) || {}; return uniq([d.runsOn].concat(Object.keys(a).filter((c) => a[c]))); }
+  /* (N2) New Project's default Computer is its own answer: it starts as the records home's Computer and never sets it */
+  const npDef = (s) => (s.d.work && s.d.work.def) || s.d.runsOn;
+  function npAllowed(s) { const d = s.d, a = (d.work && d.work.allowed) || {}; return uniq([npDef(s)].concat(Object.keys(a).filter((c) => a[c]))); }
   function npBlock(s, opts) {
     opts = opts || {};
     const u = U(), d = s.d;
@@ -223,22 +257,23 @@
     box.appendChild(u.cap(w('wk.np.title')));
     box.appendChild(u.choices('wk:np:mode', [
       { id: 'auto', glyph: 'sparkle', title: w('wk.auto'), sub: w('wk.np.autoSub'), tag: w('np.svc.recommended') },
-      { id: 'chosen', glyph: 'pin', title: w('wk.form.chosen', { computer: cname(d.runsOn) }), sub: w('wk.form.chosenSub', { computer: cname(d.runsOn) }) }
+      { id: 'chosen', glyph: 'pin', title: w('wk.form.chosen', { computer: cname(npDef(s)) }), sub: w('wk.form.chosenSub', { computer: cname(npDef(s)) }) }
     ], d.work.mode, (v) => { d.work.mode = v; s.changed(); }, { label: w('wk.np.title') }));
-    if (opts.defSeg) box.appendChild(h('div.pjx-np-field', null, u.cap(w('wk.f.default')), opts.defSeg, u.hint(w('wk.form.defRoles', { computer: cname(d.runsOn) }))));
-    else box.appendChild(u.hint(w('wk.form.defRoles', { computer: cname(d.runsOn) })));
+    const off = (c) => (c.id === 'homenas' && PJX.np && !PJX.np.serverOn() ? w('np.loc.serverOff', { server: c.name }) : null);
+    const defSeg = u.seg('wk:np:def', ENV.computers.map((c) => ({ id: c.id, title: c.name, sub: c.detail, off: off(c) })), npDef(s), (v) => { d.work.def = v; s.changed(); }, w('wk.f.default'));
+    box.appendChild(h('div.pjx-np-field', null, u.cap(w('wk.f.default')), defSeg, u.hint(w('wk.form.defRoles', { computer: cname(npDef(s)) }) + ' ' + w('wk.np.defNotHome', { home: cname(d.runsOn) }))));
     const checks = h('div.pjx-wk-allowed', { role: 'group', 'aria-label': w('wk.form.allowed') });
     ENV.computers.forEach((c) => {
-      const isDef = c.id === d.runsOn, off = c.server && c.id === 'homenas' && PJX.np && !PJX.np.serverOn() ? w('np.loc.serverOff', { server: c.name }) : null;
+      const isDef = c.id === npDef(s), offW = c.server && off(c);
       checks.appendChild(u.check('wk:np:allow:' + c.id, c.name, isDef || !!d.work.allowed[c.id], (v) => { d.work.allowed[c.id] = v; s.changed(); },
-        { disabled: isDef ? w('wk.form.defAlways') : off, sub: isDef ? w('wk.np.isDefault') : w('wk.form.getsCopy') }));
+        { disabled: isDef ? w('wk.form.defAlways') : offW || null, sub: isDef ? w('wk.np.isDefault') : c.id === d.runsOn ? w('wk.np.isHome') : w('wk.form.getsCopy') }));
     });
     box.appendChild(h('div.pjx-np-field', null, u.cap(w('wk.form.allowed')), checks, u.hint(w('wk.np.allowedHint'))));
     box.appendChild(u.line(null, w('wk.np.separate'), { icon: 'info' }));
     box.appendChild(u.line(null, w('wk.form.presets'), { icon: 'settings', after: u.link(w('wk.settingsLink'), () => PJX.toast(w('wk.settingsToast'), w('wk.settingsToastText'), 'info'), { key: 'wk:np:settings', cmd: 'cmd.settings.open' }) }));
     return box;
   }
-  const npChoice = (s) => { const d = s.d, m = (d.work && d.work.mode) || 'auto'; return m === 'auto' ? w('wk.auto') : w('wk.form.chosen', { computer: cname(d.runsOn) }); };
+  const npChoice = (s) => { const d = s.d, m = (d.work && d.work.mode) || 'auto'; return m === 'auto' ? w('wk.auto') : w('wk.form.chosen', { computer: cname(npDef(s)) }); };
 
-  PJX.work = { OBS, LEVEL, policy, autoPick, running, choiceWord, rowWord, workingNow, homeWord, facts, rows, why, form, pinMenu, setPin, startDialog, npBlock, npAllowed, npChoice, comp, cname };
+  PJX.work = { OBS, LEVEL, policy, autoPick, running, stale, choiceWord, rowWord, workingNow, homeWord, facts, rows, why, form, pinMenu, setPin, startDialog, npBlock, npDef, npAllowed, npChoice, comp, cname };
 })(window);

@@ -746,9 +746,9 @@
     // the Project is already added: its folder, on the computer that does its work (files on Home NAS read as Home NAS's)
     const fresh = PJX.np.start({ purpose: 'page', project: p.id, way: 'folder' });
     const d = fresh.d;
-    // the computer that does the work is the Project's own (SIR-026); where its files are is a separate fact, which the
-    // form reads from the Project itself (the NAS rule, the holder), never by moving the work to where the files are
-    d.runsOn = p.runsOn || 'here'; d.name = p.name; d.nameTouched = true;
+    // the form's Computer is the Project's records home, which reaches its folder (SIR-056: never its default Computer,
+    // which only says where new work goes); where its files are is read from the Project itself (the NAS rule, the holder)
+    d.runsOn = p.home || p.runsOn || 'here'; d.name = p.name; d.nameTouched = true;
     d.folder.path = p.where.path;
     // the look is the Project's own facts: no second inspection
     const info = { history: p.history.backend, branch: p.history.branch, changed: p.history.changed || 0, online: kind === 'link' && p.online.found ? { service: p.online.found.service, repo: p.online.found.repo, remote: p.online.found.remote } : null };
@@ -1581,7 +1581,7 @@
     const order = ['This computer'].concat(PJX.ENV.devices.map((d) => d.name));
     const lists = Array.from(groups.keys()).sort((a, b) => ((order.indexOf(a) + 1 || 99) - (order.indexOf(b) + 1 || 99))).map((k) => U.group(k, U.choices('mv:target:' + k.replace(/\W+/g, '-'), groups.get(k).map((x) => ({ id: x.p.id, glyph: x.p.glyph, title: x.p.name, sub: [PJX.primary(x.p).word, x.other ? W_('np.mv.other', { project: x.p.name, computer: x.other }) : null].filter(Boolean).join(' · '), disabled: x.off })), m.target, (v) => { m.target = v; m.place = 'draft'; m.changed(); }, { label: k })));
     put0(box, q(1, W_('np.mv.q1'), W_('np.mv.q1Lead'), U.field(W_('np.mv.search'), U.input('mv:q', m.q, 'harbor', (v) => { m.q = v; m.changed(); }), ''), lists.length ? lists : U.hint('No project matches that search.'),
-      p && (p.runsOn || 'here') !== c.runsOn ? U.line('info', W_('np.mv.other', { project: p.name, computer: NPx.comp(p.runsOn).name })) : null));
+      p && (p.home || p.runsOn || 'here') !== c.runsOn ? U.line('info', W_('np.mv.other', { project: p.name, computer: NPx.comp(p.home || p.runsOn).name })) : null));
     if (!p) return box;
     // 2 which files: all ticked; each marked New, Same or Different against the project
     const files = (c.fileList || []).map((f) => { const mk = MARK[NPx.moveMark(m, f)]; return h('div.pjxc-mvfile', null, U.check('mv:file:' + f, f, !!m.files[f] && !m.chatOnly, (v) => { m.files[f] = v; m.changed(); }, { disabled: m.chatOnly ? W_('np.mv.chatOnlySub', { n: c.files, folder: c.folder }) : null }), PJX.parts.st(mk[0], W_(mk[1]))); });
