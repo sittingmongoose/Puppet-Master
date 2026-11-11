@@ -88,10 +88,12 @@ def ok(action):
         return False
 
 
-def expected(route, value):
+def expected(route, value, family):
     """Accept or refuse, from the shared helpers and the slot's owner bounds only."""
-    if route == 'producer' and value is None:
-        return 'accepted'  # the owner slot is nullable_non_negative_integer: null is not an integer slot
+    if route == 'producer' and value is None and not family.endswith('.restore_point'):
+        # The EventRecord slot is nullable_non_negative_integer: null is not an integer slot. For
+        # restore_point the ordinal is also the RAP-113 identity revision, an exact integer >= 0.
+        return 'accepted'
     if route == 'payload':
         admitted = dr.integer_refusal(value, minimum=1) is None
     else:
@@ -148,7 +150,7 @@ def main():
                 continue
             for route in routes:
                 runs += 1
-                want = expected(route, value)
+                want = expected(route, value, family)
                 try:
                     with dr.exact_digits():
                         got = actual(row, fixtures, route, value)
