@@ -162,8 +162,12 @@ html[data-o55-nier="on"] .pmed-cz .pmed-art-syntax { background:
    (one each time a composited hover transition starts or ends, 20-28 a second while Usage scrolls), with 3-16 layers
    of its preview (the head's backdrop blur, the canvas, the thumbs). A forced re-layerize, RTX 3090, Basic Dark: Usage
    2.7-3.05 -> 2.4 ms, Home 2.55 -> 2.27 ms. The dialog's own box stays visible for Liquid Glass, as on the terminal's
-   screen; the class's removal shows the parts in the click's frame, painted there (lane H, 2026-11-11). */
-.pmed-cz.pmed-prepared > :is(.pmt-cz-scrim, .pmt-cz-frame), .pmed-cz.pmed-prepared .pmt-cz-dialog > * { visibility: hidden; }
+   screen; the class's removal shows the parts in the click's frame, painted there (lane H, 2026-11-11).
+   Not in Glass: there the hidden body (the preview and its tiles) made the page re-layerize on most frames of a pointer
+   sweep (Usage, Glass Dark: 14-19 -> 67-74 a second, Liquid Glass's doing, cause not found), and a forced re-layerize
+   got no cheaper (3.0 ms either way), so Glass keeps the sheet drawn as before. */
+:root:not([data-theme^="glass"]) .pmed-cz.pmed-prepared > :is(.pmt-cz-scrim, .pmt-cz-frame),
+:root:not([data-theme^="glass"]) .pmed-cz.pmed-prepared .pmt-cz-dialog > * { visibility: hidden; }
 /* Static scheme pictures keep their measured size while the browser skips
    drawing them below the scrollport. Their original contents appear before
    they enter view; no tile or effect is replaced by a placeholder. */
