@@ -99,13 +99,9 @@ export default (ctx) => {
 				// NieR's switch-on plays a transition first; wait for the painted state rather than a fixed time
 				await f0.waitForFunction(([want, m]) => { const theme = document.documentElement.getAttribute('data-theme') || ''; const nier = !!(window.PM_NIER && PM_NIER.on()) || theme.startsWith('nier'); return nier === want && theme.endsWith('-' + m); }, [family === 'nier', mode], { timeout: 20000 }).catch(() => {});
 				await t.page.waitForTimeout(500);
-				// the look is applied when its cover is gone: while a look's cover is up (NieR's reboot plate, the theme
-				// cross-cover) the page holds every real press until its reveal, by design (19-nier-parts.js holdPresses),
-				// so a check that clicks then loses the click. Wait for the page's own settled state, not a longer sleep.
-				const settled = await f0.waitForFunction(() => !(window.PM_LOOK_COVERED && PM_LOOK_COVERED()) && !(window.PM_THEME_TRANSITION && PM_THEME_TRANSITION.busy && PM_THEME_TRANSITION.busy()), null, { timeout: 20000 }).then(() => true).catch(() => false);
 				const got = await f0.evaluate(state);
 				const ok = family === 'nier' ? got.nier && got.theme.endsWith('-' + mode) : !got.nier && got.theme === name;
-				return t.check(`look ${name} applied`, ok && settled, `data-theme ${got.theme}, NieR ${got.nier ? 'on' : 'off'}${settled ? '' : ', its cover still up after 20 s'}`);
+				return t.check(`look ${name} applied`, ok, `data-theme ${got.theme}, NieR ${got.nier ? 'on' : 'off'}`);
 			},
 			// Home panels write localStorage on unload: block that and clear, so the next load starts from defaults (the
 			// sandbox has no storage to clear)

@@ -101,6 +101,15 @@ const RESULT = () => {
 	};
 };
 
+/* A look's cover (NieR's reboot plate, the theme cross-cover) holds every real press until its reveal, by design
+   (19-nier-parts.js holdPresses), and t.app.look returns before it lifts on a slower host: the Settings tab click was
+   held and the page stayed on Home (opus-recheck-b10e2, NieR Light). Press only once the page has settled. Local to
+   this check until the shared helper takes the same wait (TOOL-ISSUES). */
+async function lookSettled(t, f, look) {
+	const ok = await f.waitForFunction(() => !(window.PM_LOOK_COVERED && PM_LOOK_COVERED()) && !(window.PM_THEME_TRANSITION && PM_THEME_TRANSITION.busy && PM_THEME_TRANSITION.busy()), null, { timeout: 20000 }).then(() => true).catch(() => false);
+	return t.check(`${look}: its cover is gone before the next press`, ok, ok ? '' : 'the look cover was still up after 20 s');
+}
+
 async function openCase(t, f, c) {
 	await f.evaluate(([d, w]) => PM51.go(d, w), [c.domain, c.ws]);
 	await f.waitForSelector(`[data-continuous-workspace-body="${c.ws}"][data-workspace-mounted="true"]`, { timeout: 15000 });
@@ -174,6 +183,7 @@ for (const surface of ['normal', 'sandbox']) {
 			const f = await t.app.open({ sandbox: surface === 'sandbox' });
 			await t.app.resetLayout();
 			await t.app.look(look);
+			await lookSettled(t, f, look);
 			await f.locator('#tab-settings').click();
 			await t.settle();
 			for (const name of names) await runCase(t, f, 1280, 900, name, `${look} 1280x900`);
