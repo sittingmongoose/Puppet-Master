@@ -1,8 +1,6 @@
-// Split v3 (Jared 2026-11-10, "easier to read") is Split v2 drawn with concepts/c-v3.css: the switch on the strip and by
-// key, what switching keeps, v2 left exactly as it was, how each plate's facts are set, and the layout audit in v3.
-import path from 'node:path';
-import { pathToFileURL } from 'node:url';
-
+// Split v3 (Jared 2026-11-10, "easier to read"; 2026-11-11, "We are replacing v2 with v3") is the Split concept drawn
+// with concepts/c-v3.css: that Split opens as v3 from the strip and by key, how each plate's facts are set, the layout
+// audit in every look, scenario and width, and v3 measured against Split's base layout for what the audit cannot see.
 const state = (f) => f.evaluate(() => {
 	const c = window.PJX.split.state();
 	const fact = document.querySelector('#pjxc .pjxc-facts > .pmu-fact'), val = document.querySelector('#pjxc .pjxc-facts .pmu-factv');
@@ -12,7 +10,7 @@ const state = (f) => f.evaluate(() => {
 		factDisplay: fact ? getComputedStyle(fact).display : null, valAlign: val ? getComputedStyle(val).textAlign : null
 	};
 });
-const pressed = (t) => t.page.evaluate(() => Array.from(document.querySelectorAll('#opt button[aria-pressed="true"]')).map((b) => b.dataset.read || b.dataset.opt).join(','));
+const pressed = (t) => t.page.evaluate(() => Array.from(document.querySelectorAll('#opt button[aria-pressed="true"]')).map((b) => b.dataset.opt).join(','));
 const plates = (f) => f.evaluate(() => Object.fromEntries(Array.from(document.querySelectorAll('#pjxc .pjxc-facts')).map((g) => {
 	const p = g.closest('[data-plate]');
 	return [p ? p.getAttribute('data-plate') : '?', (g.hasAttribute('data-v3-stack') ? 'stack' : 'beside') + ':' + g.querySelectorAll('.pmu-fact[data-v3-long]').length];
@@ -36,8 +34,9 @@ async function audit(t, f, name) {
 const tallestBeside = (f) => f.evaluate(() => Math.max(0, ...Array.from(document.querySelectorAll('#pjxc .pjxc-facts:not([data-v3-stack]) > .pmu-fact:not([data-v3-long]) > .pmu-factv')).map((v) => Math.round(v.getBoundingClientRect().height / (parseFloat(getComputedStyle(v).lineHeight) || 19)))));
 
 const LOOKS = ['basic-dark', 'basic-light', 'friendly-dark', 'friendly-light', 'glass-dark', 'glass-light', 'retro-dark', 'retro-light', 'nier-dark', 'nier-light'];
-/* v3 keeps v2's layout (review r2, N4 and N5). Three things the audit cannot see, each measured in v3 and in v2 on the
-   same state:
+/* v3 keeps Split's base layout (review r2, N4 and N5): what c.css alone lays out, which was Split v2 and is still
+   what v3 restyles. PJX.read.set('v2') shows it for a moment; no control does. Things the audit cannot see, each
+   measured in v3 and in the base layout on the same state:
    - text cut off with an ellipsis: a by-design clamp, which the audit leaves alone. v3 must cut nothing v2 shows whole;
    - a plate's glyph beside its title: in a narrow pane c.css sizes the titles for v2's gap, so a different gap puts
      the glyph on a line of its own;
@@ -63,109 +62,58 @@ const layout = (f) => f.evaluate(() => {
 		steps: steps && steps.getClientRects().length ? half(steps.getBoundingClientRect().width) : null, answers: body && body.getClientRects().length ? half(body.clientWidth - parseFloat(bs.paddingLeft) - parseFloat(bs.paddingRight)) : null };
 });
 const show = async (t, f, v) => { await f.evaluate((x) => window.PJX.read.set(x), v); await f.waitForFunction((x) => window.PJX.read.get() === x, v, { timeout: 6000 }); await t.page.waitForTimeout(220); };
-/* measured in v3 (which is showing), then in v2, and v3 is left showing */
+/* measured in v3 (which is showing), then in the base layout, and v3 is left showing */
 async function sameLayout(t, f, name) {
 	const a = await layout(f);
 	await show(t, f, 'v2');
 	const b = await layout(f);
 	await show(t, f, 'v3');
 	const more = a.cut.filter((x) => !b.cut.includes(x)), apart = a.apart.filter((x) => !b.apart.includes(x));
-	await t.check(`${name}: v3 cuts off no text v2 shows whole`, !more.length, more.join(' | '));
-	await t.check(`${name}: every plate’s glyph is beside its title, as in v2`, !apart.length && a.heads === b.heads, apart.join(', ') + ' (' + a.heads + ' heads, v2 ' + b.heads + ')');
-	if (b.edge === 0) await t.equal(`${name}: the open question’s answers start on its own edge, as in v2`, a.edge, 0);
-	if (b.steps != null) await t.equal(`${name}: the questions’ card is as wide as in v2`, a.steps, b.steps);
-	if (b.answers != null) await t.equal(`${name}: an open question’s answers have v2’s width`, a.answers, b.answers);
+	await t.check(`${name}: v3 cuts off no text the base layout shows whole`, !more.length, more.join(' | '));
+	await t.check(`${name}: every plate’s glyph is beside its title, as in the base layout`, !apart.length && a.heads === b.heads, apart.join(', ') + ' (' + a.heads + ' heads, base ' + b.heads + ')');
+	if (b.edge === 0) await t.equal(`${name}: the open question’s answers start on its own edge, as in the base layout`, a.edge, 0);
+	if (b.steps != null) await t.equal(`${name}: the questions’ card is as wide as in the base layout`, a.steps, b.steps);
+	if (b.answers != null) await t.equal(`${name}: an open question’s answers have the base layout’s width`, a.answers, b.answers);
 }
 
-/* This file is about v3. The kit is also run with ?split=v2 on the page (the other files then test v2): here that run
-   first shows the page did open on v2, then goes to v3 by the strip, so every check below holds in both runs. */
-const askedV2 = (t) => /[?&]split=v2\b/.test(String(t.args.page || ''));
-async function open(t) {
-	const f = await t.app.open(t);
-	if (!askedV2(t)) return f;
-	await t.equal('?split=v2: the page opened on v2', await f.evaluate(() => document.documentElement.getAttribute('data-pjx-read')), null);
-	await t.page.click('#opt button[data-read="v3"]');
-	await t.app.until(t, f, '?split=v2: the strip then shows v3', () => document.documentElement.getAttribute('data-pjx-read') === 'v3', null, 8000);
-	return f;
-}
+const open = (t) => t.app.open(t);
 
 export const tests = {
-	async 'opens on v3, switches both ways, keeps what was open'(t) {
+	async 'Split opens as v3: the strip, the keys, Today and A and back'(t) {
 		const f = await open(t);
 		await f.evaluate(() => window.PJX.split.select('tastebook'));
 		await t.page.waitForTimeout(300);
 		let s = await state(f);
-		const how = askedV2(t) ? 'v3 by the strip' : 'opens on v3';
-		await t.equal(`${how} (attribute)`, s.read, 'v3');
-		await t.equal(`${how} (strip)`, await pressed(t), 'v3');
-		await t.equal('it is still concept C', s.mounted, 'c');
-		await t.equal('v3: a fact gives its cells to the plate’s grid', s.factDisplay, 'contents');
-		await t.check('v3: values are left-aligned', s.valAlign === 'left' || s.valAlign === 'start', s.valAlign);
+		await t.equal('Split opens as v3 (attribute)', s.read, 'v3');
+		await t.equal('the strip shows one Split, pressed', await pressed(t), 'c');
+		await t.equal('the strip has no second Split button', await t.page.evaluate(() => document.querySelectorAll('#opt button[data-opt="c"]').length), 1);
+		await t.equal('it is concept C', s.mounted, 'c');
+		await t.equal('a fact gives its cells to the plate’s grid', s.factDisplay, 'contents');
+		await t.check('values are left-aligned', s.valAlign === 'left' || s.valAlign === 'start', s.valAlign);
 		await t.shot('v3-project', 'Split v3, the Project page (LOOK)');
-		// v2 by the strip: nothing of v3 is left behind
-		await t.page.click('#opt button[data-read="v2"]');
-		await t.page.waitForTimeout(400);
-		s = await state(f);
-		await t.equal('v2: attribute gone', s.read, null);
-		await t.equal('v2: no marks left', s.marks, 0);
-		await t.equal('v2: facts are rows again', s.factDisplay, 'flex');
-		await t.equal('v2: values right-aligned as before', s.valAlign, 'right');
-		await t.equal('v2: the same Project is chosen', s.sel, 'tastebook');
-		await t.equal('v2 pressed on the strip', await pressed(t), 'v2');
-		// keys 4 and 3 on the strip
+		// Today by its key, and back to Split by key 3 on the strip: still v3, the same Project chosen
 		await t.page.locator('.pc-note').click();
-		await t.page.keyboard.press('4');
-		await t.page.waitForTimeout(400);
-		await t.equal('key 4 on the strip: v3', (await state(f)).read, 'v3');
-		await t.equal('key 4 on the strip: pressed', await pressed(t), 'v3');
+		await t.page.keyboard.press('0');
+		await t.app.until(t, f, 'key 0: Today, no concept mounted', () => !document.querySelector('#pjxc'), null, 8000);
 		await t.page.keyboard.press('3');
-		await t.page.waitForTimeout(400);
-		await t.equal('key 3 on the strip: v2', (await state(f)).read, null);
-		// keys 4 and 3 inside PMConcept7: the strip follows
-		await t.quickClick(f.locator('#pjxc .pjxc-title'));
-		await t.page.waitForTimeout(150);
-		await t.page.keyboard.press('4');
-		await t.page.waitForTimeout(500);
-		await t.equal('key 4 inside: v3', (await state(f)).read, 'v3');
-		await t.equal('key 4 inside: the strip follows', await pressed(t), 'v3');
-		await t.page.keyboard.press('3');
-		await t.page.waitForTimeout(500);
-		await t.equal('key 3 inside: v2', (await state(f)).read, null);
-		await t.equal('key 3 inside: the strip follows', await pressed(t), 'v2');
-		// an open New Project and its answers survive the switch
-		await t.app.moment(t, 'foundonline');
-		await t.page.waitForTimeout(1500);
-		const draft = () => f.evaluate(() => { const x = window.PJX.split.session(); return x ? JSON.stringify(window.PJX.np.toPlan ? window.PJX.np.toPlan(x) : Object.keys(x)) : null; });
-		const before = await draft();
-		await t.page.click('#opt button[data-read="v3"]');
-		await t.page.waitForTimeout(500);
-		await t.check('New Project is still open with the same answers', !!before && before === (await draft()));
-		await t.text(f.locator('#pjxc .pjxc-title').first(), 'budget-tracker');
-		await t.shot('v3-new-project', 'Split v3, New Project beside its Review (LOOK)');
-		// Today and A still work, and coming back to C keeps v3
-		await t.page.click('#opt button[data-opt="before"]');
-		await t.page.waitForTimeout(500);
-		await t.check('Today: no concept mounted', await f.evaluate(() => !document.querySelector('#pjxc')));
-		await t.page.click('#opt button[data-read="v3"]');
-		await t.page.waitForTimeout(600);
-		await t.equal('back on v3', (await state(f)).read, 'v3');
+		await t.app.until(t, f, 'key 3 on the strip: Split is back', () => !!document.querySelector('#pjxc .pjxc-facts'), null, 8000);
+		s = await state(f);
+		await t.equal('key 3: v3', s.read, 'v3');
+		await t.equal('key 3: the strip follows', await pressed(t), 'c');
+		// key 3 inside PMConcept7 from A
 		await t.page.click('#moreAB');
 		await t.page.click('#opt button[data-opt="a"]');
-		await t.page.waitForTimeout(600);
-		await t.equal('A mounts', await f.evaluate(() => window.PJX.S.mounted), 'a');
+		await t.app.until(t, f, 'A mounts', () => window.PJX.S.mounted === 'a', null, 8000);
 		await t.equal('A is pressed alone', await pressed(t), 'a');
-	},
-	async '?split=v2 opens on v2'(t) {
-		const page = t.args.page;
-		const url = /^[a-z][a-z0-9+.-]+:/i.test(page) ? page : pathToFileURL(path.resolve(page)).href;
-		await t.emulate({ reducedMotion: 'reduce' });
-		await t.goto(`${url}${url.includes('?') ? '&' : '?'}split=v2&cb=${Date.now()}`, { settleMs: 200 });
-		await t.until('layer ready', () => !!(window.PJX_HOST && window.PJX_HOST.isLive()), null, { timeout: 90000, hard: true });
-		const f = t.app.frame(t);
-		await f.waitForFunction(() => !!(window.PJX && window.PJX.split && document.querySelector('#pjxc')), null, { timeout: 60000 });
-		await t.page.waitForTimeout(500);
-		await t.equal('no v3 attribute', await f.evaluate(() => document.documentElement.getAttribute('data-pjx-read')), null);
-		await t.equal('the strip shows v2', await pressed(t), 'v2');
+		await t.page.click('#opt button[data-opt="c"]');
+		await t.app.until(t, f, 'Split from the strip after A', () => window.PJX.S.mounted === 'c' && !!document.querySelector('#pjxc .pjxc-facts'), null, 8000);
+		s = await state(f);
+		await t.equal('after A: v3, facts set its way', s.read + ' ' + s.factDisplay, 'v3 contents');
+		// New Project beside its Review
+		await t.app.moment(t, 'foundonline');
+		await t.page.waitForTimeout(1500);
+		await t.text(f.locator('#pjxc .pjxc-title').first(), 'budget-tracker');
+		await t.shot('v3-new-project', 'Split v3, New Project beside its Review (LOOK)');
 	},
 	async 'plates: values beside their labels, a dense plate stacked, a sentence under its label'(t) {
 		const f = await open(t);
@@ -264,8 +212,8 @@ export const tests = {
 		await t.app.look(t, 'basic-dark');
 	},
 	/* the 2026-11-10 fix pass's parts (SPEC-split-v3 R9): Where work runs' rows, the sync paused on a clash, and the
-	   dialogs Split opens. In v3 they follow the page; in v2 they are as the fix pass made them. */
-	async 'fix-pass parts: work rows, the paused sync and Split’s dialogs in v3, and unchanged in v2'(t) {
+	   dialogs Split opens follow the page. */
+	async 'fix-pass parts: work rows, the paused sync and Split’s dialogs in v3'(t) {
 		const f = await open(t);
 		await hideMinimap(f);
 		const rows = () => f.evaluate(() => {
@@ -352,28 +300,5 @@ export const tests = {
 		}
 		await t.app.look(t, 'basic-dark');
 		await t.app.page(t, f, 'projects');
-		// v2: the same parts exactly as the fix pass made them
-		await t.page.click('#opt button[data-read="v2"]');
-		await t.app.until(t, f, 'v2 shows', () => !document.documentElement.hasAttribute('data-pjx-read'), null, 6000);
-		await f.evaluate(() => window.PJX.split.select('photo-sorter'));
-		await t.app.until(t, f, 'v2: still paused on the clash', () => !!document.querySelector('[data-c-key="p:settle"]'), null, 10000);
-		await t.app.click(t, f, '[data-c-key="p:settle"]', { wait: 400 });
-		d = await dialog();
-		await t.equal('v2: the dialog’s choices keep their gap', d && d.gap, '4px');
-		await t.check('v2: and their own boxes', !!d && d.midRadius !== '0px', d && d.midRadius);
-		await closeDialog();
-		await workPlate();
-		r = await rows();
-		await t.check('v2: where work went is bold as before', r.to >= 600, String(r.to));
-		await t.check('v2: Why this computer is underlined as before', r.underline);
-		await t.check('v2: a live Run this on… is underlined as before, an off one is off', r.pinUnderline && r.offIsOff, JSON.stringify(r));
-		await t.app.click(t, f, '[data-plate="work"] [data-c-key="p:startrun"]', { wait: 400 });
-		d = await dialog();
-		await t.equal('v2: Start a run keeps its boxes and its small capitals', d && d.gap + ' ' + d.cap, '4px uppercase');
-		await closeDialog();
-		await t.app.click(t, f, '[data-plate="work"] [data-c-key="wk:why:1"]', { wait: 400 });
-		d = await dialog();
-		await t.equal('v2: Why this computer keeps its size', d && d.fact, '12.5px/17px');
-		await closeDialog();
 	}
 };

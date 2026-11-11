@@ -46,8 +46,7 @@
     <b>Projects</b><span class="pc-model" data-concept-model="Opus 5.5">Opus 5.5</span>
     <span class="pc-sep" aria-hidden="true"></span>
     <div class="pc-seg" id="opt" role="group" aria-label="Concept">
-      <button type="button" data-opt="c" data-read="v3" aria-pressed="true">C · Split v3<kbd>4</kbd></button>
-      <button type="button" data-opt="c" data-read="v2" aria-pressed="false">C · Split v2<kbd>3</kbd></button>
+      <button type="button" data-opt="c" aria-pressed="true">C · Split v3<kbd>3</kbd></button>
       <button type="button" data-opt="before" aria-pressed="false">Today<kbd>0</kbd></button>
       <button type="button" data-opt="a" aria-pressed="false" class="pc-frozen">A · Polish<kbd>1</kbd></button>
       <button type="button" data-opt="b" aria-pressed="false" class="pc-frozen">B · Ledger<kbd>2</kbd></button>
@@ -122,22 +121,19 @@
   const NOTES = {
     a: '<b>A · Polish.</b> Today’s page, kept and brought up to Home and Usage: the same cards, now with a status mark and word, a Safe line (history, online copy, backup), labelled actions and a More menu. One New Project button opens a stepped window that asks what onboarding asks, without the stage.',
     b: '<b>B · Ledger.</b> Usage’s layout: a side list of views with counts, a header row of filters, and one ledger row per project with its status, place, history, online copy and backup. A row opens an inspector beside it. New Project is a sheet from the right on one scrolling page.',
-    c: '<b>C · Split (v2).</b> The chosen concept. A project list grouped by machine, and the chosen Project’s own page. New Project: paste or pick a way, then one guided page beside a live Review: where it lives, a look inside before adding, online copy for every service, contribute, backups and copying settings with AI accounts. A chat with no project becomes a new project or moves into one you have. A and B are kept as they were (More concepts).',
-    c3: '<b>C · Split v3, easier to read.</b> Split v2’s page with the same parts, words and layout, set so the eye can find things: each value sits beside its label on one left edge instead of bold at the far right, bold and colour are kept for what needs you, rows are separated by space instead of a rule under each, a list of choices is one ruled list instead of a stack of boxes, there is more room between plates and groups than inside them, and the small capital labels are kept for dividers. <b>C · Split v2</b> (key 3) is beside it to compare; switching keeps the chosen Project and every answer.',
+    c: '<b>C · Split v3.</b> The chosen concept, set for reading. A project list grouped by machine, and the chosen Project’s own page: each value sits beside its label on one left edge, bold and colour are kept for what needs you, rows are separated by space, a list of choices is one ruled list, and there is more room between plates and groups than inside them. New Project: paste or pick a way, then one guided page beside a live Review: where it lives, a look inside before adding, online copy for every service, contribute, backups and copying settings with AI accounts. A chat with no project becomes a new project or moves into one you have. A and B are kept as they were (More concepts).',
     before: '<b>Today.</b> PMConcept7’s current Projects page, unchanged: New Project and Open Folder open the same sheet, the card icons have no labels, and the folder-missing project points to a Settings page that cannot fix it.'
   };
-  // Split v3 is Split (C) drawn with concepts/c-v3.css; ?split=v2 opens on v2 instead
-  const UI = { opt: 'c', read: /[?&]split=v2\b/.test(location.search) ? 'v2' : 'v3', scenario: 'demo', run: 'regular' };
-  const noteKey = () => (UI.opt === 'c' && UI.read === 'v3' ? 'c3' : UI.opt);
+  const UI = { opt: 'c', scenario: 'demo', run: 'regular' };
   const RUN_NOTE = ' <b>Run mode · YOLO</b> (the run mode <code>yolo</code>, never the Full profile). Each yes-point says what YOLO does instead: pushes, publishing, making the online copy and forks go ahead without asking, a force-push only with a lease on a branch Puppet Master made; then a report, with Undo or plainly “can’t be undone”. Still asked: sign-ins, a new device’s identity, the Recovery Kit, FileSafe, putting files back, deleting anything online or Puppet Master’s data.';
   const $ = (id) => document.getElementById(id);
   let live = false;
 
   const send = (msg) => { try { frame.contentWindow.postMessage(Object.assign({ source: 'pjx-host' }, msg), '*'); } catch (e) { /* not there yet */ } };
-  const config = () => { if (UI.opt === 'c') send({ cmd: 'read', read: UI.read }); send({ cmd: 'config', opt: UI.opt, scenario: UI.scenario }); };
+  const config = () => send({ cmd: 'config', opt: UI.opt, scenario: UI.scenario });
   function paintBar() {
-    document.querySelectorAll('#opt button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.opt === UI.opt && (!b.dataset.read || b.dataset.read === UI.read))));
-    $('note').innerHTML = NOTES[noteKey()] + (UI.run === 'yolo' && UI.opt === 'c' ? RUN_NOTE : '');
+    document.querySelectorAll('#opt button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.opt === UI.opt)));
+    $('note').innerHTML = NOTES[UI.opt] + (UI.run === 'yolo' && UI.opt === 'c' ? RUN_NOTE : '');
     document.querySelectorAll('#runmode button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.v === UI.run)));
     $('scenario').value = UI.scenario;
     document.querySelectorAll('[data-act]').forEach((b) => { b.disabled = UI.opt === 'before'; });
@@ -187,8 +183,6 @@
     const m = ev.data;
     if (!m || typeof m !== 'object') return;
     if (m.source === 'pjx' && ev.source === frame.contentWindow) {
-      // key 3 or 4 inside PMConcept7 switched between Split v2 and v3
-      if (m.type === 'read') { if (live && (m.read === 'v2' || m.read === 'v3') && m.read !== UI.read) { UI.read = m.read; paintBar(); } return; }
       if (m.type === 'ready' && !live) {
         live = true;
         const w = $('wait'); if (w) w.remove();
@@ -212,7 +206,7 @@
     }
   });
 
-  $('opt').addEventListener('click', (e) => { const b = e.target.closest('button[data-opt]'); if (!b) return; UI.opt = b.dataset.opt; if (b.dataset.read) UI.read = b.dataset.read; paintBar(); config(); });
+  $('opt').addEventListener('click', (e) => { const b = e.target.closest('button[data-opt]'); if (!b) return; UI.opt = b.dataset.opt; paintBar(); config(); });
   $('scenario').addEventListener('change', (e) => { UI.scenario = e.target.value; config(); });
   $('look').addEventListener('change', (e) => { e.target.disabled = true; send({ cmd: 'look', look: e.target.value }); setTimeout(() => { e.target.disabled = false; }, 4000); });
   $('width').addEventListener('change', (e) => { frame.style.width = e.target.value ? e.target.value + 'px' : '100%'; });
@@ -221,11 +215,11 @@
   document.querySelectorAll('[data-act]').forEach((b) => b.addEventListener('click', () => send({ cmd: 'act', act: b.dataset.act })));
   $('moment').addEventListener('change', (e) => { const v = e.target.value; e.target.value = ''; if (v) send({ cmd: 'act', act: v }); });
   $('moreAB').addEventListener('click', () => { const on = $('opt').getAttribute('data-more') !== 'on'; $('opt').setAttribute('data-more', on ? 'on' : 'off'); $('moreAB').setAttribute('aria-expanded', String(on)); });
-  // 1-3 pick a concept, 4 shows Split v3 and 0 shows today's page (outside text fields; inside PMConcept7 the layer listens for the same keys)
+  // 1-3 pick a concept and 0 shows today's page (outside text fields; inside PMConcept7 the layer listens for the same keys)
   document.addEventListener('keydown', (e) => {
     if (e.ctrlKey || e.metaKey || e.altKey || /input|select|textarea/i.test((e.target && e.target.tagName) || '')) return;
-    const map = { 1: 'a', 2: 'b', 3: 'c', 4: 'c', 0: 'before' };
-    if (map[e.key]) { UI.opt = map[e.key]; if (e.key === '3') UI.read = 'v2'; if (e.key === '4') UI.read = 'v3'; paintBar(); config(); }
+    const map = { 1: 'a', 2: 'b', 3: 'c', 0: 'before' };
+    if (map[e.key]) { UI.opt = map[e.key]; paintBar(); config(); }
   });
   paintBar();
   window.PJX_HOST = { frame, UI, send, config, isLive: () => live };
