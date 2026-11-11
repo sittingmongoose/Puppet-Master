@@ -346,7 +346,9 @@ The narrow r4 recheck (`REVIEW-concept-A-r4-opus-high.md`) found these; each is 
   a change and reported by nobody left the strip naming an older look. It now compares with the look last reported. One
   look change runs at a time; the latest waiting one wins, and each answer names its request. The strip's Look is
   greyed and names the change only while its own latest request is on its way; otherwise it names the painted look. The
-  `strip` part repeats the reviewer's case under a busy-loop load.
+  `strip` part repeats the reviewer's case under a busy-loop load, at three loads and spacings (busy 70 of every 90ms
+  with picks 1.2s apart, then 150 of every 170ms with picks 600ms and 250ms apart), so the race shows on a fast GPU
+  too: the heaviest fails `5614c4fbf7` on the RTX 3090, where the lightest didn't.
 - **Real-pointer clicks** on Think between tool steps, Tidy up, Caching for browser sign-ins and Show where each setting
   comes from: a pointer at each switch's centre lands on other content, on bare PMConcept7 too. That is stream F's.
 
