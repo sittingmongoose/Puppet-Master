@@ -1072,6 +1072,62 @@ p.pmx-meta, .pmx-meta{margin:0;font:var(--pmx-fs-meta);font-weight:var(--pmx-w-r
 .pmx-dock-act{flex:none;height:32px;min-height:32px;padding:0 10px;color:var(--accent);font:600 12px/16px var(--font-ui);background:none;}
 .pmx-dock-act:hover{background:var(--surface-3);}
 .pmx-dock-more{margin:0;padding:0 12px;font:var(--pmx-fs-meta);font-weight:var(--pmx-w-reg);color:var(--muted);}
+/* FO-128: a line that asks you something carries its answers (pmxDockLine's o.ask). Its head is the one-row line; the
+   question takes its own row, whole, under the words; the answers sit beside it when both fit and wrap under it when
+   they do not. */
+.pmx-dock-line[data-ask]{display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;align-items:center;column-gap:8px;row-gap:4px;height:auto;min-height:var(--pmx-dock-line-h);padding:4px 2px 8px 12px;}
+.pmx-dock-line[data-ask] > :first-child{grid-row:1;grid-column:1;}
+.pmx-dock-line[data-ask] > .pmx-dock-say{grid-row:1;grid-column:2;white-space:normal;overflow:visible;}
+.pmx-dock-line[data-ask] > .pmx-clock{grid-row:1;grid-column:3;}
+.pmx-dock-line[data-ask] > .pmx-dock-act{grid-row:1;grid-column:4;}
+.pmx-dock-body{grid-row:2;grid-column:2 / -1;display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;min-width:0;padding-right:10px;}
+/* the question asks for its whole width: the answers share its row only when it fits there on one line */
+.pmx-dock-q{flex:1 1 auto;min-width:0;max-width:100%;margin:0;font:var(--pmx-fs-sentence);color:var(--text);overflow-wrap:anywhere;}
+.pmx-dock-q code{font:500 12px/18px var(--font-mono);color:var(--text);}
+.pmx-dock-answers{flex:0 1 auto;display:flex;flex-wrap:wrap;align-items:center;gap:6px;min-width:0;}
+.pmx-dock-ans{height:30px;min-height:30px;padding:0 12px;font:600 12px/16px var(--font-ui);white-space:nowrap;}
+.pmx-dock-answers .soft-button{border:1px solid var(--border-strong);background:var(--pmx-soft-fill);color:var(--text);}
+.pmx-dock-answers .soft-button:hover{background:var(--surface-3);}
+.pmx-dock-answers .text-button{padding:0 8px;color:var(--accent);background:none;}
+/* the compact ladder (pmxAskButtons): "Deny  Allow [Once | For session | Always…]", in a dock line and in a card's
+   decision row. One more class than the hosted button corner rule (pm7-port 20-controls.css), so the inner corners of
+   the segmented control stay square. */
+.pmx-ask-seg{display:inline-flex;align-items:center;gap:6px;min-width:0;}
+/* a card under 420 px whose decision carries the ladder gives it the card's full width, as a narrow card does for every
+   decision (below 360 px), so Deny and the segmented control stay one row in every look (Glass and Retro were 6-16 px
+   short with the 22 px indent at a 400 px chat) */
+@container pmxrun (max-width: 419.98px){
+  .pmx-decision-acts:has(> .pmx-ask-seg){padding-left:0;}
+  .pmx-decision-q{margin-left:0;}
+}
+/* a card decision's command, under its (clamped) sentence and in line with its words */
+.pmx-decision-q{margin:2px 0 8px 22px;min-width:0;font:var(--pmx-fs-sentence);color:var(--text);overflow-wrap:anywhere;}
+.pmx-decision-q code{font:500 12px/18px var(--font-mono);color:var(--text);}
+.pmx-ask-lead{margin:0;font:var(--pmx-fs-meta);color:var(--muted);}
+.pmx-ask-seg-in{display:inline-flex;min-width:0;}
+:is(.pmx-dock, .pmx-decision) .pmx-ask-seg-in > .soft-button{padding:0 10px;}
+:is(.pmx-dock, .pmx-decision) .pmx-ask-seg-in > .soft-button + .soft-button{margin-left:-1px;}
+:is(.pmx-dock, .pmx-decision) .pmx-ask-seg-in > .soft-button:not(:first-child){border-top-left-radius:0;border-bottom-left-radius:0;}
+:is(.pmx-dock, .pmx-decision) .pmx-ask-seg-in > .soft-button:not(:last-child){border-top-right-radius:0;border-bottom-right-radius:0;}
+:is(.pmx-dock, .pmx-decision) .pmx-ask-seg-in > .soft-button:is(:hover, :focus-visible){position:relative;z-index:1;}
+/* the Always chooser (Permissions_System 6.1 and 3.4: the suggested pattern is editable and the place is chosen, never
+   preselected) and a request's details, in a dock line or a card's decision row */
+.pmx-ask-always{flex:1 1 100%;display:flex;flex-direction:column;gap:8px;min-width:0;}
+.pmx-ask-pat{display:flex;align-items:center;gap:8px;min-width:0;margin:0;font:var(--pmx-fs-meta);color:var(--muted);}
+.pmx-ask-pat input{flex:1 1 auto;min-width:0;height:30px;box-sizing:border-box;padding:0 8px;border:1px solid var(--border-strong);border-radius:6px;background:var(--surface);color:var(--text);font:500 12px/18px var(--font-mono);}
+.pmx-ask-where{display:flex;flex-wrap:wrap;align-items:center;gap:6px;min-width:0;}
+.pmx-ask-where-l{margin-right:2px;font:var(--pmx-fs-meta);color:var(--muted);}
+.pmx-ask-where .soft-button{display:inline-flex;align-items:center;gap:5px;height:30px;min-height:30px;padding:0 12px;border:1px solid var(--border-strong);background:var(--pmx-soft-fill);color:var(--text);font:600 12px/16px var(--font-ui);}
+.pmx-ask-where .soft-button[aria-pressed="true"]{border-color:var(--accent);background:var(--pmx-accent-halo);font-weight:700;}
+.pmx-ask-always-acts{display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:6px;}
+.pmx-ask-always-acts :is(.primary-button, .text-button){height:30px;min-height:30px;padding:0 12px;font:600 12px/16px var(--font-ui);}
+:is(.pmx-dock, .pmx-decision) .pmx-ask-always-acts .primary-button[aria-disabled="true"]{opacity:.45;cursor:not-allowed;}
+.pmx-ask-always-note{margin:0;font:var(--pmx-fs-meta);font-weight:var(--pmx-w-reg);color:var(--muted);}
+.pmx-ask-facts{flex:1 1 100%;display:grid;grid-template-columns:auto minmax(0,1fr);gap:2px 12px;margin:2px 0 0;font:var(--pmx-fs-meta);font-weight:var(--pmx-w-reg);}
+.pmx-ask-facts dt{color:var(--muted);}
+.pmx-ask-facts dd{margin:0;min-width:0;color:var(--text);overflow-wrap:anywhere;}
+.pmx-ask-facts code{font:500 11.5px/17px var(--font-mono);}
+.pmx-ask-facts .text-button{height:auto;min-height:0;padding:0;color:var(--accent);background:none;font:inherit;font-weight:600;}
 
 /* C16-C20 boards: findings, severity, agreement, votes, pull-quotes */
 .pmx-findings{display:flex;flex-direction:column;min-width:0;}

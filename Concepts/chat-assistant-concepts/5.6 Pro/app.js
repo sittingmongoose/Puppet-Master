@@ -2257,7 +2257,9 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     if(decisionExit){
       return `<div class="decision-host empty" data-k="decision-host" data-variant="${state.variants[6]}">${decisionExit.html}</div>`;
     }
-    if(!state.decision) return `<div class="decision-host empty" data-k="decision-host" data-variant="${state.variants[6]}"></div>`;
+    /* FO-128 (Jared, 2026-11-10: the Studio's Ask permission answers in the bar, in the compact ladder): while dock-asks.js
+       is loaded it asks the 'permission' decision in the composer dock (Deny, Once, For session, Always), so the host stays empty */
+    if(!state.decision||(state.decision.type==='permission'&&window.PM56_ASKS)) return `<div class="decision-host empty" data-k="decision-host" data-variant="${state.variants[6]}"></div>`;
     const type=state.decision.type;
     let body='';
     if(type==='question') body=renderQuestionDecision();

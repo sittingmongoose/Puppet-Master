@@ -551,8 +551,9 @@
     var msgBtn = btn({ action: 'collab-message', attrs: (runAttr(run) + attr('data-participant', p.id)).trim(), disabled: finished(st), label: 'Message ' + esc(p.role) });
     var head = '<p class="collab-view-pstate">' + markOf(run, p, 18) + '<span><b>' + esc(helperWord(p)) + '</b>' + (p.current ? ' · ' + esc(p.current) : '') + '</span></p>' +
       '<p class="pmx-fine collab-view-pmodel">' + esc(modelShort(p.effectiveModelName || p.requestedModelName)) + ' · ' + esc(p.effectivePersona || p.requestedPersona || '') + '</p>' +
-      /* 7.4 / 7.9: a helper waiting for your OK is answered in the chat card (Allow once · Don't allow), never here */
-      (p.status === 'blocked' ? '<p class="collab-view-answer">' + S().pmxGlyph('warn', 14) + '<span><b>' + esc(p.role) + ' needs your OK.</b> ' + (p.blockedReason ? esc(String(p.blockedReason).replace(/\.?$/, '.')) + ' ' : '') + 'Answer in the chat card: Allow once or Don’t allow.</span></p>' : '') +
+      /* 7.4 / 7.9: a helper waiting for your OK is answered in the chat card or the bar above the composer (FO-128: Deny,
+         Once, For session, Always), never here */
+      (p.status === 'blocked' ? '<p class="collab-view-answer">' + S().pmxGlyph('warn', 14) + '<span><b>' + esc(p.role) + ' needs your OK.</b> ' + (p.blockedReason ? esc(String(p.blockedReason).replace(/\.?$/, '.')) + ' ' : '') + (window.PM56_ASKS ? 'Answer in the chat card or the bar above the composer: Deny, Once, For session or Always.' : 'Answer in the chat card: Allow once or Don’t allow.') + '</span></p>' : '') +
       '<div class="collab-view-acts">' + (finished(st) ? reasoned(msgBtn, esc(fill(copy().finishedMessage || 'This {kind} has finished, so it can’t take messages. Ask the assistant instead.', { kind: kw }))) : msgBtn) + '</div>';
     var pcp = run.crew && run.crew.planBinding && C() && C().planCrewParticipantHtml;
     if (typeof pcp === 'function') { try { head += String(pcp(run, p) || ''); } catch (e) { } }
