@@ -1,0 +1,18 @@
+/* styles that only the pages in source.js need; shared parts are in ../smx.css */
+
+/* "Where your code is saved online": a code service, then its accounts and online copies set in under it */
+#smx-root .smx-tree .smx-thing.smx-branch { min-height: 44px; padding-left: 48px; }
+#smx-root .smx-tree .smx-thing.smx-branch .smx-thing-avatar { width: 28px; height: 28px; }
+#smx-root .smx-tree .smx-thing.smx-branch .smx-thing-avatar .icon, #smx-root .smx-tree .smx-thing.smx-branch .smx-thing-avatar svg { width: 15px; height: 15px; }
+#smx-root .smx-tree + .smx-pad { border-top: 1px solid var(--k3-line); }
+#smx-root .smx-quiet-line .pm51-link { margin-left: 4px; }
+
+@container smx (max-width: 900px) {
+  #smx-root .smx-tree .smx-thing.smx-branch { padding-left: 20px; }
+}
+
+/* lists whose rows only open (no buttons of their own) stay on one line when the Settings area is narrow */
+@container smx (max-width: 900px) {
+  #smx-root .smx-things.smx-src-rows .smx-thing, #smx-root .smx-tree .smx-thing { flex-wrap: nowrap; }
+  #smx-root .smx-things.smx-src-rows .smx-thing-end, #smx-root .smx-tree .smx-thing-end { flex-basis: auto; }
+}

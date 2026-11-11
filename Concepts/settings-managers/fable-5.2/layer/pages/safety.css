@@ -1,0 +1,23 @@
+/* styles that only the pages in safety.js need; shared parts are in ../smx.css */
+
+/* A row that opens something and also carries its own buttons (a profile with "Use this profile"). The part that
+   opens is one button; the row's own buttons sit beside it, so pressing one never also opens the row. */
+#smx-root .smx-thing.smx-split { padding: 0; gap: 8px; }
+#smx-root .smx-split-open { flex: 1 1 320px; min-width: 0; display: flex; align-items: center; gap: 12px; min-height: 54px; padding: 9px 4px; border: 0; border-radius: var(--k3-radius-sm); background: transparent; color: var(--k3-text-1); font: inherit; text-align: left; cursor: pointer; }
+#smx-root .smx-split-open:hover { background: var(--k3-accent-soft-2); }
+#smx-root .smx-split-open:focus-visible { outline: 2px solid var(--k3-accent); outline-offset: 1px; }
+#smx-root .smx-split-open > .smx-thing-go { flex: none; color: var(--k3-text-3); }
+#smx-root .smx-split-status { flex: none; font-size: 12px; }
+#smx-root .smx-split > .smx-thing-end { padding-right: 4px; }
+
+/* the numbered order on "Which answer wins": the step's button stays on its line */
+#smx-root .smx-page .pm51-steps .pm51-step-end .btn { white-space: nowrap; }
+
+/* a rule's text fields are as wide as the row allows, not the kit's narrow default */
+#smx-root .smx-page [data-smx-do-change="safety-rule-text"] { display: inline-flex; flex: 1 1 260px; min-width: 0; }
+#smx-root .smx-page [data-smx-do-change="safety-rule-text"] .text-control { width: 100%; min-width: 220px; }
+
+@container smx (max-width: 900px) {
+  #smx-root .smx-split-open { flex-basis: 100%; }
+  #smx-root .smx-split > .smx-thing-end { flex-basis: 100%; justify-content: flex-end; padding: 0 4px 9px; }
+}

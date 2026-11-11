@@ -1,0 +1,22 @@
+/* styles that only the pages in keeping.js need; shared parts are in ../smx.css */
+
+/* "Get work back": the sentence, then what will happen and the three buttons */
+#smx-root .smx-restore .smx-sentence-note + .smx-sentence { margin-top: 14px; }
+#smx-root .smx-restore-go { margin-top: 16px; padding-top: 14px; border-top: 1px dashed var(--k3-line-strong); }
+#smx-root .smx-restore-review { margin: 0 0 10px; font-size: 13.5px; font-weight: 600; color: var(--k3-text-1); }
+
+/* "What happened": the filter line above the list */
+#smx-root .smx-filter { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin: 0 0 10px; }
+#smx-root .smx-filter .text-control { width: 220px; max-width: 100%; }
+#smx-root .smx-filter-chip { display: inline-flex; align-items: center; gap: 8px; font-size: 12.5px; color: var(--k3-text-2); cursor: pointer; }
+#smx-root .smx-quiet-line .pm51-link { margin-left: 4px; }
+
+@container smx (max-width: 760px) {
+  #smx-root .smx-filter .text-control { width: 100%; }
+}
+
+/* lists whose rows only open (no buttons of their own) stay on one line when the Settings area is narrow */
+@container smx (max-width: 900px) {
+  #smx-root .smx-things.smx-keep-rows .smx-thing { flex-wrap: nowrap; }
+  #smx-root .smx-things.smx-keep-rows .smx-thing-end { flex-basis: auto; }
+}

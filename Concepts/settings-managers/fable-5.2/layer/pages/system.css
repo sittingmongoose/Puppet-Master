@@ -1,0 +1,39 @@
+/* styles that only the pages in system.js need; shared parts are in ../smx.css */
+
+/* A row that opens something and also carries its own buttons (a version with "Go back to it"). The same shape as in
+   safety.css, repeated so that either file works without the other. */
+#smx-root .smx-thing.smx-split { padding: 0; gap: 8px; }
+#smx-root .smx-split-open { flex: 1 1 320px; min-width: 0; display: flex; align-items: center; gap: 12px; min-height: 54px; padding: 9px 4px; border: 0; border-radius: var(--k3-radius-sm); background: transparent; color: var(--k3-text-1); font: inherit; text-align: left; cursor: pointer; }
+#smx-root .smx-split-open:hover { background: var(--k3-accent-soft-2); }
+#smx-root .smx-split-open:focus-visible { outline: 2px solid var(--k3-accent); outline-offset: 1px; }
+#smx-root .smx-split-open > .smx-thing-go { flex: none; color: var(--k3-text-3); }
+#smx-root .smx-split-status { flex: none; font-size: 12px; }
+#smx-root .smx-split > .smx-thing-end { padding-right: 4px; }
+
+/* ---- Every setting, as a list ----------------------------------------------------------------------------------- */
+#smx-root .smx-search.smx-all-find { margin: 0; height: 38px; }
+#smx-root .smx-all-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
+#smx-root .smx-all-bar + .smx-all-bar { margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--k3-line-strong); }
+#smx-root .smx-all-check { display: inline-flex; align-items: center; gap: 8px; font-size: 12.5px; color: var(--k3-text-2); cursor: pointer; }
+#smx-root .smx-all-countline { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 16px; font-size: 12.5px; color: var(--k3-text-2); }
+#smx-root .smx-all-list { display: grid; gap: 8px; }
+#smx-root .smx-all-group { border: 1px solid var(--k3-line); border-radius: var(--k3-radius-lg); background: var(--k3-surface-1); overflow: hidden; }
+#smx-root .smx-all-head { display: flex; align-items: center; gap: 10px; width: 100%; min-height: 44px; padding: 8px 14px; border: 0; background: transparent; color: var(--k3-text-1); font: inherit; text-align: left; cursor: pointer; }
+#smx-root .smx-all-head:disabled { cursor: default; }
+#smx-root .smx-all-head:not(:disabled):hover { background: var(--k3-accent-soft-2); }
+#smx-root .smx-all-head:focus-visible { outline: 2px solid var(--k3-accent); outline-offset: -2px; }
+#smx-root .smx-all-head .icon, #smx-root .smx-all-head svg { width: 15px; height: 15px; flex: none; stroke: currentColor; }
+#smx-root .smx-all-head .icon { color: var(--k3-text-3); transition: transform var(--k3-dur-fast, .12s); }
+#smx-root .smx-all-head.is-open .icon { transform: rotate(90deg); }
+#smx-root .smx-all-title { flex: 1; min-width: 0; font-size: 13px; font-weight: 650; }
+#smx-root .smx-all-count { flex: none; font-size: 12px; color: var(--k3-text-3); }
+#smx-root .smx-all-rows { padding: 0 10px 6px; border-top: 1px solid var(--k3-line); }
+#smx-root .smx-thing.smx-all-row { min-height: 46px; padding: 7px 4px; }
+#smx-root .smx-all-value { max-width: 34ch; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 12px; color: var(--k3-text-2); }
+#smx-root .smx-all-id { font-family: var(--k3-font-mono, ui-monospace, monospace); font-size: 11px; }
+
+@container smx (max-width: 900px) {
+  #smx-root .smx-split-open { flex-basis: 100%; }
+  #smx-root .smx-split > .smx-thing-end { flex-basis: 100%; justify-content: flex-end; padding: 0 4px 9px; }
+  #smx-root .smx-all-value { max-width: 100%; }
+}
