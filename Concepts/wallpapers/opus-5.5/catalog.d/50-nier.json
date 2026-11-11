@@ -64,6 +64,36 @@
     "light": "src/walls/flooded-light.webp"
    },
    "default_for": null
+  },
+  {
+   "id": "eclipse",
+   "name": "Eclipse",
+   "description": "A ruined city of viaducts and spires under a dark moon, white flowers in the foreground.",
+   "files": {
+    "dark": "src/walls/eclipse-dark.webp",
+    "light": "src/walls/eclipse-light.webp"
+   },
+   "default_for": null
+  },
+  {
+   "id": "lilies",
+   "name": "Lily Ruins",
+   "description": "Overgrown arches and hanging spheres above still water, with white lilies along the edges.",
+   "files": {
+    "dark": "src/walls/lilies-dark.webp",
+    "light": "src/walls/lilies-light.webp"
+   },
+   "default_for": null
+  },
+  {
+   "id": "fair",
+   "name": "Drowned Fair",
+   "description": "A big wheel and a coaster standing in misty shallows, mirrored in the water under a low sun.",
+   "files": {
+    "dark": "src/walls/fair-dark.webp",
+    "light": "src/walls/fair-light.webp"
+   },
+   "default_for": null
   }
  ]
 }
