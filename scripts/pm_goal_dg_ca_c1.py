@@ -386,6 +386,12 @@ class NoAssociationCancel(Route):
                 original_pending_binding_operation_id=None, original_pending_binding_candidate_sha256=None, association_count=0,
                 disposition='no_execution_association', original_reader=reader), BINDING)
             selection_w = self.wrap('StorageBindingSelection', selection, selection_key, BINDING)
+            # read_current_for_cancel complete request/return roots over the actual stored members.
+            self.binding_read_request = self.check('BindingReadRequest', dict(scope=copy.deepcopy(self.scope), purpose='current_for_cancel',
+                operation_id=self.operation_id, expected_selection=selection['binding_control']), BINDING)
+            self.binding_read_current = self.check('BindingReadCurrent', dict(scope=copy.deepcopy(self.scope),
+                control=copy.deepcopy(bctl), revision=copy.deepcopy(brev), origin=copy.deepcopy(read['origin']['value']['record']),
+                domain=copy.deepcopy(read['domain']['record']), original_execution_binding=binding, selection=selection), BINDING)
             head = self._head(0, progress)
             self.at('capture_source', 'final')
             self.recheck('capture_source', 'final', entry)
@@ -835,6 +841,27 @@ class NoAssociationCancel(Route):
             require('C1/audit_read/passive', w.storage.cell_generation == generation)
             slot.set(dict(member=member))
             return result
+
+    def read_retained_selection(self):
+        """read_retained_selection: passive historical binding selection audit (BindingReadAudit)."""
+        w = self.world
+        with self.call('read_retained_selection') as slot:
+            generation = w.storage.cell_generation
+            stored = w.value('goal_cancel_binding_selection', self.key('goal_cancel_binding_selection'))
+            require('C1/read_retained_selection/unavailable', stored is not None)
+            selection = stored['record']
+            revision = w.cell(selection['binding_revision']['family_id'], selection['binding_revision']['physical_key'])
+            origin = w.cell(selection['binding_origin']['family_id'], selection['binding_origin']['physical_key'])
+            require('C1/read_retained_selection/revision_original', revision is not None
+                    and row_sha(revision['value']) == selection['binding_revision']['complete_value_sha256'])
+            require('C1/read_retained_selection/origin_original', origin is not None
+                    and row_sha(origin['value']) == selection['binding_origin']['complete_value_sha256'])
+            audit = self.check('BindingReadAudit', dict(original_selection=copy.deepcopy(selection),
+                original_revision=copy.deepcopy(revision['value']['record']), original_origin=copy.deepcopy(origin['value']['record']),
+                observation='historical_binding_selection_only'), BINDING)
+            require('C1/read_retained_selection/passive', w.storage.cell_generation == generation)
+            slot.set(dict(audit=True))
+            return audit
 
     def hold_current_read(self):
         """A held current binding reader (SP-423): captured now, released later."""

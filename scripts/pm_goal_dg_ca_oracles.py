@@ -43,7 +43,7 @@ import pm_goal_dg_ca_c1 as C1
 
 HERE = Path(__file__).resolve().parent
 REFUSALS = (A.AdapterRefusal, S.StorageRefusal, NR.NumruleRefusal, OWNC.Refusal)
-LANE_FILES = ('pm_goal_dg_ca_owners.py', 'pm_goal_dg_ca_c1.py', 'pm_goal_dg_ca_c2.py', 'pm_goal_dg_ca_c3.py', 'pm_goal_dg_ca_c4.py')
+LANE_FILES = ('pm_goal_dg_ca_owners.py', 'pm_goal_dg_ca_c1.py', 'pm_goal_dg_ca_crash.py', 'pm_goal_dg_ca_c2.py', 'pm_goal_dg_ca_c3.py', 'pm_goal_dg_ca_c4.py')
 
 
 def code_of(error):
@@ -257,6 +257,8 @@ def c1_positive(suite, state):
     # Lawful retained audit after a later current change and SP-423 withdrawal.
     w.host_stop.manual(scope, 'resume')
     w.binding.withdraw()
+    retained = route.read_retained_selection()
+    A.require('C1/positive/retained_selection', retained['original_selection']['disposition'] == 'no_execution_association')
     audits = {m: route.audit_read(m)['kind'] for m in ('source_audit', 'stop_receipt', 'cancellation_receipt', 'control_publication', 'terminal', 'progress_head')}
     A.require('C1/positive/retained_audit', set(audits.values()) == set(audits))
     return dict(state=state, recorder=top, event_id=stored['event_id'], sequence_id=stored['sequence_id'],
@@ -306,7 +308,9 @@ def c1_positive_unknown_terminal(suite):
         A.require('C1/unknown/immutable', error.code == 'C1/terminal/already_issued')
     stored = w.value('goal_cancel_terminal_audit', route.key('goal_cancel_terminal_audit'))['record']
     A.require('C1/unknown/stored', stored['kind'] == 'unknown')
-    return dict(terminal='unknown', later_success_refused=True)
+    replay = route.replay(copy.deepcopy(route.request))
+    A.require('C1/unknown/replay', A.same(replay, stored))
+    return dict(terminal='unknown', later_success_refused=True, retained_unknown_replay=True)
 
 
 def c1_positive_no_effect(suite):
@@ -318,7 +322,8 @@ def c1_positive_no_effect(suite):
     A.require('C1/no_effect/kind', terminal['kind'] == 'no_effect')
     A.require('C1/no_effect/stop_unchanged', A.same(w.host_stop.record(route.scope), stop))
     A.require('C1/no_effect/no_event', len(w.storage.events) == 0)
-    return dict(terminal='no_effect')
+    A.require('C1/no_effect/replay', A.same(route.replay(copy.deepcopy(route.request)), terminal))
+    return dict(terminal='no_effect', retained_no_effect_replay=True)
 
 
 def c1_positive_capture_retry(suite):
@@ -346,6 +351,14 @@ def c1_cases(suite):
     suite.positive(G, 'C1/positive/pre_latch_no_effect', lambda: c1_positive_no_effect(suite))
     suite.positive(G, 'C1/positive/capture_equal_retry', lambda: c1_positive_capture_retry(suite))
     suite.positive(G, 'C1/positive/held_reader_release', lambda: c1_positive_held_reader(suite))
+    if os.environ.get('PM_DG_CA_SKIP_CRASH') != '1':
+        import pm_goal_dg_ca_crash as CRASH
+        for row in CRASH.matrix():
+            def crash_row(r=row):
+                if r['status'] != 'pass':
+                    raise AssertionError(r.get('error'))
+                return dict(cut=r['cut'], exit=r['exit'], read=r.get('read'), reentry=r.get('reentry'))
+            suite.positive(G, 'C1/crash/%s' % (row['cut'] or 'control'), crash_row)
 
     # --- entry: state, request and sources ---------------------------------
     def completed():
@@ -621,6 +634,163 @@ def c1_cases(suite):
         _, create = w.permissions.grant(route.actor_ref, {'storage_instance_id': w.storage_id}, 'goal.create')
         return w, lambda: route.birth_none('🌱' * 4000, create)
     suite.negative(G, 'C1/size/oversize_body_refused_before_effect', oversize_birth, 'tx/stored_part_cap', boundary='birth_none/final')
+
+    # --- genuine change made before a method's entry ------------------------
+    ENTRY = [('capture_source', 'accepted', 'C1/capture_source/sir_epoch'),
+             ('latch_and_reserve', 'domain', 'C1/latch_and_reserve/writer_cutoff'),
+             ('latch_and_reserve', 'permission', 'C1/latch_and_reserve/permission'),
+             ('latch_and_reserve', 'stop', 'C1/latch_and_reserve/original_stop'),
+             ('latch_and_reserve', 'body', 'C1/latch_and_reserve/original_control'),
+             ('latch_and_reserve', 'control', 'C1/latch_and_reserve/original_control'),
+             ('commit_receipt', 'domain', 'C1/commit_receipt/writer_cutoff'),
+             ('commit_receipt', 'stop', 'C1/commit_receipt/stop_latched'),
+             ('settle_owner', 'inventory', 'C1/settle_owner/inventory_nonempty/scheduler_association'),
+             ('append_original', 'domain', 'C1/append_original/writer_cutoff'),
+             ('publish_control', 'domain', 'C1/publish_control/writer_cutoff')]
+    hooks = dict(INJECTIONS)
+    for method, source, expected in ENTRY:
+        def before_entry(m=method, h=hooks[source]):
+            w, route = c1_until(suite, m)
+            w.injected = []
+            h(route)
+            return w, getattr(route, m)
+        suite.negative(G, 'C1/entry_drift/%s/%s' % (method, source), before_entry, expected, boundary=method + '/entry')
+
+    # --- substituted stored custody (a value presented in place of the owner's original) ---
+    def overwrite(w, table, key, edit):
+        cell = w.storage.cells[table][key]
+        cell['value'] = edit(copy.deepcopy(cell['value']))
+    SUBSTITUTED = [('capture_source', lambda w, r: overwrite(w, w.sir.ACCEPTED, r.request['command_instance_id'],
+                                                         lambda v: dict(v, accepted_at='2000-01-01T00:00:00.000Z')),
+                    'C1/capture_source/accepted_custody'),
+                   ('commit_receipt', lambda w, r: overwrite(w, 'goal_cancel_stop_receipt', r.key('goal_cancel_stop_receipt'),
+                                                         lambda v: dict(v, record=dict(v['record'], committed_at='2000-01-01T00:00:00.000Z'))),
+                    'C1/commit_receipt/stop_receipt_custody'),
+                   ('settle_owner', lambda w, r: overwrite(w, w.binding.PROOF, r.proof_key, lambda v: dict(v, association_count=1)),
+                    'C1/settle_owner/scope_proof_custody'),
+                   ('freeze_event', lambda w, r: overwrite(w, 'goal_cancel_receipt', r.key('goal_cancel_receipt'),
+                                                       lambda v: dict(v, record=dict(v['record'], accepted_at='2000-01-01T00:00:00.000Z'))),
+                    'C1/freeze_event/receipt_custody')]
+    for method, edit, expected in SUBSTITUTED:
+        def substituted(m=method, e=edit):
+            w, route = c1_until(suite, m)
+            e(w, route)
+            return w, getattr(route, m)
+        suite.negative(G, 'C1/substituted_custody/%s' % method, substituted, expected, boundary=method + '/entry')
+
+    def substituted_operation():
+        w, route = c1_route(suite)
+        route.operation_id = O.uid('TEST_ONLY:cancel-operation')
+        return w, route.capture_source
+    suite.negative(G, 'C1/entry/substituted_operation_id', substituted_operation, 'C1/capture_source/accepted_operation', boundary='capture_source/entry')
+
+    def concurrent_cancellation():
+        w, first = c1_until(suite, 'commit_receipt')
+        second = C1.NoAssociationCancel(w, birth=False)
+        second.scope, second.cancel_decision, second.actor_ref = first.scope, first.cancel_decision, first.actor_ref
+        second.dispatch(second.user_request())
+        return w, second.capture_source
+    suite.negative(G, 'C1/entry/concurrent_cancellation_pending', concurrent_cancellation, 'C1/capture_source/not_pending_cancel',
+                   boundary='capture_source/entry')
+
+    def unknown_permission_ref():
+        w, route = c1_route(suite)
+        route.dispatch(route.user_request(permission_snapshot_ref=O.uid('TEST_ONLY:permission')))
+        return w, route.capture_source
+    suite.negative(G, 'C1/entry/unknown_permission_source', unknown_permission_ref, 'permission/unavailable', boundary='capture_source/entry')
+
+    def substituted_original_append_result():
+        w, route = c1_until(suite, 'publish_control')
+        pub = copy.deepcopy(route.progress['publication'])
+        pub['original_append_result']['byte_offset'] += 1
+        route.progress = dict(route.progress, publication=pub)
+        head_key = route.key('goal_cancel_progress') + ':head'
+        w.storage.cells['goal_cancel_progress'][route.progress_key(route.progress['progress_epoch'])]['value'] = route.wrap('StorageProgress', route.progress)
+        w.storage.cells['goal_cancel_progress'][head_key]['value'] = route.wrap('StorageProgress', route._head(route.progress['progress_epoch'], route.progress))
+        return w, route.publish_control
+    suite.negative(G, 'C1/custody/substituted_original_append_result', substituted_original_append_result,
+                   'C1/publish_control/original_publication', boundary='publish_control/entry')
+
+    def birth_permission_revoked():
+        w = suite.world()
+        w.registration.register_all()
+        _, decision = w.permissions.grant(w.binding.owner_id, {'storage_instance_id': w.storage_id}, 'install')
+        w.binding.install_writer_domain(w.permissions.selection(decision))
+        route = C1.NoAssociationCancel(w, birth=False)
+        _, create = w.permissions.grant(route.actor_ref, {'storage_instance_id': w.storage_id}, 'goal.create')
+        w.permissions.revoke(create)
+        return w, lambda: route.birth_none('TEST_ONLY objective', create)
+    suite.negative(G, 'C1/birth/create_permission_revoked', birth_permission_revoked, 'C1/birth_none/permission', boundary='birth_none/entry')
+
+    def birth_final_revoked():
+        w = suite.world()
+        w.registration.register_all()
+        _, decision = w.permissions.grant(w.binding.owner_id, {'storage_instance_id': w.storage_id}, 'install')
+        w.binding.install_writer_domain(w.permissions.selection(decision))
+        route = C1.NoAssociationCancel(w, birth=False)
+        _, create = w.permissions.grant(route.actor_ref, {'storage_instance_id': w.storage_id}, 'goal.create')
+        def hook(r):
+            w.permissions.revoke(create)
+            mark(w, w.permissions.FAMILY, create)
+        route.inject[('birth_none', 'final')] = hook
+        return w, lambda: route.birth_none('TEST_ONLY objective', create)
+    suite.negative(G, 'C1/birth/final_create_permission_revoked', birth_final_revoked, 'C1/birth_none/final/permission', boundary='birth_none/final')
+
+    def no_effect_stop_changed():
+        w, route = c1_until(suite, 'latch_and_reserve')
+        w.permissions.revoke(route.cancel_decision)
+        w.host_stop.manual(route.scope, 'stop')
+        return w, lambda: route.terminal('no_effect')
+    suite.negative(G, 'C1/terminal/no_effect_with_changed_stop', no_effect_stop_changed, 'C1/terminal/no_effect_stop_unchanged', boundary='terminal/entry')
+
+    def no_effect_still_permitted():
+        w, route = c1_until(suite, 'latch_and_reserve')
+        return w, lambda: route.terminal('no_effect')
+    suite.negative(G, 'C1/terminal/no_effect_while_permitted', no_effect_still_permitted, 'C1/terminal/no_effect_unpermitted', boundary='terminal/entry')
+
+    def unknown_kind():
+        w, route = c1_until(suite, 'terminal')
+        return w, lambda: route.terminal('settled')
+    suite.negative(G, 'C1/terminal/unknown_kind', unknown_kind, 'C1/terminal/kind', boundary='terminal/entry')
+
+    def replay_before_terminal():
+        w, route = c1_until(suite, 'terminal')
+        return w, lambda: route.replay(copy.deepcopy(route.request))
+    suite.negative(G, 'C1/replay/before_terminal', replay_before_terminal, 'C1/replay/terminal_issued', boundary='replay/entry')
+
+    def audit_without_permission():
+        w, route = c1_route(suite)
+        route.run()
+        return w, lambda: route.audit_read('terminal', audit_permission=False)
+    suite.negative(G, 'C1/audit/without_audit_permission', audit_without_permission, 'C1/audit_read/audit_permission', boundary='audit_read/entry')
+
+    def audit_unpublished_member():
+        w, route = c1_until(suite, 'publish_control')
+        return w, lambda: route.audit_read('control_publication')
+    suite.negative(G, 'C1/audit/member_not_yet_published', audit_unpublished_member, 'C1/audit_read/member_unavailable', boundary='audit_read/entry')
+
+    def retained_selection_before_capture():
+        w, route = c1_route(suite)
+        return w, route.read_retained_selection
+    suite.negative(G, 'C1/audit/retained_selection_before_capture', retained_selection_before_capture,
+                   'C1/read_retained_selection/unavailable', boundary='read_retained_selection/entry')
+
+    for label, first, action, expected in (
+            ('stop_twice', lambda w, r: w.host_stop.manual(r.scope, 'stop'), lambda w, r: w.host_stop.manual(r.scope, 'stop'),
+             'host_stop/already_latched'),
+            ('resume_unlatched', None, lambda w, r: w.host_stop.manual(r.scope, 'resume'), 'host_stop/not_latched'),
+            ('mutate_completed', lambda w, r: w.goal.mutate_state(r.scope, 'completed'), lambda w, r: w.goal.mutate_state(r.scope, 'active'),
+             'goal/mutation_completed'),
+            ('pending_twice', lambda w, r: w.goal.reserve_pending(r.scope, 1), lambda w, r: w.goal.reserve_pending(r.scope, 1),
+             'goal/pending_exists'),
+            ('install_domain_twice', None, lambda w, r: w.binding.install_writer_domain(w.permissions.selection(r.cancel_decision)),
+             'domain/not_installed')):
+        def owner_refusal(f=first, a=action):
+            w, route = c1_route(suite)
+            if f is not None:
+                f(w, route)
+            return w, lambda: a(w, route)
+        suite.negative(G, 'C1/owner/%s' % label, owner_refusal, expected, boundary='owner')
 
     # --- schema seams on the actual captured records (wrong-type forms) ---
     for label, value in (('string', '2'), ('float', 2.0), ('bool', True), ('null', None), ('array', [2]), ('object', {'e': 2})):
