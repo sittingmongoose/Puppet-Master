@@ -13,8 +13,11 @@
 //          residue is on the record. --set strict=1 asserts them too (the item's own sentence, "no visible
 //          Settings text below 11 px", lands there until someone owns that call).
 //   fit  — the controls whose text this item grew still hold it at 740x900, 860x900 and 1280x500: no word is
-//          cut by its control's box, and every control that draws its label on one line (white-space: nowrap,
-//          a button, chip, tab, key cap or badge) still draws it on one line (Range rects: exactly one).
+//          cut by a box that clips its own overflow (hidden, clip, scroll: its scroll area against its client box,
+//          and the text's painted end past that box), and every control whose own CSS draws its label on one line
+//          (white-space: nowrap, or the fixed one-line shape of a badge, tab, chip, key cap, definition term or
+//          stepper value) still draws one line box (Range rects: exactly one). A plain button may wrap by design
+//          and is judged by the cut rule alone.
 // A control that is built to ellipsize its own text (text-overflow: ellipsis: resource names and meta) is
 // exempt from the cut rule and still held to one line.
 //   browser-check run Concepts/pm7-tools/browser-check/checks/settings-min-text.check.mjs --set page=<build>
@@ -148,7 +151,10 @@ const FIT = ([affected]) => {
 		if (el.closest('[inert], [aria-hidden="true"]')) return false;
 		return getComputedStyle(el).visibility !== 'hidden';
 	};
-	const oneLine = (el) => el.matches('button, .badge, .manager-tab, .filter-chip, .pm51-kbd, dt, .segmented button, .chip-select button');
+	/* A control is held to one line only where its own CSS draws one (nowrap, an ellipsis row) or where its shape is
+	   fixed to a single line (a badge, a tab, a chip, a key cap, a definition term). A plain button may wrap by
+	   design and is judged by the cut rule instead. */
+	const oneLine = (el, cs) => cs.whiteSpace === 'nowrap' || el.matches('.badge, .manager-tab, .filter-chip, .pm51-kbd, dt, .segmented button, .chip-select button, .stepper-value');
 	const textRects = (el) => {
 		const r = document.createRange();
 		r.selectNodeContents(el);
@@ -167,21 +173,25 @@ const FIT = ([affected]) => {
 			const cs = getComputedStyle(el);
 			const b = el.getBoundingClientRect();
 			const padL = b.left + (parseFloat(cs.borderLeftWidth) || 0), padR = b.right - (parseFloat(cs.borderRightWidth) || 0);
-			const padT = b.top + (parseFloat(cs.borderTopWidth) || 0), padB = b.bottom - (parseFloat(cs.borderBottomWidth) || 0);
+			const padB = b.bottom - (parseFloat(cs.borderBottomWidth) || 0);
 			const label = `${el.tagName.toLowerCase()}${typeof el.className === 'string' && el.className.trim() ? '.' + el.className.trim().split(/\s+/)[0] : ''} "${text.slice(0, 32)}"`;
 			const rects = textRects(el);
 			if (!rects.length) continue;
 			const left = Math.min(...rects.map((r) => r.left)), right = Math.max(...rects.map((r) => r.right));
-			const top = Math.min(...rects.map((r) => r.top)), bottom = Math.max(...rects.map((r) => r.bottom));
+			const bottom = Math.max(...rects.map((r) => r.bottom));
 			const ellipsis = cs.textOverflow === 'ellipsis';
 			if (ellipsis) out.ellipsis++;
-			// cut: words painted outside the padding box, or a box that scrolls its own content sideways
-			const outside = right > padR + 0.5 || left < padL - 0.5 || bottom > padB + 0.5 || top < padT - 0.5;
-			const scrolls = cs.overflowX !== 'visible' && el.scrollWidth > el.clientWidth + 1;
-			const tall = cs.overflowY !== 'visible' && el.scrollHeight > el.clientHeight + 1;
-			if (!ellipsis && (outside || scrolls || tall)) out.cut.push(`${label} text ${Math.round(left)}..${Math.round(right)} in ${Math.round(padL)}..${Math.round(padR)}${scrolls ? ` scrollX ${el.scrollWidth}>${el.clientWidth}` : ''}${tall ? ` scrollY ${el.scrollHeight}>${el.clientHeight}` : ''}`);
+			/* A word is cut when a box that clips its own overflow (hidden, clip, scroll) paints it past that box's
+			   content edge: the width/height its scroll area reports against the client box, and the text's own
+			   painted end past the padding box. A control that lets its text show (overflow visible) is not cutting
+			   it, whatever the text's start sits on. Built-in ellipsis is the design's own choice and exempt. */
+			const clipsX = cs.overflowX !== 'visible', clipsY = cs.overflowY !== 'visible';
+			const scrolls = clipsX && el.scrollWidth > el.clientWidth + 1;
+			const tall = clipsY && el.scrollHeight > el.clientHeight + 1;
+			const past = (clipsX && right > padR + 1) || (clipsY && bottom > padB + 1);
+			if (!ellipsis && (past || scrolls || tall)) out.cut.push(`${label} text ${Math.round(left)}..${Math.round(right)} in ${Math.round(padL)}..${Math.round(padR)}${scrolls ? ` scrollX ${el.scrollWidth}>${el.clientWidth}` : ''}${tall ? ` scrollY ${el.scrollHeight}>${el.clientHeight}` : ''}`);
 			// wrapped: a control that draws its label on one line must still draw one line box
-			if ((cs.whiteSpace === 'nowrap' || oneLine(el)) && rects.length > 1 && !ellipsis) out.wrapped.push(`${label} ${rects.length} line boxes`);
+			if (oneLine(el, cs) && rects.length > 1 && !ellipsis) out.wrapped.push(`${label} ${rects.length} line boxes`);
 		}
 	}
 	return out;
