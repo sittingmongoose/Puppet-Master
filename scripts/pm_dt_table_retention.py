@@ -10,15 +10,23 @@ FIELDS names every observation the rows read; the checker passes no other.
 """
 import pm_guard_isolation as g
 
-FIELDS = ('anchor_present', 'age_days', 'required_days', 'held_truthy', 'dependent_truthy')
+FIELDS = ('anchor_present', 'now_refusal', 'anchor_refusal', 'age_days', 'required_days', 'held_truthy', 'dependent_truthy')
 
 
 def RT01_anchor(value, context):
     return 'retention_ineligible' if value['anchor_present'] is False else None
 
 
+def RT05_now_date_time(value, context):
+    return 'retention_ineligible' if value['now_refusal'] is not None else None
+
+
+def RT06_anchor_date_time(value, context):
+    return 'retention_ineligible' if value['anchor_present'] is True and value['anchor_refusal'] is not None else None
+
+
 def RT02_age(value, context):
-    return 'retention_ineligible' if value['anchor_present'] is True and value['age_days'] < value['required_days'] else None
+    return 'retention_ineligible' if value['anchor_present'] is True and value['age_days'] is not None and value['age_days'] < value['required_days'] else None
 
 
 def RT03_not_held(value, context):
@@ -33,13 +41,17 @@ def case(value):
     context = None
     table = g.GuardTable([
         g.Guard('RT01_anchor', g.Invariant('/input', 'the policy anchor time is present'), 'retention_ineligible', RT01_anchor),
-        g.Guard('RT02_age', g.Invariant('/input/now', 'the anchor is at least the policy days old'), 'retention_ineligible', RT02_age),
+        g.Guard('RT05_now_date_time', g.Invariant('/input/now', 'satisfies the shared CV-1101 date_time predicate (EventRecord profile)'), 'retention_ineligible', RT05_now_date_time),
+        g.Guard('RT06_anchor_date_time', g.Invariant('/input', 'a present anchor satisfies the shared CV-1101 date_time predicate (EventRecord profile)'), 'retention_ineligible', RT06_anchor_date_time),
+        g.Guard('RT02_age', g.Invariant('/input/now', 'the anchor is at least the policy days old, in exact POSIX days'), 'retention_ineligible', RT02_age),
         g.Guard('RT03_not_held', g.Invariant('/input/held', 'is falsy'), 'retention_ineligible', RT03_not_held),
         g.Guard('RT04_not_dependent', g.Invariant('/input/dependent', 'is falsy'), 'retention_ineligible', RT04_not_dependent),
     ])
 
     def check(value):
         table.require('RT01_anchor', value, context)
+        table.require('RT05_now_date_time', value, context)
+        table.require('RT06_anchor_date_time', value, context)
         table.require('RT02_age', value, context)
         table.require('RT03_not_held', value, context)
         table.require('RT04_not_dependent', value, context)

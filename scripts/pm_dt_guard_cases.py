@@ -198,26 +198,32 @@ def other_corpus(dt, c, f, schemas):
     case = dict(f['recovery_cases'][0]['input'], replay_policy='projector_replay_only')
     result.append(('recovery/replay_only', lambda case=case: dt.recovery(c, f, case, schemas)['result'], {'original', 'append_original', 'finalize_original'}))
     a, b, e = closure(dt, f)
-    ctx = dict(f['historical_reader_oracle']['context'], authenticated_original={'prepared': a, 'completed': b, 'event': e}, live_before=None)
+    # SP-1101: originals are sealed by the writer composition (dt.retained_world);
+    # the reader resolves them through the shared dispatcher, never from ctx.
+    ctx = dict(f['historical_reader_oracle']['context'], live_before=None)
+
+    def read(values, sealed=None, context=ctx):
+        with dt.retained_world(*([sealed] if sealed is not None else [])):
+            return dt.historical_read(c, *values, schemas, context)['result']
     for key in ['withdrawn', 'permission', 'deleted', 'source_present', 'owner_proven', 'reader_installed', 'versions_supported']:
         changed = dict(ctx, **{key: not ctx[key]})
-        result.append(('history/' + key, lambda changed=changed: dt.historical_read(c, a, b, e, schemas, changed)['result'], 'retained'))
+        result.append(('history/' + key, lambda changed=changed: read([a, b, e], context=changed), 'retained'))
     for label, values in [('forged_event', [a, b, dict(e, correlation_id='forged-correlation')]),
                           ('forged_storage_metadata', [a, b, dict(e, sequence_id=e['sequence_id'] + 1)]),
                           ('forged_source', [a, dict(b, owner_outcome_ref=b['owner_outcome_ref'] + '-forged'), e])]:
-        result.append(('history/' + label, lambda values=values: dt.historical_read(c, *values, schemas, ctx)['result'], 'retained'))
-    typed_context = copy.deepcopy(ctx)
-    typed_context['authenticated_original']['event']['sequence_id'] = True
-    result.append(('history/forged_original_storage_type', lambda: dt.historical_read(c, a, b, e, schemas, typed_context)['result'], 'retained'))
+        result.append(('history/' + label, lambda values=values: read(values), 'retained'))
+    result.append(('history/forged_original_storage_type', lambda: read([a, b, e], sealed=(a, b, dict(e, sequence_id=True))), 'retained'))
     invalid_event = dict(e, sequence_id='invalid-sequence')
-    invalid_ctx = dict(ctx, authenticated_original={'prepared': a, 'completed': b, 'event': invalid_event})
-    result.append(('history/envelope_schema', lambda: dt.historical_read(c, a, b, invalid_event, schemas, invalid_ctx)['result'], 'retained'))
+    result.append(('history/envelope_schema', lambda: read([a, b, invalid_event], sealed=(a, b, invalid_event)), 'retained'))
     invalid_policy = dict(e, replay_policy='forged_replay_policy')
-    policy_ctx = dict(ctx, authenticated_original={'prepared': a, 'completed': b, 'event': invalid_policy})
-    result.append(('history/replay_policy_domain', lambda: dt.historical_read(c, a, b, invalid_policy, schemas, policy_ctx)['result'], 'retained'))
+    result.append(('history/replay_policy_domain', lambda: read([a, b, invalid_policy], sealed=(a, b, invalid_policy)), 'retained'))
     invalid_payload_event = copy.deepcopy(e); invalid_payload_event['payload']['schema_version'] = 'wrong'
-    invalid_payload_ctx = dict(ctx, authenticated_original={'prepared': a, 'completed': b, 'event': invalid_payload_event})
-    result.append(('history/source_contract', lambda: dt.historical_read(c, a, b, invalid_payload_event, schemas, invalid_payload_ctx)['result'], 'retained'))
+    result.append(('history/source_contract', lambda: read([a, b, invalid_payload_event], sealed=(a, b, invalid_payload_event)), 'retained'))
+    # SP-1101 custody refusals (HR13): no sealed original at the record's ref, and a binding that differs from custody.
+    forged_id = dict(e, event_id='evt_dt_' + '0' * 64)
+    result.append(('history/custody_unsealed_ref', lambda: read([a, b, forged_id]), 'retained'))
+    forged_key = dict(e, idempotency_key=e['idempotency_key'][:-1] + ('0' if e['idempotency_key'][-1] != '0' else '1'))
+    result.append(('history/custody_binding', lambda: read([a, b, forged_key]), 'retained'))
     key = e['idempotency_key']; digest = dt.producer_semantic_digest(e)
     original_result = {'event': e, 'receipt': f['first_append_receipt']}
     for mutation in f['retry_oracle']['producer_mutations']:

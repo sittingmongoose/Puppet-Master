@@ -34,7 +34,7 @@ def case(value):
     table = g.GuardTable([
         g.Guard('CP25_rows_list', g.Invariant('/context/source_rows', 'is exactly a list'), 'unavailable', CP25_rows_list),
         g.Guard('CP26_rows_objects', g.Invariant('/context/source_rows', 'every row is exactly an object'), 'unavailable', CP26_rows_objects),
-        g.Guard('CP27_rows_sequence', g.Invariant('/context/source_rows/sequence_id', 'every row sequence_id is an unsigned JSON Schema integer'), 'unavailable', CP27_rows_sequence),
+        g.Guard('CP27_rows_sequence', g.Invariant('/context/source_rows/sequence_id', 'every row sequence_id is an exact Storage uint64 (shared storage_uint64, SP-1100)'), 'unavailable', CP27_rows_sequence),
         g.Guard('CP28_rows_strings', g.Invariant('/context/source_rows', 'every row event_type, event_id and scope_partition is a nonempty str'), 'unavailable', CP28_rows_strings),
     ])
 

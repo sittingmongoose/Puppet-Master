@@ -5,7 +5,9 @@ Leaf guards use their real JSON Schema evaluator. Each removal changes only one
 keyword, or an explicitly named type/const/enum duplicate set. This is lane
 evidence for schema keywords only and earns no Method B credit: the model rows
 and every source join are guard-table rows proved by the shared guard tool
-(scripts/pm-dt-guard-tables.py).
+(scripts/pm-dt-guard-tables.py). Sweep part 2B: every leaf runs on the lane
+validator (shared CV-1100 integer slots and the CV-1101 predicate), and an
+integer leaf also refuses its integral float 1.0.
 """
 import argparse
 import copy
@@ -41,13 +43,14 @@ def sweep(name):
         if definition != slug and not definition.startswith(slug + '_'):
             continue
         for path, rule, selector in leaves(schema):
-            validator = dt.Draft202012Validator(rule)
+            validator = dt.lane_validator(rule)
             kind = dt.schema_value_kind(rule); numeric += kind != 'boolean'; boolean += kind == 'boolean'
             base = rule.get('const', rule.get('enum', [False if kind == 'boolean' else max(0, rule.get('minimum', 0))])[0])
             checks += 1
             if not validator.is_valid(base):
                 failures.append(definition + '/' + str(path) + ': invalid positive leaf base')
-            values = ['false', '0', 'true', '1', None, [], {}, [False], {'value': False}, *([0, 1] if kind == 'boolean' else [False, True])]
+            values = ['false', '0', 'true', '1', None, [], {}, [False], {'value': False}, *([0, 1] if kind == 'boolean' else [False, True]),
+                      *([1.0] if kind == 'integer' else [])]
             if isinstance(rule.get('type'), list) and 'null' in rule['type'] or None in rule.get('enum', []):
                 values = [value for value in values if value is not None]
             negatives = {str(i) + '/' + repr(value): value for i, value in enumerate(values)}
@@ -71,7 +74,7 @@ def sweep(name):
                 weakened = copy.deepcopy(rule)
                 for keyword in keywords:
                     del weakened[keyword]
-                altered = dt.Draft202012Validator(weakened)
+                altered = dt.lane_validator(weakened)
                 flips = [label for label, value in negatives.items() if altered.is_valid(value)]
                 stays = [label for label in negatives if label not in flips]
                 if not flips:
@@ -91,7 +94,7 @@ def sweep(name):
     populated = 0
     for definition, label, value in dt.schema_type_cases(contract, fixture, schemas):
         populated += 1
-        if dt.Draft202012Validator(schemas[definition], format_checker=dt.FormatChecker()).is_valid(value):
+        if dt.schema_valid(dt.lane_validator(schemas[definition]), value):
             failures.append('populated schema accepted ' + label)
     return {'status': 'pass' if not failures else 'fail', 'family': name,
             'numeric_schema_leaves': numeric, 'boolean_schema_leaves': boolean,

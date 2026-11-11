@@ -29,16 +29,18 @@ phase('src_envelope', 'source_valid: historical mode type and the complete Event
     ('SV02_event_schema', '/event', 'the EventRecord schema reports no error', 'schema_refused',
      "value['event_schema_errors'] != 0"),
 ])
-phase('src_replay', 'source_valid: current-writer replay policy (standing check 1).', [
+phase('src_replay', 'source_valid: current-writer replay policy (standing check 1) and producer projection qualification.', [
     ('SV03_replay_only_refused', '/event/replay_policy', 'a current writer never appends projector_replay_only', 'replay_only_not_appendable',
      "value['historical'] is False and value['replay_policy'] == 'projector_replay_only'"),
     ('SV04_writer_replay_policy', '/event/replay_policy', 'a current writer appends only dedupe_by_idempotency_key', 'join_refused',
      "value['historical'] is False and value['replay_policy'] not in ('dedupe_by_idempotency_key', 'projector_replay_only')"),
+    ('SV36_producer_projection', '/event', 'a current writer qualifies the complete CV-317 producer projection through shared RFC 8785 (CV-1100) before append',
+     'number_domain', "value['historical'] is False and value['producer_refusal'] is not None"),
 ])
 phase('src_inline', 'source_valid: SP-337 inline body route (standing check 4).', [
-    ('SV05_inline_encodable', '/event/payload', 'an inline body has a CV-366 MessagePack encoding', 'schema_refused',
+    ('SV05_inline_encodable', '/event/payload', 'an inline body has an SP-236 EVENT_VALUE encoding (shared storage_value_bytes)', 'schema_refused',
      "value['inline'] is True and value['inline_size'] is None"),
-    ('SV06_inline_limit', '/event/payload', 'an inline body encodes to at most 16384 bytes', 'payload_ref_required',
+    ('SV06_inline_limit', '/event/payload', 'an inline body encodes to at most 16384 SP-236 EVENT_VALUE bytes', 'payload_ref_required',
      "value['inline'] is True and value['inline_size'] is not None and value['inline_size'] > 16384"),
 ])
 phase('src_definition', 'source_valid: the captured scope has a source definition.', [
@@ -122,7 +124,7 @@ phase('src_context', 'source_valid: payload, occurrence, runtime, Usage and web-
 
 # ------------------------------------------------------------------ identity
 phase('id_inputs', 'identity: exact integer subject and original application operation.', [
-    ('ID01_blocked_sequence', '/payload/blocked_sequence', 'an identity blocked_sequence is an unsigned JSON Schema integer', 'schema_refused',
+    ('ID01_blocked_sequence', '/payload/blocked_sequence', 'an identity blocked_sequence is an exact integer in 0..2^64-1 (shared current_integer)', 'schema_refused',
      "value['blocked_in_identity'] is True and value['blocked_valid'] is False"),
     ('ID02_application_present', '/application', 'an application partition carries its original application identity', 'missing original application identity',
      "value['application_partition'] is True and value['application_present'] is False"),
@@ -236,7 +238,7 @@ phase('cp_source', 'checkpoint_result: verified source coverage flags and partit
 phase('cp_rows', 'checkpoint_result: the verified global source rows are well formed.', [
     ('CP25_rows_list', '/context/source_rows', 'is exactly a list', UNAVAILABLE, "value['rows_type'] != 'list'"),
     ('CP26_rows_objects', '/context/source_rows', 'every row is exactly an object', UNAVAILABLE, "value['non_object_rows'] != 0"),
-    ('CP27_rows_sequence', '/context/source_rows/sequence_id', 'every row sequence_id is an unsigned JSON Schema integer', UNAVAILABLE,
+    ('CP27_rows_sequence', '/context/source_rows/sequence_id', 'every row sequence_id is an exact Storage uint64 (shared storage_uint64, SP-1100)', UNAVAILABLE,
      "value['bad_sequence_rows'] != 0"),
     ('CP28_rows_strings', '/context/source_rows', 'every row event_type, event_id and scope_partition is a nonempty str', UNAVAILABLE,
      "value['bad_string_rows'] != 0"),
@@ -270,10 +272,12 @@ phase('hr_flags_a', 'historical_read: reader adapter flag types and disclosure g
     ('HR04_permission', '/context/permission', 'is True', UNAVAILABLE, "value['permission'] is False"),
     ('HR05_not_deleted', '/context/deleted', 'is False', UNAVAILABLE, "value['deleted'] is True"),
 ])
-phase('hr_flags_b', 'historical_read: original custody and version support.', [
+phase('hr_flags_b', 'historical_read: original custody, version support and SP-1101 authenticated original dispatch.', [
     ('HR06_source_present', '/context/source_present', 'is True', UNAVAILABLE, "value['source_present'] is False"),
     ('HR07_owner_proven', '/context/owner_proven', 'is True', UNAVAILABLE, "value['owner_proven'] is False"),
     ('HR08_versions_supported', '/context/versions_supported', 'is True', UNAVAILABLE, "value['versions_supported'] is False"),
+    ('HR13_original_custody', '/event', 'the SP-1101 dispatcher resolves the sealed original and its frozen recipe for this binding', UNAVAILABLE,
+     "value['custody_refusal'] is not None"),
 ])
 phase('hr_original', 'historical_read: the authenticated retained original and its envelope.', [
     ('HR09_original_prepared', '/context/authenticated_original/prepared', 'source bytes equal the prepared stage bytes', UNAVAILABLE,
@@ -314,7 +318,12 @@ phase('tr_approval_denied', 'transition approval.denied.', [
 ])
 phase('tr_approval_timeout', 'transition approval.timeout.', [
     ('AT1_requested', '/before/episode_state', 'is requested', TRANSITION, "value['episode_state'] != 'requested'"),
-    ('AT2_expired', '/payload/ts', 'is at or after the requested deadline', TRANSITION, "value['ts_micros'] < value['deadline_micros']"),
+    ('AT3_ts_date_time', '/payload/ts', 'satisfies the shared CV-1101 date_time predicate (EventRecord profile)', TRANSITION,
+     "value['ts_refusal'] is not None"),
+    ('AT4_deadline_date_time', '/before/deadline_at_utc', 'satisfies the shared CV-1101 date_time predicate (EventRecord profile)', TRANSITION,
+     "value['deadline_refusal'] is not None"),
+    ('AT2_expired', '/payload/ts', 'is at or after the requested deadline, compared as exact instants (offsets and complete fractions)', TRANSITION,
+     "value['ts_instant'] is not None and value['deadline_instant'] is not None and value['ts_instant'] < value['deadline_instant']"),
 ])
 phase('tr_config_migrated', 'transition config.migrated.', [
     ('CM1_first_load', '/before/first_load', 'is True', TRANSITION, "value['first_load'] is not True"),
@@ -459,8 +468,8 @@ phase('tr_worktree_created', 'transition worktree.created.', [
 phase('tr_worktree_deleted_a', 'transition worktree.deleted: state and grace period.', [
     ('WD1_cleanup_eligible', '/before/allocation_state', 'is cleanup_eligible', TRANSITION, "value['before_state'] != 'cleanup_eligible'"),
     ('WD2_deleted', '/owner_result/allocation_state', 'is deleted', TRANSITION, "value['outcome_state'] != 'deleted'"),
-    ('WD3_elapsed_unsigned', '/before/elapsed_grace_ms', 'is an unsigned JSON Schema integer', TRANSITION, "value['elapsed_unsigned'] is False"),
-    ('WD4_grace_unsigned', '/payload/grace_period_ms', 'is an unsigned JSON Schema integer', TRANSITION, "value['grace_unsigned'] is False"),
+    ('WD3_elapsed_unsigned', '/before/elapsed_grace_ms', 'is an exact integer in 0..2^64-1 (shared current_integer)', TRANSITION, "value['elapsed_unsigned'] is False"),
+    ('WD4_grace_unsigned', '/payload/grace_period_ms', 'is an exact integer in 0..2^64-1 (shared current_integer)', TRANSITION, "value['grace_unsigned'] is False"),
     ('WD5_grace_elapsed', '/before/elapsed_grace_ms', 'is at least the grace period', TRANSITION,
      "value['elapsed_unsigned'] is True and value['grace_unsigned'] is True and value['elapsed'] < value['grace']"),
 ])
@@ -519,8 +528,12 @@ phase('references', 'Whole-bundle schema reference preflight (standing check 9).
 ])
 phase('retention', 'Retention eligibility of one retained record.', [
     ('RT01_anchor', '/input', 'the policy anchor time is present', 'retention_ineligible', "value['anchor_present'] is False"),
-    ('RT02_age', '/input/now', 'the anchor is at least the policy days old', 'retention_ineligible',
-     "value['anchor_present'] is True and value['age_days'] < value['required_days']"),
+    ('RT05_now_date_time', '/input/now', 'satisfies the shared CV-1101 date_time predicate (EventRecord profile)', 'retention_ineligible',
+     "value['now_refusal'] is not None"),
+    ('RT06_anchor_date_time', '/input', 'a present anchor satisfies the shared CV-1101 date_time predicate (EventRecord profile)', 'retention_ineligible',
+     "value['anchor_present'] is True and value['anchor_refusal'] is not None"),
+    ('RT02_age', '/input/now', 'the anchor is at least the policy days old, in exact POSIX days', 'retention_ineligible',
+     "value['anchor_present'] is True and value['age_days'] is not None and value['age_days'] < value['required_days']"),
     ('RT03_not_held', '/input/held', 'is falsy', 'retention_ineligible', "value['held_truthy'] is True"),
     ('RT04_not_dependent', '/input/dependent', 'is falsy', 'retention_ineligible', "value['dependent_truthy'] is True"),
 ])

@@ -28,7 +28,7 @@ def ID03_application_operation(value, context):
 def case(value):
     context = None
     table = g.GuardTable([
-        g.Guard('ID01_blocked_sequence', g.Invariant('/payload/blocked_sequence', 'an identity blocked_sequence is an unsigned JSON Schema integer'), 'schema_refused', ID01_blocked_sequence),
+        g.Guard('ID01_blocked_sequence', g.Invariant('/payload/blocked_sequence', 'an identity blocked_sequence is an exact integer in 0..2^64-1 (shared current_integer)'), 'schema_refused', ID01_blocked_sequence),
         g.Guard('ID02_application_present', g.Invariant('/application', 'an application partition carries its original application identity'), 'missing original application identity', ID02_application_present),
         g.Guard('ID03_application_operation', g.Invariant('/application/owner_operation_id', 'equals the recomputed original application operation'), 'wrong original application operation', ID03_application_operation),
     ])

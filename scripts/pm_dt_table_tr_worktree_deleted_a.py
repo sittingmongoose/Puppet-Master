@@ -38,8 +38,8 @@ def case(value):
     table = g.GuardTable([
         g.Guard('WD1_cleanup_eligible', g.Invariant('/before/allocation_state', 'is cleanup_eligible'), 'transition_refused', WD1_cleanup_eligible),
         g.Guard('WD2_deleted', g.Invariant('/owner_result/allocation_state', 'is deleted'), 'transition_refused', WD2_deleted),
-        g.Guard('WD3_elapsed_unsigned', g.Invariant('/before/elapsed_grace_ms', 'is an unsigned JSON Schema integer'), 'transition_refused', WD3_elapsed_unsigned),
-        g.Guard('WD4_grace_unsigned', g.Invariant('/payload/grace_period_ms', 'is an unsigned JSON Schema integer'), 'transition_refused', WD4_grace_unsigned),
+        g.Guard('WD3_elapsed_unsigned', g.Invariant('/before/elapsed_grace_ms', 'is an exact integer in 0..2^64-1 (shared current_integer)'), 'transition_refused', WD3_elapsed_unsigned),
+        g.Guard('WD4_grace_unsigned', g.Invariant('/payload/grace_period_ms', 'is an exact integer in 0..2^64-1 (shared current_integer)'), 'transition_refused', WD4_grace_unsigned),
         g.Guard('WD5_grace_elapsed', g.Invariant('/before/elapsed_grace_ms', 'is at least the grace period'), 'transition_refused', WD5_grace_elapsed),
     ])
 

@@ -24,8 +24,8 @@ def SV06_inline_limit(value, context):
 def case(value):
     context = None
     table = g.GuardTable([
-        g.Guard('SV05_inline_encodable', g.Invariant('/event/payload', 'an inline body has a CV-366 MessagePack encoding'), 'schema_refused', SV05_inline_encodable),
-        g.Guard('SV06_inline_limit', g.Invariant('/event/payload', 'an inline body encodes to at most 16384 bytes'), 'payload_ref_required', SV06_inline_limit),
+        g.Guard('SV05_inline_encodable', g.Invariant('/event/payload', 'an inline body has an SP-236 EVENT_VALUE encoding (shared storage_value_bytes)'), 'schema_refused', SV05_inline_encodable),
+        g.Guard('SV06_inline_limit', g.Invariant('/event/payload', 'an inline body encodes to at most 16384 SP-236 EVENT_VALUE bytes'), 'payload_ref_required', SV06_inline_limit),
     ])
 
     def check(value):

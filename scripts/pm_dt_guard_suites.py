@@ -42,7 +42,8 @@ LIVE_STATE = ('retained-reader live-state witness (historical_results live_trans
 EXCLUDED = [
     ('src_schema', ('SV08_prepared_schema', 'SV09_completed_schema'),
      'coherent by design: identifier_checks puts the trailing-LF original hash in both original stages so only schema grammar '
-     'can refuse it; the table SV08/SV09 one-stage witnesses prove each row alone'),
+     'can refuse it, and the shared number corpus (sweep 2B) writes one raw spelling at the captured producer_sequence_id of '
+     'both stages (null reaches the source schema); the table SV08/SV09 one-stage witnesses prove each row alone'),
     ('src_identity', ('SV27_event_key', 'SV28_event_id', 'SV29_captured_key', 'SV30_captured_id'),
      'coherent forged identity: standing check 2 and the app_key corpus put the forged key and its derived event id on the event '
      'and both captured stages, so every copy row refuses; the table SV27..SV30 witnesses change one copy each'),

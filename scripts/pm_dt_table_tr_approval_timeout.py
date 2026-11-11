@@ -10,26 +10,38 @@ FIELDS names every observation the rows read; the checker passes no other.
 """
 import pm_guard_isolation as g
 
-FIELDS = ('episode_state', 'ts_micros', 'deadline_micros')
+FIELDS = ('episode_state', 'ts_refusal', 'deadline_refusal', 'ts_instant', 'deadline_instant')
 
 
 def AT1_requested(value, context):
     return 'transition_refused' if value['episode_state'] != 'requested' else None
 
 
+def AT3_ts_date_time(value, context):
+    return 'transition_refused' if value['ts_refusal'] is not None else None
+
+
+def AT4_deadline_date_time(value, context):
+    return 'transition_refused' if value['deadline_refusal'] is not None else None
+
+
 def AT2_expired(value, context):
-    return 'transition_refused' if value['ts_micros'] < value['deadline_micros'] else None
+    return 'transition_refused' if value['ts_instant'] is not None and value['deadline_instant'] is not None and value['ts_instant'] < value['deadline_instant'] else None
 
 
 def case(value):
     context = None
     table = g.GuardTable([
         g.Guard('AT1_requested', g.Invariant('/before/episode_state', 'is requested'), 'transition_refused', AT1_requested),
-        g.Guard('AT2_expired', g.Invariant('/payload/ts', 'is at or after the requested deadline'), 'transition_refused', AT2_expired),
+        g.Guard('AT3_ts_date_time', g.Invariant('/payload/ts', 'satisfies the shared CV-1101 date_time predicate (EventRecord profile)'), 'transition_refused', AT3_ts_date_time),
+        g.Guard('AT4_deadline_date_time', g.Invariant('/before/deadline_at_utc', 'satisfies the shared CV-1101 date_time predicate (EventRecord profile)'), 'transition_refused', AT4_deadline_date_time),
+        g.Guard('AT2_expired', g.Invariant('/payload/ts', 'is at or after the requested deadline, compared as exact instants (offsets and complete fractions)'), 'transition_refused', AT2_expired),
     ])
 
     def check(value):
         table.require('AT1_requested', value, context)
+        table.require('AT3_ts_date_time', value, context)
+        table.require('AT4_deadline_date_time', value, context)
         table.require('AT2_expired', value, context)
         return True
     return g.Case(table, check, context)
