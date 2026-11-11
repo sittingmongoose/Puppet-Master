@@ -556,36 +556,59 @@ function o55RunAction(found) {
    back to factory values. Always asks first, and highlights what changed."). The row promised "Pick one setting, a
    section or everything; you see it first" and opened one confirmation for everything (S4). Now one dialog: what to
    reset, then the settings that would change, each with its value now and its default, before anything happens. */
+/* FO-163 (the land-2 before/after sheet): one column for everything in the dialog (the form grid's two columns had put the
+   preview in a narrow one); only the picker the chosen scope needs is drawn (the form field's display beat `hidden`, so
+   Everything still showed a section and a setting); the list is the app's key/value rows at the paragraph's size (no
+   browser bullets hanging outside the column); and each value reads in the app's own words (PM51.valueText: On/Off, a
+   list as "a, b", Not set), never raw True/False or a list joined with no space. */
+PM51.style(`
+#panel-settings .o55-reset-form { display: flex; flex-direction: column; gap: 13px; min-width: 0; }
+#panel-settings .o55-reset-preview { display: flex; flex-direction: column; gap: 6px; min-width: 0; font-size: 12px; line-height: 1.45; color: var(--k3-text-2); }
+#panel-settings .o55-reset-preview > p { margin: 0; font-size: inherit; line-height: inherit; color: inherit; }
+#panel-settings .o55-reset-preview .pm51-kv-row { font-size: inherit; }
+#panel-settings .o55-reset-preview .pm51-kv-row > span:first-child { color: var(--k3-text-1); font-weight: 600; }
+`);
 function o55ResetDialog() {
   const titles = CATEGORY_TITLES(), changed = allSettingsCatalog().filter(e => state.changed[e.setting.id]);
   const cats = [...new Set(changed.map(e => e.category))];
   const name = e => PM51.rowLabel(e.setting), catName = c => titles.get(c) || humanize(c);
-  const shown = (e, v) => { try { const t = PM51.valueLabel(e.setting.id, v); return t == null || t === '' ? '(empty)' : String(Array.isArray(t) ? t.join(', ') : t); } catch (_e) { return String(v); } };
+  const shown = (e, v) => { try { return String(PM51.valueText(e.setting, v)); } catch (_e) { return String(v); } };
   const d = { what: changed.length ? 'one' : 'everything', cat: cats[0] || '', id: changed[0] ? changed[0].setting.id : '' };
   const pick = () => d.what === 'one' ? changed.filter(e => e.setting.id === d.id) : d.what === 'section' ? changed.filter(e => e.category === d.cat) : changed;
+  const opt = (v, l, cur) => `<option value="${escAttr(v)}"${v === cur ? ' selected' : ''}>${escapeHtml(l)}</option>`;
+  /* the one picker the scope needs: a section for A section, a setting for One setting, none for Everything */
+  const picker = () => d.what === 'section'
+    ? `<label class="form-field o55-reset-cat"><span class="form-label">Section</span><select class="form-select" name="cat" aria-label="Section">${cats.map(c => opt(c, catName(c), d.cat)).join('') || opt('', 'No section has changes', '')}</select></label>`
+    : d.what === 'one'
+      ? `<label class="form-field o55-reset-one"><span class="form-label">Setting</span><select class="form-select" name="id" aria-label="Setting">${changed.map(e => opt(e.setting.id, `${name(e)} · ${catName(e.category)}`, d.id)).join('') || opt('', 'No setting is changed', '')}</select></label>`
+      : '';
   const preview = () => {
     const list = pick();
-    const lead = d.what === 'everything' ? 'Every setting in this project goes back to its default. Accounts, keys and history are kept, and a restore point is made first so you can undo it.' : '';
-    return (lead ? `<p class="form-help">${escapeHtml(lead)}</p>` : '')
-      + (list.length ? `<div class="form-help o55-reset-count">${list.length === 1 ? 'This setting goes' : `These ${list.length} settings go`} back to ${list.length === 1 ? 'its default' : 'their defaults'}:</div><ul class="o55-reset-list">${list.map(e => `<li data-setting-id="${escAttr(e.setting.id)}"><strong>${escapeHtml(name(e))}</strong> <span>${escapeHtml(shown(e, settingValue(e.setting)))} → ${escapeHtml(shown(e, e.setting.value))}</span></li>`).join('')}</ul>`
-        : `<div class="form-help o55-reset-count">${d.what === 'everything' ? 'No setting is changed from its default right now.' : 'Nothing here is changed from its default.'}</div>`);
+    const lead = d.what === 'everything' ? '<p class="o55-reset-lead">Every setting in this project goes back to its default. Accounts, keys and history are kept, and a restore point is made first so you can undo it.</p>' : '';
+    if (!list.length) return lead + `<p class="o55-reset-count">${d.what === 'everything' ? 'No setting is changed from its default right now.' : 'Nothing here is changed from its default.'}</p>`;
+    return lead + `<p class="o55-reset-count">${list.length === 1 ? 'This setting goes' : `These ${list.length} settings go`} back to ${list.length === 1 ? 'its default' : 'their defaults'}:</p>`
+      + `<div class="pm51-kv o55-reset-list">${list.map(e => `<div class="pm51-kv-row" data-setting-id="${escAttr(e.setting.id)}"><span>${escapeHtml(name(e))}</span><span>${escapeHtml(shown(e, settingValue(e.setting)))} → ${escapeHtml(shown(e, e.setting.value))}</span></div>`).join('')}</div>`;
   };
-  const opt = (v, l, cur) => `<option value="${escAttr(v)}"${v === cur ? ' selected' : ''}>${escapeHtml(l)}</option>`;
-  const body = `<div class="form-grid">
-    <label class="form-field full"><span class="form-label">What to reset</span><select class="form-select" name="what" aria-label="What to reset">${[['one', 'One setting'], ['section', 'A section'], ['everything', 'Everything']].map(([v, l]) => opt(v, l, d.what)).join('')}</select></label>
-    <label class="form-field full o55-reset-cat"${d.what === 'section' ? '' : ' hidden'}><span class="form-label">Section</span><select class="form-select" name="cat" aria-label="Section">${cats.map(c => opt(c, catName(c), d.cat)).join('') || opt('', 'No section has changes', '')}</select></label>
-    <label class="form-field full o55-reset-one"${d.what === 'one' ? '' : ' hidden'}><span class="form-label">Setting</span><select class="form-select" name="id" aria-label="Setting">${changed.map(e => opt(e.setting.id, `${name(e)} · ${catName(e.category)}`, d.id)).join('') || opt('', 'No setting is changed', '')}</select></label>
-    <div class="full o55-reset-preview" aria-live="polite">${preview()}</div></div>`;
+  const body = `<div class="o55-reset-form">
+    <label class="form-field"><span class="form-label">What to reset</span><select class="form-select" name="what" aria-label="What to reset">${[['one', 'One setting'], ['section', 'A section'], ['everything', 'Everything']].map(([v, l]) => opt(v, l, d.what)).join('')}</select></label>
+    <div class="o55-reset-picker">${picker()}</div>
+    <div class="o55-reset-preview" aria-live="polite">${preview()}</div></div>`;
   openDialog({ title: 'Reset settings to defaults', subtitle: 'Pick one setting, a section or everything. You see what changes before anything is reset.', body, saveLabel: 'Reset',
     onOpen: overlay => {
-      const sync = () => {
-        const f = overlay.querySelector('form'); if (!f) return;
-        d.what = f.elements.what.value; d.cat = f.elements.cat.value; d.id = f.elements.id.value;
-        overlay.querySelector('.o55-reset-cat').hidden = d.what !== 'section'; overlay.querySelector('.o55-reset-one').hidden = d.what !== 'one';
+      const f = overlay.querySelector('form'); if (!f) return;
+      const sync = (redrawPicker) => {
+        if (redrawPicker) overlay.querySelector('.o55-reset-picker').innerHTML = picker();
         overlay.querySelector('.o55-reset-preview').innerHTML = preview();
         const go = overlay.querySelector('button[type="submit"]'); if (go) go.disabled = d.what !== 'everything' && !pick().length;
       };
-      overlay.querySelectorAll('select').forEach(x => x.addEventListener('change', sync)); sync();
+      f.addEventListener('change', ev => {
+        const t = ev.target; if (!t || !t.name) return;
+        if (t.name === 'what') { d.what = t.value; sync(true); return; }
+        if (t.name === 'cat') d.cat = t.value;
+        if (t.name === 'id') d.id = t.value;
+        sync(false);
+      });
+      sync(false);
     },
     onSave: () => {
       if (d.what === 'everything') { o55AfterPaint(restoreAllProjectDefaults); return true; }

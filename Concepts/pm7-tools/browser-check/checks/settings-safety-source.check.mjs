@@ -108,6 +108,38 @@ async function guardLook(t, f, look, where) {
 	await t.check(`${where}: measured under ${look} (painted ${got.theme}${got.nier ? ', NieR on' : ''})`, ok, 'the panel opened on a different look than the cell names');
 }
 
+/* FO-163: the Reset dialog read in one task. Which pickers show; every text block's left edge and width (one column);
+   whether the list's rows hang browser markers outside the column; the list's text size against the paragraph's; and
+   each row's value text against the app's own words for it (PM51.valueText). */
+async function measureReset(dlg) {
+	return dlg.evaluate((root) => {
+		const vis = (e) => !!e && e.getClientRects().length > 0 && getComputedStyle(e).visibility !== 'hidden';
+		const box = (e) => { const r = e.getBoundingClientRect(); return { l: Math.round(r.left * 10) / 10, w: Math.round(r.width * 10) / 10 }; };
+		const pickers = ['what', 'cat', 'id'].filter((n) => vis(root.querySelector(`select[name="${n}"]`)));
+		const what = root.querySelector('select[name="what"]');
+		const field = what && what.closest('label, .form-field');
+		const list = root.querySelector('.o55-reset-list');
+		const rows = list ? [...list.querySelectorAll('[data-setting-id]')] : [];
+		const texts = [...root.querySelectorAll('.o55-reset-preview > p, .o55-reset-preview > .form-help, .o55-reset-preview > div.form-help')].filter(vis);
+		const para = texts[texts.length - 1] || null;
+		const markers = rows.filter((r) => { const cs = getComputedStyle(r); return cs.display === 'list-item' && cs.listStyleType !== 'none' && cs.listStylePosition !== 'inside'; }).length;
+		const size = (e) => parseFloat(getComputedStyle(e).fontSize);
+		const rowText = (r) => { const parts = [...r.children].map((c) => c.textContent.trim()); return parts.length > 1 ? parts.slice(1).join(' ').trim() : r.textContent.replace(r.querySelector('strong') ? r.querySelector('strong').textContent : '', '').trim(); };
+		const values = rows.map((r) => {
+			const id = r.dataset.settingId, st = PM51.setting ? PM51.setting(id) : null;
+			const want = st && PM51.valueText ? `${PM51.valueText(st, PM51.value(id))} → ${PM51.valueText(st, st.value)}` : '';
+			return { id, got: rowText(r), want };
+		});
+		return {
+			pickers,
+			field: field ? box(field) : null,
+			blocks: texts.map(box).concat(list ? [box(list)] : []),
+			markers,
+			rowSize: rows.length ? size(rows[0]) : 0, paraSize: para ? size(para) : 0,
+			values
+		};
+	});
+}
 export const tests = {};
 for (const surface of ['normal', 'sandbox']) {
 	const skip = async (t) => { if (t.app.surfaces().includes(surface)) return false; await t.check(`${surface} surface not asked for`, true); return true; };
@@ -376,12 +408,30 @@ for (const surface of ['normal', 'sandbox']) {
 		// One setting: pick the first seeded one; the list shows that one only
 		await d.locator('select[name="id"]').selectOption(pair[0][0]);
 		await t.page.waitForTimeout(200);
-		const listed = await d.locator('.o55-reset-list li').evaluateAll((li) => li.map((x) => x.dataset.settingId));
+		const listed = await d.locator('.o55-reset-list [data-setting-id]').evaluateAll((li) => li.map((x) => x.dataset.settingId));
 		await t.check('it lists what would change before anything happens', listed.length === 1 && listed[0] === pair[0][0], listed.join(', '));
 		await d.locator('select[name="what"]').selectOption('everything');
-		const all = await d.locator('.o55-reset-list li').evaluateAll((li) => li.map((x) => x.dataset.settingId));
+		const all = await d.locator('.o55-reset-list [data-setting-id]').evaluateAll((li) => li.map((x) => x.dataset.settingId));
 		await t.check('Everything lists every changed setting', pair.every(([id]) => all.includes(id)), all.join(', '));
+		// FO-163 (1)-(5), read on the dialog itself with Everything chosen
+		const m = await measureReset(d);
+		await t.check('FO-163 (4) Everything shows no section or setting picker', m.pickers.join(',') === 'what', `pickers shown: ${m.pickers.join(', ')}`);
+		await t.check('FO-163 (1) no list marker hangs outside the text column', m.markers === 0, `${m.markers} rows draw an outside bullet`);
+		await t.check('FO-163 (1) the list text is no larger than the paragraph above it', m.rowSize > 0 && m.paraSize > 0 && m.rowSize <= m.paraSize + 0.01, `list ${m.rowSize}px, paragraph ${m.paraSize}px`);
+		const lefts = m.blocks.map((b) => b.l), widths = m.blocks.map((b) => b.w);
+		await t.check('FO-163 (5) the paragraph and the list share one column with the fields', m.field && m.blocks.length >= 2 && lefts.every((l) => Math.abs(l - m.field.l) <= 1) && widths.every((w) => Math.abs(w - m.field.w) <= 1), JSON.stringify({ field: m.field, blocks: m.blocks }));
+		const raw = m.values.filter((v) => /\b(true|false)\b/i.test(v.got));
+		await t.check('FO-163 (2) values read in the app\'s words (On/Off), never True/False', raw.length === 0 && m.values.length >= 2, raw.map((v) => `${v.id}: ${v.got}`).join(' | ') || `${m.values.length} rows`);
+		const joined = m.values.filter((v) => /,\S/.test(v.got));
+		await t.check('FO-163 (3) a list value is written with the app\'s list spacing', joined.length === 0, joined.map((v) => `${v.id}: ${v.got}`).join(' | '));
+		const off = m.values.filter((v) => v.want && v.got !== v.want);
+		await t.check('FO-163 (2)(3) each row says exactly what its setting reads elsewhere (PM51.valueText)', off.length === 0, off.map((v) => `${v.id}: "${v.got}" vs "${v.want}"`).join(' | '));
+		await d.locator('select[name="what"]').selectOption('section');
+		await t.page.waitForTimeout(200);
+		await t.check('FO-163 (4) A section shows the section picker only', (await measureReset(d)).pickers.join(',') === 'what,cat', (await measureReset(d)).pickers.join(','));
 		await d.locator('select[name="what"]').selectOption('one');
+		await t.page.waitForTimeout(200);
+		await t.check('FO-163 (4) One setting shows the setting picker only', (await measureReset(d)).pickers.join(',') === 'what,id', (await measureReset(d)).pickers.join(','));
 		await d.locator('select[name="id"]').selectOption(pair[0][0]);
 		await t.page.waitForTimeout(200);
 		const one = pair[0][0];
@@ -501,6 +551,17 @@ for (const surface of ['normal', 'sandbox']) {
 				await go(t, f, 'system', 'advanced');
 				await press(t, f, `${body('advanced')} [data-setting="system.advanced.reset-defaults"]`);
 				await fits('Reset settings to defaults', '.overlay [role="dialog"][aria-label="Reset settings to defaults"]', ['select[name="what"]', 'button[type="submit"]']);
+				{
+					const rd = f.locator('.overlay [role="dialog"][aria-label="Reset settings to defaults"]').last();
+					if (await rd.locator('select[name="what"]').count()) {
+						await rd.locator('select[name="what"]').selectOption('everything');
+						await t.page.waitForTimeout(250);
+						const m = await measureReset(rd);
+						await t.check(`${look} Reset (FO-163): Everything shows no other picker`, m.pickers.join(',') === 'what', m.pickers.join(','));
+						await t.check(`${look} Reset (FO-163): one column, no outside markers, list no larger than the paragraph`, m.markers === 0 && m.field && m.blocks.length >= 1 && m.blocks.every((b) => Math.abs(b.l - m.field.l) <= 1 && Math.abs(b.w - m.field.w) <= 1) && (!m.rowSize || m.rowSize <= m.paraSize + 0.01), JSON.stringify(m).slice(0, 400));
+						await t.noOverflow(`${look} Reset (Everything): no overflow or clipped text`, { scope: '.overlay [role="dialog"][aria-label="Reset settings to defaults"]' });
+					}
+				}
 				await closeAll(t, f);
 				await go(t, f, 'system', 'doctor');
 				await press(t, f, `${body('doctor')} [data-setting="system.health.platform-diagnostics"]`);
