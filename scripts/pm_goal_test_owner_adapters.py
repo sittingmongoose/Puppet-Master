@@ -78,6 +78,27 @@ def digest(value):
     return sha256(canonical(value))
 
 
+def same(a, b):
+    """Type-exact recursive equality (1 != 1.0 != True; no codec domain)."""
+    if type(a) is not type(b):
+        return False
+    if type(a) is dict:
+        return a.keys() == b.keys() and all(same(a[k], b[k]) for k in a)
+    if type(a) is list:
+        return len(a) == len(b) and all(same(x, y) for x, y in zip(a, b))
+    return a == b
+
+
+def observation_digest(value):
+    """Recorder digest. It observes and never refuses: values the physical
+    profile cannot hold (an arbitrary-precision revision, a float under test)
+    fall back to tagged exact JSON so the recorder adds no numeric domain."""
+    try:
+        return sha256(canonical(value))
+    except AdapterRefusal:
+        return sha256(b'json\0' + json.dumps(value, sort_keys=True, ensure_ascii=False, default=repr).encode())
+
+
 # ------------------------------------------------------------------ roots
 
 class RootBank:
@@ -182,20 +203,20 @@ class MethodRecorder:
         out = {}
         for name in sorted(self._observers):
             value = self._observers[name]()
-            out[name] = dict(value=copy.deepcopy(value), sha256=digest(value))
+            out[name] = dict(value=copy.deepcopy(value), sha256=observation_digest(value))
         return out
 
     @contextmanager
     def call(self, owner_id, method, args=None):
         record = dict(index=len(self.calls) + len(self._stack), owner=owner_id, method=method,
                       parent=self._stack[-1]['index'] if self._stack else None,
-                      args_sha256=None if args is None else digest(args), before=self.snapshot(),
+                      args_sha256=None if args is None else observation_digest(args), before=self.snapshot(),
                       result_sha256=None, refusal=None, qualification=QUALIFICATION)
         self._stack.append(record)
 
         class Slot:
             def set(slot, result):
-                record['result_sha256'] = None if result is None else digest(result)
+                record['result_sha256'] = None if result is None else observation_digest(result)
                 return result
         try:
             yield Slot()
@@ -228,10 +249,44 @@ class MethodRecorder:
 
 # ------------------------------------------------------------------ owners
 
+def exact_json(value, where='custody/exact_json'):
+    """Exact source JSON custody codec: sorted keys, exact integers, no floats.
+
+    Used by owners whose originals carry arbitrary-precision integers that the
+    physical MessagePack profile cannot hold; it adds no numeric cap.
+    """
+    def check(v):
+        if type(v) is float:
+            raise AdapterRefusal(where + '/float')
+        if type(v) is int:
+            NR.integer(v, where)
+        elif type(v) is dict:
+            for k, x in v.items():
+                require(where + '/key', type(k) is str)
+                check(x)
+        elif type(v) is list:
+            for x in v:
+                check(x)
+        elif type(v) is str:
+            v.encode('utf-8', 'strict')
+        else:
+            require(where + '/type', v is None or type(v) is bool)
+    check(value)
+    return json.dumps(value, ensure_ascii=False, separators=(',', ':'), sort_keys=True,
+                      allow_nan=False).encode('utf-8')
+
+
+CODECS = {
+    'msgpack': (lambda v: canonical(v, 'issue/canonical'), lambda raw: NR.decode_event_value(raw, 'resolve')),
+    'exact_json': (exact_json, lambda raw: json.loads(raw.decode('utf-8'))),
+}
+
+
 class TestOwner:
     """Base TEST_ONLY owner: private original custody and opaque handles."""
 
     role = 'owner'
+    custody_codec = 'msgpack'
 
     def __init__(self, registry, *, owner_id=None, bank=None, owner_epoch=1):
         self.owner_id = owner_id or 'TEST_ONLY:owner:%s:%s' % (self.role, uuid.uuid4())
@@ -249,7 +304,7 @@ class TestOwner:
     def _issue(self, root, value, *, kind, ref=None):
         if self.bank is not None and root is not None:
             self.bank.validate(root, value, 'issue/' + kind)
-        raw = canonical(value, 'issue/canonical')
+        raw = CODECS[self.custody_codec][0](value)
         self._sequence = NR.uint64(self._sequence + 1, 'owner/sequence')
         ref = ref or 'TEST_ONLY:original:%s:%s:%d' % (self.owner_id, kind, self._sequence)
         require('issue/immutable_ref', ref not in self._originals)
@@ -279,7 +334,7 @@ class TestOwner:
         record = self._originals[ref]
         if root is not None:
             require('original/root', record['root'] == root)
-        return ref, NR.decode_event_value(record['raw'], 'resolve')
+        return ref, CODECS[self.custody_codec][1](record['raw'])
 
     def authenticate(self, ref, presented, *, root=None):
         """Presented bytes must equal retained bytes; returns the retained value."""
@@ -289,8 +344,8 @@ class TestOwner:
         require('original/withdrawn', ref not in self.withdrawn)
         if root is not None:
             require('original/root', record['root'] == root)
-        require('original/bytes', canonical(presented, 'authenticate/presented') == record['raw'])
-        return NR.decode_event_value(record['raw'], 'authenticate')
+        require('original/bytes', CODECS[self.custody_codec][0](presented) == record['raw'])
+        return CODECS[self.custody_codec][1](record['raw'])
 
     def custody(self, handle):
         ref = self._ref(handle)
