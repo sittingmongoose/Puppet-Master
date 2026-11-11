@@ -133,6 +133,10 @@ for (const surface of ['normal', 'sandbox']) {
 			if (/no model/i.test(row.label) && p.models > 0) wrong.push(`${row.label}: ${p.name} has ${p.models} models on`);
 			if (/seat|cannot invoke/i.test(row.label) && !p.seat) wrong.push(`${row.label}: ${p.name} has its seat`);
 		}
+		// a service whose list line says it waits on a seat has its own Home row that says so
+		for (const p of r.rows.filter((x) => /seat/i.test(x.meta))) {
+			if (!home.rows.some((x) => x.provider === p.id && /seat|cannot invoke/i.test(x.label + ' ' + x.meta))) wrong.push(`${p.name} ("${p.meta}") has no Home row about its seat`);
+		}
 		await t.check(`each Home service row says what its service says (${home.rows.length} rows)`, home.rows.length > 0 && wrong.length === 0, wrong.join('; ') || home.rows.map((x) => x.label).join(' | '));
 		const n = Number((home.meta.match(/^(\d+)/) || [])[1]);
 		await t.check(`Home's count is its rows ("${home.meta}")`, n === home.rows.length, `${home.rows.length} rows`);

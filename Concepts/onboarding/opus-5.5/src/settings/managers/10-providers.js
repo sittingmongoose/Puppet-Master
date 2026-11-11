@@ -305,7 +305,9 @@
     all().forEach(p => {
       if (!/^Needs/.test(plain(p))) return;
       const r = p.readiness || {}, act = activeAccounts(p);
-      if (p.signedIn && act.length && act.every(seatless)) kinds.seat.push(p);
+      /* a seat is what it waits on when one of its accounts has no seat and no other account can run a model, as its
+         own page says (GitHub Copilot: a seatless account beside one with no model on) */
+      if (p.signedIn && act.some(seatless) && !act.some(x => !seatless(x) && accEnabled(p, x).length)) kinds.seat.push(p);
       else if (!p.signedIn) kinds.signin.push(p);
       else if (!r.accountChosen) kinds.account.push(p);
       else kinds.models.push(p);
