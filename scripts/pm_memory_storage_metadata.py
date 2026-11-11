@@ -60,7 +60,7 @@ def run(m, contexts):
                 if route == 'fresh':
                     assert output == candidate and type(output[field]) is int and output[field] == number
                     assert after['append_count'] == state['append_count'] + 1
-                    assert after['original']['full_value_sha256'] == m.historical_digest(candidate)
+                    assert after['original']['full_value_sha256'] == m.numbers.full_value_commitment(candidate)
                     counts['fresh_positives'] += 1
                     # A retry against each newly stored boundary original preserves the exact receipt.
                     again, returned = m.append_current(after, value, event)

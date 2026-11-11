@@ -52,16 +52,21 @@ def canonical_start_checks(canonical, row, expected):
     reference = core.canonical_value(row, 'started')
     started = event_type(row, 'started')
     core.require('asc_object', is_object=isinstance(value, dict))
-    # original_matches(canonical, value) with value = canonical['full_value']: its binding conjunct
-    # compares the value with itself and cannot refuse, so it has no row.
-    core.retained_check(canonical, None, 'asc', binding=False)
-    core.require('asc_envelope', envelope_valid=core.historical_envelope_matches(value))
+    core.require('asc_shape', shape_valid=core.retained_shape(canonical))
     producer = set(reference) - core.STORAGE_FIELDS - {'payload', 'replay_policy'}
-    core.require('asc_payload_schema', payload_valid=core.validator('Plans/memory_maintenance_event_payloads.schema.json',
-                                                                    started.replace('.', '_')).is_valid(value['payload']))
-    core.require('asc_joins', producer_matches=core.retained_binding({k: value[k] for k in producer}, {k: reference[k] for k in producer}),
-                 replay_policy=value['replay_policy'], reference_replay_policy=reference['replay_policy'],
-                 payload_matches=core.retained_binding(value['payload'], reference['payload']))
+
+    def verify(recipe):
+        # original_matches(canonical, value) with value = canonical['full_value']: its binding conjunct
+        # compares the value with itself and cannot refuse, so it has no row.
+        core.retained_body(canonical, None, 'asc', binding=False, recipe=recipe)
+        core.require('asc_envelope', envelope_valid=core.recipe_envelope_matches(value, recipe))
+        core.require('asc_payload_schema', payload_valid=core.validator('Plans/memory_maintenance_event_payloads.schema.json',
+                                                                        started.replace('.', '_')).is_valid(value['payload']))
+        core.require('asc_joins', producer_matches=core.retained_binding({k: value[k] for k in producer}, {k: reference[k] for k in producer}),
+                     replay_policy=value['replay_policy'], reference_replay_policy=reference['replay_policy'],
+                     payload_matches=core.retained_binding(value['payload'], reference['payload']))
+    # SP-1101: the started writer's canonical original is resolved through its sealed write-time recipe.
+    core.resolve_retained(value, row, started, 'asc', verify, canonical.get('full_value_sha256'))
 
 core.canonical_start_checks = canonical_start_checks
 
@@ -233,19 +238,24 @@ def append_current(before, value, event):
     if state['original'] is not None:
         original = state['original']['full_value']
         if suffix == 'completed':
-            # original_matches(state['original'], original): its binding conjunct is the value itself (no row).
-            core.retained_check(state['original'], None, 'aao', binding=False)
-            core.require('aao_envelope', envelope_valid=core.historical_envelope_matches(original))
+            core.require('aao_shape', shape_valid=core.retained_shape(state['original']))
+
+            def verify(recipe):
+                # original_matches(state['original'], original): its binding conjunct is the value itself (no row).
+                core.retained_body(state['original'], None, 'aao', binding=False, recipe=recipe)
+                core.require('aao_envelope', envelope_valid=core.recipe_envelope_matches(original, recipe))
+            # SP-1101: the returned terminal original is resolved through its sealed write-time recipe.
+            core.resolve_retained(original, row, event, 'aao', verify, state['original'].get('full_value_sha256'))
             core.require('aao_projection', projection_matches=core.retained_binding(
                 {k: original[k] for k in set(expected) - core.STORAGE_FIELDS},
                 {k: value[k] for k in set(expected) - core.STORAGE_FIELDS}))
         output = deepcopy(original)
     else:
         core.require('aa_phase', phase=row['phase'], required_phase='accepted' if suffix == 'started' else 'effect_committed')
-        state['original'] = core.retained(value); state['append_count'] += 1
+        state['original'] = core.retained_canonical(value); state['append_count'] += 1
         output = deepcopy(value)
-    core.start_custody_gate(before, first_start=suffix == 'started', writer_event=event)
-    core.start_custody_gate(state, writer_event=event)
+    core.committed(before, state, event, lambda: (core.start_custody_gate(before, first_start=suffix == 'started', writer_event=event),
+                                                  core.start_custody_gate(state, writer_event=event)))
     return state, output
 
 
@@ -325,6 +335,18 @@ def probe(case, fixtures, contracts):
         return {'accepted': False, 'refusal': str(error)}
     assert context == before, (case['name'], 'entry point mutated caller inputs')
     return {'accepted': True}
+
+
+def checkpoint_guard_controls(fixtures):
+    """The retained original each checkpoint guard case's positive control joins (composition seals it, SP-1101)."""
+    controls = []
+    for case in fixtures['guard_cases']:
+        if case['kind'] == 'checkpoint':
+            family = next(f for f in fixtures['families'] if f['event_type'] == case['event_type'])
+            initial = case.get('initial', 'started') if case.get('initial', 'started') in family['states'] else 'started'
+            controls.append({'event_type': case['event_type'], 'operation': family['states'][initial]['operation'],
+                             'value': case.get('control_value', case['value'])})
+    return controls
 
 
 def run_guards(fixtures, contracts):
@@ -416,6 +438,8 @@ def main():
     fixtures = core.load('Plans/memory_archive_event_fixtures.json')
     families = {f['event_type']: f for f in contracts['families']}
     assert len(families) == 4 and {f['event_type'] for f in fixtures['families']} == set(families)
+    core.compose_custody([{'event_type': f['event_type'], 'states': f['writer_states']} for f in fixtures['families']],
+                         checkpoint_guard_controls(fixtures))
     assert not core.table_order_errors(), ('table order', core.table_order_errors())
     registered = {x['event_type'] for x in core.load('Plans/event_family_registry.json')['families']}
     assert not set(families) & registered

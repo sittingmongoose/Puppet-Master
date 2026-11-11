@@ -74,8 +74,10 @@ def domain_cases(m, contexts, boundaries, archive=None):
                     parsed = m.json_numbers(number['literal'])
                     if finite_positive(m,parsed) and parsed != int(parsed):
                         bad = {**control,'sequence_id':parsed}
+                        # The frozen recipe of this mode's writer, chosen by the test (never by the record).
+                        recipe = m.recipe_tuple(event, (control['schema_id'], control['schema_version']), m.RECIPE_FROZEN)
                         add(event,'commitment_numbers','historical-envelope-'+mode+'-'+number['literal'],
-                            lambda v:m.historical_envelope_matches(v),(control,),(bad,))
+                            lambda v,r=recipe:m.recipe_envelope_matches(v,r),(control,),(bad,))
         for field in ('sequence_id', 'producer_sequence_id'):
             for label,wrong in [('bool-true', True),('bool-false', False)] + [
                     (r['name'],r['value']) for r in fixtures['wrong_boolean_values']
@@ -147,7 +149,7 @@ def run(m, contexts, boundaries, archive=None):
                     assert not storage_sequence_valid,(event,literal)
                 else:
                     assert storage_sequence_valid,(event,literal,'writer accepted')
-                    assert output==value and after['original']['full_value_sha256']==m.historical_digest(value)
+                    assert output==value and after['original']['full_value_sha256']==m.numbers.full_value_commitment(value)
                 assert before==untouched
                 counts['numeric_writer_cases']+=1
             if not case['sequence_valid']:
@@ -157,7 +159,11 @@ def run(m, contexts, boundaries, archive=None):
                 record['full_value']['sequence_id']=number
                 record['full_value_sha256']=m.digest(record['full_value'])
                 snapshot=deepcopy(state)
-                result=m.read_canonical_history(state,event)
+                # A retained original the frozen writer wrote with this number: Storage sealed it as written (SP-1101).
+                with m.custody_scope():
+                    m.seal_original(record['full_value'],state['written_operation'],event,m.RECIPE_FROZEN,
+                                    recorded=record['full_value_sha256'])
+                    result=m.read_canonical_history(state,event)
                 assert result==record['full_value']
                 assert state==snapshot
                 counts['numeric_reader_cases']+=1

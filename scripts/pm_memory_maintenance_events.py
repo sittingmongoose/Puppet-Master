@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Static DMEM contract model. Synthetic custody/transactions; native NOT_RUN."""
+from contextlib import contextmanager
 from copy import deepcopy
 from decimal import Decimal
 from functools import lru_cache
@@ -747,7 +748,7 @@ def start_custody_gate(state, first_start=False, writer_event=None, canonical_hi
     if record is not None:
         # Exact retained value, full-flush settled receipt, digest, identity, operation, event type and payload.
         if canonical_history:
-            history_check(record, expected, 'sgh')
+            history_check(record, expected, 'sgh', row)
         else:
             retained_check(record, expected, 'sgr')
     if canonical is not None:
@@ -761,13 +762,18 @@ def canonical_start_checks(canonical, row, expected):
     """The started writer's retained canonical original (pm_memory_archive_events.py installs its own split)."""
     value = canonical.get('full_value') if isinstance(canonical, dict) else None
     reference = canonical_value(row, 'started')
-    # original_matches(canonical, value) with value = canonical['full_value']: its binding conjunct
-    # compares the value with itself and cannot refuse, so it has no row.
-    retained_check(canonical, None, 'sgc', binding=False)
-    require('sgc_envelope', envelope_valid=historical_envelope_matches(value))
-    require('sgc_reference', reference_matches=retained_binding({k: value[k] for k in set(reference) - STORAGE_FIELDS},
-                                                                {k: reference[k] for k in set(reference) - STORAGE_FIELDS}))
-    require('sgc_reduced', reduced_matches=retained_binding({k: value[k] for k in expected}, expected))
+    require('sgc_shape', shape_valid=retained_shape(canonical))
+
+    def verify(recipe):
+        # original_matches(canonical, value) with value = canonical['full_value']: its binding conjunct
+        # compares the value with itself and cannot refuse, so it has no row.
+        retained_body(canonical, None, 'sgc', binding=False, recipe=recipe)
+        require('sgc_envelope', envelope_valid=recipe_envelope_matches(value, recipe))
+        require('sgc_reference', reference_matches=retained_binding({k: value[k] for k in set(reference) - STORAGE_FIELDS},
+                                                                    {k: reference[k] for k in set(reference) - STORAGE_FIELDS}))
+        require('sgc_reduced', reduced_matches=retained_binding({k: value[k] for k in expected}, expected))
+    # SP-1101: the started writer's canonical original is resolved through its sealed write-time recipe.
+    resolve_retained(value, row, event_type(row, 'started'), 'sgc', verify, canonical.get('full_value_sha256'))
 
 
 def later_check(value, start_id):
@@ -783,9 +789,24 @@ def append_current(before, value, event):
     suffix = event.rsplit('.', 1)[1]
     state, output = _append_current(before, value, event)
     # Commit point: no append or original return escapes the start custody gate, before or after.
-    start_custody_gate(before, first_start=suffix == 'started', writer_event=event)
-    start_custody_gate(state, writer_event=event)
+    committed(before, state, event, lambda: (start_custody_gate(before, first_start=suffix == 'started', writer_event=event),
+                                             start_custody_gate(state, writer_event=event)))
     return state, output
+
+
+def committed(before, state, event, gates):
+    """Storage seals a newly appended canonical original with the current writer's recipe as part of the append;
+    the commit-point gates read it sealed. If a gate refuses, the append and its seal are both withdrawn."""
+    saved = {ref: {c: list(entries) for c, entries in commits.items()} for ref, commits in ORIGINAL_CUSTODY.items()}
+    try:
+        if state['append_count'] != before['append_count']:
+            seal_original(state['original']['full_value'], state['operation'], event, RECIPE_CURRENT,
+                          recorded=state['original']['full_value_sha256'])
+        gates()
+    except BaseException:
+        ORIGINAL_CUSTODY.clear()
+        ORIGINAL_CUSTODY.update(saved)
+        raise
 
 
 def uint64_refusal(value):
@@ -829,22 +850,37 @@ def _append_current(before, value, event):
     start_custody_gate(state, first_start=suffix == 'started', writer_event=event)
     if state['original'] is not None:
         original = state['original']['full_value']
-        # original_matches(state['original'], original): its binding conjunct is the value itself (no row).
-        retained_check(state['original'], None, 'apo', binding=False)
-        require('apo_envelope', envelope_valid=historical_envelope_matches(original))
+        require('apo_shape', shape_valid=retained_shape(state['original']))
+
+        def verify(recipe):
+            # original_matches(state['original'], original): its binding conjunct is the value itself (no row).
+            retained_body(state['original'], None, 'apo', binding=False, recipe=recipe)
+            require('apo_envelope', envelope_valid=recipe_envelope_matches(original, recipe))
+        # SP-1101: the returned original is resolved through its sealed write-time recipe before it is disclosed.
+        resolve_retained(original, row, event, 'apo', verify, state['original'].get('full_value_sha256'))
         require('apo_producer', producer_matches=retained_binding({k: original[k] for k in producer_fields},
                                                                   {k: value[k] for k in producer_fields}))
         return state, deepcopy(original)
     require('ap_phase', phase=row['phase'], required_phase='accepted' if suffix == 'started' else 'effect_committed')
-    state['original'] = retained(value)
+    state['original'] = retained_canonical(value)
     state['append_count'] += 1
     return state, deepcopy(value)
 
 
 def retained(value):
-    # Reuse the existing integral record encoding, which already preserves exact uint64 metadata.
+    # The reduced phase-model original (no envelope edition): one frozen recipe, integer-json-v1, no selection.
     # Producer-only numeric admission happens at the writer; no current cap reaches Storage fields.
     return {'full_value': deepcopy(value), 'full_value_sha256': historical_digest(value), 'durability': 'full_flush'}
+
+
+def retained_canonical(value):
+    """The current writer's retained canonical EventRecord: its CV-339 full-value commitment (sweep part 2B, S3).
+
+    pm_event_numbers.full_value_commitment is the unchanged CV-339 original_event_value_commitment.sha256 over the
+    complete 2.0.0 EventRecord map (SP-236 EVENT_VALUE bytes). Older originals keep their frozen integer-json-v1
+    commitment, selected by their sealed write-time recipe (SP-1101), never recomputed under the current one.
+    """
+    return {'full_value': deepcopy(value), 'full_value_sha256': numbers.full_value_commitment(value), 'durability': 'full_flush'}
 
 
 def retained_shape(original):
@@ -872,11 +908,246 @@ def original_matches(original, value):
 def retained_check(original, value, prefix, binding=True):
     """original_matches as phases prefix_shape, prefix_body (flush, value binding, frozen digest)."""
     require(prefix + '_shape', shape_valid=retained_shape(original))
+    retained_body(original, value, prefix, binding)
+
+
+def retained_body(original, value, prefix, binding=True, recipe=None):
+    """prefix_body: flush, value binding and the full-value digest (frozen, or under the selected SP-1101 recipe)."""
     facts = {'durability': original['durability'], 'full_value_sha256': original['full_value_sha256'],
-             'expected_full_value_sha256': historical_digest(original['full_value'])}
+             'expected_full_value_sha256': (historical_digest(original['full_value']) if recipe is None
+                                            else recipe_full_value_digest(original['full_value'], recipe))}
     if binding:
         facts['value_matches'] = retained_binding(original['full_value'], value)
     require(prefix + '_body', **facts)
+
+
+# ---- SP-1101 authenticated retained dispatch (sweep part 2B, S3) -------------------------------------------------
+# A retained canonical EventRecord original (the writer's returned or canonical start original, a canonical history
+# original, a checkpoint-joined original) is read through one resolution of the shared pm_event_numbers.
+# RetainedDispatcher. Its write-time recipe comes from Storage's sealed custody for that exact original, never from
+# the record: not from its schema_version, a recipe field or the caller, and there is no current-then-legacy
+# probing. The composition-installed frozen verifier of the selected RecipeTuple authenticates the sealed bytes and
+# then runs that recipe's checks (full-value commitment, envelope edition with its CV-1101/CV-253 date-time
+# profiles, joins) as the reading site's own table rows. A dispatcher refusal is the site's `_custody` row.
+# The static stand-in for Storage's sealed custody is ORIGINAL_CUSTODY: composition seals the committed positive
+# originals of the fixtures (`install_original_custody`), and the writers seal what they append after their commit
+# point. A case under check never adds to it. Native custody and authentication remain NOT_RUN.
+RECIPE_FROZEN = 'integer-json-v1'
+RECIPE_CURRENT = 'cv1100-exact-integer-write-v3'
+FULL_VALUE_FROZEN = 'dmem-integer-json-v1-sha256'
+FULL_VALUE_CV339 = 'pm.storage.original_event_value_commitment.v1'
+IDENTITY_RECIPE = 'pm.memory.maintenance.event.v1'
+LOCAL_SOURCE_PROFILE = 'dmem-sorted-compact-utf8-json-sha256-v1'
+PAYLOAD_PROFILE = 'dmem-inline-payload-null-ref-v1'
+# The frozen editions a frozen recipe validates with (the closed retained envelope definitions).
+FROZEN_EDITIONS = {('pm.event.v0', '2.0.0'): 'historical_current', ('pm.event.v0', '1.0.0'): 'compatibility'}
+RECIPE_RESOURCES = ('Plans/event_record.schema.json', 'Plans/memory_maintenance_event_record.schema.json',
+                    'Plans/memory_maintenance_event_payloads.schema.json')
+ORIGINAL_CUSTODY = {}
+_VERIFYING = []
+
+
+@lru_cache(maxsize=1)
+def recipe_resource_manifest():
+    """SHA-256 over the SHA-256 of each resource document a DMEM recipe tuple validates with."""
+    digests = [hashlib.sha256((ROOT / path).read_bytes()).hexdigest() for path in RECIPE_RESOURCES]
+    return hashlib.sha256(json.dumps(digests, separators=(',', ':')).encode('ascii')).hexdigest()
+
+
+def recipe_tuple(event, edition, writer):
+    """The write-time recipe tuple of one DMEM canonical original: its family, envelope edition and writer recipe."""
+    return numbers.RecipeTuple(
+        envelope_schema_id=edition[0], envelope_schema_version=edition[1],
+        payload_schema_id=load('Plans/memory_maintenance_event_payloads.schema.json')['$id'] + '#/$defs/' + event.replace('.', '_'),
+        payload_schema_version='1.0.0', owner_source_id='dmem-family:' + event, owner_edition='1.0.0',
+        registry_revision='prepared_without_admission', identity_recipe=IDENTITY_RECIPE, producer_recipe=writer,
+        physical_profile=numbers.EVENT_VALUE, full_value_profile=FULL_VALUE_CV339 if writer == RECIPE_CURRENT else FULL_VALUE_FROZEN,
+        local_source_profile=LOCAL_SOURCE_PROFILE, payload_profile=PAYLOAD_PROFILE,
+        resource_manifest_sha256=recipe_resource_manifest())
+
+
+def installed_recipes(events):
+    """Composition: the immutable RecipeTuple -> FrozenRecipe map. The current writer writes only 2.0.0; the frozen
+    integer-json-v1 writer wrote both retained editions. No other tuple is installed."""
+    tuples = [recipe_tuple(event, edition, writer) for event in events
+              for edition, writer in ((('pm.event.v0', '2.0.0'), RECIPE_CURRENT), (('pm.event.v0', '2.0.0'), RECIPE_FROZEN),
+                                      (('pm.event.v0', '1.0.0'), RECIPE_FROZEN))]
+    return {t: numbers.FrozenRecipe(frozen_verify) for t in tuples}
+
+
+def frozen_verify(custody):
+    """The frozen verifier body: authenticate the sealed bytes, then run the selected recipe's checks as the reading
+    site's table rows (a defect raises that row's TableRefusal out of the resolution)."""
+    if hashlib.sha256(custody.record_bytes).hexdigest() != custody.binding.source_commitment:
+        return False
+    _VERIFYING[-1](custody.recipe)
+    return True
+
+
+@lru_cache(maxsize=None)
+def frozen_recipe_map(events):
+    return installed_recipes(events)
+
+
+def source_commitment(value, recorded=None):
+    """The sealed identity of an original: SHA-256 of the retained record bytes Storage sealed (custody_bytes), or None."""
+    record = custody_bytes(value, recorded)
+    return hashlib.sha256(record).hexdigest() if record is not None else None
+
+
+def custody_bytes(value, recorded=None):
+    """The retained record as Storage sealed it: the value's frozen canonical bytes (integer-json-v1, so a respelled
+    integral number is the same original) and, for a retained record, the full-value commitment it recorded at write
+    time (a checkpoint join reads the bare value and records none). None when the value has no frozen reading."""
+    if not isinstance(value, dict) or not (recorded is None or type(recorded) is str):
+        return None
+    try:
+        body = json.dumps(historical_numbers(value), ensure_ascii=False, sort_keys=True, separators=(',', ':')).encode('utf-8')
+    except (ValueError, TypeError):
+        return None
+    return body if recorded is None else body + b'\x00' + recorded.encode('utf-8')
+
+
+def original_binding(row, event, commitment):
+    """The binding of an original of `event` for this operation row (writer side and reader side alike)."""
+    event_id, key = identity(event, row['storage_instance_id'], row['project_id'], row['operation_id'])
+    return numbers.OriginalBinding(
+        storage_instance_id=row['storage_instance_id'], scope_kind='project', server_id=row['storage_instance_id'],
+        project_id=row['project_id'], event_type=event, event_id=event_id, idempotency_key=key,
+        owner_operation_id=row['operation_id'], source_commitment=commitment)
+
+
+def seal_original(value, row, event, writer, edition=None, recorded=None):
+    """Writer side (static stand-in): Storage seals an original at its seglog ref with its write-time recipe."""
+    commitment = source_commitment(value, recorded)
+    if commitment is None:
+        return
+    binding = original_binding(row, event, commitment)
+    recipe = recipe_tuple(event, edition or (value['schema_id'], value['schema_version']), writer)
+    entries = ORIGINAL_CUSTODY.setdefault('seglog:' + binding.event_id, {}).setdefault(commitment, [])
+    if (binding, recipe) not in entries:
+        entries.append((binding, recipe))
+
+
+class DmemOriginalOwner:
+    """Storage's custody at one seglog ref (static stand-in): it returns the presented original only when Storage
+    sealed exactly those frozen bytes there, with the single binding and recipe recorded at write time."""
+
+    def __init__(self, value, recorded=None):
+        self.value, self.recorded = value, recorded
+
+    def authenticated_original(self, original_ref):
+        commitment = source_commitment(self.value, self.recorded)
+        entries = ORIGINAL_CUSTODY.get(original_ref, {}).get(commitment) if commitment is not None else None
+        if not entries:
+            raise numbers.Refusal('original_authority')
+        if len(entries) != 1:
+            raise numbers.Refusal('recipe_ambiguous')
+        binding, recipe = entries[0]
+        record = custody_bytes(self.value, self.recorded)
+        return numbers.OriginalCustody(binding, recipe, record, record, record)
+
+
+def resolve_retained(value, row, event, prefix, verify, recorded=None):
+    """One SP-1101 resolution of a retained canonical original; `verify(recipe)` is the site's frozen-recipe rows.
+
+    The dispatcher's refusal (original_authority, recipe_ambiguous, original_binding, recipe_unknown, or any other)
+    is observed and refused only by the site's `_custody` row; a row defect inside the verifier propagates as that
+    row's own refusal. On success the custody row observes the completed resolution.
+    """
+    refusal = None
+    try:
+        expected = original_binding(row, event, source_commitment(value, recorded))
+    except numbers.Refusal:
+        expected = None
+    if expected is None:
+        refusal = 'original_authority'
+    else:
+        _VERIFYING.append(verify)
+        try:
+            numbers.RetainedDispatcher(DmemOriginalOwner(value, recorded), frozen_recipe_map(installed_events())).resolve(
+                'seglog:' + expected.event_id, expected, disclose=lambda binding: True)
+        except numbers.Refusal as error:
+            refusal = error.reason
+        finally:
+            _VERIFYING.pop()
+    require(prefix + '_custody', custody_refusal=refusal)
+
+
+@lru_cache(maxsize=1)
+def installed_events():
+    """Every DMEM family with a canonical original: the eight maintenance and the four Card 1b families."""
+    return tuple(sorted({f['event_type'] for f in load('Plans/memory_maintenance_contracts.json')['families']}
+                        | {f['event_type'] for f in load('Plans/memory_archive_contracts.json')['families']}))
+
+
+def recipe_full_value_digest(value, recipe):
+    """The full-value commitment under the selected recipe: CV-339 for the current writer, frozen otherwise."""
+    try:
+        if recipe.full_value_profile == FULL_VALUE_CV339:
+            return numbers.full_value_commitment(value)
+        return historical_digest(value)
+    except (numbers.Refusal, ValueError, TypeError, KeyError):
+        return None
+
+
+def recipe_envelope_matches(value, recipe):
+    """The envelope edition of the selected recipe, with its CV-1101/CV-253 profiles: the current writer's exact
+    2.0.0 edition, or the frozen edition read through the integer-json-v1 view. The record never selects it."""
+    if not isinstance(value, dict):
+        return False
+    if recipe.producer_recipe == RECIPE_CURRENT:
+        return envelope_edition_validator('current').is_valid(value)
+    definition = FROZEN_EDITIONS.get((recipe.envelope_schema_id, recipe.envelope_schema_version))
+    view = frozen_view(value)
+    return definition is not None and view is not None and envelope_edition_validator(definition).is_valid(view)
+
+
+@contextmanager
+def custody_scope():
+    """Restore ORIGINAL_CUSTODY exactly on exit: a test that models one more original Storage sealed as written
+    (seal_original inside the scope) never leaves it sealed for any later read."""
+    saved = {ref: {c: list(entries) for c, entries in commits.items()} for ref, commits in ORIGINAL_CUSTODY.items()}
+    try:
+        yield
+    finally:
+        ORIGINAL_CUSTODY.clear()
+        ORIGINAL_CUSTODY.update(saved)
+
+
+def install_original_custody(writer_states=(), history_families=(), recipe_families=(), checkpoint_families=(),
+                             writer_operations=None):
+    """Composition: seal the committed positive canonical originals of the fixtures with their write-time recipes.
+
+    writer_states: (event, states) whose `original` the current writer wrote; history_families: canonical history
+    families (frozen writer; every state original and every accepted case's patched originals); recipe_families:
+    write-recipe fixture families (frozen old-writer originals and receipts); checkpoint_families: the retained
+    value each checkpoint join reads (frozen 2.0.0). Negative cases are never sealed.
+    """
+    for event, states in writer_states:
+        for state in states.values():
+            record = state.get('original')
+            if isinstance(record, dict) and isinstance(record.get('full_value'), dict):
+                value = record['full_value']
+                seal_original(value, state['operation'], value['event_type'], RECIPE_CURRENT, recorded=record.get('full_value_sha256'))
+    for family in history_families:
+        snapshots = list(family['states'].values())
+        snapshots += [patch(family['states'][c['initial']], c.get('edits', [])) for c in family['cases'] if 'refusal' not in c]
+        for state in snapshots:
+            for event, record in state['originals'].items():
+                if isinstance(record, dict) and isinstance(record.get('full_value'), dict):
+                    seal_original(record['full_value'], state['written_operation'], event, RECIPE_FROZEN,
+                                  recorded=record.get('full_value_sha256'))
+    for family, bases in recipe_families:
+        for case in family['retained_cases']:
+            row = case.get('written_operation', bases[case['base_mode']]['written_operation'])
+            for event, record in case['originals'].items():
+                seal_original(record['full_value'], row, event, RECIPE_FROZEN, recorded=record['full_value_sha256'])
+        for receipt in family['old_writer_receipts'] + family['old_float_writer_receipts']:
+            seal_original(receipt['full_value'], writer_operations[family['event_type']], family['event_type'], RECIPE_FROZEN,
+                          recorded=receipt['full_value_sha256'])
+    for family in checkpoint_families:
+        seal_original(family['value'], family['operation'], family['event_type'], RECIPE_FROZEN)
 
 
 def accept(payload, contract, context):
@@ -1100,27 +1371,10 @@ def read_history(before, event):
     return deepcopy(state['originals'][event]['full_value'])
 
 
-# Frozen recipe selection is by the closed envelope edition, not an untrusted recipe field.
-# The two editions deliberately share one numeric/hash recipe, so changing edition cannot select
-# weaker number validation. Their separate envelope constraints still apply in full.
-HISTORY_RECIPES = {('pm.event.v0', '1.0.0'): 'compatibility',
-                   ('pm.event.v0', '2.0.0'): 'historical_current'}
-
-
-def historical_envelope_matches(value):
-    if not isinstance(value, dict):
-        return False
-    try:
-        historical_numbers(value)
-    except ValueError:
-        return False
-    edition = (value.get('schema_id'), value.get('schema_version'))
-    definition = HISTORY_RECIPES.get(edition, 'historical_current') if all(type(v) is str for v in edition) else 'historical_current'
-    # Unknown editions are tested against the closed 2.0.0 schema, which rejects their constants;
-    # this is not a permissive recipe fallback. Both known editions use the same hash encoding.
-    # The frozen reader admitted integral spellings as integers; current parsing never narrows history.
-    # CV-1101/CV-253 at the retained edition too: a skipped old format check never authorizes invalid Storage history.
-    return envelope_edition_validator(definition).is_valid(historical_numbers(value))
+# SP-1101 (sweep part 2B, S3): the record-selected edition dispatch (HISTORY_RECIPES and
+# historical_envelope_matches, keyed by the record's own schema_id/schema_version) is gone. Every retained
+# canonical read resolves its write-time recipe from sealed custody (resolve_retained) and validates with
+# recipe_envelope_matches.
 
 
 def historical_payload_matches(value, expected):
@@ -1149,24 +1403,20 @@ def historical_producer_matches(value, expected):
     return value.get('actor_ref', expected['actor_ref']) == expected['actor_ref']
 
 
-def historical_matches(original, expected):
-    # Boolean form for lane oracles; the checker paths use history_check (one row per conjunct).
-    return (retained_shape(original) and retained_flush(original) and retained_digest(original, True)
-            and historical_envelope_matches(original['full_value'])
-            and historical_payload_matches(original['full_value'], expected)
-            and historical_producer_matches(original['full_value'], expected)
-            and historical_binding(original['full_value'], expected))
-
-
-def history_check(original, expected, prefix):
-    """historical_matches as phases prefix_shape, prefix_body (flush, digest, edition), prefix_joins."""
+def history_check(original, expected, prefix, row):
+    """historical_matches as phases prefix_shape, then one SP-1101 resolution whose frozen verifier runs
+    prefix_body (flush, digest and envelope edition of the selected recipe) and prefix_joins; prefix_custody."""
     require(prefix + '_shape', shape_valid=retained_shape(original))
     value = original['full_value']
-    require(prefix + '_body', durability=original['durability'], full_value_sha256=original['full_value_sha256'],
-            expected_full_value_sha256=historical_digest(value), envelope_valid=historical_envelope_matches(value))
-    require(prefix + '_joins', payload_valid=historical_payload_matches(value, expected),
-            actor_ref=value.get('actor_ref', expected['actor_ref']), expected_actor_ref=expected['actor_ref'],
-            binding_matches=historical_binding(value, expected))
+
+    def verify(recipe):
+        require(prefix + '_body', durability=original['durability'], full_value_sha256=original['full_value_sha256'],
+                expected_full_value_sha256=recipe_full_value_digest(value, recipe),
+                envelope_valid=recipe_envelope_matches(value, recipe))
+        require(prefix + '_joins', payload_valid=historical_payload_matches(value, expected),
+                actor_ref=value.get('actor_ref', expected['actor_ref']), expected_actor_ref=expected['actor_ref'],
+                binding_matches=historical_binding(value, expected))
+    resolve_retained(value, row, expected['event_type'], prefix, verify, original.get('full_value_sha256'))
 
 
 def read_canonical_history(before, event):
@@ -1183,7 +1433,7 @@ def read_canonical_history(before, event):
     snapshot = {'operation': row, 'originals': before['originals'], 'withdrawn': before['withdrawn']}
     start_custody_gate(snapshot, canonical_history=True)
     record = before['originals'].get(event)
-    history_check(record, canonical_value(row, suffix), 'hm')
+    history_check(record, canonical_value(row, suffix), 'hm', row)
     return deepcopy(record['full_value'])
 
 
@@ -1245,7 +1495,7 @@ def run_numeric_writers(contexts):
             if type(number) is int:
                 after, output = append_current(before, value, event)
                 assert output == value and after['original']['full_value'] == value
-                assert after['original']['full_value_sha256'] == digest(value)
+                assert after['original']['full_value_sha256'] == numbers.full_value_commitment(value)
                 assert after['append_count'] == before['append_count'] + 1
                 assert after['effect_count'] == before['effect_count']
             else:
@@ -1539,8 +1789,12 @@ def checkpoint_check(checkpoint, row, value, event):
     """Only the adopted SP-278 storage/event join; no projector, cursor advance or read authorization."""
     expected_id, expected_key = identity(event, row['storage_instance_id'], row['project_id'], row['operation_id'])
     operation_check(row, operation_name(event), True)
-    require('ck_envelope', envelope_valid=historical_envelope_matches(value),
-            checkpoint_valid=checkpoint_validator().is_valid(checkpoint['checkpoint']))
+
+    def verify(recipe):
+        require('ck_envelope', envelope_valid=recipe_envelope_matches(value, recipe),
+                checkpoint_valid=checkpoint_validator().is_valid(checkpoint['checkpoint']))
+    # SP-1101: the checkpoint reader projection reads the retained original through its sealed write-time recipe.
+    resolve_retained(value, row, event, 'ck', verify)
     require('ck_store', checkpoint_storage_instance_id=checkpoint['checkpoint']['storage_instance_id'],
             storage_instance_id=row['storage_instance_id'], checkpoint_key=checkpoint['checkpoint_key'],
             expected_checkpoint_key='event_record_index_checkpoint.v1:' + row['storage_instance_id'])
@@ -1576,6 +1830,20 @@ def run_checkpoint_joins(fixtures, families):
             counts[event] += 1
     assert set(counts) == set(families)
     return counts
+
+
+def compose_custody(writer_families, checkpoint_families=()):
+    """SP-1101 composition for a checker run: seal the committed positive canonical originals (see
+    install_original_custody) before any read. The write-recipe fixtures are read with the plain JSON loader, exactly
+    as their frozen old-writer values are read (pm_memory_write_recipes.py)."""
+    history = load('Plans/memory_canonical_history_fixtures.json')['canonical_history_families']
+    recipes = json.loads((ROOT / 'Plans/memory_write_recipe_fixtures.json').read_text())['families']
+    bases = {f['event_type']: f['states'] for f in history}
+    operations = {f['event_type']: f['states']['before']['operation'] for f in writer_families}
+    install_original_custody(writer_states=[(f['event_type'], f['states']) for f in writer_families],
+                             history_families=history,
+                             recipe_families=[(f, bases[f['event_type']]) for f in recipes if f['event_type'] in operations],
+                             checkpoint_families=checkpoint_families, writer_operations=operations)
 
 
 def check_resources():
@@ -1665,6 +1933,7 @@ def main():
     # Standing check 9 before any instance validation: dormant branches cannot hide an unresolved reference.
     mirrors = require_resolved_references()
     families = {x['event_type']: x for x in contracts['families']}; counts = {}
+    compose_custody(fixtures['writer_families'], fixtures['checkpoint_families'])
     if args.family:
         assert args.family in families
         families = {args.family: families[args.family]}; fixtures = select_family(fixtures, args.family)

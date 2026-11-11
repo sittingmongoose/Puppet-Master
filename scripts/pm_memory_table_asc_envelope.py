@@ -22,7 +22,7 @@ def ASC05_envelope(value, context):
 def case(value):
     context = None
     table = g.GuardTable([
-        g.Guard('ASC05_envelope', g.Invariant('/original/full_value', 'satisfies its closed retained envelope edition'), 'start_receipt_missing', ASC05_envelope),
+        g.Guard('ASC05_envelope', g.Invariant('/original/full_value', 'satisfies the envelope edition of the selected SP-1101 recipe, with its CV-1101/CV-253 date-time profiles'), 'start_receipt_missing', ASC05_envelope),
     ])
 
     def check(value):

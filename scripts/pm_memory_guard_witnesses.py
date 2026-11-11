@@ -38,12 +38,136 @@ def edited(value, *edits):
 
 
 def rehash(m, state, path):
-    """Refresh the frozen digest of the retained record at path (its value was changed coherently)."""
+    """Refresh the digest of the retained record at path (its value was changed coherently): the current writer's
+    canonical original (`original`) carries its CV-339 commitment; every other record its frozen digest."""
     record = state
     for key in path:
         record = record[key]
-    record['full_value_sha256'] = m.historical_digest(record['full_value'])
+    record['full_value_sha256'] = (m.numbers.full_value_commitment(record['full_value']) if path == ['original']
+                                   else m.historical_digest(record['full_value']))
     return state
+
+
+def with_custody(m, call, seal=(), replace=None):
+    """Run call() with custody changed for this one call, then restore it exactly (sweep part 2B, SP-1101).
+
+    seal: (value, row, event, writer, recorded) originals Storage sealed as written (recorded: the commitment the
+    retained record carries, None for a bare checkpoint value), so a defective sealed original reaches the frozen
+    verifier's own rows; replace: (value, row, event, entries, recorded) puts exactly these (binding, recipe) entries
+    at that original's ref and commitment (a forged or ambiguous custody record)."""
+    saved = {ref: {c: list(entries) for c, entries in commits.items()} for ref, commits in m.ORIGINAL_CUSTODY.items()}
+    try:
+        for value, row, event, writer, recorded in seal:
+            m.seal_original(value, row, event, writer, recorded=recorded)
+        if replace is not None:
+            value, row, event, entries, recorded = replace
+            commitment = m.source_commitment(value, recorded)
+            ref = 'seglog:' + m.original_binding(row, event, commitment).event_id
+            m.ORIGINAL_CUSTODY.setdefault(ref, {})[commitment] = list(entries)
+        return call()
+    finally:
+        m.ORIGINAL_CUSTODY.clear()
+        m.ORIGINAL_CUSTODY.update(saved)
+
+
+def sealed_writer(m, call, state, event):
+    """call(state) with the state's canonical writer original sealed as written (the current writer's recipe)."""
+    record = state['original']
+    return lambda: with_custody(m, lambda: call(state), seal=[(record['full_value'], state['operation'], event,
+                                                               m.RECIPE_CURRENT, record['full_value_sha256'])])
+
+
+def downgrade_attempt(m, call, state, event):
+    """SP-1101 downgrade: the writer's original carries the frozen integer-json-v1 digest, while custody holds exactly
+    the current writer's recipe for that record. The recipe comes from custody, so the CV-339 digest row refuses."""
+    bad = edited(state, (['original', 'full_value_sha256'], m.historical_digest(state['original']['full_value'])))
+    value, recorded, row = bad['original']['full_value'], bad['original']['full_value_sha256'], bad['operation']
+    entries = [(m.original_binding(row, event, m.source_commitment(value, recorded)),
+                m.recipe_tuple(event, (value['schema_id'], value['schema_version']), m.RECIPE_CURRENT))]
+    return lambda: with_custody(m, lambda: call(bad), replace=(value, row, event, entries, recorded))
+
+
+def sealed_history(m, call, state, event, written=None):
+    """call(state) with the state's retained canonical original of `event` sealed as the frozen writer wrote it."""
+    record = state['originals'][event]
+    return lambda: with_custody(m, lambda: call(state), seal=[(record['full_value'], written or state['written_operation'], event,
+                                                               m.RECIPE_FROZEN, record['full_value_sha256'])])
+
+
+def history_witnesses(m, add, event, family):
+    """SP-1101 at the canonical history reader (hm) and its start custody gate (sgh), and CV-1101/CV-253 at the
+    retained edition, each one change from an intact canonical original. Defects behind custody are sealed as
+    written, so the frozen verifier's own row refuses them; the custody rows get their four witnesses."""
+    base = event.rsplit('.', 1)[0]
+    started = base + '.started'
+    canonical = family['states']['canonical']
+    read = lambda target: (lambda state: m.read_canonical_history(deepcopy(state), target))
+    row = canonical['written_operation']
+    # For a started family the reader's start custody gate (sgh) checks the same start record first, so the hm rows
+    # are witnessed through the completed families' terminal originals.
+    sites = ([('hm', event, event)] if event.endswith('.completed') else []) + [('sgh', base + '.completed', started)]
+    for prefix, target, held in sites:
+        call = read(target)
+        record = ['originals', held]
+        value = canonical['originals'][held]['full_value']
+        forged = rehash(m, edited(canonical, (record + ['full_value', 'correlation_id'], 'other-operation')), record)
+        custody_witnesses(m, add, prefix + '-custody', prefix + '_custody', prefix, call,
+                          {'intact': canonical, 'forged': forged}, value, row, held, m.RECIPE_FROZEN,
+                          canonical['originals'][held]['full_value_sha256'])
+        P = prefix.upper()
+        sealed = lambda state: sealed_history(m, call, state, held)
+        add(prefix + '-sealed-envelope-extra', prefix + '_body', P + '04_envelope', lambda: call(canonical),
+            sealed(rehash(m, edited(canonical, (record + ['full_value', 'unexpected'], True)), record)))
+        # CV-253 at the retained edition: a sealed original whose Storage time is not terminal uppercase Z refuses.
+        add(prefix + '-sealed-storage-offset', prefix + '_body', P + '04_envelope', lambda: call(canonical),
+            sealed(rehash(m, edited(canonical, (record + ['full_value', 'observed_at_utc'],
+                                                 value['observed_at_utc'][:-1] + '+00:00')), record)))
+        add(prefix + '-sealed-occurred-hour-24', prefix + '_body', P + '04_envelope', lambda: call(canonical),
+            sealed(rehash(m, edited(canonical, (record + ['full_value', 'occurred_at_utc'],
+                                                 value['occurred_at_utc'][:11] + '24:00:00Z')), record)))
+        # The record never selects its edition: a valid 1.0.0 original sealed under the 2.0.0 frozen recipe refuses.
+        compat = family['states']['compatibility']
+        cvalue = compat['originals'][held]['full_value']; crecorded = compat['originals'][held]['full_value_sha256']
+        add(prefix + '-edition-from-custody', prefix + '_body', P + '04_envelope', lambda: call(compat),
+            lambda: with_custody(m, lambda: call(compat), replace=(cvalue, compat['written_operation'], held, [
+                (m.original_binding(compat['written_operation'], held, m.source_commitment(cvalue, crecorded)),
+                 m.recipe_tuple(held, ('pm.event.v0', '2.0.0'), m.RECIPE_FROZEN))], crecorded)))
+        add(prefix + '-sealed-payload-extra', prefix + '_joins', P + '05_payload_schema', lambda: call(canonical),
+            sealed(rehash(m, edited(canonical, (record + ['full_value', 'payload', 'unexpected'], True)), record)))
+        add(prefix + '-sealed-producer', prefix + '_joins', P + '06_producer', lambda: call(canonical),
+            sealed(rehash(m, edited(canonical, (record + ['full_value', 'actor_ref'], 'component:Other')), record)))
+        add(prefix + '-sealed-binding', prefix + '_joins', P + '07_binding', lambda: call(canonical),
+            sealed(forged))
+        # A legitimate leap second and a lowercase t at the retained Storage times stay readable (CV-1101/CV-253).
+        for label, stamp in (('leap-second', '2016-12-31T23:59:60Z'), ('lower-t', value['observed_at_utc'].replace('T', 't'))):
+            valid = rehash(m, edited(canonical, (record + ['full_value', 'observed_at_utc'], stamp),
+                                     (record + ['full_value', 'persisted_at_utc'], stamp)), record)
+            sealed(valid)()
+
+
+def custody_witnesses(m, add, label, phase, prefix, call, state, value, row, event, writer, recorded, edition=None):
+    """The four SP-1101 custody rows of one site, each from the intact control `call(state)` with one change:
+    R1 an unsealed coherent forgery; R2 the same bytes sealed twice; R3 a sealed binding for another operation;
+    R4 a sealed recipe with no installed frozen verifier."""
+    p = prefix.upper()
+    edition = edition or (value['schema_id'], value['schema_version'])
+    commitment = m.source_commitment(value, recorded)
+    binding = m.original_binding(row, event, commitment)
+    recipe = m.recipe_tuple(event, edition, writer)
+    other_writer = m.RECIPE_FROZEN if writer == m.RECIPE_CURRENT else m.RECIPE_CURRENT
+    unsealed = state['forged']
+    add(label + '-unsealed-forgery', phase, p + 'R1_sealed', lambda: call(state['intact']), lambda: call(unsealed))
+    add(label + '-ambiguous-recipe', phase, p + 'R2_unambiguous', lambda: call(state['intact']),
+        lambda: with_custody(m, lambda: call(state['intact']), replace=(value, row, event, [
+            (binding, recipe), (binding, m.recipe_tuple(event, edition, other_writer))], recorded)))
+    foreign = m.numbers.OriginalBinding(**{**{f: getattr(binding, f) for f in m.numbers.OriginalBinding.__dataclass_fields__},
+                                           'owner_operation_id': 'other-operation'})
+    add(label + '-foreign-binding', phase, p + 'R3_binding', lambda: call(state['intact']),
+        lambda: with_custody(m, lambda: call(state['intact']), replace=(value, row, event, [(foreign, recipe)], recorded)))
+    unknown = m.numbers.RecipeTuple(**{**{f: getattr(recipe, f) for f in m.numbers.RecipeTuple.__dataclass_fields__},
+                                       'producer_recipe': 'legacy-permissive'})
+    add(label + '-uninstalled-recipe', phase, p + 'R4_recipe', lambda: call(state['intact']),
+        lambda: with_custody(m, lambda: call(state['intact']), replace=(value, row, event, [(binding, unknown)], recorded)))
 
 
 def with_expected(state, action):
@@ -71,6 +195,7 @@ def maintenance(m, fixtures, families):
     stateful = {f['event_type']: f['states'] for f in fixtures['stateful_families']}
     writers = {f['event_type']: f['states'] for f in fixtures['writer_families']}
     checkpoints = {f['event_type']: f for f in fixtures['checkpoint_families']}
+    histories = {f['event_type']: f for f in m.load('Plans/memory_canonical_history_fixtures.json')['canonical_history_families']}
     generic = m.load('Plans/event_record_index_checkpoint_contract_fixtures.json')['positive']['current_read_without_old_controls']
     for event in families:
         S = stateful[event]; W = writers[event]
@@ -119,15 +244,28 @@ def maintenance(m, fixtures, families):
             add('writer-original-shape', 'apo_shape', 'APO01_shape', lambda: append(terminal),
                 lambda: append(edited(terminal, (['original', 'unexpected'], True))))
             add('writer-original-envelope', 'apo_envelope', 'APO05_envelope', lambda: append(terminal),
-                lambda: append(rehash(m, edited(terminal, (['original', 'full_value', 'unexpected'], True)), ['original'])))
+                sealed_writer(m, append, rehash(m, edited(terminal, (['original', 'full_value', 'unexpected'], True)), ['original']), event))
             add('writer-new-append-completed-row', 'ap_phase', 'AP14_phase', lambda: append(terminal),
                 lambda: append({**deepcopy(retry), 'original': None}))
+            # SP-1101 downgrade: a current-writer original carrying the frozen digest still selects CV-339 (custody).
+            add('writer-original-frozen-digest', 'apo_body', 'APO04_digest', lambda: append(terminal),
+                downgrade_attempt(m, append, terminal, event))
+            custody_witnesses(m, add, 'writer-original', 'apo_custody', 'apo', append,
+                              {'intact': terminal, 'forged': rehash(m, edited(terminal, (['original', 'full_value', 'actor_ref'], 'component:Other')), ['original'])},
+                              terminal['original']['full_value'], terminal['operation'], event, m.RECIPE_CURRENT,
+                              terminal['original']['full_value_sha256'])
         else:
             canonical = W['started-retry']
             add('writer-canonical-envelope', 'sgc_envelope', 'SGC05_envelope', lambda: append(canonical),
-                lambda: append(rehash(m, edited(canonical, (['original', 'full_value', 'unexpected'], True)), ['original'])))
+                sealed_writer(m, append, rehash(m, edited(canonical, (['original', 'full_value', 'unexpected'], True)), ['original']), event))
             add('writer-canonical-reference', 'sgc_reference', 'SGC06_reference', lambda: append(canonical),
-                lambda: append(rehash(m, edited(canonical, (['original', 'full_value', 'actor_ref'], 'component:Other')), ['original'])))
+                sealed_writer(m, append, rehash(m, edited(canonical, (['original', 'full_value', 'actor_ref'], 'component:Other')), ['original']), event))
+            add('writer-canonical-frozen-digest', 'sgc_body', 'SGC04_digest', lambda: append(canonical),
+                downgrade_attempt(m, append, canonical, event))
+            custody_witnesses(m, add, 'writer-canonical', 'sgc_custody', 'sgc', append,
+                              {'intact': canonical, 'forged': rehash(m, edited(canonical, (['original', 'full_value', 'actor_ref'], 'component:Other')), ['original'])},
+                              canonical['original']['full_value'], canonical['operation'], event, m.RECIPE_CURRENT,
+                              canonical['original']['full_value_sha256'])
 
         # Phase model.
         crash = {'op': 'crash'}
@@ -250,15 +388,24 @@ def maintenance(m, fixtures, families):
         join = lambda checkpoint=generic, row=ck['operation'], value=ck['value']: m.checkpoint_check(
             deepcopy(checkpoint), deepcopy(row), deepcopy(value), event)
         cv = ck['value']
-        add('checkpoint-envelope', 'ck_envelope', 'CK01_envelope', join, lambda: join(value={**cv, 'unexpected': True}))
+        # Each value defect is a retained original Storage sealed as written, so the join's own row refuses it.
+        sealed_join = lambda bad: (lambda: with_custody(m, lambda: join(value=bad), seal=[(bad, ck['operation'], event, m.RECIPE_FROZEN, None)]))
+        add('checkpoint-envelope', 'ck_envelope', 'CK01_envelope', join, sealed_join({**cv, 'unexpected': True}))
+        add('checkpoint-storage-offset', 'ck_envelope', 'CK01_envelope', join,
+            sealed_join({**cv, 'persisted_at_utc': cv['persisted_at_utc'][:-1] + '+00:00'}))
         add('checkpoint-schema', 'ck_envelope', 'CK02_checkpoint_schema', join,
             lambda: join(checkpoint=edited(generic, (['checkpoint', 'unexpected'], True))))
-        add('checkpoint-family', 'ck_event', 'CK05_event_type', join, lambda: join(value={**cv, 'event_type': base + '.other'}))
+        add('checkpoint-family', 'ck_event', 'CK05_event_type', join, sealed_join({**cv, 'event_type': base + '.other'}))
+        add('checkpoint-event-id', 'ck_event', 'CK06_event_id', join, sealed_join({**cv, 'event_id': OTHER_EVENT_ID}))
         add('checkpoint-key', 'ck_event', 'CK07_idempotency_key', join,
-            lambda: join(value={**cv, 'idempotency_key': 'memory-maintenance:' + OTHER_SHA}))
-        add('checkpoint-project', 'ck_project', 'CK09_project', join, lambda: join(value={**cv, 'project_id': 'other-project'}))
+            sealed_join({**cv, 'idempotency_key': 'memory-maintenance:' + OTHER_SHA}))
+        add('checkpoint-project', 'ck_project', 'CK09_project', join, sealed_join({**cv, 'project_id': 'other-project'}))
         add('checkpoint-payload', 'ck_project', 'CK10_payload', join,
-            lambda: join(value=edited(cv, (['payload', 'source_revision_sha256'], OTHER_SHA))))
+            sealed_join(edited(cv, (['payload', 'source_revision_sha256'], OTHER_SHA))))
+        custody_witnesses(m, add, 'checkpoint', 'ck_custody', 'ck', lambda value: join(value=value),
+                          {'intact': cv, 'forged': {**cv, 'correlation_id': 'other-operation'}}, cv, ck['operation'], event,
+                          m.RECIPE_FROZEN, None)
+        history_witnesses(m, add, event, histories[event])
 
         # Card 6 dedup.
         if base == 'memory.dedup_sweep':
@@ -282,6 +429,7 @@ def maintenance(m, fixtures, families):
 def archive(a, fixtures, families):
     m = a.core
     counts = {}
+    histories = {f['event_type']: f for f in m.load('Plans/memory_canonical_history_fixtures.json')['canonical_history_families']}
     for event in families:
         fam = next(f for f in fixtures['families'] if f['event_type'] == event)
         S, W = fam['states'], fam['writer_states']
@@ -330,7 +478,13 @@ def archive(a, fixtures, families):
             add('writer-original-shape', 'aao_shape', 'AAO01_shape', lambda: append(terminal),
                 lambda: append(edited(terminal, (['original', 'unexpected'], True))))
             add('writer-original-envelope', 'aao_envelope', 'AAO05_envelope', lambda: append(terminal),
-                lambda: append(rehash(m, edited(terminal, (['original', 'full_value', 'unexpected'], True)), ['original'])))
+                sealed_writer(m, append, rehash(m, edited(terminal, (['original', 'full_value', 'unexpected'], True)), ['original']), event))
+            add('writer-original-frozen-digest', 'aao_body', 'AAO04_digest', lambda: append(terminal),
+                downgrade_attempt(m, append, terminal, event))
+            custody_witnesses(m, add, 'writer-original', 'aao_custody', 'aao', append,
+                              {'intact': terminal, 'forged': rehash(m, edited(terminal, (['original', 'full_value', 'actor_ref'], 'component:Other')), ['original'])},
+                              terminal['original']['full_value'], terminal['operation'], event, m.RECIPE_CURRENT,
+                              terminal['original']['full_value_sha256'])
             add('writer-new-append-completed-row', 'aa_phase', 'AA12_phase', lambda: append(terminal),
                 lambda: append({**deepcopy(retry), 'original': None}))
         else:
@@ -341,11 +495,18 @@ def archive(a, fixtures, families):
             add('canonical-shape', 'asc_shape', 'ASC01_shape', lambda: append(canonical),
                 lambda: append(edited(canonical, (['original', 'unexpected'], True))))
             add('canonical-envelope', 'asc_envelope', 'ASC05_envelope', lambda: append(canonical),
-                lambda: append(rehash(m, edited(canonical, (fv + ['unexpected'], True)), ['original'])))
+                sealed_writer(m, append, rehash(m, edited(canonical, (fv + ['unexpected'], True)), ['original']), event))
             add('canonical-payload-schema', 'asc_payload_schema', 'ASC06_payload_schema', lambda: append(canonical),
-                lambda: append(rehash(m, edited(canonical, (fv + ['payload', 'unexpected'], True)), ['original'])))
+                sealed_writer(m, append, rehash(m, edited(canonical, (fv + ['payload', 'unexpected'], True)), ['original']), event))
             add('canonical-producer', 'asc_joins', 'ASC07_producer', lambda: append(canonical),
-                lambda: append(rehash(m, edited(canonical, (fv + ['actor_ref'], 'component:Other')), ['original'])))
+                sealed_writer(m, append, rehash(m, edited(canonical, (fv + ['actor_ref'], 'component:Other')), ['original']), event))
+            add('canonical-frozen-digest', 'asc_body', 'ASC04_digest', lambda: append(canonical),
+                downgrade_attempt(m, append, canonical, event))
+            custody_witnesses(m, add, 'canonical', 'asc_custody', 'asc', append,
+                              {'intact': canonical, 'forged': rehash(m, edited(canonical, (fv + ['correlation_id'], 'other-operation')), ['original'])},
+                              canonical['original']['full_value'], canonical['operation'], event, m.RECIPE_CURRENT,
+                              canonical['original']['full_value_sha256'])
             add('canonical-replay-policy', 'asc_joins', 'ASC08_replay_policy', lambda: append(canonical),
-                lambda: append(rehash(m, edited(canonical, (fv + ['replay_policy'], 'projector_replay_only')), ['original'])))
+                sealed_writer(m, append, rehash(m, edited(canonical, (fv + ['replay_policy'], 'projector_replay_only')), ['original']), event))
+        history_witnesses(m, add, event, histories[event])
     return counts

@@ -26,7 +26,7 @@ def CK02_checkpoint_schema(value, context):
 def case(value):
     context = None
     table = g.GuardTable([
-        g.Guard('CK01_envelope', g.Invariant('/value', 'satisfies its closed retained envelope edition'), 'checkpoint_join', CK01_envelope),
+        g.Guard('CK01_envelope', g.Invariant('/value', 'satisfies the envelope edition of the selected SP-1101 recipe, with its CV-1101/CV-253 date-time profiles'), 'checkpoint_join', CK01_envelope),
         g.Guard('CK02_checkpoint_schema', g.Invariant('/checkpoint/checkpoint', 'satisfies the SP-278 checkpoint schema'), 'checkpoint_join', CK02_checkpoint_schema),
     ])
 

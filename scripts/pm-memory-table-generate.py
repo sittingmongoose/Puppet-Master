@@ -86,8 +86,10 @@ def target_chain(prefix, code, where, source=True):
     phase(prefix + '_body', f'valid_target at {where}: artifact order, manifest,{" source," if source else ""} and target identity.', rows)
 
 
-def retained_chain(prefix, code, where, binding=True):
-    """original_matches conjuncts: record shape, then flush, value binding and full-value digest."""
+def retained_chain(prefix, code, where, binding=True, selected=False):
+    """original_matches conjuncts: record shape, then flush, value binding and full-value digest.
+
+    selected=True: a canonical original read through SP-1101, whose digest is that of the selected recipe."""
     p = prefix.upper()
     phase(prefix + '_shape', f'original_matches at {where}: the retained record has exactly its three fields.', [
         (p + '01_shape', '/', 'is an object with exactly full_value, full_value_sha256 and durability', code,
@@ -95,22 +97,42 @@ def retained_chain(prefix, code, where, binding=True):
     rows = [(p + '02_flush', '/durability', 'is full_flush', code, "value['durability'] != 'full_flush'")]
     if binding:
         rows.append((p + '03_binding', '/full_value', 'equals the expected full value', code, "value['value_matches'] is not True"))
-    rows.append((p + '04_digest', '/full_value_sha256', 'equals the frozen integer-json-v1 digest of the retained value', code,
+    rows.append((p + '04_digest', '/full_value_sha256', SELECTED_DIGEST if selected else 'equals the frozen integer-json-v1 digest of the retained value', code,
                  "value['full_value_sha256'] != value['expected_full_value_sha256']"))
     phase(prefix + '_body', f'original_matches at {where}: flush{", value binding" if binding else ""} and digest.', rows)
 
 
+SELECTED_DIGEST = 'equals the full-value commitment of the SP-1101 selected recipe (CV-339 current writer, integer-json-v1 frozen writer)'
+
+
+def custody_chain(prefix, code, where):
+    """SP-1101 resolution of a retained canonical original through the shared RetainedDispatcher (sweep part 2B).
+
+    The observation is the dispatcher's refusal reason, or None when the resolution completed (its frozen verifier
+    ran the site's rows). Each row is one distinct predicate of the resolution."""
+    p = prefix.upper()
+    phase(prefix + '_custody', f'SP-1101 resolution at {where}: one sealed original, one binding, one installed recipe.', [
+        (p + 'R1_sealed', '/full_value', 'resolves to the original Storage sealed at its seglog ref with exactly these frozen bytes', code,
+         "value['custody_refusal'] not in (None, 'recipe_ambiguous', 'original_binding', 'recipe_unknown')"),
+        (p + 'R2_unambiguous', '/full_value', 'is sealed with exactly one binding and recipe', code,
+         "value['custody_refusal'] == 'recipe_ambiguous'"),
+        (p + 'R3_binding', '/full_value', 'its sealed binding equals the binding the reader expects', code,
+         "value['custody_refusal'] == 'original_binding'"),
+        (p + 'R4_recipe', '/full_value', 'its sealed write-time recipe has an installed frozen verifier', code,
+         "value['custody_refusal'] == 'recipe_unknown'")])
+
+
 def history_chain(prefix, code, where):
-    """historical_matches conjuncts for canonical retained envelopes."""
+    """historical_matches conjuncts for canonical retained envelopes (the SP-1101 frozen verifier's rows)."""
     p = prefix.upper()
     phase(prefix + '_shape', f'historical_matches at {where}: the retained record has exactly its three fields.', [
         (p + '01_shape', '/', 'is an object with exactly full_value, full_value_sha256 and durability', code,
          "value['shape_valid'] is not True")])
-    phase(prefix + '_body', f'historical_matches at {where}: flush, digest and the frozen envelope edition.', [
+    phase(prefix + '_body', f'historical_matches at {where}: flush, digest and the envelope edition of the selected recipe.', [
         (p + '02_flush', '/durability', 'is full_flush', code, "value['durability'] != 'full_flush'"),
-        (p + '03_digest', '/full_value_sha256', 'equals the frozen integer-json-v1 digest of the retained value', code,
+        (p + '03_digest', '/full_value_sha256', SELECTED_DIGEST, code,
          "value['full_value_sha256'] != value['expected_full_value_sha256']"),
-        (p + '04_envelope', '/full_value', 'satisfies its closed retained envelope edition', code,
+        (p + '04_envelope', '/full_value', 'satisfies the envelope edition of the selected recipe, with its CV-1101/CV-253 date-time profiles', code,
          "value['envelope_valid'] is not True")])
     phase(prefix + '_joins', f'historical_matches at {where}: payload schema, producer and semantic joins.', [
         (p + '05_payload_schema', '/full_value/payload', 'satisfies the family payload schema', code,
@@ -119,6 +141,7 @@ def history_chain(prefix, code, where):
          "value['actor_ref'] != value['expected_actor_ref']"),
         (p + '07_binding', '/full_value', 'the semantic fields and payload equal the frozen write-time operation', code,
          "value['binding_matches'] is not True")])
+    custody_chain(prefix, code, where)
 
 
 def access_phase(name, prefix, where):
@@ -148,9 +171,9 @@ phase('sg_unrecorded', 'start_custody_gate: any path except first start admissio
      "value['record_present'] is not True and value['canonical_present'] is not True")])
 retained_chain('sgr', START, 'start_custody_gate (retained start record)')
 history_chain('sgh', START, 'start_custody_gate (canonical history start record)')
-retained_chain('sgc', START, 'start_custody_gate (started writer canonical original)', binding=False)
+retained_chain('sgc', START, 'start_custody_gate (started writer canonical original)', binding=False, selected=True)
 phase('sgc_envelope', 'start_custody_gate (started writer canonical original): the retained envelope edition.', [
-    ('SGC05_envelope', '/original/full_value', 'satisfies its closed retained envelope edition', START,
+    ('SGC05_envelope', '/original/full_value', 'satisfies the envelope edition of the selected SP-1101 recipe, with its CV-1101/CV-253 date-time profiles', START,
      "value['envelope_valid'] is not True")])
 phase('sgc_reference', 'start_custody_gate (started writer canonical original): the producer fields equal the canonical reference.', [
     ('SGC06_reference', '/original/full_value', 'the producer fields equal the canonical reference', START,
@@ -158,6 +181,7 @@ phase('sgc_reference', 'start_custody_gate (started writer canonical original): 
 phase('sgc_reduced', 'start_custody_gate (started writer canonical original): the reduced fields equal the expected start value (defence in depth: a subset of SGC06).', [
     ('SGC07_reduced', '/original/full_value', 'the reduced phase-model fields equal the expected start value', START,
      "value['reduced_matches'] is not True")])
+custody_chain('sgc', START, 'start_custody_gate (started writer canonical original)')
 phase('sgl_later', 'start_custody_gate: every later retained original cites exactly this start record.', [
     ('SGL01_object', '/<later original>/full_value', 'is an object', START, "value['is_object'] is not True"),
     ('SGL02_causation', '/<later original>/full_value/causation_event_id', 'equals the start event id', START,
@@ -200,13 +224,14 @@ phase('ap_inline', '_append_current: the inline payload fits the Storage inline 
 phase('ap_partition', '_append_current: the dedupe key uses the encoded project~ partition (CV-365).', [
     ('AP13_partition', '/dedupe_key', 'equals [project~ partition, event type, idempotency key]', 'scope_partition_mismatch',
      "value['dedupe_key'] != value['expected_dedupe_key']")])
-retained_chain('apo', 'original_value_changed', '_append_current (returned original)', binding=False)
+retained_chain('apo', 'original_value_changed', '_append_current (returned original)', binding=False, selected=True)
 phase('apo_envelope', '_append_current (returned original): the retained envelope edition.', [
-    ('APO05_envelope', '/original/full_value', 'satisfies its closed retained envelope edition', 'original_value_changed',
+    ('APO05_envelope', '/original/full_value', 'satisfies the envelope edition of the selected SP-1101 recipe, with its CV-1101/CV-253 date-time profiles', 'original_value_changed',
      "value['envelope_valid'] is not True")])
 phase('apo_producer', '_append_current (returned original): the producer projection equals the retry candidate.', [
     ('APO06_producer', '/original/full_value', 'the producer fields equal the retry candidate', 'original_value_changed',
      "value['producer_matches'] is not True")])
+custody_chain('apo', 'original_value_changed', '_append_current (returned original)')
 phase('ap_phase', '_append_current: a new append requires its lawful operation phase.', [
     ('AP14_phase', '/operation/phase', 'is accepted for started and effect_committed for completed', 'wrong_phase',
      "value['phase'] != value['required_phase']")])
@@ -354,7 +379,7 @@ phase('bd_completed', 'accept: a completed row keeps its retained terminal origi
 # --------------------------------------------------------------- SP-278 checkpoint join
 CK = 'checkpoint_join'
 phase('ck_envelope', 'checkpoint_identity_matches: the retained envelope and the checkpoint schema.', [
-    ('CK01_envelope', '/value', 'satisfies its closed retained envelope edition', CK, "value['envelope_valid'] is not True"),
+    ('CK01_envelope', '/value', 'satisfies the envelope edition of the selected SP-1101 recipe, with its CV-1101/CV-253 date-time profiles', CK, "value['envelope_valid'] is not True"),
     ('CK02_checkpoint_schema', '/checkpoint/checkpoint', 'satisfies the SP-278 checkpoint schema', CK,
      "value['checkpoint_valid'] is not True")])
 phase('ck_store', 'checkpoint_identity_matches: checkpoint Store and key.', [
@@ -373,6 +398,7 @@ phase('ck_scope', 'checkpoint_identity_matches: Project scope (defence in depth:
 phase('ck_project', 'checkpoint_identity_matches: Project and payload.', [
     ('CK09_project', '/value/project_id', 'equals the operation Project', CK, "value['project_id'] != value['expected_project_id']"),
     ('CK10_payload', '/value/payload', 'equals the payload recomputed from the operation', CK, "value['payload_matches'] is not True")])
+custody_chain('ck', CK, 'checkpoint_identity_matches (retained original)')
 
 # --------------------------------------------------------------- Card 1b archive families (pm_memory_archive_events.py)
 phase('cg_present', 'cutoff_gate: the operation names an approved cutoff authority.', [
@@ -471,21 +497,22 @@ phase('aa_payload_join', 'archive append_current: every recomputed payload field
 phase('aa_partition', 'archive append_current: the dedupe key uses the encoded project~ partition (CV-365).', [
     ('AA11_partition', '/dedupe_key', 'equals [project~ partition, event type, idempotency key]', 'partition',
      "value['dedupe_key'] != value['expected_dedupe_key']")])
-retained_chain('aao', 'original_value', 'archive append_current (returned terminal original)', binding=False)
+retained_chain('aao', 'original_value', 'archive append_current (returned terminal original)', binding=False, selected=True)
 phase('aao_envelope', 'archive append_current (returned terminal original): the retained envelope edition.', [
-    ('AAO05_envelope', '/original/full_value', 'satisfies its closed retained envelope edition', 'original_value',
+    ('AAO05_envelope', '/original/full_value', 'satisfies the envelope edition of the selected SP-1101 recipe, with its CV-1101/CV-253 date-time profiles', 'original_value',
      "value['envelope_valid'] is not True")])
 phase('aao_projection', 'archive append_current (returned terminal original): the non-Storage projection equals the candidate.', [
     ('AAO06_projection', '/original/full_value', 'the non-Storage fields equal the retry candidate', 'original_value',
      "value['projection_matches'] is not True")])
+custody_chain('aao', 'original_value', 'archive append_current (returned terminal original)')
 phase('aa_phase', 'archive append_current: a new append requires its lawful operation phase.', [
     ('AA12_phase', '/operation/phase', 'is accepted for started and effect_committed for completed', 'phase',
      "value['phase'] != value['required_phase']")])
-retained_chain('asc', START, 'archive start_custody_gate (started writer canonical original)', binding=False)
+retained_chain('asc', START, 'archive start_custody_gate (started writer canonical original)', binding=False, selected=True)
 phase('asc_object', 'archive start_custody_gate (started writer canonical original): the full value is an object.', [
     ('ASC00_object', '/original/full_value', 'is an object', START, "value['is_object'] is not True")])
 phase('asc_envelope', 'archive start_custody_gate (started writer canonical original): the retained envelope edition.', [
-    ('ASC05_envelope', '/original/full_value', 'satisfies its closed retained envelope edition', START, "value['envelope_valid'] is not True")])
+    ('ASC05_envelope', '/original/full_value', 'satisfies the envelope edition of the selected SP-1101 recipe, with its CV-1101/CV-253 date-time profiles', START, "value['envelope_valid'] is not True")])
 phase('asc_payload_schema', 'archive start_custody_gate (started writer canonical original): the started payload schema.', [
     ('ASC06_payload_schema', '/original/full_value/payload', 'satisfies the started payload schema', START, "value['payload_valid'] is not True")])
 phase('asc_joins', 'archive start_custody_gate (started writer canonical original): producer, policy and payload binding.', [
@@ -494,6 +521,7 @@ phase('asc_joins', 'archive start_custody_gate (started writer canonical origina
     ('ASC08_replay_policy', '/original/full_value/replay_policy', 'equals the reference replay policy', START,
      "value['replay_policy'] != value['reference_replay_policy']"),
     ('ASC09_payload', '/original/full_value/payload', 'equals the reference payload', START, "value['payload_matches'] is not True")])
+custody_chain('asc', START, 'archive start_custody_gate (started writer canonical original)')
 
 # --------------------------------------------------------------- Card 6 dedup (pm_memory_policy.py)
 DI = 'dedup_input_shape'

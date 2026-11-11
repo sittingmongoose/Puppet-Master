@@ -27,7 +27,7 @@ def case(value):
     context = None
     table = g.GuardTable([
         g.Guard('ASC02_flush', g.Invariant('/durability', 'is full_flush'), 'start_receipt_missing', ASC02_flush),
-        g.Guard('ASC04_digest', g.Invariant('/full_value_sha256', 'equals the frozen integer-json-v1 digest of the retained value'), 'start_receipt_missing', ASC04_digest),
+        g.Guard('ASC04_digest', g.Invariant('/full_value_sha256', 'equals the full-value commitment of the SP-1101 selected recipe (CV-339 current writer, integer-json-v1 frozen writer)'), 'start_receipt_missing', ASC04_digest),
     ])
 
     def check(value):
