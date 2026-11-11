@@ -24,6 +24,48 @@ const hideMinimap = (f) => f.addStyleTag({ content: '.pmw-ed-canvas { visibility
 /* how many lines the tallest value that sits beside its label takes (a stacked or long one has the plate's width) */
 const tallestBeside = (f) => f.evaluate(() => Math.max(0, ...Array.from(document.querySelectorAll('#pjxc .pjxc-facts:not([data-v3-stack]) > .pmu-fact:not([data-v3-long]) > .pmu-factv')).map((v) => Math.round(v.getBoundingClientRect().height / (parseFloat(getComputedStyle(v).lineHeight) || 19)))));
 
+const LOOKS = ['basic-dark', 'basic-light', 'friendly-dark', 'friendly-light', 'glass-dark', 'glass-light', 'retro-dark', 'retro-light', 'nier-dark', 'nier-light'];
+/* v3 keeps v2's layout (review r2, N4 and N5). Three things the audit cannot see, each measured in v3 and in v2 on the
+   same state:
+   - text cut off with an ellipsis: a by-design clamp, which the audit leaves alone. v3 must cut nothing v2 shows whole;
+   - a plate's glyph beside its title: in a narrow pane c.css sizes the titles for v2's gap, so a different gap puts
+     the glyph on a line of its own;
+   - an open question's answers starting on the question's own left edge;
+   - the widths Split's own layout steps are measured on (the questions' card, pjxcsteps; an open question's answers,
+     pjxcsec): the same in both, so every step falls at the same window width and flipping never re-flows the page. */
+const layout = (f) => f.evaluate(() => {
+	const cut = Array.from(document.querySelectorAll('#pjxc *')).filter((e) => {
+		if (e.scrollWidth <= e.clientWidth || !e.getClientRects().length) return false;
+		const cs = getComputedStyle(e);
+		return cs.textOverflow === 'ellipsis' && cs.overflowX !== 'visible';
+	}).map((e) => String(e.getAttribute('class') || e.tagName).split(' ')[0] + ': ' + e.textContent.trim().slice(0, 70));
+	const apart = Array.from(document.querySelectorAll('#pjxc .pjxc-plate[data-head="plate"] > .pmu-cardhead')).filter((h) => {
+		const i = h.querySelector(':scope > .pjxc-plico'), x = h.querySelector('.pmu-cardtitle');
+		if (!i || !x || !h.getClientRects().length) return false;
+		const a = i.getBoundingClientRect(), b = x.getBoundingClientRect();
+		return a.bottom <= b.top || a.top >= b.bottom || a.left >= b.left;
+	}).map((h) => h.parentElement.getAttribute('data-plate'));
+	const sec = document.querySelector('#pjxc .pjx-np-sec[data-state="open"]'), q = sec && sec.querySelector('.pjx-np-q'), ans = sec && sec.querySelector('.pjx-np-body > *');
+	const steps = document.querySelector('#pjxc .pjxc-steps'), body = sec && sec.querySelector('.pjx-np-body'), bs = body && getComputedStyle(body);
+	const half = (n) => Math.round(n * 2) / 2;
+	return { cut, apart, heads: document.querySelectorAll('#pjxc .pjxc-plate[data-head="plate"] > .pmu-cardhead').length, edge: q && ans && ans.getClientRects().length ? Math.round(ans.getBoundingClientRect().left - q.getBoundingClientRect().left) : null,
+		steps: steps && steps.getClientRects().length ? half(steps.getBoundingClientRect().width) : null, answers: body && body.getClientRects().length ? half(body.clientWidth - parseFloat(bs.paddingLeft) - parseFloat(bs.paddingRight)) : null };
+});
+const show = async (t, f, v) => { await f.evaluate((x) => window.PJX.read.set(x), v); await f.waitForFunction((x) => window.PJX.read.get() === x, v, { timeout: 6000 }); await t.page.waitForTimeout(220); };
+/* measured in v3 (which is showing), then in v2, and v3 is left showing */
+async function sameLayout(t, f, name) {
+	const a = await layout(f);
+	await show(t, f, 'v2');
+	const b = await layout(f);
+	await show(t, f, 'v3');
+	const more = a.cut.filter((x) => !b.cut.includes(x)), apart = a.apart.filter((x) => !b.apart.includes(x));
+	await t.check(`${name}: v3 cuts off no text v2 shows whole`, !more.length, more.join(' | '));
+	await t.check(`${name}: every plate’s glyph is beside its title, as in v2`, !apart.length && a.heads === b.heads, apart.join(', ') + ' (' + a.heads + ' heads, v2 ' + b.heads + ')');
+	if (b.edge === 0) await t.equal(`${name}: the open question’s answers start on its own edge, as in v2`, a.edge, 0);
+	if (b.steps != null) await t.equal(`${name}: the questions’ card is as wide as in v2`, a.steps, b.steps);
+	if (b.answers != null) await t.equal(`${name}: an open question’s answers have v2’s width`, a.answers, b.answers);
+}
+
 /* This file is about v3. The kit is also run with ?split=v2 on the page (the other files then test v2): here that run
    first shows the page did open on v2, then goes to v3 by the strip, so every check below holds in both runs. */
 const askedV2 = (t) => /[?&]split=v2\b/.test(String(t.args.page || ''));
@@ -148,6 +190,7 @@ export const tests = {
 			await f.evaluate((i) => window.PJX.split.select(i), id);
 			await t.page.waitForTimeout(350);
 			await t.audit(`v3 ${id}`);
+			await sameLayout(t, f, `v3 ${id}`);
 		}
 		await t.app.act(t, 'new');
 		await t.page.waitForTimeout(600);
@@ -156,6 +199,7 @@ export const tests = {
 			await t.app.moment(t, m);
 			await t.page.waitForTimeout(1400);
 			await t.audit(`v3 ${m}`);
+			await sameLayout(t, f, `v3 ${m}`);
 		}
 	},
 	async 'audit: narrower windows and the dialogs in v3'(t) {
@@ -172,7 +216,41 @@ export const tests = {
 			await t.page.selectOption('#width', w);
 			await t.page.waitForTimeout(900);
 			await t.audit(`v3 at ${w}`);
+			await sameLayout(t, f, `v3 at ${w}`);
 		}
+		// every plate of the busiest Project at each width (review r2, N4: at 860 every head had its glyph on its own line)
+		for (const w of ['1280', '1024', '860', '640', '']) {
+			await t.page.selectOption('#width', w);
+			await f.evaluate(() => window.PJX.split.select('tastebook'));
+			await t.app.until(t, f, `tastebook at ${w || 'full width'}: its plates are drawn`, () => document.querySelectorAll('#pjxc .pjxc-plate[data-head="plate"] > .pmu-cardhead').length >= 5, null, 10000);
+			await t.page.waitForTimeout(500);
+			await sameLayout(t, f, `tastebook at ${w || 'full width'}`);
+		}
+	},
+	/* R7: all ten looks, with the demo set, on first run and with 40 projects. The audit (overflow, clipped text, covered
+	   controls, console) and v2's layout kept, the chosen library row's second line included (review r2, N5). */
+	async 'every look: the demo set, first run and 40 projects in v3'(t) {
+		const f = await open(t);
+		await hideMinimap(f);
+		for (const look of LOOKS) {
+			await t.step(look, async () => {
+				if (look !== 'basic-dark') await t.app.look(t, look);
+				for (const sc of ['demo', 'first', 'many']) {
+					await t.page.selectOption('#scenario', sc);
+					await t.app.page(t, f, 'projects');
+					await t.app.until(t, f, `${look}, ${sc}: the page is drawn`, (x) => { const r = document.querySelector('.pjx-root'); return !!document.querySelector('#pjxc') && !!r && r.getAttribute('data-scenario') === x && document.documentElement.getAttribute('data-pjx-read') === 'v3'; }, sc, 12000);
+					if (sc === 'demo') {
+						await f.evaluate(() => window.PJX.split.select('tastebook'));
+						await t.app.until(t, f, `${look}: tastebook is the chosen row`, () => /tastebook/.test((document.querySelector('#pjxc .pjxc-row[aria-current="true"]') || {}).textContent || ''), null, 8000);
+					}
+					await t.page.waitForTimeout(350);
+					await t.audit(`v3 ${look}, ${sc}`);
+					await sameLayout(t, f, `${look}, ${sc}`);
+				}
+			});
+		}
+		await t.page.selectOption('#scenario', 'demo');
+		await t.app.look(t, 'basic-dark');
 	},
 	/* the 2026-11-10 fix pass's parts (SPEC-split-v3 R9): Where work runs' rows, the sync paused on a clash, and the
 	   dialogs Split opens. In v3 they follow the page; in v2 they are as the fix pass made them. */
@@ -246,7 +324,7 @@ export const tests = {
 		await t.page.waitForTimeout(200);
 		await t.crop('v3-paused', f.locator('[data-plate="online"]'), 'Split v3, Online copy paused on a clash (LOOK)');
 		await t.audit('v3 paused on a clash');
-		for (const look of ['basic-dark', 'basic-light', 'friendly-dark', 'friendly-light', 'glass-dark', 'glass-light', 'retro-dark', 'retro-light', 'nier-dark', 'nier-light']) {
+		for (const look of LOOKS) {
 			await t.step(look, async () => {
 				if (look !== 'basic-dark') { await t.app.look(t, look); await t.app.page(t, f, 'projects'); await f.evaluate(() => window.PJX.split.select('photo-sorter')); }
 				await t.app.until(t, f, `${look}: still paused`, () => !!document.querySelector('[data-c-key="p:settle"]'), null, 10000);

@@ -13,7 +13,8 @@
    the plate's own width, and marked for c-v3.css:
    - data-v3-stack on the facts: most of this plate's values would not fit on one line beside their labels (Backup,
      Where work runs in a half-width plate), so every label goes above its value and the plate reads one way;
-   - data-v3-long on a fact: this one value would need more than two lines beside its label (a sentence, a long path),
+   - data-v3-long on a fact: this one value would need more than two lines beside its label (a sentence), or is one
+     line that cannot wrap and does not fit there (a folder path, which Split shortens in the middle only when it must),
      so it alone goes under its label, the plate wide.
    Nothing else in Split's markup is touched, and the marks go when v2 comes back. */
 (function (W) {
@@ -56,10 +57,12 @@
       if (!w || !rows.length) return;   // not laid out (hidden): leave it as it is
       const label = Math.min(w * LABEL, Math.max.apply(null, rows.map((f) => widthOf(f.querySelector('.pmu-factl')))));
       const col = Math.max(40, w - label - GAP);
-      const need = rows.map((f) => widthOf(f.querySelector('.pmu-factv')));
+      // a path is one line that never wraps (.pjxc-mid, in the code face): it needs its whole width, not two lines' worth
+      const path = rows.map((f) => f.querySelector('.pmu-factv .pjxc-mid'));
+      const need = rows.map((f, i) => (path[i] ? Math.ceil(widthOf(path[i])) + 1 : widthOf(f.querySelector('.pmu-factv'))));
       const stack = rows.length >= 3 && need.filter((n) => n > col).length * 2 > rows.length;
       flag(g, 'data-v3-stack', stack);
-      rows.forEach((f, i) => flag(f, 'data-v3-long', !stack && need[i] > col * LINES * FILL));
+      rows.forEach((f, i) => flag(f, 'data-v3-long', !stack && need[i] > (path[i] ? col : col * LINES * FILL)));
     });
     // the page's own box: its width is what the plates follow, and nothing marked here changes it
     const page = D.querySelector('#pjxc .pjxc-scroll');

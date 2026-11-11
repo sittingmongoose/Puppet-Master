@@ -51,9 +51,17 @@ the History row's menu are not v3's and are the same in both.
 Its checks are `tools/checks/split-v3.check.mjs` in this folder's kit: the switch on the strip and by key, what
 switching keeps, v2 left exactly as it was, how each plate's facts are set, the fix pass's parts in v3 and unchanged in
 v2 (the Settle the clash dialog in all ten looks), and browser-check's audit (overflow, clipped text, covered controls)
-on every demo Project, New Project and its moments, and at 1280, 1024, 860 and 640 px. The
-kit's other checks run in v3 unchanged, since the page opens on it; `--set page=file://<dir>/projects-concepts.html?split=v2`
-runs them in v2. It was also looked at in Basic, Friendly, Glass, Retro and NieR, with 40 projects and on first run.
+on every demo Project, New Project and its moments, at 1280, 1024, 860 and 640 px, and in all ten looks with the demo
+set, on first run and with 40 projects. On each of those states it also measures v3 against v2 for what the audit
+cannot see: v3 cuts off no text v2 shows whole, every plate's glyph stays beside its title, and an open question's
+answers start on the question's own edge. The kit's other checks run in v3 unchanged, since the page opens on it;
+`--set page=file://<dir>/projects-concepts.html?split=v2` runs the kit in v2 (this file then shows the page opened on
+v2 and goes to v3 by the strip).
+
+Review r2 (2026-11-11, `REVIEW-concept-B-r2-opus-high.md`) found two places where v3's own gaps broke a layout v2
+sizes for its gaps, both fixed by leaving those gaps as v2 has them: at 860 px every plate head put its glyph on a
+line of its own (N4), and in Retro the chosen library row's second line was cut off (N5). The measures above were
+added for them; they fail on the build before the fix and pass after it.
 
 ## Split v2 (pass 2, 2026-11-02): the chosen concept
 
