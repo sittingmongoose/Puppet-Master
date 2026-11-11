@@ -11,7 +11,7 @@
 
 const O55_REF = (() => { const m = new Map(); const ref = window.PM12_REFERENCE; if (ref && ref.byCat) for (const c of Object.values(ref.byCat)) for (const r of c.settings || []) m.set(r.id, r); return m; })();
 const O55_SCOPE = {
-  global: 'Every project, unless a project sets its own',
+  global: 'Everywhere, unless a project sets its own',   /* FO-131, P's rule: a value says Everywhere, then the levels its row offers */
   project: 'This project',
   run: 'Can be changed for a single run',
   account: 'Each account can have its own',

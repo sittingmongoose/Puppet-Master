@@ -174,7 +174,7 @@
     const body = PM51.section({ title: 'In short', body: PM51.rows([
       { label: 'Summary', value: p.description || 'Your own profile' },
       { label: 'Safety level', help: 'Built-in profiles are the preset levels; your own count as Custom.', value: PM51.valueLabel('safety.rules.permission-preset', presetOf(p)) },
-      { label: 'Applies', help: 'This project, only until you close the app, or everywhere.', value: scopeWord(p.scope) },
+      { label: 'Where it applies', help: 'This project, only until you close the app, or everywhere.', value: scopeWord(p.scope) },
       { label: 'Asks before', value: cap1(listSentence(sum.asks, 'nothing extra')) },
       { label: 'Never allows', value: cap1(listSentence(sum.never, 'nothing is fully blocked')) }
     ]) });
