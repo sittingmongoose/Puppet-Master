@@ -26,7 +26,7 @@ html[data-smx-view="new"] .pmt-cz .pmt-cz-dialog:not(.pmt-cz-beside) .pmt-cz-doc
 @keyframes smxCzPulse { 0% { box-shadow: 0 0 0 0 var(--pmt-cz-accent, rgba(100, 181, 246, .9)); } 100% { box-shadow: 0 0 0 10px transparent; } }
 /* a close-up under the example, for a choice the sample cannot show or shows too small to notice. It never covers
    the example; the quick sets and the meter step aside while it is there, so everything still fits beside the options */
-.smx-cz-closeup { position: relative; display: block; border: 1px dashed var(--pmt-cz-line, rgba(128, 128, 128, .4)); border-radius: var(--pmt-cz-r, 8px); background: var(--pmt-cz-ground, #1e1e1e); color: var(--pmw-text, inherit); overflow: hidden; }
+.smx-cz-closeup { position: relative; display: block; border: 1px dashed var(--pmt-cz-line, rgba(128, 128, 128, .4)); border-radius: var(--pmt-cz-r, 8px); background: var(--pmt-cz-ground, Canvas); color: var(--pmw-text, inherit); overflow: hidden; }
 .smx-cz-closeup-cap { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 5px 10px; border-bottom: 1px solid var(--pmt-cz-line, rgba(128, 128, 128, .3)); font-size: 11px; color: var(--pmw-text-2, inherit); }
 .smx-cz-closeup-cap b { font-weight: 650; color: var(--pmw-text, inherit); }
 .smx-cz-closeup-cap button { font: inherit; color: inherit; background: transparent; border: 1px solid var(--pmt-cz-line, rgba(128, 128, 128, .3)); border-radius: 6px; padding: 2px 8px; cursor: pointer; }
@@ -46,12 +46,14 @@ html[data-smx-view="new"] .pmt-cz .pmt-cz-dialog:not(.pmt-cz-beside) .pmt-cz-gro
   html[data-smx-view="new"] .pmt-cz .pmt-cz-dialog:not(.pmt-cz-beside) .pmt-cz-preview { min-height: 0; }
   html[data-smx-view="new"] .pmt-cz .pmt-cz-dialog:not(.pmt-cz-beside) .pmt-cz-pvbox { min-height: 150px; max-height: 190px; }
   html[data-smx-view="new"] .pmt-cz .pmt-cz-dialog:not(.pmt-cz-beside) .pmt-cz-side { display: none; }
+  /* stacked, a close-up under the example would leave the options a sliver: it takes the example's place until "Hide" */
+  html[data-smx-view="new"] .pmt-cz .pmt-cz-dialog:not(.pmt-cz-beside) .pmt-cz-top:has(.smx-cz-closeup) .pmt-cz-preview { display: none; }
 }
 
 /* ---- Customize Pip and Adjust NieR: their example stays at the top of the sheet --------------------------------------- */
 html[data-smx-view="new"] .pipe-top, html[data-smx-view="new"] .o55nc-top { position: sticky; top: 0; z-index: 4; }
-html[data-smx-view="new"] .pipe-top::before, html[data-smx-view="new"] .o55nc-top::before { content: ''; position: absolute; inset: -12px -14px -8px; z-index: -1; background: var(--k3-surface-1, var(--k3-bg-0, #1e1e1e)); border-bottom: 1px solid var(--k3-line, rgba(128, 128, 128, .3)); }
-html[data-theme^="glass"][data-smx-view="new"] .pipe-top::before, html[data-theme^="glass"][data-smx-view="new"] .o55nc-top::before { background: var(--k3-bg-0, #04060d); }
+html[data-smx-view="new"] .pipe-top::before, html[data-smx-view="new"] .o55nc-top::before { content: ''; position: absolute; inset: -12px -14px -8px; z-index: -1; background: var(--k3-surface-1, var(--k3-bg-0, Canvas)); border-bottom: 1px solid var(--k3-line, rgba(128, 128, 128, .3)); }
+html[data-theme^="glass"][data-smx-view="new"] .pipe-top::before, html[data-theme^="glass"][data-smx-view="new"] .o55nc-top::before { background: var(--k3-bg-0, Canvas); }
 
 /* ---- the options as tabs: one group at a time beside the example ("Everything" brings back the long list) ---------- */
 html[data-smx-view="new"] .pmt-cz-body[data-smx-tab="colors"] > .pmt-cz-group:not([data-group="colors"]),
@@ -63,7 +65,7 @@ html[data-smx-view="new"] .pmt-cz-body[data-smx-tab="behavior"] > .pmt-cz-group:
 html[data-smx-view="new"] .pmt-cz-body[data-smx-tab="cursor"] > .pmt-cz-group:not([data-group="cursor"]),
 html[data-smx-view="new"] .pmt-cz-body[data-smx-tab="ground"] > .pmt-cz-group:not([data-group="ground"]),
 html[data-smx-view="new"] .pmt-cz-body[data-smx-tab="effects"] > .pmt-cz-group:not([data-group="effects"]) { display: none !important; }
-html[data-smx-view="new"] .pmt-cz-nav [data-jump][data-smx-on="true"] { background: var(--pmt-cz-accent, var(--accent-primary)); color: var(--background, #111); font-weight: 650; border-radius: 6px; }
+html[data-smx-view="new"] .pmt-cz-nav [data-jump][data-smx-on="true"] { background: var(--pmt-cz-accent, var(--accent-primary)); color: var(--background, Canvas); font-weight: 650; border-radius: 6px; }
 html[data-smx-view="new"] .pmt-cz-nav .smx-cz-all { margin-left: auto; opacity: .85; }
 html[data-smx-view="new"] .pmt-cz-nav .smx-cz-all[data-smx-on="true"] { opacity: 1; text-decoration: underline; text-underline-offset: 3px; }
 html[data-smx-view="new"] .pmt-cz .pmt-cz-dialog:not(.pmt-cz-beside) .pmt-cz-nav { display: flex; flex-wrap: wrap; align-items: center; gap: 2px 4px; }
@@ -76,8 +78,8 @@ html[data-smx-view="new"] .pmt-cz-side > .smx-cz-try { order: -1; }
 
 /* ---- Customize Pip and Adjust NieR as side sheets: the picture stays, the presets scroll away ------------------------ */
 html[data-smx-view="new"] .pipe-panel .pipe-top, html[data-smx-view="new"] .o55nc-panel .o55nc-top { display: contents !important; }
-html[data-smx-view="new"] .pipe-panel .pipe-stage, html[data-smx-view="new"] .o55nc-panel .o55nc-pv { position: sticky !important; top: 0; z-index: 5; box-shadow: 0 -16px 0 16px var(--k3-surface-0, #1e1e1e), 0 10px 14px -10px rgb(0 0 0 / .5); }
-html[data-smx-view="new"] .pipe-panel .smx-cz-said, html[data-smx-view="new"] .o55nc-panel .smx-cz-said { position: sticky; width: auto; max-width: none; top: calc(var(--smx-cz-pin, 158px) - 8px); z-index: 5; margin: 0 0 10px; background: var(--k3-surface-1, #2d2d2d); box-shadow: 0 -10px 0 0 var(--k3-surface-0, #1e1e1e), 0 10px 14px -10px rgb(0 0 0 / .5); }
+html[data-smx-view="new"] .pipe-panel .pipe-stage, html[data-smx-view="new"] .o55nc-panel .o55nc-pv { position: sticky !important; top: 0; z-index: 5; box-shadow: 0 -16px 0 16px var(--k3-surface-0, Canvas), 0 10px 14px -10px rgb(0 0 0 / .5); }
+html[data-smx-view="new"] .pipe-panel .smx-cz-said, html[data-smx-view="new"] .o55nc-panel .smx-cz-said { position: sticky; width: auto; max-width: none; top: calc(var(--smx-cz-pin, 158px) - 8px); z-index: 5; margin: 0 0 10px; background: var(--k3-surface-1, Canvas); box-shadow: 0 -10px 0 0 var(--k3-surface-0, Canvas), 0 10px 14px -10px rgb(0 0 0 / .5); }
 html[data-smx-view="new"] .pipe-panel .pipe-side, html[data-smx-view="new"] .o55nc-panel .o55nc-side { margin-bottom: 10px; }
 
 @media (prefers-reduced-motion: reduce) { .smx-cz-pulse { animation: none; } }

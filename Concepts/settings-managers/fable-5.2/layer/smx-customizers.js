@@ -27,6 +27,10 @@
 
   /* ------------------------------------------------------------------ which choice was touched, in the words on screen */
   function describe(target, root) {
+    // a preset of the Pip editor (Full, Quiet, Still, Plain): a plain button with no key, and the choice a newcomer is
+    // most likely to press. It said nothing (review R1, F11).
+    const preset = target.closest && target.closest('[data-pipe-preset]');
+    if (preset) return { key: 'preset', name: 'Preset', choice: firstText(preset) || T(preset.textContent), help: txt(preset, 'small'), kind: 'preset', group: 'Presets', groupKey: '', root, ctl: preset, value: preset.dataset.pipePreset || '' };
     const ctl = target.closest('button, input, select, textarea, [role="switch"], [role="radio"], [role="option"], [role="slider"]');
     if (!ctl || ctl.closest('.pmt-cz-top, .pmt-cz-nav, .pmt-cz-head, .pmt-cz-foot, .smx-cz-closeup, .smx-cz-said, .pmt-cz-ghead, .pmt-cz-findrow, .pipe-top, .o55nc-top, .pipe-ghead')) return null;
     const keyEl = ctl.closest('[data-key], [data-tok], [data-pipe-part], [data-o55nc-key], [data-part], [data-chip], [data-opt]');
@@ -64,8 +68,10 @@
     return info;
   }
   const sentence = (info) => {
+    if (info.kind === 'preset') return `You chose the preset <b>${esc(info.choice)}</b>.`;
     if (info.kind === 'switch') return `You turned <b>${esc(info.name)}</b> ${info.on ? 'on' : 'off'}.`;
     if (info.kind === 'amount') return `<b>${esc(info.name)}</b> is now <b>${esc(info.choice)}</b>.`;
+    if (info.choice && info.choice.toLowerCase() === info.name.toLowerCase()) return `You chose <b>${esc(info.choice)}</b>.`;   // "Blink is now Blink"
     return info.choice ? `<b>${esc(info.name)}</b> is now <b>${esc(info.choice)}</b>.` : `You changed <b>${esc(info.name)}</b>.`;
   };
 
@@ -132,6 +138,7 @@
   const closeCloseup = (root) => { const c = root.querySelector('.smx-cz-closeup'); if (c) c.remove(); };
   /* PMConcept7's own notes about an option (rulers, indentation): whatever it says now that it did not say before */
   const notesOf = (root) => [...root.querySelectorAll('.pmt-cz-note, .pmt-cz-pnote')].map((n) => T(n.textContent)).filter(Boolean);
+  const dot = (t) => { const x = T(t); return !x || /[.!?…]$/.test(x) ? x : x + '.'; };   // PMConcept7's short helps end without a full stop
   function say(root, kind, info, before) {
     const line = said(root); if (!line) return;
     settle(info);
@@ -139,11 +146,11 @@
     closeCloseup(root);
     if (kind === 'pip') {
       const play = root.querySelector('.pipe-play');
-      const can = play && play.getAttribute('aria-disabled') !== 'true' && /faces|motion|look/i.test(info.group);
+      const can = play && play.getAttribute('aria-disabled') !== 'true' && (info.kind === 'preset' || /faces|motion|look/i.test(info.group));
       if (can) W.setTimeout(() => { if (play.isConnected) play.click(); }, 220);
-      setSaid(line, 'plain', `${sentence(info)} ${esc(info.help)} ${can ? 'The five Pips above are playing it now.' : /sound/i.test(info.group) ? 'This one you hear, not see.' : 'It shows in the app itself, where Pip appears.'}`);
+      setSaid(line, 'plain', `${sentence(info)} ${esc(dot(info.help))} ${can ? 'The five Pips above are playing it now.' : /sound/i.test(info.group) ? 'This one you hear, not see.' : 'It shows in the app itself, where Pip appears.'}`);
     } else if (kind === 'nier') {
-      setSaid(line, 'plain', `${sentence(info)} ${esc(info.help)} ${/look|pointer/i.test(info.group) ? 'Look at the small menu above, and at the page behind this sheet.' : 'It shows in the app itself: look at the page behind this sheet.'}`);
+      setSaid(line, 'plain', `${sentence(info)} ${esc(dot(info.help))} ${/look|pointer/i.test(info.group) ? 'Look at the small menu above, and at the page behind this sheet.' : 'It shows in the app itself: look at the page behind this sheet.'}`);
     } else {
       const rule = ruleFor(kind, info.key) || {};
       const own = notesOf(root).find((t) => !before.includes(t));                          // the dialog's own note, if it wrote one
@@ -161,11 +168,38 @@
         line.insertAdjacentElement('afterend', c);
         try { up.draw(c.querySelector('.smx-cz-closeup-body'), info); } catch (e) { W.console.error('close-up failed', e); }
         c.querySelector('[data-smx-cz-back]').addEventListener('click', () => closeCloseup(root));
-        where += rule.none ? ' A close-up under the example shows it.' : ' The close-up under the example shows it larger.';
+        // stacked (a narrow dialog) the close-up takes the example's place, so the sentence does not send you to the example
+        const bodyEl = root.querySelector('.pmt-cz-body');
+        const stacked = !!bodyEl && W.getComputedStyle(bodyEl).gridTemplateColumns.trim().split(/\s+/).length < 2;
+        if (stacked) where = rule.none ? `${rule.why || 'The sample cannot show this one.'} A close-up shows it; “Hide” brings the example back.` : 'It is a small change, so a close-up shows it larger; “Hide” brings the example back.';
+        else where += rule.none ? ' A close-up shows it.' : ' The close-up shows it larger.';
       }
       setSaid(line, up ? 'closeup' : 'plain', `${sentence(info)} ${esc(where)}${ownText}`);
+      bringLines(root, where);
     }
     if (preview) { preview.classList.remove('smx-cz-pulse'); void preview.offsetWidth; preview.classList.add('smx-cz-pulse'); }
+  }
+
+  /* When the dialog is narrow the example sits above the options and shows about six lines of its sample. A sentence
+     that says "look at line 7" then points outside it (review R1, F10): the sample is scrolled, inside its own box, so
+     that the lines named are in it. A full-size example shows every line and is left alone. */
+  function bringLines(root, text) {
+    const sc = root.querySelector('.pmt-cz-preview .pmw-ed-scroll'); if (!sc || sc.scrollHeight <= sc.clientHeight + 4) return;
+    const nums = []; String(text || '').replace(/lines? (\d+)(?: (?:to|and) (?:line )?(\d+))?/gi, (m, a, b) => { nums.push(Number(a)); if (b) nums.push(Number(b)); return m; });
+    if (!nums.length) return;
+    const lh = parseFloat(W.getComputedStyle(sc).lineHeight) || 20;
+    const first = Math.min(...nums), last = Math.max(...nums);
+    const mid = ((first + last) / 2 - 0.5) * lh, span = (last - first + 1) * lh;
+    const top = span >= sc.clientHeight ? (first - 1) * lh : mid - sc.clientHeight / 2;
+    sc.scrollTop = Math.max(0, Math.min(sc.scrollHeight - sc.clientHeight, Math.round(top)));
+  }
+  /* The options jump to a group by scrolling it to the top of their box. Stacked under the example, "the top" is behind
+     the example, so the group's heading was hidden: the jump lands under the example instead. */
+  function landUnder(root) {
+    const body = root.querySelector('.pmt-cz-body'), top = root.querySelector('.pmt-cz-body > .pmt-cz-top'); if (!body || !top) return;
+    const stacked = W.getComputedStyle(body).gridTemplateColumns.trim().split(/\s+/).length < 2;
+    const want = stacked ? `${Math.round(top.getBoundingClientRect().height) + 14}px` : '';
+    if (body.style.scrollPaddingTop !== want) body.style.scrollPaddingTop = want;
   }
 
   /* ------------------------------------------------------------------ the options as tabs, one group at a time */
@@ -225,6 +259,7 @@
     for (const root of D.querySelectorAll('.pmt-cz:not(.pmt-cz-parked)')) {
       if (!root.querySelector('.pmt-cz-dialog') || root.getBoundingClientRect().width < 50) continue;
       attach(root, root.classList.contains('pmed-cz') ? 'editor' : 'terminal', '.pmt-cz-preview');
+      landUnder(root);
     }
     for (const stage of D.querySelectorAll('.pipe-top .pipe-stage')) { const root = stage.closest('.pipe'); if (root) attach(root, 'pip', '.pipe-stage'); }
     for (const pv of D.querySelectorAll('.o55nc-top .o55nc-pv')) { const root = pv.closest('.o55nc-top').parentElement; if (root) attach(root, 'nier', '.o55nc-pv'); }
@@ -275,11 +310,11 @@
     guides: { title: 'Indent guides', draw: (b, info) => {
       const hay = (info.choice + ' ' + info.value).toLowerCase();
       const off = /off|none/.test(hay) && info.key === 'indentGuides', rainbow = /rainbow/.test(hay);
-      const g = (n) => Array.from({ length: n }, (_, i) => `<i style="display:inline-block;width:2ch;border-left:1px solid ${off ? 'transparent' : rainbow ? ['#e06c75', '#e5c07b', '#98c379', '#61afef'][i % 4] : 'currentColor'};opacity:${rainbow ? .9 : .4}">&nbsp;</i>`).join('');
+      const g = (n) => Array.from({ length: n }, (_, i) => `<i style="display:inline-block;width:2ch;border-left:1px solid ${off ? 'transparent' : rainbow ? ['var(--k3-red)', 'var(--k3-amber)', 'var(--k3-green)', 'var(--k3-blue)'][i % 4] : 'currentColor'};opacity:${rainbow ? .9 : .4}">&nbsp;</i>`).join('');
       b.innerHTML = `<div style="padding:8px 10px;${mono}">${caption('The thin lines that show how deep each line sits, here five levels deep.')}${lines(['fn plan(recipe: &Recipe) {', g(1) + 'for step in &recipe.steps {', g(2) + 'if step.needs_oven {', g(3) + 'match step.heat {', g(4) + 'Heat::High =&gt; preheat(220),', g(3) + '}'])}</div>`;
     } },
     sticky: { title: 'Sticky scroll', draw: (b) => {
-      b.innerHTML = `<div style="position:relative;height:118px;padding:8px 10px;${mono}overflow:hidden"><div style="position:absolute;left:10px;right:10px;top:8px;padding:2px 0;border-bottom:1px solid color-mix(in srgb, currentColor 30%, transparent);background:var(--pmt-cz-ground,#1e1e1e);z-index:1">impl Recipe {  <span style="opacity:.6">← stays in view while you read inside it</span></div><div style="padding-top:26px;animation:smxCzScroll 4s ease-in-out infinite alternate">${lines(['    let k = n as f32;', '    let steps: Vec&lt;_&gt; = self.steps.iter()', '        .map(|s| s.scale(k)).collect();', '    if steps.is_empty() {', '        return self.clone();', '    }', '    Recipe { serves: n, steps }'])}</div></div><style>@keyframes smxCzScroll{to{transform:translateY(-60px)}}</style>`;
+      b.innerHTML = `<div style="position:relative;height:118px;padding:8px 10px;${mono}overflow:hidden"><div style="position:absolute;left:10px;right:10px;top:8px;padding:2px 0;border-bottom:1px solid color-mix(in srgb, currentColor 30%, transparent);background:var(--pmt-cz-ground,Canvas);z-index:1">impl Recipe {  <span style="opacity:.6">← stays in view while you read inside it</span></div><div style="padding-top:26px;animation:smxCzScroll 4s ease-in-out infinite alternate">${lines(['    let k = n as f32;', '    let steps: Vec&lt;_&gt; = self.steps.iter()', '        .map(|s| s.scale(k)).collect();', '    if steps.is_empty() {', '        return self.clone();', '    }', '    Recipe { serves: n, steps }'])}</div></div><style>@keyframes smxCzScroll{to{transform:translateY(-60px)}}</style>`;
     } },
     tabs: { title: 'Tab size', draw: (b, info) => {
       const n = Number(String(info.choice || info.value).replace(/\D+/g, '')) || 4;

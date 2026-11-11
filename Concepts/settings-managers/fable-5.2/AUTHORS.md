@@ -72,7 +72,9 @@ others as **exceptions** to it ("Follows the main rule: … [Give it its own]"),
 
 - All ten looks must work with no rule per look: colours, radii and shadows come only from the Settings tokens
   (`var(--k3-…)`: `text-1/2/3`, `surface-0/1`, `line`, `line-strong`, `accent`, `accent-ink`, `accent-soft`,
-  `accent-soft-2`, `amber`, `red`, `green`, `radius-sm/md/lg`, `shadow-md`). Never a hex colour.
+  `accent-soft-2`, `amber`, `red`, `green`, `radius-sm/md/lg`, `shadow-md`). Never a hex colour, with one exception: a
+  picture of a look or of a named colour that is NOT the current one carries that look's own colours (the NieR card
+  and the accent swatches on Look & feel). A `var()` falls back to a system colour (`Canvas`, `CanvasText`), not a hex.
 - No pills (no shape whose corner is half its short side), no one-sided stripes, no gradients for decoration.
 - Text is at least 11px. Icons are SVG through `SMX.icon(name)`.
 - Layout answers to the width of the Settings area with container queries (`@container smx (max-width: …)`), never to
@@ -174,7 +176,7 @@ been opened once (`{"do":"view","view":"today"}`, then `{"do":"view","view":"new
   `ui.elsewhere(['setting.id', ['Name', 'value in words', 'route', 'setting.id or empty']], {title, help})` draws the
   same card. Moving a setting is then two edits: name its id in a section of its new home, and put it in `also` where
   it was.
-- **Rewording a row:** `SMX.reword({'setting.id': {label, help, action, unit}})` replaces a PMConcept7 row's words as it
+- **Rewording a row:** `SMX.reword({'setting.id': {label, help, action, unit, options: {'old choice': 'new choice'}}})` replaces a PMConcept7 row's words as it
   is drawn (its id, value and control stay), and search and "Everything that moved" use the new words. Use it for
   jargon in a row's label, and to make one choice read the same way wherever it appears.
 - **A field of your own** (a filter box): `<input data-smx-input="name" data-smx-key="name">` runs `SMX.act('name')`

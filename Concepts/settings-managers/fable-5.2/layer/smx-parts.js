@@ -37,7 +37,7 @@
      Every setting has one home. Where it also matters, the page says it in words and the row goes to its home:
      ui.elsewhere(['setting.id', ['Name', 'value in words', 'route', 'setting.id or empty'], {id, name, value}], {title, help}).
      A setting id alone gets its own label and value. A section takes the same list as `also: [...]`. */
-  SMX.valueText = (id) => { let t = ''; try { t = String(kit().valueText(kit().setting(id), kit().value(id))); } catch (e) { const v = SMX.val(id); t = v == null ? '' : String(v); } return /^(true|on)$/i.test(t) ? 'On' : /^(false|off)$/i.test(t) ? 'Off' : t.length > 64 ? t.slice(0, 62) + '…' : t; };
+  SMX.valueText = (id) => { let t = ''; try { t = String(kit().valueText(kit().setting(id), kit().value(id))); } catch (e) { const v = SMX.val(id); t = v == null ? '' : String(v); } const ow = ((SMX.words || {})[id] || {}).options; if (ow && ow[t]) t = ow[t]; return /^(true|on)$/i.test(t) ? 'On' : /^(false|off)$/i.test(t) ? 'Off' : t.length > 64 ? t.slice(0, 62) + '…' : t; };
   ui.elsewhere = (rows, o = {}) => {
     const list = (rows || []).filter(Boolean).map((r) => {
       if (typeof r === 'string') r = { id: r };
@@ -138,10 +138,14 @@
      (written by the Backups builder; it lives here so every chapter, search and the moved list share it) */
   SMX.words = SMX.words || {};
   SMX.reword = (map) => {
-    Object.assign(SMX.words, map || {});
+    // merged per setting: a chapter rewords a row's label, the words pass adds its choices, and neither loses the other's
+    for (const [id, w] of Object.entries(map || {})) SMX.words[id] = Object.assign({}, SMX.words[id], w, w.options ? { options: Object.assign({}, (SMX.words[id] || {}).options, w.options) } : {});
     if (SMX.wordsOn) return; SMX.wordsOn = true;
     const text = (row, sel, to) => { const n = row.querySelector(sel); if (!n) return; const t = [...n.childNodes].find((c) => c.nodeType === 3 && c.nodeValue.trim()); if (t) { if (t.nodeValue !== to) t.nodeValue = to; } else if (!n.firstChild) n.textContent = to; };
-    const fix = (row) => { const w = SMX.words[String(row.id || '').slice(8)]; if (!w) return; if (w.label) text(row, '.setting-label', w.label); if (w.help) text(row, '.setting-description', w.help); if (w.action) { const b = row.querySelector('.setting-control .btn span, .setting-control .o55-textbtn'); if (b && b.textContent !== w.action) b.textContent = w.action; } if (w.unit) { const u = row.querySelector('.o55-unit'); if (u && u.textContent !== w.unit) u.textContent = w.unit; } };
+    /* a dropdown's choices: {options: {'old words': 'new words'}} renames a choice in the list and on the closed
+       dropdown (the value that is saved stays PMConcept7's own) */
+    const choices = (row, map) => { const sel = row.querySelector('select'); if (!sel) return; for (const o of sel.options) { const to = map[o.textContent.trim()] || map[o.value]; if (to && o.textContent !== to) o.textContent = to; } const v = row.querySelector('.pm51-dd-value'), cur = sel.options[sel.selectedIndex]; if (v && cur && v.textContent !== cur.textContent) v.textContent = cur.textContent; };
+    const fix = (row) => { const w = SMX.words[String(row.id || '').slice(8)]; if (!w) return; if (w.options) choices(row, w.options); if (w.label) text(row, '.setting-label', w.label); if (w.help) text(row, '.setting-description', w.help); if (w.action) { const b = row.querySelector('.setting-control .btn span, .setting-control .o55-textbtn'); if (b && b.textContent !== w.action) b.textContent = w.action; } if (w.unit) { const u = row.querySelector('.o55-unit'); if (u && u.textContent !== w.unit) u.textContent = w.unit; } };
     const ROW = '.setting-row[id^="setting-"]';
     const scan = (n) => { if (!n || n.nodeType !== 1) return; if (n.matches(ROW)) fix(n); n.querySelectorAll(ROW).forEach(fix); };
     const start = () => { const host = SMX.host && SMX.host(); if (!host) { W.setTimeout(start, 300); return; } new W.MutationObserver((list) => { for (const m of list) { const el = m.target && m.target.nodeType === 1 ? m.target : m.target && m.target.parentElement; const row = el && el.closest ? el.closest(ROW) : null; if (row) fix(row); for (const n of m.addedNodes) scan(n); } }).observe(host, { childList: true, subtree: true, characterData: true }); scan(host); };
@@ -187,19 +191,21 @@
       if (p.id.includes(':')) continue;
       const title = typeof p.title === 'function' ? p.title(ctx) : p.title;
       const nav = typeof p.nav === 'function' ? p.nav(ctx) : (p.nav || title);
-      idx.push({ kind: 'page', title: p.id === p.chapter ? title : nav, sub: p.id === p.chapter || p.id === 'home' ? (typeof p.purpose === 'function' ? p.purpose(ctx) : (p.purpose || '')) : `${chTitle(p.chapter)}`, route: p.id, text: [title, nav, typeof p.purpose === 'string' ? p.purpose : '', (p.keywords || []).join(' ')].join(' ').toLowerCase(), weight: 3 });
+      idx.push({ kind: 'page', title: p.id === p.chapter ? title : nav, sub: p.id === p.chapter || p.id === 'home' ? (typeof p.purpose === 'function' ? p.purpose(ctx) : (p.purpose || '')) : `${chTitle(p.chapter)}`, route: p.id, text: [title, nav, typeof p.purpose === 'string' ? p.purpose : '', (p.keywords || []).join(' ')].join(' ').toLowerCase(), aka: (p.keywords || []).concat(p.aka || []).map((k) => String(k).toLowerCase()), weight: 3 });
     }
     const place = SMX.placement();
     for (const [id, rec] of place.claimed) {
       const s = kit().setting(id); if (!s) continue;
       let label = s.label, help = s.description || '';
       try { label = kit().rowLabel(s) || label; help = kit().rowHelp(s) || help; } catch (e) { /* inventory words */ }
+      const was = label;                                                                          // what PMConcept7 calls the row: still found by that name
       const w = SMX.words[id]; if (w) { if (w.label) label = w.label; if (w.help) help = w.help; }   // the redesign's own words for this row
+      const aka = [was, s.label].concat(w && w.options ? Object.keys(w.options).concat(Object.values(w.options)) : []).filter((x) => x && x !== label).map((x) => String(x).toLowerCase());
       const m = SMX.match(rec.route); const pg = m ? m.page : null;
       const pTitle = pg ? (typeof pg.nav === 'function' ? pg.nav(ctx) : (pg.nav || (typeof pg.title === 'function' ? pg.title(ctx) : pg.title))) : '';
-      idx.push({ kind: 'setting', title: label, sub: `${pg ? chTitle(pg.chapter) : ''}${pTitle && pg && pg.id !== pg.chapter ? ' › ' + pTitle : ''}${rec.section ? ' › ' + rec.section : ''}`, route: rec.route, reveal: id, text: [label, s.label, help, id.replace(/[.\-]/g, ' ')].join(' ').toLowerCase(), weight: rec.level === 'main' || rec.level === 'drawn' ? 2 : 1 });
+      idx.push({ kind: 'setting', title: label, sub: `${pg ? chTitle(pg.chapter) : ''}${pTitle && pg && pg.id !== pg.chapter ? ' › ' + pTitle : ''}${rec.section ? ' › ' + rec.section : ''}`, route: rec.route, reveal: id, text: [label, s.label, was, help, id.replace(/[.\-]/g, ' ')].join(' ').toLowerCase(), aka, weight: rec.level === 'main' || rec.level === 'drawn' ? 2 : 1 });
     }
-    for (const f of (SMX.thingSources || [])) { try { for (const t of f(ctx.st)) idx.push(Object.assign({ kind: 'thing', weight: 3, text: [t.title, t.sub || ''].join(' ').toLowerCase() }, t)); } catch (e) { /* skip a source that fails */ } }
+    for (const f of (SMX.thingSources || [])) { try { for (const t of f(ctx.st)) idx.push(Object.assign({ kind: 'thing', weight: 3, text: [t.title, t.sub || ''].concat(t.aka || []).join(' ').toLowerCase() }, t, { aka: (t.aka || []).map((k) => String(k).toLowerCase()) })); } catch (e) { /* skip a source that fails */ } }
     INDEX = idx; return idx;
   }
   function find(q) {
@@ -211,7 +217,11 @@
       const title = it.title.toLowerCase();
       for (const w of words) {
         let s = 0;
-        if (title === w) s = 12; else if (title.startsWith(w)) s = 9; else if (word(w).test(title)) s = 7; else if (title.includes(w)) s = 5; else if (word(w).test(it.text)) s = 2; else if (w.length > 3 && it.text.includes(w)) s = 1;
+        if (title === w) s = 12; else if (title.startsWith(w)) s = 9; else if (word(w).test(title)) s = 7; else if (title.includes(w)) s = 5;
+        // "also called": a page's keywords, PMConcept7's own name for a reworded row. "crawl" finds "Read a whole site"
+        // before a page that merely has the letters in its name; "service try order" still finds the row.
+        if (s < 8 && it.aka && it.aka.length) { const k = it.aka.some((x) => x === w) ? 8 : it.aka.some((x) => x.startsWith(w)) ? 6 : it.aka.some((x) => word(w).test(x)) ? 4.5 : 0; if (k > s) s = k; }
+        if (!s) { if (word(w).test(it.text)) s = 2; else if (w.length > 3 && it.text.includes(w)) s = 1; }
         if (!s && SYN[w]) for (const alt of SYN[w]) { if (whole(alt).test(title)) { s = 4; break; } if (whole(alt).test(it.text)) s = Math.max(s, 1.5); }
         if (!s) { ok = false; break; }
         score += s;

@@ -84,7 +84,8 @@
 #smx-root .smx-lk-mini-win i { width: 9px; height: 9px; border-radius: 50%; background: var(--smx-acc); flex: none; }
 #smx-root .smx-lk-mini-win b { font-family: var(--display-font, inherit); font-size: 15px; font-weight: 650; line-height: 1; }
 #smx-root .smx-lk-mini-win em { margin-left: auto; width: 26px; height: 9px; border-radius: var(--border-radius, 6px); background: var(--smx-acc); }
-/* NieR is not one of the app's theme scopes, so its card carries its two inks itself */
+/* NieR is not one of the app's theme scopes, so its card carries its two inks itself: a picture of a look that is
+   not the current one (the one case AUTHORS.md allows a literal colour) */
 #smx-root .smx-lk-mini.is-nier { --background: #d1cdb7; --surface: #dcd8c0; --text-primary: #454138; --border: #454138; --smx-acc: #454138; }
 #smx-root .smx-lk-mini.is-nier[data-smx-shown="dark"] { --background: #2e2c26; --surface: #3b382f; --text-primary: #d1cdb7; --border: #d1cdb7; --smx-acc: #d1cdb7; }
 #smx-root .smx-lk-mini.is-nier .smx-lk-mini-win { border-radius: 0; box-shadow: none; }
@@ -113,7 +114,7 @@
 #smx-root .smx-lkt-row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--lg, 12px); padding: 4px; }
 #smx-root .smx-lkt-btn { padding: var(--sm, 4px) var(--lg, 12px); border: var(--border-width, 1px) solid var(--border); border-radius: var(--border-radius, 6px); font-weight: 600; font-size: .86rem; }
 #smx-root .smx-lkt-btn.is-focus { outline: 2px solid var(--accent-primary); outline-offset: 2px; }
-html[data-focus="high-contrast"] #smx-root .smx-lkt-btn.is-focus { outline: 3px solid var(--text-primary, #fff); }
+html[data-focus="high-contrast"] #smx-root .smx-lkt-btn.is-focus { outline: 3px solid var(--text-primary, CanvasText); }
 html[data-focus="color-blind"] #smx-root .smx-lkt-btn.is-focus { outline: 3px dashed rgb(0, 114, 178); }
 html[data-focus="color-blind"][data-theme$="-dark"] #smx-root .smx-lkt-btn.is-focus { outline-color: rgb(86, 180, 233); }
 #smx-root .smx-lkt-move { position: relative; height: 44px; overflow: hidden; border: 1px dashed var(--border); border-radius: var(--border-radius, 6px); font-size: .8rem; color: var(--text-secondary); }

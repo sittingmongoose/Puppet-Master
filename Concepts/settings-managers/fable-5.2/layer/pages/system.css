@@ -37,3 +37,8 @@
   #smx-root .smx-split > .smx-thing-end { flex-basis: 100%; justify-content: flex-end; padding: 0 4px 9px; }
   #smx-root .smx-all-value { max-width: 100%; }
 }
+
+/* the one row opened in the list of every setting ("Change here") */
+#smx-root .smx-all-edit { margin: 0 4px 8px; }
+#smx-root .smx-all-edit > .panel-card, #smx-root .smx-all-edit > section { margin: 0; }
+#smx-root .smx-all-row .btn.ghost { flex: none; }
