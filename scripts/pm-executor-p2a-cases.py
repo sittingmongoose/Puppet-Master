@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate the DX sweep part 2A witnesses (Plans/executor_event_p2a_cases.json).
+"""Generate the DX sweep part 2A and part 2B witnesses (Plans/executor_event_p2a_cases.json).
 
 Usage: python3 scripts/pm-executor-p2a-cases.py [--check]
 
@@ -160,6 +160,10 @@ def custody_add(doc, edition, family, payload, contract, entry=lambda e: e):
         sem._RECIPE.reset(token)
     made = entry({'recipe_version': edition, 'family': family, 'source_sha256': sha, 'stored_identity': identity,
                   'write_time_edition': EDITION})
+    # One complete original has one authenticated custody entry: a witness whose original equals another's
+    # (or an existing entry's) would silently re-authenticate it under another edition.
+    if sha in ADDED or sha in BASE_CUSTODY:
+        raise RuntimeError('custody entry collision for original ' + sha)
     if made is not None:
         ADDED[sha] = made
     return sha
@@ -456,6 +460,160 @@ def build():
             'the family shape fixtures without their rejected cases')
     literal('IT01-swapped-requires', AC, 'integrity_table_order', {'phase': 'transport_storage', 'swap': [0, 1]}, 'reject', 'IT01_require_order',
             'a factory check() that requires its two rows in swapped order')
+    build_p2b()
+
+
+def lower_t(text):
+    return text[:10] + 't' + text[11:]
+
+
+def edit_dependency(c, ref, field, value):
+    """Change one field of a stored dependency body and recompute its declared digest (an uncatalogued new body)."""
+    dependency = c.doc['capture']['dependencies'][ref]
+    dependency['body'][field] = value
+    dependency['sha256'] = sem.digest(dependency['body'])
+    return c
+
+
+# ============================================================================ sweep part 2B: CV-1101 date-time witnesses
+def build_p2b():
+    """Witnesses for the shared CV-1101 date_time adoption, the F19 field-owner profile and the RFC 9110 Retry-After.
+
+    Each is built like the part 2A witnesses: a named valid seed of its own family, one changed fact with every copy
+    moved and every changed owner record rehashed, kept only when the complete checker refuses it at exactly its row
+    (a control: accepts it).
+    """
+    AC, SP, NS = 'attempt.completed', 'scheduler.pass', 'node.started'
+    BS, BE = 'run.node_backoff_started', 'run.node_backoff_expired'
+
+    # ---- F19: ordinary scheduler clocks admit a lowercase t (CV-515); backoff clock observations do not.
+    def ready_lower(c):
+        ready = copy.deepcopy(c.doc['payload']['ready_nodes'])
+        for node in ready:
+            node['ready_since_utc'] = lower_t(node['ready_since_utc'])
+        selected = copy.deepcopy(c.doc['payload']['selected_nodes'])
+        for item in selected:
+            item['score_tuple']['ready_since_utc'] = lower_t(item['score_tuple']['ready_since_utc'])
+        c.payload('ready_nodes', ready).payload('selected_nodes', selected)
+        return c.body('scheduler', 'selected_nodes', selected)
+    capture_case('F19-control-ready-since-lower-t', SP, 'baseline', ready_lower, None,
+                 'every copy of every ready-since clock (ready nodes, selected score tuples, operation and scheduler records) '
+                 'spelled with a lowercase t', expected='accept')
+
+    def wakes(edit):
+        def apply(c):
+            listed = copy.deepcopy(c.records['scheduler']['body']['wakes'])
+            edit(listed)
+            return c.body('scheduler', 'wakes', listed)
+        return apply
+
+    def all_lower(listed):
+        for wake in listed:
+            wake['recorded_at_utc'] = lower_t(wake['recorded_at_utc'])
+    capture_case('F19-control-wakes-lower-t', SP, 'baseline', wakes(all_lower), None,
+                 'both scheduler wake clocks (prerequisite_resolved, capacity_available) spelled with a lowercase t', expected='accept')
+
+    def first_leap(listed):
+        listed[0]['recorded_at_utc'] = '2016-12-31T23:59:60Z'
+    capture_case('TC04-wake-announced-leap-second', SP, 'baseline', wakes(first_leap), 'TC04_owner_no_leap_second',
+                 'the first wake clock is the announced leap second 2016-12-31T23:59:60Z, which the shared storage_utc_z profile '
+                 'admits and the DX owner profile refuses (still the earliest wake)')
+
+    def shape_ready_lower(doc):
+        for target in (doc['payload'], doc['context']['envelope']['payload']):
+            for node in target['ready_nodes']:
+                node['ready_since_utc'] = lower_t(node['ready_since_utc'])
+            for item in target['selected_nodes']:
+                item['score_tuple']['ready_since_utc'] = lower_t(item['score_tuple']['ready_since_utc'])
+        return doc
+    shape_case('F19-shape-control-ready-since-lower-t', SP, 'score-priority-valid-boundary-50', shape_ready_lower, None,
+               'every ready-since clock of the payload and its inline envelope copy spelled with a lowercase t', expected='accept')
+    shape_case('TC05-shape-backoff-now-lower-t', BE, 'positive',
+               lambda d: sem.mutate(d, [{'path': 'context/now_utc', 'value': lower_t(d['context']['now_utc'])}]),
+               'TC05_backoff_upper_t', 'the backoff-expiry observation now_utc spelled with a lowercase t')
+    score_seed = next(r for r in SHAPES if r['event_type'] == SP and r['case'] == 'score-priority-valid-boundary-50')['payload']
+    score_doc = {'ready_nodes': copy.deepcopy(score_seed['ready_nodes']), 'selected_nodes': copy.deepcopy(score_seed['selected_nodes'])}
+    literal('F19-score-control-lower-t', SP, 'score', shape_ready_lower({'payload': copy.deepcopy(score_doc),
+                                                                         'context': {'envelope': {'payload': copy.deepcopy(score_doc)}}})['payload'],
+            'accept', None, 'ready and selected score tuples whose ready-since clocks use a lowercase t')
+
+    # ---- SP-1101: a retained original's date-time profile is its authenticated edition's frozen resource
+    v0_seed = 'F15-retained-9007199254740991-dedupe_by_idempotency_key'
+
+    def failed_at(value):
+        return lambda d: edit_original(d, lambda c: c.body('failure', 'failed_at_utc', value))
+    history_case('TS-control-v0-zero-offset', BS, v0_seed, failed_at('2026-11-04T12:00:00+00:00'), None,
+                 'a retained v0 original whose failure clock is the same instant written with the zero offset +00:00, '
+                 'valid under the frozen v0 spelling', expected='accept', custody=sem.RETAINED_RECIPE)
+    history_case('TC02-current-edition-lowercase-z', BS, v0_seed, failed_at('2026-11-04T12:00:00z'), 'TC02_shared_utc_z',
+                 'an original authenticated under the current edition whose failure clock ends in a lowercase z (valid v0 '
+                 'spelling): the dispatcher selects the CV-1101 profile, which requires a terminal uppercase Z', custody=sem.CURRENT_RECIPE)
+    history_case('TS-control-v0-lowercase-z', BS, v0_seed, failed_at('2026-11-04T12:00:00.0z'), None,
+                 'a retained v0 original whose failure clock ends in a lowercase z, valid under the frozen v0 spelling',
+                 expected='accept', custody=sem.RETAINED_RECIPE)
+    history_case('TS01-v0-space-separator', BS, v0_seed, failed_at('2026-11-04 12:00:00Z'), 'TS01_spelling',
+                 'a retained v0 original whose failure clock uses a space separator, outside the frozen v0 spelling',
+                 custody=sem.RETAINED_RECIPE)
+
+    # ---- the owner clock rows at their helper boundary
+    for case_id, helper, value, expected, row, defect in [
+            ('TC-control-helper-lower-t', 'instant', '2026-11-04t12:00:00Z', 'accept', None, 'an ordinary owner clock with a lowercase t'),
+            ('TC-control-helper-year-0000', 'instant', '0000-02-29T12:00:00Z', 'accept', None,
+             'year 0000 (a Gregorian leap year) at an ordinary owner clock, which no host datetime can hold'),
+            ('TC-control-helper-long-fraction', 'backoff_instant', '2026-11-04T12:00:00.' + '1' * 5001 + 'Z', 'accept', None,
+             'a backoff clock with 5,001 fractional digits'),
+            ('TC04-helper-announced-leap-second', 'instant', '2016-12-31T23:59:60Z', 'reject', 'TC04_owner_no_leap_second',
+             'the announced leap second 2016-12-31T23:59:60Z at an ordinary owner clock'),
+            ('TC05-helper-backoff-lower-t', 'backoff_instant', '2026-11-04t12:00:00Z', 'reject', 'TC05_backoff_upper_t',
+             'a backoff clock observation with a lowercase t'),
+            ('TC03-helper-unannounced-leap-second', 'instant', '2026-06-30T23:59:60Z', 'reject', 'TC03_shared_calendar',
+             'second 60 at a month end where no leap second was announced'),
+            ('TC02-helper-zero-offset', 'instant', '2026-11-04T12:00:00+00:00', 'reject', 'TC02_shared_utc_z',
+             'the zero offset +00:00 where the owner requires a terminal Z'),
+            ('TC01-helper-trailing-LF', 'instant', '2026-11-04T12:00:00Z\n', 'reject', 'TC01_shared_syntax', 'a trailing LF')]:
+        literal(case_id, AC, 'helper', {'case': case_id, 'helper': helper, 'value': value}, expected, row, defect)
+
+    # ---- the frozen v0 rows at their helper boundary (no retained rate_limited original is modelled)
+    for case_id, helper, value, expected, row, defect in [
+            ('RA-control-v0-numeric-zone', 'retry_after_date_v0', 'Wed, 04 Nov 2026 12:00:05 +0000', 'accept', None,
+             'a numeric-zone Retry-After, which the frozen v0 route parsed and still reads (10a: no tightening of history)'),
+            ('RA01-v0-not-a-date', 'retry_after_date_v0', 'not-a-header', 'reject', 'RA01_date_parses', 'a v0 Retry-After that is no date'),
+            ('RA02-v0-naive-date', 'retry_after_date_v0', 'Wed, 04 Nov 2026 12:00:30', 'reject', 'RA02_date_timezone',
+             'a v0 Retry-After date without a zone'),
+            ('TS-control-v0-helper-offset', 'instant_v0', '2026-11-04t17:00:00+05:00', 'accept', None,
+             'a v0 clock with a lowercase t and a +05:00 offset, valid under the frozen v0 spelling')]:
+        literal(case_id, AC, 'helper', {'case': case_id, 'helper': helper, 'value': value}, expected, row, defect)
+
+    # ---- the strict payload-schema boundary (the registered format predicate)
+    def payload_with(field, value):
+        return {'payload': {**copy.deepcopy(FAMILIES[AC]['baseline']['payload']), field: value}}
+    literal('PS01-ts-announced-leap-second', AC, 'schema', payload_with('ts', '2016-12-31T23:59:60Z'), 'reject', 'PS01_payload_schema',
+            'payload ts is the announced leap second 2016-12-31T23:59:60Z (its pattern admits it; the registered predicate refuses it)')
+    literal('PS01-control-ts-lower-t', AC, 'schema', payload_with('ts', '2026-11-04t12:00:00Z'), 'accept', None,
+            'payload ts with a lowercase t under the strict schema boundary')
+
+    # ---- an other owner's format date-time keeps that owner's RFC 3339 profile (execution_unit_context.schema.json)
+    ref = FAMILIES[NS]['baseline']['capture']['dependency_refs']['execution_unit_context_ref']
+    capture_case('DS-control-context-created-offset', NS, 'baseline',
+                 lambda c: edit_dependency(c, ref, 'created_at_utc', '2026-11-04T17:00:00+05:00'), None,
+                 'the execution context dependency\'s created_at_utc with a +05:00 offset, valid RFC 3339 for that schema', expected='accept')
+    capture_case('DS01-context-created-no-zone', NS, 'baseline',
+                 lambda c: edit_dependency(c, ref, 'created_at_utc', '2026-11-04T12:00:00'), 'DS01_context_schema',
+                 'the execution context dependency\'s created_at_utc without a zone')
+
+    # ---- Retry-After: RFC 9110 HTTP-date (EP-032), each from the accepted IMF-fixdate case, same instant where it parses
+    seed = 'rate-limit-original-Retry-After-http-date'
+    for case_id, header, expected, row, defect in [
+            ('RG-control-rfc850-date', 'Wednesday, 04-Nov-26 12:00:05 GMT', 'accept', None, 'the same instant as an rfc850-date'),
+            ('RG-control-asctime-date', 'Wed Nov  4 12:00:05 2026', 'accept', None, 'the same instant as an asctime-date'),
+            ('RG01-numeric-zone', 'Wed, 04 Nov 2026 12:00:05 +0000', 'reject', 'RG01_http_date_grammar', 'a numeric zone +0000 instead of GMT'),
+            ('RG01-no-weekday', '04 Nov 2026 12:00:05 GMT', 'reject', 'RG01_http_date_grammar', 'no day name'),
+            ('RG01-one-digit-day', 'Wed, 4 Nov 2026 12:00:05 GMT', 'reject', 'RG01_http_date_grammar', 'a one-digit day in IMF-fixdate'),
+            ('RG01-two-digit-year', 'Wed, 04 Nov 26 12:00:05 GMT', 'reject', 'RG01_http_date_grammar', 'a two-digit year in IMF-fixdate'),
+            ('RG01-lowercase-gmt', 'Wed, 04 Nov 2026 12:00:05 gmt', 'reject', 'RG01_http_date_grammar', 'lowercase gmt (HTTP-date is case sensitive)'),
+            ('RG02-31-november', 'Wed, 31 Nov 2026 12:00:05 GMT', 'reject', 'RG02_http_date_calendar', 'an IMF-fixdate naming 31 November')]:
+        capture_case(case_id, BS, seed, lambda c, header=header: c.body('failure', 'retry_after_header', header), row,
+                     'the original Retry-After header: ' + defect, expected=expected)
 
 
 build()

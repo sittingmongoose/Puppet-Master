@@ -2977,6 +2977,986 @@
       "expected": "reject",
       "row": "IT01_require_order",
       "defect": "a factory check() that requires its two rows in swapped order"
+    },
+    {
+      "id": "F19-control-ready-since-lower-t",
+      "family": "scheduler.pass",
+      "route": "capture",
+      "seed": {
+        "kind": "capture",
+        "name": "baseline"
+      },
+      "expected": "accept",
+      "row": null,
+      "defect": "every copy of every ready-since clock (ready nodes, selected score tuples, operation and scheduler records) spelled with a lowercase t",
+      "changes": [
+        {
+          "path": "payload/ready_nodes",
+          "value": [
+            {
+              "scheduler_lane": "remediation",
+              "manual_priority": 1,
+              "transitive_unblock_count": 2,
+              "ready_since_utc": "2026-11-04t12:00:00Z",
+              "node_id": "node-high"
+            },
+            {
+              "scheduler_lane": "normal",
+              "manual_priority": 1,
+              "transitive_unblock_count": 2,
+              "ready_since_utc": "2026-11-04t12:00:00Z",
+              "node_id": "node-low"
+            }
+          ]
+        },
+        {
+          "path": "payload/selected_nodes",
+          "value": [
+            {
+              "node_id": "node-high",
+              "score_tuple": {
+                "scheduler_lane": "remediation",
+                "manual_priority": 1,
+                "transitive_unblock_count": 2,
+                "ready_since_utc": "2026-11-04t12:00:00Z",
+                "node_id": "node-high"
+              },
+              "lane": "remediation"
+            }
+          ]
+        },
+        {
+          "path": "capture/envelope/payload/ready_nodes",
+          "value": [
+            {
+              "scheduler_lane": "remediation",
+              "manual_priority": 1,
+              "transitive_unblock_count": 2,
+              "ready_since_utc": "2026-11-04t12:00:00Z",
+              "node_id": "node-high"
+            },
+            {
+              "scheduler_lane": "normal",
+              "manual_priority": 1,
+              "transitive_unblock_count": 2,
+              "ready_since_utc": "2026-11-04t12:00:00Z",
+              "node_id": "node-low"
+            }
+          ]
+        },
+        {
+          "path": "capture/envelope/payload/selected_nodes",
+          "value": [
+            {
+              "node_id": "node-high",
+              "score_tuple": {
+                "scheduler_lane": "remediation",
+                "manual_priority": 1,
+                "transitive_unblock_count": 2,
+                "ready_since_utc": "2026-11-04t12:00:00Z",
+                "node_id": "node-high"
+              },
+              "lane": "remediation"
+            }
+          ]
+        },
+        {
+          "path": "capture/records/operation/body/ready_nodes",
+          "value": [
+            {
+              "scheduler_lane": "remediation",
+              "manual_priority": 1,
+              "transitive_unblock_count": 2,
+              "ready_since_utc": "2026-11-04t12:00:00Z",
+              "node_id": "node-high"
+            },
+            {
+              "scheduler_lane": "normal",
+              "manual_priority": 1,
+              "transitive_unblock_count": 2,
+              "ready_since_utc": "2026-11-04t12:00:00Z",
+              "node_id": "node-low"
+            }
+          ]
+        },
+        {
+          "path": "capture/records/operation/body/selected_nodes",
+          "value": [
+            {
+              "node_id": "node-high",
+              "score_tuple": {
+                "scheduler_lane": "remediation",
+                "manual_priority": 1,
+                "transitive_unblock_count": 2,
+                "ready_since_utc": "2026-11-04t12:00:00Z",
+                "node_id": "node-high"
+              },
+              "lane": "remediation"
+            }
+          ]
+        },
+        {
+          "path": "capture/records/operation/sha256",
+          "value": "daf1ea02bad7d82c60e6613e432325296d920f688d3c7f0395873467bcab61fc"
+        },
+        {
+          "path": "capture/records/scheduler/body/selected_nodes",
+          "value": [
+            {
+              "node_id": "node-high",
+              "score_tuple": {
+                "scheduler_lane": "remediation",
+                "manual_priority": 1,
+                "transitive_unblock_count": 2,
+                "ready_since_utc": "2026-11-04t12:00:00Z",
+                "node_id": "node-high"
+              },
+              "lane": "remediation"
+            }
+          ]
+        },
+        {
+          "path": "capture/records/scheduler/sha256",
+          "value": "f7f1a255211607144e80c263ec609d8a214774c24c43a773bc5d2d1faa6a9b0f"
+        },
+        {
+          "path": "capture/transition/observed_payload/ready_nodes",
+          "value": [
+            {
+              "scheduler_lane": "remediation",
+              "manual_priority": 1,
+              "transitive_unblock_count": 2,
+              "ready_since_utc": "2026-11-04t12:00:00Z",
+              "node_id": "node-high"
+            },
+            {
+              "scheduler_lane": "normal",
+              "manual_priority": 1,
+              "transitive_unblock_count": 2,
+              "ready_since_utc": "2026-11-04t12:00:00Z",
+              "node_id": "node-low"
+            }
+          ]
+        },
+        {
+          "path": "capture/transition/observed_payload/selected_nodes",
+          "value": [
+            {
+              "node_id": "node-high",
+              "score_tuple": {
+                "scheduler_lane": "remediation",
+                "manual_priority": 1,
+                "transitive_unblock_count": 2,
+                "ready_since_utc": "2026-11-04t12:00:00Z",
+                "node_id": "node-high"
+              },
+              "lane": "remediation"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "F19-control-wakes-lower-t",
+      "family": "scheduler.pass",
+      "route": "capture",
+      "seed": {
+        "kind": "capture",
+        "name": "baseline"
+      },
+      "expected": "accept",
+      "row": null,
+      "defect": "both scheduler wake clocks (prerequisite_resolved, capacity_available) spelled with a lowercase t",
+      "changes": [
+        {
+          "path": "capture/records/scheduler/body/wakes",
+          "value": [
+            {
+              "event_id": "wake-001",
+              "reason": "prerequisite_resolved",
+              "recorded_at_utc": "2026-11-04t12:00:00Z"
+            },
+            {
+              "event_id": "wake-002",
+              "reason": "capacity_available",
+              "recorded_at_utc": "2026-11-04t12:00:00Z"
+            }
+          ]
+        },
+        {
+          "path": "capture/records/scheduler/sha256",
+          "value": "a5dc4970cea019905c2c30f7508d5ace341d80a920ca0336589864a6e62d3f7b"
+        }
+      ]
+    },
+    {
+      "id": "TC04-wake-announced-leap-second",
+      "family": "scheduler.pass",
+      "route": "capture",
+      "seed": {
+        "kind": "capture",
+        "name": "baseline"
+      },
+      "expected": "reject",
+      "row": "TC04_owner_no_leap_second",
+      "defect": "the first wake clock is the announced leap second 2016-12-31T23:59:60Z, which the shared storage_utc_z profile admits and the DX owner profile refuses (still the earliest wake)",
+      "changes": [
+        {
+          "path": "capture/records/scheduler/body/wakes",
+          "value": [
+            {
+              "event_id": "wake-001",
+              "reason": "prerequisite_resolved",
+              "recorded_at_utc": "2016-12-31T23:59:60Z"
+            },
+            {
+              "event_id": "wake-002",
+              "reason": "capacity_available",
+              "recorded_at_utc": "2026-11-04T12:00:00Z"
+            }
+          ]
+        },
+        {
+          "path": "capture/records/scheduler/sha256",
+          "value": "0a12cfec8edcbb82b3fc7c6a7171cd959ad06f00253ead05ec747bd83675c7f5"
+        }
+      ]
+    },
+    {
+      "id": "F19-shape-control-ready-since-lower-t",
+      "family": "scheduler.pass",
+      "route": "shape",
+      "seed": {
+        "kind": "shape",
+        "name": "score-priority-valid-boundary-50"
+      },
+      "expected": "accept",
+      "row": null,
+      "defect": "every ready-since clock of the payload and its inline envelope copy spelled with a lowercase t",
+      "changes": [
+        {
+          "path": "payload/ready_nodes",
+          "value": [
+            {
+              "scheduler_lane": "remediation",
+              "manual_priority": 50,
+              "transitive_unblock_count": 2,
+              "ready_since_utc": "2026-11-04t12:00:00Z",
+              "node_id": "node-high"
+            },
+            {
+              "scheduler_lane": "normal",
+              "manual_priority": 1,
+              "transitive_unblock_count": 2,
+              "ready_since_utc": "2026-11-04t12:00:00Z",
+              "node_id": "node-low"
+            }
+          ]
+        },
+        {
+          "path": "payload/selected_nodes",
+          "value": [
+            {
+              "node_id": "node-high",
+              "score_tuple": {
+                "scheduler_lane": "remediation",
+                "manual_priority": 50,
+                "transitive_unblock_count": 2,
+                "ready_since_utc": "2026-11-04t12:00:00Z",
+                "node_id": "node-high"
+              },
+              "lane": "remediation"
+            }
+          ]
+        },
+        {
+          "path": "context/envelope/payload/ready_nodes",
+          "value": [
+            {
+              "scheduler_lane": "remediation",
+              "manual_priority": 50,
+              "transitive_unblock_count": 2,
+              "ready_since_utc": "2026-11-04t12:00:00Z",
+              "node_id": "node-high"
+            },
+            {
+              "scheduler_lane": "normal",
+              "manual_priority": 1,
+              "transitive_unblock_count": 2,
+              "ready_since_utc": "2026-11-04t12:00:00Z",
+              "node_id": "node-low"
+            }
+          ]
+        },
+        {
+          "path": "context/envelope/payload/selected_nodes",
+          "value": [
+            {
+              "node_id": "node-high",
+              "score_tuple": {
+                "scheduler_lane": "remediation",
+                "manual_priority": 50,
+                "transitive_unblock_count": 2,
+                "ready_since_utc": "2026-11-04t12:00:00Z",
+                "node_id": "node-high"
+              },
+              "lane": "remediation"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "TC05-shape-backoff-now-lower-t",
+      "family": "run.node_backoff_expired",
+      "route": "shape",
+      "seed": {
+        "kind": "shape",
+        "name": "positive"
+      },
+      "expected": "reject",
+      "row": "TC05_backoff_upper_t",
+      "defect": "the backoff-expiry observation now_utc spelled with a lowercase t",
+      "changes": [
+        {
+          "path": "context/now_utc",
+          "value": "2026-11-04t12:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "F19-score-control-lower-t",
+      "family": "scheduler.pass",
+      "route": "score",
+      "seed": {
+        "kind": "literal",
+        "value": {
+          "ready_nodes": [
+            {
+              "scheduler_lane": "remediation",
+              "manual_priority": 50,
+              "transitive_unblock_count": 2,
+              "ready_since_utc": "2026-11-04t12:00:00Z",
+              "node_id": "node-high"
+            },
+            {
+              "scheduler_lane": "normal",
+              "manual_priority": 1,
+              "transitive_unblock_count": 2,
+              "ready_since_utc": "2026-11-04t12:00:00Z",
+              "node_id": "node-low"
+            }
+          ],
+          "selected_nodes": [
+            {
+              "node_id": "node-high",
+              "score_tuple": {
+                "scheduler_lane": "remediation",
+                "manual_priority": 50,
+                "transitive_unblock_count": 2,
+                "ready_since_utc": "2026-11-04t12:00:00Z",
+                "node_id": "node-high"
+              },
+              "lane": "remediation"
+            }
+          ]
+        }
+      },
+      "expected": "accept",
+      "row": null,
+      "defect": "ready and selected score tuples whose ready-since clocks use a lowercase t"
+    },
+    {
+      "id": "TS-control-v0-zero-offset",
+      "family": "run.node_backoff_started",
+      "route": "history",
+      "seed": {
+        "kind": "history",
+        "name": "F15-retained-9007199254740991-dedupe_by_idempotency_key"
+      },
+      "expected": "accept",
+      "row": null,
+      "defect": "a retained v0 original whose failure clock is the same instant written with the zero offset +00:00, valid under the frozen v0 spelling",
+      "changes": [
+        {
+          "path": "original/capture/records/failure/body/failed_at_utc",
+          "value": "2026-11-04T12:00:00+00:00"
+        },
+        {
+          "path": "original/capture/records/failure/sha256",
+          "value": "ac94bded7a36580ecec5201073c8cd96c41f4966ca3255d9097a52a800e62380"
+        },
+        {
+          "path": "retained_source_sha256",
+          "value": "31ef4807d15cd0e29de7e1cd4e24458b83d5514d99f01768549e66a130a5b245"
+        }
+      ]
+    },
+    {
+      "id": "TC02-current-edition-lowercase-z",
+      "family": "run.node_backoff_started",
+      "route": "history",
+      "seed": {
+        "kind": "history",
+        "name": "F15-retained-9007199254740991-dedupe_by_idempotency_key"
+      },
+      "expected": "reject",
+      "row": "TC02_shared_utc_z",
+      "defect": "an original authenticated under the current edition whose failure clock ends in a lowercase z (valid v0 spelling): the dispatcher selects the CV-1101 profile, which requires a terminal uppercase Z",
+      "changes": [
+        {
+          "path": "original/capture/records/failure/body/failed_at_utc",
+          "value": "2026-11-04T12:00:00z"
+        },
+        {
+          "path": "original/capture/records/failure/sha256",
+          "value": "200a4deb211008e71bd5b516bedd5c935a64383c7c90fc439921d7af05e74a8e"
+        },
+        {
+          "path": "retained_source_sha256",
+          "value": "4d50f52510db89f23ddb0bbb16ffc33bfe19333dc47a19d0b0248576f5228622"
+        }
+      ]
+    },
+    {
+      "id": "TS-control-v0-lowercase-z",
+      "family": "run.node_backoff_started",
+      "route": "history",
+      "seed": {
+        "kind": "history",
+        "name": "F15-retained-9007199254740991-dedupe_by_idempotency_key"
+      },
+      "expected": "accept",
+      "row": null,
+      "defect": "a retained v0 original whose failure clock ends in a lowercase z, valid under the frozen v0 spelling",
+      "changes": [
+        {
+          "path": "original/capture/records/failure/body/failed_at_utc",
+          "value": "2026-11-04T12:00:00.0z"
+        },
+        {
+          "path": "original/capture/records/failure/sha256",
+          "value": "916a91bb88c15a32913b4e1bed67d67f78f4bb39487e2f04ee99793702c44d0f"
+        },
+        {
+          "path": "retained_source_sha256",
+          "value": "91a8c89f90650fcf48393f98cb5c9cd32c7e0a5a3b66190508cdfdd7b042d748"
+        }
+      ]
+    },
+    {
+      "id": "TS01-v0-space-separator",
+      "family": "run.node_backoff_started",
+      "route": "history",
+      "seed": {
+        "kind": "history",
+        "name": "F15-retained-9007199254740991-dedupe_by_idempotency_key"
+      },
+      "expected": "reject",
+      "row": "TS01_spelling",
+      "defect": "a retained v0 original whose failure clock uses a space separator, outside the frozen v0 spelling",
+      "changes": [
+        {
+          "path": "original/capture/records/failure/body/failed_at_utc",
+          "value": "2026-11-04 12:00:00Z"
+        },
+        {
+          "path": "original/capture/records/failure/sha256",
+          "value": "5afcf65462b647363d2e0009515918bbeda730c5ace02976b4436508e023bf67"
+        },
+        {
+          "path": "retained_source_sha256",
+          "value": "98d47489cae46f722a38bee25f9416649225e22f125f3ee47de0c854c07c636f"
+        }
+      ]
+    },
+    {
+      "id": "TC-control-helper-lower-t",
+      "family": "attempt.completed",
+      "route": "helper",
+      "seed": {
+        "kind": "literal",
+        "value": {
+          "case": "TC-control-helper-lower-t",
+          "helper": "instant",
+          "value": "2026-11-04t12:00:00Z"
+        }
+      },
+      "expected": "accept",
+      "row": null,
+      "defect": "an ordinary owner clock with a lowercase t"
+    },
+    {
+      "id": "TC-control-helper-year-0000",
+      "family": "attempt.completed",
+      "route": "helper",
+      "seed": {
+        "kind": "literal",
+        "value": {
+          "case": "TC-control-helper-year-0000",
+          "helper": "instant",
+          "value": "0000-02-29T12:00:00Z"
+        }
+      },
+      "expected": "accept",
+      "row": null,
+      "defect": "year 0000 (a Gregorian leap year) at an ordinary owner clock, which no host datetime can hold"
+    },
+    {
+      "id": "TC-control-helper-long-fraction",
+      "family": "attempt.completed",
+      "route": "helper",
+      "seed": {
+        "kind": "literal",
+        "value": {
+          "case": "TC-control-helper-long-fraction",
+          "helper": "backoff_instant",
+          "value": "2026-11-04T12:00:00.111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111Z"
+        }
+      },
+      "expected": "accept",
+      "row": null,
+      "defect": "a backoff clock with 5,001 fractional digits"
+    },
+    {
+      "id": "TC04-helper-announced-leap-second",
+      "family": "attempt.completed",
+      "route": "helper",
+      "seed": {
+        "kind": "literal",
+        "value": {
+          "case": "TC04-helper-announced-leap-second",
+          "helper": "instant",
+          "value": "2016-12-31T23:59:60Z"
+        }
+      },
+      "expected": "reject",
+      "row": "TC04_owner_no_leap_second",
+      "defect": "the announced leap second 2016-12-31T23:59:60Z at an ordinary owner clock"
+    },
+    {
+      "id": "TC05-helper-backoff-lower-t",
+      "family": "attempt.completed",
+      "route": "helper",
+      "seed": {
+        "kind": "literal",
+        "value": {
+          "case": "TC05-helper-backoff-lower-t",
+          "helper": "backoff_instant",
+          "value": "2026-11-04t12:00:00Z"
+        }
+      },
+      "expected": "reject",
+      "row": "TC05_backoff_upper_t",
+      "defect": "a backoff clock observation with a lowercase t"
+    },
+    {
+      "id": "TC03-helper-unannounced-leap-second",
+      "family": "attempt.completed",
+      "route": "helper",
+      "seed": {
+        "kind": "literal",
+        "value": {
+          "case": "TC03-helper-unannounced-leap-second",
+          "helper": "instant",
+          "value": "2026-06-30T23:59:60Z"
+        }
+      },
+      "expected": "reject",
+      "row": "TC03_shared_calendar",
+      "defect": "second 60 at a month end where no leap second was announced"
+    },
+    {
+      "id": "TC02-helper-zero-offset",
+      "family": "attempt.completed",
+      "route": "helper",
+      "seed": {
+        "kind": "literal",
+        "value": {
+          "case": "TC02-helper-zero-offset",
+          "helper": "instant",
+          "value": "2026-11-04T12:00:00+00:00"
+        }
+      },
+      "expected": "reject",
+      "row": "TC02_shared_utc_z",
+      "defect": "the zero offset +00:00 where the owner requires a terminal Z"
+    },
+    {
+      "id": "TC01-helper-trailing-LF",
+      "family": "attempt.completed",
+      "route": "helper",
+      "seed": {
+        "kind": "literal",
+        "value": {
+          "case": "TC01-helper-trailing-LF",
+          "helper": "instant",
+          "value": "2026-11-04T12:00:00Z\n"
+        }
+      },
+      "expected": "reject",
+      "row": "TC01_shared_syntax",
+      "defect": "a trailing LF"
+    },
+    {
+      "id": "RA-control-v0-numeric-zone",
+      "family": "attempt.completed",
+      "route": "helper",
+      "seed": {
+        "kind": "literal",
+        "value": {
+          "case": "RA-control-v0-numeric-zone",
+          "helper": "retry_after_date_v0",
+          "value": "Wed, 04 Nov 2026 12:00:05 +0000"
+        }
+      },
+      "expected": "accept",
+      "row": null,
+      "defect": "a numeric-zone Retry-After, which the frozen v0 route parsed and still reads (10a: no tightening of history)"
+    },
+    {
+      "id": "RA01-v0-not-a-date",
+      "family": "attempt.completed",
+      "route": "helper",
+      "seed": {
+        "kind": "literal",
+        "value": {
+          "case": "RA01-v0-not-a-date",
+          "helper": "retry_after_date_v0",
+          "value": "not-a-header"
+        }
+      },
+      "expected": "reject",
+      "row": "RA01_date_parses",
+      "defect": "a v0 Retry-After that is no date"
+    },
+    {
+      "id": "RA02-v0-naive-date",
+      "family": "attempt.completed",
+      "route": "helper",
+      "seed": {
+        "kind": "literal",
+        "value": {
+          "case": "RA02-v0-naive-date",
+          "helper": "retry_after_date_v0",
+          "value": "Wed, 04 Nov 2026 12:00:30"
+        }
+      },
+      "expected": "reject",
+      "row": "RA02_date_timezone",
+      "defect": "a v0 Retry-After date without a zone"
+    },
+    {
+      "id": "TS-control-v0-helper-offset",
+      "family": "attempt.completed",
+      "route": "helper",
+      "seed": {
+        "kind": "literal",
+        "value": {
+          "case": "TS-control-v0-helper-offset",
+          "helper": "instant_v0",
+          "value": "2026-11-04t17:00:00+05:00"
+        }
+      },
+      "expected": "accept",
+      "row": null,
+      "defect": "a v0 clock with a lowercase t and a +05:00 offset, valid under the frozen v0 spelling"
+    },
+    {
+      "id": "PS01-ts-announced-leap-second",
+      "family": "attempt.completed",
+      "route": "schema",
+      "seed": {
+        "kind": "literal",
+        "value": {
+          "payload": {
+            "schema_version": "1.0.0",
+            "project_id": "project_id-001",
+            "event_sequence": 1,
+            "ts": "2016-12-31T23:59:60Z",
+            "run_id": "run_id-001",
+            "thread_id": "thread_id-001",
+            "node_id": "node_id-001",
+            "attempt_id": "attempt_id-001",
+            "replan_generation": 1,
+            "terminal_state": "failed",
+            "retry_count": 1,
+            "runtime_snapshot_ref": "runtime_snapshot_ref-001",
+            "verification_result_refs": [
+              "verifier-001"
+            ],
+            "reviewer_result_refs": [
+              "reviewer-001"
+            ],
+            "safe_point_id": "safe_point_id-001",
+            "remediation_root_id": "remediation_root_id-001",
+            "remediation_parent_attempt_id": "remediation_parent_attempt_id-001",
+            "failure_class": "verification_failed",
+            "backoff_until_utc": "2026-11-04T12:00:00Z"
+          }
+        }
+      },
+      "expected": "reject",
+      "row": "PS01_payload_schema",
+      "defect": "payload ts is the announced leap second 2016-12-31T23:59:60Z (its pattern admits it; the registered predicate refuses it)"
+    },
+    {
+      "id": "PS01-control-ts-lower-t",
+      "family": "attempt.completed",
+      "route": "schema",
+      "seed": {
+        "kind": "literal",
+        "value": {
+          "payload": {
+            "schema_version": "1.0.0",
+            "project_id": "project_id-001",
+            "event_sequence": 1,
+            "ts": "2026-11-04t12:00:00Z",
+            "run_id": "run_id-001",
+            "thread_id": "thread_id-001",
+            "node_id": "node_id-001",
+            "attempt_id": "attempt_id-001",
+            "replan_generation": 1,
+            "terminal_state": "failed",
+            "retry_count": 1,
+            "runtime_snapshot_ref": "runtime_snapshot_ref-001",
+            "verification_result_refs": [
+              "verifier-001"
+            ],
+            "reviewer_result_refs": [
+              "reviewer-001"
+            ],
+            "safe_point_id": "safe_point_id-001",
+            "remediation_root_id": "remediation_root_id-001",
+            "remediation_parent_attempt_id": "remediation_parent_attempt_id-001",
+            "failure_class": "verification_failed",
+            "backoff_until_utc": "2026-11-04T12:00:00Z"
+          }
+        }
+      },
+      "expected": "accept",
+      "row": null,
+      "defect": "payload ts with a lowercase t under the strict schema boundary"
+    },
+    {
+      "id": "DS-control-context-created-offset",
+      "family": "node.started",
+      "route": "capture",
+      "seed": {
+        "kind": "capture",
+        "name": "baseline"
+      },
+      "expected": "accept",
+      "row": null,
+      "defect": "the execution context dependency's created_at_utc with a +05:00 offset, valid RFC 3339 for that schema",
+      "changes": [
+        {
+          "path": "capture/dependencies/execution_unit_context_ref-001/body/created_at_utc",
+          "value": "2026-11-04T17:00:00+05:00"
+        },
+        {
+          "path": "capture/dependencies/execution_unit_context_ref-001/sha256",
+          "value": "4d5e801f16d8c124fc774bfd17708fcad8597a80528609007394312933cb6349"
+        }
+      ]
+    },
+    {
+      "id": "DS01-context-created-no-zone",
+      "family": "node.started",
+      "route": "capture",
+      "seed": {
+        "kind": "capture",
+        "name": "baseline"
+      },
+      "expected": "reject",
+      "row": "DS01_context_schema",
+      "defect": "the execution context dependency's created_at_utc without a zone",
+      "changes": [
+        {
+          "path": "capture/dependencies/execution_unit_context_ref-001/body/created_at_utc",
+          "value": "2026-11-04T12:00:00"
+        },
+        {
+          "path": "capture/dependencies/execution_unit_context_ref-001/sha256",
+          "value": "f01bf3a9e05fcd4580ebb866f810132859e5e5ae17750c987e59d89fd743cbe9"
+        }
+      ]
+    },
+    {
+      "id": "RG-control-rfc850-date",
+      "family": "run.node_backoff_started",
+      "route": "capture",
+      "seed": {
+        "kind": "capture",
+        "name": "rate-limit-original-Retry-After-http-date"
+      },
+      "expected": "accept",
+      "row": null,
+      "defect": "the original Retry-After header: the same instant as an rfc850-date",
+      "changes": [
+        {
+          "path": "capture/records/failure/body/retry_after_header",
+          "value": "Wednesday, 04-Nov-26 12:00:05 GMT"
+        },
+        {
+          "path": "capture/records/failure/sha256",
+          "value": "6ec4bac4b5c0b05b97f164cae8bd372af3d5ac2aebd770fb5131c83065ea28a9"
+        }
+      ]
+    },
+    {
+      "id": "RG-control-asctime-date",
+      "family": "run.node_backoff_started",
+      "route": "capture",
+      "seed": {
+        "kind": "capture",
+        "name": "rate-limit-original-Retry-After-http-date"
+      },
+      "expected": "accept",
+      "row": null,
+      "defect": "the original Retry-After header: the same instant as an asctime-date",
+      "changes": [
+        {
+          "path": "capture/records/failure/body/retry_after_header",
+          "value": "Wed Nov  4 12:00:05 2026"
+        },
+        {
+          "path": "capture/records/failure/sha256",
+          "value": "0902fee8cd937d37f831752374864a38775e0bca0f012bb1f8369cf2f1e5adda"
+        }
+      ]
+    },
+    {
+      "id": "RG01-numeric-zone",
+      "family": "run.node_backoff_started",
+      "route": "capture",
+      "seed": {
+        "kind": "capture",
+        "name": "rate-limit-original-Retry-After-http-date"
+      },
+      "expected": "reject",
+      "row": "RG01_http_date_grammar",
+      "defect": "the original Retry-After header: a numeric zone +0000 instead of GMT",
+      "changes": [
+        {
+          "path": "capture/records/failure/body/retry_after_header",
+          "value": "Wed, 04 Nov 2026 12:00:05 +0000"
+        },
+        {
+          "path": "capture/records/failure/sha256",
+          "value": "f3123a0914bd8503100e18a534518969323b82509edc90d51ec8ed72282b5b7e"
+        }
+      ]
+    },
+    {
+      "id": "RG01-no-weekday",
+      "family": "run.node_backoff_started",
+      "route": "capture",
+      "seed": {
+        "kind": "capture",
+        "name": "rate-limit-original-Retry-After-http-date"
+      },
+      "expected": "reject",
+      "row": "RG01_http_date_grammar",
+      "defect": "the original Retry-After header: no day name",
+      "changes": [
+        {
+          "path": "capture/records/failure/body/retry_after_header",
+          "value": "04 Nov 2026 12:00:05 GMT"
+        },
+        {
+          "path": "capture/records/failure/sha256",
+          "value": "264638e8581df50f95b7860cbcbae0cf79a00c6d0b3d27d558d7f619c830a8ca"
+        }
+      ]
+    },
+    {
+      "id": "RG01-one-digit-day",
+      "family": "run.node_backoff_started",
+      "route": "capture",
+      "seed": {
+        "kind": "capture",
+        "name": "rate-limit-original-Retry-After-http-date"
+      },
+      "expected": "reject",
+      "row": "RG01_http_date_grammar",
+      "defect": "the original Retry-After header: a one-digit day in IMF-fixdate",
+      "changes": [
+        {
+          "path": "capture/records/failure/body/retry_after_header",
+          "value": "Wed, 4 Nov 2026 12:00:05 GMT"
+        },
+        {
+          "path": "capture/records/failure/sha256",
+          "value": "9d08d64eb8bf76c246a818af766199ae4f4252353c71468539518858919b681c"
+        }
+      ]
+    },
+    {
+      "id": "RG01-two-digit-year",
+      "family": "run.node_backoff_started",
+      "route": "capture",
+      "seed": {
+        "kind": "capture",
+        "name": "rate-limit-original-Retry-After-http-date"
+      },
+      "expected": "reject",
+      "row": "RG01_http_date_grammar",
+      "defect": "the original Retry-After header: a two-digit year in IMF-fixdate",
+      "changes": [
+        {
+          "path": "capture/records/failure/body/retry_after_header",
+          "value": "Wed, 04 Nov 26 12:00:05 GMT"
+        },
+        {
+          "path": "capture/records/failure/sha256",
+          "value": "94947e6b1a9a62ee9db2308b47d67268c3904811ea79ed09632d8919b367de98"
+        }
+      ]
+    },
+    {
+      "id": "RG01-lowercase-gmt",
+      "family": "run.node_backoff_started",
+      "route": "capture",
+      "seed": {
+        "kind": "capture",
+        "name": "rate-limit-original-Retry-After-http-date"
+      },
+      "expected": "reject",
+      "row": "RG01_http_date_grammar",
+      "defect": "the original Retry-After header: lowercase gmt (HTTP-date is case sensitive)",
+      "changes": [
+        {
+          "path": "capture/records/failure/body/retry_after_header",
+          "value": "Wed, 04 Nov 2026 12:00:05 gmt"
+        },
+        {
+          "path": "capture/records/failure/sha256",
+          "value": "8bc0c51efdc502b593100e274a7ba0b68b8c1aa1c386f55bec01325690440043"
+        }
+      ]
+    },
+    {
+      "id": "RG02-31-november",
+      "family": "run.node_backoff_started",
+      "route": "capture",
+      "seed": {
+        "kind": "capture",
+        "name": "rate-limit-original-Retry-After-http-date"
+      },
+      "expected": "reject",
+      "row": "RG02_http_date_calendar",
+      "defect": "the original Retry-After header: an IMF-fixdate naming 31 November",
+      "changes": [
+        {
+          "path": "capture/records/failure/body/retry_after_header",
+          "value": "Wed, 31 Nov 2026 12:00:05 GMT"
+        },
+        {
+          "path": "capture/records/failure/sha256",
+          "value": "afdf77f0ef4d3c478836408e35a7b59d3096dd410ff3ec7f7ed694584eacbf9a"
+        }
+      ]
     }
   ]
 }

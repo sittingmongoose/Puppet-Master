@@ -1,4 +1,4 @@
-"""DX sweep part 2A witnesses (Plans/executor_event_p2a_cases.json): build and run each one.
+"""DX sweep part 2A and part 2B witnesses (Plans/executor_event_p2a_cases.json): build and run each one.
 
 Each witness names a valid seed of its own family (the family baseline, a named accepted capture,
 history, shape or trace case) and the exact changes that make it; the changes are frozen in the
@@ -75,6 +75,11 @@ def action(case, contract, family, shapes, existing, root):
         return lambda: contract_integrity(mutated, registry, cases)
     if route == 'stock_schema':
         return lambda: sem.stock_schema_validate(contract['schema_ref'], document['payload'])
+    if route == 'schema':
+        # The strict payload-schema boundary with the explicitly registered CV-1101 date-time predicate.
+        return lambda: sem.schema_validate(contract['schema_ref'], document['payload'])
+    if route == 'score':
+        return lambda: sem.validate_score_domain(document['ready_nodes'], document['selected_nodes'])
     if route == 'schema_document':
         return lambda: refs.check_document(document['schema'])
     if route == 'schema_reference':
