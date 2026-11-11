@@ -102,8 +102,9 @@ html[data-theme^="retro"] .history-flyout .pjx-npg-row, html[data-o55-nier="on"]
 /* the row's two links on their own line: the plate is often a narrow bento column, where a side column squeezed the task */
 .pjx-wk-acts { grid-area: a; display: flex; flex-wrap: wrap; gap: 2px 16px; align-items: center; justify-self: start; margin-top: 2px; }
 .pjx-wk-why, .pjx-wk-pin { white-space: nowrap; font-size: 12px; }
-/* an off Run this on… reads as off in every look: the light looks' #pjxc .pjx-link ink (c.css) would paint it like a live link */
-.pjx-wk-pin[aria-disabled="true"], html[data-theme] #pjxc .pjx-wk-row .pjx-wk-pin[aria-disabled="true"] { color: var(--pmu-ink-3, var(--pmu-ink-2)); text-decoration: none; cursor: default; }
+/* an off Run this on… reads as off in every look: the light looks' #pjxc :is(.pjx-link, …) ink (c.css, specificity 1,4,1,
+   loaded later) would paint it like a live link, so this one is a class stronger (1,5,1) */
+.pjx-wk-pin[aria-disabled="true"], html[data-theme] #pjxc .pjx-wk-row .pjx-link.pjx-wk-pin[aria-disabled="true"] { color: var(--pmu-ink-3, var(--pmu-ink-2)); text-decoration: none; cursor: default; }
 .pjx-wk-allowed { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 6px 14px; }
 .pjx-wk-np { margin-top: 4px; display: flex; flex-direction: column; gap: 8px; padding: 12px; border: 1px solid var(--pmu-rule); border-radius: min(var(--pmu-r-card, 10px), 10px); }
 .pjx-wk-whybody { display: flex; flex-direction: column; gap: 10px; }
