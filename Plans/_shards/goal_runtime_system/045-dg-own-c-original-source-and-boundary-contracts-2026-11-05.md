@@ -2,9 +2,9 @@
 
 Source: `Plans/Goal_Runtime_System.md`
 
-Source lines: L8920-L9195
+Source lines: L8920-L9196
 
-Source SHA256: `3ecfda58ed3bba5b0cf959a985cab0dd95df118e99b9acf688a35ff08b047218`
+Source SHA256: `5f8e12118aadf8cdec8d3a51dd3b6603bd20565617ab916fba307356bb6ace88`
 
 ---
 
@@ -96,6 +96,7 @@ acceptance_criteria:
 validation_surfaces:
 - scripts/pm_goal_own_c_oracles.py
 - Plans/goal_own_c_contracts/protocol.md
+- python3 scripts/pm_goal_dg_ca_oracles.py
 risk_class: forged_original_authority_or_lost_pending_effect
 reasoning_tier: high
 context_scope: dg_own_c_20261105

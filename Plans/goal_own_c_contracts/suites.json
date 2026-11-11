@@ -64,7 +64,15 @@
       "c3_w12_part2_whole_root_closure": "NOT_COMPLETE",
       "c3_w12b_corpus": "Plans/goal_own_c_contracts/w12b-corpus-v1/coverage.json",
       "c3_w12b_oracle": "python3 scripts/pm_goal_own_c3_w12b_oracles.py",
-      "c3_w12b_whole_root_closure": "NOT_COMPLETE"
+      "c3_w12b_whole_root_closure": "NOT_COMPLETE",
+      "dg_ca_corpus": "Plans/goal_own_c_contracts/dg-ca-corpus-v1/coverage.json",
+      "dg_ca_oracle": "python3 scripts/pm_goal_dg_ca_oracles.py",
+      "dg_ca_group_closure": {
+        "C1": "COMPLETE",
+        "C2": "NOT_COMPLETE",
+        "C3": "NOT_COMPLETE",
+        "C4": "NOT_COMPLETE"
+      }
     },
     {
       "event_type": "goal_run.started",

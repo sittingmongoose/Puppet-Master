@@ -7566,6 +7566,8 @@ acceptance_criteria:
 validation_surfaces:
 - python3 scripts/pm_goal_own_c3_w12b_oracles.py
 - Plans/goal_own_c_contracts/w12b-corpus-v1/coverage.json
+- python3 scripts/pm_goal_dg_ca_oracles.py
+- Plans/goal_own_c_contracts/dg-ca-corpus-v1/coverage.json
 - python3 scripts/pm_goal_own_c3_w12_successor_oracles.py
 - Plans/goal_own_c_contracts/w12-successor-v2/cancel-methods.v2.json
 - python3 scripts/pm_goal_own_c_source_oracles.py
@@ -7592,7 +7594,7 @@ negative_constraints:
 - No source capability, runtime installation, full oracle PASS, Event Authority or WorkNode from a test adapter.
 ```
 
-The complete newly authored contract is `Plans/goal_own_c_contracts/protocol.md` (Goal cancellation migration and three original route oracles). Its schema roots are `Plans/goal_own_c_contracts/contracts.schema.json`; the original source roots and historical banks stay byte-exact, while C3-W12 part 2 explicitly selects the versioned source/bank successors named in that protocol. C3-W12b adds explicitly bounded no-association migration/cancellation witnesses and a per-method remaining inventory. Its complete inherited W2 tuple coverage remains NOT_COMPLETE.
+The complete newly authored contract is `Plans/goal_own_c_contracts/protocol.md` (Goal cancellation migration and three original route oracles). Its schema roots are `Plans/goal_own_c_contracts/contracts.schema.json`; the original source roots and historical banks stay byte-exact, while C3-W12 part 2 explicitly selects the versioned source/bank successors named in that protocol. C3-W12b adds explicitly bounded no-association migration/cancellation witnesses and a per-method remaining inventory. Its complete inherited W2 tuple coverage remains NOT_COMPLETE. DG-CA (2026-11-11) executes the C1 authenticated no-association route as a complete TEST_ONLY original path on the shared owner adapters, with child-process crash cuts of its Event protocol, and maps every inherited method row in `Plans/goal_own_c_contracts/dg-ca-corpus-v1/coverage.json`; the bound-Plan (C2), Workflow D05/D06 (C3) and late-assignment/private-inspection (C4) groups remain NOT_COMPLETE there. native evidence stays NOT_RUN and is a separate claim; a planning PASS must never read as native proof.
 
 ContractRef: ContractName:Plans/goal_own_c_contracts/protocol.md, ContractName:Plans/goal_own_c_contracts/contracts.schema.json
 
