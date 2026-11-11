@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L6713-L7305
+Source lines: L6713-L7310
 
-Source SHA256: `6b0e47287e80cae7d987b0a6eda31791e987046c0a447c8cc12bb639e451ec6d`
+Source SHA256: `9e7b8cf34f101ec37f91d7c49a84621e5bdb325c903e8383380f5a13f2cd9cd5`
 
 ---
 
@@ -558,8 +558,13 @@ canonical_text: Nine prepared exact families in Plans/debug_investigation_event_
   policy while forged or withdrawn originals refuse. scripts/pm-debug-investigation-standing-checks.py
   promotes each family's bad candidates and rejects successful exits masquerading as failure. Static fixtures
   use projected original facts; they never prove native receipt, proof dereference, payload-pack, writer
-  exclusion, recovery, CAS or effects. Those obligations remain authored and NOT_RUN. NUMRULE adoption
-  and shared guard-table isolation are part-2 work; no local number or proof helper is introduced.
+  exclusion, recovery, CAS or effects. Those obligations remain authored and NOT_RUN. Number, physical
+  and date-time checks call the shared helpers of CV-1100, SP-1100 and CV-1101 (current_integer at every
+  companion-schema integer slot with its schema bounds, qualified RFC 8785 identity and producer digests,
+  EVENT_VALUE inline sizes, exact uint64 Storage metadata, date_time with the EventRecord profile and with
+  CV-253 storage_utc_z), and the shared number corpus runs through the complete checker. Every refusal is
+  a named guard-table row proved by the shared guard-isolation tool. No local number, date-time or proof
+  helper is introduced.
 gui_related: false
 gui_classification_reason: Event persistence and reader contract; existing UI behavior remains owned by
   its surface.

@@ -1721,7 +1721,13 @@ canonical_text: 'Newly authored owner contract under DL-045 for exactly debug.in
   a different real operation gets a different id. Storage''s producer_semantic_digest covers the complete
   immutable semantic envelope and payload under Case L-5. Same identity and digest returns the original
   receipt without another effect; changed digest conflicts before append. Sequence_id and persisted_at_utc
-  are Storage assignments, never part of producer identity.
+  are Storage assignments, never part of producer identity. The shared rules apply beside these owners:
+  CV-1100 qualifies the identity preimage and this producer projection with the shared qualified RFC 8785,
+  and each companion-schema integer slot is a current integer within its schema bounds; SP-1100 measures
+  each 16 KiB inline body in EVENT_VALUE bytes and keeps Storage sequence_id an exact uint64; CV-1101 checks
+  occurred_at_utc with the EventRecord date-time profile and CV-253''s storage_utc_z profile at observed_at_utc
+  and persisted_at_utc, preserving the exact strings; SP-1101 selects the authenticated at-write recipe
+  debug-project-rfc8785-v1 and its timestamp profiles for retained reads.
 
 
   Consumer binding: reader.debug.investigation.context_item_added@1.0.0 is the direct transient history
@@ -1845,7 +1851,13 @@ canonical_text: 'Newly authored owner contract under DL-045 for exactly debug.in
   a different real operation gets a different id. Storage''s producer_semantic_digest covers the complete
   immutable semantic envelope and payload under Case L-5. Same identity and digest returns the original
   receipt without another effect; changed digest conflicts before append. Sequence_id and persisted_at_utc
-  are Storage assignments, never part of producer identity.
+  are Storage assignments, never part of producer identity. The shared rules apply beside these owners:
+  CV-1100 qualifies the identity preimage and this producer projection with the shared qualified RFC 8785,
+  and each companion-schema integer slot is a current integer within its schema bounds; SP-1100 measures
+  each 16 KiB inline body in EVENT_VALUE bytes and keeps Storage sequence_id an exact uint64; CV-1101 checks
+  occurred_at_utc with the EventRecord date-time profile and CV-253''s storage_utc_z profile at observed_at_utc
+  and persisted_at_utc, preserving the exact strings; SP-1101 selects the authenticated at-write recipe
+  debug-project-rfc8785-v1 and its timestamp profiles for retained reads.
 
 
   Consumer binding: reader.debug.investigation.context_item_state_changed@1.0.0 is the direct transient
@@ -1969,7 +1981,13 @@ canonical_text: 'Newly authored owner contract under DL-045 for exactly debug.in
   a different real operation gets a different id. Storage''s producer_semantic_digest covers the complete
   immutable semantic envelope and payload under Case L-5. Same identity and digest returns the original
   receipt without another effect; changed digest conflicts before append. Sequence_id and persisted_at_utc
-  are Storage assignments, never part of producer identity.
+  are Storage assignments, never part of producer identity. The shared rules apply beside these owners:
+  CV-1100 qualifies the identity preimage and this producer projection with the shared qualified RFC 8785,
+  and each companion-schema integer slot is a current integer within its schema bounds; SP-1100 measures
+  each 16 KiB inline body in EVENT_VALUE bytes and keeps Storage sequence_id an exact uint64; CV-1101 checks
+  occurred_at_utc with the EventRecord date-time profile and CV-253''s storage_utc_z profile at observed_at_utc
+  and persisted_at_utc, preserving the exact strings; SP-1101 selects the authenticated at-write recipe
+  debug-project-rfc8785-v1 and its timestamp profiles for retained reads.
 
 
   Consumer binding: reader.debug.investigation.exported@1.0.0 is the direct transient history reader for
@@ -2093,7 +2111,13 @@ canonical_text: 'Newly authored owner contract under DL-045 for exactly debug.in
   a different real operation gets a different id. Storage''s producer_semantic_digest covers the complete
   immutable semantic envelope and payload under Case L-5. Same identity and digest returns the original
   receipt without another effect; changed digest conflicts before append. Sequence_id and persisted_at_utc
-  are Storage assignments, never part of producer identity.
+  are Storage assignments, never part of producer identity. The shared rules apply beside these owners:
+  CV-1100 qualifies the identity preimage and this producer projection with the shared qualified RFC 8785,
+  and each companion-schema integer slot is a current integer within its schema bounds; SP-1100 measures
+  each 16 KiB inline body in EVENT_VALUE bytes and keeps Storage sequence_id an exact uint64; CV-1101 checks
+  occurred_at_utc with the EventRecord date-time profile and CV-253''s storage_utc_z profile at observed_at_utc
+  and persisted_at_utc, preserving the exact strings; SP-1101 selects the authenticated at-write recipe
+  debug-project-rfc8785-v1 and its timestamp profiles for retained reads.
 
 
   Consumer binding: reader.debug.investigation.imported@1.0.0 is the direct transient history reader for
@@ -2270,7 +2294,13 @@ canonical_text: 'Newly authored owner contract under DL-045 for exactly debug.in
   a different real operation gets a different id. Storage''s producer_semantic_digest covers the complete
   immutable semantic envelope and payload under Case L-5. Same identity and digest returns the original
   receipt without another effect; changed digest conflicts before append. Sequence_id and persisted_at_utc
-  are Storage assignments, never part of producer identity.
+  are Storage assignments, never part of producer identity. The shared rules apply beside these owners:
+  CV-1100 qualifies the identity preimage and this producer projection with the shared qualified RFC 8785,
+  and each companion-schema integer slot is a current integer within its schema bounds; SP-1100 measures
+  each 16 KiB inline body in EVENT_VALUE bytes and keeps Storage sequence_id an exact uint64; CV-1101 checks
+  occurred_at_utc with the EventRecord date-time profile and CV-253''s storage_utc_z profile at observed_at_utc
+  and persisted_at_utc, preserving the exact strings; SP-1101 selects the authenticated at-write recipe
+  debug-project-rfc8785-v1 and its timestamp profiles for retained reads.
 
 
   Consumer binding: reader.debug.investigation.instrumentation_state_changed@1.0.0 is the direct transient
@@ -2420,7 +2450,13 @@ canonical_text: 'Newly authored owner contract under DL-045 for exactly debug.in
   a different real operation gets a different id. Storage''s producer_semantic_digest covers the complete
   immutable semantic envelope and payload under Case L-5. Same identity and digest returns the original
   receipt without another effect; changed digest conflicts before append. Sequence_id and persisted_at_utc
-  are Storage assignments, never part of producer identity.
+  are Storage assignments, never part of producer identity. The shared rules apply beside these owners:
+  CV-1100 qualifies the identity preimage and this producer projection with the shared qualified RFC 8785,
+  and each companion-schema integer slot is a current integer within its schema bounds; SP-1100 measures
+  each 16 KiB inline body in EVENT_VALUE bytes and keeps Storage sequence_id an exact uint64; CV-1101 checks
+  occurred_at_utc with the EventRecord date-time profile and CV-253''s storage_utc_z profile at observed_at_utc
+  and persisted_at_utc, preserving the exact strings; SP-1101 selects the authenticated at-write recipe
+  debug-project-rfc8785-v1 and its timestamp profiles for retained reads.
 
 
   Consumer binding: reader.debug.investigation.started@1.0.0 is the direct transient history reader for
@@ -2547,7 +2583,13 @@ canonical_text: 'Newly authored owner contract under DL-045 for exactly debug.in
   a different real operation gets a different id. Storage''s producer_semantic_digest covers the complete
   immutable semantic envelope and payload under Case L-5. Same identity and digest returns the original
   receipt without another effect; changed digest conflicts before append. Sequence_id and persisted_at_utc
-  are Storage assignments, never part of producer identity.
+  are Storage assignments, never part of producer identity. The shared rules apply beside these owners:
+  CV-1100 qualifies the identity preimage and this producer projection with the shared qualified RFC 8785,
+  and each companion-schema integer slot is a current integer within its schema bounds; SP-1100 measures
+  each 16 KiB inline body in EVENT_VALUE bytes and keeps Storage sequence_id an exact uint64; CV-1101 checks
+  occurred_at_utc with the EventRecord date-time profile and CV-253''s storage_utc_z profile at observed_at_utc
+  and persisted_at_utc, preserving the exact strings; SP-1101 selects the authenticated at-write recipe
+  debug-project-rfc8785-v1 and its timestamp profiles for retained reads.
 
 
   Consumer binding: reader.debug.investigation.target_bound@1.0.0 is the direct transient history reader
@@ -2672,7 +2714,13 @@ canonical_text: 'Newly authored owner contract under DL-045 for exactly debug.in
   a different real operation gets a different id. Storage''s producer_semantic_digest covers the complete
   immutable semantic envelope and payload under Case L-5. Same identity and digest returns the original
   receipt without another effect; changed digest conflicts before append. Sequence_id and persisted_at_utc
-  are Storage assignments, never part of producer identity.
+  are Storage assignments, never part of producer identity. The shared rules apply beside these owners:
+  CV-1100 qualifies the identity preimage and this producer projection with the shared qualified RFC 8785,
+  and each companion-schema integer slot is a current integer within its schema bounds; SP-1100 measures
+  each 16 KiB inline body in EVENT_VALUE bytes and keeps Storage sequence_id an exact uint64; CV-1101 checks
+  occurred_at_utc with the EventRecord date-time profile and CV-253''s storage_utc_z profile at observed_at_utc
+  and persisted_at_utc, preserving the exact strings; SP-1101 selects the authenticated at-write recipe
+  debug-project-rfc8785-v1 and its timestamp profiles for retained reads.
 
 
   Consumer binding: reader.debug.investigation.verification_recorded@1.0.0 is the direct transient history
@@ -2823,7 +2871,13 @@ canonical_text: 'Newly authored owner contract under DL-045 for exactly debug.in
   a different real operation gets a different id. Storage''s producer_semantic_digest covers the complete
   immutable semantic envelope and payload under Case L-5. Same identity and digest returns the original
   receipt without another effect; changed digest conflicts before append. Sequence_id and persisted_at_utc
-  are Storage assignments, never part of producer identity.
+  are Storage assignments, never part of producer identity. The shared rules apply beside these owners:
+  CV-1100 qualifies the identity preimage and this producer projection with the shared qualified RFC 8785,
+  and each companion-schema integer slot is a current integer within its schema bounds; SP-1100 measures
+  each 16 KiB inline body in EVENT_VALUE bytes and keeps Storage sequence_id an exact uint64; CV-1101 checks
+  occurred_at_utc with the EventRecord date-time profile and CV-253''s storage_utc_z profile at observed_at_utc
+  and persisted_at_utc, preserving the exact strings; SP-1101 selects the authenticated at-write recipe
+  debug-project-rfc8785-v1 and its timestamp profiles for retained reads.
 
 
   Consumer binding: reader.debug.investigation.state_changed@1.0.0 is the direct transient history reader
