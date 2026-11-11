@@ -532,6 +532,52 @@ function o55RunAction(found) {
   });
   return true;
 }
+/* Reset settings to defaults (system.advanced.reset-defaults; canon: "Puts one setting, a whole section, or everything
+   back to factory values. Always asks first, and highlights what changed."). The row promised "Pick one setting, a
+   section or everything; you see it first" and opened one confirmation for everything (S4). Now one dialog: what to
+   reset, then the settings that would change, each with its value now and its default, before anything happens. */
+function o55ResetDialog() {
+  const titles = CATEGORY_TITLES(), changed = allSettingsCatalog().filter(e => state.changed[e.setting.id]);
+  const cats = [...new Set(changed.map(e => e.category))];
+  const name = e => PM51.rowLabel(e.setting), catName = c => titles.get(c) || humanize(c);
+  const shown = (e, v) => { try { const t = PM51.valueLabel(e.setting.id, v); return t == null || t === '' ? '(empty)' : String(Array.isArray(t) ? t.join(', ') : t); } catch (_e) { return String(v); } };
+  const d = { what: changed.length ? 'one' : 'everything', cat: cats[0] || '', id: changed[0] ? changed[0].setting.id : '' };
+  const pick = () => d.what === 'one' ? changed.filter(e => e.setting.id === d.id) : d.what === 'section' ? changed.filter(e => e.category === d.cat) : changed;
+  const preview = () => {
+    const list = pick();
+    const lead = d.what === 'everything' ? 'Every setting in this project goes back to its default. Accounts, keys and history are kept, and a restore point is made first so you can undo it.' : '';
+    return (lead ? `<p class="form-help">${escapeHtml(lead)}</p>` : '')
+      + (list.length ? `<div class="form-help o55-reset-count">${list.length === 1 ? 'This setting goes' : `These ${list.length} settings go`} back to ${list.length === 1 ? 'its default' : 'their defaults'}:</div><ul class="o55-reset-list">${list.map(e => `<li data-setting-id="${escAttr(e.setting.id)}"><strong>${escapeHtml(name(e))}</strong> <span>${escapeHtml(shown(e, settingValue(e.setting)))} → ${escapeHtml(shown(e, e.setting.value))}</span></li>`).join('')}</ul>`
+        : `<div class="form-help o55-reset-count">${d.what === 'everything' ? 'No setting is changed from its default right now.' : 'Nothing here is changed from its default.'}</div>`);
+  };
+  const opt = (v, l, cur) => `<option value="${escAttr(v)}"${v === cur ? ' selected' : ''}>${escapeHtml(l)}</option>`;
+  const body = `<div class="form-grid">
+    <label class="form-field full"><span class="form-label">What to reset</span><select class="form-select" name="what" aria-label="What to reset">${[['one', 'One setting'], ['section', 'A section'], ['everything', 'Everything']].map(([v, l]) => opt(v, l, d.what)).join('')}</select></label>
+    <label class="form-field full o55-reset-cat"${d.what === 'section' ? '' : ' hidden'}><span class="form-label">Section</span><select class="form-select" name="cat" aria-label="Section">${cats.map(c => opt(c, catName(c), d.cat)).join('') || opt('', 'No section has changes', '')}</select></label>
+    <label class="form-field full o55-reset-one"${d.what === 'one' ? '' : ' hidden'}><span class="form-label">Setting</span><select class="form-select" name="id" aria-label="Setting">${changed.map(e => opt(e.setting.id, `${name(e)} · ${catName(e.category)}`, d.id)).join('') || opt('', 'No setting is changed', '')}</select></label>
+    <div class="full o55-reset-preview" aria-live="polite">${preview()}</div></div>`;
+  openDialog({ title: 'Reset settings to defaults', subtitle: 'Pick one setting, a section or everything. You see what changes before anything is reset.', body, saveLabel: 'Reset',
+    onOpen: overlay => {
+      const sync = () => {
+        const f = overlay.querySelector('form'); if (!f) return;
+        d.what = f.elements.what.value; d.cat = f.elements.cat.value; d.id = f.elements.id.value;
+        overlay.querySelector('.o55-reset-cat').hidden = d.what !== 'section'; overlay.querySelector('.o55-reset-one').hidden = d.what !== 'one';
+        overlay.querySelector('.o55-reset-preview').innerHTML = preview();
+        const go = overlay.querySelector('button[type="submit"]'); if (go) go.disabled = d.what !== 'everything' && !pick().length;
+      };
+      overlay.querySelectorAll('select').forEach(x => x.addEventListener('change', sync)); sync();
+    },
+    onSave: () => {
+      if (d.what === 'everything') { o55AfterPaint(restoreAllProjectDefaults); return true; }
+      const list = pick(); if (!list.length) return false;
+      const done = list.filter(e => restoreSettingDefault(e.setting.id));
+      if (!done.length) return true;
+      saveState(); done.forEach(e => { try { refreshSettingRow(e.setting.id); } catch (_e) { /* not on screen */ } });
+      allSettingsCatalogCache = null; searchIndexDirty = true;
+      showToast(done.length === 1 ? 'Setting back to its default' : `${done.length} settings back to their defaults`, done.map(name).slice(0, 4).join(', ') + (done.length > 4 ? ` and ${done.length - 4} more` : ''), 'success');
+      return true;
+    } });
+}
 const o55ValuesDispatch = dispatchAction;
 dispatchAction = function (action, el, event) {
   const id = el && el.dataset ? el.dataset.setting : null;
@@ -541,7 +587,7 @@ dispatchAction = function (action, el, event) {
     case 'set-slider-override': if (found) { o55NumberDialog(found); return; } break;
     case 'manage-credential-reference': if (found) { o55KeyPanel(found); return; } break;
     case 'run-setting-action':
-      if (found && found.setting.id === 'system.advanced.reset-defaults') { confirmDialog('Reset settings to defaults', 'Every setting in this project goes back to its default. Accounts, keys and history are kept, and a restore point is made first so you can undo it.', 'Reset', () => restoreAllProjectDefaults(), true); return; }
+      if (found && found.setting.id === 'system.advanced.reset-defaults') { o55ResetDialog(); return; }
       if (found && found.setting.id !== 'restore-defaults') { o55RunAction(found); return; } break;
     case 'o55-go-owner': if (id) { o55GoOwner(id); return; } break;
     case 'o55-auto-number': if (found) { if (restoreSettingDefault(id)) { saveState(); refreshSettingRow(id); showToast((O55R[id] || {}).themeOwn ? "Back to the theme's own" : 'Back to automatic', PM51.rowLabel(found.setting), 'success', 2200); } return; } break;

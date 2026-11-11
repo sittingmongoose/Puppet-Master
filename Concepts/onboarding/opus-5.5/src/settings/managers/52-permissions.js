@@ -35,7 +35,11 @@
 
   const pm = () => PM51.s().permissions;
   const profiles = () => state.permissionProfiles;
-  const rules = () => state.permissionRules;
+  /* every rule has its owner (a profile, or this project) from the first read on, not from the first time the
+     Profiles tab draws: an action or count that runs before it (a toast's "Its N rules now apply", a profile's rule
+     count) reads the same owners the tab shows. ensureAttach is idempotent and cheap; it re-attaches after a load. */
+  let attaching = false;
+  const rules = () => { if (!attaching) { attaching = true; try { ensureAttach(); } finally { attaching = false; } } return state.permissionRules; };
   const paths = () => state.fileSafePaths;
   const refresh = () => { saveState(); PM51.refresh(ID, { swap: false }); };
   const inUse = p => p.status === 'default';
@@ -48,9 +52,13 @@
   const PRESET_OF = { 'hands-off': 'full', 'review-first': 'regular', 'read-only': 'read_only' };
   const builtIn = p => !!PRESET_OF[p.id];
   const presetOf = p => PRESET_OF[p.id] || p.preset || 'custom';
+  /* The saved safety level names a level, not a profile: every profile you make yourself is Custom. So the level only
+     moves the profile in use when that profile's own level differs (the level was changed somewhere else, such as
+     All Settings); a second Custom profile put in use stays in use, never handed back to the first Custom one. */
   function syncFromPreset() {
     const want = PM51.value('safety.rules.permission-preset'); const P = profiles() || [];
-    const match = P.find(p => presetOf(p) === want); if (!match || inUse(match)) return;
+    const cur = P.find(inUse); if (cur && presetOf(cur) === want) return;
+    const match = P.find(p => presetOf(p) === want); if (!match) return;
     P.forEach(x => { if (inUse(x)) x.status = 'available'; }); match.status = 'default';
   }
   const TOOLS = [['bash', 'Run commands'], ['edit', 'Edit files'], ['read', 'Read files'], ['grep', 'Search in files'], ['question', 'Ask you a question'], ['todo_write', 'Write the to-do list'], ['todo_read', 'Read the to-do list'], ['skill', 'Use skills'], ['lsp_readonly', 'Code intelligence (read only)']];
@@ -98,7 +106,7 @@
     'read-only': [{ action: 'Read project files', decision: 'Allow', condition: 'Inside project root' }, { action: 'Search the web', decision: 'Ask', condition: 'Show the address first' }]
   };
   function ensureAttach() {
-    const R = rules(), P = profiles(); if (!Array.isArray(R) || !Array.isArray(P)) return;
+    const R = state.permissionRules, P = profiles(); if (!Array.isArray(R) || !Array.isArray(P)) return;
     R.forEach(r => { if (r.profile === undefined) { const p = P.find(x => x.name === r.source || x.id === r.source); r.profile = p ? p.id : ''; } });
     const s = PM51.s();
     if (!s.o55PermSeeded) {
@@ -422,7 +430,7 @@
   }
   function pathDialog(index) {
     const F = paths(), f = index >= 0 ? F[index] : null;
-    openDialog({ title: f ? 'Edit protected path' : 'Add protected path', subtitle: 'Paths can use ${projectRoot} for the workspace folder.', body: PM51.form([
+    openDialog({ title: f ? 'Edit protected path' : 'Add protected path', subtitle: '${projectRoot} stands for this project’s folder, so ${projectRoot}/secrets is the secrets folder inside it.', body: PM51.form([
       { label: 'Path', name: 'path', value: f ? f.path : '${projectRoot}/', autofocus: true, full: true },
       { label: 'Access', name: 'access', value: f ? f.access : 'Read only', type: 'select', choices: ACCESS_OPTIONS },
       { label: 'Applies to', name: 'inheritance', value: f ? f.inheritance : 'This folder and everything inside', placeholder: 'This folder and everything inside' }
