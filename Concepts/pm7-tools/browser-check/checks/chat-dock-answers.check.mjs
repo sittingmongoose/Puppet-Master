@@ -550,8 +550,13 @@ async function helperCase(t, surface) {
 	// out of view: the dock line carries it
 	// scrolled down past the card, its line carries the ladder
 	await wheelMessages(t, f, 400, () => !!document.querySelector('#pmRoot .composer > .pmx-dock [data-k="pmx-dock:crew-query-perf"][data-ask]'), `${surface}: the helper's line is in the dock`);
+	// one more step takes the card clearly out of view (the line shows as soon as any of the card is hidden), then the
+	// line's question row is read once it is there, without throwing
+	await t.page.mouse.wheel(0, 400);
+	await t.page.waitForTimeout(400);
+	await t.until(`${surface}: the helper's line carries its question`, () => !!document.querySelector('#pmRoot .composer > .pmx-dock [data-k="pmx-dock:crew-query-perf"] .pmx-dock-q'));
 	const ln = line(f, 'pmx-dock:crew-query-perf');
-	const lq = await ln.locator('.pmx-dock-q').innerText();
+	const lq = await f.evaluate(() => { const q = document.querySelector('#pmRoot .composer > .pmx-dock [data-k="pmx-dock:crew-query-perf"] .pmx-dock-q'); return q ? q.textContent : ''; });
 	await t.check(`${surface}: the line shows the command whole`, lq.includes('pg_restore --clean --if-exists -d tastebook_rehearsal snapshots/0007_pre.dump'), lq);
 	await ln.locator('[data-value="once"]').click();
 	await t.until(`${surface}: Once lets the helper go on`, () => !PM56_ASKS.list().some((a) => a.id.startsWith('collab:crew-query-perf:')) && !document.querySelector('#pmRoot article[data-run-id="crew-query-perf"] [data-action="perm-answer"]'));
