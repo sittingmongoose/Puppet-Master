@@ -13,12 +13,13 @@
   const SMX = W.SMX; if (!SMX || SMX.planned) return;
   SMX.planned = true;
   const S = SMX.sec, D = SMX.drawn;
-  const page = (id, chapter, nav, o) => SMX.page(Object.assign({ id, chapter, nav, title: nav }, o));
+  const page = (id, chapter, nav, o) => SMX.page(Object.assign({ id, chapter, nav, title: nav, planned: true }, o));
   const LIST = 'Drawn as this page’s own list, not as a row.';
 
   /* a page declared here can be completed by a chapter file */
   SMX.extend = (id, patch) => {
     const p = SMX.pages.find((x) => x.id === id); if (!p) { W.console.error('SMX.extend: no page', id); return null; }
+    p.extended = true;
     for (const [k, v] of Object.entries(patch)) {
       if (k === 'covers') p.covers = Object.assign({}, p.covers || {}, v);
       else if (k === 'changes') p.changes = (p.changes || []).concat(v);

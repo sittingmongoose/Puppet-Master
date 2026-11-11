@@ -75,6 +75,12 @@
     }).join('')}</div></section>`;
   };
 
+  /* a page that is planned but whose manager-drawn parts are not rebuilt in this cut */
+  ui.pending = (p) => {
+    const hows = [...new Set(Object.values(p.covers || {}).map(String))].filter((x) => !/own list/.test(x)).slice(0, 4);
+    return `<section class="panel-card pm51-section smx-pending"><div class="pm51-section-head"><div class="pm51-section-copy"><h3 class="pm51-section-title">Not rebuilt in this cut</h3><p class="pm51-section-help">This page’s settings are all here. Its lists and guided steps${hows.length ? ` (${h(hows.join(' ').replace(/\s+/g, ' ').slice(0, 180))})` : ''} are still drawn by today’s manager, which opens with one press. The finished chapters (AI providers, Computers & remote access, Look & feel, Memory, Planning, Source control, Backups, Safety, Health) show where this one is going.</p></div><div class="pm51-section-actions">${ui.btn({ label: 'Open it as it is today', icon: 'external', do: 'see-today' })}</div></div></section>`;
+  };
+
   /* a line of text that reads as a sentence and holds real controls */
   ui.sentence = (html, o = {}) => `<div class="smx-sentence${o.cls ? ' ' + o.cls : ''}">${html}</div>`;
   ui.kicker = (text) => `<h3 class="smx-kicker">${h(text)}</h3>`;

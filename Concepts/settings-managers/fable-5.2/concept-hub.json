@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "id": "settings-managers:fable-5.2",
+  "topic": "settings-managers",
+  "model": "Fable 5.2",
+  "presentation": "workspace",
+  "order": 10,
+  "widthControl": {
+    "enabled": false,
+    "label": "Window width",
+    "role": "none",
+    "default": 1440,
+    "previewWidth": 1440
+  },
+  "workspace": {
+    "path": "index.html",
+    "title": "Settings managers, rethought",
+    "openActions": "none",
+    "controlMode": "internal",
+    "tags": [
+      "settings",
+      "managers",
+      "newcomers"
+    ],
+    "id": "workspace",
+    "openPath": "index.html"
+  }
+}

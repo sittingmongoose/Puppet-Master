@@ -222,6 +222,14 @@
     SMX.report && SMX.report('state');
   }
   SMX.setView = setView;
+  /* opened without the review strip (the page on its own), "Today" needs its own way back */
+  const backBtn = () => {
+    let b = D.getElementById('smx-back-btn');
+    if (SMX.view === 'today' && W.parent === W) {
+      if (!b) { b = D.createElement('button'); b.id = 'smx-back-btn'; b.type = 'button'; b.textContent = 'Back to the redesign'; b.addEventListener('click', () => { setView('new'); backBtn(); }); D.body.appendChild(b); }
+    } else if (b) b.remove();
+  };
+  SMX.act('see-today', () => { setView('today'); backBtn(); });
 
   /* ------------------------------------------------------------------ router */
   SMX.route = 'home';
@@ -311,6 +319,9 @@
     const push = (b) => { if (b && b.html) out.push(uniq(b)); };
     const lead = p.lead ? p.lead(ctx) : [];
     for (const b of (lead || [])) push(b);
+    // A planned page whose manager draws lists and cards of its own, not rebuilt in this cut: say so, and give the way
+    // to them, so nothing PMConcept7 offers is out of reach from here.
+    if (SMX.ui && (p.pending || (p.planned && !p.extended && p.covers && Object.keys(p.covers).length))) push({ key: 'pending', html: SMX.ui.pending(p) });
     const sec = (s, i, level) => {
       if (s.when && !s.when(ctx)) return null;
       if (s.html) return { key: `${level}-${s.key || i}`, html: `<div data-smx-anchor="${esc(s.key || '')}">${fn(s.html, ctx)}</div>`, fixed: !!s.fixed };

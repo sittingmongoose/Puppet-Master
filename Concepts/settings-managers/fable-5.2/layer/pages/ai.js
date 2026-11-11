@@ -369,7 +369,7 @@
 
   /* ================================================================== Web research, media, the advisor: their rows; lists come from layer/pages/ai-more.js */
   SMX.page({
-    id: 'ai/web', chapter: 'ai', nav: 'Web research', icon: 'globe', title: 'Web research',
+    id: 'ai/web', pending: true, chapter: 'ai', nav: 'Web research', icon: 'globe', title: 'Web research',
     purpose: 'Lets the assistant look things up on the web: search, read pages, follow links.',
     legacy: [['ai', 'web', 'abilities', 'web'], ['ai', 'web', 'services', 'web'], ['ai', 'web', 'limits', 'web'], ['ai', 'web', 'network', 'web']],
     keywords: ['web search', 'search', 'crawl', 'firecrawl', 'tavily', 'brave', 'exa', 'proxy', 'offline'],
@@ -379,7 +379,7 @@
     covers: Object.assign({}, D('web-abilities', 'The card “What it can do on the web” on this page.'), D('web-services', 'The list “Search services” on this page.'))
   });
   SMX.page({
-    id: 'ai/media', chapter: 'ai', nav: 'Pictures, voice & video', icon: 'image', title: 'Pictures, voice & video',
+    id: 'ai/media', pending: true, chapter: 'ai', nav: 'Pictures, voice & video', icon: 'image', title: 'Pictures, voice & video',
     purpose: 'Whether the assistant can make and understand pictures, speech, video and music, and where the results go.',
     legacy: [['ai', 'media', 'abilities', 'media'], ['ai', 'media', 'files', 'media']],
     keywords: ['image', 'picture', 'voice', 'speech', 'tts', 'video', 'music', 'screenshot'],
@@ -388,7 +388,7 @@
     covers: Object.assign({}, D('media-switches', 'The switches at the top of this page.'), D('media-abilities', 'The list “What it can make and understand” on this page.'))
   });
   SMX.page({
-    id: 'ai/advisor', chapter: 'ai', nav: 'Back Seat Driver', icon: 'eye', title: 'Back Seat Driver',
+    id: 'ai/advisor', pending: true, chapter: 'ai', nav: 'Back Seat Driver', icon: 'eye', title: 'Back Seat Driver',
     purpose: 'A second AI that watches the work as it happens and speaks up when something looks wrong. It never changes anything itself.',
     legacy: [['ai', 'bsd', 'overview', 'bsd'], ['ai', 'bsd', 'stages', 'bsd'], ['ai', 'bsd', 'findings', 'bsd']],
     keywords: ['advisor', 'second opinion', 'bsd', 'watcher', 'findings'],

@@ -282,3 +282,7 @@ html[data-motion="reduced"] #smx-root *, html[data-reduced-motion="1"] #smx-root
 
 /* a button whose menu is on its way (it is borrowed from the manager it belongs to) */
 #smx-root .btn[aria-busy="true"] { cursor: progress; opacity: .72; }
+
+/* a planned page's note that its lists still live in today's manager; and the way back from "Today" without the review strip */
+#smx-root .smx-pending { border-style: dashed; }
+#smx-back-btn { position: fixed; left: 50%; bottom: 44px; transform: translateX(-50%); z-index: 2147482000; padding: 9px 16px; border: 1px solid var(--border, #555); border-radius: 8px; background: var(--accent-primary, #64b5f6); color: var(--background, #111); font: 600 13px/1 var(--body-font, system-ui, sans-serif); cursor: pointer; box-shadow: 0 6px 20px rgb(0 0 0 / .35); }
