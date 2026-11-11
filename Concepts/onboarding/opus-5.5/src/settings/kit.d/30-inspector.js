@@ -58,11 +58,15 @@ function o55ChoicesFor(setting, current) {
    setting's Your choices is one picker button, the chat's (5.6 Pro shared-picker-button: the maker's mark, the name, a
    small line, the chevron), and it unfolds the chat model menu's rows inside the panel under itself: a strip of maker
    marks (the chat menu's rail, laid flat for the narrow panel), a search box, one section per maker, one row per model
-   with the maker's mark (PM56_PICKERS.providerMark), where it runs, the Default/Recommended tags and the tick. Only the
-   13 model settings: every other list stays a list until Jared says which long lists should follow. */
+   with the maker's mark (PM56_PICKERS.providerMark), where it runs, the Default/Recommended tags and the tick. Which
+   lists (Jared, 2026-11-11, "looks good, I choose all 11"): the 13 model settings, and every other single choice with
+   more than O55_PICK_AT choices (Background image, Editor colors, Service tried first, Background gradient, Theme, Kind
+   of job, Bezel material, the two persona lists, NieR background, Image service), those without the maker strip.
+   Short lists (On/Off) and lists that take several choices stay tick lists. */
+const O55_PICK_AT = 6;
 const O55_BRANDS = { anthropic: 'Anthropic', 'anthropic-api': 'Anthropic', 'claude-code': 'Anthropic', openai: 'OpenAI', 'openai-codex': 'OpenAI', gemini: 'Google', google: 'Google', 'qwen-coding': 'Alibaba', 'qwen-token': 'Alibaba', alibaba: 'Alibaba', 'kimi-coding': 'Moonshot', moonshot: 'Moonshot', 'zai-coding': 'z.ai', zai: 'z.ai', 'cursor-cli': 'Cursor', cursor: 'Cursor', 'free-models': 'Free routes', opencode: 'OpenCode' };
 const o55IsModelChoice = (setting, items) => /^ai\.models\..*-model$/.test(setting.id) || /(^|\.)default-model$/.test(setting.id) || (items.length > 1 && items.every(it => /^[\w.-]+\/[\w.:-]+$/.test(String(it.raw))));
-const o55UsesPicker = (setting, ch) => !!ch && ch.kind === 'single' && o55IsModelChoice(setting, ch.items);
+const o55UsesPicker = (setting, ch) => !!ch && ch.kind === 'single' && (o55IsModelChoice(setting, ch.items) || ch.items.length > O55_PICK_AT);
 /* the chat's maker mark (PM56_PICKERS.providerMark draws its PROVIDER_MARKS; an unknown maker gets the chat's sparkle),
    or the maker's first letter when the chat is not in the page */
 function o55BrandMark(brand, size) {
@@ -91,13 +95,13 @@ function o55PickTrigger(setting, pm) {
   const name = cur ? cur.name : PM51.valueText(setting, settingValue(setting));
   const marks = cur ? cur.marks : [];
   const sub = cur ? [pm.model ? cur.brand : '', cur.sub].filter(Boolean).join(' · ') : '';
-  return `<button type="button" class="o55-pick-trigger${pm.model ? ' is-model' : ''}" role="combobox" aria-haspopup="listbox" aria-expanded="false" aria-label="${a(`${label}: ${name}${marks.length ? ', ' + marks.join(', ') : ''}`)}" data-action="o55-insp-pick" data-setting="${a(setting.id)}">${pm.model ? `<span class="o55-pick-mark" aria-hidden="true">${o55BrandMark(cur ? cur.brand : '', 16)}</span>` : ''}<span class="o55-pick-copy"><strong>${h(name)}${marks.map(m => `<em>${h(m)}</em>`).join('')}</strong>${sub ? `<small>${h(sub)}</small>` : ''}</span><span class="o55-pick-chev" aria-hidden="true">${icon('down')}</span></button>`;
+  return `<button type="button" class="o55-pick-trigger${pm.model ? ' is-model' : pm.current && pm.current.swatch ? ' has-dot' : ''}" role="combobox" aria-haspopup="listbox" aria-expanded="false" aria-label="${a(`${label}: ${name}${marks.length ? ', ' + marks.join(', ') : ''}`)}" data-action="o55-insp-pick" data-setting="${a(setting.id)}">${pm.model ? `<span class="o55-pick-mark" aria-hidden="true">${o55BrandMark(cur ? cur.brand : '', 16)}</span>` : cur && cur.swatch ? `<span class="o55-insp-dot" aria-hidden="true" style="background:${cur.swatch}"></span>` : ''}<span class="o55-pick-copy"><strong>${h(name)}${marks.map(m => `<em>${h(m)}</em>`).join('')}</strong>${sub ? `<small>${h(sub)}</small>` : ''}</span><span class="o55-pick-chev" aria-hidden="true">${icon('down')}</span></button>`;
 }
 function o55PickItems(pm, idBase) {
   let html = '', last = null;
   pm.items.forEach(it => {
     if (pm.model && it.brand !== last) { html += `<div class="pm51-popout-group o55-pick-group" role="presentation" data-brand="${a(it.brand)}">${h(it.brand)}</div>`; last = it.brand; }
-    html += `<div class="pm51-popout-item o55-pick-item${it.why ? ' has-why' : ''}${pm.model ? ' is-model' : ''}" role="option" id="${idBase}-${it.index}" data-index="${it.index}" data-brand="${a(it.brand)}" aria-selected="${it.on}"${it.why ? ` aria-disabled="true" data-disabled-reason="${a(it.why)}"` : ''}>${pm.model ? `<span class="o55-pick-mark" aria-hidden="true">${o55BrandMark(it.brand, 15)}</span>` : ''}<span class="o55-pick-copy"><strong>${h(it.name)}${it.marks.map(m => `<em>${h(m)}</em>`).join('')}</strong>${it.sub ? `<small>${h(it.sub)}</small>` : ''}</span><span class="o55-pick-tick" aria-hidden="true">${it.on ? icon('check') : ''}</span></div>`;
+    html += `<div class="pm51-popout-item o55-pick-item${it.why ? ' has-why' : ''}${pm.model ? ' is-model' : it.swatch ? ' has-dot' : ''}" role="option" id="${idBase}-${it.index}" data-index="${it.index}" data-brand="${a(it.brand)}" aria-selected="${it.on}"${it.why ? ` aria-disabled="true" data-disabled-reason="${a(it.why)}"` : ''}>${pm.model ? `<span class="o55-pick-mark" aria-hidden="true">${o55BrandMark(it.brand, 15)}</span>` : it.swatch ? `<span class="o55-insp-dot" aria-hidden="true" style="background:${it.swatch}"></span>` : ''}<span class="o55-pick-copy"><strong>${h(it.name)}${it.marks.map(m => `<em>${h(m)}</em>`).join('')}</strong>${it.sub ? `<small>${h(it.sub)}</small>` : ''}</span><span class="o55-pick-tick" aria-hidden="true">${it.on ? icon('check') : ''}</span></div>`;
   });
   return html + '<div class="pm51-popout-empty" hidden>No matches</div>';
 }

@@ -9,6 +9,9 @@
 // and html[data-theme] is asserted at measurement time (sol-recheck-b10's false pass).
 //   browser-check run Concepts/pm7-tools/browser-check/checks/settings-inspector-fit.check.mjs --set page=<build>
 // --set looks=a,b,c narrows the looks; --set widths=1280,740 narrows the width pass; --set move=0 skips FO-125.
+// FO-127 (Jared, 2026-11-11, all 11 long lists): Theme's choices are a picker now (settings-choices-picker); its panel
+// opens the picker and the chosen row's tick is measured in its tick cell, by the same rule. --set nudge=1 shifts every
+// tick and the head glyph 1 px, to show the check fails an off-centre tick or glyph.
 import { LOOKS } from '../browser-check.config.mjs';
 
 /* Everything the open inspector shows: every ticked choice's mark, the header icon tile. One tick's painted
@@ -47,7 +50,7 @@ const MEASURE = () => {
   };
   const insp = document.querySelector('#panel-settings .detail-inspector');
   if (!insp || insp.getAttribute('aria-hidden') === 'true' || !insp.getClientRects().length) return { error: 'no inspector is open' };
-  const ticks = [...insp.querySelectorAll('.o55-insp-choice.is-on .o55-insp-mark')].map(tick);
+  const ticks = [...insp.querySelectorAll('.o55-insp-choice.is-on .o55-insp-mark, .o55-pick-item[aria-selected="true"] .o55-pick-tick')].map(tick);
   const tileEl = insp.querySelector('.o55-insp-icon');
   let tile = null;
   if (tileEl) {
@@ -62,7 +65,7 @@ const MEASURE = () => {
       };
     } else tile = { error: 'the icon tile draws no svg' };
   }
-  const roles = [...insp.querySelectorAll('.o55-insp-choice')].map((c) => c.getAttribute('role'));
+  const roles = [...insp.querySelectorAll('.o55-insp-choice, .o55-pick-item[role="option"]')].map((c) => c.getAttribute('role'));
   return { ticks, tile, roles: [...new Set(roles)] };
 };
 const centre = (b) => [(b.left + b.right) / 2, (b.top + b.bottom) / 2];
@@ -107,7 +110,7 @@ const SHAPE = (d) => {
 async function measurePanel(t, f, label, saw) {
   const m = await f.evaluate(MEASURE);
   if (m.error) { await t.check(`${label}: the inspector is open`, false, m.error); return; }
-  if (saw) { saw.panels++; for (const r of m.roles || []) { if (r === 'checkbox') saw.checkbox++; else saw.radio++; } }
+  if (saw) { saw.panels++; for (const r of m.roles || []) { if (r === 'checkbox') saw.checkbox++; else if (r === 'radio') saw.radio++; else saw.option++; } }
   await t.check(`${label}: the panel shows choices`, (m.roles || []).length > 0, JSON.stringify(m.roles));
   const bad = [], miss = [];
   for (const tick of m.ticks) {
@@ -136,8 +139,21 @@ async function openInspector(t, f, setting) {
   if (!(await btn.count())) { await t.check(`${setting}: the row's About button exists`, false, 'the placement must show this row'); return false; }
   await btn.scrollIntoViewIfNeeded();
   await btn.click();
-  await f.waitForSelector('#panel-settings .detail-inspector .o55-insp-choice', { timeout: 8000 });
+  await f.waitForSelector('#panel-settings .detail-inspector :is(.o55-insp-choice, .o55-pick-trigger)', { timeout: 8000 });
   await t.settle();
+  /* a long list's choices are a picker (FO-127): open it, so its chosen row's tick is on screen to measure */
+  const picker = f.locator('#panel-settings .detail-inspector .o55-pick-trigger').first();
+  if (await picker.count()) {
+    await picker.click();
+    await f.waitForSelector('#panel-settings .detail-inspector .o55-pick-item[aria-selected="true"] .o55-pick-tick svg', { timeout: 8000 });
+    await t.settle();
+  }
+  if (t.args.nudge) await f.evaluate(() => {
+    if (document.getElementById('fit-nudge')) return;
+    const st = document.createElement('style'); st.id = 'fit-nudge';
+    st.textContent = '#panel-settings :is(.o55-insp-mark, .o55-pick-tick) svg { transform: translate(1px, 1px) } #panel-settings .o55-insp-icon svg { transform: translate(1px, 0) }';
+    document.head.appendChild(st);
+  });
   return true;
 }
 
@@ -184,11 +200,12 @@ async function guardLook(t, f, look, where) {
 export const tests = {
   /* FO-122: every tick centred within 0.5 px of its mark's centre, the tile's svg at its designed size, square,
      wholly inside the tile, and its glyph centred in the tile, across the ten looks and a width pass. Three
-     panels cover the three tick shapes: a select (radio), a toggle (radio, On/Off) and a multiselect (checkbox). */
+     panels cover the tick shapes: a long select (Theme: a picker since FO-127, its chosen row's tick), a toggle (radio,
+     On/Off) and a multiselect (checkbox). */
   'FO-122 inspector ticks and header icon': async (t) => {
     const looks = t.args.looks ? String(t.args.looks).split(',') : LOOKS;
     const widths = t.args.widths ? String(t.args.widths).split(',').map(Number) : [860, 1024, 1280, 1390, 740];
-    const saw = { panels: 0, ticks: 0, radio: 0, checkbox: 0 };
+    const saw = { panels: 0, ticks: 0, radio: 0, checkbox: 0, option: 0 };
     const f = await t.app.open();
     await t.viewport(1920, 1080);
     await f.locator('#tab-settings').click();
@@ -206,6 +223,7 @@ export const tests = {
       }
     }
     await t.check(`FO-122: both choice roles were measured (radio ${saw.radio}, checkbox ${saw.checkbox}, ${saw.panels} panels, ${saw.ticks} ticks)`, saw.radio > 0 && saw.checkbox > 0, 'the multiselect row must still open its inspector');
+    await t.check(`FO-127: Theme's picker was measured too (${saw.option} picker options)`, saw.option > 0, "Theme's Details must open its picker");
 
     /* the width pass: the boxes are px-fixed, but the panel's own width and the row it opens from are not */
     await setLookBySetting(t, f, looks[0]);

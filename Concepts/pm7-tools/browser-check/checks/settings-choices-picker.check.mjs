@@ -1,18 +1,25 @@
 // FO-127 (Jared's settings feedback #2, 2026-11-09): "Shouldnt the your choices list be a drop down rather than listing
-// every model down the page? you could use the model selector from assistant chat." His pick (2026-11-10, "option b"):
-// in the Settings Details panel, a model setting's "Your choices" is one picker (a combobox, the chat's model selector)
-// whose listbox unfolds inside the panel under it, with a strip of maker marks that filters it; every choice stays
-// reachable through it, by pointer and by keys, in all ten looks, at a standard and a narrow width, with Reduced
-// Motion, on either surface (--set sandbox=0/1). Every other list stays a list until Jared says which long lists
-// follow (On/Off and Theme are checked). His #1 ("that logo looks terrible", most right-side panels), pick icon B: the
-// head tile of the Details panel and of every Settings side panel draws the PM glyph (PMG: data-nx, a glyph PMG.has)
-// in a quiet tile with no outer glow (every box-shadow layer inset). Semantics and geometry only (roles, names,
-// states, hit-tests, boxes, computed styles); no eye. Tile geometry (square, centred) stays settings-inspector-fit's.
+// every model down the page? you could use the model selector from assistant chat." His picks: "option b" (2026-11-10)
+// and "looks good, I choose all 11" (2026-11-11). In the Settings Details panel, "Your choices" of a model setting, and
+// of every other single choice with more than 6 choices (the 11 long lists), is one picker (a combobox, the chat's
+// model selector) whose listbox unfolds inside the panel under it; a model setting's has a strip of maker marks that
+// filters it, a long list's has none. Every choice stays reachable through it, by pointer and by keys, in all ten
+// looks, at a standard and a narrow width, with Reduced Motion, on either surface (--set sandbox=0/1). Short lists
+// (On/Off) and lists that take several choices stay tick lists. His #1 ("that logo looks terrible", most right-side
+// panels), pick icon B: the head tile of the Details panel and of every Settings side panel draws the PM glyph (PMG:
+// data-nx, a glyph PMG.has) in a quiet tile with no outer glow (every box-shadow layer inset). Semantics and geometry
+// only (roles, names, states, hit-tests, boxes, computed styles); no eye. Tile geometry and tick centring stay
+// settings-inspector-fit's.
 //   browser-check run Concepts/pm7-tools/browser-check/checks/settings-choices-picker.check.mjs --set page=<build>
-// --set looks=a,b narrows the looks; --set sizes=1390x900,740x900 the sizes; --set setting=<id> another model setting.
+// --set looks=a,b narrows the looks; --set sizes=1390x900,740x900 the sizes; --set setting=<id> another model setting;
+// --set lists=<id,id> narrows the long lists.
 import { LOOKS } from '../browser-check.config.mjs';
 
 const SETTING = 'ai.models.default-model';
+/* the 11 long single-choice lists Jared chose (2026-11-11), each with more than 6 choices. The persona lists and Image
+   service have no row in this fixture's Settings pages (no placement), so a run reports them as not reachable; NieR
+   background shows only under NieR, so it is opened in NieR Dark. At least 7 must open. */
+const LONG = ['code.terminal.background-image', 'code.editing.color-scheme', 'ai.models.default-provider', 'code.terminal.background-gradient', 'general.visual.theme', 'planning.verification.goal-template', 'code.terminal.bezel-material', 'personas.library.default-persona', 'personas.library.active-persona', 'general.visual.nier-background', 'media.image.provider'];
 
 /* The look is chosen the way a person chooses it, through the Theme and Theme Mode rows' own dropdowns (the settings
    engine re-applies the saved pair on every render, applyPaint), and asserted at measurement time. */
@@ -45,16 +52,17 @@ async function guardLook(t, f, look, where) {
 }
 
 /* The setting's own page (its chapter and tab from the placement), then its About button: the Details panel. */
-async function openDetails(t, f, id) {
+async function openDetails(t, f, id, quiet = false) {
 	const pl = await f.evaluate((id) => (window.PM51 && PM51.placement && PM51.placement.byId[id]) || null, id);
-	if (!pl) { await t.check(`${id}: the placement knows the setting`, false); return false; }
+	if (!pl) { if (!quiet) await t.check(`${id}: the placement knows the setting`, false); return false; }
 	await f.locator(`#pm-settings-root [data-action="navigate-domain"][data-domain="${pl.domain}"]`).first().click();
 	await t.settle();
 	if (pl.tab) { await f.locator(`#pm-settings-root [data-tab="${pl.tab}"]`).first().click().catch(() => {}); await t.settle(); }
 	const about = f.locator(`#pm-settings-root .o55-about[data-setting="${id}"]`).first();
-	if (!(await about.count())) { await t.check(`${id}: the row's About button exists`, false); return false; }
-	await about.scrollIntoViewIfNeeded();
-	await about.click();
+	if (!(await about.count()) || !(await about.isVisible())) { if (!quiet) await t.check(`${id}: the row's About button exists`, false); return false; }
+	await about.evaluate((el) => el.scrollIntoView({ block: 'center' }));
+	await t.page.waitForTimeout(250);
+	await about.click({ timeout: 15000 });
 	await f.waitForSelector('#panel-settings .detail-inspector .o55-insp-head', { timeout: 8000 });
 	await t.settle();
 	return true;
@@ -80,8 +88,17 @@ const BLOCK = (id) => {
 		text: c ? c.textContent.trim() : '',
 		box: r ? { left: r.left, right: r.right, top: r.top, bottom: r.bottom, w: r.width, h: r.height } : null,
 		panel: insp ? (() => { const b = insp.getBoundingClientRect(); return { left: b.left, right: b.right }; })() : null,
-		choices: sel ? [...sel.options].map((o) => ({ value: o.value, label: o.textContent.trim() })) : [],
-		value: sel ? sel.value : null
+		choices: sel ? [...sel.options].map((o) => ({ value: o.value, label: o.textContent.trim() })) : null,
+		value: sel ? sel.value : null,
+		face: c ? ((c.querySelector('strong') || c).firstChild || {}).textContent || '' : '',
+		mark: !!(c && c.querySelector('.o55-pick-mark')),
+		/* the current value as the panel's own "now" card writes it, and the setting's choices as the settings
+		   inventory names them (a row may present another list: Theme's row picks a family, its Details a look) */
+		now: ((insp && insp.querySelector('.o55-insp-now-value')) || {}).textContent || '',
+		/* a per-scope setting (each Goal template has its own): the now card lists each scope's value, the picker
+		   sets the shared value, which may be unset, and there is no single default to go back to */
+		per: !!(insp && insp.querySelector('.o55-insp-now.is-per')),
+		inv: (() => { try { const st = window.PM51 && PM51.setting(id); return st && Array.isArray(st.options) ? st.options.map((o) => String(PM51.valueLabel(id, o && typeof o === 'object' ? o.value : o))) : []; } catch (e) { return []; } })()
 	};
 };
 /* The open listbox the combobox controls, wherever it is drawn (floating or in the panel): its options, the selected
@@ -121,6 +138,7 @@ const OPEN = () => {
 		inPanel: !!(insp && insp.contains(host)), panel: ib ? { left: ib.left, right: ib.right } : null,
 		open: true, role: list.getAttribute('role'), label: list.getAttribute('aria-label') || '',
 		total: opts.length, labels: opts.map((o) => o.textContent.trim()), selected: opts.filter((o) => o.getAttribute('aria-selected') === 'true').map((o) => o.textContent.trim()),
+		names: opts.map((o) => (((o.querySelector('strong') || o).firstChild || {}).textContent || '').trim()),
 		host: { left: hb.left, right: hb.right, top: hb.top, bottom: hb.bottom }, vw: innerWidth, vh: innerHeight, sbTop,
 		hits, searchFocused: !!search && act === search, activeDesc: search ? search.getAttribute('aria-activedescendant') : null,
 		activeExists: !!(search && search.getAttribute('aria-activedescendant') && document.getElementById(search.getAttribute('aria-activedescendant'))),
@@ -148,12 +166,11 @@ async function judgeTile(t, f, where, sel) {
 async function judgeClosed(t, f, where, id) {
 	const b = await f.evaluate(BLOCK, id);
 	await t.check(`${where}: the panel shows "Your choices"`, b.block);
-	await t.check(`${where}: "Your choices" is one picker, not a column of every choice (${b.combos} combobox, ${b.radios} radios for ${b.choices.length} choices)`, b.combos === 1 && b.radios === 0, `combobox ${b.combos}, radio/checkbox ${b.radios}`);
+	await t.check(`${where}: "Your choices" is one picker, not a column of every choice (${b.combos} combobox, ${b.radios} radios${b.choices ? ` for ${b.choices.length} choices` : ''})`, b.combos === 1 && b.radios === 0, `combobox ${b.combos}, radio/checkbox ${b.radios}`);
 	if (!b.combos) return b;
 	await t.check(`${where}: the picker says it opens a listbox and is closed`, b.popup === 'listbox' && b.expanded === 'false', `aria-haspopup ${b.popup}, aria-expanded ${b.expanded}`);
-	const cur = b.choices.find((c) => c.value === b.value);
-	const curName = cur ? cur.label.split(' · ')[0] : '';
-	await t.check(`${where}: its name and face say the current choice ("${curName}")`, !!curName && b.name.includes(curName) && b.text.includes(curName), `name "${b.name}", text "${b.text}"`);
+	const curName = (b.per ? b.face : b.now).trim().split(' · ')[0];
+	await t.check(`${where}: its name and face say the current value ("${curName}", from ${b.per ? 'the shared value of a per-scope setting' : "the panel's now card"})`, !!curName && b.name.includes(curName) && b.text.includes(curName), `name "${b.name}", text "${b.text}"`);
 	await t.check(`${where}: the picker sits inside the panel`, !!b.box && !!b.panel && b.box.left >= b.panel.left - 0.5 && b.box.right <= b.panel.right + 0.5 && b.box.h >= 32, JSON.stringify({ box: b.box, panel: b.panel }));
 	return b;
 }
@@ -161,11 +178,17 @@ async function judgeOpen(t, f, where, b, { still = false } = {}) {
 	const o = await f.evaluate(OPEN);
 	await t.check(`${where}: the picker opened a listbox it controls`, o.open && o.role === 'listbox', JSON.stringify(o).slice(0, 200));
 	if (!o.open) return o;
-	const want = b.choices.map((c) => c.label.split(' · ')[0]);
-	const missing = want.filter((w) => !o.labels.some((l) => l.includes(w)));
-	await t.check(`${where}: every choice is in the list (${o.total} of ${b.choices.length})`, o.total === b.choices.length && missing.length === 0, missing.length ? `missing ${missing.join(', ')}` : `${o.total} vs ${b.choices.length}`);
-	const cur = (b.choices.find((c) => c.value === b.value) || {}).label || '';
-	await t.check(`${where}: exactly the current choice is selected`, o.selected.length === 1 && o.selected[0].includes(cur.split(' · ')[0]), JSON.stringify(o.selected));
+	/* every choice: the row's own select when it offers the same long list, else the inventory's choices */
+	const truth = b.choices && b.choices.length > 6 ? b.choices.map((c) => c.label) : b.inv.length > 6 ? b.inv : null;
+	if (truth) {
+		const want = truth.map((l) => l.split(' · ')[0]);
+		const missing = want.filter((w) => !o.labels.some((l) => l.includes(w)));
+		await t.check(`${where}: every choice is in the list (${o.total} of ${truth.length})`, o.total === truth.length && missing.length === 0, missing.length ? `missing ${missing.join(', ')}` : `${o.total} vs ${truth.length}`);
+	} else await t.check(`${where}: the list holds more than 6 choices (${o.total})`, o.total > 6 && o.labels.every((l) => l.length > 0), `${o.total}`);
+	/* the current value is ticked when it is one of the choices; an unset value ("Not set") ticks none */
+	const cur = (b.per ? b.face : b.now).trim().split(' · ')[0];
+	const listed = o.names.some((n) => n === cur);
+	await t.check(`${where}: ${listed ? `exactly the current choice ("${cur}") is selected` : `nothing is selected while the value ("${cur}") is not one of the choices`}`, listed ? o.selected.length === 1 && o.selected[0].startsWith(cur) : o.selected.length === 0, JSON.stringify(o.selected));
 	await t.check(`${where}: focus is in its search, with an active option named`, o.searchFocused && o.activeExists, `search focused ${o.searchFocused}, active ${o.activeDesc}`);
 	await t.check(`${where}: the list unfolds inside the Details panel`, o.inPanel && !!o.panel && o.host.left >= o.panel.left - 0.5 && o.host.right <= o.panel.right + 0.5, JSON.stringify({ host: o.host, panel: o.panel }));
 	await t.check(`${where}: the open list is inside the window and above the status bar`, o.host.left >= 0 && o.host.right <= o.vw && o.host.top >= 0 && o.host.bottom <= o.sbTop + 0.5, JSON.stringify({ host: o.host, vw: o.vw, sbTop: o.sbTop }));
@@ -176,8 +199,9 @@ async function judgeOpen(t, f, where, b, { still = false } = {}) {
 }
 
 export const tests = {
-	/* All ten looks at each size: the panel shows one closed picker, a click opens the whole list on top, Escape
-	   closes the picker and not the panel, and focus is back on the picker. */
+	/* All ten looks at each size, for the model setting and for Theme (the long list whose look matters most): the
+	   panel shows one closed picker, a click opens the whole list on top, Escape closes the picker and not the panel,
+	   and focus is back on the picker. */
 	'FO-127 model choices are one picker, all looks and sizes': async (t) => {
 		const id = String(t.args.setting || SETTING);
 		const looks = t.args.looks ? String(t.args.looks).split(',') : LOOKS;
@@ -190,14 +214,14 @@ export const tests = {
 		for (const look of looks) {
 			await t.viewport(1390, 900);
 			await setLook(t, f, look);
-			for (const [w, h] of sizes) {
+			for (const [w, h] of sizes) for (const sid of [id, 'general.visual.theme']) {
 				await t.viewport(1390, 900);
-				if (!(await openDetails(t, f, id))) continue;
+				if (!(await openDetails(t, f, sid))) continue;
 				if (w !== 1390 || h !== 900) { await t.viewport(w, h); await t.page.waitForTimeout(500); }
-				const where = `${look} ${w}x${h}`;
+				const where = `${look} ${w}x${h} ${sid === id ? 'model' : 'Theme'}`;
 				await guardLook(t, f, look, where);
-				const b = await judgeClosed(t, f, where, id);
-				await judgeTile(t, f, `${where} Details`, '#panel-settings .detail-inspector .o55-insp-icon');
+				const b = await judgeClosed(t, f, where, sid);
+				if (sid === id) await judgeTile(t, f, `${where} Details`, '#panel-settings .detail-inspector .o55-insp-icon');
 				if (b.combos) {
 					await f.locator('#panel-settings .detail-inspector .o55-insp-block [role="combobox"]').first().click();
 					await t.page.waitForTimeout(450);
@@ -292,6 +316,73 @@ export const tests = {
 		await t.emulate({ reducedMotion: 'no-preference' });
 	},
 
+	/* Each of the 11 long lists that opens from its page: one picker with no maker mark or strip, the whole list on
+	   top; Arrow Down opens it, typing a choice's name narrows the list to it, Enter picks it, focus is back on the
+	   closed picker naming it, the row's own control follows, and Go back to the default restores it. */
+	'FO-127 the 11 long lists are one picker each': async (t) => {
+		const ids = t.args.lists ? String(t.args.lists).split(',') : LONG;
+		const f = await t.app.open();
+		await t.viewport(1390, 900);
+		await f.locator('#tab-settings').click();
+		await t.settle();
+		const settleLook = () => f.waitForFunction(() => !(window.PM_LOOK_COVERED && PM_LOOK_COVERED()) && !(window.PM_THEME_TRANSITION && PM_THEME_TRANSITION.busy && PM_THEME_TRANSITION.busy()), null, { timeout: 15000 }).catch(() => {});
+		const opened = [], unreachable = [];
+		for (const id of ids) {
+			const nier = id === 'general.visual.nier-background';
+			if (nier) await setLook(t, f, 'nier-dark');
+			if (!(await openDetails(t, f, id, true))) { unreachable.push(id); if (nier) await setLook(t, f, 'basic-dark'); continue; }
+			opened.push(id);
+			const where = `long list ${id}`;
+			const b = await judgeClosed(t, f, where, id);
+			if (b.combos) {
+				await t.check(`${where}: its picker has no maker mark`, !b.mark);
+				await f.locator('#panel-settings .detail-inspector .o55-insp-block [role="combobox"]').first().focus();
+				await t.page.keyboard.press('ArrowDown');
+				await t.page.waitForTimeout(400);
+				const o = await judgeOpen(t, f, where, b);
+				const rows = await f.evaluate(() => {
+					const c = document.querySelector('#panel-settings .detail-inspector [role="combobox"][aria-expanded="true"]');
+					const list = c && document.getElementById(c.getAttribute('aria-controls'));
+					const host = list && (list.closest('.o55-pick-inline') || list.parentElement);
+					return { strip: host ? host.querySelectorAll('[role="group"] button[aria-pressed]').length : -1, rows: list ? [...list.querySelectorAll('[role="option"]')].map((n) => ({ name: (((n.querySelector('strong') || n).firstChild || {}).textContent || '').trim(), sel: n.getAttribute('aria-selected') === 'true', off: n.getAttribute('aria-disabled') === 'true' })) : [] };
+				});
+				await t.check(`${where}: no maker strip`, rows.strip === 0, `${rows.strip} maker marks`);
+				const names = rows.rows.map((r) => r.name.toLowerCase());
+				const target = rows.rows.find((r) => r.name && !r.sel && !r.off && names.filter((n) => n.includes(r.name.toLowerCase())).length === 1);
+				if (!target) { await t.check(`${where}: a choice with a name of its own to type`, false, JSON.stringify(rows.rows.slice(0, 6))); }
+				else {
+					await t.page.keyboard.type(target.name);
+					await t.page.waitForTimeout(250);
+					const shown = await f.evaluate(() => { const c = document.querySelector('#panel-settings .detail-inspector [role="combobox"][aria-expanded="true"]'); const l = c && document.getElementById(c.getAttribute('aria-controls')); return l ? [...l.querySelectorAll('[role="option"]')].filter((n) => !n.hidden).map((n) => n.textContent.trim()) : []; });
+					await t.check(`${where}: typing "${target.name}" narrows the list to it`, shown.length >= 1 && shown.every((x) => x.toLowerCase().includes(target.name.toLowerCase())), JSON.stringify(shown));
+					await t.page.keyboard.press('Enter');
+					await t.page.waitForTimeout(600);
+					await settleLook();
+					const after = await f.evaluate(([id]) => {
+						const sel = document.querySelector(`#pm-settings-root select[data-setting="${CSS.escape(id)}"]`);
+						const c = document.querySelector('#panel-settings .detail-inspector .o55-insp-block [role="combobox"]');
+						return { row: sel ? (sel.options[sel.selectedIndex] || {}).textContent : null, rowOffers: sel ? [...sel.options].map((o) => o.textContent.trim()) : [], expanded: c && c.getAttribute('aria-expanded'), focus: !!(c && document.activeElement === c), face: c ? (((c.querySelector('strong') || c).firstChild || {}).textContent || '').trim() : '' };
+					}, [id]);
+					await t.check(`${where}: Enter picks "${target.name}"; focus is back on the closed picker, which names it`, after.expanded === 'false' && after.focus && after.face === target.name, JSON.stringify(after));
+					/* the row's own select follows when it offers that same choice (Theme's row offers families instead) */
+					/* (a per-scope setting's row shows one scope's value, not the shared one the picker set) */
+					if (!b.per && after.rowOffers.some((x) => x.startsWith(target.name))) await t.check(`${where}: the row's own control follows`, (after.row || '').trim().startsWith(target.name), `row shows "${after.row}"`);
+					const reset = f.locator('#panel-settings .detail-inspector [data-action="reset-setting"]').first();
+					if (b.per) await t.check(`${where}: a per-scope setting offers no single default to go back to`, !(await reset.count()), 'a reset button is shown');
+					else {
+						if (await reset.count()) { await reset.click(); await t.page.waitForTimeout(500); await settleLook(); }
+						const back = await f.evaluate(() => { const c = document.querySelector('#panel-settings .detail-inspector .o55-insp-block [role="combobox"]'); return c ? (((c.querySelector('strong') || c).firstChild || {}).textContent || '').trim() : ''; });
+						await t.check(`${where}: Go back to the default restores "${b.face.trim()}"`, back === b.face.trim(), `now "${back}"`);
+					}
+				}
+			}
+			await closeDetails(t, f);
+			if (nier) await setLook(t, f, 'basic-dark');
+		}
+		t.log(`long lists opened: ${opened.join(', ')}; not reachable from a page in this fixture: ${unreachable.join(', ') || 'none'}`);
+		await t.check(`at least 7 of the long lists open from their pages (${opened.length} of ${ids.length})`, opened.length >= Math.min(7, ids.length), `not reachable: ${unreachable.join(', ')}`);
+	},
+
 	/* Every Settings side panel's head (PM51.panel, the one builder they all use: sign-in, Check connection, the
 	   managers' sheets), opened here with the builder itself; the ready tone too, all ten looks. */
 	'FO-127 side panel head tile, all looks': async (t) => {
@@ -314,7 +405,7 @@ export const tests = {
 		}
 	},
 
-	/* Every other list stays a list: an On/Off setting's two radios, and (until Jared answers) Theme's. */
+	/* Every other list stays a list: an On/Off setting's two radios, and a list that takes several choices. */
 	'FO-127 other lists stay lists': async (t) => {
 		const f = await t.app.open();
 		await t.viewport(1390, 900);
@@ -324,10 +415,10 @@ export const tests = {
 		const b = await f.evaluate(BLOCK, 'general.interaction.question-cards');
 		await t.check('On/Off: "Your choices" keeps its two radios and no picker', b.block && b.radios === 2 && b.combos === 0, `radios ${b.radios}, combobox ${b.combos}`);
 		await closeDetails(t, f);
-		/* Theme has 10 choices; it stays a list until Jared says which long lists follow the models */
-		if (!(await openDetails(t, f, 'general.visual.theme'))) return;
-		const th = await f.evaluate(BLOCK, 'general.visual.theme');
-		await t.check(`Theme: "Your choices" stays a list for now (${th.radios} radios)`, th.block && th.radios >= 2 && th.combos === 0, `radios ${th.radios}, combobox ${th.combos}`);
+		/* a list that takes several choices stays a tick list, however long ("Ways to fix, in order": 10) */
+		if (!(await openDetails(t, f, 'planning.verification.repair-strategies'))) return;
+		const mp = await f.evaluate(() => { const i = document.querySelector('#panel-settings .detail-inspector'); return { checks: i.querySelectorAll('.o55-insp-block [role="checkbox"]').length, combos: i.querySelectorAll('.o55-insp-block [role="combobox"]').length }; });
+		await t.check(`Ways to fix (several choices): stays a tick list (${mp.checks} checkboxes)`, mp.checks > 6 && mp.combos === 0, `checkboxes ${mp.checks}, combobox ${mp.combos}`);
 		await closeDetails(t, f);
 	}
 };
