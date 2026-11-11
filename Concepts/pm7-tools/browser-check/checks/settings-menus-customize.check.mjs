@@ -185,9 +185,11 @@ for (const surface of ['normal', 'sandbox']) {
 		await t.viewport(1600, 1000);
 		const f = await t.app.open({ sandbox: surface === 'sandbox' });
 		// both screens are built while the app is idle; the editor's is prepared after load
-		await f.waitForFunction(() => document.querySelector('.pmt-cz.pmed-cz.pmed-prepared'), null, { timeout: 30000 }).catch(() => null);
+		// FO-145's case: on the bare page the terminal's screen is built and parked at idle (about 8 s after load), and
+		// the editor's is prepared; wait for both
+		await f.waitForFunction(() => document.querySelector('.pmt-cz.pmed-cz.pmed-prepared') && document.querySelector('.pmt-cz.pmt-cz-parked:not(.pmed-cz)'), null, { timeout: 40000 }).catch(() => null);
 		const atRest = await parkedClaims(f);
-		await t.check('at rest: a prepared or parked Customize screen exists', atRest.length >= 1, JSON.stringify(atRest));
+		await t.check('at rest: the terminal\'s parked and the editor\'s prepared Customize screens are in the page', atRest.some((c) => c.kind === 'terminal') && atRest.some((c) => c.kind === 'editor'), JSON.stringify(atRest));
 		for (const c of atRest) await t.check(`at rest: the ${c.kind}'s parked screen has no aria-modal, is inert and aria-hidden`, c.modal === null && c.inert && c.hidden, JSON.stringify(c));
 		const m0 = await openModals(f);
 		await t.check('at rest: nothing claims an open modal (the audit\'s rule)', m0.length === 0, m0.join(', '));

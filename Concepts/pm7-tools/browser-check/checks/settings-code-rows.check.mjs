@@ -97,15 +97,20 @@ for (const surface of ['normal', 'sandbox']) {
 		// a fresh page: the "Restart language servers" steps clear it too
 		const g = await settings(t, surface);
 		await go(t, g, 'code', 'toolchain');
-		// the row's own action (run-setting-action on code.editing.lsp-restart, the button the row draws wherever it is
-		// shown: Details, search, All Project Settings) runs its five steps
-		const opened = await g.evaluate(() => { const found = typeof findSettingGlobal === 'function' && findSettingGlobal('code.editing.lsp-restart'); if (!found || typeof o55RunAction !== 'function') return false; o55RunAction(found); return true; });
+		// the row's own button (run-setting-action on code.editing.lsp-restart): Toolchain carries the row in its server
+		// menus, so the row itself is drawn in Projects & Sync › All project settings, found there by its words
+		await go(t, g, 'projects', 'project-settings');
+		const filter = g.locator('[data-continuous-workspace-body="project-settings"] input').first();
+		if (await filter.count()) { await filter.fill('Restart language servers'); await t.page.waitForTimeout(1200); }
+		const btn = g.locator('[data-action="run-setting-action"][data-setting="code.editing.lsp-restart"]').first();
+		const opened = await btn.waitFor({ state: 'visible', timeout: 8000 }).then(async () => { await btn.scrollIntoViewIfNeeded(); await btn.click(); return true; }).catch(() => false);
 		if (await t.check('"Restart language servers" opens its steps', opened)) {
 			const go2 = g.locator('.pm51-panel button, aside button', { hasText: /^\s*Restart them\s*$/ }).first();
 			await go2.click({ timeout: 6000 });
 			await t.page.waitForTimeout(4200);
 			await t.page.keyboard.press('Escape');
 			await t.page.waitForTimeout(500);
+			await go(t, g, 'code', 'toolchain');
 			const r = g.locator('[data-continuous-workspace-body="toolchain"] .resource-row', { hasText: 'Pyright' }).first();
 			if (await r.count()) { await r.click(); await t.page.waitForTimeout(500); }
 			const w2 = await g.evaluate(() => (document.querySelector('[data-continuous-workspace-body="toolchain"] .pm51-detail-title') || {}).textContent.replace(/\s+/g, ' ').trim());
