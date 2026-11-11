@@ -67,7 +67,16 @@ def datetime_payload(check, validate, payload, order_ok=lambda value: True):
             altered = dict(payload, **{field: value})
             if order_ok(altered):
                 count += expect(bool(check(altered)), False, 'cv1101_accept_' + field + '_' + value)
+        # Part 2A leak: the lane check `type(v) is not str or instant(v)` passed a str subclass unchecked.
+        # The shared predicate refuses it (date_time_type), even when its text is a valid timestamp.
+        altered = dict(payload, **{field: _StrSubclass(payload[field])})
+        assert check(altered), ('str subclass timestamp accepted', field)
+        count += expect(causes(validate(altered)), {'date_time_type'}, 'cv1101_str_subclass_' + field)
     return count
+
+
+class _StrSubclass(str):
+    """A timestamp held in a str subclass (programmatic input; JSON parsing never yields one)."""
 
 
 def _read(reader, request, expected, unavailable):
