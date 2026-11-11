@@ -366,10 +366,10 @@ for (const surface of ['normal', 'sandbox']) {
 		}
 		// Upload file saved with no file
 		const before = await library();
-		// Add sound is the "general.interaction.sound-management" row's own button; it opens Upload file / Import pack
-		const addRow = NB.locator('[id="setting-general.interaction.sound-management"]').first();
-		await addRow.scrollIntoViewIfNeeded();
-		await addRow.locator('button.o55-actionbtn, button').first().click();
+		// Add sound is the Sound library's button for "general.interaction.sound-management"; it opens Upload file / Import pack
+		const add = NB.locator('button[data-setting-id="general.interaction.sound-management"]').first();
+		await add.scrollIntoViewIfNeeded();
+		await add.click();
 		await t.page.waitForTimeout(300);
 		if (await f.locator('.pm51-menu-item', { hasText: /Upload file/ }).count()) await menuItem(t, f, 'Upload file');
 		await f.locator('.overlay .dialog').last().waitFor({ state: 'visible', timeout: 8000 });
