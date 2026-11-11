@@ -7,7 +7,7 @@
 #smx-root .smx-look .smx-blocks > [data-smx-block="proxy"] { display: none; }
 #smx-root .smx-look .smx-blocks > [data-smx-block="example"] { position: sticky; top: 0; z-index: 4; padding-bottom: 8px; }
 /* while it is stuck on top (one column), a ground behind it reaches the edges of the page so nothing shows through */
-#smx-root .smx-look .smx-blocks > [data-smx-block="example"]::before { content: ''; position: absolute; z-index: -1; inset: -32px -28px 0; background: color-mix(in srgb, var(--background) 94%, transparent); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); border-bottom: 1px solid var(--k3-line); }
+#smx-root .smx-look .smx-blocks > [data-smx-block="example"]::before { content: ''; position: absolute; z-index: -1; inset: -32px calc(-1 * var(--smx-pad-x, 14px)) 0; background: color-mix(in srgb, var(--background) 94%, transparent); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); border-bottom: 1px solid var(--k3-line); }
 #smx-root .smx-lk-choice-body { padding: 0 18px 16px; }
 /* the wallpaper and font cards already carry their names: their rows show only the control */
 #smx-root .smx-look [data-smx-anchor="wall"] .setting-row > .setting-copy, #smx-root .smx-look [data-smx-anchor="font"] .setting-row > .setting-copy { display: none; }

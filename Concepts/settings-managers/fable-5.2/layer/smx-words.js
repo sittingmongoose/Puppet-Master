@@ -16,11 +16,12 @@
     'code.editing.token-colors': { label: 'Colours for one kind of word', help: 'Your own colour for one kind of word (a keyword, a number, a comment) in one colour scheme. Set them in the editor’s Customize screen, under Colors.' },
     /* ---- AI providers: "service" is an AI provider */
     'ai.models.default-provider': { label: 'AI provider tried first', help: 'Used first when more than one AI provider could do a job.' },
-    'ai.models.provider-priority': { label: 'The order AI providers are tried in', help: 'Used when several AI providers could do a job.' },
+    'ai.models.provider-priority': { label: 'The order AI providers are tried in', help: 'Used when several AI providers could do a job.', replace: [[/\bservices\b/g, 'AI providers'], [/\bservice\b/g, 'AI provider']] },
     'ai.models.provider-fallback': { label: 'Move to another AI provider when one is down', help: 'Otherwise the run stops when its AI provider is down.' },
     'ai.accounts.default-account': { help: 'Each AI provider’s accounts are on its own page.', options: { 'The one I pick for each service': 'The one I pick for each AI provider' } },
     'ai.models.provider-options': { label: 'Extra options for an AI provider', help: 'Options passed straight to an AI provider, each written as a name and a value, for anything that has no switch of its own.' },
     'ai.models.per-lane-platform': { label: 'AI provider for each kind of work', help: 'A different AI provider for each kind of work in a big job.', options: { 'The everyday model’s service': 'The everyday model’s AI provider' } },
+    'ai.models.lane-bindings': { label: 'Who does each role in a big job', help: 'Pin each role (the cheap doer, the reviewer, the one that directs, the checker, the judge, the one that signs off) to an AI provider, an account and a model.' },
     'ai.models.per-lane-model': { label: 'Model for each kind of work', help: 'An exact model name for one kind of work, written the way its AI provider writes it. Leave it blank to use that provider’s usual model.' },
     /* ---- AI providers › Spending & warnings: a token is said once, where the number is set */
     'ai.usage.monthly-token-budget': { label: 'Monthly limit on tokens', help: 'AI use is counted in tokens: a token is a small piece of text, about three quarters of a word. This number feeds the warnings and the limits for one run. 0 means no limit.' },

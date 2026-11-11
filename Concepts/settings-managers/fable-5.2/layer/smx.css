@@ -46,7 +46,7 @@
 
 /* ---- the page -------------------------------------------------------------------------------------------------- */
 #smx-root .smx-main { position: relative; min-width: 0; height: 100%; min-height: 0; display: block; padding: 0; margin: 0; overflow: hidden; }
-#smx-root .smx-scroll { height: 100%; overflow-y: auto; overflow-x: hidden; padding: 18px 28px 72px; scrollbar-gutter: stable; outline: 0; }
+#smx-root .smx-scroll { --smx-pad-x: 28px; height: 100%; overflow-y: auto; overflow-x: hidden; padding: 18px var(--smx-pad-x) 72px; scrollbar-gutter: stable; outline: 0; }
 #smx-root .smx-page { width: 100%; max-width: 940px; margin: 0 auto; display: block; height: auto; min-height: 0; overflow: visible; background: transparent; color: var(--k3-text-1); font-size: 12.5px; }
 #smx-root .smx-page.is-wide { max-width: 1180px; }
 #smx-root .smx-crumbs { display: flex; align-items: center; flex-wrap: wrap; gap: 4px; margin: 0 0 8px -6px; font-size: 12px; color: var(--k3-text-3); }
@@ -208,7 +208,7 @@ html[data-theme^="glass"] #smx-root .smx-find, html[data-theme^="glass"] #smx-ro
   #smx-root .smx-nav-item { width: auto; min-height: 30px; }
   #smx-root .smx-nav-pages { flex-basis: 100%; display: flex; flex-wrap: wrap; margin: 2px 0 4px; padding-left: 6px; border-left: 0; }
   #smx-root .smx-nav-page { width: auto; }
-  #smx-root .smx-scroll { padding: 14px 14px 56px; }
+  #smx-root .smx-scroll { --smx-pad-x: 14px; padding: 14px var(--smx-pad-x) 56px; }
   #smx-root .smx-find { top: 52px; }
   #smx-root .smx-head { flex-direction: column; align-items: flex-start; }
   #smx-root .smx-summary { flex-direction: column; }

@@ -103,3 +103,6 @@
 
 /* a menu of PMConcept7 that a button here opens only to choose one of its items is not shown for that moment */
 html.smx-nt-picking .pm51-popout.pm51-menu { opacity: 0 !important; pointer-events: none !important; }
+
+/* the library's style filter: one row of choices above the tiles, wrapping when the page is narrow */
+#smx-root .smx-nt-styles { display: flex; flex-wrap: wrap; gap: 4px; margin: 0 0 12px; }

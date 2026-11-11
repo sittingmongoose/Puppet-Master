@@ -308,5 +308,39 @@ export const tests = {
 			return { bad };
 		});
 		if (r.bad.length) fail(r.bad.join(' || '));
+	},
+	/* Every other test runs 1600 wide. This one opens every page 780 wide (the list folds above the page) and 860 wide:
+	   no page may scroll sideways, and nothing may leave its page. (The backdrop of the pinned example on Look & feel
+	   did, by 14 px, until round 2.) It also checks that a row's control is named by the label that shows. */
+	async 'narrow windows: no page scrolls sideways, and a control is named by its label'(t) {
+		const { f } = await open(t);
+		const scan = async (w) => {
+			await t.viewport(w, 900);
+			await t.page.waitForTimeout(600);
+			return f.evaluate(async () => {
+				const S = window.SMX, wait = (ms) => new Promise((res) => setTimeout(res, ms)), out = [];
+				let pages = 0, rows = 0, misnamed = [];
+				for (const p of S.pages) {
+					if (p.id.includes(':')) continue;
+					S.go(p.id, { replace: true }); await wait(60); pages++;
+					const sc = document.querySelector('#smx-root .smx-scroll'); if (!sc) { out.push(p.id + ': no page'); continue; }
+					if (sc.scrollWidth > sc.clientWidth + 1) out.push(`${p.id} scrolls sideways by ${sc.scrollWidth - sc.clientWidth} px`);
+					for (const r of sc.querySelectorAll('.setting-row[id^="setting-"]')) {
+						const lab = r.querySelector('.setting-label'); const tn = lab ? [...lab.childNodes].find((c) => c.nodeType === 3 && c.nodeValue.trim()) : null; const text = tn ? tn.nodeValue.trim() : '';
+						const cs = [...r.querySelectorAll('.setting-control [role="switch"], .setting-control .toggle, .setting-control .pm51-dd-trigger, .setting-control input:not([type="hidden"]):not([type="file"]), .setting-control textarea')];
+						if (text && cs.length === 1) { rows++; if (cs[0].getAttribute('aria-label') !== text) misnamed.push(`${p.id}: "${text}" is named "${cs[0].getAttribute('aria-label')}"`); }
+					}
+				}
+				S.go('home', { replace: true });
+				return { pages, rows, out, misnamed, width: window.innerWidth, folded: getComputedStyle(document.querySelector('#smx-root')).gridTemplateColumns.trim().split(/\s+/).length < 2 };
+			});
+		};
+		const a = await scan(780), b = await scan(860);
+		await t.viewport(1600, 1000);
+		if (!a.folded) fail(`at 780 wide the list did not fold above the page (window ${a.width})`);
+		if (a.pages < 90) fail(`only ${a.pages} pages were opened`);
+		if (a.out.length || b.out.length) fail('pages that scroll sideways: at 780: ' + (a.out.join('; ') || 'none') + ' | at 860: ' + (b.out.join('; ') || 'none'));
+		if (a.rows < 300) fail(`only ${a.rows} rows with one control were found, so the naming check proves little`);
+		if (a.misnamed.length) fail(`${a.misnamed.length} controls are not named by their label: ${a.misnamed.slice(0, 5).join('; ')}`);
 	}
 };

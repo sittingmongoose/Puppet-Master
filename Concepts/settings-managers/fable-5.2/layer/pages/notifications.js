@@ -332,7 +332,9 @@
     nav: (ctx) => { const x = destOf(ctx); return x ? x.name : 'Destination'; },
     purpose: (ctx) => { const x = destOf(ctx); return x ? kind(x).about : ''; },
     legacy: [['general', 'notifications', 'destinations', 'notifications']],
-    headSide: (ctx) => { const x = destOf(ctx); if (!x) return ''; return x.status === 'disabled' ? ui.btn({ label: 'Resume', icon: 'play', primary: true, action: 'pm51-notifications-dest-on', data: { dest: x.id } }) : ui.btn({ label: 'Send a test', icon: 'bell', primary: true, action: 'pm51-notifications-test', data: { dest: x.id } }); },
+    // "Send a test" stays at the top of the page; while the destination is paused it says why it cannot be used, and
+    // "Resume" is once on the page, among its actions (it was there twice, and the test was gone; review R2-9)
+    headSide: (ctx) => { const x = destOf(ctx); if (!x) return ''; const paused = x.status === 'disabled'; return ui.btn({ label: 'Send a test', icon: 'bell', primary: !paused, action: 'pm51-notifications-test', data: { dest: x.id }, disabled: paused, reason: 'It is paused, so nothing is sent to it. Resume it first.' }); },
     lead: (ctx) => {
       const st = ctx.st, x = destOf(ctx); prime(st);
       if (!x) return [{ key: 'gone', html: ui.card({ title: 'This destination is no longer in your list', body: ui.btn({ label: 'Back to your destinations', go: 'notifications' }) }) }];
@@ -358,7 +360,7 @@
           + (ag.length ? `<p class="smx-quiet-line">${ag.length === 1 ? 'The agent' : 'The agents'} ${listOf(ag.map((g) => h(g.name)))} also ${ag.length === 1 ? 'sends' : 'send'} here when ${ag.length === 1 ? 'it follows' : 'they follow'} up on an alert.</p>` : '') }) },
         { key: 'about', html: ui.card({ title: 'About this destination', body: ui.rows(rows) }) },
         { key: 'lately', html: lately.length ? ui.things({ title: 'Sent here lately', items: lately.map(([row, i]) => ({ icon: 'history', name: row.event, sub: [row.time, tookSay(row.latency)].filter(Boolean).join(' · '), status: { text: row.result, tone: resultTone(row.result) }, action: 'pm51-notifications-history', data: { index: i } })) }) : '' },
-        { key: 'actions', html: `<div class="smx-btn-row">${x.status === 'disabled' ? ui.btn({ label: 'Resume', icon: 'play', action: 'pm51-notifications-dest-on', data }) : ui.btn({ label: 'Pause', icon: 'pause', do: 'notif-dest-pause', data: { id: x.id }, key: 'pause' })}${ui.btn({ label: 'Rename or change its kind…', icon: 'edit', do: 'notif-dest-edit', data: { id: x.id }, key: 'edit' })}${ui.btn({ label: 'Remove this destination…', icon: 'trash', danger: true, do: 'notif-dest-remove', data: { id: x.id }, key: 'remove' })}</div>` }
+        { key: 'actions', html: `<div class="smx-btn-row">${x.status === 'disabled' ? ui.btn({ label: 'Resume', icon: 'play', primary: true, action: 'pm51-notifications-dest-on', data }) : ui.btn({ label: 'Pause', icon: 'pause', do: 'notif-dest-pause', data: { id: x.id }, key: 'pause' })}${ui.btn({ label: 'Rename or change its kind…', icon: 'edit', do: 'notif-dest-edit', data: { id: x.id }, key: 'edit' })}${ui.btn({ label: 'Remove this destination…', icon: 'trash', danger: true, do: 'notif-dest-remove', data: { id: x.id }, key: 'remove' })}</div>` }
       ];
     },
     more: [{ key: 'message', count: 0, when: (ctx) => !!destOf(ctx), html: (ctx) => { const x = destOf(ctx); if (!x) return ''; const adv = x.advanced || {}; const dd = (key, list, label) => select(adv[key] || list[0], list, { action: 'pm51-notifications-dest-adv', data: { dest: x.id, key }, label }); return ui.card({ title: 'What is in the message', body: ui.rows([
@@ -375,7 +377,8 @@
       { was: 'A destination is the right-hand pane of the Destinations tab: four facts, its seven alert switches and a folded “More options”. Edit, Turn off, Remove and Delivery history are items of a “More actions” menu.', now: 'A destination has a page. One sentence says whether alerts arrive; then what arrives there, its facts in everyday words, what was sent lately, and Pause, Rename and Remove as buttons. Each button runs PMConcept7’s own menu item.' },
       { was: 'The address is labelled “Webhook address”, “Topic”, “Chat id” or “User key”, with the line “Kept on your server. Only its ends are shown.”', now: '“Its web address”, “Topic”, “Chat number” or “Your Pushover key”, each with a line saying what it is, and that it is kept private on the computer that runs Puppet Master.' },
       { was: '“During quiet hours” is a list on every destination, one of three places that say what gets through.', now: 'The page says what this destination does in quiet hours and leads to the one list, under Quiet hours.' },
-      { was: 'Retry policy, Rate limit, Message format and Redaction are one fold.', now: '“What is left out” and “How much it says” are under More options; trying again and the burst limit are under For experts.' }
+      { was: 'Retry policy, Rate limit, Message format and Redaction are one fold.', now: '“What is left out” and “How much it says” are under More options; trying again and the burst limit are under For experts.' },
+      'The dialog that adds or edits a destination is PMConcept7’s own and keeps its words (“Webhook address, topic, or chat id”, “Kept on your server”); the concept rewords pages and rows, not PMConcept7’s dialogs.'
     ]
   });
 
@@ -491,13 +494,19 @@
     const line = app ? [moment(s), lengthOf(s), used.length ? `Used by ${listOf(used.map((e) => e.name))}` : ''].filter(Boolean).join(' · ') : [lengthOf(s), used.length ? `Used by ${listOf(used.map((e) => e.name))}` : 'Not used yet'].filter(Boolean).join(' · ');
     return `<div class="smx-nt-tile${ok ? '' : ' is-missing'}">${playBtn(st, s, { key: (o.key || 'lib') + '-' })}<button type="button" class="smx-nt-tile-open" data-smx-go="${h(soundRoute(s))}"><span class="smx-nt-tile-name">${h(app ? shortName(s) : s.name)}${ok ? '' : ` ${ui.status(app ? 'Cannot play here' : 'File missing', 'attention')}`}</span><span class="smx-nt-tile-sub">${h(line)}</span></button></div>`;
   };
+  SMX.act('notif-style', (el) => { SMX.local.flags['nt-style'] = el.getAttribute('data-style') || ''; });
   const tiles = (st, list, o) => `<div class="smx-nt-tiles">${list.map((s) => tile(st, s, o)).join('')}</div>`;
   const library = (st) => {
     const all = librarySounds(st); const mine = all.filter((s) => !builtInSound(s));
-    const groups = STYLES(st).map((style) => [style, all.filter((s) => styleOf(st, s) === style)]).filter(([, list]) => list.length);
+    const every = STYLES(st).map((style) => [style, all.filter((s) => styleOf(st, s) === style)]).filter(([, list]) => list.length);
+    /* PMConcept7 has a style filter over its library (All | Chimes | Pings | …). The styles are headings here, so every
+       sound is in sight at once; the filter is kept for showing one style only (review R2, D2-2). */
+    const want = SMX.local.flags['nt-style'] || ''; const one = every.some(([style]) => style === want) ? want : '';
+    const groups = one ? every.filter(([style]) => style === one) : every;
+    const pick = every.length > 1 ? `<div class="segmented pm51-seg smx-nt-styles" role="group" aria-label="Show">${[['', 'All']].concat(every.map(([style]) => [style, styleName(style)])).map(([v, l]) => `<button type="button" class="${v === one ? 'active' : ''}" aria-pressed="${v === one}" data-smx-do="notif-style" data-style="${h(v)}" data-smx-key="nt-style-${h(v || 'all')}">${h(l)}</button>`).join('')}</div>` : '';
     return `<div data-smx-covers="general.interaction.sound-catalog general.interaction.sound-management">` + ui.card({ anchor: 'library', title: 'Sounds for alerts', help: `${plural(all.length - mine.length, 'sound')} ${all.length - mine.length === 1 ? 'comes' : 'come'} with Puppet Master${mine.length ? `, and ${mine.length} ${mine.length === 1 ? 'is' : 'are'} your own` : ''}. Press play to hear one; open it to rename it, or to use it for an alert.`,
       side: ui.btn({ label: 'Add a sound', icon: 'plus', do: 'notif-sound-add', key: 'add-sound' }),
-      body: groups.map(([style, list]) => `<h4 class="smx-nt-group">${h(styleName(style))}</h4>${tiles(st, list)}`).join('') || '<p class="smx-quiet-line">No sounds yet. Add one of your own.</p>' }) + '</div>';
+      body: pick + (groups.map(([style, list]) => `<h4 class="smx-nt-group">${h(styleName(style))}</h4>${tiles(st, list)}`).join('') || '<p class="smx-quiet-line">No sounds yet. Add one of your own.</p>') }) + '</div>';
   };
   /* the sounds of setup and the Guided Tour (a set for each look), and of the NieR look: PMConcept7's own groups */
   const takes = (st, key) => { const t = (st.pm51 || {}).notifSoundTakes; return !!(t && typeof t === 'object' ? t[key] : t === true); };
@@ -558,6 +567,7 @@
     changes: [
       { was: 'The Sounds tab is 2,886 px tall: 104 buttons, 7 dropdowns, 4 switches and 1 number box for 4 settings. “Event sounds” repeats each alert’s list of 26 sounds, and each of the 25 sound cards repeats “Play”, “Manage” and “Use for events…”.', now: 'What your alerts sound like now is one short list with a play button each; the choice itself is in the table. The library is tiles grouped by kind of sound: a tile plays the sound, and opens it.' },
       { was: 'The library’s heading reads “378 sounds are built in, in eight styles, all generated demonstration tones”. 354 of those are the sounds of setup, the Guided Tour and the NieR look, in two groups at the end of the list.', now: 'The 24 sounds meant for alerts, and your own, come first. The sounds of setup and the tour and of the NieR look are two folds that say what they are and that they follow “Play sounds”.' },
+      { was: 'The library has a row of ten style choices (All, Chimes, Pings, Alerts, Soft, Playful, Retro, Setup & tour, NieR, Uploaded); the sounds of one style show only after choosing it.', now: 'The styles are headings, so every sound for alerts is in sight at once, and the same row of choices above them shows one style only. Setup & tour and NieR are their own folds below, because they are not sounds for alerts.' },
       { was: '“Team jingle” shows “File missing” on its card and a greyed play button. The way to mend it is “Replace file”, inside its “Manage” menu.', now: '“Needs you” says the sound has lost its file and offers “Attach the file again”; if an alert uses it, the line says which alert is silent meanwhile.' },
       { was: '“Volume” and “Also while you are using this app” have no line saying what they change beyond their label; “Sound packs” and “Licence details” are two sections for one example pack.', now: 'Volume and when sounds play are one card under the switch. Packs are one folded card: the pack with its licence, “Bring in a pack” and “Save your sounds as a pack”.' }
     ]

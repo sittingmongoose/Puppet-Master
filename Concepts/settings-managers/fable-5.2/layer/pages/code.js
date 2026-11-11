@@ -412,7 +412,7 @@
   });
   const lspThing = (x) => { const [text, tone] = lspStatus(x); return { icon: 'code', name: x.name, tag: x.language || '', sub: `Understands ${x.language || 'its language'}`, sub2: sourceOf(x), status: { text, tone }, go: R.lsp(x.id) }; };
   const fmtThing = (x) => { const [text, tone] = fmtStatus(x); const langs = x.languages || []; return { icon: 'sparkle', name: x.name, tag: langs.length > 2 ? count(langs.length, 'language') : langs.join(', '), sub: `Tidies ${and(langs) || 'its files'} ${fmtWhen(x)}`, sub2: sourceOf(x), status: { text, tone }, go: R.fmt(x.id) }; };
-  const LANG_FILTER_FROM = 8;   /* the two lists together hold more than this many tools before a filter box is worth its place */
+  const LANG_FILTER_FROM = 5;   /* the two lists together hold more than this many tools before a filter box is worth its place (PMConcept7 always shows two; with the six tools of the example the box shows) */
   SMX.act('code-lang-filter', () => { SMX.soon(10); });
   SMX.extend('code/languages', {
     cls: 'smx-cd',
@@ -443,9 +443,8 @@
       ];
     },
     sections: [{ key: 'all', title: 'For all of them', help: 'One switch for each kind, and what happens by itself.', ids: [LG.on, LG.tidy, 'general.interaction.language-detection', 'code.editing.lsp-auto-restart'] }],
-    tail: () => [{ key: 'helpers', html: ui.elsewhere(['code.editing.lsp-subagent-bias'], { title: 'When a helper agent fixes code', help: 'Helper agents are extra workers the assistant can start. Which of them fixes code is chosen with the other choices about helpers.' }) }],
     expert: [S('toolchain-lsp-tools', { title: 'Waiting times and limits', help: 'How long the tools that understand code may take, and how much of this computer they may use.' })],
-    tail: () => [{ key: 'links', html: covered([LG.restart], ui.links([
+    tail: () => [{ key: 'helpers', html: ui.elsewhere(['code.editing.lsp-subagent-bias'], { title: 'When a helper agent fixes code', help: 'Helper agents are extra workers the assistant can start. Which of them fixes code is chosen with the other choices about helpers.' }) }, { key: 'links', html: covered([LG.restart], ui.links([
       Object.assign({ label: 'Restart every tool that understands code' }, runSetting(LG.restart)),
       { label: 'Check the tools that understand code', action: 'pm51-toolchain-diagnostics', data: { kind: 'lsps' } },
       { label: 'Check the tools that tidy code', action: 'pm51-toolchain-diagnostics', data: { kind: 'formatters' } },
@@ -798,7 +797,7 @@
           web ? { label: 'Sign-in', help: 'Sign in again when the service says it needs it. Signing out forgets the saved sign-in and keeps the connection.', control: (cnOn(m) && m.state !== 'Working' ? '' : ui.btn({ label: 'Sign in again', icon: 'refresh', action: 'pm51-mcp-signin', data })) + ui.btn({ label: 'Sign out', icon: 'lock', action: 'pm51-mcp-signout', data }) } : null
         ]) }) },
         { key: 'may', html: ui.card({ title: 'How careful the assistant is with it', help: 'An exception to your own rules, for this one connection.', body: ui.rows([{ label: 'What it may do', help: CN_MAY_HELP[cnMay(m)], control: select(cnMay(m), CN_MAY.map(([value, label]) => ({ value, label })), { action: 'pm51-mcp-permissions', data, label: `What ${m.name} may do` }) + ui.btn({ label: 'Your own rules', go: 'safety/asking', ghost: true }) }]) }) },
-        { key: 'tools', html: ui.card({ title: 'Its tools', help: tools.length ? `${m.tools || tools.length} in total. Turn one off to keep the assistant from using it.` : '', body: tools.length ? ui.rows(tools.map((t) => ({ label: toolLabel(t), control: toggle(!off.has(t), { action: 'pm51-mcp-tool', data: { id: m.id, tool: t }, label: toolLabel(t) }) }))) + ((m.tools || 0) > tools.length ? `<p class="smx-quiet-line smx-pad">${(m.tools || 0) - tools.length} more are listed once it has connected.</p>` : '') : quiet(m.tools ? `${m.tools} tools. They are listed once it has connected.` : 'No tools yet. They appear once it connects.') }) },
+        { key: 'tools', html: ui.card({ title: 'Its tools', help: tools.length ? `${m.tools || tools.length} in total. Turn one off to keep the assistant from using it.` : '', body: tools.length ? ui.rows(tools.map((t) => ({ label: toolLabel(t), control: toggle(!off.has(t), { action: 'pm51-mcp-tool', data: { id: m.id, tool: t }, label: toolLabel(t) }) }))) + ((m.tools || 0) > tools.length ? `<p class="smx-quiet-line smx-pad">${m.state === 'Working' ? `${(m.tools || 0) - tools.length} more are not listed in this example; in the app every tool it offers has a switch here.` : `${(m.tools || 0) - tools.length} more are listed once it has connected.`}</p>` : '') : quiet(m.tools ? `${m.tools} tools. They are listed once it has connected.` : 'No tools yet. They appear once it connects.') }) },
         { key: 'actions', html: btnRow(ui.btn({ label: 'See its logs', icon: 'terminal', action: 'pm51-mcp-logs', data }), ui.btn({ label: 'Remove this connection…', icon: 'trash', danger: true, action: 'pm51-mcp-remove', data })) }
       ];
     },
@@ -862,7 +861,7 @@
   const shortcutsPage = SMX.extend('code/shortcuts', {
     cls: 'smx-cd',
     purpose: 'Keys you press together to do something at once, such as Ctrl+N for a new chat. Click the keys on a row to change them.',
-    blurb: (ctx) => { const set = allKeys(ctx.st).filter((x) => x.keys); const places = [['app', 'everywhere'], ['box', 'while you type a message'], ['term', 'in the terminal']].filter((p) => set.some((x) => x.group === p[0])).map((p) => p[1]); return set.length ? `${count(set.length, 'shortcut')}: ${and(places)}` : 'No shortcut has keys yet'; },
+    blurb: (ctx) => { const every = allKeys(ctx.st); const set = every.filter((x) => x.keys); const places = [['app', 'everywhere'], ['box', 'while you type a message'], ['term', 'in the terminal']].filter((p) => set.some((x) => x.group === p[0])).map((p) => p[1]); return set.length ? `${count(every.length, 'shortcut')}: ${and(places)}` : 'No shortcut has keys yet'; },
     status: (ctx) => { const p = clashPairs(ctx.st).length; return p ? { text: `${count(p, 'pair')} share keys`, tone: 'attention' } : { text: 'No keys used twice', tone: 'ready' }; },
     keywords: ['shortcut', 'keybinding', 'hotkey', 'keys', 'cheat sheet', 'keyboard layout', 'rebind', 'ctrl'],
     lead: (ctx) => {
@@ -875,7 +874,9 @@
       if (q && (shown('box').length || shown('term').length)) SMX.local.openMore['code/shortcuts:others'] = true;
       return [
         { key: 'summary', html: ui.summary({ icon: 'key', tone: pairs ? 'attention' : 'ready', lines: [
-          set.length ? `${ui.b(count(set.length, 'shortcut'))}: ${works(inGroup('app'))} everywhere, ${inGroup('box') || 'none'} while you type a message and ${inGroup('term') || 'none'} in the terminal.` : 'No shortcut has keys yet. Click “Set keys” on a row to give it some.',
+          // the count is of the rows on the page (it said "34 shortcuts: 13 work everywhere" over 35 rows, 14 of them
+          // under Everywhere: one has no keys yet, and was left out without a word; review R2-1)
+          set.length ? `${ui.b(count(all.length, 'shortcut'))}${all.length > set.length ? `, ${all.length - set.length} of them with no keys yet` : ''}. With keys: ${works(inGroup('app'))} everywhere, ${inGroup('box') || 'none'} while you type a message and ${inGroup('term') || 'none'} in the terminal.` : 'No shortcut has keys yet. Click “Set keys” on a row to give it some.',
           !set.length ? '' : pairs ? `${ui.b(count(pairs, 'pair'))} ${pairs === 1 ? 'shares' : 'share'} the same keys, so one of each pair does not work.` : 'No two of them share the same keys.'
         ], side: ui.btn({ label: 'Open the cheat sheet', icon: 'file', action: 'pm51-commands-sheet' }) }) },
         { key: 'needs', html: ui.needs(needsFor(st, 'shortcuts')) },
