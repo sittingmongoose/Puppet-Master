@@ -60514,7 +60514,7 @@ div.pm56-host[data-theme^="retro"] .pmx-p-line{stroke-linecap:square;}
 .pm56-host .pmx-dock-line[data-ask] > .pmx-dock-say{grid-row:1;grid-column:2;white-space:normal;overflow:visible;}
 .pm56-host .pmx-dock-line[data-ask] > .pmx-clock{grid-row:1;grid-column:3;}
 .pm56-host .pmx-dock-line[data-ask] > .pmx-dock-act{grid-row:1;grid-column:4;}
-.pm56-host .pmx-dock-body{grid-row:2;grid-column:2 / -1;display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;min-width:0;padding-right:10px;}
+.pm56-host .pmx-dock-body{grid-row:2;grid-column:2 / -1;display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;min-width:0;padding-right:10px;container:pmxdockbody / inline-size;}
 .pm56-host .pmx-dock-q{flex:1 1 auto;min-width:0;max-width:100%;margin:0;font:var(--pmx-fs-sentence);color:var(--text);overflow-wrap:anywhere;}
 .pm56-host .pmx-dock-q code{font:500 12px/18px var(--font-mono);color:var(--text);}
 .pm56-host .pmx-dock-answers{flex:0 1 auto;display:flex;flex-wrap:wrap;align-items:center;gap:6px;min-width:0;}
@@ -60530,6 +60530,10 @@ div.pm56-host[data-theme^="retro"] .pmx-p-line{stroke-linecap:square;}
 .pm56-host .pmx-ask-lead{margin:0;font:var(--pmx-fs-meta);color:var(--muted);}
 .pm56-host .pmx-ask-seg-in{display:inline-flex;min-width:0;}
 .pm56-host :is(.pmx-dock, .pmx-decision, .bc-allow-banner) .pmx-ask-seg-in > .soft-button{padding:0 10px;}
+@container pmxdockbody (max-width: 359.98px){.pm56-host .pmx-dock-body .pmx-dock-answers{gap:4px;}
+.pm56-host .pmx-dock-body .pmx-dock-answers > .pmx-dock-ans{padding:0 9px;}
+.pm56-host .pmx-dock-body .pmx-ask-seg{gap:4px;}
+.pm56-host .pmx-dock-body .pmx-ask-seg-in > .soft-button.pmx-dock-ans{padding:0 8px;}}
 .pm56-host :is(.pmx-dock, .pmx-decision, .bc-allow-banner) .pmx-ask-seg-in > .soft-button + .soft-button{margin-left:-1px;}
 .pm56-host :is(.pmx-dock, .pmx-decision, .bc-allow-banner) .pmx-ask-seg-in > .soft-button:not(:first-child){border-top-left-radius:0;border-bottom-left-radius:0;}
 .pm56-host :is(.pmx-dock, .pmx-decision, .bc-allow-banner) .pmx-ask-seg-in > .soft-button:not(:last-child){border-top-right-radius:0;border-bottom-right-radius:0;}
@@ -126052,7 +126056,17 @@ function o55BrandMark(brand, size) {
   if (P && typeof P.providerMark === 'function' && brand) { try { return P.providerMark(brand, size); } catch (e) { /* fall through */ } }
   return `<b class="o55-pick-letter">${h(String(brand || '?').charAt(0))}</b>`;
 }
-function o55PickModel(setting, ch) {
+/* The choices the picker shows, and how it saves. A per-thing setting (a persona's Preferred model, a Goal template's
+   Kind of job) asks its owner (kit.d/45-scoped.js PM51.pickSource): from one thing's own row it shows that row's own
+   choices and saves through that row; opened any other way it is read only ("What it can be"), as the old buttons were.
+   Every other setting keeps its inventory choices and the global save. */
+function o55PickSource(setting, ch) {
+  const src = PM51.pickSource ? PM51.pickSource(setting) : null;
+  if (!src) return { ch, src: null };
+  if (src.static) return { ch: { kind: 'single', items: ch.items.map(it => Object.assign({}, it, { on: false, why: '', off: true, reason: src.reason })) }, src };
+  return { ch: { kind: 'single', items: src.items.map(it => Object.assign({ marks: [] }, it)) }, src };
+}
+function o55PickModel(setting, ch, src) {
   const model = o55IsModelChoice(setting);
   const items = ch.items.map((it, i) => {
     const raw = String(it.raw), slash = model ? raw.indexOf('/') : -1, pid = slash > 0 ? raw.slice(0, slash) : '';
@@ -126065,20 +126079,21 @@ function o55PickModel(setting, ch) {
      groups its menu; data-index stays the choice's own index */
   const brands = model ? [...new Set(items.map(x => x.brand))] : [];
   const rows = model ? brands.flatMap(b => items.filter(x => x.brand === b)) : items;
-  return { model, items: rows, brands, current: rows.find(x => x.on) || null };
+  return { model, items: rows, brands, current: rows.find(x => x.on) || null, static: !!(src && src.static), reason: src && src.static ? src.reason : '' };
 }
 function o55PickTrigger(setting, pm) {
   const cur = pm.current, label = PM51.rowLabel(setting);
-  const name = cur ? cur.name : PM51.valueText(setting, settingValue(setting));
+  /* read only: it names no current value (each thing has its own, listed above) */
+  const name = pm.static ? `See the ${pm.items.length} choices` : cur ? cur.name : PM51.valueText(setting, settingValue(setting));
   const marks = cur ? cur.marks : [];
-  const sub = cur ? [pm.model ? cur.brand : '', cur.sub].filter(Boolean).join(' · ') : '';
+  const sub = pm.static ? pm.reason : cur ? [pm.model ? cur.brand : '', cur.sub].filter(Boolean).join(' · ') : '';
   return `<button type="button" class="o55-pick-trigger${pm.model ? ' is-model' : pm.current && pm.current.swatch ? ' has-dot' : ''}" role="combobox" aria-haspopup="listbox" aria-expanded="false" aria-label="${a(`${label}: ${name}${marks.length ? ', ' + marks.join(', ') : ''}`)}" data-action="o55-insp-pick" data-setting="${a(setting.id)}">${pm.model ? `<span class="o55-pick-mark" aria-hidden="true">${o55BrandMark(cur ? cur.brand : '', 16)}</span>` : cur && cur.swatch ? `<span class="o55-insp-dot" aria-hidden="true" style="background:${cur.swatch}"></span>` : ''}<span class="o55-pick-copy"><strong>${h(name)}${marks.map(m => `<em>${h(m)}</em>`).join('')}</strong>${sub ? `<small>${h(sub)}</small>` : ''}</span><span class="o55-pick-chev" aria-hidden="true">${icon('down')}</span></button>`;
 }
 function o55PickItems(pm, idBase) {
   let html = '', last = null;
   pm.items.forEach(it => {
     if (pm.model && it.brand !== last) { html += `<div class="pm51-popout-group o55-pick-group" role="presentation" data-brand="${a(it.brand)}">${h(it.brand)}</div>`; last = it.brand; }
-    html += `<div class="pm51-popout-item o55-pick-item${it.why ? ' has-why' : ''}${pm.model ? ' is-model' : it.swatch ? ' has-dot' : ''}" role="option" id="${idBase}-${it.index}" data-index="${it.index}" data-brand="${a(it.brand)}" aria-selected="${it.on}"${it.why ? ` aria-disabled="true" data-disabled-reason="${a(it.why)}"` : ''}>${pm.model ? `<span class="o55-pick-mark" aria-hidden="true">${o55BrandMark(it.brand, 15)}</span>` : it.swatch ? `<span class="o55-insp-dot" aria-hidden="true" style="background:${it.swatch}"></span>` : ''}<span class="o55-pick-copy"><strong>${h(it.name)}${it.marks.map(m => `<em>${h(m)}</em>`).join('')}</strong>${it.sub ? `<small>${h(it.sub)}</small>` : ''}</span><span class="o55-pick-tick" aria-hidden="true">${it.on ? icon('check') : ''}</span></div>`;
+    html += `<div class="pm51-popout-item o55-pick-item${it.why ? ' has-why' : ''}${pm.model ? ' is-model' : it.swatch ? ' has-dot' : ''}" role="option" id="${idBase}-${it.index}" data-index="${it.index}" data-brand="${a(it.brand)}" aria-selected="${it.on}"${it.why || it.off ? ` aria-disabled="true" data-disabled-reason="${a(it.why || it.reason)}"` : ''}>${pm.model ? `<span class="o55-pick-mark" aria-hidden="true">${o55BrandMark(it.brand, 15)}</span>` : it.swatch ? `<span class="o55-insp-dot" aria-hidden="true" style="background:${it.swatch}"></span>` : ''}<span class="o55-pick-copy"><strong>${h(it.name)}${it.marks.map(m => `<em>${h(m)}</em>`).join('')}</strong>${it.sub ? `<small>${h(it.sub)}</small>` : ''}</span><span class="o55-pick-tick" aria-hidden="true">${it.on ? icon('check') : ''}</span></div>`;
   });
   return html + '<div class="pm51-popout-empty" hidden>No matches</div>';
 }
@@ -126126,6 +126141,16 @@ function o55PickCommit(id, raw) {
   if (o55SameValue(settingValue(found.setting), raw)) return;
   if (!commitSettingValue(id, raw)) return;
   saveState(); o55InspRefresh(id); o55Changed(found.setting, raw);
+  o55PickFocusBack(id);
+}
+/* a per-thing setting saves through its thing's own row (its scoped setter stores it on the thing and says so), then
+   the panel follows: its Now list and the picker read the thing again */
+function o55PickOwnerCommit(id, src, raw) {
+  if (!src.commit(raw)) { showToast('Not saved', 'Change it where it is shown.', 'info', 2600); return; }
+  PM51.syncInspector();
+  o55PickFocusBack(id);
+}
+function o55PickFocusBack(id) {
   /* a pick hands focus back to the picker, as a select does; a model change can re-render the page in place
      (28-in-place.js lets the focused control go), and a Theme pick re-renders it again when its look transition ends
      (NieR's exit most of all), so the new trigger takes focus back whenever it was dropped, until the look is settled */
@@ -126139,7 +126164,7 @@ function o55PickCommit(id, raw) {
   const watch = () => { back(); if (busy() && Date.now() < until) setTimeout(watch, 100); else requestAnimationFrame(() => requestAnimationFrame(back)); };
   back(); requestAnimationFrame(() => requestAnimationFrame(watch));
 }
-const o55PickOptions = pm => { const o = []; pm.items.forEach(it => { o[it.index] = { value: it.raw, label: it.name, disabled: !!it.why, reason: it.why || '' }; }); return o; };
+const o55PickOptions = pm => { const o = []; pm.items.forEach(it => { o[it.index] = { value: it.raw, label: it.name, disabled: !!(it.why || it.off), reason: it.why || it.reason || '' }; }); return o; };
 const o55PickBrands = (pm, size) => [`<button type="button" class="o55-pick-chip is-on" data-brand="" aria-pressed="true" aria-label="All makers" data-pm-hover-label="All makers">${icon('users')}</button>`]
   .concat(pm.brands.map(b => `<button type="button" class="o55-pick-chip" data-brand="${a(b)}" aria-pressed="false" aria-label="${a(b)}" data-pm-hover-label="${a(b)}">${o55BrandMark(b, size)}</button>`)).join('');
 /* The rows unfold in the panel under the trigger, with the makers as a strip (the panel is too narrow for the chat's
@@ -126151,7 +126176,7 @@ function o55InlineClose(focusTrigger) {
   e.box.remove();
   if (focusTrigger && e.trigger.isConnected) { try { e.trigger.focus({ preventScroll: true }); } catch (err) { e.trigger.focus(); } }
 }
-function o55InlineOpen(trigger, setting, pm) {
+function o55InlineOpen(trigger, setting, pm, src) {
   if (o55Inline && o55Inline.trigger === trigger) { o55InlineClose(true); return; }
   o55InlineClose(false); PM51.closePopouts();
   const label = PM51.rowLabel(setting), id = POP_ID();
@@ -126162,7 +126187,7 @@ function o55InlineOpen(trigger, setting, pm) {
   const entry = { el: list, trigger, options: o55PickOptions(pm), active: -1, searchInput: box.querySelector('input'), brand: '' };
   o55Inline = { box, trigger, entry };
   trigger.setAttribute('aria-expanded', 'true'); trigger.setAttribute('aria-controls', id + '-list');
-  const pick = index => { const o = entry.options[index]; if (!o) return; if (o.disabled) { showToast('Not available', o.reason || 'Not available here.', 'info', 2600); return; } o55InlineClose(true); o55PickCommit(setting.id, o.value); };
+  const pick = index => { const o = entry.options[index]; if (!o) return; if (o.disabled) { showToast('Not available', o.reason || 'Not available here.', 'info', 2600); return; } o55InlineClose(true); if (src && src.commit) o55PickOwnerCommit(setting.id, src, o.value); else o55PickCommit(setting.id, o.value); };
   const sel = pm.items.find(x => x.on), first = pm.items.find(x => !x.why);
   setActiveOption(entry, (sel || first || { index: -1 }).index, false);
   const node = list.querySelector(`[data-index="${entry.active}"]`);
@@ -126201,9 +126226,9 @@ document.addEventListener('keydown', e => {
   e.preventDefault(); e.stopPropagation(); t.click();
 }, true);
 function o55PickerHtml(setting, ch) {
-  const pm = o55PickModel(setting, ch);
+  const ps = o55PickSource(setting, ch), pm = o55PickModel(setting, ps.ch, ps.src);
   const count = pm.model ? `${pm.items.length} models from ${pm.brands.length} makers` : `${pm.items.length} choices`;
-  return `<section class="o55-insp-block o55-pick-block"><h4>Your choices <span class="o55-pick-count">· ${h(count)}</span></h4>${o55PickTrigger(setting, pm)}</section>`;
+  return `<section class="o55-insp-block o55-pick-block${pm.static ? ' is-static' : ''}"><h4>${pm.static ? 'What it can be' : 'Your choices'} <span class="o55-pick-count">· ${h(count)}</span></h4>${o55PickTrigger(setting, pm)}</section>`;
 }
 function o55ChoicesHtml(setting, ch) {
   if (!ch) return '';
@@ -126373,7 +126398,8 @@ dispatchAction = function (action, el, event) {
   if (action === 'o55-insp-pick') {
     const found = findSettingGlobal(el.dataset.setting); if (!found) return;
     const ch = o55ChoicesFor(found.setting, settingValue(found.setting)); if (!ch) return;
-    o55InlineOpen(el, found.setting, o55PickModel(found.setting, ch)); return;
+    const ps = o55PickSource(found.setting, ch);
+    o55InlineOpen(el, found.setting, o55PickModel(found.setting, ps.ch, ps.src), ps.src); return;
   }
   if (action === 'reset-setting') {
     const id = el.dataset.setting, found = findSettingGlobal(id); if (!found || !restoreSettingDefault(id)) return;
@@ -126760,6 +126786,50 @@ renderSettingRow = function (setting) {
   tpl.content.querySelector('.setting-row')?.classList.remove('is-changed');
   tpl.content.querySelector('.o55-changed')?.remove();
   return tpl.innerHTML;
+};
+
+/* ---------- the Details picker of a per-thing setting (FO-127, sol-review-l1s L1S-N2) --------------------------- */
+/* A per-thing setting has no single value, so Details never offered a global choice: its old choice buttons were
+   read only ("What it can be", above) with Show me to the thing's own row. The picker (kit.d/30-inspector.js) asks
+   PM51.pickSource(setting) and follows the same rule. Opened from one thing's own row (a persona's Preferred model, a
+   Goal template's Kind of job), it offers that row's own choices and saves through that row's own control, so the
+   thing's scoped setter stores the value on the thing and the Now list follows; opened any other way, it is read only.
+   It never commits a shared value for a per-thing setting. */
+let o55PickFrom = null;
+const o55PickFromDispatch = dispatchAction;
+dispatchAction = function (action, el) {
+  if (action === 'setting-details') {
+    const row = el && el.closest && el.closest('.o55-scoped, .o55-field');
+    const ctl = row && row.querySelector('[data-scope][data-setting]');
+    o55PickFrom = ctl && el.dataset && ctl.dataset.setting === el.dataset.setting ? Object.assign({}, ctl.dataset) : null;
+  }
+  return o55PickFromDispatch.apply(this, arguments);
+};
+/* the thing's own control as it is drawn now (a manager may have drawn its row again since) */
+const o55PickControl = from => {
+  const keys = Object.keys(from).filter(k => k !== 'action' && /^[a-z][a-zA-Z0-9]*$/.test(k));
+  const sel = keys.map(k => `[data-${k.replace(/[A-Z]/g, m => '-' + m.toLowerCase())}="${cssEscape(from[k])}"]`).join('');
+  return sel ? root.querySelector(`select${sel}`) : null;
+};
+PM51.pickSource = setting => {
+  const row = (setting && O55R[setting.id]) || {};
+  if (!row.per) return null;
+  const from = o55PickFrom && o55PickFrom.setting === setting.id ? o55PickFrom : null;
+  const ctl = from ? o55PickControl(from) : null;
+  if (!ctl) return { static: true, reason: row.perWhere || 'Change it where it is shown.' };
+  return {
+    items: [...ctl.options].map(o => ({ raw: o.value, label: o.textContent, hint: o.dataset.meta || '', on: o.value === ctl.value, marks: [], why: o.dataset.disabled === '1' ? (o.dataset.reason || 'Not available here.') : '' })),
+    commit(value) {
+      const live = o55PickControl(from); if (!live) return false;
+      const i = [...live.options].findIndex(o => o.value === String(value)); if (i < 0) return false;
+      if (live.selectedIndex === i) return true;
+      /* exactly what the row's own dropdown does when a person picks in it (kit.js dropdownOpen) */
+      live.selectedIndex = i;
+      const shown = live.closest('.pm51-dd') && live.closest('.pm51-dd').querySelector('.pm51-dd-value'); if (shown) shown.textContent = live.options[i].textContent;
+      live.dispatchEvent(new Event('change', { bubbles: true }));
+      return true;
+    }
+  };
 };
 
 /* ---- kit.d/47-status-words.js ---- */
@@ -285956,12 +286026,18 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
   /* An owner that must decide at once (browser capture's policy guard runs inside the action it holds) asks whether a
      grant already covers a call: if one does, the one-line receipt is written now and the call goes ahead unasked. */
   function covered(o) {
-    var a = make(o || {}), g = grantFor(a);
+    var g = grantOf(o);
     if (!g) return false;
-    var ctx = EXT.ctx && EXT.ctx(), t = tool(a), title = (g.scope === 'session' ? 'Allowed by this session’s grant: ' : 'Allowed by your rule: ') + t.verb;
+    noteGrant(o, g);
+    return true;
+  }
+  /* the grant that covers a call, with no receipt (an owner that combines several checks writes them only when the
+     whole operation goes ahead: browser capture's capabilities, FO-128 C1), and that grant's one-line receipt */
+  function grantOf(o) { return grantFor(make(o || {})); }
+  function noteGrant(o, g) {
+    var a = make(o || {}), ctx = EXT.ctx && EXT.ctx(), t = tool(a), title = (g.scope === 'session' ? 'Allowed by this session’s grant: ' : 'Allowed by your rule: ') + t.verb;
     if (ctx && ctx.addReceipt) ctx.addReceipt('permission-answer', title, (a.target ? a.target + ' · ' : '') + 'matches ' + g.pattern + '. Nothing was asked.');
     announce(title);
-    return true;
   }
   function find(id) { for (var i = 0; i < asks.length; i++) if (asks[i].id === id) return asks[i]; return null; }
   function patternOf(a) { var p = a.ui.pattern != null ? a.ui.pattern : a.suggested; return String(p).trim() || a.suggested; }
@@ -286196,7 +286272,7 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
     if (back) { e.preventDefault(); e.stopPropagation(); back.click(); }
   }, true);
 
-  window.PM56_ASKS = { ask: ask, ensure: ensure, drop: drop, parts: parts, pending: pending, covered: covered, list: function () { return asks.slice(); }, grants: function () { return grants.slice(); }, suggest: suggest };
+  window.PM56_ASKS = { ask: ask, ensure: ensure, drop: drop, parts: parts, pending: pending, covered: covered, grantOf: grantOf, noteGrant: noteGrant, list: function () { return asks.slice(); }, grants: function () { return grants.slice(); }, suggest: suggest };
 })();
 
 /* browser-capture.js — feature module.  OWNER: Assistant-redesign wave (2026-09-03) —
@@ -287781,8 +287857,16 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
       if (pv !== 'ask') return false;
       return !(P().allowOnce && P().allowOnce[c] && onceHere(ctx, P().allowOnce[c]));
     });
-    /* FO-128: a grant or rule that covers the missing set lets the operation run now (one-line receipt) */
-    if (missing.length && grantCovers(missing, actionLabel)) missing = [];
+    /* FO-128 C1: grants compose. The set's own For session grant or Always rule covers it whole; otherwise each
+       capability its own grant or rule covers is subtracted, so a Screenshots grant and a DOM grant made one at a time
+       together let an operation that needs both run. The receipts are written only when the operation then runs; what
+       is left is held as one set (Once grants above stay all-or-nothing, single-use and the answering chat's). */
+    if (missing.length) {
+      var A = window.PM56_ASKS, used = [], whole = A && A.grantOf ? A.grantOf(holdSpec(missing, actionLabel)) : null;
+      if (whole) { used.push([missing.slice(), whole]); missing = []; }
+      else if (A && A.grantOf) missing = missing.filter(function (c) { var g = A.grantOf(holdSpec([c], actionLabel)); if (g) { used.push([[c], g]); return false; } return true; });
+      if (!missing.length) used.forEach(function (u) { A.noteGrant(holdSpec(u[0], actionLabel), u[1]); });
+    }
     if (missing.length) {
       var prev = P().pendingAllow;
       var sameHold = prev && prev.capabilities && prev.capabilities.length === missing.length

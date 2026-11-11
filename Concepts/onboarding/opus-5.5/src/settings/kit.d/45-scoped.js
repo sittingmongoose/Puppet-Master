@@ -216,3 +216,47 @@ renderSettingRow = function (setting) {
   tpl.content.querySelector('.o55-changed')?.remove();
   return tpl.innerHTML;
 };
+
+/* ---------- the Details picker of a per-thing setting (FO-127, sol-review-l1s L1S-N2) --------------------------- */
+/* A per-thing setting has no single value, so Details never offered a global choice: its old choice buttons were
+   read only ("What it can be", above) with Show me to the thing's own row. The picker (kit.d/30-inspector.js) asks
+   PM51.pickSource(setting) and follows the same rule. Opened from one thing's own row (a persona's Preferred model, a
+   Goal template's Kind of job), it offers that row's own choices and saves through that row's own control, so the
+   thing's scoped setter stores the value on the thing and the Now list follows; opened any other way, it is read only.
+   It never commits a shared value for a per-thing setting. */
+let o55PickFrom = null;
+const o55PickFromDispatch = dispatchAction;
+dispatchAction = function (action, el) {
+  if (action === 'setting-details') {
+    const row = el && el.closest && el.closest('.o55-scoped, .o55-field');
+    const ctl = row && row.querySelector('[data-scope][data-setting]');
+    o55PickFrom = ctl && el.dataset && ctl.dataset.setting === el.dataset.setting ? Object.assign({}, ctl.dataset) : null;
+  }
+  return o55PickFromDispatch.apply(this, arguments);
+};
+/* the thing's own control as it is drawn now (a manager may have drawn its row again since) */
+const o55PickControl = from => {
+  const keys = Object.keys(from).filter(k => k !== 'action' && /^[a-z][a-zA-Z0-9]*$/.test(k));
+  const sel = keys.map(k => `[data-${k.replace(/[A-Z]/g, m => '-' + m.toLowerCase())}="${cssEscape(from[k])}"]`).join('');
+  return sel ? root.querySelector(`select${sel}`) : null;
+};
+PM51.pickSource = setting => {
+  const row = (setting && O55R[setting.id]) || {};
+  if (!row.per) return null;
+  const from = o55PickFrom && o55PickFrom.setting === setting.id ? o55PickFrom : null;
+  const ctl = from ? o55PickControl(from) : null;
+  if (!ctl) return { static: true, reason: row.perWhere || 'Change it where it is shown.' };
+  return {
+    items: [...ctl.options].map(o => ({ raw: o.value, label: o.textContent, hint: o.dataset.meta || '', on: o.value === ctl.value, marks: [], why: o.dataset.disabled === '1' ? (o.dataset.reason || 'Not available here.') : '' })),
+    commit(value) {
+      const live = o55PickControl(from); if (!live) return false;
+      const i = [...live.options].findIndex(o => o.value === String(value)); if (i < 0) return false;
+      if (live.selectedIndex === i) return true;
+      /* exactly what the row's own dropdown does when a person picks in it (kit.js dropdownOpen) */
+      live.selectedIndex = i;
+      const shown = live.closest('.pm51-dd') && live.closest('.pm51-dd').querySelector('.pm51-dd-value'); if (shown) shown.textContent = live.options[i].textContent;
+      live.dispatchEvent(new Event('change', { bubbles: true }));
+      return true;
+    }
+  };
+};
