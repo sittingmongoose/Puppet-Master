@@ -34,7 +34,6 @@ import base_source
 import active_descendant_rewrite
 import css_bucket_split
 import css_media_split
-import still_page
 
 TOOLS = Path(__file__).resolve().parent
 PKG = TOOLS.parent
@@ -698,17 +697,6 @@ def build_text() -> str:
             'body.pm-home-dragging * { cursor: grabbing', 'body.pm-home-dragging { -webkit-user-select']})
     except ValueError as exc:
         raise BuildError(str(exc)) from exc
-    # 8. The still page (PERF-3, the owner's choice B of 2026-11-11): after 20 s without input src/js/14-shell-still.js
-    #    puts data-pm-still on <html> and every endless decorative loop holds where it is. still_page.apply() reads the
-    #    finished page (before the viewport split, so each rule's @media block is in view), writes one pause rule per
-    #    rule that gives an element an endless animation, keyed as that rule is, into <style id="pm-still-css"> before
-    #    </head> of both pages, and hands the script the ids of the sheets that script fills with loops at run time.
-    #    The sheet is generated, so it is outside the page lint ratchet (its !important is how it works: one per rule);
-    #    still_problems() lints it instead.
-    try:
-        whole, built, SETTINGS_NOTES['still'] = still_page.apply(whole, built)
-    except still_page.StillError as exc:
-        raise BuildError(f'still page: {exc}') from exc
     UNSPLIT.clear()
     UNSPLIT[built] = unsplit
     MEDIA_WHOLE.clear()
@@ -780,24 +768,6 @@ def page_lint_ratchet(html: str) -> list[str]:
     return page_lint_growth(page_lint_counts(html), {key: int(allowed[key]) for key in PAGE_LINT_KEYS})
 
 
-def still_problems(html: str) -> list[str]:
-    """The still page's generated sheet: present once, holding only its three kinds of rule (still_page.lint), and no
-    selector that switches with the state and that the page-wide universal lint would refuse (a bare `*` subject would
-    restyle the whole page at each toggle). Its notes (custom properties that only script sets, broad subjects with no
-    narrow ancestor) are printed."""
-    for n in SETTINGS_NOTES.get('still', {}).get('notes', []):
-        print('NOTE:', n, file=sys.stderr)
-    sheets = [body for name, body in built_stylesheets(html) if name == still_page.SHEET_ID]
-    if len(sheets) != 1:
-        return [f'still page: <style id="{still_page.SHEET_ID}"> appears {len(sheets)} times (need exactly 1)']
-    problems = [f'still page: {p}' for p in still_page.lint(sheets[0])]
-    for _line, sel in css_selectors(sheets[0]):
-        if f'[{still_page.STILL_ATTR}~=' in compounds(sel)[0] and page_wide_universal(sel) is not None:
-            problems.append(f'still page: generated selector `{sel[:100]}` ends in a bare `*`: each toggle would restyle '
-                            f'the whole page')
-    return problems[:20]
-
-
 def warn_inert_sources() -> None:
     """Warn when a frozen pm7-tools source or pm6-build part differs from the recorded copy.
 
@@ -855,7 +825,7 @@ def check(built: str) -> list[str]:
     warn_inert_sources()
     problems = (lint_liquid_glass_slots() + lint_sources() + syntax_check(built) + _rail().published_problems(built)
                 + _glyphs().published_problems(built) + _home().published_problems(built)
-                + _chat56().published_problems(built) + still_problems(built))
+                + _chat56().published_problems(built))
     for removed in dict.fromkeys(['id="pm7-onboarding"', 'id="pm7-guided-tour"', 'pm7-onboarding-js', 'pm7-guided-tour-js',
                                   'pm7-onboarding-css', 'pm7-guided-tour-css', 'id="pm7-settings-data"',
                                   "'.pm7gt-callout", ".closest('.pm7gt')",
@@ -930,7 +900,7 @@ def main() -> int:
         return 0 if not problems else 1
     whole = MEDIA_WHOLE.get(built, built)
     problems = (lint_sources() + syntax_check(built) + _rail().published_problems(whole) + _glyphs().published_problems(whole)
-                + _home().published_problems(whole) + _chat56().published_problems(whole) + still_problems(built))
+                + _home().published_problems(whole) + _chat56().published_problems(whole))
     if css_media_split.join(built) != whole:
         problems.append('css_media_split: the published page with its viewport parts joined is not the page before the split')
     if problems:
