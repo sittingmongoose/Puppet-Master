@@ -1287,9 +1287,7 @@
       if (this.remeasureAt && tn > this.remeasureAt) { this.remeasureAt = 0; this.measure(); }
       if (this.still() && !this.dirty && this.t > this.moodUntil + .3 && !this.fx.length && !this.faceOut && this.faceT0 == null) return;
       this.raf = requestAnimationFrame(this.loop);
-      this.t += dt;
-      const sub = 3; for (let i = 0; i < sub; i++) this.step(dt / sub);
-      this.life(dt);
+      this.advance(dt);
       // Retro's tube refreshes in steps; the phosphor holds what was there a moment longer
       const fps = this.frameRate();
       /* (on a steady cadence: each draw is due one step after the last was due, so a frame that comes a little late
@@ -1300,6 +1298,20 @@
       this.dirty = false;
       this.render();
     }
+    /* the physics on a fixed step, 1/360 s (the substep a 120 Hz frame took: three a frame): the motion then depends only
+       on time, not on when frames ran, so a 60 Hz screen moves as a 120 Hz one does and the loop can skip frames and catch
+       up exactly (PERF-1 step 3). The clock advances with each step; what is left over waits for the next tick. Idle life
+       runs once a tick, as before. */
+    advance(dt) {
+      const h = 1 / 360;
+      this.acc = (this.acc || 0) + dt;
+      this.tickN = (this.tickN || 0) + 1;
+      while (this.acc >= h) { this.t += h; this.step(h); this.acc -= h; }
+      this.life(dt);
+    }
+    /* a prop's destination, once a tick: nothing a physics step changes is in its key, and building that key for every
+       prop in every step was the step's main cost */
+    tickPose(pr) { if (pr.tickPoseN !== this.tickN || !pr.tickPoseV) { pr.tickPoseV = this.restPose(pr); pr.tickPoseN = this.tickN; } return pr.tickPoseV; }
     // how often the stage is drawn: every frame, but Retro in steps (Retro Light, paper, at half Retro Dark's rate,
     // a flipbook of printouts)
     frameRate() { return this.reduced ? 0 : this.tube === 'teletype' ? 10 : this.fam.fps || 0; }
@@ -1367,7 +1379,7 @@
         if (pr.state === 'out' && !red) this.holdUnder(pr, tg);
         if (red) {
           pr.ax = tg.ax; pr.len = tg.len; pr.a = 0; pr.av = 0; pr.op = tg.op; pr.scale = (pr.spec.scale || 1);
-          if (pr.state !== 'out' && pr.spec.stack == null) { const pose = this.restPose(pr); pr.aimDx = pose.dx; pr.aimDy = pose.dy; pr.aimDxv = 0; pr.aimDyv = 0; }
+          if (pr.state !== 'out' && pr.spec.stack == null) { const pose = this.tickPose(pr); pr.aimDx = pose.dx; pr.aimDy = pose.dy; pr.aimDxv = 0; pr.aimDyv = 0; }
         }
         else {
           const axA = F.pk * (tg.ax - pr.ax) - F.pc * pr.axv; pr.axv += axA * dt; pr.ax += pr.axv * dt;
@@ -1388,7 +1400,7 @@
           /* A refitted destination moves this offset on the same spring as the slot. The painted prop
              follows aimDx/aimDy, so a target change re-aims instead of teleporting. */
           if (pr.state !== 'out' && pr.spec.stack == null) {
-            const pose = this.restPose(pr);
+            const pose = this.tickPose(pr);
             if (pr.aimDx == null) { pr.aimDx = pose.dx; pr.aimDy = pose.dy; pr.aimDxv = 0; pr.aimDyv = 0; }
             else {
               const dxA = F.pk * (pose.dx - pr.aimDx) - F.pc * pr.aimDxv; pr.aimDxv += dxA * dt; pr.aimDx += pr.aimDxv * dt;
@@ -1398,7 +1410,7 @@
         }
         let arrived = Math.abs(pr.len - tg.len) < 2.5 && Math.abs(pr.lenv) < 30 && Math.abs(pr.ax - tg.ax) < 2.5 && Math.abs(pr.axv) < 30;
         if (arrived && pr.aimDx != null && pr.spec.stack == null) {
-          const pose = this.restPose(pr);
+          const pose = this.tickPose(pr);
           arrived = Math.abs(pr.aimDx - pose.dx) < 2.5 && Math.abs(pr.aimDy - pose.dy) < 2.5 && Math.abs(pr.aimDxv) < 30 && Math.abs(pr.aimDyv) < 30;
         }
         if (!pr.settled && pr.state !== 'out' && arrived) this.settle(pr);
