@@ -54,6 +54,36 @@
     "light": "src/walls/arcs-light.webp"
    },
    "default_for": null
+  },
+  {
+   "id": "schematic",
+   "name": "Schematic",
+   "description": "A hand at the top of a drafting sheet, its strings running down into a diagram of nodes and connectors.",
+   "files": {
+    "dark": "src/walls/schematic-dark.webp",
+    "light": "src/walls/schematic-light.webp"
+   },
+   "default_for": null
+  },
+  {
+   "id": "papercut",
+   "name": "Papercut",
+   "description": "Layered cut-paper mountains around a winding lake, a round moon or sun behind the ridges.",
+   "files": {
+    "dark": "src/walls/papercut-dark.webp",
+    "light": "src/walls/papercut-light.webp"
+   },
+   "default_for": null
+  },
+  {
+   "id": "gilt",
+   "name": "Gilt Ridges",
+   "description": "Fine contour-line ridges with a gold river running through them, a hand holding the peaks by threads.",
+   "files": {
+    "dark": "src/walls/gilt-dark.webp",
+    "light": "src/walls/gilt-light.webp"
+   },
+   "default_for": null
   }
  ]
 }

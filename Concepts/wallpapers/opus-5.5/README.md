@@ -5,7 +5,8 @@ Jared's direction of 2026-10-11 ("add a setting in settings to change wallpapers
 any wallpaper for their background ... Ribbon is default for the glass theme") and his review of 2026-10-13 ("5
 options for wallpapers for the other themes each. All are selectable by any theme").
 
-- **28 wallpapers, 56 prints.** Glass has 8 (Ribbons, the Glass default, with Prism and Orbs, plus the five of
+- **47 wallpapers, 94 prints** since 2026-11-11 (see "Supplied wallpapers" below); the set drawn here was
+  **28 wallpapers, 56 prints.** Glass has 8 (Ribbons, the Glass default, with Prism and Orbs, plus the five of
   2026-10-13), drawn by pm7-liquid-glass. Basic, Friendly, Retro and NieR have 5 each, drawn here. Every wallpaper
   has a dark and a light print, and the look's mode picks the print.
 - **One choice for every look:** "Look's own" (the default) or any wallpaper. The gallery is the row
@@ -23,13 +24,36 @@ options for wallpapers for the other themes each. All are selectable by any them
 
 All art is original and drawn in code from fixed seeds (`tools/art.js`). The references are mood, not material.
 
+## Supplied wallpapers (Jared, 2026-11-11)
+
+Jared supplied 29 images, added to the set above without replacing any of it: 18 more wallpapers, 36 prints, so the
+catalog now holds 47 wallpapers and 94 prints. They sit after each family's own wallpapers in the gallery.
+
+| Family | Added | Prints |
+|---|---|---|
+| Glass | Atrium, Panes | Both supplied |
+| Basic | Schematic, Papercut, Gilt Ridges | Both supplied |
+| Friendly | Lagoon, Confetti, Silk, Blue Wave, Soft Horizon | Blue Wave and Soft Horizon came light only; their dark prints are derived |
+| Retro | Console, Grid Sun, Neon Grid, Rainbow Stripe, Synth Sun | Console and Neon Grid came dark only; their light prints are derived |
+| NieR | Eclipse, Lily Ruins, Drowned Fair | All three came light only; their dark prints are derived |
+
+- These are images, not code-drawn art. `tools/walls.mjs` draws only the ids in `tools/art.js`, so it never rewrites
+  these prints; its thumbnail pass re-makes their thumbnails from the prints.
+- The sources were 1672 x 941 PNG (51 MB together). Each print is scaled to 2560 x 1440 and saved as WebP at quality
+  84, or the highest quality that stays under the size cap (Gilt Ridges 57 to 62, the NieR light prints 59 to 79):
+  4.2 MB for the 36 prints.
+- A derived print is made from the supplied one: lightness flipped with the hue kept (Blue Wave, Soft Horizon, Console,
+  Neon Grid), or darkened to dusk (the NieR scenes). Replace it by dropping a drawn print over the file.
+- The sources and the three scripts that made the prints, the thumbnails and the catalog entries are in
+  `/mnt/Cursor/share/puppet-master/2026-11-11-supplied-wallpapers/`.
+
 ## Files
 
 | Path | What |
 |---|---|
 | `catalog.d/<NN>-<family>.json` | The catalog, one fragment per owner. `10-glass.json` belongs to pm7-liquid-glass, and its images stay in `Concepts/liquid-glass/opus-5.5/src/walls/` |
-| `src/walls/<id>-<dark\|light>.webp` | The 40 prints drawn here: 2560 x 1440 WebP, quality 0.84 (lossless for the pixel-art Retro set) |
-| `src/thumbs/<id>-<dark\|light>.webp` | 320 x 180 thumbnails of all 56 prints, which the gallery shows instead of decoding the full images |
+| `src/walls/<id>-<dark\|light>.webp` | The prints kept here (the 40 drawn here, the retired NieR ones, and the 36 supplied ones): 2560 x 1440 WebP, quality 0.84 (lossless for the pixel-art Retro set) |
+| `src/thumbs/<id>-<dark\|light>.webp` | 320 x 180 thumbnails of every print, which the gallery shows instead of decoding the full images |
 | `src/wallpapers.js` | The choice, its paint on `<html>` and the gallery (`window.PM_WALLPAPERS` is the test hook) |
 | `src/wallpapers.css` | The paint in Basic, Friendly, Retro and NieR Mode, and the gallery |
 | `tools/art.js`, `tools/walls.mjs` | The art and its driver: `node tools/walls.mjs [--cdp <endpoint>] [--only id,..] [--no-walls] [--sheet <png>]` |
