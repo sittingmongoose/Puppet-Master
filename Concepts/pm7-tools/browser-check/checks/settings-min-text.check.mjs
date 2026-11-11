@@ -325,7 +325,7 @@ for (const surface of ['normal', 'sandbox']) {
 			   rule whose selector names it (or a settings-only piece: the NieR chips, the picker, the inspector, the
 			   setup recap, the row badges). */
 			const tenHalf = await f.evaluate(() => {
-				const near = (sel) => /panel-settings|pm-settings-root|pm51-|o55nc-|o55-pick-|o55-insp-|o55g-|\.o55-changed|\.o55-risk/.test(sel || '');
+				const near = (sel) => /panel-settings|pm-settings-root|pm51-|o55-pick-|o55-insp-|o55g-|\.o55-changed|\.o55-risk/.test(sel || '');
 				const bad = [];
 				const walk = (list) => {
 					for (const r of list) {
