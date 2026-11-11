@@ -1715,9 +1715,9 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":892,"inventory_sha256":"be85c
       { id: 'ntfy', name: 'Phone alerts', type: 'ntfy', status: 'attention', address: 'pm-private-topic', urgent: true }
     ],
     agents: [
-      { id: 'completion', name: 'Goal completion agent', events: ['Goal completed', 'Goal failed'], destinations: ['In-app', 'System notifications'], escalation: 'Discord after 5 minutes', status: 'active' },
+      { id: 'completion', name: 'Goal completion agent', events: ['Goal completed'], destinations: ['In-app', 'System notifications'], escalation: 'Discord after 5 minutes', status: 'active' },
       { id: 'approval', name: 'Approval agent', events: ['Approval required', 'Agent blocked'], destinations: ['System notifications', 'Phone alerts'], escalation: 'Repeat urgent after 10 minutes', status: 'active' },
-      { id: 'provider', name: 'Provider health agent', events: ['Usage exhausted', 'Authentication expired'], destinations: ['In-app'], escalation: 'None', status: 'active' }
+      { id: 'provider', name: 'Provider health agent', events: ['Provider usage exhausted'], destinations: ['In-app'], escalation: 'None', status: 'active' }
     ],
     events: [
   {
@@ -3621,7 +3621,7 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":892,"inventory_sha256":"be85c
   function renderOwnerRedirects(section){
     const ids=(section.settings||[]).map(setting=>setting.id);
     if(!ids.some(id=>/^code\.execution\.(?:docker|container|registry|k8s)/.test(id)))return '';
-    return `<div class="owner-redirects"><span>Container values stay ordinary project Settings; live containers and exact execution identities remain in their owners.</span><button class="btn" data-action="open-docker-manager">Open Docker Manager</button><button class="btn" data-action="open-hosts-manager">Open Hosts</button></div>`;
+    return `<div class="owner-redirects"><span>Container values stay ordinary project Settings; live containers and exact execution identities remain in their owners.</span><button class="btn" data-action="open-docker-manager">Open Docker Manager</button><button class="btn" data-action="open-hosts-manager">Open Servers</button></div>`;
   }
 
   function renderSettingsSection(section, workspace, index) {
@@ -7130,7 +7130,7 @@ if(state.projectSyncTab==='move')return `<div class="card-grid two"><section cla
       case 'manage-credential-reference': {const found=findSettingGlobal(ds(el,'setting')),project=window.PM7_SETTINGS_TOME.project();if(!found)return;if(!project){showToast('Select or create a project','No-project mode cannot open mutation-capable credential Settings.','warning');return;}const owner=window.PM_SETTINGS_CREDENTIALS&&window.PM_SETTINGS_CREDENTIALS.open;if(typeof owner==='function'){owner({project_id:project.id,setting_id:found.setting.id,mode:'reference_only'});return;}infoDrawer(found.setting.label,'Credential material is never rendered, copied into project Settings, or persisted by this concept. The native owner opens the OS credential store and returns only a redacted reference/status.',[['Setting ID',found.setting.id],['Storage owner','OS credential store / secure Settings owner'],['Project value','Redacted reference only'],['Owner UI','Not attached to this concept fixture']]);return;}
       case 'clear-all-settings-filters': {clearTimeout(allSettingsQueryTimer);allSettingsQueryTimer=0;allSettingsView.query='';allSettingsView.category='all';allSettingsView.exposure='all';allSettingsView.control='all';allSettingsView.applicability='all';allSettingsView.ownerStatus='all';allSettingsView.resultType='all';allSettingsView.scrollTop=0;renderApp({soft:true});return;}
       case 'open-docker-manager': {const target=document.querySelector('.activity-bar .icon[data-target="panel-docker"]');if(target){target.click();showToast('Docker Manager opened','Container operations remain outside Settings.','info');}else showToast('Docker Manager unavailable','The owner surface is not mounted in this host.','warning');return;}
-      case 'open-hosts-manager': state.serverTab='hosts';navigate('system','servers');return;
+      case 'open-hosts-manager': /* the computers are on Server & Project Location's Servers tab (the old Hosts tab is gone; B11 D2) */ if(window.PM51&&typeof window.PM51.setTab==='function')window.PM51.setTab('servers','servers');navigate('system','servers');return;
       case 'toggle-setting': {
         const id=ds(el,'setting'),found=findSettingGlobal(id);if(!found)return;const next=!settingValue(found.setting);if(!commitSettingValue(id,next))return;refreshSettingRow(id);showToast('Setting updated',`${found.setting.label} is now ${next?'on':'off'}.`);return;
       }

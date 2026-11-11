@@ -30,6 +30,15 @@ function o55FlowCollect(wrap, flow, into) {
   (flow.fields || []).forEach(f => { if (!missing && f.required && !into[f.key]) missing = `${f.type === 'secret' ? 'Paste' : 'Fill in'} ${f.label.toLowerCase()} first.`; });
   return missing;
 }
+/* A list that shows what a choice row allows (`itemsFrom`): one line per option of that setting, read when the list is
+   drawn, so it can only name the powers the row offers (B11 D6: "Show debug permissions" listed four powers that were
+   not the three "Debugging may, without asking" offers). `items` are fixed lines after them. */
+function o55FlowItemsFrom(flow) {
+  const src = flow.itemsFrom, found = src && findSettingGlobal(src.setting);
+  if (!found) return [];
+  const chosen = settingValue(found.setting), on = Array.isArray(chosen) ? chosen.map(String) : [];
+  return (found.setting.options || []).map(o => { const v = String(Array.isArray(o) ? o[0] : (o && typeof o === 'object' ? o.value : o)); const yes = on.includes(v); return { label: PM51.valueLabel(found.setting.id, v), help: yes ? src.on[0] : src.off[0], value: yes ? src.on[1] : src.off[1] }; });
+}
 function o55Flow(found, flow) {
   const s = found.setting, id = s.id, store = o55FlowStore(id);
   const title = flow.title || (O55R[id] || {}).actionLabel || PM51.rowLabel(s);
@@ -55,11 +64,12 @@ function o55Flow(found, flow) {
     return !!wrap;
   }
   if (flow.kind === 'list' || flow.kind === 'order') {
-    if (!store.items) store.items = clone(flow.items || []);
+    if (!store.items && !flow.itemsFrom) store.items = clone(flow.items || []);
     const paint = w => {
       const body = w.querySelector('.pm51-panel-body'); if (!body) return;
-      const n = store.items.length;
-      const rows = store.items.map((it, i) => ({ label: it.label, help: it.help, control: [
+      const shownItems = flow.itemsFrom ? o55FlowItemsFrom(flow).concat(clone(flow.items || [])) : store.items;
+      const n = shownItems.length;
+      const rows = shownItems.map((it, i) => ({ label: it.label, help: it.help, control: [
         it.value ? `<span class="pm51-row-value">${h(it.value)}</span>` : '',
         flow.kind === 'order' ? PM51.iconBtn({ icon: 'up', label: `Move ${it.label} up`, action: 'pm51-o55-flow-move', data: { id, i, d: -1 }, disabled: i === 0, reason: 'Already first.' }) + PM51.iconBtn({ icon: 'down', label: `Move ${it.label} down`, action: 'pm51-o55-flow-move', data: { id, i, d: 1 }, disabled: i === n - 1, reason: 'Already last.' }) : '',
         it.action ? PM51.btn({ label: it.action, small: true, icon: it.icon || 'play', action: 'pm51-o55-flow-item', data: { id, i } }) : '',

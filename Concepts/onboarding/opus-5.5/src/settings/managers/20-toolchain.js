@@ -626,4 +626,49 @@
       + PM51.panelSection('Adding one', '<p class="pm51-ps-text">Add walks you through it: the language, the tool most people use for it, where the program comes from (already on this computer, installed for you, or one you point to), which files it handles, and any start options.</p>')
       + PM51.panelSection('Good to know', '<p class="pm51-ps-text">Removing a tool here only takes it off the list. Nothing is uninstalled from your computer.</p>')
   }));
+  /* Connect Docker Hub (code.execution.dockerhub-signin; canon: "Sign in via browser, test that saved credentials still
+     work, or clear them"). The access token has one home, the row "Docker Hub access token"; this panel follows "How to
+     sign in to Docker Hub": Sign in in the browser signs in there, Paste an access token checks or clears the token saved
+     in that row. (B11 D4, R2: the panel was a user name and token form of its own whatever the method, so after
+     connecting with a token the token row still offered "Add key", and choosing the browser changed nothing.) */
+  const HUB = { method: 'code.execution.dockerhub-auth-method', token: 'code.execution.dockerhub-token', signin: 'code.execution.dockerhub-signin' };
+  const hubKeys = () => (PM51.s().o55Keys = PM51.s().o55Keys || {});
+  const hubState = () => (PM51.s().dockerHub = PM51.s().dockerHub || {});
+  const hubNow = () => new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+  function dockerHubConnect() {
+    const browser = PM51.value(HUB.method) === 'Browser Sign-In', hub = hubState(), saved = !!hubKeys()[HUB.token];
+    const how = PM51.kv([['How you sign in', browser ? 'Sign in in the browser' : 'Paste an access token'], ['Change it with', 'How to sign in to Docker Hub']]);
+    if (browser) {
+      const wrap = PM51.panel({
+        title: 'Connect Docker Hub', eyebrow: 'Docker Hub', icon: 'user', status: hub.browser ? { label: 'Signed in', tone: 'ready' } : { label: 'Not signed in', tone: 'off' },
+        summary: 'You sign in on hub.docker.com in your browser. Puppet Master keeps the sign-in, never your password, and checks which accounts and teams you may publish under.',
+        body: PM51.panelSection('Sign-in', how + (hub.browser ? PM51.note(`Signed in at ${hub.browser}.`, 'info') : ''))
+          + (hub.browser ? PM51.panelSection('Clear it', PM51.btn({ label: 'Clear the sign-in', small: true, danger: true, icon: 'trash', action: 'pm51-toolchain-dockerhub-clear' }), 'Publishing stops until you sign in again.') : ''),
+        primaryLabel: hub.browser ? 'Check the sign-in' : 'Sign in in the browser',
+        onPrimary: () => { const was = !!hub.browser; hub.browser = hubNow(); saveState(); PM51.toast(was ? 'Docker Hub sign-in works' : 'Docker Hub connected', 'Publishing can use your account. Example only: nothing left this preview.', 'info'); }
+      });
+      return !!wrap;
+    }
+    const wrap = PM51.panel({
+      title: 'Connect Docker Hub', eyebrow: 'Docker Hub', icon: 'user', status: saved ? { label: 'Token saved', tone: 'ready' } : { label: 'No token yet', tone: 'off' },
+      summary: saved ? 'Checks that the access token saved under "Docker Hub access token" still works, and refreshes which accounts and teams you may publish under.' : 'You sign in with an access token. Add it under "Docker Hub access token" first; this button then checks that it works.',
+      body: PM51.panelSection('Access token', how + PM51.kv([['Docker Hub access token', saved ? 'Saved securely' : 'Not added yet']]) + (hub.checked ? PM51.note(`Last checked at ${hub.checked}.`, 'info') : ''))
+        + (saved ? PM51.panelSection('Clear it', PM51.btn({ label: 'Clear the token', small: true, danger: true, icon: 'trash', action: 'pm51-toolchain-dockerhub-clear' }), 'Publishing stops until you add a token again.') : ''),
+      primaryLabel: saved ? 'Check the token' : 'Add the token',
+      onPrimary: () => {
+        if (!saved) { closeOverlay(false); const found = findSettingGlobal(HUB.token); if (found && typeof o55KeyPanel === 'function') window.setTimeout(() => o55KeyPanel(found), 0); return; }
+        hub.checked = hubNow(); saveState(); PM51.toast('Docker Hub token works', 'Publishing can use your account. Example only: nothing left this preview.', 'info');
+      }
+    });
+    return !!wrap;
+  }
+  PM51.on('toolchain-dockerhub-connect', () => dockerHubConnect());
+  PM51.on('toolchain-dockerhub-clear', () => {
+    const browser = PM51.value(HUB.method) === 'Browser Sign-In';
+    PM51.confirm(browser ? 'Clear the Docker Hub sign-in?' : 'Clear the Docker Hub token?', 'Publishing to Docker Hub stops until you connect again.', 'Clear', () => {
+      if (browser) delete hubState().browser; else { delete hubKeys()[HUB.token]; delete hubState().checked; }
+      saveState(); closeOverlay(false); refreshSettingRow(HUB.token); PM51.toast(browser ? 'Sign-in cleared' : 'Token cleared', 'Docker Hub');
+    }, true);
+  });
 })();
+
