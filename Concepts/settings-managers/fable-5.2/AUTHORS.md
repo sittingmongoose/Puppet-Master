@@ -214,6 +214,15 @@ title, the choices, the value and the default follow `SMX.reword`; the line abov
 Settings that holds the row; "Next to it" lists the rows of the same section on that page. `SMX.details.close()`
 closes it, and going to another page closes it too.
 
+### The frame around a page is part of the page
+
+PMConcept7 draws things AROUND each manager that no audit of the managers lists: at a Settings page's top right a
+project button (four shortcuts) and "Page options" (Show all explanations, Show advanced controls, Reset this section,
+Copy deep link). The census of controls was taken inside the managers, so the concept had none of this until
+2026-11-11. The framework now gives every page "Page options" (`layer/smx-pageopts.js`: "Explain everything on this
+page" from where each setting is placed, and "Copy a link to this page"); a page needs to do nothing for it. If you
+compare a chapter with PMConcept7, look at the whole Settings area, not only at the manager's own block.
+
 ## Building and checking
 
 ```sh

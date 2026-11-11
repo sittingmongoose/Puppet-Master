@@ -210,6 +210,8 @@ html[data-theme^="glass"] #smx-root .smx-find, html[data-theme^="glass"] #smx-ro
   #smx-root .smx-scroll { --smx-pad-x: 14px; padding: 14px var(--smx-pad-x) 56px; }
   #smx-root .smx-find { top: 52px; }
   #smx-root .smx-head { flex-direction: column; align-items: flex-start; }
+  #smx-root .smx-page-options { position: absolute; top: 0; right: 0; }
+  #smx-root .smx-head-copy { padding-right: 40px; }
   #smx-root .smx-summary { flex-direction: column; }
   #smx-root .smx-summary-side { align-items: flex-start; }
   #smx-root .smx-need { flex-wrap: wrap; }
@@ -324,3 +326,11 @@ html[data-motion="reduced"] #smx-root *, html[data-reduced-motion="1"] #smx-root
 #smx-root .smx-details .smx-details-go { display: inline-flex; flex-wrap: wrap; gap: 4px 6px; padding: 0; border: 0; background: none; color: var(--k3-accent-ink, var(--k3-accent)); font: inherit; text-align: left; text-decoration: underline dotted; text-underline-offset: 3px; cursor: pointer; }
 #smx-root .smx-details .smx-details-go:hover { text-decoration-style: solid; }
 #smx-root .smx-details .smx-details-go:focus-visible { outline: 2px solid var(--k3-accent); outline-offset: 2px; border-radius: 3px; }
+
+/* ---- "Page options" at a page's top right, and the panel "everything explained" (smx-pageopts.js) */
+#smx-root .smx-head { position: relative; }
+#smx-root .smx-page-options { flex: none; align-self: flex-start; order: 3; width: 30px; height: 30px; display: inline-grid; place-items: center; border: 1px solid var(--k3-line); border-radius: var(--k3-radius-sm); background: var(--k3-surface-1); color: var(--k3-text-2); cursor: pointer; }
+#smx-root .smx-page-options:hover { color: var(--k3-text-1); border-color: var(--k3-line-strong); background: var(--k3-accent-soft-2); }
+#smx-root .smx-page-options:focus-visible { outline: 2px solid var(--k3-accent); outline-offset: 1px; }
+#smx-root .smx-page-options .icon, #smx-root .smx-page-options svg { width: 15px; height: 15px; stroke: currentColor; }
+#panel-settings .pm51-list.smx-explain .pm51-item-sub, #pm-settings-portals .pm51-list.smx-explain .pm51-item-sub { white-space: normal; }

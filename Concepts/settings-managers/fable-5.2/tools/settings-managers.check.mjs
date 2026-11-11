@@ -13,9 +13,9 @@ const fail = (msg) => { throw new Error(msg); };
 
 /* The page a person opens is the review page: PMConcept7 in a frame, with a strip above it. This test runs only when
    that file is given: --set host=<out>/settings-managers.html */
-const openHost = async (t) => {
+const openHost = async (t, hash = '') => {
 	await t.viewport(1600, 1000);
-	await t.page.goto('file://' + t.args.host, { waitUntil: 'commit', timeout: 120000 });   // 39 MB with PMConcept7 inside: do not wait for load
+	await t.page.goto('file://' + t.args.host + hash, { waitUntil: 'commit', timeout: 120000 });   // 39 MB with PMConcept7 inside: do not wait for load
 	const deadline = Date.now() + 120000;
 	for (;;) {
 		const frame = t.page.frames().find((f) => f !== t.page.mainFrame());
@@ -30,9 +30,18 @@ const openHost = async (t) => {
 export const tests = {
 	async 'the review page: redesign and today at the same place, what changed, everything that moved'(t) {
 		if (!t.args.host) return;
-		const frame = await openHost(t);
+		// opened by a link that "Copy a link to this page" made, the review page goes to that page; and the link it
+		// copies is its own address with the page in it
+		const frame = await openHost(t, '#smx=' + encodeURIComponent('route=look/text'));
 		const top = t.page;
 		const state = async () => frame.evaluate(() => ({ view: window.SMX.view, route: window.SMX.route, layer: window.SMX.layerOpen || '', ws: window.PM12_KIMI.getState().workspace, home: window.PM12_KIMI.getState().home }));
+		for (let i = 0; i < 30 && (await state()).route !== 'look/text'; i++) await top.waitForTimeout(150);
+		if ((await state()).route !== 'look/text') fail('opened by a link to Look & feel › Text & motion, the review page showed ' + (await state()).route);
+		await top.evaluate(() => { window.__copied = ''; const c = navigator.clipboard; if (c) c.writeText = (text) => { window.__copied = String(text); return Promise.resolve(); }; });
+		await frame.evaluate(() => { window.SMX.go('computers/away'); window.SMX.pageOptions.link(); });
+		for (let i = 0; i < 20 && !(await top.evaluate(() => window.__copied)); i++) await top.waitForTimeout(150);
+		const copied = await top.evaluate(() => window.__copied);
+		if (!/^file:.*settings-managers\.html#smx=/.test(copied) || decodeURIComponent(copied.split('#smx=')[1] || '') !== 'route=computers/away') fail('the review page copied this as the link to Computers › Away from home: ' + (copied || 'nothing'));
 		await frame.evaluate(() => window.SMX.go('computers/away'));
 		await top.waitForTimeout(600);
 		await top.click('#changes');
@@ -554,5 +563,76 @@ export const tests = {
 			return { bad, notes };
 		});
 		if (r.bad.length) fail(r.bad.join(' || '));
+	},
+	/* PMConcept7 gives every Settings page a "Page options" menu (Show all explanations, Copy deep link, and two entries
+	   that only show a note). The concept had none until 2026-11-11: the audits never looked at the frame around the
+	   managers. Every page here has the button; "Explain everything" lists exactly the settings placed on the page, and
+	   pressing one leads to its row and its About; "Copy a link" makes a link that names the page. */
+	async 'every page has Page options: everything on the page explained, each leading to its About; a link that names the page'(t) {
+		const { f } = await open(t);
+		const r = await f.evaluate(async () => {
+			const S = window.SMX, E = window.PM12_KIMI, wait = (ms) => new Promise((res) => setTimeout(res, ms)), bad = [];
+			const until = async (fn, ms = 3000) => { const end = performance.now() + ms; while (performance.now() < end) { if (fn()) return true; await wait(60); } return !!fn(); };
+			const menu = () => [...document.querySelectorAll('#pm-settings-portals .popover, .pm51-popout.is-open')].find((m) => m.getBoundingClientRect().width > 4 && /Page options/i.test(m.textContent));
+			const panel = () => [...document.querySelectorAll('#pm-settings-portals .drawer-wrap')].find((d) => d.getBoundingClientRect().width > 4 && /everything explained/.test(d.textContent));
+			const item = (m, re) => [...m.querySelectorAll('button, [role="menuitem"], .menu-item')].find((b) => re.test(b.textContent));
+			// 1. the button is on every page
+			let without = [], pages = 0;
+			for (const p of S.pages) { if (p.id.includes(':')) continue; S.go(p.id, { replace: true }); await wait(50); pages++; if (!document.querySelector('#smx-root .smx-head .smx-page-options')) without.push(p.id); }
+			if (without.length) bad.push('pages with no Page options: ' + without.slice(0, 8).join(', '));
+			// 2. on three pages: the list is the page's settings, and an entry leads to its row and its About
+			let checked = 0;
+			for (const route of ['look/text', 'ai/models', 'code/terminal']) {
+				S.go(route); await wait(600);
+				const want = S.pageSettings();
+				const btn = document.querySelector('#smx-root .smx-head .smx-page-options'); if (!btn) continue;
+				btn.click();
+				if (!await until(() => !!menu())) { bad.push(route + ': Page options opened no menu'); continue; }
+				const ex = item(menu(), /Explain everything on this page/);
+				if (!ex) { bad.push(route + ': the menu has no "Explain everything on this page" though the page has ' + want + ' settings'); continue; }
+				if (!item(menu(), /Copy a link to this page/)) bad.push(route + ': the menu has no "Copy a link to this page"');
+				ex.click();
+				if (!await until(() => !!panel())) { bad.push(route + ': "Explain everything" opened no panel'); continue; }
+				const rows = [...panel().querySelectorAll('.pm51-list.smx-explain .pm51-item')];
+				if (rows.length !== want) bad.push(`${route}: the panel explains ${rows.length} settings, the page has ${want}`);
+				const blank = rows.filter((x) => !(x.querySelector('.pm51-item-sub') || {}).textContent).length;
+				if (blank) bad.push(`${route}: ${blank} settings are listed with no explanation`);
+				// the first entry whose row has an About: press it
+				const ids = S.pageOptions.groups().flatMap((g) => g.ids);
+				const k = ids.findIndex((id) => !!document.querySelector('#smx-root .smx-page [id="setting-' + id + '"] [data-action="setting-details"]'));
+				if (k < 0) { bad.push(route + ': no listed setting has a row with About'); continue; }
+				rows[k].click();
+				if (!await until(() => !panel())) bad.push(route + ': pressing an entry did not close the panel');
+				if (!await until(() => S.details.shown() && S.details.current() === ids[k], 4000)) bad.push(`${route}: pressing "${rows[k].querySelector('.pm51-item-title').textContent}" did not open its About (open: ${S.details.current() || 'none'})`);
+				S.details.close(); await until(() => !S.details.shown()); await wait(300);
+				checked++;
+			}
+			if (checked < 3) bad.push('only ' + checked + ' of 3 pages could be checked');
+			// 3. a page with no settings offers only the link
+			S.go('home'); await wait(400);
+			document.querySelector('#smx-root .smx-head .smx-page-options').click();
+			if (!await until(() => !!menu())) bad.push('Home: Page options opened no menu');
+			else { if (item(menu(), /Explain everything/)) bad.push('Home has no settings, and its menu offers to explain them'); if (!item(menu(), /Copy a link to this page/)) bad.push('Home: no "Copy a link to this page"'); }
+			try { window.PM51.closePopouts(); E.closeTransientUi(); } catch (e) {}
+			// 4. the link names the page (the page on its own: the link is this page's address)
+			S.go('computers/away'); await wait(400);
+			let copied = ''; const clip = navigator.clipboard; const orig = clip && clip.writeText;
+			if (clip) clip.writeText = (text) => { copied = String(text); return Promise.resolve(); };
+			S.pageOptions.link(); await wait(300);
+			if (clip && orig) clip.writeText = orig;
+			const link = copied || S.lastLink || '';
+			const hm = /[#&]smx=([^&]*)/.exec(link);
+			const cfg = {}; if (hm) decodeURIComponent(hm[1]).split(',').forEach((kv) => { const i = kv.indexOf('='); if (i > 0) cfg[kv.slice(0, i)] = kv.slice(i + 1); });
+			if (cfg.route !== 'computers/away') bad.push('the link does not name the page: ' + link.slice(-60));
+			return { bad, pages };
+		});
+		if (r.bad.length) fail(r.bad.join(' || '));
+		if (r.pages < 90) fail(`only ${r.pages} pages were opened`);
+		// Ctrl+K puts the cursor in this Settings' search box (PMConcept7's own handler would focus its hidden one)
+		await f.evaluate(async () => { window.SMX.go('look/text'); await new Promise((res) => setTimeout(res, 400)); document.querySelector('#smx-root .smx-head .smx-page-options').focus(); });
+		await t.page.keyboard.press('Control+k');
+		await t.page.waitForTimeout(250);
+		const k = await f.evaluate(() => { const a = document.activeElement; return { ours: !!(a && a.matches && a.matches('#smx-root [data-smx-search]')), what: a ? (a.tagName + ' ' + (a.getAttribute('placeholder') || a.className || '')).slice(0, 60) : 'nothing', shown: !!(a && a.offsetParent) }; });
+		if (!k.ours || !k.shown) fail('Ctrl+K did not put the cursor in the search box of these pages: focus is on ' + k.what);
 	}
 };

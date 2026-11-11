@@ -78,12 +78,15 @@
 
   function command(m) {
     switch (m.cmd) {
-      case 'hello': report('ready', { pages: pagesForHost() }); break;
+      // answered only once these pages have started: an early "ready" made the review page send its first commands (the
+      // place a link names) before there was anything to send them to, and the start then went to Home regardless
+      case 'hello': if (H.getAttribute('data-smx-layer') === 'on') report('ready', { pages: pagesForHost() }); break;
       case 'view': SMX.setView(m.view); break;
       case 'go': if (SMX.view !== 'new') SMX.setView('new'); if (typeof m.route === 'string' && m.route.startsWith('do:')) { const f = SMX.acts[m.route.slice(3)]; if (f) f(D.body, null); } else SMX.go(m.route); break;
       case 'changes': if (SMX.view === 'new') { SMX.showChanges(); report('state'); } break;
       case 'moved': if (SMX.view !== 'new') SMX.setView('new'); SMX.showMoved(); report('state'); break;
       case 'look': setLook(m.look); break;
+      case 'link-copied': if (SMX.linkSaid) SMX.linkSaid(!!m.ok, m.url); break;
       case 'escape': if (SMX.layerOpen) { SMX.closeLayer(); report('state'); } else if (SMX.details && SMX.details.shown()) SMX.details.close(); break;
       case 'motion': H.setAttribute('data-motion', m.reduced ? 'reduced' : ''); if (!m.reduced) H.removeAttribute('data-motion'); SMX.reduced = !!m.reduced; break;
       case 'reset': try { W.PM12_KIMI.reset(); } catch (e) { /* engine not ready */ } SMX.resetLocal(); SMX.search && SMX.search.reset(); SMX.setView('new'); SMX.go('home', { replace: true }); SMX.toast('Demo reset', 'Every example value is back where it started.', 'info'); break;

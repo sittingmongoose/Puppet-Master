@@ -228,6 +228,16 @@
       if (SMX.layerOpen === 'find' && q) { q.value = ''; SMX.query = ''; }
       closeLayer(); e.stopPropagation(); SMX.report && SMX.report('state');
     }, true);
+    // Ctrl+K (Cmd+K on a Mac) puts the cursor in the search box, as it does in PMConcept7's Settings. PMConcept7's own
+    // handler would put it in ITS search box, which is hidden under these pages (found 2026-11-11 with the page frame).
+    D.addEventListener('keydown', (e) => {
+      if (SMX.view !== 'new' || !(e.ctrlKey || e.metaKey) || e.altKey || e.shiftKey || String(e.key).toLowerCase() !== 'k') return;
+      let owns = false; try { owns = W.PM7_SETTINGS_TOME.ownsEvent(e.target); } catch (err) { owns = host.contains(e.target); }
+      const q = navEl && navEl.querySelector('[data-smx-search]');
+      if (!owns || !q) return;
+      e.preventDefault(); e.stopPropagation();
+      closeTheirs(); q.focus(); try { q.select(); } catch (err) { /* nothing to select */ }
+    }, true);
     W.addEventListener('scroll', (e) => {
       const pop = SMX.view === 'new' && menuOpen();
       const t = e.target;
@@ -463,7 +473,7 @@
       scrollEl.innerHTML = `<div class="smx-page manager-page pm51-mgr${p.cls ? ' ' + p.cls : ''}" data-smx-route="${esc(SMX.route)}"><div class="smx-page-top"></div><div class="smx-blocks"></div></div>`;
       pageEl = scrollEl.firstElementChild; drawn.route = SMX.route; drawn.keys = []; drawn.html = {}; drawn.sig = {}; drawn.top = null;
     }
-    const top = `${crumbsHtml(m, ctx)}<header class="smx-head"><div class="smx-head-copy"><h1 class="smx-title">${esc(fn(p.title, ctx))}</h1>${p.purpose ? `<p class="smx-purpose">${esc(fn(p.purpose, ctx))}</p>` : ''}</div>${p.headSide ? `<div class="smx-head-side">${p.headSide(ctx)}</div>` : ''}</header>`;
+    const top = `${crumbsHtml(m, ctx)}<header class="smx-head"><div class="smx-head-copy"><h1 class="smx-title">${esc(fn(p.title, ctx))}</h1>${p.purpose ? `<p class="smx-purpose">${esc(fn(p.purpose, ctx))}</p>` : ''}</div>${p.headSide ? `<div class="smx-head-side">${p.headSide(ctx)}</div>` : ''}<button type="button" class="icon-btn smx-page-options" data-smx-do="page-options" aria-haspopup="menu" aria-label="Page options" data-pm-hover-label="Page options" data-pm-hover-detail="Everything on this page explained, and a link to it.">${SMX.icon('sliders')}</button></header>`;
     if (top !== drawn.top) { pageEl.querySelector('.smx-page-top').innerHTML = top; drawn.top = top; }
     const blocks = blocksOf(m, ctx);
     const wrap = pageEl.querySelector('.smx-blocks');

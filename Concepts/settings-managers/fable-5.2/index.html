@@ -88,7 +88,7 @@
     ['js', 'layer/pages/look.js'], ['js', 'layer/pages/assistant.js'], ['js', 'layer/pages/notifications.js'],
     ['js', 'layer/pages/memory.js'], ['js', 'layer/pages/planning.js'], ['js', 'layer/pages/code.js'], ['js', 'layer/pages/code-work.js'],
     ['js', 'layer/pages/source.js'], ['js', 'layer/pages/safety.js'], ['js', 'layer/pages/keeping.js'], ['js', 'layer/pages/system.js'],
-    ['js', 'layer/smx-words.js'], ['js', 'layer/smx-details.js'],
+    ['js', 'layer/smx-words.js'], ['js', 'layer/smx-details.js'], ['js', 'layer/smx-pageopts.js'],
     ['css', 'layer/smx-customizers.css'], ['js', 'layer/smx-customizers.js'],
     ['js', 'layer/smx-boot.js']
   ].map(([k, p]) => [k, new URL(p, base).href]);
@@ -148,8 +148,18 @@
     const m = ev.data;
     if (!m || typeof m !== 'object') return;
     if (m.source === 'smx' && ev.source === frame.contentWindow) {
+      // "Copy a link to this page": the address a person can open again is this page's, so the link is made and copied here
+      if (m.type === 'copy-link') {
+        const url = location.href.split('#')[0] + (m.hash || '');
+        const tell = (ok) => send({ cmd: 'link-copied', ok, url });
+        try { navigator.clipboard.writeText(url).then(() => tell(true), () => tell(false)); } catch (e) { tell(false); }
+        return;
+      }
       if (m.type === 'ready' && !live) {
         live = true;
+        // opened by such a link (…#smx=route=computers/away): go there
+        const hm = /[#&]smx=([^&]*)/.exec(location.hash || '');
+        if (hm) { const cfg = {}; try { decodeURIComponent(hm[1]).split(',').forEach((kv) => { const i = kv.indexOf('='); if (i > 0) cfg[kv.slice(0, i)] = kv.slice(i + 1); }); } catch (e) { /* not a link of ours */ } if (cfg.route) send({ cmd: 'go', route: cfg.route }); }
         const w = $('wait'); if (w) w.remove();
         if (m.pages) {
           const sel = $('goto'); sel.length = 1;
