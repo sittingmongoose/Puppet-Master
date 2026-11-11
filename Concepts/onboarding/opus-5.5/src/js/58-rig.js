@@ -1299,14 +1299,17 @@
       if (fps && !this.reduced) { const step = 1 / fps; if (this.t - this.frameT < step - 0.006) return; this.frameT = this.t - this.frameT > 2 * step ? this.t : this.frameT + step; }
       /* (and elsewhere only when a draw is due: the displacement gate, drawDue; with none due the loop asks for no frame
          and waits on a timer, PERF-1 step 5) */
-      else if (smooth && !this.dirty && !this.drawDue()) { this.wait(); return; }
+      else if (smooth && !this.drawDue() && !this.dirty) { this.wait(); return; }
+      /* (a kick's draw keeps the frame loop for the next frame: what it started, a swing or a letter's poke, may move at
+         once) */
+      if (smooth && this.dirty) this.speed = Infinity;
       /* (a change is drawn only once a frame is: cleared before Retro's stepped gate, a still stage that skipped one never
          drew it, and a sign kept 1024's place at 860 after a resize) */
       this.dirty = false;
       this.render();
-      /* (moving fast enough to need the next frame too, a swing or anything that draws every frame: the frame loop goes on;
-         slow drift goes back to the timer) */
-      if (smooth && !this.raf) { if (this.speed >= 3) this.raf = requestAnimationFrame(this.loop); else this.wait(); }
+      /* (moving fast enough that the next frame's draw is due too, a swing or anything that draws every frame: the frame
+         loop goes on; slow drift goes back to the timer) */
+      if (smooth && !this.raf) { if (this.speed >= 8) this.raf = requestAnimationFrame(this.loop); else this.wait(); }
     }
     /* PERF-1 step 5: a tick that drew nothing asks for no animation frame. Each frame the loop asked for cost 1.3-4.3 ms
        even when it drew nothing (the stage world's CSS animations are re-serviced on every main frame). A light timer
@@ -1462,20 +1465,8 @@
       const mood = this.moodNow();
       this.renderHead(mood);
       this.animFace();
-      let H = this.headAt(ps.C.x, ps.C.y, ps.th, ps.dy);
-      let ang = ps.th * .9 + ps.tilt;
-      // NieR hovers: a slow bob and a little drift of the visor
-      if (this.fam.bob && !this.reduced) { H = [H[0], H[1] + Math.sin(this.t * 1.35) * this.fam.bob * Lay.s / 2.6]; ang += Math.sin(this.t * .9) * .025; }
-      // asleep: the head rests on the floor and the strings go slack
-      const headH = 28 * Lay.s;
-      if (H[1] + headH > Lay.ground - 2) { H = [H[0], Lay.ground - 2 - headH]; }
-      /* (and on the lowest floor a person can see: a narrow window's Retro tube crops the stage's floor away, FO-51) */
-      const reach = this.pipReach(ang);
-      if (reach && H[1] + reach[3] > this.vis.y1) H = [H[0], this.vis.y1 - reach[3]];
+      const hp = this.headPose(), H = hp.H, ang = hp.ang, sx = hp.sx, sy = hp.sy, s = Lay.s;
       this.H = H; this.ang = ang;
-      // breathing: Pip's head swells a touch, slower when it sleeps
-      const br = this.reduced || !PIP.h.part('idle-life') ? 0 : (this.fam.breathe || 0) * Math.sin(this.t * (this.sleepZ ? 1.5 : 2.2));
-      const sx = ps.sx * (1 - br * .4), sy = ps.sy * (1 + br), s = Lay.s;
       sa(this.gCtl, 'transform', `translate(${R(ps.C.x)} ${R(ps.C.y)}) rotate(${R(ps.phi * 57.3)}) scale(${s}) translate(-32 -14.5)`);
       sa(this.gHead, 'transform', `translate(${R(H[0])} ${R(H[1])}) rotate(${R(ang * 57.3)}) scale(${s}) translate(-32 -31.5) translate(32 59.5) scale(${R(sx)} ${R(sy)}) translate(-32 -59.5)`);
       const ends = this.solveStrings({ C: ps.C, phi: ps.phi, H, ang, sx, sy });
@@ -1578,6 +1569,23 @@
       /* (what this draw showed, for the displacement gate: drawDue) */
       this.drawnPose = this.poseVec(); this.blinkDrawn = blink;
     }
+    // the head's pose this tick, as render draws it
+    headPose() {
+      const ps = this.ps, Lay = this.L;
+      let H = this.headAt(ps.C.x, ps.C.y, ps.th, ps.dy);
+      let ang = ps.th * .9 + ps.tilt;
+      // NieR hovers: a slow bob and a little drift of the visor
+      if (this.fam.bob && !this.reduced) { H = [H[0], H[1] + Math.sin(this.t * 1.35) * this.fam.bob * Lay.s / 2.6]; ang += Math.sin(this.t * .9) * .025; }
+      // asleep: the head rests on the floor and the strings go slack
+      const headH = 28 * Lay.s;
+      if (H[1] + headH > Lay.ground - 2) { H = [H[0], Lay.ground - 2 - headH]; }
+      /* (and on the lowest floor a person can see: a narrow window's Retro tube crops the stage's floor away, FO-51) */
+      const reach = this.pipReach(ang);
+      if (reach && this.vis && H[1] + reach[3] > this.vis.y1) H = [H[0], this.vis.y1 - reach[3]];
+      // breathing: Pip's head swells a touch, slower when it sleeps
+      const br = this.reduced || !PIP.h.part('idle-life') ? 0 : (this.fam.breathe || 0) * Math.sin(this.t * (this.sleepZ ? 1.5 : 2.2));
+      return { H, ang, sx: ps.sx * (1 - br * .4), sy: ps.sy * (1 + br) };
+    }
     // what the face shows now: a transient feeling wins over the scene's own
     moodNow() {
       if (this.moodOverride && this.t > this.moodUntil) this.moodOverride = null;
@@ -1626,8 +1634,10 @@
        away. What is drawn is the exact pose at today's precision: slow drift is sampled less often, never moved. */
     drawDue() {
       this.aimEyes(); this.motionSounds();
-      /* (and how fast the pose moves, in px a second from the last tick: the frame loop goes on while it is 3 or more, a
-         twentieth of a pixel a 60 Hz frame; anything that draws every frame counts as fast) */
+      /* (and how fast the pose moves, in px a second from the last tick: the frame loop goes on while it is 8 or more, more
+         than a tenth of a pixel a 60 Hz frame, so the next frame's draw is due too and no frame is asked for in vain;
+         slower, the timer asks for a frame once the draw falls due, its 16 ms and that frame at most about 50 ms of drift
+         under 8 px/s (0.4 px) after it; anything that draws every frame counts as fast) */
       this.speed = Infinity;
       if (this.fx.length || this.faceOut || this.faceT0 != null || this.moodNow() !== this.curMood) return true;
       if (this.blinkK() !== this.blinkDrawn) return true;
@@ -1642,26 +1652,33 @@
       for (let i = 0; i < v.length; i++) if (!(Math.abs(v[i] - d[i]) < .1)) return true;
       return false;
     }
-    /* the drawn pose as screen pixels: the head's four corners (with its tilt, hop, breathing and squash, NieR's bob), the
-       control bar's ends (its rock), the eyes' offset, NieR's bracket breathing, and each prop's drawing corners where
-       placeProp hangs it (its pivot, length, swing, fit offset and scale), its opacity (a .0025 step counts) and squash */
+    /* the drawn pose as screen pixels, from the values render writes, rounded as it rounds them (R, .01 units and .01
+       degrees), so a draw is due on the frame a written value would move something a tenth of a pixel: the head's own
+       box corners (its tilt, hop, breathing and squash, NieR's bob), the control's corners (its rock), the eyes' offset,
+       NieR's bracket breathing, and each prop's drawing corners where placeProp hangs it (its pivot, length, swing, fit
+       offset and scale), its drawn opacity and squash. (Breathing's scale is written to .01: its step moves the head's
+       top about 0.85 px at once, on the same frame as before.) */
     poseVec() {
-      const ps = this.ps, Lay = this.L, k = (this.map && this.map.k) || 1, v = [];
-      let hd = this.headAt(ps.C.x, ps.C.y, ps.th, ps.dy), ang = ps.th * .9 + ps.tilt;
-      if (this.fam.bob && !this.reduced) { hd = [hd[0], hd[1] + Math.sin(this.t * 1.35) * this.fam.bob * Lay.s / 2.6]; ang += Math.sin(this.t * .9) * .025; }
-      const br = this.reduced || !PIP.h.part('idle-life') ? 0 : (this.fam.breathe || 0) * Math.sin(this.t * (this.sleepZ ? 1.5 : 2.2));
-      const sx = ps.sx * (1 - br * .4), sy = ps.sy * (1 + br);
-      for (const q of [[0, 0], [64, 0], [0, 62], [64, 62]]) { const p = this.headXf(q, hd, ang, sx, sy); v.push(p[0] * k, p[1] * k); }
-      for (const q of [[0, 0], [64, 29]]) { const p = this.ctlXf(q, ps.C, ps.phi); v.push(p[0] * k, p[1] * k); }
-      v.push(ps.look[0] * Lay.s * k, ps.look[1] * Lay.s * k);
-      if (this.famName === 'nier' && this.hudPulse) v.push(this.hudPulse() * k);
+      const ps = this.ps, Lay = this.L, k = (this.map && this.map.k) || 1, v = [], deg = (a) => R(a * 57.3) / 57.3;
+      const hp = this.headPose(), hd = [R(hp.H[0]), R(hp.H[1])], ang = deg(hp.ang), sx = R(hp.sx), sy = R(hp.sy);
+      /* (the corners of the head's and the control's own drawn boxes, pipBB, as kit units; the kit's frame until measured) */
+      const box = (b) => [[b[0], b[1]], [b[0] + b[2], b[1]], [b[0], b[1] + b[3]], [b[0] + b[2], b[1] + b[3]]], bb0 = this.pipBB;
+      for (const q of box(bb0 ? bb0.h : [0, 0, 64, 62])) { const p = this.headXf(q, hd, ang, sx, sy); v.push(p[0] * k, p[1] * k); }
+      for (const q of box(bb0 ? bb0.c : [0, 0, 64, 29])) { const p = this.ctlXf(q, { x: R(ps.C.x), y: R(ps.C.y) }, deg(ps.phi)); v.push(p[0] * k, p[1] * k); }
+      v.push(R(ps.look[0]) * Lay.s * k, R(ps.look[1]) * Lay.s * k);
+      /* (Pip's strings' ends: they follow the breathing head smoothly, from its unrounded scale, as render draws them) */
+      this.solveStrings({ C: ps.C, phi: ps.phi, H: hp.H, ang: hp.ang, sx: hp.sx, sy: hp.sy }).forEach((e) => v.push(R(e.T[0]) * k, R(e.T[1]) * k, R(e.E[0]) * k, R(e.E[1]) * k));
+      /* (NieR's brackets breathe on the diagonal: each corner moves the pulse's change times the square root of two) */
+      if (this.famName === 'nier' && this.hudPulse) v.push(this.hudPulse() * k * Math.SQRT2);
       this.props.forEach((pr) => {
         const tg = this.propTarget(pr), sc = tg.sc * (pr.scale / (pr.spec.scale || 1)), bb = pr.bb || [0, 0, 0, 0];
         const tm = [pr.ties.reduce((m, t) => m + t[0], 0) / pr.ties.length, tg.tieY];
         const hang = [pr.ax + Math.sin(pr.a) * Math.max(0, pr.len), Lay.anchorY + Math.cos(pr.a) * Math.max(0, pr.len)];
-        const f = this.fit(pr, hang, sc, tm), s2 = sc * f.f;
-        for (const [x, y] of [[bb[0], bb[1]], [bb[0] + bb[2], bb[1] + bb[3]]]) { const c = rot([(x - tm[0]) * s2, (y - tm[1]) * s2], pr.a); v.push((hang[0] + f.dx + c[0]) * k, (hang[1] + f.dy + c[1]) * k); }
-        v.push(pr.op * 40, (pr.sq || 0) * (pr.foot || 0) * s2 * k);
+        const f = this.fit(pr, hang, sc, tm), s2 = R(sc * f.f), hx = R(hang[0] + f.dx), hy = R(hang[1] + f.dy), a = deg(pr.a), t0 = R(tm[0]), t1 = R(tm[1]);
+        for (const [x, y] of box(bb)) { const c = rot([(x - t0) * s2, (y - t1) * s2], a); v.push((hx + c[0]) * k, (hy + c[1]) * k); }
+        /* (its opacity as drawn, to the .01 a draw writes: a change draws, a residue the write would round away does not) */
+        const sq = this.reduced ? 0 : clamp(pr.sq || 0, -.12, .12);
+        v.push(R(pr.op) * 40, (Math.abs(sq) > .002 ? R(1 - sq) - 1 : 0) * (pr.foot || 0) * s2 * k);
       });
       return v;
     }
