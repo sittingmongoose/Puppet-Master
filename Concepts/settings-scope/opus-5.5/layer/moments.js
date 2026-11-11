@@ -545,7 +545,9 @@
   const MODEL = {
     /* B. the answers each kind of step offers, whether YOLO still asks, and the one rule kind that may cover it.
        command: §6.1 keeps deny, once, for session and always; §8.0 step 2, yolo clamps tool permissions to allow.
-       path: §3.3, external_directory "Default remains `ask`, including YOLO"; only the allowlist bypasses it.
+       path: §3.3, external_directory "Default remains `ask`, including YOLO"; the allowlist bypasses it, and so does
+       PS-145's one exception: with FileSafe on, a task-needed, listed, non-secret home-folder read outside its
+       exclusions doesn't ask, in either mode (§3.3, §4.2, PS-026, PS-145). FileSafe off removes the exception.
        remote (push, publish): PS-146, Regular keeps its exact-effect approvals and yolo pushes and publishes without
        another yes; a push approval is bound to its branch and commit, so a kept rule could never be reused.
        remote-delete: PS-146, remote branch deletion "still ask[s] with exact targets in ordinary YOLO" */
@@ -555,6 +557,8 @@
       remote: { answers: ['once', 'session', 'no'], yoloAsks: false, rule: null },
       'remote-delete': { answers: ['once', 'no'], yoloAsks: true, rule: null }
     },
+    // B, the path exception: a home read the task needs (a step marked home), while FileSafe is on
+    homeRead: (a, fileSafe) => !!a.home && !!fileSafe,
     /* C. how long an answer lasts. step: this step only (§6.1 "Once authorizes one invocation"; §2.3 deny blocks the
        invocation). run: the same request later in this run and this run mode, gone at a new run or a switch of Run
        mode (§6.1 "for session is ephemeral under approval_scope_key"; PS-113; §2 Rules 3). rule: a kept rule, in every
@@ -574,9 +578,14 @@
       samples: ['./scripts/release.sh v1.4.0', './scripts/release.sh v1.5.0', './scripts/deploy.sh', 'npm test'] },
     { id: 'push', what: 'Push to GitHub', kind: 'remote', cmd: 'git push origin feature/tags', target: 'git push origin feature/tags', report: 'Pushed 3 commits to origin/feature/tags. A push can’t be undone exactly; a later push can change it back.' },
     { id: 'publish', what: 'Publish the image', kind: 'remote', cmd: 'docker push ghcr.io/jared/loom:1.4.0', target: 'docker push ghcr.io/jared/loom:1.4.0', report: 'Published ghcr.io/jared/loom:1.4.0 (private). A published image can’t be unpublished by Undo.' },
-    { id: 'outside', what: 'Read a folder outside loom', kind: 'path', cmd: 'read ~/Documents/taxes', target: '~/Documents/taxes', why: 'A path outside the project that isn’t granted still asks.', report: 'Read ~/Documents/taxes: 3 files.',
-      patterns: [['~/Documents/taxes', 'this folder only'], ['~/Documents/taxes/**', 'this folder and every folder in it'], ['~/Documents/**', 'everything in Documents']],
-      samples: ['~/Documents/taxes', '~/Documents/taxes/2025/w2.pdf', '~/Documents/photos'] },
+    /* review A-r4 F1: the outside folder is off the home folder, so PS-145's FileSafe-on home-read exception can never
+       cover it: it asks in both run modes unless a folder rule does. The home read below shows the exception */
+    { id: 'outside', what: 'Read a folder outside loom', kind: 'path', cmd: 'read /mnt/team-share/release-notes', target: '/mnt/team-share/release-notes', why: 'A path outside the project that isn’t granted, and isn’t a home-folder read FileSafe allows, still asks.', report: 'Read /mnt/team-share/release-notes: 3 files.',
+      patterns: [['/mnt/team-share/release-notes', 'this folder only'], ['/mnt/team-share/release-notes/**', 'this folder and every folder in it'], ['/mnt/team-share/**', 'everything on the team share']],
+      samples: ['/mnt/team-share/release-notes', '/mnt/team-share/release-notes/1.4/notes.md', '/mnt/team-share/payroll'] },
+    { id: 'home', what: 'Read your release checklist', kind: 'path', home: true, cmd: 'read ~/Documents/release-checklist.md', target: '~/Documents/release-checklist.md', why: 'FileSafe is off for loom, so a home-folder read asks like any path outside the project.', report: 'Read ~/Documents/release-checklist.md.',
+      patterns: [['~/Documents/release-checklist.md', 'this file only'], ['~/Documents/*.md', 'every Markdown file in Documents'], ['~/Documents/**', 'everything in Documents']],
+      samples: ['~/Documents/release-checklist.md', '~/Documents/notes.md', '~/Documents/taxes/2025.pdf'] },
     // the same command again later in the run: For this session on the first one covers it, Allow once doesn't
     { id: 'test2', what: 'Run npm test again, after the fix', kind: 'command', cmd: 'npm test', target: 'npm test', report: 'Ran npm test again: 214 passed.',
       patterns: [['npm test', 'exactly this command'], ['npm test *', 'npm test with any arguments'], ['npm *', 'every npm command']],
@@ -585,17 +594,20 @@
   ];
   const ruleKind = (a) => MODEL.kinds[a.kind].rule;
   /* E. host-dependent: what the rule allows depends on one computer. A folder rule always is; a command rule is when
-     its step is about a script or a path, when its pattern names a path or a script, when its program is a file
-     command (read, rm and the like), or when its program is a wildcard (*, ./scripts/*: programs at every location) */
+     its pattern names a path or a script, when its program is a file command (read, rm and the like), or when its
+     program is a wildcard (*, ./scripts/*: programs at every location). Review A-r4 N2: it comes from the pattern, what
+     the rule is about (PS-144), never from the step it was typed on. The file-command and wildcard-program parts are
+     concept choices: a pattern that can match a program by its path is about that location */
   const hostText = (t) => /(^|\s)(~|\.{1,2}\/|\/|[A-Za-z]:\\)/.test(t) || /\.(sh|ps1|bat|cmd|exe|py)\b/.test(t);
   const FILE_CMDS = /^(read|write|edit|list|open|cat|less|head|tail|ls|cp|mv|rm|rmdir|mkdir|touch|chmod|chown|find|grep|tar|zip|unzip)$/i;
   const words = (p) => { const w = String(p || '').trim().split(/\s+/).filter(Boolean); return w[0] === 'sudo' ? w.slice(1) : w; };
-  const hostDependent = (pattern, a) => { const p = String(pattern || '').trim(), w = words(p); return (!!a && ruleKind(a) === 'path') || (!!a && hostText(a.target)) || hostText(p) || (!!w[0] && (FILE_CMDS.test(w[0]) || w[0].includes('*'))) || p === '*'; };
+  const hostDependent = (pattern, a) => { const p = String(pattern || '').trim(), w = words(p); return (!!a && ruleKind(a) === 'path') || hostText(p) || (!!w[0] && (FILE_CMDS.test(w[0]) || w[0].includes('*'))) || p === '*'; };
   /* F. broad: the preview warns, and the rule can still be made. A command rule is broad when its program is a
      wildcard (*, ./scripts/*), when it starts with sudo and has a *, when a shell or interpreter runs * or inline code,
      or when one program word, with or without flags, is followed by * (npm *, npx *, git *, rm -rf *, read *). A named
      script or subcommand followed by * is not (./scripts/release.sh *, npm test *, git push origin *). A folder rule
-     is broad when it reaches past the folder the step asked for (~/Documents/**) */
+     is broad when it reaches past the file or folder the step asked for (/mnt/team-share/**). The whole list is a
+     concept choice: canon names none */
   const SHELLS = /^(bash|sh|zsh|fish|dash|ksh|csh|tcsh|pwsh|powershell|cmd(\.exe)?|env|eval|exec|xargs|python[0-9.]*|node|deno|bun|ruby|perl|php|lua|osascript)$/i;
   const isScript = (w) => /[\\/]/.test(w) || /\.(sh|ps1|bat|cmd|exe|py|js|mjs|ts|rb|pl|php|lua)$/i.test(w);
   const isBroad = (pattern, a) => {
@@ -623,14 +635,19 @@
   const PLACE = { project: ['In this project', 'loom', 'in loom'], computer: ['On this computer', 'This computer', 'on This computer'], everywhere: ['Everywhere', 'every project and computer', 'everywhere'] };
   const RULE_WORD = { command: 'command rule', path: 'folder rule' };
   function approvals() {
-    const st = { done: {}, rules: [], edit: null, session: [], run: 0 };
+    const st = { done: {}, rules: [], edit: null, session: [], run: 0, fileSafe: true };
+    // loom's FileSafe as this run starts: a run keeps the permission snapshot it started with (§2 Rules 1 and 2), so a
+    // change of FileSafe takes effect in the next run
+    const fileSafeNow = () => { try { return PSX.resolve('safety.protection.filesafe-integration', S.ctx).value !== false; } catch (e) { return true; } };
     const yolo = () => S.runMode === 'yolo';
     const asks = (a) => !yolo() || MODEL.kinds[a.kind].yoloAsks;
     const at = (a) => ASKS.indexOf(a);
-    /* settle each later step that is still open, from the tables alone: YOLO's own allow first (§8.0 step 2), then a
-       kept rule (D), then a session answer given earlier in this run (C); otherwise the step asks */
+    /* settle each later step that is still open, from the tables alone: PS-145's home read while FileSafe is on (B), or
+       YOLO's own allow (§8.0 step 2), then a kept rule (D), then a session answer given earlier in this run (C);
+       otherwise the step asks */
     const settle = () => ASKS.forEach((x) => {
       if (st.done[x.id]) return;
+      if (MODEL.homeRead(x, st.fileSafe)) { st.done[x.id] = { mark: 'complete', word: 'Read, not asked', text: `${x.report} FileSafe is on, and this home-folder read is one the task needs and not a secret, so it didn’t ask. It is listed in Activity.`, by: 'filesafe' }; return; }
       if (!asks(x)) { st.done[x.id] = { mark: 'complete', word: 'Ran, not asked', text: x.report, by: 'mode' }; return; }
       const r = st.rules.find((y) => y.at < at(x) && covers(y, x));
       if (r) { st.done[x.id] = { mark: 'complete', word: 'Allowed by your rule', text: `${x.report} Your ${RULE_WORD[r.kind]} ${r.pattern} (${PLACE[r.where][2]}) allowed it.`, by: 'rule' }; return; }
@@ -670,9 +687,9 @@
       </div></li>`;
     };
     const LABEL = { once: 'Allow once', session: 'For this session', always: 'Always allow…', no: 'Don’t allow' };
-    const pendingSub = (a) => (yolo() ? `YOLO still asks: ${a.why}` : a.kind === 'remote' ? 'Regular asks before a push or a publish.' : a.kind === 'remote-delete' ? 'It asks every time, naming the branch, in both run modes.' : a.kind === 'path' ? 'It asks before reaching outside the project.' : 'Regular asks before it runs.');
+    const pendingSub = (a) => (yolo() ? `YOLO still asks: ${a.why}` : a.kind === 'remote' ? 'Regular asks before a push or a publish.' : a.kind === 'remote-delete' ? 'It asks every time, naming the branch, in both run modes.' : a.home ? 'FileSafe is off for loom, so this home-folder read asks.' : a.kind === 'path' ? 'It asks before reaching outside the project.' : 'Regular asks before it runs.');
     const draw = (s) => {
-      s.body.innerHTML = `<p class="psx-p">“Tag the release and ship it.” What each step does in ${yolo() ? '<b>YOLO</b>' : '<b>Regular</b>'}; switch Run mode in the strip to see the other.</p>`
+      s.body.innerHTML = `<p class="psx-p">“Tag the release and ship it.” What each step does in ${yolo() ? '<b>YOLO</b>' : '<b>Regular</b>'}; switch Run mode in the strip to see the other. FileSafe is <b data-k="filesafe">${st.fileSafe ? 'on' : 'off'}</b> for loom.</p>`
         + `<ul class="psx-list psx-ask">${ASKS.map((a) => {
           const d = st.done[a.id];
           const end = d ? PSX.st(d.mark, d.word) : MODEL.kinds[a.kind].answers.map((k, i) => `<button type="button" class="psx-tb${i === 0 ? ' is-primary' : ''}" data-ask="${a.id}" data-a="${k}"${k === 'always' ? ` aria-expanded="${st.edit && st.edit.id === a.id ? 'true' : 'false'}"` : ''}>${LABEL[k]}</button>`).join('');
@@ -713,7 +730,7 @@
     const s = PSX.sheet({ title: 'What asks you', kicker: 'loom’s chat · one run', sub: 'Approvals in Regular and in YOLO.', size: 'wide', body: '' });
     // a new run (Run it again, or a switch of Run mode) starts with no answers and no session answers; kept rules
     // apply to the whole of every later run
-    const start = () => { st.done = {}; st.edit = null; st.session = []; st.run += 1; st.rules.forEach((r) => { r.at = -1; }); settle(); draw(s); };
+    const start = () => { st.done = {}; st.edit = null; st.session = []; st.run += 1; st.fileSafe = fileSafeNow(); st.rules.forEach((r) => { r.at = -1; }); settle(); draw(s); };
     PSX.approvals = { sheet: s, draw: () => { if (s.back.isConnected) start(); }, st, MODEL, ASKS, covers, hostDependent, isBroad, test };
     start();
   }

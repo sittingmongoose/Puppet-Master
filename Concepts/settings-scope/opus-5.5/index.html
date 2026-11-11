@@ -194,7 +194,7 @@
     '11.15': '<b>11.15 First start.</b> Before any computer is set up there is nowhere to keep anything: the ephemeral Basic Dark Settings, every control unavailable and every write (row, panel, copy, managers) refused with one sentence (SSYS-002’s ephemeral context, kept).',
     '11.16': '<b>11.16 Filters and the Differences view.</b> Changed, Set here, Varies, Per computer and Per project filter the list; group by project or computer; bulk actions refuse two values for one setting, keep project-only rows, and keep a careful safety value. Also from any page: the header’s Change › All the differences. NEW CANON (3.6).',
     '11.17': '<b>11.17 A batch that can’t finish.</b> Studio Mac is off; copying tastebook’s settings into five projects finishes four and says why the fifth wasn’t changed. Nothing is queued. Set Studio Mac to Answering above; History’s <b>Finish lighting-rig</b> brings the values the batch copied, and the batch’s Undo all of it then undoes every part. NEW CANON (5.6).',
-    '11.18': '<b>11.18 What asks you.</b> One run in loom’s chat, built from one rule model (README). Regular: a command or a folder outside the project offers Allow once, For this session, Always allow… and Don’t allow; a push or a publish offers no Always; a deletion on the remote is answered one at a time. For this session lasts the rest of this run in this run mode. <b>Always allow</b> opens under the step: you choose the exact pattern (a suggestion or your own) and its place, with nothing chosen for you; the preview says what it matches and what still asks. A command rule covers commands only and a folder rule covers paths only; nothing covers a push, a publish or a deletion. Everywhere is offered only for a command rule that isn’t about a path, a folder or a program’s location. NEW CANON (Permissions, guided flows 8.03 and 8.04). YOLO: the tests, the <b>git push</b> and the <b>publish</b> run without asking and are reported; the outside folder (unless your folder rule covers it) and the deletion still ask; nothing YOLO runs becomes a rule.',
+    '11.18': '<b>11.18 What asks you.</b> One run in loom’s chat, built from one rule model (README). Regular: a command or a folder outside the project offers Allow once, For this session, Always allow… and Don’t allow; a push or a publish offers no Always; a deletion on the remote is answered one at a time. For this session lasts the rest of this run in this run mode. <b>Always allow</b> opens under the step: you choose the exact pattern (a suggestion or your own) and its place, with nothing chosen for you; the preview says what it matches and what still asks. A command rule covers commands only and a folder rule covers paths only; nothing covers a push, a publish or a deletion. Everywhere is offered only for a command rule whose pattern isn’t about a path, a folder or a program’s location. NEW CANON (Permissions, guided flows 8.03 and 8.04). A home-folder read the task needs doesn’t ask while FileSafe is on (PS-145); the folder on the team share, outside home, asks in both run modes unless your folder rule covers it. YOLO: the tests, the <b>git push</b> and the <b>publish</b> run without asking and are reported; the team-share folder and the deletion still ask; nothing YOLO runs becomes a rule.',
     copy: '<b>Copy settings, in Settings.</b> Settings Transfer › Copy settings from another project: what makes it different, its own things and its AI accounts, with Advanced to pick one by one. Copy checks each account on the destination computer again at the moment it copies, and shows the preview again if one changed. NEW CANON (5.1 to 5.6, decisions S9 to S11; Settings_System: a different Computer or account invalidates the readiness preview). <em>Example</em> counts.',
     'copy-new': '<b>Copy settings, in New Project.</b> The same sheet as Split v2’s “Start like another Project?” for a new project, recipe-box, whose default computer is Home NAS. It starts on Your usual settings; this moment picks Like tastebook for you, to show Advanced. The AI account rows say what each needs there; the Copilot seat tied to this Mac reads <b>Can’t be used on Home NAS</b> and stays the intended choice (cannot_move). Keep them fixed follows the kinds and rows you choose. NEW CANON (5.2, 5.4; Settings_System cannot_move and Notifications &amp; limits).'
   };
@@ -202,11 +202,21 @@
     regular: ' <b>Run mode · Regular.</b> Every yes-point asks.',
     yolo: ' <b>Run mode · YOLO</b> (the run mode <code>yolo</code>, never the Full profile). An ordinary yes is skipped: the preview is shown as the report after the change, with Undo. Still asked: FileSafe off, a looser rule from someone else’s repository, which computer keeps your settings, pairing, sign-ins, a path outside the project, a deletion on the remote. Still refused: a project that can’t take a change, a computer that isn’t answering, a Member’s device.'
   };
-  const UI = { end: 'origin', changed: 'outline', moment: '', run: 'regular', compare: false };
+  const UI = { end: 'origin', changed: 'outline', moment: '', run: 'regular', compare: false, lookWant: null, painted: null };
   const $ = (id) => document.getElementById(id);
   let live = false;
 
   const send = (msg) => { try { frame.contentWindow.postMessage(Object.assign({ source: 'psx-host' }, msg), '*'); } catch (e) { /* not there yet */ } };
+  // a look change: the Look is greyed and names it until the answer to this request arrives (or 30s pass, when it names
+  // the last look painted again)
+  let lookSeq = 0, lookTimer = 0;
+  const askLook = (v) => {
+    lookSeq += 1; UI.lookWant = { look: v, seq: lookSeq };
+    $('look').value = v; $('look').disabled = true;
+    send({ cmd: 'look', look: v, seq: lookSeq });
+    clearTimeout(lookTimer);
+    lookTimer = setTimeout(() => { UI.lookWant = null; $('look').disabled = false; if (UI.painted) $('look').value = UI.painted; }, 30000);
+  };
   function paintBar() {
     document.querySelectorAll('#end button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.v === UI.end)));
     document.querySelectorAll('#changed button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.v === UI.changed)));
@@ -268,11 +278,16 @@
         send({ cmd: 'runmode', mode: UI.run });
         send({ cmd: 'compare', open: UI.compare });
         if ($('reduced').checked) send({ cmd: 'motion', reduced: true });
-        if ($('look').value !== 'basic-dark' && m.state && m.state.look !== $('look').value) send({ cmd: 'look', look: $('look').value });
+        if ($('look').value !== 'basic-dark' && m.state && m.state.look !== $('look').value) askLook($('look').value);
       }
       const s = m.state;
       if (s) {
-        if (s.look && m.type !== 'look-done' && !$('look').disabled) $('look').value = s.look;
+        /* review A-r4 (R3-5): the Look names the look that is painted. Only while a change it asked for is on its way is
+           it greyed and naming that change; the answer to that request (its seq), and only that one, ends the wait */
+        if (s.look) UI.painted = s.look;
+        if (m.type === 'look-done' && UI.lookWant && m.seq != null && m.seq !== UI.lookWant.seq) { /* an older request's answer */ }
+        else if (m.type === 'look-done') { UI.lookWant = null; clearTimeout(lookTimer); $('look').disabled = false; if (s.look) $('look').value = s.look; }
+        else if (s.look && !UI.lookWant) { $('look').disabled = false; $('look').value = s.look; }
         if (s.opt) { UI.end = s.opt.end; UI.changed = s.opt.changed; }
         if (s.ctx) {
           $('project').value = s.ctx.project || 'tastebook';
@@ -285,7 +300,6 @@
         UI.moment = s.moment || '';
         if (s.runMode) UI.run = s.runMode;
         paintBar();
-        if (m.type === 'look-done') { $('look').disabled = false; if (s.look) $('look').value = s.look; }
       }
       return;
     }
@@ -293,7 +307,7 @@
     if (m.source === 'pm-concept-hub' && m.type === 'pm-concept-state' && m.state) {
       $('reduced').checked = !!m.state.reducedMotion;
       send({ cmd: 'motion', reduced: !!m.state.reducedMotion });
-      if (m.state.theme && m.state.theme !== $('look').value) { $('look').value = m.state.theme; send({ cmd: 'look', look: m.state.theme }); }
+      if (m.state.theme && m.state.theme !== $('look').value) { $('look').value = m.state.theme; askLook(m.state.theme); }
     }
   });
 
@@ -310,7 +324,7 @@
   $('moment').addEventListener('change', (e) => { const v = e.target.value; if (!v) return; UI.moment = v; paintBar(); send({ cmd: 'moment', id: v }); setTimeout(() => { e.target.value = ''; }, 0); });
   $('compare').addEventListener('click', () => send({ cmd: 'board' }));
   $('reset').addEventListener('click', () => { UI.moment = ''; paintBar(); send({ cmd: 'reset' }); });
-  $('look').addEventListener('change', (e) => { e.target.disabled = true; send({ cmd: 'look', look: e.target.value }); setTimeout(() => { e.target.disabled = false; }, 5000); });
+  $('look').addEventListener('change', (e) => askLook(e.target.value));
   $('width').addEventListener('change', (e) => { frame.style.width = e.target.value ? e.target.value + 'px' : '100%'; });
   $('reduced').addEventListener('change', (e) => send({ cmd: 'motion', reduced: e.target.checked }));
   // while Compare options is open: 1 to 4 pick the end-of-row option and 0 shows today's, C opens the board (outside text

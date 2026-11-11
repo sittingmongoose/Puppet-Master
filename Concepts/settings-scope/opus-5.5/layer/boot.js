@@ -13,10 +13,12 @@
   const look = () => { const t = H.getAttribute('data-theme') || 'basic-dark'; return H.getAttribute('data-o55-nier') === 'on' ? 'nier-' + (/-light$/.test(t) ? 'light' : 'dark') : t; };
 
   /* ------------------------------------------------------------------ messages to index.html */
-  function report(type) {
+  function report(type, extra) {
     const state = { opt: Object.assign({}, S.opt), ctx: Object.assign({}, S.ctx, { homenas: PSX.W.up.homenas !== false, studio: PSX.W.up.studio !== false, actor: S.actor }), look: look(), moment: S.moment, motion: !!S.osReduced, runMode: S.runMode };
     PSX.lastReport = { type, state };
-    if (W.parent !== W) { try { W.parent.postMessage({ source: 'psx', type, state }, '*'); } catch (e) { /* no parent */ } }
+    // the look the strip was last told about: the look watcher below compares the painted look with this one
+    PSX.lastLook = state.look;
+    if (W.parent !== W) { try { W.parent.postMessage(Object.assign({ source: 'psx', type, state }, extra || {}), '*'); } catch (e) { /* no parent */ } }
   }
   PSX.report = report;
 
@@ -75,8 +77,11 @@
   /* the strip's Look always shows the look that is on screen: any change of the painted look (the base page's own
      repaint, a look that landed late or never) is reported a moment later, and the strip takes it while its Look isn't
      waiting for a change of its own (review A-r3 R3-5) */
-  let lookSeen = look(), lookTimer = 0;
-  new MutationObserver(() => { clearTimeout(lookTimer); lookTimer = setTimeout(() => { const now = look(); if (now !== lookSeen) { lookSeen = now; report('state'); } }, 300); }).observe(H, { attributes: true, attributeFilter: ['data-theme', 'data-o55-nier'] });
+  /* review A-r4 (R3-5 under load): it compares with the look last reported to the strip, not with the last one it saw
+     itself. A look it saw while a change was on its way, then reported by none, left the strip naming an older look
+     after the new one painted */
+  let lookTimer = 0;
+  new MutationObserver(() => { clearTimeout(lookTimer); lookTimer = setTimeout(() => { if (look() !== PSX.lastLook) report('state'); }, 120); }).observe(H, { attributes: true, attributeFilter: ['data-theme', 'data-o55-nier'] });
 
   /* ------------------------------------------------------------------ review commands */
   function setOpt(patch) {
@@ -117,7 +122,7 @@
     }
     if (m.cmd === 'moment') { if (PSX.moments) await PSX.moments.run(m.id); report('state'); return; }
     if (m.cmd === 'board') { if (PSX.board) PSX.board.open(); return; }
-    if (m.cmd === 'look') { await setLook(m.look); report('look-done'); return; }
+    if (m.cmd === 'look') { await lookCmd(m); return; }
     if (m.cmd === 'motion') {
       S.osReduced = !!m.reduced;
       if (m.reduced) { H.setAttribute('data-motion', 'reduced'); H.setAttribute('data-reduced-motion', '1'); }
@@ -132,6 +137,18 @@
     if (m.cmd === 'selftest') { report('selftest'); return; }
   }
   PSX.command = command;
+  /* review A-r4 (R3-5 under load): one look change at a time. A change asked for while another is on its way waits,
+     and only the latest waiting one runs (two at once clicked the theme menu in turns). Each look-done says which
+     request it answers (seq), so the strip ends a wait only on the answer to its latest request */
+  let lookBusy = false, lookNext = null;
+  async function lookCmd(m) {
+    if (lookBusy) { lookNext = m; return; }
+    lookBusy = true;
+    try { await setLook(m.look); } catch (e) { console.error('[psx look]', e); }
+    lookBusy = false;
+    report('look-done', { seq: m.seq == null ? null : m.seq, requested: m.look });
+    if (lookNext) { const n = lookNext; lookNext = null; await lookCmd(n); }
+  }
   W.addEventListener('message', (ev) => {
     const m = ev.data;
     if (!m || m.source !== 'psx-host' || ev.source !== W.parent) return;

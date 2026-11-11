@@ -141,7 +141,7 @@ browser-check run Concepts/settings-scope/opus-5.5/tools/checks/feedback.check.m
   --config Concepts/pm7-tools/browser-check/browser-check.config.mjs --set page=$OUT/settings-scope-app.html
 ```
 
-`--set only=strip|rows|shake|acct|head|where|copy|always` runs one part. `rows` measures every section's control and
+`--set only=strip|rows|shake|acct|head|where|detail|copy|always` runs one part. `rows` measures every section's control and
 end-word x on Models and Services for the decided design and every Compare option, at Full (a 2560 window), 1920,
 1280, 1024 and 860, in Basic Dark, Retro Light and NieR Dark. `shake` reads every painted frame while a switch changes
 (the switch, the end word, the row, the next row, the header, the Changed mark, any “?” on screen, and the browser's
@@ -149,7 +149,8 @@ own layout shifts). Since round A-r3 it turns every switch on Models and on Gene
 looks at 1920, 1024 and 860 (`--set shakeWidths=` narrows the widths). A switch whose job is to change the page is
 listed in `SHAKE_ALLOW` with what it may move and why. A row the base page redraws is judged until the redraw, and
 the same redraw is then checked on bare PMConcept7. `head` measures the header's box, Change and the page under it.
-`where` builds Where it applies for every adopted row and opens one panel of each kind. `copy` covers Copy settings.
+`where` builds Where it applies for every adopted row and opens one panel of each kind. `detail` measures every
+detail-card value against its widest word (round A-r4). `copy` covers Copy settings.
 `always` keeps its own copy of the rule model's tables (above) and walks every 11.18 step × answer × run mode × same
 run, new run and mode switch, reading what each row shows.
 
@@ -219,14 +220,17 @@ items 3, 4, 8 and 11) and the guided-flows check named what this concept must ch
   why; the run now has a release script to show that. Ordinary YOLO git push and publish still run without asking and
   never become an Always rule (NEW CANON: Permissions_System's Always and YOLO rules).
 
-## Always allow: the rule model (round A-r3, 2026-11-11)
+## Always allow: the rule model (rounds A-r3 and A-r4, 2026-11-11)
 
 Moment 11.18 had a different defect in each round: host-dependence in r1, session lifetime and broad patterns in r2, and
 rule carry-over in r3. So it is rebuilt from this one model, each cell resting on a line of
 `Plans/Permissions_System.md`. `layer/moments.js` holds tables B, C and E as `MODEL`, table D as `covers()` and table F
 as `isBroad()`. Every step is settled by the same code, with no exception of its own. The `always` part of
-`feedback.check.mjs` carries its own copy of these tables and walks every step × answer × run mode × same run, new run
-and mode switch.
+`feedback.check.mjs` carries its own copy of these tables. It walks every step × answer × run mode × same run, new run
+and mode switch, with FileSafe on and off, and generates the cross-kind cases from table D.
+
+Cells marked **Concept choice** are this concept's own careful narrowing where canon is silent or allows more. Each says
+why. None loosens anything canon asks for.
 
 **A. The steps in loom's run, and their kinds**
 
@@ -235,7 +239,8 @@ and mode switch.
 | Run npm test · Run npm test again, after the fix | command | `npm test` |
 | Run the release script | command (a script by its path) | `./scripts/release.sh v1.4.0` |
 | Push to GitHub · Publish the image | remote effect | `git push origin feature/tags` · `docker push ghcr.io/jared/loom:1.4.0` |
-| Read a folder outside loom | path | `~/Documents/taxes` |
+| Read a folder outside loom | path, outside the home folder | `/mnt/team-share/release-notes` |
+| Read your release checklist | path, a home-folder read the task needs (not a secret, not on PS-145's exclusion list) | `~/Documents/release-checklist.md` |
 | Delete a branch on GitHub | destructive remote action | `git push origin --delete old-ui` |
 | Use the looser rule open-recipes brings | not an ask: held (moment 11.13) | — |
 
@@ -244,9 +249,11 @@ and mode switch.
 | Kind | Regular offers | YOLO | A rule may cover it | Rests on |
 |---|---|---|---|---|
 | command | Allow once · For this session · Always allow… · Don't allow | runs without asking | a command rule | §6.1 "The approval UI preserves deny, once, for session and always." §8.0 step 2: "`yolo` clamps tool permissions to `allow`". |
-| path | the same four | **still asks** (all four), unless your folder rule covers it | a folder rule | §3.3 `external_directory` "Default remains `ask`, including YOLO." "Paths on the allowlist bypass the `external_directory` guard." |
-| remote effect | Allow once · For this session · Don't allow (no Always) | runs without asking | none | PS-146 "yolo authorizes ordinary Git/Jujutsu remote push, package/image/template publication … without an extra publication yes. Regular retains its exact-effect approvals." Target-bound approvals: "SCM approvals carry … `branch`, and `commit` … changed target identity invalidates reuse", so a kept rule could never be reused. |
-| destructive remote action | Allow once · Don't allow (one at a time) | **still asks** (the same two) | none, ever | PS-146 "Prune, remote branch/repository deletion … still ask with exact targets in ordinary YOLO". |
+| path | the same four | **still asks** (all four), unless a folder rule covers it or it is the home read below | a folder rule | §3.3 `external_directory` "Default remains `ask`, including YOLO." "Paths on the allowlist bypass the `external_directory` guard." |
+| path: a home-folder read the task needs, while FileSafe is on | **doesn't ask**, and is listed in Activity | **doesn't ask** | (not needed) | §3.3 "PS-145 permits only FileSafe-on task-needed listed home-folder reads through its explicit exclusions". §4.2: the guard's trigger has "only the explicit PS-145 FileSafe-on listed home-read exception". PS-026 "task-needed, visibly listed non-secret home-folder reads while FileSafe is on … FileSafe off removes the home-read exception". PS-145 lists the exclusions: "all registered Project folders wherever stored, PM private data …, secrets/.env/key/certificate files, cloud/service/AI sign-in roots, browser profiles, mail, keychains and password managers". |
+| the same read, FileSafe off | the four, as any path | **still asks** | a folder rule | PS-026 "FileSafe off removes the home-read exception." |
+| remote effect | Allow once · For this session · Don't allow | runs without asking | none | PS-146 "yolo authorizes ordinary Git/Jujutsu remote push, package/image/template publication … without an extra publication yes. Regular retains its exact-effect approvals." **Concept choice: no Always.** A push approval is bound to its branch and commit ("SCM approvals carry … `branch`, and `commit`"), so a kept rule could never be reused. For a publish, canon would allow a bounded one (Docker's `image_ref` is optional; §12A.2: never "an unbounded global publication grant"). The concept leaves it out because a publication can't be taken back, and Regular keeps it an exact-effect yes. |
+| destructive remote action | Allow once · Don't allow | **still asks** (the same two) | none, ever | PS-146 "Prune, remote branch/repository deletion … still ask with exact targets in ordinary YOLO". **Concept choice: no For this session.** Canon asks with the exact target and doesn't forbid a session answer for that same target. A deleted branch can't be deleted again, so a session answer would never be used, and leaving it out keeps a deletion one yes at a time. |
 | looser rule from a repository | held | held | — | PS-144 "This S15 acceptance remains required in YOLO". |
 
 **C. How long each answer lasts**
@@ -258,6 +265,9 @@ and mode switch.
 | Always allow (a rule) | allowed | allowed where the rule covers it (D) | allowed where it covers it | allowed where it covers it (in YOLO this matters only for a path; the rest run anyway) | kept until you remove it | §6.1 "Always is the durable person-choice path". PS-144 "Explicit rules stay inspectable and revocable and do not silently expand with mode changes." |
 | Don't allow | refused | asks | asks | asks | — | §2.3 "The tool invocation is blocked … returns an error to the agent." |
 
+A run keeps the permission snapshot it started with (§2 Rules 1 and 2), so a change of FileSafe takes effect in the
+next run.
+
 **D. Which rule may cover which step**
 
 | Rule (made by Always allow on) | a command | a path | a push or publish | a deletion on the remote | Rests on |
@@ -266,19 +276,28 @@ and mode switch.
 | folder rule (a path step; it goes on the outside-folder list) | never | yes, when its pattern matches the path | never | never | §3.3 allowlist. PS-144 "The external-directory row remains `safety.protection.external-dir-allowlist`; do not invent a second list." |
 
 Matching follows §3.1: "`*` Matches zero or more characters", "`?` Matches exactly one character", and "A pattern
-ending with ` *` (space + wildcard) makes the trailing portion optional". A folder rule's trailing `/**` covers the
-folder itself and everything in it (§3.4 suggests "The directory prefix (`<dir>/**`)" for a path).
+ending with ` *` (space + wildcard) makes the trailing portion optional". **Concept choice:** a folder rule's trailing
+`/**` also covers the folder itself. §3.1 is silent on it; §3.4 suggests "The directory prefix (`<dir>/**`)" for a
+path, and that suggestion is meant to cover the folder it names.
 
 **E. Where a rule may apply** (nothing is preselected; Add the rule waits for both choices)
 
 | Rule | This project | This computer | Everywhere | Rests on |
 |---|---|---|---|---|
 | command rule that isn't host-dependent (`npm test *`, `git *`) | offered | offered | offered | PS-144 "Always requires a person to choose the exact pattern and `This project`, `This computer` or `Everywhere`; nothing is preselected." |
-| host-dependent command rule: made on a step about a script or path, naming a path or script, a file command (`read`, `rm`…), or a wildcard program (`*`, `./scripts/*`) | offered | offered | **never** | PS-144 "Rules about a file, directory, executable location, root or other host-dependent target never offer Everywhere." |
+| host-dependent command rule: its pattern names a path or a script | offered | offered | **never** | PS-144 "Rules about a file, directory, executable location, root or other host-dependent target never offer Everywhere." |
+| …and, as a **concept choice**, a pattern whose program is a file command (`read *`, `rm -rf *`) or a wildcard (`*`, `./scripts/*`) | offered | offered | **never** | Canon names targets, not commands. A file command acts on files of one computer, and a wildcard program can match a program by its path on one computer, so these are treated as about a location. |
 | folder rule | offered | offered | **never** | §6.1 "paths never offer Everywhere". |
 | (no project open) | hidden | | | §6.1 "no-project hides This project". |
 
-**F. What counts as broad** (the preview warns "This one is broad"; the rule can still be made)
+Host-dependence comes from the pattern, which is what the rule is about (PS-144), never from the step it is typed on
+(round A-r4, N2): `git push origin *` typed on the release step offers Everywhere.
+
+**F. What counts as broad** (the preview warns "This one is broad"; the rule can still be made). **The whole table is
+a concept choice:** canon names no list. It is the lead's r3 definition ("A bare `*`, a shell, interpreter or package
+runner, `sudo`, or `rm -rf` followed by `*` is broad. A specific script path followed by `*` … is not"), kept inside
+§3.4's bound that a suggestion "never grants a whole command prefix outside that guard". §3.4's own bash suggestion is
+"first word + space + `*`" (`git *`), so the page still offers that shape as its third suggestion and warns on it.
 
 | Pattern | Broad? |
 |---|---|
@@ -287,16 +306,45 @@ folder itself and everything in it (§3.4 suggests "The directory prefix (`<dir>
 | a shell or interpreter running `*` or inline code (`bash -c *`, `python3 *`, `node *`) | broad |
 | one program word, with or without flags, then ` *`: a package runner or any command (`npm *`, `npx *`, `git *`, `rm -rf *`, `read *`) | broad |
 | a named script or subcommand then ` *` (`./scripts/release.sh *`, `npm test *`, `git push origin *`, `python3 tools/build.py *`) | not broad |
-| a folder rule reaching past the folder the step asked for (`~/Documents/**`, `~/**`, `*`) | broad |
-| a folder rule inside it (`~/Documents/taxes`, `~/Documents/taxes/**`) | not broad |
+| a folder rule reaching past the file or folder the step asked for (`/mnt/team-share/**`, `~/Documents/**`, `*`) | broad |
+| a folder rule inside it (`/mnt/team-share/release-notes`, `/mnt/team-share/release-notes/**`) | not broad |
 
-Canon names no list of broad patterns. The list is the lead's r3 definition ("A bare `*`, a shell, interpreter or
-package runner, `sudo`, or `rm -rf` followed by `*` is broad. A specific script path followed by `*` … is not"), kept
-inside §3.4's bound that a suggestion "never grants a whole command prefix outside that guard".
+**What YOLO still asks:** a path outside the project that no folder rule covers and that isn't PS-145's FileSafe-on
+home read (§3.3, §4.2, PS-026, PS-145), a deletion on the remote (PS-146), and a looser rule from a repository, which
+stays held (PS-144). Nothing YOLO runs without asking becomes an Always rule (PS-144 "YOLO ordinary auto-allow creates
+neither an Always rule nor a FileSafe approved-command entry").
 
-**What YOLO still asks:** a path outside the project that no folder rule covers (§3.3), a deletion on the remote
-(PS-146), and a looser rule from a repository, which stays held (PS-144). Nothing YOLO runs without asking becomes
-an Always rule (PS-144 "YOLO ordinary auto-allow creates neither an Always rule nor a FileSafe approved-command entry").
+## Fix round A-r4 (2026-11-11)
+
+The narrow r4 recheck (`REVIEW-concept-A-r4-opus-high.md`) found these; each is fixed:
+
+- **F1, the path cell missed PS-145's exception.** With FileSafe on, a task-needed, listed, non-secret home-folder read
+  doesn't ask, in Regular or YOLO (§3.3, §4.2, PS-026, PS-145). Table B says so. 11.18's outside folder moved off the
+  home folder to `/mnt/team-share/release-notes`, so it still asks in both modes. Another Project's folder would have
+  been the wrong example: PS-145 reads it through `other_projects_read`, which YOLO with an explicit task scope can
+  allow. A new step reads `~/Documents/release-checklist.md`. With FileSafe on it doesn't ask and is listed; with
+  FileSafe off it asks like any path. The run reads loom's FileSafe as it starts.
+- **F2, a detail card's value one letter wide.** In a narrow list the layer put the control under the copy but kept
+  it in the first column, beside an empty end column. In Web & Research › Abilities › Browser at 860 that left 129px,
+  and "Change" squeezed the value to 36px. The control's line now spans the whole row. The new `detail` part measures
+  every detail-card value against its widest word, in every workspace, tab and list item, in three looks at 1024, 860
+  and 640. A value that is narrower is measured again on bare PMConcept7; it passes only when bare gives it no more
+  room. Two such values are the base page's own (long paths in Media & Output, Backup's folder and account at 860).
+- **The model's own choices are labelled.** No Always for push and publish, no For this session for a deletion,
+  `/**` covering the folder itself, the file-command and wildcard-program parts of host-dependence, and the whole
+  broad list are marked "Concept choice", each with its reason.
+- **N2:** host-dependence comes from the pattern, never from the step it is typed on.
+- **The walk** now covers FileSafe on and off (38 step × answer × run-mode cases), and its cross-kind cases are
+  generated from table D: for each rule kind, a rule whose pattern is exactly another kind's target, plus `*`.
+- **The two copy guards** r3 dropped are back: no line says "Allowed. Allowed", and a kept rule is listed with its
+  kind and place.
+- **R3-5 under load.** The look watcher compared the painted look with the last one it saw itself, so a look seen during
+  a change and reported by nobody left the strip naming an older look. It now compares with the look last reported. One
+  look change runs at a time; the latest waiting one wins, and each answer names its request. The strip's Look is
+  greyed and names the change only while its own latest request is on its way; otherwise it names the painted look. The
+  `strip` part repeats the reviewer's case under a busy-loop load.
+- **Real-pointer clicks** on Think between tool steps, Tidy up, Caching for browser sign-ins and Show where each setting
+  comes from: a pointer at each switch's centre lands on other content, on bare PMConcept7 too. That is stream F's.
 
 ## Round A-r3: the other fixes (2026-11-11)
 
