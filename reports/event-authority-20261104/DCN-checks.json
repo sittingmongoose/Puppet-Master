@@ -716,5 +716,50 @@
       "sha256": "ef22888e471fb35c24e0f1dec5edf46a07a59912ff7a6d023aa570965cb19b3e"
     }
   ],
-  "rebase_lineage_ref": "reports/event-authority-20261104/DCN-rebase-lineage.json"
+  "rebase_lineage_ref": "reports/event-authority-20261104/DCN-rebase-lineage.json",
+  "sweep_p2a": {
+    "implementation_head": "1d51901d8703910e139dfa8dc7362dea639fdcfe",
+    "tool_sha256": "e8038992eabbe067c8bcba8d48824b97fbb6b5b7e69cbfe28a669f939a96c0b8",
+    "guard_collection": {
+      "accepted": 290,
+      "cases": 16868,
+      "judged_errors": 0,
+      "refused": 16578
+    },
+    "exits": {
+      "checker": "0",
+      "family-browser.session.created": "0",
+      "family-browser.session.state_changed": "0",
+      "family-browser.session.closed": "0",
+      "family-browser.session.promoted": "0",
+      "family-browser.session.takeover_state_changed": "0",
+      "family-memory.gist_state_changed": "0",
+      "tables-check": "0",
+      "p2a-check": "0",
+      "numbers-selftest": "0",
+      "number-corpus": "0",
+      "guard-tables": "0",
+      "fuzz": "0"
+    },
+    "index_validate_origin_main": "f0c0d38d3f4f6241265c35bd01e22a364d528499",
+    "evidence_dir": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/sweep-p2a",
+    "commands": [
+      "| `python3 scripts/pm_card2_events.py` | 0 | PASS: 283 positives, 7 controls, 16,578 witnesses, 562 rows / 138 tables, 495 rows refused first, 67 entailed, 0 errors |",
+      "| `python3 scripts/pm_card2_events.py --family browser.session.created` | 0 | PASS: 34 positives, 1,852 witnesses, 187 rows refused first by this family |",
+      "| `python3 scripts/pm_card2_events.py --family browser.session.state_changed` | 0 | PASS: 34 positives, 2,952 witnesses, 277 rows refused first by this family |",
+      "| `python3 scripts/pm_card2_events.py --family browser.session.closed` | 0 | PASS: 34 positives, 2,901 witnesses, 226 rows refused first by this family |",
+      "| `python3 scripts/pm_card2_events.py --family browser.session.promoted` | 0 | PASS: 34 positives, 2,901 witnesses, 227 rows refused first by this family |",
+      "| `python3 scripts/pm_card2_events.py --family browser.session.takeover_state_changed` | 0 | PASS: 34 positives, 2,900 witnesses, 227 rows refused first by this family |",
+      "| `python3 scripts/pm_card2_events.py --family memory.gist_state_changed` | 0 | PASS: 113 positives, 3,072 witnesses, 300 rows refused first by this family |",
+      "| `python3 scripts/pm-card2-table-generate.py --check` | 0 | {'tables': 138, 'rows': 562, 'stale': [], 'extra': []} |",
+      "| `python3 scripts/pm-card2-p2a-cases.py --check` | 0 | 235 witnesses, 7 controls, 229 target rows, failures 0, stale False |",
+      "| `python3 scripts/pm_event_numbers.py --self-test --scope numbers` | 0 | `\"status\": \"pass\"`, 580/580 cases, 63 owner checks, all true: True |",
+      "| `python3 scripts/pm-card2-number-corpus.py` | 0 | pass: 163 corpus cases, 460 route runs (213 accepted, 247 refused), 0 disagreements, 0 untracked; 4,400-digit routes at their rows |",
+      "| `python3 scripts/pm-card2-guard-tables.py --out <dir>` | 0 | 16,868 cases, 0 findings, 495/495 provable rows proved, 67 entailed; every run table PASS |",
+      "| `python3 scripts/pm-card2-entailed-fuzz.py --trials 20000` | 0 | pass: no entailed row first in 20,000 trials |",
+      "| `python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json` | 0 | pass (3,100 shards, 99 documents) |",
+      "| `python3 scripts/pm-plan-index.py validate` | 1 | 59 rows at origin/main `f0c0d38d3f`: 21 `plan_unit_removal_ledger_invalid`, 38 `plan_unit_removed_without_ledger_decision`; none names a DCN unit (units added on main after the lane base; no rebase this round) |"
+    ],
+    "timestamp_review": "interim only (CV-1101 is part 2B)"
+  }
 }
