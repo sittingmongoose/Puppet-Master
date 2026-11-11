@@ -178,15 +178,25 @@ phase('grant', 'String-list grants: subject and grant list types, then exact mem
 ])
 
 # ===================================================================== owner-read helpers (helper cases)
-phase('clock_spelling', 'Owner clocks: whole-string RFC3339 spelling and the UTC route (instant).', [
-    ('TS01_spelling', '/**/*_utc', 'the whole string is a date-time with a calendar-valid date where the recipe requires it', 'whole-string source timestamp',
-     "value['spelling_valid'] is not True"),
-    ('TS02_utc_route', '/**/*_utc', 'a UTC clock ends in uppercase Z under the current recipe', 'whole-string source timestamp',
-     "value['spelling_valid'] is True and value['utc_required'] is True and value['utc_spelling'] is not True"),
-    ('TS03_parses', '/**/*_utc', 'a valid spelling parses to an instant', 'whole-string source timestamp',
-     "value['spelling_valid'] is True and (value['utc_required'] is not True or value['utc_spelling'] is True) and value['parses'] is not True"),
+phase('clock_owner', 'Owner clocks, current edition: the shared CV-1101 date_time predicate (storage_utc_z) and the DX owner profile of CV-500..515 (instant).', [
+    ('TC01_shared_syntax', '/**/*_utc', 'the whole string is an RFC 3339 date-time (shared date_time: type and syntax)', 'whole-string source timestamp',
+     "value['shared_refusal'] in ('date_time_type', 'date_time_syntax')"),
+    ('TC02_shared_utc_z', '/**/*_utc', 'the zone is a terminal uppercase Z (shared date_time, storage_utc_z profile)', 'whole-string source timestamp',
+     "value['shared_refusal'] == 'date_time_utc_z'"),
+    ('TC03_shared_calendar', '/**/*_utc', 'the date, time and any second 60 are real (shared date_time: calendar, ranges, announced leap seconds)',
+     'whole-string source timestamp', "value['shared_refusal'] not in (None, 'date_time_type', 'date_time_syntax', 'date_time_utc_z')"),
+    ('TC04_owner_no_leap_second', '/**/*_utc', 'a DX owner timestamp has no second 60, even an announced one (CV-500..515)', 'whole-string source timestamp',
+     "value['shared_refusal'] is None and value['leap_second'] is True"),
+    ('TC05_backoff_upper_t', '/**/*_utc', 'a backoff clock observation has an uppercase T (CV-500..515)', 'whole-string source timestamp',
+     "value['shared_refusal'] is None and value['leap_second'] is not True and value['backoff'] is True and value['upper_t'] is not True"),
 ])
-phase('clock_timezone', 'Owner clocks: the parsed instant is zone-aware (validate_source_timezone).', [
+phase('clock_spelling', 'Owner clocks, frozen v0 edition: the v0 spelling and its original clock parse (v0_instant; SP-500..515).', [
+    ('TS01_spelling', '/**/*_utc', 'the whole string matches the frozen v0 date-time spelling', 'whole-string source timestamp',
+     "value['spelling_valid'] is not True"),
+    ('TS03_parses', '/**/*_utc', 'a valid v0 spelling parses to an instant', 'whole-string source timestamp',
+     "value['spelling_valid'] is True and value['parses'] is not True"),
+])
+phase('clock_timezone', 'Owner clocks, frozen v0 edition: the parsed instant is zone-aware (validate_source_timezone).', [
     ('TZ01_timezone', '/**/*_utc', 'the parsed clock carries a zone', 'source clock timezone', "value['tz_present'] is not True"),
 ])
 phase('retry_classification', 'EP-032: no blind retry of a non-retryable class.', [
@@ -204,7 +214,13 @@ phase('retry_after_header', 'EP-032 rate_limited: the original Retry-After heade
     ('RH02_header_nonempty', '/retry_after_header', 'a string header is nonempty', 'original Retry-After header',
      "value['header_type'] == 'str' and value['header_nonempty'] is not True"),
 ])
-phase('retry_after_date', 'EP-032 rate_limited: an HTTP-date Retry-After parses with a zone.', [
+phase('retry_after_http_date', 'EP-032 rate_limited, current edition: a non-decimal Retry-After is an RFC 9110 HTTP-date naming a real UTC second.', [
+    ('RG01_http_date_grammar', '/retry_after_header', 'the whole header is one HTTP-date form (IMF-fixdate, rfc850-date or asctime-date)', 'Retry-After HTTP-date',
+     "value['form'] is None"),
+    ('RG02_http_date_calendar', '/retry_after_header', 'the HTTP-date names a real date and time (shared date_time)', 'Retry-After HTTP-date',
+     "value['form'] is not None and value['shared_refusal'] is not None"),
+])
+phase('retry_after_date', 'EP-032 rate_limited, frozen v0 edition: an HTTP-date Retry-After parses with a zone (v0_retry_after_deadline).', [
     ('RA01_date_parses', '/retry_after_header', 'a non-decimal header is an HTTP-date', 'Retry-After HTTP-date', "value['parses'] is not True"),
     ('RA02_date_timezone', '/retry_after_header', 'the parsed HTTP-date carries a zone', 'Retry-After date timezone',
      "value['parses'] is True and value['tz_present'] is not True"),

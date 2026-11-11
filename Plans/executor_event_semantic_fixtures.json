@@ -13582,7 +13582,7 @@
         },
         {
           "case": "S12-calendar-ts-'0000-11-04T12:00:00Z'",
-          "expected": "reject",
+          "expected": "accept",
           "valid_seed": {
             "schema_version": "1.0.0",
             "project_id": "project_id-001",
@@ -13633,7 +13633,8 @@
             "failure_class": "verification_failed",
             "backoff_until_utc": "2026-11-04T12:00:00Z"
           },
-          "format_route": "strict"
+          "format_route": "strict",
+          "date_time_rule": "CV-1101: \"Four-digit year 0000 and Gregorian century rules are handled without a narrower host datetime range.\" The DX owner grammar [0-9]{4} with Gregorian calendar validity (CV-500..515) admits year 0000; the old format checker refused it only because Python datetime has no year 0. The shared date_time predicate (storage_utc_z) accepts it."
         },
         {
           "case": "S12-calendar-ts-'2026-11-04T25:00:00Z'",
@@ -14387,7 +14388,7 @@
         },
         {
           "case": "S12-calendar-backoff_until_utc-'0000-11-04T12:00:00Z'",
-          "expected": "reject",
+          "expected": "accept",
           "valid_seed": {
             "schema_version": "1.0.0",
             "project_id": "project_id-001",
@@ -14438,7 +14439,8 @@
             "failure_class": "verification_failed",
             "backoff_until_utc": "0000-11-04T12:00:00Z"
           },
-          "format_route": "strict"
+          "format_route": "strict",
+          "date_time_rule": "CV-1101: \"Four-digit year 0000 and Gregorian century rules are handled without a narrower host datetime range.\" The DX owner grammar [0-9]{4} with Gregorian calendar validity (CV-500..515) admits year 0000; the old format checker refused it only because Python datetime has no year 0. The shared date_time predicate (storage_utc_z) accepts it."
         },
         {
           "case": "S12-calendar-backoff_until_utc-'2026-11-04T25:00:00Z'",
@@ -54572,7 +54574,7 @@
         },
         {
           "case": "S12-calendar-ts-'0000-11-04T12:00:00Z'",
-          "expected": "reject",
+          "expected": "accept",
           "valid_seed": {
             "schema_version": "1.0.0",
             "project_id": "project_id-001",
@@ -54615,7 +54617,8 @@
             "requested_account_snapshot_id": "requested_account_snapshot_id-001",
             "effective_account_snapshot_id": "effective_account_snapshot_id-001"
           },
-          "format_route": "strict"
+          "format_route": "strict",
+          "date_time_rule": "CV-1101: \"Four-digit year 0000 and Gregorian century rules are handled without a narrower host datetime range.\" The DX owner grammar [0-9]{4} with Gregorian calendar validity (CV-500..515) admits year 0000; the old format checker refused it only because Python datetime has no year 0. The shared date_time predicate (storage_utc_z) accepts it."
         },
         {
           "case": "S12-calendar-ts-'2026-11-04T25:00:00Z'",
@@ -104064,7 +104067,7 @@
         },
         {
           "case": "S12-calendar-ts-'0000-11-04T12:00:00Z'",
-          "expected": "reject",
+          "expected": "accept",
           "valid_seed": {
             "schema_version": "1.0.0",
             "project_id": "project_id-001",
@@ -104123,7 +104126,8 @@
             "timeout_class": "inactivity_timeout",
             "wait_state_class": "approval_wait"
           },
-          "format_route": "strict"
+          "format_route": "strict",
+          "date_time_rule": "CV-1101: \"Four-digit year 0000 and Gregorian century rules are handled without a narrower host datetime range.\" The DX owner grammar [0-9]{4} with Gregorian calendar validity (CV-500..515) admits year 0000; the old format checker refused it only because Python datetime has no year 0. The shared date_time predicate (storage_utc_z) accepts it."
         },
         {
           "case": "S12-calendar-ts-'2026-11-04T25:00:00Z'",
@@ -134693,7 +134697,7 @@
         },
         {
           "case": "S12-calendar-ts-'0000-11-04T12:00:00Z'",
-          "expected": "reject",
+          "expected": "accept",
           "valid_seed": {
             "schema_version": "1.0.0",
             "project_id": "project_id-001",
@@ -134730,7 +134734,8 @@
             ],
             "runtime_snapshot_ref": "runtime_snapshot_ref-001"
           },
-          "format_route": "strict"
+          "format_route": "strict",
+          "date_time_rule": "CV-1101: \"Four-digit year 0000 and Gregorian century rules are handled without a narrower host datetime range.\" The DX owner grammar [0-9]{4} with Gregorian calendar validity (CV-500..515) admits year 0000; the old format checker refused it only because Python datetime has no year 0. The shared date_time predicate (storage_utc_z) accepts it."
         },
         {
           "case": "S12-calendar-ts-'2026-11-04T25:00:00Z'",
@@ -168159,7 +168164,7 @@
         },
         {
           "case": "S12-calendar-ts-'0000-11-04T12:00:00Z'",
-          "expected": "reject",
+          "expected": "accept",
           "valid_seed": {
             "schema_version": "1.0.0",
             "project_id": "project_id-001",
@@ -168184,7 +168189,8 @@
             "execution_unit_context_ref": "execution_unit_context_ref-001",
             "runtime_snapshot_ref": "runtime_snapshot_ref-001"
           },
-          "format_route": "strict"
+          "format_route": "strict",
+          "date_time_rule": "CV-1101: \"Four-digit year 0000 and Gregorian century rules are handled without a narrower host datetime range.\" The DX owner grammar [0-9]{4} with Gregorian calendar validity (CV-500..515) admits year 0000; the old format checker refused it only because Python datetime has no year 0. The shared date_time predicate (storage_utc_z) accepts it."
         },
         {
           "case": "S12-calendar-ts-'2026-11-04T25:00:00Z'",
@@ -200509,7 +200515,7 @@
         },
         {
           "case": "S12-calendar-ts-'0000-11-04T12:00:00Z'",
-          "expected": "reject",
+          "expected": "accept",
           "valid_seed": {
             "schema_version": "1.0.0",
             "project_id": "project_id-001",
@@ -200534,7 +200540,8 @@
             "resolution": "approval_granted",
             "attempt_id": "attempt_id-001"
           },
-          "format_route": "strict"
+          "format_route": "strict",
+          "date_time_rule": "CV-1101: \"Four-digit year 0000 and Gregorian century rules are handled without a narrower host datetime range.\" The DX owner grammar [0-9]{4} with Gregorian calendar validity (CV-500..515) admits year 0000; the old format checker refused it only because Python datetime has no year 0. The shared date_time predicate (storage_utc_z) accepts it."
         },
         {
           "case": "S12-calendar-ts-'2026-11-04T25:00:00Z'",
@@ -218503,7 +218510,7 @@
         },
         {
           "case": "S12-calendar-ts-'0000-11-04T12:00:00Z'",
-          "expected": "reject",
+          "expected": "accept",
           "valid_seed": {
             "schema_version": "1.0.0",
             "project_id": "project_id-001",
@@ -218526,7 +218533,8 @@
             "degraded_shape": "degraded_shape-001",
             "evidence_ref": "evidence_ref-001"
           },
-          "format_route": "strict"
+          "format_route": "strict",
+          "date_time_rule": "CV-1101: \"Four-digit year 0000 and Gregorian century rules are handled without a narrower host datetime range.\" The DX owner grammar [0-9]{4} with Gregorian calendar validity (CV-500..515) admits year 0000; the old format checker refused it only because Python datetime has no year 0. The shared date_time predicate (storage_utc_z) accepts it."
         },
         {
           "case": "S12-calendar-ts-'2026-11-04T25:00:00Z'",
@@ -241713,7 +241721,7 @@
         },
         {
           "case": "S12-calendar-ts-'0000-11-04T12:00:00Z'",
-          "expected": "reject",
+          "expected": "accept",
           "valid_seed": {
             "schema_version": "1.0.0",
             "project_id": "project_id-001",
@@ -241744,7 +241752,8 @@
             "finding_refs": [],
             "resolution": "fixed"
           },
-          "format_route": "strict"
+          "format_route": "strict",
+          "date_time_rule": "CV-1101: \"Four-digit year 0000 and Gregorian century rules are handled without a narrower host datetime range.\" The DX owner grammar [0-9]{4} with Gregorian calendar validity (CV-500..515) admits year 0000; the old format checker refused it only because Python datetime has no year 0. The shared date_time predicate (storage_utc_z) accepts it."
         },
         {
           "case": "S12-calendar-ts-'2026-11-04T25:00:00Z'",
@@ -263944,7 +263953,7 @@
         },
         {
           "case": "S12-calendar-ts-'0000-11-04T12:00:00Z'",
-          "expected": "reject",
+          "expected": "accept",
           "valid_seed": {
             "schema_version": "1.0.0",
             "project_id": "project_id-001",
@@ -263975,7 +263984,8 @@
             "finding_refs": [],
             "parent_failure_class": "provider_transient"
           },
-          "format_route": "strict"
+          "format_route": "strict",
+          "date_time_rule": "CV-1101: \"Four-digit year 0000 and Gregorian century rules are handled without a narrower host datetime range.\" The DX owner grammar [0-9]{4} with Gregorian calendar validity (CV-500..515) admits year 0000; the old format checker refused it only because Python datetime has no year 0. The shared date_time predicate (storage_utc_z) accepts it."
         },
         {
           "case": "S12-calendar-ts-'2026-11-04T25:00:00Z'",
@@ -283643,7 +283653,7 @@
         },
         {
           "case": "S12-calendar-ts-'0000-11-04T12:00:00Z'",
-          "expected": "reject",
+          "expected": "accept",
           "valid_seed": {
             "schema_version": "1.0.0",
             "project_id": "project_id-001",
@@ -283666,7 +283676,8 @@
             "usage_ref": "usage_ref-001",
             "result_ref": "result_ref-001"
           },
-          "format_route": "strict"
+          "format_route": "strict",
+          "date_time_rule": "CV-1101: \"Four-digit year 0000 and Gregorian century rules are handled without a narrower host datetime range.\" The DX owner grammar [0-9]{4} with Gregorian calendar validity (CV-500..515) admits year 0000; the old format checker refused it only because Python datetime has no year 0. The shared date_time predicate (storage_utc_z) accepts it."
         },
         {
           "case": "S12-calendar-ts-'2026-11-04T25:00:00Z'",
@@ -305510,7 +305521,7 @@
         },
         {
           "case": "S12-calendar-ts-'0000-11-04T12:00:00Z'",
-          "expected": "reject",
+          "expected": "accept",
           "valid_seed": {
             "schema_version": "1.0.0",
             "project_id": "project_id-001",
@@ -305531,7 +305542,8 @@
             "reason_code": "reason_code-001",
             "detail_ref": "detail_ref-001"
           },
-          "format_route": "strict"
+          "format_route": "strict",
+          "date_time_rule": "CV-1101: \"Four-digit year 0000 and Gregorian century rules are handled without a narrower host datetime range.\" The DX owner grammar [0-9]{4} with Gregorian calendar validity (CV-500..515) admits year 0000; the old format checker refused it only because Python datetime has no year 0. The shared date_time predicate (storage_utc_z) accepts it."
         },
         {
           "case": "S12-calendar-ts-'2026-11-04T25:00:00Z'",
@@ -334373,7 +334385,7 @@
         },
         {
           "case": "S12-calendar-ts-'0000-11-04T12:00:00Z'",
-          "expected": "reject",
+          "expected": "accept",
           "valid_seed": {
             "schema_version": "1.0.0",
             "project_id": "project_id-001",
@@ -334396,7 +334408,8 @@
             "replan_generation": 1,
             "failure_class": "provider_transient"
           },
-          "format_route": "strict"
+          "format_route": "strict",
+          "date_time_rule": "CV-1101: \"Four-digit year 0000 and Gregorian century rules are handled without a narrower host datetime range.\" The DX owner grammar [0-9]{4} with Gregorian calendar validity (CV-500..515) admits year 0000; the old format checker refused it only because Python datetime has no year 0. The shared date_time predicate (storage_utc_z) accepts it."
         },
         {
           "case": "S12-calendar-ts-'2026-11-04T25:00:00Z'",
@@ -363293,7 +363306,7 @@
         },
         {
           "case": "S12-calendar-ts-'0000-11-04T12:00:00Z'",
-          "expected": "reject",
+          "expected": "accept",
           "valid_seed": {
             "schema_version": "1.0.0",
             "project_id": "project_id-001",
@@ -363320,7 +363333,8 @@
             "backoff_until_utc": "2026-11-04T12:00:01Z",
             "retry_count": 1
           },
-          "format_route": "strict"
+          "format_route": "strict",
+          "date_time_rule": "CV-1101: \"Four-digit year 0000 and Gregorian century rules are handled without a narrower host datetime range.\" The DX owner grammar [0-9]{4} with Gregorian calendar validity (CV-500..515) admits year 0000; the old format checker refused it only because Python datetime has no year 0. The shared date_time predicate (storage_utc_z) accepts it."
         },
         {
           "case": "S12-calendar-ts-'2026-11-04T25:00:00Z'",
@@ -363750,7 +363764,7 @@
         },
         {
           "case": "S12-calendar-backoff_until_utc-'0000-11-04T12:00:00Z'",
-          "expected": "reject",
+          "expected": "accept",
           "valid_seed": {
             "schema_version": "1.0.0",
             "project_id": "project_id-001",
@@ -363777,7 +363791,8 @@
             "backoff_until_utc": "0000-11-04T12:00:00Z",
             "retry_count": 1
           },
-          "format_route": "strict"
+          "format_route": "strict",
+          "date_time_rule": "CV-1101: \"Four-digit year 0000 and Gregorian century rules are handled without a narrower host datetime range.\" The DX owner grammar [0-9]{4} with Gregorian calendar validity (CV-500..515) admits year 0000; the old format checker refused it only because Python datetime has no year 0. The shared date_time predicate (storage_utc_z) accepts it."
         },
         {
           "case": "S12-calendar-backoff_until_utc-'2026-11-04T25:00:00Z'",
@@ -382562,7 +382577,7 @@
         },
         {
           "case": "S12-calendar-ts-'0000-11-04T12:00:00Z'",
-          "expected": "reject",
+          "expected": "accept",
           "valid_seed": {
             "schema_version": "1.0.0",
             "project_id": "project_id-001",
@@ -382585,7 +382600,8 @@
             "ready_since_utc": "2026-11-04T12:00:00Z",
             "wake_reason": "prerequisite_resolved"
           },
-          "format_route": "strict"
+          "format_route": "strict",
+          "date_time_rule": "CV-1101: \"Four-digit year 0000 and Gregorian century rules are handled without a narrower host datetime range.\" The DX owner grammar [0-9]{4} with Gregorian calendar validity (CV-500..515) admits year 0000; the old format checker refused it only because Python datetime has no year 0. The shared date_time predicate (storage_utc_z) accepts it."
         },
         {
           "case": "S12-calendar-ts-'2026-11-04T25:00:00Z'",
@@ -414457,7 +414473,7 @@
         },
         {
           "case": "S12-calendar-ts-'0000-11-04T12:00:00Z'",
-          "expected": "reject",
+          "expected": "accept",
           "valid_seed": {
             "schema_version": "1.0.0",
             "project_id": "project_id-001",
@@ -414484,7 +414500,8 @@
             "failure_class": "provider_transient",
             "safe_point_id": "safe_point_id-001"
           },
-          "format_route": "strict"
+          "format_route": "strict",
+          "date_time_rule": "CV-1101: \"Four-digit year 0000 and Gregorian century rules are handled without a narrower host datetime range.\" The DX owner grammar [0-9]{4} with Gregorian calendar validity (CV-500..515) admits year 0000; the old format checker refused it only because Python datetime has no year 0. The shared date_time predicate (storage_utc_z) accepts it."
         },
         {
           "case": "S12-calendar-ts-'2026-11-04T25:00:00Z'",
@@ -464287,7 +464304,7 @@
               "value": "405783145c7741d12c5863c33996fb2d2154a1c5c7c230889bfc61ed966192ff"
             }
           ],
-          "expected": "reject",
+          "expected": "accept",
           "seed_changes": [],
           "defect_changes": [
             {
@@ -464298,7 +464315,8 @@
               "path": "capture/records/scheduler/sha256",
               "value": "405783145c7741d12c5863c33996fb2d2154a1c5c7c230889bfc61ed966192ff"
             }
-          ]
+          ],
+          "date_time_rule": "F19: CV-515 admits [Tt] for an ordinary scheduler wake clock; only backoff clock observations need an uppercase T. The shared CV-1101 date_time predicate (storage_utc_z) accepts this clock; the old lane route refused it at TS02_utc_route."
         },
         {
           "case": "F19-wake-0-space",
@@ -464512,7 +464530,7 @@
               "value": "7e16862c296086d7d6e44ef0dc83aae1fde407d3cafef50b526551c4412fd595"
             }
           ],
-          "expected": "reject",
+          "expected": "accept",
           "seed_changes": [],
           "defect_changes": [
             {
@@ -464523,7 +464541,8 @@
               "path": "capture/records/scheduler/sha256",
               "value": "7e16862c296086d7d6e44ef0dc83aae1fde407d3cafef50b526551c4412fd595"
             }
-          ]
+          ],
+          "date_time_rule": "F19: CV-515 admits [Tt] for an ordinary scheduler wake clock; only backoff clock observations need an uppercase T. The shared CV-1101 date_time predicate (storage_utc_z) accepts this clock; the old lane route refused it at TS02_utc_route."
         },
         {
           "case": "F19-wake-1-space",
@@ -468676,7 +468695,7 @@
         },
         {
           "case": "S12-calendar-ts-'0000-11-04T12:00:00Z'",
-          "expected": "reject",
+          "expected": "accept",
           "valid_seed": {
             "schema_version": "1.0.0",
             "project_id": "project_id-001",
@@ -468785,7 +468804,8 @@
               "capacity_available"
             ]
           },
-          "format_route": "strict"
+          "format_route": "strict",
+          "date_time_rule": "CV-1101: \"Four-digit year 0000 and Gregorian century rules are handled without a narrower host datetime range.\" The DX owner grammar [0-9]{4} with Gregorian calendar validity (CV-500..515) admits year 0000; the old format checker refused it only because Python datetime has no year 0. The shared date_time predicate (storage_utc_z) accepts it."
         },
         {
           "case": "S12-calendar-ts-'2026-11-04T25:00:00Z'",
@@ -482750,17 +482770,27 @@
     },
     {
       "case": "F10-naive-retry-after-valid",
-      "helper": "retry_after_timezone",
-      "value": "Wed, 04 Nov 2026 12:00:30 GMT",
+      "helper": "retry_after_date",
+      "value": {
+        "header": "Wed, 04 Nov 2026 12:00:30 GMT",
+        "received_at_utc": "2026-11-04T12:00:00Z"
+      },
       "expected": "accept"
     },
     {
       "case": "F10-naive-retry-after",
-      "helper": "retry_after_timezone",
-      "value": "Wed, 04 Nov 2026 12:00:30",
+      "helper": "retry_after_date",
+      "value": {
+        "header": "Wed, 04 Nov 2026 12:00:30",
+        "received_at_utc": "2026-11-04T12:00:00Z"
+      },
       "expected": "reject",
-      "reason": "Retry-After date timezone",
-      "valid_seed": "Wed, 04 Nov 2026 12:00:30 GMT"
+      "reason": "Retry-After HTTP-date",
+      "valid_seed": {
+        "header": "Wed, 04 Nov 2026 12:00:30 GMT",
+        "received_at_utc": "2026-11-04T12:00:00Z"
+      },
+      "date_time_rule": "RG01_http_date_grammar: an RFC 9110 HTTP-date always ends in GMT, so a header without a zone matches no HTTP-date form (EP-032 names HTTP-date); the old route parsed it with email.utils and refused its missing zone at RA02_date_timezone (that frozen route now serves only the v0 edition)."
     },
     {
       "case": "F11-missing-refresh-valid",

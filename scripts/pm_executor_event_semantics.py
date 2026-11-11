@@ -19,12 +19,15 @@ from pathlib import Path
 import jsonschema
 from pm_executor_schema_refs import check_references, check_lane_schemas, reference_cases
 from blake3 import blake3
-# Shared number rule (NUMRULE number scope, gated at a16f67c1ef): CV-1100 current tokens/slots and
-# qualified JCS, SP-1100 physical bytes, SP-1101 authenticated original dispatch. Date-time stays lane-local
-# (part 2B): no pm_event_datetime code is imported here.
+# Shared number rule (NUMRULE, gated at 58c2816ff3): CV-1100 current tokens/slots and qualified JCS,
+# SP-1100 physical bytes, SP-1101 authenticated original dispatch, and CV-1101's shared date-time predicate
+# (pm_event_datetime.date_time with an explicit owner profile per field; sweep part 2B). In this lane tree the
+# whole-Plans inventory gate and datetime_validator are not called (lead addendum 2, 2026-11-10): they run at
+# batch-2 integration.
 from pm_event_numbers import (EVENT_VALUE, Refusal, current_integer, loads_current_json, qualified_jcs,
                               storage_value_bytes, RecipeTuple, OriginalBinding, OriginalCustody, FrozenRecipe,
                               RetainedDispatcher)
+from pm_event_datetime import EVENT_RECORD, STORAGE_UTC_Z, date_time
 
 if __name__ == '__main__':
     # The identity module imports this name lazily. Keep one recipe context when
@@ -32,12 +35,22 @@ if __name__ == '__main__':
     sys.modules['pm_executor_event_semantics'] = sys.modules[__name__]
 
 ROOT = Path(__file__).resolve().parents[1]
+# Frozen v0 date-time resource (SP-500..515: "v0 spelling-only schema checks and its original semantic clock
+# checks remain frozen"). It is read only through the retained v0 edition selected below, never by a current write.
 DATE_TIME = re.compile(r'[0-9]{4}-[0-9]{2}-[0-9]{2}[Tt][0-9]{2}:[0-9]{2}:[0-9]{2}(?:\.[0-9]+)?(?:[Zz]|[+-][0-9]{2}:[0-9]{2})')
-UTC_TIME = re.compile(r'[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\.[0-9]+)?Z')
 CURRENT_RECIPE = 'executor-jcs-binary64-v1'
 RETAINED_RECIPE = 'executor-json-integer-v0'
 _RECIPE = ContextVar('executor_record_recipe', default=CURRENT_RECIPE)
 UNCLAIMED_RECIPE = object()
+# The date-time edition of the record under validation. Current writes use the current edition (CV-1101 with the
+# DX owner profiles below). A retained original's frozen edition is bound by the verifier installed for its
+# authenticated SP-1101 recipe tuple (frozen_verifier); a stored dependency body's by its authenticated custody
+# edition (validate_dependencies). Request data never sets it.
+_DATETIME = ContextVar('executor_datetime_edition', default=CURRENT_RECIPE)
+# Field-owner profiles. DX_OWNER: every DX timestamp (CV-500..515 "[Tt] ... Z", calendar, ranges, no leap second);
+# backoff clock observations also need an uppercase T (instant(..., backoff=True)). OTHER_OWNER_RFC3339: a field
+# another owner's schema declares only as format date-time (RFC 3339; execution_unit_context.schema.json).
+DX_OWNER, OTHER_OWNER_RFC3339 = 'dx_owner', 'other_owner_rfc3339'
 
 
 # --- Method B guard tables (sweep part 2A) ------------------------------------------------------------------
@@ -183,6 +196,16 @@ def stored_rules(source_sha256, claimed_recipe=UNCLAIMED_RECIPE, *, retained=Fal
         _RECIPE.reset(token)
 
 
+@contextmanager
+def datetime_edition(edition):
+    """Select the frozen date-time edition for the enclosed validation (authenticated custody only)."""
+    token = _DATETIME.set(edition)
+    try:
+        yield
+    finally:
+        _DATETIME.reset(token)
+
+
 def stored_digest(value, source_sha256):
     with stored_rules(source_sha256):
         return digest(value)
@@ -228,19 +251,77 @@ def validate_retry_after_header(header):
     refuse('retry_after_header', {'header_type': tname(header), 'header_nonempty': type(header) is str and bool(header)})
 
 
-def retry_after_deadline(header):
-    """Parse a non-decimal Retry-After as an HTTP-date; the parse and its zone are table rows."""
+# RFC 9110 section 5.6.7 HTTP-date: the grammar EP-032's "Retry-After ... HTTP-date" names. It is case sensitive,
+# and a recipient accepts all three forms (IMF-fixdate and the obsolete rfc850-date and asctime-date). Python's
+# email parser is not used: it also accepts numeric zones, a missing weekday, one-digit IMF days, two-digit IMF
+# years and a missing zone, none of which is an HTTP-date.
+HTTP_MONTHS = ('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec')
+_HTTP_DAY = r'(?:Mon|Tue|Wed|Thu|Fri|Sat|Sun)'
+_HTTP_MONTH = '(' + '|'.join(HTTP_MONTHS) + ')'
+_HTTP_TIME = r'([0-9]{2}):([0-9]{2}):([0-9]{2})'
+HTTP_DATE_FORMS = (
+    ('imf_fixdate', re.compile(_HTTP_DAY + r', ([0-9]{2}) ' + _HTTP_MONTH + r' ([0-9]{4}) ' + _HTTP_TIME + ' GMT', re.ASCII)),
+    ('rfc850_date', re.compile(r'(?:Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday), ([0-9]{2})-' + _HTTP_MONTH
+                               + r'-([0-9]{2}) ' + _HTTP_TIME + ' GMT', re.ASCII)),
+    ('asctime_date', re.compile(_HTTP_DAY + ' ' + _HTTP_MONTH + r' ([0-9]{2}| [0-9]) ' + _HTTP_TIME + r' ([0-9]{4})', re.ASCII)),
+)
+
+
+def http_date_text(header, received_text):
+    """(form, RFC 3339 UTC text) of an HTTP-date, or (None, None). Never rewrites the stored header.
+
+    An rfc850-date's two-digit year is read as RFC 9110 requires: in the receipt's century, unless that appears to
+    be more than 50 years after the response receipt, then the century before (received_text is the validated
+    original response_received_at_utc, so the reading is deterministic).
+    """
+    for form, pattern in HTTP_DATE_FORMS:
+        match = pattern.fullmatch(header) if type(header) is str else None
+        if match is None:
+            continue
+        if form == 'imf_fixdate':
+            day, month, year, hh, mm, ss = match.groups()
+        elif form == 'rfc850_date':
+            day, month, yy, hh, mm, ss = match.groups()
+            base = int(received_text[0:4])
+            year = base - base % 100 + int(yy)
+            later = (int(received_text[5:7]), int(received_text[8:10]), int(received_text[11:13]),
+                     int(received_text[14:16]), int(received_text[17:19]))
+            if (year, HTTP_MONTHS.index(month) + 1, int(day), int(hh), int(mm), int(ss)) > (base + 50,) + later:
+                year -= 100
+            year = '%04d' % year
+        else:
+            month, day, hh, mm, ss, year = match.groups()
+            day = day.strip().zfill(2)
+        return form, f'{year}-{HTTP_MONTHS.index(month) + 1:02d}-{day}T{hh}:{mm}:{ss}Z'
+    return None, None
+
+
+def retry_after_deadline(header, received_text):
+    """Current edition: a non-decimal Retry-After is an RFC 9110 HTTP-date (RG01) naming a real UTC second (RG02).
+
+    The matched date and time are checked by the shared CV-1101 date_time predicate (storage_utc_z: calendar,
+    ranges and RFC 9110's leap second only where one was announced); HTTP-date is always GMT.
+    """
+    form, text = http_date_text(header, received_text)
+    shared = None
+    if form is not None:
+        try:
+            date_time(text, profile=STORAGE_UTC_Z)
+        except Refusal as error:
+            shared = error.reason
+    refuse('retry_after_http_date', {'form': form, 'shared_refusal': shared})
+    return utc_text_instant(text)
+
+
+def v0_retry_after_deadline(header):
+    """The frozen v0 Retry-After route (an original semantic clock check of SP-500..515): the email parser, its zone."""
     try:
         deadline = parsedate_to_datetime(header)
     except (TypeError, ValueError):
         deadline = None
     refuse('retry_after_date', {'parses': deadline is not None,
                                 'tz_present': deadline is not None and deadline.tzinfo is not None})
-    return deadline
-
-
-def validate_retry_after_timezone(deadline):
-    refuse('retry_after_date', {'parses': True, 'tz_present': deadline.tzinfo is not None})
+    return v0_instant(deadline.isoformat())
 
 
 def validate_auth_refresh(refresh):
@@ -386,44 +467,83 @@ def _load_schema(path):
     return json.loads((ROOT / path).read_text())
 
 
-def strict_format_checker():
+def strict_format_checker(profile=DX_OWNER):
+    """The explicitly registered date-time predicate of the edition under validation (CV-1101).
+
+    Every other format keeps jsonschema's own checker; date-time is replaced, never left to an optional plugin.
+    """
     checker = jsonschema.FormatChecker()
-    checker.checks('date-time')(valid_timestamp)
+    checker.checks('date-time')(lambda value: timestamp_format(value, profile))
     return checker
 
 
-def schema_validate(path, value, *, whole_schema_refs=True, phase='payload_schema'):
+def schema_validate(path, value, *, whole_schema_refs=True, phase='payload_schema', profile=DX_OWNER):
     """Validate one value against its owner schema; the schema occurrence is one table row."""
     schema = _load_schema(path)
     if whole_schema_refs:
         check_references(schema, path)
     with exact_integer_text():
-        error = next(iter(jsonschema.Draft202012Validator(schema, format_checker=strict_format_checker()).iter_errors(value)), None)
+        error = next(iter(jsonschema.Draft202012Validator(schema, format_checker=strict_format_checker(profile)).iter_errors(value)), None)
         message = '' if error is None else ': ' + error.message
     refuse(phase, {'schema_valid': error is None}, message)
 
 
-def valid_timestamp(value):
-    if type(value) is not str or DATE_TIME.fullmatch(value) is None:
-        return False
-    if record_rules() == RETAINED_RECIPE:
-        # Frozen write-time v0 schema recipe had spelling checks only. Original
-        # semantic clock parsing below still applies wherever v0 required it.
-        return True
-    return calendar_valid(value)
-
-
-def calendar_valid(value):
-    # Do not depend on jsonschema's optional date-time implementation. Explicit
-    # range/calendar checks also reject offset hours that fromisoformat carries.
+def shared_date_time_refusal(value, profile):
+    """The shared CV-1101 predicate's refusal reason for one field profile, or None (the string is never changed)."""
     try:
-        datetime(int(value[:4]), int(value[5:7]), int(value[8:10]),
-                 int(value[11:13]), int(value[14:16]), int(value[17:19]))
-        if value[-1:] not in ('Z', 'z'):
-            return int(value[-5:-3]) <= 23 and int(value[-2:]) <= 59
+        date_time(value, profile=EVENT_RECORD if profile == OTHER_OWNER_RFC3339 else STORAGE_UTC_Z)
+    except Refusal as error:
+        return error.reason
+    return None
+
+
+def timestamp_format(value, profile):
+    """JSON Schema format date-time under the selected edition; format applies to strings only.
+
+    Current edition: the shared predicate with the field owner's profile, then the DX owner's own restriction (no
+    second 60) for DX fields. Frozen v0 edition: its spelling-only schema check (SP-500..515), unchanged.
+    """
+    if not isinstance(value, str):
         return True
-    except ValueError:
+    if _DATETIME.get() == RETAINED_RECIPE:
+        return DATE_TIME.fullmatch(value) is not None
+    if shared_date_time_refusal(value, profile) is not None:
         return False
+    return profile == OTHER_OWNER_RFC3339 or value[17:19] != '60'
+
+
+def _civil_count(year, month, day):
+    y = year - (month <= 2)
+    era = y // 400
+    yoe = y - era * 400
+    doy = (153 * ((month + 9) % 12) + 2) // 5 + day - 1
+    return era * 146097 + yoe * 365 + yoe // 4 - yoe // 100 + doy
+
+
+def civil_days(year, month, day):
+    """Proleptic Gregorian days since 0001-01-01 (date.toordinal() - 1 where datetime can represent the date).
+
+    Year 0000 is included (CV-1101) with no host datetime range; the epoch equals the frozen v0 clock route's, so
+    instants from either route and from a Retry-After HTTP-date compare on one timeline.
+    """
+    return _civil_count(year, month, day) - _civil_count(1, 1, 1)
+
+
+def exact_fraction(digits):
+    """Every admitted fractional digit, independently of datetime's microsecond field (chunked for long text)."""
+    numerator = 0
+    for start in range(0, len(digits), 1000):
+        chunk = digits[start:start + 1000]
+        numerator = numerator * 10 ** len(chunk) + int(chunk)
+    return Fraction(numerator, 10 ** len(digits))
+
+
+def utc_text_instant(value):
+    """The exact instant of a UTC date-time text the shared predicate accepted (terminal Z, offset zero)."""
+    whole = (civil_days(int(value[0:4]), int(value[5:7]), int(value[8:10])) * 86400
+             + int(value[11:13]) * 3600 + int(value[14:16]) * 60 + int(value[17:19]))
+    fraction = re.match(r'\.([0-9]+)', value[19:])
+    return Fraction(whole) + exact_fraction(fraction[1] if fraction else '')
 
 
 def validate_append_policy(contract, policy):
@@ -541,32 +661,39 @@ def source_observation(adapter, records):
     return observed
 
 
-def instant(value, *, utc=True):
-    # Current owner clocks require T/Z. Authenticated retained records keep the
-    # spelling grammar selected at write time; their text/bytes are never edited.
-    spelling = valid_timestamp(value)
-    utc_required = utc and record_rules() != RETAINED_RECIPE
-    utc_spelling = type(value) is str and UTC_TIME.fullmatch(value) is not None
+def instant(value, *, backoff=False):
+    """An owner clock's exact instant under the date-time edition selected for the record (never request data).
+
+    Current edition: the shared CV-1101 date_time predicate with the storage_utc_z profile (whole string, T or t,
+    calendar, ranges, terminal uppercase Z; rows TC01-TC03), then the DX owner's stricter rules of CV-500..515: no
+    second 60 (TC04) and, for backoff clock observations, an uppercase T (TC05). Scheduler ready-since and wake
+    clocks are ordinary timestamps and admit a lowercase t (F19). Frozen v0 edition: its original spelling and clock
+    parse (v0_instant). The string is never rewritten; the instant keeps every fractional digit.
+    """
+    if _DATETIME.get() == RETAINED_RECIPE:
+        return v0_instant(value)
+    shared = shared_date_time_refusal(value, DX_OWNER)
+    accepted = shared is None
+    refuse('clock_owner', {'shared_refusal': shared, 'leap_second': accepted and value[17:19] == '60',
+                           'backoff': backoff is True, 'upper_t': accepted and value[10] == 'T'})
+    return utc_text_instant(value)
+
+
+def v0_instant(value):
+    """The frozen v0 clock route: v0 spelling, then the original clock parse and its zone (SP-500..515)."""
+    spelling = type(value) is str and DATE_TIME.fullmatch(value) is not None
     result = None
-    if spelling and (not utc_required or utc_spelling):
+    if spelling:
         try:
             result = datetime.fromisoformat(value.upper())
         except ValueError:
             result = None
-    refuse('clock_spelling', {'spelling_valid': spelling, 'utc_required': utc_required, 'utc_spelling': utc_spelling,
-                              'parses': result is not None})
+    refuse('clock_spelling', {'spelling_valid': spelling, 'parses': result is not None})
     validate_source_timezone(result)
     whole = ((result.toordinal() - 1) * 86400 + result.hour * 3600
              + result.minute * 60 + result.second - int(result.utcoffset().total_seconds()))
     fraction = re.match(r'\.([0-9]+)', value[19:])
-    digits = fraction[1] if fraction else ''
-    # Chunking avoids Python's decimal-string-to-int limit. Fraction preserves
-    # every admitted digit, independently of datetime's microsecond field.
-    numerator = 0
-    for start in range(0, len(digits), 1000):
-        chunk = digits[start:start + 1000]
-        numerator = numerator * 10 ** len(chunk) + int(chunk)
-    return Fraction(whole) + Fraction(numerator, 10 ** len(digits))
+    return Fraction(whole) + exact_fraction(fraction[1] if fraction else '')
 
 
 RETRY_LIMITS = {'provider_transient': 3, 'rate_limited': 3, 'structured_output_invalid': 2, 'auth_expired': 1}
@@ -609,10 +736,11 @@ def validate_retry(contract, payload, records):
         'limit_type': tname(retry['limit']), 'limit': retry['limit'] if type(retry['limit']) is int else None,
         'expected_limit': limit, 'used': used, 'has_retry_count': has_retry_count,
         'retry_count': payload['retry_count'] if has_retry_count else None, 'next_count': used + 1})
-    failed = instant(failure['failed_at_utc'])
-    received = instant(failure['response_received_at_utc'])
-    scheduled = instant(retry['scheduled_at_utc'])
-    observed = instant(payload['ts'])
+    # EP-032/SP-238 backoff clock observations (CV-500..515: uppercase T and final Z before comparison).
+    failed = instant(failure['failed_at_utc'], backoff=True)
+    received = instant(failure['response_received_at_utc'], backoff=True)
+    scheduled = instant(retry['scheduled_at_utc'], backoff=True)
+    observed = instant(payload['ts'], backoff=True)
     refuse('retry_clocks', {'received': q(received), 'failed': q(failed), 'scheduled': q(scheduled), 'observed': q(observed)})
     delay = Fraction(0)
     if classification == 'provider_transient':
@@ -625,35 +753,36 @@ def validate_retry(contract, payload, records):
             validate_retry_after_header(header)
             if header.isascii() and header.isdecimal():
                 deadline = received + int(header)
+            elif _DATETIME.get() == RETAINED_RECIPE:
+                deadline = v0_retry_after_deadline(header)
             else:
-                deadline = retry_after_deadline(header)
-                deadline = instant(deadline.isoformat(), utc=False)
+                deadline = retry_after_deadline(header, failure['response_received_at_utc'])
             delay = max(deadline - scheduled, Fraction(0))
     elif classification == 'auth_expired':
         refresh = failure['refresh']
         validate_auth_refresh(refresh)
-        completed = instant(refresh['completed_at_utc'])
-        rebuilt = instant(refresh['client_rebuilt_at_utc'])
+        completed = instant(refresh['completed_at_utc'], backoff=True)
+        rebuilt = instant(refresh['client_rebuilt_at_utc'], backoff=True)
         refuse('retry_refresh_clocks', {'failed': q(failed), 'completed': q(completed), 'rebuilt': q(rebuilt), 'scheduled': q(scheduled)})
     elif classification == 'storage_io' and failure['storage_io_class'] == 'transient_busy':
         delay = Fraction(1, 4)
     refuse('retry_ownership', {'rate_limited': classification == 'rate_limited', 'auth_expired': classification == 'auth_expired',
                                'header': copy.deepcopy(failure['retry_after_header']) if classification != 'rate_limited' else None,
                                'refresh': copy.deepcopy(failure['refresh']) if classification != 'auth_expired' else None})
-    until = instant(retry['backoff_until_utc'])
+    until = instant(retry['backoff_until_utc'], backoff=True)
     started = name == 'run.node_backoff_started'
     refuse('retry_deadline', {
         'until': q(until), 'expected_until': q(scheduled + delay), 'delay': q(delay), 'observed': q(observed),
         'backoff_family': name in ('run.node_backoff_started', 'run.node_backoff_expired'),
         'expired_family': name == 'run.node_backoff_expired', 'started_family': started,
-        'payload_until': q(instant(payload['backoff_until_utc'])) if started else None})
+        'payload_until': q(instant(payload['backoff_until_utc'], backoff=True)) if started else None})
 
 
 def validate_score_domain(ready, selected):
     for score in ready + [item['score_tuple'] for item in selected]:
         priority = score['manual_priority']
         refuse('score_priority', {'priority_type': tname(priority), 'priority': priority if type(priority) is int else None})
-        instant(score['ready_since_utc'])
+        instant(score['ready_since_utc'])  # an ordinary scheduler timestamp: [Tt] ... Z (F19)
 
 
 def validate_capture(contract, payload, capture, *, historical=False):
@@ -897,9 +1026,11 @@ def validate_dependencies(contract, payload, capture):
         if field == 'execution_unit_context_ref':
             # Shared dependency instances keep their existing owner validation.
             # The DX whole-document gate owns the sixteen payloads and proof schema.
-            with stored_rules(dependency['sha256']):
+            # Its created_at_utc/updated_at_utc are that schema's own format date-time (RFC 3339; CV-1101 broad
+            # profile). The body's date-time edition is the one its authenticated custody records.
+            with stored_rules(dependency['sha256']), datetime_edition(record_rules()):
                 schema_validate('Plans/execution_unit_context.schema.json', dependency['body'],
-                                whole_schema_refs=False, phase='dependency_schema')
+                                whole_schema_refs=False, phase='dependency_schema', profile=OTHER_OWNER_RFC3339)
         if field in ('runtime_snapshot_ref', 'execution_unit_context_ref'):
             for key in ('project_id', 'run_id', 'thread_id', 'node_id', 'attempt_id'):
                 if key in dependency['body'] and key in payload:
@@ -990,8 +1121,20 @@ class CustodyOwner:
 def installed_recipes(contract, verify):
     """The exact tuple -> frozen verifier map, installed from this head's resources outside request data."""
     manifest = resource_manifest(contract)
-    return {recipe_tuple(contract, version, edition, manifest): FrozenRecipe(verify)
+    return {recipe_tuple(contract, version, edition, manifest): FrozenRecipe(frozen_verifier(verify, version))
             for edition in OWNER_EDITIONS for version in (CURRENT_RECIPE, RETAINED_RECIPE)}
+
+
+def frozen_verifier(verify, version):
+    """Bind the frozen date-time edition of one recipe tuple to the verifier installed for that tuple (SP-1101).
+
+    The dispatcher reaches this verifier only through the authenticated original's exact recipe tuple, so the
+    original's date-time profile (v0 spelling, or CV-1101 with the DX owner profiles) follows its custody.
+    """
+    def verify_original(custody):
+        with datetime_edition(version):
+            return verify(custody)
+    return verify_original
 
 
 def validate_history(contract, payload, original, retained_source_sha256, disclosure):
@@ -1143,6 +1286,12 @@ def mutate(value, changes):
     return result
 
 
+def v0_helper(call):
+    """Helper cases for the frozen v0 rows: the harness names the edition a retained reader's dispatcher would bind."""
+    with datetime_edition(RETAINED_RECIPE):
+        return call()
+
+
 def run_helper_case(case):
     """Exercise prerequisite predicates before their dependent dereferences."""
     name, value = case['helper'], case['value']
@@ -1152,10 +1301,13 @@ def run_helper_case(case):
         'pack_presence': lambda: validate_pack_presence(value),
         'source_timezone': lambda: validate_source_timezone(datetime.fromisoformat(value)),
         'instant': lambda: instant(value),
+        'backoff_instant': lambda: instant(value, backoff=True),
         'retry_classification': lambda: validate_retry_classification(value),
         'retry_policy_domain': lambda: validate_retry_policy_domain(value, RETRY_LIMITS),
         'retry_after_header': lambda: validate_retry_after_header(value),
-        'retry_after_timezone': lambda: validate_retry_after_timezone(parsedate_to_datetime(value)),
+        'retry_after_date': lambda: retry_after_deadline(value['header'], value['received_at_utc']),
+        'retry_after_date_v0': lambda: v0_helper(lambda: v0_retry_after_deadline(value)),
+        'instant_v0': lambda: v0_helper(lambda: v0_instant(value)),
         'auth_refresh': lambda: validate_auth_refresh(value),
         'source_record_set': lambda: validate_source_record_set(value['records'], set(value['expected_slots'])),
         'transition_rules': lambda: validate_transition_rules(value),

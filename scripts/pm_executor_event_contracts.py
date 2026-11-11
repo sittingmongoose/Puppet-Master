@@ -4,7 +4,6 @@ import copy
 import hashlib
 import json
 from pathlib import Path
-from datetime import datetime
 import jsonschema
 from pm_executor_schema_refs import check_lane_schemas, reference_cases
 
@@ -89,15 +88,18 @@ def validate(contract, payload, context):
         facts['child_success'] = copy.deepcopy(context['source_child_success']) if facts['fixed'] else None
     if name == 'remediation.spawned':
         facts['child'], facts['parent'] = payload['child_attempt_id'], payload['remediation_parent_attempt_id']
+    # Backoff clock observations need an uppercase T before comparison (CV-500..515); scheduler ready-since
+    # clocks below are ordinary timestamps ([Tt] ... Z, F19). Both use the shared CV-1101 date_time predicate.
     if name == 'run.node_backoff_started':
-        facts['until'], facts['ts'] = q(instant(payload['backoff_until_utc'])), q(instant(payload['ts']))
+        facts['until'] = q(instant(payload['backoff_until_utc'], backoff=True))
+        facts['ts'] = q(instant(payload['ts'], backoff=True))
     if name == 'plan.decomposition_degraded':
         facts['graph_locked'] = copy.deepcopy(context['graph_locked'])
     if name == 'run.completed':
         facts['packaging_passed'] = copy.deepcopy(context['packaging_passed'])
     if name == 'run.node_backoff_expired':
-        facts['now'] = q(instant(context['now_utc'], utc=True))
-        facts['context_until'] = q(instant(context['backoff_until_utc'], utc=True))
+        facts['now'] = q(instant(context['now_utc'], backoff=True))
+        facts['context_until'] = q(instant(context['backoff_until_utc'], backoff=True))
     refuse('shape_family', facts)
     restore = name == 'node.blocked' and bool(payload.get('requires_safe_point_restore'))
     refuse('shape_family_b', {
