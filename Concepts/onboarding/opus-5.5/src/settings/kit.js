@@ -481,7 +481,12 @@ assistantPick = function (anchor, kind, current, onPick) {
     }
   }, true);
   document.addEventListener('pointerdown', e => { const p = pmActive; if (!p) return; if (p.el.contains(e.target) || (p.trigger && p.trigger.contains && p.trigger.contains(e.target)) || (p.anchor && p.anchor.contains && p.anchor.contains(e.target))) return; popoutClose({ restoreFocus: false }); }, true);
-  document.addEventListener('scroll', e => { const p = pmActive; if (!p) return; if (p.el.contains(e.target)) return; if (p.kind === 'menu' || !p.anchor || !p.anchor.isConnected) { popoutClose({ restoreFocus: false }); return; } positionPopout(p.el, p.anchor, { align: p.align, width: p.width }); }, true);
+  /* A scroll closes a menu (or moves a popout) only when it can move what the popout hangs from: the page, or a scroller
+     that holds the anchor. Another scroller elsewhere (the chat's transcript following its stream, a list beside it)
+     moves nothing under the menu, and closing on it shut the Add account menu just after it opened (FO-123 / batch 10
+     landing: the chat's dock auto-scrolled at that moment). */
+  const pm51ScrollMoves = (p, t) => !p.anchor || t === document || t === document.documentElement || t === document.body || !t.contains || t.contains(p.anchor);
+  document.addEventListener('scroll', e => { const p = pmActive; if (!p) return; if (p.el.contains(e.target)) return; if (!pm51ScrollMoves(p, e.target)) return; if (p.kind === 'menu' || !p.anchor || !p.anchor.isConnected) { popoutClose({ restoreFocus: false }); return; } positionPopout(p.el, p.anchor, { align: p.align, width: p.width }); }, true);
   window.addEventListener('resize', () => popoutClose({ restoreFocus: false }));
   document.addEventListener('focusin', e => { const p = pmActive; if (!p) return; if (p.el.contains(e.target) || e.target === p.trigger || (p.anchor && p.anchor.contains && p.anchor.contains(e.target))) return; popoutClose({ restoreFocus: false }); });
 })();

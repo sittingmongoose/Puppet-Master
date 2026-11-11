@@ -209,6 +209,54 @@ export const tests = {
 		}
 	},
 
+	/* Batch 10 landing (2026-11-11): the Add account menu closed just after it opened whenever another scroller moved,
+	   because a menu closed on any scroll outside it. The chat's transcript following its stream (FO-128's dock asks)
+	   did that mid-step, so the ten-look test failed about 2 in 3 on the combined head in the sandbox. A scroll elsewhere
+	   (the chat's transcript, a stand-in scroller outside Settings) must leave the open menu open and in place; a scroll
+	   of the Settings page under it still closes it, as designed. Both surfaces. */
+	async 'FO-123: a scroll elsewhere leaves the open menu open'(t) {
+		for (const surface of t.app.surfaces()) {
+			await t.step(surface, async () => {
+				await t.viewport(1280, 800);
+				const f = await t.app.open({ settleMs: 1500, sandbox: surface === 'sandbox' });
+				await f.locator('#tab-settings').click();
+				await sleep(f, 1500);
+				await toClaude(t, f);
+				await t.viewport(1920, 1080);
+				await sleep(f, 400);
+				await openAddAccount(t, f, 'end');
+				const before = await f.evaluate(() => { const p = document.querySelector('.pm51-popout.pm51-menu.is-open'); return p ? p.getBoundingClientRect().top : null; });
+				await t.check(`${surface}: the Add account menu is open`, before !== null);
+				if (before === null) return;
+				const moved = await f.evaluate(async () => {
+					const out = [];
+					const tr = [...document.querySelectorAll('#pmRoot .transcript, #chatPanel .transcript')].find((x) => x.scrollHeight > x.clientHeight + 4);
+					if (tr) { tr.scrollTop = tr.scrollTop > 40 ? tr.scrollTop - 40 : tr.scrollTop + 40; out.push('chat transcript'); }
+					const box = document.createElement('div'); box.id = 'fo123-elsewhere';
+					box.style.cssText = 'position:fixed;left:0;bottom:0;width:120px;height:40px;overflow:auto;opacity:0;pointer-events:none';
+					box.innerHTML = '<div style="height:400px"></div>'; document.body.appendChild(box); box.scrollTop = 120; out.push('stand-in scroller');
+					await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+					await new Promise((r) => setTimeout(r, 300));
+					box.remove();
+					const p = document.querySelector('.pm51-popout.pm51-menu');
+					return { scrolled: out, open: !!(p && p.classList.contains('is-open') && !p.classList.contains('is-closing')), top: p ? p.getBoundingClientRect().top : null };
+				});
+				await t.check(`${surface}: a scroll elsewhere (${moved.scrolled.join(', ')}) leaves the menu open, in place`, moved.open && Math.abs(moved.top - before) < 1, JSON.stringify({ before, ...moved }));
+				const closed = await f.evaluate(async () => {
+					// the scroller that holds the Add account button (the page under the menu), moved the way it has room
+					const btn = [...document.querySelectorAll('[data-action="pm51-providers-add-account"]')].find((b) => b.getBoundingClientRect().height > 0);
+					let sc = null; for (let e = btn && btn.parentElement; e; e = e.parentElement) { const o = getComputedStyle(e).overflowY; if ((o === 'auto' || o === 'scroll') && e.scrollHeight > e.clientHeight + 1) { sc = e; break; } }
+					if (!sc) return { closed: null, why: 'no scroller holds the button' };
+					const was = sc.scrollTop; sc.scrollTo({ top: was > 60 ? was - 60 : was + 60, behavior: 'instant' });
+					await new Promise((r) => setTimeout(r, 400));
+					const p = document.querySelector('.pm51-popout.pm51-menu');
+					return { closed: !(p && p.classList.contains('is-open') && !p.classList.contains('is-closing')), scroller: (sc.id || sc.className).toString().slice(0, 40), from: Math.round(was), to: Math.round(sc.scrollTop) };
+				});
+				await t.check(`${surface}: a scroll of the Settings page under it still closes it`, !!closed && closed.closed === true, JSON.stringify(closed));
+			});
+		}
+	},
+
 	async 'FO-126: every signed-in GitHub account is listed, matching the count'(t) {
 		const f = await openSettings(t);
 		await t.check('Source Control opens', await enterManager(f, 'Source Control'));
