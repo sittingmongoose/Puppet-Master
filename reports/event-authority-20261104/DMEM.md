@@ -1,3 +1,197 @@
+# DMEM — Sweep part 2B (date-time and S3)
+
+**Branch:** `plans/ea-w2-memory-maintenance-20261104`. **Start:** `1c8246395c` (the part 2A head, confirmed equal to `origin/<branch>` before the merge). **Gated NUMRULE merge:** `28e7e9661f` = `git merge --no-ff 58c2816ff33365384d4039553f5efdb5370930e6`, clean. It brings exactly seven date-time files, each byte-identical to `58c2816ff3`: `scripts/pm_event_datetime.py`, `_inventory.py`, `_mutations.json`, `_mutations.py`, `_node_controls.json`, `_selfcheck.py`, and `reports/event-authority-20261104/NUMRULE.md`. There was no conflict of any kind, so neither addendum-1 resolution was used. No NUMRULE file is edited: every `scripts/pm_event_numbers*`, `scripts/pm_event_datetime*`, `Plans/event_number_recipe_corpus.json` and `Plans/event_datetime_inventory.json` blob at the head equals `58c2816ff3`. **Implementation head:** `0375e1c7ce`; the delivery head (this report commit) is in the external `HEAD.txt`. **No rebase.**
+
+**Result.**
+- **Timestamps.** Every DMEM timestamp field is checked by the gated shared predicate `pm_event_datetime.date_time` with its owner's explicit profile. The lane grammar is gone.
+- **S3.** Every retained canonical original read resolves once through the shared `RetainedDispatcher`. Its write-time recipe comes from sealed custody of the exact retained record, never from the record. Current-writer originals carry the CV-339 `full_value_commitment`.
+- **Checkers.** All twelve family checkers exit 0 at `0375e1c7ce`.
+- **Guard tables.** The gated tool `004bdedd63` proves **289 of 316 rows** in 183 tables. It reports 0 masked negatives, 0 unrelated changes, 0 lane-matrix problems and 0 collection findings. The 27 unproved rows are exactly part 2A's 27 by-construction rows, unchanged.
+- **Grades.** Every cell is carried. `positive_negative_oracles` stays PARTIAL in all twelve families for its one remaining reason: schema keyword cuts are not ported to the tool. Its timestamp and SP-1101 reasons are closed. Totals stay **108 PASS / 24 PARTIAL / 12 ABSENT**. Membership is ABSENT, retention PARTIAL, native NOT_RUN; READY stays false.
+
+**Timestamp review: no longer interim.** Each field is checked by the shared `date_time` predicate under the profile named in the field table below (SWEEP-P2B addendum 2, point 3). Per addendum 2, this lane tree calls neither `datetime_validator` nor the inventory gate. Both run at batch-2 integration. The gate's failure rows here are recorded below.
+
+**Disputed:** none. **Stopped for Jared:** none. **IDs used:** zero new. CV-658/659, SP-630–639 and ATS-315 change in place.
+
+## Sweep part 2B: findings and responses
+
+| Item | Disposition and change | Where | Verify |
+|---|---|---|---|
+| **Merge the gated NUMRULE head** | `--no-ff` merge of exactly `58c2816ff3` as `28e7e9661f`. It is clean, brings only the seven date-time files, and edits no NUMRULE file. The merge touches no `Plans/` file, so nothing derived needed regenerating for it. | merge commit | `git log --format=%P -1 28e7e9661f` → `1c8246395c 58c2816ff3`. For each of the seven files, `git rev-parse 28e7e9661f:<f>` equals `git rev-parse 58c2816ff3:<f>`. |
+| **CV-1101: the shared predicate at every date-time field** (fixed, `0b62439c91`) | `enforced_formats(profile)` registers `date-time` as `pm_event_datetime.date_time(value, profile=...)`, raising the shared `Refusal`. As in the shared `format_checker`, every value the validator treats as a string reaches it, and a non-string is left to `type`. UUID is unchanged. `FIELD_PROFILES` names every `format: date-time` declaration by document and field. `field_profile_errors` fails when a declaration has no entry, an entry has no declaration, or the document's validator installs a different profile. | `scripts/pm_memory_maintenance_events.py:421` (`FIELD_PROFILES`), `:439` (`shared_date_time`), `:458` (`_enforced_formats`), `:499` (`validator`), `:515` (`field_profile_errors`) | `datetime_profile_cases` asserts `field_profile_errors` is empty: 76 declarations, dormant and frozen branches included. |
+| **CV-253 at the envelope Storage fields** (fixed, `0b62439c91`) | `StorageProfileValidator` adds `date_time(..., profile=STORAGE_UTC_Z)` at `observed_at_utc`/`persisted_at_utc` on top of the EventRecord declaration those fields share with `occurred_at_utc`. It wraps the current envelope (AP03/AA02) and every retained edition the selected recipe validates with, so a skipped old check never authorizes invalid Storage history. | `:469` (`storage_timestamp_errors`), `:483`, `:510` (`envelope_edition_validator`), `:697` (`envelope_validator`), `:1094` (`recipe_envelope_matches`) | Writer: each broad-only form at either Storage field refuses at AP03/AA02 (12 per family). A leap second and a 12-digit lowercase-`t` time append. Retained: `hm/sgh-sealed-storage-offset` refuses at HM04/SGH04; `checkpoint-storage-offset` at CK01. |
+| **Operation times take storage_utc_z** (fixed, `0b62439c91`) | `started_occurred_at_utc` and `completed_occurred_at_utc` carry the operation owner's terminal-uppercase-Z pattern (`Z$`, SP-630–639). Their validator therefore installs `storage_utc_z` explicitly, and the owner pattern stays in the schema. | `:434` (`document_profile`) | The battery requires the shared reason `date_time_utc_z` for `…z` at every operation leaf, so a pattern refusal alone does not count. Probe T3 (broad profile restored) fails the complete checker. |
+| **BD02 reads the shared predicate** (fixed, `0b62439c91`) | The reduced boundary's `endswith('Z')` is replaced by `shared_date_time(payload['occurred_at_utc'], STORAGE_UTC_Z)`: the payload time must equal the frozen operation time, whose owner profile is uppercase-Z. The row predicate is unchanged; only its observation (`utc_z`) and words changed. | `:1168`; `scripts/pm-memory-table-generate.py` (`bd_zone`) | BD02 proved (1/1). Witness `boundary-offset-zone` (`+00:00`). |
+| **Policy instants; part-1 fixture-pass item 3 (`created_at`)** (fixed, `0b62439c91`) | `instant()` reads PT02 from the shared predicate under the broad profile. These are AMS memory-record times with no stricter owner profile. The instant is elapsed seconds on the shared predicate's own calendar and announced leap-second table (`_day_number`, `_LEAP_PRECEDING_SECONDS`): year 0000 is valid, and 23:59:60 is the one second between 23:59:59 and the next 00:00:00, so ordering stays strict. Every selected original's `created_at` is now read and checked even when an edit and an access time are both present (AMS §3.1 requires it on every memory). | `scripts/pm_memory_policy.py:43` (`_PARTS`), `:47` (`instant`), `:93`; generator `pt_instant` words | `timestamp_checks` per Card 6 family (`:268`). 8 valid forms accepted, 12 malformed refused at PT02, 5 wrong types at PT01, and strict order across `2016-12-31T23:59:60Z`. For dedup, the 23:59:60 original survives over the next-day 00:00:00 one. Probe T4 (fallback-only read restored) fails the complete monthly checker. |
+| **Lane leaks refuse through the shared check** | DMEM's own interim review recorded no accepting leak: its grammar already refused hour 24, a trailing LF and an unannounced second 60. Each now refuses at every DMEM date-time field with the shared reason. | `scripts/pm_memory_write_recipes.py:146` (`CAUSES`), `:155` (`refusal_reasons`) | 504 shared-reason checks per family: `24:00:00Z` → `date_time_hour`, trailing LF → `date_time_syntax`, `17:00:60Z` → `date_time_leap_second`, 29 February 2026 → `date_time_day`, minute 60 → `date_time_minute`, `+24:00` → `date_time_offset_hour`, and `…z` → `date_time_utc_z` at strict fields. A `str` subclass refuses at all 76 declarations. |
+| **Widening and narrowing, stated plainly** | **Widening:** a legitimate leap second and year 0000 are now valid at every DMEM date-time field and in policy instants. Lowercase `t`/`z` and offsets were already valid at the broad fields. **Narrowing:** `observed_at_utc`/`persisted_at_utc` with lowercase `z` or any offset (including `+00:00`/`-00:00`) are now refused by CV-253. Both follow CV-1101/CV-253 and need no Jared choice: the adoption guide's authority boundary assigns the grammar to those owners. No existing fixture case changed outcome. | — | `BOTH_VALID`, `BROAD_ONLY`, `BOTH_REFUSED` at `scripts/pm_memory_write_recipes.py:138`–`:142`, with hand-written expectations. |
+| **Date-time inventory gate and self-tests (addendum 2)** | Not called from any DMEM checker. Run once for the record, the gate refuses on hash drift exactly as T198 describes. See "Inventory gate and self-tests" below. | — | `python3 scripts/pm_event_numbers.py --self-test --scope numbers` exits 0, `"status": "pass"`, 580/580. |
+| **S3 — SP-1101 authenticated retained dispatch** (fixed, `0e007530a4`) | Each retained canonical original read resolves once through `pm_event_numbers.RetainedDispatcher(DmemOriginalOwner, installed recipe map)`, with no caller override and no current-then-legacy probing. The reads are the writer's returned original (`apo`, `aao`), the started writer's canonical original (`sgc`, `asc`), a canonical history original (`hm`) and its start record (`sgh`), and the checkpoint-joined original (`ck`). The owner returns custody only for the exact retained record Storage sealed at that seglog ref: the frozen canonical value bytes plus the commitment the record carries (none for a bare checkpoint value). It returns the single binding and `RecipeTuple` recorded at write time. The composition-installed `FrozenRecipe` authenticates the sealed bytes against the binding, then runs the selected recipe's checks as the site's own table rows: full-value commitment, envelope edition with its date-time profiles, and joins. `HISTORY_RECIPES` and the record-selected `historical_envelope_matches` are deleted. | `:935` (`RECIPE_FROZEN`) to `:1118` (`install_original_custody`), `:761` (`canonical_start_checks`), `:860` (writer retry), `:1406` (`history_check`), `:1797` (`checkpoint_check`), `:1374`; `scripts/pm_memory_archive_events.py:46`, `:248` | New phase per site, `<site>_custody`: R1 sealed original, R2 exactly one binding and recipe, R3 sealed binding equals the reader's, R4 installed recipe. 7 tables, 28 rows, all proved. |
+| **Unknown, ambiguous and downgrade negatives** | **Unknown:** a recipe with no installed verifier refuses at R4. An unsealed original, i.e. any coherent forgery, refuses at R1. **Ambiguous:** the same record sealed under two recipes refuses at R2. **Downgrade:** a current-writer original carrying the frozen integer-json-v1 digest still has custody's current recipe, so CV-339 is computed and the digest row refuses (`downgrade_attempt`). A valid 1.0.0 original sealed under the 2.0.0 recipe refuses at HM04/SGH04: the record never selects its edition. | `scripts/pm_memory_guard_witnesses.py:51` (`with_custody`), `:80` (`downgrade_attempt`), `:97` (`history_witnesses`), `:136`, `:153` (`custody_witnesses`) | Probes S1 (record selects edition), S2 (custody not authenticated), S4 (recipe ignored) and S5 (ambiguity accepted) each fail the complete checker. |
+| **CV-339 current full-value commitment** (fixed, `0e007530a4`) | The current writers' retained canonical EventRecord is `retained_canonical`: the unchanged `full_value_commitment` (CV-339 `pm.storage.original_event_value_commitment.v1` over the 2.0.0 map in SP-236 EVENT_VALUE bytes). Frozen originals keep integer-json-v1, selected by their sealed recipe. The reduced phase-model originals have no envelope edition and keep their one frozen recipe; no selection exists for them. | `:876` (`retained_canonical`), `:1084` (`recipe_full_value_digest`) | Probe S3 (current writes on the frozen digest) fails. The 11 corpus `full_value_commitment` cases now run through `retained_canonical` and agree (below). |
+| **Custody composition and the writer commit point** (`0e007530a4`) | Composition (`compose_custody`) seals the committed positive canonical originals: writer-fixture states under the current recipe; canonical-history states and accepted cases under the frozen recipe of their edition; write-recipe originals and old-writer receipts under the frozen recipe; checkpoint values. Negative cases are never sealed. A writer seals its new original at the commit point and withdraws the seal when a commit gate refuses (`committed`). A test that models one more original sealed as written uses `custody_scope`/`with_custody`, which restore custody exactly. | `:1835` (`compose_custody`), `:797` (`committed`), `:1107` (`custody_scope`); `scripts/pm_memory_archive_events.py:340` | Every suite passes in all twelve families. |
+| **Witnesses for rows behind custody** (`0e007530a4`, `97c6dacaf6`, `0375e1c7ce`) | Former negatives that were coherent unsealed forgeries now refuse at R1. They keep their exact refusal code, because each custody table uses its site's code. Each row behind custody therefore has a sealed one-defect witness: the defect sealed as written, so the frozen verifier's own row refuses it. These cover flush, digest, envelope, CV-253 offset, hour 24, payload schema, producer, binding (`hm`/`sgh`), APO06/AAO06, ASC09, CK01/05/06/07/09/10, and CK03 (the checkpoint's own Store). | `scripts/pm_memory_guard_witnesses.py:73` (`sealed_writer`), `:90` (`sealed_history`), `:257`, `:409`, `:497`, `:530` | Witness calls per family: 85, 64, 96, 75, 96, 75, 83, 62, 46, 36, 46, 36 (part 2A: 45, 38, 56, 49, 56, 49, 43, 36, 13, 16, 13, 16), in the family order of the grades table. |
+| **Shared number corpus** (fixed, `d556fce821`) | The 11 number-scope `full_value_commitment` cases run through DMEM's current-writer route and agree. The `history`, `recipe_constructor` and `binding_constructor` reasons no longer say "part 2B": they name DMEM's own SP-1101 composition. | `scripts/pm_memory_number_corpus.py:37`, `:143` | **111** DMEM-boundary cases agree in each of the twelve families (part 2A: 100). |
+| **Owner text** (fixed, `c8c4c93caf`) | The lane date-time restatement is replaced in all 13 DMEM numeric paragraphs. It said one grammar refusing leap seconds for every field. It now names the shared CV-1101 predicate with each owner profile, and says a skipped old check never authorizes invalid history. The same paragraphs now carry SP-1101 dispatch (replacing "closed by schema_id/schema_version"), the CV-339 current commitment, and the sealed-recipe original verification. ATS-315 names the custody phases, the CV-1101 battery and the policy-instant checks. In CV-658/659 and SP-638/639, whose `canonical_text` is single-quoted YAML, the apostrophes are doubled. | `Plans/storage-plan.md:29740`, `:29799`, `:29866`, `:29931`, `:29996`, `:30061`, `:30118`, `:30175`, `:30314`, `:30460`; `Plans/Contracts_V0.md:25083`, `:25226`; `Plans/Automated_Testing_System.md:7261`, `:7263`, `:7265` | All 22 DMEM units parse. Regeneration: only these three documents' outputs change (13 units' `canonical_text`; every other index row is a `source_doc_sha256` of those documents). |
+| **Shards and index** | `pm-shard-plans --generate`, `pm-plan-index generate` and `--check`, with the 15-file currentness edition SHA-256-equal to part 2A's. | `Plans/_shards/{automated_testing_system,contracts_v0,storage-plan}`, `Plans/.plan_index` | Index generate `pass`, 7,522 units, 30,233 acceptance units (part 2A: the same). Shard check `pass`. |
+
+## Timestamp fields and the shared check that covers each
+
+Every row below is checked by `pm_event_datetime.date_time`. That is the predicate the validator installs (`enforced_formats(profile)`), called directly as `shared_date_time` or `storage_timestamp_errors`. `datetime_validator` is not used in this tree (addendum 2).
+
+| Field | Where declared | Owner | Profile | Enforced at |
+|---|---|---|---|---|
+| payload `occurred_at_utc` (12 families) | `Plans/memory_maintenance_event_payloads.schema.json` `$defs/<family>/properties/occurred_at_utc` (+ `maxLength 64`) | CV-650–659 payload owner; CV-1101 broad family time | `event_record` | payload schema verdicts (AP06/AA09, BD01, HM05/SGH05, ASC06) |
+| payload `occurred_at_utc` at the reduced boundary | same | bound to the frozen operation time (SP-630–639) | `storage_utc_z` | BD02 (`shared_date_time`) |
+| EventRecord `occurred_at_utc` | `Plans/event_record.schema.json` `$defs/date_time_string` | CV-317/CV-1101 | `event_record` | current envelope (AP03/AA02); retained editions (SGC05, APO05, HM04/SGH04, CK01, ASC05, AAO05) |
+| EventRecord `observed_at_utc`, `persisted_at_utc` | same declaration | CV-253 (Storage-assigned) | `storage_utc_z` on top of the declaration | `StorageProfileValidator` at the same envelope verdicts, current and retained |
+| operation `started_occurred_at_utc`, `completed_occurred_at_utc` (current and `historical_`, all `oneOf` branches) | `Plans/memory_maintenance_operation.schema.json` (+ owner pattern `Z$(?![\s\S])`, `maxLength 64`) | SP-630–639 operation owner | `storage_utc_z` | operation schema verdicts (OP01, OPA01, AOP01, and the historical reads) |
+| checkpoint `indexed_at_utc`, `first_prepared_at_utc`, `activated_at_utc`, `retired_at_utc` | `Plans/event_record_index_checkpoint.schema.json` | SP-278 | `event_record` | CK02 |
+| Card 6 policy `captured_at` and each selected memory's `created_at`, `updated_at`, `last_access_at` | `Plans/memory_card6_policy_fixtures.json` / AMS §3.1 (no format declared) | AMS memory record | `event_record` | PT01/PT02 (`instant`) |
+
+## Fixture expectations that changed
+
+- **CV-339 commitments:** 44 distinct current-writer `full_value_sha256` values (64 records in `Plans/memory_maintenance_event_fixtures.json`, 32 in `Plans/memory_archive_event_fixtures.json`) change from integer-json-v1 to CV-339. These are the writer states' originals and the custody-matrix `canonical` replacements. Each old value appeared exactly as often as its records, so the swap was an exact string replacement (mapping in the evidence). The 6 deliberately wrong `digest` defects are untouched. **Refusing row and reason:** none. Each changed record is a positive or a coherent negative whose own defect is unchanged. The frozen history and write-recipe fixtures are unchanged.
+- **Timestamps:** no fixture case changed outcome; the widening and narrowing above reach no existing case.
+- **First refusing row, same code:** coherent unsealed forgeries (rehashed values, digest-only edits, foreign records) now refuse at their site's custody row R1 instead of a later row of the same site. The code is unchanged, so every fixture expectation holds; the sealed witnesses above keep each later row proved.
+
+## Inventory gate and self-tests (addendum 2)
+
+| Command | Exit | Outcome |
+|---|---:|---|
+| `python3 scripts/pm_event_datetime_inventory.py` at the merge `28e7e9661f` | 1 | `fail`, 262 rows: 145 `unclassified_mentioning_container` (`Plans/.plan_index`, `.plan_migration` span maps, and the four DMEM fixture files), 69 `unreadable_mentioning_container` (`Plans/_shards`, `storage-plan.md`, `Contracts_V0.md`, `Decision_Log.md`, `usage-feature.md`, `Automated_Testing_System.md`), 48 `stale_scan_exclusion`. |
+| same, at `0375e1c7ce` | 1 | `fail`, 266 rows: the same 262 plus 4 `unclassified_mentioning_container` rows in `Plans/.audits/event-authority-2026-08-13-currentness/EVENT_OCCURRENCES.jsonl`. That is the ignored local currentness copy placed in the run tree for index generation, not branch content. No row is gone; no row names a file only this round edited. |
+| `python3 scripts/pm_event_numbers.py --self-test` (scope all) | 1 | `case_execution: NOT_RUN_ADMISSION_REFUSED`, 0 of 13,626 cases: it refuses before any case while the inventory is stale in this tree, exactly as addendum 2 says. Recorded, not credited. |
+| `python3 scripts/pm_event_numbers.py --self-test --scope numbers` | 0 | `"status": "pass"`, 580/580. |
+| `python3 scripts/pm_event_datetime.py --self-test` | — | not counted (addendum 2: no entry point). |
+
+`datetime_validator` and the inventory gate run at batch-2 integration, after the inventory and exclusions are refreshed for the merged tree.
+
+## Guard-table result
+
+The gated tool ran once per phase table (183 runs) at `0375e1c7ce`. It used **588 negatives and 313 controls** drawn from **30,940 witness calls** (17,828 refused) of the twelve complete family checkers.
+- **Proved:** **289 of 316 rows**. Credit is the tool's own `rows[].proved`.
+- **Cuts:** own negatives flip 588/588, 989 stays, 0 unrelated changes, 0 masked.
+- **Lane matrix:** uncapped, 0 problems. Collection findings: 0.
+- **Unproved:** 27 rows, exactly part 2A's by-construction set, each decided first by a named earlier row or schema and still alone in its 19 tables. They are AOP02, AOP05 (never evaluated: `NOT_RUN_NO_CONTROL`), AP11, AP12, BD16, CK08, EF01/02, OPA02–07, RC01/02, RR01/02, SEL02, SGC07, TGO01, TGOA01–05 and TGS01. The part 2A reasons stand unchanged.
+- **New this round:** the 7 custody tables (28 rows, all proved), BD02 and PT01/PT02 (re-observed, proved).
+- **Recovered in-round:** APO06, AAO06, ASC07–09, CK03 and CK04 were unproved at `d556fce821`. Their only negatives had become custody refusals, which also held ASC07/08 and CK04 in failing tables. With the sealed witnesses they are proved at `0375e1c7ce`.
+
+| Site (custody table) | Tables at the site | Rows | Proved | Custody rows R1–R4 (distinct negatives) |
+|---|---:|---:|---:|---|
+| writer returned original (`apo`) | 5 | 9 | 9 | 1 / 1 / 1 / 1 |
+| started writer canonical original (`sgc`) | 6 | 10 | 9 (SGC07 by construction) | 1 / 1 / 1 / 1 |
+| canonical history reader (`hm`) | 4 | 11 | 11 | 1 / 1 / 1 / 1 |
+| canonical history start record (`sgh`) | 4 | 11 | 11 | 1 / 1 / 1 / 1 |
+| checkpoint join (`ck`) | 6 | 14 | 13 (CK08 by construction) | 1 / 1 / 1 / 1 |
+| Card 1b returned terminal original (`aao`) | 5 | 9 | 9 | 1 / 1 / 1 / 1 |
+| Card 1b started canonical original (`asc`) | 7 | 13 | 13 | 1 / 1 / 1 / 1 |
+| all other tables | 146 | 239 | 214 | — |
+| **Total** | **183** | **316** | **289** | |
+
+A custody negative's observation is the dispatcher's refusal reason, so every R1 negative is one distinct observation; the 30,940-call collection holds many witness calls behind it. Per-table reports are in the evidence (`tool.tar.gz`).
+
+## Probes (load-bearing changes, full processes)
+
+Each probe restores one old behaviour in a separate probe worktree at `0375e1c7ce`, runs one complete family checker, then restores the file. **9 of 9 as expected (exit 1):**
+
+| Probe | Old behaviour restored | First failure |
+|---|---|---|
+| T1 | the lane date-time grammar | battery: a legitimate leap second refused |
+| T2 | no CV-253 profile on Storage fields | battery: `…z` accepted at `observed_at_utc` |
+| T3 | broad profile at the operation times | `field_profile_errors` |
+| T4 | `created_at` read only on fallback | policy: `24:00:00Z` `created_at` accepted |
+| S1 | the record selects its edition | witness `hm-edition-from-custody` accepted |
+| S2 | custody not authenticated | witness `writer-original-unsealed-forgery` reached R3 |
+| S3 | current writes on the frozen digest | writer fixture state mismatch |
+| S4 | the recipe ignored (frozen digest always) | `append-retry-original` refused |
+| S5 | ambiguity accepted | witness `writer-original-ambiguous-recipe` accepted |
+
+## What Astra keeps finding, probed
+
+- **1. Forged inputs:** an unsealed coherent forgery refuses at custody R1 before any later row. A sealed forgery still refuses at its own row: identity, commitment and joins are recomputed under the selected recipe.
+- **2. Storage-assigned metadata:** `observed_at_utc`/`persisted_at_utc` take CV-253 `storage_utc_z` at current and retained editions. `sequence_id` stays SP-1100 `storage_uint64`.
+- **3. Historical readers:** retained originals of both frozen editions read through their sealed frozen recipe. That includes large integers, binary64 and respelled integral numbers (write-recipe suite, 28–29 retained cases per family), and a legitimate leap second at the Storage times (`hm/sgh` positives). Withdrawn, revoked, forged, unsealed and ambiguous originals refuse. No current-writer gate reaches a frozen original; the current recipe exists only for current-writer originals.
+- **4. One field read two ways:** a timestamp is decided only by the shared predicate. `instant` decomposes only a string the predicate already accepted, so the custody key and the commitment read the same frozen bytes.
+- **5. Eager references:** unchanged (standing-check-9 walk).
+- **6. Size:** unchanged.
+- **7. Custody:** every canonical read goes through the dispatcher. Every writer path still runs the start custody gate, and its seal is withdrawn if a gate refuses.
+- **8. Masked negatives:** 0 (tool and lane matrix).
+- **9. Grades:** see below; nothing upgraded.
+- **10/10a. Numbers:** adopted in part 2A. CV-339 now holds for current writes; history keeps integer-json-v1 by custody.
+- **11. Types:** a `str` subclass refuses at every date-time field. Wrong-type policy times refuse at PT01.
+- **12. Formats:** enforced by the shared predicate with explicit profiles. A refusal by a pattern alone never counts in the battery.
+
+## Family grades before and after
+
+P=PASS, Q=PARTIAL, A=ABSENT. Before is the part 2A self-grade at `c4669460af`; after is `DMEM-self-grade.json` at `0375e1c7ce`. No status changes. Three findings are rewritten with new evidence:
+- **`compatibility_withdrawal`:** SP-1101 custody selection.
+- **`producer`:** the CV-339 current commitment.
+- **`positive_negative_oracles`:** two of three PARTIAL reasons closed; the cell stays PARTIAL.
+
+All 694 evidence quotes were re-checked at their lines: 576 at the same line and 94 relocated to their moved line, with none replaced. The other 24 are new: 3 per family, less the 12 removed `Historical originals instead use …` quotes.
+
+| Family | Before → after | Witnesses (2A → 2B) | Shared-corpus cases agreeing |
+|---|---|---:|---:|
+| `memory.dedup_sweep.completed` | 9P / 2Q / 1A → 9P / 2Q / 1A | 45 → 85 | 111 |
+| `memory.dedup_sweep.started` | 9P / 2Q / 1A → 9P / 2Q / 1A | 38 → 64 | 111 |
+| `memory.index.lexical.rebuild.completed` | 9P / 2Q / 1A → 9P / 2Q / 1A | 56 → 96 | 111 |
+| `memory.index.lexical.rebuild.started` | 9P / 2Q / 1A → 9P / 2Q / 1A | 49 → 75 | 111 |
+| `memory.index.semantic.rebuild.completed` | 9P / 2Q / 1A → 9P / 2Q / 1A | 56 → 96 | 111 |
+| `memory.index.semantic.rebuild.started` | 9P / 2Q / 1A → 9P / 2Q / 1A | 49 → 75 | 111 |
+| `memory.verification_sweep.completed` | 9P / 2Q / 1A → 9P / 2Q / 1A | 43 → 83 | 111 |
+| `memory.verification_sweep.started` | 9P / 2Q / 1A → 9P / 2Q / 1A | 36 → 62 | 111 |
+| `memory.monthly_summary.completed` | 9P / 2Q / 1A → 9P / 2Q / 1A | 13 → 46 | 111 |
+| `memory.monthly_summary.started` | 9P / 2Q / 1A → 9P / 2Q / 1A | 16 → 36 | 111 |
+| `memory.prune_archive.completed` | 9P / 2Q / 1A → 9P / 2Q / 1A | 13 → 46 | 111 |
+| `memory.prune_archive.started` | 9P / 2Q / 1A → 9P / 2Q / 1A | 16 → 36 | 111 |
+
+108 PASS / 24 PARTIAL / 12 ABSENT → **108 PASS / 24 PARTIAL / 12 ABSENT**.
+
+## Readiness
+
+**Not READY.** Ready for the batch-2 Sol max and Astra max review of the integrated branch on everything this lane owns: CV-1101 profiles, SP-1101 dispatch and CV-339, guard tables 289/316 with the 27 by-construction rows unchanged.
+
+What remains outside this round:
+- **By design:** membership ABSENT, retention pending (RT), native custody and atomicity NOT_RUN.
+- **Batch-2 integration:** the shared inventory refresh, then `datetime_validator`, the inventory gate and the combined self-test.
+- **Tool limit:** JSON Schema keyword cuts are not ported to the shared tool, which keeps every oracle cell PARTIAL.
+
+## Commands and evidence
+
+Heavy runs (12 family checkers, guard tool, probes, inventory gate, self-tests) ran one at a time from detached snapshot worktrees at `0375e1c7ce`. Each started at 13.5 GiB available or more, paused below 10 GiB, and waited in a `long-job`; PM7 work was not touched.
+
+**Commits:**
+- `28e7e9661f`: NUMRULE merge.
+- `0b62439c91`: timestamps.
+- `0e007530a4`: S3 and CV-339.
+- `c8c4c93caf`: owner text and regeneration.
+- `97c6dacaf6`: flush and digest witnesses.
+- `d556fce821`: number corpus.
+- `0375e1c7ce`: APO06/AAO06/ASC09/CK03 witnesses.
+
+The report commit follows. Evidence is in `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/sweep-p2b/`, with the SHA-256 of every file in `SHA256SUMS`.
+
+| Command | Exit | Outcome |
+|---|---:|---|
+| `git merge --no-ff 58c2816ff33365384d4039553f5efdb5370930e6` | 0 | clean; 7 files, all equal to `58c2816ff3` (`28e7e9661f`) |
+| `python3 scripts/pm-memory-table-generate.py scripts --check` | 0 | 184 modules current (183 tables + index), 316 rows |
+| `python3 -B scripts/pm_memory_maintenance_events.py --family <f>` ×8 | 0 ×8 | `pass` (about 18 s each, at most 196 MB) |
+| `python3 -B scripts/pm_memory_archive_events.py --family <f>` ×4 | 0 ×4 | `pass` |
+| `python3 -B scripts/pm-memory-guard-tables.py --out tool` | 1 | 164 tables `PASS`, 18 `FAIL unproved_guards` and 1 `NOT_RUN_NO_CONTROL`, all holding only the 27 by-construction rows; 289/316 proved; 0 masked; lane matrix 0; findings 0; 389.9 s |
+| probes (`probes.json`, 9 full-process probes) | 0 | 9 of 9 as expected |
+| `python3 scripts/pm_event_numbers.py --self-test --scope numbers` | 0 | `pass`, 580/580 |
+| `python3 scripts/pm_event_numbers.py --self-test` | 1 | refused before any case (inventory stale in the lane tree) |
+| `python3 scripts/pm_event_datetime_inventory.py` | 1 | `fail`, 262 rows at the merge; 266 at the head (+4 from the ignored local currentness copy) |
+| `python3 scripts/pm-shard-plans.py --generate` / `--check` | 0 / 0 | `pass`; only the three edited documents' outputs changed |
+| `python3 scripts/pm-plan-index.py generate` (15 currentness files equal to part 2A's) | 0 | `pass`, 7,522 units, 30,233 acceptance units |
+
+**IDs:** no new IDs. No pm-mail other than the final FYI to the lead; no subagent, admission, registry append, Decision Log change, governance artifact edit, landing lock or main push. The worktrees are removed after publication.
+
+---
+
+Earlier-round material below is **superseded source lineage**, including its grades and guard-table result.
+
 # DMEM — Sweep part 2A (guard tables) and part 2B numbers
 
 **Branch:** `plans/ea-w2-memory-maintenance-20261104`. **Start:** `1abebee498` (sweep part 1). **Gated guard-tool merge:** `09d35571b6` (tool `004bdedd63`, `--no-ff`, exactly the eleven tool files, none edited). **Gated NUMRULE number-scope merge:** `74e62c0e78` (exactly `a16f67c1ef`, `--no-ff`; it brings no main commit; its 163 conflicts were all generated `Plans/_shards/{contracts_v0,storage-plan}` and `Plans/.plan_index` files, resolved by `pm-shard-plans --generate`, `pm-plan-index generate` and `pm-shard-plans --check`, never by hand). **Implementation head:** `c4669460af`; the delivery head (this report commit) is in the external `HEAD.txt`. **No rebase** onto main this round.

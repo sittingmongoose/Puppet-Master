@@ -1,6 +1,6 @@
 {
   "schema_id": "pm.assurance.event_authority.step08_current_depth.v1",
-  "assessment_id": "EA-W2-DMEM-SWEEP-P2A-P2B-NUMBERS-SELF-GRADE-20261108",
+  "assessment_id": "EA-W2-DMEM-SWEEP-P2B-SELF-GRADE-20261111",
   "assessment_kind": "worker_self_grade",
   "rubric": {
     "criteria": [
@@ -21,7 +21,7 @@
   },
   "assessed_tree": {
     "branch": "plans/ea-w2-memory-maintenance-20261104",
-    "commit": "c4669460afe6eadf441e14fba667355c40e567b5",
+    "commit": "0375e1c7ce73e96660d0fbfb5053e2c1ef1a2cf2",
     "base": "2989975e8f8a4a1e49235e8ae2095b3df7ea0321"
   },
   "registry": {
@@ -121,7 +121,7 @@
         "producer": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Own SP-286/CV-339 full-value/full-flush ordering, exact operation CAS and frozen publication values.",
+          "finding": "Own SP-286/CV-339 full-value/full-flush ordering, exact operation CAS and frozen publication values; current-writer retained EventRecords now carry the CV-339 full_value_commitment itself.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -136,6 +136,13 @@
               "line_start": 29732,
               "line_end": 29732,
               "quote": "Every mutation is a whole-value CAS against the exact prior operation row under the single maintenance writer; request, scope, source, start time and receipt identities never change. started"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-630",
+              "line_start": 29740,
+              "line_end": 29740,
+              "quote": "A current-writer retained EventRecord carries the unchanged CV-339 full-value commitment"
             }
           ],
           "prior": {
@@ -143,7 +150,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
+          "change_reason": "Sweep part 2B: the current full-value commitment is the CV-339 recipe; grade carried."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -379,7 +386,7 @@
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Both retained envelope editions verify unchanged originals by frozen integer-json-v1; new Storage metadata uses owner uint64 independently of producer rules. Unknown edition, custody loss, access denial and withdrawal refuse.",
+          "finding": "Both retained envelope editions verify unchanged originals through SP-1101: one RetainedDispatcher resolution from sealed custody of the exact retained record selects the write-time recipe (frozen integer-json-v1 for older originals, CV-339 for current-writer ones), never the record; unsealed, ambiguous, foreign-binding and uninstalled-recipe originals refuse at the custody guard. New Storage metadata uses owner uint64 and CV-253 storage_utc_z independently of producer rules. Unknown edition, custody loss, access denial and withdrawal refuse.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -400,7 +407,7 @@
               "unit": "SP-630",
               "line_start": 29740,
               "line_end": 29740,
-              "quote": "Historical originals instead use their frozen write-time recipe integer-json-v1"
+              "quote": "Reader dispatch follows SP-1101: each retained canonical original"
             }
           ],
           "prior": {
@@ -408,12 +415,12 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
+          "change_reason": "Sweep part 2B (S3) replaces record-selected edition dispatch with SP-1101 custody selection; the grade is carried with the new evidence."
         },
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family checkers pass (12/12) with lifecycle/custody/history, format, full uint64, Card 6 policy, guard-table witness and shared-number-corpus suites. Check 11 is Method B: every refusal is one row of a generated phase table and the gated shared tool proves 261 of 288 rows (0 masked, 0 unrelated changes); the 27 unproved rows are entailed by an earlier row or schema (listed in the report). PARTIAL because each JSON Schema occurrence is one verdict row (per-keyword and format cuts are not ported to the shared tool), SP-1101 retained dispatch is part 2B and the timestamp review is interim only. Native NOT_RUN.",
+          "finding": "Exact-family checkers pass (12/12) with lifecycle/custody/history, CV-1101 date-time profile battery, full uint64, Card 6 policy and policy-instant, SP-1101 custody, guard-table witness and shared-number-corpus suites. Check 11 is Method B: every refusal is one row of a generated phase table and the gated shared tool proves 289 of 316 rows; the 27 unproved rows are each decided first by a named earlier row or schema (listed in the report). The timestamp review is no longer interim: every timestamp field is checked by the shared CV-1101 predicate with its owner profile. PARTIAL because each JSON Schema occurrence is one verdict row (per-keyword and format cuts are not ported to the shared tool). Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -503,22 +510,22 @@
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "start_custody_gate",
               "quote": "def start_custody_gate(state, first_start=False, writer_event=None, canonical_history=False):",
-              "line_start": 627,
-              "line_end": 627
+              "line_start": 718,
+              "line_end": 718
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "transition",
               "quote": "start_custody_gate(before, first_start=action['op'] == 'append_started')",
-              "line_start": 881,
-              "line_end": 881
+              "line_start": 1244,
+              "line_end": 1244
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "main",
               "quote": "mirrors = require_resolved_references()",
-              "line_start": 1573,
-              "line_end": 1573
+              "line_start": 1934,
+              "line_end": 1934
             },
             {
               "path": "Plans/memory_canonical_history_fixtures.json",
@@ -545,22 +552,22 @@
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "read_canonical_history",
               "quote": "def read_canonical_history(before, event):",
-              "line_start": 1079,
-              "line_end": 1079
+              "line_start": 1422,
+              "line_end": 1422
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "json_numbers",
               "quote": "def json_numbers(text):",
-              "line_start": 180,
-              "line_end": 180
+              "line_start": 181,
+              "line_end": 181
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "flag",
               "quote": "return type(value) is bool and value is expected",
-              "line_start": 279,
-              "line_end": 279
+              "line_start": 280,
+              "line_end": 280
             },
             {
               "path": "scripts/pm_memory_boundary_domains.py",
@@ -607,8 +614,8 @@
             {
               "path": "scripts/pm_memory_policy.py",
               "unit": "run",
-              "line_start": 243,
-              "line_end": 243,
+              "line_start": 312,
+              "line_end": 312,
               "quote": "def run(core, families, archive=None):"
             },
             {
@@ -636,15 +643,15 @@
               "path": "scripts/pm_memory_policy.py",
               "unit": "same",
               "quote": "if type(left) is not type(right):",
-              "line_start": 25,
-              "line_end": 25
+              "line_start": 24,
+              "line_end": 24
             },
             {
               "path": "scripts/pm_memory_policy.py",
               "unit": "instant",
               "quote": "return seconds + Fraction(Decimal('0.' + fraction)) if fraction else Fraction(seconds)",
-              "line_start": 57,
-              "line_end": 57
+              "line_start": 69,
+              "line_end": 69
             },
             {
               "path": "Plans/memory_card6_policy_fixtures.json",
@@ -682,8 +689,8 @@
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
-              "line_start": 95,
-              "line_end": 95,
+              "line_start": 96,
+              "line_end": 96,
               "quote": "def table_refusal(phase, facts):"
             },
             {
@@ -691,14 +698,21 @@
               "line_start": 10,
               "line_end": 10,
               "quote": "Credit is copied from the tool"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-630",
+              "line_start": 29740,
+              "line_end": 29740,
+              "quote": "Every declared date-time format is enforced by the shared CV-1101 predicate"
             }
           ],
           "prior": {
             "source": "sweep part 1 self-grade at 1abebee498",
             "status": "PASS"
           },
-          "change": "downgraded",
-          "change_reason": "The lane-local removal proof (per-keyword schema cuts) is retired; the shared tool proves table rows only, and schema keyword cuts, SP-1101 dispatch and date-time stay open, as for DCH and DR."
+          "change": "carried",
+          "change_reason": "Sweep part 2B closes two of the three PARTIAL reasons (SP-1101 dispatch, interim timestamp review); the schema-keyword-cut reason remains, so the cell stays PARTIAL."
         }
       },
       "remaining_gaps": [
@@ -706,9 +720,8 @@
         "RT must resolve event/operation and rebuild selector/target retention.",
         "Native custody/atomicity/filesystem crash/backup/read-race obligations remain NOT_RUN; static success is not native proof.",
         "Independent review, separate per-family admission and unresolved operation/result retention still fence activation; Card 6 supplies no no-project writer permission.",
-        "S3 (SP-1101 authenticated retained dispatch) and the CV-339 current full-value commitment that depends on it are part 2B: the retained dispatch selects the envelope edition whose schemas carry the date-time format checks.",
-        "Timestamp fields: this lane's own review is interim only until the shared date-time gate passes.",
-        "JSON Schema keyword and format cuts are not ported to the shared guard tool; each schema occurrence is one verdict row."
+        "JSON Schema keyword and format cuts are not ported to the shared guard tool; each schema occurrence is one verdict row.",
+        "The shared date-time inventory and datetime_validator run at batch-2 integration (SWEEP-P2B Addendum 2); in this lane tree the inventory gate refuses on hash drift only."
       ],
       "static_checks_seen": [
         "scripts/pm_memory_maintenance_events.py",
@@ -722,7 +735,7 @@
       "notes": "Sweep part 2A + 2B-numbers worker self-grade. Membership ABSENT, retention PARTIAL, native NOT_RUN. Guard tables on the gated tool; CV-1100/SP-1100 number scope adopted; S3, timestamps and review remain.",
       "assessed_tree": {
         "branch": "plans/ea-w2-memory-maintenance-20261104",
-        "commit": "c4669460afe6eadf441e14fba667355c40e567b5",
+        "commit": "0375e1c7ce73e96660d0fbfb5053e2c1ef1a2cf2",
         "base": "2989975e8f8a4a1e49235e8ae2095b3df7ea0321"
       },
       "prepared_verdict": "PREPARED_WITH_NOTES"
@@ -813,7 +826,7 @@
         "producer": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Own SP-286/CV-339 full-value/full-flush ordering, exact operation CAS and frozen publication values.",
+          "finding": "Own SP-286/CV-339 full-value/full-flush ordering, exact operation CAS and frozen publication values; current-writer retained EventRecords now carry the CV-339 full_value_commitment itself.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -828,6 +841,13 @@
               "line_start": 29732,
               "line_end": 29732,
               "quote": "Every mutation is a whole-value CAS against the exact prior operation row under the single maintenance writer; request, scope, source, start time and receipt identities never change. started"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-631",
+              "line_start": 29799,
+              "line_end": 29799,
+              "quote": "A current-writer retained EventRecord carries the unchanged CV-339 full-value commitment"
             }
           ],
           "prior": {
@@ -835,7 +855,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
+          "change_reason": "Sweep part 2B: the current full-value commitment is the CV-339 recipe; grade carried."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -1078,7 +1098,7 @@
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Both retained envelope editions verify unchanged originals by frozen integer-json-v1; new Storage metadata uses owner uint64 independently of producer rules. Unknown edition, custody loss, access denial and withdrawal refuse.",
+          "finding": "Both retained envelope editions verify unchanged originals through SP-1101: one RetainedDispatcher resolution from sealed custody of the exact retained record selects the write-time recipe (frozen integer-json-v1 for older originals, CV-339 for current-writer ones), never the record; unsealed, ambiguous, foreign-binding and uninstalled-recipe originals refuse at the custody guard. New Storage metadata uses owner uint64 and CV-253 storage_utc_z independently of producer rules. Unknown edition, custody loss, access denial and withdrawal refuse.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -1097,9 +1117,9 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-631",
-              "line_start": 29740,
-              "line_end": 29740,
-              "quote": "Historical originals instead use their frozen write-time recipe integer-json-v1"
+              "line_start": 29799,
+              "line_end": 29799,
+              "quote": "Reader dispatch follows SP-1101: each retained canonical original"
             }
           ],
           "prior": {
@@ -1107,12 +1127,12 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
+          "change_reason": "Sweep part 2B (S3) replaces record-selected edition dispatch with SP-1101 custody selection; the grade is carried with the new evidence."
         },
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family checkers pass (12/12) with lifecycle/custody/history, format, full uint64, Card 6 policy, guard-table witness and shared-number-corpus suites. Check 11 is Method B: every refusal is one row of a generated phase table and the gated shared tool proves 261 of 288 rows (0 masked, 0 unrelated changes); the 27 unproved rows are entailed by an earlier row or schema (listed in the report). PARTIAL because each JSON Schema occurrence is one verdict row (per-keyword and format cuts are not ported to the shared tool), SP-1101 retained dispatch is part 2B and the timestamp review is interim only. Native NOT_RUN.",
+          "finding": "Exact-family checkers pass (12/12) with lifecycle/custody/history, CV-1101 date-time profile battery, full uint64, Card 6 policy and policy-instant, SP-1101 custody, guard-table witness and shared-number-corpus suites. Check 11 is Method B: every refusal is one row of a generated phase table and the gated shared tool proves 289 of 316 rows; the 27 unproved rows are each decided first by a named earlier row or schema (listed in the report). The timestamp review is no longer interim: every timestamp field is checked by the shared CV-1101 predicate with its owner profile. PARTIAL because each JSON Schema occurrence is one verdict row (per-keyword and format cuts are not ported to the shared tool). Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -1202,22 +1222,22 @@
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "start_custody_gate",
               "quote": "def start_custody_gate(state, first_start=False, writer_event=None, canonical_history=False):",
-              "line_start": 627,
-              "line_end": 627
+              "line_start": 718,
+              "line_end": 718
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "transition",
               "quote": "start_custody_gate(before, first_start=action['op'] == 'append_started')",
-              "line_start": 881,
-              "line_end": 881
+              "line_start": 1244,
+              "line_end": 1244
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "main",
               "quote": "mirrors = require_resolved_references()",
-              "line_start": 1573,
-              "line_end": 1573
+              "line_start": 1934,
+              "line_end": 1934
             },
             {
               "path": "Plans/memory_canonical_history_fixtures.json",
@@ -1244,22 +1264,22 @@
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "read_canonical_history",
               "quote": "def read_canonical_history(before, event):",
-              "line_start": 1079,
-              "line_end": 1079
+              "line_start": 1422,
+              "line_end": 1422
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "json_numbers",
               "quote": "def json_numbers(text):",
-              "line_start": 180,
-              "line_end": 180
+              "line_start": 181,
+              "line_end": 181
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "flag",
               "quote": "return type(value) is bool and value is expected",
-              "line_start": 279,
-              "line_end": 279
+              "line_start": 280,
+              "line_end": 280
             },
             {
               "path": "scripts/pm_memory_boundary_domains.py",
@@ -1306,8 +1326,8 @@
             {
               "path": "scripts/pm_memory_policy.py",
               "unit": "run",
-              "line_start": 243,
-              "line_end": 243,
+              "line_start": 312,
+              "line_end": 312,
               "quote": "def run(core, families, archive=None):"
             },
             {
@@ -1335,15 +1355,15 @@
               "path": "scripts/pm_memory_policy.py",
               "unit": "same",
               "quote": "if type(left) is not type(right):",
-              "line_start": 25,
-              "line_end": 25
+              "line_start": 24,
+              "line_end": 24
             },
             {
               "path": "scripts/pm_memory_policy.py",
               "unit": "instant",
               "quote": "return seconds + Fraction(Decimal('0.' + fraction)) if fraction else Fraction(seconds)",
-              "line_start": 57,
-              "line_end": 57
+              "line_start": 69,
+              "line_end": 69
             },
             {
               "path": "Plans/memory_card6_policy_fixtures.json",
@@ -1381,8 +1401,8 @@
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
-              "line_start": 95,
-              "line_end": 95,
+              "line_start": 96,
+              "line_end": 96,
               "quote": "def table_refusal(phase, facts):"
             },
             {
@@ -1390,14 +1410,21 @@
               "line_start": 10,
               "line_end": 10,
               "quote": "Credit is copied from the tool"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-631",
+              "line_start": 29799,
+              "line_end": 29799,
+              "quote": "Every declared date-time format is enforced by the shared CV-1101 predicate"
             }
           ],
           "prior": {
             "source": "sweep part 1 self-grade at 1abebee498",
             "status": "PASS"
           },
-          "change": "downgraded",
-          "change_reason": "The lane-local removal proof (per-keyword schema cuts) is retired; the shared tool proves table rows only, and schema keyword cuts, SP-1101 dispatch and date-time stay open, as for DCH and DR."
+          "change": "carried",
+          "change_reason": "Sweep part 2B closes two of the three PARTIAL reasons (SP-1101 dispatch, interim timestamp review); the schema-keyword-cut reason remains, so the cell stays PARTIAL."
         }
       },
       "remaining_gaps": [
@@ -1405,9 +1432,8 @@
         "RT must resolve event/operation and rebuild selector/target retention.",
         "Native custody/atomicity/filesystem crash/backup/read-race obligations remain NOT_RUN; static success is not native proof.",
         "Independent review, separate per-family admission and unresolved operation/result retention still fence activation; Card 6 supplies no no-project writer permission.",
-        "S3 (SP-1101 authenticated retained dispatch) and the CV-339 current full-value commitment that depends on it are part 2B: the retained dispatch selects the envelope edition whose schemas carry the date-time format checks.",
-        "Timestamp fields: this lane's own review is interim only until the shared date-time gate passes.",
-        "JSON Schema keyword and format cuts are not ported to the shared guard tool; each schema occurrence is one verdict row."
+        "JSON Schema keyword and format cuts are not ported to the shared guard tool; each schema occurrence is one verdict row.",
+        "The shared date-time inventory and datetime_validator run at batch-2 integration (SWEEP-P2B Addendum 2); in this lane tree the inventory gate refuses on hash drift only."
       ],
       "static_checks_seen": [
         "scripts/pm_memory_maintenance_events.py",
@@ -1421,7 +1447,7 @@
       "notes": "Sweep part 2A + 2B-numbers worker self-grade. Membership ABSENT, retention PARTIAL, native NOT_RUN. Guard tables on the gated tool; CV-1100/SP-1100 number scope adopted; S3, timestamps and review remain.",
       "assessed_tree": {
         "branch": "plans/ea-w2-memory-maintenance-20261104",
-        "commit": "c4669460afe6eadf441e14fba667355c40e567b5",
+        "commit": "0375e1c7ce73e96660d0fbfb5053e2c1ef1a2cf2",
         "base": "2989975e8f8a4a1e49235e8ae2095b3df7ea0321"
       },
       "prepared_verdict": "PREPARED_WITH_NOTES"
@@ -1505,7 +1531,7 @@
         "producer": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Own SP-286/CV-339 full-value/full-flush ordering, exact operation CAS and frozen publication values; rebuild target persists before selector CAS.",
+          "finding": "Own SP-286/CV-339 full-value/full-flush ordering, exact operation CAS and frozen publication values; current-writer retained EventRecords now carry the CV-339 full_value_commitment itself.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -1527,6 +1553,13 @@
               "line_start": 29858,
               "line_end": 29858,
               "quote": "Newly authored lexical target/selection custody for this exact family (per-family round-1 search in DMEM-search.json) uses required nullable prepared_target in index_lexical_rebuild. It is n"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-632",
+              "line_start": 29866,
+              "line_end": 29866,
+              "quote": "A current-writer retained EventRecord carries the unchanged CV-339 full-value commitment"
             }
           ],
           "prior": {
@@ -1534,7 +1567,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
+          "change_reason": "Sweep part 2B: the current full-value commitment is the CV-339 recipe; grade carried."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -1777,7 +1810,7 @@
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Both retained envelope editions verify unchanged originals by frozen integer-json-v1; new Storage metadata uses owner uint64 independently of producer rules. Unknown edition, custody loss, access denial and withdrawal refuse.",
+          "finding": "Both retained envelope editions verify unchanged originals through SP-1101: one RetainedDispatcher resolution from sealed custody of the exact retained record selects the write-time recipe (frozen integer-json-v1 for older originals, CV-339 for current-writer ones), never the record; unsealed, ambiguous, foreign-binding and uninstalled-recipe originals refuse at the custody guard. New Storage metadata uses owner uint64 and CV-253 storage_utc_z independently of producer rules. Unknown edition, custody loss, access denial and withdrawal refuse.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -1796,9 +1829,9 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-632",
-              "line_start": 29740,
-              "line_end": 29740,
-              "quote": "Historical originals instead use their frozen write-time recipe integer-json-v1"
+              "line_start": 29866,
+              "line_end": 29866,
+              "quote": "Reader dispatch follows SP-1101: each retained canonical original"
             }
           ],
           "prior": {
@@ -1806,12 +1839,12 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
+          "change_reason": "Sweep part 2B (S3) replaces record-selected edition dispatch with SP-1101 custody selection; the grade is carried with the new evidence."
         },
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family checkers pass (12/12) with lifecycle/custody/history, format, full uint64, Card 6 policy, guard-table witness and shared-number-corpus suites. Check 11 is Method B: every refusal is one row of a generated phase table and the gated shared tool proves 261 of 288 rows (0 masked, 0 unrelated changes); the 27 unproved rows are entailed by an earlier row or schema (listed in the report). PARTIAL because each JSON Schema occurrence is one verdict row (per-keyword and format cuts are not ported to the shared tool), SP-1101 retained dispatch is part 2B and the timestamp review is interim only. Native NOT_RUN.",
+          "finding": "Exact-family checkers pass (12/12) with lifecycle/custody/history, CV-1101 date-time profile battery, full uint64, Card 6 policy and policy-instant, SP-1101 custody, guard-table witness and shared-number-corpus suites. Check 11 is Method B: every refusal is one row of a generated phase table and the gated shared tool proves 289 of 316 rows; the 27 unproved rows are each decided first by a named earlier row or schema (listed in the report). The timestamp review is no longer interim: every timestamp field is checked by the shared CV-1101 predicate with its owner profile. PARTIAL because each JSON Schema occurrence is one verdict row (per-keyword and format cuts are not ported to the shared tool). Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -1901,22 +1934,22 @@
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "start_custody_gate",
               "quote": "def start_custody_gate(state, first_start=False, writer_event=None, canonical_history=False):",
-              "line_start": 627,
-              "line_end": 627
+              "line_start": 718,
+              "line_end": 718
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "transition",
               "quote": "start_custody_gate(before, first_start=action['op'] == 'append_started')",
-              "line_start": 881,
-              "line_end": 881
+              "line_start": 1244,
+              "line_end": 1244
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "main",
               "quote": "mirrors = require_resolved_references()",
-              "line_start": 1573,
-              "line_end": 1573
+              "line_start": 1934,
+              "line_end": 1934
             },
             {
               "path": "Plans/memory_canonical_history_fixtures.json",
@@ -1943,22 +1976,22 @@
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "read_canonical_history",
               "quote": "def read_canonical_history(before, event):",
-              "line_start": 1079,
-              "line_end": 1079
+              "line_start": 1422,
+              "line_end": 1422
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "json_numbers",
               "quote": "def json_numbers(text):",
-              "line_start": 180,
-              "line_end": 180
+              "line_start": 181,
+              "line_end": 181
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "flag",
               "quote": "return type(value) is bool and value is expected",
-              "line_start": 279,
-              "line_end": 279
+              "line_start": 280,
+              "line_end": 280
             },
             {
               "path": "scripts/pm_memory_boundary_domains.py",
@@ -2017,8 +2050,8 @@
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
-              "line_start": 95,
-              "line_end": 95,
+              "line_start": 96,
+              "line_end": 96,
               "quote": "def table_refusal(phase, facts):"
             },
             {
@@ -2026,14 +2059,21 @@
               "line_start": 10,
               "line_end": 10,
               "quote": "Credit is copied from the tool"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-632",
+              "line_start": 29866,
+              "line_end": 29866,
+              "quote": "Every declared date-time format is enforced by the shared CV-1101 predicate"
             }
           ],
           "prior": {
             "source": "sweep part 1 self-grade at 1abebee498",
             "status": "PASS"
           },
-          "change": "downgraded",
-          "change_reason": "The lane-local removal proof (per-keyword schema cuts) is retired; the shared tool proves table rows only, and schema keyword cuts, SP-1101 dispatch and date-time stay open, as for DCH and DR."
+          "change": "carried",
+          "change_reason": "Sweep part 2B closes two of the three PARTIAL reasons (SP-1101 dispatch, interim timestamp review); the schema-keyword-cut reason remains, so the cell stays PARTIAL."
         }
       },
       "remaining_gaps": [
@@ -2041,9 +2081,8 @@
         "RT must resolve event/operation and rebuild selector/target retention.",
         "Native custody/atomicity/filesystem crash/backup/read-race obligations remain NOT_RUN; static success is not native proof.",
         "Independent review, separate per-family admission and unresolved operation/result retention still fence activation; Card 6 supplies no no-project writer permission.",
-        "S3 (SP-1101 authenticated retained dispatch) and the CV-339 current full-value commitment that depends on it are part 2B: the retained dispatch selects the envelope edition whose schemas carry the date-time format checks.",
-        "Timestamp fields: this lane's own review is interim only until the shared date-time gate passes.",
-        "JSON Schema keyword and format cuts are not ported to the shared guard tool; each schema occurrence is one verdict row."
+        "JSON Schema keyword and format cuts are not ported to the shared guard tool; each schema occurrence is one verdict row.",
+        "The shared date-time inventory and datetime_validator run at batch-2 integration (SWEEP-P2B Addendum 2); in this lane tree the inventory gate refuses on hash drift only."
       ],
       "static_checks_seen": [
         "scripts/pm_memory_maintenance_events.py",
@@ -2056,7 +2095,7 @@
       "notes": "Sweep part 2A + 2B-numbers worker self-grade. Membership ABSENT, retention PARTIAL, native NOT_RUN. Guard tables on the gated tool; CV-1100/SP-1100 number scope adopted; S3, timestamps and review remain.",
       "assessed_tree": {
         "branch": "plans/ea-w2-memory-maintenance-20261104",
-        "commit": "c4669460afe6eadf441e14fba667355c40e567b5",
+        "commit": "0375e1c7ce73e96660d0fbfb5053e2c1ef1a2cf2",
         "base": "2989975e8f8a4a1e49235e8ae2095b3df7ea0321"
       },
       "prepared_verdict": "PREPARED_WITH_NOTES"
@@ -2140,7 +2179,7 @@
         "producer": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Own SP-286/CV-339 full-value/full-flush ordering, exact operation CAS and frozen publication values; rebuild target persists before selector CAS.",
+          "finding": "Own SP-286/CV-339 full-value/full-flush ordering, exact operation CAS and frozen publication values; current-writer retained EventRecords now carry the CV-339 full_value_commitment itself.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -2162,6 +2201,13 @@
               "line_start": 29858,
               "line_end": 29858,
               "quote": "Newly authored lexical target/selection custody for this exact family (per-family round-1 search in DMEM-search.json) uses required nullable prepared_target in index_lexical_rebuild. It is n"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-633",
+              "line_start": 29931,
+              "line_end": 29931,
+              "quote": "A current-writer retained EventRecord carries the unchanged CV-339 full-value commitment"
             }
           ],
           "prior": {
@@ -2169,7 +2215,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
+          "change_reason": "Sweep part 2B: the current full-value commitment is the CV-339 recipe; grade carried."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -2419,7 +2465,7 @@
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Both retained envelope editions verify unchanged originals by frozen integer-json-v1; new Storage metadata uses owner uint64 independently of producer rules. Unknown edition, custody loss, access denial and withdrawal refuse.",
+          "finding": "Both retained envelope editions verify unchanged originals through SP-1101: one RetainedDispatcher resolution from sealed custody of the exact retained record selects the write-time recipe (frozen integer-json-v1 for older originals, CV-339 for current-writer ones), never the record; unsealed, ambiguous, foreign-binding and uninstalled-recipe originals refuse at the custody guard. New Storage metadata uses owner uint64 and CV-253 storage_utc_z independently of producer rules. Unknown edition, custody loss, access denial and withdrawal refuse.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -2438,9 +2484,9 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-633",
-              "line_start": 29799,
-              "line_end": 29799,
-              "quote": "Historical originals instead use their frozen write-time recipe integer-json-v1"
+              "line_start": 29931,
+              "line_end": 29931,
+              "quote": "Reader dispatch follows SP-1101: each retained canonical original"
             }
           ],
           "prior": {
@@ -2448,12 +2494,12 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
+          "change_reason": "Sweep part 2B (S3) replaces record-selected edition dispatch with SP-1101 custody selection; the grade is carried with the new evidence."
         },
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family checkers pass (12/12) with lifecycle/custody/history, format, full uint64, Card 6 policy, guard-table witness and shared-number-corpus suites. Check 11 is Method B: every refusal is one row of a generated phase table and the gated shared tool proves 261 of 288 rows (0 masked, 0 unrelated changes); the 27 unproved rows are entailed by an earlier row or schema (listed in the report). PARTIAL because each JSON Schema occurrence is one verdict row (per-keyword and format cuts are not ported to the shared tool), SP-1101 retained dispatch is part 2B and the timestamp review is interim only. Native NOT_RUN.",
+          "finding": "Exact-family checkers pass (12/12) with lifecycle/custody/history, CV-1101 date-time profile battery, full uint64, Card 6 policy and policy-instant, SP-1101 custody, guard-table witness and shared-number-corpus suites. Check 11 is Method B: every refusal is one row of a generated phase table and the gated shared tool proves 289 of 316 rows; the 27 unproved rows are each decided first by a named earlier row or schema (listed in the report). The timestamp review is no longer interim: every timestamp field is checked by the shared CV-1101 predicate with its owner profile. PARTIAL because each JSON Schema occurrence is one verdict row (per-keyword and format cuts are not ported to the shared tool). Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -2543,22 +2589,22 @@
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "start_custody_gate",
               "quote": "def start_custody_gate(state, first_start=False, writer_event=None, canonical_history=False):",
-              "line_start": 627,
-              "line_end": 627
+              "line_start": 718,
+              "line_end": 718
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "transition",
               "quote": "start_custody_gate(before, first_start=action['op'] == 'append_started')",
-              "line_start": 881,
-              "line_end": 881
+              "line_start": 1244,
+              "line_end": 1244
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "main",
               "quote": "mirrors = require_resolved_references()",
-              "line_start": 1573,
-              "line_end": 1573
+              "line_start": 1934,
+              "line_end": 1934
             },
             {
               "path": "Plans/memory_canonical_history_fixtures.json",
@@ -2585,22 +2631,22 @@
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "read_canonical_history",
               "quote": "def read_canonical_history(before, event):",
-              "line_start": 1079,
-              "line_end": 1079
+              "line_start": 1422,
+              "line_end": 1422
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "json_numbers",
               "quote": "def json_numbers(text):",
-              "line_start": 180,
-              "line_end": 180
+              "line_start": 181,
+              "line_end": 181
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "flag",
               "quote": "return type(value) is bool and value is expected",
-              "line_start": 279,
-              "line_end": 279
+              "line_start": 280,
+              "line_end": 280
             },
             {
               "path": "scripts/pm_memory_boundary_domains.py",
@@ -2659,8 +2705,8 @@
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
-              "line_start": 95,
-              "line_end": 95,
+              "line_start": 96,
+              "line_end": 96,
               "quote": "def table_refusal(phase, facts):"
             },
             {
@@ -2668,14 +2714,21 @@
               "line_start": 10,
               "line_end": 10,
               "quote": "Credit is copied from the tool"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-633",
+              "line_start": 29931,
+              "line_end": 29931,
+              "quote": "Every declared date-time format is enforced by the shared CV-1101 predicate"
             }
           ],
           "prior": {
             "source": "sweep part 1 self-grade at 1abebee498",
             "status": "PASS"
           },
-          "change": "downgraded",
-          "change_reason": "The lane-local removal proof (per-keyword schema cuts) is retired; the shared tool proves table rows only, and schema keyword cuts, SP-1101 dispatch and date-time stay open, as for DCH and DR."
+          "change": "carried",
+          "change_reason": "Sweep part 2B closes two of the three PARTIAL reasons (SP-1101 dispatch, interim timestamp review); the schema-keyword-cut reason remains, so the cell stays PARTIAL."
         }
       },
       "remaining_gaps": [
@@ -2683,9 +2736,8 @@
         "RT must resolve event/operation and rebuild selector/target retention.",
         "Native custody/atomicity/filesystem crash/backup/read-race obligations remain NOT_RUN; static success is not native proof.",
         "Independent review, separate per-family admission and unresolved operation/result retention still fence activation; Card 6 supplies no no-project writer permission.",
-        "S3 (SP-1101 authenticated retained dispatch) and the CV-339 current full-value commitment that depends on it are part 2B: the retained dispatch selects the envelope edition whose schemas carry the date-time format checks.",
-        "Timestamp fields: this lane's own review is interim only until the shared date-time gate passes.",
-        "JSON Schema keyword and format cuts are not ported to the shared guard tool; each schema occurrence is one verdict row."
+        "JSON Schema keyword and format cuts are not ported to the shared guard tool; each schema occurrence is one verdict row.",
+        "The shared date-time inventory and datetime_validator run at batch-2 integration (SWEEP-P2B Addendum 2); in this lane tree the inventory gate refuses on hash drift only."
       ],
       "static_checks_seen": [
         "scripts/pm_memory_maintenance_events.py",
@@ -2698,7 +2750,7 @@
       "notes": "Sweep part 2A + 2B-numbers worker self-grade. Membership ABSENT, retention PARTIAL, native NOT_RUN. Guard tables on the gated tool; CV-1100/SP-1100 number scope adopted; S3, timestamps and review remain.",
       "assessed_tree": {
         "branch": "plans/ea-w2-memory-maintenance-20261104",
-        "commit": "c4669460afe6eadf441e14fba667355c40e567b5",
+        "commit": "0375e1c7ce73e96660d0fbfb5053e2c1ef1a2cf2",
         "base": "2989975e8f8a4a1e49235e8ae2095b3df7ea0321"
       },
       "prepared_verdict": "PREPARED_WITH_NOTES"
@@ -2782,7 +2834,7 @@
         "producer": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Own SP-286/CV-339 full-value/full-flush ordering, exact operation CAS and frozen publication values; rebuild target persists before selector CAS.",
+          "finding": "Own SP-286/CV-339 full-value/full-flush ordering, exact operation CAS and frozen publication values; current-writer retained EventRecords now carry the CV-339 full_value_commitment itself.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -2804,6 +2856,13 @@
               "line_start": 29988,
               "line_end": 29988,
               "quote": "Newly authored semantic target/selection custody for this exact family (per-family round-1 search in DMEM-search.json) uses required nullable prepared_target in index_semantic_rebuild. It is"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-634",
+              "line_start": 29996,
+              "line_end": 29996,
+              "quote": "A current-writer retained EventRecord carries the unchanged CV-339 full-value commitment"
             }
           ],
           "prior": {
@@ -2811,7 +2870,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
+          "change_reason": "Sweep part 2B: the current full-value commitment is the CV-339 recipe; grade carried."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -3054,7 +3113,7 @@
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Both retained envelope editions verify unchanged originals by frozen integer-json-v1; new Storage metadata uses owner uint64 independently of producer rules. Unknown edition, custody loss, access denial and withdrawal refuse.",
+          "finding": "Both retained envelope editions verify unchanged originals through SP-1101: one RetainedDispatcher resolution from sealed custody of the exact retained record selects the write-time recipe (frozen integer-json-v1 for older originals, CV-339 for current-writer ones), never the record; unsealed, ambiguous, foreign-binding and uninstalled-recipe originals refuse at the custody guard. New Storage metadata uses owner uint64 and CV-253 storage_utc_z independently of producer rules. Unknown edition, custody loss, access denial and withdrawal refuse.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -3073,9 +3132,9 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-634",
-              "line_start": 29866,
-              "line_end": 29866,
-              "quote": "Historical originals instead use their frozen write-time recipe integer-json-v1"
+              "line_start": 29996,
+              "line_end": 29996,
+              "quote": "Reader dispatch follows SP-1101: each retained canonical original"
             }
           ],
           "prior": {
@@ -3083,12 +3142,12 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
+          "change_reason": "Sweep part 2B (S3) replaces record-selected edition dispatch with SP-1101 custody selection; the grade is carried with the new evidence."
         },
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family checkers pass (12/12) with lifecycle/custody/history, format, full uint64, Card 6 policy, guard-table witness and shared-number-corpus suites. Check 11 is Method B: every refusal is one row of a generated phase table and the gated shared tool proves 261 of 288 rows (0 masked, 0 unrelated changes); the 27 unproved rows are entailed by an earlier row or schema (listed in the report). PARTIAL because each JSON Schema occurrence is one verdict row (per-keyword and format cuts are not ported to the shared tool), SP-1101 retained dispatch is part 2B and the timestamp review is interim only. Native NOT_RUN.",
+          "finding": "Exact-family checkers pass (12/12) with lifecycle/custody/history, CV-1101 date-time profile battery, full uint64, Card 6 policy and policy-instant, SP-1101 custody, guard-table witness and shared-number-corpus suites. Check 11 is Method B: every refusal is one row of a generated phase table and the gated shared tool proves 289 of 316 rows; the 27 unproved rows are each decided first by a named earlier row or schema (listed in the report). The timestamp review is no longer interim: every timestamp field is checked by the shared CV-1101 predicate with its owner profile. PARTIAL because each JSON Schema occurrence is one verdict row (per-keyword and format cuts are not ported to the shared tool). Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -3178,22 +3237,22 @@
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "start_custody_gate",
               "quote": "def start_custody_gate(state, first_start=False, writer_event=None, canonical_history=False):",
-              "line_start": 627,
-              "line_end": 627
+              "line_start": 718,
+              "line_end": 718
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "transition",
               "quote": "start_custody_gate(before, first_start=action['op'] == 'append_started')",
-              "line_start": 881,
-              "line_end": 881
+              "line_start": 1244,
+              "line_end": 1244
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "main",
               "quote": "mirrors = require_resolved_references()",
-              "line_start": 1573,
-              "line_end": 1573
+              "line_start": 1934,
+              "line_end": 1934
             },
             {
               "path": "Plans/memory_canonical_history_fixtures.json",
@@ -3220,22 +3279,22 @@
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "read_canonical_history",
               "quote": "def read_canonical_history(before, event):",
-              "line_start": 1079,
-              "line_end": 1079
+              "line_start": 1422,
+              "line_end": 1422
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "json_numbers",
               "quote": "def json_numbers(text):",
-              "line_start": 180,
-              "line_end": 180
+              "line_start": 181,
+              "line_end": 181
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "flag",
               "quote": "return type(value) is bool and value is expected",
-              "line_start": 279,
-              "line_end": 279
+              "line_start": 280,
+              "line_end": 280
             },
             {
               "path": "scripts/pm_memory_boundary_domains.py",
@@ -3294,8 +3353,8 @@
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
-              "line_start": 95,
-              "line_end": 95,
+              "line_start": 96,
+              "line_end": 96,
               "quote": "def table_refusal(phase, facts):"
             },
             {
@@ -3303,14 +3362,21 @@
               "line_start": 10,
               "line_end": 10,
               "quote": "Credit is copied from the tool"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-634",
+              "line_start": 29996,
+              "line_end": 29996,
+              "quote": "Every declared date-time format is enforced by the shared CV-1101 predicate"
             }
           ],
           "prior": {
             "source": "sweep part 1 self-grade at 1abebee498",
             "status": "PASS"
           },
-          "change": "downgraded",
-          "change_reason": "The lane-local removal proof (per-keyword schema cuts) is retired; the shared tool proves table rows only, and schema keyword cuts, SP-1101 dispatch and date-time stay open, as for DCH and DR."
+          "change": "carried",
+          "change_reason": "Sweep part 2B closes two of the three PARTIAL reasons (SP-1101 dispatch, interim timestamp review); the schema-keyword-cut reason remains, so the cell stays PARTIAL."
         }
       },
       "remaining_gaps": [
@@ -3318,9 +3384,8 @@
         "RT must resolve event/operation and rebuild selector/target retention.",
         "Native custody/atomicity/filesystem crash/backup/read-race obligations remain NOT_RUN; static success is not native proof.",
         "Independent review, separate per-family admission and unresolved operation/result retention still fence activation; Card 6 supplies no no-project writer permission.",
-        "S3 (SP-1101 authenticated retained dispatch) and the CV-339 current full-value commitment that depends on it are part 2B: the retained dispatch selects the envelope edition whose schemas carry the date-time format checks.",
-        "Timestamp fields: this lane's own review is interim only until the shared date-time gate passes.",
-        "JSON Schema keyword and format cuts are not ported to the shared guard tool; each schema occurrence is one verdict row."
+        "JSON Schema keyword and format cuts are not ported to the shared guard tool; each schema occurrence is one verdict row.",
+        "The shared date-time inventory and datetime_validator run at batch-2 integration (SWEEP-P2B Addendum 2); in this lane tree the inventory gate refuses on hash drift only."
       ],
       "static_checks_seen": [
         "scripts/pm_memory_maintenance_events.py",
@@ -3333,7 +3398,7 @@
       "notes": "Sweep part 2A + 2B-numbers worker self-grade. Membership ABSENT, retention PARTIAL, native NOT_RUN. Guard tables on the gated tool; CV-1100/SP-1100 number scope adopted; S3, timestamps and review remain.",
       "assessed_tree": {
         "branch": "plans/ea-w2-memory-maintenance-20261104",
-        "commit": "c4669460afe6eadf441e14fba667355c40e567b5",
+        "commit": "0375e1c7ce73e96660d0fbfb5053e2c1ef1a2cf2",
         "base": "2989975e8f8a4a1e49235e8ae2095b3df7ea0321"
       },
       "prepared_verdict": "PREPARED_WITH_NOTES"
@@ -3417,7 +3482,7 @@
         "producer": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Own SP-286/CV-339 full-value/full-flush ordering, exact operation CAS and frozen publication values; rebuild target persists before selector CAS.",
+          "finding": "Own SP-286/CV-339 full-value/full-flush ordering, exact operation CAS and frozen publication values; current-writer retained EventRecords now carry the CV-339 full_value_commitment itself.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -3439,6 +3504,13 @@
               "line_start": 29988,
               "line_end": 29988,
               "quote": "Newly authored semantic target/selection custody for this exact family (per-family round-1 search in DMEM-search.json) uses required nullable prepared_target in index_semantic_rebuild. It is"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-635",
+              "line_start": 30061,
+              "line_end": 30061,
+              "quote": "A current-writer retained EventRecord carries the unchanged CV-339 full-value commitment"
             }
           ],
           "prior": {
@@ -3446,7 +3518,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
+          "change_reason": "Sweep part 2B: the current full-value commitment is the CV-339 recipe; grade carried."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -3696,7 +3768,7 @@
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Both retained envelope editions verify unchanged originals by frozen integer-json-v1; new Storage metadata uses owner uint64 independently of producer rules. Unknown edition, custody loss, access denial and withdrawal refuse.",
+          "finding": "Both retained envelope editions verify unchanged originals through SP-1101: one RetainedDispatcher resolution from sealed custody of the exact retained record selects the write-time recipe (frozen integer-json-v1 for older originals, CV-339 for current-writer ones), never the record; unsealed, ambiguous, foreign-binding and uninstalled-recipe originals refuse at the custody guard. New Storage metadata uses owner uint64 and CV-253 storage_utc_z independently of producer rules. Unknown edition, custody loss, access denial and withdrawal refuse.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -3715,9 +3787,9 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-635",
-              "line_start": 29931,
-              "line_end": 29931,
-              "quote": "Historical originals instead use their frozen write-time recipe integer-json-v1"
+              "line_start": 30061,
+              "line_end": 30061,
+              "quote": "Reader dispatch follows SP-1101: each retained canonical original"
             }
           ],
           "prior": {
@@ -3725,12 +3797,12 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
+          "change_reason": "Sweep part 2B (S3) replaces record-selected edition dispatch with SP-1101 custody selection; the grade is carried with the new evidence."
         },
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family checkers pass (12/12) with lifecycle/custody/history, format, full uint64, Card 6 policy, guard-table witness and shared-number-corpus suites. Check 11 is Method B: every refusal is one row of a generated phase table and the gated shared tool proves 261 of 288 rows (0 masked, 0 unrelated changes); the 27 unproved rows are entailed by an earlier row or schema (listed in the report). PARTIAL because each JSON Schema occurrence is one verdict row (per-keyword and format cuts are not ported to the shared tool), SP-1101 retained dispatch is part 2B and the timestamp review is interim only. Native NOT_RUN.",
+          "finding": "Exact-family checkers pass (12/12) with lifecycle/custody/history, CV-1101 date-time profile battery, full uint64, Card 6 policy and policy-instant, SP-1101 custody, guard-table witness and shared-number-corpus suites. Check 11 is Method B: every refusal is one row of a generated phase table and the gated shared tool proves 289 of 316 rows; the 27 unproved rows are each decided first by a named earlier row or schema (listed in the report). The timestamp review is no longer interim: every timestamp field is checked by the shared CV-1101 predicate with its owner profile. PARTIAL because each JSON Schema occurrence is one verdict row (per-keyword and format cuts are not ported to the shared tool). Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -3820,22 +3892,22 @@
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "start_custody_gate",
               "quote": "def start_custody_gate(state, first_start=False, writer_event=None, canonical_history=False):",
-              "line_start": 627,
-              "line_end": 627
+              "line_start": 718,
+              "line_end": 718
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "transition",
               "quote": "start_custody_gate(before, first_start=action['op'] == 'append_started')",
-              "line_start": 881,
-              "line_end": 881
+              "line_start": 1244,
+              "line_end": 1244
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "main",
               "quote": "mirrors = require_resolved_references()",
-              "line_start": 1573,
-              "line_end": 1573
+              "line_start": 1934,
+              "line_end": 1934
             },
             {
               "path": "Plans/memory_canonical_history_fixtures.json",
@@ -3862,22 +3934,22 @@
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "read_canonical_history",
               "quote": "def read_canonical_history(before, event):",
-              "line_start": 1079,
-              "line_end": 1079
+              "line_start": 1422,
+              "line_end": 1422
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "json_numbers",
               "quote": "def json_numbers(text):",
-              "line_start": 180,
-              "line_end": 180
+              "line_start": 181,
+              "line_end": 181
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "flag",
               "quote": "return type(value) is bool and value is expected",
-              "line_start": 279,
-              "line_end": 279
+              "line_start": 280,
+              "line_end": 280
             },
             {
               "path": "scripts/pm_memory_boundary_domains.py",
@@ -3936,8 +4008,8 @@
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
-              "line_start": 95,
-              "line_end": 95,
+              "line_start": 96,
+              "line_end": 96,
               "quote": "def table_refusal(phase, facts):"
             },
             {
@@ -3945,14 +4017,21 @@
               "line_start": 10,
               "line_end": 10,
               "quote": "Credit is copied from the tool"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-635",
+              "line_start": 30061,
+              "line_end": 30061,
+              "quote": "Every declared date-time format is enforced by the shared CV-1101 predicate"
             }
           ],
           "prior": {
             "source": "sweep part 1 self-grade at 1abebee498",
             "status": "PASS"
           },
-          "change": "downgraded",
-          "change_reason": "The lane-local removal proof (per-keyword schema cuts) is retired; the shared tool proves table rows only, and schema keyword cuts, SP-1101 dispatch and date-time stay open, as for DCH and DR."
+          "change": "carried",
+          "change_reason": "Sweep part 2B closes two of the three PARTIAL reasons (SP-1101 dispatch, interim timestamp review); the schema-keyword-cut reason remains, so the cell stays PARTIAL."
         }
       },
       "remaining_gaps": [
@@ -3960,9 +4039,8 @@
         "RT must resolve event/operation and rebuild selector/target retention.",
         "Native custody/atomicity/filesystem crash/backup/read-race obligations remain NOT_RUN; static success is not native proof.",
         "Independent review, separate per-family admission and unresolved operation/result retention still fence activation; Card 6 supplies no no-project writer permission.",
-        "S3 (SP-1101 authenticated retained dispatch) and the CV-339 current full-value commitment that depends on it are part 2B: the retained dispatch selects the envelope edition whose schemas carry the date-time format checks.",
-        "Timestamp fields: this lane's own review is interim only until the shared date-time gate passes.",
-        "JSON Schema keyword and format cuts are not ported to the shared guard tool; each schema occurrence is one verdict row."
+        "JSON Schema keyword and format cuts are not ported to the shared guard tool; each schema occurrence is one verdict row.",
+        "The shared date-time inventory and datetime_validator run at batch-2 integration (SWEEP-P2B Addendum 2); in this lane tree the inventory gate refuses on hash drift only."
       ],
       "static_checks_seen": [
         "scripts/pm_memory_maintenance_events.py",
@@ -3975,7 +4053,7 @@
       "notes": "Sweep part 2A + 2B-numbers worker self-grade. Membership ABSENT, retention PARTIAL, native NOT_RUN. Guard tables on the gated tool; CV-1100/SP-1100 number scope adopted; S3, timestamps and review remain.",
       "assessed_tree": {
         "branch": "plans/ea-w2-memory-maintenance-20261104",
-        "commit": "c4669460afe6eadf441e14fba667355c40e567b5",
+        "commit": "0375e1c7ce73e96660d0fbfb5053e2c1ef1a2cf2",
         "base": "2989975e8f8a4a1e49235e8ae2095b3df7ea0321"
       },
       "prepared_verdict": "PREPARED_WITH_NOTES"
@@ -4059,7 +4137,7 @@
         "producer": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Own SP-286/CV-339 full-value/full-flush ordering, exact operation CAS and frozen publication values.",
+          "finding": "Own SP-286/CV-339 full-value/full-flush ordering, exact operation CAS and frozen publication values; current-writer retained EventRecords now carry the CV-339 full_value_commitment itself.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -4074,6 +4152,13 @@
               "line_start": 29980,
               "line_end": 29980,
               "quote": "Every mutation is a whole-value CAS against the exact prior operation row under the single maintenance writer; request, scope, source, start time and receipt identities never change. started"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-636",
+              "line_start": 30118,
+              "line_end": 30118,
+              "quote": "A current-writer retained EventRecord carries the unchanged CV-339 full-value commitment"
             }
           ],
           "prior": {
@@ -4081,7 +4166,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
+          "change_reason": "Sweep part 2B: the current full-value commitment is the CV-339 recipe; grade carried."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -4310,7 +4395,7 @@
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Both retained envelope editions verify unchanged originals by frozen integer-json-v1; new Storage metadata uses owner uint64 independently of producer rules. Unknown edition, custody loss, access denial and withdrawal refuse.",
+          "finding": "Both retained envelope editions verify unchanged originals through SP-1101: one RetainedDispatcher resolution from sealed custody of the exact retained record selects the write-time recipe (frozen integer-json-v1 for older originals, CV-339 for current-writer ones), never the record; unsealed, ambiguous, foreign-binding and uninstalled-recipe originals refuse at the custody guard. New Storage metadata uses owner uint64 and CV-253 storage_utc_z independently of producer rules. Unknown edition, custody loss, access denial and withdrawal refuse.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -4329,9 +4414,9 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-636",
-              "line_start": 29996,
-              "line_end": 29996,
-              "quote": "Historical originals instead use their frozen write-time recipe integer-json-v1"
+              "line_start": 30118,
+              "line_end": 30118,
+              "quote": "Reader dispatch follows SP-1101: each retained canonical original"
             }
           ],
           "prior": {
@@ -4339,12 +4424,12 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
+          "change_reason": "Sweep part 2B (S3) replaces record-selected edition dispatch with SP-1101 custody selection; the grade is carried with the new evidence."
         },
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family checkers pass (12/12) with lifecycle/custody/history, format, full uint64, Card 6 policy, guard-table witness and shared-number-corpus suites. Check 11 is Method B: every refusal is one row of a generated phase table and the gated shared tool proves 261 of 288 rows (0 masked, 0 unrelated changes); the 27 unproved rows are entailed by an earlier row or schema (listed in the report). PARTIAL because each JSON Schema occurrence is one verdict row (per-keyword and format cuts are not ported to the shared tool), SP-1101 retained dispatch is part 2B and the timestamp review is interim only. Native NOT_RUN.",
+          "finding": "Exact-family checkers pass (12/12) with lifecycle/custody/history, CV-1101 date-time profile battery, full uint64, Card 6 policy and policy-instant, SP-1101 custody, guard-table witness and shared-number-corpus suites. Check 11 is Method B: every refusal is one row of a generated phase table and the gated shared tool proves 289 of 316 rows; the 27 unproved rows are each decided first by a named earlier row or schema (listed in the report). The timestamp review is no longer interim: every timestamp field is checked by the shared CV-1101 predicate with its owner profile. PARTIAL because each JSON Schema occurrence is one verdict row (per-keyword and format cuts are not ported to the shared tool). Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -4434,22 +4519,22 @@
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "start_custody_gate",
               "quote": "def start_custody_gate(state, first_start=False, writer_event=None, canonical_history=False):",
-              "line_start": 627,
-              "line_end": 627
+              "line_start": 718,
+              "line_end": 718
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "transition",
               "quote": "start_custody_gate(before, first_start=action['op'] == 'append_started')",
-              "line_start": 881,
-              "line_end": 881
+              "line_start": 1244,
+              "line_end": 1244
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "main",
               "quote": "mirrors = require_resolved_references()",
-              "line_start": 1573,
-              "line_end": 1573
+              "line_start": 1934,
+              "line_end": 1934
             },
             {
               "path": "Plans/memory_canonical_history_fixtures.json",
@@ -4476,22 +4561,22 @@
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "read_canonical_history",
               "quote": "def read_canonical_history(before, event):",
-              "line_start": 1079,
-              "line_end": 1079
+              "line_start": 1422,
+              "line_end": 1422
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "json_numbers",
               "quote": "def json_numbers(text):",
-              "line_start": 180,
-              "line_end": 180
+              "line_start": 181,
+              "line_end": 181
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "flag",
               "quote": "return type(value) is bool and value is expected",
-              "line_start": 279,
-              "line_end": 279
+              "line_start": 280,
+              "line_end": 280
             },
             {
               "path": "scripts/pm_memory_boundary_domains.py",
@@ -4550,8 +4635,8 @@
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
-              "line_start": 95,
-              "line_end": 95,
+              "line_start": 96,
+              "line_end": 96,
               "quote": "def table_refusal(phase, facts):"
             },
             {
@@ -4559,14 +4644,21 @@
               "line_start": 10,
               "line_end": 10,
               "quote": "Credit is copied from the tool"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-636",
+              "line_start": 30118,
+              "line_end": 30118,
+              "quote": "Every declared date-time format is enforced by the shared CV-1101 predicate"
             }
           ],
           "prior": {
             "source": "sweep part 1 self-grade at 1abebee498",
             "status": "PASS"
           },
-          "change": "downgraded",
-          "change_reason": "The lane-local removal proof (per-keyword schema cuts) is retired; the shared tool proves table rows only, and schema keyword cuts, SP-1101 dispatch and date-time stay open, as for DCH and DR."
+          "change": "carried",
+          "change_reason": "Sweep part 2B closes two of the three PARTIAL reasons (SP-1101 dispatch, interim timestamp review); the schema-keyword-cut reason remains, so the cell stays PARTIAL."
         }
       },
       "remaining_gaps": [
@@ -4574,9 +4666,8 @@
         "RT must resolve event/operation and rebuild selector/target retention.",
         "Native custody/atomicity/filesystem crash/backup/read-race obligations remain NOT_RUN; static success is not native proof.",
         "Independent review, separate per-family admission and unresolved operation/result retention still fence activation; Card 6 supplies no no-project writer permission.",
-        "S3 (SP-1101 authenticated retained dispatch) and the CV-339 current full-value commitment that depends on it are part 2B: the retained dispatch selects the envelope edition whose schemas carry the date-time format checks.",
-        "Timestamp fields: this lane's own review is interim only until the shared date-time gate passes.",
-        "JSON Schema keyword and format cuts are not ported to the shared guard tool; each schema occurrence is one verdict row."
+        "JSON Schema keyword and format cuts are not ported to the shared guard tool; each schema occurrence is one verdict row.",
+        "The shared date-time inventory and datetime_validator run at batch-2 integration (SWEEP-P2B Addendum 2); in this lane tree the inventory gate refuses on hash drift only."
       ],
       "static_checks_seen": [
         "scripts/pm_memory_maintenance_events.py",
@@ -4589,7 +4680,7 @@
       "notes": "Sweep part 2A + 2B-numbers worker self-grade. Membership ABSENT, retention PARTIAL, native NOT_RUN. Guard tables on the gated tool; CV-1100/SP-1100 number scope adopted; S3, timestamps and review remain.",
       "assessed_tree": {
         "branch": "plans/ea-w2-memory-maintenance-20261104",
-        "commit": "c4669460afe6eadf441e14fba667355c40e567b5",
+        "commit": "0375e1c7ce73e96660d0fbfb5053e2c1ef1a2cf2",
         "base": "2989975e8f8a4a1e49235e8ae2095b3df7ea0321"
       },
       "prepared_verdict": "PREPARED_WITH_NOTES"
@@ -4673,7 +4764,7 @@
         "producer": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Own SP-286/CV-339 full-value/full-flush ordering, exact operation CAS and frozen publication values.",
+          "finding": "Own SP-286/CV-339 full-value/full-flush ordering, exact operation CAS and frozen publication values; current-writer retained EventRecords now carry the CV-339 full_value_commitment itself.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -4688,6 +4779,13 @@
               "line_start": 30045,
               "line_end": 30045,
               "quote": "Every mutation is a whole-value CAS against the exact prior operation row under the single maintenance writer; request, scope, source, start time and receipt identities never change. started"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-637",
+              "line_start": 30175,
+              "line_end": 30175,
+              "quote": "A current-writer retained EventRecord carries the unchanged CV-339 full-value commitment"
             }
           ],
           "prior": {
@@ -4695,7 +4793,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
+          "change_reason": "Sweep part 2B: the current full-value commitment is the CV-339 recipe; grade carried."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -4931,7 +5029,7 @@
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Both retained envelope editions verify unchanged originals by frozen integer-json-v1; new Storage metadata uses owner uint64 independently of producer rules. Unknown edition, custody loss, access denial and withdrawal refuse.",
+          "finding": "Both retained envelope editions verify unchanged originals through SP-1101: one RetainedDispatcher resolution from sealed custody of the exact retained record selects the write-time recipe (frozen integer-json-v1 for older originals, CV-339 for current-writer ones), never the record; unsealed, ambiguous, foreign-binding and uninstalled-recipe originals refuse at the custody guard. New Storage metadata uses owner uint64 and CV-253 storage_utc_z independently of producer rules. Unknown edition, custody loss, access denial and withdrawal refuse.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -4950,9 +5048,9 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-637",
-              "line_start": 30061,
-              "line_end": 30061,
-              "quote": "Historical originals instead use their frozen write-time recipe integer-json-v1"
+              "line_start": 30175,
+              "line_end": 30175,
+              "quote": "Reader dispatch follows SP-1101: each retained canonical original"
             }
           ],
           "prior": {
@@ -4960,12 +5058,12 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
+          "change_reason": "Sweep part 2B (S3) replaces record-selected edition dispatch with SP-1101 custody selection; the grade is carried with the new evidence."
         },
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family checkers pass (12/12) with lifecycle/custody/history, format, full uint64, Card 6 policy, guard-table witness and shared-number-corpus suites. Check 11 is Method B: every refusal is one row of a generated phase table and the gated shared tool proves 261 of 288 rows (0 masked, 0 unrelated changes); the 27 unproved rows are entailed by an earlier row or schema (listed in the report). PARTIAL because each JSON Schema occurrence is one verdict row (per-keyword and format cuts are not ported to the shared tool), SP-1101 retained dispatch is part 2B and the timestamp review is interim only. Native NOT_RUN.",
+          "finding": "Exact-family checkers pass (12/12) with lifecycle/custody/history, CV-1101 date-time profile battery, full uint64, Card 6 policy and policy-instant, SP-1101 custody, guard-table witness and shared-number-corpus suites. Check 11 is Method B: every refusal is one row of a generated phase table and the gated shared tool proves 289 of 316 rows; the 27 unproved rows are each decided first by a named earlier row or schema (listed in the report). The timestamp review is no longer interim: every timestamp field is checked by the shared CV-1101 predicate with its owner profile. PARTIAL because each JSON Schema occurrence is one verdict row (per-keyword and format cuts are not ported to the shared tool). Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -5055,22 +5153,22 @@
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "start_custody_gate",
               "quote": "def start_custody_gate(state, first_start=False, writer_event=None, canonical_history=False):",
-              "line_start": 627,
-              "line_end": 627
+              "line_start": 718,
+              "line_end": 718
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "transition",
               "quote": "start_custody_gate(before, first_start=action['op'] == 'append_started')",
-              "line_start": 881,
-              "line_end": 881
+              "line_start": 1244,
+              "line_end": 1244
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "main",
               "quote": "mirrors = require_resolved_references()",
-              "line_start": 1573,
-              "line_end": 1573
+              "line_start": 1934,
+              "line_end": 1934
             },
             {
               "path": "Plans/memory_canonical_history_fixtures.json",
@@ -5097,22 +5195,22 @@
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "read_canonical_history",
               "quote": "def read_canonical_history(before, event):",
-              "line_start": 1079,
-              "line_end": 1079
+              "line_start": 1422,
+              "line_end": 1422
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "json_numbers",
               "quote": "def json_numbers(text):",
-              "line_start": 180,
-              "line_end": 180
+              "line_start": 181,
+              "line_end": 181
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "flag",
               "quote": "return type(value) is bool and value is expected",
-              "line_start": 279,
-              "line_end": 279
+              "line_start": 280,
+              "line_end": 280
             },
             {
               "path": "scripts/pm_memory_boundary_domains.py",
@@ -5171,8 +5269,8 @@
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
-              "line_start": 95,
-              "line_end": 95,
+              "line_start": 96,
+              "line_end": 96,
               "quote": "def table_refusal(phase, facts):"
             },
             {
@@ -5180,14 +5278,21 @@
               "line_start": 10,
               "line_end": 10,
               "quote": "Credit is copied from the tool"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-637",
+              "line_start": 30175,
+              "line_end": 30175,
+              "quote": "Every declared date-time format is enforced by the shared CV-1101 predicate"
             }
           ],
           "prior": {
             "source": "sweep part 1 self-grade at 1abebee498",
             "status": "PASS"
           },
-          "change": "downgraded",
-          "change_reason": "The lane-local removal proof (per-keyword schema cuts) is retired; the shared tool proves table rows only, and schema keyword cuts, SP-1101 dispatch and date-time stay open, as for DCH and DR."
+          "change": "carried",
+          "change_reason": "Sweep part 2B closes two of the three PARTIAL reasons (SP-1101 dispatch, interim timestamp review); the schema-keyword-cut reason remains, so the cell stays PARTIAL."
         }
       },
       "remaining_gaps": [
@@ -5195,9 +5300,8 @@
         "RT must resolve event/operation and rebuild selector/target retention.",
         "Native custody/atomicity/filesystem crash/backup/read-race obligations remain NOT_RUN; static success is not native proof.",
         "Independent review, separate per-family admission and unresolved operation/result retention still fence activation; Card 6 supplies no no-project writer permission.",
-        "S3 (SP-1101 authenticated retained dispatch) and the CV-339 current full-value commitment that depends on it are part 2B: the retained dispatch selects the envelope edition whose schemas carry the date-time format checks.",
-        "Timestamp fields: this lane's own review is interim only until the shared date-time gate passes.",
-        "JSON Schema keyword and format cuts are not ported to the shared guard tool; each schema occurrence is one verdict row."
+        "JSON Schema keyword and format cuts are not ported to the shared guard tool; each schema occurrence is one verdict row.",
+        "The shared date-time inventory and datetime_validator run at batch-2 integration (SWEEP-P2B Addendum 2); in this lane tree the inventory gate refuses on hash drift only."
       ],
       "static_checks_seen": [
         "scripts/pm_memory_maintenance_events.py",
@@ -5210,7 +5314,7 @@
       "notes": "Sweep part 2A + 2B-numbers worker self-grade. Membership ABSENT, retention PARTIAL, native NOT_RUN. Guard tables on the gated tool; CV-1100/SP-1100 number scope adopted; S3, timestamps and review remain.",
       "assessed_tree": {
         "branch": "plans/ea-w2-memory-maintenance-20261104",
-        "commit": "c4669460afe6eadf441e14fba667355c40e567b5",
+        "commit": "0375e1c7ce73e96660d0fbfb5053e2c1ef1a2cf2",
         "base": "2989975e8f8a4a1e49235e8ae2095b3df7ea0321"
       },
       "prepared_verdict": "PREPARED_WITH_NOTES"
@@ -5236,7 +5340,7 @@
       "native_execution": "NOT_RUN",
       "assessed_tree": {
         "branch": "plans/ea-w2-memory-maintenance-20261104",
-        "commit": "c4669460afe6eadf441e14fba667355c40e567b5",
+        "commit": "0375e1c7ce73e96660d0fbfb5053e2c1ef1a2cf2",
         "base": "2989975e8f8a4a1e49235e8ae2095b3df7ea0321"
       },
       "current_owner_units": [
@@ -5299,7 +5403,7 @@
         "producer": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact emitter and existing command are bound; SP-286/CV-339 custody and cutoff refusal precede publication.",
+          "finding": "Own SP-286/CV-339 full-value/full-flush ordering, exact operation CAS and frozen publication values; current-writer retained EventRecords now carry the CV-339 full_value_commitment itself.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -5307,6 +5411,13 @@
               "line_start": 30218,
               "line_end": 30218,
               "quote": "unit owns this family''s payload and storage contract. Its producer is MemoryMaintenance.monthly_summary.completed.v1@1.0.0"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-638",
+              "line_start": 30314,
+              "line_end": 30314,
+              "quote": "A current-writer retained EventRecord carries the unchanged CV-339 full-value commitment"
             }
           ],
           "prior": {
@@ -5314,7 +5425,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
+          "change_reason": "Sweep part 2B: the current full-value commitment is the CV-339 recipe; grade carried."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -5466,7 +5577,7 @@
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Both retained envelope editions verify unchanged originals by frozen integer-json-v1; new Storage metadata uses owner uint64 independently of producer rules. Unknown edition, custody loss, access denial and withdrawal refuse.",
+          "finding": "Both retained envelope editions verify unchanged originals through SP-1101: one RetainedDispatcher resolution from sealed custody of the exact retained record selects the write-time recipe (frozen integer-json-v1 for older originals, CV-339 for current-writer ones), never the record; unsealed, ambiguous, foreign-binding and uninstalled-recipe originals refuse at the custody guard. New Storage metadata uses owner uint64 and CV-253 storage_utc_z independently of producer rules. Unknown edition, custody loss, access denial and withdrawal refuse.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -5478,9 +5589,9 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-638",
-              "line_start": 30175,
-              "line_end": 30175,
-              "quote": "Historical originals instead use their frozen write-time recipe integer-json-v1"
+              "line_start": 30314,
+              "line_end": 30314,
+              "quote": "Reader dispatch follows SP-1101: each retained canonical original"
             }
           ],
           "prior": {
@@ -5488,12 +5599,12 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
+          "change_reason": "Sweep part 2B (S3) replaces record-selected edition dispatch with SP-1101 custody selection; the grade is carried with the new evidence."
         },
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family checkers pass (12/12) with lifecycle/custody/history, format, full uint64, Card 6 policy, guard-table witness and shared-number-corpus suites. Check 11 is Method B: every refusal is one row of a generated phase table and the gated shared tool proves 261 of 288 rows (0 masked, 0 unrelated changes); the 27 unproved rows are entailed by an earlier row or schema (listed in the report). PARTIAL because each JSON Schema occurrence is one verdict row (per-keyword and format cuts are not ported to the shared tool), SP-1101 retained dispatch is part 2B and the timestamp review is interim only. Native NOT_RUN.",
+          "finding": "Exact-family checkers pass (12/12) with lifecycle/custody/history, CV-1101 date-time profile battery, full uint64, Card 6 policy and policy-instant, SP-1101 custody, guard-table witness and shared-number-corpus suites. Check 11 is Method B: every refusal is one row of a generated phase table and the gated shared tool proves 289 of 316 rows; the 27 unproved rows are each decided first by a named earlier row or schema (listed in the report). The timestamp review is no longer interim: every timestamp field is checked by the shared CV-1101 predicate with its owner profile. PARTIAL because each JSON Schema occurrence is one verdict row (per-keyword and format cuts are not ported to the shared tool). Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -5527,8 +5638,8 @@
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "read_canonical_history",
               "quote": "def read_canonical_history(before, event):",
-              "line_start": 1079,
-              "line_end": 1079
+              "line_start": 1422,
+              "line_end": 1422
             },
             {
               "path": "Plans/memory_archive_event_fixtures.json",
@@ -5562,15 +5673,15 @@
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "json_numbers",
               "quote": "def json_numbers(text):",
-              "line_start": 180,
-              "line_end": 180
+              "line_start": 181,
+              "line_end": 181
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "flag",
               "quote": "return type(value) is bool and value is expected",
-              "line_start": 279,
-              "line_end": 279
+              "line_start": 280,
+              "line_end": 280
             },
             {
               "path": "scripts/pm_memory_boundary_domains.py",
@@ -5590,8 +5701,8 @@
               "path": "scripts/pm_memory_archive_events.py",
               "unit": "memory_flags",
               "quote": "before_flags = memory_flags(before['memories'])",
-              "line_start": 133,
-              "line_end": 133
+              "line_start": 138,
+              "line_end": 138
             },
             {
               "path": "Plans/storage-plan.md",
@@ -5624,8 +5735,8 @@
             {
               "path": "scripts/pm_memory_policy.py",
               "unit": "run",
-              "line_start": 243,
-              "line_end": 243,
+              "line_start": 312,
+              "line_end": 312,
               "quote": "def run(core, families, archive=None):"
             },
             {
@@ -5653,15 +5764,15 @@
               "path": "scripts/pm_memory_policy.py",
               "unit": "same",
               "quote": "if type(left) is not type(right):",
-              "line_start": 25,
-              "line_end": 25
+              "line_start": 24,
+              "line_end": 24
             },
             {
               "path": "scripts/pm_memory_policy.py",
               "unit": "instant",
               "quote": "return seconds + Fraction(Decimal('0.' + fraction)) if fraction else Fraction(seconds)",
-              "line_start": 57,
-              "line_end": 57
+              "line_start": 69,
+              "line_end": 69
             },
             {
               "path": "Plans/memory_card6_policy_fixtures.json",
@@ -5678,8 +5789,8 @@
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
-              "line_start": 95,
-              "line_end": 95,
+              "line_start": 96,
+              "line_end": 96,
               "quote": "def table_refusal(phase, facts):"
             },
             {
@@ -5687,14 +5798,21 @@
               "line_start": 10,
               "line_end": 10,
               "quote": "Credit is copied from the tool"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-638",
+              "line_start": 30314,
+              "line_end": 30314,
+              "quote": "Every declared date-time format is enforced by the shared CV-1101 predicate"
             }
           ],
           "prior": {
             "source": "sweep part 1 self-grade at 1abebee498",
             "status": "PASS"
           },
-          "change": "downgraded",
-          "change_reason": "The lane-local removal proof (per-keyword schema cuts) is retired; the shared tool proves table rows only, and schema keyword cuts, SP-1101 dispatch and date-time stay open, as for DCH and DR."
+          "change": "carried",
+          "change_reason": "Sweep part 2B closes two of the three PARTIAL reasons (SP-1101 dispatch, interim timestamp review); the schema-keyword-cut reason remains, so the cell stays PARTIAL."
         }
       },
       "remaining_gaps": [
@@ -5702,9 +5820,8 @@
         "Canonical operation/result custody retention is PENDING_RETENTION_DECISION.",
         "Native receipt/transaction/flush/crash/GUI proof remains NOT_RUN.",
         "Independent review, separate per-family admission and unresolved operation/result retention still fence activation; Card 6 supplies no no-project writer permission.",
-        "S3 (SP-1101 authenticated retained dispatch) and the CV-339 current full-value commitment that depends on it are part 2B: the retained dispatch selects the envelope edition whose schemas carry the date-time format checks.",
-        "Timestamp fields: this lane's own review is interim only until the shared date-time gate passes.",
-        "JSON Schema keyword and format cuts are not ported to the shared guard tool; each schema occurrence is one verdict row."
+        "JSON Schema keyword and format cuts are not ported to the shared guard tool; each schema occurrence is one verdict row.",
+        "The shared date-time inventory and datetime_validator run at batch-2 integration (SWEEP-P2B Addendum 2); in this lane tree the inventory gate refuses on hash drift only."
       ],
       "static_checks_seen": [
         "scripts/pm_memory_archive_events.py",
@@ -5740,7 +5857,7 @@
       "native_execution": "NOT_RUN",
       "assessed_tree": {
         "branch": "plans/ea-w2-memory-maintenance-20261104",
-        "commit": "c4669460afe6eadf441e14fba667355c40e567b5",
+        "commit": "0375e1c7ce73e96660d0fbfb5053e2c1ef1a2cf2",
         "base": "2989975e8f8a4a1e49235e8ae2095b3df7ea0321"
       },
       "current_owner_units": [
@@ -5803,7 +5920,7 @@
         "producer": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact emitter and existing command are bound; SP-286/CV-339 custody and cutoff refusal precede publication.",
+          "finding": "Own SP-286/CV-339 full-value/full-flush ordering, exact operation CAS and frozen publication values; current-writer retained EventRecords now carry the CV-339 full_value_commitment itself.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -5811,6 +5928,13 @@
               "line_start": 30364,
               "line_end": 30364,
               "quote": "unit owns this family''s payload and storage contract. Its producer is MemoryMaintenance.monthly_summary.started.v1@1.0.0"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-639",
+              "line_start": 30460,
+              "line_end": 30460,
+              "quote": "A current-writer retained EventRecord carries the unchanged CV-339 full-value commitment"
             }
           ],
           "prior": {
@@ -5818,7 +5942,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
+          "change_reason": "Sweep part 2B: the current full-value commitment is the CV-339 recipe; grade carried."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -5970,7 +6094,7 @@
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Both retained envelope editions verify unchanged originals by frozen integer-json-v1; new Storage metadata uses owner uint64 independently of producer rules. Unknown edition, custody loss, access denial and withdrawal refuse.",
+          "finding": "Both retained envelope editions verify unchanged originals through SP-1101: one RetainedDispatcher resolution from sealed custody of the exact retained record selects the write-time recipe (frozen integer-json-v1 for older originals, CV-339 for current-writer ones), never the record; unsealed, ambiguous, foreign-binding and uninstalled-recipe originals refuse at the custody guard. New Storage metadata uses owner uint64 and CV-253 storage_utc_z independently of producer rules. Unknown edition, custody loss, access denial and withdrawal refuse.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -5982,9 +6106,9 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-639",
-              "line_start": 30314,
-              "line_end": 30314,
-              "quote": "Historical originals instead use their frozen write-time recipe integer-json-v1"
+              "line_start": 30460,
+              "line_end": 30460,
+              "quote": "Reader dispatch follows SP-1101: each retained canonical original"
             }
           ],
           "prior": {
@@ -5992,12 +6116,12 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
+          "change_reason": "Sweep part 2B (S3) replaces record-selected edition dispatch with SP-1101 custody selection; the grade is carried with the new evidence."
         },
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family checkers pass (12/12) with lifecycle/custody/history, format, full uint64, Card 6 policy, guard-table witness and shared-number-corpus suites. Check 11 is Method B: every refusal is one row of a generated phase table and the gated shared tool proves 261 of 288 rows (0 masked, 0 unrelated changes); the 27 unproved rows are entailed by an earlier row or schema (listed in the report). PARTIAL because each JSON Schema occurrence is one verdict row (per-keyword and format cuts are not ported to the shared tool), SP-1101 retained dispatch is part 2B and the timestamp review is interim only. Native NOT_RUN.",
+          "finding": "Exact-family checkers pass (12/12) with lifecycle/custody/history, CV-1101 date-time profile battery, full uint64, Card 6 policy and policy-instant, SP-1101 custody, guard-table witness and shared-number-corpus suites. Check 11 is Method B: every refusal is one row of a generated phase table and the gated shared tool proves 289 of 316 rows; the 27 unproved rows are each decided first by a named earlier row or schema (listed in the report). The timestamp review is no longer interim: every timestamp field is checked by the shared CV-1101 predicate with its owner profile. PARTIAL because each JSON Schema occurrence is one verdict row (per-keyword and format cuts are not ported to the shared tool). Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -6031,8 +6155,8 @@
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "read_canonical_history",
               "quote": "def read_canonical_history(before, event):",
-              "line_start": 1079,
-              "line_end": 1079
+              "line_start": 1422,
+              "line_end": 1422
             },
             {
               "path": "Plans/memory_archive_event_fixtures.json",
@@ -6066,15 +6190,15 @@
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "json_numbers",
               "quote": "def json_numbers(text):",
-              "line_start": 180,
-              "line_end": 180
+              "line_start": 181,
+              "line_end": 181
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "flag",
               "quote": "return type(value) is bool and value is expected",
-              "line_start": 279,
-              "line_end": 279
+              "line_start": 280,
+              "line_end": 280
             },
             {
               "path": "scripts/pm_memory_boundary_domains.py",
@@ -6094,8 +6218,8 @@
               "path": "scripts/pm_memory_archive_events.py",
               "unit": "memory_flags",
               "quote": "before_flags = memory_flags(before['memories'])",
-              "line_start": 133,
-              "line_end": 133
+              "line_start": 138,
+              "line_end": 138
             },
             {
               "path": "Plans/storage-plan.md",
@@ -6128,8 +6252,8 @@
             {
               "path": "scripts/pm_memory_policy.py",
               "unit": "run",
-              "line_start": 243,
-              "line_end": 243,
+              "line_start": 312,
+              "line_end": 312,
               "quote": "def run(core, families, archive=None):"
             },
             {
@@ -6157,15 +6281,15 @@
               "path": "scripts/pm_memory_policy.py",
               "unit": "same",
               "quote": "if type(left) is not type(right):",
-              "line_start": 25,
-              "line_end": 25
+              "line_start": 24,
+              "line_end": 24
             },
             {
               "path": "scripts/pm_memory_policy.py",
               "unit": "instant",
               "quote": "return seconds + Fraction(Decimal('0.' + fraction)) if fraction else Fraction(seconds)",
-              "line_start": 57,
-              "line_end": 57
+              "line_start": 69,
+              "line_end": 69
             },
             {
               "path": "Plans/memory_card6_policy_fixtures.json",
@@ -6182,8 +6306,8 @@
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
-              "line_start": 95,
-              "line_end": 95,
+              "line_start": 96,
+              "line_end": 96,
               "quote": "def table_refusal(phase, facts):"
             },
             {
@@ -6191,14 +6315,21 @@
               "line_start": 10,
               "line_end": 10,
               "quote": "Credit is copied from the tool"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-639",
+              "line_start": 30460,
+              "line_end": 30460,
+              "quote": "Every declared date-time format is enforced by the shared CV-1101 predicate"
             }
           ],
           "prior": {
             "source": "sweep part 1 self-grade at 1abebee498",
             "status": "PASS"
           },
-          "change": "downgraded",
-          "change_reason": "The lane-local removal proof (per-keyword schema cuts) is retired; the shared tool proves table rows only, and schema keyword cuts, SP-1101 dispatch and date-time stay open, as for DCH and DR."
+          "change": "carried",
+          "change_reason": "Sweep part 2B closes two of the three PARTIAL reasons (SP-1101 dispatch, interim timestamp review); the schema-keyword-cut reason remains, so the cell stays PARTIAL."
         }
       },
       "remaining_gaps": [
@@ -6206,9 +6337,8 @@
         "Canonical operation/result custody retention is PENDING_RETENTION_DECISION.",
         "Native receipt/transaction/flush/crash/GUI proof remains NOT_RUN.",
         "Independent review, separate per-family admission and unresolved operation/result retention still fence activation; Card 6 supplies no no-project writer permission.",
-        "S3 (SP-1101 authenticated retained dispatch) and the CV-339 current full-value commitment that depends on it are part 2B: the retained dispatch selects the envelope edition whose schemas carry the date-time format checks.",
-        "Timestamp fields: this lane's own review is interim only until the shared date-time gate passes.",
-        "JSON Schema keyword and format cuts are not ported to the shared guard tool; each schema occurrence is one verdict row."
+        "JSON Schema keyword and format cuts are not ported to the shared guard tool; each schema occurrence is one verdict row.",
+        "The shared date-time inventory and datetime_validator run at batch-2 integration (SWEEP-P2B Addendum 2); in this lane tree the inventory gate refuses on hash drift only."
       ],
       "static_checks_seen": [
         "scripts/pm_memory_archive_events.py",
@@ -6244,7 +6374,7 @@
       "native_execution": "NOT_RUN",
       "assessed_tree": {
         "branch": "plans/ea-w2-memory-maintenance-20261104",
-        "commit": "c4669460afe6eadf441e14fba667355c40e567b5",
+        "commit": "0375e1c7ce73e96660d0fbfb5053e2c1ef1a2cf2",
         "base": "2989975e8f8a4a1e49235e8ae2095b3df7ea0321"
       },
       "current_owner_units": [
@@ -6307,7 +6437,7 @@
         "producer": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact emitter and existing command are bound; SP-286/CV-339 custody and cutoff refusal precede publication.",
+          "finding": "Own SP-286/CV-339 full-value/full-flush ordering, exact operation CAS and frozen publication values; current-writer retained EventRecords now carry the CV-339 full_value_commitment itself.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -6315,6 +6445,13 @@
               "line_start": 24990,
               "line_end": 24990,
               "quote": "unit owns this family''s payload and storage contract. Its producer is MemoryMaintenance.prune_archive.completed.v1@1.0.0"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-636",
+              "line_start": 30118,
+              "line_end": 30118,
+              "quote": "A current-writer retained EventRecord carries the unchanged CV-339 full-value commitment"
             }
           ],
           "prior": {
@@ -6322,7 +6459,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
+          "change_reason": "Sweep part 2B: the current full-value commitment is the CV-339 recipe; grade carried."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -6474,7 +6611,7 @@
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Both retained envelope editions verify unchanged originals by frozen integer-json-v1; new Storage metadata uses owner uint64 independently of producer rules. Unknown edition, custody loss, access denial and withdrawal refuse.",
+          "finding": "Both retained envelope editions verify unchanged originals through SP-1101: one RetainedDispatcher resolution from sealed custody of the exact retained record selects the write-time recipe (frozen integer-json-v1 for older originals, CV-339 for current-writer ones), never the record; unsealed, ambiguous, foreign-binding and uninstalled-recipe originals refuse at the custody guard. New Storage metadata uses owner uint64 and CV-253 storage_utc_z independently of producer rules. Unknown edition, custody loss, access denial and withdrawal refuse.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -6484,11 +6621,11 @@
               "quote": "authorized historical reads. Withdrawal first fences this family''s command/writer, retains unresolved original"
             },
             {
-              "path": "Plans/Contracts_V0.md",
-              "unit": "CV-658",
-              "line_start": 25083,
-              "line_end": 25083,
-              "quote": "Historical originals instead use their frozen write-time recipe integer-json-v1"
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-636",
+              "line_start": 30118,
+              "line_end": 30118,
+              "quote": "Reader dispatch follows SP-1101: each retained canonical original"
             }
           ],
           "prior": {
@@ -6496,12 +6633,12 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
+          "change_reason": "Sweep part 2B (S3) replaces record-selected edition dispatch with SP-1101 custody selection; the grade is carried with the new evidence."
         },
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family checkers pass (12/12) with lifecycle/custody/history, format, full uint64, Card 6 policy, guard-table witness and shared-number-corpus suites. Check 11 is Method B: every refusal is one row of a generated phase table and the gated shared tool proves 261 of 288 rows (0 masked, 0 unrelated changes); the 27 unproved rows are entailed by an earlier row or schema (listed in the report). PARTIAL because each JSON Schema occurrence is one verdict row (per-keyword and format cuts are not ported to the shared tool), SP-1101 retained dispatch is part 2B and the timestamp review is interim only. Native NOT_RUN.",
+          "finding": "Exact-family checkers pass (12/12) with lifecycle/custody/history, CV-1101 date-time profile battery, full uint64, Card 6 policy and policy-instant, SP-1101 custody, guard-table witness and shared-number-corpus suites. Check 11 is Method B: every refusal is one row of a generated phase table and the gated shared tool proves 289 of 316 rows; the 27 unproved rows are each decided first by a named earlier row or schema (listed in the report). The timestamp review is no longer interim: every timestamp field is checked by the shared CV-1101 predicate with its owner profile. PARTIAL because each JSON Schema occurrence is one verdict row (per-keyword and format cuts are not ported to the shared tool). Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -6535,8 +6672,8 @@
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "read_canonical_history",
               "quote": "def read_canonical_history(before, event):",
-              "line_start": 1079,
-              "line_end": 1079
+              "line_start": 1422,
+              "line_end": 1422
             },
             {
               "path": "Plans/memory_archive_event_fixtures.json",
@@ -6570,15 +6707,15 @@
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "json_numbers",
               "quote": "def json_numbers(text):",
-              "line_start": 180,
-              "line_end": 180
+              "line_start": 181,
+              "line_end": 181
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "flag",
               "quote": "return type(value) is bool and value is expected",
-              "line_start": 279,
-              "line_end": 279
+              "line_start": 280,
+              "line_end": 280
             },
             {
               "path": "scripts/pm_memory_boundary_domains.py",
@@ -6598,8 +6735,8 @@
               "path": "scripts/pm_memory_archive_events.py",
               "unit": "memory_flags",
               "quote": "before_flags = memory_flags(before['memories'])",
-              "line_start": 133,
-              "line_end": 133
+              "line_start": 138,
+              "line_end": 138
             },
             {
               "path": "Plans/Contracts_V0.md",
@@ -6632,8 +6769,8 @@
             {
               "path": "scripts/pm_memory_policy.py",
               "unit": "run",
-              "line_start": 243,
-              "line_end": 243,
+              "line_start": 312,
+              "line_end": 312,
               "quote": "def run(core, families, archive=None):"
             },
             {
@@ -6661,15 +6798,15 @@
               "path": "scripts/pm_memory_policy.py",
               "unit": "same",
               "quote": "if type(left) is not type(right):",
-              "line_start": 25,
-              "line_end": 25
+              "line_start": 24,
+              "line_end": 24
             },
             {
               "path": "scripts/pm_memory_policy.py",
               "unit": "instant",
               "quote": "return seconds + Fraction(Decimal('0.' + fraction)) if fraction else Fraction(seconds)",
-              "line_start": 57,
-              "line_end": 57
+              "line_start": 69,
+              "line_end": 69
             },
             {
               "path": "Plans/memory_card6_policy_fixtures.json",
@@ -6686,8 +6823,8 @@
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
-              "line_start": 95,
-              "line_end": 95,
+              "line_start": 96,
+              "line_end": 96,
               "quote": "def table_refusal(phase, facts):"
             },
             {
@@ -6695,14 +6832,21 @@
               "line_start": 10,
               "line_end": 10,
               "quote": "Credit is copied from the tool"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-636",
+              "line_start": 30118,
+              "line_end": 30118,
+              "quote": "Every declared date-time format is enforced by the shared CV-1101 predicate"
             }
           ],
           "prior": {
             "source": "sweep part 1 self-grade at 1abebee498",
             "status": "PASS"
           },
-          "change": "downgraded",
-          "change_reason": "The lane-local removal proof (per-keyword schema cuts) is retired; the shared tool proves table rows only, and schema keyword cuts, SP-1101 dispatch and date-time stay open, as for DCH and DR."
+          "change": "carried",
+          "change_reason": "Sweep part 2B closes two of the three PARTIAL reasons (SP-1101 dispatch, interim timestamp review); the schema-keyword-cut reason remains, so the cell stays PARTIAL."
         }
       },
       "remaining_gaps": [
@@ -6710,9 +6854,8 @@
         "Canonical operation/result custody retention is PENDING_RETENTION_DECISION.",
         "Native receipt/transaction/flush/crash/GUI proof remains NOT_RUN.",
         "Independent review, separate per-family admission and unresolved operation/result retention still fence activation; Card 6 supplies no no-project writer permission.",
-        "S3 (SP-1101 authenticated retained dispatch) and the CV-339 current full-value commitment that depends on it are part 2B: the retained dispatch selects the envelope edition whose schemas carry the date-time format checks.",
-        "Timestamp fields: this lane's own review is interim only until the shared date-time gate passes.",
-        "JSON Schema keyword and format cuts are not ported to the shared guard tool; each schema occurrence is one verdict row."
+        "JSON Schema keyword and format cuts are not ported to the shared guard tool; each schema occurrence is one verdict row.",
+        "The shared date-time inventory and datetime_validator run at batch-2 integration (SWEEP-P2B Addendum 2); in this lane tree the inventory gate refuses on hash drift only."
       ],
       "static_checks_seen": [
         "scripts/pm_memory_archive_events.py",
@@ -6748,7 +6891,7 @@
       "native_execution": "NOT_RUN",
       "assessed_tree": {
         "branch": "plans/ea-w2-memory-maintenance-20261104",
-        "commit": "c4669460afe6eadf441e14fba667355c40e567b5",
+        "commit": "0375e1c7ce73e96660d0fbfb5053e2c1ef1a2cf2",
         "base": "2989975e8f8a4a1e49235e8ae2095b3df7ea0321"
       },
       "current_owner_units": [
@@ -6811,7 +6954,7 @@
         "producer": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact emitter and existing command are bound; SP-286/CV-339 custody and cutoff refusal precede publication.",
+          "finding": "Own SP-286/CV-339 full-value/full-flush ordering, exact operation CAS and frozen publication values; current-writer retained EventRecords now carry the CV-339 full_value_commitment itself.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -6819,6 +6962,13 @@
               "line_start": 25133,
               "line_end": 25133,
               "quote": "unit owns this family''s payload and storage contract. Its producer is MemoryMaintenance.prune_archive.started.v1@1.0.0"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-637",
+              "line_start": 30175,
+              "line_end": 30175,
+              "quote": "A current-writer retained EventRecord carries the unchanged CV-339 full-value commitment"
             }
           ],
           "prior": {
@@ -6826,7 +6976,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
+          "change_reason": "Sweep part 2B: the current full-value commitment is the CV-339 recipe; grade carried."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -6978,7 +7128,7 @@
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Both retained envelope editions verify unchanged originals by frozen integer-json-v1; new Storage metadata uses owner uint64 independently of producer rules. Unknown edition, custody loss, access denial and withdrawal refuse.",
+          "finding": "Both retained envelope editions verify unchanged originals through SP-1101: one RetainedDispatcher resolution from sealed custody of the exact retained record selects the write-time recipe (frozen integer-json-v1 for older originals, CV-339 for current-writer ones), never the record; unsealed, ambiguous, foreign-binding and uninstalled-recipe originals refuse at the custody guard. New Storage metadata uses owner uint64 and CV-253 storage_utc_z independently of producer rules. Unknown edition, custody loss, access denial and withdrawal refuse.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -6988,11 +7138,11 @@
               "quote": "authorized historical reads. Withdrawal first fences this family''s command/writer, retains unresolved original"
             },
             {
-              "path": "Plans/Contracts_V0.md",
-              "unit": "CV-659",
-              "line_start": 25083,
-              "line_end": 25083,
-              "quote": "Historical originals instead use their frozen write-time recipe integer-json-v1"
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-637",
+              "line_start": 30175,
+              "line_end": 30175,
+              "quote": "Reader dispatch follows SP-1101: each retained canonical original"
             }
           ],
           "prior": {
@@ -7000,12 +7150,12 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact-family source and complete checker still support this grade; admission/retention/native boundaries remain."
+          "change_reason": "Sweep part 2B (S3) replaces record-selected edition dispatch with SP-1101 custody selection; the grade is carried with the new evidence."
         },
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family checkers pass (12/12) with lifecycle/custody/history, format, full uint64, Card 6 policy, guard-table witness and shared-number-corpus suites. Check 11 is Method B: every refusal is one row of a generated phase table and the gated shared tool proves 261 of 288 rows (0 masked, 0 unrelated changes); the 27 unproved rows are entailed by an earlier row or schema (listed in the report). PARTIAL because each JSON Schema occurrence is one verdict row (per-keyword and format cuts are not ported to the shared tool), SP-1101 retained dispatch is part 2B and the timestamp review is interim only. Native NOT_RUN.",
+          "finding": "Exact-family checkers pass (12/12) with lifecycle/custody/history, CV-1101 date-time profile battery, full uint64, Card 6 policy and policy-instant, SP-1101 custody, guard-table witness and shared-number-corpus suites. Check 11 is Method B: every refusal is one row of a generated phase table and the gated shared tool proves 289 of 316 rows; the 27 unproved rows are each decided first by a named earlier row or schema (listed in the report). The timestamp review is no longer interim: every timestamp field is checked by the shared CV-1101 predicate with its owner profile. PARTIAL because each JSON Schema occurrence is one verdict row (per-keyword and format cuts are not ported to the shared tool). Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -7039,8 +7189,8 @@
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "read_canonical_history",
               "quote": "def read_canonical_history(before, event):",
-              "line_start": 1079,
-              "line_end": 1079
+              "line_start": 1422,
+              "line_end": 1422
             },
             {
               "path": "Plans/memory_archive_event_fixtures.json",
@@ -7074,15 +7224,15 @@
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "json_numbers",
               "quote": "def json_numbers(text):",
-              "line_start": 180,
-              "line_end": 180
+              "line_start": 181,
+              "line_end": 181
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "flag",
               "quote": "return type(value) is bool and value is expected",
-              "line_start": 279,
-              "line_end": 279
+              "line_start": 280,
+              "line_end": 280
             },
             {
               "path": "scripts/pm_memory_boundary_domains.py",
@@ -7102,8 +7252,8 @@
               "path": "scripts/pm_memory_archive_events.py",
               "unit": "memory_flags",
               "quote": "before_flags = memory_flags(before['memories'])",
-              "line_start": 133,
-              "line_end": 133
+              "line_start": 138,
+              "line_end": 138
             },
             {
               "path": "Plans/Contracts_V0.md",
@@ -7136,8 +7286,8 @@
             {
               "path": "scripts/pm_memory_policy.py",
               "unit": "run",
-              "line_start": 243,
-              "line_end": 243,
+              "line_start": 312,
+              "line_end": 312,
               "quote": "def run(core, families, archive=None):"
             },
             {
@@ -7165,15 +7315,15 @@
               "path": "scripts/pm_memory_policy.py",
               "unit": "same",
               "quote": "if type(left) is not type(right):",
-              "line_start": 25,
-              "line_end": 25
+              "line_start": 24,
+              "line_end": 24
             },
             {
               "path": "scripts/pm_memory_policy.py",
               "unit": "instant",
               "quote": "return seconds + Fraction(Decimal('0.' + fraction)) if fraction else Fraction(seconds)",
-              "line_start": 57,
-              "line_end": 57
+              "line_start": 69,
+              "line_end": 69
             },
             {
               "path": "Plans/memory_card6_policy_fixtures.json",
@@ -7190,8 +7340,8 @@
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
-              "line_start": 95,
-              "line_end": 95,
+              "line_start": 96,
+              "line_end": 96,
               "quote": "def table_refusal(phase, facts):"
             },
             {
@@ -7199,14 +7349,21 @@
               "line_start": 10,
               "line_end": 10,
               "quote": "Credit is copied from the tool"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-637",
+              "line_start": 30175,
+              "line_end": 30175,
+              "quote": "Every declared date-time format is enforced by the shared CV-1101 predicate"
             }
           ],
           "prior": {
             "source": "sweep part 1 self-grade at 1abebee498",
             "status": "PASS"
           },
-          "change": "downgraded",
-          "change_reason": "The lane-local removal proof (per-keyword schema cuts) is retired; the shared tool proves table rows only, and schema keyword cuts, SP-1101 dispatch and date-time stay open, as for DCH and DR."
+          "change": "carried",
+          "change_reason": "Sweep part 2B closes two of the three PARTIAL reasons (SP-1101 dispatch, interim timestamp review); the schema-keyword-cut reason remains, so the cell stays PARTIAL."
         }
       },
       "remaining_gaps": [
@@ -7214,9 +7371,8 @@
         "Canonical operation/result custody retention is PENDING_RETENTION_DECISION.",
         "Native receipt/transaction/flush/crash/GUI proof remains NOT_RUN.",
         "Independent review, separate per-family admission and unresolved operation/result retention still fence activation; Card 6 supplies no no-project writer permission.",
-        "S3 (SP-1101 authenticated retained dispatch) and the CV-339 current full-value commitment that depends on it are part 2B: the retained dispatch selects the envelope edition whose schemas carry the date-time format checks.",
-        "Timestamp fields: this lane's own review is interim only until the shared date-time gate passes.",
-        "JSON Schema keyword and format cuts are not ported to the shared guard tool; each schema occurrence is one verdict row."
+        "JSON Schema keyword and format cuts are not ported to the shared guard tool; each schema occurrence is one verdict row.",
+        "The shared date-time inventory and datetime_validator run at batch-2 integration (SWEEP-P2B Addendum 2); in this lane tree the inventory gate refuses on hash drift only."
       ],
       "static_checks_seen": [
         "scripts/pm_memory_archive_events.py",
@@ -7232,8 +7388,8 @@
       "prepared_verdict": "PREPARED_WITH_NOTES"
     }
   ],
-  "review_round": "sweep part 2A + 2B numbers",
-  "review_scope": "Guard tables on the gated tool 004bdedd63; NUMRULE number scope a16f67c1ef merged and adopted; AMS-022 DL-402 wording; timestamp review interim only.",
+  "review_round": "sweep part 2B",
+  "review_scope": "Gated NUMRULE head 58c2816ff3 merged (date-time scope); CV-1101 date_time with explicit field profiles; S3 SP-1101 authenticated retained dispatch and the CV-339 current full-value commitment; guard tables rerun on the gated tool 004bdedd63.",
   "review_baseline_prepared_status_counts": {
     "PASS": 114,
     "PARTIAL": 18,
@@ -7256,7 +7412,7 @@
     {
       "id": "S2",
       "location": "scripts/pm_memory_maintenance_events.py digest/canonical_numbers/retained/retained_digest/within_value_cap; twelve full-value paragraphs",
-      "status": "PARTLY_ADOPTED_CV339_COMMITMENT_PART_2B",
+      "status": "ADOPTED_SWEEP_2B",
       "title": "SP-1100/CV-1100 separate profiles",
       "action": "Adopt separate physical, semantic and local commitment profiles; never normalize physical floats, erase signed zero or rewrite old commitments.",
       "review_source": "DMEM-sol/REVIEW-cycle9.md"
@@ -7264,7 +7420,7 @@
     {
       "id": "S3",
       "location": "scripts/pm_memory_maintenance_events.py HISTORY_RECIPES/historical_envelope_matches/retained_digest/read_canonical_history; frozen definitions; twelve numeric paragraphs",
-      "status": "PART_2B_DATETIME_CROSSING",
+      "status": "ADOPTED_SWEEP_2B",
       "title": "SP-1101 authenticated original selection",
       "action": "Adopt authentic immutable original edition/recipe selection and unknown/ambiguous/downgrade negatives; preserve old results and custody/access/withdrawal fences.",
       "review_source": "DMEM-sol/REVIEW-cycle9.md"
@@ -7373,5 +7529,51 @@
     },
     "grades": "positive_negative_oracles PASS -> PARTIAL for all twelve families; every other cell carried",
     "quotes_replaced": 16
+  },
+  "sweep_p2b": {
+    "implementation_head": "0375e1c7ce73e96660d0fbfb5053e2c1ef1a2cf2",
+    "numrule_merge": "28e7e9661f (exactly 58c2816ff3)",
+    "guard_tables": {
+      "tables": 183,
+      "rows": 316,
+      "proved": 289,
+      "unproved": [
+        "AOP02_value_cap",
+        "AOP05_terminal_reserve",
+        "AP11_payload_schema",
+        "AP12_inline_cap",
+        "BD16_phase",
+        "CK08_scope_kind",
+        "EF01_permission",
+        "EF02_withdrawn",
+        "OPA02_value_cap",
+        "OPA03_started_receipt",
+        "OPA04_completed_receipt",
+        "OPA05_terminal_reserve",
+        "OPA06_result_ref",
+        "OPA07_result_digest",
+        "RC01_permission",
+        "RC02_withdrawn",
+        "RR01_permission",
+        "RR02_withdrawn",
+        "SEL02_value_cap",
+        "SGC07_reduced",
+        "TGO01_schema",
+        "TGOA01_schema",
+        "TGOA02_artifact_order",
+        "TGOA03_manifest",
+        "TGOA04_source",
+        "TGOA05_identity",
+        "TGS01_schema"
+      ],
+      "witness_calls": 30940,
+      "refused_calls": 17828
+    },
+    "quotes": {
+      "at_line": 576,
+      "relocated": 94,
+      "replaced_text": []
+    },
+    "grades": "every cell carried; status counts unchanged (positive_negative_oracles stays PARTIAL for the schema-keyword-cut reason only)"
   }
 }
