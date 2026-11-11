@@ -135,6 +135,42 @@ export const tests = {
 		const kept = await f.evaluate((W) => { const a = document.activeElement; return { code: a.getAttribute('data-code'), pressed: a.getAttribute('aria-pressed') }; }, WIN);
 		await t.check('a demo answer pressed by keyboard keeps focus and shows it is chosen', kept.code === 'denied' && kept.pressed === 'true', JSON.stringify(kept));
 	},
+	async '1.06 + 1.11: a refusal under Continue goes away once the step it names has moved on'(t) {
+		/* (recheck F1 on 10da46a5ea: the in-place update left "Press Start first.", "Wait for the steps to finish." and
+		   "Create the link first." under steps that had moved on; the full redraw before it had cleared them) */
+		const refusal = (f) => f.evaluate((W) => { const e = document.querySelector(`${W} .o55g-layer:not(.o55g-out) .o55g-error`); return e ? { text: e.textContent.trim(), shown: !e.hidden && !!e.textContent.trim() && e.getClientRects().length > 0 } : { text: '', shown: false }; }, WIN);
+		const f = await openAway(t);
+		await setUp(f, 'tailscale'); await cont(f);
+		await cont(f);
+		let r = await refusal(f);
+		await t.check('Continue before Start is refused: Press Start first.', r.shown && /Press Start first/.test(r.text), JSON.stringify(r));
+		await press(f, 'Start');
+		await untilTs(f, ['running', 'waiting']);
+		r = await refusal(f);
+		await t.check('once Start is pressed, "Press Start first." is gone', !r.shown && !/Press Start first/.test(r.text), JSON.stringify(r));
+		await untilTs(f, ['waiting']);
+		await cont(f);
+		r = await refusal(f);
+		await t.check('Continue while the steps wait is refused: Wait for the steps to finish.', r.shown && /Wait for the steps to finish/.test(r.text), JSON.stringify(r));
+		await press(f, 'Sign in to Tailscale');
+		await untilTs(f, ['running']);
+		r = await refusal(f);
+		await t.check('at the next answer "Wait for the steps to finish." is gone', !r.shown && !/Wait for the steps/.test(r.text), JSON.stringify(r));
+		await untilTs(f, ['done']);
+		r = await refusal(f);
+		const body = await main(f);
+		await t.check('and it stays gone under the finished Signed in', !r.shown && /Signed in/.test(body), JSON.stringify(r));
+		await closeAll(f);
+		await setUp(f, 'remote-link'); await cont(f);
+		await cont(f);
+		r = await refusal(f);
+		await t.check('Continue before the link is made is refused: Create the link first.', r.shown && /Create the link first/.test(r.text), JSON.stringify(r));
+		await press(f, 'Create link');
+		await f.waitForFunction((W) => /https:\/\//.test((document.querySelector(`${W} .o55g-layer:not(.o55g-out) .o55g-main`) || {}).innerText || ''), WIN, { timeout: 5000 }).catch(() => {});
+		r = await refusal(f);
+		const link = await main(f);
+		await t.check('once the link is issued, "Create the link first." is gone', /https:\/\//.test(link) && !r.shown && !/Create the link first/.test(r.text), JSON.stringify(r));
+	},
 	async '1.06: a refused or expired sign-in goes back to a fresh sign-in; an approval failure asks again'(t) {
 		const f = await openAway(t);
 		for (const [hint, words] of [['Tailscale says no', /didn.t allow it/], ['Sign-in runs out', /ran out before it finished/]]) {

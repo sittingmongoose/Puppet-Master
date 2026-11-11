@@ -573,9 +573,14 @@
      step-change entrance, the pane back at its top and focus on the title, on every 900 ms answer (batch 11 lane A
      recheck). Focus stays where it is; when the control holding it goes away (Start, Sign in, Try again), the step's own
      next control takes it, else the steps list. A step not showing is drawn from the state when it is shown again. */
+  /* The step's refusal line (the wizard's say(), "Press Start first." and the like) belonged to the step as it was drawn,
+     and the full redraw cleared it with everything else; an answer patched in place clears it the same way, so it never
+     names a state the step has left (recheck F1 on 10da46a5ea). */
+  const clearRefusal = host => { const box = host && host.closest('.o55g-layer') && host.closest('.o55g-layer').querySelector('.o55g-error'); if (box && (box.textContent || !box.hidden)) { box.textContent = ''; box.hidden = true; } };
   const tsHost = w => { const wrap = [...portalRoot().querySelectorAll('.drawer-wrap')].find(x => x._o55Wizard === w); return wrap && wrap.dataset.closing !== '1' && w.step() === w.draft.connectAt ? wrap.querySelector('.o55g-layer:not(.o55g-out) [data-ts-host]') : null; };
   function tsPaint(w) {
     const host = tsHost(w); if (!host) return;
+    clearRefusal(host);
     const d = w.draft, T = d.ts, had = document.activeElement, fresh = document.createElement('div');
     fresh.innerHTML = tsConnect(d);
     const next = fresh.firstElementChild;
@@ -688,6 +693,7 @@
   function rlPaint(w) {
     const wrap = [...portalRoot().querySelectorAll('.drawer-wrap')].find(x => x._o55Wizard === w);
     const host = wrap && wrap.dataset.closing !== '1' && w.step() === w.draft.connectAt ? wrap.querySelector('.o55g-layer:not(.o55g-out) [data-rl-host]') : null; if (!host) return;
+    clearRefusal(host);
     const had = document.activeElement; host.innerHTML = rlBody(w.draft);
     if (had && had !== document.body && !had.isConnected) { const to = host.querySelector('button') || host.querySelector('[tabindex]'); if (to) try { to.focus({ preventScroll: true }); } catch (_e) { to.focus(); } }
   }
