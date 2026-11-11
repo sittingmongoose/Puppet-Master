@@ -26,6 +26,12 @@ html[data-o55-open][data-o55-nier-parts] body > [data-o55-held] :is(.o55-spin, .
    (PERF-2, Jared's choice B, 2026-11-11; it was for computers that could not composite the app beneath at full rate);
    the scrim lies over the page's own ground */
 html[data-o55-open][data-o55-solid] body > [data-o55-held] { visibility: hidden !important; }
+/* Two kinds of element beneath set their own visibility and would still be drawn: the hosted 5.6 Pro chat's roots
+   (#pmRoot, #pmOverlayRoot, #pm56Fx: :where(.pm56-host) { visibility: visible } in its stylesheet) and a neon glyph's
+   halo copies (.nx-h: visibility: var(--nx-hiv, hidden), visible while lit). Found by the kit's onboarding-plain-backdrop
+   on the 3090 (2026-11-11): the whole chat column stayed drawn under the scrim in six of the ten looks. Restyled in the
+   frame that opens the window, which restyles the app beneath already (the rule above it). */
+html[data-o55-open][data-o55-solid] body > [data-o55-held] .pm56-host, html[data-o55-open][data-o55-solid] body > [data-o55-held] .nx-h { visibility: hidden !important; }
 .o55-scrim { position: absolute; inset: 0; background: color-mix(in srgb, var(--background) 74%, transparent); }
 /* The click paints this dim before the window is built (the open used to stay undimmed through that work).
    The flash is one empty element, so the click frame can paint it; the real scrim replaces it on the next
