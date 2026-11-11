@@ -18,7 +18,6 @@
 #smx-root .smx-nav { position: relative; width: auto; height: 100%; min-height: 0; display: flex; flex-direction: column; gap: 0; overflow: hidden; padding: 0; margin: 0; }
 #smx-root .smx-nav-head { padding: 14px 16px 8px; }
 #smx-root .smx-nav-title { font-size: 18px; font-weight: 700; letter-spacing: -.01em; color: var(--k3-text-1); }
-#smx-root .smx-nav-sub { margin-top: 2px; font-size: 11.5px; color: var(--k3-text-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 #smx-root .smx-search { display: flex; align-items: center; gap: 8px; margin: 4px 12px 8px; padding: 0 10px; height: 34px; border: 1px solid var(--k3-line); border-radius: var(--k3-radius-md); background: var(--k3-surface-1); color: var(--k3-text-3); }
 #smx-root .smx-search:focus-within { border-color: var(--k3-accent); }
 #smx-root .smx-search .icon { width: 15px; height: 15px; flex: none; }
@@ -155,7 +154,7 @@
 #smx-root .smx-layer { position: absolute; inset: 0; z-index: 8; pointer-events: none; display: none; }
 #smx-root .smx-layer.is-open { display: block; }
 #smx-root .smx-layer > * { pointer-events: auto; }
-#smx-root .smx-find { position: absolute; top: 96px; left: 12px; width: min(440px, calc(100% - 24px)); max-height: min(560px, calc(100% - 120px)); overflow-y: auto; padding: 6px; border: 1px solid var(--k3-line-strong); border-radius: var(--k3-radius-lg); background: var(--k3-surface-1); box-shadow: var(--k3-shadow-lg, var(--k3-shadow-md)); }
+#smx-root .smx-find { position: absolute; top: 80px; left: 12px; width: min(440px, calc(100% - 24px)); max-height: min(560px, calc(100% - 120px)); overflow-y: auto; padding: 6px; border: 1px solid var(--k3-line-strong); border-radius: var(--k3-radius-lg); background: var(--k3-surface-1); box-shadow: var(--k3-shadow-lg, var(--k3-shadow-md)); }
 html[data-theme^="glass"] #smx-root .smx-find, html[data-theme^="glass"] #smx-root .smx-rv { background: var(--k3-bg-0); }
 #smx-root .smx-find-group { padding: 8px 8px 4px; font-size: 11px; font-weight: 650; letter-spacing: .06em; text-transform: uppercase; color: var(--k3-text-3); }
 #smx-root .smx-find-row { display: grid; gap: 1px; width: 100%; padding: 7px 8px; border: 0; border-radius: var(--k3-radius-sm); background: transparent; color: var(--k3-text-1); text-align: left; cursor: pointer; }
@@ -313,3 +312,15 @@ html[data-motion="reduced"] #smx-root *, html[data-reduced-motion="1"] #smx-root
 #smx-root .setting-label .o55-risk, #smx-root .setting-label .o55-risk span,
 #smx-root .reorder-item, #smx-root .reorder-item span, #smx-root .reorder-item button,
 #smx-root .wpk-fam { font-size: 11.5px; }
+
+/* ---- PMConcept7's "About" panel of a setting, drawn by its own engine in a place these pages lend it (smx-details.js).
+   The panel's frame, spring and content are PMConcept7's (#panel-settings .detail-inspector); only the place is ours. */
+#panel-settings #smx-root .smx-main > .smx-details { position: absolute; inset: 0; z-index: 6; display: none; height: auto; min-width: 0; grid-template-columns: none; overflow: hidden; pointer-events: none; }
+#panel-settings #smx-root .smx-main > .smx-details.document-layout { display: block; }
+#panel-settings #smx-root .smx-main > .smx-details.is-armed > .detail-inspector { pointer-events: auto; }
+/* opened by the engine while it was sent to a setting: these pages show the row instead */
+#panel-settings #smx-root .smx-main > .smx-details:not(.is-armed) > * { visibility: hidden; pointer-events: none; }
+#smx-root .smx-details .o55-insp-block[hidden] { display: none; }
+#smx-root .smx-details .smx-details-go { display: inline-flex; flex-wrap: wrap; gap: 4px 6px; padding: 0; border: 0; background: none; color: var(--k3-accent-ink, var(--k3-accent)); font: inherit; text-align: left; text-decoration: underline dotted; text-underline-offset: 3px; cursor: pointer; }
+#smx-root .smx-details .smx-details-go:hover { text-decoration-style: solid; }
+#smx-root .smx-details .smx-details-go:focus-visible { outline: 2px solid var(--k3-accent); outline-offset: 2px; border-radius: 3px; }

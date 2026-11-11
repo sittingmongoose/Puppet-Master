@@ -227,6 +227,7 @@
        to wait for the next look of a slow clock, up to a second and a half. Changes inside these pages are ours and
        are ignored; while the engine is parked its hidden page does not change, so this costs nothing at rest. */
     new W.MutationObserver((list) => { for (const m of list) { const t = m.target; if (t && !host.contains(t) && !(portals && portals.contains(t))) { soon(40); return; } } }).observe(root, { childList: true, subtree: true });
+    if (SMX.details) SMX.details.mount();   // the place PMConcept7's "About" panel is drawn in (smx-details.js)
     setView('new');
     return true;
   }
@@ -269,6 +270,7 @@
     if (!root) return;
     root.classList.toggle('smx-on', SMX.view === 'new');
     D.documentElement.setAttribute('data-smx-view', SMX.view);
+    if (SMX.details) SMX.details.view();   // PMConcept7's "About" panel is drawn in these pages only while they show
     if (SMX.view === 'new') { leaving = null; SMX.tick(true); }   // tick goes to the page that holds the place "Today" was showing, then parks
     else {
       // show PMConcept7's own Settings at the place that matches the current page, when the page names one
@@ -344,7 +346,8 @@
     const curCh = cur.page.chapter;
     const st = SMX.st(); const ctx = { st, local: SMX.local };
     const out = [];
-    out.push(`<div class="smx-nav-head"><div class="smx-nav-title">Settings</div><div class="smx-nav-sub">${esc(SMX.projectLine ? SMX.projectLine(st) : '')}</div></div>`);
+    // no "Project: …" line under the title: the title bar's project button names the project (PMConcept7 dropped the same line from its rail on 2026-11-11, FO-135)
+    out.push('<div class="smx-nav-head"><div class="smx-nav-title">Settings</div></div>');
     out.push(`<label class="smx-search">${SMX.icon('search')}<input type="search" autocomplete="off" spellcheck="false" placeholder="Search settings" aria-label="Search settings" data-smx-search value="${esc(SMX.query || '')}"></label>`);
     out.push('<nav class="smx-nav-list">');
     out.push(`<button type="button" class="smx-nav-item smx-nav-home${cur.page.id === 'home' ? ' is-current' : ''}" data-smx-go="home">${SMX.icon('home')}<span>Home</span></button>`);
@@ -522,6 +525,7 @@
         else if (to && to !== SMX.route && !mine) SMX.go(to);
       }
     }
+    if (SMX.details) SMX.details.tidy(st);
     render(!!force);
   };
 
@@ -553,6 +557,7 @@
      the person goes to next. Going somewhere by hand closes it the way a click beside it does. (A page change the
      engine asks for, in the middle of a guided flow, closes nothing.) */
   function closeTheirs() {
+    if (SMX.details) SMX.details.close();
     try { kit().closePopouts(); } catch (e) { /* none open */ }
     D.querySelectorAll('#pm-settings-portals .drawer-wrap.is-open:not([data-closing])').forEach((w) => { try { w.dispatchEvent(new W.MouseEvent('mousedown', { bubbles: true, cancelable: true, view: W })); } catch (e) { /* it stays */ } });
   }

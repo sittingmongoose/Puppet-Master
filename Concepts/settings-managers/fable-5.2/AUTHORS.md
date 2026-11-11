@@ -193,6 +193,20 @@ settings placed and none drawn twice. Things the audit found broken go into `cha
 does), and a defect that is PMConcept7's own (a dead button, a wrong count) is *not* silently fixed: say in `changes`
 that the concept shows the intended behaviour, and list the defect in your report.
 
+### A real button is not yet a working button
+
+A page draws PMConcept7's real rows and real `data-action` buttons, and the engine handles the press. That is not
+enough by itself: what the press DOES must show here. An action that changes saved state shows (the page redraws
+from the state), and so does one that opens a menu, a dialog or a side panel (they live outside the page). An action
+whose result PMConcept7 draws into its own page does not, because that page is hidden under these: the button is
+then real and dead. Every row's "About" button was exactly that until 2026-11-11, on every page, through two review
+rounds. So press what you draw, and look at what happened.
+
+The "About" panel itself needs nothing from a page. `layer/smx-details.js` lends the engine a place to draw it; the
+title, the choices, the value and the default follow `SMX.reword`; the line above the title names the page of this
+Settings that holds the row; "Next to it" lists the rows of the same section on that page. `SMX.details.close()`
+closes it, and going to another page closes it too.
+
 ## Building and checking
 
 ```sh

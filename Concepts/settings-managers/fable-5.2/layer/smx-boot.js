@@ -84,7 +84,7 @@
       case 'changes': if (SMX.view === 'new') { SMX.showChanges(); report('state'); } break;
       case 'moved': if (SMX.view !== 'new') SMX.setView('new'); SMX.showMoved(); report('state'); break;
       case 'look': setLook(m.look); break;
-      case 'escape': if (SMX.layerOpen) { SMX.closeLayer(); report('state'); } break;
+      case 'escape': if (SMX.layerOpen) { SMX.closeLayer(); report('state'); } else if (SMX.details && SMX.details.shown()) SMX.details.close(); break;
       case 'motion': H.setAttribute('data-motion', m.reduced ? 'reduced' : ''); if (!m.reduced) H.removeAttribute('data-motion'); SMX.reduced = !!m.reduced; break;
       case 'reset': try { W.PM12_KIMI.reset(); } catch (e) { /* engine not ready */ } SMX.resetLocal(); SMX.search && SMX.search.reset(); SMX.setView('new'); SMX.go('home', { replace: true }); SMX.toast('Demo reset', 'Every example value is back where it started.', 'info'); break;
       default: break;

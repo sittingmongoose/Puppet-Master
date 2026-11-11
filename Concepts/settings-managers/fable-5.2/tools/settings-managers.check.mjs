@@ -342,5 +342,150 @@ export const tests = {
 		if (a.out.length || b.out.length) fail('pages that scroll sideways: at 780: ' + (a.out.join('; ') || 'none') + ' | at 860: ' + (b.out.join('; ') || 'none'));
 		if (a.rows < 300) fail(`only ${a.rows} rows with one control were found, so the naming check proves little`);
 		if (a.misnamed.length) fail(`${a.misnamed.length} controls are not named by their label: ${a.misnamed.slice(0, 5).join('; ')}`);
+	},
+	/* Every row ends in PMConcept7's "About" button: what the setting does, your choices, the default and the way back
+	   to it. PMConcept7 draws that panel into its own page, which these pages hide, so the button did nothing here until
+	   2026-11-11 (two review rounds and this file had missed it). The pages lend the engine a place for its real panel
+	   (layer/smx-details.js). This test presses the button the way a person does and uses what opens. */
+	async 'About on a row opens PMConcept7\'s own panel here: choose, go back to the default, Escape from anywhere; a link to a setting shows the row; Today keeps its own panel'(t) {
+		const { f } = await open(t);
+		const lib = `
+			const S = window.SMX, E = window.PM12_KIMI, wait = (ms) => new Promise((res) => setTimeout(res, ms));
+			const lay = () => document.querySelector('#smx-root .smx-main > .smx-details');
+			const insp = () => lay() && lay().querySelector('.detail-inspector');
+			const seen = () => { const i = insp(); if (!i || !i.classList.contains('is-open') || getComputedStyle(i).visibility !== 'visible') return false; const q = i.getBoundingClientRect(); const top = document.elementFromPoint(q.left + q.width / 2, q.top + 60); return q.width > 200 && q.left >= 0 && q.right <= innerWidth + 1 && !!top && i.contains(top); };
+			const about = (id) => document.querySelector('#smx-root .smx-page [id="setting-' + id + '"] [data-action="setting-details"]');
+			const until = async (fn, ms = 3000) => { const end = performance.now() + ms; while (performance.now() < end) { if (fn()) return true; await wait(60); } return !!fn(); };
+			const text = (sel) => { const n = insp() && insp().querySelector(sel); return n ? n.innerText.replace(/\\s+/g, ' ').trim() : ''; };
+		`;
+		const run = (body) => f.evaluate(`(async () => { ${lib} const bad = []; ${body} })()`);
+		const ID = 'general.visual.app-font';
+		// 1. it opens, over the page, as the engine's own panel; a choice made in it changes the row; the default comes back
+		const a = await run(`
+			if (!lay()) { bad.push('these pages lend PMConcept7 no place for its About panel'); return { bad }; }
+			S.go('look'); await wait(700);
+			const rows = [...document.querySelectorAll('#smx-root .smx-page .setting-row[id^="setting-"]')].filter((r) => r.offsetParent);
+			const without = rows.filter((r) => !r.querySelector('[data-action="setting-details"]')).map((r) => r.id.slice(8));
+			const b = about('${ID}'); if (!b) { bad.push('App font has no About button on Look & feel'); return { bad }; }
+			b.click();
+			if (!await until(seen)) { bad.push('About on App font opened nothing that shows'); return { bad }; }
+			const st = E.getState();
+			if (!st.home) bad.push('opening About moved the engine off its Home view');
+			if (S.route !== 'look') bad.push('opening About changed the page to ' + S.route);
+			if (b.getAttribute('aria-expanded') !== 'true') bad.push('the About button does not say its panel is open');
+			const label = [...document.querySelector('#smx-root .smx-page [id="setting-${ID}"] .setting-label').childNodes].find((c) => c.nodeType === 3 && c.nodeValue.trim()).nodeValue.trim();
+			if (text('.o55-insp-title') !== label) bad.push('the panel is titled "' + text('.o55-insp-title') + '", the row "' + label + '"');
+			if (!/Look & feel/.test(text('.o55-insp-crumbs'))) bad.push('the line above the title does not name this page: "' + text('.o55-insp-crumbs') + '"');
+			const heads = [...insp().querySelectorAll('.o55-insp-block:not([hidden]) > h4')].map((x) => x.innerText.trim());
+			for (const need of ['What it does', 'Where it applies']) if (!heads.includes(need)) bad.push('the panel has no "' + need + '"');
+			if (!heads.some((x) => /^Your choices|^Choose any/.test(x))) bad.push('the panel lists no choices for a setting that has two');
+			const was = String(S.val('${ID}'));
+			const other = insp().querySelector('.o55-insp-choice[aria-checked="false"]:not([aria-disabled="true"])');
+			if (!other) { bad.push('no other choice to press'); return { bad }; }
+			const want = other.querySelector('.o55-insp-choice-label').childNodes[0].nodeValue.trim();
+			other.click();
+			if (!await until(() => String(S.val('${ID}')) !== was)) bad.push('a choice pressed in the panel did not change the setting');
+			await until(() => ((document.querySelector('#smx-root .smx-page [id="setting-${ID}"] .pm51-dd-value') || {}).textContent || '').trim() === want, 2500);
+			const rowNow = ((document.querySelector('#smx-root .smx-page [id="setting-${ID}"] .pm51-dd-value') || {}).textContent || '').trim();
+			if (rowNow !== want) bad.push('the row behind the panel still reads "' + rowNow + '" after "' + want + '" was chosen');
+			if (!seen()) bad.push('the panel went away when a choice was made');
+			if (!await until(() => !!insp().querySelector('.o55-insp-now.is-changed'))) bad.push('the panel does not say the setting was changed');
+			const back = insp().querySelector('[data-action="reset-setting"]');
+			if (!back) bad.push('a changed setting has no "Go back to the default" in its panel');
+			else { back.click(); if (!await until(() => String(S.val('${ID}')) === was)) bad.push('"Go back to the default" did not bring ' + was + ' back'); }
+			if (!seen()) bad.push('the panel went away on "Go back to the default"');
+			if (document.activeElement && document.activeElement !== document.body) document.activeElement.blur();
+			return { bad, rows: rows.length, without, focus: document.activeElement === document.body ? 'body' : document.activeElement.className };
+		`);
+		if (a.bad.length) fail(a.bad.join(' || '));
+		// 2. Escape closes it with the focus on the page body (PMConcept7's own handler needs the focus inside Settings)
+		await t.page.keyboard.press('Escape');
+		const b = await run(`
+			if (!await until(() => !seen() && !E.getState().detailSetting)) bad.push('Escape left the panel open (focus on ' + (document.activeElement === document.body ? 'the page body' : document.activeElement.className) + ')');
+			await wait(500);
+			if (about('${ID}').getAttribute('aria-expanded') === 'true') bad.push('the About button still says its panel is open');
+			if (S.route !== 'look') bad.push('Escape changed the page to ' + S.route);
+			// a second press of the button opens it again, and the same button closes it
+			about('${ID}').click(); if (!await until(seen)) bad.push('About did not open a second time');
+			about('${ID}').click(); if (!await until(() => !seen())) bad.push('pressing About again did not close its panel');
+			await wait(400);
+			// 3. a setting whose list is long: the choices are operable, as a tick list or as PMConcept7's picker
+			S.go('ai/models'); await wait(900);
+			const M = 'ai.models.default-model', mb = about(M);
+			if (!mb) { bad.push('Everyday model has no About button'); return { bad }; }
+			mb.click(); if (!await until(seen)) { bad.push('About on Everyday model opened nothing'); return { bad }; }
+			if (text('.o55-insp-title') !== S.labelOf(M)) bad.push('Everyday model: the panel is titled "' + text('.o55-insp-title') + '"');
+			const was = String(S.val(M)); let how = 'list';
+			const trig = insp().querySelector('[data-action="o55-insp-pick"]');
+			if (trig) {
+				how = 'picker'; trig.click();
+				if (!await until(() => !!insp().querySelector('.o55-pick-inline [role="option"]'))) bad.push('the picker in the panel did not unfold');
+				const opt = [...insp().querySelectorAll('.o55-pick-inline [role="option"]')].find((o) => o.getAttribute('aria-selected') !== 'true' && o.getAttribute('aria-disabled') !== 'true');
+				if (opt) opt.click(); else bad.push('the picker lists no other model');
+			} else {
+				const opt = insp().querySelector('.o55-insp-choice[aria-checked="false"]:not([aria-disabled="true"])');
+				if (opt) opt.click(); else bad.push('Everyday model lists no other choice');
+			}
+			if (!await until(() => String(S.val(M)) !== was)) bad.push('a model picked in the panel (' + how + ') did not change the setting');
+			const near = [...insp().querySelectorAll('.o55-insp-block:not([hidden]) .o55-insp-near button')].map((x) => x.getAttribute('data-setting'));
+			const off = near.filter((id) => { const w = S.where(id), me = S.where(M); return !w || w.route !== me.route; });
+			if (off.length) bad.push('"Next to it" lists rows that are on another page here: ' + off.join(', '));
+			const reset = insp().querySelector('[data-action="reset-setting"]'); if (reset) reset.click();
+			if (!await until(() => String(S.val(M)) === was)) bad.push('Everyday model did not go back to ' + was);
+			insp().querySelector('[data-action="close-details"]').click();
+			if (!await until(() => !seen())) bad.push('the Close button of the panel did not close it');
+			await wait(400);
+			// 4. the words are the row's: a reworded label is the panel's title, a reworded choice is the panel's choice
+			let worded = 0;
+			for (const [id, w] of Object.entries(S.words || {})) {
+				if (worded >= 4 || !(w.label || w.options)) continue;
+				const at = S.where(id); if (!at) continue;
+				S.go(at.route, { reveal: id }); await wait(450);
+				const btn = about(id); if (!btn || !btn.offsetParent) continue;
+				btn.click(); if (!await until(seen)) { bad.push('About on ' + id + ' opened nothing'); continue; }
+				worded++;
+				if (w.label && text('.o55-insp-title') !== w.label) bad.push(id + ': the row reads "' + w.label + '", its panel "' + text('.o55-insp-title') + '"');
+				if (w.options) { const labels = [...insp().querySelectorAll('.o55-insp-choice-label')].map((n) => (n.childNodes[0].nodeValue || '').trim()); const old = Object.keys(w.options).filter((o) => labels.includes(o)); if (old.length) bad.push(id + ': the panel still lists "' + old.join('", "') + '"'); }
+				S.details.close(); await until(() => !seen()); await wait(350);
+			}
+			if (!worded) bad.push('no reworded row could be opened, so the wording check proves nothing');
+			// 5. a link to a setting (the engine is sent to it with its panel) shows the row here, and no panel
+			S.go('home'); await wait(300);
+			E.navigate('general', 'app-input', { detailSetting: '${ID}' });
+			let flashed = false, shown = false; const end = performance.now() + 2200;
+			while (performance.now() < end) { if (seen()) shown = true; if (document.querySelector('#smx-root .smx-page [id="setting-${ID}"].smx-flash')) flashed = true; await wait(40); }
+			if (S.route !== 'look') bad.push('a link to App font led to ' + S.route);
+			if (!flashed) bad.push('a link to App font did not show its row');
+			if (shown) bad.push('a link to App font opened the About panel over the row it was showing');
+			if (!E.getState().home) bad.push('the engine did not go back to its Home view after the link');
+			about('${ID}').click(); if (!await until(seen)) bad.push('About did not open after a link had been followed');
+			S.details.close(); await until(() => !seen()); await wait(350);
+			// 6. Today shows PMConcept7's own Settings: its panel belongs in its own page there
+			S.setView('today'); await wait(1200);
+			if (lay().classList.contains('document-layout')) bad.push('in Today the lent place still stands in for the one PMConcept7 has');
+			const theirs = document.querySelector('#pm-settings-root > .pm-shell .details-btn[data-action="setting-details"]');
+			if (theirs) { theirs.click(); if (!await until(() => !!document.querySelector('#pm-settings-root > .pm-shell .detail-inspector.is-open'))) bad.push('in Today, the About panel of PMConcept7 did not open in its own page'); }
+			else bad.push('Today shows no row with an About button, so its own panel was not tried');
+			S.setView('new'); await wait(1200);
+			if (!lay().classList.contains('document-layout')) bad.push('back in the redesign the lent place is gone');
+			if (seen()) bad.push('a panel opened in Today is showing over the redesign');
+			return { bad, how, worded, near: near.length };
+		`);
+		if (b.bad.length) fail(b.bad.join(' || '));
+		// 7. a narrow window: the panel stays inside it
+		await t.viewport(780, 900);
+		await t.page.waitForTimeout(500);
+		const c = await run(`
+			S.go('look'); await wait(700);
+			const btn = about('${ID}'); btn.scrollIntoView({ block: 'center' }); btn.click();
+			if (!await until(seen)) bad.push('at 780 wide the panel does not show inside the window');
+			const q = insp().getBoundingClientRect();
+			if (insp().querySelector('.o55-insp-body') && insp().querySelector('.o55-insp-body').scrollWidth > insp().querySelector('.o55-insp-body').clientWidth + 1) bad.push('at 780 wide the panel scrolls sideways');
+			S.details.close(); await until(() => !seen());
+			return { bad, width: Math.round(q.width), window: innerWidth };
+		`);
+		await t.viewport(1600, 1000);
+		if (c.bad.length) fail(c.bad.join(' || '));
+		if (a.rows < 5) fail(`only ${a.rows} rows were on Look & feel`);
 	}
 };

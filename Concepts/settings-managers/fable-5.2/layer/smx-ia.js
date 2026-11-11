@@ -47,7 +47,6 @@
   d.providerReady = (p) => d.providerState(p) === 'Ready';
   d.project = (st) => { try { return W.PM7_SETTINGS_TOME.projectLabel() || 'this project'; } catch (e) { return 'this project'; } };
   d.plural = (n, one, many) => `${n} ${n === 1 ? one : (many || one + 's')}`;
-  SMX.projectLine = (st) => `Project: ${d.project(st)}`;
 
   /* ------------------------------------------------------------------ PMConcept7's sections, by id
      SMX.sec('app-theme') is that section as PMConcept7 has it (its title, its help line, its settings in its order),

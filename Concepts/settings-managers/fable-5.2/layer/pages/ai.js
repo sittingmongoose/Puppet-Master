@@ -229,7 +229,7 @@
     expertLabel: 'About, technical details and removing it',
     changes: [
       { was: 'A provider’s detail pane holds its readiness, a note, every account opened in place, its own rule, and three more folded sections, in a pane that shares the screen with the list of all 22.', now: 'A provider has a page. One sentence says whether it works; then its accounts as a short list, each with its limits; then the few choices about this provider.' },
-      { was: 'Reordering accounts uses two chevrons that look like the third chevron beside them, which opens the account instead (Jared’s point 7 of 2026-11-09).', now: 'Two labelled arrows change the order (“Try earlier”, “Try later”); opening an account is a click on its row.' },
+      { was: 'Reordering accounts uses two small arrows with no words, beside the chevron that opens the account. (Until 2026-11-11 they were chevrons too, which read as one control doing two things: Jared’s point 7 of 2026-11-09, fixed in PMConcept7 since.)', now: 'Two labelled arrows change the order (“Try earlier”, “Try later”); opening an account is a click on its row.' },
       { was: 'The provider’s switch rule is three dropdowns that always show (“Shared · 10% left”), repeating the shared setting.', now: 'One line says the provider follows your main rule and quotes it. The dropdowns appear only when you choose to give this provider its own rule, and one button puts it back.' },
       { was: '“Remove from this list” is hidden in a “More actions” menu beside “Add account” and “Check connection”, which are also buttons on the page.', now: 'Add an account and Check the connection are on the page once. Removing sits with the technical details, marked as risky.' }
     ]

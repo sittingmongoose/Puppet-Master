@@ -145,9 +145,9 @@
     /* a dropdown's choices: {options: {'old words': 'new words'}} renames a choice in the list and on the closed
        dropdown (the value that is saved stays PMConcept7's own) */
     const choices = (row, map) => { const sel = row.querySelector('select'); if (!sel) return; for (const o of sel.options) { const to = map[o.textContent.trim()] || map[o.value]; if (to && o.textContent !== to) o.textContent = to; } const v = row.querySelector('.pm51-dd-value'), cur = sel.options[sel.selectedIndex]; if (v && cur && v.textContent !== cur.textContent) v.textContent = cur.textContent; };
-    /* PMConcept7 names a row's control for a screen reader by its inventory label ("Offline (Air-Gap) Mode") while the
-       row shows a plain one ("Work offline"). Here the control is named by the label that shows, reworded or not, when
-       the row has one control (review R2-4). */
+    /* The row's control is named, for a screen reader, by the label that shows. PMConcept7 named it by its inventory
+       label ("Offline (Air-Gap) Mode" under a row that reads "Work offline"; review R2-4) until stream F's landing of
+       2026-11-11 named it by the row's own label. A row reworded here still needs this: its shown label is ours. */
     const name = (row) => {
       const lab = row.querySelector('.setting-label'); if (!lab) return;
       const t = [...lab.childNodes].find((c) => c.nodeType === 3 && c.nodeValue.trim()); const text = t ? t.nodeValue.trim() : '';
@@ -255,6 +255,8 @@
       const group = (kind, title) => { const list = results.filter((r) => r.kind === kind).slice(0, kind === 'setting' ? 12 : 6); if (!list.length) return ''; return `<div class="smx-find-group">${h(title)}</div>${list.map((r) => `<button type="button" class="smx-find-row" data-smx-go="${h(r.route)}"${r.reveal ? ` data-smx-reveal="${h(r.reveal)}"` : ''} data-smx-find="${results.indexOf(r)}"><span class="smx-find-title">${h(r.title)}</span><span class="smx-find-sub">${h(r.sub || '')}</span></button>`).join('')}`; };
       const body = results.length ? group('page', 'Pages') + group('thing', 'Your things') + group('setting', 'Settings') : `<div class="smx-find-none">Nothing matches “${h(q)}”. Try an everyday word, like “phone”, “dark” or “spending”.</div>`;
       SMX.openLayer('find', `<div class="smx-find" role="listbox" aria-label="Search results">${body}</div>`, 'smx-layer-find');
+      // the results hang just under the search box, wherever the layout has put it (the stylesheet's top is a fallback)
+      try { const L = SMX.layer(), box = SMX.host().querySelector('.smx-search'), panel = L && L.querySelector('.smx-find'); if (box && panel) panel.style.top = Math.round(box.getBoundingClientRect().bottom - L.getBoundingClientRect().top + 6) + 'px'; } catch (e) { /* the stylesheet's place stands */ }
       this.mark();
     },
     mark() { const L = SMX.layer(); if (!L) return; L.querySelectorAll('.smx-find-row').forEach((b, i) => b.classList.toggle('is-sel', i === sel)); },

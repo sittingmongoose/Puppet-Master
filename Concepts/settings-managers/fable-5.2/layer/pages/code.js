@@ -488,7 +488,7 @@
           { label: 'Files it handles', help: 'A star stands for any name: *.rs is every file that ends in .rs.', value: filesOf('lsp', x).join(', ') || 'Not set' },
           { label: 'Program', help: sourceOf(x), value: x.command || 'Not set' },
           { label: 'Folder it reads', help: 'The folder this tool treats as the project.', value: reads, covers: LG.attach },
-          { label: 'Available in', value: x.scope === 'User' ? 'Every project' : 'This project' }
+          { label: 'Where it’s available', value: x.scope === 'User' ? 'Every project' : 'This project' }
         ]) }) },
         { key: 'actions', html: btnRow(
           ui.btn({ label: 'Change it…', icon: 'edit', action: 'pm51-toolchain-edit-lsp', data: { id: x.id } }),
@@ -535,7 +535,7 @@
           { label: (x.languages || []).length === 1 ? 'Language' : 'Languages', value: (x.languages || []).join(', ') || 'Not set' },
           { label: 'Files it tidies', help: 'A star stands for any name: *.rs is every file that ends in .rs.', value: filesOf('fmt', x).join(', ') || 'Not set' },
           { label: 'Program', help: sourceOf(x), value: x.executable || 'Not set' },
-          { label: 'Available in', value: x.scope === 'User' ? 'Every project' : 'This project' }
+          { label: 'Where it’s available', value: x.scope === 'User' ? 'Every project' : 'This project' }
         ]) }) },
         { key: 'sample', html: ui.card({ title: 'What tidying does', help: 'A small example. The code does the same before and after; only its shape changes.', body: `<div class="smx-cd-sample"><div><div class="smx-cd-sample-label">Before</div><pre>${h(sample[0])}</pre></div><div><div class="smx-cd-sample-label">After</div><pre>${h(sample[1])}</pre></div></div>` }) },
         { key: 'actions', html: btnRow(
@@ -618,7 +618,7 @@
       const st = ctx.st, s = skillOf(ctx);
       if (!stillThere(ctx, s, 'code/skills')) return gone('skill', 'code/skills', 'Back to Skills');
       const tone = skStatus(s)[1]; const reqs = s.requirements || []; const waiting = s.state === 'Needs permission';
-      const where = skBundled(s) ? 'Inside Puppet Master' : s.where === 'Global' ? 'Your own skills folder, for every project' : 'This project (.puppet-master/skills)';
+      const where = skBundled(s) ? 'Every project · it comes with Puppet Master' : s.where === 'Global' ? 'Every project · your own skills folder' : 'This project · .puppet-master/skills';   // PMConcept7's words for where a thing you add is available (FO-131)
       return [
         { key: 'summary', html: ui.summary({ icon: 'wand', tone, lines: [
           `${ui.b(s.name)} ${!s.enabled ? 'is switched off. It stays on your list, and the assistant does not use it.' : waiting ? 'is on, but waiting for your OK before it does anything.' : s.state === 'Needs setup' ? 'is on, but cannot run until what it needs is set up.' : s.state === 'Has problems' ? 'is on, but something is wrong with it.' : 'is on. The assistant uses it when a job fits.'}`,
@@ -631,7 +631,7 @@
         { key: 'may', html: ui.card({ title: 'What it may do', help: 'A skill never gets more than this. Removing the skill takes it back.', body: ui.rows([{ label: mayText(s), help: waiting ? 'The skill is waiting for your OK.' : 'Granted when the skill was added.', status: waiting ? ui.status('Waiting for you', 'attention') : '', control: waiting && !s.enabled ? ui.btn({ label: 'Allow it…', icon: 'check', action: 'pm51-skills-allow', data: { id: s.id } }) : '' }]) + `<p class="smx-quiet-line smx-pad">What the assistant may do without asking, with or without a skill, is under ${ui.link({ label: 'Safety & permissions › When it asks you', go: 'safety/asking' })}.</p>` }) },
         { key: 'version', html: ui.card({ title: 'Its version, and where it is kept', body: ui.rows([
           { label: s.updateAvailable ? `Version ${s.updateAvailable} is available` : 'Up to date', help: `You have version ${s.version}.`, control: s.updateAvailable ? ui.btn({ label: 'See what changes', icon: 'download', action: 'pm51-skills-update', data: { id: s.id } }) : '' },
-          { label: 'Kept in', value: where }
+          { label: 'Where it’s available', value: where }
         ]) }) },
         { key: 'actions', html: btnRow(ui.btn({ label: 'Remove this skill…', icon: 'trash', danger: true, action: 'pm51-skills-remove', data: { id: s.id }, disabled: skBundled(s), reason: 'It came with Puppet Master, so it can be switched off but not removed.' })) }
       ];
@@ -1006,7 +1006,7 @@
           field('The text', `<textarea class="form-textarea pm51-commands-template" data-action="pm51-commands-template" data-id="${h(c.id)}" rows="7" spellcheck="false" aria-label="What ${h(c.name)} sends">${h(c.template || '')}</textarea>`)
           + field('What to type after the name', args, 'A reminder shown while you type the command.')
           + field('What it is for', desc, 'One line, shown next to the name in chat and in the command palette.') }) },
-        { key: 'where', html: ui.card({ title: 'Where it is available', body: ui.rows([{ label: 'Available in', help: 'When both places have a command of the same name, the one kept with the project wins.', control: select(c.scope, [{ value: 'Project', label: 'This project', meta: 'Kept with the project' }, { value: 'Global', label: 'Every project', meta: 'Kept in your own folder' }], { action: 'pm51-commands-field', data: { id: c.id, field: 'scope' }, label: `Where ${c.name} is available` }) }]) }) },
+        { key: 'where', html: ui.card({ title: 'Where it’s available', body: ui.rows([{ label: 'This command works in', help: 'When both places have a command of the same name, the one kept with the project wins.', control: select(c.scope, [{ value: 'Project', label: 'This project', meta: 'Kept with the project' }, { value: 'Global', label: 'Every project', meta: 'Kept in your own folder' }], { action: 'pm51-commands-field', data: { id: c.id, field: 'scope' }, label: `Where ${c.name} is available` }) }]) }) },
         { key: 'who', html: ui.card({ anchor: 'who', title: 'Who answers, and what it may do', help: 'Left on “Same as the chat”, the command runs exactly like a message you typed yourself. Each choice here is an exception for this one command. It is a request: the chat’s own mode and your permissions still cap it.', body: ui.rows([
           ovRow('persona', 'Persona', 'The character the assistant plays while this command runs.', personaOpts(st, ov.persona), { label: 'Personas', go: 'memory/personas' }),
           ovRow('mode', 'How freely it may act', 'It can be more careful than the chat, never less.', modeOpts(ov.mode), { label: 'When it asks you', go: 'safety/asking' }),

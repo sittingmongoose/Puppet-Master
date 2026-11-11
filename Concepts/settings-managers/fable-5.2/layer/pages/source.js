@@ -1,7 +1,8 @@
 /* Settings managers, rethought (Fable 5.2): the chapter "Source control".
    Today this is Source Control: five tabs (Code Services, Local Tools, Repositories, Defaults & Safety, Actions &
-   Pipelines), a roster of 11 code services of which 10 are not connected, and a second account that vanishes the
-   moment it is added. A newcomer does not know Git, so this chapter answers their questions in their own data:
+   Pipelines), a roster of 11 code services of which 10 are not connected, and a second account that shows only inside
+   one service's detail (until 2026-11-11 it vanished the moment it was added; stream F's FO-126 gave it a list
+   there). A newcomer does not know Git, so this chapter answers their questions in their own data:
    - the overview says where the code is saved online and who they are there, then lists each code service with its
      accounts and online copies underneath it, so every account is a row that can be opened;
    - a code service, an account, a repository, a working copy and a tool each have a page of their own;
@@ -74,7 +75,7 @@
   const blocked = (f) => f.id === 'github-enterprise' && ghOnly() && !connected(f);
   const webAddress = (f) => (f.id === 'github' ? `https://github.com/${connected(f) ? f.defaultAccount : ''}` : f.instanceUrl || '');
   const svcRoute = (f) => `source/service/${enc(f.id)}`;
-  const acctRoute = (f, a) => `source/service/${enc(f.id)}/${enc(a.name || 'account-' + a.n)}`;
+  const acctRoute = (f, a) => `source/service/${enc(f.id)}/${enc(a.name)}`;
   const repoRoute = (r) => `source/repos/${enc(r.name)}`;
   const copyRoute = (w) => `source/working-copy/${enc(w.name)}`;
   /* the key Git uses for a code service: the one it names, or (PMConcept7's one-time default) the first current key */
@@ -135,34 +136,38 @@
   };
 
   /* ------------------------------------------------------------------ every account of a code service
-     PMConcept7 keeps one name per code service (the account in use) and a count. Adding a second account raises the
-     count and shows nothing (the audit's worst finding). Here every account is a row: the account in use from the
-     state, and the others by the name typed into PMConcept7's own guided flow, noted as it finishes. An account whose
-     name was never seen (added before this page was loaded) still gets its row. */
-  const known = (id) => (SMX.local.flags['src:accounts:' + id] || []);
+     PMConcept7 keeps every signed-in account by name (accountNames; stream F's FO-126, 2026-11-11) and lists them on
+     the service's detail, each with its own Disconnect. Before that it kept one name and a count, and this page noted
+     the others itself as its guided flow finished; that stand-in is gone. The list is read the way PMConcept7 reads
+     it (managers/35-source.js accountList): its names, else the account in use, filled up to the count with
+     "Account 2", "Account 3" for a saved state that has a count and no names. What PMConcept7 does not keep is HOW
+     each account signed in, so that one fact is still noted here from its own flow's answers. */
   let lastDraft = null, lastAt = 0;
   W.document.addEventListener('click', (e) => {
     const wrap = e.target && e.target.closest ? e.target.closest('.drawer-wrap') : null;
     const api = wrap && wrap._o55Wizard;
     if (api && api.draft && 'tokenGiven' in api.draft && 'via' in api.draft) { lastDraft = api.draft; lastAt = W.performance.now(); }   // the connect flow's answers
   }, true);
-  const accountsOf = (st, f) => {
-    const n = connected(f) ? Math.max(1, Number(f.accounts) || 0) : 0;
-    if (!n) { if (known(f.id).length) SMX.local.flags['src:accounts:' + f.id] = []; SMX.local.flags['src:in-use:' + f.id] = ''; return []; }
-    let extra = known(f.id).filter((x) => x && x.name && x.name !== f.defaultAccount);
-    const fresh = lastDraft && W.performance.now() - lastAt < 20000 ? lastDraft : null;
-    if (extra.length < n - 1 && fresh && fresh.account && fresh.account !== f.defaultAccount && !extra.some((x) => x.name === fresh.account)) { extra = extra.concat([{ name: String(fresh.account), how: fresh.how === 'token' ? 'A token' : 'Your browser' }]); lastDraft = null; }
-    const was = SMX.local.flags['src:in-use:' + f.id];   // signing in again as another account: the one in use before is still signed in
-    if (was && was !== f.defaultAccount && extra.length < n - 1 && !extra.some((x) => x.name === was)) extra = extra.concat([{ name: was, how: (SMX.local.flags['src:how:' + f.id] || {})[was] || 'Your browser' }]);
-    SMX.local.flags['src:in-use:' + f.id] = f.defaultAccount;
-    extra = extra.slice(0, n - 1);
-    SMX.local.flags['src:accounts:' + f.id] = extra;
-    const hows = SMX.local.flags['src:how:' + f.id] = Object.assign({}, SMX.local.flags['src:how:' + f.id], Object.fromEntries(extra.map((x) => [x.name, x.how])));   // how each account signed in, kept when the one in use changes
-    const list = [{ name: f.defaultAccount, inUse: true, how: hows[f.defaultAccount] || (/token/i.test(f.auth || '') && !/oauth|app|sign-in|entra/i.test(f.auth || '') ? 'A token' : 'Your browser') }].concat(extra.map((x) => ({ name: x.name, how: x.how })));
-    while (list.length < n) list.push({ name: '', n: list.length + 1 });
-    return list;
+  const namesOf = (f) => {
+    if (!connected(f)) return [];
+    const kept = (Array.isArray(f.accountNames) ? f.accountNames.filter(Boolean) : []).filter((x, i, a) => a.indexOf(x) === i);
+    const names = kept.length ? kept.slice() : [f.defaultAccount].filter((x) => x && x !== 'None');
+    const n = Math.max(1, names.length, Number(f.accounts) || 0);
+    while (names.length < n) names.push(`Account ${names.length + 1}`);
+    return names;
   };
-  const accountName = (a) => a.name || `Account ${a.n}`;
+  const accountsOf = (st, f) => {
+    const names = namesOf(f);
+    if (!names.length) { SMX.local.flags['src:how:' + f.id] = {}; return []; }
+    const hows = SMX.local.flags['src:how:' + f.id] = Object.assign({}, SMX.local.flags['src:how:' + f.id]);
+    const fresh = lastDraft && W.performance.now() - lastAt < 20000 ? lastDraft : null;
+    if (fresh && fresh.account && names.includes(String(fresh.account))) { hows[String(fresh.account)] = fresh.how === 'token' ? 'A token' : 'Your browser'; lastDraft = null; }
+    for (const k of Object.keys(hows)) if (!names.includes(k)) delete hows[k];
+    const use = names.includes(f.defaultAccount) ? f.defaultAccount : names[0];
+    const usual = /token/i.test(f.auth || '') && !/oauth|app|sign-in|entra/i.test(f.auth || '') ? 'A token' : 'Your browser';
+    return [use].concat(names.filter((x) => x !== use)).map((name) => ({ name, inUse: name === use, how: hows[name] || (name === use ? usual : 'Your browser') }));
+  };
+  const accountName = (a) => a.name;
 
   /* ------------------------------------------------------------------ what needs you */
   const needs = (st) => {
@@ -198,7 +203,7 @@
     const rows = on.map((f) => {
       const accts = accountsOf(st, f); const mine = repos(st).filter((r) => r.forge === f.name);
       return thing({ initials: MARK[f.id] || '?', name: f.name, tag: c.service === f.name ? 'New online copies go here' : '', sub: connected(f) ? `Git sends your changes with ${lower(gitSignIn(st, f))}` : 'Signed out', sub2: f.lastCheck ? `Checked ${f.lastCheck}` : '', status: connected(f) ? { text: 'Connected', tone: 'ready' } : { text: 'Needs sign-in', tone: 'attention' }, go: svcRoute(f) })
-        + accts.map((a) => thing({ cls: 'smx-branch', icon: 'user', name: accountName(a), tag: a.inUse ? (accts.length > 1 ? 'The account in use' : 'Your account') : 'Also signed in', sub: a.name ? `Signed in with ${lower(a.how || 'your browser')}` : 'Added earlier; PMConcept7 kept no name for it', go: acctRoute(f, a) })).join('')
+        + accts.map((a) => thing({ cls: 'smx-branch', icon: 'user', name: accountName(a), tag: a.inUse ? (accts.length > 1 ? 'The account in use' : 'Your account') : 'Also signed in', sub: `Signed in with ${lower(a.how || 'your browser')}`, go: acctRoute(f, a) })).join('')
         + mine.slice(0, 4).map((r) => thing(repoThing(st, r, { cls: 'smx-branch', tag: 'Online copy', sub: `${repoAddress(st, r)} · branch ${r.branch}` }))).join('')
         + (mine.length > 4 ? thing({ cls: 'smx-branch', icon: 'folder', name: `${mine.length - 4} more online ${mine.length - 4 === 1 ? 'copy' : 'copies'}`, go: svcRoute(f) }) : '');
     }).join('');
@@ -251,7 +256,7 @@
     covers: { 'ai.accounts.github-connect': 'The GitHub row of “Where your code is saved online”; signing out is on GitHub’s own page.', 'ai.accounts.github-token': 'On GitHub’s own page, under More options.', 'ai.accounts.github-host-policy': 'On GitHub Enterprise’s own page: “Company GitHub servers”.', 'ai.accounts.github-oauth-loopback': 'On GitHub’s own page, under For experts.' },
     changes: [
       { was: 'The page opens on a roster of 11 code services, of which only GitHub is connected, beside the detail of the first. Three show the same mark, G (GitHub, GitLab.com, Gitea), three more start with G (GE, GS, GO), and two show AD.', now: 'It opens on two sentences in your own data: where your code is saved online and who you are there; how many folders have history and how many have an online copy. Only the services you use are listed. The other 10 are one click away, each with a mark of its own (GH, GE, GL, GS, AZ, AS, BB, BD, FJ, GT).' },
-      { was: 'Adding a second GitHub account succeeds (“GitHub connected — Signed in as seconduser”) and then shows nothing: “Accounts” goes from 1 to 2 and “Signed in as” still names the first. The second account can never be seen, chosen or removed.', now: 'Every account is a row under its code service and opens on a page of its own. PMConcept7 stores only a count, so the concept notes the name as PMConcept7’s own flow finishes; this is the intended behaviour, and the defect is listed in the build report. An account can be made the one in use, or signed out by itself.' },
+      { was: 'A second GitHub account appears only inside GitHub’s detail, in a list “Signed-in accounts” with “Disconnect” on each; the page’s first view shows a number (“Accounts => 2”). The account work is saved as cannot be changed. (When this concept was reviewed the second account could not be seen at all; PMConcept7 gained the list on 2026-11-11.)', now: 'Every account is a row under its code service, on the first page, and opens on a page of its own. An account can be made the one in use (the concept’s own action), or signed out by itself (PMConcept7’s own).' },
       { was: 'Five tabs; “Local Tools” (Git 2.51, Jujutsu 0.33, Git LFS 3.7) is the second, before repositories. “Reset source control defaults” and “How version history works” repeat under all five.', now: 'Tabs became pages named for what a person wants. The tools are folded under “The tools underneath” because Puppet Master runs them for you. The two links appear once, here.' },
       { was: '“Default code service” is a dropdown on Defaults & Safety, a read-only line under Repositories (“New repositories go to: GitHub”), and “Make default” in each service’s menu. “Version history tool” is a choice on Defaults & Safety and again “Make default” on each tool.', now: 'Each is chosen once: “A new online copy is created on …” sits under the list of services, and “New folders keep their history with …” sits with the tools.' },
       'Words: PMConcept7 uses “code service”, “Source Control”, “SCM” and (in code) “forge” for one thing, and “repository”, “project”, “workspace” and “folder” for another. Here a code service holds an online copy; a repository is a folder whose history is kept; a working copy is what Git calls a worktree.'
@@ -294,7 +299,7 @@
         { title: 'Let Git send changes', desc: 'Git signs in separately from the website, with a key or a token.', status: f.pushAccess === 'Ready' ? 'Ready' : 'Not set up', tone: f.pushAccess === 'Ready' ? 'ready' : 'off', done: f.pushAccess === 'Ready', action: f.pushAccess === 'Ready' ? null : { label: 'Set it up', action: 'pm51-source-push', data: { id: f.id } } }
       ]) }) });
       if (on && !generic) blocks.push({ key: 'accounts', html: ui.things({ cls: 'smx-src-rows', title: 'Accounts', help: accts.length > 1 ? `Work is saved as the account marked “in use”. The others stay signed in.` : 'You can sign in with more than one, for example a personal and a work account.', add: { label: 'Add an account', action: 'pm51-source-connect', data: { id: f.id } },
-        items: accts.map((a) => ({ icon: 'user', name: accountName(a), tag: a.inUse ? (accts.length > 1 ? 'The account in use' : '') : 'Also signed in', sub: a.name ? `Signed in with ${lower(a.how || 'your browser')}` : 'Added earlier; PMConcept7 kept no name for it', status: { text: 'Signed in', tone: 'ready' }, go: acctRoute(f, a) })) }) });
+        items: accts.map((a) => ({ icon: 'user', name: accountName(a), tag: a.inUse ? (accts.length > 1 ? 'The account in use' : '') : 'Also signed in', sub: `Signed in with ${lower(a.how || 'your browser')}`, status: { text: 'Signed in', tone: 'ready' }, go: acctRoute(f, a) })) }) });
       if (on || mine.length) blocks.push({ key: 'copies', html: ui.things({ cls: 'smx-src-rows', title: `Online copies on ${f.name}`, items: mine.map((r) => repoThing(st, r, { tag: '' })), empty: { icon: 'folder', title: 'No online copy here yet', text: 'Create a new one, or bring one of yours here from Repositories.', fix: generic ? null : { label: 'Put a project online', action: 'pm51-source-new-repo' } } }) });
       blocks.push({ key: 'using', html: ui.card({ title: `About ${f.name}`, body: ui.rows([
         on ? { label: 'New online copies are created here', help: 'One code service is the place where a new online copy is made.', status: ui.status(c.service === f.name ? 'Yes' : 'No', c.service === f.name ? 'ready' : 'off'), control: ui.btn({ label: 'Change', go: 'source', anchor: 'services' }) } : null,
@@ -319,25 +324,21 @@
   });
 
   /* ================================================================== one account */
-  const acctOf = (ctx) => { const f = svcOf(ctx); if (!f) return { f: null, a: null, all: [] }; const all = accountsOf(ctx.st, f); const key = (ctx.params || {}).account || ''; return { f, all, a: all.find((x) => (x.name || 'account-' + x.n) === key) || null }; };
-  /* PMConcept7 has no action for one account: its only verb is Disconnect, which forgets them all. These two write the
-     same fields its own flow writes (the account in use, the count). */
+  const acctOf = (ctx) => { const f = svcOf(ctx); if (!f) return { f: null, a: null, all: [] }; const all = accountsOf(ctx.st, f); const key = (ctx.params || {}).account || ''; return { f, all, a: all.find((x) => x.name === key) || null }; };
+  /* Signing one account out is PMConcept7's own action now (pm51-source-account-disconnect, FO-126); this page only
+     goes back to the code service afterwards, because the page of an account that is gone has nothing to show. What
+     PMConcept7 still has no action for is choosing which account work is saved as, so "Use this account" is the
+     concept's own: it writes the one field PMConcept7's own flow writes (the account in use), and the names as read. */
   SMX.act('source-account-use', (el) => {
     const id = el.getAttribute('data-id'), name = el.getAttribute('data-name'); const s = eng().getState(); const f = ((s.sourceControl || {}).forges || []).find((x) => x.id === id); if (!f || !name) return;
-    const old = f.defaultAccount; f.defaultAccount = name; eng().setState(s);
-    SMX.local.flags['src:accounts:' + id] = known(id).filter((x) => x.name !== name).concat([{ name: old, how: (SMX.local.flags['src:how:' + id] || {})[old] || 'Your browser' }]);
+    const names = namesOf(f); if (!names.includes(name)) return;
+    f.accountNames = names; f.accounts = names.length; f.defaultAccount = name; eng().setState(s);
     SMX.toast(`${f.name} now uses ${name}`, 'New work is saved to its online copies as this account. Example only: nothing was sent.', 'info');
   });
   SMX.act('source-account-out', (el) => {
-    const id = el.getAttribute('data-id'), name = el.getAttribute('data-name'); const f0 = forges(SMX.fresh()).find((x) => x.id === id); if (!f0) return;
-    kit().confirm(`Sign out of ${name}?`, `Puppet Master forgets this account. Your repositories on ${f0.name} are not touched.`, 'Sign out', () => {
-      const s = eng().getState(); const f = ((s.sourceControl || {}).forges || []).find((x) => x.id === id); if (!f) return;
-      const rest = known(id).filter((x) => x.name !== name);
-      if (f.defaultAccount === name && rest.length) { f.defaultAccount = rest[0].name; rest.shift(); }
-      f.accounts = Math.max(1, (Number(f.accounts) || 1) - 1);
-      SMX.local.flags['src:accounts:' + id] = rest; eng().setState(s);
-      SMX.toast('Signed out', `${name} is no longer signed in to ${f.name}.`, 'warning'); SMX.go(svcRoute(f), { replace: true });
-    }, true);
+    const id = el.getAttribute('data-id'), name = el.getAttribute('data-name'); const f = forges(SMX.fresh()).find((x) => x.id === id); if (!f || !name) return;
+    SMX.run('pm51-source-account-disconnect', { id, name });
+    SMX.go(svcRoute(f), { replace: true });
   });
   SMX.page({
     id: 'source/service/:sid/:account', chapter: 'source', parent: 'source',
@@ -352,22 +353,22 @@
       const name = accountName(a); const mine = a.inUse ? repos(st).filter((r) => r.forge === f.name) : []; const m = me(st);
       const only = all.length === 1;
       return [
-        { key: 'summary', html: ui.summary({ icon: 'user', tone: 'ready', lines: [a.inUse ? `${ui.b(name)} is the ${h(f.name)} account Puppet Master uses.` : `${ui.b(name)} is signed in to ${h(f.name)}, but work is saved as ${ui.word(f.defaultAccount, { go: acctRoute(f, { name: f.defaultAccount }) })}.`, a.name ? '' : 'It was added before this page could note its name: PMConcept7 keeps only how many accounts there are.'], side: a.inUse || !a.name ? '' : ui.btn({ label: 'Use this account', icon: 'check', primary: true, small: false, do: 'source-account-use', data: { id: f.id, name: a.name } }) }) },
+        { key: 'summary', html: ui.summary({ icon: 'user', tone: 'ready', lines: [a.inUse ? `${ui.b(name)} is the ${h(f.name)} account Puppet Master uses.` : `${ui.b(name)} is signed in to ${h(f.name)}, but work is saved as ${ui.word(f.defaultAccount, { go: acctRoute(f, { name: f.defaultAccount }) })}.`], side: a.inUse ? '' : ui.btn({ label: 'Use this account', icon: 'check', primary: true, small: false, do: 'source-account-use', data: { id: f.id, name: a.name } }) }) },
         { key: 'facts', html: ui.card({ title: 'This account', body: ui.rows([
           { label: 'Code service', value: f.name, control: ui.btn({ label: 'Open', go: svcRoute(f) }) },
-          a.name && f.id === 'github' ? { label: 'Its page online', value: `github.com/${a.name}`, control: copyBtn('Copy the link', `https://github.com/${a.name}`, 'Link') } : null,
+          f.id === 'github' && !/^Account \d+$/.test(a.name) ? { label: 'Its page online', value: `github.com/${a.name}`, control: copyBtn('Copy the link', `https://github.com/${a.name}`, 'Link') } : null,
           { label: 'Signed in with', help: 'The website sign-in. Git itself signs in with a key or a token.', value: a.how || 'Your browser' },
           { label: 'What Puppet Master may do there', value: (f.scopes || []).length ? f.scopes.join(' · ') : 'Nothing yet' },
           a.inUse ? { label: 'How Git signs in', value: gitSignIn(st, f), control: ui.btn({ label: 'Change', go: 'source/you' }) } : null,
           { label: 'Name on your saved changes', help: 'Separate from the account: it is written into the history itself.', value: m.name ? `${m.name} · ${m.email}` : 'Not set yet', muted: !m.name, control: ui.btn({ label: m.name ? 'Change' : 'Set it', go: 'source/you' }) }
         ]) }) },
         { key: 'copies', html: a.inUse ? ui.things({ cls: 'smx-src-rows', title: 'Online copies under this account', items: mine.map((r) => repoThing(st, r, { tag: '' })), empty: { icon: 'folder', title: 'No online copy yet', text: 'A project you put online appears here.' } }) : '' },
-        { key: 'actions', html: `<div class="smx-btn-row">${a.inUse ? ui.btn({ label: 'Sign in again', icon: 'refresh', do: 'source-reauth', data: { id: f.id } }) : a.name ? ui.btn({ label: 'Use this account', icon: 'check', do: 'source-account-use', data: { id: f.id, name: a.name } }) : ''}${only ? ui.btn({ label: `Sign out of ${f.name}…`, icon: 'close', danger: true, action: 'pm51-source-gh-disconnect', data: { id: f.id } }) : ui.btn({ label: 'Sign out of this account…', icon: 'close', danger: true, do: 'source-account-out', data: { id: f.id, name: a.name || '' }, disabled: !a.name, reason: 'PMConcept7 kept no name for this account, so it cannot be told apart. Signing out of the code service removes it.' })}</div>` }
+        { key: 'actions', html: `<div class="smx-btn-row">${a.inUse ? ui.btn({ label: 'Sign in again', icon: 'refresh', do: 'source-reauth', data: { id: f.id } }) : ui.btn({ label: 'Use this account', icon: 'check', do: 'source-account-use', data: { id: f.id, name: a.name } })}${only ? ui.btn({ label: `Sign out of ${f.name}…`, icon: 'close', danger: true, action: 'pm51-source-gh-disconnect', data: { id: f.id } }) : ui.btn({ label: 'Sign out of this account', icon: 'close', danger: true, do: 'source-account-out', data: { id: f.id, name: a.name } })}</div>` }
       ];
     },
     changes: [
-      { was: 'An account has no place of its own: GitHub’s detail shows “Signed in as sittingmongoose” and “Accounts — You can sign in with more than one. => 1”. After a second account is added the number reads 2 and nothing else changes.', now: 'An account has a page: which code service it belongs to, how it signed in, what Puppet Master may do there, and its online copies.' },
-      { was: 'The only verb is “Disconnect”, which forgets every account of the service at once. A second account cannot be chosen or removed.', now: '“Use this account” makes it the one work is saved as; “Sign out of this account” removes only that one. PMConcept7 has no such actions, so these two are the concept’s own and are listed in the build report.' }
+      { was: 'An account has no place of its own. With one account, GitHub’s detail shows “Signed in as sittingmongoose” and “Accounts — You can sign in with more than one. => 1”; with two, a list “Signed-in accounts” names both, one marked “Used by default”. (The list is new in PMConcept7 since 2026-11-11; when this concept was reviewed the second account raised the number to 2 and showed nothing.)', now: 'An account has a page: which code service it belongs to, how it signed in, what Puppet Master may do there, and its online copies.' },
+      { was: 'Each account in that list has “Disconnect”, and the service has one that forgets them all. Which account is “Used by default” cannot be chosen: it changes only when that account is disconnected.', now: '“Sign out of this account” is PMConcept7’s own per-account Disconnect. “Use this account” makes it the one work is saved as; PMConcept7 has no such action, so that one is the concept’s own and is listed in the build report.' }
     ]
   });
 
@@ -681,7 +682,7 @@
   /* search: code services, accounts, repositories, working copies and tools, by name */
   (SMX.thingSources = SMX.thingSources || []).push((st) => {
     const out = [];
-    for (const f of forges(st)) { out.push({ title: f.name, sub: `Source control › ${connected(f) ? 'connected' : 'not connected'}`, route: svcRoute(f) }); for (const a of accountsOf(st, f)) if (a.name) out.push({ title: a.name, sub: `Source control › ${f.name} › account`, route: acctRoute(f, a) }); }
+    for (const f of forges(st)) { out.push({ title: f.name, sub: `Source control › ${connected(f) ? 'connected' : 'not connected'}`, route: svcRoute(f) }); for (const a of accountsOf(st, f)) out.push({ title: a.name, sub: `Source control › ${f.name} › account`, route: acctRoute(f, a) }); }
     for (const r of repos(st)) out.push({ title: r.name, sub: 'Source control › Repositories', route: repoRoute(r) });
     for (const w of copies(st)) out.push({ title: w.name, sub: 'Source control › Working copies', route: copyRoute(w) });
     for (const t of tools(st)) out.push({ title: t.name, sub: 'Source control › The tools underneath', route: `source/tool/${enc(t.id)}` });
