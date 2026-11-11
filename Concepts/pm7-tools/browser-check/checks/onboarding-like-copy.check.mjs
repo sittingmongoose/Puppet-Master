@@ -18,6 +18,8 @@ import { LOOKS } from '../browser-check.config.mjs';
 const LAYER = '#pm-o55-onboarding .o55-layer:not(.o55-out)';
 async function open(t, at, scenario = 'returning') {
 	await t.viewport(1440, 900);
+	/* (on the normal page an earlier test's onboarding session is stored: clear it and load again, so each test starts fresh) */
+	if (!t.app.sandboxed(true)) { await t.app.open({ settleMs: 300 }); await t.app.resetLayout(); }
 	const f = await t.app.open({ sandbox: t.app.sandboxed(true), settleMs: 1500 });
 	await f.evaluate(([at, sc]) => O55.studio.onboarding.screen(at, sc), [at, scenario]);
 	await screen(f, at);
