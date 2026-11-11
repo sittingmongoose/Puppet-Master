@@ -1,15 +1,22 @@
 {
   "schema_id": "pm.assurance.event_authority.step08_current_depth.v1",
-  "assessment_id": "EA-W2-DX-SWEEP-P2A-P2B-NUMBERS-SELF-GRADE-20261108",
+  "assessment_id": "EA-W2-DX-SWEEP-P2B-DATETIME-SELF-GRADE-20261111",
   "assessment_kind": "draft_self_grade",
   "assessed_tree": {
     "branch": "plans/ea-w2-executor-20261104",
     "base": "d5ec2f70c0d69c469796eea9b9cfdae30f281f42",
-    "commit": "51732062cb",
+    "commit": "bb67fb0573",
     "starting_head": "d987fd25afea712767a520d9c72b84d2e444e9a8",
     "tool_merge": "a2fe401091 (gated guard tool 004bdedd632d9463f3535190a6ed5772338cdce1)",
     "numrule_merge": "3505142713 (gated NUMRULE number scope a16f67c1ef21796758f4209ff12c0f4d12b86ce9)",
-    "report_commit": "Following report-only commit; final pushed head in sweep-p2a/HEAD.txt."
+    "report_commit": "Following report-only commit; final pushed head in sweep-p2b/HEAD.txt.",
+    "part_2a_head": "35f2cfd65b5de8abb31727736202c2e00e3dda7a",
+    "numrule_datetime_merge": "f025ad6e74 (gated NUMRULE head 58c2816ff33365384d4039553f5efdb5370930e6)",
+    "implementation_commits": [
+      "183f4c36bd (shared CV-1101 date_time adoption)",
+      "cfa0aad472 (part 2B witnesses)",
+      "bb67fb0573 (CV-500..515 owner text, shards, index)"
+    ]
   },
   "native_execution": "NOT_RUN",
   "rubric": {
@@ -31,7 +38,7 @@
   },
   "source_sha256": {
     "Plans/Automated_Testing_System.md": "26a445a0aeb43efb07bac94f24f24682a11437644f0f9b13bc0f164ce958e688",
-    "Plans/Contracts_V0.md": "08fa27e542b68812fa78b595bfd8c1a9f397d7071b2c92c19c335c84ddba57ba",
+    "Plans/Contracts_V0.md": "5923ea704d2aeb9e9836ef8d38a50b4b17b1a1243d0cb7b567ce9fea256853f1",
     "Plans/Executor_Protocol.md": "135217710534c629acf727d4e0c8255531c7418bf71f0e70059f19520e3dca98",
     "Plans/event_family_registry.json": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
     "Plans/event_payload_attempt_completed.schema.json": "a100e2c589a12726d5bb5bcda2a38142231f6bf8ddd89f72e79c22ca4ab2b05f",
@@ -52,26 +59,29 @@
     "Plans/event_payload_scheduler_pass.schema.json": "c8d7272f99124185290dd289fb79d6f58a641d6e490743fe12ad67ff5712597b",
     "Plans/executor_event_contract_fixtures.json": "a5c41fc28f1cde9b0b51368c2778d8558e91c7ed746f4feb52ba99d9dc3b2568",
     "Plans/executor_event_contracts.json": "97795f9c61029924f458b03fe3e54d8bad7c6ac322f020769c15ef8d5405f033",
-    "Plans/executor_event_recipe_custody_fixtures.json": "9c892068f7bdeb66e78526c369ab4fb6cb555b4fcb24d9f0cbd7b4854865c09f",
+    "Plans/executor_event_recipe_custody_fixtures.json": "36dcf3a407a9d4dfe911a6eef51566afe5b44cd05b684bfb9740adcaab1fd339",
     "Plans/executor_event_schema_reference_fixtures.json": "c1cc7e9a0b7f2702d04aa3dc546c6daa97e3ca7fff515e815347a4287a2eb65c",
-    "Plans/executor_event_semantic_fixtures.json": "8f8796e3d74bd3093b5a0614f575435e1e7be6c84e115345b6324da5317f3c57",
+    "Plans/executor_event_semantic_fixtures.json": "3285863095dd8db7b57394e8540d823cdeecef82b5d181022fba96a17cbd6b01",
     "Plans/executor_event_source_proofs.schema.json": "d9012ea529f89a25a93a466d203c508891ccaf3aa02ed732cd61d32529e2058a",
     "Plans/executor_event_type_fixtures.json": "e431e1b5250015f5eee97a455846b207b563f76c2f9cc608037f33ef8af5988c",
     "Plans/storage-plan.md": "aca6b40967f44c6fcb2fe5a3c711d8280da5295a95f87509336f1c6d7be64f7e",
     "Plans/storage_value_registry.json": "00df41ae4fdb88f0465f95d87bff92ed9e47be104b78ca9d839f5a7b3f4520bc",
-    "scripts/pm_executor_event_contracts.py": "e2e3b08e64f4dcbb86606de233dd560401203328dbb9f143ee964d958abe5145",
-    "scripts/pm_executor_event_semantics.py": "0574bdbedef91eebfecc36093576d28a9de06972e35d7190b7120628377f7192",
+    "scripts/pm_executor_event_contracts.py": "053a52162a5e40d9e7d14d511c472418e354303ebbf6f3717035684bb6083c63",
+    "scripts/pm_executor_event_semantics.py": "db3e5889f7dd467ae22c00a8c2f13eb87d673a17278b248df59323ff506afd78",
     "scripts/pm_executor_schema_refs.py": "d099c02d9fe4704843eb984c0e810f781975ba0801eb85bade2011d8f68e7fbd",
     "scripts/requirements-executor-events.txt": "70514f8395c522d4cdd3f826c90dba7e6f820c54eb98937961673fa08ecac299",
-    "scripts/pm-executor-table-generate.py": "c3d9763856035bf0f4c79b75d04333b60cb000c364812f4a15172e876f683db8",
+    "scripts/pm-executor-table-generate.py": "d5da33a88f7d6fe151fb6cce70dde9132fb5a045d36cd9d9a604bf0716297638",
     "scripts/pm_executor_guard_suites.py": "5675be21c820787e80e04c6915e21a0f3dd0df067e1d3a2276244ac7b0e6eb54",
     "scripts/pm-executor-guard-tables.py": "a17ac94269a94074d396dffbbae3382c5db7ba8abd8b0b8701599ce1fb36eee9",
-    "scripts/pm_executor_p2a_cases.py": "c12367d97063a1704e95d82f5579d6891e6e8e18368021f69a09197c052e8f0a",
-    "scripts/pm-executor-p2a-cases.py": "3e59ad7fa51f93ae660eb7653d7c8949b00d526c54353ed8781de1b7f8ae01d0",
+    "scripts/pm_executor_p2a_cases.py": "aa42e20791b19072bc8a86fb9da4ff183dd8fd873b69d1a2309743afccfbe28c",
+    "scripts/pm-executor-p2a-cases.py": "1ba69993d469fce0d7a06883650b1f60760d20a0e62ef6eef6ad86a639bf97fb",
     "scripts/pm-executor-number-corpus.py": "e5a2b2b4c90255741a4de21be56ee88e90266377e2947c57360cb859f7e1e000",
-    "Plans/executor_event_p2a_cases.json": "03bee5dc5e42806477b98fed78beb7810f8f5af1762c22ab55ee4bfc1f3bcf73",
+    "Plans/executor_event_p2a_cases.json": "eac779957e95b65447b5891323793287df4d53ef9f5be0d02cfd6ee7f094a874",
     "scripts/pm_event_numbers.py": "31ae47086bacad7f078239baa9e9ec3a5118472298a9e26e878dcf2534819444",
-    "scripts/pm_guard_isolation.py": "e8038992eabbe067c8bcba8d48824b97fbb6b5b7e69cbfe28a669f939a96c0b8"
+    "scripts/pm_guard_isolation.py": "e8038992eabbe067c8bcba8d48824b97fbb6b5b7e69cbfe28a669f939a96c0b8",
+    "scripts/pm_event_datetime.py": "e09d1a18b8c198dc4fc54d9b7017aff47eeaf3a02366c61c64c61e6df3b7995e",
+    "scripts/pm_executor_table_clock_owner.py": "85609bcd9cb6e7e581a080df68ca66967bdd4328f3be0c3e4fb97999feb9598c",
+    "scripts/pm_executor_table_retry_after_http_date.py": "0965268a29ca9735b71e11096aa3ad56ef87778e2e7db70b26a6934b151ea185"
   },
   "rows": [
     {
@@ -348,7 +358,7 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Finite static oracles: every refusal of the DX checkers for this family is a named Method B guard-table row credited only by the gated shared tool; CV-1100/SP-1100/SP-1101 are adopted through the shared helper and the shared corpus runs through this family's complete routes. Timestamp grammar (CV-1101) is part 2B and reviewed interim only; native NOT_RUN.",
+          "finding": "Finite static oracles: every refusal of the DX checkers for this family is a named Method B guard-table row credited only by the gated shared tool; CV-1100/SP-1100/SP-1101 are adopted through the shared helper and the shared corpus runs through this family's complete routes; every timestamp field is checked by the shared CV-1101 date_time predicate with its owner profile (DX owner: storage_utc_z plus no second 60, uppercase T for backoff clock observations), and a retained original's frozen date-time edition is bound by SP-1101 dispatch. datetime_validator and the whole-Plans inventory gate run at batch-2 integration (lead addendum 2); native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -381,8 +391,8 @@
             {
               "path": "scripts/pm_executor_event_semantics.py",
               "unit": "canonical",
-              "line_start": 289,
-              "line_end": 289,
+              "line_start": 370,
+              "line_end": 370,
               "quote": "text, reason = qualified_jcs(value).decode('utf-8'), None"
             },
             {
@@ -444,23 +454,51 @@
             {
               "path": "scripts/pm_executor_event_semantics.py",
               "unit": "refuse",
-              "line_start": 106,
-              "line_end": 106,
+              "line_start": 119,
+              "line_end": 119,
               "quote": "def refuse(phase, facts, suffix='', message=None):"
             },
             {
               "path": "scripts/pm_executor_event_semantics.py",
               "unit": "_validate_history",
-              "line_start": 1047,
-              "line_end": 1047,
+              "line_start": 1190,
+              "line_end": 1190,
               "quote": "dispatcher.resolve(retained_source_sha256, expected, disclose=disclose)"
             },
             {
               "path": "scripts/pm_executor_event_semantics.py",
               "unit": "validate_capture",
-              "line_start": 672,
-              "line_end": 672,
+              "line_start": 801,
+              "line_end": 801,
               "quote": "admit_integer_slots(contract['schema_ref'], payload)"
+            },
+            {
+              "path": "scripts/pm_executor_event_semantics.py",
+              "unit": "instant",
+              "line_start": 677,
+              "line_end": 677,
+              "quote": "refuse('clock_owner', {'shared_refusal': shared, 'leap_second': accepted and value[17:19] == '60',"
+            },
+            {
+              "path": "scripts/pm_executor_event_semantics.py",
+              "unit": "shared_date_time_refusal",
+              "line_start": 494,
+              "line_end": 494,
+              "quote": "date_time(value, profile=EVENT_RECORD if profile == OTHER_OWNER_RFC3339 else STORAGE_UTC_Z)"
+            },
+            {
+              "path": "scripts/pm_executor_event_semantics.py",
+              "unit": "strict_format_checker",
+              "line_start": 476,
+              "line_end": 476,
+              "quote": "checker.checks('date-time')(lambda value: timestamp_format(value, profile))"
+            },
+            {
+              "path": "scripts/pm_executor_event_semantics.py",
+              "unit": "frozen_verifier",
+              "line_start": 1135,
+              "line_end": 1135,
+              "quote": "with datetime_edition(version):"
             }
           ],
           "prior": {
@@ -468,7 +506,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Sweep part 2A (guard tables, gated tool) and part 2B numbers; status unchanged, evidence extended.",
+          "change_reason": "Sweep part 2B date-time (shared CV-1101 date_time, F19, SP-1101 frozen date-time edition); evidence extended.",
           "static_verification": {
             "families": 1,
             "source_transition_cases": 209,
@@ -486,7 +524,9 @@
             "command": "python3 scripts/pm_executor_event_semantics.py --family attempt.completed",
             "check_receipt": "reports/event-authority-20261104/DX.checks.json",
             "targeted_predicate_receipt": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/sweep-p1/f20-verification.json",
-            "whole_lane_guard_proof": "PENDING_PART_2_SHARED_GUARD_TOOL"
+            "whole_lane_guard_proof": "METHOD_B_GUARD_TABLES (reports/event-authority-20261104/DX.guard-tables.json)",
+            "sweep_witnesses": 65,
+            "date_time": "shared pm_event_datetime.date_time with the DX owner profile (storage_utc_z, no second 60; uppercase T for backoff clock observations); frozen v0 edition bound by SP-1101 dispatch"
           }
         }
       },
@@ -497,12 +537,13 @@
       },
       "remaining_gaps": [
         "Membership ABSENT until separate admission.",
-        "Timestamp grammar (CV-1101 adoption) remains part 2B; interim review only."
+        "datetime_validator and the whole-Plans date-time inventory gate run at batch-2 integration (lead addendum 2)."
       ],
       "static_checks_seen": [
-        "Both family CLIs exit 0/top-level pass, including the sweep part 2A witnesses.",
+        "Both family CLIs exit 0/top-level pass, including the sweep part 2A and part 2B witnesses.",
         "Every guard-table row the family reaches is credited by the gated tool, or listed unprovable with its reason.",
-        "Shared number corpus through numeric, capture and first-receipt routes: 0 disagreements."
+        "Shared number corpus through numeric, capture and first-receipt routes: 0 disagreements.",
+        "Every timestamp field goes through the shared CV-1101 date_time predicate with its owner profile."
       ],
       "notes": "Sweep part 2A + part 2B numbers static self-grade. No lane READY until CV-1101 timestamp adoption (part 2B), the Sol max and Astra max lane reviews and admission; no native claim.",
       "technical_depth_ready": false,
@@ -797,7 +838,7 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Finite static oracles: every refusal of the DX checkers for this family is a named Method B guard-table row credited only by the gated shared tool; CV-1100/SP-1100/SP-1101 are adopted through the shared helper and the shared corpus runs through this family's complete routes. Timestamp grammar (CV-1101) is part 2B and reviewed interim only; native NOT_RUN.",
+          "finding": "Finite static oracles: every refusal of the DX checkers for this family is a named Method B guard-table row credited only by the gated shared tool; CV-1100/SP-1100/SP-1101 are adopted through the shared helper and the shared corpus runs through this family's complete routes; every timestamp field is checked by the shared CV-1101 date_time predicate with its owner profile (DX owner: storage_utc_z plus no second 60, uppercase T for backoff clock observations), and a retained original's frozen date-time edition is bound by SP-1101 dispatch. datetime_validator and the whole-Plans inventory gate run at batch-2 integration (lead addendum 2); native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -830,8 +871,8 @@
             {
               "path": "scripts/pm_executor_event_semantics.py",
               "unit": "canonical",
-              "line_start": 289,
-              "line_end": 289,
+              "line_start": 370,
+              "line_end": 370,
               "quote": "text, reason = qualified_jcs(value).decode('utf-8'), None"
             },
             {
@@ -844,8 +885,8 @@
             {
               "path": "Plans/executor_event_semantic_fixtures.json",
               "unit": "#/families/attempt.started",
-              "line_start": 51059,
-              "line_end": 51059,
+              "line_start": 51061,
+              "line_end": 51061,
               "quote": "\"case\": \"F13-coherent-sequence-1152921504606846976\""
             },
             {
@@ -893,23 +934,51 @@
             {
               "path": "scripts/pm_executor_event_semantics.py",
               "unit": "refuse",
-              "line_start": 106,
-              "line_end": 106,
+              "line_start": 119,
+              "line_end": 119,
               "quote": "def refuse(phase, facts, suffix='', message=None):"
             },
             {
               "path": "scripts/pm_executor_event_semantics.py",
               "unit": "_validate_history",
-              "line_start": 1047,
-              "line_end": 1047,
+              "line_start": 1190,
+              "line_end": 1190,
               "quote": "dispatcher.resolve(retained_source_sha256, expected, disclose=disclose)"
             },
             {
               "path": "scripts/pm_executor_event_semantics.py",
               "unit": "validate_capture",
-              "line_start": 672,
-              "line_end": 672,
+              "line_start": 801,
+              "line_end": 801,
               "quote": "admit_integer_slots(contract['schema_ref'], payload)"
+            },
+            {
+              "path": "scripts/pm_executor_event_semantics.py",
+              "unit": "instant",
+              "line_start": 677,
+              "line_end": 677,
+              "quote": "refuse('clock_owner', {'shared_refusal': shared, 'leap_second': accepted and value[17:19] == '60',"
+            },
+            {
+              "path": "scripts/pm_executor_event_semantics.py",
+              "unit": "shared_date_time_refusal",
+              "line_start": 494,
+              "line_end": 494,
+              "quote": "date_time(value, profile=EVENT_RECORD if profile == OTHER_OWNER_RFC3339 else STORAGE_UTC_Z)"
+            },
+            {
+              "path": "scripts/pm_executor_event_semantics.py",
+              "unit": "strict_format_checker",
+              "line_start": 476,
+              "line_end": 476,
+              "quote": "checker.checks('date-time')(lambda value: timestamp_format(value, profile))"
+            },
+            {
+              "path": "scripts/pm_executor_event_semantics.py",
+              "unit": "frozen_verifier",
+              "line_start": 1135,
+              "line_end": 1135,
+              "quote": "with datetime_edition(version):"
             }
           ],
           "prior": {
@@ -917,7 +986,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Sweep part 2A (guard tables, gated tool) and part 2B numbers; status unchanged, evidence extended.",
+          "change_reason": "Sweep part 2B date-time (shared CV-1101 date_time, F19, SP-1101 frozen date-time edition); evidence extended.",
           "static_verification": {
             "families": 1,
             "source_transition_cases": 230,
@@ -935,7 +1004,9 @@
             "command": "python3 scripts/pm_executor_event_semantics.py --family attempt.started",
             "check_receipt": "reports/event-authority-20261104/DX.checks.json",
             "targeted_predicate_receipt": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/sweep-p1/f20-verification.json",
-            "whole_lane_guard_proof": "PENDING_PART_2_SHARED_GUARD_TOOL"
+            "whole_lane_guard_proof": "METHOD_B_GUARD_TABLES (reports/event-authority-20261104/DX.guard-tables.json)",
+            "sweep_witnesses": 0,
+            "date_time": "shared pm_event_datetime.date_time with the DX owner profile (storage_utc_z, no second 60; uppercase T for backoff clock observations); frozen v0 edition bound by SP-1101 dispatch"
           }
         }
       },
@@ -946,12 +1017,13 @@
       },
       "remaining_gaps": [
         "Membership ABSENT until separate admission.",
-        "Timestamp grammar (CV-1101 adoption) remains part 2B; interim review only."
+        "datetime_validator and the whole-Plans date-time inventory gate run at batch-2 integration (lead addendum 2)."
       ],
       "static_checks_seen": [
-        "Both family CLIs exit 0/top-level pass, including the sweep part 2A witnesses.",
+        "Both family CLIs exit 0/top-level pass, including the sweep part 2A and part 2B witnesses.",
         "Every guard-table row the family reaches is credited by the gated tool, or listed unprovable with its reason.",
-        "Shared number corpus through numeric, capture and first-receipt routes: 0 disagreements."
+        "Shared number corpus through numeric, capture and first-receipt routes: 0 disagreements.",
+        "Every timestamp field goes through the shared CV-1101 date_time predicate with its owner profile."
       ],
       "notes": "Sweep part 2A + part 2B numbers static self-grade. No lane READY until CV-1101 timestamp adoption (part 2B), the Sol max and Astra max lane reviews and admission; no native claim.",
       "technical_depth_ready": false,
@@ -1246,7 +1318,7 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Finite static oracles: every refusal of the DX checkers for this family is a named Method B guard-table row credited only by the gated shared tool; CV-1100/SP-1100/SP-1101 are adopted through the shared helper and the shared corpus runs through this family's complete routes. Timestamp grammar (CV-1101) is part 2B and reviewed interim only; native NOT_RUN.",
+          "finding": "Finite static oracles: every refusal of the DX checkers for this family is a named Method B guard-table row credited only by the gated shared tool; CV-1100/SP-1100/SP-1101 are adopted through the shared helper and the shared corpus runs through this family's complete routes; every timestamp field is checked by the shared CV-1101 date_time predicate with its owner profile (DX owner: storage_utc_z plus no second 60, uppercase T for backoff clock observations), and a retained original's frozen date-time edition is bound by SP-1101 dispatch. datetime_validator and the whole-Plans inventory gate run at batch-2 integration (lead addendum 2); native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -1279,8 +1351,8 @@
             {
               "path": "scripts/pm_executor_event_semantics.py",
               "unit": "canonical",
-              "line_start": 289,
-              "line_end": 289,
+              "line_start": 370,
+              "line_end": 370,
               "quote": "text, reason = qualified_jcs(value).decode('utf-8'), None"
             },
             {
@@ -1293,8 +1365,8 @@
             {
               "path": "Plans/executor_event_semantic_fixtures.json",
               "unit": "#/families/node.blocked",
-              "line_start": 100735,
-              "line_end": 100735,
+              "line_start": 100738,
+              "line_end": 100738,
               "quote": "\"case\": \"F13-coherent-sequence-1152921504606846976\""
             },
             {
@@ -1342,23 +1414,51 @@
             {
               "path": "scripts/pm_executor_event_semantics.py",
               "unit": "refuse",
-              "line_start": 106,
-              "line_end": 106,
+              "line_start": 119,
+              "line_end": 119,
               "quote": "def refuse(phase, facts, suffix='', message=None):"
             },
             {
               "path": "scripts/pm_executor_event_semantics.py",
               "unit": "_validate_history",
-              "line_start": 1047,
-              "line_end": 1047,
+              "line_start": 1190,
+              "line_end": 1190,
               "quote": "dispatcher.resolve(retained_source_sha256, expected, disclose=disclose)"
             },
             {
               "path": "scripts/pm_executor_event_semantics.py",
               "unit": "validate_capture",
-              "line_start": 672,
-              "line_end": 672,
+              "line_start": 801,
+              "line_end": 801,
               "quote": "admit_integer_slots(contract['schema_ref'], payload)"
+            },
+            {
+              "path": "scripts/pm_executor_event_semantics.py",
+              "unit": "instant",
+              "line_start": 677,
+              "line_end": 677,
+              "quote": "refuse('clock_owner', {'shared_refusal': shared, 'leap_second': accepted and value[17:19] == '60',"
+            },
+            {
+              "path": "scripts/pm_executor_event_semantics.py",
+              "unit": "shared_date_time_refusal",
+              "line_start": 494,
+              "line_end": 494,
+              "quote": "date_time(value, profile=EVENT_RECORD if profile == OTHER_OWNER_RFC3339 else STORAGE_UTC_Z)"
+            },
+            {
+              "path": "scripts/pm_executor_event_semantics.py",
+              "unit": "strict_format_checker",
+              "line_start": 476,
+              "line_end": 476,
+              "quote": "checker.checks('date-time')(lambda value: timestamp_format(value, profile))"
+            },
+            {
+              "path": "scripts/pm_executor_event_semantics.py",
+              "unit": "frozen_verifier",
+              "line_start": 1135,
+              "line_end": 1135,
+              "quote": "with datetime_edition(version):"
             }
           ],
           "prior": {
@@ -1366,7 +1466,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Sweep part 2A (guard tables, gated tool) and part 2B numbers; status unchanged, evidence extended.",
+          "change_reason": "Sweep part 2B date-time (shared CV-1101 date_time, F19, SP-1101 frozen date-time edition); evidence extended.",
           "static_verification": {
             "families": 1,
             "source_transition_cases": 215,
@@ -1384,7 +1484,9 @@
             "command": "python3 scripts/pm_executor_event_semantics.py --family node.blocked",
             "check_receipt": "reports/event-authority-20261104/DX.checks.json",
             "targeted_predicate_receipt": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/sweep-p1/f20-verification.json",
-            "whole_lane_guard_proof": "PENDING_PART_2_SHARED_GUARD_TOOL"
+            "whole_lane_guard_proof": "METHOD_B_GUARD_TABLES (reports/event-authority-20261104/DX.guard-tables.json)",
+            "sweep_witnesses": 4,
+            "date_time": "shared pm_event_datetime.date_time with the DX owner profile (storage_utc_z, no second 60; uppercase T for backoff clock observations); frozen v0 edition bound by SP-1101 dispatch"
           }
         }
       },
@@ -1395,12 +1497,13 @@
       },
       "remaining_gaps": [
         "Membership ABSENT until separate admission.",
-        "Timestamp grammar (CV-1101 adoption) remains part 2B; interim review only."
+        "datetime_validator and the whole-Plans date-time inventory gate run at batch-2 integration (lead addendum 2)."
       ],
       "static_checks_seen": [
-        "Both family CLIs exit 0/top-level pass, including the sweep part 2A witnesses.",
+        "Both family CLIs exit 0/top-level pass, including the sweep part 2A and part 2B witnesses.",
         "Every guard-table row the family reaches is credited by the gated tool, or listed unprovable with its reason.",
-        "Shared number corpus through numeric, capture and first-receipt routes: 0 disagreements."
+        "Shared number corpus through numeric, capture and first-receipt routes: 0 disagreements.",
+        "Every timestamp field goes through the shared CV-1101 date_time predicate with its owner profile."
       ],
       "notes": "Sweep part 2A + part 2B numbers static self-grade. No lane READY until CV-1101 timestamp adoption (part 2B), the Sol max and Astra max lane reviews and admission; no native claim.",
       "technical_depth_ready": false,
@@ -1695,7 +1798,7 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Finite static oracles: every refusal of the DX checkers for this family is a named Method B guard-table row credited only by the gated shared tool; CV-1100/SP-1100/SP-1101 are adopted through the shared helper and the shared corpus runs through this family's complete routes. Timestamp grammar (CV-1101) is part 2B and reviewed interim only; native NOT_RUN.",
+          "finding": "Finite static oracles: every refusal of the DX checkers for this family is a named Method B guard-table row credited only by the gated shared tool; CV-1100/SP-1100/SP-1101 are adopted through the shared helper and the shared corpus runs through this family's complete routes; every timestamp field is checked by the shared CV-1101 date_time predicate with its owner profile (DX owner: storage_utc_z plus no second 60, uppercase T for backoff clock observations), and a retained original's frozen date-time edition is bound by SP-1101 dispatch. datetime_validator and the whole-Plans inventory gate run at batch-2 integration (lead addendum 2); native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -1728,8 +1831,8 @@
             {
               "path": "scripts/pm_executor_event_semantics.py",
               "unit": "canonical",
-              "line_start": 289,
-              "line_end": 289,
+              "line_start": 370,
+              "line_end": 370,
               "quote": "text, reason = qualified_jcs(value).decode('utf-8'), None"
             },
             {
@@ -1742,8 +1845,8 @@
             {
               "path": "Plans/executor_event_semantic_fixtures.json",
               "unit": "#/families/node.completed",
-              "line_start": 131595,
-              "line_end": 131595,
+              "line_start": 131599,
+              "line_end": 131599,
               "quote": "\"case\": \"F13-coherent-sequence-1152921504606846976\""
             },
             {
@@ -1791,23 +1894,51 @@
             {
               "path": "scripts/pm_executor_event_semantics.py",
               "unit": "refuse",
-              "line_start": 106,
-              "line_end": 106,
+              "line_start": 119,
+              "line_end": 119,
               "quote": "def refuse(phase, facts, suffix='', message=None):"
             },
             {
               "path": "scripts/pm_executor_event_semantics.py",
               "unit": "_validate_history",
-              "line_start": 1047,
-              "line_end": 1047,
+              "line_start": 1190,
+              "line_end": 1190,
               "quote": "dispatcher.resolve(retained_source_sha256, expected, disclose=disclose)"
             },
             {
               "path": "scripts/pm_executor_event_semantics.py",
               "unit": "validate_capture",
-              "line_start": 672,
-              "line_end": 672,
+              "line_start": 801,
+              "line_end": 801,
               "quote": "admit_integer_slots(contract['schema_ref'], payload)"
+            },
+            {
+              "path": "scripts/pm_executor_event_semantics.py",
+              "unit": "instant",
+              "line_start": 677,
+              "line_end": 677,
+              "quote": "refuse('clock_owner', {'shared_refusal': shared, 'leap_second': accepted and value[17:19] == '60',"
+            },
+            {
+              "path": "scripts/pm_executor_event_semantics.py",
+              "unit": "shared_date_time_refusal",
+              "line_start": 494,
+              "line_end": 494,
+              "quote": "date_time(value, profile=EVENT_RECORD if profile == OTHER_OWNER_RFC3339 else STORAGE_UTC_Z)"
+            },
+            {
+              "path": "scripts/pm_executor_event_semantics.py",
+              "unit": "strict_format_checker",
+              "line_start": 476,
+              "line_end": 476,
+              "quote": "checker.checks('date-time')(lambda value: timestamp_format(value, profile))"
+            },
+            {
+              "path": "scripts/pm_executor_event_semantics.py",
+              "unit": "frozen_verifier",
+              "line_start": 1135,
+              "line_end": 1135,
+              "quote": "with datetime_edition(version):"
             }
           ],
           "prior": {
@@ -1815,7 +1946,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Sweep part 2A (guard tables, gated tool) and part 2B numbers; status unchanged, evidence extended.",
+          "change_reason": "Sweep part 2B date-time (shared CV-1101 date_time, F19, SP-1101 frozen date-time edition); evidence extended.",
           "static_verification": {
             "families": 1,
             "source_transition_cases": 180,
@@ -1833,7 +1964,9 @@
             "command": "python3 scripts/pm_executor_event_semantics.py --family node.completed",
             "check_receipt": "reports/event-authority-20261104/DX.checks.json",
             "targeted_predicate_receipt": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/sweep-p1/f20-verification.json",
-            "whole_lane_guard_proof": "PENDING_PART_2_SHARED_GUARD_TOOL"
+            "whole_lane_guard_proof": "METHOD_B_GUARD_TABLES (reports/event-authority-20261104/DX.guard-tables.json)",
+            "sweep_witnesses": 1,
+            "date_time": "shared pm_event_datetime.date_time with the DX owner profile (storage_utc_z, no second 60; uppercase T for backoff clock observations); frozen v0 edition bound by SP-1101 dispatch"
           }
         }
       },
@@ -1844,12 +1977,13 @@
       },
       "remaining_gaps": [
         "Membership ABSENT until separate admission.",
-        "Timestamp grammar (CV-1101 adoption) remains part 2B; interim review only."
+        "datetime_validator and the whole-Plans date-time inventory gate run at batch-2 integration (lead addendum 2)."
       ],
       "static_checks_seen": [
-        "Both family CLIs exit 0/top-level pass, including the sweep part 2A witnesses.",
+        "Both family CLIs exit 0/top-level pass, including the sweep part 2A and part 2B witnesses.",
         "Every guard-table row the family reaches is credited by the gated tool, or listed unprovable with its reason.",
-        "Shared number corpus through numeric, capture and first-receipt routes: 0 disagreements."
+        "Shared number corpus through numeric, capture and first-receipt routes: 0 disagreements.",
+        "Every timestamp field goes through the shared CV-1101 date_time predicate with its owner profile."
       ],
       "notes": "Sweep part 2A + part 2B numbers static self-grade. No lane READY until CV-1101 timestamp adoption (part 2B), the Sol max and Astra max lane reviews and admission; no native claim.",
       "technical_depth_ready": false,
@@ -2144,7 +2278,7 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Finite static oracles: every refusal of the DX checkers for this family is a named Method B guard-table row credited only by the gated shared tool; CV-1100/SP-1100/SP-1101 are adopted through the shared helper and the shared corpus runs through this family's complete routes. Timestamp grammar (CV-1101) is part 2B and reviewed interim only; native NOT_RUN.",
+          "finding": "Finite static oracles: every refusal of the DX checkers for this family is a named Method B guard-table row credited only by the gated shared tool; CV-1100/SP-1100/SP-1101 are adopted through the shared helper and the shared corpus runs through this family's complete routes; every timestamp field is checked by the shared CV-1101 date_time predicate with its owner profile (DX owner: storage_utc_z plus no second 60, uppercase T for backoff clock observations), and a retained original's frozen date-time edition is bound by SP-1101 dispatch. datetime_validator and the whole-Plans inventory gate run at batch-2 integration (lead addendum 2); native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -2177,8 +2311,8 @@
             {
               "path": "scripts/pm_executor_event_semantics.py",
               "unit": "canonical",
-              "line_start": 289,
-              "line_end": 289,
+              "line_start": 370,
+              "line_end": 370,
               "quote": "text, reason = qualified_jcs(value).decode('utf-8'), None"
             },
             {
@@ -2191,8 +2325,8 @@
             {
               "path": "Plans/executor_event_semantic_fixtures.json",
               "unit": "#/families/node.started",
-              "line_start": 165275,
-              "line_end": 165275,
+              "line_start": 165280,
+              "line_end": 165280,
               "quote": "\"case\": \"F13-coherent-sequence-1152921504606846976\""
             },
             {
@@ -2240,23 +2374,51 @@
             {
               "path": "scripts/pm_executor_event_semantics.py",
               "unit": "refuse",
-              "line_start": 106,
-              "line_end": 106,
+              "line_start": 119,
+              "line_end": 119,
               "quote": "def refuse(phase, facts, suffix='', message=None):"
             },
             {
               "path": "scripts/pm_executor_event_semantics.py",
               "unit": "_validate_history",
-              "line_start": 1047,
-              "line_end": 1047,
+              "line_start": 1190,
+              "line_end": 1190,
               "quote": "dispatcher.resolve(retained_source_sha256, expected, disclose=disclose)"
             },
             {
               "path": "scripts/pm_executor_event_semantics.py",
               "unit": "validate_capture",
-              "line_start": 672,
-              "line_end": 672,
+              "line_start": 801,
+              "line_end": 801,
               "quote": "admit_integer_slots(contract['schema_ref'], payload)"
+            },
+            {
+              "path": "scripts/pm_executor_event_semantics.py",
+              "unit": "instant",
+              "line_start": 677,
+              "line_end": 677,
+              "quote": "refuse('clock_owner', {'shared_refusal': shared, 'leap_second': accepted and value[17:19] == '60',"
+            },
+            {
+              "path": "scripts/pm_executor_event_semantics.py",
+              "unit": "shared_date_time_refusal",
+              "line_start": 494,
+              "line_end": 494,
+              "quote": "date_time(value, profile=EVENT_RECORD if profile == OTHER_OWNER_RFC3339 else STORAGE_UTC_Z)"
+            },
+            {
+              "path": "scripts/pm_executor_event_semantics.py",
+              "unit": "strict_format_checker",
+              "line_start": 476,
+              "line_end": 476,
+              "quote": "checker.checks('date-time')(lambda value: timestamp_format(value, profile))"
+            },
+            {
+              "path": "scripts/pm_executor_event_semantics.py",
+              "unit": "frozen_verifier",
+              "line_start": 1135,
+              "line_end": 1135,
+              "quote": "with datetime_edition(version):"
             }
           ],
           "prior": {
@@ -2264,7 +2426,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Sweep part 2A (guard tables, gated tool) and part 2B numbers; status unchanged, evidence extended.",
+          "change_reason": "Sweep part 2B date-time (shared CV-1101 date_time, F19, SP-1101 frozen date-time edition); evidence extended.",
           "static_verification": {
             "families": 1,
             "source_transition_cases": 197,
@@ -2282,7 +2444,9 @@
             "command": "python3 scripts/pm_executor_event_semantics.py --family node.started",
             "check_receipt": "reports/event-authority-20261104/DX.checks.json",
             "targeted_predicate_receipt": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/sweep-p1/f20-verification.json",
-            "whole_lane_guard_proof": "PENDING_PART_2_SHARED_GUARD_TOOL"
+            "whole_lane_guard_proof": "METHOD_B_GUARD_TABLES (reports/event-authority-20261104/DX.guard-tables.json)",
+            "sweep_witnesses": 2,
+            "date_time": "shared pm_event_datetime.date_time with the DX owner profile (storage_utc_z, no second 60; uppercase T for backoff clock observations); frozen v0 edition bound by SP-1101 dispatch"
           }
         }
       },
@@ -2293,12 +2457,13 @@
       },
       "remaining_gaps": [
         "Membership ABSENT until separate admission.",
-        "Timestamp grammar (CV-1101 adoption) remains part 2B; interim review only."
+        "datetime_validator and the whole-Plans date-time inventory gate run at batch-2 integration (lead addendum 2)."
       ],
       "static_checks_seen": [
-        "Both family CLIs exit 0/top-level pass, including the sweep part 2A witnesses.",
+        "Both family CLIs exit 0/top-level pass, including the sweep part 2A and part 2B witnesses.",
         "Every guard-table row the family reaches is credited by the gated tool, or listed unprovable with its reason.",
-        "Shared number corpus through numeric, capture and first-receipt routes: 0 disagreements."
+        "Shared number corpus through numeric, capture and first-receipt routes: 0 disagreements.",
+        "Every timestamp field goes through the shared CV-1101 date_time predicate with its owner profile."
       ],
       "notes": "Sweep part 2A + part 2B numbers static self-grade. No lane READY until CV-1101 timestamp adoption (part 2B), the Sol max and Astra max lane reviews and admission; no native claim.",
       "technical_depth_ready": false,
@@ -2593,7 +2758,7 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Finite static oracles: every refusal of the DX checkers for this family is a named Method B guard-table row credited only by the gated shared tool; CV-1100/SP-1100/SP-1101 are adopted through the shared helper and the shared corpus runs through this family's complete routes. Timestamp grammar (CV-1101) is part 2B and reviewed interim only; native NOT_RUN.",
+          "finding": "Finite static oracles: every refusal of the DX checkers for this family is a named Method B guard-table row credited only by the gated shared tool; CV-1100/SP-1100/SP-1101 are adopted through the shared helper and the shared corpus runs through this family's complete routes; every timestamp field is checked by the shared CV-1101 date_time predicate with its owner profile (DX owner: storage_utc_z plus no second 60, uppercase T for backoff clock observations), and a retained original's frozen date-time edition is bound by SP-1101 dispatch. datetime_validator and the whole-Plans inventory gate run at batch-2 integration (lead addendum 2); native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -2626,8 +2791,8 @@
             {
               "path": "scripts/pm_executor_event_semantics.py",
               "unit": "canonical",
-              "line_start": 289,
-              "line_end": 289,
+              "line_start": 370,
+              "line_end": 370,
               "quote": "text, reason = qualified_jcs(value).decode('utf-8'), None"
             },
             {
@@ -2640,8 +2805,8 @@
             {
               "path": "Plans/executor_event_semantic_fixtures.json",
               "unit": "#/families/node.unblocked",
-              "line_start": 197365,
-              "line_end": 197365,
+              "line_start": 197371,
+              "line_end": 197371,
               "quote": "\"case\": \"F13-coherent-sequence-1152921504606846976\""
             },
             {
@@ -2689,23 +2854,51 @@
             {
               "path": "scripts/pm_executor_event_semantics.py",
               "unit": "refuse",
-              "line_start": 106,
-              "line_end": 106,
+              "line_start": 119,
+              "line_end": 119,
               "quote": "def refuse(phase, facts, suffix='', message=None):"
             },
             {
               "path": "scripts/pm_executor_event_semantics.py",
               "unit": "_validate_history",
-              "line_start": 1047,
-              "line_end": 1047,
+              "line_start": 1190,
+              "line_end": 1190,
               "quote": "dispatcher.resolve(retained_source_sha256, expected, disclose=disclose)"
             },
             {
               "path": "scripts/pm_executor_event_semantics.py",
               "unit": "validate_capture",
-              "line_start": 672,
-              "line_end": 672,
+              "line_start": 801,
+              "line_end": 801,
               "quote": "admit_integer_slots(contract['schema_ref'], payload)"
+            },
+            {
+              "path": "scripts/pm_executor_event_semantics.py",
+              "unit": "instant",
+              "line_start": 677,
+              "line_end": 677,
+              "quote": "refuse('clock_owner', {'shared_refusal': shared, 'leap_second': accepted and value[17:19] == '60',"
+            },
+            {
+              "path": "scripts/pm_executor_event_semantics.py",
+              "unit": "shared_date_time_refusal",
+              "line_start": 494,
+              "line_end": 494,
+              "quote": "date_time(value, profile=EVENT_RECORD if profile == OTHER_OWNER_RFC3339 else STORAGE_UTC_Z)"
+            },
+            {
+              "path": "scripts/pm_executor_event_semantics.py",
+              "unit": "strict_format_checker",
+              "line_start": 476,
+              "line_end": 476,
+              "quote": "checker.checks('date-time')(lambda value: timestamp_format(value, profile))"
+            },
+            {
+              "path": "scripts/pm_executor_event_semantics.py",
+              "unit": "frozen_verifier",
+              "line_start": 1135,
+              "line_end": 1135,
+              "quote": "with datetime_edition(version):"
             }
           ],
           "prior": {
@@ -2713,7 +2906,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Sweep part 2A (guard tables, gated tool) and part 2B numbers; status unchanged, evidence extended.",
+          "change_reason": "Sweep part 2B date-time (shared CV-1101 date_time, F19, SP-1101 frozen date-time edition); evidence extended.",
           "static_verification": {
             "families": 1,
             "source_transition_cases": 188,
@@ -2731,7 +2924,9 @@
             "command": "python3 scripts/pm_executor_event_semantics.py --family node.unblocked",
             "check_receipt": "reports/event-authority-20261104/DX.checks.json",
             "targeted_predicate_receipt": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/sweep-p1/f20-verification.json",
-            "whole_lane_guard_proof": "PENDING_PART_2_SHARED_GUARD_TOOL"
+            "whole_lane_guard_proof": "METHOD_B_GUARD_TABLES (reports/event-authority-20261104/DX.guard-tables.json)",
+            "sweep_witnesses": 0,
+            "date_time": "shared pm_event_datetime.date_time with the DX owner profile (storage_utc_z, no second 60; uppercase T for backoff clock observations); frozen v0 edition bound by SP-1101 dispatch"
           }
         }
       },
@@ -2742,12 +2937,13 @@
       },
       "remaining_gaps": [
         "Membership ABSENT until separate admission.",
-        "Timestamp grammar (CV-1101 adoption) remains part 2B; interim review only."
+        "datetime_validator and the whole-Plans date-time inventory gate run at batch-2 integration (lead addendum 2)."
       ],
       "static_checks_seen": [
-        "Both family CLIs exit 0/top-level pass, including the sweep part 2A witnesses.",
+        "Both family CLIs exit 0/top-level pass, including the sweep part 2A and part 2B witnesses.",
         "Every guard-table row the family reaches is credited by the gated tool, or listed unprovable with its reason.",
-        "Shared number corpus through numeric, capture and first-receipt routes: 0 disagreements."
+        "Shared number corpus through numeric, capture and first-receipt routes: 0 disagreements.",
+        "Every timestamp field goes through the shared CV-1101 date_time predicate with its owner profile."
       ],
       "notes": "Sweep part 2A + part 2B numbers static self-grade. No lane READY until CV-1101 timestamp adoption (part 2B), the Sol max and Astra max lane reviews and admission; no native claim.",
       "technical_depth_ready": false,
@@ -3049,7 +3245,7 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Finite static oracles: every refusal of the DX checkers for this family is a named Method B guard-table row credited only by the gated shared tool; CV-1100/SP-1100/SP-1101 are adopted through the shared helper and the shared corpus runs through this family's complete routes. Timestamp grammar (CV-1101) is part 2B and reviewed interim only; native NOT_RUN.",
+          "finding": "Finite static oracles: every refusal of the DX checkers for this family is a named Method B guard-table row credited only by the gated shared tool; CV-1100/SP-1100/SP-1101 are adopted through the shared helper and the shared corpus runs through this family's complete routes; every timestamp field is checked by the shared CV-1101 date_time predicate with its owner profile (DX owner: storage_utc_z plus no second 60, uppercase T for backoff clock observations), and a retained original's frozen date-time edition is bound by SP-1101 dispatch. datetime_validator and the whole-Plans inventory gate run at batch-2 integration (lead addendum 2); native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -3082,8 +3278,8 @@
             {
               "path": "scripts/pm_executor_event_semantics.py",
               "unit": "canonical",
-              "line_start": 289,
-              "line_end": 289,
+              "line_start": 370,
+              "line_end": 370,
               "quote": "text, reason = qualified_jcs(value).decode('utf-8'), None"
             },
             {
@@ -3096,8 +3292,8 @@
             {
               "path": "Plans/executor_event_semantic_fixtures.json",
               "unit": "#/families/plan.decomposition_degraded",
-              "line_start": 216721,
-              "line_end": 216721,
+              "line_start": 216728,
+              "line_end": 216728,
               "quote": "\"case\": \"F13-coherent-sequence-1152921504606846976\""
             },
             {
@@ -3138,23 +3334,51 @@
             {
               "path": "scripts/pm_executor_event_semantics.py",
               "unit": "refuse",
-              "line_start": 106,
-              "line_end": 106,
+              "line_start": 119,
+              "line_end": 119,
               "quote": "def refuse(phase, facts, suffix='', message=None):"
             },
             {
               "path": "scripts/pm_executor_event_semantics.py",
               "unit": "_validate_history",
-              "line_start": 1047,
-              "line_end": 1047,
+              "line_start": 1190,
+              "line_end": 1190,
               "quote": "dispatcher.resolve(retained_source_sha256, expected, disclose=disclose)"
             },
             {
               "path": "scripts/pm_executor_event_semantics.py",
               "unit": "validate_capture",
-              "line_start": 672,
-              "line_end": 672,
+              "line_start": 801,
+              "line_end": 801,
               "quote": "admit_integer_slots(contract['schema_ref'], payload)"
+            },
+            {
+              "path": "scripts/pm_executor_event_semantics.py",
+              "unit": "instant",
+              "line_start": 677,
+              "line_end": 677,
+              "quote": "refuse('clock_owner', {'shared_refusal': shared, 'leap_second': accepted and value[17:19] == '60',"
+            },
+            {
+              "path": "scripts/pm_executor_event_semantics.py",
+              "unit": "shared_date_time_refusal",
+              "line_start": 494,
+              "line_end": 494,
+              "quote": "date_time(value, profile=EVENT_RECORD if profile == OTHER_OWNER_RFC3339 else STORAGE_UTC_Z)"
+            },
+            {
+              "path": "scripts/pm_executor_event_semantics.py",
+              "unit": "strict_format_checker",
+              "line_start": 476,
+              "line_end": 476,
+              "quote": "checker.checks('date-time')(lambda value: timestamp_format(value, profile))"
+            },
+            {
+              "path": "scripts/pm_executor_event_semantics.py",
+              "unit": "frozen_verifier",
+              "line_start": 1135,
+              "line_end": 1135,
+              "quote": "with datetime_edition(version):"
             }
           ],
           "prior": {
@@ -3162,7 +3386,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Sweep part 2A (guard tables, gated tool) and part 2B numbers; status unchanged, evidence extended.",
+          "change_reason": "Sweep part 2B date-time (shared CV-1101 date_time, F19, SP-1101 frozen date-time edition); evidence extended.",
           "static_verification": {
             "families": 1,
             "source_transition_cases": 118,
@@ -3180,7 +3404,9 @@
             "command": "python3 scripts/pm_executor_event_semantics.py --family plan.decomposition_degraded",
             "check_receipt": "reports/event-authority-20261104/DX.checks.json",
             "targeted_predicate_receipt": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/sweep-p1/f20-verification.json",
-            "whole_lane_guard_proof": "PENDING_PART_2_SHARED_GUARD_TOOL"
+            "whole_lane_guard_proof": "METHOD_B_GUARD_TABLES (reports/event-authority-20261104/DX.guard-tables.json)",
+            "sweep_witnesses": 0,
+            "date_time": "shared pm_event_datetime.date_time with the DX owner profile (storage_utc_z, no second 60; uppercase T for backoff clock observations); frozen v0 edition bound by SP-1101 dispatch"
           }
         }
       },
@@ -3191,12 +3417,13 @@
       },
       "remaining_gaps": [
         "Membership ABSENT until separate admission.",
-        "Timestamp grammar (CV-1101 adoption) remains part 2B; interim review only."
+        "datetime_validator and the whole-Plans date-time inventory gate run at batch-2 integration (lead addendum 2)."
       ],
       "static_checks_seen": [
-        "Both family CLIs exit 0/top-level pass, including the sweep part 2A witnesses.",
+        "Both family CLIs exit 0/top-level pass, including the sweep part 2A and part 2B witnesses.",
         "Every guard-table row the family reaches is credited by the gated tool, or listed unprovable with its reason.",
-        "Shared number corpus through numeric, capture and first-receipt routes: 0 disagreements."
+        "Shared number corpus through numeric, capture and first-receipt routes: 0 disagreements.",
+        "Every timestamp field goes through the shared CV-1101 date_time predicate with its owner profile."
       ],
       "notes": "Sweep part 2A + part 2B numbers static self-grade. No lane READY until CV-1101 timestamp adoption (part 2B), the Sol max and Astra max lane reviews and admission; no native claim.",
       "technical_depth_ready": false,
@@ -3491,7 +3718,7 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Finite static oracles: every refusal of the DX checkers for this family is a named Method B guard-table row credited only by the gated shared tool; CV-1100/SP-1100/SP-1101 are adopted through the shared helper and the shared corpus runs through this family's complete routes. Timestamp grammar (CV-1101) is part 2B and reviewed interim only; native NOT_RUN.",
+          "finding": "Finite static oracles: every refusal of the DX checkers for this family is a named Method B guard-table row credited only by the gated shared tool; CV-1100/SP-1100/SP-1101 are adopted through the shared helper and the shared corpus runs through this family's complete routes; every timestamp field is checked by the shared CV-1101 date_time predicate with its owner profile (DX owner: storage_utc_z plus no second 60, uppercase T for backoff clock observations), and a retained original's frozen date-time edition is bound by SP-1101 dispatch. datetime_validator and the whole-Plans inventory gate run at batch-2 integration (lead addendum 2); native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -3524,8 +3751,8 @@
             {
               "path": "scripts/pm_executor_event_semantics.py",
               "unit": "canonical",
-              "line_start": 289,
-              "line_end": 289,
+              "line_start": 370,
+              "line_end": 370,
               "quote": "text, reason = qualified_jcs(value).decode('utf-8'), None"
             },
             {
@@ -3538,8 +3765,8 @@
             {
               "path": "Plans/executor_event_semantic_fixtures.json",
               "unit": "#/families/remediation.resolved",
-              "line_start": 238523,
-              "line_end": 238523,
+              "line_start": 238531,
+              "line_end": 238531,
               "quote": "\"case\": \"F13-coherent-sequence-1152921504606846976\""
             },
             {
@@ -3587,23 +3814,51 @@
             {
               "path": "scripts/pm_executor_event_semantics.py",
               "unit": "refuse",
-              "line_start": 106,
-              "line_end": 106,
+              "line_start": 119,
+              "line_end": 119,
               "quote": "def refuse(phase, facts, suffix='', message=None):"
             },
             {
               "path": "scripts/pm_executor_event_semantics.py",
               "unit": "_validate_history",
-              "line_start": 1047,
-              "line_end": 1047,
+              "line_start": 1190,
+              "line_end": 1190,
               "quote": "dispatcher.resolve(retained_source_sha256, expected, disclose=disclose)"
             },
             {
               "path": "scripts/pm_executor_event_semantics.py",
               "unit": "validate_capture",
-              "line_start": 672,
-              "line_end": 672,
+              "line_start": 801,
+              "line_end": 801,
               "quote": "admit_integer_slots(contract['schema_ref'], payload)"
+            },
+            {
+              "path": "scripts/pm_executor_event_semantics.py",
+              "unit": "instant",
+              "line_start": 677,
+              "line_end": 677,
+              "quote": "refuse('clock_owner', {'shared_refusal': shared, 'leap_second': accepted and value[17:19] == '60',"
+            },
+            {
+              "path": "scripts/pm_executor_event_semantics.py",
+              "unit": "shared_date_time_refusal",
+              "line_start": 494,
+              "line_end": 494,
+              "quote": "date_time(value, profile=EVENT_RECORD if profile == OTHER_OWNER_RFC3339 else STORAGE_UTC_Z)"
+            },
+            {
+              "path": "scripts/pm_executor_event_semantics.py",
+              "unit": "strict_format_checker",
+              "line_start": 476,
+              "line_end": 476,
+              "quote": "checker.checks('date-time')(lambda value: timestamp_format(value, profile))"
+            },
+            {
+              "path": "scripts/pm_executor_event_semantics.py",
+              "unit": "frozen_verifier",
+              "line_start": 1135,
+              "line_end": 1135,
+              "quote": "with datetime_edition(version):"
             }
           ],
           "prior": {
@@ -3611,7 +3866,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Sweep part 2A (guard tables, gated tool) and part 2B numbers; status unchanged, evidence extended.",
+          "change_reason": "Sweep part 2B date-time (shared CV-1101 date_time, F19, SP-1101 frozen date-time edition); evidence extended.",
           "static_verification": {
             "families": 1,
             "source_transition_cases": 187,
@@ -3629,7 +3884,9 @@
             "command": "python3 scripts/pm_executor_event_semantics.py --family remediation.resolved",
             "check_receipt": "reports/event-authority-20261104/DX.checks.json",
             "targeted_predicate_receipt": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/sweep-p1/f20-verification.json",
-            "whole_lane_guard_proof": "PENDING_PART_2_SHARED_GUARD_TOOL"
+            "whole_lane_guard_proof": "METHOD_B_GUARD_TABLES (reports/event-authority-20261104/DX.guard-tables.json)",
+            "sweep_witnesses": 1,
+            "date_time": "shared pm_event_datetime.date_time with the DX owner profile (storage_utc_z, no second 60; uppercase T for backoff clock observations); frozen v0 edition bound by SP-1101 dispatch"
           }
         }
       },
@@ -3640,12 +3897,13 @@
       },
       "remaining_gaps": [
         "Membership ABSENT until separate admission.",
-        "Timestamp grammar (CV-1101 adoption) remains part 2B; interim review only."
+        "datetime_validator and the whole-Plans date-time inventory gate run at batch-2 integration (lead addendum 2)."
       ],
       "static_checks_seen": [
-        "Both family CLIs exit 0/top-level pass, including the sweep part 2A witnesses.",
+        "Both family CLIs exit 0/top-level pass, including the sweep part 2A and part 2B witnesses.",
         "Every guard-table row the family reaches is credited by the gated tool, or listed unprovable with its reason.",
-        "Shared number corpus through numeric, capture and first-receipt routes: 0 disagreements."
+        "Shared number corpus through numeric, capture and first-receipt routes: 0 disagreements.",
+        "Every timestamp field goes through the shared CV-1101 date_time predicate with its owner profile."
       ],
       "notes": "Sweep part 2A + part 2B numbers static self-grade. No lane READY until CV-1101 timestamp adoption (part 2B), the Sol max and Astra max lane reviews and admission; no native claim.",
       "technical_depth_ready": false,
@@ -3940,7 +4198,7 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Finite static oracles: every refusal of the DX checkers for this family is a named Method B guard-table row credited only by the gated shared tool; CV-1100/SP-1100/SP-1101 are adopted through the shared helper and the shared corpus runs through this family's complete routes. Timestamp grammar (CV-1101) is part 2B and reviewed interim only; native NOT_RUN.",
+          "finding": "Finite static oracles: every refusal of the DX checkers for this family is a named Method B guard-table row credited only by the gated shared tool; CV-1100/SP-1100/SP-1101 are adopted through the shared helper and the shared corpus runs through this family's complete routes; every timestamp field is checked by the shared CV-1101 date_time predicate with its owner profile (DX owner: storage_utc_z plus no second 60, uppercase T for backoff clock observations), and a retained original's frozen date-time edition is bound by SP-1101 dispatch. datetime_validator and the whole-Plans inventory gate run at batch-2 integration (lead addendum 2); native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -3973,8 +4231,8 @@
             {
               "path": "scripts/pm_executor_event_semantics.py",
               "unit": "canonical",
-              "line_start": 289,
-              "line_end": 289,
+              "line_start": 370,
+              "line_end": 370,
               "quote": "text, reason = qualified_jcs(value).decode('utf-8'), None"
             },
             {
@@ -3987,8 +4245,8 @@
             {
               "path": "Plans/executor_event_semantic_fixtures.json",
               "unit": "#/families/remediation.spawned",
-              "line_start": 260754,
-              "line_end": 260754,
+              "line_start": 260763,
+              "line_end": 260763,
               "quote": "\"case\": \"F13-coherent-sequence-1152921504606846976\""
             },
             {
@@ -4036,23 +4294,51 @@
             {
               "path": "scripts/pm_executor_event_semantics.py",
               "unit": "refuse",
-              "line_start": 106,
-              "line_end": 106,
+              "line_start": 119,
+              "line_end": 119,
               "quote": "def refuse(phase, facts, suffix='', message=None):"
             },
             {
               "path": "scripts/pm_executor_event_semantics.py",
               "unit": "_validate_history",
-              "line_start": 1047,
-              "line_end": 1047,
+              "line_start": 1190,
+              "line_end": 1190,
               "quote": "dispatcher.resolve(retained_source_sha256, expected, disclose=disclose)"
             },
             {
               "path": "scripts/pm_executor_event_semantics.py",
               "unit": "validate_capture",
-              "line_start": 672,
-              "line_end": 672,
+              "line_start": 801,
+              "line_end": 801,
               "quote": "admit_integer_slots(contract['schema_ref'], payload)"
+            },
+            {
+              "path": "scripts/pm_executor_event_semantics.py",
+              "unit": "instant",
+              "line_start": 677,
+              "line_end": 677,
+              "quote": "refuse('clock_owner', {'shared_refusal': shared, 'leap_second': accepted and value[17:19] == '60',"
+            },
+            {
+              "path": "scripts/pm_executor_event_semantics.py",
+              "unit": "shared_date_time_refusal",
+              "line_start": 494,
+              "line_end": 494,
+              "quote": "date_time(value, profile=EVENT_RECORD if profile == OTHER_OWNER_RFC3339 else STORAGE_UTC_Z)"
+            },
+            {
+              "path": "scripts/pm_executor_event_semantics.py",
+              "unit": "strict_format_checker",
+              "line_start": 476,
+              "line_end": 476,
+              "quote": "checker.checks('date-time')(lambda value: timestamp_format(value, profile))"
+            },
+            {
+              "path": "scripts/pm_executor_event_semantics.py",
+              "unit": "frozen_verifier",
+              "line_start": 1135,
+              "line_end": 1135,
+              "quote": "with datetime_edition(version):"
             }
           ],
           "prior": {
@@ -4060,7 +4346,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Sweep part 2A (guard tables, gated tool) and part 2B numbers; status unchanged, evidence extended.",
+          "change_reason": "Sweep part 2B date-time (shared CV-1101 date_time, F19, SP-1101 frozen date-time edition); evidence extended.",
           "static_verification": {
             "families": 1,
             "source_transition_cases": 184,
@@ -4078,7 +4364,9 @@
             "command": "python3 scripts/pm_executor_event_semantics.py --family remediation.spawned",
             "check_receipt": "reports/event-authority-20261104/DX.checks.json",
             "targeted_predicate_receipt": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/sweep-p1/f20-verification.json",
-            "whole_lane_guard_proof": "PENDING_PART_2_SHARED_GUARD_TOOL"
+            "whole_lane_guard_proof": "METHOD_B_GUARD_TABLES (reports/event-authority-20261104/DX.guard-tables.json)",
+            "sweep_witnesses": 0,
+            "date_time": "shared pm_event_datetime.date_time with the DX owner profile (storage_utc_z, no second 60; uppercase T for backoff clock observations); frozen v0 edition bound by SP-1101 dispatch"
           }
         }
       },
@@ -4089,12 +4377,13 @@
       },
       "remaining_gaps": [
         "Membership ABSENT until separate admission.",
-        "Timestamp grammar (CV-1101 adoption) remains part 2B; interim review only."
+        "datetime_validator and the whole-Plans date-time inventory gate run at batch-2 integration (lead addendum 2)."
       ],
       "static_checks_seen": [
-        "Both family CLIs exit 0/top-level pass, including the sweep part 2A witnesses.",
+        "Both family CLIs exit 0/top-level pass, including the sweep part 2A and part 2B witnesses.",
         "Every guard-table row the family reaches is credited by the gated tool, or listed unprovable with its reason.",
-        "Shared number corpus through numeric, capture and first-receipt routes: 0 disagreements."
+        "Shared number corpus through numeric, capture and first-receipt routes: 0 disagreements.",
+        "Every timestamp field goes through the shared CV-1101 date_time predicate with its owner profile."
       ],
       "notes": "Sweep part 2A + part 2B numbers static self-grade. No lane READY until CV-1101 timestamp adoption (part 2B), the Sol max and Astra max lane reviews and admission; no native claim.",
       "technical_depth_ready": false,
@@ -4389,7 +4678,7 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Finite static oracles: every refusal of the DX checkers for this family is a named Method B guard-table row credited only by the gated shared tool; CV-1100/SP-1100/SP-1101 are adopted through the shared helper and the shared corpus runs through this family's complete routes. Timestamp grammar (CV-1101) is part 2B and reviewed interim only; native NOT_RUN.",
+          "finding": "Finite static oracles: every refusal of the DX checkers for this family is a named Method B guard-table row credited only by the gated shared tool; CV-1100/SP-1100/SP-1101 are adopted through the shared helper and the shared corpus runs through this family's complete routes; every timestamp field is checked by the shared CV-1101 date_time predicate with its owner profile (DX owner: storage_utc_z plus no second 60, uppercase T for backoff clock observations), and a retained original's frozen date-time edition is bound by SP-1101 dispatch. datetime_validator and the whole-Plans inventory gate run at batch-2 integration (lead addendum 2); native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -4422,8 +4711,8 @@
             {
               "path": "scripts/pm_executor_event_semantics.py",
               "unit": "canonical",
-              "line_start": 289,
-              "line_end": 289,
+              "line_start": 370,
+              "line_end": 370,
               "quote": "text, reason = qualified_jcs(value).decode('utf-8'), None"
             },
             {
@@ -4436,8 +4725,8 @@
             {
               "path": "Plans/executor_event_semantic_fixtures.json",
               "unit": "#/families/run.completed",
-              "line_start": 281765,
-              "line_end": 281765,
+              "line_start": 281775,
+              "line_end": 281775,
               "quote": "\"case\": \"F13-coherent-sequence-1152921504606846976\""
             },
             {
@@ -4478,23 +4767,51 @@
             {
               "path": "scripts/pm_executor_event_semantics.py",
               "unit": "refuse",
-              "line_start": 106,
-              "line_end": 106,
+              "line_start": 119,
+              "line_end": 119,
               "quote": "def refuse(phase, facts, suffix='', message=None):"
             },
             {
               "path": "scripts/pm_executor_event_semantics.py",
               "unit": "_validate_history",
-              "line_start": 1047,
-              "line_end": 1047,
+              "line_start": 1190,
+              "line_end": 1190,
               "quote": "dispatcher.resolve(retained_source_sha256, expected, disclose=disclose)"
             },
             {
               "path": "scripts/pm_executor_event_semantics.py",
               "unit": "validate_capture",
-              "line_start": 672,
-              "line_end": 672,
+              "line_start": 801,
+              "line_end": 801,
               "quote": "admit_integer_slots(contract['schema_ref'], payload)"
+            },
+            {
+              "path": "scripts/pm_executor_event_semantics.py",
+              "unit": "instant",
+              "line_start": 677,
+              "line_end": 677,
+              "quote": "refuse('clock_owner', {'shared_refusal': shared, 'leap_second': accepted and value[17:19] == '60',"
+            },
+            {
+              "path": "scripts/pm_executor_event_semantics.py",
+              "unit": "shared_date_time_refusal",
+              "line_start": 494,
+              "line_end": 494,
+              "quote": "date_time(value, profile=EVENT_RECORD if profile == OTHER_OWNER_RFC3339 else STORAGE_UTC_Z)"
+            },
+            {
+              "path": "scripts/pm_executor_event_semantics.py",
+              "unit": "strict_format_checker",
+              "line_start": 476,
+              "line_end": 476,
+              "quote": "checker.checks('date-time')(lambda value: timestamp_format(value, profile))"
+            },
+            {
+              "path": "scripts/pm_executor_event_semantics.py",
+              "unit": "frozen_verifier",
+              "line_start": 1135,
+              "line_end": 1135,
+              "quote": "with datetime_edition(version):"
             }
           ],
           "prior": {
@@ -4502,7 +4819,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Sweep part 2A (guard tables, gated tool) and part 2B numbers; status unchanged, evidence extended.",
+          "change_reason": "Sweep part 2B date-time (shared CV-1101 date_time, F19, SP-1101 frozen date-time edition); evidence extended.",
           "static_verification": {
             "families": 1,
             "source_transition_cases": 131,
@@ -4520,7 +4837,9 @@
             "command": "python3 scripts/pm_executor_event_semantics.py --family run.completed",
             "check_receipt": "reports/event-authority-20261104/DX.checks.json",
             "targeted_predicate_receipt": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/sweep-p1/f20-verification.json",
-            "whole_lane_guard_proof": "PENDING_PART_2_SHARED_GUARD_TOOL"
+            "whole_lane_guard_proof": "METHOD_B_GUARD_TABLES (reports/event-authority-20261104/DX.guard-tables.json)",
+            "sweep_witnesses": 0,
+            "date_time": "shared pm_event_datetime.date_time with the DX owner profile (storage_utc_z, no second 60; uppercase T for backoff clock observations); frozen v0 edition bound by SP-1101 dispatch"
           }
         }
       },
@@ -4531,12 +4850,13 @@
       },
       "remaining_gaps": [
         "Membership ABSENT until separate admission.",
-        "Timestamp grammar (CV-1101 adoption) remains part 2B; interim review only."
+        "datetime_validator and the whole-Plans date-time inventory gate run at batch-2 integration (lead addendum 2)."
       ],
       "static_checks_seen": [
-        "Both family CLIs exit 0/top-level pass, including the sweep part 2A witnesses.",
+        "Both family CLIs exit 0/top-level pass, including the sweep part 2A and part 2B witnesses.",
         "Every guard-table row the family reaches is credited by the gated tool, or listed unprovable with its reason.",
-        "Shared number corpus through numeric, capture and first-receipt routes: 0 disagreements."
+        "Shared number corpus through numeric, capture and first-receipt routes: 0 disagreements.",
+        "Every timestamp field goes through the shared CV-1101 date_time predicate with its owner profile."
       ],
       "notes": "Sweep part 2A + part 2B numbers static self-grade. No lane READY until CV-1101 timestamp adoption (part 2B), the Sol max and Astra max lane reviews and admission; no native claim.",
       "technical_depth_ready": false,
@@ -4831,7 +5151,7 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Finite static oracles: every refusal of the DX checkers for this family is a named Method B guard-table row credited only by the gated shared tool; CV-1100/SP-1100/SP-1101 are adopted through the shared helper and the shared corpus runs through this family's complete routes. Timestamp grammar (CV-1101) is part 2B and reviewed interim only; native NOT_RUN.",
+          "finding": "Finite static oracles: every refusal of the DX checkers for this family is a named Method B guard-table row credited only by the gated shared tool; CV-1100/SP-1100/SP-1101 are adopted through the shared helper and the shared corpus runs through this family's complete routes; every timestamp field is checked by the shared CV-1101 date_time predicate with its owner profile (DX owner: storage_utc_z plus no second 60, uppercase T for backoff clock observations), and a retained original's frozen date-time edition is bound by SP-1101 dispatch. datetime_validator and the whole-Plans inventory gate run at batch-2 integration (lead addendum 2); native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -4864,8 +5184,8 @@
             {
               "path": "scripts/pm_executor_event_semantics.py",
               "unit": "canonical",
-              "line_start": 289,
-              "line_end": 289,
+              "line_start": 370,
+              "line_end": 370,
               "quote": "text, reason = qualified_jcs(value).decode('utf-8'), None"
             },
             {
@@ -4878,8 +5198,8 @@
             {
               "path": "Plans/executor_event_semantic_fixtures.json",
               "unit": "#/families/run.graph_integrity_failed",
-              "line_start": 303741,
-              "line_end": 303741,
+              "line_start": 303752,
+              "line_end": 303752,
               "quote": "\"case\": \"F13-coherent-sequence-1152921504606846976\""
             },
             {
@@ -4920,23 +5240,51 @@
             {
               "path": "scripts/pm_executor_event_semantics.py",
               "unit": "refuse",
-              "line_start": 106,
-              "line_end": 106,
+              "line_start": 119,
+              "line_end": 119,
               "quote": "def refuse(phase, facts, suffix='', message=None):"
             },
             {
               "path": "scripts/pm_executor_event_semantics.py",
               "unit": "_validate_history",
-              "line_start": 1047,
-              "line_end": 1047,
+              "line_start": 1190,
+              "line_end": 1190,
               "quote": "dispatcher.resolve(retained_source_sha256, expected, disclose=disclose)"
             },
             {
               "path": "scripts/pm_executor_event_semantics.py",
               "unit": "validate_capture",
-              "line_start": 672,
-              "line_end": 672,
+              "line_start": 801,
+              "line_end": 801,
               "quote": "admit_integer_slots(contract['schema_ref'], payload)"
+            },
+            {
+              "path": "scripts/pm_executor_event_semantics.py",
+              "unit": "instant",
+              "line_start": 677,
+              "line_end": 677,
+              "quote": "refuse('clock_owner', {'shared_refusal': shared, 'leap_second': accepted and value[17:19] == '60',"
+            },
+            {
+              "path": "scripts/pm_executor_event_semantics.py",
+              "unit": "shared_date_time_refusal",
+              "line_start": 494,
+              "line_end": 494,
+              "quote": "date_time(value, profile=EVENT_RECORD if profile == OTHER_OWNER_RFC3339 else STORAGE_UTC_Z)"
+            },
+            {
+              "path": "scripts/pm_executor_event_semantics.py",
+              "unit": "strict_format_checker",
+              "line_start": 476,
+              "line_end": 476,
+              "quote": "checker.checks('date-time')(lambda value: timestamp_format(value, profile))"
+            },
+            {
+              "path": "scripts/pm_executor_event_semantics.py",
+              "unit": "frozen_verifier",
+              "line_start": 1135,
+              "line_end": 1135,
+              "quote": "with datetime_edition(version):"
             }
           ],
           "prior": {
@@ -4944,7 +5292,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Sweep part 2A (guard tables, gated tool) and part 2B numbers; status unchanged, evidence extended.",
+          "change_reason": "Sweep part 2B date-time (shared CV-1101 date_time, F19, SP-1101 frozen date-time edition); evidence extended.",
           "static_verification": {
             "families": 1,
             "source_transition_cases": 119,
@@ -4962,7 +5310,9 @@
             "command": "python3 scripts/pm_executor_event_semantics.py --family run.graph_integrity_failed",
             "check_receipt": "reports/event-authority-20261104/DX.checks.json",
             "targeted_predicate_receipt": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/sweep-p1/f20-verification.json",
-            "whole_lane_guard_proof": "PENDING_PART_2_SHARED_GUARD_TOOL"
+            "whole_lane_guard_proof": "METHOD_B_GUARD_TABLES (reports/event-authority-20261104/DX.guard-tables.json)",
+            "sweep_witnesses": 0,
+            "date_time": "shared pm_event_datetime.date_time with the DX owner profile (storage_utc_z, no second 60; uppercase T for backoff clock observations); frozen v0 edition bound by SP-1101 dispatch"
           }
         }
       },
@@ -4973,12 +5323,13 @@
       },
       "remaining_gaps": [
         "Membership ABSENT until separate admission.",
-        "Timestamp grammar (CV-1101 adoption) remains part 2B; interim review only."
+        "datetime_validator and the whole-Plans date-time inventory gate run at batch-2 integration (lead addendum 2)."
       ],
       "static_checks_seen": [
-        "Both family CLIs exit 0/top-level pass, including the sweep part 2A witnesses.",
+        "Both family CLIs exit 0/top-level pass, including the sweep part 2A and part 2B witnesses.",
         "Every guard-table row the family reaches is credited by the gated tool, or listed unprovable with its reason.",
-        "Shared number corpus through numeric, capture and first-receipt routes: 0 disagreements."
+        "Shared number corpus through numeric, capture and first-receipt routes: 0 disagreements.",
+        "Every timestamp field goes through the shared CV-1101 date_time predicate with its owner profile."
       ],
       "notes": "Sweep part 2A + part 2B numbers static self-grade. No lane READY until CV-1101 timestamp adoption (part 2B), the Sol max and Astra max lane reviews and admission; no native claim.",
       "technical_depth_ready": false,
@@ -5273,7 +5624,7 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Finite static oracles: every refusal of the DX checkers for this family is a named Method B guard-table row credited only by the gated shared tool; CV-1100/SP-1100/SP-1101 are adopted through the shared helper and the shared corpus runs through this family's complete routes. Timestamp grammar (CV-1101) is part 2B and reviewed interim only; native NOT_RUN.",
+          "finding": "Finite static oracles: every refusal of the DX checkers for this family is a named Method B guard-table row credited only by the gated shared tool; CV-1100/SP-1100/SP-1101 are adopted through the shared helper and the shared corpus runs through this family's complete routes; every timestamp field is checked by the shared CV-1101 date_time predicate with its owner profile (DX owner: storage_utc_z plus no second 60, uppercase T for backoff clock observations), and a retained original's frozen date-time edition is bound by SP-1101 dispatch. datetime_validator and the whole-Plans inventory gate run at batch-2 integration (lead addendum 2); native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -5306,8 +5657,8 @@
             {
               "path": "scripts/pm_executor_event_semantics.py",
               "unit": "canonical",
-              "line_start": 289,
-              "line_end": 289,
+              "line_start": 370,
+              "line_end": 370,
               "quote": "text, reason = qualified_jcs(value).decode('utf-8'), None"
             },
             {
@@ -5320,8 +5671,8 @@
             {
               "path": "Plans/executor_event_semantic_fixtures.json",
               "unit": "#/families/run.node_backoff_expired",
-              "line_start": 330175,
-              "line_end": 330175,
+              "line_start": 330187,
+              "line_end": 330187,
               "quote": "\"case\": \"F13-coherent-sequence-1152921504606846976\""
             },
             {
@@ -5347,10 +5698,10 @@
             },
             {
               "path": "scripts/pm_executor_event_semantics.py",
-              "unit": "instant",
-              "line_start": 569,
-              "line_end": 569,
-              "quote": "return Fraction(whole) + Fraction(numerator, 10 ** len(digits))"
+              "unit": "utc_text_instant",
+              "line_start": 546,
+              "line_end": 546,
+              "quote": "return Fraction(whole) + exact_fraction(fraction[1] if fraction else '')"
             },
             {
               "path": "scripts/pm_executor_table_workgraph_id.py",
@@ -5376,23 +5727,51 @@
             {
               "path": "scripts/pm_executor_event_semantics.py",
               "unit": "refuse",
-              "line_start": 106,
-              "line_end": 106,
+              "line_start": 119,
+              "line_end": 119,
               "quote": "def refuse(phase, facts, suffix='', message=None):"
             },
             {
               "path": "scripts/pm_executor_event_semantics.py",
               "unit": "_validate_history",
-              "line_start": 1047,
-              "line_end": 1047,
+              "line_start": 1190,
+              "line_end": 1190,
               "quote": "dispatcher.resolve(retained_source_sha256, expected, disclose=disclose)"
             },
             {
               "path": "scripts/pm_executor_event_semantics.py",
               "unit": "validate_capture",
-              "line_start": 672,
-              "line_end": 672,
+              "line_start": 801,
+              "line_end": 801,
               "quote": "admit_integer_slots(contract['schema_ref'], payload)"
+            },
+            {
+              "path": "scripts/pm_executor_event_semantics.py",
+              "unit": "instant",
+              "line_start": 677,
+              "line_end": 677,
+              "quote": "refuse('clock_owner', {'shared_refusal': shared, 'leap_second': accepted and value[17:19] == '60',"
+            },
+            {
+              "path": "scripts/pm_executor_event_semantics.py",
+              "unit": "shared_date_time_refusal",
+              "line_start": 494,
+              "line_end": 494,
+              "quote": "date_time(value, profile=EVENT_RECORD if profile == OTHER_OWNER_RFC3339 else STORAGE_UTC_Z)"
+            },
+            {
+              "path": "scripts/pm_executor_event_semantics.py",
+              "unit": "strict_format_checker",
+              "line_start": 476,
+              "line_end": 476,
+              "quote": "checker.checks('date-time')(lambda value: timestamp_format(value, profile))"
+            },
+            {
+              "path": "scripts/pm_executor_event_semantics.py",
+              "unit": "frozen_verifier",
+              "line_start": 1135,
+              "line_end": 1135,
+              "quote": "with datetime_edition(version):"
             }
           ],
           "prior": {
@@ -5400,7 +5779,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Sweep part 2A (guard tables, gated tool) and part 2B numbers; status unchanged, evidence extended.",
+          "change_reason": "Sweep part 2B date-time (shared CV-1101 date_time, F19, SP-1101 frozen date-time edition); evidence extended.",
           "static_verification": {
             "families": 1,
             "source_transition_cases": 287,
@@ -5418,7 +5797,9 @@
             "command": "python3 scripts/pm_executor_event_semantics.py --family run.node_backoff_expired",
             "check_receipt": "reports/event-authority-20261104/DX.checks.json",
             "targeted_predicate_receipt": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/sweep-p1/f20-verification.json",
-            "whole_lane_guard_proof": "PENDING_PART_2_SHARED_GUARD_TOOL"
+            "whole_lane_guard_proof": "METHOD_B_GUARD_TABLES (reports/event-authority-20261104/DX.guard-tables.json)",
+            "sweep_witnesses": 1,
+            "date_time": "shared pm_event_datetime.date_time with the DX owner profile (storage_utc_z, no second 60; uppercase T for backoff clock observations); frozen v0 edition bound by SP-1101 dispatch"
           }
         }
       },
@@ -5429,12 +5810,13 @@
       },
       "remaining_gaps": [
         "Membership ABSENT until separate admission.",
-        "Timestamp grammar (CV-1101 adoption) remains part 2B; interim review only."
+        "datetime_validator and the whole-Plans date-time inventory gate run at batch-2 integration (lead addendum 2)."
       ],
       "static_checks_seen": [
-        "Both family CLIs exit 0/top-level pass, including the sweep part 2A witnesses.",
+        "Both family CLIs exit 0/top-level pass, including the sweep part 2A and part 2B witnesses.",
         "Every guard-table row the family reaches is credited by the gated tool, or listed unprovable with its reason.",
-        "Shared number corpus through numeric, capture and first-receipt routes: 0 disagreements."
+        "Shared number corpus through numeric, capture and first-receipt routes: 0 disagreements.",
+        "Every timestamp field goes through the shared CV-1101 date_time predicate with its owner profile."
       ],
       "notes": "Sweep part 2A + part 2B numbers static self-grade. No lane READY until CV-1101 timestamp adoption (part 2B), the Sol max and Astra max lane reviews and admission; no native claim.",
       "technical_depth_ready": false,
@@ -5729,7 +6111,7 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Finite static oracles: every refusal of the DX checkers for this family is a named Method B guard-table row credited only by the gated shared tool; CV-1100/SP-1100/SP-1101 are adopted through the shared helper and the shared corpus runs through this family's complete routes. Timestamp grammar (CV-1101) is part 2B and reviewed interim only; native NOT_RUN.",
+          "finding": "Finite static oracles: every refusal of the DX checkers for this family is a named Method B guard-table row credited only by the gated shared tool; CV-1100/SP-1100/SP-1101 are adopted through the shared helper and the shared corpus runs through this family's complete routes; every timestamp field is checked by the shared CV-1101 date_time predicate with its owner profile (DX owner: storage_utc_z plus no second 60, uppercase T for backoff clock observations), and a retained original's frozen date-time edition is bound by SP-1101 dispatch. datetime_validator and the whole-Plans inventory gate run at batch-2 integration (lead addendum 2); native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -5762,8 +6144,8 @@
             {
               "path": "scripts/pm_executor_event_semantics.py",
               "unit": "canonical",
-              "line_start": 289,
-              "line_end": 289,
+              "line_start": 370,
+              "line_end": 370,
               "quote": "text, reason = qualified_jcs(value).decode('utf-8'), None"
             },
             {
@@ -5776,8 +6158,8 @@
             {
               "path": "Plans/executor_event_semantic_fixtures.json",
               "unit": "#/families/run.node_backoff_started",
-              "line_start": 359395,
-              "line_end": 359395,
+              "line_start": 359408,
+              "line_end": 359408,
               "quote": "\"case\": \"F13-coherent-sequence-1152921504606846976\""
             },
             {
@@ -5803,10 +6185,10 @@
             },
             {
               "path": "scripts/pm_executor_event_semantics.py",
-              "unit": "instant",
-              "line_start": 569,
-              "line_end": 569,
-              "quote": "return Fraction(whole) + Fraction(numerator, 10 ** len(digits))"
+              "unit": "utc_text_instant",
+              "line_start": 546,
+              "line_end": 546,
+              "quote": "return Fraction(whole) + exact_fraction(fraction[1] if fraction else '')"
             },
             {
               "path": "scripts/pm_executor_table_workgraph_id.py",
@@ -5832,23 +6214,51 @@
             {
               "path": "scripts/pm_executor_event_semantics.py",
               "unit": "refuse",
-              "line_start": 106,
-              "line_end": 106,
+              "line_start": 119,
+              "line_end": 119,
               "quote": "def refuse(phase, facts, suffix='', message=None):"
             },
             {
               "path": "scripts/pm_executor_event_semantics.py",
               "unit": "_validate_history",
-              "line_start": 1047,
-              "line_end": 1047,
+              "line_start": 1190,
+              "line_end": 1190,
               "quote": "dispatcher.resolve(retained_source_sha256, expected, disclose=disclose)"
             },
             {
               "path": "scripts/pm_executor_event_semantics.py",
               "unit": "validate_capture",
-              "line_start": 672,
-              "line_end": 672,
+              "line_start": 801,
+              "line_end": 801,
               "quote": "admit_integer_slots(contract['schema_ref'], payload)"
+            },
+            {
+              "path": "scripts/pm_executor_event_semantics.py",
+              "unit": "instant",
+              "line_start": 677,
+              "line_end": 677,
+              "quote": "refuse('clock_owner', {'shared_refusal': shared, 'leap_second': accepted and value[17:19] == '60',"
+            },
+            {
+              "path": "scripts/pm_executor_event_semantics.py",
+              "unit": "shared_date_time_refusal",
+              "line_start": 494,
+              "line_end": 494,
+              "quote": "date_time(value, profile=EVENT_RECORD if profile == OTHER_OWNER_RFC3339 else STORAGE_UTC_Z)"
+            },
+            {
+              "path": "scripts/pm_executor_event_semantics.py",
+              "unit": "strict_format_checker",
+              "line_start": 476,
+              "line_end": 476,
+              "quote": "checker.checks('date-time')(lambda value: timestamp_format(value, profile))"
+            },
+            {
+              "path": "scripts/pm_executor_event_semantics.py",
+              "unit": "frozen_verifier",
+              "line_start": 1135,
+              "line_end": 1135,
+              "quote": "with datetime_edition(version):"
             }
           ],
           "prior": {
@@ -5856,7 +6266,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Sweep part 2A (guard tables, gated tool) and part 2B numbers; status unchanged, evidence extended.",
+          "change_reason": "Sweep part 2B date-time (shared CV-1101 date_time, F19, SP-1101 frozen date-time edition); evidence extended.",
           "static_verification": {
             "families": 1,
             "source_transition_cases": 286,
@@ -5874,7 +6284,9 @@
             "command": "python3 scripts/pm_executor_event_semantics.py --family run.node_backoff_started",
             "check_receipt": "reports/event-authority-20261104/DX.checks.json",
             "targeted_predicate_receipt": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/sweep-p1/f20-verification.json",
-            "whole_lane_guard_proof": "PENDING_PART_2_SHARED_GUARD_TOOL"
+            "whole_lane_guard_proof": "METHOD_B_GUARD_TABLES (reports/event-authority-20261104/DX.guard-tables.json)",
+            "sweep_witnesses": 20,
+            "date_time": "shared pm_event_datetime.date_time with the DX owner profile (storage_utc_z, no second 60; uppercase T for backoff clock observations); frozen v0 edition bound by SP-1101 dispatch"
           }
         }
       },
@@ -5885,12 +6297,13 @@
       },
       "remaining_gaps": [
         "Membership ABSENT until separate admission.",
-        "Timestamp grammar (CV-1101 adoption) remains part 2B; interim review only."
+        "datetime_validator and the whole-Plans date-time inventory gate run at batch-2 integration (lead addendum 2)."
       ],
       "static_checks_seen": [
-        "Both family CLIs exit 0/top-level pass, including the sweep part 2A witnesses.",
+        "Both family CLIs exit 0/top-level pass, including the sweep part 2A and part 2B witnesses.",
         "Every guard-table row the family reaches is credited by the gated tool, or listed unprovable with its reason.",
-        "Shared number corpus through numeric, capture and first-receipt routes: 0 disagreements."
+        "Shared number corpus through numeric, capture and first-receipt routes: 0 disagreements.",
+        "Every timestamp field goes through the shared CV-1101 date_time predicate with its owner profile."
       ],
       "notes": "Sweep part 2A + part 2B numbers static self-grade. No lane READY until CV-1101 timestamp adoption (part 2B), the Sol max and Astra max lane reviews and admission; no native claim.",
       "technical_depth_ready": false,
@@ -6185,7 +6598,7 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Finite static oracles: every refusal of the DX checkers for this family is a named Method B guard-table row credited only by the gated shared tool; CV-1100/SP-1100/SP-1101 are adopted through the shared helper and the shared corpus runs through this family's complete routes. Timestamp grammar (CV-1101) is part 2B and reviewed interim only; native NOT_RUN.",
+          "finding": "Finite static oracles: every refusal of the DX checkers for this family is a named Method B guard-table row credited only by the gated shared tool; CV-1100/SP-1100/SP-1101 are adopted through the shared helper and the shared corpus runs through this family's complete routes; every timestamp field is checked by the shared CV-1101 date_time predicate with its owner profile (DX owner: storage_utc_z plus no second 60, uppercase T for backoff clock observations), and a retained original's frozen date-time edition is bound by SP-1101 dispatch. datetime_validator and the whole-Plans inventory gate run at batch-2 integration (lead addendum 2); native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -6218,8 +6631,8 @@
             {
               "path": "scripts/pm_executor_event_semantics.py",
               "unit": "canonical",
-              "line_start": 289,
-              "line_end": 289,
+              "line_start": 370,
+              "line_end": 370,
               "quote": "text, reason = qualified_jcs(value).decode('utf-8'), None"
             },
             {
@@ -6232,8 +6645,8 @@
             {
               "path": "Plans/executor_event_semantic_fixtures.json",
               "unit": "#/families/run.node_ready",
-              "line_start": 380253,
-              "line_end": 380253,
+              "line_start": 380268,
+              "line_end": 380268,
               "quote": "\"case\": \"F13-coherent-sequence-1152921504606846976\""
             },
             {
@@ -6281,23 +6694,51 @@
             {
               "path": "scripts/pm_executor_event_semantics.py",
               "unit": "refuse",
-              "line_start": 106,
-              "line_end": 106,
+              "line_start": 119,
+              "line_end": 119,
               "quote": "def refuse(phase, facts, suffix='', message=None):"
             },
             {
               "path": "scripts/pm_executor_event_semantics.py",
               "unit": "_validate_history",
-              "line_start": 1047,
-              "line_end": 1047,
+              "line_start": 1190,
+              "line_end": 1190,
               "quote": "dispatcher.resolve(retained_source_sha256, expected, disclose=disclose)"
             },
             {
               "path": "scripts/pm_executor_event_semantics.py",
               "unit": "validate_capture",
-              "line_start": 672,
-              "line_end": 672,
+              "line_start": 801,
+              "line_end": 801,
               "quote": "admit_integer_slots(contract['schema_ref'], payload)"
+            },
+            {
+              "path": "scripts/pm_executor_event_semantics.py",
+              "unit": "instant",
+              "line_start": 677,
+              "line_end": 677,
+              "quote": "refuse('clock_owner', {'shared_refusal': shared, 'leap_second': accepted and value[17:19] == '60',"
+            },
+            {
+              "path": "scripts/pm_executor_event_semantics.py",
+              "unit": "shared_date_time_refusal",
+              "line_start": 494,
+              "line_end": 494,
+              "quote": "date_time(value, profile=EVENT_RECORD if profile == OTHER_OWNER_RFC3339 else STORAGE_UTC_Z)"
+            },
+            {
+              "path": "scripts/pm_executor_event_semantics.py",
+              "unit": "strict_format_checker",
+              "line_start": 476,
+              "line_end": 476,
+              "quote": "checker.checks('date-time')(lambda value: timestamp_format(value, profile))"
+            },
+            {
+              "path": "scripts/pm_executor_event_semantics.py",
+              "unit": "frozen_verifier",
+              "line_start": 1135,
+              "line_end": 1135,
+              "quote": "with datetime_edition(version):"
             }
           ],
           "prior": {
@@ -6305,7 +6746,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Sweep part 2A (guard tables, gated tool) and part 2B numbers; status unchanged, evidence extended.",
+          "change_reason": "Sweep part 2B date-time (shared CV-1101 date_time, F19, SP-1101 frozen date-time edition); evidence extended.",
           "static_verification": {
             "families": 1,
             "source_transition_cases": 142,
@@ -6323,7 +6764,9 @@
             "command": "python3 scripts/pm_executor_event_semantics.py --family run.node_ready",
             "check_receipt": "reports/event-authority-20261104/DX.checks.json",
             "targeted_predicate_receipt": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/sweep-p1/f20-verification.json",
-            "whole_lane_guard_proof": "PENDING_PART_2_SHARED_GUARD_TOOL"
+            "whole_lane_guard_proof": "METHOD_B_GUARD_TABLES (reports/event-authority-20261104/DX.guard-tables.json)",
+            "sweep_witnesses": 0,
+            "date_time": "shared pm_event_datetime.date_time with the DX owner profile (storage_utc_z, no second 60; uppercase T for backoff clock observations); frozen v0 edition bound by SP-1101 dispatch"
           }
         }
       },
@@ -6334,12 +6777,13 @@
       },
       "remaining_gaps": [
         "Membership ABSENT until separate admission.",
-        "Timestamp grammar (CV-1101 adoption) remains part 2B; interim review only."
+        "datetime_validator and the whole-Plans date-time inventory gate run at batch-2 integration (lead addendum 2)."
       ],
       "static_checks_seen": [
-        "Both family CLIs exit 0/top-level pass, including the sweep part 2A witnesses.",
+        "Both family CLIs exit 0/top-level pass, including the sweep part 2A and part 2B witnesses.",
         "Every guard-table row the family reaches is credited by the gated tool, or listed unprovable with its reason.",
-        "Shared number corpus through numeric, capture and first-receipt routes: 0 disagreements."
+        "Shared number corpus through numeric, capture and first-receipt routes: 0 disagreements.",
+        "Every timestamp field goes through the shared CV-1101 date_time predicate with its owner profile."
       ],
       "notes": "Sweep part 2A + part 2B numbers static self-grade. No lane READY until CV-1101 timestamp adoption (part 2B), the Sol max and Astra max lane reviews and admission; no native claim.",
       "technical_depth_ready": false,
@@ -6634,7 +7078,7 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Finite static oracles: every refusal of the DX checkers for this family is a named Method B guard-table row credited only by the gated shared tool; CV-1100/SP-1100/SP-1101 are adopted through the shared helper and the shared corpus runs through this family's complete routes. Timestamp grammar (CV-1101) is part 2B and reviewed interim only; native NOT_RUN.",
+          "finding": "Finite static oracles: every refusal of the DX checkers for this family is a named Method B guard-table row credited only by the gated shared tool; CV-1100/SP-1100/SP-1101 are adopted through the shared helper and the shared corpus runs through this family's complete routes; every timestamp field is checked by the shared CV-1101 date_time predicate with its owner profile (DX owner: storage_utc_z plus no second 60, uppercase T for backoff clock observations), and a retained original's frozen date-time edition is bound by SP-1101 dispatch. datetime_validator and the whole-Plans inventory gate run at batch-2 integration (lead addendum 2); native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -6667,8 +7111,8 @@
             {
               "path": "scripts/pm_executor_event_semantics.py",
               "unit": "canonical",
-              "line_start": 289,
-              "line_end": 289,
+              "line_start": 370,
+              "line_end": 370,
               "quote": "text, reason = qualified_jcs(value).decode('utf-8'), None"
             },
             {
@@ -6681,8 +7125,8 @@
             {
               "path": "Plans/executor_event_semantic_fixtures.json",
               "unit": "#/families/run.node_retry_scheduled",
-              "line_start": 407354,
-              "line_end": 407354,
+              "line_start": 407370,
+              "line_end": 407370,
               "quote": "\"case\": \"F13-coherent-sequence-1152921504606846976\""
             },
             {
@@ -6708,10 +7152,10 @@
             },
             {
               "path": "scripts/pm_executor_event_semantics.py",
-              "unit": "instant",
-              "line_start": 569,
-              "line_end": 569,
-              "quote": "return Fraction(whole) + Fraction(numerator, 10 ** len(digits))"
+              "unit": "utc_text_instant",
+              "line_start": 546,
+              "line_end": 546,
+              "quote": "return Fraction(whole) + exact_fraction(fraction[1] if fraction else '')"
             },
             {
               "path": "scripts/pm_executor_table_workgraph_id.py",
@@ -6737,23 +7181,51 @@
             {
               "path": "scripts/pm_executor_event_semantics.py",
               "unit": "refuse",
-              "line_start": 106,
-              "line_end": 106,
+              "line_start": 119,
+              "line_end": 119,
               "quote": "def refuse(phase, facts, suffix='', message=None):"
             },
             {
               "path": "scripts/pm_executor_event_semantics.py",
               "unit": "_validate_history",
-              "line_start": 1047,
-              "line_end": 1047,
+              "line_start": 1190,
+              "line_end": 1190,
               "quote": "dispatcher.resolve(retained_source_sha256, expected, disclose=disclose)"
             },
             {
               "path": "scripts/pm_executor_event_semantics.py",
               "unit": "validate_capture",
-              "line_start": 672,
-              "line_end": 672,
+              "line_start": 801,
+              "line_end": 801,
               "quote": "admit_integer_slots(contract['schema_ref'], payload)"
+            },
+            {
+              "path": "scripts/pm_executor_event_semantics.py",
+              "unit": "instant",
+              "line_start": 677,
+              "line_end": 677,
+              "quote": "refuse('clock_owner', {'shared_refusal': shared, 'leap_second': accepted and value[17:19] == '60',"
+            },
+            {
+              "path": "scripts/pm_executor_event_semantics.py",
+              "unit": "shared_date_time_refusal",
+              "line_start": 494,
+              "line_end": 494,
+              "quote": "date_time(value, profile=EVENT_RECORD if profile == OTHER_OWNER_RFC3339 else STORAGE_UTC_Z)"
+            },
+            {
+              "path": "scripts/pm_executor_event_semantics.py",
+              "unit": "strict_format_checker",
+              "line_start": 476,
+              "line_end": 476,
+              "quote": "checker.checks('date-time')(lambda value: timestamp_format(value, profile))"
+            },
+            {
+              "path": "scripts/pm_executor_event_semantics.py",
+              "unit": "frozen_verifier",
+              "line_start": 1135,
+              "line_end": 1135,
+              "quote": "with datetime_edition(version):"
             }
           ],
           "prior": {
@@ -6761,7 +7233,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Sweep part 2A (guard tables, gated tool) and part 2B numbers; status unchanged, evidence extended.",
+          "change_reason": "Sweep part 2B date-time (shared CV-1101 date_time, F19, SP-1101 frozen date-time edition); evidence extended.",
           "static_verification": {
             "families": 1,
             "source_transition_cases": 325,
@@ -6779,7 +7251,9 @@
             "command": "python3 scripts/pm_executor_event_semantics.py --family run.node_retry_scheduled",
             "check_receipt": "reports/event-authority-20261104/DX.checks.json",
             "targeted_predicate_receipt": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/sweep-p1/f20-verification.json",
-            "whole_lane_guard_proof": "PENDING_PART_2_SHARED_GUARD_TOOL"
+            "whole_lane_guard_proof": "METHOD_B_GUARD_TABLES (reports/event-authority-20261104/DX.guard-tables.json)",
+            "sweep_witnesses": 4,
+            "date_time": "shared pm_event_datetime.date_time with the DX owner profile (storage_utc_z, no second 60; uppercase T for backoff clock observations); frozen v0 edition bound by SP-1101 dispatch"
           }
         }
       },
@@ -6790,12 +7264,13 @@
       },
       "remaining_gaps": [
         "Membership ABSENT until separate admission.",
-        "Timestamp grammar (CV-1101 adoption) remains part 2B; interim review only."
+        "datetime_validator and the whole-Plans date-time inventory gate run at batch-2 integration (lead addendum 2)."
       ],
       "static_checks_seen": [
-        "Both family CLIs exit 0/top-level pass, including the sweep part 2A witnesses.",
+        "Both family CLIs exit 0/top-level pass, including the sweep part 2A and part 2B witnesses.",
         "Every guard-table row the family reaches is credited by the gated tool, or listed unprovable with its reason.",
-        "Shared number corpus through numeric, capture and first-receipt routes: 0 disagreements."
+        "Shared number corpus through numeric, capture and first-receipt routes: 0 disagreements.",
+        "Every timestamp field goes through the shared CV-1101 date_time predicate with its owner profile."
       ],
       "notes": "Sweep part 2A + part 2B numbers static self-grade. No lane READY until CV-1101 timestamp adoption (part 2B), the Sol max and Astra max lane reviews and admission; no native claim.",
       "technical_depth_ready": false,
@@ -7109,9 +7584,9 @@
           "change_reason": "Current owner quotations revalidated after rebase; only F16 retention and F20 oracle cells repaired in part 1."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "PARTIAL: every refusal is a guard-table row proved on the gated tool, the shared number rule is adopted, and the part 2A witnesses pass, but F19 still rejects owner-admitted scheduler lowercase-t clocks; CV-1101 adoption and the contrary wake negatives are part 2B (timestamp review interim only); native NOT_RUN.",
+          "finding": "Finite static oracles: every refusal of the DX checkers for this family is a named Method B guard-table row credited only by the gated shared tool; CV-1100/SP-1100/SP-1101 are adopted through the shared helper and the shared corpus runs through this family's complete routes; every timestamp field is checked by the shared CV-1101 date_time predicate with its owner profile (DX owner: storage_utc_z plus no second 60, uppercase T for backoff clock observations), and a retained original's frozen date-time edition is bound by SP-1101 dispatch. datetime_validator and the whole-Plans inventory gate run at batch-2 integration (lead addendum 2); native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -7144,8 +7619,8 @@
             {
               "path": "scripts/pm_executor_event_semantics.py",
               "unit": "canonical",
-              "line_start": 289,
-              "line_end": 289,
+              "line_start": 370,
+              "line_end": 370,
               "quote": "text, reason = qualified_jcs(value).decode('utf-8'), None"
             },
             {
@@ -7158,8 +7633,8 @@
             {
               "path": "Plans/executor_event_semantic_fixtures.json",
               "unit": "#/families/scheduler.pass",
-              "line_start": 459005,
-              "line_end": 459005,
+              "line_start": 459022,
+              "line_end": 459022,
               "quote": "\"case\": \"F13-coherent-sequence-1152921504606846976\""
             },
             {
@@ -7185,10 +7660,10 @@
             },
             {
               "path": "scripts/pm_executor_event_semantics.py",
-              "unit": "instant",
-              "line_start": 569,
-              "line_end": 569,
-              "quote": "return Fraction(whole) + Fraction(numerator, 10 ** len(digits))"
+              "unit": "utc_text_instant",
+              "line_start": 546,
+              "line_end": 546,
+              "quote": "return Fraction(whole) + exact_fraction(fraction[1] if fraction else '')"
             },
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -7207,31 +7682,101 @@
             {
               "path": "scripts/pm_executor_event_semantics.py",
               "unit": "refuse",
-              "line_start": 106,
-              "line_end": 106,
+              "line_start": 119,
+              "line_end": 119,
               "quote": "def refuse(phase, facts, suffix='', message=None):"
             },
             {
               "path": "scripts/pm_executor_event_semantics.py",
               "unit": "_validate_history",
-              "line_start": 1047,
-              "line_end": 1047,
+              "line_start": 1190,
+              "line_end": 1190,
               "quote": "dispatcher.resolve(retained_source_sha256, expected, disclose=disclose)"
             },
             {
               "path": "scripts/pm_executor_event_semantics.py",
               "unit": "validate_capture",
-              "line_start": 672,
-              "line_end": 672,
+              "line_start": 801,
+              "line_end": 801,
               "quote": "admit_integer_slots(contract['schema_ref'], payload)"
+            },
+            {
+              "path": "scripts/pm_executor_event_semantics.py",
+              "unit": "instant",
+              "line_start": 677,
+              "line_end": 677,
+              "quote": "refuse('clock_owner', {'shared_refusal': shared, 'leap_second': accepted and value[17:19] == '60',"
+            },
+            {
+              "path": "scripts/pm_executor_event_semantics.py",
+              "unit": "shared_date_time_refusal",
+              "line_start": 494,
+              "line_end": 494,
+              "quote": "date_time(value, profile=EVENT_RECORD if profile == OTHER_OWNER_RFC3339 else STORAGE_UTC_Z)"
+            },
+            {
+              "path": "scripts/pm_executor_event_semantics.py",
+              "unit": "strict_format_checker",
+              "line_start": 476,
+              "line_end": 476,
+              "quote": "checker.checks('date-time')(lambda value: timestamp_format(value, profile))"
+            },
+            {
+              "path": "scripts/pm_executor_event_semantics.py",
+              "unit": "frozen_verifier",
+              "line_start": 1135,
+              "line_end": 1135,
+              "quote": "with datetime_edition(version):"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-515",
+              "line_start": 25432,
+              "line_end": 25432,
+              "quote": "Backoff clock observations require canonical uppercase T and final Z"
+            },
+            {
+              "path": "scripts/pm_executor_event_semantics.py",
+              "unit": "validate_scheduler",
+              "line_start": 997,
+              "line_end": 997,
+              "quote": "wakes = sorted(scheduler['wakes'], key=lambda x: (instant(x['recorded_at_utc']), x['event_id']))"
+            },
+            {
+              "path": "Plans/executor_event_p2a_cases.json",
+              "unit": "#/cases/F19-control-ready-since-lower-t",
+              "line_start": 2982,
+              "line_end": 2982,
+              "quote": "\"id\": \"F19-control-ready-since-lower-t\""
+            },
+            {
+              "path": "Plans/executor_event_p2a_cases.json",
+              "unit": "#/cases/F19-control-wakes-lower-t",
+              "line_start": 3160,
+              "line_end": 3160,
+              "quote": "\"id\": \"F19-control-wakes-lower-t\""
+            },
+            {
+              "path": "Plans/executor_event_p2a_cases.json",
+              "unit": "#/cases/F19-shape-control-ready-since-lower-t",
+              "line_start": 3226,
+              "line_end": 3226,
+              "quote": "\"id\": \"F19-shape-control-ready-since-lower-t\""
+            },
+            {
+              "path": "Plans/executor_event_semantic_fixtures.json",
+              "unit": "#/families/scheduler.pass/cases/F19-wake-0-lower-t",
+              "line_start": 464296,
+              "line_end": 464296,
+              "quote": "\"case\": \"F19-wake-0-lower-t\""
             }
           ],
           "prior": {
             "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DX-sol/REGRADE-cycle10.json",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Sweep part 2A (guard tables, gated tool) and part 2B numbers; status unchanged, evidence extended.",
+          "change": "upgraded",
+          "change_reason": "F19 closed in sweep part 2B: scheduler ready-since and wake clocks are ordinary CV-515 timestamps that admit a lowercase t through the shared date_time predicate; backoff clock observations keep the uppercase T; coherent lowercase-t capture, shape, score and wake positives pass and the two contrary wake negatives now expect accept.",
           "static_verification": {
             "families": 1,
             "source_transition_cases": 216,
@@ -7249,24 +7794,26 @@
             "command": "python3 scripts/pm_executor_event_semantics.py --family scheduler.pass",
             "check_receipt": "reports/event-authority-20261104/DX.checks.json",
             "targeted_predicate_receipt": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/sweep-p1/f20-verification.json",
-            "whole_lane_guard_proof": "PENDING_PART_2_SHARED_GUARD_TOOL"
+            "whole_lane_guard_proof": "METHOD_B_GUARD_TABLES (reports/event-authority-20261104/DX.guard-tables.json)",
+            "sweep_witnesses": 12,
+            "date_time": "shared pm_event_datetime.date_time with the DX owner profile (storage_utc_z, no second 60; uppercase T for backoff clock observations); frozen v0 edition bound by SP-1101 dispatch"
           }
         }
       },
       "status_counts": {
         "ABSENT": 1,
-        "PASS": 10,
-        "PARTIAL": 1
+        "PASS": 11,
+        "PARTIAL": 0
       },
       "remaining_gaps": [
         "Membership ABSENT until separate admission.",
-        "Timestamp grammar (CV-1101 adoption) remains part 2B; interim review only.",
-        "F19 scheduler lowercase-t clocks remain part 2B."
+        "datetime_validator and the whole-Plans date-time inventory gate run at batch-2 integration (lead addendum 2)."
       ],
       "static_checks_seen": [
-        "Both family CLIs exit 0/top-level pass, including the sweep part 2A witnesses.",
+        "Both family CLIs exit 0/top-level pass, including the sweep part 2A and part 2B witnesses.",
         "Every guard-table row the family reaches is credited by the gated tool, or listed unprovable with its reason.",
-        "Shared number corpus through numeric, capture and first-receipt routes: 0 disagreements."
+        "Shared number corpus through numeric, capture and first-receipt routes: 0 disagreements.",
+        "Every timestamp field goes through the shared CV-1101 date_time predicate with its owner profile."
       ],
       "notes": "Sweep part 2A + part 2B numbers static self-grade. No lane READY until CV-1101 timestamp adoption (part 2B), the Sol max and Astra max lane reviews and admission; no native claim.",
       "technical_depth_ready": false,
@@ -7292,31 +7839,31 @@
     "families": 16,
     "status_counts": {
       "ABSENT": 16,
-      "PASS": 175,
-      "PARTIAL": 1
+      "PASS": 176,
+      "PARTIAL": 0
     },
     "before_status_counts": {
       "ABSENT": 16,
       "PASS": 175,
       "PARTIAL": 1
     },
-    "cells_upgraded_from_independent_review": 0,
+    "cells_upgraded_from_independent_review": 1,
     "ready_lanes": 0,
     "membership_absent": 16,
     "pending_retention_decision": 0,
-    "strict_check_11": "METHOD_B_GUARD_TABLES: 279/285 rows proved by the gated tool 004bdedd63 in 112 tables; 6 rows unprovable by construction, each in its own table with its reason",
+    "strict_check_11": "METHOD_B_GUARD_TABLES: 285/291 rows proved by the gated tool 004bdedd63 in 114 tables at cfa0aad472; 6 rows unprovable by construction, each in its own table with its reason",
     "native_execution": "NOT_RUN",
-    "finite_rubric_passes_subject_to_part_2b": 15,
-    "number_scope": "NUMRULE number scope a16f67c1ef adopted; --self-test --scope numbers: pass 580/580",
-    "timestamp_review": "interim only (part 2B)"
+    "finite_rubric_passes_subject_to_part_2b": 16,
+    "number_scope": "NUMRULE number scope adopted in part 2A; at 58c2816ff3 --self-test --scope numbers: pass 580/580",
+    "timestamp_review": "no longer interim: every DX timestamp field is checked by the shared CV-1101 date_time predicate with its owner profile (field table in DX.md); datetime_validator and the inventory gate run at batch-2 integration"
   },
-  "review_round": "sweep-part-2a-and-2b-numbers",
+  "review_round": "sweep-part-2b-datetime",
   "prior_independent_assessment": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DX-sol/REGRADE-cycle10.json",
-  "strict_check_11": "METHOD_B_GUARD_TABLES: 279/285 rows proved by the gated tool 004bdedd63 in 112 tables; 6 rows unprovable by construction, each in its own table with its reason",
+  "strict_check_11": "METHOD_B_GUARD_TABLES: 285/291 rows proved by the gated tool 004bdedd63 in 114 tables at cfa0aad472; 6 rows unprovable by construction, each in its own table with its reason",
   "guard_removal_report": {
     "historical_superseded": "reports/event-authority-20261104/DX.guard-removal.json",
     "method_b": "reports/event-authority-20261104/DX.guard-tables.json",
-    "whole_lane": "METHOD_B_GUARD_TABLES: 279/285 rows proved by the gated tool 004bdedd63 in 112 tables; 6 rows unprovable by construction, each in its own table with its reason"
+    "whole_lane": "METHOD_B_GUARD_TABLES: 285/291 rows proved by the gated tool 004bdedd63 in 114 tables at cfa0aad472; 6 rows unprovable by construction, each in its own table with its reason"
   },
   "sweep_items": [
     {
@@ -7365,8 +7912,29 @@
       "id": "F19",
       "location": "scripts/pm_executor_event_semantics.py:instant/validate_score_domain/scheduler sorts; scripts/pm_executor_event_contracts.py:validate",
       "issue": "Ordinary scheduler ready/wake clocks incorrectly refuse lowercase t; two wake negatives encode that restriction.",
-      "fix": "Part 2: adopt CV-1101 field-owner profile alongside NUMRULE; retain uppercase T for backoff and exact arithmetic; add coherent lowercase-t positives and correct contrary wake negatives.",
-      "status": "part_2b_timestamp"
+      "fix": "Sweep part 2B: shared CV-1101 date_time (storage_utc_z) with the DX owner profile; ordinary scheduler clocks admit a lowercase t, backoff clock observations keep the uppercase T (TC05); coherent lowercase-t positives; the two contrary wake negatives now expect accept.",
+      "status": "fixed"
+    },
+    {
+      "id": "P2B-T1",
+      "location": "scripts/pm_executor_event_semantics.py: instant/timestamp_format/strict_format_checker",
+      "issue": "Lane-local timestamp grammar (UTC_TIME, valid_timestamp, calendar_valid).",
+      "fix": "Shared pm_event_datetime.date_time with an explicit profile per field; table clock_owner TC01-TC05.",
+      "status": "fixed"
+    },
+    {
+      "id": "P2B-T2",
+      "location": "scripts/pm_executor_event_semantics.py: installed_recipes/frozen_verifier/validate_dependencies",
+      "issue": "The v0 date-time profile was selected by a code branch on the record recipe.",
+      "fix": "The frozen date-time edition is bound to the verifier the SP-1101 dispatcher installs for the authenticated recipe tuple.",
+      "status": "fixed"
+    },
+    {
+      "id": "P2B-T3",
+      "location": "scripts/pm_executor_event_semantics.py: retry_after_deadline/http_date_text",
+      "issue": "Retry-After HTTP-date parsed by email.utils, which accepts forms that are not HTTP-dates.",
+      "fix": "RFC 9110 HTTP-date grammar (table retry_after_http_date RG01/RG02); the frozen v0 edition keeps its route.",
+      "status": "fixed"
     }
   ]
 }

@@ -1,4 +1,231 @@
-# Lane DX — sweep part 2A (guard tables on the gated tool) and part 2B numbers
+# Lane DX — sweep part 2B (shared CV-1101 date-time check)
+
+Branch `plans/ea-w2-executor-20261104`; part 2A head `35f2cfd65b`; gated NUMRULE merge `f025ad6e74` (exact commit `58c2816ff3`, never the branch head); implementation commits `183f4c36bd` (adoption), `cfa0aad472` (witnesses), `bb67fb0573` (owner text, shards, index); the delivery head is in the external `HEAD.txt`. No rebase onto main this round.
+
+**All 16 families: 176 PASS / 0 PARTIAL / 16 ABSENT** (part 2A: 175 / 1 / 16). DX had already merged the number scope in part 2A, so part 2B is date-time only. Every DX timestamp field is now checked by the shared `pm_event_datetime.date_time` predicate with an explicit profile per field, and the timestamp review is **no longer interim** for those fields (table below). F19 is closed: scheduler ready-since and wake clocks admit a lowercase `t`, backoff clock observations keep the uppercase `T`, and `scheduler.pass`'s oracle cell moves from PARTIAL to PASS. The gated guard tool proves **285 of 291 rows** in 114 tables at `cfa0aad472`; the 6 unprovable rows are the same six as in part 2A, each alone in its table. `datetime_validator` and the whole-`Plans/` inventory gate are not called in this lane tree (lead addendum 2): both refuse here only because of hash drift from the lane's Plans edits, and they run at batch-2 integration. Membership stays ABSENT; native execution is NOT_RUN.
+
+**Readiness:** NOT_READY (prepared for the batch-2 review). Both part 2 halves are done (guard tables, numbers, date-time). Still open, and owned by batch-2 integration: the rebase, the date-time inventory and exclusions refresh followed by `datetime_validator`, the inventory gate and the combined self-test, the census pins, and the Sol max then Astra max review of the batch. Nothing is stopped for Jared.
+
+## Sweep part 2B: findings and responses
+
+| Item | Disposition and change | Where | Verify |
+|---|---|---|---|
+| **Merge the gated NUMRULE head** | Head confirmed at the part 2A head `35f2cfd65b`, then `git merge --no-ff 58c2816ff33365384d4039553f5efdb5370930e6` as `f025ad6e74`. No conflict of any kind: the merge brought exactly the 7 date-time files that changed on NUMRULE between `a16f67c1ef` and `58c2816ff3` (`scripts/pm_event_datetime.py`, `_inventory.py`, `_mutations.json`, `_mutations.py`, `_node_controls.json`, `_selfcheck.py`, `reports/event-authority-20261104/NUMRULE.md`), none of which DX ever edited, and no Plans file, so nothing was regenerated for it. Neither addendum 1 resolution was needed. No NUMRULE file is edited afterwards. | merge `f025ad6e74` | `git diff --stat f025ad6e74^1 f025ad6e74` lists those 7 files; for each of them and `pm_event_numbers.py`, `pm_event_numbers_corpus.py`, `Plans/event_number_recipe_corpus.json`, `Plans/event_datetime_inventory.json`, `scripts/pm_event_datetime_exclusions.json`: `git diff --quiet 58c2816ff3 HEAD -- <path>` exits 0 (`numrule-identity.txt`). |
+| **F19 / CV-515 field-owner profile** (fixed, `183f4c36bd`, `cfa0aad472`) | Scheduler ready-since clocks (`validate_score_domain`, the capture and shape scheduler sorts) and wake clocks are ordinary DX timestamps: `[Tt]` through the shared predicate. Backoff clock observations keep the uppercase `T`: every clock `validate_retry` compares (failure, receipt, scheduling, observation, refresh, rebuild, both `backoff_until_utc`) and the shape oracle's backoff clocks call `instant(..., backoff=True)` (row TC05). The reading follows cycle 10's fix text ("preserve `[Tt]...Z` for ordinary scheduler timestamps and the existing uppercase-T restriction for backoff clocks"); a wake clock is a wake clock whatever its reason, including `backoff_expired`, because it orders wakes and is never compared with a backoff deadline. Coherent positives: `F19-control-ready-since-lower-t` (every copy: payload, inline envelope, operation and scheduler records, transition mirror; rehashed), `F19-control-wakes-lower-t`, `F19-shape-control-ready-since-lower-t`, `F19-score-control-lower-t`. The two contrary negatives `F19-wake-0-lower-t` and `F19-wake-1-lower-t` now expect accept. | `scripts/pm_executor_event_semantics.py:664` (`instant`), `:781` (`validate_score_domain`), `:985`, `:997` (scheduler sorts), `:740`-`:778` (backoff clocks); `scripts/pm_executor_event_contracts.py:94`-`:102`, `:122`; `Plans/executor_event_p2a_cases.json:2982`; `Plans/executor_event_semantic_fixtures.json:464296`, `:464522` | `python3 scripts/pm_executor_event_semantics.py --family scheduler.pass` and `pm_executor_event_contracts.py --family scheduler.pass` exit 0; the four controls pass; `before-after.json`: the part 2A checker refuses all six F19 controls at `TS02_utc_route`. |
+| **CV-1101 adoption at the DX timestamp boundaries** (fixed, `183f4c36bd`) | The lane grammar is gone (`UTC_TIME`, `valid_timestamp`, `calendar_valid`, row `TS02_utc_route`). Current owner clocks call `pm_event_datetime.date_time(value, profile=STORAGE_UTC_Z)` and refuse through the new table `clock_owner`: TC01 syntax/type, TC02 zone not a terminal `Z`, TC03 calendar, ranges and unannounced second 60, TC04 the DX owner's "no second 60" (an announced leap second the shared profile admits), TC05 the backoff uppercase `T`. The strict payload-schema boundary registers the same predicate explicitly as its `date-time` format checker (`strict_format_checker` → `timestamp_format`), so the schema refuses an announced leap second its pattern admits (`PS01-ts-announced-leap-second`). The exact instant is computed from the validated text over the proleptic Gregorian calendar (year 0000 included, every fraction digit kept, no host `datetime`), on the same epoch as the frozen v0 route. The isolated stock-schema route (`stock_schema_validate`, PS02) is unchanged: it isolates the schema patterns' exact-end guard (standing check 5) and is never a validation boundary. | `scripts/pm_executor_event_semantics.py:30` (import), `:470` (`strict_format_checker`), `:491` (`shared_date_time_refusal`), `:500` (`timestamp_format`), `:523`-`:541` (exact instant), `:664` (`instant`); table spec `scripts/pm-executor-table-generate.py:181`; `scripts/pm_executor_table_clock_owner.py` | Helper witnesses TC01–TC05 and controls (lowercase `t`, year 0000, 5,001 fraction digits); `own-probes.json` 58/58; the guard tool proves TC01–TC05. |
+| **SP-1101 frozen date-time profile for history** (fixed, `183f4c36bd`, `cfa0aad472`) | The v0 date-time profile (the v0 spelling, its original clock parse and its email Retry-After route) is no longer chosen by `record_rules() == RETAINED_RECIPE` inside the format and clock code. `installed_recipes` installs, for each exact recipe tuple, `frozen_verifier(verify, version)`, which runs the original's verification under that tuple's frozen date-time edition; the dispatcher reaches it only through the original's authenticated tuple, so request data cannot select it. A stored `execution_unit_context` dependency body takes the edition its own authenticated custody records. Current disclosure and current writes always run the current edition. Witnesses: `TS-control-v0-zero-offset` and `TS-control-v0-lowercase-z` (retained v0 originals read under the frozen v0 profile), `TC02-current-edition-lowercase-z` (an original authenticated under the current edition refuses lowercase `z`), `TS01-v0-space-separator`, and the existing `TS03-v0-impossible-date`. The forged-edition controls RB01–RB05 and DD01 are unchanged. | `scripts/pm_executor_event_semantics.py:49` (`_DATETIME`), `:200` (`datetime_edition`), `:1121` (`installed_recipes`), `:1128` (`frozen_verifier`), `:1031` (dependency edition), `:682` (`v0_instant`); `Plans/executor_event_p2a_cases.json:3370` | All 1,345 history cases still pass; the four new history witnesses pass at their rows. |
+| **Retry-After HTTP-date grammar** (fixed, `183f4c36bd`, `cfa0aad472`) | Current edition: a non-decimal Retry-After must match one RFC 9110 section 5.6.7 HTTP-date form as a whole (IMF-fixdate, rfc850-date, asctime-date; case sensitive), the grammar EP-032's "Retry-After … HTTP-date" names (table `retry_after_http_date`: RG01 grammar, RG02 a real date and time through the shared `date_time`). An rfc850-date's two-digit year is read in the receipt's century unless that is more than 50 years after the original `response_received_at_utc`, as RFC 9110 requires. The frozen v0 edition keeps its email-parser route and its rows RA01/RA02 (10a: a then-valid original stays readable). Before this, `email.utils` accepted five non-HTTP-dates (numeric zone, no weekday, one-digit day, two-digit IMF year, lowercase `gmt`) and refused the asctime form RFC 9110 requires recipients to accept. | `scripts/pm_executor_event_semantics.py:262` (`HTTP_DATE_FORMS`), `:270` (`http_date_text`), `:299` (`retry_after_deadline`), `:316` (`v0_retry_after_deadline`), `:756` (edition dispatch); `Plans/executor_event_p2a_cases.json:3830` | Witnesses RG01 ×5, RG02 ×1, rfc850 and asctime controls; v0 helper witnesses RA01, RA02 and a numeric-zone control; the century rule in `own-probes.json`. |
+| **Other owners' date-time** (fixed, `183f4c36bd`) | `execution_unit_context.schema.json`'s `created_at_utc`/`updated_at_utc` are that schema's own `format: date-time`; DX now validates them with the shared broad `event_record` profile (RFC 3339: offsets, lowercase, announced leap seconds) instead of DX's own grammar. | `scripts/pm_executor_event_semantics.py:1031` | `DS-control-context-created-offset` (a `+05:00` offset accepted), `DS01-context-created-no-zone` (refused at DS01). |
+| **SP-1101 retained-record dispatch (brief step 4)** | DX's dispatch was done in part 2A (S-N5); as for DF, it is checked against the gated date-time check, not redone: the date-time edition now rides on the same authenticated recipe tuple (row above). | as above | as above |
+| **Owner text** (`bb67fb0573`) | Each CV-500..515 timestamp paragraph gains one sentence citing CV-1101: every current timestamp, at the payload-schema format boundary and every owner clock, is checked by the shared `pm_event_datetime.date_time` predicate under the `storage_utc_z` profile, then by the unit's stricter rules, and SP-1101 dispatch selects a retained original's frozen date-time edition. No rule changed. | `Plans/Contracts_V0.md:24622` (CV-500) … `:25432` (CV-515), at the end of each line | Shards regenerated: only `Plans/_shards/contracts_v0/**` changed (every shard carries the source hash); index generate: only Contracts_V0 plan units changed; shard check exit 0. |
+| **Fixture expectations** (`183f4c36bd`) | 22 cases changed, each with a `date_time_rule` note: 18 year-0000 schema cases and the 2 F19 wake cases now expect accept; the two naive Retry-After helper cases are re-routed to the new current-edition helper (the negative now refuses at RG01). | `Plans/executor_event_semantic_fixtures.json` | `fixture-changes.json`; section below. |
+| **Witnesses** (`cfa0aad472`) | 34 part 2B witnesses (19 negatives, 15 controls), built by the part 2A builder from named valid seeds: one changed fact, every copy moved, every changed owner record rehashed, kept only when the complete checker refuses at exactly the target row. Four new modelled originals get custody entries (`write_time_edition` `DX-sweep-p2a`); no existing entry changes. The builder now fails on a custody-entry collision (it had let one witness's original silently re-authenticate another's under a different edition while this round's witnesses were being written; caught and fixed before commit). The runner gained the `schema` (strict) and `score` routes. | `scripts/pm-executor-p2a-cases.py:479` (`build_p2b`), `:166` (collision guard); `scripts/pm_executor_p2a_cases.py:78`, `:81` | `python3 scripts/pm-executor-p2a-cases.py --check`: 110 witnesses, 10 custody additions, files current. |
+| **Numbers (lane already on the number scope)** | Nothing to adopt. Rerun at this head: `--self-test --scope numbers` exit 0, `"status": "pass"`, 580/580; the shared number corpus through DX's complete routes: 6,432 route runs, 0 disagreements (1,840 accepted, 4,592 refused), unchanged from part 2A. | `scripts/pm-executor-number-corpus.py` | `selftest-numbers.json`, `number-corpus.json`. |
+
+**Disputed:** none. **Stopped for Jared:** none. **IDs used:** no new PlanUnit, Decision Log or admission ID; CV-500..515 change in place. New witness IDs are the part 2B case IDs in `Plans/executor_event_p2a_cases.json` (listed in the witness table).
+
+## Timestamp fields and the shared check that covers each
+
+Profiles: **DX owner** = `date_time(value, profile=STORAGE_UTC_Z)` (whole string, `T` or `t`, Gregorian calendar including year 0000, hours 00..23, minutes 00..59, second 60 only where a leap second was announced, terminal uppercase `Z`, any number of fraction digits), then the CV-500..515 restriction "no second 60" (TC04, or the format predicate). **DX backoff** = DX owner plus an uppercase `T` (TC05). **Other owner** = `date_time(value, profile=EVENT_RECORD)`, the RFC 3339 `format: date-time` of the field's own schema. **Frozen v0** = the v0 spelling and the original clock parse, selected only for an original whose authenticated SP-1101 recipe tuple names `executor-json-integer-v0`.
+
+| Field (families) | Boundary | Profile and shared check | Rows |
+|---|---|---|---|
+| Payload `ts` (all 16) | strict payload-schema format | DX owner: registered `date-time` predicate = shared `date_time` (storage_utc_z) + no second 60; the schema pattern `[Tt]…Z(?![\s\S])` stays as the owner's exact-end guard | PS01 |
+| Payload `ts` (`run.node_backoff_started`, `run.node_backoff_expired`, `run.node_retry_scheduled`) | EP-032 retry and backoff comparison (`validate_retry`) | DX backoff | TC01–TC05 |
+| Payload `backoff_until_utc` (`run.node_backoff_started`) | schema format; backoff comparison and shape oracle | DX owner at the schema; DX backoff at the comparison | PS01; TC01–TC05 |
+| Payload `backoff_until_utc` (`attempt.completed`) | schema format (no comparison) | DX owner | PS01 |
+| Payload `ready_since_utc` (`run.node_ready`) | schema format | DX owner | PS01 |
+| Payload `ready_nodes[].ready_since_utc`, `selected_nodes[].score_tuple.ready_since_utc` (`scheduler.pass`) | schema format; score domain; capture and shape scheduler order | DX owner (ordinary: `t` admitted, F19) | PS01; TC01–TC04 |
+| Source `scheduler.wakes[].recorded_at_utc` (`scheduler.pass`) | capture wake order | DX owner (ordinary, F19) | TC01–TC04 |
+| Source `operation`/`scheduler` ready and selected score clocks (`scheduler.pass`) | score domain | DX owner (ordinary, F19) | TC01–TC04 |
+| Source `failure.failed_at_utc`, `failure.response_received_at_utc`, `retry.scheduled_at_utc`, `retry.backoff_until_utc` (three retry families) | `validate_retry` | DX backoff | TC01–TC05 |
+| Source `failure.refresh.completed_at_utc`, `failure.refresh.client_rebuilt_at_utc` (`auth_expired`) | `validate_retry` | DX backoff | TC01–TC05 |
+| Shape context `now_utc`, `backoff_until_utc` (`run.node_backoff_expired`) | shape oracle | DX backoff | TC01–TC05 |
+| Joined copies (inline envelope payload, `operation.body.observed_at_utc` = payload `ts`, transition `observed_payload`) | exact typed equality with the validated payload field | inherits the payload field's check; never parsed separately | source-join rows |
+| Source `failure.retry_after_header`, HTTP-date form (`rate_limited`) | `retry_after_deadline` | RFC 9110 HTTP-date grammar (lane, EP-032), then shared `date_time` (storage_utc_z) on the named date and time | RG01, RG02 |
+| Dependency `execution_unit_context` `created_at_utc`, `updated_at_utc` (`node.started` and every family that resolves it) | dependency schema | Other owner: shared `date_time` (event_record) as that schema's `format: date-time` | DS01 |
+| Any of the above in a retained v0 original | the frozen verifier the SP-1101 dispatcher installs for the original's tuple | Frozen v0: v0 spelling, original clock parse, email Retry-After route | PS01, TS01, TS03, TZ01, RA01, RA02 |
+
+DX models no EventRecord envelope timestamp (`occurred_at_utc`, `observed_at_utc`, `persisted_at_utc`): no DX schema or fixture declares one. Those fields stay with the EventRecord validator (CV-1101 `datetime_validator`, CV-253 `storage_utc_z`), which runs at batch-2 integration. The `deleted_at` and `event_deleted_at` deletion markers are presence checks (PK12, DC04, HD03 refuse any non-null value), so no timestamp is ever accepted there and no date-time profile applies.
+
+## Fixture expectations that changed
+
+Every changed case carries a `date_time_rule` note with its reason. Nothing else in the fixtures changed.
+
+| Cases | Before → after | Reason (the case's `date_time_rule`) |
+|---|---|---|
+| `S12-calendar-ts-'0000-11-04T12:00:00Z'` (16 families) and `S12-calendar-backoff_until_utc-'0000-11-04T12:00:00Z'` (2), strict schema route | reject → accept | CV-1101: "Four-digit year 0000 and Gregorian century rules are handled without a narrower host datetime range." The DX grammar `[0-9]{4}` with Gregorian calendar validity admits year 0000; the old format checker refused it only because Python's `datetime` has no year 0. |
+| `scheduler.pass` `F19-wake-0-lower-t`, `F19-wake-1-lower-t` | reject → accept | F19: CV-515 admits `[Tt]` for an ordinary scheduler wake clock; only backoff clock observations need an uppercase `T`. The old route refused them at `TS02_utc_route`. |
+| helper `F10-naive-retry-after-valid` | accept → accept | Re-routed to the current-edition helper `retry_after_date` (value now names the receipt clock the rfc850 century rule reads). |
+| helper `F10-naive-retry-after` (`Wed, 04 Nov 2026 12:00:30`) | reject → reject, reason `Retry-After date timezone` → `Retry-After HTTP-date` | RG01: an HTTP-date always ends in `GMT`, so a header without a zone matches no form; the old email route refused its missing zone at `RA02_date_timezone`, which now serves only the v0 edition. |
+
+Every other expectation is unchanged: the existing timestamp negatives (offsets, lowercase `z`, space separators, missing zones, invalid days, unannounced leap seconds, empty fractions, trailing LF, backoff lowercase `t`) still refuse, now at TC01–TC05 or, inside a payload, at PS01.
+
+## Guard-table result (part 2B rerun)
+
+One fresh collection and one gated-tool run per table at `cfa0aad472` (long-job `dx-p2b-gt`, 26,345 witnesses: 13,520 accepted, 12,594 refused, 231 traces; collection 217 s, whole run 31 min). Every table was rerun, not only the changed ones, because the flipped F19 cases and the new controls change control sets across tables. **285 of 291 rows proved** in 114 tables; 111 tool runs, all PASS; 2,372 distinct single-row negatives (10,437 further witnesses ride as aliases), 38,621 tool evaluations. Lane-matrix problems: 0. Collection findings: 0. Masked negatives: 0. Unrelated changes: 0. Credit is the tool's own `rows[].proved`. The 6 unprovable rows are unchanged from part 2A (IR01, IR03, IR04, IR05, IF06, RM09), each alone in a table with its reason (`identity_replay_fixed`, `integrity_numeric_fixed`, `remediation_ceiling_join`); the runner exits 1 for those three tables only, exactly as in part 2A.
+
+Changed tables (the rest keep their rows; their part 2B cut results are in `DX.guard-tables.json`):
+
+| Table | Rows | Proved | Negatives / controls to the tool | Cuts (own flips / stays) | Change from part 2A |
+|---|---|---|---|---|---|
+| `clock_owner` | TC01_shared_syntax, TC02_shared_utc_z, TC03_shared_calendar, TC04_owner_no_leap_second, TC05_backoff_upper_t | 5/5 | 13 / 3 | TC01 3/3, 10; TC02 2/2, 11; TC03 6/6, 7; TC04 1/1, 12; TC05 1/1, 12 | new: the shared CV-1101 predicate and the DX owner profile (replaces TS02 and the lane grammar) |
+| `clock_spelling` | TS01_spelling, TS03_parses | 2/2 | 2 / 1 | TS01 1/1, 1; TS03 1/1, 1 | now the frozen v0 route only; TS02_utc_route removed |
+| `clock_timezone` | TZ01_timezone | 1/1 | 1 / 1 | TZ01 1/1, 0 | unchanged row; now documented as the frozen v0 route |
+| `dependency_schema` | DS01_context_schema | 1/1 | 1 / 1 | DS01 1/1, 0 | same row; other-owner fields now use the shared event_record profile |
+| `payload_schema` | PS01_payload_schema | 1/1 | 1 / 1 | PS01 1/1, 0 | same row; its format checker is now the shared predicate with the DX owner profile |
+| `retry_after_date` | RA01_date_parses, RA02_date_timezone | 2/2 | 2 / 1 | RA01 1/1, 1; RA02 1/1, 1 | unchanged rows; now the frozen v0 route only |
+| `retry_after_http_date` | RG01_http_date_grammar, RG02_http_date_calendar | 2/2 | 2 / 3 | RG01 1/1, 1; RG02 1/1, 1 | new: RFC 9110 HTTP-date for the current edition |
+
+| Checker | Tables | Rows | Proved | Cut: own flips / own | Cut: stays | Unrelated | Masked |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| Replay policy | 1 | 2 | 2 | 2/2 | 2 | 0 | 0 |
+| Retry/backoff EP-032 and SP-238 (validate_retry and helpers) | 15 | 47 | 47 | 130/130 | 404 | 0 | 0 |
+| Shared number rule adoption (CV-1100, SP-1100) and owner value domain | 6 | 12 | 12 | 13/13 | 16 | 0 | 0 |
+| Capture route: dispatch, scope, envelope, source records, joins, transition, effects, publication (validate_capture) | 25 | 61 | 61 | 593/593 | 849 | 0 | 0 |
+| Owner clocks (instant: shared CV-1101 date_time with the DX owner profile; frozen v0 edition) | 3 | 8 | 8 | 16/16 | 54 | 0 | 0 |
+| Dependencies (validate_dependencies) | 7 | 10 | 10 | 69/69 | 138 | 0 | 0 |
+| Fixture routes and authoring notation | 2 | 7 | 7 | 7/7 | 22 | 0 | 0 |
+| SP-337 payload transport and packs, grants | 7 | 28 | 28 | 688/688 | 1434 | 0 | 0 |
+| Retained reader: recipe binding, custody, disclosure, SP-1101 dispatch | 6 | 15 | 15 | 607/607 | 2044 | 0 | 0 |
+| Identity recipe (pm_executor_event_contracts.identity) and replay self-checks | 4 | 12 | 8 | 22/22 | 66 | 0 | 0 |
+| CLI fixture integrity | 8 | 14 | 13 | 13/13 | 20 | 0 | 0 |
+| Schema occurrences and reference admission | 4 | 5 | 5 | 5/5 | 2 | 0 | 0 |
+| Family predicates: remediation, scheduler.pass, attempt/node families | 11 | 31 | 30 | 37/37 | 101 | 0 | 0 |
+| Shape oracle (pm_executor_event_contracts.validate) | 10 | 30 | 30 | 145/145 | 474 | 0 | 0 |
+| Receipt/replay trace model (run_trace) | 5 | 9 | 9 | 25/25 | 24 | 0 | 0 |
+
+Part 2A: 279/285 rows in 112 tables at `51732062cb`. Part 2B: TS02 removed; TC01–TC05, RG01, RG02 added (+7 rows, +2 tables); every new row is proved by a part 2B or existing witness. Complete-boundary re-runs of each refused witness with only its row cut: 9,819 accepted, 2,990 refused later by a distinct invariant (per table in the JSON). The lane matrix confirms each negative is refused by its target row alone within its table.
+
+## What each new witness did before and after
+
+`before-after.json` runs all 34 part 2B witnesses through the part 2A checker (`git archive 35f2cfd65b scripts`, same fixtures) and through this head. 12 results change: the 6 F19 controls (refused by the part 2A checker at `TS02_utc_route`), year 0000 (refused at `TS01_spelling`), the asctime-date control (refused at `RA02_date_timezone`) and the 5 `RG01` negatives (each **accepted** by the part 2A checker: `email.utils` read numeric zones, a missing weekday, a one-digit day, a two-digit IMF year and lowercase `gmt` as dates). Every other witness keeps its accept or reject result and now refuses at the new row. All 34 match their expectation at this head.
+
+| Witness | Family / route | Expected | Part 2A checker | This head |
+|---|---|---|---|---|
+| `F19-control-ready-since-lower-t` | scheduler.pass / capture | accept | reject TS02_utc_route | accept |
+| `F19-control-wakes-lower-t` | scheduler.pass / capture | accept | reject TS02_utc_route | accept |
+| `TC04-wake-announced-leap-second` | scheduler.pass / capture | reject | reject TS01_spelling | reject TC04_owner_no_leap_second |
+| `F19-shape-control-ready-since-lower-t` | scheduler.pass / shape | accept | reject TS02_utc_route | accept |
+| `TC05-shape-backoff-now-lower-t` | run.node_backoff_expired / shape | reject | reject TS02_utc_route | reject TC05_backoff_upper_t |
+| `F19-score-control-lower-t` | scheduler.pass / score | accept | reject TS02_utc_route | accept |
+| `TS-control-v0-zero-offset` | run.node_backoff_started / history | accept | accept | accept |
+| `TC02-current-edition-lowercase-z` | run.node_backoff_started / history | reject | reject TS02_utc_route | reject TC02_shared_utc_z |
+| `TS-control-v0-lowercase-z` | run.node_backoff_started / history | accept | accept | accept |
+| `TS01-v0-space-separator` | run.node_backoff_started / history | reject | reject TS01_spelling | reject TS01_spelling |
+| `TC-control-helper-lower-t` | attempt.completed / helper | accept | reject TS02_utc_route | accept |
+| `TC-control-helper-year-0000` | attempt.completed / helper | accept | reject TS01_spelling | accept |
+| `TC-control-helper-long-fraction` | attempt.completed / helper | accept | accept | accept |
+| `TC04-helper-announced-leap-second` | attempt.completed / helper | reject | reject TS01_spelling | reject TC04_owner_no_leap_second |
+| `TC05-helper-backoff-lower-t` | attempt.completed / helper | reject | reject TS02_utc_route | reject TC05_backoff_upper_t |
+| `TC03-helper-unannounced-leap-second` | attempt.completed / helper | reject | reject TS01_spelling | reject TC03_shared_calendar |
+| `TC02-helper-zero-offset` | attempt.completed / helper | reject | reject TS02_utc_route | reject TC02_shared_utc_z |
+| `TC01-helper-trailing-LF` | attempt.completed / helper | reject | reject TS01_spelling | reject TC01_shared_syntax |
+| `RA-control-v0-numeric-zone` | attempt.completed / helper | accept | accept | accept |
+| `RA01-v0-not-a-date` | attempt.completed / helper | reject | reject RA01_date_parses | reject RA01_date_parses |
+| `RA02-v0-naive-date` | attempt.completed / helper | reject | reject RA02_date_timezone | reject RA02_date_timezone |
+| `TS-control-v0-helper-offset` | attempt.completed / helper | accept | accept | accept |
+| `PS01-ts-announced-leap-second` | attempt.completed / schema | reject | reject PS01_payload_schema | reject PS01_payload_schema |
+| `PS01-control-ts-lower-t` | attempt.completed / schema | accept | accept | accept |
+| `DS-control-context-created-offset` | node.started / capture | accept | accept | accept |
+| `DS01-context-created-no-zone` | node.started / capture | reject | reject DS01_context_schema | reject DS01_context_schema |
+| `RG-control-rfc850-date` | run.node_backoff_started / capture | accept | accept | accept |
+| `RG-control-asctime-date` | run.node_backoff_started / capture | accept | reject RA02_date_timezone | accept |
+| `RG01-numeric-zone` | run.node_backoff_started / capture | reject | accept | reject RG01_http_date_grammar |
+| `RG01-no-weekday` | run.node_backoff_started / capture | reject | accept | reject RG01_http_date_grammar |
+| `RG01-one-digit-day` | run.node_backoff_started / capture | reject | accept | reject RG01_http_date_grammar |
+| `RG01-two-digit-year` | run.node_backoff_started / capture | reject | accept | reject RG01_http_date_grammar |
+| `RG01-lowercase-gmt` | run.node_backoff_started / capture | reject | accept | reject RG01_http_date_grammar |
+| `RG02-31-november` | run.node_backoff_started / capture | reject | reject RA01_date_parses | reject RG02_http_date_calendar |
+
+## Date-time inventory gate and the combined self-test (lead addendum 2)
+
+Run on the committed tree (the ignored currentness copy moved aside first, so the gate sees exactly the branch content). Neither call is made from a DX checker; both are recorded here as addendum 2 asks, and both run at batch-2 integration after the inventory and exclusions refresh.
+
+- `python3 scripts/pm_event_datetime_inventory.py` exits **1**: status `fail`, 233 classified nodes (133 storage, 89 other-owner, 3 + 8 wildcard), 0 unclassified nodes, **203 failure rows**: 112 `unclassified_mentioning_container`, 48 `stale_scan_exclusion`, 43 `unreadable_mentioning_container`. **No `inventory_node_changed`**: no classified node's resource changed in this tree, so the DO-style hash drift does not occur here. Credited exactly: the gate fails (`inventory-gate.json`).
+- Where the rows are:
+
+| Area | Error | Rows |
+|---|---|---:|
+| `Plans/.plan_migration` | `unclassified_mentioning_container` | 95 |
+| `Plans/_shards` | `stale_scan_exclusion` | 41 |
+| `Plans/_shards` | `unreadable_mentioning_container` | 38 |
+| `Plans/.plan_index` | `unclassified_mentioning_container` | 14 |
+| `Plans/.plan_index` | `stale_scan_exclusion` | 2 |
+| `Plans/Decision_Log.md` | `stale_scan_exclusion` | 2 |
+| `Plans/Decision_Log.md` | `unreadable_mentioning_container` | 2 |
+| `Plans/usage-feature.md` | `stale_scan_exclusion` | 2 |
+| `Plans/usage-feature.md` | `unreadable_mentioning_container` | 2 |
+| `Plans/Contracts_V0.md` | `stale_scan_exclusion` | 1 |
+| `Plans/Contracts_V0.md` | `unreadable_mentioning_container` | 1 |
+| `Plans/executor_event_contracts.json` | `unclassified_mentioning_container` | 1 |
+| `Plans/executor_event_p2a_cases.json` | `unclassified_mentioning_container` | 1 |
+| `Plans/executor_event_semantic_fixtures.json` | `unclassified_mentioning_container` | 1 |
+
+- **The DX rows, for the batch-2 classification:** `Plans/executor_event_contracts.json`, `Plans/executor_event_semantic_fixtures.json` and `Plans/executor_event_p2a_cases.json` are `unclassified_mentioning_container` because they mention `observed_at_utc` (the contracts' adapter join `ts → operation.body.observed_at_utc` and that field in the fixtures' Executor operation records). That field is the Executor operation record's copy of payload `ts`, joined by exact equality; it is not EventRecord's Storage-assigned `observed_at_utc`. These three files are static fixture and contract data with no schema declaration; all three already mentioned the field at the part 2A head (the p2a cases file once). `Plans/Contracts_V0.md` `stale_scan_exclusion` at `fence:20988` plus `unreadable_mentioning_container` at `fence:21002` are one fence whose content is byte-identical and shifted 14 lines by this branch's earlier Contracts_V0 edits (`numrule-identity.txt` holds the comparison). No row names a file part 2B created; the rest are regenerated `_shards`, `.plan_index`, `.plan_migration` and two documents this lane never edited (`Decision_Log.md`, `usage-feature.md`).
+- `python3 scripts/pm_event_numbers.py --self-test` (`--scope all`) exits **1**: `case_execution: NOT_RUN_ADMISSION_REFUSED`, 0 cases run, the only failing check `datetime_inventory_complete_and_classified` (the same 203 gate rows). Recorded, not credited.
+- `python3 scripts/pm_event_numbers.py --self-test --scope numbers` exits **0**: `"status": "pass"`, 580 of 580 cases (`selftest-numbers.json`).
+- `python3 scripts/pm_event_datetime.py --self-test` is not counted: the module has no entry point (addendum 2's correction).
+- `datetime_validator` is not called anywhere in the DX checkers; the shared `date_time` predicate with an explicit profile per field is the part 2B adoption (addendum 2, point 1).
+
+## What Astra keeps finding, probed for part 2B
+
+(1) A forged or caller-chosen edition cannot select the v0 profile: the date-time edition rides on the authenticated recipe tuple (`frozen_verifier`), and RB01–RB05 and DD01 keep refusing forged, unknown or replaced selections. (2) No Storage-assigned timestamp exists in DX's model: no EventRecord `observed_at_utc`/`persisted_at_utc` is read, and `operation.body.observed_at_utc` is the Executor owner record's copy of payload `ts`, joined by exact typed equality. (3) Historical readers both ways: retained v0 originals with `+00:00`, lowercase `z` and an impossible-but-spelled date read or refuse exactly as their frozen edition says (`TS-control-v0-*`, `TS03-v0-impossible-date`), the email Retry-After route stays for v0 (`RA-control-v0-numeric-zone`), and a current-edition original refuses lowercase `z` (`TC02-current-edition-lowercase-z`). (4) One field read two ways: every timestamp is read by one predicate per edition and profile; the joined copies are compared as exact strings, never re-parsed; `t`/`T` and `.1`/`.10` give one instant (`own-probes.json`). (5) No new schema reference. (6) No size rule changed. (7) Custody unchanged. (8) Masked negatives: each part 2B negative changes one fact from a named seed, and the tool reports no masked negative (guard section). (9) The one upgrade is `scheduler.pass`'s oracle cell, with the F19 controls and wake cases as evidence. (10, 10a) Year 0000 and long fractions are kept exactly; tightening the Retry-After grammar applies to the current edition only, and the v0 edition keeps its then-valid route. (11) Wrong types (`None`, integers) refuse at TC01 through the shared predicate's `date_time_type`. (12) Formats: `date-time` is an explicitly registered predicate in every DX validator; the stock route exists only to isolate the patterns' exact-end guard. Own probes: 58 of 58 pass (`own-probes.json`).
+
+## Family grades before and after
+
+P=PASS, Q=PARTIAL, A=ABSENT. Before is the part 2A self-grade; after is this self-grade at `bb67fb0573`.
+
+| Family | Before → after |
+|---|---|
+| `attempt.completed` | 11P / 0Q / 1A → 11P / 0Q / 1A |
+| `attempt.started` | 11P / 0Q / 1A → 11P / 0Q / 1A |
+| `node.blocked` | 11P / 0Q / 1A → 11P / 0Q / 1A |
+| `node.completed` | 11P / 0Q / 1A → 11P / 0Q / 1A |
+| `node.started` | 11P / 0Q / 1A → 11P / 0Q / 1A |
+| `node.unblocked` | 11P / 0Q / 1A → 11P / 0Q / 1A |
+| `plan.decomposition_degraded` | 11P / 0Q / 1A → 11P / 0Q / 1A |
+| `remediation.resolved` | 11P / 0Q / 1A → 11P / 0Q / 1A |
+| `remediation.spawned` | 11P / 0Q / 1A → 11P / 0Q / 1A |
+| `run.completed` | 11P / 0Q / 1A → 11P / 0Q / 1A |
+| `run.graph_integrity_failed` | 11P / 0Q / 1A → 11P / 0Q / 1A |
+| `run.node_backoff_expired` | 11P / 0Q / 1A → 11P / 0Q / 1A |
+| `run.node_backoff_started` | 11P / 0Q / 1A → 11P / 0Q / 1A |
+| `run.node_ready` | 11P / 0Q / 1A → 11P / 0Q / 1A |
+| `run.node_retry_scheduled` | 11P / 0Q / 1A → 11P / 0Q / 1A |
+| `scheduler.pass` | 10P / 1Q / 1A → **11P / 0Q / 1A** |
+
+**175 PASS / 1 PARTIAL / 16 ABSENT → 176 PASS / 0 PARTIAL / 16 ABSENT.** The one change: `scheduler.pass` `positive_negative_oracles` PARTIAL → PASS. Timestamps were its only reason (F19), and the shared check now covers them: ordinary scheduler clocks admit a lowercase `t` through `pm_event_datetime.date_time`, backoff clocks keep TC05, and the coherent lowercase-`t` capture, shape, score and wake positives pass with the guard tool proving TC01–TC05. Every other oracle cell keeps PASS with its evidence extended (the shared date-time calls, the frozen-edition binding); every family's `remaining_gaps` drops "timestamp review interim" and keeps "membership ABSENT" and "datetime_validator and the inventory gate at batch-2 integration". No other cell depended on timestamps. Every self-grade evidence quote was re-checked at its line at `bb67fb0573`: 586 quotes, 0 missing (83 relocated to their moved lines, 4 re-pointed from the removed `instant` fraction line to `utc_text_instant`, 70 new for the part 2B evidence).
+
+## Commands and evidence
+
+Heavy runs one at a time, each started at 15–16 GB available (floor 13.5 GB); the guard run used the tool's MemoryGate (pause below 10 GB) and never paused. Receipt: `reports/event-authority-20261104/DX.checks.json`. Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/sweep-p2b/` (SHA-256 of every file in `SHA256SUMS`; the 75 MB guard collection pickle stays local and is named there by hash only).
+
+| Command | Exit | Outcome |
+|---|---:|---|
+| `git merge --no-ff 58c2816ff33365384d4039553f5efdb5370930e6` | 0 | `f025ad6e74`, clean; 7 NUMRULE files; none edited since (`numrule-identity.txt`) |
+| `python3 scripts/pm-executor-table-generate.py --check` | 0 | 114 tables, 291 rows |
+| `python3 scripts/pm-executor-p2a-cases.py --check` | 0 | 110 witnesses (76 + 34), 10 custody additions, files current |
+| `python3 scripts/pm_executor_event_semantics.py --family F` (16) | 0 | `pass` each, 0 failures, 110 witnesses in total |
+| `python3 scripts/pm_executor_event_contracts.py --family F` (16) | 0 | `pass` each |
+| `python3 scripts/pm-executor-number-corpus.py --json …` | 0 | 6,432 route runs, 0 disagreements |
+| `python3 scripts/pm_event_numbers.py --self-test --scope numbers` | 0 | `pass`, 580/580 |
+| `python3 scripts/pm_event_numbers.py --self-test` (scope all) | 1 | `NOT_RUN_ADMISSION_REFUSED` (inventory gate); not credited |
+| `python3 scripts/pm_event_datetime_inventory.py` | 1 | 203 rows, no `inventory_node_changed`; not credited |
+| `python3 scripts/pm-executor-guard-tables.py --out … --save-collection …` (long-job `dx-p2b-gt`) | 1 | 111 tool runs PASS, 285/291 rows; exit 1 only for the 3 by-construction tables |
+| `before-after.py` (part 2A checker vs this head) | 0 | 34 witnesses, 12 results changed, all 34 as expected now |
+| `own-probes.py` | 0 | 58/58 |
+| `python3 scripts/pm-shard-plans.py --generate --config Plans/sharding_config.json` | 0 | only `Plans/_shards/contracts_v0/**` changed |
+| `python3 scripts/pm-plan-index.py generate` (15 currentness files hash-verified first) | 0 | only Contracts_V0 plan units changed |
+| `python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json` | 0 | `pass` |
+| `python3 scripts/pm-plan-index.py validate` (origin/main `77bae0c636`) | 1 | top-level `fail`, 60 failures: 21 `plan_unit_removal_ledger_invalid` in existing ledgers (as in part 2A) and 39 `plan_unit_removed_without_ledger_decision` for units added on main after this unrebased branch's base (DL-333..341, DL-349, DL-470..472, CV-369, EP-236, UCC-230/231 and others); none names a DX file. The batch-2 rebase owns them. |
+| `git diff --check 35f2cfd65b HEAD` | 0 | clean |
+
+Governance staleness for Contracts_V0 (edited again) is expected before the next reseal; no reseal was attempted. No admission, registry append, Decision Log entry, new PlanUnit ID, NUMRULE-file edit, test-file edit, pm-mail beyond the final line, or subagent.
+
+---
+
+# DX sweep part 2A and part 2B numbers (earlier report; part 2B above supersedes its timestamp and grade statements)
 
 Branch `plans/ea-w2-executor-20261104`; start `d987fd25af`; gated tool merge `a2fe401091` (tool `004bdedd63`, eleven files, none edited); gated NUMRULE number-scope merge `3505142713` (exact commit `a16f67c1ef`, never the branch head); implementation head `51732062cb`. The delivery head is in the external `HEAD.txt`. No rebase onto main this round. Both merges brought no main commit into the lane (the NUMRULE merge base `fb441b27fd` is already on main).
 
@@ -71,7 +298,7 @@ Rows each family's own witnesses prove (a row is credited per table; shared rows
 
 **Phase boundary.** Tables are extracted observation boundaries (tool boundary `synthetic`), as in DC, DR and DG6B. The complete path is the full checker, which reaches every refusal through the same rows. As lane evidence beyond the tool, each refused witness was re-run through the whole checker with only its refusing row cut: 9,694 are then accepted and 3,116 are refused later by a distinct invariant on the same source fact (kinds per cut row in `flips.json`). The largest groups: a cut source join is caught by the complete source observation (SJ01 → SO01, 665); a cut inline payload join is caught by the source join, the scope Project or the JCS identity of the same changed field (PT03 → SJ01 338, SC01 192, JQ01 160, JQ02 160); the Storage-instance pair above (PT01 → ID06, 288); a cut row whose derivation then reads the refused value (for example a cut JCS row returns no text, a cut clock-spelling row leaves no instant): `derivation_requires_cut_row`, 663. None reaches a second row of its own table, so each stays a single-row negative for the tool.
 
-**What Astra keeps finding, probed for part 2A.** (1) Digests and identities are recomputed in derivation and compared by rows (SD01, DC03, HI01–HI03, PK03); forged copies are the negatives, and DD01 refuses an original authenticated for another family. (2) Storage-assigned fields are compared with the owner record (RV01–RV04, TX02, TX07, TX08), never trusted from the event; retry compares only the original semantic body (TA02). (3) The current-writer replay row AP01 never runs on a retained original (historical routes use HP01); retained `projector_replay_only` history stays accepted, and withdrawn, forged, unknown or replaced originals refuse (RB01–RB05, HI01–HI03, DD01). (4) Joins compare exact typed values (`typed`) on both sides; the number pass below removes the JCS range from joins. (5) SR02/SR03 resolve every `$ref` per document root, dormant branches included. (6) PT04 measures the encoded inline body; the reference route checks every descriptor and pack field (PR01–PR06, PK01–PK12). (7) Every capture runs source custody, dependencies and the publication order; required slots come from the adapter, never the caller (SS01). (8) Masked negatives: tool `masked` empty on every row; complete-boundary re-runs above. (9) Grades unchanged; the scheduler oracle cell stays PARTIAL. (10, 10a) The number pass below. (11) Type rows test the exact type name (`type(x).__name__`) and identity with `True`/`False`, with string, number, null, array and object negatives in the existing type fixtures. (12) Timestamp formats: part 2B; interim review below.
+**What Astra keeps finding, probed for part 2A.** (1) Digests and identities are recomputed in derivation and compared by rows (SD01, DC03, HI01–HI03, PK03); forged copies are the negatives, and DD01 refuses an original authenticated for another family. (2) Storage-assigned fields are compared with the owner record (RV01–RV04, TX02, TX07, TX08), never trusted from the event; retry compares only the original semantic body (TA02). (3) The current-writer replay row AP01 never runs on a retained original (historical routes use HP01); retained `projector_replay_only` history stays accepted, and withdrawn, forged, unknown or replaced originals refuse (RB01–RB05, HI01–HI03, DD01). (4) Joins compare exact typed values (`typed`) on both sides; the number pass below removes the JCS range from joins. (5) SR02/SR03 resolve every `$ref` per document root, dormant branches included. (6) PT04 measures the encoded inline body; the reference route checks every descriptor and pack field (PR01–PR06, PK01–PK12). (7) Every capture runs source custody, dependencies and the publication order; required slots come from the adapter, never the caller (SS01). (8) Masked negatives: tool `masked` empty on every row; complete-boundary re-runs above. (9) Grades unchanged; the scheduler oracle cell stays PARTIAL. (10, 10a) The number pass below. (11) Type rows test the exact type name (`type(x).__name__`) and identity with `True`/`False`, with string, number, null, array and object negatives in the existing type fixtures. (12) Timestamp formats: done in sweep part 2B (above).
 
 ## Sweep part 2B numbers: findings and responses
 
@@ -92,21 +319,13 @@ The number scope was merged as the exact gated commit and adopted through the sh
 
 `producer_semantic_bytes`/`_digest` are not used: DX defines no EventRecord producer projection; its identity and digest recipes are payload-only and keep their own preimages. `storage_uint64` is not used: no DX field is declared uint64 by its owner.
 
-## Timestamp fields — interim only
+## Timestamp fields (superseded)
 
-This is my own review of the DX timestamp fields, and it is **interim only** (pm7-build, 2026-11-05 16:50Z), not a certification. No date-time code from NUMRULE is adopted, and no timestamp rule changed in this pass. The DX owner text (CV-500..515) sets a stricter field-owner profile than CV-1101's broad one: complete UTC strings `[Tt]` … `Z` with calendar validity, hours 00..23, minutes and seconds 00..59, no leap seconds, unlimited fraction digits, no trailing bytes; backoff clock observations need an uppercase T. What the checker does today:
-- **Payload schemas** (`ts`, `backoff_until_utc`, nested `ready_since_utc`): full-match patterns `^…[Tt]…Z(?![\s\S])` plus the strict format checker `valid_timestamp` (`scripts/pm_executor_event_semantics.py:406`), which re-checks the calendar (`calendar_valid`, `:416`). The isolated stock-checker route (`stock_schema_validate`) relies on the stock `FormatChecker` and the pattern.
-- **Parsed clocks** (`instant`, `:544`; rows TS01–TS03, TZ01): under the current recipe every `utc=True` clock needs uppercase T and Z (`UTC_TIME`, `:36`). That is stricter than CV-515 for ordinary scheduler ready and wake clocks, which admit a lowercase `t`: **F19**, still open.
-- **Retained v0 originals**: spelling-only schema checks; semantic clock parsing still applies (TS03 refuses a validly spelled 31 November). The v0 grammar is selected by the authenticated custody edition in code, not by a frozen date-time resource.
-- **Retry-After**: delta seconds, or an HTTP-date parsed by `email.utils.parsedate_to_datetime` that must carry a zone (RA01, RA02); obsolete HTTP-date forms are not checked against EP-032's exact grammar.
+This section held part 2A's own review of the DX timestamp fields. Sweep part 2B replaced it: every field is now checked by the shared CV-1101 `pm_event_datetime.date_time` predicate with its owner profile, as the field table in "Timestamp fields and the shared check that covers each" above records. The part 2A list of what the lane grammar did is in git history at `35f2cfd65b`.
 
-## Part 2B items
+## Part 2B items (closed)
 
-Timestamp items only; each needs CV-1101 (date-time gate not yet passed) and is left exactly as it was:
-- **F19 / CV-1101 field-owner profile.** `scripts/pm_executor_event_semantics.py:544` (`instant`, default `utc=True`), `:36` (`UTC_TIME`), `:652` (`validate_score_domain`), `:839` (`validate_scheduler` ready and wake sorts), `scripts/pm_executor_event_contracts.py:43` (`validate`: shape scheduler order and backoff clocks); owner `Plans/Contracts_V0.md` CV-515. Ordinary ready-since and wake clocks admit lowercase `t`; backoff observations keep uppercase T; final Z, calendar and full precision stay. Add coherent lowercase-`t` capture/shape/wake positives and replace the two `F19-wake-*-lower-t` negatives.
-- **CV-1101 adoption at the DX timestamp boundaries.** `valid_timestamp` (`:406`), `calendar_valid` (`:416`), `DATE_TIME` (`:35`), `schema_validate`/`stock_schema_validate` format checkers, the 16 payload schemas' timestamp patterns, rows TS01–TS03, TZ01, RA01, RA02: `datetime_validator`/`date_time` with DX's stricter owner profile selected explicitly; leap-second, offset, lowercase and trailing-byte negatives from the shared battery.
-- **SP-1101 frozen date-time profile for history.** `record_rules` (`:153`) and `valid_timestamp`'s v0 branch: the v0 spelling-only grammar becomes the frozen original resource/profile selected through the dispatcher, not a code branch.
-- **Retry-After HTTP-date grammar.** `retry_after_deadline` and `validate_retry` (`:575`): EP-032's exact HTTP-date grammar against `parsedate_to_datetime`'s permissive forms.
+All four timestamp items of part 2A (F19, CV-1101 adoption at the DX timestamp boundaries, the SP-1101 frozen date-time profile for history, the Retry-After HTTP-date grammar) are closed in "Sweep part 2B: findings and responses" above.
 
 ## Family grades before and after
 
