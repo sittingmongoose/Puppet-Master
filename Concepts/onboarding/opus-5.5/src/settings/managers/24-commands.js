@@ -661,8 +661,8 @@ html[data-motion="reduced"] #panel-settings .pm51-dialog-group > summary .icon s
           onShow: wrap => { const ta = wrap.querySelector('.o55-cmd-text'), line = wrap.querySelector('[data-placeholders]'); if (ta && line) ta.addEventListener('input', () => { line.innerHTML = placeholderLine(ta.value); }); },
           collect: (wrap, d) => { const v = s => (wrap.querySelector(s) || {}).value || ''; d.name = v('.o55-cmd-name').trim().replace(/^\//, '').replace(/^x-/, ''); d.description = v('.o55-cmd-desc').trim(); d.template = v('.o55-cmd-text').replace(/\r\n/g, '\n'); d.argumentsHint = v('.o55-cmd-args').trim(); },
           check: d => nameProblem(d.name) || (!d.description ? 'Say what it does in one line.' : '') },
-        { label: 'How it runs', icon: 'sliders', title: 'How should it run?', lead: 'Where it is available, who answers it, what it may do, and keys if you want them. Leave anything on its default.', recap: d => d.scope === 'Global' ? 'Every project' : 'This project', render: d => `<div class="o55-setup-fields">`
-            + PM51.field('Where it’s available', PM51.dropdown(d.scope, [{ value: 'Project', label: 'This project', meta: '.puppet-master/commands/' }, { value: 'Global', label: 'Every project', meta: 'Your user folder' }], { cls: 'o55-cmd-scope', label: 'Available in' }), 'A project command wins when both have the same name.')
+        { label: 'How it runs', icon: 'sliders', title: 'How should it run?', lead: 'Where it’s available, who answers it, what it may do, and keys if you want them. Leave anything on its default.', recap: d => d.scope === 'Global' ? 'Every project' : 'This project', render: d => `<div class="o55-setup-fields">`
+            + PM51.field('Where it’s available', PM51.dropdown(d.scope, [{ value: 'Project', label: 'This project', meta: '.puppet-master/commands/' }, { value: 'Global', label: 'Every project', meta: 'Your user folder' }], { cls: 'o55-cmd-scope', label: 'Where it’s available' }), 'A project command wins when both have the same name.')
             + wizOverride('persona', d.overrides.persona) + wizOverride('mode', d.overrides.mode) + wizOverride('model', d.overrides.model) + wizOverride('permissionsProfile', d.overrides.permissionsProfile)
             + captureField(d.keys, 'Optional. Hold Ctrl, Alt, or Shift with a key. Backspace clears it.')
             + `</div>`,
@@ -710,8 +710,8 @@ html[data-motion="reduced"] #panel-settings .pm51-dialog-group > summary .icon s
         + PM51.field('Arguments hint', PM51.input(c.argumentsHint || '', { action: 'pm51-commands-args', data: { id: c.id }, placeholder: 'For example: <branch name>' }), 'Shown while you type the command, so you remember what to pass.'),
         '$ARGUMENTS is everything typed after the name. $1 $2 are single words. @path pastes a file. !`command` pastes what a command prints.', { icon: 'code' })
         + PM51.panelSection('Description', PM51.field('One line', PM51.input(c.description || '', { action: 'pm51-commands-desc', data: { id: c.id }, placeholder: 'What this command does' }), 'Shown next to the name in chat and in the command palette.'), '', { icon: 'edit' })
-        + PM51.panelSection('Where it is available',
-          PM51.field('Where it’s available', PM51.dropdown(c.scope, [{ value: 'Project', label: 'This project', meta: '.puppet-master/commands/' }, { value: 'Global', label: 'Every project', meta: 'Your user folder' }], { action: 'pm51-commands-field', data: { id: c.id, field: 'scope' }, label: 'Where it is available' }))
+        + PM51.panelSection('Where it’s available',
+          PM51.dropdown(c.scope, [{ value: 'Project', label: 'This project', meta: '.puppet-master/commands/' }, { value: 'Global', label: 'Every project', meta: 'Your user folder' }], { action: 'pm51-commands-field', data: { id: c.id, field: 'scope' }, label: 'Where it’s available' })
           + `<p class="pm51-ps-help" data-scope-path>Stored as ${h(pathFor(c))}.</p>`,
           'A project command wins when both have the same name.', { icon: 'folder' })
         + PM51.panelSection('Overrides',
@@ -754,7 +754,7 @@ html[data-motion="reduced"] #panel-settings .pm51-dialog-group > summary .icon s
       body: PM51.panelSection('Sample input', PM51.field('What you type after the name', PM51.input(sample, { action: 'pm51-commands-sample', data: { id: c.id }, placeholder: 'For example: v2.1 release', label: 'Sample input' }), found.args || found.positional.length ? `Fills ${found.labels.filter(l => l.startsWith('$')).join(' and ')} below.` : 'This command has no placeholders, so the input is not used.'), '', { icon: 'edit' })
         + PM51.panelSection('Resolved prompt', `<pre class="pm51-code" data-resolved>${resolveTemplate(c.template, sample)}</pre><div class="pm51-commands-legend"><span><i></i>Filled from your input</span><span><i class="is-perm"></i>Needs permission when it runs</span></div>`
           + (found.labels.length ? '' : PM51.note('No placeholders here, so the text is sent exactly as written.', 'info')), '', { icon: 'code' })
-        + PM51.panelSection('How it will run', PM51.kv([['Persona', plan.persona.line], ['Mode', plan.mode.line], ['Model', plan.model.line], ['Permissions', plan.permissions], ['Available in', `${scopeLabel(c.scope)} · ${pathFor(c)}`]]), 'Requested is what the command asks for. Effective is what happens after the chat\'s own limits apply.', { icon: 'sliders' }),
+        + PM51.panelSection('How it will run', PM51.kv([['Persona', plan.persona.line], ['Mode', plan.mode.line], ['Model', plan.model.line], ['Permissions', plan.permissions], ['Where it’s available', `${scopeLabel(c.scope)} · ${pathFor(c)}`]]), 'Requested is what the command asks for. Effective is what happens after the chat\'s own limits apply.', { icon: 'sliders' }),
       secondaryLabel: 'Back to command', onSecondary: () => { openCommand(c.id); }
     });
     if (w) w.dataset.dryRun = c.id;

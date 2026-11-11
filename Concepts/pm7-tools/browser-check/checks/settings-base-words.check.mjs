@@ -5,8 +5,9 @@
 // FO-135: the Settings rail has no "Project: … · concept fixture" line; a chapter page's toolbar project button names the project.
 // FO-131: the base scope pickers follow stream P's rule (batch10/fo-b10-e/SCOPE-LIST.md): a thing you add is
 //   "Where it’s available: This project / Every project" (Toolchain's Edit panel, the persona scope row, a command's
-//   panel); Git's identity is a computer's: "Where it applies: Every project on <computer> / This project", never
-//   "on this server" or "Only this project".
+//   panel, its dry run and the set-up's How it runs step, each scanned whole, with every scope picker's accessible
+//   name equal to that label); Git's identity is a computer's: "Where it applies: Every project on <computer> /
+//   This project", never "on this server" or "Only this project".
 // Each test runs on the surfaces asked for (normal and T3's sandbox unless --set sandbox= picks one).
 
 async function settings(t, surface, [w, h] = [1920, 1080]) {
@@ -101,17 +102,57 @@ for (const surface of ['normal', 'sandbox']) {
 			await t.page.keyboard.press('Escape');
 			await t.page.waitForTimeout(400);
 		}
-		// Commands › a command's panel: the picker is labelled as in its set-up
+		// Commands: the panel, its dry run and the New command set-up's "How it runs" step. Each is scanned whole (labels,
+		// headings, facts, kv keys, the accessible names of its pickers) for the retired scope words, and every scope
+		// picker's accessible name must be its visible "Where it’s available" (one spelling, the curly apostrophe)
+		// only: read just the innermost open sheet whose text has these words (the dry run opens over the command's panel)
+		const scan = (where, only = '') => f.evaluate(([where, banned, only]) => {
+			const re = new RegExp(banned, 'i'), vis = (e) => e.getClientRects().length;
+			let roots = [...document.querySelectorAll('#pm-settings-portals, .drawer-wrap, aside.drawer, [role="dialog"], .o55g-win, .o55g-layer')].filter(vis);
+			if (only) { const hit = [...document.querySelectorAll('aside.drawer, [role="dialog"], .drawer-wrap')].filter((r) => vis(r) && r.textContent.includes(only)); roots = hit.length ? [hit[hit.length - 1]] : []; }
+			const hits = [], pickers = [];
+			for (const r of roots) {
+				for (const e of r.querySelectorAll('.pm51-field-label, .pm51-ps-title, .pm51-pc-head, .pm51-kv-row > span:first-child, dt, th, .o55g-lead, p, .pm51-fact-label, [class*="fact"] span, h2, h3, h4')) if (vis(e) && re.test(e.textContent)) hits.push(e.textContent.trim().slice(0, 80));
+				for (const e of r.querySelectorAll('[aria-label]')) if (re.test(e.getAttribute('aria-label'))) hits.push('name: ' + e.getAttribute('aria-label'));
+				for (const sel of r.querySelectorAll('select')) {
+					const opts = [...sel.options].map((o) => o.textContent.trim());
+					if (!opts.includes('This project') || !opts.includes('Every project')) continue;
+					const trig = sel.parentElement && sel.parentElement.querySelector('.pm51-dd-trigger');
+					pickers.push({ name: sel.getAttribute('aria-label') || '', trigger: trig ? trig.getAttribute('aria-label') || '' : '' });
+				}
+			}
+			return { where, roots: roots.length, hits: [...new Set(hits)], pickers };
+		}, [where, 'Available in|Where it is available|Where it\'s available|Use it in|Use it for|Where it is saved|Save new personas for|This project only|All my projects|All your projects', only]);
+		const judge = async (r, wantPicker) => {
+			await t.check(`Commands › ${r.where}: no retired or mixed scope words`, r.roots > 0 && r.hits.length === 0, r.roots ? r.hits.join(' | ') : 'nothing open');
+			if (wantPicker) await t.check(`Commands › ${r.where}: the scope picker is named “Where it’s available”`, r.pickers.length > 0 && r.pickers.every((x) => x.name === 'Where it’s available' && (!x.trigger || x.trigger === 'Where it’s available')), JSON.stringify(r.pickers));
+		};
 		await go(t, f, 'code', 'commands');
 		await f.evaluate(() => PM51.switchTab('commands', 'commands'));
 		const cmd = await f.waitForFunction(() => { const b = document.querySelector('[data-continuous-workspace-body="commands"] [data-action="pm51-commands-open"]'); if (!b) return false; b.click(); return true; }, null, { timeout: 8000 }).then(() => true).catch(() => false);
 		if (await t.check('Commands: a command opens', cmd)) {
-			const label = await f.waitForFunction(() => {
-				const secs = [...document.querySelectorAll('.pm51-panel-section, .pm51-panel-card')].filter((s) => /Where it is available/.test(s.textContent));
-				const l = secs.length && secs[secs.length - 1].querySelector('.pm51-field-label');
-				return l ? l.textContent.trim() : false;
-			}, null, { timeout: 8000 }).then((h) => h.jsonValue()).catch(() => '');
-			await t.check('Commands › a command’s panel: the picker says “Where it’s available”', label === 'Where it’s available', `label "${label}"`);
+			await f.waitForSelector('[data-action="pm51-commands-field"][data-field="scope"]', { state: 'attached', timeout: 8000 }).catch(() => {});
+			await t.page.waitForTimeout(400);
+			await judge(await scan('a command’s panel'), true);
+			const dry = await f.evaluate(() => { const b = [...document.querySelectorAll('button')].find((x) => x.getClientRects().length && /Preview \(dry run\)/.test(x.textContent)); if (!b) return false; b.click(); return true; });
+			if (await t.check('Commands: the panel has Preview (dry run)', dry)) {
+				await f.waitForFunction(() => [...document.querySelectorAll('.pm51-ps-title, .pm51-pc-head')].some((x) => x.getClientRects().length && /How it will run/.test(x.textContent)), null, { timeout: 8000 }).catch(() => {});
+				await judge(await scan('the dry run', 'How it will run'), false);
+			}
+			for (let k = 0; k < 3; k++) { await t.page.keyboard.press('Escape'); await t.page.waitForTimeout(250); }
+		}
+		const wiz = await f.evaluate(() => { const b = document.querySelector('[data-continuous-workspace-body="commands"] [data-action="pm51-commands-new"]'); if (!b) return false; b.click(); return true; });
+		if (await t.check('Commands: New command opens its set-up', wiz)) {
+			// Start: the first example; Write: give it a name nobody has; then How it runs
+			await f.waitForSelector('.o55g-primary', { timeout: 8000 });
+			await f.evaluate(() => { const tile = [...document.querySelectorAll('[data-action="pm51-commands-example"]')].find((x) => x.getClientRects().length); if (tile) tile.click(); });
+			await f.locator('.o55g-primary').first().click();
+			await f.waitForSelector('.o55-cmd-name', { timeout: 8000 });
+			await f.evaluate(() => { const set = (sel, v) => { const e = document.querySelector(sel); if (e) { e.value = v; e.dispatchEvent(new Event('input', { bubbles: true })); } }; const val = (sel) => (document.querySelector(sel) || {}).value; set('.o55-cmd-name', 'fo131-check'); if (!val('.o55-cmd-desc')) set('.o55-cmd-desc', 'A check'); if (!val('.o55-cmd-text')) set('.o55-cmd-text', 'Hello'); });
+			await f.locator('.o55g-primary').first().click();
+			const step = await f.waitForSelector('select.o55-cmd-scope', { state: 'attached', timeout: 8000 }).then(() => true).catch(() => false);
+			if (await t.check('Commands › New command reaches “How it runs”', step)) await judge(await scan('the set-up’s How it runs step'), true);
+			for (let k = 0; k < 3; k++) { await t.page.keyboard.press('Escape'); await t.page.waitForTimeout(250); }
 		}
 		// Source Control › Git identity: a computer's setting
 		await t.page.keyboard.press('Escape');
