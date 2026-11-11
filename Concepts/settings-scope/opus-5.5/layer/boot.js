@@ -50,11 +50,12 @@
       /* the theme menu sits outside Settings, so a click there that changes only light or dark never reaches the router:
          the world kept the old look and the next change of project or view painted it again (found in review round
          A-r1). The look that is painted now is stored where the look lives, as the router would have stored it */
-      const K = W.PM12_KIMI, est = (K && K.getState && K.getState().settings) || {};
-      const famNow = String(est['general.visual.theme'] || 'Basic Dark').split(/\s+/)[0], modeNow = String(est['general.visual.theme-mode'] || mode).toLowerCase();
-      const value = `${famNow} ${modeNow === 'light' ? 'Light' : 'Dark'}`;
+      // only once the asked-for look has really painted, and then that look itself: under load a paint can outlast the
+      // wait above, and storing the base page's state then would store the look it is leaving (review round A-r2)
+      const FAM = { basic: 'Basic', friendly: 'Friendly', retro: 'Retro', glass: 'Glass', nier: 'NieR' };
+      const value = `${FAM[id.split('-')[0]] || 'Basic'} ${mode === 'light' ? 'Light' : 'Dark'}`;
       const r = PSX.resolve('general.visual.theme', S.ctx);
-      if (r && r.value !== value && PSX.targetFor) {
+      if (painted() && r && r.value !== value && PSX.targetFor) {
         const tg = PSX.targetFor('general.visual.theme', r, S.ctx);
         if (tg) { PSX.apply([{ level: tg.level, key: tg.key, id: 'general.visual.theme', value }], { history: false }); PSX.feed.push(); }
       }
