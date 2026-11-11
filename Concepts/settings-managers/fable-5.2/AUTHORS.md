@@ -151,6 +151,10 @@ been opened once (`{"do":"view","view":"today"}`, then `{"do":"view","view":"new
   manager's own code can do, `SMX.lends('my-more', (el) => ({domain, ws, manager, tab, select: {action, data}, find: (block) => originalButton}))`
   opens the real menu from your button `ui.btn({icon: 'more', label2: 'More for …', do: 'my-more', data})` (see
   `pages/computers.js`). Add `mode: 'click'` when the original is a plain button whose handler should just run.
+  With `select`, PMConcept7 swaps the manager's detail and keeps the old one in the page for a moment: the core takes
+  that leaving detail out before your `find` runs, so the first match is the new thing's control. Where the detail
+  carries a title, let `find` check it as well (see `moreFor` in `pages/ai-more.js`). After the menu closes the core
+  hands the engine back and keeps the page where it is; a page never needs to touch `SMX.borrowing` itself.
 - **Your own handler:** `SMX.act('name', (el, event) => { … })` for `ui.btn({do: 'name', data})`; wrap a kit dropdown
   in `<span data-smx-do-change="name" data-id="…">` to hear its change. Change the engine's state with
   `const st = W.PM12_KIMI.getState(); …; W.PM12_KIMI.setState(st)`, confirm with `kit().confirm(title, text, label, onYes, danger)`,

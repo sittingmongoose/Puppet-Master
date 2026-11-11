@@ -204,16 +204,35 @@
     setView('new');
     return true;
   }
+  /* Keep the engine on its Home view while the redesign shows: no setting row is then mounted in its hidden shell.
+     PMConcept7 goes Home a frame or more AFTER it is asked (it animates the way out, kit.d/29-navigation-motion.js) and
+     drops the trip when anything else navigates meanwhile. Until it has arrived, the place it is leaving is not a place
+     it was "sent to", and tick must not follow it there (the page used to jump to the manager a menu was borrowed from;
+     found by the Web research builder). */
+  let leaving = null;
+  const placeOf = (st) => [st.domain, st.workspace, st.detailSetting || ''].join('|');
   function park() {
-    // keep the engine on its Home view while the redesign shows: no setting row is then mounted in its hidden shell
-    try { const st = SMX.fresh(); if (!st.home) eng().dispatchAction('home'); } catch (e) { /* engine not ready */ }
+    try {
+      const st = SMX.fresh();
+      if (st.home) { leaving = null; return; }
+      const now = W.performance.now();
+      leaving = { place: placeOf(st), at: now, asked: now };
+      eng().dispatchAction('home');
+    } catch (e) { /* engine not ready */ }
+  }
+  function onTheWayHome(st) {
+    if (!leaving) return false;
+    const now = W.performance.now();
+    if (st.home || placeOf(st) !== leaving.place || now - leaving.at > 2500) { leaving = null; return false; }   // arrived, or sent somewhere else since
+    if (now - leaving.asked > 350) { leaving.asked = now; try { eng().dispatchAction('home'); } catch (e) { /* engine not ready */ } }   // the trip was dropped: ask again
+    return true;
   }
   function setView(v) {
     SMX.view = v === 'today' ? 'today' : 'new';
     if (!root) return;
     root.classList.toggle('smx-on', SMX.view === 'new');
     D.documentElement.setAttribute('data-smx-view', SMX.view);
-    if (SMX.view === 'new') { park(); SMX.tick(true); }
+    if (SMX.view === 'new') { leaving = null; SMX.tick(true); }   // tick goes to the page that holds the place "Today" was showing, then parks
     else {
       // show PMConcept7's own Settings at the place that matches the current page, when the page names one
       const cur = match(SMX.route); const lg = cur && cur.page.legacy && cur.page.legacy[0];
@@ -415,7 +434,7 @@
   SMX.render = render;
 
   /* redraw soon after anything happens; the engine patches its own rows, this redraws the parts that are ours */
-  let timer = 0, timer2 = 0;
+  let timer = 0, timer2 = 0, timer3 = 0;
   function soon(ms) { W.clearTimeout(timer); timer = W.setTimeout(() => SMX.tick(), ms || 40); W.clearTimeout(timer2); timer2 = W.setTimeout(() => SMX.tick(), 420); }
   SMX.soon = soon;
   SMX.tick = (force) => {
@@ -423,7 +442,8 @@
     snap = null;
     let st; try { st = SMX.st(); } catch (e) { return; }
     // the engine was sent somewhere (a link inside a flow, the title bar's search): follow it to the page that holds it now
-    if (!st.home && !SMX.borrowing) {
+    if (!st.home && !SMX.borrowing && onTheWayHome(st)) { W.clearTimeout(timer3); timer3 = W.setTimeout(() => SMX.tick(), 70); }
+    else if (!st.home && !SMX.borrowing) {
       let tab = ''; try { tab = (st.pm51 && st.pm51.tabs && st.pm51.tabs[st.workspace]) || ''; } catch (e) { tab = ''; }
       const to = SMX.fromLegacy(st.domain, st.workspace, tab);
       const reveal = st.detailSetting || '';
@@ -508,7 +528,7 @@
     if (spec.select) eng().dispatchAction(spec.select.action, spec.select.data || {});
   };
   /* hand the engine back: it is parked again only once whatever opened has closed (parking closes menus and panels) */
-  const release = (ws, after) => {
+  const release = (ws, after, had) => {
     const mine = ++lendGen;
     const showing = () => [...D.querySelectorAll('.pm51-popout, #pm-settings-portals > *')].some((n) => { const r = n.getBoundingClientRect(); return r.width > 4 && r.height > 4 && W.getComputedStyle(n).visibility !== 'hidden'; });
     let tries = 0;
@@ -517,7 +537,8 @@
       if (showing() && tries++ < 600) { W.setTimeout(settle, 400); return; }
       SMX.borrowing = false;
       let st = null; try { st = SMX.fresh(); } catch (e) { st = null; }
-      if (st && !st.home && st.workspace !== ws) { soon(20); return; }   // something sent the engine elsewhere on purpose: follow it
+      // something sent the engine elsewhere on purpose (another manager, or a setting it now points at): follow it
+      if (st && !st.home && (st.workspace !== ws || ((st.detailSetting || '') && (st.detailSetting || '') !== (had || '')))) { leaving = null; soon(20); return; }
       park(); soon(60);
     };
     W.setTimeout(settle, after);
@@ -528,7 +549,8 @@
     if (SMX.borrowing || SMX.view !== 'new') return;
     SMX.borrowing = true; lendGen++;
     try { reach(spec); } catch (e) { SMX.borrowing = false; return; }
-    const w = warm = { key: specKey(spec), timer: W.setTimeout(() => { if (warm === w) { warm = null; release(spec.ws, 0); } }, 3500) };
+    let had = ''; try { had = SMX.fresh().detailSetting || ''; } catch (e) { had = ''; }
+    const w = warm = { key: specKey(spec), timer: W.setTimeout(() => { if (warm === w) { warm = null; release(spec.ws, 0, had); } }, 3500) };
   };
   SMX.borrow = async (btn, spec) => {
     const ready = !!(warm && warm.key === specKey(spec));
@@ -541,9 +563,16 @@
     btn.setAttribute('aria-busy', 'true');
     // going to a manager scrolls its page a moment later; wait until two frames pass with no scrolling, not a fixed pause
     const quiet = async () => { for (let i = 0; i < 30; i++) { await frames(2); if (W.performance.now() - scrolled > 50) return; } };
+    /* PMConcept7 swaps a manager's detail with a short animation and keeps the one that is LEAVING in the page until it
+       ends (kit.d/20-motion.js, o55Morph). A control in there belongs to the thing shown before: borrowed, its menu
+       acts on that thing (a reset meant for one ability reset another; found by the Web research builder). What is
+       leaving is taken out first, as PMConcept7 itself does when a second swap interrupts the first; none of it is on
+       screen while the redesign shows. */
     const find = () => {
       const blk = [...root.querySelectorAll('.pm-shell .workspace-block')].find((b) => b.dataset.workspaceBlock === spec.ws);
-      return blk ? (typeof spec.find === 'function' ? spec.find(blk) : blk.querySelector(spec.find)) : null;
+      if (!blk) return null;
+      blk.querySelectorAll('.o55-leaving').forEach((n) => n.remove());
+      return typeof spec.find === 'function' ? spec.find(blk) : blk.querySelector(spec.find);
     };
     // the original's handler runs with the pressed button as its anchor: lend it the original's data, click, take it back
     const lend = (orig) => {
@@ -555,8 +584,10 @@
       for (const a of [...btn.attributes]) if (a.name.startsWith('data-')) btn.removeAttribute(a.name);
       for (const [k, v] of Object.entries(keep)) btn.setAttribute(k, v);
     };
+    let had = '';
     try {
       if (!ready) reach(spec);
+      try { had = SMX.fresh().detailSetting || ''; } catch (e) { had = ''; }
       let orig = find();
       for (let i = 0; i < 25 && !orig; i++) { await quiet(); orig = find(); }
       if (!orig) throw new Error('the original control was not found: ' + (typeof spec.find === 'string' ? spec.find : 'by function'));
@@ -570,7 +601,7 @@
     } catch (e) { W.console.error('SMX.borrow failed', e); SMX.toast('Not available in this preview', 'That menu could not be opened here.', 'info'); }
     D.removeEventListener('scroll', onScroll, true);
     btn.removeAttribute('aria-busy');
-    release(spec.ws, 700);
+    release(spec.ws, 700, had);
     return ok;
   };
   /* a page names a borrowed control once: the action that runs it and the warm-up share the same description */
