@@ -13,6 +13,7 @@
 //   tour    the Guided Tour, whose subject is the app, never has it: no data-o55-solid while the tour runs.
 // --set looks=<a,b>   default all ten
 // --set selftest=live  turns the solid backdrop off through O55.solid.set(false) before each opening: must fail
+// --set shots=1        one frame of the open window per look (LOOK lines), for the owner's before/after pictures
 const ALL = ['basic', 'friendly', 'retro', 'glass', 'nier'].flatMap((f) => [`${f}-light`, `${f}-dark`]);
 
 const BENEATH = () => {
@@ -49,6 +50,7 @@ export default async function (t) {
 			await t.page.waitForTimeout(1200);
 			await settled();
 			const o = await f.evaluate(BENEATH);
+			if (t.args.shots === '1') { await t.page.mouse.move(1914, 540); await t.page.waitForTimeout(400); await t.shot(`${look}-${surface}-window-open`, `PERF-2: the onboarding window open in ${look}, ${o.solid ? 'the plain dimmed background (the app beneath not drawn)' : 'the live app dimmed beneath'}`); }
 			await t.check(`${at}: with the window open the app beneath is not drawn`, o.open && o.solid && o.parts > 0 && o.drawn === 0,
 				`data-o55-solid ${o.solid ? 'on' : 'off'}, ${o.parts} parts beneath, ${o.drawn} drawn${o.eg.length ? ': ' + o.eg.join(', ') : ''}`);
 			// close: the frame after the close starts, and after the window has gone
