@@ -1,19 +1,22 @@
-# DF — sweep parts 1, 2A and 2B numbers, 2026-11-08
+# DF — sweep parts 1, 2A and 2B, 2026-11-11
 
 Sweep part 1 below is the 2026-11-05 record at its implementation head
 `ef27813b0cd3d851f586729eddf94aef434f2fdd`, retained unchanged. Sweep part 2A
-(guard tables on the gated shared tool) and part 2B numbers (CV-1100, SP-1100,
-SP-1101 adoption) are implemented at head
-`9145fdd04758f72870d638c187b44fe5bba7f290` on `plans/ea-w2-filesafe-20261104`
-(part-1 head `f7b88ca1033707205109e58f965f61ddbf475271`); the re-grade and
-this report sit in the commit on top. See the sweep sections at the end.
+and part 2B numbers are the record through
+`8ba3cc12e8b7112d3e855a66d51f8e761893f491`. Part 2B date-time adoption is
+`b1dc935fe09ae15163cad080fa393683656d52a7` on `plans/ea-w2-filesafe-20261104`,
+after the clean merge `78910a98bc2e311950c982c858008f3fd5417785` of gated
+NUMRULE head `58c2816ff33365384d4039553f5efdb5370930e6`.
 
-**NOT_READY_PART_2B_TIMESTAMPS_AND_REVIEW_PENDING.** S1–S6 are closed: both
-gated tools are adopted exactly, 356/405 guard rows are proved, and the shared
-number corpus passes through the complete checkers. What remains is part 2B
-timestamps (CV-1101; this lane's timestamp review is interim only) and the
-Sol/Astra part-2 review. Every membership cell remains ABSENT, native
-execution remains NOT_RUN, and deck 3 Card 7 remains with Jared.
+**NOT_READY_REVIEW_PENDING.** Timestamp fields this lane validates are checked
+by the shared `date_time` predicate: the EventRecord profile for schema
+`format: date-time`, and `storage_utc_z` for Storage-assigned `observed_at_utc`
+and `persisted_at_utc`. `datetime_validator` and the inventory gate run at
+batch-2 integration. The gated guard tool proves 354/403 rows (174 PASS, 0 FAIL).
+C12 stays PARTIAL because each schema occurrence is one structural row and
+because that gate is not run in this lane tree. Membership stays ABSENT, native
+execution stays NOT_RUN, deck 3 Card 7 stays with Jared, and the Sol/Astra
+part-2 review is still pending.
 
 Part-1 implementation head: `ef27813b0cd3d851f586729eddf94aef434f2fdd`. Rebased the 21 lane commits from `a10cfa6d834fad8984285510dd8abd438b893ff6` onto fetched main `e42ce235b4711325ced818c777f070c3ee0d7952` before editing. The shared clone's origin/main may advance while other workers fetch; that report's base is pinned. Generated conflicts were deferred and regenerated, never hand-merged.
 
@@ -257,7 +260,7 @@ file). Number adoption is at `ef2842284a04990ca02c58d2450e63857c86ffab` plus
   numbers), Project canonical-MessagePack source commitment and CV-366
   `accepted_source` are unchanged. The DIY scan's remaining hits are exactly
   these recipes, hash-of-bytes observations, fixture/schema/report loading, the
-  recipe-pinned retained body decoder, and the interim date-time grammar.
+  recipe-pinned retained body decoder, and, at that head, the lane date-time grammar part 2B replaces.
 
 Verification: `pm_event_numbers.py --self-test --scope numbers` passes
 **580/580**. `scripts/pm-filesafe-number-corpus.py` (new) runs the 81
@@ -280,15 +283,15 @@ lone-surrogate `event_id` outside the CV-317 projection (EVENT_VALUE other,
 issued boundary), and a coherent 2^64 sequence in every retained copy
 (retained-dispatch other, via the SP-1101 owner's physical bytes).
 
-**Timestamp review (interim only).** This lane's own timestamp review is interim
-only. The DF date-time grammar (`pm_filesafe_schema_graph.py` `date_time` /
-`date_time_grammar` / `date_time_fields`, format fixtures) is unchanged part-1
-(S6) code. Part 2B timestamps must: replace it with CV-1101
+**Timestamp review at the part 2A head (closed by Sweep part 2B).** At this head the timestamp review was still open.
+The DF date-time grammar (`pm_filesafe_schema_graph.py` `date_time` /
+`date_time_grammar` / `date_time_fields`, format fixtures) was still the part-1
+(S6) code. Part 2B, recorded below, replaces it with CV-1101
 `datetime_validator`/`date_time` at every `format_checker` and schema
 `format: date-time` site; use `storage_utc_z` for Storage-assigned
-observed/persisted fields (the lane grammar admits numeric offsets there today);
-decide leap seconds (refused today, `60` not in `00..59`) and year zero (refused
-today by the `datetime` constructor) per CV-1101; and re-run the witness,
+observed/persisted fields (the lane grammar admitted numeric offsets at that head);
+decide leap seconds (refused at that head, `60` not in `00..59`) and year zero (refused
+at that head by the `datetime` constructor) per CV-1101; and re-run the witness,
 differential, collection and tool certification for the affected tables.
 
 Owner text (`644142fe4b6b757ac07f6465f89a0ef2c90ace91`,
@@ -310,7 +313,7 @@ changes** in any family (totals 85 PASS / 14 PARTIAL / 9 ABSENT before and
 after). C12 (`positive_negative_oracles`) stays PARTIAL in all nine: guard
 tables are now certified on the gated shared tool, but each schema occurrence
 remains one structural verdict row (individual JSON Schema keywords are not cut
-one by one) and the timestamp review is interim only. C7 stays PARTIAL for the
+one by one) and, at this part 2A regrade, the timestamp review was still open (closed in Sweep part 2B). C7 stays PARTIAL for the
 five application-scope rule sets held with Jared; membership (C1) stays ABSENT.
 All 336 evidence quotes (309 carried, relocated to their lines at the
 implementation head; 27 new) verify exactly against the cited files
@@ -328,7 +331,7 @@ implementation head; 27 new) verify exactly against the cited files
 | safe_point.created | 10 → 10 | 147 |
 | safe_point.restored | 10 → 10 | 131 |
 
-## Final checks at the implementation head
+## Final checks at the part 2A head
 
 - `python3 scripts/pm_filesafe_event_contracts.py` — pass (94 positive / 360 negative / 18 identity).
 - `python3 scripts/pm_filesafe_event_authority.py` — pass (235 positive / 2,368 negative / 1,323 protocol steps).
@@ -341,3 +344,69 @@ implementation head; 27 new) verify exactly against the cited files
 - `python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json` — pass.
 - `python3 scripts/pm-plan-index.py validate` — 53 failures, byte-identical to the pre-edit lane head (fork drift; none new).
 - Python 3.14.4, msgpack 1.2.1, rfc8785 0.1.4, jsonschema 4.26.0. Native execution NOT_RUN throughout; no browsers used.
+
+## Sweep part 2B: findings and responses
+
+Part 2B for this lane is date-time only. The number scope and the SP-1101 dispatcher were already on the branch. Merge of `58c2816ff33365384d4039553f5efdb5370930e6` was clean (`78910a98bc2e311950c982c858008f3fd5417785`): no content conflict, so neither Addendum 1 resolution was used. The gate commits touch no `Plans/*.md`, so that merge did not regenerate shards. Adoption commit: `b1dc935fe09ae15163cad080fa393683656d52a7`.
+
+| Item | Outcome | Where | How to verify |
+|---|---|---|---|
+| Merge `58c2816ff3` | Clean merge. No NUMRULE file edited. | `78910a98bc2e311950c982c858008f3fd5417785` | `git log -1 --format=%P 78910a98bc` starts with `8ba3cc12e8`. |
+| Shared `date_time` | EventRecord profile at every schema `format: date-time`. Refusal is guard row `DT01_event_record`. | `scripts/pm_filesafe_schema_graph.py:47`, `scripts/pm_filesafe_schema_graph.py:195` | `format_case_failures()` is empty. A rejected fixture's `ValidationError.cause` is `Refusal` with the fixture `reason`. A `str` subclass refuses `date_time_type`. |
+| `storage_utc_z` | `observed_at_utc` and `persisted_at_utc` only, after schema admission, in materialization and in the SP-1101 issued/retained path. | `scripts/pm_filesafe_schema_graph.py:67`, `scripts/pm_filesafe_event_authority.py:547`, `scripts/pm_filesafe_event_authority.py:686` | Storage witnesses: real leap `2016-12-31T23:59:60Z` and year `0000-01-01T00:00:00Z` materialize; `+00:00` and lowercase `z` refuse `date_time_storage` and the complete-boundary flip accepts. |
+| Order key | Tuple of ints `(posix microseconds, leap flag, extra digits)` so the guard tool can fingerprint it. Comparisons of timestamps with at most six fractional digits match the previous microsecond order. | `scripts/pm_filesafe_schema_graph.py:86` | `payload_grant_window`, `mat_grant_window` and `retention_compact_age` PASS on the gated tool. |
+| Guard rows | `date_time_grammar` and `date_time_fields` removed. `date_time_event_record` / `DT01_event_record` and `date_time_storage` / `DT02_storage` added. | `scripts/pm-filesafe-table-generate.py`; generated `scripts/pm_filesafe_table_date_time_event_record.py`, `scripts/pm_filesafe_table_date_time_storage.py` | `pm-filesafe-table-generate.py --check`: 204 tables, 403 rows; stale 0, extra 0. |
+
+### Timestamp fields and profiles
+
+| Field | Profile |
+|---|---|
+| `occurred_at_utc`, payload `ts`, `issued_at`, `expires_at`, `maximum_expires_at`, `created_at_utc`, `started_at_utc`, `updated_at_utc`, receipt `acknowledged_at_utc`, and every other schema `format: date-time` this lane validates | EventRecord (`date_time` default profile) |
+| `observed_at_utc`, `persisted_at_utc` | `storage_utc_z` (uppercase `Z` only), after the EventRecord check |
+
+No coordination or legacy-normalization profile is used. The SP-1101 frozen verifier calls the same issued path, so retained originals use those profiles and the original strings are not rewritten.
+
+### Fixture expectations that changed
+
+- `Plans/filesafe_event_format_fixtures.json`: `date_time.year_zero` (`0000-02-01T10:00:00Z`) is accepted. Added accepted `date_time.real_leap_second` (`2016-12-31T23:59:60Z`) and `date_time.offset_leap_second` (`2017-01-01T00:59:60+01:00`). Rejected cases carry the shared `reason`. Illegitimate leap `2026-06-30T23:59:60Z` still refuses `date_time_leap_second`.
+- Nine contract negatives and eighteen authority negatives named `format.year_zero` were removed. Those inputs now pass the complete checker; leaving them as negatives made the checker report `negative_accepted`.
+- Each family's `format.offset` and `format.lowercase` authority positives keep their strings and are now required to refuse `date_time_storage` (EventRecord still accepts a numeric offset and a lowercase `z`). The complete-boundary flip of that row accepts.
+
+### Checks
+
+- `python3 scripts/pm_filesafe_event_contracts.py` — pass. 94 positive / 351 negative / 18 identity (9 year-zero negatives removed).
+- `python3 scripts/pm_filesafe_event_authority.py` — pass. 217 positive / 2,368 negative / 1,323 protocol steps. The 18 offset and lowercase positives are counted as storage-profile negatives; the 18 year-zero negatives are gone, so the negative total is unchanged.
+- `python3 scripts/pm-filesafe-table-generate.py --check` — 204 tables, 403 rows; stale 0, extra 0.
+- `python3 scripts/pm-filesafe-p2a-cases.py --check` — 1,081 cases kept, 0 rejected.
+- `python3 scripts/pm_event_numbers.py --self-test --scope numbers` — pass, 580/580.
+- `python3 scripts/pm_event_numbers.py --self-test` (scope all) — exit 1 before any case: `case_execution` `NOT_RUN_ADMISSION_REFUSED`, `corpus_cases` 13626, failure `datetime_inventory_complete_and_classified`. Not repaired.
+- `python3 scripts/pm_event_datetime.py --self-test` is not a self-test entry point and is not counted.
+- `python3 scripts/pm-filesafe-number-corpus.py` — pass, 2,148 route runs, 518 accepted, 1,630 refused, 0 untracked, 0 failures.
+- `python3 scripts/pm_event_datetime_inventory.py` — exit 1. 233 nodes, 202 failure rows: `unclassified_mentioning_container` 111, `stale_scan_exclusion` 48, `unreadable_mentioning_container` 43. Examples: `Plans/.plan_index/acceptance_units.jsonl` (`jsonl:4692`, unclassified mentioning container), `Plans/Contracts_V0.md` (`fence:21002`, unreadable mentioning container), `Plans/_shards/storage_value_registry/056-lines-11001-11200.md` (`code:11`, stale scan exclusion). Inventory and exclusions were not edited. `datetime_validator` and this gate run at batch-2 integration.
+- `python3 scripts/pm-filesafe-guard-tables.py --out DIR` — tool `e8038992eabbe067c8bcba8d48824b97fbb6b5b7e69cbfe28a669f939a96c0b8` (gated `004bdedd63`). 174 PASS / 0 FAIL / 30 tables with no negative. 354/403 rows proved. Exit 1 from 49 rows with no negative and 7 two-row observations. `bad` 0. `date_time_event_record` PASS (`DT01_event_record`). `date_time_storage` PASS (`DT02_storage`). Collection findings are the same 7 two-row observations as part 2A (SM03/SM04, HJ01/HJ02 five times, OO01/OO02).
+- `python3 scripts/pm-shard-plans.py --check` — pass. Regenerated shards are only `contracts_v0` and `storage-plan`.
+- `python3 scripts/pm-plan-index.py validate` against `origin/main` `77bae0c63605d0a6f643aa3f1d8c51c2f3bb7947` — 60 failures (`plan_unit_removed_without_ledger_decision` 39, `plan_unit_removal_ledger_invalid` 21). Index unit text changed only for `Plans/Contracts_V0.md` and `Plans/storage-plan.md`. `CV-369` is one of the 60: it is on that `origin/main` and was already absent from this lane's `Contracts_V0.md` and index at `8ba3cc12e8`, before this edit. Not restored.
+
+### Rows with no negative
+
+The 49 rows with no negative are the same set as part 2A (the four retired date-time rows were proved, and both new rows are proved). They earn no credit. Proof that no input refuses them first:
+
+| Rows | Proof |
+|---|---|
+| CI02–CI04 | `scripts/pm_filesafe_guard_suites.py:233` recomputes both event ids with the same `identity` call. `scripts/pm_filesafe_guard_suites.py:51` names the phase unprovable. |
+| MO03, BD02 | `scripts/pm_filesafe_event_authority.py:565` and `scripts/pm_filesafe_event_authority.py:1001` compare a commitment to the value just computed for that same source. |
+| MG01 | `scripts/pm_filesafe_event_contracts.py:132` (`payload_grant_window`) refuses the issued/expires window before `scripts/pm_filesafe_event_authority.py:612` (`mat_grant_order`). |
+| OS01 | `scripts/pm_filesafe_event_contracts.py:40` compares `grant['scope_kind']` to the payload scope kind it was derived from. |
+| SU01–SU02, SU06–SU11 | `scripts/pm_filesafe_event_contracts.py:66` runs the subset tables only after the scope rows in `override_scope_semantic`. |
+| ME01, MX02, MD01, MJ02 | `scripts/pm_filesafe_event_authority.py:579`, `:604`, `:646` and `:621` re-check joins the earlier envelope, effect, policy and body rows already refused. |
+| MK03–MK06, CS02 | `scripts/pm_filesafe_event_authority.py:640` and `:433` see worktree fields only after the payload worktree rows have refused a partial worktree. |
+| AB01, AB03, AF08 | `scripts/pm_filesafe_event_authority.py:319`, `:337` and `:394` follow the closed body-schema validation of the same values. |
+| SP03–SP04, TR04–TR05 | `scripts/pm_filesafe_event_authority.py:406` and `:444` run after the record schema has fixed node and attempt. |
+| OK02–OK03, OQ02–OQ03, OQ06–OQ07, OQ09–OQ10, OQ13, OQ17 | `scripts/pm_filesafe_event_authority.py:497` and `:513` only see schema-admitted operation and outcome combinations; the combinations these rows name do not occur on those seeds. |
+| JC03, MT11, IR08, RB02 | `scripts/pm_filesafe_event_authority.py:504`, `:662`, `:709` and `:967` follow schema const/minimum checks and the retention-decision binding. |
+| DJ03 | `scripts/pm_filesafe_event_authority.py:268` feeds a descriptor the schema has already limited to a blake3-hex id, a const media type and one integer slot. |
+| AJ01–AJ03 | `scripts/pm_filesafe_event_authority.py:343` runs after `scripts/pm_filesafe_event_authority.py:334` (`app_body_decode`) has refused a body qualified RFC 8785 cannot encode. |
+
+### Readiness
+
+Timestamps are no longer an open review for the fields in the table above. `datetime_validator` and the inventory gate run at batch-2 integration; their lane-tree failure is the stale inventory, recorded above and not edited. C12 stays PARTIAL for the single structural schema row and for that gate. C7 stays PARTIAL for the five application-scope families held with Jared. Membership stays ABSENT. Native execution stays NOT_RUN. Family PASS counts are unchanged (9, 9, 10, 9, 9, 9, 10, 10, 10). No READY or admission claim. Sol/Astra part-2 review is pending. Nothing in this pass was stopped for a Jared decision.
