@@ -25,7 +25,11 @@
 @media (hover: none) { .history-flyout .pjx-npg-more { opacity: 1; } }
 
 /* ------------------------------------------------------------------ the no-project chat, over the chat stage */
-#pmw-chat56 .chat-stage > .pjx-npc { position: absolute; inset: 0; z-index: 20; display: flex; flex-direction: column; min-height: 0; background: inherit; color: inherit; }
+/* (B-press) the chat's own host, beside #pmRoot over the stage's box (chat.js place()): PMConcept7's reconcile of #pmRoot
+   never reaches it. It takes the stage's background, colour and corners, and pm56-host gives the chat the chat's look */
+#pmw-chat56 > .pjx-npc-host { position: absolute; z-index: 20; display: flex; min-width: 0; min-height: 0; overflow: hidden; }
+#pmw-chat56 > .pjx-npc-host[hidden] { display: none; }
+#pmw-chat56 > .pjx-npc-host > .pjx-npc { position: relative; flex: 1 1 auto; display: flex; flex-direction: column; min-width: 0; min-height: 0; background: inherit; color: inherit; border-radius: inherit; }
 #pmw-chat56[data-pjx-npc] .chat-stage { background-clip: padding-box; }
 .pjx-npc > .pmu-shell { display: contents !important; }
 .pjx-npc { container: pjxnpc / inline-size; }
