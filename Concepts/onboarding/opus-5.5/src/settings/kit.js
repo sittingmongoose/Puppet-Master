@@ -177,7 +177,11 @@ PM51.quiet = items => `<div class="pm51-quiet">${items.filter(Boolean).map(i => 
 PM51.empty = (title, copy, action) => `<div class="empty-state pm51-empty"><div>${icon('info')}<div class="empty-title">${h(title)}</div>${copy ? `<div class="empty-copy">${h(copy)}</div>` : ''}${action ? `<div class="empty-actions">${PM51.btn(Object.assign({ primary: true }, action))}</div>` : ''}</div></div>`;
 PM51.kv = pairs => `<div class="pm51-kv">${pairs.filter(Boolean).map(([k, v]) => `<div class="pm51-kv-row"><span>${h(k)}</span><span>${v == null ? '—' : h(String(v))}</span></div>`).join('')}</div>`;
 PM51.note = (text, tone) => `<p class="pm51-note${tone ? ' tone-' + a(tone) : ''}">${icon(tone === 'attention' ? 'alert' : 'info')}<span>${h(text)}</span></p>`;
-PM51.field = (label, control, help) => `<label class="pm51-field"><span class="pm51-field-label">${h(label)}</span>${control}${help ? `<span class="pm51-field-help">${h(help)}</span>` : ''}</label>`;
+/* FO-134: a field's accessible name is the label it shows. A <label> can hold the control, but an aria-label on
+   that control wins over it and names the field something the screen does not say (the Notifications replacement
+   field read "New address" beside a visible "Webhook address"). So the labelable parts inside a field keep no
+   aria-label of their own; groups, buttons and other parts a <label> cannot name keep theirs. */
+PM51.field = (label, control, help) => `<label class="pm51-field"><span class="pm51-field-label">${h(label)}</span>${String(control == null ? '' : control).replace(/<(input|select|textarea)\b[^>]*>/gi, tag => tag.replace(/\saria-label="[^"]*"/i, ''))}${help ? `<span class="pm51-field-help">${h(help)}</span>` : ''}</label>`;
 PM51.initials = name => String(name || '?').split(/\s+/).map(w => w[0]).join('').slice(0, 2).toUpperCase();
 /* Usage meter: 4 px rounded track, label + "value" line; tone from the percentage unless given. */
 PM51.meter = ({ label, pct, reset, tone, note, value }) => {
