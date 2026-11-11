@@ -13,7 +13,7 @@
 //   unchanged page only had category toggles.
 // Runs in T3's sandbox by default (the onboarding window), on the normal page with --set sandbox=0.
 import { onboardingApp } from '../helpers/onboarding-fields.mjs';
-import { paintedText } from '../helpers/painted-text.mjs';
+import { ink } from '../helpers/text-ink.mjs';
 import { LOOKS } from '../browser-check.config.mjs';
 const LAYER = '#pm-o55-onboarding .o55-layer:not(.o55-out)';
 async function open(t, at, scenario = 'returning') {
@@ -159,8 +159,8 @@ export const tests = {
 			for (const [what, sel] of [['a kind', '.o55-like-kinds .o55-toggletitle'], ['a kind’s count', '.o55-like-kinds .o55-togglesub'], ['a single setting', '.o55-like-single .o55-togglesub'], ['a thing', '.o55-like-things .o55-toggletitle'], ['an account’s readiness', '.o55-like-accts .o55-rowmeta']]) {
 				const el = f.locator(`${LAYER} .o55-sheet ${sel}`).first();
 				await el.scrollIntoViewIfNeeded().catch(() => {});
-				const p = await paintedText(el);
-				await t.check(`${look}: ${what} paints readable ink`, p.paintedCount >= 10, JSON.stringify([p.count, p.paintedCount, p.minimum]));
+				const p = await ink(el);
+				await t.check(`${look}: ${what} paints readable ink (contrast >= 3)`, p.n >= 30 && p.contrast >= 3, JSON.stringify(p));
 			}
 		}
 	}

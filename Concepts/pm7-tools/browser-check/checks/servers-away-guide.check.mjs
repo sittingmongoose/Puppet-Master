@@ -19,7 +19,7 @@
 // a pm-link://<server id>-<code> link. Runs on the surface the switch picks (--set sandbox=1 for T3's preview).
 import fs from 'node:fs';
 import { pagePath } from '../helpers/onboarding-fields.mjs';
-import { paintedText } from '../helpers/painted-text.mjs';
+import { ink } from '../helpers/text-ink.mjs';
 import { LOOKS } from '../browser-check.config.mjs';
 
 const sleep = (f, ms) => f.waitForTimeout(ms);
@@ -225,9 +225,9 @@ export const tests = {
 			const live = f.locator(`${WIN} .o55g-layer:not(.o55g-out)`).last();
 			const chip = live.locator('.pm51-servers-demo-c').first(), step = live.locator('[data-ts-state] .pm51-step-title').nth(1), state = live.locator('[data-ts-state] .pm51-step-end').nth(1);
 			const box = await f.evaluate((W) => { const w = document.querySelector(`${W}`).getBoundingClientRect(), live = [...document.querySelectorAll(`${W} .o55g-layer:not(.o55g-out)`)].pop(); const cs = [...live.querySelectorAll('.pm51-servers-demo-c')]; return { n: cs.length, inside: cs.every((c) => { const r = c.getBoundingClientRect(); return r.left >= w.left - 1 && r.right <= w.right + 1 && c.scrollWidth <= c.clientWidth + 1; }) }; }, WIN);
-			const [pc, ps, pst] = [await paintedText(chip), await paintedText(step), await paintedText(state)];
+			const [pc, ps, pst] = [await ink(chip), await ink(step), await ink(state)];
 			await t.check(`${look}: the demo answers sit whole inside the window`, box.n >= 2 && box.inside, JSON.stringify(box));
-			await t.check(`${look}: a demo answer, a step and its Waiting for you state paint readable ink`, pc.paintedCount >= 10 && ps.paintedCount >= 10 && pst.paintedCount >= 10, JSON.stringify({ chip: [pc.count, pc.paintedCount], step: [ps.count, ps.paintedCount], state: [pst.count, pst.paintedCount] }));
+			await t.check(`${look}: a demo answer, a step and its Waiting for you state paint readable ink (contrast >= 3)`, [pc, ps, pst].every((x) => x.n >= 30 && x.contrast >= 3), JSON.stringify({ chip: pc, step: ps, state: pst }));
 		}
 	}
 };
