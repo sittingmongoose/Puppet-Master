@@ -74,8 +74,11 @@
     a.onAnswer = o.onAnswer || a.onAnswer || null; a.at = o.at || a.at || Date.now();
     a.suggested = o.pattern || suggest(a.tool, a.target);
   }
+  /* An ask a grant already covers is never asked: it is allowed on its own, after the render that met it, with its one-line
+     receipt (ask() returns null, ensure() null, and pending(id) says it is on its way). */
   function ask(o, quiet) {
-    var a = make(o || {});
+    var a = make(o || {}), g = grantFor(a);
+    if (g) { autoAllow(a, g); return null; }
     asks.push(a);
     var c = EXT.ctx && EXT.ctx();
     if (!quiet && c && c.renderApp) c.renderApp();
@@ -85,9 +88,47 @@
   function ensure(o) {
     var a = find(o.id);
     if (a) { apply(a, o, EXT.ctx && EXT.ctx()); return a; }
-    a = make(o); asks.push(a); return a;
+    if (autoIds[o.id]) return null;
+    a = make(o);
+    var g = grantFor(a);
+    if (g) { autoAllow(a, g); return null; }
+    asks.push(a); return a;
   }
+
+  /* ------------------------------------------------------------------ what a For session or Always answer covers */
+  /* Permissions_System 6.1 and FinalGUISpec 15.7: For session is held under the approval scope (this chat session: the
+     thread) until it ends, and covers later asks of the same tool that its pattern matches; Always is the person's rule
+     (the demo has one project and one computer, so every place it names covers every thread here). A later ask that one
+     covers is allowed without asking, and a pending one is allowed with it. The match is the pattern itself (an ask
+     whose own suggestion is the same pattern) or its glob over the call (* and ** match anything). */
+  function globRe(p) { return new RegExp('^' + String(p).replace(/[.+?^${}()|[\]\\]/g, '\\$&').replace(/\*+/g, '.*') + '$'); }
+  function covers(g, a) {
+    if (g.tool !== a.tool || (g.scope === 'session' && g.thread !== a.thread)) return false;
+    if (g.pattern === a.suggested) return true;
+    if (!a.target) return false;
+    try { return globRe(g.pattern).test(a.target); } catch (e) { return false; }
+  }
+  function grantFor(a) { for (var i = grants.length - 1; i >= 0; i--) if (covers(grants[i], a)) return grants[i]; return null; }
+  var autoIds = {};
+  function autoAllow(a, g) {
+    if (autoIds[a.id]) return;
+    autoIds[a.id] = 1;
+    setTimeout(function () {
+      var ctx = EXT.ctx && EXT.ctx();
+      delete autoIds[a.id];
+      if (!ctx) return;
+      var how = g.scope === 'session' ? 'session' : 'always', own = false;
+      try { own = a.onAnswer ? a.onAnswer(ctx, how, { pattern: g.pattern, place: g.place || null, auto: true }) === true : false; } catch (e) { console.error('dock-asks: onAnswer threw', e); }
+      var t = tool(a), title = (how === 'session' ? 'Allowed by this session’s grant: ' : 'Allowed by your rule: ') + t.verb;
+      if (!own && ctx.addReceipt) ctx.addReceipt('permission-answer', title, (a.target ? a.target + ' · ' : '') + 'matches ' + g.pattern + '. Nothing was asked.');
+      announce(title);
+      if (ctx.renderApp) ctx.renderApp();
+    }, 0);
+  }
+  /* the asks that share one approval ask (FinalGUISpec 15.7: a Deny refuses them all): same thread, tool and pattern */
+  function sameAsk(a, b) { return a !== b && a.thread === b.thread && a.tool === b.tool && a.suggested === b.suggested; }
   function drop(id) { var a = find(id), i = asks.indexOf(a); if (i >= 0) asks.splice(i, 1); }
+  function pending(id) { return !!autoIds[id]; }
   function find(id) { for (var i = 0; i < asks.length; i++) if (asks[i].id === id) return asks[i]; return null; }
   function patternOf(a) { var p = a.ui.pattern != null ? a.ui.pattern : a.suggested; return String(p).trim() || a.suggested; }
 
@@ -156,14 +197,16 @@
   function studioAsk(ctx) {
     var d = ctx.state.decision, open = !!(d && d.type === 'permission');
     if (!open) { drop(STUDIO); return; }
-    if (find(STUDIO)) return;
+    if (find(STUDIO) || autoIds[STUDIO]) return;
     var hosts = ((ctx.D && ctx.D.operational && ctx.D.operational.hosts) || []).filter(function (h) { return h.role === 'execution'; });
     ensure({ id: STUDIO, thread: ctx.state.selectedThread, tool: 'host', target: 'Reconnect to Windows execution host and resume browser control', pattern: 'Windows execution host',
       who: 'The agent', verb: 'reconnect the Windows execution host', rule: 'Execution hosts ask first in this project',
       facts: [['Why', 'The prior host connection dropped during step 7. The checkpoint is intact; no command will be replayed twice.'],
         ['Scope', 'Reconnect host · restore browser session · continue from checkpoint · no schema mutation'],
         ['Hosts', hosts.map(function (h) { return esc(h.label) + ' (' + esc(h.state) + ')'; }).join(' · ') || 'Windows native']],
-      onAnswer: function (c, how) { appAct(how === 'deny' ? 'deny-permission' : 'approve-permission'); return how === 'deny'; } });
+      /* Deny closes the decision and writes the same one-line receipt as the other answers (the app's deny-permission
+         wrote a large Permission request card); the allowing answers resume through approve-permission */
+      onAnswer: function (c, how) { appAct(how === 'deny' ? 'close-decision' : 'approve-permission'); return false; } });
   }
   /* the app's own action: PM56_APP.act where the chat is hosted (PMConcept7); on the chat's own page, which has no
      PM56_APP, the same hidden-button press app.js's click handler reads */
@@ -197,17 +240,29 @@
     session: function (a) { return ['Allowed for this session: ' + patternOf(a), tool(a).word + ' calls that match run without asking until this chat session ends.']; },
     always: function (a) { return ['Always allowed: ' + patternOf(a), 'A rule for ' + placeWord(a.ui.place) + '. Change it in Settings › Permissions.']; }
   };
-  function resolve(ctx, a, how) {
+  function settle(ctx, a, how, rule) {
     var i = asks.indexOf(a);
     if (i < 0) return;
     asks.splice(i, 1);
-    var rule = { pattern: patternOf(a), place: a.ui.place };
-    if (how === 'session') grants.push({ tool: a.tool, pattern: rule.pattern, thread: a.thread });
     var own = false;
     try { own = a.onAnswer ? a.onAnswer(ctx, how, rule) === true : false; } catch (e) { console.error('dock-asks: onAnswer threw', e); }
     var r = RECEIPT[how](a);
     if (!own && ctx.addReceipt) ctx.addReceipt('permission-answer', r[0], r[1]);
-    announce(r[0]);
+    return r[0];
+  }
+  function resolve(ctx, a, how) {
+    if (asks.indexOf(a) < 0) return;
+    var rule = { pattern: patternOf(a), place: a.ui.place };
+    var said = settle(ctx, a, how, rule);
+    if (how === 'session' || how === 'always') {
+      var g = { scope: how === 'session' ? 'session' : 'rule', tool: a.tool, pattern: rule.pattern, thread: a.thread, place: rule.place };
+      grants.push(g);
+      /* the pending asks it covers are allowed with it */
+      asks.slice().forEach(function (b) { if (covers(g, b)) { asks.splice(asks.indexOf(b), 1); autoAllow(b, g); } });
+    } else if (how === 'deny') {
+      asks.slice().forEach(function (b) { if (sameAsk(a, b)) settle(ctx, b, 'deny', rule); });
+    }
+    announce(said);
     ctx.renderApp();
   }
   EXT.action('perm-answer', function (ctx, btn) {
@@ -302,5 +357,5 @@
     if (back) { e.preventDefault(); e.stopPropagation(); back.click(); }
   }, true);
 
-  window.PM56_ASKS = { ask: ask, ensure: ensure, drop: drop, parts: parts, list: function () { return asks.slice(); }, grants: function () { return grants.slice(); }, suggest: suggest };
+  window.PM56_ASKS = { ask: ask, ensure: ensure, drop: drop, parts: parts, pending: pending, list: function () { return asks.slice(); }, grants: function () { return grants.slice(); }, suggest: suggest };
 })();

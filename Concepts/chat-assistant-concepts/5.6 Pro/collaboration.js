@@ -1311,9 +1311,12 @@
   }
   /* FO-128 (Jared, 2026-11-10: "Yes but in the more compact format"): a helper that waits for your OK is a tool's
      permission ask, owned by dock-asks.js (PM56_ASKS): the card's decision row and the run's dock line both draw its
-     compact ladder (Deny, Once, For session, Always) from PM56_ASKS.parts, and every answer comes back to onAnswer here
-     (cmd.runtime.approve with its scope, or cmd.runtime.decline). Without dock-asks the card keeps Allow once and
-     Don't allow. */
+     compact ladder (Deny, Once, For session, Always) from PM56_ASKS.parts, and every answer comes back to onAnswer here,
+     which changes the run's state directly, as the card's own Allow once and Don't allow did (answerHelper, below:
+     the helper goes on or is declined, its blocked assignments follow, and the run says which answer and scope; this
+     preview stands in for cmd.runtime.approve and cmd.runtime.decline). A For session grant or an Always rule that
+     already covers the helper's call lets it go on without asking (PM56_ASKS.ensure returns null meanwhile). Without
+     dock-asks the card keeps Allow once and Don't allow. */
   function helperAsk(run, b) {
     var A = window.PM56_ASKS;
     if (!A || !A.ensure || !b) return null;
@@ -1327,6 +1330,8 @@
     if (att && att.actions) return att.actions.slice();
     var K = KIND_LABEL[run.kind], c = completionProjection(run), b = blockedHelper(run), out = [];
     var ha = b && helperAsk(run, b), hp = ha && window.PM56_ASKS.parts(ha);
+    /* a grant already lets it go on: nothing to answer while that lands */
+    if (b && !ha && window.PM56_ASKS && window.PM56_ASKS.pending && window.PM56_ASKS.pending('collab:' + run.id + ':' + b.id)) return [];
     if (hp) {
       out = hp.answers.slice();
       out.push({ action: 'collab-open-participant', attrs: 'data-participant="' + esc(b.id) + '"', label: 'Details', extra: true });
@@ -1690,6 +1695,7 @@
       if (own && own.dock && own.dock.sentence) { say = own.dock.sentence; if ({ live: 1, needs: 1, yourmove: 1 }[own.dock.tone]) tone = own.dock.tone; }
       /* FO-128: a helper that waits for your OK answers in the line, with the card's compact ladder; Details shows the card */
       var hb = att && blockedHelper(run), ha = hb && helperAsk(run, hb), hp = ha && window.PM56_ASKS.parts(ha);
+      if (hb && !ha && window.PM56_ASKS && window.PM56_ASKS.pending && window.PM56_ASKS.pending('collab:' + run.id + ':' + hb.id)) return;
       out.push({ runId: run.id, tone: tone, at: Date.parse(run.createdAt) || 0,
         html: S.pmxDockLine({ key: 'pmx-dock:' + run.id, tone: tone, runId: run.id, markHtml: S.pmxKindMark(run.kind, 16), kindWord: esc(KIND_LABEL[run.kind]),
           sentence: hp ? hp.sentence : tone === 'live' ? esc(shownTitle(run)) + ' · ' + say : say, time: tone === 'live' ? esc(clockOf(run, st)) : '',
@@ -4213,14 +4219,14 @@
      approve below; For session and Always let it go on the same way and say the grant; Deny is the decline below */
   var SCOPE_SAID = {
     once: function (p) { return 'You allowed ' + p.role + ' once. The next time it needs this, it asks again.'; },
-    session: function (p, r) { return 'You allowed ' + p.role + ' for this session: ' + r.pattern + ' runs without asking until this chat session ends.'; },
-    always: function (p, r) { return 'You made a rule: always allow ' + r.pattern + ' on ' + (r.place === 'project' ? 'this project' : r.place === 'computer' ? 'this computer' : 'every computer') + '. Change it in Settings › Permissions.'; }
+    session: function (p, r) { return r.auto ? p.role + ' went on without asking: ' + r.pattern + ' is allowed for this session.' : 'You allowed ' + p.role + ' for this session: ' + r.pattern + ' runs without asking until this chat session ends.'; },
+    always: function (p, r) { return r.auto ? p.role + ' went on without asking: your rule allows ' + r.pattern + '.' : 'You made a rule: always allow ' + r.pattern + ' on ' + (r.place === 'project' ? 'this project' : r.place === 'computer' ? 'this computer' : 'every computer') + '. Change it in Settings › Permissions.'; }
   };
   function answerHelper(ctx, runId, pid, how, rule) {
     var run = findRun(runId), p = run && blockedOf(run, pid);
     if (!p) return;
     if (how === 'deny') { declineHelper(run, p); return; }
-    p.status = 'working'; p.current = (how === 'once' ? 'Allowed once by you: ' : how === 'session' ? 'Allowed for this session by you: ' : 'Allowed by your rule: ') + String(p.blockedReason || 'going on.').replace(/;.*$/, '').replace(/\.?$/, '.'); p.blockedReason = '';
+    p.status = 'working'; p.current = (how === 'once' ? 'Allowed once by you: ' : how === 'session' ? (rule && rule.auto ? 'Allowed by this session’s grant: ' : 'Allowed for this session by you: ') : 'Allowed by your rule: ') + String(p.blockedReason || 'going on.').replace(/;.*$/, '').replace(/\.?$/, '.'); p.blockedReason = '';
     assignmentsOf(run, p).forEach(function (a) { a.status = 'in_progress'; });
     if (run.status === 'blocked') run.status = 'running';
     run.messages.push(mkMsg(run, { senderKind: 'system', senderName: 'System', messageType: 'message', body: SCOPE_SAID[how](p, rule || {}) }));
@@ -4231,23 +4237,18 @@
     if (run.status === 'blocked') run.status = 'running';
     run.messages.push(mkMsg(run, { senderKind: 'system', senderName: 'System', messageType: 'message', body: 'You didn’t allow ' + p.role + ' to go on. Its part was not done; the others keep working.' }));
   }
+  /* the card's own Allow once and Don't allow (a build without dock-asks.js) are the ladder's Once and Deny */
   EXT.action('collab-approve', function (ctx, btn) {
     var run = findRun(btn.dataset.run), p = run && blockedOf(run, btn.dataset.participant);
     if (!p) return true;
-    p.status = 'working'; p.current = 'Allowed once by you: ' + String(p.blockedReason || 'going on.').replace(/;.*$/, '').replace(/\.?$/, '.'); p.blockedReason = '';
-    assignmentsOf(run, p).forEach(function (a) { a.status = 'in_progress'; });
-    if (run.status === 'blocked') run.status = 'running';
-    run.messages.push(mkMsg(run, { senderKind: 'system', senderName: 'System', messageType: 'message', body: 'You allowed ' + p.role + ' once. The next time it needs this, it asks again.' }));
+    answerHelper(ctx, run.id, p.id, 'once');
     ctx.renderApp();
     return true;
   });
   EXT.action('collab-deny', function (ctx, btn) {
     var run = findRun(btn.dataset.run), p = run && blockedOf(run, btn.dataset.participant);
     if (!p) return true;
-    p.status = 'failed'; p.outcome = 'not_allowed'; p.current = 'Not allowed by you. Its part was not done.'; p.blockedReason = '';
-    assignmentsOf(run, p).forEach(function (a) { a.status = 'skipped'; });
-    if (run.status === 'blocked') run.status = 'running';
-    run.messages.push(mkMsg(run, { senderKind: 'system', senderName: 'System', messageType: 'message', body: 'You didn’t allow ' + p.role + ' to go on. Its part was not done; the others keep working.' }));
+    declineHelper(run, p);
     ctx.renderApp();
     return true;
   });

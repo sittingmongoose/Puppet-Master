@@ -8,11 +8,15 @@
 //             keyboard lands on the next asking line or the composer, never on the page.
 //   studio    the Studio's Ask permission (demo-trigger "Permission request") asks in the bar, not in the Ask Card: the
 //             decision host stays empty; the ladder is in canon's order with the short words; Once goes through the app's
-//             approve-permission (the decision closes) and writes "Allowed once"; Deny goes through deny-permission (its
-//             "Permission denied" receipt, no second one); Always opens the chooser with the suggested pattern editable
+//             approve-permission (the decision closes) and writes "Allowed once"; Deny closes the decision and writes one
+//             one-line "Denied" receipt (not the app's large card); Always opens the chooser with the suggested pattern editable
 //             and no place chosen, a real press on Save is refused until a place is chosen, Escape leaves the chooser,
 //             and Save writes "Always allowed" with its place.
 //   places    a path ask never offers Everywhere and suggests its folder "/**"; a chat with no project hides This project.
+//   grants    For session is remembered (Permissions_System 6.1, FinalGUISpec 15.7): after For session on the Studio's ask,
+//             the next one never asks (the decision closes on its own, one "Allowed by this session's grant" receipt);
+//             an ask its pattern doesn't match still asks; a bash grant "psql *" covers a later psql call and a pending one,
+//             not pg_dump; a Deny also refuses the other pending asks that share its approval ask, one receipt each.
 //   helper    the Crew helper that waits for your OK (Rollback Auditor, recovery-collaboration) has the same ladder in its
 //             card's decision row, under the command it would run shown whole, and in its dock line once the card is out of view;
 //             Once from the line lets it go on and the run says so; Always from the card opens the chooser in the card.
@@ -95,14 +99,14 @@ async function studioCase(t, surface) {
 	await t.until(`${surface}: Once closes the decision`, () => !PM56_APP.ctx().state.decision && !PM56_ASKS.list().some((a) => a.id === 'perm-studio-host'));
 	let rec = await lastMsg(f);
 	await t.check(`${surface}: Once writes its receipt`, /^permission-answer\|Allowed once: reconnect the Windows execution host/.test(rec), rec);
-	// Deny: the app's own receipt, no second one
+	// Deny: one line, like the other answers
 	await openStudio(f);
 	await t.until(`${surface}: asked again`, (k) => !!document.querySelector(`#pmRoot .composer > .pmx-dock [data-k="${k}"]`), STUDIO);
 	const before = await f.evaluate(() => PM56_APP.activeThread().messages.length);
 	await line(f, STUDIO).locator('[data-value="deny"]').click();
 	await t.until(`${surface}: Deny closes the decision`, () => !PM56_APP.ctx().state.decision);
 	const added = await f.evaluate((n) => PM56_APP.activeThread().messages.slice(n).map((m) => m.type + '|' + m.title), before);
-	await t.check(`${surface}: Deny writes the app's one receipt`, JSON.stringify(added) === '["permission|Permission denied"]', JSON.stringify(added));
+	await t.check(`${surface}: Deny writes one one-line receipt`, JSON.stringify(added) === '["permission-answer|Denied: reconnect the Windows execution host"]', JSON.stringify(added));
 	// Always
 	await openStudio(f);
 	await t.until(`${surface}: asked a third time`, (k) => !!document.querySelector(`#pmRoot .composer > .pmx-dock [data-k="${k}"]`), STUDIO);
@@ -141,6 +145,53 @@ async function placesCase(t, surface) {
 	await t.check(`${surface}: a path suggests its folder and never offers Everywhere`, r.path.s === 'web/src/routes/**' && JSON.stringify(r.path.p) === '["project","computer"]', JSON.stringify(r.path));
 	await t.check(`${surface}: a chat with no project hides This project`, r.noProject.s === 'ls *' && JSON.stringify(r.noProject.p) === '["computer","everywhere"]', JSON.stringify(r.noProject));
 	await t.check(`${surface}: a page suggests its origin`, r.web.s === 'https://docs.example.com/*', JSON.stringify(r.web));
+}
+
+async function grantsCase(t, surface) {
+	const f = await ready(t, surface); if (!f) return;
+	await t.emulate({ reducedMotion: 'reduce' });
+	await f.evaluate(() => PMW.chatCol.setWidth(600));
+	const titlesAfter = (n) => f.evaluate((n) => PM56_APP.activeThread().messages.slice(n).map((m) => m.type + '|' + m.title), n);
+	const count = () => f.evaluate(() => PM56_APP.activeThread().messages.length);
+	// the Studio's ask: For session, then asked again
+	await openStudio(f);
+	await t.until(`${surface}: the Studio asks`, (k) => !!document.querySelector(`#pmRoot .composer > .pmx-dock [data-k="${k}"]`), STUDIO);
+	await line(f, STUDIO).locator('[data-value="session"]').click();
+	await t.until(`${surface}: For session closes the decision`, () => !PM56_APP.ctx().state.decision && !PM56_ASKS.list().some((a) => a.id === 'perm-studio-host'));
+	let n = await count();
+	await f.evaluate(() => { window.__fo128Seen = 0; window.__fo128Watch = setInterval(() => { if (document.querySelector('#pmRoot .composer > .pmx-dock [data-k="pmx-dock:perm-studio-host"]')) window.__fo128Seen++; }, 16); });
+	await openStudio(f);
+	await t.until(`${surface}: the second Studio ask closes on its own`, () => !PM56_APP.ctx().state.decision);
+	await t.page.waitForTimeout(400);
+	const seen = await f.evaluate(() => { clearInterval(window.__fo128Watch); return window.__fo128Seen; });
+	await t.check(`${surface}: the second matching ask never asked in the bar`, seen === 0, `seen ${seen} times`);
+	let added = await titlesAfter(n);
+	await t.check(`${surface}: and wrote one line saying the session's grant allowed it`, JSON.stringify(added) === '["permission-answer|Allowed by this session’s grant: reconnect the Windows execution host"]', JSON.stringify(added));
+	// an ask the grant does not match still asks
+	const other = await f.evaluate(() => PM56_ASKS.ask({ tool: 'host', target: 'Reconnect to Linux container and resume the rehearsal', pattern: 'Linux container', who: 'The agent', verb: 'reconnect the Linux container' }));
+	await t.check(`${surface}: a non-matching ask asks`, !!other && await line(f, `pmx-dock:${other}`).count() === 1, String(other));
+	await f.evaluate((i) => { PM56_ASKS.drop(i); PM56_APP.render(); }, other);
+	// bash: a psql grant covers a later psql call and a pending one, not pg_dump
+	const ids = await f.evaluate(() => [
+		PM56_ASKS.ask({ tool: 'bash', target: 'psql "$STAGING_DATABASE_URL" -c "EXPLAIN ANALYZE SELECT 1"', who: 'Query Analyzer' }, true),
+		PM56_ASKS.ask({ tool: 'bash', target: 'psql "$STAGING_DATABASE_URL" -c "SELECT count(*) FROM recipes"', who: 'Query Analyzer' }, true),
+		PM56_ASKS.ask({ tool: 'bash', target: 'pg_dump --schema-only tastebook', who: 'Schema Reviewer' }, true)]);
+	await f.evaluate(() => PM56_APP.render());
+	await line(f, `pmx-dock:${ids[0]}`).locator('[data-value="session"]').click();
+	await t.until(`${surface}: the pending psql ask is allowed with it`, (i) => !PM56_ASKS.list().some((a) => a.id === i), ids[1]);
+	await t.check(`${surface}: pg_dump still asks`, await f.evaluate((i) => PM56_ASKS.list().some((a) => a.id === i), ids[2]));
+	n = await count();
+	const later = await f.evaluate(() => PM56_ASKS.ask({ tool: 'bash', target: 'psql -c "SELECT 2"', who: 'Query Analyzer' }));
+	await t.page.waitForTimeout(300);
+	added = await titlesAfter(n);
+	await t.check(`${surface}: a later psql call is allowed without asking`, later === null && JSON.stringify(added) === '["permission-answer|Allowed by this session’s grant: run a command"]', JSON.stringify({ later, added }));
+	// Deny refuses the pending asks that share its approval ask
+	const dup = await f.evaluate(() => PM56_ASKS.ask({ tool: 'bash', target: 'pg_dump --data-only tastebook', who: 'Schema Reviewer' }));
+	n = await count();
+	await line(f, `pmx-dock:${ids[2]}`).locator('[data-value="deny"]').click();
+	await t.until(`${surface}: Deny answers both pg_dump asks`, (i) => !PM56_ASKS.list().some((a) => i.includes(a.id)), [ids[2], dup]);
+	added = await titlesAfter(n);
+	await t.check(`${surface}: one Denied line each`, JSON.stringify(added) === '["permission-answer|Denied: run a command","permission-answer|Denied: run a command"]', JSON.stringify(added));
 }
 
 async function helperCase(t, surface) {
@@ -228,6 +279,7 @@ for (const surface of ['normal', 'sandbox']) {
 	tests[`FO-128 process prompt answers in the bar ${surface}`] = (t) => processCase(t, surface);
 	tests[`FO-128 Studio Ask permission in the bar ${surface}`] = (t) => studioCase(t, surface);
 	tests[`FO-128 Always places follow canon ${surface}`] = (t) => placesCase(t, surface);
+	tests[`FO-128 For session is remembered, Deny covers its ask ${surface}`] = (t) => grantsCase(t, surface);
 	tests[`FO-128 Crew helper card and line ${surface}`] = (t) => helperCase(t, surface);
 	tests[`FO-128 ten looks, two chat widths ${surface}`] = (t) => looksCase(t, surface);
 }
