@@ -233,7 +233,9 @@ const DETAIL = async (arg) => {
 	};
 	window.PM12_KIMI.dispatchAction('pm51-tab', { manager, tab });
 	const out = { n: 0, items: 0, bad: [], all: [], unsettled: [] };
-	if (!(await settled())) out.unsettled.push(mt);
+	// the tab itself must be the current one first: until it is, the panes and picks are still the last tab's
+	const tabOn = () => { const te = document.querySelector(`#pm-settings-root [data-action="pm51-tab"][data-manager="${manager}"][data-tab="${tab}"]`); return !!te && (te.getAttribute('aria-selected') === 'true' || te.getAttribute('aria-current') === 'true' || te.getAttribute('aria-pressed') === 'true' || te.classList.contains('active') || te.classList.contains('is-active')); };
+	if (!(await settled(tabOn))) out.unsettled.push(`${mt} (the tab never became current)`);
 	const cv = window.__psxCv || (window.__psxCv = document.createElement('canvas').getContext('2d'));
 	const measure = (label, item) => {
 		rootNow().querySelectorAll('.pm51-detail-content').forEach((dc) => {
@@ -245,7 +247,7 @@ const DETAIL = async (arg) => {
 				const ls = parseFloat(cs.letterSpacing) || 0, up = cs.textTransform === 'uppercase';
 				const widest = Math.max(...txt.split(/\s+/).map((x) => cv.measureText(up ? x.toUpperCase() : x).width + ls * x.length));
 				const width = el.getBoundingClientRect().width; out.n++;
-				const v = { label, item, txt: txt.slice(0, 60), w: Math.round(width), widest: Math.round(widest) };
+				const v = { label, item, cls: String(el.className).trim().split(/\s+/).sort().join('.'), txt: txt.slice(0, 60), w: Math.round(width), widest: Math.round(widest) };
 				out.all.push(v);
 				if (width + 1 < widest) out.bad.push(v);
 			});
@@ -677,9 +679,12 @@ export default async function (t) {
 					await t.viewport(x.w, 900); await settle(t, 300);
 					await run(t, DETAIL_TABS, x.ws);
 					if (!bareShell[x.w]) bareShell[x.w] = await run(t, SHELL);
-					for (const item of [...new Set(x.r.bad.map((b) => b.item))]) {
-						const br = await run(t, DETAIL, [x.mt, item || null]);
-						for (const b of br.all) bareOf[`${lk}|${x.w}|${x.mt}|${b.item}|${b.txt}`] = painted ? b.w : null;
+					// the whole tab on bare: the same value under the same item, and the widest value of the same kind
+					const br = await run(t, DETAIL, x.mt);
+					for (const b of br.all) {
+						bareOf[`${lk}|${x.w}|${x.mt}|${b.item}|${b.txt}`] = painted ? b.w : null;
+						const ck = `${lk}|${x.w}|${x.mt}|cls:${b.cls}`;
+						if (painted) bareOf[ck] = Math.max(bareOf[ck] || 0, b.w);
 					}
 				}
 			}
@@ -693,7 +698,10 @@ export default async function (t) {
 			   left-panel resizer only with data-pmw-home="on" and a folded rail, and its rail state can differ between
 			   the two pages, which is outside Settings and outside the layer (up to 4px is taken as the shell's) */
 			const allow = layerShell[w] && bareShell[w] ? Math.min(4, Math.max(0, bareShell[w].w - layerShell[w].w)) : 0;
-			const key = (b) => `${lk}|${w}|${mt}|${b.item}|${b.txt}`;
+			/* the same value under the same item on bare; where the two pages' demo data differ (a path one shows and the
+			   other doesn't), the widest value of the same kind (the same classes) in the same card on bare */
+			const exact = (b) => `${lk}|${w}|${mt}|${b.item}|${b.txt}`, byKind = (b) => `${lk}|${w}|${mt}|cls:${b.cls}`;
+			const key = (b) => (bareOf[exact(b)] != null ? exact(b) : byKind(b));
 			const own = r.bad.filter((b) => { const bw = bareOf[key(b)]; return bw == null || bw > b.w + allow + 0.5; });
 			const base = r.bad.filter((b) => !own.includes(b));
 			const why = base.map((b) => `excluded, the base page’s own: ${lk} · ${w} · ${b.label}: “${b.txt}” ${b.w}px here, ${bareOf[key(b)]}px on bare PMConcept7 (its widest word ${b.widest}px; the shell’s own difference ${allow}px)`);
