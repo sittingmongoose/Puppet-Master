@@ -231,6 +231,7 @@
     if(el&&el.closest&&el.closest('#pm7GlobalStatusBar'))return ['',el.matches('button,[role="button"]')?'Click to see the details.':'Shows the latest known state.'];   /* O55 */
     if(el&&el.matches&&el.matches('[role="tab"],[data-page]'))return ['', 'Show this page.'];
     if(el&&el.matches&&el.matches('a[href]'))return ['', 'Open the linked page.'];
+    if(el&&el.matches&&el.matches('[role="switch"]'))return ['',attr(el,'aria-checked')==='true'?'Turn this setting off.':'Turn this setting on.'];   /* FO-134: a switch says what a press does */
     if(el&&el.matches&&el.matches('input,select,textarea,[role="checkbox"],[role="radio"],[role="switch"],[role="slider"]'))return ['', 'Change this setting.'];
     return ['', 'Choose this option.'];
   }

@@ -62,7 +62,7 @@ html[data-motion="reduced"] #panel-settings .pm51-mgr > .pm51-tabs .tab-ink { tr
 #panel-settings .pm51-mgr .pm51-detail-content > * + * { margin-top: 0; }
 #panel-settings .pm51-mgr .pm51-detail-content .settings-section.o55-group { border: 0; border-top: 1px solid var(--k3-line); border-radius: 0; background: none; }
 #panel-settings .pm51-mgr .pm51-detail-content .o55-group-head { padding: 14px 0 2px; }
-#panel-settings .pm51-mgr .pm51-detail-content .o55-group > .setting-list { padding: 0 0 8px; }
+#panel-settings .pm51-mgr .pm51-detail-content .o55-group > .setting-list { padding: 0 0 8px; --o55-list-inset-l: 0px; --o55-list-inset-r: 0px; }
 
 /* ---- list + detail: one card, calm list ---------------------------------------------------------------------- */
 #panel-settings .pm51-mgr .split-manager.pm51-split { border: 1px solid var(--k3-line); border-radius: var(--k3-radius-md, 10px); background: var(--k3-surface-1); box-shadow: none; overflow: clip; grid-template-columns: 264px minmax(0, 1fr); }

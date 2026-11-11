@@ -76,12 +76,16 @@ renderPageIndexCard = function (workspaces, activeWsId, activeSection) {
   return `<aside class="page-index" aria-label="On this page"><nav class="page-index-card" data-page-index-links>${groups}</nav></aside>`;
 };
 /* Redraw one page's entries after it is drawn, redrawn or changes tab; the highlight is put back and kept in view. */
+const pm51IndexDrawn = new WeakMap();
 PM51.syncIndex = function (ws) {
   const group = root.querySelector(`.pm51-index-group[data-index-ws="${cssEscape(ws)}"]`);
   const w = group && getDomain().workspaces.find(x => x.id === ws);
   if (!w) return;
+  /* compared with what was last drawn, not with the live markup (the highlight, pm51MarkIndex, and the browser's own
+     serialisation always differ from it), and patched in place: every save rebuilt the index and replayed the open of
+     each tab's entries (pm51IndexOpen). An entry list that is new still opens as before (FO-130). */
   const html = pm51IndexGroupInner(w, state.workspace, state.activeSection[state.workspace]);
-  if (group.innerHTML !== html) group.innerHTML = html;
+  if (pm51IndexDrawn.get(group) !== html) { pm51IndexDrawn.set(group, html); if (PM51.patchInner) PM51.patchInner(group, html); else group.innerHTML = html; }
   pm51MarkIndex();
 };
 PM51.syncIndexTabs = ws => PM51.syncIndex(ws);

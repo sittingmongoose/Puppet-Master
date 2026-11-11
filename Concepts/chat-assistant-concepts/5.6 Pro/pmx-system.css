@@ -238,6 +238,12 @@ body[data-theme^="glass"] #pmOverlayRoot:not(.pmx-swapping) > .pmx-sheet{animati
 
 /* ================================================================ C14/C15 the dock host (composerBelow) */
 .composer > .pmx-dock{margin:0 0 8px;}
+/* FO-128: a line that asks carries its answers and is taller, so the dock keeps the height budget the one-row lines had
+   in a short window (three lines and "and N more", about 145 px at 1024 x 480) and past it scrolls in place, needs
+   lines first: the Activity bar floating above it, the messages and the composer stay in view (chat-sweep SW01). Its
+   lines never shrink to fit. The 1 px pad keeps the needs lines' edge inside the scroller. */
+.composer > .pmx-dock{max-height:max(108px, 30vh);overflow-y:auto;overscroll-behavior:contain;padding:1px;margin-left:-1px;margin-right:-1px;scrollbar-width:thin;}
+.composer > .pmx-dock > *{flex-shrink:0;}
 .pmx-dock-line{animation:pmx-rise-6 var(--pmx-t-row) var(--pmx-ease-out) backwards;}
 .pmx-dock-line[data-tone="needs"]{animation:pmx-rise-6 var(--pmx-t-row) var(--pmx-ease-out) backwards,pmx-breathe var(--pmx-t-breathe) var(--pmx-ease-breathe) var(--pmx-t-row) 2;}
 

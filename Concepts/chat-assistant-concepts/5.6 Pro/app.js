@@ -2257,7 +2257,9 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     if(decisionExit){
       return `<div class="decision-host empty" data-k="decision-host" data-variant="${state.variants[6]}">${decisionExit.html}</div>`;
     }
-    if(!state.decision) return `<div class="decision-host empty" data-k="decision-host" data-variant="${state.variants[6]}"></div>`;
+    /* FO-128 (Jared, 2026-11-10: the Studio's Ask permission answers in the bar, in the compact ladder): while dock-asks.js
+       is loaded it asks the 'permission' decision in the composer dock (Deny, Once, For session, Always), so the host stays empty */
+    if(!state.decision||(state.decision.type==='permission'&&window.PM56_ASKS)) return `<div class="decision-host empty" data-k="decision-host" data-variant="${state.variants[6]}"></div>`;
     const type=state.decision.type;
     let body='';
     if(type==='question') body=renderQuestionDecision();
@@ -2363,8 +2365,10 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   let composerMeasureCache=null;
   function syncComposerCompact(){
     if(measuringCompact) return;
-    const box=document.querySelector('.composer-box');
-    const tools=document.querySelector('.composer-tools');
+    // FO-143: only this chat's own composer (#pmRoot), never another surface's .composer-box on the same page
+    const own=document.getElementById('pmRoot')||document;
+    const box=own.querySelector('.composer-box[data-k="composer-box"]');
+    const tools=own.querySelector('.composer-tools');
     if(!box||!tools) return;
     const slack=8;
     if(box.clientWidth<=320){
@@ -2531,7 +2535,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       if(chromeSyncFrame!==null)return;
       chromeSyncFrame=requestAnimationFrame(runChromeSync);
     });
-    const next=new Set(document.querySelectorAll('.composer-box,.composer-tools,.chat-stage>.composer,.decision-host,.activity-wrap,.chat-float,.lens-inline'));
+    const next=new Set((document.getElementById('pmRoot')||document).querySelectorAll('.composer-box,.composer-tools,.chat-stage>.composer,.decision-host,.activity-wrap,.chat-float,.lens-inline'));
     for(const n of chromeObserved)if(!next.has(n))composerRO.unobserve(n);
     for(const n of next)if(!chromeObserved.has(n))composerRO.observe(n);
     chromeObserved=next;
@@ -3935,6 +3939,8 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     openModel:(button,value,change)=>beginScopedPicker('model',button,value,change),
     openPersona:(button,value,change)=>beginScopedPicker('persona',button,value,change),
     personas:()=>PERSONA_CATALOG.map(([name,description])=>({name,description})),
+    /* FO-127: the picker's maker marks, so Settings' model choices draw the same marks as this menu */
+    providerMark:(provider,size=16)=>providerMark(provider,size),
     modelButton(action,anchor,modelId,extra=''){
       const m=D.models.find(x=>x.id===modelId);
       return `<button type="button" class="shared-picker-button" data-action="${esc(action)}" data-menu-anchor="${esc(anchor)}" ${pickerExpandedAttr(anchor)} ${extra}><span class="provider-mark">${m?providerMark(m.provider,16):icon('sparkles',16)}</span><span class="shared-picker-copy"><strong>${esc(m?m.name:'Default model')}</strong><small>${esc(m?D.accountNick(m.accountId,m.account):'Use the configured default')}</small></span>${icon('down',11)}</button>`;

@@ -3050,7 +3050,7 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":892,"inventory_sha256":"be85c
     plus: '<path d="M12 5v14M5 12h14"/>',
     edit: '<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L8 18l-4 1 1-4z"/>',
     trash: '<path d="M4 7h16M9 7V4h6v3m-9 0 1 14h10l1-14M10 11v6m4-6v6"/>',
-    check: '<path d="m5 12 4 4L19 6"/>',
+    check: '<path d="m5 13 4 4L19 7"/>',
     alert: '<path d="M12 3 2.8 20h18.4z"/><path d="M12 9v4m0 3h.01"/>',
     info: '<circle cx="12" cy="12" r="9"/><path d="M12 11v6m0-10h.01"/>',
     external: '<path d="M14 4h6v6M20 4l-9 9"/><path d="M18 13v6H5V6h6"/>',
@@ -3092,6 +3092,8 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":892,"inventory_sha256":"be85c
     rocket: '<path d="M14 4c3-2 6-1 6-1s1 3-1 6l-5 5-4-4zM9 11l-4 1-2 4 5 1m5-3 1 5-4 2-1-4"/><circle cx="16" cy="7" r="1"/>',
     restore: '<path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/>',
     arrowRight: '<path d="M5 12h14m-5-5 5 5-5 5"/>',
+    arrowUp: '<path d="M12 19V5m-5 5 5-5 5 5"/>',
+    arrowDown: '<path d="M12 5v14m-5-5 5 5 5-5"/>',
     sliders: '<path d="M4 7h10M18 7h2M14 5v4M4 17h4M12 17h8M8 15v4M4 12h6M14 12h6M10 10v4"/>',
     link: '<path d="M10 13a5 5 0 0 0 7.07 0l2.12-2.12a5 5 0 0 0-7.07-7.07L10.7 5.2"/><path d="M14 11a5 5 0 0 0-7.07 0L4.8 13.12a5 5 0 0 0 7.07 7.07L13.3 18.8"/>'
   };

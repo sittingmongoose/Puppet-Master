@@ -1,4 +1,5 @@
-// SW-09/10: real owner controls must project their changed scopes.
+// SW-09/10: real owner controls must project their changed scopes. A needs row is read by its line's tone, not its
+// button's word: since FO-128 a process that asks answers in its line and says Details, an agent's question Review.
 export const tests={
  async 'Studio work changes preserve the conversation (SW-10)'(t){
   const f=await t.app.open();await t.app.look('basic-dark');
@@ -17,7 +18,7 @@ export const tests={
    const dock=await f.evaluate(()=>{
     const W=PM_WORK,tid=PM56_EXT.ctx().state.selectedThread;
     const items=W.items({thread:tid,kind:['process','agent','scheduled'],view:'thread:'+tid});
-    const rows=[...document.querySelectorAll('#pmRoot .composer [data-action="work-dock-review"]')].map(b=>({id:b.dataset.id,review:b.textContent.trim()==='Review'}));
+    const rows=[...document.querySelectorAll('#pmRoot .composer [data-action="work-dock-review"]')].map(b=>({id:b.dataset.id,review:b.closest('.pmx-dock-line')?.dataset.tone==='needs'}));
     return {needs:items.filter(W.needsYou).length,rows,valid:rows.every(b=>{const it=W.item(b.id);return !!it&&(b.review?W.needsYou(it):W.isLive(it)||(it.kind==='scheduled'&&it.state==='pending'));})};
    });
    await t.check(`${scene}: composer work rows match current projection`,dock.valid&&(dock.needs===0?!dock.rows.some(r=>r.review):dock.rows.some(r=>r.review)),JSON.stringify(dock));

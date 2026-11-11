@@ -11,7 +11,7 @@
 
 const O55_REF = (() => { const m = new Map(); const ref = window.PM12_REFERENCE; if (ref && ref.byCat) for (const c of Object.values(ref.byCat)) for (const r of c.settings || []) m.set(r.id, r); return m; })();
 const O55_SCOPE = {
-  global: 'Every project, unless a project sets its own',
+  global: 'Everywhere, unless a project sets its own',   /* FO-131, P's rule: a value says Everywhere, then the levels its row offers */
   project: 'This project',
   run: 'Can be changed for a single run',
   account: 'Each account can have its own',
@@ -53,10 +53,220 @@ function o55ChoicesFor(setting, current) {
   }
   return null;
 }
+/* FO-127 (Jared, 2026-11-09 #2): "Shouldnt the your choices list be a drop down rather than listing every model down
+   the page? you could use the model selector from assistant chat." Jared's pick (2026-11-10, "option b"): a model
+   setting's Your choices is one picker button, the chat's (5.6 Pro shared-picker-button: the maker's mark, the name, a
+   small line, the chevron), and it unfolds the chat model menu's rows inside the panel under itself: a strip of maker
+   marks (the chat menu's rail, laid flat for the narrow panel), a search box, one section per maker, one row per model
+   with the maker's mark (PM56_PICKERS.providerMark), where it runs, the Default/Recommended tags and the tick. Which
+   lists, by id, exactly as Jared chose them: the 13 model settings (option B, 2026-11-10) and the 11 long single-choice
+   lists of question 3 ("looks good, I choose all 11", 2026-11-11), those without the maker strip. No rule widens it:
+   every other list, however long (Terminal colors, How it talks and the rest), stays a tick list until he says so. */
+const O55_PICK_MODELS = new Set(['ai.models.default-model', 'ai.models.overseer-model', 'ai.models.worker-model', 'ai.models.gui-worker-model', 'ai.models.high-effort-worker-model', 'ai.models.auditor-model', 'ai.models.teach-model', 'ai.models.goal-worker-model', 'ai.models.goal-verifier-model', 'ai.models.subagent-model', 'ai.models.thread-title-model', 'ai.models.per-lane-model', 'personas.tuning.default-model']);
+const O55_PICK_LISTS = new Set(['code.terminal.background-image', 'code.editing.color-scheme', 'ai.models.default-provider', 'code.terminal.background-gradient', 'general.visual.theme', 'planning.verification.goal-template', 'code.terminal.bezel-material', 'personas.library.default-persona', 'personas.library.active-persona', 'general.visual.nier-background', 'media.image.provider']);
+const O55_BRANDS = { anthropic: 'Anthropic', 'anthropic-api': 'Anthropic', 'claude-code': 'Anthropic', openai: 'OpenAI', 'openai-codex': 'OpenAI', gemini: 'Google', google: 'Google', 'qwen-coding': 'Alibaba', 'qwen-token': 'Alibaba', alibaba: 'Alibaba', 'kimi-coding': 'Moonshot', moonshot: 'Moonshot', 'zai-coding': 'z.ai', zai: 'z.ai', 'cursor-cli': 'Cursor', cursor: 'Cursor', 'free-models': 'Free routes', opencode: 'OpenCode' };
+const o55IsModelChoice = setting => O55_PICK_MODELS.has(setting.id);
+const o55UsesPicker = (setting, ch) => !!ch && ch.kind === 'single' && (O55_PICK_MODELS.has(setting.id) || O55_PICK_LISTS.has(setting.id));
+/* the chat's maker mark (PM56_PICKERS.providerMark draws its PROVIDER_MARKS; an unknown maker gets the chat's sparkle),
+   or the maker's first letter when the chat is not in the page */
+function o55BrandMark(brand, size) {
+  const P = window.PM56_PICKERS;
+  if (brand === 'Free routes') return icon('route');
+  if (P && typeof P.providerMark === 'function' && brand) { try { return P.providerMark(brand, size); } catch (e) { /* fall through */ } }
+  return `<b class="o55-pick-letter">${h(String(brand || '?').charAt(0))}</b>`;
+}
+function o55PickModel(setting, ch) {
+  const model = o55IsModelChoice(setting);
+  const items = ch.items.map((it, i) => {
+    const raw = String(it.raw), slash = model ? raw.indexOf('/') : -1, pid = slash > 0 ? raw.slice(0, slash) : '';
+    const brand = model ? (O55_BRANDS[pid] || pid.replace(/[-_]+/g, ' ').replace(/^./, c => c.toUpperCase())) : '';
+    const parts = String(it.label).split(' · ');
+    const name = model && parts.length > 1 ? parts.slice(0, -1).join(' · ') : String(it.label);
+    return Object.assign({}, it, { index: i, brand, name, sub: it.why || it.hint || '' });
+  });
+  /* one section per maker, makers in the order they first appear (the inventory's examples first), as the chat
+     groups its menu; data-index stays the choice's own index */
+  const brands = model ? [...new Set(items.map(x => x.brand))] : [];
+  const rows = model ? brands.flatMap(b => items.filter(x => x.brand === b)) : items;
+  return { model, items: rows, brands, current: rows.find(x => x.on) || null };
+}
+function o55PickTrigger(setting, pm) {
+  const cur = pm.current, label = PM51.rowLabel(setting);
+  const name = cur ? cur.name : PM51.valueText(setting, settingValue(setting));
+  const marks = cur ? cur.marks : [];
+  const sub = cur ? [pm.model ? cur.brand : '', cur.sub].filter(Boolean).join(' · ') : '';
+  return `<button type="button" class="o55-pick-trigger${pm.model ? ' is-model' : pm.current && pm.current.swatch ? ' has-dot' : ''}" role="combobox" aria-haspopup="listbox" aria-expanded="false" aria-label="${a(`${label}: ${name}${marks.length ? ', ' + marks.join(', ') : ''}`)}" data-action="o55-insp-pick" data-setting="${a(setting.id)}">${pm.model ? `<span class="o55-pick-mark" aria-hidden="true">${o55BrandMark(cur ? cur.brand : '', 16)}</span>` : cur && cur.swatch ? `<span class="o55-insp-dot" aria-hidden="true" style="background:${cur.swatch}"></span>` : ''}<span class="o55-pick-copy"><strong>${h(name)}${marks.map(m => `<em>${h(m)}</em>`).join('')}</strong>${sub ? `<small>${h(sub)}</small>` : ''}</span><span class="o55-pick-chev" aria-hidden="true">${icon('down')}</span></button>`;
+}
+function o55PickItems(pm, idBase) {
+  let html = '', last = null;
+  pm.items.forEach(it => {
+    if (pm.model && it.brand !== last) { html += `<div class="pm51-popout-group o55-pick-group" role="presentation" data-brand="${a(it.brand)}">${h(it.brand)}</div>`; last = it.brand; }
+    html += `<div class="pm51-popout-item o55-pick-item${it.why ? ' has-why' : ''}${pm.model ? ' is-model' : it.swatch ? ' has-dot' : ''}" role="option" id="${idBase}-${it.index}" data-index="${it.index}" data-brand="${a(it.brand)}" aria-selected="${it.on}"${it.why ? ` aria-disabled="true" data-disabled-reason="${a(it.why)}"` : ''}>${pm.model ? `<span class="o55-pick-mark" aria-hidden="true">${o55BrandMark(it.brand, 15)}</span>` : it.swatch ? `<span class="o55-insp-dot" aria-hidden="true" style="background:${it.swatch}"></span>` : ''}<span class="o55-pick-copy"><strong>${h(it.name)}${it.marks.map(m => `<em>${h(m)}</em>`).join('')}</strong>${it.sub ? `<small>${h(it.sub)}</small>` : ''}</span><span class="o55-pick-tick" aria-hidden="true">${it.on ? icon('check') : ''}</span></div>`;
+  });
+  return html + '<div class="pm51-popout-empty" hidden>No matches</div>';
+}
+/* The active row of the unfolded list, kept wholly inside the list's own visible box. kit.js's setActiveOption scrolls
+   by offsetTop with a pad for a popout's sticky search; here the list is the scroller, its search sits above it, and an
+   option's offsetParent was not the list (the unfolding box, or the Details panel under Reduced Motion), so Arrow Up and
+   every step under Reduced Motion left the row out of view. The row is placed against the list's rect instead, and then
+   against every scroller that holds the list up to the Details panel (its body), so a short window (1280x500), where
+   the list itself runs past the panel's scrolled view, still shows the row: each scroller moves the least it must. */
+function o55InlineActive(entry, index) {
+  setActiveOption(entry, index, false);
+  const node = entry.el.querySelector(`[role="option"][data-index="${index}"]`); if (!node) return;
+  const m = 4;
+  const reveal = scroller => {
+    const sr = scroller.getBoundingClientRect(), nr = node.getBoundingClientRect();
+    if (nr.top < sr.top + m) scroller.scrollTop -= Math.ceil(sr.top + m - nr.top);
+    else if (nr.bottom > sr.bottom - m) scroller.scrollTop += Math.ceil(nr.bottom - (sr.bottom - m));
+  };
+  reveal(entry.el);
+  for (let el = entry.el.parentElement; el && el !== document.body; el = el.parentElement) {
+    if (el.scrollHeight > el.clientHeight + 1 && /(auto|scroll)/.test(getComputedStyle(el).overflowY)) reveal(el);
+    if (el.classList.contains('detail-inspector')) break;
+  }
+}
+function o55InlineMove(entry, delta, edge) {
+  const nodes = [...entry.el.querySelectorAll('[role="option"]')].filter(n => !n.hidden && n.getAttribute('aria-disabled') !== 'true');
+  if (!nodes.length) return;
+  let i = nodes.findIndex(n => Number(n.dataset.index) === entry.active);
+  if (edge === 'home') i = 0; else if (edge === 'end') i = nodes.length - 1;
+  else i = Math.max(0, Math.min(nodes.length - 1, (i < 0 ? (delta > 0 ? -1 : nodes.length) : i) + delta));
+  o55InlineActive(entry, Number(nodes[i].dataset.index));
+}
+/* search and the maker filter together; a maker's section hides with its last row */
+function o55PickFilter(entry, root) {
+  const q = String(entry.searchInput.value || '').trim().toLowerCase();
+  let any = false;
+  root.querySelectorAll('[role="option"]').forEach(n => { const hit = (!entry.brand || n.dataset.brand === entry.brand) && (!q || `${n.textContent} ${n.dataset.brand || ''}`.toLowerCase().includes(q)); n.hidden = !hit; if (hit) any = true; });
+  root.querySelectorAll('.o55-pick-group').forEach(g => { g.hidden = !root.querySelector(`[role="option"][data-brand="${cssEscape(g.dataset.brand)}"]:not([hidden])`); });
+  const empty = root.querySelector('.pm51-popout-empty'); if (empty) empty.hidden = any;
+  const first = [...root.querySelectorAll('[role="option"]')].find(n => !n.hidden && n.getAttribute('aria-disabled') !== 'true');
+  if (first) { entry.el.scrollTop = 0; o55InlineActive(entry, Number(first.dataset.index)); } else entry.active = -1;
+}
+function o55PickCommit(id, raw) {
+  const found = findSettingGlobal(id); if (!found) return;
+  if (o55SameValue(settingValue(found.setting), raw)) return;
+  if (!commitSettingValue(id, raw)) return;
+  saveState(); o55InspRefresh(id); o55Changed(found.setting, raw);
+  /* a pick hands focus back to the picker, as a select does; a model change can re-render the page in place
+     (28-in-place.js lets the focused control go), and a Theme pick re-renders it again when its look transition ends
+     (NieR's exit most of all), so the new trigger takes focus back whenever it was dropped, until the look is settled */
+  const back = () => {
+    const act = document.activeElement; if (act && act !== document.body && act.isConnected) return;
+    const t = document.querySelector(`#panel-settings .detail-inspector [data-action="o55-insp-pick"][data-setting="${cssEscape(id)}"]`);
+    if (t) { try { t.focus({ preventScroll: true }); } catch (e) { t.focus(); } }
+  };
+  const busy = () => !!((window.PM_THEME_TRANSITION && PM_THEME_TRANSITION.busy && PM_THEME_TRANSITION.busy()) || (window.PM_LOOK_COVERED && PM_LOOK_COVERED()));
+  const until = Date.now() + 5000;
+  const watch = () => { back(); if (busy() && Date.now() < until) setTimeout(watch, 100); else requestAnimationFrame(() => requestAnimationFrame(back)); };
+  back(); requestAnimationFrame(() => requestAnimationFrame(watch));
+}
+const o55PickOptions = pm => { const o = []; pm.items.forEach(it => { o[it.index] = { value: it.raw, label: it.name, disabled: !!it.why, reason: it.why || '' }; }); return o; };
+const o55PickBrands = (pm, size) => [`<button type="button" class="o55-pick-chip is-on" data-brand="" aria-pressed="true" aria-label="All makers" data-pm-hover-label="All makers">${icon('users')}</button>`]
+  .concat(pm.brands.map(b => `<button type="button" class="o55-pick-chip" data-brand="${a(b)}" aria-pressed="false" aria-label="${a(b)}" data-pm-hover-label="${a(b)}">${o55BrandMark(b, size)}</button>`)).join('');
+/* The rows unfold in the panel under the trigger, with the makers as a strip (the panel is too narrow for the chat's
+   rail beside the list). Not a popout, so it keeps its own keys: arrows, Page Up/Down, Home/End, Enter; Escape below. */
+let o55Inline = null;
+function o55InlineClose(focusTrigger) {
+  const e = o55Inline; if (!e) return; o55Inline = null;
+  if (e.trigger.isConnected) { e.trigger.setAttribute('aria-expanded', 'false'); e.trigger.removeAttribute('aria-controls'); }
+  e.box.remove();
+  if (focusTrigger && e.trigger.isConnected) { try { e.trigger.focus({ preventScroll: true }); } catch (err) { e.trigger.focus(); } }
+}
+function o55InlineOpen(trigger, setting, pm) {
+  if (o55Inline && o55Inline.trigger === trigger) { o55InlineClose(true); return; }
+  o55InlineClose(false); PM51.closePopouts();
+  const label = PM51.rowLabel(setting), id = POP_ID();
+  const box = document.createElement('div'); box.className = 'o55-pick-inline';
+  box.innerHTML = `${pm.model && pm.brands.length > 1 ? `<div class="o55-pick-chips" role="group" aria-label="Show models from">${o55PickBrands(pm, 14)}</div>` : ''}<div class="pm51-popout-search o55-pick-search">${icon('search')}<input type="search" role="combobox" aria-autocomplete="list" aria-controls="${id}-list" aria-expanded="true" data-pm-hover-exempt="menu" aria-label="${a('Filter ' + label)}" placeholder="${a(pm.model ? 'Search models…' : 'Search choices…')}"/></div><div class="o55-pick-list" role="listbox" id="${id}-list" aria-label="${a(label)}">${o55PickItems(pm, id)}</div>`;
+  trigger.insertAdjacentElement('afterend', box);
+  const list = box.querySelector('.o55-pick-list');
+  const entry = { el: list, trigger, options: o55PickOptions(pm), active: -1, searchInput: box.querySelector('input'), brand: '' };
+  o55Inline = { box, trigger, entry };
+  trigger.setAttribute('aria-expanded', 'true'); trigger.setAttribute('aria-controls', id + '-list');
+  const pick = index => { const o = entry.options[index]; if (!o) return; if (o.disabled) { showToast('Not available', o.reason || 'Not available here.', 'info', 2600); return; } o55InlineClose(true); o55PickCommit(setting.id, o.value); };
+  const sel = pm.items.find(x => x.on), first = pm.items.find(x => !x.why);
+  setActiveOption(entry, (sel || first || { index: -1 }).index, false);
+  const node = list.querySelector(`[data-index="${entry.active}"]`);
+  if (node) { const lr = list.getBoundingClientRect(), nr = node.getBoundingClientRect(); list.scrollTop = Math.max(0, list.scrollTop + nr.top - lr.top - (lr.height - nr.height) / 2); }
+  /* the unfolded list is brought into the panel's view, instantly (the panel scroll is not an animation) */
+  const body = box.closest('.o55-insp-body');
+  if (body) { const br = body.getBoundingClientRect(), xr = box.getBoundingClientRect(), over = xr.bottom + 12 - br.bottom; if (over > 0) body.scrollTop += Math.min(over, Math.max(0, trigger.getBoundingClientRect().top - br.top - 8)); }
+  box.addEventListener('pointermove', e => { const it = e.target.closest('[role="option"]'); if (it && Number(it.dataset.index) !== entry.active) setActiveOption(entry, Number(it.dataset.index), false); });
+  box.addEventListener('click', e => {
+    const chip = e.target.closest('.o55-pick-chip');
+    if (chip) { e.preventDefault(); e.stopPropagation(); entry.brand = chip.dataset.brand || ''; box.querySelectorAll('.o55-pick-chip').forEach(b => { const on = b === chip; b.classList.toggle('is-on', on); b.setAttribute('aria-pressed', String(on)); }); o55PickFilter(entry, list); return; }
+    const it = e.target.closest('[role="option"]'); if (!it) return; e.preventDefault(); e.stopPropagation(); pick(Number(it.dataset.index));
+  });
+  entry.searchInput.addEventListener('input', () => o55PickFilter(entry, list));
+  box.addEventListener('keydown', e => {
+    const k = e.key, stop = () => { e.preventDefault(); e.stopPropagation(); };
+    if (e.target.closest('.o55-pick-chip') && (k === 'Enter' || k === ' ')) return;
+    if (k === 'ArrowDown' || k === 'ArrowUp' || k === 'PageDown' || k === 'PageUp') { stop(); o55InlineMove(entry, { ArrowDown: 1, ArrowUp: -1, PageDown: 8, PageUp: -8 }[k]); return; }
+    if ((k === 'Home' || k === 'End') && e.target !== entry.searchInput) { stop(); o55InlineMove(entry, 0, k === 'Home' ? 'home' : 'end'); return; }
+    if (k === 'Enter' && entry.active >= 0) { stop(); pick(entry.active); }
+  });
+  box.addEventListener('focusout', () => { requestAnimationFrame(() => { if (o55Inline && o55Inline.box === box && !box.contains(document.activeElement) && document.activeElement !== trigger) o55InlineClose(false); }); });
+  requestAnimationFrame(() => { if (o55Inline && o55Inline.box === box) entry.searchInput.focus({ preventScroll: true }); });
+  if (!o55Still()) { box.classList.add('is-entering'); box.addEventListener('animationend', () => box.classList.remove('is-entering'), { once: true }); }
+}
+document.addEventListener('pointerdown', e => { const p = o55Inline; if (!p) return; if (p.box.contains(e.target) || p.trigger.contains(e.target)) return; o55InlineClose(false); }, true);
+/* Escape folds the unfolded list and nothing else: registered at load, ahead of the Details panel's own Escape
+   (onDetailEsc, a later capture listener), as kit.js's popout keys are */
+document.addEventListener('keydown', e => {
+  const p = o55Inline; if (!p || e.key !== 'Escape' || !(p.box.contains(e.target) || p.trigger.contains(e.target))) return;
+  e.preventDefault(); e.stopImmediatePropagation(); o55InlineClose(true);
+}, true);
+/* the trigger is a combobox: Arrow Down (or Alt+Arrow Down) opens it, as it does a Settings dropdown */
+document.addEventListener('keydown', e => {
+  const t = e.target && e.target.closest && e.target.closest('.o55-pick-trigger'); if (!t || e.key !== 'ArrowDown' || t.getAttribute('aria-expanded') === 'true') return;
+  e.preventDefault(); e.stopPropagation(); t.click();
+}, true);
+function o55PickerHtml(setting, ch) {
+  const pm = o55PickModel(setting, ch);
+  const count = pm.model ? `${pm.items.length} models from ${pm.brands.length} makers` : `${pm.items.length} choices`;
+  return `<section class="o55-insp-block o55-pick-block"><h4>Your choices <span class="o55-pick-count">· ${h(count)}</span></h4>${o55PickTrigger(setting, pm)}</section>`;
+}
 function o55ChoicesHtml(setting, ch) {
   if (!ch) return '';
+  if (o55UsesPicker(setting, ch)) return o55PickerHtml(setting, ch);
   return `<section class="o55-insp-block"><h4>${ch.kind === 'multi' ? 'Choose any' : 'Your choices'}</h4><div class="o55-insp-choices" role="${ch.kind === 'multi' ? 'group' : 'radiogroup'}" aria-label="${a(PM51.rowLabel(setting))}">${ch.items.map(it => `<button type="button" class="o55-insp-choice${it.on ? ' is-on' : ''}" role="${ch.kind === 'multi' ? 'checkbox' : 'radio'}" aria-checked="${it.on}" data-action="o55-insp-choose" data-setting="${a(setting.id)}" data-kind="${ch.kind}" data-value="${a(typeof it.raw === 'boolean' ? (it.raw ? '__true' : '__false') : it.raw)}"${it.why ? ` aria-disabled="true" data-disabled-reason="${a(it.why)}"` : ''}><span class="o55-insp-mark">${it.on ? icon('check') : ''}</span>${it.swatch ? `<span class="o55-insp-dot" aria-hidden="true" style="background:${it.swatch}"></span>` : ''}<span class="o55-insp-choice-copy"><span class="o55-insp-choice-label">${h(it.label)}${it.marks.map(m => `<em>${h(m)}</em>`).join('')}</span>${it.why || it.hint ? `<span class="o55-insp-choice-hint">${h(it.why || it.hint)}</span>` : ''}</span></button>`).join('')}</div></section>`;
 }
+/* FO-127 (moved from FO-122, Jared #1: "that logo looks terrible", on most right-side panels; his pick, 2026-11-10:
+   "For the header icons B"): the head tile of the Details panel and of every Settings side panel (PM51.panel's hero)
+   draws the PM glyph (PMG, the shell's neon set the rail and the chat use) in a quiet tile, no accent ring or glow
+   (30-inspector.css). A chapter glyph PMG lacks takes its PMG neighbour; without PMG the settings glyph stays. */
+const O55_PMG_NAMES = { memory: 'database', system: 'server', archive: 'vault', brackets: 'puzzle', test: 'flask', map: 'route' };
+/* A PM glyph is drawn on a 24-unit grid but not always centred in it (the brain sits 0.8 units high); a head tile
+   centres the glyph it shows (FO-122's rule: within 0.5 px). Its painted parts (every shape but the halo, nx-h) are
+   measured once per glyph in a hidden svg, and the viewBox is shifted so their middle is the svg's middle. */
+const o55GlyphShift = {};
+function o55CentredGlyph(markup, name) {
+  if (!(name in o55GlyphShift)) {
+    o55GlyphShift[name] = null;
+    try {
+      const box = document.createElement('div');
+      box.style.cssText = 'position:absolute;left:-200px;top:0;width:24px;height:24px;visibility:hidden;pointer-events:none';
+      box.innerHTML = markup; document.body.appendChild(box);
+      let x1 = Infinity, y1 = Infinity, x2 = -Infinity, y2 = -Infinity;
+      box.querySelectorAll('svg :is(path, circle, rect, ellipse, line, polyline, polygon):not(.nx-h)').forEach(el => { const b = el.getBBox(); if (!b.width && !b.height) return; x1 = Math.min(x1, b.x); y1 = Math.min(y1, b.y); x2 = Math.max(x2, b.x + b.width); y2 = Math.max(y2, b.y + b.height); });
+      box.remove();
+      if (isFinite(x1)) { const dx = Math.round(((x1 + x2) / 2 - 12) * 100) / 100, dy = Math.round(((y1 + y2) / 2 - 12) * 100) / 100; if (Math.abs(dx) >= 0.05 || Math.abs(dy) >= 0.05) o55GlyphShift[name] = [dx, dy]; }
+    } catch (e) { /* measured nothing: the glyph stays as drawn */ }
+  }
+  const d = o55GlyphShift[name];
+  return d ? markup.replace('viewBox="0 0 24 24"', `viewBox="${d[0]} ${d[1]} 24 24"`) : markup;
+}
+function o55HeadGlyph(name, size) {
+  const G = window.PMG;
+  if (G && typeof G.icon === 'function' && typeof G.has === 'function') {
+    const n = [O55_PMG_NAMES[name], name].find(x => x && G.has(x));
+    if (n) { try { return `<span class="icon o55-head-pmg">${o55CentredGlyph(G.icon(n, size || 20), n)}</span>`; } catch (e) { /* fall back to the settings glyph */ } }
+  }
+  return icon(name);
+}
+PM51.headGlyph = o55HeadGlyph;
 renderDetailInspectorBody = function (setting, section, workspace) {
   const row = O55R[setting.id] || {};
   const ref = O55_REF.get(setting.id) || {};
@@ -79,7 +289,7 @@ renderDetailInspectorBody = function (setting, section, workspace) {
   const neighbours = (section && Array.isArray(section.settings) ? section.settings : []).filter(s => s.id !== setting.id).slice(0, 5);
   const crumbs = [where.domain && where.domain.label, where.workspace && where.workspace.label].filter(Boolean);
   return `<div class="detail-head pm51-panel-head o55-insp-head">
-      <span class="o55-insp-icon">${icon(iconName)}</span>
+      <span class="o55-insp-icon">${o55HeadGlyph(iconName, 20)}</span>
       <div class="o55-insp-headcopy">${crumbs.length ? `<div class="o55-insp-crumbs">${crumbs.map(h).join('<span aria-hidden="true">›</span>')}</div>` : ''}<div class="pm51-panel-title o55-insp-title">${h(label)}</div></div>
       <button type="button" class="icon-btn pm51-panel-close" data-action="close-details" aria-label="Close">${icon('close')}</button>
     </div>
@@ -182,6 +392,11 @@ dispatchAction = function (action, el, event) {
     if (el.dataset.kind === 'multi') { const cur = [...(settingValue(found.setting) || [])].map(String); const i = cur.indexOf(String(raw)); if (i >= 0) cur.splice(i, 1); else cur.push(String(raw)); next = cur; }
     if (!commitSettingValue(id, next)) return;
     saveState(); o55InspRefresh(id); o55Changed(found.setting, next); return;
+  }
+  if (action === 'o55-insp-pick') {
+    const found = findSettingGlobal(el.dataset.setting); if (!found) return;
+    const ch = o55ChoicesFor(found.setting, settingValue(found.setting)); if (!ch) return;
+    o55InlineOpen(el, found.setting, o55PickModel(found.setting, ch)); return;
   }
   if (action === 'reset-setting') {
     const id = el.dataset.setting, found = findSettingGlobal(id); if (!found || !restoreSettingDefault(id)) return;
