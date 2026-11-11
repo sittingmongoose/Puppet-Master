@@ -1,4 +1,5 @@
-// FO-130 film for 60 fps GPU review (record one size per run; a recording refuses viewport changes):
+// FO-130 film for 60 fps GPU review (record one size per run; a recording films one fixed 1920x1080 window, and
+// t.viewport(w, h) inside it frames the page at that size — the page's size changes, the recorded window's does not):
 //   browser-check run checks/settings-save-film.check.mjs --set page=<build> --set size=860x900 --record <out.mp4>
 // Settings › AI & Providers › Services › Claude: "Use this service" off, then Turn on; then Web › "Search the web" off
 // and on. Each press is marked; review the 600 ms after each mark frame by frame. The unchanged build fades the page
