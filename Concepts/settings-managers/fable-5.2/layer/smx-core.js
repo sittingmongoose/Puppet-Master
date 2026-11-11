@@ -222,6 +222,11 @@
     }, true);
     const portals = D.getElementById('pm-settings-portals');
     if (portals) new W.MutationObserver(() => soon(120)).observe(portals, { childList: true, subtree: false });
+    /* When something of PMConcept7's sends the engine somewhere (a search result in the title bar, a link in a flow),
+       its hidden page is redrawn. That redraw is the signal to look: the page then follows within a moment. It used
+       to wait for the next look of a slow clock, up to a second and a half. Changes inside these pages are ours and
+       are ignored; while the engine is parked its hidden page does not change, so this costs nothing at rest. */
+    new W.MutationObserver((list) => { for (const m of list) { const t = m.target; if (t && !host.contains(t) && !(portals && portals.contains(t))) { soon(40); return; } } }).observe(root, { childList: true, subtree: true });
     setView('new');
     return true;
   }
