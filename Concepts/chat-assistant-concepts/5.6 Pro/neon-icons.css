@@ -612,6 +612,9 @@ html[data-o55-nier="on"] .nx-st-failed { animation: o55n-nx-glitch 320ms steps(4
    at 2.8 s it out-moved needs-you 3-4x in a list; fix cycle 1 keeps the slow turn to the list);
    otherwise it is the ink bead on the ring, going round in steps (--nx-le above). */
 html[data-o55-nier-parts~="diamonds"] .nx-st-working > svg.nx { visibility: hidden; }
+/* the hidden ring's bead does not go round: Chrome ticks every running animation, seen or not, and restyles it in
+   every frame the page draws (pm7-perf lane F2: the Files footer's working mark on every NieR page) */
+html[data-o55-nier-parts~="diamonds"] .nx-st-working > svg.nx .nx-p { animation: none; }
 html[data-o55-nier-parts~="diamonds"] .nx-st-working::after {
   content: ""; position: absolute; inset: 18%; box-sizing: border-box; pointer-events: none;
   border: 1.5px solid var(--nx-ink, var(--o55-nier-ink)); outline: 1px solid var(--nx-ink, var(--o55-nier-ink)); outline-offset: -4.5px;
