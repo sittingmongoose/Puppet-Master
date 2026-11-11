@@ -434,6 +434,25 @@ for (const surface of ['normal', 'sandbox']) {
 		await t.check('PM51.settingRows override: the visible label is the caller\'s', r.rows.visible === 'Probe label S' && r.rows.name === 'Probe label S', JSON.stringify(r.rows));
 	};
 
+	tests[`choices: a row whose default changed by decision holds a value among its choices (${surface})`] = async (t) => {
+		if (await skip(t)) return;
+		const f = await settings(t, surface);
+		// the rows whose canon default and choices changed together (settings_layer._canon_defaults): the page's
+		// reference row offers canon's choices and the row's value is one of them
+		const rows = await f.evaluate(() => {
+			const ref = Object.values(PM12_REFERENCE.byCat || {}).flatMap((c) => c.settings || []);
+			return ['code.terminal.transcript-retention', 'code.terminal.theme', 'code.terminal.font-family', 'ai.accounts.soft-warning-level', 'ai.accounts.hard-switch-level'].map((id) => {
+				const r = ref.find((x) => x.id === id) || {};
+				return { id, value: PM51.value(id), default: r.default, options: r.options || [] };
+			});
+		});
+		for (const r of rows) {
+			const opts = r.options.map(String);
+			await t.check(`${r.id}: its default is one of its choices`, opts.includes(String(r.default)), JSON.stringify({ default: r.default, options: r.options.slice(0, 8) }));
+			await t.check(`${r.id}: its value is one of its choices`, opts.includes(String(r.value)), JSON.stringify({ value: r.value, options: r.options.slice(0, 8) }));
+		}
+	};
+
 	tests[`load: pins and key uses read the same before Source Control draws (${surface})`] = async (t) => {
 		if (await skip(t)) return;
 		const f = await settings(t, surface);
