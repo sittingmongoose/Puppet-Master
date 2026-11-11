@@ -63,7 +63,7 @@ function selfTimes(evs) {
 	return { self, busy };
 }
 
-export function summarise(trace, { url } = {}) {
+export function summarise(trace, { url, allScripts = false } = {}) {
 	const events = Array.isArray(trace) ? trace : trace.traceEvents || [];
 	const threads = new Map(), procs = new Map();
 	let t0 = Infinity, t1 = -Infinity, started = null;
@@ -191,12 +191,13 @@ export function summarise(trace, { url } = {}) {
 		notComposited: [...failed].sort((a, b) => b[1] - a[1]).slice(0, 12),
 		animations: { started: animStarted, composited: composited.size },
 		reporter: { states, smooth, smoothDropped },
-		scripts: [...scripts].sort((a, b) => b[1].ms - a[1].ms).slice(0, 10).map(([k, v]) => [k, r1(v.ms / secs), r1(v.n / secs)])
+		// [function@line:col of the built page, ms a second, calls a second]: the ten dearest, or every one with allScripts
+		scripts: [...scripts].sort((a, b) => b[1].ms - a[1].ms).slice(0, allScripts ? Infinity : 10).map(([k, v]) => [k, allScripts ? Math.round(v.ms / secs * 100) / 100 : r1(v.ms / secs), r1(v.n / secs)])
 	};
 }
 
 // Trace `ms` of whatever `during` does (or of nothing), and summarise it. One trace per window keeps each small.
-export async function traceWindow(cdp, { ms = 3000, during, url, keep } = {}) {
+export async function traceWindow(cdp, { ms = 3000, during, url, keep, allScripts = false } = {}) {
 	await cdp.send('Tracing.start', { categories: TRACE_CATEGORIES, transferMode: 'ReturnAsStream', bufferUsageReportingInterval: 0 });
 	// `at` (wall clock, ms) and the summary's `gpuPid` let a sampler outside the browser be matched to this window: the
 	// GPU thread's busy time in a trace is the GPU process's CPU side, not the load on the graphics card itself
@@ -213,5 +214,5 @@ export async function traceWindow(cdp, { ms = 3000, during, url, keep } = {}) {
 	await cdp.send('IO.close', { handle: stream });
 	const text = parts.join('');
 	if (keep) (await import('node:fs')).writeFileSync(keep, text);
-	return { at, ...summarise(JSON.parse(text), { url }) };
+	return { at, ...summarise(JSON.parse(text), { url, allScripts }) };
 }
