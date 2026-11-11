@@ -1075,7 +1075,9 @@
     const special = p.id === 'free-models' ? routesSection() : p.id === 'opencode' ? serverSection(p) : '';
     return {
       title: p.name, pill: PM51.status(plain(p)), subtitle: [p.product, p.connect].filter(Boolean).join(' · '),
-      primary: p.status === 'active' && p.nextAction === 'addaccount' ? null : primaryFor(p), menu: anchor => menuFor(p, anchor),
+      /* "Add account" lives on the Accounts section's head; the page head repeats no action of its sections (A2 B-11:
+         a service waiting for a model or a seat showed the same button twice once its state followed its readiness) */
+      primary: p.status !== 'disabled' && p.nextAction === 'addaccount' ? null : primaryFor(p), menu: anchor => menuFor(p, anchor),
       body: [readiness(p), pairLine(p), accountsSection(p), special, serviceSection(p), advancedSection(p)].join('')
     };
   }

@@ -73,7 +73,7 @@ for (const surface of ['normal', 'sandbox']) {
 		const dup = r.heads.filter((x, i) => r.heads.indexOf(x) !== i);
 		await t.check(`each group heading appears once (${r.heads.join(' / ')})`, r.heads.length >= 2 && dup.length === 0, dup.join(', '));
 		// every service's own page: the pill and what it says under it
-		const bad = [], versionless = [];
+		const bad = [], versionless = [], doubled = [];
 		const open = (name) => f.waitForFunction((name) => {
 			const det = document.querySelector('[data-continuous-workspace-body="providers"] .pm51-detail');
 			const title = det && det.querySelector('.pm51-detail-title');
@@ -91,12 +91,17 @@ for (const surface of ['normal', 'sandbox']) {
 				if (!title || !title.textContent.trim().startsWith(name)) return false;
 				const pill = title.querySelector('.pm51-status, [class*="status"]');
 				const heads = [...det.querySelectorAll('.pm51-section-title, .pm51-section-head h3, .pm51-section-head .pm51-section-name')].map((x) => x.textContent.trim());
-				return { pill: pill ? pill.textContent.trim() : title.textContent.replace(name, '').trim(), getting: heads.includes('Getting it ready'), text: det.innerText };
+				// an action the page head offers is not offered again in the page (A2 B-11: Cursor's "Enter API Key" twice)
+				const head = [...det.querySelectorAll('.pm51-detail-head [data-action^="pm51-providers-"]')].map((b) => b.dataset.action);
+				const twice = head.filter((act) => [...det.querySelectorAll(`.pm51-detail-content [data-action="${act}"]`)].some((b) => b.getClientRects().length));
+				return { pill: pill ? pill.textContent.trim() : title.textContent.replace(name, '').trim(), getting: heads.includes('Getting it ready'), text: det.innerText, twice };
 			}, row.name, { timeout: 6000 }).then((h) => h.jsonValue()).catch(() => null);
 			if (!d) { bad.push(`${row.name}: its page did not open`); continue; }
 			if (/^Ready\b/.test(d.pill) && d.getting) bad.push(`${row.name}: "Ready" above "Getting it ready"`);
 			if (/Version\s+(is installed|undefined)/.test(d.text)) versionless.push(row.name);
+			if (d.twice.length) doubled.push(`${row.name}: ${d.twice.join(', ')}`);
 		}
+		await t.check('no service page offers its head\'s action again below it (A2 B-11)', doubled.length === 0, doubled.join('; '));
 		await t.check(`no service page shows "Ready" above "Getting it ready" (${r.rows.length} pages)`, bad.length === 0, bad.join('; '));
 		await t.check('no service page says "Version is installed" without a number', versionless.length === 0, versionless.join(', '));
 	};
