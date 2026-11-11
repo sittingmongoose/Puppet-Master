@@ -387,6 +387,78 @@ export const tests = {
 		await t.check(`at least 7 of the long lists open from their pages (${opened.length} of ${ids.length})`, opened.length >= Math.min(7, ids.length), `not reachable: ${unreachable.join(', ')}`);
 	},
 
+	/* opus-recheck-b10d127 F1: walking the unfolded list with Page Down, Arrow Up, Page Up and Arrow Down keeps the
+	   active row (the search box's aria-activedescendant) wholly inside the list's visible box after every key, in a
+	   model setting and two long lists, with motion and under Reduced Motion. The old scroll used offsetTop against
+	   another box: Arrow Up hid the row, and under Reduced Motion every step did. */
+	'FO-127 arrow keys keep the active row in view': async (t) => {
+		const f = await t.app.open();
+		await t.viewport(1390, 900);
+		await f.locator('#tab-settings').click();
+		await t.settle();
+		const VIS = () => {
+			const c = document.querySelector('#panel-settings .detail-inspector [role="combobox"][aria-expanded="true"]');
+			const list = c && document.getElementById(c.getAttribute('aria-controls'));
+			const host = list && (list.closest('.o55-pick-inline') || list.parentElement);
+			const search = host && host.querySelector('input[type="search"]');
+			const id = search && search.getAttribute('aria-activedescendant');
+			const n = id && document.getElementById(id);
+			if (!list || !n) return { ok: false, why: 'no open list or no active option' };
+			const lr = list.getBoundingClientRect(), nr = n.getBoundingClientRect();
+			return { ok: nr.top >= lr.top - 0.5 && nr.bottom <= lr.bottom + 0.5, top: Math.round(nr.top - lr.top), bottom: Math.round(lr.bottom - nr.bottom), name: n.textContent.trim().slice(0, 30), focus: document.activeElement === search };
+		};
+		const KEYS = [...Array(8).fill('PageDown'), ...Array(20).fill('ArrowUp'), ...Array(3).fill('PageUp'), ...Array(20).fill('ArrowDown')];
+		for (const motion of ['no-preference', 'reduce']) {
+			await t.emulate({ reducedMotion: motion });
+			for (const id of ['code.terminal.background-image', SETTING, 'code.editing.color-scheme']) {
+				if (!(await openDetails(t, f, id))) continue;
+				await f.locator('#panel-settings .detail-inspector .o55-insp-block [role="combobox"]').first().focus();
+				await t.page.keyboard.press('ArrowDown');
+				await t.page.waitForTimeout(350);
+				const misses = [];
+				let lostFocus = 0;
+				for (const k of KEYS) {
+					await t.page.keyboard.press(k);
+					const v = await f.evaluate(VIS);
+					if (!v.ok) misses.push(`${k}: ${v.why || `top ${v.top}, bottom ${v.bottom} (${v.name})`}`);
+					if (!v.focus) lostFocus++;
+				}
+				await t.check(`arrows ${motion} ${id}: the active row stays wholly in the list's view over ${KEYS.length} keys`, misses.length === 0, `${misses.length} out of view: ${misses.slice(0, 4).join(' | ')}`);
+				await t.check(`arrows ${motion} ${id}: focus stays in the search box while walking`, lostFocus === 0, `${lostFocus} keys left focus elsewhere`);
+				await t.page.keyboard.press('Escape');
+				await closeDetails(t, f);
+			}
+		}
+		await t.emulate({ reducedMotion: 'no-preference' });
+	},
+
+	/* opus-recheck-b10d127 F3: the picker's search box is a menu's search field, not a show/hide toggle: hovering it
+	   shows no "Hide the related choices" tag. */
+	'FO-127 the search box has no show/hide hover tag': async (t) => {
+		const f = await t.app.open();
+		await t.viewport(1390, 900);
+		await f.locator('#tab-settings').click();
+		await t.settle();
+		if (!(await openDetails(t, f, 'code.terminal.background-image'))) return;
+		await f.locator('#panel-settings .detail-inspector .o55-insp-block [role="combobox"]').first().click();
+		await t.page.waitForTimeout(400);
+		const search = f.locator('#panel-settings .detail-inspector .o55-pick-inline input[type="search"]').first();
+		await search.hover();
+		await t.page.waitForTimeout(1200);
+		/* what a person sees (the visible tag) and what a screen reader hears (the box's own description) */
+		const tag = await f.evaluate(() => {
+			const v = document.getElementById('pm-hover-tag-visual');
+			const shown = v && v.getClientRects().length && getComputedStyle(v).visibility !== 'hidden' && getComputedStyle(v).opacity !== '0' ? v.textContent.replace(/\s+/g, ' ').trim() : '';
+			const s = document.querySelector('#panel-settings .detail-inspector .o55-pick-inline input[type="search"]');
+			const desc = s ? (s.getAttribute('aria-describedby') || '').split(/\s+/).filter(Boolean).map((id) => (document.getElementById(id) || {}).textContent || '').join(' ') : '';
+			return { shown, desc };
+		});
+		await t.check('hovering the search box shows no "Hide the related choices" tag', !/related choices/i.test(tag.shown), `visible tag "${tag.shown.slice(0, 120)}"`);
+		await t.check('the search box is not described as a show/hide toggle', !/related choices/i.test(tag.desc), `described as "${tag.desc.slice(0, 120)}"`);
+		await t.page.keyboard.press('Escape');
+		await closeDetails(t, f);
+	},
+
 	/* Every Settings side panel's head (PM51.panel, the one builder they all use: sign-in, Check connection, the
 	   managers' sheets), opened here with the builder itself; the ready tone too, all ten looks. */
 	'FO-127 side panel head tile, all looks': async (t) => {
@@ -419,6 +491,17 @@ export const tests = {
 		const b = await f.evaluate(BLOCK, 'general.interaction.question-cards');
 		await t.check('On/Off: "Your choices" keeps its two radios and no picker', b.block && b.radios === 2 && b.combos === 0, `radios ${b.radios}, combobox ${b.combos}`);
 		await closeDetails(t, f);
+		/* opus-recheck-b10d127 F2: long single-choice lists Jared did not choose stay tick lists (the picker goes on
+		   exactly the 13 model settings and the 11 he chose, by id). At least 3 of these 5 must open here. */
+		let others = 0;
+		for (const id of ['code.terminal.theme', 'code.terminal.font-family', 'safety.approvals.bsd-persona', 'safety.approvals.bsd-model', 'ai.accounts.soft-warning-level']) {
+			if (!(await openDetails(t, f, id, true))) { t.log(`${id}: no Details reachable from its page here`); continue; }
+			others++;
+			const o = await f.evaluate(() => { const i = document.querySelector('#panel-settings .detail-inspector'); return { radios: i.querySelectorAll('.o55-insp-block [role="radio"]').length, combos: i.querySelectorAll('.o55-insp-block [role="combobox"]').length }; });
+			await t.check(`${id} (not chosen by Jared): stays a tick list (${o.radios} radios)`, o.radios > 6 && o.combos === 0, `radios ${o.radios}, combobox ${o.combos}`);
+			await closeDetails(t, f);
+		}
+		await t.check(`at least 3 of the 5 long lists Jared did not choose open here (${others})`, others >= 3, `${others} opened`);
 		/* a list that takes several choices stays a tick list, however long ("Ways to fix, in order": 10) */
 		if (!(await openDetails(t, f, 'planning.verification.repair-strategies'))) return;
 		const mp = await f.evaluate(() => { const i = document.querySelector('#panel-settings .detail-inspector'); return { checks: i.querySelectorAll('.o55-insp-block [role="checkbox"]').length, combos: i.querySelectorAll('.o55-insp-block [role="combobox"]').length }; });

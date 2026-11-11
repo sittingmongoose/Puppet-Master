@@ -59,14 +59,14 @@ function o55ChoicesFor(setting, current) {
    small line, the chevron), and it unfolds the chat model menu's rows inside the panel under itself: a strip of maker
    marks (the chat menu's rail, laid flat for the narrow panel), a search box, one section per maker, one row per model
    with the maker's mark (PM56_PICKERS.providerMark), where it runs, the Default/Recommended tags and the tick. Which
-   lists (Jared, 2026-11-11, "looks good, I choose all 11"): the 13 model settings, and every other single choice with
-   more than O55_PICK_AT choices (Background image, Editor colors, Service tried first, Background gradient, Theme, Kind
-   of job, Bezel material, the two persona lists, NieR background, Image service), those without the maker strip.
-   Short lists (On/Off) and lists that take several choices stay tick lists. */
-const O55_PICK_AT = 6;
+   lists, by id, exactly as Jared chose them: the 13 model settings (option B, 2026-11-10) and the 11 long single-choice
+   lists of question 3 ("looks good, I choose all 11", 2026-11-11), those without the maker strip. No rule widens it:
+   every other list, however long (Terminal colors, How it talks and the rest), stays a tick list until he says so. */
+const O55_PICK_MODELS = new Set(['ai.models.default-model', 'ai.models.overseer-model', 'ai.models.worker-model', 'ai.models.gui-worker-model', 'ai.models.high-effort-worker-model', 'ai.models.auditor-model', 'ai.models.teach-model', 'ai.models.goal-worker-model', 'ai.models.goal-verifier-model', 'ai.models.subagent-model', 'ai.models.thread-title-model', 'ai.models.per-lane-model', 'personas.tuning.default-model']);
+const O55_PICK_LISTS = new Set(['code.terminal.background-image', 'code.editing.color-scheme', 'ai.models.default-provider', 'code.terminal.background-gradient', 'general.visual.theme', 'planning.verification.goal-template', 'code.terminal.bezel-material', 'personas.library.default-persona', 'personas.library.active-persona', 'general.visual.nier-background', 'media.image.provider']);
 const O55_BRANDS = { anthropic: 'Anthropic', 'anthropic-api': 'Anthropic', 'claude-code': 'Anthropic', openai: 'OpenAI', 'openai-codex': 'OpenAI', gemini: 'Google', google: 'Google', 'qwen-coding': 'Alibaba', 'qwen-token': 'Alibaba', alibaba: 'Alibaba', 'kimi-coding': 'Moonshot', moonshot: 'Moonshot', 'zai-coding': 'z.ai', zai: 'z.ai', 'cursor-cli': 'Cursor', cursor: 'Cursor', 'free-models': 'Free routes', opencode: 'OpenCode' };
-const o55IsModelChoice = (setting, items) => /^ai\.models\..*-model$/.test(setting.id) || /(^|\.)default-model$/.test(setting.id) || (items.length > 1 && items.every(it => /^[\w.-]+\/[\w.:-]+$/.test(String(it.raw))));
-const o55UsesPicker = (setting, ch) => !!ch && ch.kind === 'single' && (o55IsModelChoice(setting, ch.items) || ch.items.length > O55_PICK_AT);
+const o55IsModelChoice = setting => O55_PICK_MODELS.has(setting.id);
+const o55UsesPicker = (setting, ch) => !!ch && ch.kind === 'single' && (O55_PICK_MODELS.has(setting.id) || O55_PICK_LISTS.has(setting.id));
 /* the chat's maker mark (PM56_PICKERS.providerMark draws its PROVIDER_MARKS; an unknown maker gets the chat's sparkle),
    or the maker's first letter when the chat is not in the page */
 function o55BrandMark(brand, size) {
@@ -76,7 +76,7 @@ function o55BrandMark(brand, size) {
   return `<b class="o55-pick-letter">${h(String(brand || '?').charAt(0))}</b>`;
 }
 function o55PickModel(setting, ch) {
-  const model = o55IsModelChoice(setting, ch.items);
+  const model = o55IsModelChoice(setting);
   const items = ch.items.map((it, i) => {
     const raw = String(it.raw), slash = model ? raw.indexOf('/') : -1, pid = slash > 0 ? raw.slice(0, slash) : '';
     const brand = model ? (O55_BRANDS[pid] || pid.replace(/[-_]+/g, ' ').replace(/^./, c => c.toUpperCase())) : '';
@@ -105,6 +105,25 @@ function o55PickItems(pm, idBase) {
   });
   return html + '<div class="pm51-popout-empty" hidden>No matches</div>';
 }
+/* The active row of the unfolded list, kept wholly inside the list's own visible box. kit.js's setActiveOption scrolls
+   by offsetTop with a pad for a popout's sticky search; here the list is the scroller, its search sits above it, and an
+   option's offsetParent was not the list (the unfolding box, or the Details panel under Reduced Motion), so Arrow Up and
+   every step under Reduced Motion left the row out of view. The row is placed against the list's rect instead. */
+function o55InlineActive(entry, index) {
+  setActiveOption(entry, index, false);
+  const node = entry.el.querySelector(`[role="option"][data-index="${index}"]`); if (!node) return;
+  const lr = entry.el.getBoundingClientRect(), nr = node.getBoundingClientRect(), m = 4;
+  if (nr.top < lr.top + m) entry.el.scrollTop -= Math.ceil(lr.top + m - nr.top);
+  else if (nr.bottom > lr.bottom - m) entry.el.scrollTop += Math.ceil(nr.bottom - (lr.bottom - m));
+}
+function o55InlineMove(entry, delta, edge) {
+  const nodes = [...entry.el.querySelectorAll('[role="option"]')].filter(n => !n.hidden && n.getAttribute('aria-disabled') !== 'true');
+  if (!nodes.length) return;
+  let i = nodes.findIndex(n => Number(n.dataset.index) === entry.active);
+  if (edge === 'home') i = 0; else if (edge === 'end') i = nodes.length - 1;
+  else i = Math.max(0, Math.min(nodes.length - 1, (i < 0 ? (delta > 0 ? -1 : nodes.length) : i) + delta));
+  o55InlineActive(entry, Number(nodes[i].dataset.index));
+}
 /* search and the maker filter together; a maker's section hides with its last row */
 function o55PickFilter(entry, root) {
   const q = String(entry.searchInput.value || '').trim().toLowerCase();
@@ -113,7 +132,7 @@ function o55PickFilter(entry, root) {
   root.querySelectorAll('.o55-pick-group').forEach(g => { g.hidden = !root.querySelector(`[role="option"][data-brand="${cssEscape(g.dataset.brand)}"]:not([hidden])`); });
   const empty = root.querySelector('.pm51-popout-empty'); if (empty) empty.hidden = any;
   const first = [...root.querySelectorAll('[role="option"]')].find(n => !n.hidden && n.getAttribute('aria-disabled') !== 'true');
-  if (first) setActiveOption(entry, Number(first.dataset.index), true); else entry.active = -1;
+  if (first) { entry.el.scrollTop = 0; o55InlineActive(entry, Number(first.dataset.index)); } else entry.active = -1;
 }
 function o55PickCommit(id, raw) {
   const found = findSettingGlobal(id); if (!found) return;
@@ -150,7 +169,7 @@ function o55InlineOpen(trigger, setting, pm) {
   o55InlineClose(false); PM51.closePopouts();
   const label = PM51.rowLabel(setting), id = POP_ID();
   const box = document.createElement('div'); box.className = 'o55-pick-inline';
-  box.innerHTML = `${pm.model && pm.brands.length > 1 ? `<div class="o55-pick-chips" role="group" aria-label="Show models from">${o55PickBrands(pm, 14)}</div>` : ''}<div class="pm51-popout-search o55-pick-search">${icon('search')}<input type="search" role="combobox" aria-autocomplete="list" aria-controls="${id}-list" aria-expanded="true" aria-label="${a('Filter ' + label)}" placeholder="${a(pm.model ? 'Search models…' : 'Search choices…')}"/></div><div class="o55-pick-list" role="listbox" id="${id}-list" aria-label="${a(label)}">${o55PickItems(pm, id)}</div>`;
+  box.innerHTML = `${pm.model && pm.brands.length > 1 ? `<div class="o55-pick-chips" role="group" aria-label="Show models from">${o55PickBrands(pm, 14)}</div>` : ''}<div class="pm51-popout-search o55-pick-search">${icon('search')}<input type="search" role="combobox" aria-autocomplete="list" aria-controls="${id}-list" aria-expanded="true" data-pm-hover-exempt="menu" aria-label="${a('Filter ' + label)}" placeholder="${a(pm.model ? 'Search models…' : 'Search choices…')}"/></div><div class="o55-pick-list" role="listbox" id="${id}-list" aria-label="${a(label)}">${o55PickItems(pm, id)}</div>`;
   trigger.insertAdjacentElement('afterend', box);
   const list = box.querySelector('.o55-pick-list');
   const entry = { el: list, trigger, options: o55PickOptions(pm), active: -1, searchInput: box.querySelector('input'), brand: '' };
@@ -174,13 +193,13 @@ function o55InlineOpen(trigger, setting, pm) {
   box.addEventListener('keydown', e => {
     const k = e.key, stop = () => { e.preventDefault(); e.stopPropagation(); };
     if (e.target.closest('.o55-pick-chip') && (k === 'Enter' || k === ' ')) return;
-    if (k === 'ArrowDown' || k === 'ArrowUp' || k === 'PageDown' || k === 'PageUp') { stop(); moveActive(entry, { ArrowDown: 1, ArrowUp: -1, PageDown: 8, PageUp: -8 }[k]); return; }
-    if ((k === 'Home' || k === 'End') && e.target !== entry.searchInput) { stop(); moveActive(entry, 0, k === 'Home' ? 'home' : 'end'); return; }
+    if (k === 'ArrowDown' || k === 'ArrowUp' || k === 'PageDown' || k === 'PageUp') { stop(); o55InlineMove(entry, { ArrowDown: 1, ArrowUp: -1, PageDown: 8, PageUp: -8 }[k]); return; }
+    if ((k === 'Home' || k === 'End') && e.target !== entry.searchInput) { stop(); o55InlineMove(entry, 0, k === 'Home' ? 'home' : 'end'); return; }
     if (k === 'Enter' && entry.active >= 0) { stop(); pick(entry.active); }
   });
   box.addEventListener('focusout', () => { requestAnimationFrame(() => { if (o55Inline && o55Inline.box === box && !box.contains(document.activeElement) && document.activeElement !== trigger) o55InlineClose(false); }); });
   requestAnimationFrame(() => { if (o55Inline && o55Inline.box === box) entry.searchInput.focus({ preventScroll: true }); });
-  if (!o55Still()) box.classList.add('is-entering');
+  if (!o55Still()) { box.classList.add('is-entering'); box.addEventListener('animationend', () => box.classList.remove('is-entering'), { once: true }); }
 }
 document.addEventListener('pointerdown', e => { const p = o55Inline; if (!p) return; if (p.box.contains(e.target) || p.trigger.contains(e.target)) return; o55InlineClose(false); }, true);
 /* Escape folds the unfolded list and nothing else: registered at load, ahead of the Details panel's own Escape
