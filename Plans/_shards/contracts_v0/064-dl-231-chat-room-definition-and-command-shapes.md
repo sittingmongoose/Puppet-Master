@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L24092-L25239
+Source lines: L24092-L25301
 
-Source SHA256: `49fadea756be894cd95f3148482f3d1b5fbab406def6445b7792c019ceefe02a`
+Source SHA256: `4f61cf0a126c2aee204e3d854e967551fe79153f46be8cb870153a3863e75cd0`
 
 ---
 
@@ -591,9 +591,19 @@ canonical_text: 'Newly authored owner contract, exactly browser.session.created@
   producer_semantic_digest); a projection that RFC 8785 cannot carry exactly, for example producer_sequence_id
   2^53+1, 2^60 or 2^64-1, is refused before any append or owner effect, while 2^53 encodes exactly. Storage-
   assigned sequence_id follows SP-1100 and stays outside producer semantics. The idempotency, event_id and CV-366
-  key recipes are unchanged. Authenticated selection of a retained original''s write-time recipe under SP-1101,
-  together with the CV-1101 date-time profiles, is still to be adopted; until then this family''s timestamp checks
-  keep their interim grammar.
+  key recipes are unchanged. Timestamps and retained originals, sweep 2026-11-11 (CV-1101 beside CV-253 and CV-317;
+  SP-1101): every timestamp field uses the shared CV-1101 date_time predicate with its owner''s profile, never a
+  lane grammar. occurred_at_utc and payload ts take the broad event_record profile (T or t, Z, z or an hh:mm
+  offset, legitimate leap seconds, any fraction length); Storage-assigned observed_at_utc and persisted_at_utc also
+  take CV-253''s storage_utc_z profile (terminal uppercase Z only), on the current record, the retry original and
+  retained history alike. A retry original and a retained history read are first resolved once through the shared
+  SP-1101 RetainedDispatcher from Storage''s sealed write custody (static stand-in
+  Plans/card2_original_custody.json, never a request field): a Store outside that custody refuses as
+  original_unavailable and a sealed recipe without an installed frozen verifier as recipe_unknown, with no
+  fallback, current-then-legacy probing or caller override. The only write-time recipe is card2@1, whose tuple pins
+  the EventRecord and family payload schema bytes and these field profiles. Owner-valid lowercase, offset,
+  leap-second and long-fraction history stays readable with its exact spelling; an offset or lowercase-z Storage
+  timestamp never becomes valid history.
 '
 gui_related: false
 gui_classification_reason: Defines event semantics, metadata and custody for existing behavior; no visual presentation.
@@ -696,9 +706,19 @@ canonical_text: 'Newly authored owner contract, exactly browser.session.state_ch
   projection (producer_semantic_bytes / producer_semantic_digest); a projection that RFC 8785 cannot carry
   exactly, for example producer_sequence_id 2^53+1, 2^60 or 2^64-1, is refused before any append or owner effect,
   while 2^53 encodes exactly. Storage-assigned sequence_id follows SP-1100 and stays outside producer semantics.
-  The idempotency, event_id and CV-366 key recipes are unchanged. Authenticated selection of a retained
-  original''s write-time recipe under SP-1101, together with the CV-1101 date-time profiles, is still to be
-  adopted; until then this family''s timestamp checks keep their interim grammar.
+  The idempotency, event_id and CV-366 key recipes are unchanged. Timestamps and retained originals, sweep
+  2026-11-11 (CV-1101 beside CV-253 and CV-317; SP-1101): every timestamp field uses the shared CV-1101 date_time
+  predicate with its owner''s profile, never a lane grammar. occurred_at_utc and payload ts take the broad
+  event_record profile (T or t, Z, z or an hh:mm offset, legitimate leap seconds, any fraction length);
+  Storage-assigned observed_at_utc and persisted_at_utc also take CV-253''s storage_utc_z profile (terminal
+  uppercase Z only), on the current record, the retry original and retained history alike. A retry original and a
+  retained history read are first resolved once through the shared SP-1101 RetainedDispatcher from Storage''s
+  sealed write custody (static stand-in Plans/card2_original_custody.json, never a request field): a Store outside
+  that custody refuses as original_unavailable and a sealed recipe without an installed frozen verifier as
+  recipe_unknown, with no fallback, current-then-legacy probing or caller override. The only write-time recipe is
+  card2@1, whose tuple pins the EventRecord and family payload schema bytes and these field profiles. Owner-valid
+  lowercase, offset, leap-second and long-fraction history stays readable with its exact spelling; an offset or
+  lowercase-z Storage timestamp never becomes valid history.
 '
 gui_related: false
 gui_classification_reason: Defines event semantics, metadata and custody for existing behavior; no visual presentation.
@@ -801,9 +821,19 @@ canonical_text: 'Newly authored owner contract, exactly browser.session.closed@1
   producer_semantic_digest); a projection that RFC 8785 cannot carry exactly, for example producer_sequence_id
   2^53+1, 2^60 or 2^64-1, is refused before any append or owner effect, while 2^53 encodes exactly. Storage-
   assigned sequence_id follows SP-1100 and stays outside producer semantics. The idempotency, event_id and CV-366
-  key recipes are unchanged. Authenticated selection of a retained original''s write-time recipe under SP-1101,
-  together with the CV-1101 date-time profiles, is still to be adopted; until then this family''s timestamp checks
-  keep their interim grammar.
+  key recipes are unchanged. Timestamps and retained originals, sweep 2026-11-11 (CV-1101 beside CV-253 and CV-317;
+  SP-1101): every timestamp field uses the shared CV-1101 date_time predicate with its owner''s profile, never a
+  lane grammar. occurred_at_utc and payload ts take the broad event_record profile (T or t, Z, z or an hh:mm
+  offset, legitimate leap seconds, any fraction length); Storage-assigned observed_at_utc and persisted_at_utc also
+  take CV-253''s storage_utc_z profile (terminal uppercase Z only), on the current record, the retry original and
+  retained history alike. A retry original and a retained history read are first resolved once through the shared
+  SP-1101 RetainedDispatcher from Storage''s sealed write custody (static stand-in
+  Plans/card2_original_custody.json, never a request field): a Store outside that custody refuses as
+  original_unavailable and a sealed recipe without an installed frozen verifier as recipe_unknown, with no
+  fallback, current-then-legacy probing or caller override. The only write-time recipe is card2@1, whose tuple pins
+  the EventRecord and family payload schema bytes and these field profiles. Owner-valid lowercase, offset,
+  leap-second and long-fraction history stays readable with its exact spelling; an offset or lowercase-z Storage
+  timestamp never becomes valid history.
 '
 gui_related: false
 gui_classification_reason: Defines event semantics, metadata and custody for existing behavior; no visual presentation.
@@ -906,9 +936,19 @@ canonical_text: 'Newly authored owner contract, exactly browser.session.promoted
   producer_semantic_digest); a projection that RFC 8785 cannot carry exactly, for example producer_sequence_id
   2^53+1, 2^60 or 2^64-1, is refused before any append or owner effect, while 2^53 encodes exactly. Storage-
   assigned sequence_id follows SP-1100 and stays outside producer semantics. The idempotency, event_id and CV-366
-  key recipes are unchanged. Authenticated selection of a retained original''s write-time recipe under SP-1101,
-  together with the CV-1101 date-time profiles, is still to be adopted; until then this family''s timestamp checks
-  keep their interim grammar.
+  key recipes are unchanged. Timestamps and retained originals, sweep 2026-11-11 (CV-1101 beside CV-253 and CV-317;
+  SP-1101): every timestamp field uses the shared CV-1101 date_time predicate with its owner''s profile, never a
+  lane grammar. occurred_at_utc and payload ts take the broad event_record profile (T or t, Z, z or an hh:mm
+  offset, legitimate leap seconds, any fraction length); Storage-assigned observed_at_utc and persisted_at_utc also
+  take CV-253''s storage_utc_z profile (terminal uppercase Z only), on the current record, the retry original and
+  retained history alike. A retry original and a retained history read are first resolved once through the shared
+  SP-1101 RetainedDispatcher from Storage''s sealed write custody (static stand-in
+  Plans/card2_original_custody.json, never a request field): a Store outside that custody refuses as
+  original_unavailable and a sealed recipe without an installed frozen verifier as recipe_unknown, with no
+  fallback, current-then-legacy probing or caller override. The only write-time recipe is card2@1, whose tuple pins
+  the EventRecord and family payload schema bytes and these field profiles. Owner-valid lowercase, offset,
+  leap-second and long-fraction history stays readable with its exact spelling; an offset or lowercase-z Storage
+  timestamp never becomes valid history.
 '
 gui_related: false
 gui_classification_reason: Defines event semantics, metadata and custody for existing behavior; no visual presentation.
@@ -1011,9 +1051,19 @@ canonical_text: 'Newly authored owner contract, exactly browser.session.takeover
   projection (producer_semantic_bytes / producer_semantic_digest); a projection that RFC 8785 cannot carry
   exactly, for example producer_sequence_id 2^53+1, 2^60 or 2^64-1, is refused before any append or owner effect,
   while 2^53 encodes exactly. Storage-assigned sequence_id follows SP-1100 and stays outside producer semantics.
-  The idempotency, event_id and CV-366 key recipes are unchanged. Authenticated selection of a retained
-  original''s write-time recipe under SP-1101, together with the CV-1101 date-time profiles, is still to be
-  adopted; until then this family''s timestamp checks keep their interim grammar.
+  The idempotency, event_id and CV-366 key recipes are unchanged. Timestamps and retained originals, sweep
+  2026-11-11 (CV-1101 beside CV-253 and CV-317; SP-1101): every timestamp field uses the shared CV-1101 date_time
+  predicate with its owner''s profile, never a lane grammar. occurred_at_utc and payload ts take the broad
+  event_record profile (T or t, Z, z or an hh:mm offset, legitimate leap seconds, any fraction length);
+  Storage-assigned observed_at_utc and persisted_at_utc also take CV-253''s storage_utc_z profile (terminal
+  uppercase Z only), on the current record, the retry original and retained history alike. A retry original and a
+  retained history read are first resolved once through the shared SP-1101 RetainedDispatcher from Storage''s
+  sealed write custody (static stand-in Plans/card2_original_custody.json, never a request field): a Store outside
+  that custody refuses as original_unavailable and a sealed recipe without an installed frozen verifier as
+  recipe_unknown, with no fallback, current-then-legacy probing or caller override. The only write-time recipe is
+  card2@1, whose tuple pins the EventRecord and family payload schema bytes and these field profiles. Owner-valid
+  lowercase, offset, leap-second and long-fraction history stays readable with its exact spelling; an offset or
+  lowercase-z Storage timestamp never becomes valid history.
 '
 gui_related: false
 gui_classification_reason: Defines event semantics, metadata and custody for existing behavior; no visual presentation.
@@ -1116,9 +1166,21 @@ canonical_text: 'Newly authored owner contract, exactly memory.gist_state_change
   producer_semantic_digest); a projection that RFC 8785 cannot carry exactly, for example producer_sequence_id
   2^53+1, 2^60 or 2^64-1, is refused before any append or owner effect, while 2^53 encodes exactly. Storage-
   assigned sequence_id follows SP-1100 and stays outside producer semantics. The idempotency, event_id and CV-366
-  key recipes are unchanged. Authenticated selection of a retained original''s write-time recipe under SP-1101,
-  together with the CV-1101 date-time profiles, is still to be adopted; until then this family''s timestamp checks
-  keep their interim grammar.
+  key recipes are unchanged. Timestamps and retained originals, sweep 2026-11-11 (CV-1101 beside CV-253 and CV-317;
+  SP-1101): every timestamp field uses the shared CV-1101 date_time predicate with its owner''s profile, never a
+  lane grammar. occurred_at_utc and payload ts take the broad event_record profile (T or t, Z, z or an hh:mm
+  offset, legitimate leap seconds, any fraction length); Storage-assigned observed_at_utc and persisted_at_utc also
+  take CV-253''s storage_utc_z profile (terminal uppercase Z only), on the current record, the retry original and
+  retained history alike. A retry original and a retained history read are first resolved once through the shared
+  SP-1101 RetainedDispatcher from Storage''s sealed write custody (static stand-in
+  Plans/card2_original_custody.json, never a request field): a Store outside that custody refuses as
+  original_unavailable and a sealed recipe without an installed frozen verifier as recipe_unknown, with no
+  fallback, current-then-legacy probing or caller override. The only write-time recipe is card2@1, whose tuple pins
+  the EventRecord and family payload schema bytes and these field profiles. Owner-valid lowercase, offset,
+  leap-second and long-fraction history stays readable with its exact spelling; an offset or lowercase-z Storage
+  timestamp never becomes valid history. The memory record times (created_at, updated_at, last_access_at and
+  each claim created_at) name no stricter owner profile, so the shared predicate checks them with the same broad
+  event_record profile.
 '
 gui_related: false
 gui_classification_reason: Defines event semantics, metadata and custody for existing behavior; no visual presentation.

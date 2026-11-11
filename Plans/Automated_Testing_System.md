@@ -7271,6 +7271,17 @@ canonical_text: The six exact DCN families have per-family positive, negative an
   row alone and requires its own witnesses to pass and every other witness to keep its exact refusal, then restores
   it; unrelated stale copies or post-state contradictions are never accepted as a witness.
 
+  Since sweep part 2B (2026-11-11) every timestamp field is checked by the shared CV-1101 date_time predicate with
+  its owner's profile (TIMESTAMP_PROFILES in scripts/pm_card2_events.py), and the checker run itself refuses unless
+  each lane-recorded leak (hour 24, trailing LF, an illegitimate leap second, Feb 29 of a common year, a space
+  separator, a missing zone, offset hour 24, minute 60) is refused at every field with the shared Refusal reason as
+  the validator's error cause. The CV-253 storage_utc_z restriction on observed_at_utc and persisted_at_utc is its own
+  row per view. Retry originals and retained reads resolve through the shared SP-1101 RetainedDispatcher from the
+  sealed custody catalogue Plans/card2_original_custody.json (rows recipe_custody and recipe_installed, and the
+  entailed recipe_resolved); each run also proves that a replaced schema resource, a weakened Storage profile or a
+  caller recipe override installs or selects no verifier. The part 2B witnesses and controls (ids p2b/...) are in
+  Plans/card2_event_p2a_cases.json.
+
 gui_related: false
 gui_classification_reason: Defines event semantics, metadata and custody for existing behavior; no visual presentation.
 depends_on:

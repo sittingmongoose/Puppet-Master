@@ -29791,8 +29791,14 @@ canonical_text: 'Newly authored Storage owner contract for exactly browser.sessi
   (storage_uint64), never capped at 2^53 and never part of producer semantics. Joins compare typed values exactly:
   an integer never equals a float and signed zero is kept. The browser_session_state.v1 source facts keep their
   physical domains: viewport width and height are u32, scroll position and zoom are finite f64 (an integer only
-  when exactly representable). SP-278 binding values stay uint-only. Retained-original recipe selection under
-  SP-1101 is still to be adopted, with the CV-1101 timestamp profile in the same recipe tuple.
+  when exactly representable). SP-278 binding values stay uint-only. Retained originals, sweep 2026-11-11 (SP-1101
+  beside SP-236, SP-278 and SP-286): a retry original or a retained read resolves once through the shared
+  RetainedDispatcher from Storage''s sealed write custody (static stand-in Plans/card2_original_custody.json)
+  before any original check. A Store outside that custody is original_unavailable and a sealed recipe with no
+  installed frozen verifier is recipe_unknown, with no fallback. The sealed card2@1 tuple pins the EventRecord and
+  family payload schema bytes and the CV-1101 field profiles (event_record for occurred_at_utc and ts, CV-253
+  storage_utc_z for observed_at_utc and persisted_at_utc), so a replaced resource or a weakened profile installs no
+  verifier for it. Native custody, durability and admission remain NOT_RUN.
 '
 gui_related: false
 gui_classification_reason: Defines event semantics, metadata and custody for existing behavior; no visual presentation.
@@ -29907,8 +29913,14 @@ canonical_text: 'Newly authored Storage owner contract for exactly browser.sessi
   (storage_uint64), never capped at 2^53 and never part of producer semantics. Joins compare typed values exactly:
   an integer never equals a float and signed zero is kept. The browser_session_state.v1 source facts keep their
   physical domains: viewport width and height are u32, scroll position and zoom are finite f64 (an integer only
-  when exactly representable). SP-278 binding values stay uint-only. Retained-original recipe selection under
-  SP-1101 is still to be adopted, with the CV-1101 timestamp profile in the same recipe tuple.
+  when exactly representable). SP-278 binding values stay uint-only. Retained originals, sweep 2026-11-11 (SP-1101
+  beside SP-236, SP-278 and SP-286): a retry original or a retained read resolves once through the shared
+  RetainedDispatcher from Storage''s sealed write custody (static stand-in Plans/card2_original_custody.json)
+  before any original check. A Store outside that custody is original_unavailable and a sealed recipe with no
+  installed frozen verifier is recipe_unknown, with no fallback. The sealed card2@1 tuple pins the EventRecord and
+  family payload schema bytes and the CV-1101 field profiles (event_record for occurred_at_utc and ts, CV-253
+  storage_utc_z for observed_at_utc and persisted_at_utc), so a replaced resource or a weakened profile installs no
+  verifier for it. Native custody, durability and admission remain NOT_RUN.
 '
 gui_related: false
 gui_classification_reason: Defines event semantics, metadata and custody for existing behavior; no visual presentation.
@@ -30023,8 +30035,14 @@ canonical_text: 'Newly authored Storage owner contract for exactly browser.sessi
   (storage_uint64), never capped at 2^53 and never part of producer semantics. Joins compare typed values exactly:
   an integer never equals a float and signed zero is kept. The browser_session_state.v1 source facts keep their
   physical domains: viewport width and height are u32, scroll position and zoom are finite f64 (an integer only
-  when exactly representable). SP-278 binding values stay uint-only. Retained-original recipe selection under
-  SP-1101 is still to be adopted, with the CV-1101 timestamp profile in the same recipe tuple.
+  when exactly representable). SP-278 binding values stay uint-only. Retained originals, sweep 2026-11-11 (SP-1101
+  beside SP-236, SP-278 and SP-286): a retry original or a retained read resolves once through the shared
+  RetainedDispatcher from Storage''s sealed write custody (static stand-in Plans/card2_original_custody.json)
+  before any original check. A Store outside that custody is original_unavailable and a sealed recipe with no
+  installed frozen verifier is recipe_unknown, with no fallback. The sealed card2@1 tuple pins the EventRecord and
+  family payload schema bytes and the CV-1101 field profiles (event_record for occurred_at_utc and ts, CV-253
+  storage_utc_z for observed_at_utc and persisted_at_utc), so a replaced resource or a weakened profile installs no
+  verifier for it. Native custody, durability and admission remain NOT_RUN.
 '
 gui_related: false
 gui_classification_reason: Defines event semantics, metadata and custody for existing behavior; no visual presentation.
@@ -30139,8 +30157,14 @@ canonical_text: 'Newly authored Storage owner contract for exactly browser.sessi
   (storage_uint64), never capped at 2^53 and never part of producer semantics. Joins compare typed values exactly:
   an integer never equals a float and signed zero is kept. The browser_session_state.v1 source facts keep their
   physical domains: viewport width and height are u32, scroll position and zoom are finite f64 (an integer only
-  when exactly representable). SP-278 binding values stay uint-only. Retained-original recipe selection under
-  SP-1101 is still to be adopted, with the CV-1101 timestamp profile in the same recipe tuple.
+  when exactly representable). SP-278 binding values stay uint-only. Retained originals, sweep 2026-11-11 (SP-1101
+  beside SP-236, SP-278 and SP-286): a retry original or a retained read resolves once through the shared
+  RetainedDispatcher from Storage''s sealed write custody (static stand-in Plans/card2_original_custody.json)
+  before any original check. A Store outside that custody is original_unavailable and a sealed recipe with no
+  installed frozen verifier is recipe_unknown, with no fallback. The sealed card2@1 tuple pins the EventRecord and
+  family payload schema bytes and the CV-1101 field profiles (event_record for occurred_at_utc and ts, CV-253
+  storage_utc_z for observed_at_utc and persisted_at_utc), so a replaced resource or a weakened profile installs no
+  verifier for it. Native custody, durability and admission remain NOT_RUN.
 '
 gui_related: false
 gui_classification_reason: Defines event semantics, metadata and custody for existing behavior; no visual presentation.
@@ -30256,8 +30280,14 @@ canonical_text: 'Newly authored Storage owner contract for exactly browser.sessi
   uint64 (storage_uint64), never capped at 2^53 and never part of producer semantics. Joins compare typed values
   exactly: an integer never equals a float and signed zero is kept. The browser_session_state.v1 source facts keep
   their physical domains: viewport width and height are u32, scroll position and zoom are finite f64 (an integer
-  only when exactly representable). SP-278 binding values stay uint-only. Retained-original recipe selection under
-  SP-1101 is still to be adopted, with the CV-1101 timestamp profile in the same recipe tuple.
+  only when exactly representable). SP-278 binding values stay uint-only. Retained originals, sweep 2026-11-11
+  (SP-1101 beside SP-236, SP-278 and SP-286): a retry original or a retained read resolves once through the shared
+  RetainedDispatcher from Storage''s sealed write custody (static stand-in Plans/card2_original_custody.json)
+  before any original check. A Store outside that custody is original_unavailable and a sealed recipe with no
+  installed frozen verifier is recipe_unknown, with no fallback. The sealed card2@1 tuple pins the EventRecord and
+  family payload schema bytes and the CV-1101 field profiles (event_record for occurred_at_utc and ts, CV-253
+  storage_utc_z for observed_at_utc and persisted_at_utc), so a replaced resource or a weakened profile installs no
+  verifier for it. Native custody, durability and admission remain NOT_RUN.
 '
 gui_related: false
 gui_classification_reason: Defines event semantics, metadata and custody for existing behavior; no visual presentation.
@@ -30380,8 +30410,14 @@ canonical_text: 'Newly authored Storage owner contract for exactly memory.gist_s
   (storage_uint64), never capped at 2^53 and never part of producer semantics. Joins compare typed values exactly:
   an integer never equals a float and signed zero is kept. The memory source facts keep their exact integer
   domains: access_count is a current integer of at least 0 and half_life_days null or a current integer of at
-  least 1. SP-278 binding values stay uint-only. Retained-original recipe selection under SP-1101 is still to be
-  adopted, with the CV-1101 timestamp profile in the same recipe tuple.
+  least 1. SP-278 binding values stay uint-only. Retained originals, sweep 2026-11-11 (SP-1101 beside SP-236,
+  SP-278 and SP-286): a retry original or a retained read resolves once through the shared RetainedDispatcher from
+  Storage''s sealed write custody (static stand-in Plans/card2_original_custody.json) before any original check. A
+  Store outside that custody is original_unavailable and a sealed recipe with no installed frozen verifier is
+  recipe_unknown, with no fallback. The sealed card2@1 tuple pins the EventRecord and family payload schema bytes
+  and the CV-1101 field profiles (event_record for occurred_at_utc and ts, CV-253 storage_utc_z for observed_at_utc
+  and persisted_at_utc), so a replaced resource or a weakened profile installs no verifier for it. Native custody,
+  durability and admission remain NOT_RUN.
 '
 gui_related: false
 gui_classification_reason: Defines event semantics, metadata and custody for existing behavior; no visual presentation.
