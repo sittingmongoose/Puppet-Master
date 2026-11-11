@@ -913,7 +913,8 @@ def _():
 for _row, _key, _value in (('V2CL16_tx_before', 'before', lambda tx: {**tx['before'], 'hold_refs': ['hold:other']}),
                            ('V2CL17_tx_after', 'after', lambda tx: {**tx['after'], 'hold_refs': ['hold:other']}),
                            ('V2CL18_tx_key', 'checkpoint_key', lambda tx: tx['checkpoint_key'] + '-other'),
-                           ('V2CL19_tx_publication', 'selected_publication_id', lambda tx: 'publication:created-other')):
+                           ('V2CL19_tx_publication', 'selected_publication_id', lambda tx: 'publication:created-other'),
+                           ('V2CL20_tx_committed_at', 'committed_at_utc', lambda tx: '2026-09-18T23:59:59Z')):
     def _cleanup(key=_key, value=_value):
         before, after, observation = v2_cleanup_parts()
         tx = observation['cleanup_transaction']

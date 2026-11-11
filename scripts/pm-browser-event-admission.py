@@ -530,13 +530,19 @@ def candidate_failures(event, producer_component, context, *, payload_store=None
     scoped.done()
     migration = event.get('migration')
     scope = Facts("gate_candidate_scope")
-    scope["GC09_project_scope_kind"] = event.get("scope_kind") == "project"
     scope["GC10_identity_projection"] = [field for field in IDENTITIES if event.get(field) != payload_context.get(field)] == []
     scope["GC11_payload_schema_id"] = event.get("payload_schema_id") == row["payload_schema_ref"]["schema_id"]
-    scope["GC12_payload_event_type"] = payload.get("event_type") == event["event_type"]
     scope["GC13_producer_sequence"] = historical or event.get("producer_sequence_id") is not None
     scope["GC14_replay_policy"] = historical or event.get("replay_policy") == "dedupe_by_idempotency_key"
-    failures += scope.codes()
+    codes = scope.codes()
+    # Two rows no input refuses before another row does, each in a table of its own.
+    kind = Facts("gate_candidate_scope_kind")
+    kind["GC09_project_scope_kind"] = event.get("scope_kind") == "project"
+    payload_type = Facts("gate_candidate_payload_event_type")
+    payload_type["GC12_payload_event_type"] = payload.get("event_type") == event["event_type"]
+    order = ("envelope_scope", "payload_identity_mismatch", "browser_replay_contract")
+    merged = set(codes) | set(kind.codes()) | set(payload_type.codes())
+    failures += [code for code in order if code in merged]
     present = Facts("gate_candidate_migration", chain=True)
     if present.stop("GC15_migration_object", lambda: isinstance(migration, dict)):
         return failures + [present.first_code()]
