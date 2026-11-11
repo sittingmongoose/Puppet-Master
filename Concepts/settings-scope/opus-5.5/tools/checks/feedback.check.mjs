@@ -213,16 +213,30 @@ const DETAIL_TABS = async ([d, w]) => {
 	return [...new Set([...document.querySelectorAll('#pm-settings-root [data-action="pm51-tab"][data-manager][data-tab]')].filter((e) => e.getClientRects().length).map((e) => `${e.dataset.manager}:${e.dataset.tab}`))];
 };
 const DETAIL = async (arg) => {
-	const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 	const [mt, only] = Array.isArray(arg) ? arg : [arg, null];
 	const [manager, tab] = mt.split(':');
-	window.PM12_KIMI.dispatchAction('pm51-tab', { manager, tab }); await wait(500);
-	// only this manager's own detail panes: another manager's pane on the same page is measured under its own tab
-	const tabEl = document.querySelector(`#pm-settings-root [data-action="pm51-tab"][data-manager="${manager}"][data-tab="${tab}"]`);
-	const root = (tabEl && tabEl.closest('.pm51-mgr')) || document.getElementById('pm-settings-root');
+	/* only this manager's own detail panes (another manager's pane on the same page is measured under its own tab), found
+	   again after every redraw: a tab or a pick redraws the manager, and a node kept from before is no longer the page */
+	const rootNow = () => { const te = document.querySelector(`#pm-settings-root [data-action="pm51-tab"][data-manager="${manager}"][data-tab="${tab}"]`); return (te && te.closest('.pm51-mgr')) || document.getElementById('pm-settings-root'); };
+	const frame = () => new Promise((r) => requestAnimationFrame(() => r()));
+	/* review A-r4 (where it stopped, fault a): no fixed wait. After a tab or a pick, wait until the condition holds and the
+	   manager's detail panes have kept the same text and height for three frames in a row (4s at most) */
+	const settled = async (ok) => {
+		let last = null, same = 0; const t0 = performance.now();
+		while (performance.now() - t0 < 4000) {
+			await frame();
+			if (ok && !ok()) { last = null; same = 0; continue; }
+			const sig = [...rootNow().querySelectorAll('.pm51-detail-content')].filter((d) => d.getClientRects().length).map((d) => `${d.innerText.length}:${Math.round(d.getBoundingClientRect().height)}`).join(',');
+			if (sig === last) { if (++same >= 3) return true; } else { same = 0; last = sig; }
+		}
+		return false;
+	};
+	window.PM12_KIMI.dispatchAction('pm51-tab', { manager, tab });
+	const out = { n: 0, items: 0, bad: [], all: [], unsettled: [] };
+	if (!(await settled())) out.unsettled.push(mt);
 	const cv = window.__psxCv || (window.__psxCv = document.createElement('canvas').getContext('2d'));
-	const measure = (label, out) => {
-		root.querySelectorAll('.pm51-detail-content').forEach((dc) => {
+	const measure = (label, item) => {
+		rootNow().querySelectorAll('.pm51-detail-content').forEach((dc) => {
 			if (!dc.getClientRects().length) return;
 			dc.querySelectorAll('.pm51-row-value').forEach((el) => {
 				const txt = (el.innerText || '').trim(); if (!txt || !el.getClientRects().length) return;
@@ -231,19 +245,31 @@ const DETAIL = async (arg) => {
 				const ls = parseFloat(cs.letterSpacing) || 0, up = cs.textTransform === 'uppercase';
 				const widest = Math.max(...txt.split(/\s+/).map((x) => cv.measureText(up ? x.toUpperCase() : x).width + ls * x.length));
 				const width = el.getBoundingClientRect().width; out.n++;
-				const v = { label, item: label.split(' › ')[1] || '', txt: txt.slice(0, 60), w: Math.round(width), widest: Math.round(widest) };
+				const v = { label, item, txt: txt.slice(0, 60), w: Math.round(width), widest: Math.round(widest) };
 				out.all.push(v);
 				if (width + 1 < widest) out.bad.push(v);
 			});
 		});
 	};
-	const out = { n: 0, items: 0, bad: [], all: [] };
-	const items = [...root.querySelectorAll(`button[data-action="pm51-select"][data-manager="${manager}"]`)].filter((e) => e.getClientRects().length && (!only || (e.innerText || '').trim().split('\n')[0] === only));
-	if (!items.length) measure(mt, out);
-	for (const it of items) { it.click(); await wait(300); out.items++; measure(`${mt} › ${(it.innerText || '').trim().split('\n')[0]}`, out); }
+	const sel = `button[data-action="pm51-select"][data-manager="${manager}"]`;
+	const name = (e) => (e.innerText || '').trim().split('\n')[0];
+	const picks = [...rootNow().querySelectorAll(sel)].filter((e) => e.getClientRects().length && e.dataset.id && (!only || name(e) === only)).map((e) => ({ id: e.dataset.id, name: name(e) }));
+	if (!picks.length && !only) measure(mt, '');
+	for (const p of picks) {
+		const q = `${sel}[data-id="${CSS.escape(p.id)}"]`;
+		const b = rootNow().querySelector(q);
+		if (!b) { out.unsettled.push(`${mt} › ${p.name} (gone)`); continue; }
+		b.click();
+		const ok = await settled(() => { const nb = rootNow().querySelector(q); return !!nb && (nb.getAttribute('aria-current') === 'true' || nb.classList.contains('active')); });
+		if (!ok) { out.unsettled.push(`${mt} › ${p.name}`); continue; }
+		out.items++;
+		measure(`${mt} › ${p.name}`, p.name);
+	}
 	return out;
 };
 
+// the shell around Settings: its rail state, the left-panel resizer, and the width Settings gets
+const SHELL = () => { const ma = document.querySelector('.main-area'), rz = document.getElementById('leftPanelResizer'), root = document.getElementById('pm-settings-root'); return { home: document.documentElement.getAttribute('data-pmw-home'), rail: ma && ma.getAttribute('data-pmw-rail'), resizer: rz ? getComputedStyle(rz).display : 'none', w: root ? Math.round(root.getBoundingClientRect().width * 10) / 10 : 0 }; };
 const BARE_LOOK = async (id) => {
 	const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 	const [fam, mode] = id.split('-'), tb = document.getElementById('themeSelect');
@@ -617,7 +643,7 @@ export default async function (t) {
 	if (want(t, 'detail')) await t.step('F2: every value in a detail card is at least as wide as its widest word', async () => {
 		await reset(t); await run(t, HELPERS);
 		let cards = 0;
-		const results = [];
+		const results = [], layerShell = {}, bareShell = {}, unsettled = [];
 		for (const lk of looks(t)) {
 			await look(t, lk);
 			for (const w of String(t.args.detailWidths || '1024,860,640').split(',').map(Number)) {
@@ -625,9 +651,11 @@ export default async function (t) {
 				const done = new Set();
 				for (const ws of WORKSPACES) {
 					const tabs = (await run(t, DETAIL_TABS, ws)).filter((x) => !done.has(x));
+					if (!layerShell[w]) layerShell[w] = await run(t, SHELL);
 					for (const mt of tabs) {
 						done.add(mt);
 						const r = await run(t, DETAIL, mt);
+						r.unsettled.forEach((u) => unsettled.push(`${lk} · ${w} · ${u}`));
 						if (!r.n) continue;
 						cards += r.items || 1;
 						results.push({ lk, w, ws, mt, r });
@@ -648,6 +676,7 @@ export default async function (t) {
 				for (const x of misses.filter((m) => m.lk === lk)) {
 					await t.viewport(x.w, 900); await settle(t, 300);
 					await run(t, DETAIL_TABS, x.ws);
+					if (!bareShell[x.w]) bareShell[x.w] = await run(t, SHELL);
 					for (const item of [...new Set(x.r.bad.map((b) => b.item))]) {
 						const br = await run(t, DETAIL, [x.mt, item || null]);
 						for (const b of br.all) bareOf[`${lk}|${x.w}|${x.mt}|${b.item}|${b.txt}`] = painted ? b.w : null;
@@ -659,14 +688,21 @@ export default async function (t) {
 			await run(t, HELPERS); await settle(t, 800);
 		}
 		for (const { lk, w, mt, r } of results) {
-			/* the layer's own when bare PMConcept7 gives the same value more room. The app shell around Settings is 2px
-			   narrower on the layer's page (the shell's left-panel resizer column is drawn there and not on bare), so a
-			   difference of 2px or less is the shell's, not the layer's */
-			const own = r.bad.filter((b) => { const bw = bareOf[`${lk}|${w}|${mt}|${b.item}|${b.txt}`]; return bw == null || bw > b.w + 2; });
+			/* the layer's own when bare PMConcept7 gives the same value more room than the shell's own difference in the
+			   width Settings gets. That difference is measured at this width on both pages: the base page hides its
+			   left-panel resizer only with data-pmw-home="on" and a folded rail, and its rail state can differ between
+			   the two pages, which is outside Settings and outside the layer (up to 4px is taken as the shell's) */
+			const allow = layerShell[w] && bareShell[w] ? Math.min(4, Math.max(0, bareShell[w].w - layerShell[w].w)) : 0;
+			const key = (b) => `${lk}|${w}|${mt}|${b.item}|${b.txt}`;
+			const own = r.bad.filter((b) => { const bw = bareOf[key(b)]; return bw == null || bw > b.w + allow + 0.5; });
 			const base = r.bad.filter((b) => !own.includes(b));
-			await t.check(`${lk} · ${w} · ${mt}: ${r.n} values in ${r.items || 1} detail card${(r.items || 1) === 1 ? '' : 's'} are each as wide as their widest word${base.length ? `, but for ${base.length} the base page gives no more room on bare PMConcept7 (stream F)` : ''}`, own.length === 0,
-				own.slice(0, 4).map((b) => `${b.label}: “${b.txt}” is ${b.w}px, its widest word ${b.widest}px; bare: ${bareOf[`${lk}|${w}|${mt}|${b.item}|${b.txt}`] == null ? 'not found' : bareOf[`${lk}|${w}|${mt}|${b.item}|${b.txt}`] + 'px'}`).join(' | '));
+			const why = base.map((b) => `excluded, the base page’s own: ${lk} · ${w} · ${b.label}: “${b.txt}” ${b.w}px here, ${bareOf[key(b)]}px on bare PMConcept7 (its widest word ${b.widest}px; the shell’s own difference ${allow}px)`);
+			why.forEach((x) => t.log(x));
+			await t.check(`${lk} · ${w} · ${mt}: ${r.n} values in ${r.items || 1} detail card${(r.items || 1) === 1 ? '' : 's'} are each as wide as their widest word${base.length ? `, except ${base.length} the base page gives no more room on bare PMConcept7 (stream F)` : ''}`, own.length === 0,
+				own.slice(0, 4).map((b) => `${b.label}: “${b.txt}” is ${b.w}px, its widest word ${b.widest}px; bare: ${bareOf[key(b)] == null ? 'not found' : bareOf[key(b)] + 'px'}`).concat(why.slice(0, 6)).join(' | '));
 		}
+		await t.check('every tab and list item settled before it was measured (no fixed wait)', unsettled.length === 0, unsettled.slice(0, 8).join(' | '));
+		t.log(`the shell around Settings, layer vs bare PMConcept7: ${JSON.stringify({ layer: layerShell, bare: bareShell })}`);
 		await t.check('detail cards were found and measured', cards > 20, String(cards));
 		await t.viewport(1920, 1080);
 	});
