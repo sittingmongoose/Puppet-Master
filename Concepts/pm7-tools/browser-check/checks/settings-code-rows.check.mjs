@@ -56,7 +56,7 @@ for (const surface of ['normal', 'sandbox']) {
 		if (await t.check('Start new terminals in has Choose', (await ch.count()) > 0)) {
 			await ch.scrollIntoViewIfNeeded();
 			await ch.click();
-			const words = await f.waitForFunction(() => { const d = [...document.querySelectorAll('.modal-wrap, [role="dialog"]')].filter((n) => n.getClientRects().length && /Browse|Choose|Path/.test(n.textContent)); return d.length ? d[d.length - 1].textContent.replace(/\s+/g, ' ').trim() : false; }, null, { timeout: 6000 }).then((h) => h.jsonValue()).catch(() => '');
+			const words = await f.waitForFunction(() => { const d = [...document.querySelectorAll('.modal-wrap, [role="dialog"]')].filter((n) => n.getClientRects().length && !n.closest('[aria-hidden="true"], [inert]') && /Browse ·/.test(n.textContent)); return d.length ? d[d.length - 1].textContent.replace(/\s+/g, ' ').trim() : false; }, null, { timeout: 6000 }).then((h) => h.jsonValue()).catch(() => '');
 			await t.check('the Choose dialog has no developer words', !!words && !/Slint|binds this field|project-scoped/i.test(words), words.slice(0, 160));
 			await t.page.keyboard.press('Escape');
 			await t.page.waitForTimeout(400);
