@@ -23,7 +23,6 @@ import types
 
 ROOT = Path(__file__).resolve().parents[1]
 CHECKER = ROOT / 'scripts/pm-runtime-artifact-event-drafts.py'
-ROW_FAMILIES = [r['event_type'] for r in json.loads((ROOT / 'Plans/runtime_artifact_event_drafts.json').read_text())['rows']]
 CANONICAL_CASES = None
 
 
@@ -240,10 +239,11 @@ def main():
                                                                   format_checker=m.FormatChecker())),None))
     cases.append(('S10_remove_integer_slot_rule',10,cut('N01_integer_slots'),None))
     cases.append(('S10_remove_producer_jcs_qualification',10,cut('A08_producer_jcs','F14_producer_jcs'),None))
-    cases.append(('S10a_caller_selects_retained_recipe',10,cut('H05c_no_caller_recipe'),None,
-                  [r for r in ROW_FAMILIES if r not in hash_families]))
-    cases.append(('S10a_ignore_authenticated_binding',10,cut('H05b_original_binding'),None,
-                  [r for r in ROW_FAMILIES if r not in hash_families]))
+    # Both SP-1101 trials target every family: efbeecc654 gave the provider-hash
+    # families their own H05b/H05c witnesses, and the binding-only negatives
+    # (another Server or owner operation, requested bytes) reach H05b in each.
+    cases.append(('S10a_caller_selects_retained_recipe',10,cut('H05c_no_caller_recipe'),None))
+    cases.append(('S10a_ignore_authenticated_binding',10,cut('H05b_original_binding'),None))
     cases.append(('S5_remove_provider_hash_guard',5,cut('S03_provider_hash_overlay'),None,hash_families))
     cases.append(('earlier_B6_remove_restore_grouping_guard',None,cut('O02_grouping'),None,['runtime_artifact.restore_point']))
     selected = [c for c in cases if not args.case or any(text in c[0] for text in args.case)]
