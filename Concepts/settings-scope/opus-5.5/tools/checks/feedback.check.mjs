@@ -264,17 +264,35 @@ const DETAIL = async (arg) => {
 	};
 	const sel = `button[data-action="pm51-select"][data-manager="${manager}"]`;
 	const name = (e) => (e.innerText || '').trim().split('\n')[0];
-	const picks = [...panelEl().querySelectorAll(sel)].filter((e) => vis(e) && e.dataset.id && (!only || name(e) === only)).map((e) => ({ id: e.dataset.id, name: name(e) }));
+	const collect = () => [...panelEl().querySelectorAll(sel)].filter((e) => vis(e) && e.dataset.id && (!only || name(e) === only)).map((e) => ({ id: e.dataset.id, name: name(e) }));
+	let picks = collect();
 	if (!picks.length && !only) measure(mt, '');
-	for (const p of picks) {
+	/* on a first visit some tabs (Notifications › Events, Media › Files) draw the last tab's list for a moment before
+	   their own. When a pick is gone or never becomes current, the tab is opened again, given 1.5s, and its list read
+	   again, once per tab: a pick missing from the new list was that passing list's, and the walk goes on with the real
+	   one; a pick still listed is tried once more and then fails by name */
+	const done = new Set(), retried = new Set(); let reread = false;
+	out.transient = [];
+	for (let i = 0; i < picks.length; i++) {
+		const p = picks[i];
+		if (done.has(p.id)) continue;
 		const q = `${sel}[data-id="${CSS.escape(p.id)}"]`;
-		// a pick can change the list (or leave the tab): the tab is opened again whenever this item isn't in its panel
 		let b = panelEl().querySelector(q);
 		if (!b) { await openTab(); b = panelEl().querySelector(q); }
-		if (!b) { out.unsettled.push(`${mt} › ${p.name} (gone from the tab)`); continue; }
-		b.click();
-		const ok = await settled(() => { const nb = rootNow().querySelector(q); return !!nb && (nb.getAttribute('aria-current') === 'true' || nb.classList.contains('active')); });
-		if (!ok) { out.unsettled.push(`${mt} › ${p.name}`); continue; }
+		let ok = false;
+		if (b) { b.click(); ok = await settled(() => { const nb = panelEl().querySelector(q) || rootNow().querySelector(q); return !!nb && (nb.getAttribute('aria-current') === 'true' || nb.classList.contains('active')); }); }
+		if (!ok) {
+			if (!reread) {
+				reread = true;
+				await openTab(); await new Promise((r) => setTimeout(r, 1500)); await settled();
+				const fresh = collect();
+				if (!fresh.some((f) => f.id === p.id)) { out.transient.push(`${mt}: ${picks.filter((x) => !done.has(x.id) && !fresh.some((f) => f.id === x.id)).map((x) => x.name).join(', ')}`); picks = fresh.filter((f) => !done.has(f.id)); i = -1; continue; }
+			}
+			if (!retried.has(p.id)) { retried.add(p.id); i--; continue; }
+			out.unsettled.push(`${mt} › ${p.name}${b ? '' : ' (gone from the tab)'}`);
+			continue;
+		}
+		done.add(p.id);
 		out.items++;
 		measure(`${mt} › ${p.name}`, p.name);
 	}
@@ -669,6 +687,7 @@ export default async function (t) {
 						done.add(mt);
 						const r = await run(t, DETAIL, mt);
 						r.unsettled.forEach((u) => unsettled.push(`${lk} · ${w} · ${u}`));
+						(r.transient || []).forEach((u) => t.log(`a passing list, read again: ${lk} · ${w} · ${u}`));
 						if (!r.n) continue;
 						cards += r.items || 1;
 						results.push({ lk, w, ws, mt, r });
