@@ -8,8 +8,8 @@
   },
   "assessed_tree": {
     "branch": "plans/ea-b1-seal-blockers-20261104",
-    "commit": "31a1f32d8e03300f29eff851732058a78a5fbe13",
-    "note": "Sweep part 1: DL-449 applied; fixture repairs verified separately. 55 PASS / 5 PARTIAL; no READY family or native execution claim.",
+    "commit": "2dea5e4f76",
+    "note": "Sweep part 2A (guard tables on the gated tool 004bdedd63) and part 2B numbers (NUMRULE 58c2816ff3): 55 PASS / 5 PARTIAL unchanged; no READY family or native execution claim. Timestamp review interim only.",
     "base_commit": "e42ce235b4711325ced818c777f070c3ee0d7952"
   },
   "registry": {
@@ -30,7 +30,7 @@
   },
   "native_execution": "NOT_RUN",
   "static_suites_run_by_grader": true,
-  "note": "Sweep part 1: terminal consumers_checkpoints PARTIAL -> PASS under DL-449; all five oracle cells remain PARTIAL. SOL4-03 and NUMRULE adoption remain part 2.",
+  "note": "Sweep part 2A: every DS checker refusal is a Method B guard-table row; the gated tool proves every row that an input can refuse first, the rest sit alone with proofs. Part 2B numbers: CV-1100/SP-1100 shared calls adopted; the 4,400-digit crash class was present and is fixed. All five oracle cells stay PARTIAL: part 2B (CV-1101 date-time, SP-1101 retained dispatch) and the Sol/Astra review remain.",
   "rows": [
     {
       "event_type": "context.compaction.completed",
@@ -54,10 +54,10 @@
         "ATS-040"
       ],
       "remaining_gaps": [
-        "Part 2: adopt NUMRULE (CV-1100/1101, SP-1100/1101 and shared helper) and named guard tables with scripts/pm_guard_isolation.py; close SOL4-03 at actual family entries. No full-depth readiness is claimed."
+        "Part 2B: CV-1101 date-time (timestamp review interim only); Sol/Astra review of the integrated batch. No full-depth readiness is claimed."
       ],
-      "grading_batch": "DS-SWEEP-P1",
-      "notes": "Sweep part 1: current citations verified; terminal owner conflict resolved by DL-449, oracle cells remain PARTIAL for shared guard isolation.",
+      "grading_batch": "DS-SWEEP-P2A",
+      "notes": "Sweep part 2A/2B numbers: guard tables proved by the gated tool (see DS.md, Guard-table result); evidence pins re-checked at 2dea5e4f76; oracle cell stays PARTIAL pending part 2B and review.",
       "cells": {
         "membership_version": {
           "status": "PASS",
@@ -806,10 +806,10 @@
         "DL-076"
       ],
       "remaining_gaps": [
-        "Part 2: adopt NUMRULE (CV-1100/1101, SP-1100/1101 and shared helper) and named guard tables with scripts/pm_guard_isolation.py; close SOL4-03 at actual family entries. No full-depth readiness is claimed."
+        "Part 2B: CV-1101 date-time (interim only) and SP-1101 retained dispatch; open Case-L legacy-source field custody; Sol/Astra review. No full-depth readiness is claimed."
       ],
-      "grading_batch": "DS-SWEEP-P1",
-      "notes": "Sweep part 1: current citations verified; terminal owner conflict resolved by DL-449, oracle cells remain PARTIAL for shared guard isolation.",
+      "grading_batch": "DS-SWEEP-P2A",
+      "notes": "Sweep part 2A/2B numbers: guard tables proved by the gated tool (see DS.md, Guard-table result); evidence pins re-checked at 2dea5e4f76; oracle cell stays PARTIAL pending part 2B and review.",
       "cells": {
         "membership_version": {
           "status": "PASS",
@@ -1666,10 +1666,10 @@
         "DL-076"
       ],
       "remaining_gaps": [
-        "Part 2: adopt NUMRULE (CV-1100/1101, SP-1100/1101 and shared helper) and named guard tables with scripts/pm_guard_isolation.py; close SOL4-03 at actual family entries. No full-depth readiness is claimed."
+        "Part 2B: CV-1101 date-time (interim only) and SP-1101 retained dispatch; open Case-L legacy-source field custody; Sol/Astra review. No full-depth readiness is claimed."
       ],
-      "grading_batch": "DS-SWEEP-P1",
-      "notes": "Sweep part 1: current citations verified; terminal owner conflict resolved by DL-449, oracle cells remain PARTIAL for shared guard isolation.",
+      "grading_batch": "DS-SWEEP-P2A",
+      "notes": "Sweep part 2A/2B numbers: guard tables proved by the gated tool (see DS.md, Guard-table result); evidence pins re-checked at 2dea5e4f76; oracle cell stays PARTIAL pending part 2B and review.",
       "cells": {
         "membership_version": {
           "status": "PASS",
@@ -2490,9 +2490,9 @@
         "SP-400"
       ],
       "remaining_gaps": [
-        "Part 2: adopt NUMRULE (CV-1100/1101, SP-1100/1101 and shared helper) and named guard tables with scripts/pm_guard_isolation.py; close SOL4-03 at actual family entries. No full-depth readiness is claimed."
+        "Part 2B: CV-1101 date-time (interim only) and SP-1101 retained recipe dispatch; Sol/Astra review. No full-depth readiness is claimed."
       ],
-      "grading_batch": "DS-SWEEP-P1",
+      "grading_batch": "DS-SWEEP-P2A",
       "cells": {
         "membership_version": {
           "status": "PASS",
@@ -3128,7 +3128,7 @@
           "change_reason": "Review DS-SOL-01/02: the Home4 fixtures missed the whole-value limit and the reference branch. Repaired in 31cd37713c; the event-body boundary is missing from the contract, so it cannot be tested."
         }
       },
-      "notes": "Sweep part 1: current citations verified; terminal owner conflict resolved by DL-449, oracle cells remain PARTIAL for shared guard isolation."
+      "notes": "Sweep part 2A/2B numbers: guard tables proved by the gated tool (see DS.md, Guard-table result); evidence pins re-checked at 2dea5e4f76; oracle cell stays PARTIAL pending part 2B and review."
     },
     {
       "event_type": "terminal.workgroup_moved",
@@ -3150,9 +3150,9 @@
         "DL-449"
       ],
       "remaining_gaps": [
-        "Part 2: adopt NUMRULE (CV-1100/1101, SP-1100/1101 and shared helper) and named guard tables with scripts/pm_guard_isolation.py; close SOL4-03 at actual family entries. No full-depth readiness is claimed."
+        "Sol/Astra review of the guard tables; no date-time field in its payload. No full-depth readiness is claimed."
       ],
-      "grading_batch": "DS-SWEEP-P1",
+      "grading_batch": "DS-SWEEP-P2A",
       "cells": {
         "membership_version": {
           "status": "PASS",
@@ -3518,7 +3518,7 @@
           "change_reason": "DL-449 removes the unbuilt view/companion obligations; guard completeness remains part 2."
         }
       },
-      "notes": "Sweep part 1: current citations verified; terminal owner conflict resolved by DL-449, oracle cells remain PARTIAL for shared guard isolation.",
+      "notes": "Sweep part 2A/2B numbers: guard tables proved by the gated tool (see DS.md, Guard-table result); evidence pins re-checked at 2dea5e4f76; oracle cell stays PARTIAL pending part 2B and review.",
       "static_checks_seen": [
         "scripts/pm_terminal_workgroup_compatibility.py --self-test",
         "Plans/terminal_workgroup_compatibility_fixtures.json"
