@@ -116,6 +116,11 @@ def history_witnesses(m, add, event, family):
                           canonical['originals'][held]['full_value_sha256'])
         P = prefix.upper()
         sealed = lambda state: sealed_history(m, call, state, held)
+        add(prefix + '-unflushed', prefix + '_body', P + '02_flush', lambda: call(canonical),
+            lambda: call(edited(canonical, (record + ['durability'], 'not_flushed'))))
+        # A sealed record whose recorded commitment is not its value's frozen digest (Storage sealed it as written).
+        add(prefix + '-sealed-wrong-digest', prefix + '_body', P + '03_digest', lambda: call(canonical),
+            sealed(edited(canonical, (record + ['full_value_sha256'], OTHER_SHA))))
         add(prefix + '-sealed-envelope-extra', prefix + '_body', P + '04_envelope', lambda: call(canonical),
             sealed(rehash(m, edited(canonical, (record + ['full_value', 'unexpected'], True)), record)))
         # CV-253 at the retained edition: a sealed original whose Storage time is not terminal uppercase Z refuses.
@@ -248,6 +253,8 @@ def maintenance(m, fixtures, families):
             add('writer-new-append-completed-row', 'ap_phase', 'AP14_phase', lambda: append(terminal),
                 lambda: append({**deepcopy(retry), 'original': None}))
             # SP-1101 downgrade: a current-writer original carrying the frozen digest still selects CV-339 (custody).
+            add('writer-original-unflushed', 'apo_body', 'APO02_flush', lambda: append(terminal),
+                lambda: append(edited(terminal, (['original', 'durability'], 'not_flushed'))))
             add('writer-original-frozen-digest', 'apo_body', 'APO04_digest', lambda: append(terminal),
                 downgrade_attempt(m, append, terminal, event))
             custody_witnesses(m, add, 'writer-original', 'apo_custody', 'apo', append,
@@ -260,6 +267,8 @@ def maintenance(m, fixtures, families):
                 sealed_writer(m, append, rehash(m, edited(canonical, (['original', 'full_value', 'unexpected'], True)), ['original']), event))
             add('writer-canonical-reference', 'sgc_reference', 'SGC06_reference', lambda: append(canonical),
                 sealed_writer(m, append, rehash(m, edited(canonical, (['original', 'full_value', 'actor_ref'], 'component:Other')), ['original']), event))
+            add('writer-canonical-unflushed', 'sgc_body', 'SGC02_flush', lambda: append(canonical),
+                lambda: append(edited(canonical, (['original', 'durability'], 'not_flushed'))))
             add('writer-canonical-frozen-digest', 'sgc_body', 'SGC04_digest', lambda: append(canonical),
                 downgrade_attempt(m, append, canonical, event))
             custody_witnesses(m, add, 'writer-canonical', 'sgc_custody', 'sgc', append,
@@ -479,6 +488,8 @@ def archive(a, fixtures, families):
                 lambda: append(edited(terminal, (['original', 'unexpected'], True))))
             add('writer-original-envelope', 'aao_envelope', 'AAO05_envelope', lambda: append(terminal),
                 sealed_writer(m, append, rehash(m, edited(terminal, (['original', 'full_value', 'unexpected'], True)), ['original']), event))
+            add('writer-original-unflushed', 'aao_body', 'AAO02_flush', lambda: append(terminal),
+                lambda: append(edited(terminal, (['original', 'durability'], 'not_flushed'))))
             add('writer-original-frozen-digest', 'aao_body', 'AAO04_digest', lambda: append(terminal),
                 downgrade_attempt(m, append, terminal, event))
             custody_witnesses(m, add, 'writer-original', 'aao_custody', 'aao', append,
@@ -500,6 +511,8 @@ def archive(a, fixtures, families):
                 sealed_writer(m, append, rehash(m, edited(canonical, (fv + ['payload', 'unexpected'], True)), ['original']), event))
             add('canonical-producer', 'asc_joins', 'ASC07_producer', lambda: append(canonical),
                 sealed_writer(m, append, rehash(m, edited(canonical, (fv + ['actor_ref'], 'component:Other')), ['original']), event))
+            add('canonical-unflushed', 'asc_body', 'ASC02_flush', lambda: append(canonical),
+                lambda: append(edited(canonical, (['original', 'durability'], 'not_flushed'))))
             add('canonical-frozen-digest', 'asc_body', 'ASC04_digest', lambda: append(canonical),
                 downgrade_attempt(m, append, canonical, event))
             custody_witnesses(m, add, 'canonical', 'asc_custody', 'asc', append,
