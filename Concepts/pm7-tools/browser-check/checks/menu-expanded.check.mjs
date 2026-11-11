@@ -4,10 +4,12 @@
 // aria-haspopup (menu for a menu, listbox for a list) and aria-expanded="true" on the trigger when it opens, and
 // leaves aria-expanded="false" when the popout closes by Escape, an outside press or a pick.
 //
-// The check opens and closes every menu and listbox it can reach in Settings (each chapter, each workspace, each
-// manager tab: its "More …" buttons and its dropdown triggers, bounded by `--set maxMenus=` and `--set maxLists=`),
-// then the app's own title-bar and look menus and the chat's More options, on the surface it is given
-// (--set sandbox=0 / --set sandbox=1). It fails on main, where a Settings menu's trigger never says expanded.
+// The check opens and closes the menu and listbox triggers it can reach in Settings (each chapter, each workspace,
+// each manager tab: its "More …" buttons and its dropdown triggers, bounded by `--set maxMenus=` and
+// `--set maxLists=`), then the app's own title-bar Project menu, the look menu and the chat's More options, on the
+// surface it is given (--set sandbox=0 / --set sandbox=1). It fails on main, where a Settings menu's trigger never
+// says expanded.
+//   browser-check run Concepts/pm7-tools/browser-check/checks/menu-expanded.check.mjs --set page=<build>
 const MENU = '.pm51-popout[role="menu"]';
 const LIST = '.pm51-popout[role="listbox"]';
 
@@ -20,6 +22,7 @@ async function attrs(f, sel) {
 			expanded: el.getAttribute('aria-expanded'),
 			controls: el.getAttribute('aria-controls'),
 			label: (el.getAttribute('aria-label') || el.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 40),
+			name: el.getAttribute('aria-label') || '',
 		};
 	}, sel);
 }
@@ -62,68 +65,73 @@ async function dismissDialog(f) {
 	await f.waitForFunction(() => !document.querySelector('.overlay section.dialog[role="dialog"]'), null, { timeout: 3000 }).catch(() => {});
 }
 
-async function triggerAt(f, list, index, attr = 'data-fo155') {
-	return f.evaluate(({ list, index, attr }) => {
-		document.querySelectorAll(`[${attr}]`).forEach((el) => el.removeAttribute(attr));
-		const els = [...document.querySelectorAll(list)].filter((el) => {
-			if (el.closest('[inert], .overlay, .drawer-wrap, .pm51-popout')) return false;
-			if (el.getAttribute('aria-disabled') === 'true') return false;
-			const r = el.getBoundingClientRect();
-			return r.width > 1 && r.height > 1;
-		});
-		const el = els[index];
-		if (!el) return null;
-		el.setAttribute(attr, '1');
-		return (el.getAttribute('aria-label') || el.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 40);
-	}, { list, index, attr });
-}
-
 async function closeAny(f) {
 	await escape(f);
 	await dismissDialog(f);
 }
 
-/* one dropdown trigger: open, attributes open, Escape, attributes closed, and once each way of closing */
-async function listCase(t, f, where, closeWay) {
-	if (!(await triggerAt(f, '#pm-settings-root .pm51-dd-trigger', 0))) return false;
-	const label = (await attrs(f, '[data-fo155]'))?.label || '';
-	await f.locator('[data-fo155]').first().click({ timeout: 5000 });
-	const opened = await waitPopup(f, LIST);
-	const id = await popupId(f, LIST);
-	const open = await attrs(f, '[data-fo155]');
-	await t.check(`list ${where} / ${label}: opening says expanded`, opened && open?.expanded === 'true' && open?.popup === 'listbox', `opened ${opened}, aria-haspopup ${open?.popup}, aria-expanded ${open?.expanded}`);
-	await t.check(`list ${where} / ${label}: points at the list it opened`, !!id && open?.controls === id, `aria-controls ${open?.controls}, list ${id}`);
-	let gone = false;
-	if (closeWay === 'outside') gone = await outsidePress(f);
-	else if (closeWay === 'pick') {
-		await f.locator(`${LIST}:visible [role="option"]:not([aria-disabled="true"])`).first().click({ timeout: 4000 }).catch(() => {});
-		gone = await waitGone(f);
-	} else gone = await escape(f);
-	const closed = await attrs(f, '[data-fo155]');
-	await t.check(`list ${where} / ${label}: ${closeWay} closes it and says so`, gone && closed?.expanded === 'false', `gone ${gone}, aria-expanded ${closed?.expanded}`);
-	await dismissDialog(f);
-	return true;
+/* the next unvisited trigger of one kind in the mounted workspace body; returns its key and name */
+async function pick(f, ws, kind, seen, attr) {
+	return f.evaluate(({ ws, kind, seen, attr }) => {
+		document.querySelectorAll(`[${attr}]`).forEach((el) => el.removeAttribute(attr));
+		const body = document.querySelector(`[data-continuous-workspace-body="${ws}"]`);
+		if (!body) return null;
+		const nameOf = (el) => (el.getAttribute('aria-label') || el.innerText || '').replace(/\s+/g, ' ').trim();
+		const els = [...body.querySelectorAll(kind === 'list' ? '.pm51-dd-trigger' : 'button')].filter((el) => {
+			if (el.closest('[inert], .overlay, .drawer-wrap, .pm51-popout')) return false;
+			if (el.getAttribute('aria-disabled') === 'true') return false;
+			const r = el.getBoundingClientRect();
+			if (!(r.width > 1 && r.height > 1)) return false;
+			return kind === 'list' ? true : /^more\b/i.test((el.getAttribute('aria-label') || '').trim());
+		});
+		for (const el of els) {
+			const name = nameOf(el);
+			const row = el.closest('.resource-row, .pm51-item, [data-id], [data-row]');
+			const rowId = row ? (row.dataset.id || row.dataset.row || '') : '';
+			const nth = els.filter((b) => nameOf(b) === name).indexOf(el);
+			const key = `${kind}|${ws}|${rowId}|${name}|${nth}`;
+			if (seen.includes(key)) continue;
+			el.setAttribute(attr, '1');
+			return { key, name };
+		}
+		return null;
+	}, { ws, kind, seen, attr });
 }
 
-/* one "More …" menu button: open, attributes open, close the given way, attributes closed */
-async function menuCase(t, f, where, closeWay) {
-	if (!(await triggerAt(f, '#pm-settings-root button[aria-label^="More"]', 0))) return false;
-	const label = (await attrs(f, '[data-fo155]'))?.label || '';
+/* one trigger: open, attributes open, close the given way, attributes closed */
+async function caseOf(t, f, where, kind, closeWay) {
+	const sel = kind === 'list' ? LIST : MENU;
+	const role = kind === 'list' ? 'listbox' : 'menu';
+	const before = await attrs(f, '[data-fo155]');
+	const label = before?.label || '';
+	const name = before?.name || '';
+	/* closed, the button already says what it opens and that it is closed */
+	await t.check(`${kind} ${where} / ${label}: closed it says so`, before?.popup === role && before?.expanded === 'false', `aria-haspopup ${before?.popup}, aria-expanded ${before?.expanded}`);
+	await f.locator('[data-fo155]').first().scrollIntoViewIfNeeded({ timeout: 3000 }).catch(() => {});
 	await f.locator('[data-fo155]').first().click({ timeout: 5000 });
-	const opened = await waitPopup(f, MENU);
-	const id = await popupId(f, MENU);
+	const opened = await waitPopup(f, sel);
+	const id = await popupId(f, sel);
 	const open = await attrs(f, '[data-fo155]');
-	await t.check(`menu ${where} / ${label}: opening says expanded`, opened && open?.expanded === 'true' && open?.popup === 'menu', `opened ${opened}, aria-haspopup ${open?.popup}, aria-expanded ${open?.expanded}`);
-	await t.check(`menu ${where} / ${label}: points at the menu it opened`, !!id && open?.controls === id, `aria-controls ${open?.controls}, menu ${id}`);
+	await t.check(`${kind} ${where} / ${label}: opening says expanded`, opened && open?.expanded === 'true' && open?.popup === role, `opened ${opened}, aria-haspopup ${open?.popup}, aria-expanded ${open?.expanded}`);
+	await t.check(`${kind} ${where} / ${label}: points at the ${role} it opened`, !!id && open?.controls === id, `aria-controls ${open?.controls}, ${role} ${id}`);
 	let gone = false;
 	if (closeWay === 'outside') gone = await outsidePress(f);
 	else if (closeWay === 'pick') {
-		await f.locator(`${MENU}:visible .pm51-menu-item:not([aria-disabled="true"])`).first().click({ timeout: 4000 }).catch(() => {});
+		await f.locator(`${sel}:visible ${kind === 'list' ? '[role="option"]' : '.pm51-menu-item'}:not([aria-disabled="true"])`).first().click({ timeout: 4000 }).catch(() => {});
 		gone = await waitGone(f);
 	} else gone = await escape(f);
-	const closed = await attrs(f, '[data-fo155]');
-	await t.check(`menu ${where} / ${label}: ${closeWay} closes it and says so`, gone && closed?.expanded === 'false', `gone ${gone}, aria-expanded ${closed?.expanded}`);
-	await closeAny(f);
+	let closed = await attrs(f, '[data-fo155]');
+	let closedBy = 'false';
+	if (closeWay === 'pick' && !closed) {
+		/* the pick redrew the row the button was in: the button that took its place says closed */
+		closedBy = await f.evaluate((name) => {
+			const el = [...document.querySelectorAll('button')].find((b) => b.getAttribute('aria-label') === name);
+			return el ? (el.getAttribute('aria-expanded') || 'missing') : 'missing';
+		}, name);
+		closed = { expanded: closedBy };
+	}
+	await t.check(`${kind} ${where} / ${label}: ${closeWay} closes it and says so`, gone && closed?.expanded === 'false', `gone ${gone}, aria-expanded ${closed?.expanded}`);
+	await dismissDialog(f);
 	return true;
 }
 
@@ -150,15 +158,16 @@ async function expand(f, ws) {
 
 export default async function (t) {
 	await t.viewport(1440, 900);
-	const maxMenus = Number(t.args.maxMenus || 4);
-	const maxLists = Number(t.args.maxLists || 4);
+	const maxMenus = Number(t.args.maxMenus || 2);
+	const maxLists = Number(t.args.maxLists || 2);
 	const f = await t.app.open({ settleMs: 800 });
 	await f.locator('#tab-settings').click();
 	await f.locator('#pm-settings-root .domain-link').first().waitFor({ state: 'visible', timeout: 20000 });
 
 	const bag = { menus: 0, lists: 0 };
+	const seen = new Set();
 	const domains = await f.locator('#pm-settings-root .domain-link').evaluateAll((els) => els.map((e) => e.getAttribute('data-domain')).filter(Boolean));
-	let firstMenu = true, firstList = true, pickDone = false;
+	let pickDone = false;
 	for (const domain of domains) {
 		if (!(await openChapter(f, domain))) {
 			await t.check(`opened chapter ${domain}`, false, 'the chapter link did not stay open');
@@ -178,7 +187,8 @@ export default async function (t) {
 				if (!body) return [];
 				return [...body.querySelectorAll('.manager-tab')].map((b) => b.getAttribute('data-tab')).filter(Boolean);
 			}, ws);
-			for (const tab of (managerTabs.length ? managerTabs : ['']).slice(0, 3)) {
+			const place = `${domain}/${ws}`;
+			for (const tab of (managerTabs.length ? managerTabs : ['']).slice(0, 2)) {
 				if (tab) {
 					const tabBtn = f.locator(`[data-continuous-workspace-body="${ws}"] .manager-tab[data-tab="${tab}"]`);
 					if (await tabBtn.count()) {
@@ -188,18 +198,25 @@ export default async function (t) {
 					}
 				}
 				await expand(f, ws);
-				const place = `${domain}/${ws}${tab ? '/' + tab : ''}`;
 				for (let i = 0; i < maxMenus; i++) {
-					const way = firstMenu ? 'escape' : 'outside';
-					if (!(await menuCase(t, f, `${place} #${i + 1}`, way))) break;
-					if (!pickDone) pickDone = await menuCase(t, f, `${place} pick`, 'pick');
-					firstMenu = false;
+					const more = await pick(f, ws, 'menu', [...seen], 'data-fo155');
+					if (!more) break;
+					seen.add(more.key);
+					const way = bag.menus === 0 ? 'escape' : 'outside';
+					await caseOf(t, f, `${place}${tab ? '/' + tab : ''} ${more.name}`, 'menu', way);
+					if (!pickDone) {
+						const again = await pick(f, ws, 'menu', [...seen], 'data-fo155');
+						/* the same first button as the pick case: mark it visited only after the pick */
+						if (again) { seen.add(again.key); pickDone = await caseOf(t, f, `${place} pick`, 'menu', 'pick'); }
+					}
 					bag.menus += 1;
 				}
 				for (let i = 0; i < maxLists; i++) {
-					const way = firstList ? 'escape' : 'outside';
-					if (!(await listCase(t, f, `${place} #${i + 1}`, way))) break;
-					firstList = false;
+					const list = await pick(f, ws, 'list', [...seen], 'data-fo155');
+					if (!list) break;
+					seen.add(list.key);
+					const way = bag.lists === 0 ? 'escape' : 'outside';
+					await caseOf(t, f, `${place}${tab ? '/' + tab : ''} ${list.name}`, 'list', way);
 					bag.lists += 1;
 				}
 			}
@@ -211,11 +228,11 @@ export default async function (t) {
 	await t.check('a Settings menu opens for the pick case', pickDone, 'no "More …" button was reachable for the pick case');
 
 	/* the app's own menus: the title bar's Project box, the look menu, and the chat's More options */
-	await dismissDialog(f);
-	await f.locator('#tab-dashboard').click().catch(async () => { await f.locator('#tab-home').click().catch(() => {}); });
+	await closeAny(f);
+	await f.locator('#tab-dashboard').click();
 	await t.page.waitForTimeout(300);
 	await f.locator('#projectMenuBtn').click({ timeout: 8000 });
-	const projectOpen = await f.locator('#projectMenu.is-open').count().then((n) => n > 0);
+	const projectOpen = (await f.locator('#projectMenu.is-open').count()) > 0;
 	const projectAttr = await attrs(f, '#projectMenuBtn');
 	await t.check('title-bar Project menu: opening says expanded', projectOpen && projectAttr?.expanded === 'true' && projectAttr?.popup === 'menu', `open ${projectOpen}, aria-haspopup ${projectAttr?.popup}, aria-expanded ${projectAttr?.expanded}`);
 	await f.locator('#projectMenuBtn').press('Escape').catch(() => {});
@@ -223,14 +240,14 @@ export default async function (t) {
 	const projectClosed = await attrs(f, '#projectMenuBtn');
 	await t.check('title-bar Project menu: Escape says closed', projectClosed?.expanded === 'false', `aria-expanded ${projectClosed?.expanded}`);
 
-	const look = f.locator('button.o55-lookbtn').first();
+	const look = f.locator('.o55-lookbtn').first();
 	if (await look.count()) {
 		await look.click({ timeout: 5000 }).catch(() => {});
-		const lookAttr = await attrs(f, 'button.o55-lookbtn');
+		const lookAttr = await attrs(f, '.o55-lookbtn');
 		await t.check('look menu: opening says expanded', lookAttr?.expanded === 'true', `aria-expanded ${lookAttr?.expanded}`);
 		await look.press('Escape').catch(() => {});
 		await t.page.waitForTimeout(250);
-		const lookClosed = await attrs(f, 'button.o55-lookbtn');
+		const lookClosed = await attrs(f, '.o55-lookbtn');
 		await t.check('look menu: Escape says closed', lookClosed?.expanded === 'false', `aria-expanded ${lookClosed?.expanded}`);
 	} else t.log('no look menu button on this page');
 

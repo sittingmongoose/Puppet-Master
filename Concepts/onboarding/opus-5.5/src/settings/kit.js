@@ -113,7 +113,10 @@ PM51.iconBtn = ({ action, data, icon: ic, label, cls, callback, ui, disabled, re
   const act = disabled ? 'data-action="pm51-disabled"' : (callback ? `data-callback="${a(registerAction(callback))}"` : `data-action="${a(action || 'pm51-noop')}"`);
   const why = reason || 'Not available here.';
   const dis = disabled ? ` aria-disabled="true" data-pm51-disabled="1" data-disabled-reason="${a(why)}" data-pm-hover-detail="${a(why)}"` : '';
-  return `<button type="button" class="icon-btn pm51-icon-btn${cls ? ' ' + cls : ''}${disabled ? ' is-disabled' : ''}" ${act} ${ui ? `data-ui-action-id="${a(ui)}"` : ''} ${dataAttrs(data)} aria-label="${a(label || '')}" data-pm-hover-label="${a(label || '')}"${dis}>${icon(ic || 'more')}</button>`;
+  /* a "more" icon button opens a menu (every one in the kit does): it says so, closed, from the moment it renders,
+     because the row that holds it is drawn again after a pick and a fresh button must not lose its state (FO-155) */
+  const pop = (ic || 'more') === 'more' && !disabled ? ' aria-haspopup="menu" aria-expanded="false"' : '';
+  return `<button type="button" class="icon-btn pm51-icon-btn${cls ? ' ' + cls : ''}${disabled ? ' is-disabled' : ''}" ${act} ${ui ? `data-ui-action-id="${a(ui)}"` : ''} ${dataAttrs(data)} aria-label="${a(label || '')}" data-pm-hover-label="${a(label || '')}"${pop}${dis}>${icon(ic || 'more')}</button>`;
 };
 PM51.link = ({ label, action, data, callback, cls, ui }) => {
   const act = callback ? `data-callback="${a(registerAction(callback))}"` : `data-action="${a(action || 'pm51-noop')}"`;
