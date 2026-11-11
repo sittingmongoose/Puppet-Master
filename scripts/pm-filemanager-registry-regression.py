@@ -52,9 +52,11 @@ def main():
         try:
             with contextlib.redirect_stdout(io.StringIO()):
                 checker.main("file.copied")
-        except AssertionError as error:
+        except checker.TableRefusal as error:
+            # Since sweep part 2A every product refusal is a guard-table row: the aggregate registry data
+            # contract refuses through RF01_registry_data with the legacy message (it was an AssertionError).
             prefix = "Storage registry contract failures: "
-            if not str(error).startswith(prefix):
+            if error.row != "RF01_registry_data" or not str(error).startswith(prefix):
                 raise
             if json.loads(str(error)[len(prefix):]) != failures:
                 raise AssertionError("complete checker omitted a registry failure") from error
