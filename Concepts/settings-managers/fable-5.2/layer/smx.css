@@ -258,6 +258,9 @@ html[data-motion="reduced"] #smx-root *, html[data-reduced-motion="1"] #smx-root
   #smx-root .smx-map-how { max-width: none; }
   #smx-root .smx-thing { flex-wrap: wrap; }
   #smx-root .smx-thing-end { flex-basis: 100%; justify-content: flex-end; }
+  /* a row whose end holds only its arrow keeps it beside the row (from the Memory builder) */
+  #smx-root .smx-thing-end:has(> .smx-thing-go:only-child) { flex-basis: auto; }
+  #smx-root .smx-thing:has(> .smx-thing-end > .smx-thing-go:only-child) { flex-wrap: nowrap; }
 }
 
 /* ---- Settings Home: chapters with their state ---------------------------------------------------------------------- */
@@ -296,3 +299,6 @@ html[data-motion="reduced"] #smx-root *, html[data-reduced-motion="1"] #smx-root
 #smx-root .smx-filter:focus-within { border-color: var(--k3-accent); }
 #smx-root .smx-filter .icon, #smx-root .smx-filter .icon svg { width: 15px; height: 15px; stroke: currentColor; }
 #smx-root .smx-filter input { flex: 1; min-width: 0; border: 0; outline: 0; background: transparent; color: var(--k3-text-1); font: inherit; font-size: 12.5px; }
+
+/* a link that ends a sentence keeps its full stop or comma beside it */
+#smx-root .smx-nb { white-space: nowrap; }

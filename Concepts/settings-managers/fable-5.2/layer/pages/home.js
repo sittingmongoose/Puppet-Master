@@ -28,7 +28,9 @@
       const groups = [];
       let g = null;
       for (const c of SMX.chapters) { if (!g || g.name !== c.group) { g = { name: c.group, items: [] }; groups.push(g); } g.items.push(c); }
-      const card = (c) => { let s = null; try { s = c.status ? c.status(ctx) : null; } catch (e) { s = null; } return `<button type="button" class="smx-chapter" data-smx-go="${h(c.id)}"><span class="smx-chapter-icon">${SMX.icon(c.icon)}</span><span class="smx-chapter-copy"><span class="smx-chapter-name">${h(c.title)}</span><span class="smx-chapter-blurb">${h(c.blurb || '')}</span></span>${s ? `<span class="smx-chapter-status">${ui.status(s.text, s.tone)}</span>` : ''}</button>`; };
+      // a chapter that says nothing about itself still shows when something of its own needs the person
+      const waiting = (c) => needs.filter((n) => n.chapter === c.id || (n.fix && typeof n.fix.go === 'string' && (n.fix.go === c.id || n.fix.go.startsWith(c.id + '/'))));
+      const card = (c) => { let s = null; try { s = c.status ? c.status(ctx) : null; } catch (e) { s = null; } if (!s) { const w = waiting(c); if (w.length) s = { tone: w.some((n) => n.tone !== 'info') ? 'attention' : 'info', text: `${w.length} need${w.length === 1 ? 's' : ''} you` }; } return `<button type="button" class="smx-chapter" data-smx-go="${h(c.id)}"><span class="smx-chapter-icon">${SMX.icon(c.icon)}</span><span class="smx-chapter-copy"><span class="smx-chapter-name">${h(c.title)}</span><span class="smx-chapter-blurb">${h(c.blurb || '')}</span></span>${s ? `<span class="smx-chapter-status">${ui.status(s.text, s.tone)}</span>` : ''}</button>`; };
       return [
         { key: 'summary', html: ui.summary({ icon: needs.some((n) => n.tone !== 'info') ? 'alert' : 'check', tone: needs.some((n) => n.tone !== 'info') ? 'attention' : 'ready', lines: [
           needs.length ? `Puppet Master is working. ${ui.b(needs.length === 1 ? 'One thing' : needs.length + ' things')} could use a moment of yours.` : 'Everything is set up and working.',

@@ -181,7 +181,7 @@
     host.addEventListener('input', onInput);
     host.addEventListener('change', onChange);
     host.addEventListener('keydown', onKey);
-    for (const ev of ['click', 'change', 'input', 'keyup']) host.addEventListener(ev, () => soon(), true);
+    for (const ev of ['click', 'change', 'input', 'keyup', 'focusout']) host.addEventListener(ev, () => soon(), true);
     let intent = 0;
     const warmable = (t) => { const b = t && t.closest && t.closest('[data-smx-do]'); return b && SMX.warmers[b.getAttribute('data-smx-do')] ? b : null; };
     const warmUp = (b) => { try { SMX.warm(SMX.warmers[b.getAttribute('data-smx-do')](b)); } catch (e) { /* it opens on the click instead */ } };
@@ -247,15 +247,23 @@
     render(true);
     if (scrollEl && !opts.keepScroll) scrollEl.scrollTop = typeof opts.top === 'number' ? opts.top : 0;
     if (SMX.reveal) setTimeout(() => revealSetting(SMX.reveal), 60);
-    else if (SMX.anchor) setTimeout(() => { const n = host.querySelector(`[data-smx-anchor="${W.CSS.escape(SMX.anchor)}"]`); if (n) n.scrollIntoView({ block: 'start' }); }, 60);
+    else if (SMX.anchor) setTimeout(() => { const n = host.querySelector(`[data-smx-anchor="${W.CSS.escape(SMX.anchor)}"]`); if (n) { for (let d = n.closest('details'); d; d = d.parentElement && d.parentElement.closest('details')) d.open = true; bring(n, 'start'); } }, 60);
     SMX.report && SMX.report('state');
   };
   SMX.back = () => { const t = trail.pop(); if (t) SMX.go(t.route, { replace: true, top: t.top }); else { const m = match(SMX.route); SMX.go((m && (m.page.parent || m.page.chapter)) || 'home', { replace: true }); } };
+  /* Bring a node into view by moving the page's own scroller. scrollIntoView also scrolls the app's window (the title
+     bar slid out by 47 px), and nothing brought it back; found by the Memory builder. */
+  function bring(n, where) {
+    if (!n || !scrollEl) return;
+    const a = n.getBoundingClientRect(), b = scrollEl.getBoundingClientRect();
+    scrollEl.scrollTop += where === 'center' ? (a.top + a.height / 2) - (b.top + b.height / 2) : a.top - b.top - 10;
+  }
+  SMX.bring = bring;
   function revealSetting(id) {
     const row = host.querySelector(`[id="setting-${W.CSS.escape(id)}"], [data-setting-id="${W.CSS.escape(id)}"], [data-smx-covers~="${W.CSS.escape(id)}"]`);
     if (!row) return false;
     for (let d = row.closest('details'); d; d = d.parentElement && d.parentElement.closest('details')) d.open = true;
-    row.scrollIntoView({ block: 'center' });
+    bring(row, 'center');
     row.classList.add('smx-flash'); setTimeout(() => row.classList.remove('smx-flash'), 1800);
     return true;
   }
@@ -316,7 +324,8 @@
     // two blocks with one key would be drawn as one (the second would replace the first): the later one gets a suffix
     const seen = new Set();
     const uniq = (b) => { let k = b.key, n = 1; while (seen.has(k)) k = `${b.key}~${++n}`; seen.add(k); b.key = k; return b; };
-    const push = (b) => { if (b && b.html) out.push(uniq(b)); };
+    const glue = (html) => html.replace(/(<button type="button" class="smx-word"[^>]*>[^<]*<\/button>)([.,;:!?])/g, '<span class="smx-nb">$1$2</span>');
+    const push = (b) => { if (b && b.html) { b.html = glue(b.html); out.push(uniq(b)); } };
     const lead = p.lead ? p.lead(ctx) : [];
     for (const b of (lead || [])) push(b);
     // A planned page whose manager draws lists and cards of its own, not rebuilt in this cut: say so, and give the way
@@ -351,6 +360,7 @@
     return out;
   }
   let drawn = { route: null, keys: [], html: {}, sig: {} };
+  const typingIn = (n) => { const a = D.activeElement; return !!a && n.contains(a) && a.matches('input:not([type="checkbox"]):not([type="radio"]):not([type="button"]):not([type="submit"]), textarea, [contenteditable="true"]') && !a.matches('[data-smx-search], [data-smx-input]'); };
   function render(force) {
     if (!host || SMX.view !== 'new') return;
     let m = match(SMX.route); if (!m) { SMX.route = 'home'; m = match('home'); }
@@ -385,6 +395,9 @@
       if (!n) {
         n = D.createElement('div'); n.className = 'smx-block'; n.setAttribute('data-smx-block', b.key); n.innerHTML = b.html;
         drawn.html[b.key] = b.html; drawn.sig[b.key] = sig;
+      } else if (drawn.sig[b.key] !== sig && typingIn(n)) {
+        /* someone is typing or dragging in this block: redrawing it would take the field from under the caret (a
+           nickname lost focus after two letters). It is redrawn when the field is left. */
       } else if (drawn.sig[b.key] !== sig) {
         const act = D.activeElement && n.contains(D.activeElement) ? D.activeElement : null;
         const focusKey = act ? (act.getAttribute('data-smx-key') || act.id || '') : '';
