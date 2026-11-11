@@ -1151,10 +1151,11 @@
       project.push(row('Undo', w('cv.undo', { until: untilWord() }), 'chat'));
     }
     const fp = fullPath(s), r = placeRoot(s);
-    const loc = [row(w('np.rv.runsOn'), comp(d.runsOn).name + (d.runsOn === 'here' ? ' (' + comp('here').detail + ')' : ''), 'where', { field: 'runsOn' }),
+    const def = PJX.work ? PJX.work.npDef(s) : d.runsOn;
+    const loc = [row(w('np.rv.runsOn'), comp(def).name + (def === 'here' ? ' (' + comp('here').detail + ')' : ''), 'where', { field: 'wk:np:def' }),
       row(w('wk.rv.choice'), PJX.work ? PJX.work.npChoice(s) : 'Auto', 'where', { field: 'wk:np:mode' }),
       row(w('wk.rv.allowed'), PJX.work ? andList(PJX.work.npAllowed(s).map((x) => comp(x).name)) : null, 'where', { field: 'wk:np:allow' }),
-      row(w('wk.rv.home'), comp(d.runsOn).name, 'where'),
+      row(w('wk.rv.home'), comp(d.runsOn).name, 'where', { field: 'runsOn' }),
       row(w('np.rv.files'), fp && (named || filesStay(s)) ? fp + (holderName(s) && holderName(s) !== comp(d.runsOn).name ? ' on ' + holderName(s) : '') : null, 'where', { field: 'files', code: true })];
     // the room is the chosen place's: shown once the place is (never beside "Not chosen yet")
     if (!filesStay(s) && r && fp && named) loc.push(row(w('np.rv.room'), r.free ? w('np.loc.free', { free: r.free }) : null, 'where'));
@@ -1348,7 +1349,7 @@
     const glyph = { new: 'seed', folder: 'folder', online: 'cloud', device: 'server', restore: 'history', chat: 'chat' }[d.way] || 'seed';
     const inside0 = d.way === 'online' ? (inside(s) || {}).result || {} : info || {};
     return {
-      id: slugId + '-' + PJX.uid('n').split('-').pop(), name, glyph, active: false, lifecycle, order: PJX.all().length, runsOn: d.runsOn,
+      id: slugId + '-' + PJX.uid('n').split('-').pop(), name, glyph, active: false, lifecycle, order: PJX.all().length, runsOn: PJX.work ? PJX.work.npDef(s) : d.runsOn,
       home: d.runsOn, work: { mode: (d.work && d.work.mode) || 'auto', by: d.work && d.work.mode === 'chosen' ? 'Jared' : null, allowed: PJX.work ? PJX.work.npAllowed(s) : [d.runsOn] }, workers: [],
       stack: (info && info.stack) || [], where, opened: 'Just added', openedRank: -0.5,
       activity: listed ? { key: 'idle', word: 'Ready', text: d.way === 'restore' ? 'Restored from a backup · plan or open it' : 'Ready to plan in the Planning Wizard', at: 'just now', runs: 0 } : { key: 'waiting', word: 'Setup didn’t finish', text: '', at: 'just now', runs: 0 },
@@ -1385,7 +1386,7 @@
       backup_retention: d.backup.dest === 'none' ? null : d.backup.keep === 'custom' ? Object.assign({ kind: 'custom' }, d.backup.keepCustom) : { kind: 'standard' }, secrets_in_draft: false,
       // pm.work_placement.project_policy.v1: requested_mode chosen sends new work to default_computer; there is no other
       // Project-level Computer (a single run's pin is placement_choice, on the run)
-      requested_mode: (d.work && d.work.mode) || 'auto', default_computer: d.runsOn, allowed_computers: PJX.work ? PJX.work.npAllowed(s) : [d.runsOn], records_home: d.runsOn
+      requested_mode: (d.work && d.work.mode) || 'auto', default_computer: PJX.work ? PJX.work.npDef(s) : d.runsOn, allowed_computers: PJX.work ? PJX.work.npAllowed(s) : [d.runsOn], records_home: d.runsOn
     };
   }
 

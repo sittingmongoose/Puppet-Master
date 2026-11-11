@@ -813,7 +813,11 @@
     const loc = h('div.pjx-np-loc', { role: 'group', 'aria-label': w('np.loc.filesTitle') }, cap(w('np.loc.filesTitle')));
     const stay = NPx.filesStay(s);
     if (stay) put(loc, line(null, w('np.loc.runsOnFixed', { computer: cn }), { icon: NPx.comp(d.runsOn).glyph, after: link(w('np.loc.change'), () => NPx.open(s, NPx.sections(s)[0]), { key: 'where:runsChange' }) }));
-    if (PJX.work) put(box, PJX.work.npBlock(s, { defSeg: stay ? null : runsOnSeg(s, 'where:runsOn') }));
+    if (PJX.work) put(box, PJX.work.npBlock(s));
+    // (N2) the records home is its own answer, apart from the default Computer: where Puppet Master keeps the Project's
+    // plans, chats and history (its Home Server), and where its files go
+    const homeSeg = stay ? null : runsOnSeg(s, 'where:runsOn');
+    if (homeSeg) put(loc, h('div.pjx-np-field', null, cap(w('np.loc.runsOn')), homeSeg, hint(w('np.loc.homeHint'))));
     const ch = d.way === 'chat' ? NPx.chatOf(d.chat.id) : null;
     if (ch && ch.runsOn !== d.runsOn) put(loc, line('info', w('np.loc.chatMove', { chat: ch.title, chatComputer: NPx.comp(ch.runsOn).name, computer: cn })));
     if (stay) {

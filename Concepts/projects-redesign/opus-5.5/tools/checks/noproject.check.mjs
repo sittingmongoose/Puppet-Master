@@ -127,6 +127,9 @@ export const tests = {
 		await t.page.waitForTimeout(600);
 		await t.text(f.locator('#projectMenuLabel'), 'harbor');
 		await t.check('no no-project chat is drawn over it', !(await NP(f)));
+		// (F4) and an empty chat is open there: PMConcept7's own New thread, with no messages yet
+		await t.app.until(t, f, 'an empty chat opens in harbor', () => { const st = document.querySelector('#pmw-chat56 .chat-stage'); return !!st && /^New chat$/.test(((st.querySelector('.chat-header .pmx-chat-title') || {}).textContent || '').trim()) && st.querySelectorAll('.message').length === 0; }, null, 8000);
+		await t.shot('other-project-empty-chat', 'harbor after New chat › harbor: an empty chat (LOOK: F4)');
 	},
 	async 'chooser: both choices, neither preselected'(t) {
 		const f = await t.app.open(t);

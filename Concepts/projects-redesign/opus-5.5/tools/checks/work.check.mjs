@@ -75,6 +75,34 @@ export const tests = {
 		const after2 = { sub: await workSub(f), mode: await f.evaluate(() => window.PJX.get('tastebook').work.mode), def: await f.evaluate(() => window.PJX.get('tastebook').runsOn) };
 		await t.check('starting a pinned run leaves the Project Auto with This computer as its default', /^Auto/.test(after2.sub) && after2.mode === 'auto' && after2.def === 'here', JSON.stringify(after2));
 
+		// (N1) a person's pin to a Computer the Project stops allowing waits with its reason; nothing moves by itself
+		await t.app.click(t, f, '[data-c-key="p:work"]');
+		await t.page.waitForTimeout(200);
+		await t.app.tick(t, f, 'wk:allow:studio');
+		await t.text(f.locator('[data-plate="work"] .pjxc-form').first(), /Lane docs · build the site is pinned to Studio Mac\. If Studio Mac isn’t allowed, it waits/);
+		await t.app.click(t, f, '[data-plate="work"] [data-c-key="f:save"]');
+		await t.app.until(t, f, 'saved: Studio Mac is no longer allowed', () => /^This computer and Home NAS$/.test(((Array.from(document.querySelectorAll('[data-plate="work"] .pmu-fact')).find((x) => /^Allowed/.test(x.textContent)) || {}).querySelector?.('.pmu-factv') || {}).textContent || ''), null, 10000);
+		const stale = await f.evaluate(() => { const r = document.querySelectorAll('[data-plate="work"] .pjx-wk-row'); const at = (i) => ({ state: r[i].getAttribute('data-state'), text: r[i].querySelector('.pjx-wk-where').textContent }); return { lane: at(3), photos: at(2), lw: window.PJX.get('tastebook').workers[3] }; });
+		await t.check('the pinned row waits, says why, and still shows what was asked for', stale.lane.state === 'waiting' && /^Chosen: Studio Mac by Jared · Waiting: Studio Mac is no longer allowed for tastebook$/.test(stale.lane.text) && stale.lw.c === 'studio' && stale.lw.queued === true, JSON.stringify(stale));
+		await t.check('started work on Studio Mac keeps it and says so', stale.photos.state === 'kept' && /no longer allowed for new work; this task started there and keeps it/.test(stale.photos.text), JSON.stringify(stale.photos));
+		await f.evaluate(() => { const el = document.querySelector('[data-plate="work"] [data-c-key="wk:pin:3"]'), sc = el.closest('.pjxc-scroll'); sc.scrollTop += el.getBoundingClientRect().top - sc.getBoundingClientRect().top - sc.clientHeight / 2; document.documentElement.scrollTop = 0; document.body.scrollTop = 0; });
+		await t.page.waitForTimeout(250);
+		await t.app.click(t, f, '[data-plate="work"] [data-c-key="wk:pin:3"]', { wait: 350, noScroll: true });
+		const menu2 = await f.evaluate(() => Array.from(document.querySelectorAll('.pmr-menu.is-open [role="menuitem"]')).map((x) => x.textContent.replace(/\s+/g, ' ').trim()));
+		await t.check('pinning it elsewhere offers only the Computers still allowed', menu2.length === 3 && !menu2.some((x) => /Studio Mac/.test(x)), menu2.join(' | '));
+		await t.page.keyboard.press('Escape');
+		await t.page.waitForTimeout(250);
+		await t.crop('stale-pin', f.locator('[data-plate="work"]'), 'Lane docs waits: Studio Mac is no longer allowed for tastebook (LOOK: N1 after)');
+		await t.app.click(t, f, '[data-plate="work"] [data-c-key="wk:why:3"]');
+		await t.page.waitForTimeout(300);
+		await t.text(dlg, /Why this waits/);
+		await t.text(dlg, /Jared pinned this to Studio Mac, and Studio Mac is no longer allowed for tastebook\. So it waits/);
+		await t.text(dlg, /never moves a pinned task to another Computer by itself/);
+		await t.check('a waiting pin’s Why doesn’t say the pin wins', !/A person’s choice wins/.test(await dlg.textContent()));
+		await t.shot('why-stale', 'Why this waits: pinned to a Computer no longer allowed (LOOK: N1 after)');
+		await t.app.click(t, f, '.pjx-dlg .pjx-btn', { hasText: 'Follow the Project’s choice (Auto)', noScroll: true });
+		await t.app.until(t, f, 'following the Project’s choice, it no longer waits', () => { const r = document.querySelectorAll('[data-plate="work"] .pjx-wk-row')[3]; return !!r && !r.getAttribute('data-state') && /Auto · picks a Computer when it starts/.test(r.textContent); }, null, 10000);
+
 		// the Project form: one Computer picker, the default, with its two jobs in plain words
 		await t.app.click(t, f, '[data-c-key="p:work"]');
 		await t.page.waitForTimeout(200);
@@ -96,6 +124,22 @@ export const tests = {
 		await t.text(f.locator('[data-plate="work"] .pmu-cardsub').first(), /Chosen: Studio Mac by Jared/);
 		const lf = await workFacts(f);
 		await t.check('loom: Chosen Studio Mac, and Studio Mac is its default Computer', lf.some((x) => /^Default ComputerStudio Mac · new work goes here/.test(x)), lf.join(' | '));
+		// (N3) work started under loom's Chosen keeps its Computer, and its Why says so after the default moves
+		await t.app.click(t, f, '[data-plate="work"] [data-c-key="p:startrun"]', { wait: 350 });
+		await t.app.click(t, f, '.pjx-dlg .pjx-btn.is-primary', { hasText: 'Start', noScroll: true });
+		await t.app.until(t, f, 'loom’s run started on Studio Mac', () => /Run the tests/.test(((document.querySelectorAll('[data-plate="work"] .pjx-wk-row')[0]) || {}).textContent || ''), null, 10000);
+		await t.app.click(t, f, '[data-c-key="p:work"]');
+		await t.page.waitForTimeout(200);
+		await t.app.click(t, f, '[data-c-key="wk:def:here"]');
+		await t.app.click(t, f, '[data-plate="work"] [data-c-key="f:save"]');
+		await t.app.until(t, f, 'loom saved: Chosen: This computer', () => /Chosen: This computer by Jared/.test((document.querySelector('[data-plate="work"] .pmu-cardsub') || {}).textContent || ''), null, 10000);
+		await t.app.click(t, f, '[data-plate="work"] [data-c-key="wk:why:0"]');
+		await t.page.waitForTimeout(300);
+		const lw = await dlg.textContent();
+		await t.check('Why names where it was sent and the choice in force then', /Why Studio Mac/.test(lw) && /It started on Studio Mac when loom’s new work was Chosen: Studio Mac by Jared\. Started work keeps its Computer\./.test(lw) && /loom’s new work is now Chosen: This computer by Jared\. That applies to work that hasn’t started\./.test(lw), lw.slice(0, 400));
+		await t.check('Why on project-chosen work never says “for this task only” or restates the new default as the old one', !/for this task only/.test(lw) && !/because loom’s new work is Chosen/.test(lw) && !/A person’s choice wins/.test(lw), lw.slice(0, 400));
+		await t.shot('why-loom', 'loom after its default moved: Why on work started under the old Chosen (LOOK: N3 after)');
+		await t.page.keyboard.press('Escape');
 	},
 	async 'New Project: Where it lives offers the work choice, Auto by default'(t) {
 		const f = await t.app.open(t);
@@ -106,10 +150,16 @@ export const tests = {
 		await t.check('Auto is chosen by default', await f.evaluate(() => document.querySelector('[data-c-key="wk:np:mode:auto"]').getAttribute('aria-checked') === 'true'));
 		await t.visible(f.locator('[data-c-key="wk:np:allow:homenas"]'), 'allowed Computers are a person’s choice');
 		await t.app.click(t, f, '[data-c-key="wk:np:mode:chosen"]');
-		const np = await f.evaluate(() => ({ title: ((document.querySelector('[data-c-key="wk:np:mode:chosen"]') || {}).textContent || '').trim(), def: (document.querySelector('[data-c-key^="where:runsOn:"][aria-checked="true"]') || {}).textContent, text: (document.querySelector('.pjx-wk-np') || {}).textContent || '', rv: Array.from(document.querySelectorAll('.pjxc-review dt')).map((x) => x.textContent.trim() + '=' + x.nextElementSibling.textContent.trim()).filter((x) => /^(New work|Default Computer)/.test(x)) }));
+		const np = await f.evaluate(() => ({ title: ((document.querySelector('[data-c-key="wk:np:mode:chosen"]') || {}).textContent || '').trim(), def: (document.querySelector('[data-c-key^="wk:np:def:"][aria-checked="true"]') || {}).textContent, text: (document.querySelector('.pjx-wk-np') || {}).textContent || '', rv: Array.from(document.querySelectorAll('.pjxc-review dt')).map((x) => x.textContent.trim() + '=' + x.nextElementSibling.textContent.trim()).filter((x) => /^(New work|Default Computer)/.test(x)) }));
 		await t.check('New Project has no second Computer picker', (await computerPickers(f, '.pjx-wk-np')) === 1 && (await f.locator('[data-c-key^="wk:np:chosen"]').count()) === 0);
 		await t.check('New Project: Chosen is the default Computer, This computer', /^Chosen: This computer/.test(np.title) && /^This computer/.test(np.def || '') && np.rv.some((x) => /^New work.*=Chosen: This computer/.test(x)), JSON.stringify(np));
 		await t.check('New Project says the default’s two jobs', /This computer has two jobs\. In Auto it breaks ties\. In Chosen, new Project work runs on it\./.test(np.text));
+		// (N2) the Default Computer is its own answer: picking Studio Mac leaves the records home on This computer
+		await t.app.click(t, f, '[data-c-key="wk:np:def:studio"]');
+		const n2 = await f.evaluate(() => ({ home: (document.querySelector('[data-c-key^="where:runsOn:"][aria-checked="true"]') || {}).textContent, homeCap: ((document.querySelector('[data-c-key^="where:runsOn:"]') || {}).closest?.('.pjx-np-field')?.querySelector('.pjx-np-cap') || {}).textContent, rv: Array.from(document.querySelectorAll('.pjxc-review dt')).map((x) => x.textContent.trim() + '=' + x.nextElementSibling.textContent.trim()).filter((x) => /^(New work|Default Computer|Records home)/.test(x)) }));
+		await t.check('records home stays This computer when the Default Computer is Studio Mac', /^This computer/.test(n2.home || '') && /^Records home/.test(n2.homeCap || '') && n2.rv.some((x) => /^Default Computer.*=Studio Mac/.test(x)) && n2.rv.some((x) => /^New work.*=Chosen: Studio Mac/.test(x)) && n2.rv.some((x) => /^Records home.*=This computer/.test(x)), JSON.stringify(n2));
+		const plan = await f.evaluate(() => { const s = window.PJX.split.session(); if (!s) return null; const x = window.PJX.np.toPlan(s); return { default_computer: x.default_computer, records_home: x.records_home }; });
+		await t.check('the plan keeps them apart too', !!plan && plan.default_computer === 'studio' && plan.records_home === 'here', JSON.stringify(plan));
 		const rv = await f.evaluate(() => Array.from(document.querySelectorAll('.pjxc-review dt')).map((x) => x.textContent.trim()));
 		await t.check('Review names default Computer, new work, allowed and records home', ['Default Computer', 'New work', 'Allowed', 'Records home'].every((k) => rv.some((x) => x.indexOf(k) === 0)), rv.join(' | '));
 		await t.shot('np-where', 'New Project › Where it lives with Where its work runs: one Computer picker (LOOK)');
