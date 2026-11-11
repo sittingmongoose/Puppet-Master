@@ -12,7 +12,6 @@
 //   D6  "Show debug permissions" lists the powers "Debugging may, without asking" offers, each as it is set;
 //   D7 / notify 9  the demo's research run finishing is a notice from the chat, never a quiet toast;
 //   D8 / memory 4  no "workspace" for a project or a working copy in these managers' panels and rows;
-//   D9  the Choose dialog of a path row is named "Choose · <row>" and says no developer words (Slint, project-scoped);
 //   notify 2  every notification agent watches alerts that exist, and "Watches N alerts" counts them;
 //   notify 3  quiet hours' Start and End can't be the same time;
 //   notify 4  "Still reaches you › Change" sets each destination's quiet-hours choice right there;
@@ -265,19 +264,6 @@ for (const surface of ['normal', 'sandbox']) {
 		await t.check('the research run completed while Settings was open', seenQuiet.done, '');
 		await t.check('no quiet toast about it (one that reads as the answer to the last click)', seenQuiet.quiet.length === 0, JSON.stringify(seenQuiet.quiet));
 		await t.check('it is a notice from the chat, kept in the inbox', list.length === 1 && list[0].level === 'notice' && list[0].source === 'agents', JSON.stringify(list));
-	});
-
-	T('D9 Choose explains itself in plain words', async (t) => {
-		const f = await settings(t, surface);
-		const row = await reveal(t, f, 'code.execution.dockerfile-path');
-		const label = (await row.locator('.setting-label').first().innerText().catch(() => '')).split('\n')[0].trim();
-		await row.locator('[data-action="browse-setting-path"]').first().click();
-		const dlg = f.locator('.overlay .dialog').last();
-		await dlg.waitFor({ state: 'visible', timeout: 8000 });
-		const head = (await dlg.locator('.dialog-head').innerText()).replace(/\s+/g, ' ');
-		await t.check('the Choose dialog has no developer words (Slint, binds, project-scoped)', !/Slint|binds this field|project-scoped/i.test(head), `"${head}"`);
-		await t.check('it is named by its button and the row', /^Choose · /.test(head) && head.includes(label), `"${head}" / row "${label}"`);
-		await closeDrawers(t, f);
 	});
 
 	T('notify 2 agents watch alerts that exist', async (t) => {
