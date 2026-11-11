@@ -515,9 +515,21 @@
     ['prune', 'Prune faded notes', 'Notes past their fade time go to Recently forgotten, where they can still be restored.', 'trash', () => 'Nothing had faded yet.']
   ];
   const tidyBody = () => { const t = mem().tidy; const n = mem().candidates.length; return PM51.panelSection('Chores', PM51.rows(CHORES.map(([k, label, help, ic]) => ({ label, help: t[k] ? `${help} Last run ${t[k]}.` : help, action: { label: t[k] ? 'Run again' : 'Run', icon: ic, action: 'pm51-memory-chore', data: { chore: k } } })).concat([{ label: 'Review candidates to forget', help: n ? `${n} waiting for you to keep or forget.` : 'Nothing waiting.', action: n ? { label: 'Review', icon: 'eye', action: 'pm51-memory-candidates' } : null }]))) + PM51.note('Example only: these chores change nothing outside this preview.', 'info'); };
+  /* A panel that redraws its body after a button in it is pressed keeps the focus on that button (or the panel): the
+     old button left the page, focus fell to the page itself, and Escape, which a panel takes only from inside it, no
+     longer closed it (B11 memory 10: after a chore in "Tidy up memories", Escape did nothing). */
+  function redrawKeepingFocus(wrap, html) {
+    const b = wrap.querySelector('.pm51-panel-body'); if (!b) return;
+    const was = document.activeElement, inside = was && b.contains(was);
+    const key = inside ? [...was.attributes].filter(x => x.name === 'data-action' || /^data-(chore|id|key|index|setting)$/.test(x.name)).map(x => `[${x.name}="${cssEscape(x.value)}"]`).join('') : '';
+    b.innerHTML = html;
+    if (!inside) return;
+    const again = (key && b.querySelector(key)) || wrap.querySelector('.drawer, [role="dialog"]');
+    if (again) { if (!again.matches('button, [href], input, select, textarea, [tabindex]')) again.setAttribute('tabindex', '-1'); try { again.focus({ preventScroll: true }); } catch (e) { again.focus(); } }
+  }
   PM51.on('memory-tidy', () => {
     const wrap = PM51.panel({ title: 'Tidy up memories', eyebrow: 'Keeping & privacy', icon: 'wand', summary: 'Keep memory quick and accurate. None of these delete a note for good.', body: tidyBody() });
-    wrap._pm51Rerender = () => { const b = wrap.querySelector('.pm51-panel-body'); if (b) b.innerHTML = tidyBody(); };
+    wrap._pm51Rerender = () => redrawKeepingFocus(wrap, tidyBody());
   });
   PM51.on('memory-chore', el => {
     const c = CHORES.find(x => x[0] === ds(el, 'chore')); if (!c) return;
@@ -543,7 +555,7 @@
       ? PM51.panelSection('Review each one', PM51.list(c.map(x => ({ title: x.title, meta: `${String(x.meta || '').replace(/^This thread\b/, 'One chat')} · ${x.why}`, end: `<span class="pm51-memory-pair">${PM51.btn({ label: 'Keep', small: true, action: 'pm51-memory-candidate', data: { id: x.id, keep: '1' } })}${PM51.btn({ label: 'Forget', small: true, action: 'pm51-memory-candidate', data: { id: x.id, keep: '0' } })}</span>` }))))
       : PM51.panelSection('Review each one', PM51.note('Nothing left to review.')); };
     const wrap = PM51.panel({ title: 'Candidates to forget', subtitle: 'Keep anything that still matters. Forgotten items stay recoverable for 30 days.', body: body(), primaryLabel: 'Done', onPrimary: () => refresh() });
-    wrap._pm51Rerender = () => { const b = wrap.querySelector('.pm51-panel-body'); if (b) b.innerHTML = body(); };
+    wrap._pm51Rerender = () => redrawKeepingFocus(wrap, body());
   });
   PM51.on('memory-candidate', el => {
     const m = mem(); const id = ds(el, 'id'); const keep = ds(el, 'keep') === '1';
@@ -564,7 +576,7 @@
       ? PM51.panelSection('Recently forgotten', PM51.list(f.map(x => ({ title: x.title, meta: `${storeLabel(x.store)} · ${x.type}`, end: PM51.btn({ label: 'Restore', small: true, icon: 'restore', action: 'pm51-memory-unforget', data: { id: x.id } }) }))))
       : PM51.panelSection('Recently forgotten', PM51.note('Nothing to restore.')); };
     const wrap = PM51.panel({ title: 'Recently forgotten', subtitle: 'Restored memories go back to their store unchanged.', body: body(), primaryLabel: 'Done', onPrimary: () => refresh() });
-    wrap._pm51Rerender = () => { const b = wrap.querySelector('.pm51-panel-body'); if (b) b.innerHTML = body(); };
+    wrap._pm51Rerender = () => redrawKeepingFocus(wrap, body());
   });
   PM51.on('memory-unforget', el => {
     const m = mem(); const i = m.forgotten.findIndex(x => x.id === ds(el, 'id')); if (i < 0) return;

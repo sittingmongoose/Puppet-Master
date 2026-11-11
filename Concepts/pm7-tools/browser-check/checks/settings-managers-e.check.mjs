@@ -73,7 +73,7 @@ async function pick(t, f, select, name) {
 	await t.page.waitForTimeout(400);
 }
 async function menuItem(t, f, label) {
-	await f.locator('.popover .menu-item', { hasText: new RegExp(`^\\s*${label}`) }).first().click({ timeout: 8000 });
+	await f.locator('.pm51-menu-item, .popover .menu-item', { hasText: new RegExp(`^\\s*${label}`) }).first().click({ timeout: 8000 });
 	await t.settle();
 	await t.page.waitForTimeout(400);
 }
@@ -266,16 +266,19 @@ for (const surface of ['normal', 'sandbox']) {
 		await go(t, f, 'general', 'notifications');
 		const NB = f.locator(BODY('notifications'));
 		await tab(t, f, 'notifications', 'Events');
-		const r = await f.evaluate(() => { const n = state.notifications; const names = new Set(n.events.map((e) => e.name)); return n.agents.map((g) => ({ name: g.name, events: g.events.slice(), missing: g.events.filter((x) => !names.has(x)) })); });
-		await t.check('every agent watches only alerts on the Events list', r.every((g) => g.missing.length === 0), JSON.stringify(r));
-		for (const g of r) {
-			await NB.locator('.pm51-item', { hasText: g.name }).first().click();
+		const agents = await NB.locator('[data-action="pm51-notifications-group"]').evaluateAll((xs) => xs.map((x) => ({ id: x.dataset.id, name: (x.querySelector('.pm51-item-title') || {}).textContent?.trim() || '', watched: ((x.querySelector('.pm51-item-meta') || {}).textContent || '').split(' · ')[0].split(', ').map((y) => y.trim()).filter(Boolean) })));
+		await t.check('the Events tab lists the notification agents', agents.length >= 3, JSON.stringify(agents.map((g) => g.name)));
+		for (const g of agents) {
+			await NB.locator(`[data-action="pm51-notifications-group"][data-id="${g.id}"]`).first().click();
 			await drawer(f).waitFor({ state: 'visible', timeout: 8000 });
 			await t.page.waitForTimeout(300);
 			const facts = (await drawer(f).locator('.pm51-hero-facts').innerText().catch(() => '')).replace(/\s+/g, ' ');
-			const switches = await drawer(f).locator('[data-action="pm51-notifications-group-event"][aria-checked="true"]').count();
+			const sw = await drawer(f).locator('[data-action="pm51-notifications-group-event"]').evaluateAll((xs) => xs.map((x) => ({ name: x.dataset.event, on: x.getAttribute('aria-checked') === 'true' })));
+			const names = sw.map((x) => x.name), on = sw.filter((x) => x.on).length;
+			const missing = g.watched.filter((w) => !names.includes(w));
 			const n = Number((/Watches\s*(\d+)/.exec(facts) || [])[1] || 0);
-			await t.check(`${g.name}: "Watches ${n}" is the number of alerts switched on in its panel`, n === switches, `facts "${facts}", switches on ${switches}`);
+			await t.check(`${g.name}: every alert it watches is one you have (and can switch off)`, missing.length === 0, `watches ${JSON.stringify(g.watched)}; not on the Events list: ${JSON.stringify(missing)}`);
+			await t.check(`${g.name}: "Watches ${n}" is the number switched on in its panel (${on})`, n === on && on === g.watched.length, `facts "${facts}"`);
 			await closeDrawers(t, f);
 		}
 	});
@@ -285,12 +288,13 @@ for (const surface of ['normal', 'sandbox']) {
 		await go(t, f, 'general', 'notifications');
 		const NB = f.locator(BODY('notifications'));
 		await tab(t, f, 'notifications', 'Quiet hours');
-		const startNow = await f.evaluate(() => state.notifications.quiet.start);
-		await pick(t, f, NB.locator('select[data-key="end"]').first(), startNow);
-		const q = await f.evaluate(() => Object.assign({}, state.notifications.quiet));
+		const chosen = async (key) => NB.locator(`select[data-key="${key}"]`).first().evaluate((s) => s.options[s.selectedIndex].text);
+		const start = await chosen('start');
+		await pick(t, f, NB.locator('select[data-key="end"]').first(), start);
+		const end = await chosen('end');
 		const text = (await NB.innerText()).replace(/\s+/g, ' ');
-		await t.check(`End can't be set to Start (${startNow})`, q.end !== q.start, JSON.stringify(q));
-		await t.check('the page never reads "X to X"', !new RegExp(`${startNow} to ${startNow}`).test(text), text.slice(0, 200));
+		await t.check(`End can't be set to Start (${start})`, end !== start, `end "${end}"`);
+		await t.check('the page never reads "X to X"', !text.includes(`${start} to ${start}`), text.slice(0, 160));
 	});
 
 	T('notify 4 Still reaches you › Change sets it here', async (t) => {
@@ -298,20 +302,24 @@ for (const surface of ['normal', 'sandbox']) {
 		await go(t, f, 'general', 'notifications');
 		const NB = f.locator(BODY('notifications'));
 		await tab(t, f, 'notifications', 'Quiet hours');
+		const value = (await NB.locator('.pm51-row', { has: f.locator('.pm51-row-label', { hasText: /^\s*Still reaches you\s*$/ }) }).first().innerText()).replace(/\s+/g, ' ');
+		const dests = Number((/of (\d+) destinations/.exec(value) || [])[1] || 0);
 		await NB.locator('[data-action="pm51-notifications-quiet-dests"]').first().click();
 		await t.settle();
 		await t.page.waitForTimeout(600);
 		const activeTab = (await NB.locator('.pm51-tabs .manager-tab.active').first().innerText()).trim();
 		const open = await f.locator('.drawer-wrap').count();
 		const selects = open ? await drawer(f).locator('select[data-action="pm51-notifications-dest-quiet"]').count() : 0;
-		const dests = await f.evaluate(() => state.notifications.destinations.length);
 		await t.check('Change keeps you on Quiet hours and opens the choice for every destination', activeTab === 'Quiet hours' && selects === dests && dests > 0, `tab "${activeTab}", panel ${open}, choices ${selects} of ${dests}`);
 		if (selects) {
 			const sel = drawer(f).locator('select[data-action="pm51-notifications-dest-quiet"]').first();
 			const id = await sel.getAttribute('data-dest');
 			await pick(t, f, sel, 'Always deliver');
-			const now = await f.evaluate((i) => state.notifications.destinations.find((d) => d.id === i).quiet, id);
-			await t.check('a choice made there is that destination\'s', now === 'always', `quiet "${now}"`);
+			await closeDrawers(t, f);
+			await NB.locator('[data-action="pm51-notifications-quiet-dests"]').first().click();
+			await drawer(f).waitFor({ state: 'visible', timeout: 8000 });
+			const now = await drawer(f).locator(`select[data-dest="${id}"]`).first().evaluate((s) => s.options[s.selectedIndex].text);
+			await t.check('a choice made there is kept for that destination', now === 'Always deliver', `now "${now}"`);
 		}
 		await closeDrawers(t, f);
 	});
@@ -321,51 +329,86 @@ for (const surface of ['normal', 'sandbox']) {
 		await go(t, f, 'general', 'notifications');
 		const NB = f.locator(BODY('notifications'));
 		await tab(t, f, 'notifications', 'Sounds');
-		const before = await f.evaluate(() => ({ n: state.notifications.sounds.length, built: state.notifications.sounds.find((s) => /^Built-in/.test(String(s.source || '')) && (state.notifications.events || []).some((e) => e.sound === s.name)) }));
-		// Replace file on a built-in sound that an alert uses, saved without a file
-		const s = before.built;
-		await NB.locator(`[data-action="pm51-notifications-sound-menu"][data-id="${s.id}"]`).first().click();
-		await menuItem(t, f, 'Replace file');
-		await f.locator('.overlay .dialog').last().waitFor({ state: 'visible', timeout: 8000 });
-		const renameBox = await f.locator('.overlay .dialog input[name="name"]').count();
-		await f.locator('.overlay .dialog .dialog-footer .btn.primary').last().click();
-		await t.page.waitForTimeout(600);
-		const after = await f.evaluate((id) => { const x = state.notifications.sounds.find((y) => y.id === id); return { source: x.source, name: x.name }; }, s.id);
-		await t.check('Replace file offers no rename (Rename tells its alerts; this dialog did not)', renameBox === 0, `name fields ${renameBox}`);
-		await t.check(`Replace file saved with no file leaves ${s.name} a built-in sound`, after.source === s.source && after.name === s.name, JSON.stringify(after));
-		await closeDrawers(t, f);
+		const library = async () => (await NB.innerText()).replace(/\s+/g, ' ');
+		const menus = NB.locator('[data-action="pm51-notifications-sound-menu"]');
+		// a built-in sound (its "Use for events" facts say Source Built-in)
+		let id = null, name = '';
+		for (let i = 0; i < Math.min(await menus.count(), 12) && !id; i++) {
+			const m = menus.nth(i);
+			await m.scrollIntoViewIfNeeded();
+			await m.click();
+			if (!(await f.locator('.pm51-menu-item', { hasText: /^\s*Replace file/ }).count())) { await t.page.keyboard.press('Escape'); await t.page.waitForTimeout(250); continue; }
+			await menuItem(t, f, 'Use for events');
+			await drawer(f).waitFor({ state: 'visible', timeout: 8000 });
+			const facts = (await drawer(f).locator('.pm51-hero-facts').innerText().catch(() => '')).replace(/\s+/g, ' ');
+			if (/Source\s*Built-in/.test(facts)) { id = await m.getAttribute('data-id'); name = ((await drawer(f).locator('.pm51-panel-title').innerText().catch(() => '')) || '').replace(/^Use\s+|\s+for$/g, '').trim(); }
+			await closeDrawers(t, f);
+		}
+		await t.check('found a built-in sound to replace', !!id, '');
+		if (id) {
+			const m = NB.locator(`[data-action="pm51-notifications-sound-menu"][data-id="${id}"]`).first();
+			await m.click();
+			await menuItem(t, f, 'Replace file');
+			await f.locator('.overlay .dialog').last().waitFor({ state: 'visible', timeout: 8000 });
+			const renameBox = await f.locator('.overlay .dialog input[name="name"]').count();
+			await f.locator('.overlay .dialog .dialog-footer .btn.primary').last().click();
+			await t.page.waitForTimeout(700);
+			await closeDrawers(t, f);
+			await NB.locator(`[data-action="pm51-notifications-sound-menu"][data-id="${id}"]`).first().click();
+			await menuItem(t, f, 'Use for events');
+			await drawer(f).waitFor({ state: 'visible', timeout: 8000 });
+			const facts = (await drawer(f).locator('.pm51-hero-facts').innerText().catch(() => '')).replace(/\s+/g, ' ');
+			const title = (await drawer(f).locator('.pm51-panel-title').innerText().catch(() => '')).trim();
+			await closeDrawers(t, f);
+			await t.check('Replace file offers no rename (Rename tells its alerts; that dialog did not)', renameBox === 0, `name fields ${renameBox}`);
+			await t.check(`Replace file saved with no file leaves ${name} built in, under its name`, /Source\s*Built-in/.test(facts) && title.includes(name), `facts "${facts}", title "${title}"`);
+		}
 		// Upload file saved with no file
-		await NB.locator('[data-action="pm51-notifications-add-sound"]').first().click().catch(async () => { await f.evaluate(() => dispatchAction('pm51-notifications-add-sound', null)); });
+		const before = await library();
+		await NB.locator('[data-action="pm51-notifications-add-sound"]').first().scrollIntoViewIfNeeded();
+		await NB.locator('[data-action="pm51-notifications-add-sound"]').first().click();
 		await t.page.waitForTimeout(300);
-		if (await f.locator('.popover .menu-item', { hasText: /Upload file/ }).count()) await menuItem(t, f, 'Upload file');
+		if (await f.locator('.pm51-menu-item', { hasText: /Upload file/ }).count()) await menuItem(t, f, 'Upload file');
 		await f.locator('.overlay .dialog').last().waitFor({ state: 'visible', timeout: 8000 });
 		const sourceBox = await f.locator('.overlay .dialog select[name="source"]').count();
+		const nameBox = f.locator('.overlay .dialog input[name="name"]');
+		if (await nameBox.count()) await nameBox.fill('B11 no file');
 		await f.locator('.overlay .dialog .dialog-footer .btn.primary').last().click();
-		await t.page.waitForTimeout(600);
-		const n = await f.evaluate(() => state.notifications.sounds.length);
-		await t.check('Upload file saved with no file adds no sound, and asks no "Source"', n === before.n && sourceBox === 0, `sounds ${before.n} -> ${n}, source fields ${sourceBox}`);
+		await t.page.waitForTimeout(700);
 		await closeDrawers(t, f);
+		const after = await library();
+		await t.check('Upload file asks no "Source", and saved with no file adds no sound', sourceBox === 0 && !after.includes('B11 no file') && after === before, `source fields ${sourceBox}; library changed ${after !== before}`);
 	});
 
 	T('notify 8 words', async (t) => {
 		const f = await settings(t, surface);
 		await go(t, f, 'general', 'notifications');
 		const NB = f.locator(BODY('notifications'));
-		const status = await f.evaluate(() => { const n = state.notifications; n.destinations.push({ id: 'b11-slack', name: 'B11 Slack', type: 'Slack', status: 'setup', address: 'https://hooks.example/x', quiet: 'hold' }); saveState(); PM51.setSel('notifications', 'b11-slack'); PM51.setTab('notifications', 'destinations'); PM51.refresh('notifications'); return true; });
+		await tab(t, f, 'notifications', 'Destinations');
+		await NB.locator('[data-action="pm51-notifications-add-dest"]').first().click();
+		const dlg = f.locator('.overlay .dialog').last();
+		await dlg.waitFor({ state: 'visible', timeout: 8000 });
+		await pick(t, f, dlg.locator('select[name="type"]'), 'Slack');
+		await dlg.locator('input[name="name"]').fill('B11 Slack');
+		await dlg.locator('input[name="address"]').fill('https://hooks.example.com/b11');
+		await dlg.locator('.dialog-footer .btn.primary').click();
 		await t.settle();
-		await t.page.waitForTimeout(600);
+		await t.page.waitForTimeout(700);
 		const head = (await NB.locator('.pm51-detail-head').first().innerText().catch(() => '')).replace(/\s+/g, ' ');
-		await t.check('a destination saved and not yet tested never reads "Not set up"', !/Not set up/.test(head) && /not tested/i.test(head), head);
+		await t.check('a destination just saved, not yet tested, never reads "Not set up"', /B11 Slack/.test(head) && !/Not set up/.test(head) && /not tested/i.test(head), head);
 		await tab(t, f, 'notifications', 'Quiet hours');
-		const more = NB.locator('.pm51-advanced, details').first();
-		if (await more.count()) { const sum = more.locator('summary, .pm51-advanced-toggle').first(); if (await sum.count()) await sum.click().catch(() => {}); }
-		await t.page.waitForTimeout(400);
-		const qtext = await f.evaluate((sel) => document.querySelector(sel).textContent.replace(/\s+/g, ' '), BODY('notifications'));
+		const qtext = await NB.evaluate((b) => b.textContent.replace(/\s+/g, ' '));
 		await t.check('Quiet hours names notification agents, not "escalation groups"', !/escalation groups?/i.test(qtext), '');
-		const sub = await f.evaluate(() => { dispatchAction('pm51-notifications-import-events', document.createElement('button')); const d = document.querySelector('.overlay .dialog-sub'); return d ? d.textContent : ''; });
+		await tab(t, f, 'notifications', 'Events');
+		const fold = NB.locator('details.pm51-advanced', { has: f.locator('[data-action="pm51-notifications-import-events"]') }).first();
+		if (!(await fold.evaluate((d) => d.open))) { await fold.locator('summary').first().scrollIntoViewIfNeeded(); await fold.locator('summary').first().click(); await t.page.waitForTimeout(400); }
+		const imp = fold.locator('[data-action="pm51-notifications-import-events"]').first();
+		await imp.scrollIntoViewIfNeeded();
+		await imp.click();
+		await t.page.waitForTimeout(500);
+		const sub = (await f.locator('.overlay .dialog-sub').last().innerText().catch(() => '')).trim();
 		await t.check('Import events names no workspace', !!sub && !/workspace/i.test(sub), `"${sub}"`);
 		await closeDrawers(t, f);
-		void status;
 	});
 
 	T('memory 1 Pause between rounds is under Chat Room', async (t) => {
@@ -424,6 +467,28 @@ for (const surface of ['normal', 'sandbox']) {
 		const raw = /\b(CurrentThread|Blocker|Constraint)\b/;
 		await t.check('no inner name (CurrentThread, Blocker, Constraint) is shown or editable', !r.inputs.some((v) => raw.test(v)) && !raw.test(r.text), JSON.stringify(r.inputs));
 		await t.check('each kind reads as its name', r.keys.join('|') === 'What a chat is working on|Blockers|Rules the work follows', JSON.stringify(r.keys));
+		await closeDrawers(t, f);
+	});
+
+	T('memory 10 Escape closes Tidy up memories after a chore', async (t) => {
+		const f = await settings(t, surface);
+		await go(t, f, 'memory', 'context-memory');
+		const MB = f.locator(BODY('context-memory'));
+		await tab(t, f, 'context-memory', 'Keeping & privacy');
+		const open = MB.locator('[data-action="pm51-memory-tidy"]').first();
+		await open.scrollIntoViewIfNeeded();
+		await open.click();
+		await drawer(f).waitFor({ state: 'visible', timeout: 8000 });
+		await t.page.waitForTimeout(400);
+		const chore = drawer(f).locator('[data-action="pm51-memory-chore"]').first();
+		await chore.click();
+		await t.page.waitForTimeout(500);
+		const where = await f.evaluate(() => { const a = document.activeElement; return a ? (a.closest('.drawer-wrap') ? 'in the panel' : a.tagName.toLowerCase()) : 'none'; });
+		await t.page.keyboard.press('Escape');
+		await t.page.waitForTimeout(700);
+		const still = await f.locator('.drawer-wrap:not([data-closing])').count();
+		await t.check('after a chore the focus stays in the panel', where === 'in the panel', `focus ${where}`);
+		await t.check('Escape then closes the panel', still === 0, `${still} panel(s) open`);
 		await closeDrawers(t, f);
 	});
 
