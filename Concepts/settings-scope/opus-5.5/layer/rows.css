@@ -62,6 +62,12 @@ html[data-o55-nier="on"][data-psx-end] #panel-settings .o55-about.psx-end .psx-e
 #panel-settings .psx-line.psx-src { color: var(--k3-text-2); }
 
 /* ---- the Changed mark (7.3) ------------------------------------------------------------------------------------ */
+/* review A-r3 R3-2: while a row shows no Changed mark, its label keeps the mark's place (the mark's own size, measured
+   per look by rows.js), so the label wraps the same way with or without it and the row never grows when Changed
+   appears. In Retro Light at 860 the mark had wrapped under the label and pushed every row below down 20px */
+html[data-psx-end]:not([data-psx-end="today"]) #panel-settings .setting-row.o55-row > .setting-copy > .setting-label:not(:has(> .o55-changed:not(.o55-needed):not([hidden])))::after {
+  content: ''; display: block; flex: none; width: var(--psx-chg-w, 0px); height: var(--psx-chg-h, 0px); pointer-events: none;
+}
 /* every option but Today raises the word and the risk word to 11.5px */
 html[data-psx-changed]:not([data-psx-changed="today"]) #panel-settings :is(.o55-changed, .o55-risk) { font-size: 11.5px; }
 #panel-settings .psx-board :is(.o55-changed, .o55-risk) { font-size: 11.5px; }

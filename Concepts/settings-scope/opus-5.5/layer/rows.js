@@ -480,6 +480,63 @@
     if (!fontsReady && D.fonts && !D.__psxFontsHooked) { D.__psxFontsHooked = true; D.fonts.ready.then(() => { endKey = ''; soon(); }); }
   }
   PSX.fitEndColumn = () => { endKey = ''; fitEndColumn(); return H.style.getPropertyValue('--psx-end-w'); };
+  /* review A-r3 R3-2: a row's label keeps the Changed mark's place while there is no mark (rows.css), so the row never
+     grows when Changed appears. The place is the mark's own size in the current look and Changed option, measured
+     with a real mark in a real label, once per look (and again when the fonts finish loading) */
+  let chgKey = '';
+  function fitChangedSlot() {
+    const host = D.getElementById('panel-settings') || PSX.root(); if (!host) return;
+    const fontsReady = !D.fonts || D.fonts.status === 'loaded';
+    const key = [H.getAttribute('data-theme'), !!(W.PM_NIER && W.PM_NIER.on && W.PM_NIER.on()), S.opt.changed, fontsReady].join('|');
+    if (key === chgKey) return;
+    chgKey = key;
+    const row = D.createElement('div'); row.className = 'setting-row o55-row psx-measure'; row.setAttribute('data-o55-foreign', ''); row.setAttribute('aria-hidden', 'true');
+    row.style.cssText = 'position:absolute;left:-9999px;top:0;visibility:hidden;display:block;width:600px';
+    row.innerHTML = `<div class="setting-copy"><div class="setting-label"><span>x</span><span class="o55-changed" data-psx-measure>${mark('change-modified')}<span>Changed</span></span></div></div>`;
+    host.appendChild(row);
+    const b = row.querySelector('[data-psx-measure]').getBoundingClientRect();
+    row.remove();
+    // the mark's exact size, not rounded: a slot even half a pixel taller than the mark moved the row by that much
+    H.style.setProperty('--psx-chg-w', b.width + 'px');
+    H.style.setProperty('--psx-chg-h', b.height + 'px');
+    if (!fontsReady && D.fonts) D.fonts.ready.then(() => { chgKey = ''; soon(); });
+  }
+  /* review A-r3: a switch whose job is to change the page (names beside the activity-bar icons, where each setting comes
+     from) reflows everything above it, and the row you clicked could jump hundreds of pixels away from the pointer. For a
+     moment after a click on a switch, that row is held where it was on screen: after each layout, before it is painted
+     (ResizeObserver), and on each frame. Scrolling by hand, a key or the row being redrawn ends the hold */
+  function scrollersOf(el) {
+    const out = [];
+    for (let sc = el.parentElement; sc && sc !== D.body && sc !== H; sc = sc.parentElement) { const cs = W.getComputedStyle(sc); if (/(auto|scroll)/.test(cs.overflowY) && sc.scrollHeight > sc.clientHeight + 1) out.push(sc); }
+    return out;
+  }
+  function holdRow(row) {
+    const chain = scrollersOf(row); if (!chain.length) return;
+    const top0 = row.getBoundingClientRect().top, t0 = performance.now();
+    let done = false;
+    // the row is put back by the innermost scroller that can take the difference, then the next one out
+    const fix = () => {
+      if (done) return;
+      if (!row.isConnected || performance.now() - t0 > 1600) { end(); return; }
+      for (const sc of chain) {
+        const d = row.getBoundingClientRect().top - top0;
+        if (Math.abs(d) < 0.5) break;
+        const was = sc.style.scrollBehavior; sc.style.scrollBehavior = 'auto'; sc.scrollTop += d; sc.style.scrollBehavior = was;
+      }
+    };
+    const ro = new ResizeObserver(fix);
+    ro.observe(row); chain.forEach((sc) => [...sc.children].forEach((c) => ro.observe(c)));
+    const tick = () => { fix(); if (!done) requestAnimationFrame(tick); };
+    const end = () => { done = true; ro.disconnect(); chain.forEach((sc) => { sc.removeEventListener('wheel', end); sc.removeEventListener('touchmove', end); }); D.removeEventListener('keydown', end, true); };
+    chain.forEach((sc) => { sc.addEventListener('wheel', end, { passive: true }); sc.addEventListener('touchmove', end, { passive: true }); });
+    D.addEventListener('keydown', end, true);
+    requestAnimationFrame(tick);
+  }
+  D.addEventListener('click', (e) => {
+    const tg = e.target && e.target.closest && e.target.closest('#pm-settings-root .setting-row .toggle');
+    if (tg) holdRow(tg.closest('.setting-row'));
+  }, true);
+  PSX.fitChangedSlot = () => { chgKey = ''; fitChangedSlot(); return [H.style.getPropertyValue('--psx-chg-w'), H.style.getPropertyValue('--psx-chg-h')]; };
 
   /* ------------------------------------------------------------------ decorate everything (rAF-batched) */
   let raf = 0;
@@ -492,6 +549,7 @@
     H.setAttribute('data-psx-changed', S.opt.changed);
     H.toggleAttribute('data-psx-scope-labels', !!S.scopeLabels);
     try { fitEndColumn(); } catch (e) { console.error('[psx end column]', e); }
+    try { fitChangedSlot(); } catch (e) { console.error('[psx changed slot]', e); }
     if (W.PM_PAGES && W.PM_PAGES.current === 'settings') { placeFolderRow(); headLine(); }
     rootEl.querySelectorAll('.o55-about').forEach((b) => { try { decorateButton(b); } catch (e) { console.error('[psx rows]', e); } });
     try { plainWords(rootEl); } catch (e) { console.error('[psx words]', e); }
