@@ -40,22 +40,9 @@
   const everydayModel = () => { const v = val('ai.models.default-model'); return v ? word('ai.models.default-model', v) : 'the everyday model'; };
   const uncover = (page, ids) => { if (page && page.covers) for (const id of ids) delete page.covers[id]; };
 
-  /* The framework's "show me that setting" centres the row with scrollIntoView, which also scrolls the app's window
-     (the title bar slides out of sight and nothing brings it back). While one of this lane's pages is showing, the
-     window is put back at once; the page's own scroller keeps the row in view. */
-  if (!SMX.shellGuard) {
-    SMX.shellGuard = true;
-    W.addEventListener('scroll', (e) => {
-      const t = e.target; if (t !== DOC && t !== DOC.body && t !== DOC.documentElement) return;
-      if (SMX.view !== 'new' || !/^(memory|planning)(\/|$)/.test(String(SMX.route || ''))) return;
-      if (DOC.body.scrollTop) DOC.body.scrollTop = 0;
-      if (DOC.documentElement.scrollTop) DOC.documentElement.scrollTop = 0;
-    }, true);
-  }
 
-  /* Jump to a place on the page by moving the page's own scroller. (The framework's own jump uses scrollIntoView,
-     which also moves the app's window and pushes the title bar out of sight.) */
-  const jump = (anchor) => { const sc = SMX.scroller && SMX.scroller(); const n = sc ? sc.querySelector(`[data-smx-anchor="${anchor}"]`) : null; if (n) sc.scrollTop += n.getBoundingClientRect().top - sc.getBoundingClientRect().top - 14; };
+  /* jump to a place on the page (the page's own scroller moves, through the framework) */
+  const jump = (anchor) => { const sc = SMX.scroller && SMX.scroller(); const n = sc ? sc.querySelector(`[data-smx-anchor="${anchor}"]`) : null; if (n) SMX.bring(n, 'start'); };
   SMX.act('lane-jump', (el) => jump(el.getAttribute('data-to')));
 
   /* When one of PMConcept7's own flows makes a thing (the persona and crew set-up helpers, Duplicate), the manager

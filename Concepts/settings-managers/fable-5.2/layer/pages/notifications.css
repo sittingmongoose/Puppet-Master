@@ -8,7 +8,6 @@
 #smx-root .smx-nt-say + .pm51-rows { margin-top: 4px; }
 #smx-root .smx-nt-seg { margin: 0 0 12px; }
 /* the kit draws the words of a two- or three-way choice at 10.5px; on these pages they are 11.5px */
-#smx-root .smx-page[data-smx-route^="notifications"] .pm51-seg button { font-size: 11.5px; }
 #smx-root .smx-page .pm51-row-control .o55-num .text-control { width: 84px; }
 #smx-root .smx-nt-seg + .smx-quiet-line { margin-bottom: 10px; }
 #smx-root .smx-page .pm51-section-head > .btn { flex: none; white-space: nowrap; }

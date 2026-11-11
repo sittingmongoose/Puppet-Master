@@ -23,17 +23,7 @@
   const seg = (value, options, o) => { try { return kit().segmented(value, options, o); } catch (e) { return ''; } };
   /* PMConcept7's rows keep their ids, values and controls; their words are replaced as the row is drawn, so every
      keep-for choice reads the same way. {id: {label, help, action, unit}} (the same small helper as in source.js) */
-  const reword = (map) => {
-    SMX.words = Object.assign(SMX.words || {}, map);
-    if (SMX.wordsOn) return; SMX.wordsOn = true;
-    const text = (row, sel, to) => { const n = row.querySelector(sel); if (!n) return; const t = [...n.childNodes].find((c) => c.nodeType === 3 && c.nodeValue.trim()); if (t) { if (t.nodeValue !== to) t.nodeValue = to; } else if (!n.firstChild) n.textContent = to; };
-    const fix = (row) => { const w = SMX.words[String(row.id || '').slice(8)]; if (!w) return; if (w.label) text(row, '.setting-label', w.label); if (w.help) text(row, '.setting-description', w.help); if (w.action) { const b = row.querySelector('.setting-control .btn span, .setting-control .o55-textbtn'); if (b && b.textContent !== w.action) b.textContent = w.action; } if (w.unit) { const u = row.querySelector('.o55-unit'); if (u && u.textContent !== w.unit) u.textContent = w.unit; } };
-    const ROW = '.setting-row[id^="setting-"]';
-    const scan = (n) => { if (!n || n.nodeType !== 1) return; if (n.matches(ROW)) fix(n); n.querySelectorAll(ROW).forEach(fix); };
-    const start = () => { const host = SMX.host && SMX.host(); if (!host) { W.setTimeout(start, 300); return; } new W.MutationObserver((list) => { for (const m of list) { const el = m.target && m.target.nodeType === 1 ? m.target : m.target && m.target.parentElement; const row = el && el.closest ? el.closest(ROW) : null; if (row) fix(row); for (const n of m.addedNodes) scan(n); } }).observe(host, { childList: true, subtree: true, characterData: true }); scan(host); };
-    start();
-  };
-  reword({
+  SMX.reword({
     'system.advanced.chat-history-retention': { label: 'Keep chats', help: 'Until you delete them. The two choices below tidy quiet chats away and give you time to change your mind.' },
     'general.interaction.thread-archive-days': { label: 'Move a chat to the archive when untouched for', help: '0 never archives. An archived chat is kept, out of the way.' },
     'general.interaction.thread-retention-days': { label: 'Keep deleted chats for', help: 'A deleted chat can be brought back until then.' },

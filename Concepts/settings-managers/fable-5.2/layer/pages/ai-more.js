@@ -59,11 +59,7 @@
      a short animation, so just after a selection the detail of the thing shown before is still there, and its menu is
      that thing’s menu. This answers only once the right detail is showing. */
   const moreFor = (name) => (b) => { for (const dt of b.querySelectorAll('.pm51-detail')) { const t = dt.querySelector('.pm51-detail-title'); if (!t || t.textContent.trim().indexOf(name) !== 0) continue; const btn = [...dt.querySelectorAll('button')].find((x) => /^More actions$/.test((x.getAttribute('aria-label') || x.textContent || '').trim())); if (btn) return btn; } return null; };
-  /* The Settings engine goes back to its parked place with a short animation. Until it has arrived nothing may
-     “follow” it, or the page would jump to the manager the engine is just leaving. */
-  const untilParked = () => { let n = 0; SMX.borrowing = true; const look = () => { let home = true; try { home = !!eng().getState().home; } catch (e) { home = true; } if (home || ++n > 80) { SMX.borrowing = false; SMX.fresh(); SMX.soon(30); } else W.setTimeout(look, 40); }; look(); };
-  const afterLending = () => { let n = 0; const watch = () => { if (++n > 3000) return; if (SMX.borrowing) { W.setTimeout(watch, 25); return; } let home = true; try { home = !!eng().getState().home; } catch (e) { home = true; } if (!home) untilParked(); }; W.setTimeout(watch, 25); };
-  const borrowItem = (name, specOf, item) => { SMX.warmers[name] = specOf; SMX.act(name, async (el) => { const ok = await SMX.borrow(el, specOf(el)); if (!ok) return; afterLending(); for (let i = 0; i < 14; i++) { if (pickMenu(item)) return; await SMX.wait(60); } }); };
+  const borrowItem = (name, specOf, item) => { SMX.warmers[name] = specOf; SMX.act(name, async (el) => { const ok = await SMX.borrow(el, specOf(el)); if (!ok) return; for (let i = 0; i < 14; i++) { if (pickMenu(item)) return; await SMX.wait(60); } }); };
 
   /* ================================================================== Web research: what the manager knows */
   const WEB = { matrix: 'web.providers.capability-matrix', status: 'web.providers.provider-status', keys: 'web.providers.web-api-keys', search: 'web.providers.web-search-enable', offline: 'web.fetch.air-gap-mode', ask: 'web.fetch.cost-warning-threshold', backup: 'web.providers.provider-order', errors: 'web.providers.health-disclosure' };
@@ -417,9 +413,8 @@
     mediaAsked = true;
     W.setTimeout(() => {
       if (SMX.borrowing || SMX.view !== 'new' || mediaTidy(SMX.fresh())) { mediaAsked = false; return; }
-      try { eng().navigate('ai', 'media'); } catch (e) { /* the pages then show what the state holds */ }
-      try { eng().dispatchAction('home'); } catch (e) { /* the next redraw parks it */ }
-      untilParked();
+      // one short visit: the manager tidies its data when it draws, and the framework hands the engine back
+      if (!SMX.visit({ domain: 'ai', ws: 'media', manager: 'media' })) mediaAsked = false;
     }, 0);
   };
   const mRoute = (st, id) => mediaRoutes(st).find((r) => r.id === id) || null;

@@ -82,7 +82,7 @@
     if (SMX.borrowing || SMX.view !== 'new' || Date.now() - asked < 4000 || tries > 3) return;
     asked = Date.now(); tries++;
     /* its Sounds tab: that draw also makes the place where the volume is kept */
-    W.setTimeout(() => { try { SMX.warm(Object.assign({}, NOTIF, { tab: 'sounds' })); } catch (e) { /* the readers cope with the older shape */ } SMX.fresh(); SMX.soon(30); }, 0);
+    W.setTimeout(() => { try { SMX.visit(Object.assign({}, NOTIF, { tab: 'sounds' })); } catch (e) { /* the readers cope with the older shape */ } SMX.fresh(); SMX.soon(30); }, 0);
   };
 
   /* destinations */

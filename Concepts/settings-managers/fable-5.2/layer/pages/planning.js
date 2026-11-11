@@ -34,18 +34,6 @@
   const withCurrent = (list, v) => (!v || list.includes(v) ? list : [v, ...list]);
   /* rows that say what a choice owned by another page is set to; the link goes to wherever that setting is placed */
   const elsewhere = (title, help, rows) => ui.card({ cls: 'smx-things-card', title, help, body: `<div class="smx-things">${rows.filter(Boolean).map(([name, v, go, reveal]) => { const w = reveal ? SMX.where(reveal) : null; const to = w ? w.route : go; return `<div class="smx-thing is-clickable" role="button" tabindex="0" data-smx-go="${h(to)}"${reveal ? ` data-smx-reveal="${h(reveal)}"` : ''}><span class="smx-thing-copy"><span class="smx-thing-name">${h(name)}</span><span class="smx-thing-sub">${h(v)} · ${h(SMX.pageName(to))}</span></span><span class="smx-thing-end"><span class="smx-thing-go">${SMX.icon('go')}</span></span></div>`; }).join('')}</div>` });
-  /* The framework's "show me that setting" centres the row with scrollIntoView, which also scrolls the app's window
-     (the title bar slides out of sight and nothing brings it back). While one of this lane's pages is showing, the
-     window is put back at once; the page's own scroller keeps the row in view. */
-  if (!SMX.shellGuard) {
-    SMX.shellGuard = true;
-    W.addEventListener('scroll', (e) => {
-      const t = e.target; if (t !== DOC && t !== DOC.body && t !== DOC.documentElement) return;
-      if (SMX.view !== 'new' || !/^(memory|planning)(\/|$)/.test(String(SMX.route || ''))) return;
-      if (DOC.body.scrollTop) DOC.body.scrollTop = 0;
-      if (DOC.documentElement.scrollTop) DOC.documentElement.scrollTop = 0;
-    }, true);
-  }
 
   /* when PMConcept7's template helper makes or saves a template, the manager selects it; the page follows */
   const follow = (st, key, routeOf) => {

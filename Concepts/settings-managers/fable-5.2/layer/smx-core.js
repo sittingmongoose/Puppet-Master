@@ -250,10 +250,13 @@
     if (!leaving) return false;
     const now = W.performance.now();
     if (st.home || now - leaving.at > 2500) { leaving = null; return false; }
-    if (tripMarked()) return true;
-    const sent = st.domain !== leaving.domain || (st.detailSetting || '') !== leaving.detail;
-    if (sent || (st.workspace !== leaving.ws && now - leaving.at > 900)) { leaving = null; return false; }   // follow it
-    if (now - leaving.asked > 120) { leaving.asked = now; try { eng().dispatchAction('home'); } catch (e) { /* engine not ready */ } }   // the trip was dropped: ask again
+    if (tripMarked()) return true;   // on its way: whatever its hidden page names meanwhile is not a place it was sent to
+    // The mark is gone and it is not Home: the trip was dropped. PMConcept7 drops it when something navigates, so a
+    // place that differs from the one it was leaving is a place it was SENT to: follow it. (A link pressed just after a
+    // menu closed used to be swallowed here.) The same place means the trip was dropped for nothing: ask again.
+    const sent = st.domain !== leaving.domain || st.workspace !== leaving.ws || (st.detailSetting || '') !== leaving.detail;
+    if (sent) { leaving = null; return false; }
+    if (now - leaving.asked > 200) { leaving.asked = now; try { eng().dispatchAction('home'); } catch (e) { /* engine not ready */ } }
     return true;
   }
   function setView(v) {
@@ -679,6 +682,17 @@
     btn.removeAttribute('aria-busy');
     release(spec, 700, had);
     return ok;
+  };
+  /* Some of PMConcept7's managers tidy their own data the first time they draw (the sound list, the media abilities).
+     A page that reads that data asks for one short visit: the manager is drawn, unseen, and the engine is handed back.
+     spec: {domain, ws, manager, tab}. Two chapters did this by hand, each with its own flag. */
+  SMX.visit = (spec, ms) => {
+    if (SMX.borrowing || SMX.view !== 'new') return false;
+    SMX.borrowing = true; lendGen++;
+    let had = '';
+    try { reach(spec); had = SMX.fresh().detailSetting || ''; } catch (e) { SMX.borrowing = false; return false; }
+    release(spec, ms == null ? 300 : ms, had);
+    return true;
   };
   /* a page names a borrowed control once: the action that runs it and the warm-up share the same description */
   SMX.warmers = {};

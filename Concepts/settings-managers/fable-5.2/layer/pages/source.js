@@ -26,19 +26,9 @@
   const stepList = (list) => { try { return kit().steps(list.filter(Boolean)); } catch (e) { return ''; } };
   /* PMConcept7's rows keep their ids, values and controls; where their words call a working copy a "workspace" (or
      use Git's jargon) the words are replaced as the row is drawn. {id: {label, help, action, unit}} */
-  const reword = (map) => {
-    SMX.words = Object.assign(SMX.words || {}, map);
-    if (SMX.wordsOn) return; SMX.wordsOn = true;
-    const text = (row, sel, to) => { const n = row.querySelector(sel); if (!n) return; const t = [...n.childNodes].find((c) => c.nodeType === 3 && c.nodeValue.trim()); if (t) { if (t.nodeValue !== to) t.nodeValue = to; } else if (!n.firstChild) n.textContent = to; };
-    const fix = (row) => { const w = SMX.words[String(row.id || '').slice(8)]; if (!w) return; if (w.label) text(row, '.setting-label', w.label); if (w.help) text(row, '.setting-description', w.help); if (w.action) { const b = row.querySelector('.setting-control .btn span, .setting-control .o55-textbtn'); if (b && b.textContent !== w.action) b.textContent = w.action; } if (w.unit) { const u = row.querySelector('.o55-unit'); if (u && u.textContent !== w.unit) u.textContent = w.unit; } };
-    const ROW = '.setting-row[id^="setting-"]';
-    const scan = (n) => { if (!n || n.nodeType !== 1) return; if (n.matches(ROW)) fix(n); n.querySelectorAll(ROW).forEach(fix); };
-    const start = () => { const host = SMX.host && SMX.host(); if (!host) { W.setTimeout(start, 300); return; } new W.MutationObserver((list) => { for (const m of list) { const el = m.target && m.target.nodeType === 1 ? m.target : m.target && m.target.parentElement; const row = el && el.closest ? el.closest(ROW) : null; if (row) fix(row); for (const n of m.addedNodes) scan(n); } }).observe(host, { childList: true, subtree: true, characterData: true }); scan(host); };
-    start();
-  };
   const copyBtn = (label, text, what, o) => ui.btn(Object.assign({ label, icon: 'copy', action: 'pm51-servers-copy-text', data: { text, what } }, o || {}));
   const lower = (s) => String(s || '').charAt(0).toLowerCase() + String(s || '').slice(1);
-  reword({
+  SMX.reword({
     [B + 'auto-worktree-new-threads']: { label: 'Give each new chat its own working copy', help: 'Each new chat gets its own branch and working copy on its first message, so an experiment never touches your main files until it is merged.' },
     [B + 'assistant-worktree-base']: { label: 'Chat working copies start from', help: 'The branch a new chat’s working copy is made from.' },
     [B + 'file-manager-follows']: { help: 'The file browser shows the files of the chat you are in, so you always look at the version being edited.' },

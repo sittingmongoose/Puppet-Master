@@ -1,4 +1,3 @@
 /* styles that only the pages in assistant.js need; shared parts are in ../smx.css */
 
 /* the kit draws the words of a two-way choice ("Plain English | Expert") at 10.5px; on these pages they are 11.5px */
-#smx-root .smx-page[data-smx-route^="assistant"] .segmented button { font-size: 11.5px; }

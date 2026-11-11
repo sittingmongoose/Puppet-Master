@@ -302,3 +302,12 @@ html[data-motion="reduced"] #smx-root *, html[data-reduced-motion="1"] #smx-root
 
 /* a link that ends a sentence keeps its full stop or comma beside it */
 #smx-root .smx-nb { white-space: nowrap; }
+
+/* The kit's two- and three-way choices and the "Choose" buttons on path rows are 10.5 px in PMConcept7; nothing on
+   these pages is under 11 px. One rule for every chapter (three chapters had each raised their own). */
+#smx-root .segmented button, #smx-root .pm51-seg button,
+#smx-root .setting-control .btn, #smx-root .setting-control .btn span,
+#smx-root .setting-label .o55-changed, #smx-root .setting-label .o55-changed span,
+#smx-root .setting-label .o55-risk, #smx-root .setting-label .o55-risk span,
+#smx-root .reorder-item, #smx-root .reorder-item span, #smx-root .reorder-item button,
+#smx-root .wpk-fam { font-size: 11.5px; }
