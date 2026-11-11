@@ -328,8 +328,12 @@ The narrow r4 recheck (`REVIEW-concept-A-r4-opus-high.md`) found these; each is 
   it in the first column, beside an empty end column. In Web & Research › Abilities › Browser at 860 that left 129px,
   and "Change" squeezed the value to 36px. The control's line now spans the whole row. The new `detail` part measures
   every detail-card value against its widest word, in every workspace, tab and list item, in three looks at 1024, 860
-  and 640. A value that is narrower is measured again on bare PMConcept7; it passes only when bare gives it no more
-  room. Two such values are the base page's own (long paths in Media & Output, Backup's folder and account at 860).
+  and 640. It picks each item by its id after every redraw and waits until the pick is current and the pane has held
+  still for three frames; an item that never settles fails by name. A value that is narrower than its widest word is
+  measured again on bare PMConcept7 in the same look and width, and is excluded only when bare gives it no more room
+  than the shell's own measured difference in Settings' width (the base page draws its left-panel resizer unless its
+  rail is folded with `data-pmw-home="on"`, so the two pages can differ by a few pixels outside Settings). Each
+  exclusion is written to `run.log` with both widths; they go to stream F.
 - **The model's own choices are labelled.** No Always for push and publish, no For this session for a deletion,
   `/**` covering the folder itself, the file-command and wildcard-program parts of host-dependence, and the whole
   broad list are marked "Concept choice", each with its reason.
