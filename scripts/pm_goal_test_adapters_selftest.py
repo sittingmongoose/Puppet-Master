@@ -277,6 +277,60 @@ def test_storage(s, work):
     s.negative('storage', 'custody_unavailable', lambda: st.authenticate_receipt('TEST_ONLY:absent', {}),
                'custody/unavailable')
 
+    s.negative('storage', 'same_event_id_other_key',
+               lambda: append_one(st, 'dedupe', candidate('dedupe', idempotency_key='TEST_ONLY:key:other'),
+                                  op='TEST_ONLY:op:dedupe-key'), 'append/conflict/scoped_identity')
+
+    def dup_in_group():
+        h = st.reserve('TEST_ONLY:op:dupgroup', dict(tag='dupgroup'))
+        st.append(h, [candidate('dupgroup'), candidate('dupgroup')])
+    s.negative('storage', 'duplicate_in_group', dup_in_group, 'append/duplicate_in_group')
+    s.negative('storage', 'durability_class_unknown', lambda: st.append(
+        st.reserve('TEST_ONLY:op:dclass', dict(tag='dclass')), [candidate('dclass')], durability_class='sync'),
+        'append/durability_class')
+    s.negative('storage', 'append_empty_group', lambda: st.append(
+        st.reserve('TEST_ONLY:op:empty', dict(tag='empty')), []), 'append/nonempty')
+
+    def released():
+        h = st.reserve('TEST_ONLY:op:released', dict(tag='released'))
+        st.release(h)
+        st.append(h, [candidate('released')])
+    s.negative('storage', 'append_after_release', released, 'append/released')
+    s.negative('storage', 'resume_absent', lambda: st.resume('TEST_ONLY:op:none', {}), 'resume/absent')
+    s.negative('storage', 'resume_altered', lambda: st.resume('TEST_ONLY:op:dedupe', dict(tag='other')),
+               'resume/conflict')
+    s.negative('storage', 'terminal_before_receipt', lambda: st.publish_terminal(
+        (lambda h: (st.append(h, [candidate('early')]), h)[1])(st.reserve('TEST_ONLY:op:early', dict(tag='early'))),
+        'TEST_ONLY:terminal', 'early', dict(v=1)), 'terminal/state')
+    s.negative('storage', 'tx_value_over_16kib',
+               lambda: st.transact([dict(table='t', key='big', expected=None, value=dict(blob='x' * 17000))]),
+               'tx/stored_part_cap')
+    s.negative('storage', 'scope_project_empty', lambda: S.scope_partition(dict(scope_kind='project', project_id='')),
+               'scope/project_id')
+    s.negative('storage', 'k_padding_length', lambda: S.k_decode('abcde'), 'key/component_padding')
+
+    def tampered_manifest():
+        copy_root = work / 'storage-tamper-manifest'
+        shutil.copytree(root, copy_root)
+        current = S.decode_canonical((copy_root / 'CURRENT').read_bytes())
+        path = copy_root / current['manifest_ref']
+        raw = bytearray(path.read_bytes())
+        raw[-1] ^= 1
+        path.write_bytes(bytes(raw))
+        S.TestOwnerStorage.open(copy_root)
+    s.negative('storage', 'reopen_tampered_manifest', tampered_manifest, 'open/manifest_hash')
+
+    def corrupt_durable():
+        copy_root = work / 'storage-corrupt-durable'
+        shutil.copytree(root, copy_root)
+        info = next(iter(st.events.values()))
+        path = copy_root / ('segment-%d.seglog' % info['segment_generation'])
+        raw = bytearray(path.read_bytes())
+        raw[info['offset'] + 60] ^= 1
+        path.write_bytes(bytes(raw))
+        S.TestOwnerStorage.open(copy_root)
+    s.negative('storage', 'reopen_corrupt_durable_frame', corrupt_durable, 'recover/durable_prefix_valid')
+
     # cells, CAS, transactions, visibility
     t1 = st.transact([dict(table='t', key='a', expected=None, value=dict(v=1))])
     s.positive('storage', 'cas_create', lambda: st.cell('t', 'a')['version'] == 1 or 1/0)
@@ -357,9 +411,20 @@ def test_storage(s, work):
     s.negative('storage', 'retire_foreign_owner',
                lambda: st.retire_segment(next(x['generation'] for x in st.segments if x['sealed'] and not x['retired']),
                                          S.RetentionOwner(other)), 'retire/owner')
+    s.negative('storage', 'pack_reference_extra_key', lambda: st.read_pack(dict(ref, extra=1),
+               expected_media_type='application/msgpack'), 'pack/reference')
+    s.negative('storage', 'retire_unknown_segment', lambda: st.retire_segment(999, owner), 'retire/segment')
     reopened = S.TestOwnerStorage.open(root)
     s.positive('storage', 'reopen_reads_same_state', lambda: reopened.observe() == st.observe() and
                reopened.read_token() == st.read_token() or 1/0)
+    rest = S.TestOwnerStorage.create(work / 'storage-at-rest')
+    _, out_r, _ = append_one(rest, 'rest')
+    info = rest.events[out_r['event_ids'][0]]
+    path = rest._segment_path(info['segment_generation'])
+    raw = bytearray(path.read_bytes())
+    raw[info['offset'] + 70] ^= 1
+    path.write_bytes(bytes(raw))
+    s.negative('storage', 'read_frame_tampered_at_rest', lambda: rest.read_frame(out_r['event_ids'][0]), 'read/frame_hash')
     return st
 
 
@@ -531,6 +596,50 @@ def test_source(s, work):
         return raw_src
     s.negative('source', 'token_current_hash', lambda: src.acquire(token_mismatch(st.acquire_source())),
                'source/current_hash')
+    def coherent(mutate_state=None, mutate_token=None, mutate_current=None):
+        raw_src = st.acquire_source()
+        state = S.decode_canonical(raw_src['manifest_raw'])
+        if mutate_state:
+            mutate_state(state)
+        raw_src['manifest_raw'] = S.canonical(state)
+        current = S.decode_canonical(raw_src['current_raw'])
+        current['manifest_sha256'] = S.sha256(raw_src['manifest_raw'])
+        if mutate_current:
+            mutate_current(current)
+        raw_src['current_raw'] = S.canonical(current)
+        sel = raw_src['token']['source_selection']
+        sel['current_bytes_sha256'] = S.sha256(raw_src['current_raw'])
+        sel['manifest_bytes_sha256'] = S.sha256(raw_src['manifest_raw'])
+        sel['retired_inputs_sha256'] = S.sha256(S.binding(
+            [[g['segment_generation'], g['first_sequence'], g['last_sequence'], g['proof_sha256']] for g in state['gaps']]))
+        raw_src['gaps'] = state['gaps']
+        if mutate_token:
+            mutate_token(raw_src['token'])
+        return src.acquire(raw_src)
+    s.positive('source', 'coherent_resnapshot_identity', lambda: coherent().complete or 1/0)
+    s.negative('source', 'token_recovery_epoch', lambda: coherent(mutate_token=lambda t: t['source_selection'].update(
+        recovery_epoch=t['source_selection']['recovery_epoch'] + 1)), 'source/recovery_epoch')
+    s.negative('source', 'token_watermarks', lambda: coherent(mutate_token=lambda t: t['source_selection'].update(
+        durable_watermarks_sha256='0' * 64)), 'source/watermarks')
+    s.negative('source', 'token_frontier_revision', lambda: coherent(mutate_token=lambda t: t.update(
+        frontier_revision=t['frontier_revision'] + 1)), 'source/token/frontier_revision')
+    s.negative('source', 'current_generation_mismatch', lambda: coherent(mutate_current=lambda c: c.update(
+        manifest_generation=c['manifest_generation'] + 1)), 'source/manifest_generation')
+
+    def stale_join():
+        raw_src = st.acquire_source()
+        state = S.decode_canonical(raw_src['manifest_raw'])
+        state['clock_last_ms'] += 1
+        raw_src['manifest_raw'] = S.canonical(state)
+        raw_src['token']['source_selection']['manifest_bytes_sha256'] = S.sha256(raw_src['manifest_raw'])
+        src.acquire(raw_src)
+    s.negative('source', 'manifest_without_current_join', stale_join, 'source/current_manifest_join')
+    s.negative('source', 'manifest_instance_substituted', lambda: coherent(mutate_state=lambda x: x.update(
+        storage_instance_id=str(uuid.uuid4()))), 'source/manifest_instance')
+    s.negative('source', 'snapshot_qualification_missing', lambda: src.acquire(dict(st.acquire_source(), qualification=None)),
+               'source/qualification')
+    s.negative('source', 'project_foreign_snapshot', lambda: G.GenericSource(S.TestOwnerStorage.create(
+        work / 'source-foreign')).project(src.acquire(), G.LifecycleReducer(run), select=select), 'project/storage')
     st2 = S.TestOwnerStorage.create(work / 'source-unsupported')
     for tag, kind in (('a', 'goal_test.started'), ('x', 'goal_test.replanned'), ('d', 'goal_test.cancelled')):
         append_one(st2, tag, candidate(tag, event_type=kind, run=run))
@@ -557,6 +666,17 @@ def test_source(s, work):
         assert snap.complete and len(snap.gaps) == 1
     s.positive('source', 'authenticated_gap_continues', gap_positive)
 
+    def gap_mutation(mutate):
+        def state_edit(state):
+            mutate(state['gaps'][0])
+        return state_edit
+    s.negative('source', 'gap_proof_substituted', lambda: coherent(mutate_state=gap_mutation(
+        lambda g: g.update(proof_sha256='0' * 64))), 'source/gap_proof')
+    s.negative('source', 'gap_owner_substituted_resigned', lambda: coherent(mutate_state=gap_mutation(
+        lambda g: (g.update(retention_owner_id='TEST_ONLY:retention-owner:other'),
+                   g.update(proof_sha256=S.RetentionOwner(st).sign(g))))), 'source/gap_owner')
+    s.negative('source', 'retired_segment_without_gap', lambda: coherent(mutate_state=lambda x: x.update(gaps=[])),
+               'source/retired_segments_proved')
     def dropped_gap(raw_src):
         raw_src['gaps'] = []
         return raw_src

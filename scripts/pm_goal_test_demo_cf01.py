@@ -107,7 +107,9 @@ def owner_identity(input_, formula='certified_v3'):
               input_['final_certifier_decision'], str(input_['expected_goal_run_revision']),
               str(input_['goal_run_revision'])]
     k = b'goal_run.certified.v3:' + b''.join(lp(t.encode('utf-8')) for t in tuple_)
-    domain = {'certified_v3': b'pm.goal_run.certified.event_id.v3',
+    if formula == 'unprefixed_key':
+        k = b''.join(lp(t.encode('utf-8')) for t in tuple_)
+    domain = {'certified_v3': b'pm.goal_run.certified.event_id.v3', 'unprefixed_key': b'pm.goal_run.certified.event_id.v3',
               'start_formula': b'pm.goal_run.started.event_id.v3'}[formula]
     e = domain + b'\0' + lp(input_['scope']['scope_partition'].encode('utf-8')) + lp(k)
     return dict(event_id='goal_run.certified.v3:' + hashlib.sha256(e).hexdigest(), idempotency_key=k.decode('utf-8'))
@@ -135,10 +137,12 @@ class StoragePartitionOwner(A.TestOwner):
         super().__init__(registry, **kw)
         self.storage = storage
 
-    def register_route(self, project_id):
+    def register_route(self, project_id, partition_recipe='base64url'):
         event_scope = dict(scope_kind='project', project_id=project_id)
+        partition = (S.scope_partition(event_scope) if partition_recipe == 'base64url'
+                     else 'project~' + project_id.encode('utf-8').hex())
         record = dict(qualification=QUALIFICATION, storage_instance_id=self.storage.storage_instance_id,
-                      project_id=project_id, scope_partition=S.scope_partition(event_scope),
+                      project_id=project_id, scope_partition=partition,
                       route='TEST_ONLY:route:goal_run.certified.v3',
                       owner=dict(owner_id=self.owner_id, owner_epoch=self.owner_epoch,
                                  operation_id='TEST_ONLY:operation:partition-registration'))
@@ -411,7 +415,8 @@ def cause_event(world, values):
 
 
 def run_path(work, *, values=None, source_edit=None, input_edit=None, candidate_edit=None, handle_edit=None,
-             identity_formula='certified_v3', other_storage=False, unregistered=None, drop_descriptor=False):
+             identity_formula='certified_v3', other_storage=False, unregistered=None, drop_descriptor=False,
+             partition_recipe='base64url', identity_wrapper=None, standard_decision='certified'):
     """One complete original path; returns observations or raises the refusal."""
     values = values or default_values()
     if source_edit:
@@ -425,9 +430,9 @@ def run_path(work, *, values=None, source_edit=None, input_edit=None, candidate_
     h['causality'] = (w.causality.owner_id, w.causality.issue(None, dict(qualification=QUALIFICATION,
                                                                          causation_event_id=cause_id), kind='cause'))
     h['native'] = (w.native.owner_id, w.native.issue(None, values['native'], kind='native_certification_source'))
-    h['standard'] = (w.standard.owner_id, w.standard.capture(values['run'], 'certified'))
+    h['standard'] = (w.standard.owner_id, w.standard.capture(values['run'], standard_decision))
     h['goal'] = (w.goal.owner_id, w.goal.issue(None, values['goal'], kind='current_goal'))
-    h['storage_partition'] = (w.partition.owner_id, w.partition.register_route(values['project']))
+    h['storage_partition'] = (w.partition.owner_id, w.partition.register_route(values['project'], partition_recipe))
     if not drop_descriptor:
         h['descriptor'] = (w.descriptor.owner_id, w.descriptor.issue(None, values['descriptor'], kind='descriptor'))
     if unregistered:
@@ -437,6 +442,8 @@ def run_path(work, *, values=None, source_edit=None, input_edit=None, candidate_
         h = handle_edit(w, h)
     identity_handles = {k: v for k, v in h.items() if k != 'causality'}
     identity = (w.identity.owner_id, w.identity.derive_original_identity(w, identity_handles, input_edit))
+    if identity_wrapper:
+        identity = identity_wrapper(w, identity)
     event = w.producer.prepare(w, identity, h, candidate_edit)
     request = dict(kind='TEST_ONLY:goal_run.certified.append', event_id=event['event_id'])
     events, reservation, outcome = w.appender.append_original('TEST_ONLY:operation:certified', request, [event])
@@ -568,6 +575,27 @@ def negatives():
         'producer/payload.goal_run_revision/numrule/integer_type')
     add('partial_payload_witness', dict(candidate_edit=edit_path('payload.payload', dict(goal_run_id='x'))),
         'producer/payload/schema/payload')
+    # Identity joins over the independently issued sources.
+    add('goal_project_differs', dict(source_edit=lambda v: (v['goal'].update(project_id='TEST_ONLY-project-γ'), v)[1]),
+        'identity/project')
+    add('native_goal_differs', dict(source_edit=lambda v: (v['native'].update(goal_id='TEST_ONLY:goal:2'), v)[1]),
+        'identity/goal')
+    add('assignment_other_run', dict(source_edit=lambda v: (v['assignment'].update(
+        goal_run_id='TEST_ONLY:goal_run:other'), v)[1]), 'identity/assignment_run')
+    add('standard_receipt_not_durable', dict(handle_edit=lambda w, h: (w.storage.transact([dict(
+        table='TEST_ONLY:standard_receipt', key='TEST_ONLY:standard:' + S.k_component(default_values()['run']),
+        expected=1, delete=True)]), h)[1]), 'identity/standard_durable')
+    add('standard_exception_decision', dict(standard_decision='certified_with_approved_exception'),
+        'identity/standard_decision')
+    add('partition_lower_hex_recipe', dict(partition_recipe='lower_hex'), 'identity/partition_recomputed')
+    add('unprefixed_identity_key', dict(identity_formula='unprefixed_key'), 'identity/independent_key')
+    add('cause_not_appended', dict(handle_edit=lambda w, h: dict(h, causality=(w.causality.owner_id, w.causality.issue(
+        None, dict(qualification=QUALIFICATION, causation_event_id='TEST_ONLY:event:never-appended'), kind='cause')))),
+        'read/event_unavailable')
+    add('identity_candidate_not_issued', dict(identity_wrapper=lambda w, i: w.identity.resolve(i[1])[1]),
+        'producer/identity_handle')
+    add('identity_from_other_owner', dict(identity_wrapper=lambda w, i: (
+        IdentityOwner(w.registry, w.storage).owner_id, i[1])), 'original/issuer')
     return out
 
 

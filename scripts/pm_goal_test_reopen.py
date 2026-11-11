@@ -269,6 +269,7 @@ def altered_reentry_row(workdir):
 def run_matrix(workdir=None):
     own = workdir is None
     workdir = Path(workdir or tempfile.mkdtemp(prefix='pm-goal-test-matrix-'))
+    workdir.mkdir(parents=True, exist_ok=True)
     rows, failures = [], []
     try:
         for row in MATRIX:

@@ -388,14 +388,18 @@ class Qualifier(A.TestOwner):
             return record
 
 
-def build(route_edit=None, selection_edit=None, method_edit=None, substitute=None):
+def build(route_edit=None, selection_edit=None, method_edit=None, substitute=None, declaration_edit=None,
+          predecessor_pin=None):
     registry = A.OwnerRegistry()
     owners = {}
     realm_handles = []
-    predecessor = pinned(PREDECESSOR)
+    predecessor = pinned(predecessor_pin or PREDECESSOR)
     for realm in sorted(predecessor['realms']):
         owner = RealmOwner(registry)
-        realm_handles.append((owner.owner_id, owner.load(PREDECESSOR, realm)))
+        declarations = None
+        if declaration_edit and realm == SOURCE_REALM:
+            declarations = declaration_edit(copy.deepcopy(predecessor['realms'][realm]))
+        realm_handles.append((owner.owner_id, owner.load(PREDECESSOR, realm, declarations)))
         owners[realm] = owner
     target_owner = RealmOwner(registry)
     target_handle = (target_owner.owner_id, target_owner.load(TARGET_MANIFEST, TARGET_REALM))
@@ -505,6 +509,18 @@ def cases():
         ('method_wrong_profile', dict(method_edit=lambda m: dict(m, profile='TEST_ONLY:other.profile')), 'method/profile'),
         ('method_predecessor_bank', dict(method_edit=lambda m: dict(m, bank=PREDECESSOR['path'])), 'method/bank'),
         ('method_wrong_import', dict(method_edit=lambda m: dict(m, import_ref='TEST_ONLY:original:other')), 'method/import'),
+        ('selection_route_ref_substituted', dict(selection_edit=lambda s: dict(s, route_ref='TEST_ONLY:original:other')),
+         'selection/route_ref'),
+        ('selection_target_manifest_rebound', dict(selection_edit=lambda s: dict(s, target_manifest=dict(
+            TARGET_MANIFEST, path='Plans/goal_run_cancelled_consumer_schema_resources.json'))), 'selection/target_manifest'),
+        ('bank_resource_hash_restamped', dict(declaration_edit=lambda d: (d['resources'][0].update(sha256='0' * 64), d)[1]),
+         'realm/resource_bytes/https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json'),
+        ('bank_uri_rebound', dict(declaration_edit=lambda d: (d['resources'].append(dict(
+            d['resources'][1], retrieval_uri=d['resources'][0]['retrieval_uri'])), d)[1]),
+         'realm/no_rebinding/https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json'),
+        ('bank_network_fallback', dict(declaration_edit=lambda d: dict(d, network_fallback=True)), 'realm/no_network'),
+        ('predecessor_pin_restamped', dict(predecessor_pin=dict(PREDECESSOR, sha256='0' * 64)),
+         'pin/Plans/goal_run_cancelled_consumer_schema_resources.json'),
         ('method_implicit_selection', dict(), 'method/selection_handle'),
         ('method_cross_cast', dict(), 'method/name'),
     ], other
