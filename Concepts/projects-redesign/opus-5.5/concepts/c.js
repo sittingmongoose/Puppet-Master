@@ -514,10 +514,11 @@
   function clashDialog(p) {
     const cl = p.online.clash; if (!cl) return;
     let pick = null, dlg = null;
-    const body = h('div');
+    const body = h('div.pjxc-dlgstack');
     const paint = () => {
       const U = PJX.npui;
-      body.replaceChildren(h('p.pjx-q-lead', { text: W_('pg.cf.lead', { file: cl.files[0], original: p.online.upstream.repo, base: cl.base }) }),
+      // fill() drops the parts that have nothing to say (a Git project has no Jujutsu line): replaceChildren would write "null"
+      fill(body, h('p.pjx-q-lead', { text: W_('pg.cf.lead', { file: cl.files[0], original: p.online.upstream.repo, base: cl.base }) }),
         cl.jj ? U.line('info', W_('pg.cf.jj')) : null,
         U.choices('cf:how', [{ id: 'mine', glyph: 'user', title: W_('pg.cf.mine'), sub: W_('pg.cf.mineSub', { base: cl.base }) }, { id: 'theirs', glyph: 'download', title: W_('pg.cf.theirs'), sub: W_('pg.cf.theirsSub', { original: p.online.upstream.repo }) },
           { id: 'merged', glyph: 'branch', title: W_('pg.cf.merge'), sub: W_('pg.cf.mergeSub') }], pick, (v) => { pick = v; paint(); }, { label: W_('pg.cf.settle') }),
@@ -947,10 +948,10 @@
      Backup owner opens the backup with it. Cancelling reads nothing. YOLO still stops here */
   function checkKitDialog(p) {
     let step = 'stepup', dlg = null;
-    const body = h('div');
+    const body = h('div.pjxc-dlgstack');
     const paint = () => {
       const U = PJX.npui;
-      body.replaceChildren(h('p.pjx-q-lead', { text: W_('pg.kit.lead') }),
+      fill(body, h('p.pjx-q-lead', { text: W_('pg.kit.lead') }),
         step === 'stepup' ? U.line('waiting', W_('pg.kit.stepLead')) : PJX.flow.facts([{ key: 'complete', text: W_('pg.kit.confirmed') }, { key: 'complete', text: W_('pg.kit.found', { name: p.name }) }]),
         step === 'kit' ? U.hint('Concept demo: “Try a different kit” is refused.', 'is-concept') : null,
         U.yoloLine(W_('np.yolo.kit'), { asks: true }));

@@ -108,6 +108,9 @@ html[data-theme^="retro"] .history-flyout .pjx-npg-row, html[data-o55-nier="on"]
 .pjx-wk-allowed { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 6px 14px; }
 .pjx-wk-np { margin-top: 4px; display: flex; flex-direction: column; gap: 8px; padding: 12px; border: 1px solid var(--pmu-rule); border-radius: min(var(--pmu-r-card, 10px), 10px); }
 .pjx-wk-whybody { display: flex; flex-direction: column; gap: 10px; }
+/* a dialog body of separate parts (a lead, a list of choices, a closing line): each stands apart */
+.pjxc-dlgstack { display: flex; flex-direction: column; gap: 12px; }
+.pjxc-dlgstack > .pjx-q-lead { margin: 0; }
 html[data-theme^="retro"] .pjx-wk-np, html[data-o55-nier="on"] .pjx-wk-np { border-radius: 0; }
 
 /* ------------------------------------------------------------------ conversions: picked files, the preview, blockers, report */

@@ -49,10 +49,24 @@ export const tests = {
 		await t.check('the notice says it paused and offers Settle it… and Put everything back', await f.evaluate(() => /Getting the latest paused/.test(document.querySelector('.pjxc-band').textContent) && /Settle it/.test(document.querySelector('.pjxc-band').textContent) && /Put everything back/.test(document.querySelector('.pjxc-band').textContent)));
 		await t.app.click(t, f, '[data-c-key="p:settle"]', { wait: 400 });
 		await t.text(f.locator('.pjx-dlg').first(), /sorter\/rules\.py/);
+		// (r1b) a part with nothing to say is left out, never written as the text "null" (photo-sorter is Git: no Jujutsu line)
+		const nulls = await f.evaluate(() => { const out = [], tw = document.createTreeWalker(document.querySelector('.pjx-dlg'), NodeFilter.SHOW_TEXT); for (let n = tw.nextNode(); n; n = tw.nextNode()) if (/^\s*(null|undefined)\s*$/.test(n.nodeValue)) out.push(n.parentElement.className || n.parentElement.tagName); return out; });
+		await t.check('the clash dialog has no text node reading "null"', nulls.length === 0, nulls.join(' | '));
+		const gaps = await f.evaluate(() => { const kids = Array.from(document.querySelector('.pjx-dlg .pjx-dlg-body > div').children).filter((e) => e.getBoundingClientRect().height > 0); return kids.slice(1).map((e, i) => Math.round(e.getBoundingClientRect().top - kids[i].getBoundingClientRect().bottom)); });
+		await t.check('the lead, the choices and Nothing is sent… stand apart', gaps.length >= 2 && gaps.every((g) => g >= 8), JSON.stringify(gaps));
 		await t.shot('clash', 'Settle the clash in sorter/rules.py: keep yours, take the original’s, or merge by hand (LOOK: F6 after)');
 		await t.app.click(t, f, '.pjx-dlg [data-c-key="cf:how:theirs"]', { noScroll: true });
 		await t.app.click(t, f, f.locator('.pjx-dlg .pjx-btn', { hasText: 'Settle and continue' }), { noScroll: true, wait: 300 });
 		await t.app.until(t, f, 'settled: the rest came in, nothing sent', () => !document.querySelector('[data-c-key="p:settle"]') && /4 not sent yet/.test(document.querySelector('[data-plate="online"]').textContent), null, 10000);
+	},
+	async 'Check the Recovery Kit: no part reads "null" (r1b)'(t) {
+		const f = await t.app.open(t);
+		await t.app.click(t, f, '#pjxc .pjxc-row[data-pid="tastebook"]', { wait: 400 });
+		await t.app.click(t, f, '[data-plate="backup"] [data-c-key="p:kit"]', { wait: 400 });
+		await t.text(f.locator('.pjx-dlg').first(), /Recovery Kit|kit/i);
+		const nulls = await f.evaluate(() => { const out = [], tw = document.createTreeWalker(document.querySelector('.pjx-dlg'), NodeFilter.SHOW_TEXT); for (let n = tw.nextNode(); n; n = tw.nextNode()) if (/^\s*(null|undefined)\s*$/.test(n.nodeValue)) out.push(n.parentElement.className || n.parentElement.tagName); return out; });
+		await t.check('the Check the Kit dialog has no text node reading "null"', nulls.length === 0, nulls.join(' | '));
+		await t.page.keyboard.press('Escape');
 	},
 	async 'engine rules (2.38, 3.05, 3.07, 3.12, 4.17, 5.12)'(t) {
 		const f = await t.app.open(t);
