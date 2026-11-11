@@ -148,16 +148,21 @@ def cases(m, rows, fixtures):
                 lambda n, e=bad: n.stored_event_valid(e))
             break
 
-        # H05b / H05c: SP-1101 dispatch of the family's own retained original.
+        # H05b / H05c: SP-1101 dispatch of the family's own retained original
+        # (provider-hash families: their authentic historical-v1 inline original).
         if family not in m.PROVIDER_HASH_PATHS:
             original = first_original(m, fixtures, family, full)
             source = m.history_source_for(row, full['payload'], original)
-            foreign = copy.deepcopy(source)
-            foreign['authenticated_original']['event']['event_id'] += '-foreign'
-            add('H05', family, 'foreign_authenticated_binding', lambda n, r=row, o=original, s=source: n.resolve_history(r, o, s, {}),
-                lambda n, r=row, o=original, s=foreign: n.resolve_history(r, o, s, {}))
-            add('H05', family, 'caller_recipe_override', lambda n, r=row, o=original, s=source: n.resolve_history(r, o, s, {}),
-                lambda n, r=row, o=original, s=source: n.resolve_history(r, o, s, {}, recipe_override=n.HISTORICAL_V1))
+        else:
+            case = next(c for c in fixtures['historical_originals']['cases'] if c['event_type'] == family and c['route'] == 'inline')
+            original = case['original']
+            source = m.history_source_for(row, case['logical_payload'], original)
+        foreign = copy.deepcopy(source)
+        foreign['authenticated_original']['event']['event_id'] += '-foreign'
+        add('H05', family, 'foreign_authenticated_binding', lambda n, r=row, o=original, s=source: n.resolve_history(r, o, s, {}),
+            lambda n, r=row, o=original, s=foreign: n.resolve_history(r, o, s, {}))
+        add('H05', family, 'caller_recipe_override', lambda n, r=row, o=original, s=source: n.resolve_history(r, o, s, {}),
+            lambda n, r=row, o=original, s=source: n.resolve_history(r, o, s, {}, recipe_override=n.HISTORICAL_V1))
 
         if family.endswith('.restore_point'):
             restore_cases(m, fixtures, row, full, add)
