@@ -7,7 +7,7 @@
 /* ---- Editor and Terminal appearance: the example on the left, the options on the right ----------------------------- */
 html[data-smx-view="new"] .pmt-cz:not(.pmt-cz-parked) .pmt-cz-dialog:not(.pmt-cz-beside) { left: max(20px, calc(50vw - 660px)) !important; width: min(1320px, calc(100vw - 40px)) !important; }
 html[data-smx-view="new"] .pmt-cz .pmt-cz-dialog:not(.pmt-cz-beside) .pmt-cz-body { grid-template-columns: minmax(400px, 46%) minmax(0, 1fr); column-gap: 20px; align-items: start; }
-html[data-smx-view="new"] .pmt-cz .pmt-cz-dialog:not(.pmt-cz-beside) .pmt-cz-body > .pmt-cz-top { grid-column: 1; grid-row: 1 / span 40; position: sticky; top: 0; align-self: start; z-index: 3; display: flex; flex-direction: column; gap: 12px; }
+html[data-smx-view="new"] .pmt-cz .pmt-cz-dialog:not(.pmt-cz-beside) .pmt-cz-body > .pmt-cz-top { grid-column: 1; grid-row: 1 / span 7; position: sticky; top: 0; align-self: start; z-index: 3; display: flex; flex-direction: column; gap: 12px; }
 html[data-smx-view="new"] .pmt-cz .pmt-cz-dialog:not(.pmt-cz-beside) .pmt-cz-body > :not(.pmt-cz-top) { grid-column: 2; min-width: 0; }
 html[data-smx-view="new"] .pmt-cz .pmt-cz-dialog:not(.pmt-cz-beside) .pmt-cz-preview { min-height: min(46vh, 420px); }
 html[data-smx-view="new"] .pmt-cz .pmt-cz-dialog:not(.pmt-cz-beside) .pmt-cz-pvbox { flex: 1; min-height: 240px; }
@@ -43,6 +43,33 @@ html[data-smx-view="new"] .pmt-cz .pmt-cz-dialog:not(.pmt-cz-beside) .pmt-cz-doc
 html[data-smx-view="new"] .pipe-top, html[data-smx-view="new"] .o55nc-top { position: sticky; top: 0; z-index: 4; }
 html[data-smx-view="new"] .pipe-top::before, html[data-smx-view="new"] .o55nc-top::before { content: ''; position: absolute; inset: -12px -14px -8px; z-index: -1; background: var(--k3-surface-1, var(--k3-bg-0, #1e1e1e)); border-bottom: 1px solid var(--k3-line, rgba(128, 128, 128, .3)); }
 html[data-theme^="glass"][data-smx-view="new"] .pipe-top::before, html[data-theme^="glass"][data-smx-view="new"] .o55nc-top::before { background: var(--k3-bg-0, #04060d); }
+
+/* ---- the options as tabs: one group at a time beside the example ("Everything" brings back the long list) ---------- */
+html[data-smx-view="new"] .pmt-cz-body[data-smx-tab="colors"] > .pmt-cz-group:not([data-group="colors"]),
+html[data-smx-view="new"] .pmt-cz-body[data-smx-tab="text"] > .pmt-cz-group:not([data-group="text"]),
+html[data-smx-view="new"] .pmt-cz-body[data-smx-tab="caret"] > .pmt-cz-group:not([data-group="caret"]),
+html[data-smx-view="new"] .pmt-cz-body[data-smx-tab="lines"] > .pmt-cz-group:not([data-group="lines"]),
+html[data-smx-view="new"] .pmt-cz-body[data-smx-tab="motion"] > .pmt-cz-group:not([data-group="motion"]),
+html[data-smx-view="new"] .pmt-cz-body[data-smx-tab="behavior"] > .pmt-cz-group:not([data-group="behavior"]),
+html[data-smx-view="new"] .pmt-cz-body[data-smx-tab="cursor"] > .pmt-cz-group:not([data-group="cursor"]),
+html[data-smx-view="new"] .pmt-cz-body[data-smx-tab="ground"] > .pmt-cz-group:not([data-group="ground"]),
+html[data-smx-view="new"] .pmt-cz-body[data-smx-tab="effects"] > .pmt-cz-group:not([data-group="effects"]) { display: none !important; }
+html[data-smx-view="new"] .pmt-cz-nav [data-jump][data-smx-on="true"] { background: var(--pmt-cz-accent, var(--accent-primary)); color: var(--background, #111); font-weight: 650; border-radius: 6px; }
+html[data-smx-view="new"] .pmt-cz-nav .smx-cz-all { margin-left: auto; opacity: .85; }
+html[data-smx-view="new"] .pmt-cz-nav .smx-cz-all[data-smx-on="true"] { opacity: 1; text-decoration: underline; text-underline-offset: 3px; }
+html[data-smx-view="new"] .pmt-cz .pmt-cz-dialog:not(.pmt-cz-beside) .pmt-cz-nav { display: flex; flex-wrap: wrap; align-items: center; gap: 2px 4px; }
+/* in tab mode the right column is the tabs and one group: the example spans just those two rows, and the group starts clear of the tabs */
+html[data-smx-view="new"] .pmt-cz .pmt-cz-dialog:not(.pmt-cz-beside) .pmt-cz-body[data-smx-tab]:not([data-smx-tab="*"]) > .pmt-cz-top { grid-row: 1 / span 2; }
+html[data-smx-view="new"] .pmt-cz .pmt-cz-dialog:not(.pmt-cz-beside) .pmt-cz-body[data-smx-tab]:not([data-smx-tab="*"]) > .pmt-cz-group { margin-top: 12px; align-self: start; }
+/* "Try it" acts on the example, so it sits directly under it, above the quick sets */
+html[data-smx-view="new"] .pmt-cz-side > .smx-cz-try { order: -1; }
+.smx-cz-said-text { min-width: 0; }
+
+/* ---- Customize Pip and Adjust NieR as side sheets: the picture stays, the presets scroll away ------------------------ */
+html[data-smx-view="new"] .pipe-panel .pipe-top, html[data-smx-view="new"] .o55nc-panel .o55nc-top { display: contents !important; }
+html[data-smx-view="new"] .pipe-panel .pipe-stage, html[data-smx-view="new"] .o55nc-panel .o55nc-pv { position: sticky !important; top: 0; z-index: 5; box-shadow: 0 -16px 0 16px var(--k3-surface-0, #1e1e1e), 0 10px 14px -10px rgb(0 0 0 / .5); }
+html[data-smx-view="new"] .pipe-panel .smx-cz-said, html[data-smx-view="new"] .o55nc-panel .smx-cz-said { position: sticky; width: auto; max-width: none; top: calc(var(--smx-cz-pin, 158px) - 8px); z-index: 5; margin: 0 0 10px; background: var(--k3-surface-1, #2d2d2d); box-shadow: 0 -10px 0 0 var(--k3-surface-0, #1e1e1e), 0 10px 14px -10px rgb(0 0 0 / .5); }
+html[data-smx-view="new"] .pipe-panel .pipe-side, html[data-smx-view="new"] .o55nc-panel .o55nc-side { margin-bottom: 10px; }
 
 @media (prefers-reduced-motion: reduce) { .smx-cz-pulse { animation: none; } }
 html[data-motion="reduced"] .smx-cz-pulse { animation: none; }
