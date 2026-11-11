@@ -24,7 +24,7 @@
       // the last backup that ran, in PMConcept7's own words ("Today · 2:00 AM"): only the day is said here
       const ran = (((st.backup || {}).history || [])[0] || {}).time || '';
       const backup = ran ? String(ran).split(/\s*·\s*/)[0].toLowerCase() : 'none yet';
-      const MOST = 8;
+      const MOST = 5;   // the first screen also has to show what people come here to do; the rest is one line, and the dots say where
       const groups = [];
       let g = null;
       for (const c of SMX.chapters) { if (!g || g.name !== c.group) { g = { name: c.group, items: [] }; groups.push(g); } g.items.push(c); }

@@ -239,8 +239,8 @@ export const tests = {
 			if (all.length && !q('.smx-summary-lead').includes(w.title)) bad.push(`Home's first sentence does not say "${w.title}": ${q('.smx-summary-lead')}`);
 			if (all.length && q('.smx-needs-title') !== w.title) bad.push(`Home's list is headed "${q('.smx-needs-title')}", the count is "${w.title}"`);
 			const shown = document.querySelectorAll('#smx-root .smx-need').length, more = q('.smx-needs-more');
-			if (shown !== Math.min(all.length, 8)) bad.push(`Home lists ${shown} of ${all.length} needs`);
-			if (all.length > 8 && !more.startsWith(String(all.length - 8))) bad.push(`Home does not say how many more there are: "${more}"`);
+			if (shown !== Math.min(all.length, 5)) bad.push(`Home lists ${shown} of ${all.length} needs`);
+			if (all.length > 5 && !more.startsWith(String(all.length - 5))) bad.push(`Home does not say how many more there are: "${more}"`);
 			const ctx = { st, local: S.local };
 			for (const c of S.chapters) {
 				const mine = S.needWords(S.needsOf(c.id, st)), s = S.chapterStatus(c, ctx);
