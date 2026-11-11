@@ -160,11 +160,15 @@ PM51.chipToggle = (label, on, { action, data, label: aria } = {}) => `<button ty
 PM51.tech = text => `<code class="pm51-tech">${h(text)}</code>`;
 
 /* A manager's tabs are a tab list (role, aria-selected, the body as its tab panel); 20-motion.js adds the arrow keys. */
-PM51.page = ({ id, key, tabs, active, body, quiet, cls, ui }) => {
+/* `owns`: the composed placement sections this manager draws itself, one item at a time (an ability's limits inside
+   that ability). Their rows have a home in the manager whichever item is shown, so the fallback card of those rows is
+   never added below an item that draws none of them (lane-aimore 8: a second "Web abilities" card of 11 rows under
+   Browser, and the same for Documents on Media & Output). */
+PM51.page = ({ id, key, tabs, active, body, quiet, cls, ui, owns }) => {
   const tabId = t => `pm51-tab-${a(id)}-${a(t)}`;
   const tabsHtml = tabs && tabs.length ? `<nav class="manager-tabs pm51-tabs" role="tablist" aria-label="Sections">${tabs.map(t => `<button type="button" role="tab" id="${tabId(t.id)}" aria-selected="${t.id === active ? 'true' : 'false'}" aria-controls="pm51-panel-${a(id)}" class="manager-tab${t.id === active ? ' active' : ''}" data-action="pm51-tab" data-manager="${a(id)}" data-tab="${a(t.id)}" ${t.ui || ui ? `data-ui-action-id="${a(t.ui || ui)}"` : ''}>${h(t.label)}</button>`).join('')}</nav>` : '';
   const panel = tabsHtml ? ` role="tabpanel" id="pm51-panel-${a(id)}" aria-labelledby="${tabId(active)}"` : '';
-  return `<div class="manager-page pm51-mgr${tabsHtml ? ' has-manager-tabs' : ''}${cls ? ' ' + cls : ''}" data-manager-key="${a(key || '')}" data-pm51-manager="${a(id)}">${tabsHtml}<div class="manager-body manager-tab-body pm51-body"${panel}><div class="manager-scroll pm51-scroll">${body}${quiet && quiet.length ? PM51.quiet(quiet) : ''}</div></div></div>`;
+  return `<div class="manager-page pm51-mgr${tabsHtml ? ' has-manager-tabs' : ''}${cls ? ' ' + cls : ''}" data-manager-key="${a(key || '')}" data-pm51-manager="${a(id)}"${owns && owns.length ? ` data-pm51-owns="${a(owns.join(' '))}"` : ''}>${tabsHtml}<div class="manager-body manager-tab-body pm51-body"${panel}><div class="manager-scroll pm51-scroll">${body}${quiet && quiet.length ? PM51.quiet(quiet) : ''}</div></div></div>`;
 };
 PM51.section = ({ title, help, action, body, cls, id, tone, data }) => `<section class="panel-card pm51-section${cls ? ' ' + cls : ''}${tone ? ' tone-' + a(tone) : ''}" ${id ? `id="${a(id)}"` : ''} ${dataAttrs(data)}><div class="pm51-section-head"><div class="pm51-section-copy"><h3 class="pm51-section-title">${h(title)}</h3>${help ? `<p class="pm51-section-help">${h(help)}</p>` : ''}</div>${action ? (typeof action === 'string' ? action : PM51.btn(action)) : ''}</div>${body ? `<div class="pm51-section-body">${body}</div>` : ''}</section>`;
 PM51.grid = (cols, ...parts) => `<div class="pm51-grid cols-${a(cols)}">${parts.join('')}</div>`;
@@ -1005,7 +1009,8 @@ function pm51PlaceInline(workspace, html) {
   const activeBtn = page.querySelector('.pm51-tabs .manager-tab.active');
   const activeTab = activeBtn ? activeBtn.dataset.tab : (PM51.tab(workspace.id, pm51DefaultTabs[workspace.id]) || null);
   const present = id => !!tpl.content.querySelector(`#setting-${cssEscape(id)}, [data-setting-id="${cssEscape(id)}"]`);
-  const forTab = all.filter(s => !s.tab || !activeTab || s.tab === activeTab).filter(s => !s.composed || !s.settings.some(x => present(x.id)));
+  const owns = (page.dataset.pm51Owns || '').split(' ').filter(Boolean);
+  const forTab = all.filter(s => !s.tab || !activeTab || s.tab === activeTab).filter(s => !s.composed || !(owns.includes(s.id) || s.settings.some(x => present(x.id))));
   const visible = manual ? [] : forTab.filter(s => !s.advanced);
   const advanced = forTab.filter(s => s.advanced || (manual && s.composed));
   const children = () => [...scroll.children];

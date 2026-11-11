@@ -1165,7 +1165,10 @@
     id === 'ai.accounts.account-name' ? acc.nickname : id === 'ai.accounts.account-enabled' ? acc.enabled !== false : id === 'ai.accounts.account-priority' ? i + 1 : PM51.scopedValue(acc, id))));
   /* Model pickers offer the models on your signed-in accounts, after the inventory's examples. */
   const MODEL_PICKERS = ['ai.models.default-model', 'ai.models.overseer-model', 'ai.models.worker-model', 'ai.models.gui-worker-model', 'ai.models.high-effort-worker-model', 'ai.models.auditor-model', 'ai.models.goal-worker-model', 'ai.models.goal-verifier-model', 'ai.models.subagent-model', 'ai.models.teach-model', 'ai.models.thread-title-model'];
-  const readyModels = () => all().filter(p => p.status === 'active').flatMap(p => enabledModels(p).map(m => ({ value: `${p.id}/${m.id}`, label: `${m.name} · ${p.name}`, meta: p.id === 'free-models' ? 'A free route' : `On your ${p.name} ${p.bill === 'use' ? 'account' : 'plan'}` })));
+  /* a model that only makes pictures (GPT Image) answers no chat, plan or review, so the model pickers never offer it
+     (lane-aimore 7); every picker of a model that writes, the Back Seat Driver's backup included, reads this one list */
+  const writes = m => !(m.caps || []).length || (m.caps || []).some(c => !/^image-/.test(c));
+  const readyModels = () => all().filter(p => p.status === 'active').flatMap(p => enabledModels(p).filter(writes).map(m => ({ value: `${p.id}/${m.id}`, label: `${m.name} · ${p.name}`, meta: p.id === 'free-models' ? 'A free route' : `On your ${p.name} ${p.bill === 'use' ? 'account' : 'plan'}`, pid: p.id, mid: m.id, provider: p.name, model: m.name })));
   MODEL_PICKERS.forEach(id => PM51.moreChoices(id, readyModels));
   /* "Service for each lane" offers every service in the list, in its order, after "the everyday model's service"; one
      that cannot answer now is shown with why and cannot be picked (A2 B-9: a fixed list of five old platform names, so
