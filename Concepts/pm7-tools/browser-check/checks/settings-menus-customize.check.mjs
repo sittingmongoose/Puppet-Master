@@ -1,7 +1,9 @@
 // Stream F batch 11, lane C: Settings menus and the look Customize screens (review/OPEN-AND-FOUND.md section C).
 // FO-147: an open Settings menu is closed only by a scroll that moves its button. Any scroll used to close it: a list
 //   scrolling in a box the button is not in, or on a page that is not showing (the Home editor lays itself out again
-//   about 1.5 s after load). A scroll of the box that holds the button still closes it (guard).
+//   about 1.5 s after load); the batch 10 landing (b28b13646b, FO-123) made it close only on a scroll from a box that
+//   holds the button; a scroll there that leaves the button where it was leaves it open too. A scroll of the box that
+//   holds the button that moves it still closes it (guard).
 // N-4: a detail head's "More actions" says it opens a menu and whether it is open, the same before and after a use
 //   (popoutClose wrote aria-expanded="false" on a button that had never said it was expanded).
 // FO-144: in Glass Dark and Light every Settings popout (a dropdown list, a menu) is mounted as a Liquid Glass menu: it
@@ -94,6 +96,15 @@ for (const surface of ['normal', 'sandbox']) {
 			await t.page.waitForTimeout(250);
 			await t.check(`a scroll of ${box.name} (${box.where}) leaves the menu open`, await menuOpen(f));
 		}
+		// a scroll in the box that holds the button that leaves the button where it was (a bar that stays put while the
+		// box under it scrolls): the menu stays. Sent as the scroll event such a box sends, without moving anything
+		const still = await f.evaluate(() => {
+			const anchor = document.querySelector('[data-continuous-workspace-body="servers"] .pm51-detail-actions button[aria-label="More actions"]');
+			let s = anchor.parentElement; while (s && !(s.scrollHeight > s.clientHeight + 30 && /(auto|scroll)/.test(getComputedStyle(s).overflowY))) s = s.parentElement;
+			if (!s) return false; s.dispatchEvent(new Event('scroll')); return true;
+		});
+		await t.page.waitForTimeout(250);
+		if (still) await t.check('a scroll of the box that holds the button that leaves the button where it was leaves the menu open', await menuOpen(f));
 		// guard: the box that holds the button scrolls, so the button moves: the menu closes, as it should
 		const moved = await f.evaluate(() => {
 			const anchor = document.querySelector('[data-continuous-workspace-body="servers"] .pm51-detail-actions button[aria-label="More actions"]');
