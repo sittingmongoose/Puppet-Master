@@ -683,7 +683,7 @@
        glows accent-blue (same family as context lens). Token label lives
        inside the module, not beside the ring. */
     return '<span class="context-usage pm6-chat-ctx" data-od-id="chat-context-ring" title="Context usage — click for breakdown" role="button" tabindex="0" aria-haspopup="dialog" aria-expanded="false">' +
-      '<svg width="15" height="15" viewBox="0 0 24 24" style="transform: rotate(-90deg);" aria-hidden="true">' +
+      '<svg class="pm6-chat-ctx-ring" width="15" height="15" viewBox="0 0 24 24" style="transform: rotate(-90deg);" aria-hidden="true">' +
       '<circle cx="12" cy="12" r="10" fill="transparent" stroke="var(--border-light)" stroke-width="4"></circle>' +
       '<circle class="pm6-chat-ctx-arc" cx="12" cy="12" r="10" fill="transparent" stroke="var(--accent-primary)" stroke-width="4" stroke-dasharray="62.8" stroke-dashoffset="42"></circle></svg>' +
       '<div class="context-hover-module" data-od-id="chat-context-hover-module">' +

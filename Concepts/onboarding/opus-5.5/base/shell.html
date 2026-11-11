@@ -373,9 +373,9 @@ by its "PM7 SECTION n/total" banner comment (names, never byte offsets).
 
           <div class="pm-segtab" role="tablist" aria-label="File Manager views" style="--cat:var(--cat-blue)">
           <span class="pm-segtab-ink" id="fmTabInk" aria-hidden="true"></span>
-          <button type="button" class="pm-segtab-item active" data-tab="explorer" role="tab" aria-label="Explorer"><i data-ico="folderOpen" class="pm-ico"></i><span>Explorer</span></button>
-          <button type="button" class="pm-segtab-item" data-tab="changed" role="tab" aria-label="Changed"><i data-ico="diff" class="pm-ico"></i><span>Changed</span></button>
-          <button type="button" class="pm-segtab-item" data-tab="open" role="tab" aria-label="Open"><i data-ico="file" class="pm-ico"></i><span>Open</span></button>
+          <button type="button" class="pm-segtab-item active" data-tab="explorer" role="tab" aria-label="Explorer"><i data-ico="folderOpen" class="pm-ico"></i><span class="pm-segtab-lbl">Explorer</span></button>
+          <button type="button" class="pm-segtab-item" data-tab="changed" role="tab" aria-label="Changed"><i data-ico="diff" class="pm-ico"></i><span class="pm-segtab-lbl">Changed</span></button>
+          <button type="button" class="pm-segtab-item" data-tab="open" role="tab" aria-label="Open"><i data-ico="file" class="pm-ico"></i><span class="pm-segtab-lbl">Open</span></button>
           </div>
 
           <div class="fm-toolbar-wrap">
@@ -742,8 +742,8 @@ by its "PM7 SECTION n/total" banner comment (names, never byte offsets).
           </div></section>
           </div>
           <div class="pm-segtab flat" role="tablist" aria-label="Search mode" style="--cat:var(--cat-blue)">
-          <button type="button" class="pm-segtab-item active" data-tab="find" role="tab"><i data-ico="search" class="pm-ico"></i><span>Search</span></button>
-          <button type="button" class="pm-segtab-item" data-tab="replace" role="tab"><i data-ico="diff" class="pm-ico"></i><span>Replace</span></button>
+          <button type="button" class="pm-segtab-item active" data-tab="find" role="tab"><i data-ico="search" class="pm-ico"></i><span class="pm-segtab-lbl">Search</span></button>
+          <button type="button" class="pm-segtab-item" data-tab="replace" role="tab"><i data-ico="diff" class="pm-ico"></i><span class="pm-segtab-lbl">Replace</span></button>
           </div>
           <div class="sh-scroll">
           <div data-pane="find">
@@ -977,10 +977,10 @@ by its "PM7 SECTION n/total" banner comment (names, never byte offsets).
             </div>
           </div>
           <div class="pm-segtab" role="tablist" aria-label="Source views" style="--cat:var(--cat-blue)">
-          <button type="button" class="pm-segtab-item active" data-tab="changes" role="tab"><i data-ico="diff" class="pm-ico"></i><span>Changes</span></button>
-          <button type="button" class="pm-segtab-item" data-tab="worktrees" role="tab"><i data-ico="folderOpen" class="pm-ico"></i><span>Worktrees</span></button>
-          <button type="button" class="pm-segtab-item" data-tab="history" role="tab"><i data-ico="clock" class="pm-ico"></i><span>History</span></button>
-          <button type="button" class="pm-segtab-item" data-tab="branches" role="tab"><i data-ico="branch" class="pm-ico"></i><span>Branches</span></button>
+          <button type="button" class="pm-segtab-item active" data-tab="changes" role="tab"><i data-ico="diff" class="pm-ico"></i><span class="pm-segtab-lbl">Changes</span></button>
+          <button type="button" class="pm-segtab-item" data-tab="worktrees" role="tab"><i data-ico="folderOpen" class="pm-ico"></i><span class="pm-segtab-lbl">Worktrees</span></button>
+          <button type="button" class="pm-segtab-item" data-tab="history" role="tab"><i data-ico="clock" class="pm-ico"></i><span class="pm-segtab-lbl">History</span></button>
+          <button type="button" class="pm-segtab-item" data-tab="branches" role="tab"><i data-ico="branch" class="pm-ico"></i><span class="pm-segtab-lbl">Branches</span></button>
           </div>
           <div class="sh-scroll">
           <div data-pane="changes">
@@ -1105,9 +1105,9 @@ by its "PM7 SECTION n/total" banner comment (names, never byte offsets).
             <div class="pm7-automation-common"><div class="pm7-automation-fact"><small>Revision</small><strong class="sh-mono">abc12ef · current</strong></div><div class="pm7-automation-fact"><small>Pinned</small><strong>CI · release</strong></div></div>
           </div>
           <div class="pm-segtab" role="tablist" aria-label="Actions views" style="--cat:var(--cat-green)">
-          <button type="button" class="pm-segtab-item active" data-tab="runs" role="tab"><i data-ico="actions" class="pm-ico"></i><span>Runs</span></button>
-          <button type="button" class="pm-segtab-item" data-tab="workflows" role="tab"><i data-ico="play" class="pm-ico"></i><span>Workflows</span></button>
-          <button type="button" class="pm-segtab-item" data-tab="settings" role="tab"><i data-ico="cog" class="pm-ico"></i><span>Settings</span></button>
+          <button type="button" class="pm-segtab-item active" data-tab="runs" role="tab"><i data-ico="actions" class="pm-ico"></i><span class="pm-segtab-lbl">Runs</span></button>
+          <button type="button" class="pm-segtab-item" data-tab="workflows" role="tab"><i data-ico="play" class="pm-ico"></i><span class="pm-segtab-lbl">Workflows</span></button>
+          <button type="button" class="pm-segtab-item" data-tab="settings" role="tab"><i data-ico="cog" class="pm-ico"></i><span class="pm-segtab-lbl">Settings</span></button>
           </div>
           <div class="sh-scroll">
           <div data-pane="runs">
@@ -1258,10 +1258,10 @@ by its "PM7 SECTION n/total" banner comment (names, never byte offsets).
           <div class="side-panel-view" id="panel-artifacts">
           <div class="sh-banner"><span class="sh-bico"><i data-ico="artifacts" class="pm-ico"></i></span><span class="sh-title">RUNTIME ARTIFACTS</span><span class="sh-bstatus"><span class="dot dot-ok"></span>15 rec</span></div>
           <div class="pm-segtab" role="tablist" aria-label="Artifact families" style="--cat:var(--cat-blue)">
-          <button type="button" class="pm-segtab-item active" data-tab="all" role="tab"><i data-ico="layers" class="pm-ico"></i><span>All</span></button>
-          <button type="button" class="pm-segtab-item" data-tab="web" role="tab"><i data-ico="globe" class="pm-ico"></i><span>Web</span></button>
-          <button type="button" class="pm-segtab-item" data-tab="browser" role="tab"><i data-ico="monitor" class="pm-ico"></i><span>Browser</span></button>
-          <button type="button" class="pm-segtab-item" data-tab="evidence" role="tab"><i data-ico="camera" class="pm-ico"></i><span>Evidence</span></button>
+          <button type="button" class="pm-segtab-item active" data-tab="all" role="tab"><i data-ico="layers" class="pm-ico"></i><span class="pm-segtab-lbl">All</span></button>
+          <button type="button" class="pm-segtab-item" data-tab="web" role="tab"><i data-ico="globe" class="pm-ico"></i><span class="pm-segtab-lbl">Web</span></button>
+          <button type="button" class="pm-segtab-item" data-tab="browser" role="tab"><i data-ico="monitor" class="pm-ico"></i><span class="pm-segtab-lbl">Browser</span></button>
+          <button type="button" class="pm-segtab-item" data-tab="evidence" role="tab"><i data-ico="camera" class="pm-ico"></i><span class="pm-segtab-lbl">Evidence</span></button>
           </div>
           <div class="sh-scroll">
           <div class="sh-sortrow"><span class="sh-sortlab">EVIDENCE</span><span class="pm-chip">15 cards</span>
