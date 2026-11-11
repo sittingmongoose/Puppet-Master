@@ -7,7 +7,10 @@
 // each click: no entrance animation starts in Settings; the switch is still the same element, keeps the key focus and
 // shows the new state; the switch's section and a row below it neither move (painted box, read in a task queued from
 // requestAnimationFrame, so after the frame's paint) nor fade (computed opacity of the section and its ancestors); no
-// layout shift inside Settings. --set size=860x900 --set cases=providers,web limit the matrix; --set probe=1 logs reads.
+// layout shift inside Settings. A second test runs four cases in each of the ten looks at 1280x900.
+// --set size=860x900 --set cases=providers,web --set looks=nier-dark (or none) limit the matrix; --set probe=1 logs reads.
+import { LOOKS } from '../browser-check.config.mjs';
+
 const SIZES = [[860, 900], [1920, 1080]];
 const ENTR = '^(pageIn|sectionReveal|pmSettingsTabSwap[AB]|pm51IndexOpen)$';
 const CASES = {
@@ -45,7 +48,14 @@ const ARM = ({ ws, sw, entr }) => {
 	const S = window.__fo130 = { ent: [], shifts: 0, frames: [] };
 	if (!window.__fo130armed) {
 		window.__fo130armed = true;
-		document.addEventListener('animationstart', (e) => { const s = window.__fo130; if (s && s.on && re.test(e.animationName) && e.target.closest && e.target.closest('#panel-settings')) s.ent.push(`${e.animationName}@${(e.target.id || e.target.className || e.target.tagName).toString().slice(0, 60)}`); }, true);
+		// a section's first reveal (one scrolled into view because the page got shorter) is not a replay: sectionReveal
+		// counts only on a section that had already been revealed before the press (the same element, or one drawn again
+		// with its id)
+		document.addEventListener('animationstart', (e) => {
+			const s = window.__fo130; if (!s || !s.on || !re.test(e.animationName) || !e.target.closest || !e.target.closest('#panel-settings')) return;
+			if (e.animationName === 'sectionReveal' && !(s.revealed && s.revealed.has(e.target.id))) return;
+			s.ent.push(`${e.animationName}@${(e.target.id || e.target.className || e.target.tagName).toString().slice(0, 60)}`);
+		}, true);
 		try {
 			new PerformanceObserver((l) => { const s = window.__fo130; if (!s || !s.on) return; for (const en of l.getEntries()) if (!en.hadRecentInput && (en.sources || []).some((src) => src.node && src.node.closest && src.node.closest('#panel-settings'))) s.shifts += en.value; }).observe({ type: 'layout-shift', buffered: false });
 		} catch (e) { /* no layout-shift entries in this browser */ }
@@ -55,6 +65,7 @@ const ARM = ({ ws, sw, entr }) => {
 // start sampling: one read per frame, in a task queued from rAF (after that frame's paint)
 const SAMPLE = (ms) => new Promise((resolve) => {
 	const S = window.__fo130; S.on = true; S.ent = []; S.shifts = 0; S.frames = [];
+	S.revealed = new Set([...document.querySelectorAll('#panel-settings .is-revealed[id]')].map((x) => x.id));
 	const el = document.querySelector('[data-fo130="switch"]');
 	S.node = el; S.was = el.getAttribute('aria-checked');
 	const op = (n) => { let o = 1; for (let x = n; x && x.nodeType === 1; x = x.parentElement) o *= parseFloat(getComputedStyle(x).opacity) || 0; return o; };
@@ -98,11 +109,42 @@ async function openCase(t, f, c) {
 	await t.page.waitForTimeout(900);   // the arrival's own entrances finish first
 }
 
+async function runCase(t, f, w, h, name, tagPre) {
+	const c = CASES[name];
+	await openCase(t, f, c);
+	const armed = await f.evaluate(ARM, { ws: c.ws, sw: c.sw, entr: ENTR });
+	if (!(await t.check(`${tagPre} ${name}: the switch is drawn`, !!armed.ok, armed.err || ''))) return;
+	for (const step of ['off', 'back on']) {
+		const viaButton = !!c.reshapes && step === 'back on';
+		if (viaButton) {
+			const ok = await f.evaluate((sel) => { const b = document.querySelector(sel); if (!b) return false; document.querySelectorAll('[data-fo130="switch"]').forEach((x) => x.removeAttribute('data-fo130')); b.setAttribute('data-fo130', 'switch'); return true; }, c.reshapes);
+			if (!(await t.check(`${tagPre} ${name}: off shows Turn on`, ok))) break;
+		}
+		// a replaced page (the unchanged build) drew a new switch: find it again, so every case still reports
+		await f.evaluate((sel) => { let el = document.querySelector('[data-fo130="switch"]'); if (!el) { el = document.querySelector(sel); if (el) el.setAttribute('data-fo130', 'switch'); } if (el) el.scrollIntoView({ block: 'center' }); }, `[data-continuous-workspace-body="${c.ws}"] ${c.sw}`);
+		await t.page.waitForTimeout(250);
+		const sampling = f.evaluate(SAMPLE, 1100);
+		await f.locator('[data-fo130="switch"]').click();
+		await sampling;
+		const r = await f.evaluate(RESULT);
+		if (t.args.probe) t.log(`${tagPre} ${name} ${step} ${JSON.stringify(r)}`);
+		const tag = `${tagPre} ${name} (${armed.label}) ${step}${viaButton ? ' with Turn on' : ''}`;
+		await t.check(`${tag}: no entrance replays`, r.ent.length === 0, r.ent.join(', '));
+		await t.check(`${tag}: nothing fades`, r.minOp >= 0.99, `lowest opacity ${r.minOp}`);
+		await t.check(`${tag}: no layout shift in Settings`, r.shifts < 0.001, `layout shift ${r.shifts}`);
+		if (c.reshapes) {
+			if (viaButton) await t.check(`${tag}: the switch is back, on`, await f.evaluate((sel) => { const el = document.querySelector(sel); return !!el && el.getAttribute('aria-checked') === 'true'; }, `[data-continuous-workspace-body="${c.ws}"] ${c.sw}`));
+			continue;
+		}
+		await t.check(`${tag}: the switch is the same element, with the key focus, and changed`, r.same && r.focus && r.flipped, `same ${r.same}, focus ${r.focus}, changed ${r.flipped}`);
+		await t.check(`${tag}: its section and the rows below hold still`, r.secMove <= 0.5 && r.belowMove <= 0.5 && !r.replacedSec, `section moved ${r.secMove} px, row below ${r.belowMove} px, section replaced ${r.replacedSec}, ${r.frames} frames`);
+	}
+}
+
 export const tests = {};
 for (const surface of ['normal', 'sandbox']) {
 	tests[`FO-130 manager switches hold still (${surface})`] = async (t) => {
-		const surfaces = t.app.surfaces();
-		if (!surfaces.includes(surface)) { await t.check(`${surface} surface not asked for`, true); return; }
+		if (!t.app.surfaces().includes(surface)) { await t.check(`${surface} surface not asked for`, true); return; }
 		const sizes = t.args.size ? SIZES.filter(([w, h]) => `${w}x${h}` === t.args.size) : SIZES;
 		const names = t.args.cases ? String(t.args.cases).split(',') : Object.keys(CASES);
 		for (const [w, h] of sizes) {
@@ -111,37 +153,25 @@ for (const surface of ['normal', 'sandbox']) {
 			await t.app.resetLayout();
 			await f.locator('#tab-settings').click();
 			await t.settle();
-			for (const name of names) {
-				const c = CASES[name];
-				await openCase(t, f, c);
-				const armed = await f.evaluate(ARM, { ws: c.ws, sw: c.sw, entr: ENTR });
-				if (!(await t.check(`${w}x${h} ${name}: the switch is drawn`, !!armed.ok, armed.err || ''))) continue;
-				for (const step of ['off', 'back on']) {
-					const viaButton = !!c.reshapes && step === 'back on';
-					if (viaButton) {
-						const ok = await f.evaluate((sel) => { const b = document.querySelector(sel); if (!b) return false; document.querySelectorAll('[data-fo130="switch"]').forEach((x) => x.removeAttribute('data-fo130')); b.setAttribute('data-fo130', 'switch'); return true; }, c.reshapes);
-						if (!(await t.check(`${w}x${h} ${name}: off shows Turn on`, ok))) break;
-					}
-					// a replaced page (the unchanged build) drew a new switch: find it again, so every case still reports
-					await f.evaluate((sel) => { let el = document.querySelector('[data-fo130="switch"]'); if (!el) { el = document.querySelector(sel); if (el) el.setAttribute('data-fo130', 'switch'); } if (el) el.scrollIntoView({ block: 'center' }); }, `[data-continuous-workspace-body="${c.ws}"] ${c.sw}`);
-					await t.page.waitForTimeout(250);
-					const sampling = f.evaluate(SAMPLE, 1100);
-					await f.locator('[data-fo130="switch"]').click();
-					await sampling;
-					const r = await f.evaluate(RESULT);
-					if (t.args.probe) t.log(`${w}x${h} ${name} ${step} ${JSON.stringify(r)}`);
-					const tag = `${w}x${h} ${name} (${armed.label}) ${step}${viaButton ? ' with Turn on' : ''}`;
-					await t.check(`${tag}: no entrance replays`, r.ent.length === 0, r.ent.join(', '));
-					await t.check(`${tag}: nothing fades`, r.minOp >= 0.99, `lowest opacity ${r.minOp}`);
-					await t.check(`${tag}: no layout shift in Settings`, r.shifts < 0.001, `layout shift ${r.shifts}`);
-					if (c.reshapes) {
-						if (viaButton) await t.check(`${tag}: the switch is back, on`, await f.evaluate((sel) => { const el = document.querySelector(sel); return !!el && el.getAttribute('aria-checked') === 'true'; }, `[data-continuous-workspace-body="${c.ws}"] ${c.sw}`));
-						continue;
-					}
-					await t.check(`${tag}: the switch is the same element, with the key focus, and changed`, r.same && r.focus && r.flipped, `same ${r.same}, focus ${r.focus}, changed ${r.flipped}`);
-					await t.check(`${tag}: its section and the rows below hold still`, r.secMove <= 0.5 && r.belowMove <= 0.5 && !r.replacedSec, `section moved ${r.secMove} px, row below ${r.belowMove} px, section replaced ${r.replacedSec}, ${r.frames} frames`);
-				}
-			}
+			for (const name of names) await runCase(t, f, w, h, name, `${w}x${h}`);
+		}
+	};
+	// Settings is shared by every look (NieR, Retro and Glass draw their own entrances and switches): the Services, Web,
+	// Memory and Backups cases once in each of the ten looks at 1280x900. --set looks=basic-dark,nier-light limits it;
+	// --set looks=none skips it.
+	tests[`FO-130 in every look (${surface})`] = async (t) => {
+		if (!t.app.surfaces().includes(surface)) { await t.check(`${surface} surface not asked for`, true); return; }
+		if (String(t.args.looks) === 'none') { await t.check('looks skipped (--set looks=none)', true); return; }
+		const looks = t.args.looks ? String(t.args.looks).split(',') : LOOKS;
+		const names = t.args.cases ? String(t.args.cases).split(',') : ['providers', 'web', 'memory', 'backup'];
+		await t.viewport(1280, 900);
+		for (const look of looks) {
+			const f = await t.app.open({ sandbox: surface === 'sandbox' });
+			await t.app.resetLayout();
+			await t.app.look(look);
+			await f.locator('#tab-settings').click();
+			await t.settle();
+			for (const name of names) await runCase(t, f, 1280, 900, name, `${look} 1280x900`);
 		}
 	};
 }
