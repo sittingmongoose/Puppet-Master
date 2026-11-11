@@ -384,12 +384,14 @@ def _canon_defaults(doc: str, need) -> tuple[str, list]:
             if (new_default not in empty and new_default != 'theme' and old.get('default') not in empty
                     and old.get('default') != new_default):
                 old.update({k: row[k] for k in ('default', 'recommended', 'desc') if k in row})
-                # a decision that changed the default can change the choices with it (DL-182: Saved Terminal Output is
-                # Keep Saved Scrollback or Session Only); the page must never offer a default that is not one of its
-                # choices, nor recommend a retired one
-                if isinstance(row.get('options'), list) and row['options'] != old.get('options'):
-                    old['options'] = list(row['options'])
-                    if 'recommended' not in row and old.get('recommended') not in (None, *row['options']):
+                # a canon default that is none of the old choices came with canon's own choices: take them too, and
+                # drop an old recommendation that is none of them ("Keep terminal output for" showed "Keep Saved
+                # Scrollback" over five old choices it is not one of, lane-code, 2026-11-11)
+                canon_opts = row.get('options')
+                if (isinstance(old.get('options'), list) and isinstance(canon_opts, list)
+                        and new_default not in old['options'] and new_default in canon_opts):
+                    old['options'] = canon_opts
+                    if 'recommended' not in row and old.get('recommended') not in canon_opts:
                         old.pop('recommended', None)
                 text = json.dumps(old, ensure_ascii=False, separators=(',', ':'))
                 doc = doc[:at] + text + doc[end + 1:]
