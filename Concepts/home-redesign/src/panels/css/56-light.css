@@ -115,6 +115,12 @@ html[data-pmw-home="on"] .pmw-gl-hint {
 html[data-pmw-home="on"] .pmw-gl-hint::before { inset: 25% 0; background: radial-gradient(closest-side, var(--gl-s-glow)); opacity: .2; }
 html[data-pmw-home="on"] .pmw-gl-hint::after { left: 50%; top: 0; bottom: 0; width: var(--gl-beam-w); translate: -50% 0; background: linear-gradient(to bottom, var(--gl-s-beam)); opacity: .95; }
 html[data-pmw-home="on"] .pmw-gl:is(.pmw-gl-hover, .pmw-gl-held, :focus-visible) .pmw-gl-hint { opacity: 0; transition: opacity 140ms linear; }
+/* While a bar is lit the script rewrites --gl-near and --gl-at on every pointer move near it, which moves and fades the
+   hint. Drawn in the page's own layer, each new opacity or position made Chrome re-layerize the whole page (one full
+   PaintArtifactCompositor update a frame, 2.5-4 ms on the RTX 3090); on a layer of its own while the bar is lit, the
+   compositor takes the new values directly. Home, Basic Dark, a pointer sweep: re-layerizes 41-51 -> 25-26 a second,
+   their time 170-178 -> 100-114 ms/s (lane H, 2026-11-11). */
+html[data-pmw-home="on"] .pmw-gl.pmw-gl-on .pmw-gl-hint { will-change: transform, opacity; }
 
 /* the pool: a soft bloom (::before) and the line of light along the bar (::after); heat widens it */
 html[data-pmw-home="on"] .pmw-gl-pool {
