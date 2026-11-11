@@ -697,7 +697,7 @@ class StartedProjector(W.DGOwner):
             slot.set(dict(tx=tx['tx_id']))
             return dict(tx_id=tx['tx_id'], replay=False, row=row, result=result_value)
 
-    def cutover(self, gid):
+    def cutover(self, gid, cut=None):
         storage, c = self.world.ctx.storage, self.world.ctx
         with self.recorder.call(self.owner_id, 'cutover', dict(generation=gid)):
             self.require_installed('cutover')
@@ -721,7 +721,8 @@ class StartedProjector(W.DGOwner):
             generations[gid].update(state='current', activated_at_utc=now)
             ck = self.rep.encode_checkpoint(self._logical(generations, gid))
             return storage.transact([dict(table='checkpoints', key=self.rep.checkpoint_key(), expected=cell['version'],
-                                          value=ck)])
+                                          value=ck)], cut_before=cut if cut == 'before_terminal' else None,
+                                    cut_after=cut if cut == 'after_terminal' else None)
 
     def current_row(self, where='projection'):
         cell, logical = self.checkpoint()

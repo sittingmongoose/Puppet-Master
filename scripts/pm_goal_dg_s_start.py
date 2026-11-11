@@ -477,8 +477,8 @@ class StartWorld:
         for name, owner in self.owners.items():
             if isinstance(owner, W.DGOwner):
                 owner.save(directory)
-        refs = {name: [owner_id, owner._handles[h]] for name, (owner_id, h) in self.handles.items()
-                if owner_id in {o.owner_id for o in self.owners.values()}}
+        refs = {name: [owner_id, self._owner_by_id(owner_id)._handles[h]] for name, (owner_id, h) in
+                self.handles.items() if owner_id in {o.owner_id for o in self.owners.values()}}
         meta = dict(token=self.token, ids=self.owner_ids(), refs=refs, edition=self.edition.name,
                     workgraph_sha256=self.ctx.workgraph_sha256, context=dict(
                         project=self.ctx.project_id, goal=self.ctx.goal_id, run=self.ctx.goal_run_id,
@@ -993,6 +993,7 @@ class StartOwner(W.DGOwner):
             e.bank.validate(e.custody + '#/$defs/OriginalWorkflowArgument', argument, 'start/argument')
             e.goal_bank.validate(e.goal_arg + '#/$defs/OriginalGoalArgument', src['goal'], 'start/goal_argument')
             self._check_producer(src, native, submission)
+            self.last_argument = argument
             candidate, after_body, after_control = self.candidate(op, src, native, argument, handles)
             if prepared is not None:
                 require('start/idempotency_conflict', same(prepared['value']['candidate'], candidate))
@@ -1259,9 +1260,23 @@ class StartOwner(W.DGOwner):
                         candidate=candidate, commit=commit, origin=origin, original_d01_update=update,
                         original_d01_origin=d01_origin, original_d01_head=head)
         e.bank.validate(e.consumer + '#/$defs/RetainedNativeStart', retained, 'start/retained_native')
+        commit_argument = dict(workflow=self.last_argument, candidate=candidate,
+                               native_candidates=dict(body=after_body, control=after_control))
+        e.bank.validate(e.custody + '#/$defs/OriginalCommitArgument', commit_argument, 'start/commit_argument')
+        transition = W.skeleton(e.bank, e.d01 + '#/$defs/WorkflowTransitionInput')
+        binder = W.Binder(ctx, d01.owner_id, 'd01_transition_input')
+        transition = binder.bind(transition)
+        binder.commit()
+        transition.update(current=copy.deepcopy(src['d01_current']['workflow']),
+                          before=dict(body=copy.deepcopy(before_body), control=copy.deepcopy(before_control)),
+                          candidate=dict(body=copy.deepcopy(after_body), control=copy.deepcopy(after_control)),
+                          operation_id=op, transaction_id=self.tx_id(op))
+        d01_argument = dict(held_original_start=commit_argument, coissued_transition=transition)
+        e.bank.validate(e.custody + '#/$defs/OriginalD01StartPublicationArgument', d01_argument, 'start/d01_argument')
         lineage = W.skeleton(e.bank, e.custody + '#/$defs/PublicationResult')['d01_lineage']
         lineage = self._fill_lineage(lineage, update, head, d01_origin, update_sel, head_sel, pointer_sel, origin_sel)
-        return dict(commit=commit, control=control, origin=origin, update=update, head=head, d01_origin=d01_origin,
+        return dict(commit_argument=commit_argument, d01_argument=d01_argument,
+                    commit=commit, control=control, origin=origin, update=update, head=head, d01_origin=d01_origin,
                     pointer=new_pointer, d01_lineage=lineage, after_body=after_body, after_control=after_control,
                     before_body=before_body, before_control=before_control, candidate=candidate, retained=retained,
                     update_key=update_key, head_key=head_key, d01_origin_key=d01_origin_key,
@@ -1348,7 +1363,15 @@ class StartStorageParticipantOps:
         storage = ctx.storage
         owner = world.owners['storage_participant']
         with world.recorder.call(owner.owner_id, 'commit_original', dict(operation=union['commit']['record']['operation_id'])):
-            # Lower boundary: rederive the after-images and check the whole union itself.
+            # Lower boundary: whole arguments, rederived after-images and the whole union itself.
+            e.bank.validate(e.custody + '#/$defs/OriginalCommitArgument', union['commit_argument'], 'lower/commit_argument')
+            e.bank.validate(e.custody + '#/$defs/OriginalD01StartPublicationArgument', union['d01_argument'],
+                            'lower/d01_argument')
+            require('lower/argument_hash', W.source_argument_sha256(union['commit_argument']['workflow']) ==
+                    union['candidate']['record']['actual_source_argument_sha256'])
+            require('lower/d01_held_start', same(union['d01_argument']['held_original_start'], union['commit_argument']))
+            require('lower/native_candidates', same(union['commit_argument']['native_candidates'],
+                                                    dict(body=union['after_body'], control=union['after_control'])))
             after_body, after_control = world.owners['native'].after_images(union['before_body'],
                                                                             union['commit']['record']['operation_id'])
             require('lower/after_body', same(after_body, union['after_body']))

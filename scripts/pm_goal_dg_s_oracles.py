@@ -1026,6 +1026,45 @@ def s5(suite):
         return dict(observations=dict(old=gid, new=g2))
     suite.positive('S5', 'reinstall_rebuilds_fresh_generation', reinstall)
 
+    def interrupted_cutover():
+        world, handles, _ = started(suite)
+        projector, readers, g1 = projected(world)
+        g2 = projector.stage()
+        projector.replay(g2)
+        world.storage.faults = S.FaultPlan(cut='before_terminal', mode='raise')
+        try:
+            projector.cutover(g2, cut='before_terminal')
+        except S.Crash:
+            pass
+        world.storage.faults = S.FaultPlan()
+        reopened = S.TestOwnerStorage.open(world.storage.root)
+        cell = reopened.cell('checkpoints', projector.rep.checkpoint_key())
+        logical = projector.rep.decode_checkpoint(cell['value'])
+        W.require('s5/prior_current_kept', logical['current_generation_id'] == g1 and
+                  logical['generations'][g2]['state'] == 'staged')
+        world.ctx.storage = reopened
+        world.storage = reopened
+        projector.cutover(g2)
+        cell, logical = projector.checkpoint()
+        W.require('s5/cutover_after_reopen', logical['current_generation_id'] == g2)
+        return dict(observations=dict(prior=g1, staged=g2))
+    suite.positive('S5', 'interrupted_cutover_keeps_prior_current', interrupted_cutover)
+
+    def lower_commit_argument():
+        world, handles = new_world(suite)
+
+        def tamper(commit):
+            world.start.last_argument = dict(world.start.last_argument, readiness=copy.deepcopy(
+                world.start.last_argument['readiness']))
+            world.start.last_argument['readiness']['lifecycle_ready_eligible']['satisfied'] = False
+            return commit
+        try:
+            world.start.commit_start(request(world), handles, edits=dict(commit=tamper))
+        except W.REFUSALS as error:
+            W.require('s1/prefix_receipted', world.start.recover_start(OP)['classification'] == 'receipted_unpublished')
+            raise error
+    suite.negative('S1', 'lower_publisher_commit_argument_hash', lower_commit_argument, 'lower/argument_hash')
+
     def source_loss():
         world, handles, _ = started(suite, segment_target_bytes=4096)
         for i in range(8):
