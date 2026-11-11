@@ -4,6 +4,9 @@ import fs from 'node:fs';
 //   sliders, text areas, pickers, choice groups) is named by its row's own label, not the inventory's
 //   ("Show Actual Model Used"), and a real hover over a switch on Providers & Accounts › Models shows that label with
 //   what a press does ("Turn this setting on." / "...off."), never "Change this setting.".
+// FO-134 round 3 (sol-recheck-fo134r2 K1): each roster entry is selected and each manager's inner editor panel
+//   (Replace, Edit, Add and the engine's own dialogs) is opened and read too: its fields are named by their visible
+//   label and nothing in a panel is left unnamed. The panels are in the same fixture, so one that stops opening fails.
 // FO-135: the Settings rail has no "Project: … · concept fixture" line; a chapter page's toolbar project button names the project.
 // FO-131: the base scope pickers follow stream P's rule (batch10/fo-b10-e/SCOPE-LIST.md): a thing you add is
 //   "Where it’s available: This project / Every project" (Toolchain's Edit panel, the persona scope row, a command's
@@ -82,8 +85,16 @@ for (const surface of ['normal', 'sandbox']) {
 		const f = await settings(t, surface);
 		const domains = t.args.chapters ? String(t.args.chapters).split(',') : await f.evaluate(() => [...new Set([...document.querySelectorAll('#pm-settings-root [data-action="navigate-domain"]')].map((b) => b.dataset.domain))]);
 		const all = [], seen = new Set();
+		let panelsOpened = 0;
+		/* One name computation for the rows and for a manager's inner editor panels (round 3 / sol-recheck-fo134r2 K1),
+		   installed once in the page so the two readings can never drift apart. */
+		await f.evaluate(() => {
+			window.__fo134 = {
+				VALUE: 'a[href], button, [role="button"], [role="radio"], [role="checkbox"], input:not([type="hidden"]), textarea, select, [role="switch"], [role="slider"], [role="combobox"], .pm51-dd-trigger, [role="radiogroup"], [role="group"], [role="spinbutton"], [role="textbox"], [tabindex]:not([tabindex="-1"]), [contenteditable="true"]',
+			};
+		});
 		const READ = () => {
-			const VALUE = 'a[href], button, [role="button"], [role="radio"], [role="checkbox"], input:not([type="hidden"]), textarea, select, [role="switch"], [role="slider"], [role="combobox"], .pm51-dd-trigger, [role="radiogroup"], [role="group"], [role="spinbutton"], [role="textbox"], [tabindex]:not([tabindex="-1"]), [contenteditable="true"]';
+			const VALUE = window.__fo134.VALUE;
 			const own = (lab) => lab ? [...lab.childNodes].filter((n) => n.nodeType === 3).map((n) => n.textContent).join('').replace(/\s+/g, ' ').trim() : '';
 			const txt = (e) => (e.textContent || '').replace(/\s+/g, ' ').trim();
 			const nameOf = (e) => {
@@ -98,6 +109,8 @@ for (const surface of ['normal', 'sandbox']) {
 				if (e.getAttribute('title')) return e.getAttribute('title').trim();
 				return '';
 			};
+			const kind = (e) => (e.getAttribute('role') || e.tagName.toLowerCase()) + (e.type && e.tagName === 'INPUT' ? ':' + e.type : '');
+			window.__fo134 = { VALUE, own, txt, nameOf, kind };
 			const out = [];
 			const ROWS = ['.setting-row', '.o55-field'].map((x) => '#panel-settings [data-continuous-workspace-body] ' + x).join(', ');
 			for (const row of document.querySelectorAll(ROWS)) {
@@ -118,14 +131,122 @@ for (const surface of ['normal', 'sandbox']) {
 					if (e.matches('[role="option"], [role="menuitem"]')) continue;
 					if (e.matches('.details-btn, [data-action="setting-details"]')) continue;
 					const name = nameOf(e);
-					out.push({ id, label, kind: (e.getAttribute('role') || e.tagName.toLowerCase()) + (e.type && e.tagName === 'INPUT' ? ':' + e.type : ''), index: [...box.querySelectorAll(VALUE)].indexOf(e), name, ok: name.toLowerCase().includes(label.toLowerCase()) });
+					out.push({ id, label, kind: kind(e), index: [...box.querySelectorAll(VALUE)].indexOf(e), name, ok: name.toLowerCase().includes(label.toLowerCase()) });
 				}
 			}
 			return out;
 		};
 		const take = async (where) => { for (const x of await f.evaluate(READ)) { const k = x.id + '|' + x.kind + '|' + x.index + '|' + x.name; if (seen.has(k)) continue; seen.add(k); all.push(Object.assign({ where }, x)); } };
+		/* FO-134 round 3 (sol-recheck-fo134r2 K1): a manager's inner editor panels (Replace, Edit, Add and the like)
+		   hold fields the page never shows. The Discord replacement field read "New address" beside a visible
+		   "Webhook address" while this walk passed, because it never opened one. Every open panel is read here: a
+		   control inside a field must carry that field's visible label in its name, and a control outside one must
+		   still have a name. The opener that was pressed names the census entry, so a panel that stops opening
+		   shows up as missing controls. */
+		const PANEL_READ = (open) => {
+			const S = window.__fo134;
+			const roots = [...document.querySelectorAll('.pm51-drawer-wrap.is-open .pm51-panel, .o55g-win, .overlay .dialog[role="dialog"]')].filter((e) => e.getClientRects().length);
+			const out = [];
+			for (const root of roots) {
+				const where = open + (root.matches('.o55g-win') ? ' (set-up)' : '');
+				for (const field of root.querySelectorAll('.pm51-field, .o55-field, .form-field')) {
+					const label = S.own(field.querySelector(':scope > .pm51-field-label, :scope > div > .o55-field-label, .o55-field-label, :scope > .form-label'));
+					if (!label) continue;
+					for (const e of field.querySelectorAll(S.VALUE)) {
+						if (e.closest('.pm51-field, .o55-field, .form-field') !== field) continue;
+						if (e.closest('[aria-hidden="true"]') || (e.tagName === 'INPUT' && /^hidden$/.test(e.type))) continue;
+						if (e.matches('[role="option"], [role="menuitem"], .details-btn, [data-action="setting-details"]')) continue;
+						const name = S.nameOf(e);
+						/* a field's value controls are named by it; a button in the field (Play, Browse…) names its own action */
+						const value = e.matches('input, textarea, select, .pm51-dd-trigger, [role="combobox"], [role="slider"], [role="spinbutton"], [role="radiogroup"], [role="group"], [role="switch"]');
+						out.push({ id: `panel:${where}:${label}`, label, kind: S.kind(e), name, ok: value ? name.toLowerCase().includes(label.toLowerCase()) : !!name });
+					}
+				}
+				for (const e of root.querySelectorAll(S.VALUE)) {
+					if (e.closest('.pm51-field, .o55-field, .form-field') || e.closest('[aria-hidden="true"]') || (e.tagName === 'INPUT' && /^hidden$/.test(e.type))) continue;
+					if (e.matches('[role="option"], [role="menuitem"], .details-btn, [data-action="setting-details"], [data-action="close-overlay"], .pm51-panel-close')) continue;
+					/* a container of named controls (a picker row, a step rail) is not a field: its own controls carry names */
+					if (e.matches('[role="group"], [role="radiogroup"], [role="listbox"], [role="list"]')) continue;
+					const name = S.nameOf(e);
+					out.push({ id: `panel:${where}:`, label: '', kind: S.kind(e), name, ok: !!name });
+				}
+			}
+			return out;
+		};
+		/* A sheet, a wizard or an open dropdown left behind by an opener would hide the chapter rail from the next
+		   click. Everything is dismissed and Settings is brought back before the walk moves on. */
+		const settleScreen = async () => {
+			for (let k = 0; k < 4; k++) {
+				const any = await f.evaluate(() => !![...document.querySelectorAll('.drawer-wrap, .o55g-layer, .overlay')].find((e) => e.getClientRects().length)).catch(() => false);
+				if (!any) break;
+				await t.page.keyboard.press('Escape');
+				await t.page.waitForTimeout(240);
+			}
+			await f.evaluate(() => { try { if (typeof closeOverlay === 'function') closeOverlay(false); } catch (e) { /* no overlay */ } }).catch(() => {});
+			await t.page.waitForTimeout(120);
+		};
+		const ensureSettings = async () => {
+			await settleScreen();
+			const on = await f.evaluate(() => {
+				const tab = document.querySelector('#tab-settings');
+				return !!(tab && tab.getAttribute('aria-selected') === 'true' && document.querySelector('#panel-settings') && document.querySelector('#panel-settings').getClientRects().length);
+			}).catch(() => false);
+			if (!on) {
+				await settleScreen();
+				await f.locator('#tab-settings').click({ timeout: 5000 }).catch(() => {});
+				await t.settle().catch(() => {});
+			}
+		};
+		const panelTake = async (action) => { for (const x of await f.evaluate(PANEL_READ, action)) { const k = x.id + '|' + x.kind + '|' + x.name; if (seen.has(k)) continue; seen.add(k); all.push(Object.assign({ where: 'panel' }, x)); } };
+		/* The actions that open an editor sheet, button by button: a dropdown's own trigger (pm51-dd-open) is not one. */
+		const OPENER = /^(?!pm51-dd-open$)(?:pm51-[a-z0-9-]+-(?:add|new|edit|setup|connect|import|pair|address|details|add-shortcut)|pm51-[a-z0-9-]+-open|pm51-web-key|pm51-servers-attach-key|pm51-servers-key-add|pm51-source-open-publish|pm51-notifications-event|open-(?:hosts|docker)-manager|open-(?:resource|structured)-setting|manage-credential-reference)$/;
+		const openPanels = async (d, ws, tab) => {
+			if (/^(0|false|no|off)$/i.test(String(t.args.panels || ''))) return;
+			const body = (s) => `[data-continuous-workspace-body="${ws}"]${s ? ' ' + s : ''}`;
+			const rows = await f.evaluate((sel) => [...document.querySelectorAll(sel)].filter((e) => e.getClientRects().length).map((e) => e.dataset.id), body('.resource-row[data-id]'));
+			for (const rowId of rows.slice(0, 8)) {
+				await f.evaluate(([sel, id]) => { const r = [...document.querySelectorAll(sel)].find((e) => e.dataset.id === id && e.getClientRects().length); if (r) r.click(); }, [body('.resource-row[data-id]'), rowId]);
+				/* a roster click selects and the detail cross-fades: read the next panel only after the row says it is current */
+				await f.waitForFunction(([sel, id]) => { const r = [...document.querySelectorAll(sel)].find((e) => e.dataset.id === id); return !!(r && r.getAttribute('aria-current') === 'true'); }, [body('.resource-row[data-id]'), rowId], { timeout: 4000 }).catch(() => {});
+				await t.settle().catch(() => {});
+				await t.page.waitForTimeout(180);
+				const actions = await f.evaluate(([sel, re]) => {
+					const rx = new RegExp(re);
+					return [...new Set([...document.querySelectorAll(sel)].filter((e) => e.getClientRects().length && rx.test(e.dataset.action || '')).map((e) => e.dataset.action))];
+				}, [body('[data-action]'), OPENER.source]);
+				for (const action of actions.slice(0, 14)) {
+					const pressed = await f.evaluate(([sel, a]) => { const e = [...document.querySelectorAll(sel)].find((x) => x.dataset.action === a && x.getClientRects().length); if (!e) return false; e.click(); return true; }, [body('[data-action]'), action]).catch(() => false);
+					if (!pressed) continue;
+					const showed = await f.waitForFunction(() => [...document.querySelectorAll('.pm51-drawer-wrap.is-open .pm51-panel, .o55g-win, .overlay .dialog[role="dialog"]')].some((e) => e.getClientRects().length), null, { timeout: 2500 }).then(() => true).catch(() => false);
+					if (showed) panelsOpened++;
+					await t.settle().catch(() => {});
+					await panelTake(action);
+					for (let k = 0; k < 3; k++) {
+						const still = await f.evaluate(() => [...document.querySelectorAll('.pm51-drawer-wrap.is-open .pm51-panel, .o55g-win, .overlay')].some((e) => e.getClientRects().length));
+						if (!still) break;
+						await t.page.keyboard.press('Escape');
+						await f.evaluate(() => { try { if (typeof closeOverlay === 'function') closeOverlay(false); } catch (e) { /* no overlay */ } }).catch(() => {});
+						await t.page.waitForTimeout(260);
+					}
+					// an opener that left the tab (a route, a panel that took the page) is undone before the next one
+					const back = await f.evaluate(([dd, w, tb]) => {
+						const b = document.querySelector(`[data-continuous-workspace-body="${w}"][data-workspace-mounted="true"]`);
+						return !!(b && b.querySelector(`.manager-tab.active[data-tab="${tb}"]`));
+					}, [d, ws, tab]).catch(() => false);
+					if (!back) {
+						await settleScreen();
+						await ensureSettings();
+						await f.evaluate(([dd, w]) => PM51.go(dd, w), [d, ws]).catch(() => {});
+						await t.page.waitForTimeout(300);
+						if (tab) await f.evaluate(([w, tb]) => PM51.switchTab(w, tb), [ws, tab]).catch(() => {});
+						await t.page.waitForTimeout(300);
+					}
+				}
+			}
+		};
 		for (const d of domains) {
-			await f.locator(`#pm-settings-root [data-action="navigate-domain"][data-domain="${d}"]`).first().click();
+			await ensureSettings();
+			await f.locator(`#pm-settings-root [data-action="navigate-domain"][data-domain="${d}"]`).first().click({ timeout: 10000 });
 			await f.waitForSelector(`#pm-settings-root .domain-link.active[data-domain="${d}"]`, { timeout: 15000 });
 			await t.settle();
 			const wss = await f.evaluate(() => [...document.querySelectorAll('[data-continuous-workspace-body]')].map((b) => b.dataset.continuousWorkspaceBody));
@@ -134,6 +255,8 @@ for (const surface of ['normal', 'sandbox']) {
 				await f.waitForSelector(`[data-continuous-workspace-body="${ws}"][data-workspace-mounted="true"]`, { timeout: 15000 });
 				await t.settle();
 				await take(`${d}/${ws}`);
+				const active = await f.evaluate((w) => (document.querySelector(`[data-continuous-workspace-body="${w}"] .manager-tab.active[data-tab]`) || { dataset: {} }).dataset.tab || '', ws);
+				await openPanels(d, ws, active);
 				const tabs = await f.evaluate((w) => [...document.querySelectorAll(`[data-continuous-workspace-body="${w}"] .pm51-tabs .manager-tab[data-tab]`)].map((b) => b.dataset.tab), ws);
 				for (const tab of tabs) {
 					await f.evaluate(([w, tb]) => {
@@ -149,6 +272,7 @@ for (const surface of ['normal', 'sandbox']) {
 					}, [ws, tab], { timeout: 15000 });
 					await t.settle();
 					await take(`${d}/${ws}/${tab}`);
+					await openPanels(d, ws, tab);
 				}
 			}
 		}
@@ -160,13 +284,18 @@ for (const surface of ['normal', 'sandbox']) {
 		if (t.args.namesCensus) fs.writeFileSync(String(t.args.namesCensus), JSON.stringify(census, null, 2) + '\n');
 		const fixture = new URL('./settings-value-controls.json', import.meta.url);
 		if (!t.args.chapters && !t.args.namesCensus) await t.check('the expected-control census fixture exists', fs.existsSync(fixture));
+		const panelsOff = /^(0|false|no|off)$/i.test(String(t.args.panels || ''));
 		if (fs.existsSync(fixture) && !t.args.chapters) {
 			const expected = JSON.parse(fs.readFileSync(fixture, 'utf8'));
-			const missing = Object.entries(expected).filter(([key, n]) => (census[key] || 0) < n);
+			const missing = Object.entries(expected).filter(([key, n]) => !(panelsOff && key.startsWith('panel:')) && (census[key] || 0) < n);
 			await t.check('every expected row contributes all its value controls', !missing.length,
 				missing.map(([key, n]) => `${key}: expected ${n}, walked ${census[key] || 0}`).join('; '));
 		}
 		t.log(`walked ${domains.length} chapters: ${all.length} value controls on ${new Set(all.map((x) => x.id)).size} placed rows; kinds ${JSON.stringify(kinds)}`);
+		const inPanels = all.filter((x) => x.id.startsWith('panel:'));
+		t.log(`opened ${panelsOpened} inner editor panels: ${inPanels.length} controls in them`);
+		if (!panelsOff)
+			await t.check(`every manager's inner editor panels open and their fields are read (${panelsOpened} panels, ${inPanels.length} controls)`, !t.args.chapters ? panelsOpened >= 20 && inPanels.length >= 40 : panelsOpened >= 1, `${panelsOpened} panels, ${inPanels.length} controls`);
 		if (bad.length) t.log('unnamed or misnamed: ' + JSON.stringify(bad.map((x) => `${x.where} ${x.id} ${x.kind} "${x.name}" vs "${x.label}"`)));
 		await t.check(`every placed value control on every Settings page is named by its row (${all.length} controls)`, (t.args.chapters ? all.length > 0 : all.length >= 778) && bad.length === 0, `${bad.length} not: ` + bad.slice(0, 8).map((x) => `${x.id} ${x.kind} "${x.name}" vs "${x.label}"`).join('; '));
 	};
