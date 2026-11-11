@@ -101,7 +101,7 @@
       this.feed = 0; this.loops = {};
       this.idleNext = 6 + Math.random() * 4; this.idleUntil = 0; this.idleLook = null;
       this.build();
-      this.loop = this.loop.bind(this);
+      this.loop = this.loop.bind(this); this.tick = this.tick.bind(this);
       this.raf = 0; this.active = true; this.dirty = true;
       this.parts();
       const reg = window.PM_PIP_PARTS; if (reg && typeof reg.on === 'function') try { this.offParts = reg.on('change', () => this.parts()); } catch (_) {}
@@ -1283,25 +1283,47 @@
     /* ------------------------------------------------------------- loop */
     loop() {
       this.raf = 0;
+      if (this.waitT) { clearTimeout(this.waitT); this.waitT = 0; }
       const tn = now(); let dt = Math.min(.05, tn - this.last) / H.speed(); this.last = tn;
       /* paused while the window is shut or held, the page hidden, a drag under way (body.pm-resizing) or the stage
          gone; a still stage (Reduced Motion, a low-resource computer) is drawn only when something changed */
       if (!this.live()) { this.park(); return; }
       if (this.remeasureAt && tn > this.remeasureAt) { this.remeasureAt = 0; this.measure(); }
       if (this.still() && !this.dirty && this.t > this.moodUntil + .3 && !this.fx.length && !this.faceOut && this.faceT0 == null) return;
-      this.raf = requestAnimationFrame(this.loop);
-      this.advance(dt);
       // Retro's tube refreshes in steps; the phosphor holds what was there a moment longer
-      const fps = this.frameRate();
+      const fps = this.frameRate(), smooth = !(fps && !this.reduced) && !this.still();
+      if (!smooth && !this.raf) this.raf = requestAnimationFrame(this.loop);
+      this.advance(dt);
       /* (on a steady cadence: each draw is due one step after the last was due, so a frame that comes a little late
          does not push every later draw back; Retro Light then draws ten times a second, Retro Dark twenty) */
       if (fps && !this.reduced) { const step = 1 / fps; if (this.t - this.frameT < step - 0.006) return; this.frameT = this.t - this.frameT > 2 * step ? this.t : this.frameT + step; }
-      /* (and elsewhere only when a draw is due: the displacement gate, drawDue) */
-      else if (!this.still() && !this.dirty && !this.drawDue()) return;
+      /* (and elsewhere only when a draw is due: the displacement gate, drawDue; with none due the loop asks for no frame
+         and waits on a timer, PERF-1 step 5) */
+      else if (smooth && !this.dirty && !this.drawDue()) { this.wait(); return; }
       /* (a change is drawn only once a frame is: cleared before Retro's stepped gate, a still stage that skipped one never
          drew it, and a sign kept 1024's place at 860 after a resize) */
       this.dirty = false;
       this.render();
+      /* (moving fast enough to need the next frame too, a swing or anything that draws every frame: the frame loop goes on;
+         slow drift goes back to the timer) */
+      if (smooth && !this.raf) { if (this.speed >= 3) this.raf = requestAnimationFrame(this.loop); else this.wait(); }
+    }
+    /* PERF-1 step 5: a tick that drew nothing asks for no animation frame. Each frame the loop asked for cost 1.3-4.3 ms
+       even when it drew nothing (the stage world's CSS animations are re-serviced on every main frame). A light timer
+       runs the fixed-step physics and the gate, touching nothing on the page, and asks for a frame only once a draw is
+       due. One loop, never two: kick() and park() cancel the timer, and the timer stands down while a frame is asked
+       for. Paused (park), held, destroyed or inactive, it stops as the frame loop does. */
+    wait() { if (!this.waitT && !this.dead) this.waitT = setTimeout(this.tick, 16); }
+    tick() {
+      this.waitT = 0;
+      if (this.raf || this.dead) return;
+      if (!this.live()) { this.park(); return; }
+      const tn = now(); let dt = Math.min(.05, tn - this.last) / H.speed(); this.last = tn;
+      if (this.remeasureAt && tn > this.remeasureAt) { this.remeasureAt = 0; this.measure(); }
+      if (this.raf) return;
+      this.advance(dt);
+      if (this.dirty || this.still() || this.frameRate() && !this.reduced || this.drawDue()) { this.raf = requestAnimationFrame(this.loop); return; }
+      this.wait();
     }
     /* the physics on a fixed step, 1/360 s (the substep a 120 Hz frame took: three a frame): the motion then depends only
        on time, not on when frames ran, so a 60 Hz screen moves as a 120 Hz one does and the loop can skip frames and catch
@@ -1604,13 +1626,18 @@
        away. What is drawn is the exact pose at today's precision: slow drift is sampled less often, never moved. */
     drawDue() {
       this.aimEyes(); this.motionSounds();
+      /* (and how fast the pose moves, in px a second from the last tick: the frame loop goes on while it is 3 or more, a
+         twentieth of a pixel a 60 Hz frame; anything that draws every frame counts as fast) */
+      this.speed = Infinity;
       if (this.fx.length || this.faceOut || this.faceT0 != null || this.moodNow() !== this.curMood) return true;
       if (this.blinkK() !== this.blinkDrawn) return true;
       if (this.sleepZ && !this.reduced && this.famName !== 'nier' && this.t - (this.lastZ || 0) > .9) return true;
       if (this.famName === 'nier' && this.hudBusy && this.hudBusy()) return true;
       if (this.tipBox && this.tipMoving) return true;
       for (const pr of this.props.values()) if (pr.spec.ground && pr.landed && this.t - pr.landT < .6) return true;
-      const v = this.poseVec(), d = this.drawnPose;
+      const v = this.poseVec(), d = this.drawnPose, u = this.tickV;
+      if (u && u.length === v.length && this.t > this.tickT) { let m = 0; for (let i = 0; i < v.length; i++) m = Math.max(m, Math.abs(v[i] - u[i])); this.speed = m / (this.t - this.tickT); }
+      this.tickV = v; this.tickT = this.t;
       if (!d || d.length !== v.length) return true;
       for (let i = 0; i < v.length; i++) if (!(Math.abs(v[i] - d[i]) < .1)) return true;
       return false;
@@ -1883,7 +1910,7 @@
       };
       flip();
     }
-    destroy() { if (this.off) this.off(); clearTimeout(this.questT); cancelAnimationFrame(this.raf); clearTimeout(this.parkT); clearTimeout(this.holdT); this.dead = true; this.ro.disconnect(); window.removeEventListener('resize', this.onWinResize); clearTimeout(this.winRT); if (this.bubbleMO) this.bubbleMO.disconnect(); clearTimeout(this.wakeT); [this.tipW, this.typeT, this.decT, this.cmdT, this.bootT].forEach((w) => w && w.cancel()); this.root.innerHTML = ''; }
+    destroy() { if (this.off) this.off(); clearTimeout(this.questT); cancelAnimationFrame(this.raf); clearTimeout(this.parkT); clearTimeout(this.waitT); clearTimeout(this.holdT); this.dead = true; this.ro.disconnect(); window.removeEventListener('resize', this.onWinResize); clearTimeout(this.winRT); if (this.bubbleMO) this.bubbleMO.disconnect(); clearTimeout(this.wakeT); [this.tipW, this.typeT, this.decT, this.cmdT, this.bootT].forEach((w) => w && w.cancel()); this.root.innerHTML = ''; }
 
     /* ------------------------------------------------------------- the product's own */
     /* Pip parts the stage's CSS reads: setup-world-life off holds the world's own loops (clouds, caustics, motes, the
@@ -1903,11 +1930,13 @@
       if (this.raf || this.dead) return;
       if (!this.live()) { this.park(); return; }
       if (this.root.hasAttribute('data-paused')) this.root.removeAttribute('data-paused');
-      this.last = now(); this.raf = requestAnimationFrame(this.loop);
+      /* (a loop waiting on its timer is the same loop, its clock running: it asks for the frame now and keeps its time) */
+      if (this.waitT) { clearTimeout(this.waitT); this.waitT = 0; } else this.last = now();
+      this.raf = requestAnimationFrame(this.loop);
     }
     // paused: look again a little later (a drag ends, the page shows again); nothing is drawn meanwhile
     park() {
-      clearTimeout(this.parkT);
+      clearTimeout(this.parkT); clearTimeout(this.waitT); this.waitT = 0;
       if (!this.root.hasAttribute('data-paused')) this.root.setAttribute('data-paused', '');
       if (!this.dead && this.active) this.parkT = setTimeout(() => this.kick(), 250);
     }
