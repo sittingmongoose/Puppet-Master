@@ -54,14 +54,21 @@ v2 (the Settle the clash dialog in all ten looks), and browser-check's audit (ov
 on every demo Project, New Project and its moments, at 1280, 1024, 860 and 640 px, and in all ten looks with the demo
 set, on first run and with 40 projects. On each of those states it also measures v3 against v2 for what the audit
 cannot see: v3 cuts off no text v2 shows whole, every plate's glyph stays beside its title, and an open question's
-answers start on the question's own edge. The kit's other checks run in v3 unchanged, since the page opens on it;
+answers start on the question's own edge, and the questions' card and an open question's answers are exactly as wide
+as in v2. The kit's other checks run in v3 unchanged, since the page opens on it;
 `--set page=file://<dir>/projects-concepts.html?split=v2` runs the kit in v2 (this file then shows the page opened on
 v2 and goes to v3 by the strip).
 
 Review r2 (2026-11-11, `REVIEW-concept-B-r2-opus-high.md`) found two places where v3's own gaps broke a layout v2
-sizes for its gaps, both fixed by leaving those gaps as v2 has them: at 860 px every plate head put its glyph on a
-line of its own (N4), and in Retro the chosen library row's second line was cut off (N5). The measures above were
-added for them; they fail on the build before the fix and pass after it.
+sizes for its gaps: at 860 px every plate head put its glyph on a line of its own (N4), and in Retro the chosen
+library row's second line was cut off (N5). The measures above were added for them (they fail on the build before the
+fix and pass after it), and they found two more of the same family: v3's wider page sides made the guided page's
+questions card 18 px narrower than v2's, so `np.css`'s narrow step applied at full width; and a folder path was
+shortened in the middle where v2 shows it whole. The rule v3 now keeps, written at the top of `c-v3.css`: it changes
+no side padding and no column gap along the widths Split's layout steps are measured on (`pjxcpage`, `pjxcsteps`,
+`pjxcsec`), and no gap an offset in `c.css` or `np.css` is worked out from. So every step of v2's layout falls at the
+same window width in v3, and flipping between the two never re-flows the page. A path that does not fit beside its
+label goes under it, the plate wide.
 
 ## Split v2 (pass 2, 2026-11-02): the chosen concept
 
