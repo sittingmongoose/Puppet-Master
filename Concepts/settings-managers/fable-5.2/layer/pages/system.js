@@ -355,7 +355,7 @@
       { key: 'privacy', title: 'Sharing with the makers', help: 'Anonymous reports that help improve the app. Off unless you turn it on.', ids: ['system.health.telemetry'] },
       { key: 'reset', html: () => ui.card({ title: 'Start over', help: 'For when a change made things worse and you cannot find which one.', body: ui.rows([{ label: 'Put every setting of this project back to how it came', help: 'Accounts, keys and history are kept. A copy of your settings is made first, so you can undo it.', covers: 'system.advanced.reset-defaults', control: (() => { try { return kit().bound.action('system.advanced.reset-defaults', { label: 'Start over…', icon: 'restore' }); } catch (e) { return ''; } })() }]) }) }
     ],
-    more: [{ key: 'hunt', title: 'When something misbehaves', help: 'Extra detail for hunting a problem. Leave these off otherwise.', ids: ['system.advanced.debug-mode', 'system.advanced.log-verbosity', 'system.advanced.runtime-artifacts', 'system.advanced.receipts-verbosity', 'system.advanced.cache-linter'] }],
+    more: [{ key: 'hunt', title: 'When something misbehaves', help: 'Extra detail for hunting a problem. Leave these off otherwise.', ids: ['system.advanced.debug-mode', 'system.advanced.log-verbosity', 'system.advanced.runtime-artifacts'], also: ['system.advanced.receipts-verbosity', 'system.advanced.cache-linter'] }],
     moreLabel: 'When something misbehaves', moreHelp: 'Extra detail for hunting a problem',
     expert: [
       { key: 'draw', title: 'Starting and drawing', help: 'How the app starts and draws its windows.', ids: ['system.advanced.viewer-mode', 'system.advanced.renderer'] },

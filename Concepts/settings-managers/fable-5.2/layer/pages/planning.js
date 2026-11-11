@@ -121,6 +121,7 @@
     sections: [
       { key: 'plans', title: 'Plan and Deep Plan', help: 'A plan is quick. A Deep Plan looks harder and asks you more before anything is built.', ids: [PL + 'plan-default-depth', PL + 'deep-plan-default-depth', PL + 'auto-open-deep-plan', PL + 'plan-panel-sticky'] },
       { key: 'wizard', title: 'The Planning Wizard', help: 'For a big request the wizard interviews you first, so nothing is missed.', ids: [PL + 'recommend-wizard', PL + 'workflow-style', PL + 'plan-thoroughness', PL + 'web-research-mode'] },
+      { key: 'checklist', title: 'Big jobs without a plan', help: 'When you did not ask for a plan and the job has many steps, the assistant writes its own checklist first, so that no step is dropped.', ids: ['planning.interview.todo-auto-use'] },
     ],
     more: [
       { key: 'questions', title: 'How many questions a plan may ask', help: 'The most each kind of plan may ask you before it writes. When Grill Me is on, its extra questions are added to the limit.', ids: [Q.Quick, Q.Standard, Q.Thorough, QD.Thorough, QD.Exhaustive, 'branching.crew.brainstorm-question-limit', 'branching.crew.grill-me-question-extension', PL + 'deep-plan-grill-me'] },

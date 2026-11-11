@@ -406,7 +406,7 @@
       ];
     },
     more: [
-      { key: 'tools', html: (ctx) => ui.card({ title: 'The answer for each tool', help: 'Used when no rule mentions the action. Reading and searching are safe to allow.', body: toolRows(ctx.st, 'safety.rules.per-tool-permissions', TOOLS) }), count: 9 },
+      { key: 'tools', html: (ctx) => `<div data-smx-covers="safety.rules.per-tool-permissions">${ui.card({ title: 'The answer for each tool', help: 'Used when no rule mentions the action. Reading and searching are safe to allow.', body: toolRows(ctx.st, 'safety.rules.per-tool-permissions', TOOLS) })}</div>`, count: 9 },
       { key: 'web', html: (ctx) => ui.card({ title: 'The answer for each web ability', help: 'What the assistant may do on the web. “Ask me first” is safest.', side: ui.btn({ label: 'Web research', go: 'ai/web' }), body: toolRows(ctx.st, 'safety.protection.web-tool-permissions', WEB_TOOLS) }), count: 6 }
     ],
     moreLabel: 'An answer for each tool and web ability', moreHelp: 'For when no rule decides',
@@ -506,7 +506,7 @@
       { key: 'files', title: 'Guarding files', help: 'How strictly changes to files are watched.', ids: ['safety.protection.filesafe-integration', 'safety.protection.file-guard', 'safety.protection.strict-mode', 'safety.protection.governance-unlock', 'safety.protection.write-conflict-detection'] },
       { key: 'commands', title: 'Dangerous commands', help: 'Commands you trust, more to block, and the override.', ids: ['safety.protection.approved-commands', 'safety.protection.custom-patterns-path', 'safety.protection.allow-destructive'] },
       { key: 'outside', title: 'Folders outside the project', ids: ['safety.protection.external-dir-allowlist'] },
-      { key: 'secrets', title: 'Hiding secrets in pictures', ids: ['safety.protection.screenshot-redaction'] }
+      { key: 'secrets', title: 'Hiding secrets in pictures and in proof', help: 'Before a screenshot is shared with the AI, and before proof that work was checked is saved.', ids: ['safety.protection.screenshot-redaction', 'planning.verification.evidence-redaction'] }
     ],
     expert: [
       S('permissions-exceptions', { title: 'Exceptions during checks' }),

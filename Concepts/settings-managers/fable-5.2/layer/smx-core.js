@@ -145,6 +145,8 @@
   }
   SMX.placement = () => PLACE || resolvePlacement();
   SMX.where = (id) => SMX.placement().claimed.get(id) || null;
+  /* a link to the row of a setting, wherever its home is: ui.btn(Object.assign({label}, SMX.at(id))), ui.word(text, SMX.at(id)) */
+  SMX.at = (id) => { const w = SMX.where(id); return w ? { go: w.route, reveal: id } : {}; };
   SMX.idsOf = (s) => (Array.isArray(s.ids) ? s.ids : (s.resolved || [])).filter((id) => SMX.has(id));
   SMX.coverage = () => { const p = SMX.placement(); return { total: p.all.length, placed: p.claimed.size, missing: p.missing.slice(), twice: p.dup.slice() }; };
   /* The plan can place a setting on a page whose section then fails to draw it. This opens every page in turn and
@@ -358,6 +360,7 @@
     return `<nav class="smx-crumbs" aria-label="You are in"><button type="button" class="smx-back" data-smx-do="back" aria-label="Back">${SMX.icon('back')}</button>${items.map(([r, t]) => `<button type="button" class="smx-crumb" data-smx-go="${esc(r)}">${esc(t)}</button><span class="smx-crumb-sep" aria-hidden="true">›</span>`).join('')}<span class="smx-crumb-here">${esc(fn(p.nav || p.title, ctx))}</span></nav>`;
   }
   /* the blocks of a page, in order: [{key, html, fixed}] ; fixed blocks hold the kit's own rows and are drawn once */
+  const hash = (t) => { let x = 5381; for (let i = 0; i < t.length; i++) x = ((x << 5) + x + t.charCodeAt(i)) | 0; return (x >>> 0).toString(36) + '.' + t.length; };
   function blocksOf(m, ctx) {
     const p = m.page; const out = [];
     // two blocks with one key would be drawn as one (the second would replace the first): the later one gets a suffix
@@ -375,11 +378,14 @@
     const sec = (s, i, level) => {
       if (s.when && !s.when(ctx)) return null;
       if (s.html) return { key: `${level}-${s.key || i}`, html: `<div data-smx-anchor="${esc(s.key || '')}">${fn(s.html, ctx)}</div>`, fixed: !!s.fixed };
-      const ids = SMX.idsOf(s); if (!ids.length) return null;
+      const ids = SMX.idsOf(s);
+      // `also`: settings that belong with these rows but have their home on another page; said in words, with the way there
+      const also = s.also && SMX.ui ? SMX.ui.elsewhere(s.also, { title: s.alsoTitle || (ids.length ? 'Part of this, decided on another page' : s.title || 'Decided on another page'), help: s.alsoHelp || '', here: p.id }) : '';
+      if (!ids.length && !also) return null;
       let html = '';
-      try { html = kit().settingRows(ids, { title: s.title || '', help: s.help || '' }); } catch (e) { html = ''; }
-      if (!html) return null;
-      return { key: `${level}-${s.key || i}`, html: `<div data-smx-anchor="${esc(s.key || '')}">${html}</div>`, fixed: true, sig: ids.join(',') };
+      if (ids.length) { try { html = kit().settingRows(ids, { title: s.title || '', help: s.help || '' }); } catch (e) { html = ''; } }
+      if (!html && !also) return null;
+      return { key: `${level}-${s.key || i}`, html: `<div data-smx-anchor="${esc(s.key || '')}">${html}${also}</div>`, fixed: true, sig: ids.join(',') + (also ? '|' + hash(also) : '') };
     };
     (p.sections || []).forEach((s, i) => push(sec(s, i, 'main')));
     const fold = (list, level, label, help) => {
@@ -387,7 +393,8 @@
       if (!parts.length) return;
       const key = `${p.id}:${level}`; const open = !!SMX.local.openMore[key];
       const count = (list || []).reduce((n, s) => n + (s.html ? (s.count || 0) : SMX.idsOf(s).length), 0);
-      out.push({ key: `${level}-fold`, fixed: true, sig: parts.map((x) => x.key + ':' + (x.sig || x.html.length)).join('|') + (open ? ':o' : ':c'),
+      // a part is redrawn when its words change, not only when their length does (a count going from 3 to 4 stayed 3)
+      out.push({ key: `${level}-fold`, fixed: true, sig: parts.map((x) => x.key + ':' + (x.sig || hash(x.html))).join('|') + (open ? ':o' : ':c'),
         html: `<details class="smx-fold smx-fold-${level}"${open ? ' open' : ''} data-smx-fold="${esc(key)}"><summary>${SMX.icon('fold')}<span class="smx-fold-label">${esc(label)}</span><span class="smx-fold-help">${esc(help)}${count ? ` · ${count} setting${count === 1 ? '' : 's'}` : ''}</span></summary><div class="smx-fold-body">${parts.map((x) => x.html).join('')}</div></details>` });
     };
     fold(p.more, 'more', p.moreLabel || 'More options', p.moreHelp || 'Less common choices');

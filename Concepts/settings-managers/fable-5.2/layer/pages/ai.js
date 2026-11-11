@@ -365,10 +365,11 @@
     legacy: [['ai', 'providers', 'usage', 'providers']],
     keywords: ['budget', 'spend', 'cost', 'limit', 'usage', 'warning', 'tokens'],
     lead: () => [{ key: 'usage', html: ui.links([{ label: 'See what was used: open the Usage page', do: 'open-usage' }, { label: 'Limits for a single run', go: 'safety/limits' }, { label: 'What web research may spend', go: 'ai/web' }]) }],
-    sections: [S('providers-budgets', { title: 'Monthly limit', help: '0 means no limit.' }), S('providers-warnings', { title: 'Warnings', help: 'A heads-up before anything stops.' })],
+    sections: [S('providers-budgets', { title: 'Monthly limit', help: '0 means no limit.' }), S('providers-warnings', { title: 'Warnings', help: 'A heads-up before anything stops.' }),
+      { key: 'creep', title: 'Costs that creep up', help: 'Some changes to instructions make every request cost more, because the AI can no longer reuse what it has already read. This warns you before such a change takes effect.', ids: ['system.advanced.cache-linter'] }],
     more: [S('providers-board', { title: 'What the Usage page shows', help: 'These only change how the Usage page looks. You can also change them there.' })],
     moreLabel: 'What the Usage page shows', moreHelp: 'Display choices for the Usage page',
-    expert: [S('providers-records')],
+    expert: [Object.assign(S('providers-records'), { also: ['ai.usage.usage-retention'] })],
     changes: [
       { was: 'Spending limits, warnings and six display options of the Usage page (chart style, rows per page, export format) are one tab of equal-weight rows.', now: 'The limit and the warnings are the page. The Usage page’s display options are folded, with a note that they can be changed on the Usage page itself.' },
       { was: 'Money limits are in four places: here, Permissions › Limits (per run), each persona (“Spending cap”) and Web (“Never spend more than”). No page points to the others.', now: 'This page links to the per-run limits and to web spending, and they link back.' }

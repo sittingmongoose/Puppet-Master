@@ -33,6 +33,26 @@
   ui.select = (id, o) => { try { return kit().bound.select(id, o || {}); } catch (e) { return ''; } };
   ui.toggle = (id, o) => { try { return kit().bound.toggle(id, o || {}); } catch (e) { return ''; } };
 
+  /* ------------------------------------------------------------------ decided on another page
+     Every setting has one home. Where it also matters, the page says it in words and the row goes to its home:
+     ui.elsewhere(['setting.id', ['Name', 'value in words', 'route', 'setting.id or empty'], {id, name, value}], {title, help}).
+     A setting id alone gets its own label and value. A section takes the same list as `also: [...]`. */
+  SMX.valueText = (id) => { let t = ''; try { t = String(kit().valueText(kit().setting(id), kit().value(id))); } catch (e) { const v = SMX.val(id); t = v == null ? '' : String(v); } return /^(true|on)$/i.test(t) ? 'On' : /^(false|off)$/i.test(t) ? 'Off' : t.length > 64 ? t.slice(0, 62) + '…' : t; };
+  ui.elsewhere = (rows, o = {}) => {
+    const list = (rows || []).filter(Boolean).map((r) => {
+      if (typeof r === 'string') r = { id: r };
+      else if (Array.isArray(r)) r = { name: r[0], value: r[1], go: r[2], id: r[3] || '' };
+      if (r.id && !SMX.has(r.id)) return '';
+      const w = r.id ? SMX.where(r.id) : null;
+      const to = w ? w.route : r.go;
+      if (!to || to === o.here) return '';   // its home is this very page: the row itself is here
+      const name = r.name || SMX.labelOf(r.id), v = r.value != null ? String(r.value) : (r.id ? SMX.valueText(r.id) : '');
+      return `<div class="smx-thing is-clickable" role="button" tabindex="0" data-smx-go="${h(to)}"${r.id ? ` data-smx-reveal="${h(r.id)}"` : ''}><span class="smx-thing-copy"><span class="smx-thing-name">${h(name)}</span><span class="smx-thing-sub">${v ? `${h(v)} · ` : ''}${h(SMX.pageName(to))}</span></span><span class="smx-thing-end"><span class="smx-thing-go">${SMX.icon('go')}</span></span></div>`;
+    }).filter(Boolean);
+    if (!list.length) return '';
+    return ui.card({ cls: 'smx-things-card smx-elsewhere', title: o.title || 'Decided on other pages', help: o.help != null ? o.help : 'Each of these has one home. It is listed here so you can see it; the row takes you there.', body: `<div class="smx-things">${list.join('')}</div>` });
+  };
+
   /* ------------------------------------------------------------------ the summary: what is set up, in a sentence or two */
   ui.summary = ({ icon, tone, lines, side }) => `<section class="smx-summary tone-${SMX.tone(tone || 'ready')}">${icon ? `<div class="smx-summary-icon">${SMX.icon(icon)}</div>` : ''}<div class="smx-summary-copy">${lines.filter(Boolean).map((l, i) => `<p class="${i === 0 ? 'smx-summary-lead' : 'smx-summary-line'}">${l}</p>`).join('')}</div>${side ? `<div class="smx-summary-side">${side}</div>` : ''}</section>`;
   /* a word inside a sentence that takes you to where it is changed */

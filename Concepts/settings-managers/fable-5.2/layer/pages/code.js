@@ -379,7 +379,7 @@
     ],
     more: [
       { key: 'shell', title: 'Which shell runs, and where it starts', help: 'The shell is the program that reads what is typed in a terminal.', ids: [TM.shell, 'code.terminal.allowed-profiles', TM.cwd, 'code.terminal.startup-command'] },
-      { key: 'output', title: 'Output and history', help: 'Finding your way in long output, and how much of it is kept. Every other “keep for” choice is under Backups & history › How long things are kept.', ids: ['code.terminal.readability-signals', 'code.terminal.sticky-header', 'code.terminal.scrollback-limit', TM.keep] },
+      { key: 'output', title: 'Output and history', help: 'Finding your way in long output, and how much of it stays in the window.', ids: ['code.terminal.readability-signals', 'code.terminal.sticky-header', 'code.terminal.scrollback-limit'], also: [TM.keep] },
       { key: 'speed', title: 'Speed and sharpness', ids: ['code.terminal.performance-mode', 'code.terminal.font-rendering'] }
     ],
     moreLabel: 'The shell, output and history', moreHelp: 'Less common choices',
@@ -443,8 +443,7 @@
       ];
     },
     sections: [{ key: 'all', title: 'For all of them', help: 'One switch for each kind, and what happens by itself.', ids: [LG.on, LG.tidy, 'general.interaction.language-detection', 'code.editing.lsp-auto-restart'] }],
-    more: [{ key: 'helpers', title: 'When a helper agent fixes code', help: 'Helper agents are extra workers the assistant can start. They are set up under Memory & helpers.', ids: ['code.editing.lsp-subagent-bias'] }],
-    moreLabel: 'Helpers and languages', moreHelp: 'One less common choice',
+    tail: () => [{ key: 'helpers', html: ui.elsewhere(['code.editing.lsp-subagent-bias'], { title: 'When a helper agent fixes code', help: 'Helper agents are extra workers the assistant can start. Which of them fixes code is chosen with the other choices about helpers.' }) }],
     expert: [S('toolchain-lsp-tools', { title: 'Waiting times and limits', help: 'How long the tools that understand code may take, and how much of this computer they may use.' })],
     tail: () => [{ key: 'links', html: covered([LG.restart], ui.links([
       Object.assign({ label: 'Restart every tool that understands code' }, runSetting(LG.restart)),

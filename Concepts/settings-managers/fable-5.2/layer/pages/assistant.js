@@ -61,6 +61,7 @@
     ],
     sections: [
       { key: 'send', title: 'When I send a message', help: 'The key that sends, and what happens to a message sent while the assistant is still working.', ids: [KEY, BUSY, G + 'edit-resend'] },
+      { key: 'box', title: 'The message box', help: 'Buttons for adding a picture, or asking for one. They show only while the model in use can work with pictures.', ids: [G + 'composer-media-controls'] },
       { key: 'start', title: 'When a chat starts', help: 'What a new chat is for. You can change it in any chat, at any time.', ids: [MODE, G + 'natural-language-modes'] },
       { key: 'modes', html: () => { const m = String(val(MODE) || 'Agent'); return ui.card({ title: 'What each mode is for', body: ui.facts(Object.keys(MODES).map((k) => [k === m ? `${k} (new chats start here)` : k, MODES[k][1]])) + ui.links([{ label: 'What the assistant may do without asking', go: 'safety' }, { label: 'How a plan is made', go: 'planning' }, { label: 'Which model answers', go: 'ai/models' }]) }); } },
       { key: 'asks', title: 'When it asks me something', help: 'A question from the assistant can be a card with choices, and what you typed into one is kept.', ids: [CARDS, G + 'question-drafts'] },
@@ -69,7 +70,7 @@
     more: [
       { key: 'typing', title: 'What I was typing, and waiting messages', ids: [G + 'composer-persist-unsent', G + 'queue-size'] },
       { key: 'narrow', title: 'The chat in a narrow window', ids: [G + 'chat-keep-open'] },
-      S('app-chat-assistant', { key: 'big', title: 'Big jobs', help: 'For work that takes many steps.' }),
+      Object.assign(S('app-chat-assistant', { key: 'big', title: 'Big jobs', help: 'For work that takes many steps.' }), { also: ['planning.interview.todo-auto-use'] }),
       S('app-chat', { key: 'send-rest', title: 'More about sending' })
     ],
     moreHelp: 'Unsent text, the line of waiting messages, narrow windows and big jobs',
@@ -79,7 +80,7 @@
       { was: '“Sending messages” holds seven rows that are not all about sending: “Computer for chats with no project” and “Keep the chat open in narrow Windows” are among them.', now: 'The computer row is on Computers & remote access › Where work runs, and this page links to it. The rows here are grouped by the moment they matter: when I send a message, when a chat starts, when it asks me something, spelling. Four rarely changed rows are under More options.' },
       { was: '“New chats start in” offers Ask, Agent, Debug, Plan and Deep Plan. Its line explains three of them (“Ask only answers, Agent makes changes, Plan thinks first”) and sends you to “Permissions” for the rest.', now: 'A short table under the row says what each of the five is for, with links to what the assistant may do without asking, how a plan is made, and which model answers.' },
       { was: '“Keep the chat open in narrow Windows” has a line that describes what happens when it is off; “Messages that can wait — When the line is full, new messages must wait” does not say what the number counts.', now: 'Reworded: “Keep the chat open in a narrow window”, with a line for on and for off; “How many messages can wait in line”.' },
-      '“Keep a checklist for big tasks” was moved into App & Input from Planning. It is kept here, folded under “Big jobs”, because it is about how the assistant works on a job in a chat.'
+      { was: '“Keep a checklist for big tasks” sits in App & Input among the chat rows; “Image tools in message box” sits in Media & Output.', now: 'The checklist is with plans, on Planning & goals, and this page points to it under “Big jobs”. The picture buttons are a choice about the message box, so they are here.' }
     ]
   });
 

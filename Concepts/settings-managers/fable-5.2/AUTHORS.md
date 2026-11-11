@@ -167,7 +167,13 @@ been opened once (`{"do":"view","view":"today"}`, then `{"do":"view","view":"new
   in `<span data-smx-do-change="name" data-id="…">` to hear its change. Change the engine's state with
   `const st = W.PM12_KIMI.getState(); …; W.PM12_KIMI.setState(st)`, confirm with `kit().confirm(title, text, label, onYes, danger)`,
   say what happened with `SMX.toast(title, text)`.
-- **Going somewhere:** `ui.btn({go: 'safety/limits'})`, `SMX.go(route)`.
+- **Going somewhere:** `ui.btn({go: 'safety/limits'})`, `SMX.go(route)`. To the row of a setting, wherever its home
+  is: `ui.btn(Object.assign({label: 'Change'}, SMX.at('setting.id')))`, `ui.word(text, SMX.at('setting.id'))`.
+- **A setting whose home is another page.** Every setting has one home. Where it also matters, say it in words with
+  the way there: a section takes `also: ['setting.id', …]` (and `alsoTitle`), and anywhere else
+  `ui.elsewhere(['setting.id', ['Name', 'value in words', 'route', 'setting.id or empty']], {title, help})` draws the
+  same card. Moving a setting is then two edits: name its id in a section of its new home, and put it in `also` where
+  it was.
 - **Rewording a row:** `SMX.reword({'setting.id': {label, help, action, unit}})` replaces a PMConcept7 row's words as it
   is drawn (its id, value and control stay), and search and "Everything that moved" use the new words. Use it for
   jargon in a row's label, and to make one choice read the same way wherever it appears.

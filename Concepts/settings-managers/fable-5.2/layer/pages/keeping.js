@@ -371,6 +371,7 @@
         { label: 'Bring in a history file', help: 'From another project or an older backup. You see what would change before anything is added.', control: ui.btn({ label: 'Import…', icon: 'upload', action: 'pm51-history-import' }) }
       ])}</div>` }), count: 1 },
       { key: 'where', html: (ctx) => { const extra = ((ctx.st.pm51 || {}).historyLocations || []).map((l) => [l.name, l.path]); return ui.card({ title: 'Where the files are stored', side: ui.btn({ label: 'Add a location', icon: 'plus', action: 'pm51-history-location-add' }), body: ui.facts([['Files the work produced', 'The folder “Artifacts” inside this project’s folder'], ['Recordings', 'This project’s media folder on your Server'], ['Temporary files', '/mnt/data, emptied when you clean up'], ...extra]) }); }, count: 0 },
+      { key: 'receipt-detail', title: 'How much the record of each action says', help: 'More detail makes a richer history and takes longer to read. It changes nothing about what is done.', ids: ['system.advanced.receipts-verbosity'] },
       { key: 'receipts', html: (ctx) => { const st = ctx.st; const all = timeline(st); const n = sessions(st).reduce((x, s) => x + Math.max(1, Math.round((s.artifacts || 0) / 4)), 0); return ui.card({ title: 'Receipts', help: 'Each Goal leaves a receipt saying what it did.', body: ui.rows([
         { label: 'Receipts in this project', value: String(n) },
         { label: 'Latest receipt', value: all[0] ? `${all[0].time} · ${all[0].event}` : 'None' },
@@ -464,18 +465,18 @@
 
   /* ================================================================== How long things are kept */
   const CHATS = ['system.advanced.chat-history-retention', 'general.interaction.thread-archive-days', 'general.interaction.thread-retention-days'];
-  const RECORDS = ['system.advanced.runtime-history-days', 'system.advanced.diagnostic-history-days', 'system.advanced.released-safe-point-days', 'system.advanced.preserved-terminal-runs'];
-  const PROOF = ['branching.worktrees.evidence-retention-days', 'branching.worktrees.evidence-retain-last-runs', 'planning.verification.evidence-retention-days', 'planning.verification.evidence-retain-runs', 'planning.verification.prune-on-cleanup', 'planning.verification.evidence-redaction'];
+  /* the lead's integration: the keep-for choices of other chapters have their home here too (they were pointers), so
+     that this page is what its first line says. Those chapters now point here (ui.elsewhere). */
+  const MADE = ['media.io.artifact-retention'];
+  const RECORDS = ['system.advanced.runtime-history-days', 'system.advanced.diagnostic-history-days', 'ai.usage.usage-retention', 'code.terminal.transcript-retention', 'code.execution.receipt-retention', 'system.advanced.released-safe-point-days', 'system.advanced.preserved-terminal-runs'];
+  const PROOF = ['branching.worktrees.evidence-retention-days', 'branching.worktrees.evidence-retain-last-runs', 'planning.verification.evidence-retention-days', 'planning.verification.evidence-retain-runs', 'planning.verification.prune-on-cleanup'];
   const TOOLS = ['general.interaction.history-rebuild', 'system.advanced.request-storage-compaction', 'system.advanced.inspect-holds-quarantine'];
-  /* keep-for choices that other chapters own: said here in the same words, with a link to where each is changed */
+  /* what other chapters keep for a while as part of how they work (a page read from the web is reused, a note fades):
+     said here in the same words, with a link to where each is changed */
   const ELSEWHERE = [
-    ['media.io.artifact-retention', 'Pictures, speech and video the assistant made'],
     ['web.fetch.cache-ttl-fetch', 'Web pages it read'],
     ['web.fetch.cache-ttl-search', 'Web search results'],
     ['web.fetch.cache-ttl-crawl', 'Outlines of whole websites'],
-    ['ai.usage.usage-retention', 'The record of what the AI used'],
-    ['code.terminal.transcript-retention', 'What terminals printed'],
-    ['code.execution.receipt-retention', 'Records of what was done to containers'],
     ['safety.approvals.bsd-retain-transcript', 'The Back Seat Driver’s conversation'],
     ['memory.retention.half-life-by-kind', 'Memories (they fade; they are not deleted on a date)']
   ];
@@ -519,9 +520,10 @@
     },
     sections: [
       { key: 'chats', title: 'Chats', help: 'A chat stays until you delete it. These choices tidy quiet chats away and give you time to change your mind.', ids: CHATS },
-      { key: 'records', title: 'Records and logs', help: 'Puppet Master sets a shortest time for each, so the proof of what happened is not lost; you can keep longer. A safe point is the state saved before the assistant tries something, so the attempt can be undone.', ids: RECORDS },
-      { key: 'proof', title: 'Proof that work was checked', help: 'Logs of test runs, and what a Goal kept to show it finished.', ids: PROOF },
-      { key: 'elsewhere', html: () => { const rows = ELSEWHERE.filter(([id]) => SMX.has(id) && SMX.where(id)).map(([id, name]) => { const w = SMX.where(id); return { label: name, value: keepText(id), control: ui.btn({ label: SMX.pageName(w.route), go: w.route, reveal: id }) }; }); return rows.length ? ui.card({ title: 'Kept by other parts of Puppet Master', help: 'Each of these is set where the thing itself is set up. They are listed so this page answers “how long is it kept?” for everything.', body: ui.rows(rows) }) : ''; } }
+      { key: 'made', title: 'Pictures, speech and video', help: 'What the assistant made for you with its picture, voice and video abilities. The folder they go to is chosen under AI providers › Pictures, voice & video.', ids: MADE },
+      { key: 'records', title: 'Records and logs', help: 'What Goals did, what the AI used, what terminals printed and what was done to containers. Puppet Master sets a shortest time for some, so the proof of what happened is not lost; you can keep longer. A safe point is the state saved before the assistant tries something, so the attempt can be undone.', ids: RECORDS },
+      { key: 'proof', title: 'Proof that work was checked', help: 'Logs of test runs, and what a Goal kept to show it finished.', ids: PROOF, also: ['planning.verification.evidence-redaction'], alsoTitle: 'What is hidden in proof' },
+      { key: 'elsewhere', html: () => { const rows = ELSEWHERE.filter(([id]) => SMX.has(id) && SMX.where(id)).map(([id, name]) => { const w = SMX.where(id); return { label: name, value: keepText(id), control: ui.btn({ label: SMX.pageName(w.route), go: w.route, reveal: id }) }; }); return rows.length ? ui.card({ title: 'Reused or faded, not kept', help: 'These are part of how web research, the Back Seat Driver and memories work, so each is set there. They are listed so this page answers “how long is it kept?” for everything.', body: ui.rows(rows) }) : ''; } }
     ],
     more: [
       { key: 'space', html: () => ui.card({ title: 'What takes up space', body: ui.facts([['Sessions and chats', '38 MB'], ['Files the work produced', '48.4 MB'], ['Recordings', '1.8 GB'], ['Temporary files', '214 MB']]) }), count: 0 },

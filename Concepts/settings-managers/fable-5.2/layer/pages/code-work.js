@@ -361,7 +361,7 @@
           { label: 'A run that passes', value: 'A summary only' },
           { label: 'A run that fails', value: 'Everything it printed' },
           { label: 'Pictures of the page', value: (SHOTS.find((x) => x[0] === T(st).shots) || [0, T(st).shots])[1], control: ui.btn({ label: 'Change', go: 'code/browser', anchor: 'may' }) },
-          { label: 'Secrets and personal data', value: val('planning.verification.evidence-redaction') ? 'Hidden before anything is saved' : 'Kept as they are', control: ui.btn({ label: 'Change', go: 'keeping/cleanup', reveal: 'planning.verification.evidence-redaction' }) },
+          { label: 'Secrets and personal data', value: val('planning.verification.evidence-redaction') ? 'Hidden before anything is saved' : 'Kept as they are', control: ui.btn(Object.assign({ label: 'Change' }, SMX.at('planning.verification.evidence-redaction'))) },
           { label: 'Kept for', value: txt(RETAIN) || 'Until I delete them', control: ui.btn({ label: 'Change', go: 'keeping/cleanup', reveal: RETAIN }) }
         ]) + btnRow(ui.btn({ label: 'Save the proof to a folder…', icon: 'download', action: 'pm51-testing-export' }), ui.btn({ label: 'Clear the list of runs…', icon: 'trash', danger: true, action: 'pm51-testing-clear-history', disabled: !runs.length, reason: 'There are no runs to clear.' })) }) }
       ];
@@ -615,7 +615,7 @@
     moreHelp: 'Compose, logs, disk cleanup and Kubernetes',
     expert: [
       { key: 'find', title: 'Finding Docker, and getting inside a container', ids: [X + 'docker-binary-path', X + 'docker-display-context', X + 'container-shell-command'] },
-      { key: 'manager', title: 'What the Docker Manager shows and records', help: 'Extra views, and the record of what was done to containers.', ids: [X + 'show-build-advanced', X + 'follow-latest-publish', X + 'publish-history-chain', X + 'k8s-log-defaults', X + 'receipt-verbosity', X + 'receipt-retention'] }
+      { key: 'manager', title: 'What the Docker Manager shows and records', help: 'Extra views, and the record of what was done to containers.', ids: [X + 'show-build-advanced', X + 'follow-latest-publish', X + 'publish-history-chain', X + 'k8s-log-defaults', X + 'receipt-verbosity'], also: [X + 'receipt-retention'] }
     ],
     tail: () => [{ key: 'links', html: ui.links([{ label: 'What each computer can run', go: 'computers/work' }, { label: 'What the assistant may do without asking', go: 'safety/asking' }, { label: 'How long records are kept', go: 'keeping/cleanup' }]) }],
     changes: [

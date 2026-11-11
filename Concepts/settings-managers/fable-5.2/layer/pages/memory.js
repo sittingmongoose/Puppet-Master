@@ -715,7 +715,7 @@
       { key: 'safe', title: 'Keeping helpers safe', help: 'Two helpers never change the same files at once, and one helper’s mistakes stay its own.', when: () => helpersOn(), ids: ['branching.subagents.single-writer-lease', 'branching.subagents.child-state-isolation'] }
     ],
     more: [
-      { key: 'which', title: 'Which personas help', help: 'Always include some, never use others, or choose for each kind of step.', when: () => helpersOn(), ids: ['branching.subagents.required-subagents', 'branching.subagents.disabled-subagents', 'branching.subagents.per-node-overrides'] },
+      { key: 'which', title: 'Which personas help', help: 'Always include some, never use others, or choose for each kind of step.', when: () => helpersOn(), ids: ['branching.subagents.required-subagents', 'branching.subagents.disabled-subagents', 'branching.subagents.per-node-overrides', 'code.editing.lsp-subagent-bias'] },
       { key: 'fine', title: 'When a helper fails, and how far helping goes', when: () => helpersOn(), ids: ['branching.subagents.retry-policy', 'branching.subagents.subagents-mandatory', 'branching.subagents.write-isolation-mode', 'branching.subagents.delegation-depth', 'branching.subagents.external-agent-provenance'] }
     ],
     moreLabel: 'Which personas help, and fine points', moreHelp: 'Who is included, retries, and helpers of helpers',

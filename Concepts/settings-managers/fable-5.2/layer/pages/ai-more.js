@@ -482,7 +482,7 @@
       const byMaster = off.filter((r) => gateOf(r.id) === MED.master);
       const otherOff = off.filter((r) => gateOf(r.id) !== MED.master);
       const line1 = `${ready.length ? `The assistant can ${ui.b(MA[ready[0].id].verb)}${ready.length > 1 ? ` and ${and(ready.slice(1).map((r) => MA[r.id].verb))}` : ''}.` : 'The assistant works with text only at the moment.'}${byMaster.length ? ` Making ${byMaster.length === 4 ? 'pictures, speech, music and video' : and(byMaster.map((r) => MA[r.id].verb.replace(/^make |^read /, '')))} is turned off.` : ''}${otherOff.length ? ` ${nouns(otherOff, MA)} ${otherOff.length === 1 ? 'is' : 'are'} turned off.` : ''}${notSet.length ? ` ${nouns(notSet, MA)} ${notSet.length === 1 ? 'is' : 'are'} not set up yet.` : ''}`;
-      const line2 = `What it makes is saved in ${ui.word(folderRoot(), { go: 'ai/media', reveal: MED.folder })} inside your project and kept ${ui.word(keepWords(), { go: 'ai/media', reveal: MED.keep })}.`;
+      const line2 = `What it makes is saved in ${ui.word(folderRoot(), { go: 'ai/media', reveal: MED.folder })} inside your project and kept ${ui.word(keepWords(), SMX.at(MED.keep))}.`;
       const kinds = (val(MED.kinds) || []).filter((k) => TOOL_KINDS.includes(k));
       let chips = ''; try { chips = kit().scoped.control(MED.kinds, kinds, { scope: 'media-kinds', choices: TOOL_KINDS, label: 'Tools may also hand back' }); } catch (e) { chips = ''; }
       const thing = (r) => { const a = MA[r.id], word = mState(r), why = mWhy(r); return { icon: a.icon, name: a.name, tag: a.was, sub: a.short, sub2: [mWho(r), why].filter(Boolean).join(' · '), status: { text: word, tone: word === 'Ready' ? 'ready' : 'off' }, go: maRoute(r.id) }; };
@@ -505,8 +505,8 @@
       ];
     },
     sections: [
-      { key: 'share', title: 'Pictures you share', help: 'What happens when you give the assistant a picture or a screenshot.', ids: ['media.io.screenshot-source', 'media.io.redaction-policy', 'general.interaction.composer-media-controls'] },
-      { key: 'results', title: 'Where results go', help: 'One folder inside your project. Each kind of result has a folder of its own inside it, set on its page.', ids: [MED.folder, MED.keep] },
+      { key: 'share', title: 'Pictures you share', help: 'What happens when you give the assistant a picture or a screenshot.', ids: ['media.io.screenshot-source', 'media.io.redaction-policy'], also: ['general.interaction.composer-media-controls'] },
+      { key: 'results', title: 'Where results go', help: 'One folder inside your project. Each kind of result has a folder of its own inside it, set on its page.', ids: [MED.folder], also: [MED.keep] },
       { key: 'results-links', html: () => ui.links([{ label: 'How long everything else is kept', go: 'keeping/cleanup' }, { label: 'The files this project has produced', go: 'keeping/history' }]) }
     ],
     more: [{ key: 'which', title: 'When several pictures could be meant', help: 'For when you say “the picture” and more than one fits.', ids: ['media.io.image-source-order'] }],
