@@ -359,8 +359,9 @@ async function captureCase(t, surface) {
 	await t.until(`${surface}: held under the restored permissions`, (b) => !!document.querySelector(b), BANNER);
 	// For session: the hold clears, the keyboard goes to the capture toolbar, the action runs again, and a later hold runs at once
 	n = await count();
-	await f.locator(BANNER).locator('[data-value="session"]').focus();
-	await t.page.keyboard.press('Enter');
+	const sess = f.locator(BANNER).locator('[data-value="session"]');
+	if (await sess.count() === 1) { await sess.focus(); await t.page.keyboard.press('Enter'); }
+	else await t.check(`${surface}: the hold to answer by keyboard is there`, false);
 	await t.until(`${surface}: For session clears the hold`, (b) => !document.querySelector(b), BANNER);
 	await t.until(`${surface}: the keyboard goes to the capture toolbar, not the page`, () => document.activeElement && document.activeElement.matches('.bc-toolbar .bc-tool-btn'));
 	added = await titlesAfter(n);
@@ -386,10 +387,12 @@ async function captureCase(t, surface) {
 	const p1 = await f.evaluate(() => PM56_EXT.ctx().thread.projectId || '');
 	await shoot();
 	await t.until(`${surface}: held in the first Batch 19 chat (${p1})`, (b) => !!document.querySelector(b), BANNER);
-	await f.locator(BANNER).locator('[data-value="always"]').click();
+	if (await f.locator(BANNER).count() === 1) await f.locator(BANNER).locator('[data-value="always"]').click();
 	await t.until(`${surface}: its chooser offers This project`, () => !!document.querySelector('[data-k="bc-allow-banner"] [data-action="perm-place"][data-value="project"]'));
-	await f.locator(BANNER).locator('[data-action="perm-place"][data-value="project"]').click();
-	await f.locator(BANNER).locator('[data-action="perm-save"]').click();
+	if (await f.locator(BANNER).locator('[data-action="perm-place"][data-value="project"]').count() === 1) {
+		await f.locator(BANNER).locator('[data-action="perm-place"][data-value="project"]').click();
+		await f.locator(BANNER).locator('[data-action="perm-save"]').click();
+	}
 	await t.until(`${surface}: the This project rule is saved`, (b) => !document.querySelector(b), BANNER);
 	await b19();
 	const p2 = await f.evaluate(() => PM56_EXT.ctx().thread.projectId || '');
