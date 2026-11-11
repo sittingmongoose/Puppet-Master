@@ -160,5 +160,99 @@ export const tests = {
 			await t.page.waitForTimeout(900);
 			await t.audit(`v3 at ${w}`);
 		}
+	},
+	/* the 2026-11-10 fix pass's parts (SPEC-split-v3 R9): Where work runs' rows, the sync paused on a clash, and the
+	   dialogs Split opens. In v3 they follow the page; in v2 they are as the fix pass made them. */
+	async 'fix-pass parts: work rows, the paused sync and Split’s dialogs in v3, and unchanged in v2'(t) {
+		const f = await t.app.open(t);
+		await hideMinimap(f);
+		const rows = () => f.evaluate(() => {
+			const cs = (s) => { const e = document.querySelector(s); return e ? getComputedStyle(e) : null; };
+			const to = cs('#pjxc .pjx-wk-row:not([data-mode="chosen"]) .pjx-wk-to'), ch = cs('#pjxc .pjx-wk-row[data-mode="chosen"] .pjx-wk-to'), why = cs('#pjxc .pjx-wk-why');
+			return { to: to && Number(to.fontWeight), chosen: ch && Number(ch.fontWeight), underline: !!why && why.textDecorationColor === why.color };
+		});
+		const dialog = () => f.evaluate(() => {
+			const d = document.querySelector('.pjx-dlg-back[data-concept="c"]'); if (!d) return null;
+			const list = d.querySelector('.pjx-choices-list'), mid = list && list.children[1], fact = d.querySelector('.pjx-fact, .pjx-np-line');
+			const on = list && list.querySelector('.pjx-choice.is-on'), off = list && list.querySelector('.pjx-choice:not(.is-on)');
+			return {
+				gap: list ? getComputedStyle(list).rowGap : null, midRadius: mid ? getComputedStyle(mid).borderTopLeftRadius : null, midRule: mid ? getComputedStyle(mid).borderTopWidth : null,
+				fact: fact ? getComputedStyle(fact).fontSize + '/' + getComputedStyle(fact).lineHeight : null,
+				chosenShows: !!on && !!off && (getComputedStyle(on).backgroundColor !== getComputedStyle(off).backgroundColor || getComputedStyle(on).boxShadow !== getComputedStyle(off).boxShadow)
+			};
+		});
+		const closeDialog = async () => { await t.page.keyboard.press('Escape'); await t.app.until(t, f, 'the dialog closed', () => !document.querySelector('.pjx-dlg-back'), null, 6000); };
+		const workPlate = async () => {
+			await f.evaluate(() => window.PJX.split.select('tastebook'));
+			await t.app.until(t, f, 'tastebook: the work plate is drawn', () => !!document.querySelector('#pjxc [data-plate="work"] .pjx-wk-rows'), null, 10000);
+			await f.evaluate(() => { const el = document.querySelector('[data-plate="work"]'), sc = el.closest('.pjxc-scroll'); sc.scrollTop += el.getBoundingClientRect().top - sc.getBoundingClientRect().top - 40; });
+			await t.page.waitForTimeout(200);
+		};
+		// Where work runs: where a piece of work went is a value, a chosen Computer keeps its weight, Why is quiet
+		await workPlate();
+		let r = await rows();
+		await t.check('v3: where work went is regular weight', r.to > 0 && r.to < 500, String(r.to));
+		await t.check('v3: a chosen Computer keeps its weight', r.chosen >= 600, String(r.chosen));
+		await t.check('v3: Why this computer has no underline at rest', !r.underline);
+		// the keyboard reaches it and it shows its underline with the focus
+		await f.locator('#pjxc .pjx-wk-why').first().focus();
+		await t.page.keyboard.press('Shift+Tab');
+		await t.page.keyboard.press('Tab');
+		await t.check('v3: Why this computer takes its underline with the keyboard focus', await f.evaluate(() => { const a = document.activeElement; return !!a && a.classList.contains('pjx-wk-why') && getComputedStyle(a).textDecorationColor === getComputedStyle(a).color; }));
+		await t.crop('v3-work-rows', f.locator('[data-plate="work"]'), 'Split v3, Where work runs with its rows (LOOK)');
+		await t.audit('v3 work plate');
+		await t.app.click(t, f, '[data-plate="work"] [data-c-key="wk:why:1"]', { wait: 400 });
+		let d = await dialog();
+		await t.equal('v3: Why this computer reads at the page’s size', d && d.fact, '13px/19px');
+		await t.audit('v3 Why this computer');
+		await t.shot('v3-why', 'Split v3, Why this computer (LOOK)');
+		await closeDialog();
+		// getting the latest pauses on a clash: the plate says so as a status, and the dialog's choices are one ruled list
+		await f.evaluate(() => window.PJX.split.select('photo-sorter'));
+		await t.app.until(t, f, 'photo-sorter: its Online copy can get the original’s changes', () => !!document.querySelector('[data-c-key="p:getorig"]'), null, 10000);
+		await t.app.tick(t, f, 'pg:clashdemo');
+		await t.app.click(t, f, '[data-c-key="p:getorig"]');
+		await t.app.until(t, f, 'it paused on the clash', () => !!document.querySelector('[data-c-key="p:settle"]'), null, 15000);
+		const paused = await f.evaluate(() => { const v = document.querySelector('#pjxc [data-plate="online"] .pmu-fact[data-tone] .pmu-factv'); return v ? { text: v.textContent, weight: Number(getComputedStyle(v).fontWeight), cut: v.scrollWidth > v.clientWidth + 1 } : null; });
+		await t.check('v3: the pause is a status on the plate (weight kept, nothing cut)', !!paused && /Paused/.test(paused.text) && paused.weight >= 600 && !paused.cut, JSON.stringify(paused));
+		await f.evaluate(() => { const el = document.querySelector('[data-plate="online"]'), sc = el.closest('.pjxc-scroll'); sc.scrollTop += el.getBoundingClientRect().top - sc.getBoundingClientRect().top - 40; });
+		await t.page.waitForTimeout(200);
+		await t.crop('v3-paused', f.locator('[data-plate="online"]'), 'Split v3, Online copy paused on a clash (LOOK)');
+		await t.audit('v3 paused on a clash');
+		for (const look of ['basic-dark', 'basic-light', 'friendly-dark', 'friendly-light', 'glass-dark', 'glass-light', 'retro-dark', 'retro-light', 'nier-dark', 'nier-light']) {
+			await t.step(look, async () => {
+				if (look !== 'basic-dark') { await t.app.look(t, look); await t.app.page(t, f, 'projects'); await f.evaluate(() => window.PJX.split.select('photo-sorter')); }
+				await t.app.until(t, f, `${look}: still paused`, () => !!document.querySelector('[data-c-key="p:settle"]'), null, 10000);
+				await t.app.click(t, f, '[data-c-key="p:settle"]', { wait: 400 });
+				await t.app.click(t, f, '.pjx-dlg-back [data-c-key="cf:how:theirs"]', { wait: 250 });
+				d = await dialog();
+				await t.equal(`${look}: the dialog’s choices are one list (no gap)`, d && d.gap, '0px');
+				await t.equal(`${look}: ruled apart, square inside the list`, d && d.midRule + ' ' + d.midRadius, '1px 0px');
+				await t.check(`${look}: the chosen one is plainly the chosen one`, !!d && d.chosenShows);
+				await t.audit(`v3 Settle the clash, ${look}`);
+				if (look === 'basic-dark' || look === 'retro-light') await t.shot(`v3-settle-${look}`, `Split v3, Settle the clash, ${look} (LOOK)`);
+				await closeDialog();
+			});
+		}
+		await t.app.look(t, 'basic-dark');
+		await t.app.page(t, f, 'projects');
+		// v2: the same parts exactly as the fix pass made them
+		await t.page.click('#opt button[data-read="v2"]');
+		await t.app.until(t, f, 'v2 shows', () => !document.documentElement.hasAttribute('data-pjx-read'), null, 6000);
+		await f.evaluate(() => window.PJX.split.select('photo-sorter'));
+		await t.app.until(t, f, 'v2: still paused on the clash', () => !!document.querySelector('[data-c-key="p:settle"]'), null, 10000);
+		await t.app.click(t, f, '[data-c-key="p:settle"]', { wait: 400 });
+		d = await dialog();
+		await t.equal('v2: the dialog’s choices keep their gap', d && d.gap, '4px');
+		await t.check('v2: and their own boxes', !!d && d.midRadius !== '0px', d && d.midRadius);
+		await closeDialog();
+		await workPlate();
+		r = await rows();
+		await t.check('v2: where work went is bold as before', r.to >= 600, String(r.to));
+		await t.check('v2: Why this computer is underlined as before', r.underline);
+		await t.app.click(t, f, '[data-plate="work"] [data-c-key="wk:why:1"]', { wait: 400 });
+		d = await dialog();
+		await t.equal('v2: Why this computer keeps its size', d && d.fact, '12.5px/17px');
+		await closeDialog();
 	}
 };

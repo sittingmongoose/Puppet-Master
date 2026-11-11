@@ -21,7 +21,9 @@
 
    Rules kept from v2: no :has(), no coloured side bars, no pills, no viewport @media (container queries only), type
    never under 11 px, colour only for status. Every rule here is anchored on html[data-pjx-read="v3"] #pjxc: one
-   attribute, so it ties with v2's own rules (and wins by coming later) and loses to the looks' rules, which carry two. */
+   attribute, so it ties with v2's own rules (and wins by coming later) and loses to the looks' rules, which carry two.
+   The one place it reaches outside the page is the dialogs Split opens (.pjx-dlg-back[data-concept="c"]), which take
+   the page's ruled lists and reading size; the chat, its History and Home are never touched. */
 
 html[data-pjx-read="v3"] #pjxc.pmu-shell { --v3-gap: 14px; --v3-pad: 18px; --v3-rule: var(--pmu-rule-2, var(--pmu-rule)); }
 
@@ -90,15 +92,16 @@ html[data-pjx-read="v3"] #pjxc .pjx-notice { padding: 14px 16px; column-gap: 12p
 html[data-pjx-read="v3"] #pjxc .pjx-notice-text { font-size: 13px; line-height: 19px; max-width: 66ch; text-wrap: pretty; }
 html[data-pjx-read="v3"] #pjxc .pjx-notice-acts { margin-top: 10px; gap: 8px; }
 
-/* ------------------------------------------------------------------ choices: one ruled list, not a stack of boxes */
-html[data-pjx-read="v3"] #pjxc .pjx-choices.pjx-choices-list { gap: 0; border: var(--pmu-bw, 1px) solid var(--pmu-rule); border-radius: min(var(--pmu-r-card, 10px), 10px); overflow: hidden; }
-html[data-pjx-read="v3"] #pjxc .pjx-choices-list > .pjx-choice { min-height: 46px; padding: 8px 12px; border-width: 0; border-top: 1px solid var(--v3-rule); border-radius: 0; column-gap: 12px; }
-html[data-pjx-read="v3"] #pjxc .pjx-choices-list > .pjx-choice:first-child { border-top-color: transparent; border-top-left-radius: inherit; border-top-right-radius: inherit; }
-html[data-pjx-read="v3"] #pjxc .pjx-choices-list > .pjx-choice:last-child { border-bottom-left-radius: inherit; border-bottom-right-radius: inherit; }
+/* ------------------------------------------------------------------ choices: one ruled list, not a stack of boxes
+   (on the page and in the dialogs Split opens from it: Settle the clash, From a chat, Move a chat) */
+html[data-pjx-read="v3"] :is(#pjxc, .pjx-dlg-back[data-concept="c"]) .pjx-choices.pjx-choices-list { gap: 0; border: var(--pmu-bw, 1px) solid var(--pmu-rule); border-radius: min(var(--pmu-r-card, 10px), 10px); overflow: hidden; }
+html[data-pjx-read="v3"] :is(#pjxc, .pjx-dlg-back[data-concept="c"]) .pjx-choices-list > .pjx-choice { min-height: 46px; padding: 8px 12px; border-width: 0; border-top: 1px solid var(--v3-rule); border-radius: 0; column-gap: 12px; }
+html[data-pjx-read="v3"] :is(#pjxc, .pjx-dlg-back[data-concept="c"]) .pjx-choices-list > .pjx-choice:first-child { border-top-color: transparent; border-top-left-radius: inherit; border-top-right-radius: inherit; }
+html[data-pjx-read="v3"] :is(#pjxc, .pjx-dlg-back[data-concept="c"]) .pjx-choices-list > .pjx-choice:last-child { border-bottom-left-radius: inherit; border-bottom-right-radius: inherit; }
 /* the chosen one: its fill and a hairline ring inside the row */
-html[data-pjx-read="v3"] #pjxc .pjx-choices-list > .pjx-choice.is-on { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--pmu-accent, var(--accent-primary)) 60%, var(--pmu-rule)); }
-html[data-pjx-read="v3"] #pjxc .pjx-choices-list > .pjx-choice:focus-visible { outline-offset: -2px; }
-html[data-pjx-read="v3"] #pjxc .pjx-choices-list .pjx-choice-sub { line-height: 17px; margin-top: 1px; }
+html[data-pjx-read="v3"] :is(#pjxc, .pjx-dlg-back[data-concept="c"]) .pjx-choices-list > .pjx-choice.is-on { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--pmu-accent, var(--accent-primary)) 60%, var(--pmu-rule)); }
+html[data-pjx-read="v3"] :is(#pjxc, .pjx-dlg-back[data-concept="c"]) .pjx-choices-list > .pjx-choice:focus-visible { outline-offset: -2px; }
+html[data-pjx-read="v3"] :is(#pjxc, .pjx-dlg-back[data-concept="c"]) .pjx-choices-list .pjx-choice-sub { line-height: 17px; margin-top: 1px; }
 html[data-pjx-read="v3"] #pjxc .pjx-group { gap: 8px; }
 
 /* ------------------------------------------------------------------ New Project: the launcher */
@@ -140,6 +143,33 @@ html[data-pjx-read="v3"] #pjxc .pjxc-review .pjxc-rrows dd { font-size: 13px; li
 html[data-pjx-read="v3"] #pjxc .pjxc-review .pjxc-rrows dd:last-child { margin-bottom: 0; }
 html[data-pjx-read="v3"] #pjxc .pjxc-rrows dt .pjx-link { font-size: 12px; font-weight: 450; color: var(--pmu-ink-3); text-decoration-color: transparent; }
 html[data-pjx-read="v3"] #pjxc .pjxc-rrows dt .pjx-link:hover, html[data-pjx-read="v3"] #pjxc .pjxc-rrows dt .pjx-link:focus-visible { color: var(--pmu-ink); text-decoration-color: currentColor; }
+
+/* ------------------------------------------------------------------ the 2026-11-10 fix pass's parts
+   Where work runs: each piece of work is a row in one lightly ruled list. Where it went is a value, so it is regular
+   weight, and only a Computer somebody chose keeps weight and colour. "Why this computer" is on every row, so it stays
+   a link by its colour and takes its underline when pointed at or focused. */
+html[data-pjx-read="v3"] #pjxc .pjx-wk-rows { margin-top: 2px; border-top-color: var(--v3-rule); }
+html[data-pjx-read="v3"] #pjxc .pjx-wk-row { column-gap: 10px; padding: 10px 0; border-bottom-color: var(--v3-rule); font-size: 13px; line-height: 19px; }
+html[data-pjx-read="v3"] #pjxc .pjx-wk-row:last-child { padding-bottom: 2px; border-bottom-color: transparent; }
+html[data-pjx-read="v3"] #pjxc .pjx-wk-where { font-size: 12.5px; line-height: 18px; }
+html[data-pjx-read="v3"] #pjxc .pjx-wk-to { font-weight: 480; }
+html[data-pjx-read="v3"] #pjxc .pjx-wk-row[data-mode="chosen"] .pjx-wk-to { font-weight: 620; }
+html[data-pjx-read="v3"] #pjxc .pjx-wk-why { font-weight: 450; text-decoration-color: transparent; }
+html[data-pjx-read="v3"] #pjxc .pjx-wk-why:hover, html[data-pjx-read="v3"] #pjxc .pjx-wk-why:focus-visible { text-decoration-color: currentColor; }
+/* New Project's "Where its work runs": the block keeps its frame, as light as the page's other rules */
+html[data-pjx-read="v3"] #pjxc .pjx-wk-np { gap: 12px; padding: 14px; border-color: var(--v3-rule); }
+html[data-pjx-read="v3"] #pjxc .pjx-wk-allowed { gap: 9px 16px; }
+
+/* the dialogs Split opens (Settle the clash, Why this computer, and the ones it had): the page's reading size, and
+   more room between a dialog's groups than inside them. Their lists of choices are ruled by the rules above. */
+html[data-pjx-read="v3"] .pjx-dlg-back[data-concept="c"] .pjx-dlg { --v3-rule: var(--pmu-rule-2, var(--pmu-rule)); }
+html[data-pjx-read="v3"] .pjx-dlg-back[data-concept="c"] .pjx-q-lead { line-height: 19px; text-wrap: pretty; }
+html[data-pjx-read="v3"] .pjx-dlg-back[data-concept="c"] :is(.pjx-fact, .pjx-np-line, .pjx-np-text) { font-size: 13px; line-height: 19px; }
+html[data-pjx-read="v3"] .pjx-dlg-back[data-concept="c"] :is(.pjx-fact-mark, .pjx-np-mk) { height: 19px; }
+html[data-pjx-read="v3"] .pjx-dlg-back[data-concept="c"] .pjx-facts { gap: 6px; }
+html[data-pjx-read="v3"] .pjx-dlg-back[data-concept="c"] .pjx-group { margin-top: 18px; }
+html[data-pjx-read="v3"] .pjx-dlg-back[data-concept="c"] .pjx-group:first-child { margin-top: 0; }
+html[data-pjx-read="v3"] .pjx-dlg-back[data-concept="c"] .pjx-group-label { margin-bottom: 8px; }
 
 /* ------------------------------------------------------------------ narrower panes: v2's own steps, with v3's proportions */
 @container pjx (max-width: 739.98px) {
