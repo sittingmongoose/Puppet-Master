@@ -288,7 +288,8 @@
   function publishProject(S, id, via) {
     const d = md(S), cm = S.sess.commit;
     const st = window.PM12_KIMI && window.PM12_KIMI.o55SettingsTransfer;
-    if (d.settings_transfer.mode === 'copy_from_project' && !cm.stagedSettings) {
+    /* (a copy whose picks carry no setting value, only things or accounts, staged nothing on purpose: 'no-change') */
+    if (d.settings_transfer.mode === 'copy_from_project' && !cm.stagedSettings && !(cm.receipts && cm.receipts.settings === 'no-change')) {
       cm.settingsPublishError = 'The required Settings preview is missing.'; return null;
     }
     const pub = PR().publishStagedSettings(st, cm, id, d);

@@ -138,6 +138,18 @@ export const tests = {
 		const cm = await f.evaluate(() => { const cm = O55.S.sess.commit; return { count: cm.settingsCount, err: cm.settingsError || null }; });
 		await t.check('the commit copies exactly the values left picked', cm.count === want.count && !cm.err, JSON.stringify({ cm, want: want.count }));
 	},
+	async '3.04: a copy whose picks carry no setting value (only things and accounts) still creates the Project'(t) {
+		const f = await open(t, 'name');
+		await toLike(t, f, 'Things only');
+		await press(f, 'pick', 'tastebook');
+		const sel = await f.evaluate(() => O55.like.selection(O55.S));
+		await t.check('Tastebook brings no setting value, only its things and account', sel.count === 0 && sel.things.length === 2 && sel.accounts.length === 1, JSON.stringify(sel));
+		await next(f); await screen(f, 'safe'); await next(f); await screen(f, 'review');
+		await f.locator('[data-o55-do="commit"]').click(); await screen(f, 'creating');
+		const ok = await f.waitForSelector('#pm-o55-onboarding .o55-foot [data-o55-do="next"]:not([disabled]):not([aria-disabled="true"])', { timeout: 30000 }).then(() => true, () => false);
+		const cm = await f.evaluate(() => { const cm = O55.S.sess.commit; return { state: cm.state, settings: cm.receipts && cm.receipts.settings, publishError: cm.settingsPublishError || null, project: cm.projectId || null }; });
+		await t.check('the Project is created and listed; nothing is staged and nothing is missing', ok && !cm.publishError && cm.settings === 'no-change' && !!cm.project, JSON.stringify(cm));
+	},
 	async 'every look: Advanced’s kinds, single settings, things and accounts paint readable ink'(t) {
 		const f = await open(t, 'name');
 		await toLike(t, f, 'Looks');
