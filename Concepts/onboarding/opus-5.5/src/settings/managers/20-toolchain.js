@@ -32,7 +32,9 @@
   const selected = (kind, list) => list.find(x => x.id === PM51.sel(ID + '-' + kind)) || list[0];
   const slug = name => String(name || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'tool';
   const uniqueId = (kind, base) => { let id = base, n = 2; while (byId(kind, id)) id = base + '-' + n++; return id; };
-  const pillFor = x => !isOn(x) ? PM51.pill('Off') : x.status === 'ready' ? PM51.pill('Ready') : x.status === 'attention' ? PM51.pill('Needs attention') : x.status === 'setup' ? PM51.pill('Not checked yet') : PM51.statusPill(x.status);
+  /* one word for one state, in the list and in the detail: an entry that lost contact "Needs a restart" (it read "Needs
+     attention" here and "Needs a restart" beside it, lane-code 2026-11-11); one restarting says so while it waits */
+  const pillFor = x => restarting.has(x.id) ? PM51.waiting('Restarting…') : !isOn(x) ? PM51.pill('Off') : x.status === 'ready' ? PM51.pill('Ready') : x.status === 'attention' ? PM51.pill('Needs a restart', 'attention') : x.status === 'setup' ? PM51.pill('Not checked yet') : PM51.statusPill(x.status);
   const toneFor = x => !isOn(x) ? 'off' : x.status === 'ready' ? 'ready' : x.status === 'attention' ? 'attention' : 'neutral';
   const statusText = (x, runningWord) => !isOn(x) ? 'Off · not used in this project' : x.status === 'ready' ? runningWord : x.status === 'attention' ? 'Needs a restart' : 'Not checked yet';
   const actionRow = (...buttons) => `<div class="pm51-toolchain-actions">${buttons.join('')}</div>`;
@@ -175,8 +177,8 @@
         title: s.name, subtitle: `${s.language} · ${sourceLabel(s.source)}`, pill: pillFor(s),
         primary: { label: 'Edit', icon: 'edit', action: 'pm51-toolchain-edit-lsp', data: { id: s.id } },
         menu: anchor => PM51.menu(anchor, [
-          { label: 'Restart', icon: 'refresh', onClick: () => PM51.toast(`Restarting ${s.name}`, 'Example only: language servers run in the real app.', 'info') },
-          { label: 'Restart all language servers', icon: 'refresh', onClick: () => PM51.toast('Restarting every language server', 'The usual fix when highlights or errors get stuck. Example only.', 'info') },
+          { label: 'Restart', icon: 'refresh', onClick: () => restartLsps([s]) },
+          { label: 'Restart all language servers', icon: 'refresh', onClick: () => restartLsps(tc().lsps) },
           { label: isOn(s) ? 'Turn off' : 'Turn on', icon: isOn(s) ? 'pause' : 'play', onClick: () => { s.enabled = !isOn(s); saveState(); PM51.refresh(ID, { swap: false }); } },
           { label: 'View logs', icon: 'terminal', onClick: () => openLogs('lsps', s.id) },
           { separator: true },
@@ -456,6 +458,20 @@
     out.innerHTML = PM51.status(tone === 'attention' ? 'Not yet' : 'Answered', tone || 'ready') + `<span>${h(text)}</span>`;
     if (scroll) out.scrollIntoView({ block: 'nearest', behavior: motionReduced() ? 'auto' : 'smooth' });
   }
+  /* Restart (a server's menu), Restart all, and the "Restart language servers" steps (rows.d lsp-restart, its flow's end):
+     each server that is on restarts, says "Restarting…" while it does, and answers again, so a "Needs a restart" clears.
+     They only showed a toast and the state stayed (lane-code, 2026-11-11). Example data: nothing runs in this preview. */
+  const restarting = new Set();   /* ids restarting now: never saved with the entries */
+  function restartLsps(list) {
+    const on = (list || []).filter(x => isOn(x) && !restarting.has(x.id)); if (!on.length) { PM51.toast('Nothing to restart', 'Every language server here is off.', 'info'); return; }
+    on.forEach(x => restarting.add(x.id)); PM51.refresh(ID, { swap: false });
+    window.setTimeout(() => {
+      on.forEach(x => { restarting.delete(x.id); x.status = 'ready'; x.lastTest = 'Restarted just now'; });
+      saveState(); PM51.refresh(ID, { swap: false });
+      PM51.toast(on.length === 1 ? `${on[0].name} restarted` : `${on.length} language servers restarted`, on.length === 1 ? 'It answers again.' : 'They answer again.', 'success');
+    }, motionReduced() ? 0 : 900);
+  }
+  window.addEventListener('pm51-flow-done', e => { if (e.detail && e.detail.id === S.lspRestart) restartLsps(tc().lsps); });
   const toolById = id => { for (const l of LANGS) for (const t of l.lsps.concat(l.formatters)) if (t.id === id) return t; return null; };
   PM51.on('toolchain-path-browse', el => {
     const block = el.closest('.tt-path'); if (!block) return; const input = block.querySelector('.tt-path-input'); const t = toolById(block.dataset.tool);

@@ -125,6 +125,9 @@
     return '';
   }
   /* The list follows the Show and Sort choices and the search box (all three are canonical settings). */
+  /* the readiness a person sees follows the switch: a skill that is ready but switched off reads "Off", in the list
+     and on its page (it read "Ready" beside a switch that was off, lane-code 2026-11-11); a problem still says itself */
+  const shownState = s => (!s.enabled && s.state === 'Ready' ? 'Off' : s.state);
   function visible(list) {
     const show = PM51.value(S.show) || 'Active only';
     const q = String(PM51.value(S.search) || '').trim().toLowerCase();
@@ -138,7 +141,7 @@
   function listHtml() {
     const all = skills(), shown = visible(all);
     const items = shown.map(s => ({
-      title: s.name, meta: badgeLine(s), note: noteFor(s), pill: (PM51.value(S.badges) || []).includes('Readiness') ? PM51.pill(s.state) : '',
+      title: s.name, meta: badgeLine(s), note: noteFor(s), pill: (PM51.value(S.badges) || []).includes('Readiness') ? PM51.pill(shownState(s)) : '',
       avatar: h(PM51.initials(s.name)),
       end: PM51.toggle(!!s.enabled, { action: 'pm51-skills-toggle', data: { id: s.id }, label: `${s.name} on or off` }),
       action: 'pm51-skills-open', data: { id: s.id }
@@ -177,7 +180,7 @@
     const s = byId(id); if (!s) return;
     const reqs = s.requirements || [];
     PM51.panel({
-      title: s.name, eyebrow: 'Skill', icon: 'sliders', subtitle: `${s.origin} · version ${s.version}`, status: s.state,
+      title: s.name, eyebrow: 'Skill', icon: 'sliders', subtitle: `${s.origin} · version ${s.version}`, status: shownState(s),
       body: PM51.panelSection('What it does', `<p class="pm51-ps-text">${h(s.description || 'No description yet.')}</p>` + actionRow(bundled(s) || /catalog/i.test(s.origin || '') ? PM51.btn({ label: 'Read its instructions', small: true, icon: 'file', action: 'pm51-skills-preview', data: { id: s.id } }) : PM51.btn({ label: 'Edit its instructions', small: true, icon: 'edit', action: 'pm51-skills-edit', data: { id: s.id } })), '', { icon: 'info' })
         + PM51.panelSection('Use it', PM51.rows([
           { label: 'On', help: 'Off keeps it on your list but out of the way.', control: PM51.toggle(!!s.enabled, { action: 'pm51-skills-toggle', data: { id: s.id }, label: `${s.name} on or off` }) },
@@ -197,7 +200,9 @@
     s.enabled = !s.enabled; delete s.justAdded;
     if (el.classList.contains('pm51-toggle')) { el.classList.toggle('on', s.enabled); el.setAttribute('aria-checked', String(s.enabled)); }
     saveState(); PM51.toast(s.enabled ? `${s.name} is on` : `${s.name} is off`, s.enabled ? 'The assistant can use it again.' : 'It stays on your list.', 'success');
-    if (!el.closest('.pm51-panel')) redrawList();
+    const panel = el.closest('.pm51-panel'), hero = panel && panel.querySelector('.pm51-hero-status');
+    if (hero) hero.innerHTML = PM51.status(shownState(s));
+    redrawList();
   });
   PM51.onChange('skills-run', el => {
     const s = byId(ds(el, 'id')); if (!s) return;
