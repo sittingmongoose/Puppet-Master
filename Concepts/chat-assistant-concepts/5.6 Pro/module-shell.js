@@ -1907,6 +1907,8 @@
     var tone = o.tone === 'accent' ? 'accent' : 'warm';
     return '<div class="' + cls('pmx-decision', o.cls) + '"' + k(o.key) + ' data-tone="' + tone + '" role="group"' + raw(o.attrs) + '>' +
       '<p class="pmx-decision-say">' + decisionMark(o.glyph, tone) + '<span>' + str(o.sentence) + '</span></p>' +
+      /* FO-128: o.question is what the decision allows (a permission ask's command), whole on its own row, never clamped */
+      (nonEmpty(o.question) ? '<p class="pmx-decision-q">' + str(o.question) + '</p>' : '') +
       /* FO-128: o.extra replaces the answers while it is given (the Always chooser); answers that name a group are the
          compact ladder's segmented control (pmxAskButtons), the same one the dock's asking line draws */
       (nonEmpty(o.extra) ? str(o.extra) : '<div class="pmx-decision-acts">' + pmxAskButtons(o.actions || [], function (a, i) {

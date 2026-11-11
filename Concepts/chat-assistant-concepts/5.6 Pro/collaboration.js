@@ -913,8 +913,9 @@
     var b = blockedHelper(run), noun = NOUN[run.kind];
     function mk(tone, strong, text, word) { return { tone: tone, strong: strong, text: text, word: word || 'Needs attention', plain: strong + (text ? ' ' + text : '') }; }
     if (c.coordinator_failed) return mk('warm', 'Needs attention', '· The ' + lead + ' stopped, ' + (run.kind === 'chat_room' ? 'so nobody is calling on speakers.' : 'so the final summary is missing.'));
-    /* FO-128: the card says what it would run, so the ladder under it is answered knowing the call */
-    if (b) return mk('warm', b.role + ' needs your OK', (b.blockedAsk && b.blockedAsk.target ? 'to run ' + b.blockedAsk.target + '.' : 'to go on.') + ' Only this ' + noun + ' waits; the others keep working.', 'Needs you');
+    /* FO-128: the card names the call (its decision row shows the command whole, helperQuestion), so the ladder under it
+       is answered knowing what it allows */
+    if (b) return mk('warm', b.role + ' needs your OK', (b.blockedAsk && b.blockedAsk.target ? 'to run a command.' : 'to go on.') + ' Only this ' + noun + ' waits; the others keep working.', 'Needs you');
     if (c.unresolved_required.length && c.failed_slots.length) {
       var failed = (run.participants || []).filter(function (p) { return c.failed_slots.indexOf(p.id) >= 0 && p.required; });
       var all = (run.participants || []).filter(function (p) { return p.required; }).length;
@@ -1357,11 +1358,10 @@
     return out;
   }
 
-  /* the Always chooser replaces the ladder in the card while it is open */
-  function helperExtra(run) {
-    var b = blockedHelper(run), A = window.PM56_ASKS, a = b && A && A.parts ? A.parts('collab:' + run.id + ':' + b.id) : null;
-    return a ? a.extra : '';
-  }
+  /* the Always chooser replaces the ladder in the card while it is open; the command shows whole above it */
+  function helperParts(run) { var b = blockedHelper(run), A = window.PM56_ASKS; return b && A && A.parts ? A.parts('collab:' + run.id + ':' + b.id) : null; }
+  function helperExtra(run) { var a = helperParts(run); return a ? a.extra : ''; }
+  function helperQuestion(run) { var a = helperParts(run); return a ? a.question : ''; }
   function genericCardParts(run, ctx, face, st) {
     var S = S_(), K = KIND_LABEL[run.kind];
     var s = sentenceOf(run), att = st === 'attention' ? attentionOf(run) : null;
@@ -1369,7 +1369,7 @@
     var open = openActionOf(run);
     var parts = {
       sentence: { status: s.status, word: esc(s.word), reason: esc(s.reason) },
-      decision: att ? { tone: att.tone, glyph: att.tone === 'accent' ? 'ring-dot' : 'warn', sentence: '<b>' + esc(att.strong) + '</b>' + (att.text ? ' ' + esc(att.text) : ''), actions: decisionActions(run, att), extra: helperExtra(run) } : null,
+      decision: att ? { tone: att.tone, glyph: att.tone === 'accent' ? 'ring-dot' : 'warn', sentence: '<b>' + esc(att.strong) + '</b>' + (att.text ? ' ' + esc(att.text) : ''), actions: decisionActions(run, att), extra: helperExtra(run), question: helperQuestion(run) } : null,
       track: trackOf(run, st),
       lanes: null,
       board: '',
@@ -1617,7 +1617,7 @@
         /* 7.12 one control set: while the run view is open beside the chat, the legacy follow-ons it draws (Write the plan,
            One more debate round, Next Round, Create To-Dos…) leave the card, and the card points at the view instead */
         if (viewing) { var kept = dacts.filter(function (x) { return !VIEW_FOLLOW_ON.test(x.action); }); if (kept.length !== dacts.length) { inView = true; dacts = kept; } }
-        var da = withRun(dacts, run); mark(dacts); body += S.pmxDecision({ key: 'dec:' + id, cls: 'collab-status', tone: dec.tone, glyph: dec.glyph, sentence: dec.sentence, actions: da, extra: dec.extra || '' });
+        var da = withRun(dacts, run); mark(dacts); body += S.pmxDecision({ key: 'dec:' + id, cls: 'collab-status', tone: dec.tone, glyph: dec.glyph, sentence: dec.sentence, actions: da, extra: dec.extra || '', question: dec.question || '' });
       }
       else body += S.pmxSentence({ key: 'collab-status', cls: 'collab-status', status: p.sentence.status, word: p.sentence.word, reason: p.sentence.reason });
       /* a collapsed card has no meta row: its track's count line carries the .collab-card-meta hook (B.5) */

@@ -1093,6 +1093,9 @@ p.pmx-meta, .pmx-meta{margin:0;font:var(--pmx-fs-meta);font-weight:var(--pmx-w-r
    decision row. One more class than the hosted button corner rule (pm7-port 20-controls.css), so the inner corners of
    the segmented control stay square. */
 .pmx-ask-seg{display:inline-flex;align-items:center;gap:6px;min-width:0;}
+/* a card decision's command, under its (clamped) sentence and in line with its words */
+.pmx-decision-q{margin:2px 0 8px 22px;min-width:0;font:var(--pmx-fs-sentence);color:var(--text);overflow-wrap:anywhere;}
+.pmx-decision-q code{font:500 12px/18px var(--font-mono);color:var(--text);}
 .pmx-ask-lead{margin:0 0 0 4px;font:var(--pmx-fs-meta);color:var(--muted);}
 .pmx-ask-seg-in{display:inline-flex;min-width:0;}
 :is(.pmx-dock, .pmx-decision) .pmx-ask-seg-in > .soft-button{padding:0 11px;}

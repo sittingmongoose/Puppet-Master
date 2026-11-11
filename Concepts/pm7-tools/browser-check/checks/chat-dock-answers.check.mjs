@@ -14,7 +14,7 @@
 //             and Save writes "Always allowed" with its place.
 //   places    a path ask never offers Everywhere and suggests its folder "/**"; a chat with no project hides This project.
 //   helper    the Crew helper that waits for your OK (Rollback Auditor, recovery-collaboration) has the same ladder in its
-//             card's decision row, with the command it would run, and in its dock line once the card is out of view;
+//             card's decision row, under the command it would run shown whole, and in its dock line once the card is out of view;
 //             Once from the line lets it go on and the run says so; Always from the card opens the chooser in the card.
 //   looks     in all ten looks, at a 600 and a 400 px docked chat: every answer of every asking line (rest, and with the
 //             Always chooser open) and of the helper card's ladder is on top at its centre (native hit test), inside its
@@ -149,8 +149,8 @@ async function helperCase(t, surface) {
 	const card = f.locator('#pmRoot article[data-run-id="crew-query-perf"]');
 	await wheelMessages(t, f, -400, cardInView, `${surface}: the Crew card's ladder is in view`);
 	const dec = card.locator('.pmx-decision');
-	const say = await dec.locator('.pmx-decision-say').innerText();
-	await t.check(`${surface}: the card says what the helper would run`, /Rollback Auditor needs your OK to run pg_restore --clean --if-exists -d tastebook_rehearsal snapshots\/0007_pre\.dump\./.test(say), say);
+	const say = await dec.evaluate((d) => { const q = d.querySelector('.pmx-decision-q'); return { say: d.querySelector('.pmx-decision-say').innerText, q: q ? q.textContent : '', clipped: q ? q.scrollWidth > q.clientWidth + 1 || q.scrollHeight > q.clientHeight + 1 : true }; });
+	await t.check(`${surface}: the card says the helper wants to run a command, and shows it whole`, /Rollback Auditor needs your OK to run a command\./.test(say.say) && say.q === 'pg_restore --clean --if-exists -d tastebook_rehearsal snapshots/0007_pre.dump' && !say.clipped, JSON.stringify(say));
 	const ladder = await dec.locator('[data-action="perm-answer"]').evaluateAll((bs) => bs.map((b) => b.dataset.value + '=' + b.textContent.trim()));
 	await t.check(`${surface}: the card has the compact ladder`, JSON.stringify(ladder) === '["deny=Deny","once=Once","session=For session","always=Always…"]' && await dec.locator('.pmx-ask-seg-in [data-action="perm-answer"]').count() === 3, JSON.stringify(ladder));
 	await t.check(`${surface}: and keeps Details`, await dec.locator('[data-action="collab-open-participant"]').count() === 1);
