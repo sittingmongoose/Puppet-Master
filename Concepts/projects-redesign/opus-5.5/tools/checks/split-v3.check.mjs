@@ -21,6 +21,17 @@ const plates = (f) => f.evaluate(() => Object.fromEntries(Array.from(document.qu
    pixels over it, with no way to leave a canvas out by selector (browser-check gaps 2ff3d9 and 2d5855). It is taken out
    of the audit here by a rule, since PMConcept7 makes the canvas again as it redraws; nothing else is changed. */
 const hideMinimap = (f) => f.addStyleTag({ content: '.pmw-ed-canvas { visibility: hidden !important; }' });
+/* PMConcept7's own notification toasts hang under the bell and may lie over the page head's buttons for a few seconds
+   (its ruling: covering a control is fine). They are not Split's, and the audit's "controls can be clicked" would count
+   them against the page: each is closed with its own dismiss button first, as a person would, then the audit runs. */
+async function audit(t, f, name) {
+	for (let i = 0; i < 3; i++) {
+		const open = await f.evaluate(() => { const xs = Array.from(document.querySelectorAll('.pmn-toast')).filter((e) => e.getClientRects().length); xs.forEach((e) => { const x = e.querySelector('.pmn-x'); if (x) x.click(); }); return xs.length; });
+		if (!open) break;
+		await f.waitForFunction(() => !Array.from(document.querySelectorAll('.pmn-toast')).some((e) => e.getClientRects().length), null, { timeout: 3000 }).catch(() => {});
+	}
+	await t.audit(name);
+}
 /* how many lines the tallest value that sits beside its label takes (a stacked or long one has the plate's width) */
 const tallestBeside = (f) => f.evaluate(() => Math.max(0, ...Array.from(document.querySelectorAll('#pjxc .pjxc-facts:not([data-v3-stack]) > .pmu-fact:not([data-v3-long]) > .pmu-factv')).map((v) => Math.round(v.getBoundingClientRect().height / (parseFloat(getComputedStyle(v).lineHeight) || 19)))));
 
@@ -189,16 +200,16 @@ export const tests = {
 		for (const id of ['tastebook', 'experiment', 'harbor', 'docs-site', 'recipe-app', 'garden-notes', 'photo-sorter', 'legacy-app']) {
 			await f.evaluate((i) => window.PJX.split.select(i), id);
 			await t.page.waitForTimeout(350);
-			await t.audit(`v3 ${id}`);
+			await audit(t, f, `v3 ${id}`);
 			await sameLayout(t, f, `v3 ${id}`);
 		}
 		await t.app.act(t, 'new');
 		await t.page.waitForTimeout(600);
-		await t.audit('v3 New Project');
+		await audit(t, f, 'v3 New Project');
 		for (const m of ['foundonline', 'contribute', 'gamejam', 'newdevice', 'backupsetup']) {
 			await t.app.moment(t, m);
 			await t.page.waitForTimeout(1400);
-			await t.audit(`v3 ${m}`);
+			await audit(t, f, `v3 ${m}`);
 			await sameLayout(t, f, `v3 ${m}`);
 		}
 	},
@@ -208,14 +219,14 @@ export const tests = {
 		for (const m of ['fromchat', 'chatmove', 'agent', 'work']) {
 			await t.app.moment(t, m);
 			await t.page.waitForTimeout(1400);
-			await t.audit(`v3 ${m}`);
+			await audit(t, f, `v3 ${m}`);
 		}
 		await t.page.keyboard.press('Escape');
 		for (const w of ['1280', '1024', '860', '640']) {
 			await t.app.moment(t, 'photosorter');
 			await t.page.selectOption('#width', w);
 			await t.page.waitForTimeout(900);
-			await t.audit(`v3 at ${w}`);
+			await audit(t, f, `v3 at ${w}`);
 			await sameLayout(t, f, `v3 at ${w}`);
 		}
 		// every plate of the busiest Project at each width (review r2, N4: at 860 every head had its glyph on its own line)
@@ -244,7 +255,7 @@ export const tests = {
 						await t.app.until(t, f, `${look}: tastebook is the chosen row`, () => /tastebook/.test((document.querySelector('#pjxc .pjxc-row[aria-current="true"]') || {}).textContent || ''), null, 8000);
 					}
 					await t.page.waitForTimeout(350);
-					await t.audit(`v3 ${look}, ${sc}`);
+					await audit(t, f, `v3 ${look}, ${sc}`);
 					await sameLayout(t, f, `${look}, ${sc}`);
 				}
 			});
@@ -297,11 +308,11 @@ export const tests = {
 		await t.page.keyboard.press('Tab');
 		await t.check('v3: Why this computer takes its underline with the keyboard focus', await f.evaluate(() => { const a = document.activeElement; return !!a && a.classList.contains('pjx-wk-why') && getComputedStyle(a).textDecorationColor === getComputedStyle(a).color; }));
 		await t.crop('v3-work-rows', f.locator('[data-plate="work"]'), 'Split v3, Where work runs with its rows (LOOK)');
-		await t.audit('v3 work plate');
+		await audit(t, f, 'v3 work plate');
 		await t.app.click(t, f, '[data-plate="work"] [data-c-key="wk:why:1"]', { wait: 400 });
 		let d = await dialog();
 		await t.equal('v3: Why this computer reads at the page’s size', d && d.fact, '13px/19px');
-		await t.audit('v3 Why this computer');
+		await audit(t, f, 'v3 Why this computer');
 		await t.shot('v3-why', 'Split v3, Why this computer (LOOK)');
 		await closeDialog();
 		// Start a run…: its list of choices is ruled, and its fields' labels are in the text face
@@ -309,7 +320,7 @@ export const tests = {
 		d = await dialog();
 		await t.equal('v3: Start a run’s choices are one ruled list', d && d.gap + ' ' + d.midRule + ' ' + d.midRadius, '0px 1px 0px');
 		await t.equal('v3: its fields’ labels are in sentence case', d && d.cap, 'none');
-		await t.audit('v3 Start a run');
+		await audit(t, f, 'v3 Start a run');
 		await t.shot('v3-start-run', 'Split v3, Start a run (LOOK)');
 		await closeDialog();
 		// getting the latest pauses on a clash: the plate says so as a status, and the dialog's choices are one ruled list
@@ -323,7 +334,7 @@ export const tests = {
 		await f.evaluate(() => { const el = document.querySelector('[data-plate="online"]'), sc = el.closest('.pjxc-scroll'); sc.scrollTop += el.getBoundingClientRect().top - sc.getBoundingClientRect().top - 40; });
 		await t.page.waitForTimeout(200);
 		await t.crop('v3-paused', f.locator('[data-plate="online"]'), 'Split v3, Online copy paused on a clash (LOOK)');
-		await t.audit('v3 paused on a clash');
+		await audit(t, f, 'v3 paused on a clash');
 		for (const look of LOOKS) {
 			await t.step(look, async () => {
 				if (look !== 'basic-dark') { await t.app.look(t, look); await t.app.page(t, f, 'projects'); await f.evaluate(() => window.PJX.split.select('photo-sorter')); }
@@ -334,7 +345,7 @@ export const tests = {
 				await t.equal(`${look}: the dialog’s choices are one list (no gap)`, d && d.gap, '0px');
 				await t.equal(`${look}: ruled apart, square inside the list`, d && d.midRule + ' ' + d.midRadius, '1px 0px');
 				await t.check(`${look}: the chosen one is plainly the chosen one`, !!d && d.chosenShows);
-				await t.audit(`v3 Settle the clash, ${look}`);
+				await audit(t, f, `v3 Settle the clash, ${look}`);
 				if (look === 'basic-dark' || look === 'retro-light') await t.shot(`v3-settle-${look}`, `Split v3, Settle the clash, ${look} (LOOK)`);
 				await closeDialog();
 			});
