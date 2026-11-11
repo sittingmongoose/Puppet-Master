@@ -131,11 +131,13 @@ html[data-motion="reduced"] #panel-settings .psx-head-main { transition: none; }
 #panel-settings .psx-folder-sec { margin-bottom: 14px; }
 
 /* ---- narrow Settings: the copy and the end word on the first line, the control under the copy (the base page's own
-   narrow layout, with the end column kept at its fixed width); under 560px the end word goes under the control (7.6) */
+   narrow layout, with the end column kept at its fixed width); under 560px the end word goes under the control (7.6).
+   Review A-r4 F2: the control's line has nothing in the end column, so the control takes the whole row. Held to the
+   first column it left 129px in a 296px detail card, and a value beside its Change button was one letter wide */
 @container settings-host (max-width: 760px) {
   html[data-psx-end]:not([data-psx-end="today"]) #panel-settings .setting-row.o55-row,
   html[data-psx-end]:not([data-psx-end="today"]) #panel-settings .setting-row.o55-row.is-wide { grid-template-columns: minmax(0, 1fr) var(--psx-end-w); }
-  html[data-psx-end]:not([data-psx-end="today"]) #panel-settings .setting-row.o55-row > .setting-control { grid-column: 1; grid-row: 2; justify-content: flex-start; max-width: none; }
+  html[data-psx-end]:not([data-psx-end="today"]) #panel-settings .setting-row.o55-row > .setting-control { grid-column: 1 / -1; grid-row: 2; justify-content: flex-start; max-width: none; }
   html[data-psx-end]:not([data-psx-end="today"]) #panel-settings .setting-row.o55-row > .o55-about { grid-column: 2; grid-row: 1; }
 }
 /* a list of rows narrower than the three columns need (an account's rows beside the services list) stacks the same way,
@@ -144,7 +146,7 @@ html[data-psx-end]:not([data-psx-end="today"]) #panel-settings .setting-list { c
 @container psx-rows (max-width: 600px) {
   html[data-psx-end]:not([data-psx-end="today"]) #panel-settings .setting-row.o55-row,
   html[data-psx-end]:not([data-psx-end="today"]) #panel-settings .setting-row.o55-row.is-wide { grid-template-columns: minmax(0, 1fr) var(--psx-end-w); }
-  html[data-psx-end]:not([data-psx-end="today"]) #panel-settings .setting-row.o55-row > .setting-control { grid-column: 1; grid-row: 2; justify-content: flex-start; max-width: none; }
+  html[data-psx-end]:not([data-psx-end="today"]) #panel-settings .setting-row.o55-row > .setting-control { grid-column: 1 / -1; grid-row: 2; justify-content: flex-start; max-width: none; }
   html[data-psx-end]:not([data-psx-end="today"]) #panel-settings .setting-row.o55-row > .o55-about { grid-column: 2; grid-row: 1; }
 }
 @container settings-host (max-width: 560px) {
