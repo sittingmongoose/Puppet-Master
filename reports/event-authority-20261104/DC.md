@@ -151,8 +151,8 @@ Every heavy run started at ≥ 13.5 GB available (`run-heavy.sh` waits), one at 
 | Command | Exit | Outcome |
 |---|---:|---|
 | `git merge --no-ff 58c2816ff3` | 1 → resolved | 163 derived conflicts, regenerated; none other |
-| `python3 scripts/pm_collaboration_events.py --json` (at `7a5d6328f0`; the rerun at `38ee4e0eac` is `runs/checker4`, pending at the pause) | 0 | `pass`, 0 failures, 18 prepared rows, 0 admitted, no admission blocker; 30,488 contract probes (2,745 part 2B) and 109 integrity cases; 6 m 06 s, peak RSS 1.10 GB |
-| `python3 scripts/pm_collaboration_events.py --self-test` (at `7a5d6328f0`; the rerun at `38ee4e0eac` is `runs/selftest4`, pending) | 0 | `pass`, 14/14 scenarios including the failure-exit and unvisited-reference controls; 16 m 47 s |
+| `python3 scripts/pm_collaboration_events.py --json` (at `38ee4e0eac`) | 0 | `pass`, 0 failures, 18 prepared rows, 0 admitted, no admission blocker; 30,488 contract probes (2,745 part 2B) and 109 integrity cases; 6 m 37 s, peak RSS 1.10 GB |
+| `python3 scripts/pm_collaboration_events.py --self-test` (at `38ee4e0eac`) | 0 | `pass`, 14/14 scenarios including the failure-exit and unvisited-reference controls; 15 m 47 s, peak RSS 1.13 GB |
 | `python3 scripts/pm_event_numbers.py --self-test --scope numbers` | 0 | `pass`, 580/580 |
 | `python3 scripts/pm_event_numbers.py --self-test` (scope all) | 1 | `NOT_RUN_ADMISSION_REFUSED`; only `datetime_inventory_complete_and_classified` (Addendum 2) |
 | `python3 scripts/pm_event_datetime_inventory.py` | 1 | 1 `inventory_node_changed` (resource hash only), above |
