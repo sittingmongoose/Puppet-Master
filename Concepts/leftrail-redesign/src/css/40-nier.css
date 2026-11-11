@@ -15,12 +15,16 @@ html[data-o55-nier-parts~="cursor"] .pmr-cur:is(:hover, .is-current, [aria-curre
   background: var(--o55-nier-ink) !important; color: var(--o55-nier-on-ink) !important; border-color: var(--o55-nier-ink) !important;
   box-shadow: none !important; text-shadow: none !important;
 }
+/* T2 build step (lane J, 2026-11-11): the two :where(*) below are rewritten at build time to the row parts' classes
+   (opus-5.5 tools/active_descendant_rules.json rules 13 and 14): a descendant with nothing to key on made Chrome's
+   page-wide .is-current, aria-current, aria-selected and .o55np-cur-over sets "whole subtree". A new part under these
+   rows needs its class there (check: tools/active_descendant_guard.mjs). */
 html[data-o55-nier-parts~="cursor"] .pmr-cur.o55np-cur-over:not([aria-disabled="true"]) :where(*),
 html[data-o55-nier-parts~="cursor"] .pmr-cur:is(.is-current, [aria-current="true"], [aria-selected="true"]):not([aria-disabled="true"]) :where(*) {
   color: inherit !important; -webkit-text-fill-color: currentColor;
 }
-html[data-o55-nier-parts~="cursor"] .pmr-cur.o55np-cur-over :is(.pmr-glyph, .pmr-letter, .pmr-status, .pmr-diff span),
-html[data-o55-nier-parts~="cursor"] .pmr-cur:is(.is-current, [aria-current="true"], [aria-selected="true"]) :is(.pmr-glyph, .pmr-letter, .pmr-status, .pmr-diff span) { color: var(--o55-nier-on-ink) !important; }
+html[data-o55-nier-parts~="cursor"] .pmr-cur.o55np-cur-over :is(.pmr-glyph, .pmr-letter, .pmr-status, .pmr-diff :where(.add):is(span), .pmr-diff :where(.del):is(span)),
+html[data-o55-nier-parts~="cursor"] .pmr-cur:is(.is-current, [aria-current="true"], [aria-selected="true"]) :is(.pmr-glyph, .pmr-letter, .pmr-status, .pmr-diff :where(.add):is(span), .pmr-diff :where(.del):is(span)) { color: var(--o55-nier-on-ink) !important; }
 html[data-o55-nier-parts~="headers"] .pmr-head { text-transform: uppercase; letter-spacing: .14em; font-weight: 600; }
 html[data-o55-nier-parts~="headers"] .pmr-title { text-transform: uppercase; letter-spacing: .16em; }
 html[data-o55-nier="on"] .pmr-view { --pmr-st-ok: var(--o55-nier-ink); --pmr-st-running: var(--o55-nier-ink); --pmr-st-stopped: rgba(var(--o55-nier-ink-rgb), .55); }

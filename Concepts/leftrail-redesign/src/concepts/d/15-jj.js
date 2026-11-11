@@ -71,7 +71,7 @@ function jjIco(name, cls) {
   if (g && G && G.has(g)) raw = G.icon(g, JJ_SIZE[cls] || 14, 'nx-r-' + (PMR.neonRole[name] || 'concept'));
   if (!raw) {
     raw = JJ_SVG[name]
-      ? '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + JJ_SVG[name] + '</svg>'
+      ? '<svg class="pm-isvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + JJ_SVG[name] + '</svg>'
       : (typeof window.PMIcon === 'function' ? window.PMIcon(name) : '');
   }
   i.innerHTML = raw || '';
