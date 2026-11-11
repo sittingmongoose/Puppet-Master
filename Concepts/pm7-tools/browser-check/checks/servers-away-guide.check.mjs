@@ -19,6 +19,8 @@
 // a pm-link://<server id>-<code> link. Runs on the surface the switch picks (--set sandbox=1 for T3's preview).
 import fs from 'node:fs';
 import { pagePath } from '../helpers/onboarding-fields.mjs';
+import { paintedText } from '../helpers/painted-text.mjs';
+import { LOOKS } from '../browser-check.config.mjs';
 
 const sleep = (f, ms) => f.waitForTimeout(ms);
 const BLOCK = '.workspace-block[data-workspace-block="servers"]';
@@ -213,5 +215,19 @@ export const tests = {
 		const PATS = { 'pm-link://': /pm-link:\/\//, 'Puppet Master sets it up (Caddy)': /Puppet Master sets it up \(Caddy\)/, 'gets a free certificate by itself': /gets a free certificate by itself/, 'Caddy (free certificate, simplest)': /Caddy \(free certificate, simplest\)/, 'Nginx Proxy Manager file (SSL: Request a new certificate)': /SSL: Request a new certificate/ };
 		const found = Object.entries(PATS).filter(([, rx]) => rx.test(html)).map(([k]) => k);
 		await t.check('the built page carries none of them', !found.length, found.join(', '));
+	},
+	async 'every look: the staged steps, their states and the demo answers paint inside the window'(t) {
+		const f = await openAway(t);
+		await setUp(f, 'tailscale'); await cont(f);
+		await press(f, 'Start'); await untilTs(f, ['waiting']);
+		for (const look of LOOKS) {
+			await t.app.look(look); await sleep(f, 300);
+			const live = f.locator(`${WIN} .o55g-layer:not(.o55g-out)`).last();
+			const chip = live.locator('.pm51-servers-demo-c').first(), step = live.locator('[data-ts-state] .pm51-step-title').nth(1), state = live.locator('[data-ts-state] .pm51-step-end').nth(1);
+			const box = await f.evaluate((W) => { const w = document.querySelector(`${W}`).getBoundingClientRect(), live = [...document.querySelectorAll(`${W} .o55g-layer:not(.o55g-out)`)].pop(); const cs = [...live.querySelectorAll('.pm51-servers-demo-c')]; return { n: cs.length, inside: cs.every((c) => { const r = c.getBoundingClientRect(); return r.left >= w.left - 1 && r.right <= w.right + 1 && c.scrollWidth <= c.clientWidth + 1; }) }; }, WIN);
+			const [pc, ps, pst] = [await paintedText(chip), await paintedText(step), await paintedText(state)];
+			await t.check(`${look}: the demo answers sit whole inside the window`, box.n >= 2 && box.inside, JSON.stringify(box));
+			await t.check(`${look}: a demo answer, a step and its Waiting for you state paint readable ink`, pc.paintedCount >= 10 && ps.paintedCount >= 10 && pst.paintedCount >= 10, JSON.stringify({ chip: [pc.count, pc.paintedCount], step: [ps.count, ps.paintedCount], state: [pst.count, pst.paintedCount] }));
+		}
 	}
 };

@@ -13,6 +13,8 @@
 //   unchanged page only had category toggles.
 // Runs in T3's sandbox by default (the onboarding window), on the normal page with --set sandbox=0.
 import { onboardingApp } from '../helpers/onboarding-fields.mjs';
+import { paintedText } from '../helpers/painted-text.mjs';
+import { LOOKS } from '../browser-check.config.mjs';
 const LAYER = '#pm-o55-onboarding .o55-layer:not(.o55-out)';
 async function open(t, at, scenario = 'returning') {
 	await t.viewport(1440, 900);
@@ -135,5 +137,19 @@ export const tests = {
 		await f.waitForFunction(() => { const cm = O55.S.sess.commit; return cm && (cm.settingsCount != null || cm.settingsError); }, null, { timeout: 30000 }).catch(() => {});
 		const cm = await f.evaluate(() => { const cm = O55.S.sess.commit; return { count: cm.settingsCount, err: cm.settingsError || null }; });
 		await t.check('the commit copies exactly the values left picked', cm.count === want.count && !cm.err, JSON.stringify({ cm, want: want.count }));
+	},
+	async 'every look: Advanced’s kinds, single settings, things and accounts paint readable ink'(t) {
+		const f = await open(t, 'name');
+		await toLike(t, f, 'Looks');
+		await press(f, 'pick', 'harbor'); await press(f, 'choose');
+		for (const look of LOOKS) {
+			await t.app.look(look); await f.waitForTimeout(350);
+			for (const [what, sel] of [['a kind', '.o55-like-kinds .o55-toggletitle'], ['a kind’s count', '.o55-like-kinds .o55-togglesub'], ['a single setting', '.o55-like-single .o55-togglesub'], ['a thing', '.o55-like-things .o55-toggletitle'], ['an account’s readiness', '.o55-like-accts .o55-rowmeta']]) {
+				const el = f.locator(`${LAYER} .o55-sheet ${sel}`).first();
+				await el.scrollIntoViewIfNeeded().catch(() => {});
+				const p = await paintedText(el);
+				await t.check(`${look}: ${what} paints readable ink`, p.paintedCount >= 10, JSON.stringify([p.count, p.paintedCount, p.minimum]));
+			}
+		}
 	}
 };
