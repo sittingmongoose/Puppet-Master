@@ -21,6 +21,9 @@ const CASES = {
 	memory: { domain: 'memory', ws: 'context-memory', sw: '.toggle[role="switch"][data-setting="memory.retention.enabled"]' },
 	history: { domain: 'projects', ws: 'project-history', sw: '[data-setting-id="general.interaction.history-approved-only"] .toggle[role="switch"]' },
 	backup: { domain: 'system', ws: 'backup', sw: '.toggle[role="switch"][data-action="pm51-backup-auto"]' },
+	// stream P (A-r3): the Notifications switch redrew its whole section. Off adds "Notifications are off" under it and
+	// steps the rows below aside (designed), so the switch itself and its section are judged, not the next row
+	notifications: { domain: 'general', ws: 'notifications', sw: '.toggle[role="switch"][data-setting="general.interaction.notifications-enabled"]', reflows: true },
 };
 
 // in the app frame: mark the case's switch, arm the recorders. Returns null when the switch is not drawn.
@@ -33,7 +36,7 @@ const ARM = ({ ws, sw, entr }) => {
 	if (!el) return { err: `no switch in ${ws} (${list.length} drawn)` };
 	document.querySelectorAll('[data-fo130]').forEach((x) => x.removeAttribute('data-fo130'));
 	el.setAttribute('data-fo130', 'switch');
-	el.scrollIntoView({ block: 'center' });
+	el.scrollIntoView({ block: 'center', behavior: 'instant' });
 	// the switch's section, and a row after the switch's row on the page, found again by id each frame (a replaced page
 	// draws new elements with the same ids)
 	const sec = el.closest('[id^="section-"]') || el.closest('.settings-section, .manager-section, .pm51-section, section') || body;
@@ -72,7 +75,8 @@ const SAMPLE = (ms) => new Promise((resolve) => {
 	const read = () => {
 		const k = window.__fo130keys || {}, q = (sel, mark) => (sel && document.querySelector(sel)) || document.querySelector(mark);
 		const sec = q(k.sec, '[data-fo130-sec]'), below = q(k.below, '[data-fo130-below]');
-		S.frames.push({ t: performance.now(), sec: sec ? sec.getBoundingClientRect().top : null, below: below ? below.getBoundingClientRect().top : null, op: sec ? op(sec) : null, secNode: sec, belowNode: below });
+		const swNow = document.querySelector('[data-fo130="switch"]');
+		S.frames.push({ t: performance.now(), sec: sec ? sec.getBoundingClientRect().top : null, below: below ? below.getBoundingClientRect().top : null, sw: swNow ? swNow.getBoundingClientRect().top : null, op: sec ? op(sec) : null, secNode: sec, belowNode: below });
 	};
 	const ch = new MessageChannel();
 	ch.port1.onmessage = read;
@@ -91,7 +95,7 @@ const RESULT = () => {
 		same: !!el && el === S.node && el.isConnected,
 		focus: !!S.node && document.activeElement === S.node,
 		flipped: !!el && el.getAttribute('aria-checked') !== S.was,
-		secMove: span('sec'), belowMove: span('below'),
+		secMove: span('sec'), belowMove: span('below'), swMove: span('sw'),
 		minOp: Math.round(Math.min(...f.map((x) => x.op == null ? 1 : x.op)) * 100) / 100,
 		replacedSec: f.some((x) => x.secNode !== first.secNode && x.secNode !== null && first.secNode !== null) || !(first.secNode && first.secNode.isConnected),
 	};
@@ -121,7 +125,7 @@ async function runCase(t, f, w, h, name, tagPre) {
 			if (!(await t.check(`${tagPre} ${name}: off shows Turn on`, ok))) break;
 		}
 		// a replaced page (the unchanged build) drew a new switch: find it again, so every case still reports
-		await f.evaluate((sel) => { let el = document.querySelector('[data-fo130="switch"]'); if (!el) { el = document.querySelector(sel); if (el) el.setAttribute('data-fo130', 'switch'); } if (el) el.scrollIntoView({ block: 'center' }); }, `[data-continuous-workspace-body="${c.ws}"] ${c.sw}`);
+		await f.evaluate((sel) => { let el = document.querySelector('[data-fo130="switch"]'); if (!el) { el = document.querySelector(sel); if (el) el.setAttribute('data-fo130', 'switch'); } if (el) el.scrollIntoView({ block: 'center', behavior: 'instant' }); }, `[data-continuous-workspace-body="${c.ws}"] ${c.sw}`);
 		await t.page.waitForTimeout(250);
 		const sampling = f.evaluate(SAMPLE, 1100);
 		await f.locator('[data-fo130="switch"]').click();
@@ -137,7 +141,8 @@ async function runCase(t, f, w, h, name, tagPre) {
 			continue;
 		}
 		await t.check(`${tag}: the switch is the same element, with the key focus, and changed`, r.same && r.focus && r.flipped, `same ${r.same}, focus ${r.focus}, changed ${r.flipped}`);
-		await t.check(`${tag}: its section and the rows below hold still`, r.secMove <= 0.5 && r.belowMove <= 0.5 && !r.replacedSec, `section moved ${r.secMove} px, row below ${r.belowMove} px, section replaced ${r.replacedSec}, ${r.frames} frames`);
+		if (c.reflows) await t.check(`${tag}: the switch and its section hold still`, r.secMove <= 0.5 && r.swMove <= 0.5 && !r.replacedSec, `section moved ${r.secMove} px, switch ${r.swMove} px, section replaced ${r.replacedSec}, ${r.frames} frames`);
+		else await t.check(`${tag}: its section and the rows below hold still`, r.secMove <= 0.5 && r.belowMove <= 0.5 && !r.replacedSec, `section moved ${r.secMove} px, row below ${r.belowMove} px, section replaced ${r.replacedSec}, ${r.frames} frames`);
 	}
 }
 
