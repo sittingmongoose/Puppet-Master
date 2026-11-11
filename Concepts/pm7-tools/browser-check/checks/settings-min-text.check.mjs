@@ -15,9 +15,8 @@
 //   fit  — the controls whose text this item grew still hold it at 740x900, 860x900 and 1280x500: no word is
 //          cut by a box that clips its own overflow (hidden, clip, scroll: its scroll area against its client box,
 //          and the text's painted end past that box), and every control whose own CSS draws its label on one line
-//          (white-space: nowrap, or the fixed one-line shape of a badge, tab, chip, key cap, definition term or
-//          stepper value) still draws one line box (Range rects: exactly one). A plain button may wrap by design
-//          and is judged by the cut rule alone.
+//          (white-space: nowrap) still draws its words on one line (their line boxes' tops: exactly one). A button or
+//          chip whose label may wrap is judged by the cut rule alone.
 // A control that is built to ellipsize its own text (text-overflow: ellipsis: resource names and meta) is
 // exempt from the cut rule and still held to one line.
 //   browser-check run Concepts/pm7-tools/browser-check/checks/settings-min-text.check.mjs --set page=<build>
@@ -151,14 +150,23 @@ const FIT = ([affected]) => {
 		if (el.closest('[inert], [aria-hidden="true"]')) return false;
 		return getComputedStyle(el).visibility !== 'hidden';
 	};
-	/* A control is held to one line only where its own CSS draws one (nowrap, an ellipsis row) or where its shape is
-	   fixed to a single line (a badge, a tab, a chip, a key cap, a definition term). A plain button may wrap by
-	   design and is judged by the cut rule instead. */
-	const oneLine = (el, cs) => cs.whiteSpace === 'nowrap' || el.matches('.badge, .manager-tab, .filter-chip, .pm51-kbd, dt, .segmented button, .chip-select button, .stepper-value');
+	/* A control is held to one line only where its own CSS draws one (`white-space: nowrap`); a button or chip whose
+	   label may wrap is judged by the cut rule alone. */
+	const oneLine = (cs) => cs.whiteSpace === 'nowrap';
+	/* The painted rects of the element's own words, never its icons: a glyph beside a label is a different box on the
+	   same line, and counting it as a line made every icon button read as two. */
 	const textRects = (el) => {
-		const r = document.createRange();
-		r.selectNodeContents(el);
-		return [...r.getClientRects()].filter((b) => b.width > 0.5 && b.height > 0.5);
+		const out = [];
+		const walk = (n) => {
+			if (n.nodeType === 3) {
+				if (!n.textContent.trim()) return;
+				const r = document.createRange();
+				r.selectNodeContents(n);
+				out.push(...r.getClientRects());
+			} else if (n.nodeType === 1) for (const c of n.childNodes) walk(c);
+		};
+		walk(el);
+		return out.filter((b) => b.width > 0.5 && b.height > 0.5);
 	};
 	const out = { cut: [], wrapped: [], sampled: 0, ellipsis: 0 };
 	const seen = new Set();
@@ -193,7 +201,7 @@ const FIT = ([affected]) => {
 			// wrapped: a control that draws its label on one line must still draw one line box
 			// one line = every painted rect on the same line box; an icon and its label are two rects on one line
 			const lines = new Set(rects.map((r) => Math.round(r.top))).size;
-			if (oneLine(el, cs) && lines > 1 && !ellipsis) out.wrapped.push(`${label} ${lines} lines`);
+			if (oneLine(cs) && lines > 1 && !ellipsis) out.wrapped.push(`${label} ${lines} lines`);
 		}
 	}
 	return out;
