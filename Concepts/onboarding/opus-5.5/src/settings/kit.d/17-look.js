@@ -55,10 +55,13 @@ function o55CollectScalable() {
           const v = r.style.getPropertyValue(n).trim();
           if (v && o55SplitTop(v).every(x => O55_TIME.test(x))) O55_TIME_VARS.add(n);
         }
-        /* the shorthands first, so a longhand declared beside one keeps its place after it */
-        for (const [sh, lh] of [['transition', 'transition-duration'], ['animation', 'animation-duration']]) {
+        /* every transition and animation shorthand, scaled or not (transition: none too), in the page's order: the sheet
+           restates each rule at the end of the page, so a later rule of the same weight (a "transition: none" for a
+           state) must be restated after it again or the restated one would win. The shorthands come first in a rule,
+           so a longhand declared beside one keeps its place after it */
+        for (const sh of ['transition', 'animation']) {
           const v = r.style.getPropertyValue(sh);
-          if (v && v.includes('var(') && !r.style.getPropertyValue(lh)) pick[sh] = [v.trim(), r.style.getPropertyPriority(sh)];
+          if (v) pick[sh] = [v.trim(), r.style.getPropertyPriority(sh)];
         }
         for (const p of ['font-size', 'line-height', 'transition-duration', 'transition-delay', 'animation-duration']) {
           const v = r.style.getPropertyValue(p); if (!v || /^(normal|inherit|initial|unset|revert|0s?|auto)$/.test(v.trim())) continue;

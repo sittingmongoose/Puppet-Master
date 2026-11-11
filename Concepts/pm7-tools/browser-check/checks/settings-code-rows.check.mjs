@@ -97,10 +97,10 @@ for (const surface of ['normal', 'sandbox']) {
 		// a fresh page: the "Restart language servers" steps clear it too
 		const g = await settings(t, surface);
 		await go(t, g, 'code', 'toolchain');
-		const run = g.locator('[data-continuous-workspace-body="toolchain"] [data-setting="code.editing.lsp-restart"], [data-continuous-workspace-body="toolchain"] button', { hasText: /^\s*Restart language servers\s*$/ }).first();
-		if (await t.check('Toolchain has "Restart language servers"', (await run.count()) > 0)) {
-			await run.scrollIntoViewIfNeeded();
-			await run.click();
+		// the row's own action (run-setting-action on code.editing.lsp-restart, the button the row draws wherever it is
+		// shown: Details, search, All Project Settings) runs its five steps
+		const opened = await g.evaluate(() => { const found = typeof findSettingGlobal === 'function' && findSettingGlobal('code.editing.lsp-restart'); if (!found || typeof o55RunAction !== 'function') return false; o55RunAction(found); return true; });
+		if (await t.check('"Restart language servers" opens its steps', opened)) {
 			const go2 = g.locator('.pm51-panel button, aside button', { hasText: /^\s*Restart them\s*$/ }).first();
 			await go2.click({ timeout: 6000 });
 			await t.page.waitForTimeout(4200);
@@ -117,15 +117,30 @@ for (const surface of ['normal', 'sandbox']) {
 		if (await skip(t)) return;
 		const f = await settings(t, surface);
 		await go(t, f, 'code', 'skills');
-		const row = f.locator('[data-continuous-workspace-body="skills"] .pm51-item', { hasText: 'Frontend Polish' }).first();
-		if (!(await t.check('Frontend Polish is on the list', (await row.count()) > 0))) return;
-		const sw = row.locator('[role="switch"]').first();
-		const before = await row.evaluate((n) => ({ status: (n.querySelector('.pm51-status') || {}).textContent || '', on: (n.querySelector('[role="switch"]') || {}).getAttribute?.('aria-checked') }));
-		await t.check('it starts on and Ready', /Ready/.test(before.status) && before.on === 'true', JSON.stringify(before));
-		await sw.click();
+		// the list shows every skill (Show: All), as it does a skill just added switched off
+		await f.evaluate(() => PM12_KIMI.setSettingFromHost('extensions.skills.registry-view', 'All'));
+		await t.page.waitForTimeout(500);
+		const read = () => f.evaluate(() => { const n = [...document.querySelectorAll('[data-continuous-workspace-body="skills"] .pm51-item')].find((x) => /Frontend Polish/.test(x.textContent)); return n ? { status: ((n.querySelector('.pm51-status') || {}).textContent || '').trim(), on: (n.querySelector('[role="switch"]') || {}).getAttribute('aria-checked') } : null; });
+		const before = await read();
+		if (!(await t.check('Frontend Polish is on the list, on and Ready', !!before && /Ready/.test(before.status) && before.on === 'true', JSON.stringify(before)))) return;
+		await f.locator('[data-continuous-workspace-body="skills"] .pm51-item', { hasText: 'Frontend Polish' }).first().locator('[role="switch"]').first().click();
 		await t.page.waitForTimeout(700);
-		const after = await f.evaluate(() => { const n = [...document.querySelectorAll('[data-continuous-workspace-body="skills"] .pm51-item')].find((x) => /Frontend Polish/.test(x.textContent)); return n ? { status: text(n), on: (n.querySelector('[role="switch"]') || {}).getAttribute('aria-checked') } : null; function text(n) { return ((n.querySelector('.pm51-status') || {}).textContent || '').trim(); } });
-		await t.check('switched off, its row reads Off, not Ready', !!after && after.on === 'false' && /Off/.test(after.status) && !/Ready/.test(after.status), JSON.stringify(after));
+		const after = await read();
+		await t.check('switched off in the list, its row reads Off, not Ready', !!after && after.on === 'false' && /Off/.test(after.status) && !/Ready/.test(after.status), JSON.stringify(after));
+		// its page says the same, and follows its own switch
+		await f.locator('[data-continuous-workspace-body="skills"] .pm51-item', { hasText: 'Frontend Polish' }).first().click();
+		const hero = () => f.evaluate(() => { const p = [...document.querySelectorAll('.pm51-panel')].find((x) => /Frontend Polish/.test(x.textContent)); return p ? ((p.querySelector('.pm51-hero-status') || {}).textContent || '').trim() : null; });
+		await f.waitForFunction(() => [...document.querySelectorAll('.pm51-panel')].some((x) => /Frontend Polish/.test(x.textContent)), null, { timeout: 6000 }).catch(() => null);
+		const h0 = await hero();
+		await t.check('its page reads Off', h0 === 'Off', String(h0));
+		const psw = f.locator('.pm51-panel [data-action="pm51-skills-toggle"]').first();
+		if (await psw.count()) {
+			await psw.click();
+			await t.page.waitForTimeout(500);
+			const h1 = await hero();
+			await t.check('switched on from its page, it reads Ready there', h1 === 'Ready', String(h1));
+		}
+		await t.page.keyboard.press('Escape');
 	};
 
 	tests[`lane-code Plugins: a switched-off plugin's catalog card switches it on (${surface})`] = async (t) => {
