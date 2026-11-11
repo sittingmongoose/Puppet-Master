@@ -27,7 +27,7 @@ def WR07_physical(value, context):
 
 
 def WR08_integers(value, context):
-    return 'application_wrapper_schema' if value['wrapper_integers_exact'] is not True else None
+    return 'application_wrapper_schema' if value['wrapper_schema_valid'] is True and value['wrapper_integers_exact'] is not True else None
 
 
 def case(value):
@@ -36,7 +36,7 @@ def case(value):
         g.Guard('WR01_schema', g.Invariant('/<application_wrapper>', 'conforms to the StorageApplicationV2 wrapper schema'), 'application_wrapper_schema', WR01_schema),
         g.Guard('WR02_limit', g.Invariant('/<application_wrapper>', 'the complete MessagePack wrapper is at most 16384 bytes'), 'application_wrapper_limit', WR02_limit),
         g.Guard('WR07_physical', g.Invariant('/<application_wrapper>', 'encodes under the CV-366 APP_PHYSICAL profile: shared storage_value_bytes'), 'application_wrapper_encoding', WR07_physical),
-        g.Guard('WR08_integers', g.Invariant('/<application_wrapper integer slots>', 'every integer slot, including the inline record, is an exact current integer'), 'application_wrapper_schema', WR08_integers),
+        g.Guard('WR08_integers', g.Invariant('/<application_wrapper integer slots>', 'a schema-valid wrapper has an exact current integer at every integer slot, including the inline record'), 'application_wrapper_schema', WR08_integers),
     ])
 
     def check(value):

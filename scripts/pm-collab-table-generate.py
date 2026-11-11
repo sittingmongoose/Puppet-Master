@@ -351,8 +351,8 @@ phase('wrapper_shape', 'SP-351 application wrapper schema and complete MessagePa
      "value['wrapper_packed_size'] is not None and value['wrapper_packed_size'] > 16384"),
     ('WR07_physical', '/<application_wrapper>', 'encodes under the CV-366 APP_PHYSICAL profile: shared storage_value_bytes', 'application_wrapper_encoding',
      "value['wrapper_packed_size'] is None"),
-    ('WR08_integers', '/<application_wrapper integer slots>', 'every integer slot, including the inline record, is an exact current integer', 'application_wrapper_schema',
-     "value['wrapper_integers_exact'] is not True"),
+    ('WR08_integers', '/<application_wrapper integer slots>', 'a schema-valid wrapper has an exact current integer at every integer slot, including the inline record', 'application_wrapper_schema',
+     "value['wrapper_schema_valid'] is True and value['wrapper_integers_exact'] is not True"),
 ])
 phase('wrapper_join', 'SP-351 application wrapper record and header joins.', [
     ('WR03_record', '/<application_wrapper>/record', 'the inline or referenced record equals owner_record', 'application_wrapper_record',
