@@ -1077,6 +1077,27 @@
   }
  },
  {
+  "id": "EB05-operation-storage-instance",
+  "family": "browser.context_captured",
+  "parent": [
+   "sem",
+   "valid-transition"
+  ],
+  "operation": "payload",
+  "changes": {
+   "storage_instance_id": "22222222-2222-4222-8222-222222222222"
+  },
+  "maintain": [],
+  "expect": {
+   "row": "EB05_storage_instance",
+   "result": {
+    "result": "REFUSE",
+    "effects": 0
+   }
+  },
+  "extra": {}
+ },
+ {
   "id": "SXR1-request-selects-current-recipe",
   "family": "live.step.updated",
   "parent": [

@@ -178,6 +178,11 @@ CASES = [
     ('SX06-original-sealed-under-older-recipe', LIVE, ('sem', 'read-current'), 'read',
      {'original/event/actor_ref': 'actor:sealed-v0'}, ['cohere'],
      {'row': 'SX06_recipe_known', 'result': REFUSE}, {'seal_as': [LIVE, 'ds15-v0']}),
+    # Part 2A row EB05 keeps a single-row negative: its predicate witness (isolated-envelope_ok-153-19) moves the
+    # operation's Storage instance outside the sealed custody, which SX01 now refuses first; this one moves it to the
+    # other ds15-v1 custody store, so only the application source's Storage instance join refuses.
+    ('EB05-operation-storage-instance', CAPTURE, ('sem', 'valid-transition'), 'payload',
+     {'storage_instance_id': FIXTURE_STORES[1]}, [], {'row': 'EB05_storage_instance', 'result': REFUSE}, {}),
     # S-N2: a request cannot select or downgrade the recipe (the original-evidence carrier is closed)
     ('SXR1-request-selects-current-recipe', LIVE, ('sem', 'read-current'), 'read',
      {'original_recipe': 'current'}, [], {'row': 'EVIDENCE_schema', 'result': REFUSE}, {}),
