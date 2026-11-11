@@ -4,7 +4,7 @@ Source: `Plans/Contracts_V0.md`
 
 Source lines: L24609-L24660
 
-Source SHA256: `08fa27e542b68812fa78b595bfd8c1a9f397d7071b2c92c19c335c84ddba57ba`
+Source SHA256: `5923ea704d2aeb9e9836ef8d38a50b4b17b1a1243d0cb7b567ce9fea256853f1`
 
 ---
 
@@ -21,7 +21,7 @@ Exact legacy alias for this family: `none`. Import normalization uses Case L-5's
 
 Pass-two source contract for `attempt.completed`: EP-210 and `executor.attempt_completed.source_adapter.v1@1.0.0` bind every source join and conditional presence; the exact companion row supplies the lifecycle table and source roles. Static normalized read captures in `Plans/executor_event_semantic_fixtures.json` are not runtime packets or persisted schema substitutes. Existing payload version/schema, closed enum domains, whole runtime/execution schemas and historical import provenance remain authoritative. No silent alias, discarded original discriminator or missing join may enter a current writer. Run `python3 scripts/pm_executor_event_semantics.py` for this family's own source/transition and receipt/replay/withdrawal oracles.
 
-For `attempt.completed` independently, current timestamps use the complete UTC grammar `[0-9]{4}-[0-9]{2}-[0-9]{2}[Tt][0-9]{2}:[0-9]{2}:[0-9]{2}(?:\.[0-9]+)?Z`, with Gregorian calendar validity, hours 00..23, minutes/seconds 00..59, and one or more fractional digits when the dot is present. Leap seconds, missing zones, alternate separators/basic dates, out-of-range dates/times and trailing bytes reject. The standalone schema boundary enforces calendar validity without an optional format plugin. Backoff clock observations require canonical uppercase T and final Z, with the same calendar and range checks, before comparison. Retained records use their authenticated write-time numeric/format edition from SP-500; v0 spelling-only schema checks and its original semantic clock checks remain frozen, so format tightening cannot rewrite or reject a then-valid original.
+For `attempt.completed` independently, current timestamps use the complete UTC grammar `[0-9]{4}-[0-9]{2}-[0-9]{2}[Tt][0-9]{2}:[0-9]{2}:[0-9]{2}(?:\.[0-9]+)?Z`, with Gregorian calendar validity, hours 00..23, minutes/seconds 00..59, and one or more fractional digits when the dot is present. Leap seconds, missing zones, alternate separators/basic dates, out-of-range dates/times and trailing bytes reject. The standalone schema boundary enforces calendar validity without an optional format plugin. Backoff clock observations require canonical uppercase T and final Z, with the same calendar and range checks, before comparison. Retained records use their authenticated write-time numeric/format edition from SP-500; v0 spelling-only schema checks and its original semantic clock checks remain frozen, so format tightening cannot rewrite or reject a then-valid original. CV-1101 enforcement: every current timestamp of this family, at the payload-schema format boundary and at every owner clock, is checked by the shared `pm_event_datetime.date_time` predicate under the `storage_utc_z` profile and then by the stricter rules above (no second 60; uppercase T for backoff clock observations); a retained original's frozen date-time edition is the one SP-1101 dispatch selects from its authenticated recipe tuple.
 
 ```yaml
 plan_unit_id: CV-500
