@@ -34,8 +34,12 @@
    with the box hanging from it at the right, so showing it moves nothing else */
 :is(#panel-settings, .pipe-host) .pipe-dock { position: sticky; top: 0; z-index: 3; height: 0; margin-bottom: -16px; }
 :is(#panel-settings, .pipe-host) .pipe-dock[hidden] { display: none; }
-:is(#panel-settings, .pipe-host) .pipe-dock-box { position: absolute; top: 6px; right: 0; display: grid; gap: 4px; padding: 6px 8px 8px; border: 1px solid var(--k3-line); border-radius: 12px;
+:is(#panel-settings, .pipe-host) .pipe-dock-box { pointer-events: none; transition: opacity 140ms ease-out;
+  position: absolute; top: 6px; right: 0; display: grid; gap: 4px; padding: 6px 8px 8px; border: 1px solid var(--k3-line); border-radius: 12px;
   background: var(--k3-bg-1, var(--surface, var(--background))); box-shadow: var(--elev-3, 0 14px 36px rgba(0, 0, 0, .25)); }
+:is(#panel-settings, .pipe-host) .pipe-dock.is-aside .pipe-dock-box { opacity: .1; }
+html[data-motion="reduced"] :is(#panel-settings, .pipe-host) .pipe-dock-box { transition: none; }
+@media (prefers-reduced-motion: reduce) { :is(#panel-settings, .pipe-host) .pipe-dock-box { transition: none; } }
 :is(#panel-settings, .pipe-host) .pipe-dock-title { font-size: 11px; font-weight: 600; color: var(--k3-text-2); }
 :is(#panel-settings, .pipe-host) .pipe-dock-stage { min-height: 0; padding: 4px 2px; gap: 2px; border: 0; flex-wrap: nowrap; }
 :is(#panel-settings, .pipe-host) .pipe-dock-stage .pipe-seat { min-width: 44px; gap: 3px; }

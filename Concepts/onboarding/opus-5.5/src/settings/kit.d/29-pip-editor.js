@@ -193,7 +193,33 @@
       dock.hidden = !want;
     }, { threshold: [0, 0.4, 1] });
     io.observe(stage);
-    return () => io.disconnect();
+    /* the dock steps aside (nearly clear, and it never takes the pointer) while the pointer or the focus is on what it
+       floats over, so a chip under it can be read as well as reached, as the editor's docked preview does
+       (11-editor-customize.js dockAside); it comes back when they leave */
+    const box = dock.querySelector('.pipe-dock-box');
+    let raf = 0, at = null;
+    const aside = () => {
+      raf = 0;
+      if (dock.hidden || !at || !box) { dock.classList.remove('is-aside'); return; }
+      const r = box.getBoundingClientRect();
+      let hit;
+      if (at.el) { const b = at.el.getBoundingClientRect(); hit = b.right > r.left && b.left < r.right && b.bottom > r.top && b.top < r.bottom; }
+      else hit = at.x >= r.left - 10 && at.x <= r.right + 10 && at.y >= r.top - 10 && at.y <= r.bottom + 10;
+      dock.classList.toggle('is-aside', hit);
+    };
+    const soon = a => { at = a; if (!raf) raf = requestAnimationFrame(aside); };
+    const move = e => soon({ x: e.clientX, y: e.clientY }), leave = () => soon(null);
+    const focus = e => { if (!dock.contains(e.target)) soon({ el: e.target }); };
+    const scrolled = () => { if (at) soon(at); };
+    host.addEventListener('pointermove', move, { passive: true });
+    host.addEventListener('pointerleave', leave);
+    host.addEventListener('focusin', focus);
+    host.addEventListener('scroll', scrolled, { capture: true, passive: true });
+    return () => {
+      io.disconnect(); cancelAnimationFrame(raf);
+      host.removeEventListener('pointermove', move); host.removeEventListener('pointerleave', leave);
+      host.removeEventListener('focusin', focus); host.removeEventListener('scroll', scrolled, { capture: true });
+    };
   }
   function bind(host) {
     const R = REG();

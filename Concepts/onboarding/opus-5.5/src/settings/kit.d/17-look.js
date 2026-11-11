@@ -184,7 +184,11 @@ function o55AccentTokens(html, chosen, light) {
   }
   html.setAttribute('data-o55-accent', String(chosen).toLowerCase());
   const lum = to.map(c => { const x = c / 255; return x <= 0.03928 ? x / 12.92 : Math.pow((x + 0.055) / 1.055, 2.4); });
-  put('--o55-on-accent', 0.2126 * lum[0] + 0.7152 * lum[1] + 0.0722 * lum[2] > 0.4 ? '#101114' : '#fff');
+  const L = 0.2126 * lum[0] + 0.7152 * lum[1] + 0.0722 * lum[2];
+  put('--o55-on-accent', L > 0.4 ? '#101114' : '#fff');
+  /* the words on the switcher's chosen block (B-7, styles.d/12-look.css): black or white, whichever reads better on the
+     chosen accent (at least 5:1 for each choice; Violet in dark themes is 5.2:1 in black and 4.2:1 in white) */
+  put('--o55-on-switch', (L + 0.05) / 0.05 >= 1.05 / (L + 0.05) ? '#000000' : '#ffffff');
 }
 
 /* ---------- tokens and attributes ------------------------------------------------------------------------------------ */
