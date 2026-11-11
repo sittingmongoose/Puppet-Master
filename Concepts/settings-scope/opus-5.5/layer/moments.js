@@ -574,7 +574,9 @@
   /* review A-r2 N3: any command followed only by * is broad (rm -rf *, sudo *, npx *, git *, read *): one word, its
      flags, then * allows everything that command can do */
   const isBroad = (pattern, a) => { const p = String(pattern || '').trim(); return p === '*' || /^\*(\s|$)/.test(p) || /^\S+(\s+-{1,2}\S+)*\s+\*$/.test(p) || (SHELLS.test(p) && /\*/.test(p)) || (!!a && !!a.patterns && !!a.patterns[2] && p === a.patterns[2][0]); };
-  const globRe = (p) => new RegExp('^' + p.trim().split('*').map((x) => x.replace(/[.+?^${}()|[\]\\]/g, '\\$&')).join('.*') + '$');
+  /* * matches anything; a trailing " *" (any arguments) also matches none, so npm test * covers npm test itself, and a
+     trailing "/*" (what's in a folder) covers the folder too */
+  const globRe = (p) => { const t = p.trim(), args = /\s\*$/.test(t), inside = !args && /\/\*$/.test(t), core = args ? t.replace(/\s\*$/, '') : inside ? t.replace(/\/\*$/, '') : t; return new RegExp('^' + core.split('*').map((x) => x.replace(/[.+?^${}()|[\]\\]/g, '\\$&')).join('.*') + (args ? '(\\s.*)?' : inside ? '(/.*)?' : '') + '$'); };
   function approvals() {
     const st = { done: {}, rules: [], edit: null, session: [] };
     const yolo = () => S.runMode === 'yolo';
