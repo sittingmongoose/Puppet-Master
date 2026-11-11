@@ -243,6 +243,8 @@ for (const surface of ['normal', 'sandbox']) {
 			await t.check(`${how}: the terminal's Customize shows`, shown);
 			await t.check(`${how}: Settings is still the page underneath`, (await pageNow(f)) === 'tab-settings', await pageNow(f));
 			await t.page.waitForTimeout(600);
+			// where the button is just before the screen closes: closing must neither move the page nor lose the place
+			const top1 = await b.evaluate((el) => Math.round(el.getBoundingClientRect().top)).catch(() => top0);
 			if (how === 'Done') await f.locator(`${SHOWN.terminal} .pmt-cz-done`).first().click();
 			else await t.page.keyboard.press('Escape');
 			await t.page.waitForTimeout(900);
@@ -251,7 +253,7 @@ for (const surface of ['normal', 'sandbox']) {
 				return { page: (document.querySelector('.page-tabs .page-tab.active') || {}).id || '', onButton: !!btn && a === btn, focus: a ? `${a.tagName.toLowerCase()}.${String(a.className).split(' ')[0]}` : '', top: btn ? Math.round(btn.getBoundingClientRect().top) : null };
 			});
 			await t.check(`${how}: after it closes, Settings is showing`, r.page === 'tab-settings', r.page);
-			await t.check(`${how}: the focus is back on Open Customize, where it was`, r.onButton && Math.abs(r.top - top0) <= 2, `focus ${r.focus}, button top ${top0} -> ${r.top}`);
+			await t.check(`${how}: the focus is back on Open Customize, where it was`, r.onButton && Math.abs(r.top - top1) <= 2, `focus ${r.focus} (on the button: ${r.onButton}), button top ${top0} at the click, ${top1} before closing, ${r.top} after`);
 		}
 	};
 
