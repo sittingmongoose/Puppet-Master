@@ -25,7 +25,14 @@
     if (p.status === 'active') return { title: `${n} ready`, state: 'Ready', fix: null, todo: null, impact: null };
     if (p.status === 'disabled') return { title: `${n} turned off`, state: 'Not set up', fix: 'Open', todo: `Turn ${n} on under Providers & Accounts if you want it.`, impact: `Work does not go to ${n} while it is off.` };
     if (p.status === 'not-installed') return { title: `${n} not installed`, state: 'Not set up', fix: 'Open', todo: `Install ${n} from Providers & Accounts.`, impact: `Work routed to ${n} falls back to another service.` };
-    if (!p.signedIn) return { title: `${n} signed out`, state: 'Needs attention', fix: 'Sign In Again', todo: `Sign in to ${n} from Providers & Accounts.`, impact: `Work routed to ${n} falls back to another service.` };
+    /* the step Providers itself names (window.O55ProviderAttention: a seat, a sign-in, an account or a model to turn on),
+       so Doctor and the service's page say the same thing */
+    let kind = '';
+    try { const rows = typeof window.O55ProviderAttention === 'function' ? window.O55ProviderAttention() : []; kind = ((rows || []).find(r => (r.ids || []).includes(p.id)) || {}).kind || ''; } catch (_e) { kind = ''; }
+    if (kind === 'seat') return { title: `${n} has no active seat`, state: 'Needs attention', fix: 'Open', todo: `Give its account a seat, or use another account, under Providers & Accounts.`, impact: `Work routed to ${n} falls back to another service.` };
+    if (kind === 'account') return { title: `${n} has no account in use`, state: 'Needs attention', fix: 'Open', todo: `Turn on one of its accounts under Providers & Accounts.`, impact: `Work routed to ${n} falls back to another service.` };
+    if (kind === 'models') return { title: `${n} has no model turned on`, state: 'Needs attention', fix: 'Open', todo: `Turn on at least one of its models under Providers & Accounts.`, impact: `Work routed to ${n} falls back to another service.` };
+    if (kind === 'signin' || !p.signedIn) return { title: `${n} signed out`, state: 'Needs attention', fix: 'Sign In Again', todo: `Sign in to ${n} from Providers & Accounts.`, impact: `Work routed to ${n} falls back to another service.` };
     return { title: `${n} needs attention`, state: 'Needs attention', fix: 'Open', todo: `Open ${n} under Providers & Accounts to see what it needs.`, impact: `Work routed to ${n} may fall back to another service.` };
   };
   const OWNED = {

@@ -307,7 +307,7 @@ for (const surface of ['normal', 'sandbox']) {
 			return { ag: row('ai:antigravity'), push: row('code:push'), kit: row('backups:kit'), agReady: prov.status === 'active', pushReady: gh.status === 'active' && gh.pushAccess === 'Ready', kitTested: !!kit.tested, kitSaved: !!kit.saved };
 		});
 		const r = await read();
-		await t.check('Google Antigravity: Doctor and AI Providers agree', r.agReady ? /Antigravity ready/i.test(r.ag) && !/signed out|needs attention/i.test(r.ag) : /signed out|needs attention|not installed|turned off/i.test(r.ag), JSON.stringify({ doctor: r.ag, providerReady: r.agReady }));
+		await t.check('Google Antigravity: Doctor and AI Providers agree', r.agReady ? /Antigravity ready/i.test(r.ag) && !/signed out|needs attention|has no/i.test(r.ag) : /signed out|needs attention|not installed|turned off|has no/i.test(r.ag), JSON.stringify({ doctor: r.ag, providerReady: r.agReady }));
 		await t.check('Doctor uses the provider\'s current name', !/Antigravity CLI/.test(r.ag), r.ag);
 		await t.check('GitHub push access: Doctor and Source Control agree', r.pushReady ? /push access ready/i.test(r.push) : /missing|not connected/i.test(r.push), JSON.stringify({ doctor: r.push, sourceReady: r.pushReady }));
 		await t.check('Recovery Kit: Doctor and Backup & Restore agree', r.kitTested ? /tested/i.test(r.kit) && !/not tested/i.test(r.kit) : r.kitSaved ? /not tested/i.test(r.kit) : /not saved/i.test(r.kit), JSON.stringify({ doctor: r.kit, tested: r.kitTested, saved: r.kitSaved }));
