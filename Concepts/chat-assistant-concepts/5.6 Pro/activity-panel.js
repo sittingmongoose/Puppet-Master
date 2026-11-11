@@ -1332,14 +1332,11 @@
     dockExpiry(ctx, tid, timed, now);
     return out;
   }
-  var dockOn = false;
-  function provideDock() {
-    if (dockOn || !(window.PM56_PMX && window.PM56_PMX.dock)) return;
-    dockOn = true;
-    window.PM56_PMX.dock.provide(workDock);
-  }
-  provideDock();
-  if (!dockOn) document.addEventListener('DOMContentLoaded', provideDock, { once: true });
+  /* pmx-system.js loads after this file: the provider is queued for it (it takes the queue as it loads, before the first
+     render) rather than waiting for DOMContentLoaded, which on a slow load came after the first render and left the
+     dock without its work lines until some unrelated render */
+  if (window.PM56_PMX && window.PM56_PMX.dock) window.PM56_PMX.dock.provide(workDock);
+  else (window.PM56_PMX_DOCK_QUEUE = window.PM56_PMX_DOCK_QUEUE || []).push(workDock);
   /* Review / Show keeps the work projection's stable identity through Activity Detail. */
   EXT.action('work-dock-review', function (ctx, btn) {
     var id = btn && btn.dataset.id, d = btn && btn.dataset.domain, W = window.PM_WORK, it = W && id ? W.item(id) : null;

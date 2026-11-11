@@ -1394,6 +1394,18 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot, { once: true });
   else boot();
 
+  /* The dock's providers. A module that loads before this file queues its provider on window.PM56_PMX_DOCK_QUEUE and
+     this file takes it as it loads, during parsing and before the chat's first render (activity-panel.js's work dock:
+     it waited for DOMContentLoaded, which on a slow load came after the first render). A provider that arrives after
+     the composer has rendered re-checks the dock at once: nothing else re-renders it (PM_WORK's 1 s ticks only patch
+     times in place), so its lines stayed missing until some unrelated render (FO-128, sol-recheck-b10l on Nas1). */
+  function provideDock(fn) {
+    if (typeof fn !== 'function') return function () {};
+    if (providers.indexOf(fn) < 0) providers.push(fn);
+    if (lastDockHtml !== null) { try { dockCheck(); } catch (e) { warn('dock check threw', e); } }
+    return function () { var i = providers.indexOf(fn); if (i >= 0) providers.splice(i, 1); };
+  }
+  (window.PM56_PMX_DOCK_QUEUE || []).splice(0).forEach(provideDock);
   window.PM56_PMX = {
     version: 1,
     after: after,
@@ -1407,7 +1419,7 @@
     hash: hash,
     throttle: throttle,
     stream: stream,
-    dock: { provide: function (fn) { if (typeof fn === 'function') providers.push(fn); return function () { var i = providers.indexOf(fn); if (i >= 0) providers.splice(i, 1); }; } },
+    dock: { provide: provideDock },
     visible: visible,
     fullyVisible: fullyVisible,
     reveal: reveal,

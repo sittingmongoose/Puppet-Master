@@ -259,18 +259,15 @@
     return true;
   }
 
-  function provide() {
-    var P = window.PM56_PMX;
-    if (!P || !P.dock) return false;
-    P.dock.provide(function (ctx) {
-      if (!ctx || !ctx.state || !SH() || !SH().pmxDockLine) return [];
-      studioAsk(ctx);
-      var tid = ctx.state.selectedThread;
-      return asks.filter(function (a) { return !a.external && a.thread === tid; }).map(function (a) { return { key: 'perm:' + a.id, tone: 'needs', at: a.at, html: line(ctx, a) }; });
-    });
-    return true;
+  function dockLines(ctx) {
+    if (!ctx || !ctx.state || !SH() || !SH().pmxDockLine) return [];
+    studioAsk(ctx);
+    var tid = ctx.state.selectedThread;
+    return asks.filter(function (a) { return !a.external && a.thread === tid; }).map(function (a) { return { key: 'perm:' + a.id, tone: 'needs', at: a.at, html: line(ctx, a) }; });
   }
-  if (!provide()) document.addEventListener('DOMContentLoaded', provide, { once: true });
+  /* pmx-system.js loads before this file; were it ever later, the queue it takes as it loads (never DOMContentLoaded) */
+  if (window.PM56_PMX && window.PM56_PMX.dock) window.PM56_PMX.dock.provide(dockLines);
+  else (window.PM56_PMX_DOCK_QUEUE = window.PM56_PMX_DOCK_QUEUE || []).push(dockLines);
 
   /* ------------------------------------------------------------------ answers */
   var RECEIPT = {
