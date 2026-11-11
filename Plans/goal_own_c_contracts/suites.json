@@ -105,6 +105,24 @@
           "Full source/root/frontier CAS, row/checkpoint crash/retry, staging/cutover and SP-424 withdrawal",
           "Original-path reference and checkpoint-spill tuples"
         ]
+      },
+      "dg_s_complete_original_path": {
+        "scripts": [
+          "scripts/pm_goal_dg_s_world.py",
+          "scripts/pm_goal_dg_s_start.py",
+          "scripts/pm_goal_dg_s_readers.py",
+          "scripts/pm_goal_dg_s_oracles.py"
+        ],
+        "adapters": "scripts/pm_goal_test_*.py (plans/ea-goal-adapter-20261111 at 62e61fe59a)",
+        "groups": ["S1", "S2", "S3", "S4", "S5", "S6"],
+        "editions": ["workflow_start_original.v2", "native-v7 composition (workflow_start_standard_source.v5)"],
+        "qualification": "TEST_ONLY",
+        "native_execution": "NOT_RUN",
+        "native_line": "native evidence stays NOT_RUN and is a separate claim; a planning PASS must never read as native proof",
+        "command": "python3 scripts/pm_goal_dg_s_oracles.py --output <path>",
+        "exit": "0 only when every case passes",
+        "guard_export": "every negative's expected code and the static require() inventory for scripts/pm_guard_isolation.py; no local removal engine",
+        "report": "reports/event-authority-20261111/DG-S.md"
       }
     },
     {

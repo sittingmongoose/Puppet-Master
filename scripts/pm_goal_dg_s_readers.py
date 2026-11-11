@@ -630,15 +630,11 @@ class StartedProjector(W.DGOwner):
 
     def _retire_eligible(self, generations):
         now = NR.storage_time(self.world.ctx.storage._tick(), 'projector/now')
-        for gid, gen in sorted(generations.items()):
-            if gen['state'] != 'retired' or gen['hold_refs']:
-                continue
-            retired = gen['retired_at_utc']
-            if retired is None:
-                continue
-            if _seconds(now) - _seconds(retired) >= RETIREMENT_SECONDS:
-                del generations[gid]
-                return
+        eligible = sorted((gen['retired_at_utc'], gid) for gid, gen in generations.items()
+                          if gen['state'] == 'retired' and not gen['hold_refs'] and gen['retired_at_utc'] is not None
+                          and _seconds(now) - _seconds(gen['retired_at_utc']) >= RETIREMENT_SECONDS)
+        if eligible:  # the oldest eligible, unheld retired generation leaves first
+            del generations[eligible[0][1]]
 
     def replay(self, gid, retained_by_event=None, *, cut=None, tamper=None):
         """Replay the full authentic source into a staged generation and publish
