@@ -565,7 +565,7 @@ function jjBuildStrip() {
   const strip = jh('div', { class: 'pm-segtab d-jj-strip', role: 'tablist', 'aria-label': 'Jujutsu views', style: '--cat:var(--cat-blue)' },
     JJ_TABS.map(t => {
       const b = jh('button', { type: 'button', class: 'pm-segtab-item', role: 'tab', id: 'd-jj-tab-' + t.id, 'data-jj-tab': t.id, 'aria-controls': 'd-jj-pane-' + t.id, 'aria-selected': 'false', tabindex: '-1' },
-        jjIco(t.icon), jh('span', { text: t.label }));
+        jjIco(t.icon), jh('span', { class: 'pm-segtab-lbl', text: t.label }));
       PMR.hover(b, t.label);
       return b;
     }));
