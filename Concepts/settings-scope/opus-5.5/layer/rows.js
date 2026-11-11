@@ -287,13 +287,16 @@
       { html: `${B(proj)} on ${B(comp)}${dev ? `, with ${B(dev)}’s screen` : using ? `, from ${B(actorName)}` : ''}`, label: true },
       { html: `${B(proj)} on ${B(comp)}${dev ? `, with ${B(dev)}` : using ? `, from ${B(actorName)}` : ''}`, label: true },
       { html: `${B(proj)} on ${B(comp)}${dev ? `, with ${B(dev)}` : using ? `, from ${B(actorName)}` : ''}`, label: false },
-      { html: `${B(proj)} · ${B(comp)}${dev ? ` · ${B(dev)}` : using ? ` · ${B(actorName)}` : ''}`, label: false }
+      { html: `${B(proj)} · ${B(comp)}${dev ? ` · ${B(dev)}` : using ? ` · ${B(actorName)}` : ''}`, label: false },
+      /* review A-r2 N2: the last step always fits. The same dot form may take two lines inside the same 32px box, and
+         a name never splits across them (its spaces are no-break spaces) */
+      { html: [proj, comp].concat(dev ? [dev] : using ? [actorName] : []).map((x) => `<b>${esc(x).replace(/ /g, '\u00a0')}</b>`).join(' · '), label: false, two: true }
     ];
     const ctxHtml = variants[0].html;
     const back = `${proj} on ${placeName('computer', ownOn(c))}`;
     const desc = v.viewing
       ? `You’re looking at ${proj}’s settings as they apply ${v.comp ? `when its work runs on ${placeName('computer', c.on)}` : `on ${placeName('computer', c.on)}`}${v.dev ? ` and on ${placeName('device', c.device)}’s screen` : ''}. Changes you make here are saved for real. Stop viewing goes back to ${back}.`
-      : c.project ? `Settings for ${proj} on ${placeName('computer', c.on)}, its default computer (work: Auto → ${placeName('computer', c.on)}). Change opens another project, or lets you look at another computer or device.`
+      : c.project ? `Settings for ${proj} on ${placeName('computer', c.on)}, its default computer (work: Auto, default ${placeName('computer', c.on)}). Change opens another project, or lets you look at another computer or device.`
         : `Settings for chats with no project, on ${placeName('computer', c.on)}. Changes here apply everywhere or to this computer.`;
     const lines2 = [];
     // notices that are not about the view: they are lines under the header, never a change of the header itself
@@ -324,15 +327,16 @@
     for (let i = 0; i < vs.length; i++) {
       if (ctx.innerHTML !== vs[i].html) ctx.innerHTML = vs[i].html;
       main.classList.toggle('is-compact', !vs[i].label);
+      main.classList.toggle('is-two', !!vs[i].two);
       main.setAttribute('data-fit', String(i));
-      if (ctx.scrollWidth <= ctx.clientWidth + 0.5) return;
+      if (ctx.scrollWidth <= ctx.clientWidth + 0.5 && ctx.scrollHeight <= ctx.clientHeight + 0.5) return;
     }
   }
   PSX.fitHead = () => { const el = D.querySelector('#pm-settings-root .document-toolbar > .psx-head'); if (el) fitHead(el); };
   function viewMenu(anchor) {
     const v = viewState(), c = v.c;
     // another project opens it, on its own computer, with your own device's screen (no viewing state)
-    const projects = PSX.PROJECTS.map((p) => ({ label: p.id, meta: p.id === c.project ? 'open now' : `work: Auto → ${placeName('computer', p.home)}`, run: () => PSX.setCtx({ project: p.id, on: null, device: S.actor }) }))
+    const projects = PSX.PROJECTS.map((p) => ({ label: p.id, meta: p.id === c.project ? 'open now' : `Auto (default: ${placeName('computer', p.home)})`, run: () => PSX.setCtx({ project: p.id, on: null, device: S.actor }) }))
       .concat([{ label: 'No project', meta: c.project ? 'chats with no project' : 'open now', run: () => PSX.setCtx({ project: 'none', on: null, device: S.actor }) }]);
     const comps = PSX.computerIds().map((k) => ({ label: PSX.COMPUTERS[k].name, meta: k === ownOn(c) ? (c.project ? `${c.project}’s own · ` : '') + (k === c.on ? 'shown now' : 'stop viewing') : k === c.on ? 'viewing now' : c.project ? `as if ${c.project}’s work ran there` : 'chats with no project, there', disabled: PSX.W.up[k] === false ? `${PSX.COMPUTERS[k].name} isn’t answering` : null, run: () => PSX.setCtx({ on: k === ownOn(c) ? null : k }) }));
     // another device's screen values never give that device's rights: you stay on the device you're using

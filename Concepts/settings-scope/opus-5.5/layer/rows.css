@@ -105,6 +105,8 @@ html[data-o55-nier="on"][data-psx-changed="frame"] #panel-settings .setting-row.
 #panel-settings .psx-head-main:not(.is-viewing) .psx-head-view { display: none; }
 /* where the words need the room, the frame, the tint and Stop viewing carry the viewing state without the word */
 #panel-settings .psx-head-main.is-compact .psx-head-view { display: none; }
+/* the last wording: two lines in the same box, never a cut name (review A-r2 N2) */
+#panel-settings .psx-head-main.is-two .psx-head-ctx { white-space: normal; font-size: 12px; line-height: 14px; max-height: 30px; overflow: hidden; text-overflow: clip; }
 #panel-settings .psx-head-gap { flex: 1 1 auto; min-width: 8px; }
 #panel-settings .psx-head-run { flex: none; display: inline-flex; align-items: center; gap: 5px; margin-right: 4px; font-size: 12px; font-weight: 650; color: var(--k3-text-2); }
 #panel-settings .psx-head-main .psx-tb { flex: none; min-height: 28px; font-size: 12px; font-weight: 650; }
