@@ -467,7 +467,7 @@
     const things = (src.things || []).length ? src.things.map((x) => C.toggle({ do: 'thing', arg: x.id, on: p.things[x.id] !== false, label: T('like.thingRow', { thing: x.name, kind: x.kind }), sub: x.outcome })).join('') : `<p class="o55-hint" data-key="like-nothings">${U.esc(T('like.thingNone', { project: src.name }))}</p>`;
     const names = src.providers || [];
     const accts = C.toggle({ do: 'accts', on: !!p.accounts, label: T('like.acctSwitch'), sub: T('like.acctSwitchSub') })
-      + (p.accounts ? names.map((pid) => { const a = accountState(S, pid); return C.row({ key: 'acct-' + pid, title: a.name, meta: a.text, state: [a.state === 'ready_here' ? 'ready' : 'wait', T('like.acct.state.' + a.state)] }); }).join('') : `<p class="o55-hint" data-key="like-acctoff">${U.esc(T('like.acctOff'))}</p>`);
+      + (p.accounts ? names.map((pid) => { const a = accountState(S, pid); return C.row({ key: 'acct-' + pid, title: a.name, meta: a.text, state: [a.state === 'ready_here' ? 'ready' : a.state === 'check_there' ? 'info' : 'needs', T('like.acct.state.' + a.state)] }); }).join('') : `<p class="o55-hint" data-key="like-acctoff">${U.esc(T('like.acctOff'))}</p>`);
     return C.group(T('like.kindsTitle'), kinds, { cls: 'o55-like-kinds' }) + C.group(T('like.singleTitle'), single, { cls: 'o55-like-single' })
       + C.group(T('like.thingsTitle'), things, { cls: 'o55-like-things' }) + C.group(T('like.acctTitle'), accts, { cls: 'o55-like-accts' });
   }
