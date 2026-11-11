@@ -30,6 +30,7 @@ from __future__ import annotations
 
 import functools
 import importlib
+import importlib.util
 
 TABLE_PREFIX = 'pm_ds_table_'
 RECORDER = None
@@ -64,13 +65,29 @@ def current_call():
 
 
 def table(phase):
-    """(fields, [(row, predicate, code), ...]) of one phase table, in table order."""
+    """(fields, [(row, predicate, code), ...], context, parts) of one phase, in table order.
+
+    A large phase is generated as consecutive part tables <phase>__1, <phase>__2, ...;
+    ``parts`` lists (part name, its fields) so each part is recorded as its own table.
+    """
     cached = _ROWS.get(phase)
     if cached is None:
-        module = importlib.import_module(TABLE_PREFIX + phase)
-        case = module.case(None)
-        rows = [(name, guard.predicate, guard.refusal_code) for name, guard in case.table.guards.items()]
-        cached = _ROWS[phase] = (tuple(module.FIELDS), rows, case.context)
+        names = [phase]
+        if importlib.util.find_spec(TABLE_PREFIX + phase) is None:
+            names = []
+            while importlib.util.find_spec(f'{TABLE_PREFIX}{phase}__{len(names) + 1}') is not None:
+                names.append(f'{phase}__{len(names) + 1}')
+            if not names:
+                raise ModuleNotFoundError(TABLE_PREFIX + phase)
+        fields, rows, parts, context = [], [], [], None
+        for name in names:
+            module = importlib.import_module(TABLE_PREFIX + name)
+            case = module.case(None)
+            fields += list(module.FIELDS)
+            rows += [(row, guard.predicate, guard.refusal_code) for row, guard in case.table.guards.items()]
+            parts.append((name, tuple(module.FIELDS)))
+            context = case.context
+        cached = _ROWS[phase] = (tuple(fields), rows, context, parts)
     return cached
 
 
@@ -129,7 +146,7 @@ class Facts:
         """Every refusing row as (row, code), in table order; recorded once."""
         if self._result is not None:
             return self._result
-        fields, rows, context = table(self.phase)
+        fields, rows, context, parts = table(self.phase)
         if self.chain:
             for row in fields[len(self.values):]:
                 self._set(row, True)
@@ -144,7 +161,11 @@ class Facts:
                 result.append((name, code))
         self._result = result
         if RECORDER is not None:
-            RECORDER.append((self.phase, dict(observed), [name for name, _ in result], current_call()))
+            call = current_call()
+            refused = {name for name, _ in result}
+            for part, part_fields in parts:
+                RECORDER.append((part, {field: observed[field] for field in part_fields},
+                                 [field for field in part_fields if field in refused], call))
         return result
 
     def codes(self):

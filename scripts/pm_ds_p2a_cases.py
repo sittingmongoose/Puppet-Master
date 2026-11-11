@@ -1395,7 +1395,7 @@ def check(only=None):
         for p, _, refusing, call in records:
             if refusing and call not in first:
                 first.add(call)
-                if p == phase:
+                if p == phase or p.startswith(phase + '__'):
                     target.append(refusing)
         result['target_observations'] = target[:4]
         result['ok'] = 'exception' not in result and [row] in target

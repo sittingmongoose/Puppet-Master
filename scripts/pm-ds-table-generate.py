@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
 """Generate lane DS Method B guard-table modules from the row spec.
 
-Each phase becomes scripts/pm_ds_table_<phase>.py. Each row predicate reads the
+Each phase becomes scripts/pm_ds_table_<phase>.py, or consecutive parts
+scripts/pm_ds_table_<phase>__<k>.py of at most CHUNK rows (the tool's cost grows with
+rows squared; the checker evaluates every part's rows in spec order, so its results
+do not depend on the split). Each row predicate reads the
 one boolean observation the checker derived for that row from its complete
 input and refuses with the row's exact code when the observation does not hold;
 predicates never recompute, repair or call helpers. Checkers refuse only
@@ -21,6 +24,7 @@ sys.path.insert(0, str(ROOT / 'scripts'))
 from pm_ds_guard_spec import SPEC  # noqa: E402
 
 PREFIX = 'pm_ds_table_'
+CHUNK = 8  # a phase with more rows is emitted as consecutive parts <phase>__1.. of at most CHUNK rows
 
 
 def parse(text):
@@ -68,12 +72,24 @@ def render(phase, title, owner, rows):
     return '\n'.join(lines)
 
 
+def parts(phase, rows):
+    """(module phase name, rows) of one spec phase: itself, or consecutive parts of at most CHUNK rows."""
+    if len(rows) <= CHUNK:
+        return [(phase, rows)]
+    count = -(-len(rows) // CHUNK)
+    size = -(-len(rows) // count)
+    return [(f'{phase}__{k + 1}', rows[k * size:(k + 1) * size]) for k in range(count)]
+
+
 def outputs():
     out = {}
     for phase, (title, owner, text) in SPEC.items():
-        if not phase.isidentifier():
+        if not phase.isidentifier() or '__' in phase:
             raise ValueError(f'bad phase {phase!r}')
-        out[ROOT / 'scripts' / f'{PREFIX}{phase}.py'] = render(phase, title, owner, parse(text))
+        chunks = parts(phase, parse(text))
+        for index, (name, rows) in enumerate(chunks, 1):
+            label = title if len(chunks) == 1 else f'{title} (part {index} of {len(chunks)})'
+            out[ROOT / 'scripts' / f'{PREFIX}{name}.py'] = render(name, label, owner, rows)
     return out
 
 
