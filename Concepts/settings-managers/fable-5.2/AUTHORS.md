@@ -77,7 +77,8 @@ others as **exceptions** to it ("Follows the main rule: … [Give it its own]"),
 - Text is at least 11px. Icons are SVG through `SMX.icon(name)`.
 - Layout answers to the width of the Settings area with container queries (`@container smx (max-width: …)`), never to
   the window (`@media` on width is forbidden). Check a page at 1600, 1280 and 860 wide.
-- New CSS goes at the end of `layer/smx.css` only if no existing part fits; prefer the parts below. Prefix `smx-`.
+- New CSS goes in the stylesheet beside your page file (`layer/pages/<same-name>.css`), and only if no existing part
+  fits; prefer the parts below. Prefix `smx-`.
 
 ## The API
 
@@ -115,6 +116,13 @@ others as **exceptions** to it ("Follows the main rule: … [Give it its own]"),
 `st.backup`, `st.sourceControl`, … see `census/state.json`), `params` the route's `:id` values, `local`
 (`SMX.local.flags`) this concept's own demo state for things PMConcept7 has no state for.
 
+**Data that moves.** `census/state.json` was captured after every manager had been opened. Some managers move their
+example data the first time they draw (the Servers manager moves its SSH keys from `st.pm51.serverProject.sshKeys` into
+the setting `code.execution.ssh-keys`), so a freshly loaded page can hold the same data in another place. Read a
+manager's data through the functions it exports when it has them (search its source for `PM51.<name> = {`; for example
+`PM51.sysSsh.keys()`), otherwise read both places. Test each list twice: on a fresh load, and after the old manager has
+been opened once (`{"do":"view","view":"today"}`, then `{"do":"view","view":"new"}`, then `go` to your page).
+
 **Parts** (`SMX.ui`, all return HTML):
 
 | Part | Use |
@@ -140,8 +148,9 @@ others as **exceptions** to it ("Follows the main rule: … [Give it its own]"),
   with the `scope` and `data` the manager uses (search its source for `PM51.scoped.row`).
 - **A menu that only exists as a closure in PMConcept7** (the "More actions" buttons; `actions.json` shows them as
   `callback:…`): prefer drawing its items as ordinary buttons where they belong. If the items do things only the
-  manager's own code can do, `SMX.act('my-more', (el) => SMX.borrow(el, {domain, ws, manager, tab, select: {action, data}, find: (block) => originalButton}))`
-  opens the real menu from your button (see `pages/computers.js`).
+  manager's own code can do, `SMX.lends('my-more', (el) => ({domain, ws, manager, tab, select: {action, data}, find: (block) => originalButton}))`
+  opens the real menu from your button `ui.btn({icon: 'more', label2: 'More for …', do: 'my-more', data})` (see
+  `pages/computers.js`). Add `mode: 'click'` when the original is a plain button whose handler should just run.
 - **Your own handler:** `SMX.act('name', (el, event) => { … })` for `ui.btn({do: 'name', data})`; wrap a kit dropdown
   in `<span data-smx-do-change="name" data-id="…">` to hear its change. Change the engine's state with
   `const st = W.PM12_KIMI.getState(); …; W.PM12_KIMI.setState(st)`, confirm with `kit().confirm(title, text, label, onYes, danger)`,
@@ -163,9 +172,12 @@ that the concept shows the intended behaviour, and list the defect in your repor
 E=/mnt/Cursor/PuppetMaster-Evidence/tests/settings-managers-20261110
 mkdir -p $E/runs/<lane>
 # steps: README-driver.md's steps, plus {"do":"go","route":"…"}, {"do":"coverage"}, {"do":"look","look":"glass-dark"}
-$E/tools/smx-run.sh <lane> $E/runs/<lane>/steps-01.json $E/runs/<lane>/out-01 pages/<your-file>.js
+$E/tools/smx-run.sh <lane> $E/runs/<lane>/steps-01.json $E/runs/<lane>/out-01 pages/<your-file>.js pages/<your-other-file>.js
 cat $E/runs/<lane>/out-01/log.txt
 ```
+
+Name every page file you own after the output folder. Other builders' page files are left out of your build (their
+pages then show in their planned form from `smx-plan.js`), so nothing half-written disturbs your run.
 
 `smx-run.sh` builds the concept into one page (in `/tmp/smx-lanes/<lane>/`) and runs your steps in a GPU browser,
 writing text: what each click changed, page outlines (`{"do":"dump","name":"…"}`), and uncaught errors. It waits for a
