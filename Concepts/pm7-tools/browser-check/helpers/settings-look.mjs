@@ -12,8 +12,7 @@
 // mode's slug), and a pixel sample of the Settings page taken from a real screenshot. The sample's light-or-dark must be
 // the look's mode, and for any look but Basic Dark it must differ from the Basic Dark sample this page painted when it
 // opened (captureBaseline), so a page repainted back to Basic Dark fails even if an attribute were right.
-// --set lookBite=1 forces the paint back to Basic Dark after every setLookBySetting (persist:false, as the reset does),
-// to show the guard fails then.
+// --set lookBite=1 paints Basic Dark back (persist:false, as the reset did) right before every guard, to show it fails.
 import { decodePng } from './activity-cover-pixels.mjs';
 
 const settled = () => !(window.PM_LOOK_COVERED && PM_LOOK_COVERED()) && !(window.PM_THEME_TRANSITION && PM_THEME_TRANSITION.busy && PM_THEME_TRANSITION.busy());
@@ -97,15 +96,15 @@ export async function setLookBySetting(t, f, look, { toGeneral = true } = {}) {
 	}, [family, mode], { timeout: 20000 }).catch(() => { /* the guard fails the cell with what is painted */ });
 	await f.waitForFunction(settled, null, { timeout: 20000 }).catch(() => {});
 	await t.page.waitForTimeout(500);
-	if (t.args.lookBite) {
-		await f.evaluate(async () => { if (window.PM_NIER && PM_NIER.on()) await PM_NIER.set(false, { persist: false }); PM_THEME.setFamily('basic', { persist: false }); PM_THEME.setMode('dark', { persist: false }); });
-		await f.waitForFunction(settled, null, { timeout: 20000 }).catch(() => {});
-		await t.page.waitForTimeout(600);
-	}
 }
 
 /* right before a measurement: is the look the cell names what is painted? */
 export async function guardPaintedLook(t, f, look, where) {
+	if (t.args.lookBite) {   // the bite: the page painted back to Basic Dark at the moment of measuring, as the reset did
+		await f.evaluate(async () => { if (window.PM_NIER && PM_NIER.on()) await PM_NIER.set(false, { persist: false }); PM_THEME.setFamily('basic', { persist: false }); PM_THEME.setMode('dark', { persist: false }); });
+		await f.waitForFunction(settled, null, { timeout: 20000 }).catch(() => {});
+		await t.page.waitForTimeout(600);
+	}
 	const got = await painted(f);
 	const attr = lookHeld(look, got);
 	const s = await sample(t, f).catch(() => null);

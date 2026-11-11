@@ -7,8 +7,8 @@
 // the look it names is the one painted right before every press (helpers/settings-look.mjs: the look is picked through
 // Settings' Theme and Light-or-dark rows, so Settings keeps it; astra-review-l1s found a temporary look reset to Basic
 // Dark by Settings' own saves). --set look= one look (default basic-dark); --set looks=all (or a list) runs the
-// functional pass in each, one page each, clearing the saved look after; --set lookBite=1 forces Basic Dark back after
-// each pick (the guard must fail).
+// functional pass in each, one page each, clearing the saved look after; --set lookBite=1 paints Basic Dark back right before
+// each guard (it must fail).
 import { LOOKS } from '../browser-check.config.mjs';
 import { setLookBySetting, guardPaintedLook } from '../helpers/settings-look.mjs';
 

@@ -53,8 +53,8 @@ const ARM = ({ ws, sw, entr }) => {
 	if (!window.__fo130armed) {
 		window.__fo130armed = true;
 		// a section's first reveal (one scrolled into view because the page got shorter) is not a replay: sectionReveal
-		// counts only on a section that had already been revealed before the press (the same element, or one drawn again
-		// with its id)
+		// counts only on a section that had been revealed or was on screen before the press (the same element, or one
+		// drawn again with its id)
 		document.addEventListener('animationstart', (e) => {
 			const s = window.__fo130; if (!s || !s.on || !re.test(e.animationName) || !e.target.closest || !e.target.closest('#panel-settings')) return;
 			if (e.animationName === 'sectionReveal' && !(s.revealed && s.revealed.has(e.target.id))) return;
@@ -69,7 +69,10 @@ const ARM = ({ ws, sw, entr }) => {
 // start sampling: one read per frame, in a task queued from rAF (after that frame's paint)
 const SAMPLE = (ms) => new Promise((resolve) => {
 	const S = window.__fo130; S.on = true; S.ent = []; S.shifts = 0; S.frames = [];
-	S.revealed = new Set([...document.querySelectorAll('#panel-settings .is-revealed[id]')].map((x) => x.id));
+	// a section counts when it had played its entrance or was on screen before the press (Reduced Motion leaves a section in
+	// view unmarked, and its first entrance on a save is a replay to the reader: astra-review-l1s)
+	const onScreen = (x) => { const r = x.getBoundingClientRect(); return r.bottom > 0 && r.top < innerHeight && r.width > 0; };
+	S.revealed = new Set([...document.querySelectorAll('#panel-settings [id^="section-"]')].filter((x) => x.classList.contains('is-revealed') || onScreen(x)).map((x) => x.id));
 	const el = document.querySelector('[data-fo130="switch"]');
 	S.node = el; S.was = el.getAttribute('aria-checked');
 	const op = (n) => { let o = 1; for (let x = n; x && x.nodeType === 1; x = x.parentElement) o *= parseFloat(getComputedStyle(x).opacity) || 0; return o; };
@@ -101,6 +104,18 @@ const RESULT = () => {
 		replacedSec: f.some((x) => x.secNode !== first.secNode && x.secNode !== null && first.secNode !== null) || !(first.secNode && first.secNode.isConnected),
 	};
 };
+
+async function openCase(t, f, c) {
+	await f.evaluate(([d, w]) => PM51.go(d, w), [c.domain, c.ws]);
+	await f.waitForSelector(`[data-continuous-workspace-body="${c.ws}"][data-workspace-mounted="true"]`, { timeout: 15000 });
+	if (c.select) {
+		const row = f.locator(`#pm-settings-root .resource-row[data-provider="${c.select}"]`).first();
+		await row.click();
+		await f.waitForSelector('#pm-settings-root .pm51-providers-order', { timeout: 8000 });
+	}
+	await t.settle();
+	await t.page.waitForTimeout(900);   // the arrival's own entrances finish first
+}
 
 async function runCase(t, f, w, h, name, tagPre, look = 'basic-dark') {
 	const c = CASES[name];
@@ -154,23 +169,29 @@ for (const surface of ['normal', 'sandbox']) {
 		}
 	};
 	// Settings is shared by every look (NieR, Retro and Glass draw their own entrances and switches): the Services, Web,
-	// Memory and Backups cases once in each of the ten looks at 1280x900. Each look is picked through Settings' Theme and
+	// Memory and Backups cases in each of the ten looks at 860x900, 1280x900 and 1920x1080 (--set lookSizes=), with and
+	// without Reduced Motion (--set motion=reduce). Each look is picked through Settings' Theme and
 	// Light-or-dark rows (saved, so Settings keeps it), and the painted look is checked right before every press
 	// (helpers/settings-look.mjs); the saved look is cleared before the next fresh page. --set looks=basic-dark,nier-light
-	// limits it; --set looks=none skips it; --set lookBite=1 forces Basic Dark back after each pick (the guard must fail).
+	// limits it; --set looks=none skips it; --set lookBite=1 paints Basic Dark back right before each guard (it must fail).
 	tests[`FO-130 in every look (${surface})`] = async (t) => {
 		if (!t.app.surfaces().includes(surface)) { await t.check(`${surface} surface not asked for`, true); return; }
 		if (String(t.args.looks) === 'none') { await t.check('looks skipped (--set looks=none)', true); return; }
 		const looks = t.args.looks ? String(t.args.looks).split(',') : LOOKS;
 		const names = t.args.cases ? String(t.args.cases).split(',') : ['providers', 'web', 'memory', 'backup'];
-		await t.viewport(1280, 900);
-		for (const look of looks) {
-			const f = await t.app.open({ sandbox: surface === 'sandbox' });
-			await f.locator('#tab-settings').click();
-			await t.settle();
-			await setLookBySetting(t, f, look);
-			for (const name of names) await runCase(t, f, 1280, 900, name, `${look} 1280x900`, look);
-			await t.app.resetLayout();   // the picked look is saved: the next fresh page (and the next check) starts in Basic Dark
+		const lookSizes = (t.args.lookSizes ? String(t.args.lookSizes).split(',') : ['860x900', '1280x900', '1920x1080']).map((x) => x.split('x').map(Number));
+		const motions = t.args.motion ? String(t.args.motion).split(',') : ['no-preference', 'reduce'];
+		for (const motion of motions) for (const look of looks) {
+			for (const [w, h] of lookSizes) {
+				await t.emulate({ reducedMotion: motion });
+				await t.viewport(w, h);
+				const f = await t.app.open({ sandbox: surface === 'sandbox' });
+				await f.locator('#tab-settings').click();
+				await t.settle();
+				await setLookBySetting(t, f, look);
+				for (const name of names) await runCase(t, f, w, h, name, `${look} ${w}x${h}${motion === 'reduce' ? ' reduced motion' : ''}`, look);
+				await t.app.resetLayout();   // the picked look is saved: the next fresh page (and the next check) starts in Basic Dark
+			}
 		}
 	};
 }
