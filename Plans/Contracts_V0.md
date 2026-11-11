@@ -24629,8 +24629,8 @@ canonical_text: alert.acknowledged 1.0.0 uses only Plans/event_payloads/attentio
   state and record date-time fields, EventRecord occurred_at_utc and the first-receipt acknowledged_at_utc take the
   EventRecord profile (RFC 3339 with T or t, Z, z or a signed offset, real calendar and offset ranges, a legitimate
   offset-adjusted leap second, year 0000 and any number of fractional digits; a missing zone, space separator,
-  trailing LF or illegitimate second 60 refuses), and Storage-assigned observed_at_utc/persisted_at_utc take the
-  CV-253 storage_utc_z profile. Strings are never rewritten; instants compare exactly with offsets applied, every
+  trailing LF or illegitimate second 60 refuses), and the two Storage-assigned EventRecord instants that CV-253
+  binds take its storage_utc_z profile. Strings are never rewritten; instants compare exactly with offsets applied, every
   fractional digit kept and a leap second ordered within its minute. Enforce date-time and UUID formats without
   optional package dependencies.
   The family-specific input-domain and guard oracle is scripts/pm-dg6a-domain-check.py alongside its full family checker.
@@ -24686,8 +24686,8 @@ canonical_text: alert.dismissed 1.0.0 uses only Plans/event_payloads/attention/a
   state and record date-time fields, EventRecord occurred_at_utc and the first-receipt acknowledged_at_utc take the
   EventRecord profile (RFC 3339 with T or t, Z, z or a signed offset, real calendar and offset ranges, a legitimate
   offset-adjusted leap second, year 0000 and any number of fractional digits; a missing zone, space separator,
-  trailing LF or illegitimate second 60 refuses), and Storage-assigned observed_at_utc/persisted_at_utc take the
-  CV-253 storage_utc_z profile. Strings are never rewritten; instants compare exactly with offsets applied, every
+  trailing LF or illegitimate second 60 refuses), and the two Storage-assigned EventRecord instants that CV-253
+  binds take its storage_utc_z profile. Strings are never rewritten; instants compare exactly with offsets applied, every
   fractional digit kept and a leap second ordered within its minute. Enforce date-time and UUID formats without
   optional package dependencies.
   The family-specific input-domain and guard oracle is scripts/pm-dg6a-domain-check.py alongside its full family checker.
@@ -24742,8 +24742,8 @@ canonical_text: alert.rule_muted 1.0.0 uses only Plans/event_payloads/attention/
   state and record date-time fields, EventRecord occurred_at_utc and the first-receipt acknowledged_at_utc take the
   EventRecord profile (RFC 3339 with T or t, Z, z or a signed offset, real calendar and offset ranges, a legitimate
   offset-adjusted leap second, year 0000 and any number of fractional digits; a missing zone, space separator,
-  trailing LF or illegitimate second 60 refuses), and Storage-assigned observed_at_utc/persisted_at_utc take the
-  CV-253 storage_utc_z profile. Strings are never rewritten; instants compare exactly with offsets applied, every
+  trailing LF or illegitimate second 60 refuses), and the two Storage-assigned EventRecord instants that CV-253
+  binds take its storage_utc_z profile. Strings are never rewritten; instants compare exactly with offsets applied, every
   fractional digit kept and a leap second ordered within its minute. Enforce date-time and UUID formats without
   optional package dependencies.
   The family-specific input-domain and guard oracle is scripts/pm-dg6a-domain-check.py alongside its full family checker.
@@ -24798,8 +24798,8 @@ canonical_text: alert.snoozed 1.0.0 uses only Plans/event_payloads/attention/ale
   state and record date-time fields, EventRecord occurred_at_utc and the first-receipt acknowledged_at_utc take the
   EventRecord profile (RFC 3339 with T or t, Z, z or a signed offset, real calendar and offset ranges, a legitimate
   offset-adjusted leap second, year 0000 and any number of fractional digits; a missing zone, space separator,
-  trailing LF or illegitimate second 60 refuses), and Storage-assigned observed_at_utc/persisted_at_utc take the
-  CV-253 storage_utc_z profile. Strings are never rewritten; instants compare exactly with offsets applied, every
+  trailing LF or illegitimate second 60 refuses), and the two Storage-assigned EventRecord instants that CV-253
+  binds take its storage_utc_z profile. Strings are never rewritten; instants compare exactly with offsets applied, every
   fractional digit kept and a leap second ordered within its minute. Enforce date-time and UUID formats without
   optional package dependencies.
   The family-specific input-domain and guard oracle is scripts/pm-dg6a-domain-check.py alongside its full family checker.
@@ -24855,8 +24855,8 @@ canonical_text: panel.redocked current payload 2.0.0 is the closed Plans/event_p
   state and record date-time fields, EventRecord occurred_at_utc and the first-receipt acknowledged_at_utc take the
   EventRecord profile (RFC 3339 with T or t, Z, z or a signed offset, real calendar and offset ranges, a legitimate
   offset-adjusted leap second, year 0000 and any number of fractional digits; a missing zone, space separator,
-  trailing LF or illegitimate second 60 refuses), and Storage-assigned observed_at_utc/persisted_at_utc take the
-  CV-253 storage_utc_z profile. Strings are never rewritten; instants compare exactly with offsets applied, every
+  trailing LF or illegitimate second 60 refuses), and the two Storage-assigned EventRecord instants that CV-253
+  binds take its storage_utc_z profile. Strings are never rewritten; instants compare exactly with offsets applied, every
   fractional digit kept and a leap second ordered within its minute. Enforce date-time and UUID formats without
   optional package dependencies.
   The family-specific input-domain and guard oracle is scripts/pm-dg6a-domain-check.py alongside its full family checker.
@@ -24917,8 +24917,8 @@ canonical_text: panel.undocked current payload 2.0.0 is the closed Plans/event_p
   state and record date-time fields, EventRecord occurred_at_utc and the first-receipt acknowledged_at_utc take the
   EventRecord profile (RFC 3339 with T or t, Z, z or a signed offset, real calendar and offset ranges, a legitimate
   offset-adjusted leap second, year 0000 and any number of fractional digits; a missing zone, space separator,
-  trailing LF or illegitimate second 60 refuses), and Storage-assigned observed_at_utc/persisted_at_utc take the
-  CV-253 storage_utc_z profile. Strings are never rewritten; instants compare exactly with offsets applied, every
+  trailing LF or illegitimate second 60 refuses), and the two Storage-assigned EventRecord instants that CV-253
+  binds take its storage_utc_z profile. Strings are never rewritten; instants compare exactly with offsets applied, every
   fractional digit kept and a leap second ordered within its minute. Enforce date-time and UUID formats without
   optional package dependencies.
   The family-specific input-domain and guard oracle is scripts/pm-dg6a-domain-check.py alongside its full family checker.
@@ -24987,8 +24987,8 @@ canonical_text: concern.created current 1.0.0 selects the existing closed Plans/
   state and record date-time fields, EventRecord occurred_at_utc and the first-receipt acknowledged_at_utc take the
   EventRecord profile (RFC 3339 with T or t, Z, z or a signed offset, real calendar and offset ranges, a legitimate
   offset-adjusted leap second, year 0000 and any number of fractional digits; a missing zone, space separator,
-  trailing LF or illegitimate second 60 refuses), and Storage-assigned observed_at_utc/persisted_at_utc take the
-  CV-253 storage_utc_z profile. Strings are never rewritten; instants compare exactly with offsets applied, every
+  trailing LF or illegitimate second 60 refuses), and the two Storage-assigned EventRecord instants that CV-253
+  binds take its storage_utc_z profile. Strings are never rewritten; instants compare exactly with offsets applied, every
   fractional digit kept and a leap second ordered within its minute. Enforce date-time and UUID formats without
   optional package dependencies.
   The family-specific input-domain and guard oracle is scripts/pm-dg6a-domain-check.py alongside its full family checker.
