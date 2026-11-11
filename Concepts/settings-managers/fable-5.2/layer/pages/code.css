@@ -1,1 +1,63 @@
 /* styles that only the pages in code.js need; shared parts are in ../smx.css */
+
+/* ---- the three kinds of thing the assistant can pick up, side by side so they can be told apart ---------------------- */
+#smx-root .smx-cd-kind-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+#smx-root .smx-cd-kind { display: grid; grid-template-rows: auto auto 1fr auto; align-content: start; gap: 6px; padding: 14px; border: 1px solid var(--k3-line); border-radius: var(--k3-radius-lg); background: var(--k3-surface-1); color: var(--k3-text-1); font: inherit; text-align: left; cursor: pointer; transition: border-color var(--k3-dur-fast, .12s), background var(--k3-dur-fast, .12s); }
+#smx-root .smx-cd-kind:hover { border-color: var(--k3-accent); background: var(--k3-accent-soft-2); }
+#smx-root .smx-cd-kind:focus-visible { outline: 2px solid var(--k3-accent); outline-offset: 1px; }
+#smx-root .smx-cd-kind-head { display: flex; align-items: center; gap: 10px; }
+#smx-root .smx-cd-kind-icon { flex: none; display: grid; place-items: center; width: 34px; height: 34px; border-radius: var(--k3-radius-md); background: var(--k3-accent-soft); color: var(--k3-accent-ink, var(--k3-accent)); }
+#smx-root .smx-cd-kind-icon .icon, #smx-root .smx-cd-kind-icon svg { width: 18px; height: 18px; stroke: currentColor; }
+#smx-root .smx-cd-kind-name { flex: 1; min-width: 0; font-size: 14px; font-weight: 650; }
+#smx-root .smx-cd-kind-go { flex: none; color: var(--k3-text-3); }
+#smx-root .smx-cd-kind-go .icon, #smx-root .smx-cd-kind-go svg { width: 15px; height: 15px; stroke: currentColor; }
+#smx-root .smx-cd-kind:hover .smx-cd-kind-go { color: var(--k3-accent-ink, var(--k3-accent)); }
+#smx-root .smx-cd-kind-is { margin-top: 4px; font-size: 13.5px; font-weight: 600; line-height: 1.4; color: var(--k3-text-1); }
+#smx-root .smx-cd-kind-text { font-size: 12px; line-height: 1.55; color: var(--k3-text-2); }
+#smx-root .smx-cd-kind-count { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 4px 12px; margin-top: 6px; padding-top: 10px; border-top: 1px solid var(--k3-line); font-size: 12px; color: var(--k3-text-2); }
+#smx-root .smx-cd-kind-n { font-weight: 600; color: var(--k3-text-1); }
+#smx-root .smx-cd-also { margin: 10px 2px 0; font-size: 12.5px; line-height: 1.65; color: var(--k3-text-2); }
+#smx-root .smx-cd-also strong { font-weight: 650; color: var(--k3-text-1); }
+#smx-root .smx-cd-part .smx-kicker { margin-bottom: 4px; }
+/* the first page lists the most pressing few things that need you; this line names where the rest are */
+#smx-root .smx-cd-more-needs { margin: 0; padding: 10px 16px; border-top: 1px solid var(--k3-line); font-size: 12.5px; line-height: 1.6; color: var(--k3-text-2); }
+
+/* ---- a switch with its words, beside the sentence that says whether a thing is on ------------------------------------- */
+#smx-root .smx-cd-switch { display: inline-flex; align-items: center; gap: 10px; font-size: 12.5px; font-weight: 600; color: var(--k3-text-2); white-space: nowrap; }
+
+/* ---- the line above a list: search, Show and Sort --------------------------------------------------------------------- */
+#smx-root .smx-cd-toolbar { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 14px; min-height: 32px; }
+#smx-root .smx-cd-toolbar .o55-bound-search { flex: 1 1 220px; max-width: 340px; }
+#smx-root .smx-cd-toolbar .o55-bound-select { display: inline-flex; align-items: center; gap: 6px; }
+
+/* ---- what a skill does, in its own words; a formatter's example before and after -------------------------------------- */
+#smx-root .smx-cd-text { margin: 0; font-size: 13px; line-height: 1.55; color: var(--k3-text-1); }
+#smx-root .smx-cd-sample { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+#smx-root .smx-cd-sample-label { font-size: 11px; font-weight: 650; letter-spacing: .06em; text-transform: uppercase; color: var(--k3-text-3); }
+#smx-root .smx-cd-sample pre { margin: 5px 0 0; padding: 9px 11px; border: 1px solid var(--k3-line); border-radius: var(--k3-radius-md); background: var(--k3-surface-0, transparent); color: var(--k3-text-1); font-family: var(--mono-font, ui-monospace, monospace); font-size: 11.5px; line-height: 1.55; white-space: pre-wrap; overflow-wrap: anywhere; }
+
+/* a list folded under another list keeps the list's own look, without a second frame */
+#smx-root .smx-fold-body > .panel-card.smx-things-card > .pm51-section-body { padding-bottom: 0; }
+
+/* the fields of a command (its text, the reminder, what it is for) use the page's width */
+#smx-root .smx-cd .pm51-commands-template { width: 100%; }
+#smx-root .smx-cd .pm51-field > .text-control { width: min(100%, 560px); }
+
+/* ---- rows of these pages: a control that does not fit goes onto its own line; it is never cut off --------------------- */
+#smx-root .smx-cd .pm51-rows > .pm51-row > .pm51-row-control { flex-wrap: wrap; }
+#smx-root .smx-cd .pm51-row .pm51-dd-trigger { max-width: 100%; }
+
+/* ---- narrow Settings areas --------------------------------------------------------------------------------------------- */
+@container smx (max-width: 1040px) {
+  #smx-root .smx-cd-kind-grid { grid-template-columns: minmax(0, 1fr); }
+  #smx-root .smx-cd-kind { grid-template-rows: none; }
+}
+@container smx (max-width: 900px) {
+  #smx-root .smx-cd-switch { white-space: normal; }
+  #smx-root .smx-cd-sample { grid-template-columns: minmax(0, 1fr); }
+  #smx-root .smx-cd-toolbar .o55-bound-search { max-width: none; flex-basis: 100%; }
+  /* a row's words, then its control underneath, both from the left edge */
+  #smx-root .smx-cd .pm51-rows > .pm51-row { grid-template-columns: minmax(0, 1fr); }
+  #smx-root .smx-cd .pm51-rows > .pm51-row > .pm51-row-control { justify-content: flex-start; padding-right: 0; }
+  #smx-root .smx-cd .pm51-rows > .pm51-row > .pm51-row-control:empty { display: none; }
+}
