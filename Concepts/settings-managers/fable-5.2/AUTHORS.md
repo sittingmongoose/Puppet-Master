@@ -155,6 +155,14 @@ been opened once (`{"do":"view","view":"today"}`, then `{"do":"view","view":"new
   that leaving detail out before your `find` runs, so the first match is the new thing's control. Where the detail
   carries a title, let `find` check it as well (see `moreFor` in `pages/ai-more.js`). After the menu closes the core
   hands the engine back and keeps the page where it is; a page never needs to touch `SMX.borrowing` itself.
+- **Where the engine is, and when the page follows it.** The engine is kept on its Home view. When something of
+  PMConcept7's sends it elsewhere, the core goes to the page that holds that place: at once when it points at a
+  setting or is in another chapter of PMConcept7. A page stands for the managers in its `legacy` (a page without one
+  stands for those of the page above it). Saving one of PMConcept7's dialogs redraws its hidden page at the top of the
+  chapter, which names the chapter's first manager: on a page that stands for a manager of that chapter the person
+  stays put. What this costs: a link inside one of PMConcept7's menus or dialogs that only opens ANOTHER manager of
+  the same PMConcept7 chapter, without pointing at a setting, is not followed from such a page. Three tests in
+  `tools/settings-managers.check.mjs` hold these rules.
 - **Your own handler:** `SMX.act('name', (el, event) => { … })` for `ui.btn({do: 'name', data})`; wrap a kit dropdown
   in `<span data-smx-do-change="name" data-id="…">` to hear its change. Change the engine's state with
   `const st = W.PM12_KIMI.getState(); …; W.PM12_KIMI.setState(st)`, confirm with `kit().confirm(title, text, label, onYes, danger)`,

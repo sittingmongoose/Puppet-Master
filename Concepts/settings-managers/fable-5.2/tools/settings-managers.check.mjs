@@ -197,5 +197,35 @@ export const tests = {
 		if (r.followed !== 'ai') fail('a link to PMConcept7\'s provider manager was not followed to the AI providers page: ' + r.followed);
 		if (r.pointed !== 'look') fail('a link to the Theme setting was not followed to the page that holds it: ' + r.pointed);
 		if (!r.home) fail('the engine was not parked again after following a link');
+	},
+	/* Saving one of PMConcept7's dialogs redraws its hidden page at the top of the chapter, where it names the first
+	   manager. The page used to be thrown to that manager's page (Help & hints, from a sound's page). */
+	async 'saving one of PMConcept7\'s dialogs keeps the page'(t) {
+		const { f } = await open(t);
+		const r = await f.evaluate(async () => {
+			const S = window.SMX, wait = (ms) => new Promise((res) => setTimeout(res, ms));
+			S.go('notifications/sounds');
+			await wait(4500);   // the chapter makes its manager ready once, on first view
+			const row = document.querySelector('#smx-root [data-smx-go^="notifications/sounds/"]');
+			if (!row) return { err: 'no sound has a page of its own on notifications/sounds' };
+			const route = row.getAttribute('data-smx-go');
+			S.go(route);
+			await wait(900);
+			const edit = [...document.querySelectorAll('#smx-root button')].find((b) => /^(Attach the file again|Replace the file|Replace file|Edit)/.test(b.textContent.trim()));
+			if (!edit) return { err: 'no button that opens the sound dialog on ' + route };
+			edit.click();
+			await wait(1200);
+			const save = [...document.querySelectorAll('#pm-settings-portals .btn.primary')].find((b) => /^Save/.test(b.textContent.trim()));
+			if (!save) return { err: 'the sound dialog did not open from "' + edit.textContent.trim() + '"' };
+			const inp = document.querySelector('#pm-settings-portals input[type=file]');
+			if (inp) { const dt = new DataTransfer(); dt.items.add(new File([new Uint8Array(2048)], 'jingle.mp3', { type: 'audio/mpeg' })); inp.files = dt.files; inp.dispatchEvent(new Event('change', { bubbles: true })); }
+			save.click();
+			const seen = new Set();
+			for (let i = 0; i < 25; i++) { await wait(100); const st = window.PM12_KIMI.getState(); seen.add(st.home ? 'home' : st.domain + '/' + st.workspace); }
+			return { route, now: S.route, home: window.PM12_KIMI.getState().home, seen: [...seen] };
+		});
+		if (r.err) fail(r.err);
+		if (r.now !== r.route) fail(`saving the sound dialog on ${r.route} threw the page to ${r.now} (the engine went through ${r.seen.join(', ')})`);
+		if (!r.home) fail('the engine was not parked again after the dialog was saved: ' + r.seen.join(', '));
 	}
 };

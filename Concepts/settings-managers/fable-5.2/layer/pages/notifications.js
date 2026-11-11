@@ -207,28 +207,17 @@
   /* Attaching a file. PMConcept7's dialog ("Add sound to library", "Edit <name>") holds the file in this window only
      and tells nobody, so a sound added or edited from these pages is watched: once a file was chosen and the dialog
      saved, its page stops saying "File missing".
-     Saving that dialog also sends the engine to its own Sounds tab, about a third of a second before it can be sent
-     back, and the framework follows the engine to the page that holds what it shows. So that the person stays on the
-     page they were on, the framework is told a borrowed control is in use (SMX.borrowing, the flag its own borrowed
-     menus set) until the engine is back on its Home view. */
+     Saving that dialog also sends the engine to its own Sounds tab. The framework keeps the person on the page they
+     were on: these pages stand for that manager, and what its hidden page names while it is sent Home again is not
+     followed (smx-core.js, onTheWayHome). */
   let watch = null;
   const watchSounds = (id) => { const st = SMX.st(); watch = { id: id || '', ids: allSounds(st).map((x) => x.id), picked: false, saved: 0, at: Date.now() }; };
-  const stayHere = () => {
-    let n = 0;
-    const back = () => {
-      let st = null; try { st = SMX.fresh(); } catch (e) { st = null; }
-      if (st && !st.home && SMX.view === 'new' && n++ < 16) { SMX.borrowing = true; try { W.PM12_KIMI.dispatchAction('home'); } catch (e) { /* tried again below */ } W.setTimeout(back, 200); return; }
-      if (n) SMX.borrowing = false;
-      SMX.soon(30);
-    };
-    back();
-  };
   DOC.addEventListener('change', (e) => { const t = e.target; if (watch && t && t.matches && t.matches('#pm-settings-portals input[type="file"]')) watch.picked = !!(t.files && t.files.length); }, true);
   DOC.addEventListener('click', (e) => {
     const b = watch && e.target && e.target.closest ? e.target.closest('#pm-settings-portals .btn.primary') : null;
     const form = b ? b.closest('form, .dialog, [role="dialog"]') : null; if (!form || !form.querySelector('input[type="file"]')) return;   // only the dialog that takes a sound file
     if (watch.picked) watch.saved = Date.now();
-    if (!SMX.borrowing) W.setTimeout(stayHere, 0);   // after the dialog's own save, which runs with this click
+    SMX.soon(60);                                    // after the dialog's own save, which runs with this click
   }, true);
   const noteFiles = (st) => {
     if (!watch) return;
