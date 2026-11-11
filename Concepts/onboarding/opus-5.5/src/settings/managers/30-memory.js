@@ -204,7 +204,7 @@
       title: isNew ? 'Add memory' : 'Edit memory', subtitle: isNew ? 'Something the assistant should keep in mind.' : v.title,
       body: formField('Title', 'title', v.title, { full: true, autofocus: true, placeholder: 'A short name for this memory' })
         + formField('Text', 'text', v.text, { type: 'textarea', full: true, help: 'Write it the way you would tell a colleague.' })
-        + formField('Keep it for', 'store', STORE_CHOICES.some(c => c.value === v.store) ? v.store : 'Project', { type: 'select', choices: STORE_CHOICES, help: 'Project memories stay with this projece. Memories about you follow you everywhere.' })
+        + formField('Keep it for', 'store', STORE_CHOICES.some(c => c.value === v.store) ? v.store : 'Project', { type: 'select', choices: STORE_CHOICES, help: 'Project memories stay with this project. Memories about you follow you everywhere.' })
         + formField('Type', 'type', TYPES.includes(v.type) ? v.type : 'Rule', { type: 'select', choices: TYPES, help: 'Rules are always followed. Decisions record a choice. Preferences shape style.' }),
       saveLabel: isNew ? 'Add memory' : 'Save changes',
       onSave: data => {
@@ -224,7 +224,7 @@
     PM51.panel({
       title: oneChat ? 'Keep it longer' : 'Move memory', subtitle: x.title,
       body: (oneChat ? PM51.note('Kept for one chat now, so it fades when that chat ends.', 'info') : '')
-        + PM51.panelSection('Who it is for', PM51.field('Keep this memory for', PM51.select(oneChat ? 'Project' : x.store, STORE_CHOICES.map(c => [c.value, c.label]), { label: 'Keep it for' }), 'Project memories stay with this projece. Memories about you follow you everywhere.')),
+        + PM51.panelSection('Who it is for', PM51.field('Keep this memory for', PM51.select(oneChat ? 'Project' : x.store, STORE_CHOICES.map(c => [c.value, c.label]), { label: 'Keep it for' }), 'Project memories stay with this project. Memories about you follow you everywhere.')),
       primaryLabel: oneChat ? 'Keep it' : 'Move', onPrimary: wrap => { const sel = wrap.querySelector('select'); if (sel) x.store = sel.value; x.updated = 'Now'; saveState(); refresh(); PM51.toast(oneChat ? 'Memory kept' : 'Memory moved', x.store === 'User' ? `${x.title} now follows you everywhere.` : `${x.title} now stays with this project.`); }
     });
   }

@@ -231,8 +231,43 @@ for (const surface of ['normal', 'sandbox']) {
 		await drawer(f).waitFor({ state: 'visible', timeout: 8000 });
 		await grab('How memory works');
 		const memText = async (tabName) => { await tab(t, f, 'context-memory', tabName); return (await MB.innerText()).replace(/\s+/g, ' '); };
+		const dialogText = async () => (await f.locator('.overlay .dialog').last().innerText().catch(() => '')).replace(/\s+/g, ' ');
+		const menuText = async () => (await f.locator('.pm51-popout').last().innerText().catch(() => '')).replace(/\s+/g, ' ');
+		const shut = async () => { await t.page.keyboard.press('Escape'); await t.page.waitForTimeout(350); await closeDrawers(t, f); };
+		const KEEP_FOR = 'Project memories stay with this project.';
+		// Memories: Add memory (a dialog) and Move memory (the detail's More actions › Move / Keep it longer)
+		await tab(t, f, 'context-memory', 'Memories');
+		await MB.locator('[data-action="pm51-memory-add"]').first().click();
+		await f.locator('.overlay .dialog').last().waitFor({ state: 'visible', timeout: 8000 });
+		const addText = await dialogText(); seen.push(['Add memory', addText]); await shut();
+		await MB.locator('.pm51-detail-actions [aria-label="More actions"]').first().click();
+		await menuItem(t, f, '(Move|Keep it longer)');
+		await drawer(f).waitFor({ state: 'visible', timeout: 8000 });
+		const moveText = await drawerText(f); seen.push(['Move memory', moveText]); await closeDrawers(t, f);
+		await t.check('Add memory and Move memory say "Project memories stay with this project."', addText.includes(KEEP_FOR) && moveText.includes(KEEP_FOR), `add "${addText.slice(0, 160)}" | move "${moveText.slice(0, 160)}"`);
 		seen.push(['Context & Memory › Sources', await memText('Sources')]);
 		seen.push(['Context & Memory › Keeping & privacy', await memText('Keeping & privacy')]);
+		// the folded "Export and delete" section, read open, then its Export panel and Delete all question (answered No)
+		const fold = MB.locator('details.pm51-advanced', { has: f.locator('[data-action="pm51-memory-delete-all"]') }).first();
+		if (!(await fold.evaluate((d) => d.open))) { await fold.locator('summary').first().scrollIntoViewIfNeeded(); await fold.locator('summary').first().click(); await t.page.waitForTimeout(400); }
+		seen.push(['Keeping & privacy › Export and delete (open)', (await fold.innerText()).replace(/\s+/g, ' ')]);
+		await fold.locator('[data-action="pm51-memory-export"]').first().click();
+		await drawer(f).waitFor({ state: 'visible', timeout: 8000 });
+		await grab('Export memories');
+		await fold.locator('[data-action="pm51-memory-delete-all"]').first().click();
+		await f.locator('.overlay .dialog, .drawer-wrap').last().waitFor({ state: 'visible', timeout: 8000 });
+		seen.push(['Delete all memories?', (await dialogText()) || (await drawerText(f))]); await shut();
+		// Goals › Templates › More actions (Export's line), and Personas' Add a persona menu (Import's line)
+		await go(t, f, 'memory', 'goals');
+		await tab(t, f, 'goals', 'Templates');
+		await f.locator(`${BODY('goals')} .pm51-detail-actions [aria-label="More actions"]`).first().click();
+		await t.page.waitForTimeout(400);
+		seen.push(['Goal template › More actions', await menuText()]); await shut();
+		await go(t, f, 'memory', 'personas');
+		await tab(t, f, 'personas', 'Personas');
+		await f.locator(`${BODY('personas')} [data-action="pm51-personas-add"]`).first().click();
+		await t.page.waitForTimeout(400);
+		seen.push(['Add a persona menu', await menuText()]); await shut();
 		// Personas & Crews › Helpers (the helper rows)
 		await go(t, f, 'memory', 'personas');
 		await tab(t, f, 'personas', 'Helpers');
@@ -243,6 +278,12 @@ for (const surface of ['normal', 'sandbox']) {
 		await grab("See a helper's contract");
 		const bad = seen.filter(([, tx]) => /\bworkspaces?\b/i.test(tx)).map(([w, tx]) => { const i = tx.search(/\bworkspaces?\b/i); return `${w}: …${tx.slice(Math.max(0, i - 50), i + 30)}…`; });
 		await t.check(`${seen.length} panels and pages: no "workspace" for a project or a working copy`, bad.length === 0, bad.join(' | '));
+		// the rewording itself: every word that starts like "project" is spelt right (the recheck found "this projece")
+		const typo = /\bproj(?!ects?\b|ect's\b|ect\b)[a-z']*/i;
+		const misspelt = seen.filter(([, tx]) => typo.test(tx)).map(([w, tx]) => `${w}: "${tx.match(typo)[0]}"`);
+		await t.check('no misspelt "project" in any of them', misspelt.length === 0, misspelt.join(' | '));
+		const empty = seen.filter(([, tx]) => !tx || tx.length < 20).map(([w]) => w);
+		await t.check('every panel, dialog and menu the scan opens was read', empty.length === 0, `empty: ${empty.join(', ')}`);
 	});
 
 	T('D7 notify 9 research finishing is a chat notice', async (t) => {
