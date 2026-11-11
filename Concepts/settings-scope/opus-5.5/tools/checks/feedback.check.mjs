@@ -4,7 +4,7 @@
 //   python3 Concepts/settings-scope/opus-5.5/tools/build_standalone.py $OUT
 //   browser-check run Concepts/settings-scope/opus-5.5/tools/checks/feedback.check.mjs \
 //     --config Concepts/pm7-tools/browser-check/browser-check.config.mjs --set page=$OUT/settings-scope-app.html
-// --set only=strip|rows|shake|acct|head|where|copy|always runs one part; --set looks=basic-dark,... narrows the looks
+// --set only=strip|rows|shake|acct|head|where|detail|copy|always runs one part; --set looks=basic-dark,... narrows the looks
 // (default Basic Dark, Retro Light and NieR Dark); --set lookShots=1 lists the review images under LOOK.
 // `strip` opens the page with the review strip (settings-scope.html beside the app page, or --set strip=<path>); the
 // account switch in `shake` is compared with bare PMConcept7 (Concepts/PMConcept7.html, or --set bare=<path>).
@@ -200,6 +200,64 @@ const shakeBad = (r, allow) => {
 	if (r.changedFlips > 1 || r.maxChanged > 1) bad.push('Changed flickered or showed twice');
 	if (r.shifts.length && !may.length) bad.push(`layout shifts: ${r.shifts.slice(0, 4).join(', ')}`);
 	return bad;
+};
+
+/* review A-r4 F2: every value in a detail card (a manager's list-and-detail pane) is at least as wide as its widest
+   word. Measured with the element's own font; a column one letter wide (Web & Research › Browser at 860) fails */
+// every Settings workspace (PMConcept7's domains): a domain draws its managers as you reach them, so each is visited
+const WORKSPACES = [['general', 'app-input'], ['general', 'notifications'], ['ai', 'providers'], ['ai', 'web'], ['ai', 'media'], ['ai', 'bsd'], ['code', 'editor-runtime'], ['code', 'toolchain'], ['code', 'testing'], ['memory', 'context-memory'], ['memory', 'goals'], ['memory', 'personas'], ['memory', 'owners'], ['source', 'source-manager'], ['source', 'browser-scm'], ['projects', 'project-settings'], ['projects', 'project-sync'], ['projects', 'project-history'], ['safety', 'permissions'], ['system', 'settings-transfer'], ['system', 'backup'], ['system', 'doctor'], ['system', 'servers'], ['system', 'updates'], ['system', 'advanced']];
+const DETAIL_TABS = async ([d, w]) => {
+	const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+	if (window.PM_PAGES && window.PM_PAGES.current !== 'settings') { window.PM_PAGES.go('settings'); await wait(1500); }
+	window.PM12_KIMI.navigate(d, w); await wait(900);
+	return [...new Set([...document.querySelectorAll('#pm-settings-root [data-action="pm51-tab"][data-manager][data-tab]')].filter((e) => e.getClientRects().length).map((e) => `${e.dataset.manager}:${e.dataset.tab}`))];
+};
+const DETAIL = async (arg) => {
+	const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+	const [mt, only] = Array.isArray(arg) ? arg : [arg, null];
+	const [manager, tab] = mt.split(':');
+	window.PM12_KIMI.dispatchAction('pm51-tab', { manager, tab }); await wait(500);
+	// only this manager's own detail panes: another manager's pane on the same page is measured under its own tab
+	const tabEl = document.querySelector(`#pm-settings-root [data-action="pm51-tab"][data-manager="${manager}"][data-tab="${tab}"]`);
+	const root = (tabEl && tabEl.closest('.pm51-mgr')) || document.getElementById('pm-settings-root');
+	const cv = window.__psxCv || (window.__psxCv = document.createElement('canvas').getContext('2d'));
+	const measure = (label, out) => {
+		root.querySelectorAll('.pm51-detail-content').forEach((dc) => {
+			if (!dc.getClientRects().length) return;
+			dc.querySelectorAll('.pm51-row-value').forEach((el) => {
+				const txt = (el.innerText || '').trim(); if (!txt || !el.getClientRects().length) return;
+				const cs = getComputedStyle(el); if (cs.visibility === 'hidden') return;
+				cv.font = `${cs.fontStyle} ${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;
+				const ls = parseFloat(cs.letterSpacing) || 0, up = cs.textTransform === 'uppercase';
+				const widest = Math.max(...txt.split(/\s+/).map((x) => cv.measureText(up ? x.toUpperCase() : x).width + ls * x.length));
+				const width = el.getBoundingClientRect().width; out.n++;
+				const v = { label, item: label.split(' › ')[1] || '', txt: txt.slice(0, 60), w: Math.round(width), widest: Math.round(widest) };
+				out.all.push(v);
+				if (width + 1 < widest) out.bad.push(v);
+			});
+		});
+	};
+	const out = { n: 0, items: 0, bad: [], all: [] };
+	const items = [...root.querySelectorAll(`button[data-action="pm51-select"][data-manager="${manager}"]`)].filter((e) => e.getClientRects().length && (!only || (e.innerText || '').trim().split('\n')[0] === only));
+	if (!items.length) measure(mt, out);
+	for (const it of items) { it.click(); await wait(300); out.items++; measure(`${mt} › ${(it.innerText || '').trim().split('\n')[0]}`, out); }
+	return out;
+};
+
+const BARE_LOOK = async (id) => {
+	const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+	const [fam, mode] = id.split('-'), tb = document.getElementById('themeSelect');
+	const painted = () => { const H = document.documentElement, th = H.getAttribute('data-theme') || ''; return fam === 'nier' ? (th.startsWith('nier') || !!(window.PM_NIER && window.PM_NIER.on && window.PM_NIER.on())) && th.endsWith('-' + mode) : th === id && !(window.PM_NIER && window.PM_NIER.on && window.PM_NIER.on()); };
+	for (let i = 0; i < 3 && !painted(); i++) {
+		if (tb.getAttribute('aria-expanded') !== 'true') { tb.click(); await wait(150); }
+		const nierFam = !!document.querySelector('#themeMenu .pm6-tt-family[data-family="nier"]');
+		const f = document.querySelector(`#themeMenu .pm6-tt-family[data-family="${fam === 'nier' && !nierFam ? 'basic' : fam}"]`); if (f) { f.click(); await wait(300); }
+		const m = document.querySelector(`#themeMenu .pm6-tt-mode[data-mode-value="${mode}"]`); if (m) { m.click(); await wait(300); }
+		if (fam === 'nier' && !nierFam && !painted()) { const tt = document.querySelector('#themeMenu [data-o55-nier-tt="toggle"]'); if (tt) { tt.click(); await wait(400); } }
+		await wait(900);
+	}
+	if (tb.getAttribute('aria-expanded') === 'true') { tb.click(); await wait(200); }
+	return painted();
 };
 
 /* the header: its box and the page under it, in one view */
@@ -552,6 +610,67 @@ export default async function (t) {
 		await run(t, () => { const b = document.querySelector('#pm-settings-portals [data-action="close-overlay"]'); if (b) b.click(); });
 	});
 
+	/* ------------------------------------------------------------------ review A-r4 F2: detail cards
+	   Every value in a detail card, in every Settings workspace, manager tab and list item, in the three looks at 1024,
+	   860 and 640, is at least as wide as its widest word. A value that isn't is measured again on bare PMConcept7 in the
+	   same look and width: it passes only when bare gives it no more room (the base page's own, handed to stream F) */
+	if (want(t, 'detail')) await t.step('F2: every value in a detail card is at least as wide as its widest word', async () => {
+		await reset(t); await run(t, HELPERS);
+		let cards = 0;
+		const results = [];
+		for (const lk of looks(t)) {
+			await look(t, lk);
+			for (const w of String(t.args.detailWidths || '1024,860,640').split(',').map(Number)) {
+				await t.viewport(w, 900); await settle(t, 400);
+				const done = new Set();
+				for (const ws of WORKSPACES) {
+					const tabs = (await run(t, DETAIL_TABS, ws)).filter((x) => !done.has(x));
+					for (const mt of tabs) {
+						done.add(mt);
+						const r = await run(t, DETAIL, mt);
+						if (!r.n) continue;
+						cards += r.items || 1;
+						results.push({ lk, w, ws, mt, r });
+					}
+				}
+			}
+		}
+		// the same values on bare PMConcept7, where the layer's value was narrower than its widest word
+		const misses = results.filter((x) => x.r.bad.length);
+		const bareOf = {};
+		if (misses.length) {
+			const bareUrl = fileUrl(t.args.bare || new URL('../../../../PMConcept7.html', import.meta.url).pathname);
+			await t.goto(`${bareUrl}${bareUrl.includes('?') ? '&' : '?'}o55=off&cb=${Date.now()}`);
+			await t.until('bare PMConcept7 is ready', () => document.documentElement.getAttribute('data-pmr-ready') === '1' && !!window.PM12_KIMI, null, { timeout: 60000 });
+			await settle(t, 1200);
+			for (const lk of [...new Set(misses.map((x) => x.lk))]) {
+				const painted = await run(t, BARE_LOOK, lk);
+				for (const x of misses.filter((m) => m.lk === lk)) {
+					await t.viewport(x.w, 900); await settle(t, 300);
+					await run(t, DETAIL_TABS, x.ws);
+					for (const item of [...new Set(x.r.bad.map((b) => b.item))]) {
+						const br = await run(t, DETAIL, [x.mt, item || null]);
+						for (const b of br.all) bareOf[`${lk}|${x.w}|${x.mt}|${b.item}|${b.txt}`] = painted ? b.w : null;
+					}
+				}
+			}
+			await t.app.open();
+			await t.until('the layer is booted again', () => !!(window.PSX && window.PSX.booted && window.PSX.lastReport), null, { timeout: 60000, hard: true });
+			await run(t, HELPERS); await settle(t, 800);
+		}
+		for (const { lk, w, mt, r } of results) {
+			/* the layer's own when bare PMConcept7 gives the same value more room. The app shell around Settings is 2px
+			   narrower on the layer's page (the shell's left-panel resizer column is drawn there and not on bare), so a
+			   difference of 2px or less is the shell's, not the layer's */
+			const own = r.bad.filter((b) => { const bw = bareOf[`${lk}|${w}|${mt}|${b.item}|${b.txt}`]; return bw == null || bw > b.w + 2; });
+			const base = r.bad.filter((b) => !own.includes(b));
+			await t.check(`${lk} · ${w} · ${mt}: ${r.n} values in ${r.items || 1} detail card${(r.items || 1) === 1 ? '' : 's'} are each as wide as their widest word${base.length ? `, but for ${base.length} the base page gives no more room on bare PMConcept7 (stream F)` : ''}`, own.length === 0,
+				own.slice(0, 4).map((b) => `${b.label}: “${b.txt}” is ${b.w}px, its widest word ${b.widest}px; bare: ${bareOf[`${lk}|${w}|${mt}|${b.item}|${b.txt}`] == null ? 'not found' : bareOf[`${lk}|${w}|${mt}|${b.item}|${b.txt}`] + 'px'}`).join(' | '));
+		}
+		await t.check('detail cards were found and measured', cards > 20, String(cards));
+		await t.viewport(1920, 1080);
+	});
+
 	/* ------------------------------------------------------------------ guided flows 3.x: Copy settings */
 	if (want(t, 'copy')) await t.step('guided flows 3.02-3.07, 3.12, 3.17: Copy settings', async () => {
 		await reset(t);
@@ -615,24 +734,34 @@ export default async function (t) {
 	/* ------------------------------------------------------------------ guided flows 8.03-8.04: Always allow
 	   Round A-r3: 11.18 was rebuilt from one rule model (README "Always allow: the rule model"). This part keeps its own
 	   copy of that model's tables and walks every step × every answer it offers × Regular and YOLO × the same run, a new
-	   run and a switch of Run mode, asserting the state of every step each time. The r1-r2 cases that encoded the old
-	   behaviour (one-off session and YOLO probes) are gone; the table walk covers them */
+	   run and a switch of Run mode, asserting the state of every step each time. The r1-r2 one-off session and YOLO probes
+	   asserted behaviour the walk now covers. Round A-r4 adds PS-145's home read (FileSafe on and off), cross-kind cases
+	   generated from table D, and the two copy guards r3 dropped */
 	const AM = {
 		// A and B: each step's kind, and what each kind offers; whether YOLO still asks
-		steps: [['test', 'command'], ['release', 'command'], ['push', 'remote'], ['publish', 'remote'], ['outside', 'path'], ['test2', 'command'], ['delete', 'remote-delete']],
+		steps: [['test', 'command'], ['release', 'command'], ['push', 'remote'], ['publish', 'remote'], ['outside', 'path'], ['home', 'path'], ['test2', 'command'], ['delete', 'remote-delete']],
 		offers: { command: ['once', 'session', 'always', 'no'], path: ['once', 'session', 'always', 'no'], remote: ['once', 'session', 'no'], 'remote-delete': ['once', 'no'] },
 		yoloAsks: { command: false, path: true, remote: false, 'remote-delete': true },
+		// B, review A-r4 F1: PS-145's exception. With FileSafe on, a task-needed, listed, non-secret home-folder read doesn't
+		// ask, in either mode; the team-share folder is outside home, so it never qualifies
+		home: ['home'],
+		// D: the one rule kind that may cover each step kind; a push, a publish and a deletion take none
+		ruleKind: { command: 'command', path: 'path', remote: null, 'remote-delete': null },
+		// each step's target, the text a rule's pattern is matched against
+		target: { test: 'npm test', release: './scripts/release.sh v1.4.0', push: 'git push origin feature/tags', publish: 'docker push ghcr.io/jared/loom:1.4.0', outside: '/mnt/team-share/release-notes', home: '~/Documents/release-checklist.md', test2: 'npm test', delete: 'git push origin --delete old-ui' },
 		// C: the state an answer leaves on its own step
 		own: { once: 'once', session: 'session', always: 'always', no: 'no' },
 		// the same request as another step (For this session covers it later in the run)
 		same: { test: 'test2', test2: 'test' },
 		// D: the rule Always allow makes with the middle suggestion, and every step that rule covers (by kind and match)
-		rule: { test: ['npm test *', ['test', 'test2']], test2: ['npm test *', ['test', 'test2']], release: ['./scripts/release.sh *', ['release']], outside: ['~/Documents/taxes/**', ['outside']] }
+		rule: { test: ['npm test *', ['test', 'test2']], test2: ['npm test *', ['test', 'test2']], release: ['./scripts/release.sh *', ['release']], outside: ['/mnt/team-share/release-notes/**', ['outside']], home: ['~/Documents/*.md', ['home']] }
 	};
 	const order = AM.steps.map((x) => x[0]), kindOf = Object.fromEntries(AM.steps);
-	/* what every step should read: `answered` is [step, answer] in the run being looked at, or null in a later run */
-	const expect = (mode, answered, rule) => Object.fromEntries(order.map((y, i) => {
+	/* what every step should read: `answered` is [step, answer] in the run being looked at, or null in a later run;
+	   `fs` is loom's FileSafe as the run started */
+	const expect = (mode, answered, rule, fs = true) => Object.fromEntries(order.map((y, i) => {
 		const k = kindOf[y];
+		if (fs && AM.home.includes(y)) return [y, 'filesafe'];
 		if (mode === 'yolo' && !AM.yoloAsks[k]) return [y, 'mode'];
 		if (answered && answered[0] === y) return [y, AM.own[answered[1]]];
 		const after = answered ? i > order.indexOf(answered[0]) : true;
@@ -644,9 +773,11 @@ export default async function (t) {
 	   data-state is only a cross-check, so the walk judges any build by what it shows */
 	const STATES = () => {
 		const s = document.querySelector('.psx-back:not([data-leaving]) .psx-sheet'); if (!s) return null;
-		const NAMES = { 'Run npm test': 'test', 'Run the release script': 'release', 'Push to GitHub': 'push', 'Publish the image': 'publish', 'Read a folder outside loom': 'outside', 'Run npm test again, after the fix': 'test2', 'Delete a branch on GitHub': 'delete' };
-		const WORDS = { 'Allowed once': 'once', 'Allowed for this session': 'session', 'Allowed, rule kept': 'always', 'Not allowed': 'no', 'Ran, not asked': 'mode', 'Allowed by your rule': 'rule' };
-		const out = { undef: /undefined/.test(s.innerText), steps: {} };
+		const NAMES = { 'Run npm test': 'test', 'Run the release script': 'release', 'Push to GitHub': 'push', 'Publish the image': 'publish', 'Read a folder outside loom': 'outside', 'Read your release checklist': 'home', 'Run npm test again, after the fix': 'test2', 'Delete a branch on GitHub': 'delete' };
+		const WORDS = { 'Allowed once': 'once', 'Allowed for this session': 'session', 'Allowed, rule kept': 'always', 'Not allowed': 'no', 'Ran, not asked': 'mode', 'Allowed by your rule': 'rule', 'Read, not asked': 'filesafe' };
+		// review A-r4 T3: the two copy guards dropped in r3 are back: no line says "Allowed. Allowed", and the kept rule
+		// is listed with its kind and its place
+		const out = { undef: /undefined/.test(s.innerText), doubled: /Allowed\. Allowed/.test(s.innerText), steps: {}, rules: [] };
 		s.querySelectorAll('.psx-ask > li').forEach((li) => {
 			const id = NAMES[((li.querySelector('.psx-li-name') || {}).textContent || '').trim()]; if (!id) return;
 			const offers = [...li.querySelectorAll('[data-ask]')].map((b) => b.dataset.a);
@@ -654,14 +785,20 @@ export default async function (t) {
 			const state = offers.length ? 'asks' : WORDS[word] || `“${word}”`;
 			out.steps[id] = { state, hook: li.dataset.state || null, offers, sub: (li.querySelector('.psx-li-sub') || {}).textContent || '' };
 		});
+		const h = [...s.querySelectorAll('.psx-h')].find((x) => /^Always rules$/.test(x.textContent.trim()));
+		const list = h && h.nextElementSibling && h.nextElementSibling.matches('ul') ? h.nextElementSibling : null;
+		if (list) out.rules = [...list.querySelectorAll('li')].map((li) => li.innerText.replace(/\s+/g, ' ').trim());
 		return out;
 	};
+	const PLACE_LABEL = { project: 'In this project', computer: 'On this computer', everywhere: 'Everywhere' };
 	/* compare one look at the sheet with the table: every step's state, the answers an asking step offers, the words
-	   that go with its state, and no "undefined" anywhere */
-	const same = (got, want, mode) => {
+	   that go with its state, no "undefined" and no "Allowed. Allowed" anywhere, and the kept rule with its place */
+	const same = (got, want, mode, kept) => {
 		const bad = [];
 		if (!got) return ['the sheet is gone'];
 		if (got.undef) bad.push('a row reads “undefined”');
+		if (got.doubled) bad.push('a line reads “Allowed. Allowed”');
+		if (kept && !got.rules.some((r) => r.startsWith(kept.pattern + ' ') && r.includes(`${kept.kind === 'path' ? 'Folder' : 'Command'} rule · ${PLACE_LABEL[kept.where]}`))) bad.push(`the rule ${kept.pattern} isn’t listed as a ${kept.kind === 'path' ? 'folder' : 'command'} rule ${PLACE_LABEL[kept.where]} (${got.rules.join(' / ') || 'none listed'})`);
 		for (const y of order) {
 			const g = got.steps[y] || {}, w = want[y], k = kindOf[y];
 			if (g.state !== w) { bad.push(`${y}: ${g.state} (table: ${w})`); continue; }
@@ -672,6 +809,7 @@ export default async function (t) {
 			if (w === 'rule' && !/Your (command|folder) rule .+ allowed it\./.test(g.sub)) bad.push(`${y}: no line naming the rule`);
 			if (w === 'session' && !/(For the rest of this run in (Regular|YOLO); a new run or another run mode asks again\. No rule is kept\.|allowed for this session earlier in this run, so it didn’t ask again\.)/.test(g.sub)) bad.push(`${y}: no session line`);
 			if (w === 'no' && !/nothing is kept, so the next request asks again/.test(g.sub)) bad.push(`${y}: no refusal line`);
+			if (w === 'filesafe' && !/FileSafe is on, and this home-folder read is one the task needs and not a secret, so it didn’t ask\. It is listed in Activity\./.test(g.sub)) bad.push(`${y}: no line saying FileSafe’s home read didn’t ask`);
 		}
 		return bad;
 	};
@@ -684,18 +822,24 @@ export default async function (t) {
 			const e = document.querySelector(`.psx-sheet [data-always="${i}"]`); if (!e) return null;
 			return { pat: [...e.querySelectorAll('[data-pat]')].map((r) => r.checked), where: [...e.querySelectorAll('[data-where]')].map((r) => r.value + ':' + r.checked), save: e.querySelector('[data-always-save]').getAttribute('aria-disabled'), note: !!e.querySelector('[data-k="noeverywhere"]'), covers: (e.querySelector('[data-k="covers"]') || {}).textContent || '', preview: (e.querySelector('[data-k="preview"]') || {}).textContent || '' };
 		}, id);
+		// a step or an answer the page doesn't offer fails its case and the walk goes on (an older build has no home read)
+		const has = async (sel) => (await t.root.locator(sel).count()) > 0;
 		const makeRule = async (id, pat, where) => {
+			if (!(await has(`${sh} [data-ask="${id}"][data-a="always"]`))) return false;
 			await t.root.locator(`${sh} [data-ask="${id}"][data-a="always"]`).click(); await settle(t, 200);
 			if (typeof pat === 'number') await t.root.locator(`${sh} [data-always="${id}"] [data-pat="${pat}"]`).check();
 			else { await t.root.locator(`${sh} [data-always="${id}"] [data-pat="own"]`).check(); await settle(t, 150); await t.root.locator(`${sh} [data-always="${id}"] [data-pat-own]`).fill(pat); }
 			await settle(t, 200);
 			await t.root.locator(`${sh} [data-always="${id}"] [data-where="${where}"]`).check(); await settle(t, 150);
 			await t.root.locator(`${sh} [data-always-save="${id}"]`).click(); await settle(t, 250);
+			return true;
 		};
 		const again = async () => { await t.root.locator(`${sh} .psx-sheet-foot button`, { hasText: 'Run it again' }).first().click().catch(async () => { await run(t, () => window.PSX.approvals.draw()); }); await settle(t, 250); };
 		const mode = async (m) => { await run(t, async (x) => { await window.PSX.command({ cmd: 'runmode', mode: x }); }, m); await settle(t, 300); };
+		// loom's FileSafe in the demo world; the next run starts with it (a run keeps the snapshot it started with)
+		const fileSafe = async (on) => { await run(t, (v) => { window.PSX.apply([{ level: 'project', key: 'loom', id: 'safety.protection.filesafe-integration', value: v }], { history: false }); window.PSX.feed && window.PSX.feed.push && window.PSX.feed.push(); }, on); await settle(t, 150); };
 
-		/* the editor (8.03, 8.04), as before */
+		/* the editor (8.03, 8.04) */
 		await open('regular');
 		await t.root.locator(`${sh} [data-ask="test"][data-a="always"]`).click(); await settle(t, 300);
 		let e = await ed('test');
@@ -725,75 +869,105 @@ export default async function (t) {
 		e = await ed('release');
 		await t.check('8.04: your own pattern * on the release step never offers Everywhere, and says why; * reads broad', !!e && !e.where.some((x) => /^everywhere/.test(x)) && e.note && /This one is broad/.test(e.preview), JSON.stringify(e));
 		await pic(t, 'always-own-star', 'Always allow for the release script with your own pattern *: Everywhere stays hidden and * is flagged broad', '.psx-sheet');
+		// review A-r4 N2: Everywhere follows what the pattern is about, not the step it is typed on
+		await t.root.locator(`${sh} [data-always="release"] [data-pat-own]`).fill('git push origin *'); await settle(t, 300);
+		e = await ed('release');
+		await t.check('N2: git push origin * typed on the release step is about git, not a path, so Everywhere is offered (PS-144: what the rule is about)', !!e && e.where.some((x) => /^everywhere/.test(x)) && !e.note, JSON.stringify(e));
 		await t.root.locator(`${sh} [data-always-cancel="release"]`).click(); await settle(t, 200);
 		// F (broad) and E (host-dependent), on the page's own functions with its own steps
 		const units = await run(t, () => {
 			const A = window.PSX.approvals;
 			if (!A || !A.ASKS) return { broad: ['the page has no rule model (PSX.approvals.ASKS)'], narrow: [], host: [], notHost: [] };
-			const S = Object.fromEntries(A.ASKS.map((x) => [x.id, x])), b = (p, s) => A.isBroad(p, S[s]), h = (p, s) => A.hostDependent(p, S[s]);
+			const S = Object.fromEntries(A.ASKS.map((x) => [x.id, x])), b = (p, s) => !!S[s] && A.isBroad(p, S[s]), h = (p, s) => !!S[s] && A.hostDependent(p, S[s]), missing = ['home'].filter((x) => !S[x]).map((x) => `no ${x} step`);
 			return {
-				broad: ['*', 'bash -c *', 'python3 *', 'node *', 'npm *', 'npx *', 'git *', 'rm -rf *', 'read *', 'sudo *', 'sudo apt install *'].filter((p) => !b(p, 'test')).concat(['./scripts/*', '*'].filter((p) => !b(p, 'release'))).concat(['~/Documents/**', '~/**', '*'].filter((p) => !b(p, 'outside'))),
-				narrow: ['npm test *', 'git push origin *', 'python3 tools/build.py *', 'npm test'].filter((p) => b(p, 'test')).concat(['./scripts/release.sh *'].filter((p) => b(p, 'release'))).concat(['~/Documents/taxes', '~/Documents/taxes/**'].filter((p) => b(p, 'outside'))),
-				host: [['./scripts/release.sh *', 'release'], ['*', 'release'], ['*', 'test'], ['read *', 'test'], ['rm -rf *', 'test'], ['/usr/local/bin/npm test', 'test'], ['~/Documents/taxes/**', 'outside']].filter(([p, s]) => !h(p, s)).map((x) => x.join(' on ')),
-				notHost: [['npm test *', 'test'], ['git *', 'test'], ['git push origin *', 'test']].filter(([p, s]) => h(p, s)).map((x) => x.join(' on '))
+				broad: missing.concat(['*', 'bash -c *', 'python3 *', 'node *', 'npm *', 'npx *', 'git *', 'rm -rf *', 'read *', 'sudo *', 'sudo apt install *'].filter((p) => !b(p, 'test'))).concat(['./scripts/*', '*'].filter((p) => !b(p, 'release'))).concat(['/mnt/team-share/**', '/mnt/**', '*'].filter((p) => !b(p, 'outside'))).concat(['~/Documents/**', '~/Documents/*.md'].filter((p) => !b(p, 'home'))),
+				narrow: ['npm test *', 'git push origin *', 'python3 tools/build.py *', 'npm test'].filter((p) => b(p, 'test')).concat(['./scripts/release.sh *'].filter((p) => b(p, 'release'))).concat(['/mnt/team-share/release-notes', '/mnt/team-share/release-notes/**'].filter((p) => b(p, 'outside'))).concat(['~/Documents/release-checklist.md'].filter((p) => b(p, 'home'))),
+				host: [['./scripts/release.sh *', 'release'], ['*', 'release'], ['*', 'test'], ['read *', 'test'], ['rm -rf *', 'test'], ['/usr/local/bin/npm test', 'test'], ['/mnt/team-share/release-notes/**', 'outside']].filter(([p, s]) => !h(p, s)).map((x) => x.join(' on ')),
+				notHost: [['npm test *', 'test'], ['git *', 'test'], ['git push origin *', 'test'], ['git push origin *', 'release'], ['npm test *', 'release']].filter(([p, s]) => h(p, s)).map((x) => x.join(' on '))
 			};
 		});
-		await t.check('F: broad = a wildcard program, sudo with *, a shell or interpreter running *, or one program word then *; a folder rule reaching past its folder', !units.broad.length, 'not flagged: ' + units.broad.join(' | '));
-		await t.check('F: a named script or subcommand then * is not broad (./scripts/release.sh *, npm test *, git push origin *), nor a folder rule inside its folder', !units.narrow.length, 'flagged: ' + units.narrow.join(' | '));
-		await t.check('E: host-dependent = a step about a script or path, a pattern naming one, a file command or a wildcard program; never Everywhere', !units.host.length && !units.notHost.length, JSON.stringify(units));
+		await t.check('F: broad = a wildcard program, sudo with *, a shell or interpreter running *, or one program word then *; a folder rule reaching past its file or folder', !units.broad.length, 'not flagged: ' + units.broad.join(' | '));
+		await t.check('F: a named script or subcommand then * is not broad (./scripts/release.sh *, npm test *, git push origin *), nor a folder rule inside its file or folder', !units.narrow.length, 'flagged: ' + units.narrow.join(' | '));
+		await t.check('E: host-dependent = a pattern naming a path or script, a file command or a wildcard program, whatever step it is typed on (N2); never Everywhere', !units.host.length && !units.notHost.length, JSON.stringify(units));
 
-		/* the table walk: every step × every answer it offers × Regular and YOLO × the same run, a new run and a switch */
-		for (const m of ['regular', 'yolo']) {
+		/* fresh runs: FileSafe on (the demo's), then off */
+		for (const fs of [true, false]) for (const m of ['regular', 'yolo']) {
 			await open(m);
+			if (!fs) { await fileSafe(false); await again(); }
 			const fresh = await states();
-			const bad = same(fresh, expect(m, null, null), m);
-			await t.check(`B: a fresh run in ${m === 'yolo' ? 'YOLO' : 'Regular'}: every step asks or runs as the table says, offering its kind’s answers`, !bad.length, bad.join(' | ') || JSON.stringify(Object.fromEntries(Object.entries(fresh.steps).map(([k, v]) => [k, v.state]))));
+			const bad = same(fresh, expect(m, null, null, fs), m);
+			await t.check(`B: a fresh run in ${m === 'yolo' ? 'YOLO' : 'Regular'}, FileSafe ${fs ? 'on' : 'off'}: every step asks or runs as the table says${fs ? '; the home read doesn’t ask (PS-145) and the team-share folder does' : '; the home read asks like any outside path'}`, !bad.length, bad.join(' | ') || JSON.stringify(Object.fromEntries(Object.entries(fresh.steps).map(([k, v]) => [k, v.state]))));
 		}
-		let walked = 0;
-		for (const m of ['regular', 'yolo']) {
+
+		/* the table walk: every step × every answer it offers × Regular and YOLO × the same run, a new run and a switch.
+		   With FileSafe on the home read never asks; with it off, the home read is walked too */
+		let walked = 0, cases = 0;
+		for (const fs of [true, false]) for (const m of ['regular', 'yolo']) for (const [y, k] of AM.steps) {
+			if (m === 'yolo' && !AM.yoloAsks[k]) continue;
+			if (fs === AM.home.includes(y)) continue;          // FileSafe on: every step but the home read; off: the home read
+			cases += AM.offers[k].length;
+		}
+		for (const fs of [true, false]) for (const m of ['regular', 'yolo']) {
 			const other = m === 'yolo' ? 'regular' : 'yolo', M = m === 'yolo' ? 'YOLO' : 'Regular';
 			for (const [y, k] of AM.steps) {
 				if (m === 'yolo' && !AM.yoloAsks[k]) continue;
+				if (fs === AM.home.includes(y)) continue;
 				for (const x of AM.offers[k]) {
 					await open(m);
-					const rule = x === 'always' ? AM.rule[y] : null;
-					if (x === 'always') await makeRule(y, 1, 'project');
-					else { await t.root.locator(`${sh} [data-ask="${y}"][data-a="${x}"]`).click(); await settle(t, 250); }
-					const s1 = same(await states(), expect(m, [y, x], rule), m);
+					if (!fs) { await fileSafe(false); await again(); }
+					const rule = x === 'always' ? AM.rule[y] : null, kept = rule ? { pattern: rule[0], kind: AM.ruleKind[k], where: 'project' } : null;
+					let offered = true;
+					if (x === 'always') offered = await makeRule(y, 1, 'project');
+					else if (await has(`${sh} [data-ask="${y}"][data-a="${x}"]`)) { await t.root.locator(`${sh} [data-ask="${y}"][data-a="${x}"]`).click(); await settle(t, 250); }
+					else offered = false;
+					if (!offered) { await t.check(`C/D: ${y} answered ${x} in ${M}, FileSafe ${fs ? 'on' : 'off'}: this run, Run it again, and a switch to ${other === 'yolo' ? 'YOLO' : 'Regular'} each match the table`, false, `the page offers no ${x} on ${y}`); walked++; continue; }
+					const s1 = same(await states(), expect(m, [y, x], rule, fs), m, kept);
 					await again();
-					const s2 = same(await states(), expect(m, null, rule), m);
+					const s2 = same(await states(), expect(m, null, rule, fs), m, kept);
 					await mode(other);
-					const s3 = same(await states(), expect(other, null, rule), other);
-					await t.check(`C/D: ${y} answered ${x} in ${M}: this run, Run it again, and a switch to ${other === 'yolo' ? 'YOLO' : 'Regular'} each match the table`, !s1.length && !s2.length && !s3.length, ['same run: ' + (s1.join('; ') || 'ok'), 'new run: ' + (s2.join('; ') || 'ok'), 'switch: ' + (s3.join('; ') || 'ok')].join(' | '));
+					const s3 = same(await states(), expect(other, null, rule, fs), other, kept);
+					await t.check(`C/D: ${y} answered ${x} in ${M}, FileSafe ${fs ? 'on' : 'off'}: this run, Run it again, and a switch to ${other === 'yolo' ? 'YOLO' : 'Regular'} each match the table`, !s1.length && !s2.length && !s3.length, ['same run: ' + (s1.join('; ') || 'ok'), 'new run: ' + (s2.join('; ') || 'ok'), 'switch: ' + (s3.join('; ') || 'ok')].join(' | '));
 					walked++;
 				}
 			}
 		}
-		await t.check('the walk covered all 30 step × answer × run-mode cases', walked === 30, String(walked));
+		await t.check(`the walk covered all ${cases} step × answer × run-mode cases the table gives (FileSafe on, and the home read with it off)`, walked === cases && cases > 30, `${walked} of ${cases}`);
 
-		/* R3-1: a rule wider than its step never reaches past its kind (D). Own patterns, then a new run and YOLO */
-		const WIDE = [
-			['test', '*', 'project', ['test', 'release', 'test2'], 'a bare * made on npm test covers the commands only: never the push, the publish, the outside folder or the deletion'],
-			['release', 'git push origin *', 'project', [], 'git push origin * (R3-1’s case) covers no step: the push and the deletion aren’t commands, so the deletion still asks in Regular and in YOLO'],
-			['outside', '*', 'computer', ['outside'], 'a folder rule * covers the outside folder only, never a command']
-		];
-		for (const [y, pat, where, cov, why] of WIDE) {
+		/* review A-r4 T2: cross-kind coverage, generated from table D. For each rule kind, a rule made on a step of that
+		   kind whose own pattern is exactly another kind's target (so the text matches), then a new run in Regular and in
+		   YOLO: that step is not covered. And the widest rule, *, covers every step of its own kind and nothing else */
+		const CROSS = [];
+		for (const R of ['command', 'path']) {
+			const maker = order.find((id) => AM.ruleKind[kindOf[id]] === R && !AM.home.includes(id));
+			const seen = new Set();
+			for (const y of order) {
+				if (AM.ruleKind[kindOf[y]] === R || seen.has(AM.target[y])) continue;
+				seen.add(AM.target[y]);
+				CROSS.push([R, maker, AM.target[y], order.filter((z) => AM.ruleKind[kindOf[z]] === R && AM.target[z] === AM.target[y])]);
+			}
+			CROSS.push([R, maker, '*', order.filter((z) => AM.ruleKind[kindOf[z]] === R)]);
+		}
+		// R3-1's own case: git push origin *, made on the release step
+		CROSS.push(['command', 'release', 'git push origin *', []]);
+		for (const [R, maker, pat, cov] of CROSS) {
 			await open('regular');
-			await makeRule(y, pat, where);
+			if (!(await makeRule(maker, pat, 'project'))) { await t.check(`D (cross-kind): a ${R === 'path' ? 'folder' : 'command'} rule ${pat} made on ${maker}`, false, `the page offers no Always allow on ${maker}`); continue; }
 			await again();
-			const r1 = same(await states(), expect('regular', null, [pat, cov]), 'regular');
+			const kept = { pattern: pat, kind: R, where: 'project' };
+			const r1 = same(await states(), expect('regular', null, [pat, cov]), 'regular', kept);
 			await mode('yolo');
-			const r2 = same(await states(), expect('yolo', null, [pat, cov]), 'yolo');
+			const r2 = same(await states(), expect('yolo', null, [pat, cov]), 'yolo', kept);
 			if (pat === 'git push origin *') await pic(t, 'always-r3-1-yolo', 'R3-1: after the rule git push origin *, a new run in YOLO: the deletion on the remote still asks', '.psx-sheet');
-			await t.check(`D (R3-1): ${why}`, !r1.length && !r2.length, ['Regular: ' + (r1.join('; ') || 'ok'), 'YOLO: ' + (r2.join('; ') || 'ok')].join(' | '));
+			const others = order.filter((z) => AM.ruleKind[kindOf[z]] !== R).join(', ');
+			await t.check(`D (cross-kind): a ${R === 'path' ? 'folder' : 'command'} rule ${pat} made on ${maker} covers ${cov.length ? cov.join(', ') : 'no step'} and never ${others}, in a new run in Regular and in YOLO`, !r1.length && !r2.length, ['Regular: ' + (r1.join('; ') || 'ok'), 'YOLO: ' + (r2.join('; ') || 'ok')].join(' | '));
 		}
 		// the session picture (Regular): For this session on npm test covers its repeat; the outside folder for this session
 		await open('regular');
 		await t.root.locator(`${sh} [data-ask="test"][data-a="session"]`).click(); await settle(t, 250);
 		await t.root.locator(`${sh} [data-ask="outside"][data-a="session"]`).click(); await settle(t, 250);
-		await pic(t, 'always-session-regular', '11.18 in Regular: For this session on npm test covers its repeat; the outside folder allowed for this session', '.psx-sheet');
+		await pic(t, 'always-session-regular', '11.18 in Regular: For this session on npm test covers its repeat; the team-share folder allowed for this session; the home read didn’t ask (FileSafe on)', '.psx-sheet');
 		await mode('yolo');
-		await pic(t, 'always-after-yolo', '11.18 after a switch to YOLO: a new run, so the outside folder asks again and the deletion still asks', '.psx-sheet');
+		await pic(t, 'always-after-yolo', '11.18 after a switch to YOLO: a new run, so the team-share folder asks again and the deletion still asks', '.psx-sheet');
 		const y = await run(t, () => ({ rules: window.PSX.approvals.st.rules.length, none: /None made/.test(document.querySelector('.psx-sheet').innerText) }));
 		await t.check('8.05-8.06: YOLO makes no Always rule of its own', y.rules === 0 && y.none, JSON.stringify(y));
 		await run(t, async () => { await window.PSX.command({ cmd: 'runmode', mode: 'regular' }); window.PSX.closeSheets(); });
@@ -828,6 +1002,40 @@ export default async function (t) {
 		await t.page.selectOption('#width', '860');
 		// the frame animates its width (0.2s): wait for it to arrive rather than for a fixed time
 		await t.until('Window width sets the frame to 860px', () => Math.round(document.getElementById('pm7').getBoundingClientRect().width) === 860, null, { timeout: 5000 });
+		/* review A-r4, R3-5 under load: the strip's Look names the look that is painted. A busy loop holds the frame's main
+		   thread about 75% of the time while three looks are picked 1.2s apart (past the greyed Look, as a fast hand or a
+		   script can). Every 150ms: the Look, whether it is greyed, and the look painted in the frame */
+		if (frame) {
+			await frame.evaluate(() => { window.__psxLoad = setInterval(() => { const t0 = performance.now(); while (performance.now() - t0 < 70) { /* load */ } }, 90); });
+			const seq = ['retro-dark', 'retro-light', 'glass-dark'];
+			const run5 = await t.page.evaluate(async (seq) => {
+				const sel = document.getElementById('look'), fr = document.getElementById('pm7');
+				const painted = () => { const H = fr.contentDocument.documentElement, th = H.getAttribute('data-theme') || 'basic-dark'; return H.getAttribute('data-o55-nier') === 'on' ? 'nier-' + (/-light$/.test(th) ? 'light' : 'dark') : th; };
+				const pick = (v) => { sel.disabled = false; sel.value = v; sel.dispatchEvent(new Event('change', { bubbles: true })); };
+				const out = []; const t0 = performance.now(); let i = 0, nextAt = 0, settledAt = null;
+				while (performance.now() - t0 < 40000) {
+					const now = performance.now() - t0;
+					if (i < seq.length && now >= nextAt) { pick(seq[i]); out.push({ t: Math.round(now), pick: seq[i] }); i++; nextAt = now + 1200; }
+					out.push({ t: Math.round(now), sel: sel.value, dis: sel.disabled, painted: painted() });
+					if (i >= seq.length && !sel.disabled && sel.value === painted() && painted() === seq[seq.length - 1]) { if (settledAt == null) settledAt = now; if (now - settledAt > 3000) break; } else settledAt = null;
+					await new Promise((r) => setTimeout(r, 150));
+				}
+				return out;
+			}, seq);
+			await frame.evaluate(() => clearInterval(window.__psxLoad));
+			const samples = run5.filter((x) => x.sel), last = samples[samples.length - 1] || {};
+			const lastPickAt = Math.max(...run5.filter((x) => x.pick).map((x) => x.t));
+			// a greyed Look shows the latest pick; an open one shows the painted look, within one sample of a repaint
+			const stale = []; let since = null;
+			for (const x of samples) {
+				if (x.t < lastPickAt) continue;
+				const ok = x.dis ? x.sel === seq[seq.length - 1] : x.sel === x.painted;
+				if (!ok) { if (since == null) since = x.t; if (x.t - since > 450) stale.push(`${x.t}ms: Look ${x.sel}${x.dis ? ' (greyed)' : ''}, painted ${x.painted}`); } else since = null;
+			}
+			const ends = !last.dis && last.sel === last.painted && last.painted === seq[seq.length - 1];
+			await t.check('R3-5 under load: after the last pick the Look names the look painted (or, while greyed, the one asked for), never an older one for more than a moment, and it ends open on the last look picked, painted', stale.length === 0 && ends,
+				(stale.slice(0, 5).join(' | ') || 'no stale sample') + ' · end: ' + samples.slice(-3).map((x) => `${x.t}:${x.sel}/${x.painted}${x.dis ? '/greyed' : ''}`).join(' '));
+		}
 		t.page.off('pageerror', onErr); t.page.off('console', onConsole);
 		await t.check('no uncaught error and no console.error on the strip page', errors.length === 0, errors.join(' | '));
 		await pic(t, 'strip-11-18', 'The strip page with Moments › 11.18 open, its caption and its sheet', null);
