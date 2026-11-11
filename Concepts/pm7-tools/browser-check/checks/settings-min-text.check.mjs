@@ -190,14 +190,22 @@ const FIT = ([affected]) => {
 const settle = (t, ms = 350) => t.page.waitForTimeout(ms);
 
 /* The look is set the way a person sets it — the Theme and Light or dark rows' own dropdowns — because the
-   Settings engine re-applies the saved pair on every render, so a look painted without saving is reset. */
+   Settings engine re-applies the saved pair on every render, so a look painted without saving is reset. The rows
+   live on General, and the walk above ends on whichever chapter it visited last. */
 async function setLookBySetting(t, f, look) {
 	const [family, mode] = look.split('-');
+	const general = f.locator('#pm-settings-root [data-action="navigate-domain"][data-domain="general"]').first();
+	if (await general.count()) {
+		await general.click().catch(() => {});
+		await f.waitForFunction(() => !!document.querySelector('select[data-setting="general.visual.theme"]'), null, { timeout: 15000 }).catch(() => {});
+		await t.page.waitForTimeout(600);
+	}
 	for (const [setting, value] of [
 		['general.visual.theme', family === 'nier' ? 'NieR' : family[0].toUpperCase() + family.slice(1)],
 		['general.visual.theme-mode', mode === 'light' ? 'Light' : 'Dark'],
 	]) {
 		const trigger = f.locator(`select[data-setting="${setting}"]`).locator('..').locator('.pm51-dd-trigger');
+		if (!(await trigger.count())) return false;
 		const labels = await f.locator(`select[data-setting="${setting}"] option`).allTextContents();
 		const name = labels.includes(value) ? value : `${value} ${mode === 'light' ? 'Light' : 'Dark'}`;
 		await trigger.first().scrollIntoViewIfNeeded();
