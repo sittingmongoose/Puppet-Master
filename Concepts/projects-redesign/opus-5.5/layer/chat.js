@@ -262,13 +262,7 @@
     sendB.addEventListener('click', () => send());
     const composer = h('div.pjx-npc-comp', null, c && !mr ? needsRow(c) : null, h('div.pjx-npc-box', null, h('div.pjx-npc-field', null, ta), h('div.pjx-npc-tools', null, h('span.pjx-npc-hint', { text: c ? w('nc.composerHint', { computer: comp(c.runsOn).name }) : w('nc.composerHintDraft') }), sendB)));
     const hadFocus = el.contains(D.activeElement) && D.activeElement.getAttribute && D.activeElement.getAttribute('data-c-key');
-    const shell = h('div.pmu-shell.pjx-npc-shell', null, head, folder, tx, composer);
-    // a redraw that would draw the same thing keeps the nodes on the page: a change anywhere in the app (another
-    // Project's progress) must not swap a button out from under a press that has started, which loses the click
-    // (a textarea's words aren't in its HTML, so they are compared too: Edit puts words in the field through V.text)
-    const old = el.firstElementChild, oldTa = old && old.querySelector('.pjx-npc-input');
-    if (old && oldTa && oldTa.value === ta.value && old.outerHTML === shell.outerHTML) return;
-    el.replaceChildren(shell);
+    el.replaceChildren(h('div.pmu-shell.pjx-npc-shell', null, head, folder, tx, composer));
     // the words and the caret survive a redraw (and a re-mount, when PMConcept7 redraws its chat stage)
     if (V.focusInput) { try { ta.focus({ preventScroll: true }); ta.setSelectionRange(ta.value.length, ta.value.length); } catch (e) { /* not focusable yet */ } }
     else if (hadFocus) { const f = el.querySelector('[data-c-key="' + hadFocus + '"]'); if (f) f.focus({ preventScroll: true }); }
