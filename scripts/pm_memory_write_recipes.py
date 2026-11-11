@@ -132,6 +132,87 @@ DATE_BAD = ('2026-11-04T17:00:00', '2026/11/04T17:00:00Z', '2026-13-04T17:00:00Z
             '2026-02-30T17:00:00Z', '2026-11-04T24:00:00Z', '2026-11-04T17:60:00Z',
             '2026-11-04T17:00:60Z', '2026-11-04T17:00:00Z\n', '2026-11-04T17:00:00.Z',
             '2026-11-04T17:00:00+24:00', '2026-11-04T17:00:00+00:60')
+# CV-1101 / CV-253 profile battery (sweep part 2B). Each expectation is written here by hand from the owner text
+# (CV-1101's broad event_record profile; CV-253's storage_utc_z: terminal uppercase Z only), never computed with
+# the shared helper. BROAD_ONLY holds forms owner-valid under event_record that storage_utc_z refuses.
+BOTH_VALID = ('2026-11-04T17:00:00Z', '2016-12-31T23:59:60Z', '2026-11-04t17:00:00.123456789012Z',
+              '0000-01-01T00:00:00Z', '2024-02-29T23:59:59Z', '2026-11-04T17:00:00.000000000000000000001Z')
+BROAD_ONLY = ('2026-11-04t17:00:00z', '2026-11-04T22:30:00+05:30', '2026-11-04T17:00:00+00:00',
+              '2026-11-04T17:00:00-00:00', '2017-01-01T05:29:60+05:30', '2026-11-04T12:00:00-05:00')
+BOTH_REFUSED = DATE_BAD + (' 2026-11-04T17:00:00Z', '2026-11-04 17:00:00Z', '2026-11-04T17:00:00,5Z',
+                           '2016-12-31T23:59:60+01:00', '2026-02-29T00:00:00Z', '2026-11-04T17:00:00Z ',
+                           '20261104T170000Z', '2026-11-04T17:00:00+0530', '2015-12-31T23:59:60Z')
+# One shared refusal reason per lane-local leak other lanes recorded, at the named DMEM field kinds.
+CAUSES = (('2026-11-04T24:00:00Z', 'date_time_hour'), ('2026-11-04T17:00:00Z\n', 'date_time_syntax'),
+          ('2026-11-04T17:00:60Z', 'date_time_leap_second'), ('2026-02-29T17:00:00Z', 'date_time_day'),
+          ('2026-11-04T17:60:00Z', 'date_time_minute'), ('2026-11-04T17:00:00+24:00', 'date_time_offset_hour'))
+
+
+class StrSubclass(str):
+    pass
+
+
+def refusal_reasons(validator, instance):
+    """The shared Refusal reasons among the validator's format errors (through oneOf/anyOf contexts)."""
+    reasons = []
+    pending = list(validator.iter_errors(instance))
+    while pending:
+        error = pending.pop()
+        pending.extend(error.context or ())
+        cause = getattr(error, 'cause', None)
+        if error.validator == 'format' and cause is not None and type(cause).__name__ == 'Refusal':
+            reasons.append(cause.reason)
+    return reasons
+
+
+def datetime_profile_cases(m, contexts):
+    """CV-1101/CV-253 at every DMEM timestamp field, each value one change from a valid instance."""
+    counts = {'leaf_values': 0, 'leaves': 0, 'shared_refusal_causes': 0, 'envelope_storage_values': 0,
+              'writer_storage_refusals': 0, 'writer_storage_positives': 0, 'str_subclass_refusals': 0}
+    assert not m.field_profile_errors(formatted_leaves(m)), m.field_profile_errors(formatted_leaves(m))
+    for path, pointer, schema in formatted_leaves(m):
+        if schema['format'] != 'date-time':
+            continue
+        field = pointer.split('/')[-3] if pointer.split('/')[-2] in ('anyOf', 'oneOf', 'allOf') else pointer.split('/')[-1]
+        strict = m.FIELD_PROFILES[(path, field)] == m.STORAGE_UTC_Z
+        for value in BOTH_VALID + BROAD_ONLY + BOTH_REFUSED:
+            expected = value in BOTH_VALID or (value in BROAD_ONLY and not strict)
+            assert m.formatted_value_matches(path, pointer, value) is expected, (path, pointer, value)
+            counts['leaf_values'] += 1
+        assert not m.formatted_value_matches(path, pointer, StrSubclass('2026-11-04T17:00:00Z')), (path, pointer)
+        counts['str_subclass_refusals'] += 1
+        leaf = m.validator(path, pointer)
+        for value, reason in CAUSES + ((('2026-11-04T17:00:00z', 'date_time_utc_z'),) if strict else ()):
+            # The refusal must come from the installed shared predicate, never only from a pattern.
+            assert reason in refusal_reasons(leaf, value), (path, pointer, value, refusal_reasons(leaf, value))
+            counts['shared_refusal_causes'] += 1
+        counts['leaves'] += 1
+    for event, context in contexts.items():
+        before = context['writer_states']['before']
+        value = m.canonical_value(before['operation'], event.rsplit('.', 1)[1])
+        envelope = m.envelope_validator()
+        assert envelope.is_valid(value), event
+        for field in m.STORAGE_TIMESTAMP_FIELDS + ('occurred_at_utc',):
+            for candidate in BOTH_VALID + BROAD_ONLY + BOTH_REFUSED:
+                expected = candidate in BOTH_VALID or (candidate in BROAD_ONLY and field == 'occurred_at_utc')
+                assert envelope.is_valid({**value, field: candidate}) is expected, (event, field, candidate)
+                counts['envelope_storage_values'] += 1
+        # Storage fields are outside the producer join, so the envelope verdict is the writer's only refusal.
+        for field in m.STORAGE_TIMESTAMP_FIELDS:
+            for candidate in BROAD_ONLY:
+                try:
+                    m.append_current(deepcopy(before), {**value, field: candidate}, event)
+                except m.TableRefusal as refusal:
+                    assert refusal.row in ('AP03_envelope_schema', 'AA02_envelope_schema'), (event, field, candidate, refusal.row)
+                else:
+                    raise AssertionError((event, field, candidate, 'storage_utc_z not enforced at the writer'))
+                counts['writer_storage_refusals'] += 1
+            for candidate in ('2016-12-31T23:59:60Z', '2026-11-04t17:00:00.123456789012Z'):
+                m.append_current(deepcopy(before), {**value, field: candidate}, event)
+                counts['writer_storage_positives'] += 1
+    return counts
+
+
 UUID_BAD = ('11111111111141118111111111111111', '11111111-1111-4111-8111-11111111111g',
             '11111111-1111-4111-8111-111111111111\n', 'urn:uuid:11111111-1111-4111-8111-111111111111')
 
@@ -201,6 +282,7 @@ def run(m, contexts, archive=None):
             for value in ('2024-02-29T23:59:59Z', '2026-11-04T17:00:00.0Z', '2026-11-04T17:00:00.123456789Z'):
                 assert m.formatted_value_matches(path,pointer,value), (path,pointer,value)
                 counts['format_positives'] += 1
+    counts['datetime_profiles'] = datetime_profile_cases(m, contexts)
     # Writer recipe selection is fixed by the entry point; a supplied legacy recipe or edition
     # cannot bypass current envelope admission. Owner-valid uint64 Storage metadata needs no override. The isolated numeric/schema guards are proved separately.
     for event, context in contexts.items():

@@ -4,7 +4,6 @@
 No serializer, score normalization, number cap or maintenance admission is defined here.
 """
 from copy import deepcopy
-from datetime import datetime
 from decimal import Decimal
 from fractions import Fraction
 import json
@@ -40,20 +39,33 @@ def string_list(value):
     return type(value) is list and all(type(item) is str for item in value)
 
 
-def instant(core, value):
-    """Exact rational seconds for policy ordering only; retain the original spelling.
+# Field decomposition of a string the shared predicate has already accepted (never a grammar of its own).
+_PARTS = re.compile(r'([0-9]{4})-([0-9]{2})-([0-9]{2})[Tt]([0-9]{2}):([0-9]{2}):([0-9]{2})(?:\.([0-9]+))?'
+                    r'([Zz]|[+-][0-9]{2}:[0-9]{2})', re.ASCII)
 
-    datetime parses only the whole-second calendar/zone. Decimal construction and
-    Fraction conversion retain every fractional digit without context rounding or
-    an integer-string conversion limit. No timestamp precision cap is introduced.
+
+def instant(core, value):
+    """Exact rational elapsed seconds for policy ordering only; retain the original spelling.
+
+    The policy timestamps (captured_at and each memory's created_at, updated_at, last_access_at) are
+    AMS memory-record times with no stricter owner profile, so the row reads the shared CV-1101
+    predicate under its broad RFC 3339 profile (`pm_event_datetime.date_time`, profile event_record):
+    offsets, lowercase t/z, year 0000 and announced leap seconds are valid; everything else refuses.
+    The instant counts elapsed seconds on the shared predicate's own calendar and announced leap-second
+    table (`pm_event_datetime._day_number`, `_LEAP_PRECEDING_SECONDS`): a legitimate 23:59:60 is the one
+    second between 23:59:59 and the next 00:00:00, so ordering stays strict and a duration is elapsed time.
+    Decimal construction and Fraction conversion retain every fractional digit without context rounding
+    or an integer-string conversion limit. No timestamp precision cap is introduced.
     """
     core.require('pt_instant', value_type=type(value).__name__,
-                 conforms=core.enforced_formats().conforms(value, 'date-time') if type(value) is str else None)
-    fraction, zone = re.fullmatch(r'(?:\.([0-9]+))?([Zz]|[+-][0-9]{2}:[0-9]{2})', value[19:]).groups()
-    whole = datetime.fromisoformat(value[:19].replace('t', 'T') + ('+00:00' if zone in ('Z', 'z') else zone))
-    offset = whole.utcoffset()
-    seconds = (whole.toordinal() * 86400 + whole.hour * 3600 + whole.minute * 60 + whole.second
-               - offset.days * 86400 - offset.seconds)
+                 conforms=core.shared_date_time(value, core.EVENT_RECORD) if type(value) is str else None)
+    year, month, day, hour, minute, second, fraction, zone = _PARTS.fullmatch(value).groups()
+    offset = 0 if zone in ('Z', 'z') else (1 if zone[0] == '+' else -1) * (int(zone[1:3]) * 3600 + int(zone[4:6]) * 60)
+    naive = (core.datetimes._day_number(int(year), int(month), int(day)) * 86400
+             + int(hour) * 3600 + int(minute) * 60 + int(second) - offset)
+    # Leap seconds inserted before this instant; 23:59:60 itself is the inserted second, not yet counted.
+    leaps = sum(1 for preceding in core.datetimes._LEAP_PRECEDING_SECONDS if preceding + 1 <= naive)
+    seconds = naive + leaps - (1 if int(second) == 60 else 0)
     return seconds + Fraction(Decimal('0.' + fraction)) if fraction else Fraction(seconds)
 
 
@@ -76,9 +88,12 @@ def selection_observations(core, snapshot, job):
     # Exact flag type belongs to archive.memory_flags; this predicate owns active vs archived.
     yield 'ps_active', {'archived_ids': [k for k, m in zip(keys, selected) if type(m['archived']) is bool and m['archived']]}
     captured = instant(core, snapshot['captured_at'])
-    starts = [max(instant(core, m.get('created_at') if m.get('updated_at') is None else m['updated_at']),
-                  instant(core, m.get('created_at') if m.get('last_access_at') is None else m['last_access_at']))
-              for m in selected]
+    # Every selected original's created_at is read and checked, whether or not an edit and an access time
+    # are present (AMS section 3.1 requires it on every memory; sweep part 2B, part-1 fixture-pass item 3).
+    created = [instant(core, m.get('created_at')) for m in selected]
+    starts = [max(made if m.get('updated_at') is None else instant(core, m['updated_at']),
+                  made if m.get('last_access_at') is None else instant(core, m['last_access_at']))
+              for m, made in zip(selected, created)]
     yield 'ps_age', {'young_ids': [k for k, start in zip(keys, starts) if not captured - start >= days * 86400]}
     values = [m.get('usefulness_score') for m in selected]
     bad = [k for k, v in zip(keys, values)
@@ -240,6 +255,60 @@ def dedup_errors(core, before, after):
     return errors
 
 
+# CV-1101 policy-timestamp battery (sweep part 2B), hand-written expectations: broad RFC 3339 profile.
+TIME_VALID = ('2026-08-07T00:00:00Z', '2026-08-07t00:00:00z', '2026-08-07T05:30:00+05:30', '2026-08-06T19:00:00-05:00',
+              '2016-12-31T23:59:60Z', '2017-01-01T05:29:60+05:30', '0000-01-01T00:00:00Z',
+              '2026-08-07T00:00:00.000000000000000000001Z')
+TIME_REFUSED = ('2026-08-07T24:00:00Z', '2026-08-07T00:00:00Z\n', '2026-08-07T00:00:60Z', '2026-02-29T00:00:00Z',
+                '2026-08-07T00:00:00', '2026-08-07 00:00:00Z', '2026-08-07T00:00:00.Z', '2026-08-07T00:00:00+24:00',
+                '2026-08-07T00:00:00+05:60', '2016-12-31T23:59:60+01:00', ' 2026-08-07T00:00:00Z')
+TIME_WRONG_TYPE = ('1', None, 1, True, ['2026-08-07T00:00:00Z'], {'at': '2026-08-07T00:00:00Z'})
+
+
+def timestamp_checks(core, fixtures, job, archive=None):
+    """Each case is one change from a positive: a selected original's created_at (both an edit and an access time
+    present, so its value never moves the idle anchor) or a group member's created_at; and strict leap-second order."""
+    counts = {'valid': 0, 'refused': 0, 'wrong_type': 0, 'order': 0}
+    order = [instant(core, x) for x in ('2016-12-31T23:59:59.999Z', '2016-12-31T23:59:60Z', '2016-12-31T23:59:60.5Z',
+                                        '2017-01-01T00:00:00Z', '2017-01-01T00:00:00.5Z')]
+    assert order == sorted(order) and len(set(order)) == len(order), order
+    assert instant(core, '2017-01-01T05:29:60+05:30') == instant(core, '2016-12-31T23:59:60Z')
+    assert instant(core, '2017-01-01T00:00:00Z') - instant(core, '2016-12-31T23:59:59Z') == 2
+    assert instant(core, '2026-08-07T00:00:00Z') - instant(core, '2026-08-06T00:00:00Z') == 86400
+    counts['order'] += 4
+    positive = next(c for c in fixtures['cases'] if c['job'] == job and 'refusal' not in c
+                    and not c.get('candidate_refusal') and 'after' not in c and not c.get('before_edits')
+                    and not c.get('after_edits'))
+    base = typed_edits(deepcopy(positive['before']), [])
+    if job == 'dedup_sweep':
+        key = base['eligible_ids'][0]; run_one = lambda before: dedup_candidate(core, before)
+    else:
+        key = next(k for k in base['selected_ids'] if base['memories'][k].get('updated_at') is not None
+                   and base['memories'][k].get('last_access_at') is not None)
+        run_one = lambda before: archive.archive_candidate(before, job)
+    run_one(deepcopy(base))
+    for value in TIME_VALID + TIME_REFUSED + TIME_WRONG_TYPE:
+        before = deepcopy(base); before['memories'][key]['created_at'] = deepcopy(value)
+        try:
+            run_one(before)
+        except core.TableRefusal as refusal:
+            assert value not in TIME_VALID, (job, value, refusal.row)
+            assert (refusal.phase, refusal.row) == ('pt_instant', 'PT02_format' if type(value) is str else 'PT01_type'), (job, value, refusal.row)
+            counts['wrong_type' if type(value) is not str else 'refused'] += 1
+        else:
+            assert value in TIME_VALID, (job, value, 'accepted')
+            counts['valid'] += 1
+    if job == 'dedup_sweep':
+        # Creation order across a legitimate leap second picks the earlier original whatever the key order.
+        before = deepcopy(base); first, second = base['eligible_ids'][:2]
+        before['memories'][first]['created_at'] = '2017-01-01T00:00:00Z'
+        before['memories'][second]['created_at'] = '2016-12-31T23:59:60Z'
+        after = dedup_candidate(core, before)
+        assert after['merge_records'][-1]['survivor_id'] == second, after['merge_records'][-1]
+        counts['order'] += 1
+    return counts
+
+
 def run(core, families, archive=None):
     fixtures = core.load('Plans/memory_card6_policy_fixtures.json')
     result = {}
@@ -312,5 +381,6 @@ def run(core, families, archive=None):
             counts['negatives' if errors else 'positives'] += 1
             if errors:
                 counts['one_defect_negatives'].append(case['name'])
+        counts['timestamp_checks'] = timestamp_checks(core, fixtures, job, archive)
         result[event] = counts
     return result

@@ -311,8 +311,9 @@ history_chain('hm', 'original_missing', 'read_canonical_history (requested origi
 CANDIDATE = 'boundary_refused'
 phase('bd_schema', 'accept: the candidate payload satisfies the family payload schema.', [
     ('BD01_payload_schema', '/payload', 'satisfies the family payload schema', 'invalid_payload', "value['payload_valid'] is not True")])
-phase('bd_zone', 'accept: the candidate occurrence time is in UTC Z form.', [
-    ('BD02_utc_zone', '/payload/occurred_at_utc', 'ends with Z', CANDIDATE, "value['ends_with_z'] is not True")])
+phase('bd_zone', 'accept: the candidate occurrence time takes the frozen operation time profile (shared CV-1101 storage_utc_z).', [
+    ('BD02_utc_zone', '/payload/occurred_at_utc', 'is accepted by the shared date_time predicate under storage_utc_z', CANDIDATE,
+     "value['utc_z'] is not True")])
 phase('bd_flags', 'accept: admission, the withdrawal fence and access.', [
     ('BD03_admitted', '/context/admitted', 'is exactly true', 'not_admitted', "value['admitted'] is not True"),
     ('BD04_withdrawn', '/context/withdrawn', 'is exactly false', ACCESS, "value['withdrawn'] is not False"),
@@ -409,9 +410,9 @@ phase('ps_scope', 'selection_checks: one nonempty Project and every unpinned sel
     ('PS03_members', '/memories/<selected>/project_id', 'equals the snapshot Project', 'selection_scope', "value['foreign_ids'] != []")])
 phase('ps_active', 'selection_checks: no unpinned selected original is already archived.', [
     ('PS04_active', '/memories/<selected>/archived', 'is not true', 'selection_active', "value['archived_ids'] != []")])
-phase('pt_instant', 'instant: a policy timestamp is an exact string in the enforced date-time grammar.', [
+phase('pt_instant', 'instant: a policy timestamp is an exact string the shared CV-1101 date_time predicate accepts (broad RFC 3339 profile).', [
     ('PT01_type', '/<timestamp>', 'is an exact string', 'selection_timestamp', "value['value_type'] != 'str'"),
-    ('PT02_format', '/<timestamp>', 'conforms to the enforced date-time grammar', 'selection_timestamp',
+    ('PT02_format', '/<timestamp>', 'is accepted by the shared CV-1101 date_time predicate (event_record profile)', 'selection_timestamp',
      "value['value_type'] == 'str' and value['conforms'] is not True")])
 phase('ps_age', 'selection_checks: every unpinned selected original is idle for at least the approved days.', [
     ('PS05_age', '/memories/<selected>', 'idle (later of edit and access, else creation) at least the cutoff days', 'selection_age',

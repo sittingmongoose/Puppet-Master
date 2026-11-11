@@ -12,11 +12,10 @@ import importlib.util
 import json
 import math
 import argparse
-import datetime
 import re
 import sys
 from urllib.parse import urljoin
-from jsonschema import Draft202012Validator, FormatChecker
+from jsonschema import Draft202012Validator, FormatChecker, ValidationError
 from referencing import Registry
 from referencing.exceptions import Unresolvable
 import referencing.jsonschema as _REFERENCING_SPECS
@@ -46,6 +45,7 @@ if str(ROOT / 'scripts') not in sys.path:
     sys.path.insert(0, str(ROOT / 'scripts'))
 import pm_memory_tables  # noqa: E402
 import pm_event_numbers as numbers  # noqa: E402  (NUMRULE number scope, gated a16f67c1ef)
+import pm_event_datetime as datetimes  # noqa: E402  (NUMRULE date-time predicate, gated 58c2816ff3)
 
 TABLE_PHASES = pm_memory_tables.PHASES
 _TABLE_ROWS = {}
@@ -406,31 +406,92 @@ def checked_registry():
     return schema_registry(checked_documents())
 
 
-def enforced_formats():
-    """Do not depend on jsonschema's optional date-time/URI dependency packages being installed.
+# CV-1101 / CV-253 date-time profiles (sweep part 2B). Every timestamp field DMEM validates goes through the
+# gated shared predicate pm_event_datetime.date_time with the explicit profile its owner sets; the lane's own
+# grammar is gone. FIELD_PROFILES names each `format: date-time` declaration in the documents this checker
+# validates (by document and field), and `field_profile_errors` asserts the table is complete and that the
+# validator reaching each declaration installs exactly that profile. Storage-assigned observed_at_utc and
+# persisted_at_utc take CV-253's storage_utc_z on top of the EventRecord declaration they share with
+# occurred_at_utc (`storage_timestamp_errors`, at the envelope boundary). The operation row's frozen start and
+# completion times are the operation owner's terminal-uppercase-Z fields (SP-630..639, pattern Z$), so they take
+# storage_utc_z explicitly; the pattern itself stays in the owner schema. Timestamp strings are never rewritten.
+EVENT_RECORD, STORAGE_UTC_Z = datetimes.EVENT_RECORD, datetimes.STORAGE_UTC_Z
+OPERATION_DOCUMENT = 'Plans/memory_maintenance_operation.schema.json'
+FIELD_PROFILES = {
+    ('Plans/memory_maintenance_event_payloads.schema.json', 'occurred_at_utc'): EVENT_RECORD,
+    (OPERATION_DOCUMENT, 'started_occurred_at_utc'): STORAGE_UTC_Z,
+    (OPERATION_DOCUMENT, 'completed_occurred_at_utc'): STORAGE_UTC_Z,
+    ('Plans/event_record.schema.json', 'date_time_string'): EVENT_RECORD,
+    ('Plans/event_record_index_checkpoint.schema.json', 'indexed_at_utc'): EVENT_RECORD,
+    ('Plans/event_record_index_checkpoint.schema.json', 'first_prepared_at_utc'): EVENT_RECORD,
+    ('Plans/event_record_index_checkpoint.schema.json', 'activated_at_utc'): EVENT_RECORD,
+    ('Plans/event_record_index_checkpoint.schema.json', 'retired_at_utc'): EVENT_RECORD,
+}
+STORAGE_TIMESTAMP_FIELDS = ('observed_at_utc', 'persisted_at_utc')
 
-    This is the existing RFC3339 contract: explicit zone, real calendar fields, optional nonempty
-    fractional seconds; leap seconds are unsupported. Timestamp strings are never normalized for
-    hashing. UUID is a full 8-4-4-4-12 hexadecimal spelling. Schema types remain separate guards.
+
+def document_profile(path):
+    """The date-time profile a validator built for this document installs (see FIELD_PROFILES)."""
+    return STORAGE_UTC_Z if path == OPERATION_DOCUMENT else EVENT_RECORD
+
+
+def shared_date_time(value, profile):
+    """True when the shared CV-1101 predicate accepts the exact string under the profile (observation)."""
+    try:
+        return datetimes.date_time(value, profile=profile) == value
+    except numbers.Refusal:
+        return False
+
+
+def enforced_formats(profile=EVENT_RECORD):
+    """Explicit format checks, without jsonschema's optional format packages.
+
+    date-time is the shared CV-1101 predicate (`pm_event_datetime.date_time`) under the given profile: as in the
+    shared `format_checker`, every value the validator treats as a string reaches it (a str subclass refuses,
+    `date_time_type`), and a non-string is left to `type`. UUID is a full 8-4-4-4-12 hexadecimal spelling.
     """
+    return _enforced_formats(profile)
+
+
+@lru_cache(maxsize=None)
+def _enforced_formats(profile):
     checker = FormatChecker()
-    @checker.checks('date-time')
+    @checker.checks('date-time', raises=numbers.Refusal)
     def date_time(value):
-        if not isinstance(value, str):
-            return True
-        match = re.fullmatch(r'([0-9]{4})-([0-9]{2})-([0-9]{2})[Tt]([0-9]{2}):([0-9]{2}):([0-9]{2})(?:\.[0-9]+)?([Zz]|[+-][0-9]{2}:[0-9]{2})', value)
-        if match is None:
-            return False
-        try:
-            datetime.datetime(*(int(v) for v in match.groups()[:6]))
-        except ValueError:
-            return False
-        zone = match.group(7)
-        return zone in ('Z', 'z') or int(zone[1:3]) <= 23 and int(zone[4:6]) <= 59
+        return True if not isinstance(value, str) else datetimes.date_time(value, profile=profile) == value
     @checker.checks('uuid')
     def uuid(value):
         return not isinstance(value, str) or re.fullmatch(r'[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}', value) is not None
     return checker
+
+
+def storage_timestamp_errors(record):
+    """CV-253: each Storage-assigned timestamp the record holds as a string that storage_utc_z refuses."""
+    if not isinstance(record, dict):
+        return []
+    errors = []
+    for field in STORAGE_TIMESTAMP_FIELDS:
+        if field in record and isinstance(record[field], str):
+            try:
+                datetimes.date_time(record[field], profile=STORAGE_UTC_Z)
+            except numbers.Refusal as refusal:
+                errors.append(field + ':' + refusal.reason)
+    return errors
+
+
+class StorageProfileValidator:
+    """An EventRecord envelope validator plus CV-253's storage_utc_z at its own observed/persisted fields."""
+
+    def __init__(self, inner):
+        self.inner = inner
+
+    def iter_errors(self, instance):
+        yield from self.inner.iter_errors(instance)
+        for error in storage_timestamp_errors(instance):
+            yield ValidationError('storage_utc_z ' + error)
+
+    def is_valid(self, instance):
+        return next(iter(self.iter_errors(instance)), None) is None
 
 
 @lru_cache(maxsize=None)
@@ -441,7 +502,35 @@ def validator(path, definition):
         raise KeyError(definition)
     pointer = definition if definition.startswith('/') else '/$defs/' + definition
     return Draft202012Validator({'$ref': document_uri(path, doc) + '#' + pointer},
-                                registry=checked_registry(), format_checker=enforced_formats())
+                                registry=checked_registry(), format_checker=enforced_formats(document_profile(path)))
+
+
+@lru_cache(maxsize=None)
+def envelope_edition_validator(definition):
+    """A DMEM envelope edition (current, historical_current, compatibility) with CV-253 on its Storage fields."""
+    return StorageProfileValidator(validator('Plans/memory_maintenance_event_record.schema.json', definition))
+
+
+def field_profile_errors(leaves):
+    """Every date-time declaration has its FIELD_PROFILES entry, installed by the validator of its document.
+
+    `leaves` yields (path, pointer, schema) for every format declaration (dormant branches included).
+    The field is the last property name on the pointer, or the $defs name for a shared definition.
+    """
+    errors = []; seen = set()
+    for path, pointer, schema in leaves:
+        if schema.get('format') != 'date-time':
+            continue
+        parts = pointer.split('/')
+        field = parts[-3] if parts[-2] in ('anyOf', 'oneOf', 'allOf') else parts[-1]
+        key = (path, field)
+        if key not in FIELD_PROFILES:
+            errors.append(('unprofiled date-time field', path, pointer))
+        elif FIELD_PROFILES[key] != document_profile(path):
+            errors.append(('profile not installed by its document validator', path, pointer))
+        seen.add(key)
+    errors += [('profile entry without a declaration',) + key for key in sorted(set(FIELD_PROFILES) - seen)]
+    return errors
 
 
 def formatted_value_matches(path, pointer, value):
@@ -605,7 +694,8 @@ def canonical_value(row, suffix):
 
 @lru_cache(maxsize=1)
 def envelope_validator():
-    return validator('Plans/memory_maintenance_event_record.schema.json', 'current')
+    # The current envelope edition with CV-253's storage_utc_z on observed_at_utc/persisted_at_utc (sweep part 2B).
+    return envelope_edition_validator('current')
 
 
 STORAGE_FIELDS = frozenset({'sequence_id', 'observed_at_utc', 'persisted_at_utc'})
@@ -802,7 +892,9 @@ def accept_check(payload, contract, context):
     event = contract['event_type']; name = operation_name(event)
     require('bd_schema', payload_valid=validator('Plans/memory_maintenance_event_payloads.schema.json',
                                                  event.replace('.', '_')).is_valid(payload))
-    require('bd_zone', ends_with_z=payload['occurred_at_utc'].endswith('Z'))
+    # The payload time must equal the frozen operation time, whose owner profile is terminal uppercase Z: the shared
+    # CV-1101 predicate under storage_utc_z (sweep part 2B; it replaces the former endswith('Z') test).
+    require('bd_zone', utc_z=shared_date_time(payload['occurred_at_utc'], STORAGE_UTC_Z))
     require('bd_flags', admitted=context['admitted'], withdrawn=context['withdrawn'], permission=context['permission'])
     require('bd_scope', project_id=payload['project_id'], context_project_id=context['project_id'],
             operation_id=payload['operation_id'], context_operation_id=context['operation_id'],
@@ -1027,7 +1119,8 @@ def historical_envelope_matches(value):
     # Unknown editions are tested against the closed 2.0.0 schema, which rejects their constants;
     # this is not a permissive recipe fallback. Both known editions use the same hash encoding.
     # The frozen reader admitted integral spellings as integers; current parsing never narrows history.
-    return validator('Plans/memory_maintenance_event_record.schema.json', definition).is_valid(historical_numbers(value))
+    # CV-1101/CV-253 at the retained edition too: a skipped old format check never authorizes invalid Storage history.
+    return envelope_edition_validator(definition).is_valid(historical_numbers(value))
 
 
 def historical_payload_matches(value, expected):
