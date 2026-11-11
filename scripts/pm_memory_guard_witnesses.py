@@ -253,6 +253,9 @@ def maintenance(m, fixtures, families):
             add('writer-new-append-completed-row', 'ap_phase', 'AP14_phase', lambda: append(terminal),
                 lambda: append({**deepcopy(retry), 'original': None}))
             # SP-1101 downgrade: a current-writer original carrying the frozen digest still selects CV-339 (custody).
+            # A sealed original whose producer field differs from the retry candidate (Storage sealed it as written).
+            add('writer-original-producer', 'apo_producer', 'APO06_producer', lambda: append(terminal),
+                sealed_writer(m, append, rehash(m, edited(terminal, (['original', 'full_value', 'actor_ref'], 'component:Other')), ['original']), event))
             add('writer-original-unflushed', 'apo_body', 'APO02_flush', lambda: append(terminal),
                 lambda: append(edited(terminal, (['original', 'durability'], 'not_flushed'))))
             add('writer-original-frozen-digest', 'apo_body', 'APO04_digest', lambda: append(terminal),
@@ -402,6 +405,9 @@ def maintenance(m, fixtures, families):
         add('checkpoint-envelope', 'ck_envelope', 'CK01_envelope', join, sealed_join({**cv, 'unexpected': True}))
         add('checkpoint-storage-offset', 'ck_envelope', 'CK01_envelope', join,
             sealed_join({**cv, 'persisted_at_utc': cv['persisted_at_utc'][:-1] + '+00:00'}))
+        # The checkpoint's own Store differs from the operation Store (its key and the retained original unchanged).
+        add('checkpoint-store', 'ck_store', 'CK03_store', join,
+            lambda: join(checkpoint=edited(generic, (['checkpoint', 'storage_instance_id'], '22222222-2222-4222-8222-222222222222'))))
         add('checkpoint-schema', 'ck_envelope', 'CK02_checkpoint_schema', join,
             lambda: join(checkpoint=edited(generic, (['checkpoint', 'unexpected'], True))))
         add('checkpoint-family', 'ck_event', 'CK05_event_type', join, sealed_join({**cv, 'event_type': base + '.other'}))
@@ -488,6 +494,8 @@ def archive(a, fixtures, families):
                 lambda: append(edited(terminal, (['original', 'unexpected'], True))))
             add('writer-original-envelope', 'aao_envelope', 'AAO05_envelope', lambda: append(terminal),
                 sealed_writer(m, append, rehash(m, edited(terminal, (['original', 'full_value', 'unexpected'], True)), ['original']), event))
+            add('writer-original-projection', 'aao_projection', 'AAO06_projection', lambda: append(terminal),
+                sealed_writer(m, append, rehash(m, edited(terminal, (['original', 'full_value', 'actor_ref'], 'component:Other')), ['original']), event))
             add('writer-original-unflushed', 'aao_body', 'AAO02_flush', lambda: append(terminal),
                 lambda: append(edited(terminal, (['original', 'durability'], 'not_flushed'))))
             add('writer-original-frozen-digest', 'aao_body', 'AAO04_digest', lambda: append(terminal),
@@ -519,6 +527,8 @@ def archive(a, fixtures, families):
                               {'intact': canonical, 'forged': rehash(m, edited(canonical, (fv + ['correlation_id'], 'other-operation')), ['original'])},
                               canonical['original']['full_value'], canonical['operation'], event, m.RECIPE_CURRENT,
                               canonical['original']['full_value_sha256'])
+            add('canonical-payload', 'asc_joins', 'ASC09_payload', lambda: append(canonical),
+                sealed_writer(m, append, rehash(m, edited(canonical, (fv + ['payload', 'source_revision_sha256'], 'b' * 64)), ['original']), event))
             add('canonical-replay-policy', 'asc_joins', 'ASC08_replay_policy', lambda: append(canonical),
                 sealed_writer(m, append, rehash(m, edited(canonical, (fv + ['replay_policy'], 'projector_replay_only')), ['original']), event))
         history_witnesses(m, add, event, histories[event])
