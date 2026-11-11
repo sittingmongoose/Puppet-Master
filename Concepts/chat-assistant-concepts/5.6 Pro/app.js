@@ -2363,6 +2363,13 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     return w;
   }
   let composerMeasureCache=null;
+  /* The face the labels are painted in is part of what the measurement means: a look paints a different family at
+     the same size, so its labels are a different width with nothing resized. */
+  function composerFaceKey(tools){
+    const el=tools.firstElementChild||tools;
+    const cs=getComputedStyle(el);
+    return [cs.fontFamily,cs.fontSize,cs.fontWeight,cs.fontStyle,cs.letterSpacing,cs.fontVariant].join('|');
+  }
   function syncComposerCompact(){
     if(measuringCompact) return;
     // FO-143: only this chat's own composer (#pmRoot), never another surface's .composer-box on the same page
@@ -2380,7 +2387,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     // The measured value is the tools' intrinsic labeled width (content, font, theme): it does not
     // depend on the available width. Keying the cache on clientWidth re-measured (class toggles plus
     // rect reads, i.e. forced layouts) on every step of a chat resize drag.
-    const signature=[tools.textContent,state.theme,document.fonts?.status].join('|');
+    const signature=[tools.textContent,state.theme,document.fonts?.status||'',composerFaceKey(tools)].join('|');
     if(!composerMeasureCache||composerMeasureCache.node!==tools||composerMeasureCache.key!==signature)
       composerMeasureCache={node:tools,key:signature,value:measureLabeledTools(box,tools)};
     const need=composerMeasureCache.value;
@@ -2388,6 +2395,28 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     if(composerCompact) composerCompact=avail<labeledToolsMin+slack;
     else composerCompact=labeledToolsMin>0 && avail<labeledToolsMin+slack;
     box.classList.toggle('is-compact', composerCompact);
+  }
+  /* FO-156: a look change repaints the labels in another family without resizing the column, so no observer of the
+     box hears it; and a family being painted for the first time can still be loading when the bars are measured,
+     which reads the fallback metrics. Drop the cached width and decide again when the page's look or motion
+     changes and when a face finishes loading (an event, never a timer), so a narrow composer settles on the look it
+     is actually painted in. */
+  function invalidateComposerMeasure(){
+    composerMeasureCache=null;
+    syncComposerCompact();
+  }
+  let composerWatchArmed=false;
+  function armComposerWatch(){
+    if(composerWatchArmed) return;
+    composerWatchArmed=true;
+    if(typeof MutationObserver==='function')
+      new MutationObserver(invalidateComposerMeasure).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme','data-motion','data-reduced-motion']});
+    const fonts=document.fonts;
+    if(fonts&&fonts.addEventListener){
+      fonts.addEventListener('loadingdone',invalidateComposerMeasure);
+      fonts.addEventListener('loadingerror',invalidateComposerMeasure);
+      if(fonts.ready&&fonts.ready.then) fonts.ready.then(invalidateComposerMeasure);
+    }
   }
   function setStageVar(stage, name, px){
     const v=`${Math.max(0, Math.round(px))}px`;
@@ -2539,6 +2568,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     for(const n of chromeObserved)if(!next.has(n))composerRO.unobserve(n);
     for(const n of next)if(!chromeObserved.has(n))composerRO.observe(n);
     chromeObserved=next;
+    armComposerWatch();
     syncChatChrome();
   }
 
