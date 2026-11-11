@@ -109,11 +109,13 @@ PM51.btn = ({ label, action, data, icon: ic, primary, small, ghost, danger, disa
   const lead = LD ? LD.html({ motion: typeof busy === 'string' ? busy : 'swing', px: 14 }) : (ic ? icon(ic) : '');
   return `<button type="button" class="btn pm51-btn${primary ? ' primary' : ''}${small ? ' small' : ''}${ghost ? ' ghost' : ''}${danger ? ' danger' : ''}${cls ? ' ' + cls : ''}" ${act} ${ui ? `data-ui-action-id="${a(ui)}"` : ''} ${dataAttrs(data)} ${dis} ${title ? `title="${a(title)}"` : ''}>${lead}${label ? `<span>${h(label)}</span>` : ''}</button>`;
 };
-PM51.iconBtn = ({ action, data, icon: ic, label, cls, callback, ui, disabled, reason }) => {
+PM51.iconBtn = ({ action, data, icon: ic, label, cls, callback, ui, disabled, reason, menu }) => {
   const act = disabled ? 'data-action="pm51-disabled"' : (callback ? `data-callback="${a(registerAction(callback))}"` : `data-action="${a(action || 'pm51-noop')}"`);
   const why = reason || 'Not available here.';
   const dis = disabled ? ` aria-disabled="true" data-pm51-disabled="1" data-disabled-reason="${a(why)}" data-pm-hover-detail="${a(why)}"` : '';
-  return `<button type="button" class="icon-btn pm51-icon-btn${cls ? ' ' + cls : ''}${disabled ? ' is-disabled' : ''}" ${act} ${ui ? `data-ui-action-id="${a(ui)}"` : ''} ${dataAttrs(data)} aria-label="${a(label || '')}" data-pm-hover-label="${a(label || '')}"${dis}>${icon(ic || 'more')}</button>`;
+  /* menu: the button opens a menu (openMenu marks it expanded while the menu is open, popoutClose collapsed again) */
+  const pop = menu && !disabled ? ' aria-haspopup="menu" aria-expanded="false"' : '';
+  return `<button type="button" class="icon-btn pm51-icon-btn${cls ? ' ' + cls : ''}${disabled ? ' is-disabled' : ''}" ${act} ${ui ? `data-ui-action-id="${a(ui)}"` : ''} ${dataAttrs(data)} aria-label="${a(label || '')}" data-pm-hover-label="${a(label || '')}"${pop}${dis}>${icon(ic || 'more')}</button>`;
 };
 PM51.link = ({ label, action, data, callback, cls, ui }) => {
   const act = callback ? `data-callback="${a(registerAction(callback))}"` : `data-action="${a(action || 'pm51-noop')}"`;
@@ -215,7 +217,7 @@ PM51.listDetail = ({ id, rosterId, rosterTitle, count, add, filter, items, detai
     <div class="roster-list">${items.map(it => `<button type="button" class="resource-row${it.selected ? ' active' : ''}" data-action="${a(it.action || selectAction || 'pm51-select')}" data-manager="${a(id)}" data-id="${a(it.id)}" ${dataAttrs(it.data)} aria-current="${it.selected ? 'true' : 'false'}"><span class="resource-avatar">${it.avatar || h(PM51.initials(it.title))}</span><span class="resource-row-copy"><span class="resource-row-name">${h(it.title)}</span><span class="resource-row-meta">${h(it.meta || '')}${it.pill ? ' ' + it.pill : ''}</span></span>${it.tone ? PM51.dot(it.tone) : ''}</button>`).join('')}</div>
   </aside>
   <section class="resource-detail pm51-detail">
-    <div class="resource-head pm51-detail-head"><button type="button" class="icon-btn pm51-roster-toggle" data-action="pm51-toggle-roster" aria-label="Show list">${icon('menu')}</button><div class="resource-head-main"><div class="pm51-detail-title">${h(detail.title)}${detail.pill ? ' ' + detail.pill : ''}</div>${detail.subtitle ? `<div class="pm51-detail-sub">${h(detail.subtitle)}</div>` : ''}</div><div class="pm51-detail-actions">${detail.primary ? PM51.btn(Object.assign({ primary: true }, detail.primary)) : ''}${detail.menu ? PM51.iconBtn({ icon: 'more', label: 'More actions', callback: detail.menu }) : ''}</div></div>
+    <div class="resource-head pm51-detail-head"><button type="button" class="icon-btn pm51-roster-toggle" data-action="pm51-toggle-roster" aria-label="Show list">${icon('menu')}</button><div class="resource-head-main"><div class="pm51-detail-title">${h(detail.title)}${detail.pill ? ' ' + detail.pill : ''}</div>${detail.subtitle ? `<div class="pm51-detail-sub">${h(detail.subtitle)}</div>` : ''}</div><div class="pm51-detail-actions">${detail.primary ? PM51.btn(Object.assign({ primary: true }, detail.primary)) : ''}${detail.menu ? PM51.iconBtn({ icon: 'more', label: 'More actions', callback: detail.menu, menu: true }) : ''}</div></div>
     <div class="resource-content pm51-detail-content">${detail.body}</div>
   </section>
 </div>`;
@@ -224,8 +226,13 @@ PM51.listDetail = ({ id, rosterId, rosterTitle, count, add, filter, items, detai
 /* Popouts live in document.body (position:fixed) so #pm-settings-portals' overflow:hidden and the
    root's contain never clip them. Nothing in body gets the engine's event routing (ownsEvent), so
    the engine owns its listeners here; the motion is PM6_SPROUT's, the one menu sprout (base/script/pm7-sprout.js,
-   its classes in pm7-sprout.css: six --pm6-sprout-* vars, is-open / is-closing). */
+   its classes in pm7-sprout.css: six --pm6-sprout-* vars, is-open / is-closing). In Glass each one is a floating glass
+   sheet: data-lg-surface="menu" is the Liquid Glass layer's owner opt-in (its CONTRACT.md), so it blurs what is behind it
+   like the app's other menus instead of showing the page through its thin plate (FO-144). */
 let pmActive = null, popSeq = 0;
+/* Where a popout's anchor was when it was placed: a scroll that leaves the anchor where it was does not touch the popout
+   (FO-147). */
+const anchorAt = anchor => { if (!anchor || !anchor.getBoundingClientRect) return null; const r = anchor.getBoundingClientRect(); return { left: r.left, top: r.top }; };
 const POP_ID = () => 'pm51-pop-' + (++popSeq);
 /* The corner a popout grows from, as Settings' popouts have always had it (the owner takes it as an input). The side is
    the one positionPopout put it on (data-sprout: t below its trigger, b above); across, it is the corner nearest the
@@ -362,7 +369,7 @@ function filterOptions(entry) {
 }
 function openListPopout({ anchor, trigger, options, current, search, title, width, onCommit, kind = 'dropdown' }) {
   popoutClose({ restoreFocus: false });
-  const pop = document.createElement('div'); pop.className = 'pm51-popout pm51-dd-list'; pop.id = POP_ID(); pop.setAttribute('role', 'listbox'); pop.tabIndex = -1; pop.dataset.portalDisplay = 'block';
+  const pop = document.createElement('div'); pop.className = 'pm51-popout pm51-dd-list'; pop.id = POP_ID(); pop.setAttribute('role', 'listbox'); pop.tabIndex = -1; pop.dataset.portalDisplay = 'block'; pop.setAttribute('data-lg-surface', 'menu');
   const groups = [], seen = new Map();
   /* a held-back choice that asks for it (why) says its reason under its name, once for a run held back for the same reason */
   options.forEach((o, i) => { const g = o.group || ''; if (!seen.has(g)) { seen.set(g, groups.length); groups.push({ name: g, items: [] }); } const prev = options[i - 1];
@@ -375,7 +382,7 @@ function openListPopout({ anchor, trigger, options, current, search, title, widt
   document.body.appendChild(pop);
   const entry = { kind, el: pop, trigger, anchor, options, current, onCommit, active: -1, searchInput: pop.querySelector('input'), typeBuf: '', typeAt: 0, returnFocus: trigger, align: 'left', width: Math.max(width || 0, search ? 280 : 220, anchor && anchor.getBoundingClientRect ? anchor.getBoundingClientRect().width : 0) };
   pmActive = entry;
-  positionPopout(pop, anchor, { width: entry.width });
+  positionPopout(pop, anchor, { width: entry.width }); entry.at = anchorAt(anchor);
   sproutOpen(pop, anchor);
   if (trigger && trigger.setAttribute) { trigger.setAttribute('aria-expanded', 'true'); trigger.setAttribute('aria-controls', pop.id); }
   const selIdx = options.findIndex(o => String(o.value) === String(current));
@@ -407,7 +414,7 @@ PM51.pick = (anchor, { title = '', current = null, items = [], search = true, wi
 openMenu = function (anchor, items, title = '') {
   if (pmActive && pmActive.kind === 'menu' && anchor && pmActive.anchor === anchor) { popoutClose({ restoreFocus: true }); return null; }
   popoutClose({ restoreFocus: false });
-  const pop = document.createElement('div'); pop.className = 'pm51-popout pm51-menu'; pop.id = POP_ID(); pop.setAttribute('role', 'menu'); pop.dataset.portalDisplay = 'block';
+  const pop = document.createElement('div'); pop.className = 'pm51-popout pm51-menu'; pop.id = POP_ID(); pop.setAttribute('role', 'menu'); pop.dataset.portalDisplay = 'block'; pop.setAttribute('data-lg-surface', 'menu');
   pop.innerHTML = (title ? `<div class="pm51-popout-title">${h(title)}</div>` : '') + (items || []).map((it, i) => {
     if (!it) return '';
     if (it.separator) return '<div class="pm51-popout-sep" role="separator"></div>';
@@ -417,7 +424,10 @@ openMenu = function (anchor, items, title = '') {
   document.body.appendChild(pop);
   const entry = { kind: 'menu', el: pop, trigger: anchor, anchor, items, returnFocus: captureTransientFocus(anchor) || anchor, align: 'right', width: 0 };
   pmActive = entry; menuAnchorEl = anchor || null;
-  positionPopout(pop, anchor, { align: 'right' });
+  positionPopout(pop, anchor, { align: 'right' }); entry.at = anchorAt(anchor);
+  /* the button says it opens a menu and that the menu is open (N-4: popoutClose wrote aria-expanded="false" on a button
+     that had never said it was expanded, so the same button read differently before and after its first use) */
+  if (anchor && anchor.setAttribute) { anchor.setAttribute('aria-haspopup', 'menu'); anchor.setAttribute('aria-expanded', 'true'); anchor.setAttribute('aria-controls', pop.id); }
   sproutOpen(pop, anchor);
   pop.addEventListener('click', e => {
     const b = e.target.closest('.pm51-menu-item'); if (!b) return; e.preventDefault();
@@ -488,9 +498,19 @@ assistantPick = function (anchor, kind, current, onPick) {
   /* A scroll closes a menu (or moves a popout) only when it can move what the popout hangs from: the page, or a scroller
      that holds the anchor. Another scroller elsewhere (the chat's transcript following its stream, a list beside it)
      moves nothing under the menu, and closing on it shut the Add account menu just after it opened (FO-123 / batch 10
-     landing: the chat's dock auto-scrolled at that moment). */
+     landing: the chat's dock auto-scrolled at that moment). FO-147: a list on a page that is not showing, or the Home
+     editor laying itself out again about 1.5 s after load, closed a menu just opened in Settings the same way. Even a
+     scroll that could move the anchor leaves the popout alone when the anchor stayed where it was placed (a button on
+     a bar that stays put while the page under it scrolls); one that did move it closes a menu (it would float away
+     from its button) and moves a list with it. */
   const pm51ScrollMoves = (p, t) => !p.anchor || t === document || t === document.documentElement || t === document.body || !t.contains || t.contains(p.anchor);
-  document.addEventListener('scroll', e => { const p = pmActive; if (!p) return; if (p.el.contains(e.target)) return; if (!pm51ScrollMoves(p, e.target)) return; if (p.kind === 'menu' || !p.anchor || !p.anchor.isConnected) { popoutClose({ restoreFocus: false }); return; } positionPopout(p.el, p.anchor, { align: p.align, width: p.width }); }, true);
+  document.addEventListener('scroll', e => {
+    const p = pmActive; if (!p) return; if (p.el.contains(e.target)) return; if (!pm51ScrollMoves(p, e.target)) return;
+    const anchor = p.anchor && p.anchor.isConnected ? p.anchor : null;
+    if (anchor) { const now = anchorAt(anchor); if (p.at && now && Math.abs(now.left - p.at.left) < 0.5 && Math.abs(now.top - p.at.top) < 0.5) return; }
+    if (p.kind === 'menu' || !anchor) { popoutClose({ restoreFocus: false }); return; }
+    positionPopout(p.el, anchor, { align: p.align, width: p.width }); p.at = anchorAt(anchor);
+  }, true);
   window.addEventListener('resize', () => popoutClose({ restoreFocus: false }));
   document.addEventListener('focusin', e => { const p = pmActive; if (!p) return; if (p.el.contains(e.target) || e.target === p.trigger || (p.anchor && p.anchor.contains && p.anchor.contains(e.target))) return; popoutClose({ restoreFocus: false }); });
 })();

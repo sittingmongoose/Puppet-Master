@@ -7152,7 +7152,7 @@ if(state.projectSyncTab==='move')return `<div class="card-grid two"><section cla
       case 'browse-setting-path': {
         const found=findSettingGlobal(ds(el,'setting'));if(!found)return;const picker=window.PM_SETTINGS_PICK_PATH;
         if(typeof picker==='function'){const chosen=picker({project_id:window.PM7_SETTINGS_TOME.project()?.id||null,setting_id:found.setting.id,current_value:settingValue(found.setting)});if(typeof chosen==='string'&&commitSettingValue(found.setting.id,chosen)){saveState();renderApp();}return;}
-        openDialog({title:`Browse · ${found.setting.label}`,subtitle:'The native Slint picker binds this field to the selected project-scoped path.',body:formGrid([{label:'Path',name:'path',value:settingValue(found.setting),autofocus:true}]),saveLabel:'Use path',onSave:(_v,form)=>{const value=readForm(form).path;if(!commitSettingValue(found.setting.id,value))return false;saveState();renderApp();return true;}});return;
+        openDialog({title:`Browse · ${found.setting.label}`,subtitle:'Type the folder\u2019s path. In the app, Choose opens your computer\u2019s own folder picker.',body:formGrid([{label:'Path',name:'path',value:settingValue(found.setting),autofocus:true}]),saveLabel:'Use path',onSave:(_v,form)=>{const value=readForm(form).path;if(!commitSettingValue(found.setting.id,value))return false;saveState();renderApp();return true;}});return;
       }
       case 'open-structured-setting': {
         const found=findSettingGlobal(ds(el,'setting'));if(!found)return;const current=settingValue(found.setting),kind=found.setting.control;

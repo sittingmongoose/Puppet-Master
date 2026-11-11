@@ -11,6 +11,9 @@
    where an outside service would be involved. */
 const o55FlowStore = id => { const s = PM51.s(); s.o55Flows = s.o55Flows || {}; return (s.o55Flows[id] = s.o55Flows[id] || {}); };
 const o55FlowNow = () => new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+/* a check flow that ran to its end tells the manager that owns the row ('pm51-flow-done', { id }), so the state the steps
+   say they changed does change (Toolchain's "Restart language servers" left "Needs a restart" as it was) */
+const flowDone = id => { try { window.dispatchEvent(new CustomEvent('pm51-flow-done', { detail: { id } })); } catch (e) { /* nobody listens */ } };
 function o55FlowField(f, saved) {
   const v = saved[f.key] != null ? saved[f.key] : (f.value != null ? f.value : '');
   const data = `data-key="${a(f.key)}"`;
@@ -57,7 +60,7 @@ function o55Flow(found, flow) {
       primaryLabel: flow.primary || 'Run it', onPrimary: w => {
         const host = w.querySelector('.o55-flow-steps'); if (!host) return;
         const shown = steps.map(st => Object.assign({}, st, { status: 'Waiting', tone: 'neutral' }));
-        let i = 0; const tick = () => { if (!w.isConnected) return; shown[i] = Object.assign({}, steps[i], { status: steps[i].result || 'Done', tone: steps[i].resultTone || 'ready' }); host.innerHTML = PM51.steps(shown); i++; if (i < steps.length) window.setTimeout(tick, motionReduced() ? 0 : 380); else { store.last = `${o55FlowNow()} today · ${flow.outcome || 'finished'}`; saveState(); done(flow.outcome ? `${title}: ${flow.outcome}` : `${title}: finished`); } };
+        let i = 0; const tick = () => { if (!w.isConnected) return; shown[i] = Object.assign({}, steps[i], { status: steps[i].result || 'Done', tone: steps[i].resultTone || 'ready' }); host.innerHTML = PM51.steps(shown); i++; if (i < steps.length) window.setTimeout(tick, motionReduced() ? 0 : 380); else { store.last = `${o55FlowNow()} today · ${flow.outcome || 'finished'}`; saveState(); done(flow.outcome ? `${title}: ${flow.outcome}` : `${title}: finished`); flowDone(id); } };
         tick(); return false;
       }
     });

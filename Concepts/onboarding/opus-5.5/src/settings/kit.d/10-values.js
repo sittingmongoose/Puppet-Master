@@ -291,7 +291,9 @@ function o55SentenceCase(label) {
   if (o55LabelCache.has(label)) return o55LabelCache.get(label);
   let s = String(label); const prot = [];
   O55_LABEL_PHRASES.forEach((ph, k) => { if (s.includes(ph)) { s = s.split(ph).join(`\u0000${k}\u0000`); prot.push([k, ph]); } });
-  const low = x => (!x || O55_LABEL_KEEP.has(x) || /[A-Z]/.test(x.slice(1)) || /\d/.test(x) || x[0] !== x[0].toUpperCase() || x.slice(1) !== x.slice(1).toLowerCase()) ? x : x[0].toLowerCase() + x.slice(1);
+  /* the pronoun keeps its capital in its contractions too: "Dim Terminals I'm Not In" reads "Dim terminals I'm not in"
+     (it read "i'm", lane-code 2026-11-11) */
+  const low = x => (!x || O55_LABEL_KEEP.has(x) || /^I['’](?:m|ve|ll|d)$/.test(x) || /[A-Z]/.test(x.slice(1)) || /\d/.test(x) || x[0] !== x[0].toUpperCase() || x.slice(1) !== x.slice(1).toLowerCase()) ? x : x[0].toLowerCase() + x.slice(1);
   let out = s.split(' ').map((w, n) => {
     if (w.includes('\u0000')) return w;
     const m = w.match(/^([^A-Za-z0-9]*)(.*?)([^A-Za-z0-9]*)$/), core = m ? m[2] : '';
