@@ -1,1 +1,105 @@
-/* styles that only the pages in look.js need; shared parts are in ../smx.css */
+/* Look & feel: the choices beside an example that stays in view (pages in look.js; shared parts are in ../smx.css).
+   The example and the look cards are drawn with the app's own look tokens (--background, --surface, --text-primary,
+   --border, --accent-primary, --body-font, --border-radius), so they are the look, not a picture of it. */
+
+/* ---- the page's blocks: one column, or the choices with the example beside them when the Settings area is wide ----- */
+#smx-root .smx-look .smx-blocks > .smx-block { container: smxlk / inline-size; }
+#smx-root .smx-look .smx-blocks > [data-smx-block="proxy"] { display: none; }
+#smx-root .smx-look .smx-blocks > [data-smx-block="example"] { position: sticky; top: 0; z-index: 4; padding-bottom: 8px; }
+/* while it is stuck on top (one column), a ground behind it reaches the edges of the page so nothing shows through */
+#smx-root .smx-look .smx-blocks > [data-smx-block="example"]::before { content: ''; position: absolute; z-index: -1; inset: -32px -28px 0; background: color-mix(in srgb, var(--background) 94%, transparent); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); border-bottom: 1px solid var(--k3-line); }
+#smx-root .smx-lk-choice-body { padding: 0 18px 16px; }
+/* the wallpaper and font cards already carry their names: their rows show only the control */
+#smx-root .smx-look [data-smx-anchor="wall"] .setting-row > .setting-copy, #smx-root .smx-look [data-smx-anchor="font"] .setting-row > .setting-copy { display: none; }
+@container smx (min-width: 1100px) {
+  #smx-root .smx-look .smx-blocks { grid-template-columns: minmax(0, 1fr) minmax(320px, 400px); column-gap: 18px; align-items: start; }
+  #smx-root .smx-look .smx-blocks > .smx-block { grid-column: 1; }
+  #smx-root .smx-look .smx-blocks > [data-smx-block="example"] { grid-column: 2; grid-row: 1 / span 12; top: 4px; padding: 0; }
+  #smx-root .smx-look .smx-blocks > [data-smx-block="example"]::before { content: none; }
+}
+
+/* ---- the example ---------------------------------------------------------------------------------------------------- */
+#smx-root .smx-lk-ex { margin: 0; display: grid; gap: 8px; }
+#smx-root .smx-lk-ex-stage { position: relative; overflow: hidden; border: 1px solid var(--k3-line); border-radius: var(--k3-radius-lg, 12px); background: var(--background); padding: 22px 18px; min-height: 236px; display: grid; }
+#smx-root .smx-lk-ex-wall { position: absolute; inset: 0; background-size: cover; background-position: center; }
+#smx-root .smx-lk-ex-win { position: relative; display: grid; grid-template-rows: auto minmax(0, 1fr); min-height: 0; border: var(--border-width, 1px) solid var(--border); border-radius: var(--border-radius, 6px); background: var(--surface); color: var(--text-primary); font-family: var(--body-font, inherit); font-size: 12px; line-height: 1.45; box-shadow: var(--elev-2, 0 2px 8px rgb(0 0 0 / .24)); -webkit-backdrop-filter: blur(14px) saturate(1.4); backdrop-filter: blur(14px) saturate(1.4); overflow: hidden; }
+#smx-root .smx-lk-ex-bar { display: flex; align-items: center; gap: 10px; padding: 7px 10px; border-bottom: 1px solid var(--border-light, var(--border)); font-size: 11px; color: var(--text-secondary); }
+#smx-root .smx-lk-ex-bar i { width: 9px; height: 9px; border-radius: 50%; background: var(--accent-primary); flex: none; }
+#smx-root .smx-lk-ex-bar b { font-family: var(--display-font, inherit); font-weight: 650; color: var(--text-primary); margin-right: auto; }
+#smx-root .smx-lk-ex-bar span { padding: 2px 7px; border-radius: var(--radius-sm, 4px); }
+#smx-root .smx-lk-ex-bar span.is-on { background: var(--accent-primary); color: var(--background); font-weight: 650; }
+#smx-root .smx-lk-ex-body { display: grid; grid-template-columns: 92px minmax(0, 1fr); min-height: 0; }
+#smx-root .smx-lk-ex-rail { display: grid; align-content: start; gap: 3px; padding: 8px 6px; border-right: 1px solid var(--border-light, var(--border)); font-size: 11px; color: var(--text-secondary); }
+#smx-root .smx-lk-ex-rail span { padding: 4px 6px; border-radius: var(--radius-sm, 4px); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#smx-root .smx-lk-ex-rail span.is-on { background: color-mix(in srgb, var(--accent-primary) 24%, transparent); color: var(--text-primary); font-weight: 650; }
+#smx-root .smx-lk-ex-main { display: grid; align-content: start; gap: 7px; padding: 10px; min-width: 0; }
+#smx-root .smx-lk-ex-main p { margin: 0; padding: 6px 9px; border-radius: var(--border-radius, 6px); max-width: 92%; }
+#smx-root .smx-lk-ex-you { justify-self: end; background: color-mix(in srgb, var(--accent-primary) 20%, var(--surface-elevated, var(--surface))); }
+#smx-root .smx-lk-ex-ai { background: var(--surface-elevated, var(--surface)); border: 1px solid var(--border-light, var(--border)); }
+#smx-root .smx-lk-ex-ai u { color: var(--accent-primary); text-underline-offset: 2px; }
+#smx-root .smx-lk-ex-prog { height: 5px; border-radius: 3px; background: var(--border-light, var(--border)); overflow: hidden; }
+#smx-root .smx-lk-ex-prog i { display: block; width: 62%; height: 100%; background: var(--accent-primary); }
+#smx-root .smx-lk-ex-row { display: flex; align-items: center; gap: 8px; }
+#smx-root .smx-lk-ex-btn { padding: 4px 12px; border-radius: var(--border-radius, 6px); border: 1px solid var(--border); font-weight: 600; font-size: 11.5px; }
+#smx-root .smx-lk-ex-btn.is-main { background: var(--accent-primary); border-color: var(--accent-primary); color: var(--background); }
+#smx-root .smx-lk-ex-btn.is-focus { outline: 2px solid var(--accent-primary); outline-offset: 2px; }
+#smx-root .smx-lk-ex-switch { margin-left: auto; width: 30px; height: 17px; border-radius: 9px; background: var(--accent-primary); display: flex; align-items: center; justify-content: flex-end; padding: 2px; flex: none; }
+#smx-root .smx-lk-ex-switch i { width: 13px; height: 13px; border-radius: 50%; background: var(--background); }
+#smx-root .smx-lk-ex-cap { font-size: 11.5px; color: var(--k3-text-2); }
+#smx-root .smx-lk-ex-cap b { color: var(--k3-text-1); font-weight: 650; }
+#smx-root .smx-lk-said { margin: 0; display: flex; align-items: flex-start; gap: 8px; padding: 8px 10px; border: 1px solid var(--k3-line); border-radius: var(--k3-radius-md); background: var(--k3-surface-1); font-size: 12px; line-height: 1.45; color: var(--k3-text-2); }
+#smx-root .smx-lk-said b { color: var(--k3-text-1); font-weight: 650; }
+#smx-root .smx-lk-said > i { flex: none; width: 8px; height: 8px; margin-top: 5px; border-radius: 50%; background: var(--k3-accent); }
+@container smx (max-width: 1099px) {
+  #smx-root .smx-lk-ex { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); align-items: center; column-gap: 12px; }
+  #smx-root .smx-lk-ex-stage { min-height: 0; padding: 12px; grid-row: 1 / span 2; }
+  #smx-root .smx-lk-ex-rail { display: none; }
+  #smx-root .smx-lk-ex-body { grid-template-columns: minmax(0, 1fr); }
+  #smx-root .smx-lk-ex-ai, #smx-root .smx-lk-ex-bar span:not(.is-on) { display: none; }
+}
+
+/* ---- the look cards ------------------------------------------------------------------------------------------------- */
+#smx-root .smx-lk-cards { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; }
+#smx-root .smx-lk-chosen { display: none; margin: 10px 0 0; font-size: 12px; color: var(--k3-text-2); }
+#smx-root .smx-lk-chosen b { color: var(--k3-text-1); font-weight: 650; }
+/* five cards across leave no room for a sentence under each: the chosen look's sentence goes under the row instead */
+@container smxlk (max-width: 719px) {
+  #smx-root .smx-lk-card-line { display: none; }
+  #smx-root .smx-lk-chosen { display: block; }
+  #smx-root .smx-lk-mini-win { width: 84%; padding: 6px 7px; gap: 5px; }
+  #smx-root .smx-lk-mini-win em { width: 18px; }
+}
+@container smxlk (max-width: 419px) { #smx-root .smx-lk-cards { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+#smx-root .smx-lk-card { display: grid; gap: 5px; align-content: start; padding: 7px 7px 9px; border: 1px solid var(--k3-line); border-radius: var(--k3-radius-md); background: transparent; color: var(--k3-text-1); font: inherit; text-align: left; cursor: pointer; }
+#smx-root .smx-lk-card:hover { border-color: var(--k3-line-strong, var(--k3-text-3)); }
+#smx-root .smx-lk-card.is-on { border-color: var(--k3-accent); box-shadow: 0 0 0 1px var(--k3-accent); background: var(--k3-accent-soft, transparent); }
+#smx-root .smx-lk-card:focus-visible { outline: 2px solid var(--k3-accent); outline-offset: 2px; }
+#smx-root .smx-lk-card-name { display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 650; }
+#smx-root .smx-lk-card-name .icon { width: 14px; height: 14px; color: var(--k3-accent-ink, var(--k3-accent)); }
+#smx-root .smx-lk-card-name .icon svg { width: 14px; height: 14px; stroke: currentColor; }
+#smx-root .smx-lk-card-line { font-size: 11.5px; line-height: 1.35; color: var(--k3-text-2); }
+#smx-root .smx-lk-mini { --smx-acc: var(--accent-blue, var(--accent-primary)); position: relative; display: grid; place-items: center; aspect-ratio: 16 / 10; border-radius: calc(var(--k3-radius-md) - 3px); overflow: hidden; background: var(--background); }
+#smx-root .smx-lk-mini[data-theme^="retro"] { --smx-acc: var(--accent-primary); }
+#smx-root .smx-lk-mini-win { position: relative; display: flex; align-items: center; gap: 7px; width: 78%; padding: 8px 9px; border: var(--border-width, 1px) solid var(--border); border-radius: var(--border-radius, 6px); background: var(--surface); color: var(--text-primary); box-shadow: var(--elev-1, none); }
+#smx-root .smx-lk-mini-win i { width: 9px; height: 9px; border-radius: 50%; background: var(--smx-acc); flex: none; }
+#smx-root .smx-lk-mini-win b { font-family: var(--display-font, inherit); font-size: 15px; font-weight: 650; line-height: 1; }
+#smx-root .smx-lk-mini-win em { margin-left: auto; width: 26px; height: 9px; border-radius: var(--border-radius, 6px); background: var(--smx-acc); }
+/* NieR is not one of the app's theme scopes, so its card carries its two inks itself */
+#smx-root .smx-lk-mini.is-nier { --background: #d1cdb7; --surface: #dcd8c0; --text-primary: #454138; --border: #454138; --smx-acc: #454138; }
+#smx-root .smx-lk-mini.is-nier[data-smx-shown="dark"] { --background: #2e2c26; --surface: #3b382f; --text-primary: #d1cdb7; --border: #d1cdb7; --smx-acc: #d1cdb7; }
+#smx-root .smx-lk-mini.is-nier .smx-lk-mini-win { border-radius: 0; box-shadow: none; }
+#smx-root .smx-lk-mini.is-nier .smx-lk-mini-win i, #smx-root .smx-lk-mini.is-nier .smx-lk-mini-win em { border-radius: 0; }
+#smx-root .smx-lk-mini.is-nier .smx-lk-mini-win b { font-weight: 400; letter-spacing: .12em; }
+
+/* ---- light, dark or match; the named accent swatches ------------------------------------------------------------------ */
+#smx-root .smx-lk-seg { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+#smx-root .smx-lk-seg button { display: flex; align-items: center; justify-content: center; gap: 7px; min-height: 36px; padding: 6px 8px; border: 1px solid var(--k3-line); border-radius: var(--k3-radius-md); background: transparent; color: var(--k3-text-1); font: inherit; font-size: 12.5px; cursor: pointer; }
+#smx-root .smx-lk-seg button.is-on { border-color: var(--k3-accent); box-shadow: 0 0 0 1px var(--k3-accent); background: var(--k3-accent-soft, transparent); font-weight: 650; }
+#smx-root .smx-lk-seg button:focus-visible, #smx-root .smx-lk-sw:focus-visible { outline: 2px solid var(--k3-accent); outline-offset: 2px; }
+#smx-root .smx-lk-seg .icon, #smx-root .smx-lk-seg .icon svg { width: 15px; height: 15px; stroke: currentColor; }
+#smx-root .smx-lk-sws { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 6px; }
+@container smxlk (max-width: 479px) { #smx-root .smx-lk-sws { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+#smx-root .smx-lk-sw { display: grid; justify-items: center; gap: 5px; padding: 8px 4px 7px; border: 1px solid transparent; border-radius: var(--k3-radius-md); background: transparent; color: var(--k3-text-2); font: inherit; font-size: 11.5px; cursor: pointer; }
+#smx-root .smx-lk-sw:hover { border-color: var(--k3-line); }
+#smx-root .smx-lk-sw.is-on { border-color: var(--k3-accent); background: var(--k3-accent-soft, transparent); color: var(--k3-text-1); font-weight: 650; }
+#smx-root .smx-lk-sw i { width: 26px; height: 26px; border-radius: 50%; background: var(--sw); box-shadow: inset 0 0 0 1px rgb(0 0 0 / .18); }

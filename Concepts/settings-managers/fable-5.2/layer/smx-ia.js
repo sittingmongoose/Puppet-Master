@@ -47,7 +47,7 @@
     try { const P = kit().placement; for (const id of Object.keys(P.byId)) { const sec = P.sectionOf(id); if (sec && sec.id && !META[sec.id]) META[sec.id] = { label: sec.label || '', help: sec.description || '', ids: (sec.settings || []).map((x) => x.id) }; if (sec && sec.id && !META[sec.id].ids.includes(id)) META[sec.id].ids.push(id); } } catch (e) { /* placement not ready */ }
     return META;
   };
-  SMX.sec = (sid, o = {}) => { const m = meta()[sid] || { label: sid, help: '' }; return Object.assign({ key: sid, title: o.title != null ? o.title : m.label, help: o.help != null ? o.help : m.help, ids: o.ids || SMX.from(sid) }, o.when ? { when: o.when } : {}); };
+  SMX.sec = (sid, o = {}) => { const m = meta()[sid] || { label: sid, help: '' }; return Object.assign({ key: o.key || sid, title: o.title != null ? o.title : m.label, help: o.help != null ? o.help : m.help, ids: o.ids || SMX.from(sid) }, o.when ? { when: o.when } : {}); };
   /* the settings of a section that PMConcept7's manager draws itself (a list, a per-thing switch): the page that draws
      them here says how, so search and "Everything that moved" can point at it */
   SMX.drawn = (sid, how, o = {}) => { const out = {}; const m = meta()[sid]; for (const id of (m ? m.ids : [])) if (!(o.minus || []).includes(id)) out[id] = how; return out; };

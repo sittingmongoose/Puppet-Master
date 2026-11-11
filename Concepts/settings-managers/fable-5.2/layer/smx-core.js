@@ -60,7 +60,8 @@
     here: '<circle cx="12" cy="10" r="3"/><path d="M12 21s7-6.2 7-11a7 7 0 0 0-14 0c0 4.8 7 11 7 11z"/>',
     notes: '<path d="M6 3h9l4 4v14H6z"/><path d="M9 11h7M9 15h7M9 7h3"/>',
     people: '<circle cx="9" cy="9" r="3"/><path d="M3 20a6 6 0 0 1 12 0"/><circle cx="17" cy="8" r="2.4"/><path d="M15.5 14.2A5 5 0 0 1 21 19"/>',
-    moon: '<path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z"/>'
+    moon: '<path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z"/>',
+    sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2.5V5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/>'
   };
   SMX.icon = (name, cls) => {
     if (ICONS[name]) return `<span class="icon ${cls || ''}" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${ICONS[name]}</svg></span>`;
@@ -138,6 +139,25 @@
   SMX.where = (id) => SMX.placement().claimed.get(id) || null;
   SMX.idsOf = (s) => (Array.isArray(s.ids) ? s.ids : (s.resolved || [])).filter((id) => SMX.has(id));
   SMX.coverage = () => { const p = SMX.placement(); return { total: p.all.length, placed: p.claimed.size, missing: p.missing.slice(), twice: p.dup.slice() }; };
+  /* The plan can place a setting on a page whose section then fails to draw it. This opens every page in turn and
+     lists the settings that are planned as a row there but have no row on the page: [[route, id, section]]. */
+  SMX.undrawn = () => {
+    if (!host) return [];
+    const here = SMX.route, out = [];
+    const P = SMX.placement();
+    const byRoute = {};
+    for (const [id, rec] of P.claimed) if (rec.level !== 'drawn') (byRoute[rec.route] = byRoute[rec.route] || []).push([id, rec.section]);
+    for (const p of SMX.pages) {
+      if (p.id.includes(':') || !byRoute[p.id]) continue;
+      try { SMX.go(p.id, { replace: true }); } catch (e) { out.push([p.id, '(the page failed to draw: ' + e.message + ')', '']); continue; }
+      // a section that shows only in some state (the extras of one look) is not missing while that state is off
+      const cond = new Set();
+      for (const list of [p.sections, p.more, p.expert]) for (const s of (list || [])) if (s.when) for (const id of SMX.idsOf(s)) cond.add(id);
+      for (const [id, section] of byRoute[p.id]) if (!cond.has(id) && !host.querySelector('#setting-' + W.CSS.escape(id))) out.push([p.id, id, section]);
+    }
+    SMX.go(here, { replace: true });
+    return out;
+  };
   /* where PMConcept7 draws a setting today, in words */
   SMX.oldHome = (id) => {
     const P = kit().placement, e = P.byId[id];
@@ -285,7 +305,10 @@
   /* the blocks of a page, in order: [{key, html, fixed}] ; fixed blocks hold the kit's own rows and are drawn once */
   function blocksOf(m, ctx) {
     const p = m.page; const out = [];
-    const push = (b) => { if (b && b.html) out.push(b); };
+    // two blocks with one key would be drawn as one (the second would replace the first): the later one gets a suffix
+    const seen = new Set();
+    const uniq = (b) => { let k = b.key, n = 1; while (seen.has(k)) k = `${b.key}~${++n}`; seen.add(k); b.key = k; return b; };
+    const push = (b) => { if (b && b.html) out.push(uniq(b)); };
     const lead = p.lead ? p.lead(ctx) : [];
     for (const b of (lead || [])) push(b);
     const sec = (s, i, level) => {
@@ -299,7 +322,7 @@
     };
     (p.sections || []).forEach((s, i) => push(sec(s, i, 'main')));
     const fold = (list, level, label, help) => {
-      const parts = (list || []).map((s, i) => sec(s, i, level)).filter(Boolean);
+      const parts = (list || []).map((s, i) => sec(s, i, level)).filter(Boolean).map(uniq);
       if (!parts.length) return;
       const key = `${p.id}:${level}`; const open = !!SMX.local.openMore[key];
       const count = (list || []).reduce((n, s) => n + (s.html ? (s.count || 0) : SMX.idsOf(s).length), 0);
