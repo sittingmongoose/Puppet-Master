@@ -3,6 +3,10 @@
 //   Basic, Friendly and Retro, picking Violet repaints the chosen chapter's block in Settings' rail (25 % or more of its
 //   pixels change; it changed 0.05 % of the page), and the block's words read at 4.5:1 or more on it. Segmented toggles
 //   keep each look's neutral fill (DR-069), and Glass and NieR keep their own.
+// B7-R1 (opus-recheck-b11c): in every look, with the theme's own and each accent chosen, the selected segment of a
+//   segmented toggle (Settings' Animation speed, the theme menu's Light / Dark / Auto, Usage's range) reads at 4.5:1 or
+//   more on the chip painted under it (the words' computed colour against the commonest painted colour of the
+//   segment). Friendly Light's segments read white on white with any accent.
 // B-9: Editor & Terminal › "Terminal" ("Which shell runs, where it starts, and how panes come back.") holds the five
 //   behaviour rows only; every terminal look row (each field the terminal's Customize screen sets: colors, scheme
 //   pairing, contrast, import, font, cursor, background, effects, CRT, bezel, dimming, smooth scrolling, bell) is under
@@ -88,6 +92,74 @@ for (const surface of ['normal', 'sandbox']) {
 			if (look === looks[0]) await t.crop(`b7-${look}-violet-${surface}`, f.locator('#pm-settings-root aside.domain-rail, #pm-settings-root .domain-rail').first(), `${look}: Settings' chapter rail with Violet chosen as the accent`);
 			await f.locator('#setting-general\\.visual\\.accent-color button').first().click();   // the theme's own
 			await t.page.waitForTimeout(500);
+		}
+	};
+
+	tests[`B7-R1 a selected segment reads on its chip in every look, with every accent (${surface})`] = async (t) => {
+		if (await skip(t)) return;
+		// 1920 wide: Usage draws its range only while its stage is 1000 px or wider
+		const f = await settings(t, surface, [1920, 1080]);
+		await go(t, f, 'general', 'app-input');
+		const LOOKS = t.args.looks ? String(t.args.looks).split(',') : ['basic-dark', 'basic-light', 'friendly-dark', 'friendly-light', 'retro-dark', 'retro-light', 'glass-dark', 'glass-light', 'nier-dark', 'nier-light'];
+		const ACCENTS = ['own', 'Violet', 'Cyan', 'Rose', 'Amber', 'Emerald'];
+		const L = (c) => c.map((v) => v / 255).map((v) => (v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4)).reduce((a, v, i) => a + v * [0.2126, 0.7152, 0.0722][i], 0);
+		const ratio = (a, b) => (Math.max(L(a), L(b)) + 0.05) / (Math.min(L(a), L(b)) + 0.05);
+		/* the selected segment in a strip: its words' colour, and the commonest painted colour of its box */
+		const read = async (strip, name) => {
+			const sel = f.locator(`${strip} > :is([aria-checked="true"], [aria-pressed="true"], [aria-selected="true"], .active, .is-active) >> visible=true`).first();
+			if (!(await sel.count()) || !(await sel.isVisible())) return { name, missing: true };
+			const ink = await sel.evaluate((el) => {
+				const walk = document.createTreeWalker(el, NodeFilter.SHOW_TEXT); let n, host = el;
+				while ((n = walk.nextNode())) if (n.textContent.trim()) { host = n.parentElement; break; }
+				return getComputedStyle(host).color.match(/[\d.]+/g).slice(0, 3).map(Number);
+			});
+			const png = decodePng(await sel.screenshot());
+			const buckets = new Map();
+			for (let i = 0; i < png.data.length; i += 4) { const k = (png.data[i] >> 3) << 10 | (png.data[i + 1] >> 3) << 5 | (png.data[i + 2] >> 3); const b = buckets.get(k) || [0, 0, 0, 0]; b[0]++; b[1] += png.data[i]; b[2] += png.data[i + 1]; b[3] += png.data[i + 2]; buckets.set(k, b); }
+			const top = [...buckets.values()].sort((x, y) => y[0] - x[0])[0];
+			const chip = [top[1] / top[0], top[2] / top[0], top[3] / top[0]].map(Math.round);
+			return { name, ink, chip, ratio: Math.round(ratio(ink, chip) * 100) / 100 };
+		};
+		for (const look of LOOKS) {
+			if (!(await settingsLook(t, f, look))) continue;
+			await go(t, f, 'general', 'app-input');
+			for (const acc of ACCENTS) {
+				const btn = acc === 'own' ? f.locator('#setting-general\\.visual\\.accent-color button').first() : f.locator(`#setting-general\\.visual\\.accent-color button[aria-label="${acc}"]`).first();
+				if (!(await btn.count()) || !(await btn.isVisible())) { await t.check(`${look} ${acc}: the accent can be chosen here`, true, 'no accent row in this look'); continue; }
+				await btn.scrollIntoViewIfNeeded();
+				await btn.click();
+				await t.page.waitForTimeout(700);
+				const got = [];
+				const seg = '#setting-general\\.visual\\.animation-speed .segmented';
+				await f.locator(seg).first().scrollIntoViewIfNeeded().catch(() => {});
+				await t.page.mouse.move(2, 998);
+				await t.page.waitForTimeout(250);
+				got.push(await read(seg, 'Animation speed'));
+				const menu = f.locator('#themeSelect').first();
+				if (await menu.isVisible().catch(() => false)) {
+					await menu.click();
+					await f.waitForSelector('#themeMenu .pm6-tt-modes', { state: 'visible', timeout: 4000 }).catch(() => null);
+					await t.page.mouse.move(2, 998);
+					await t.page.waitForTimeout(450);
+					got.push(await read('#themeMenu .pm6-tt-modes', 'theme menu Light / Dark / Auto'));
+					await t.page.keyboard.press('Escape');
+					await t.page.waitForTimeout(350);
+				}
+				const low = got.filter((g) => !g.missing && g.ratio < 4.5);
+				await t.check(`${look} ${acc}: the selected segment reads at 4.5:1 or more on its chip`, got.some((g) => !g.missing) && low.length === 0, got.map((g) => g.missing ? `${g.name}: not shown` : `${g.name} ${g.ratio}:1 (ink ${g.ink} on ${g.chip})`).join('; '));
+			}
+			// Usage's range, with the last accent still chosen, then back to the theme's own
+			await f.locator('.page-tabs .page-tab', { hasText: /^\s*Usage\s*$/ }).first().click();
+			await f.waitForSelector('#pmuRange', { state: 'visible', timeout: 15000 }).catch(() => null);
+			await t.page.mouse.move(2, 998);
+			await t.page.waitForTimeout(900);
+			const u = await read('#pmuRange', 'Usage range');
+			await t.check(`${look} ${ACCENTS[ACCENTS.length - 1]}: Usage's selected range reads at 4.5:1 or more on its chip`, !u.missing && u.ratio >= 4.5, u.missing ? 'the range was not shown' : `${u.ratio}:1 (ink ${u.ink} on ${u.chip})`);
+			await f.locator('#tab-settings').click();
+			await t.settle();
+			await go(t, f, 'general', 'app-input');
+			await f.locator('#setting-general\\.visual\\.accent-color button').first().click().catch(() => {});
+			await t.page.waitForTimeout(400);
 		}
 	};
 
