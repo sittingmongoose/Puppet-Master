@@ -7,7 +7,10 @@ const state = (f) => f.evaluate(() => {
 	return {
 		read: document.documentElement.getAttribute('data-pjx-read'), api: window.PJX.read.get(), mounted: window.PJX.S.mounted, sel: c && c.sel,
 		marks: document.querySelectorAll('#pjxc [data-v3-long], #pjxc [data-v3-stack]').length,
-		factDisplay: fact ? getComputedStyle(fact).display : null, valAlign: val ? getComputedStyle(val).textAlign : null
+		factDisplay: fact ? getComputedStyle(fact).display : null, valAlign: val ? getComputedStyle(val).textAlign : null,
+		// a plain value is regular weight exactly (the looks' static faces turn anything from 401 to 500 into medium); a status value keeps its weight
+		plain: Array.from(new Set(Array.from(document.querySelectorAll('#pjxc .pjxc-facts > .pmu-fact:not([data-tone]) > .pmu-factv')).map((v) => getComputedStyle(v).fontWeight))).join(','),
+		toned: Math.min(999, ...Array.from(document.querySelectorAll('#pjxc .pjxc-facts > .pmu-fact[data-tone] > .pmu-factv')).map((v) => Number(getComputedStyle(v).fontWeight)))
 	};
 });
 const pressed = (t) => t.page.evaluate(() => Array.from(document.querySelectorAll('#opt button[aria-pressed="true"]')).map((b) => b.dataset.opt).join(','));
@@ -90,6 +93,8 @@ export const tests = {
 		await t.equal('it is concept C', s.mounted, 'c');
 		await t.equal('a fact gives its cells to the plate’s grid', s.factDisplay, 'contents');
 		await t.check('values are left-aligned', s.valAlign === 'left' || s.valAlign === 'start', s.valAlign);
+		await t.equal('plain values are regular weight, every one', s.plain, '400');
+		await t.check('a value with a status keeps its weight', s.toned >= 600, String(s.toned));
 		await t.shot('v3-project', 'Split v3, the Project page (LOOK)');
 		// Today by its key, and back to Split by key 3 on the strip: still v3, the same Project chosen
 		await t.page.locator('.pc-note').click();
@@ -245,7 +250,7 @@ export const tests = {
 		// Where work runs: where a piece of work went is a value, a chosen Computer keeps its weight, Why is quiet
 		await workPlate();
 		let r = await rows();
-		await t.check('v3: where work went is regular weight', r.to > 0 && r.to < 500, String(r.to));
+		await t.equal('v3: where work went is regular weight', r.to, 400);
 		await t.check('v3: a chosen Computer keeps its weight', r.chosen >= 600, String(r.chosen));
 		await t.check('v3: Why this computer has no underline at rest', !r.underline);
 		await t.check('v3: a live Run this on… is a link like it, with no underline at rest', r.pinIsLink && !r.pinUnderline, JSON.stringify(r));

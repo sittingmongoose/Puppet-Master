@@ -77,7 +77,10 @@ html[data-pjx-read="v3"] #pjxc .pjxc-plate .pmu-cardsub { font-size: 12.5px; lin
 html[data-pjx-read="v3"] #pjxc .pjxc-facts.pmu-facts { grid-template-columns: fit-content(46%) minmax(0, 1fr); column-gap: 18px; row-gap: 9px; align-items: baseline; padding: 2px 0; }
 html[data-pjx-read="v3"] #pjxc .pjxc-facts .pmu-fact { display: contents; }
 html[data-pjx-read="v3"] #pjxc .pjxc-facts .pmu-factl { max-width: none; overflow: visible; white-space: normal; overflow-wrap: break-word; font-size: 13px; line-height: 19px; color: var(--pmu-ink-3); }
-html[data-pjx-read="v3"] #pjxc .pjxc-facts .pmu-factv { min-width: 0; overflow: visible; white-space: normal; overflow-wrap: break-word; text-align: left; text-wrap: pretty; font-size: 13px; line-height: 19px; font-weight: 480; }
+/* (a value is regular weight, 400 exactly: Inter can draw an in-between weight, but Windows paints 480 nearly as heavy
+   as a status value, and Poppins, Plex Mono and the other looks' faces have no weight between 400 and 500, so anything
+   above 400 came out medium there. The value stands out from its label by its ink and its place.) */
+html[data-pjx-read="v3"] #pjxc .pjxc-facts .pmu-factv { min-width: 0; overflow: visible; white-space: normal; overflow-wrap: break-word; text-align: left; text-wrap: pretty; font-size: 13px; line-height: 19px; font-weight: 400; }
 html[data-pjx-read="v3"] #pjxc .pjxc-facts .pmu-fact[data-tone] .pmu-factv { font-weight: 620; }
 html[data-pjx-read="v3"] #pjxc .pjxc-facts .pmu-factv .pjxc-mid { justify-content: flex-start; }
 /* a value that would not fit in two lines beside its label (a sentence, a long path) goes under the label, the plate
@@ -90,7 +93,7 @@ html[data-pjx-read="v3"] #pjxc .pjxc-facts.pmu-facts[data-v3-stack] { grid-templ
 html[data-pjx-read="v3"] #pjxc .pjxc-facts[data-v3-stack] .pmu-factl { margin-top: 10px; font-size: 12px; line-height: 16px; }
 html[data-pjx-read="v3"] #pjxc .pjxc-facts[data-v3-stack] .pmu-fact:first-child .pmu-factl { margin-top: 0; }
 html[data-pjx-read="v3"] #pjxc .pjxc-facts[data-v3-stack] .pmu-factv { margin-top: 1px; max-width: 68ch; }
-html[data-pjx-read="v3"] #pjxc .pjxc-facts .pmu-factv .pjxc-code { font-weight: 480; }
+html[data-pjx-read="v3"] #pjxc .pjxc-facts .pmu-factv :is(.pjxc-code, .pjxc-mid) { font-weight: 400; }
 
 /* Now: what it is doing, then the three things that keep it safe */
 html[data-pjx-read="v3"] #pjxc .pjxc-now { column-gap: 12px; padding: 0 0 2px; }
@@ -129,7 +132,7 @@ html[data-pjx-read="v3"] #pjxc .pjxc-try:hover, html[data-pjx-read="v3"] #pjxc .
 html[data-pjx-read="v3"] #pjxc .pjxc-begins { padding-top: 16px; padding-bottom: 14px; }
 /* "Begins as" and a field's own label: the text face, in sentence case. The small capitals stay for dividers. */
 html[data-pjx-read="v3"] #pjxc .pjxc-begins .pjxc-cap, html[data-pjx-read="v3"] :is(#pjxc, .pjx-dlg-back[data-concept="c"]) .pjx-np-cap { font-family: inherit; font-size: 12.5px; line-height: 17px; font-weight: 600; letter-spacing: 0; text-transform: none; color: var(--pmu-ink-2); }
-html[data-pjx-read="v3"] #pjxc .pjxc-begins .pjxc-cap { font-weight: 450; color: var(--pmu-ink-3); }
+html[data-pjx-read="v3"] #pjxc .pjxc-begins .pjxc-cap { font-weight: 400; color: var(--pmu-ink-3); }
 html[data-pjx-read="v3"] #pjxc .pjxc-stepsin { padding-top: 8px; padding-bottom: 18px; }
 /* answered questions fold to one quiet line each, ruled apart; the open question is the one loud thing */
 html[data-pjx-read="v3"] #pjxc .pjx-np-sec:not([data-state="open"]) + .pjx-np-sec:not([data-state="open"]) { box-shadow: 0 -1px 0 var(--v3-rule); }
@@ -156,7 +159,7 @@ html[data-pjx-read="v3"] #pjxc .pjxc-rghead { margin-bottom: 8px; }
 html[data-pjx-read="v3"] #pjxc .pjxc-review .pjxc-rrows dt { color: var(--pmu-ink-3); }
 html[data-pjx-read="v3"] #pjxc .pjxc-review .pjxc-rrows dd { font-size: 13px; line-height: 18px; font-weight: 500; margin-top: 1px; margin-bottom: 10px; }
 html[data-pjx-read="v3"] #pjxc .pjxc-review .pjxc-rrows dd:last-child { margin-bottom: 0; }
-html[data-pjx-read="v3"] #pjxc .pjxc-rrows dt .pjx-link { font-size: 12px; font-weight: 450; color: var(--pmu-ink-3); text-decoration-color: transparent; }
+html[data-pjx-read="v3"] #pjxc .pjxc-rrows dt .pjx-link { font-size: 12px; font-weight: 400; color: var(--pmu-ink-3); text-decoration-color: transparent; }
 html[data-pjx-read="v3"] #pjxc .pjxc-rrows dt .pjx-link:hover, html[data-pjx-read="v3"] #pjxc .pjxc-rrows dt .pjx-link:focus-visible { color: var(--pmu-ink); text-decoration-color: currentColor; }
 
 /* ------------------------------------------------------------------ the 2026-11-10 fix pass's parts
@@ -168,10 +171,10 @@ html[data-pjx-read="v3"] #pjxc .pjx-wk-rows { margin-top: 2px; border-top-color:
 html[data-pjx-read="v3"] #pjxc .pjx-wk-row { column-gap: 10px; padding: 10px 0; border-bottom-color: var(--v3-rule); font-size: 13px; line-height: 19px; }
 html[data-pjx-read="v3"] #pjxc .pjx-wk-row:last-child { padding-bottom: 2px; border-bottom-color: transparent; }
 html[data-pjx-read="v3"] #pjxc .pjx-wk-where { font-size: 12.5px; line-height: 18px; }
-html[data-pjx-read="v3"] #pjxc .pjx-wk-to { font-weight: 480; }
+html[data-pjx-read="v3"] #pjxc .pjx-wk-to { font-weight: 400; }
 html[data-pjx-read="v3"] #pjxc .pjx-wk-row[data-mode="chosen"] .pjx-wk-to { font-weight: 620; }
 html[data-pjx-read="v3"] #pjxc .pjx-wk-acts { column-gap: 18px; margin-top: 3px; }
-html[data-pjx-read="v3"] #pjxc :is(.pjx-wk-why, .pjx-wk-pin, .pjx-wk-follow) { font-weight: 450; text-decoration-color: transparent; }
+html[data-pjx-read="v3"] #pjxc :is(.pjx-wk-why, .pjx-wk-pin, .pjx-wk-follow) { font-weight: 400; text-decoration-color: transparent; }
 html[data-pjx-read="v3"] #pjxc :is(.pjx-wk-why, .pjx-wk-pin, .pjx-wk-follow):hover, html[data-pjx-read="v3"] #pjxc :is(.pjx-wk-why, .pjx-wk-pin, .pjx-wk-follow):focus-visible { text-decoration-color: currentColor; }
 /* New Project's "Where its work runs": the block keeps its frame, as light as the page's other rules */
 html[data-pjx-read="v3"] #pjxc .pjx-wk-np { gap: 12px; padding: 14px; border-color: var(--v3-rule); }
