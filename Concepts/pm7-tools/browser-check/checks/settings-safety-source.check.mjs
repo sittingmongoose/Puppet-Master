@@ -78,6 +78,36 @@ const state = (f, fn, arg) => f.evaluate(fn, arg);
 const errors = (f) => f.evaluate(() => (window.__b11 ? __b11.errors.slice() : []));
 const toasts = (f) => f.evaluate(() => (window.__b11 ? __b11.toasts.slice() : []));
 
+/* the look chosen the way a person chooses it (settings-choices-picker's helper): a look painted without saving is
+   reset to the saved pair on the next Settings render (applyPaint; ASTRA-B10-K1) */
+async function setLook(t, f, look) {
+	const [family, mode] = look.split('-');
+	await f.locator('#pm-settings-root [data-action="navigate-domain"][data-domain="general"]').first().click();
+	await t.settle();
+	for (const [setting, value] of [['general.visual.theme', family === 'nier' ? 'NieR' : family[0].toUpperCase() + family.slice(1)], ['general.visual.theme-mode', mode === 'light' ? 'Light' : 'Dark']]) {
+		const trigger = f.locator(`select[data-setting="${setting}"]`).locator('..').locator('.pm51-dd-trigger');
+		const labels = await f.locator(`select[data-setting="${setting}"] option`).allTextContents();
+		const name = labels.includes(value) ? value : `${value} ${mode === 'light' ? 'Light' : 'Dark'}`;
+		await trigger.first().scrollIntoViewIfNeeded();
+		await trigger.first().click();
+		await f.getByRole('option', { name, exact: true }).click({ timeout: 8000 });
+		await f.locator('.pm51-dd-list').waitFor({ state: 'hidden', timeout: 8000 }).catch(() => {});
+		await f.waitForFunction(() => !(window.PM_LOOK_COVERED && PM_LOOK_COVERED()) && !(window.PM_THEME_TRANSITION && PM_THEME_TRANSITION.busy && PM_THEME_TRANSITION.busy()), null, { timeout: 15000 }).catch(() => {});
+		await t.page.waitForTimeout(400);
+	}
+	await f.waitForFunction(([fam, m]) => {
+		const th = document.documentElement.getAttribute('data-theme') || '';
+		const nier = !!(window.PM_NIER && PM_NIER.on()) || th.startsWith('nier');
+		return fam === 'nier' ? nier && th.endsWith('-' + m) : !nier && th === fam + '-' + m;
+	}, [family, mode], { timeout: 20000 }).catch(() => {});
+}
+async function guardLook(t, f, look, where) {
+	const [family, mode] = look.split('-');
+	const got = await f.evaluate(() => ({ theme: document.documentElement.getAttribute('data-theme') || '', nier: !!(window.PM_NIER && PM_NIER.on()) || (document.documentElement.getAttribute('data-theme') || '').startsWith('nier') }));
+	const ok = family === 'nier' ? got.nier && got.theme.endsWith('-' + mode) : !got.nier && got.theme === look;
+	await t.check(`${where}: measured under ${look} (painted ${got.theme}${got.nier ? ', NieR on' : ''})`, ok, 'the panel opened on a different look than the cell names');
+}
+
 export const tests = {};
 for (const surface of ['normal', 'sandbox']) {
 	const skip = async (t) => { if (t.app.surfaces().includes(surface)) return false; await t.check(`${surface} surface not asked for`, true); return true; };
@@ -450,6 +480,41 @@ for (const surface of ['normal', 'sandbox']) {
 			const opts = r.options.map(String);
 			await t.check(`${r.id}: its default is one of its choices`, opts.includes(String(r.default)), JSON.stringify({ default: r.default, options: r.options.slice(0, 8) }));
 			await t.check(`${r.id}: its value is one of its choices`, opts.includes(String(r.value)), JSON.stringify({ value: r.value, options: r.options.slice(0, 8) }));
+		}
+	};
+
+	tests[`looks: the new panels fit and are on top in all ten looks (${surface})`] = async (t) => {
+		if (await skip(t)) return;
+		const LOOKS = t.args.looks ? String(t.args.looks).split(',') : ['basic-dark', 'basic-light', 'friendly-dark', 'friendly-light', 'glass-dark', 'glass-light', 'retro-dark', 'retro-light', 'nier-dark', 'nier-light'];
+		for (const look of LOOKS) {
+			await t.step(look, async () => {
+				const f = await settings(t, surface, [1390, 900]);
+				await setLook(t, f, look);
+				const fits = async (what, sel, buttons) => {
+					const box = f.locator(sel).last();
+					if (!(await t.check(`${look} ${what}: open`, await box.waitFor({ state: 'visible', timeout: 4000 }).then(() => true).catch(() => false)))) return;
+					await t.page.waitForTimeout(450);
+					await guardLook(t, f, look, `${look} ${what}`);
+					await t.noOverflow(`${look} ${what}: no overflow or clipped text`, { scope: sel });
+					for (const b of buttons) await t.visible(f.locator(sel).last().locator(b).first(), `${look} ${what}: ${b} is on top`);
+				};
+				await go(t, f, 'system', 'advanced');
+				await press(t, f, `${body('advanced')} [data-setting="system.advanced.reset-defaults"]`);
+				await fits('Reset settings to defaults', '.overlay [role="dialog"][aria-label="Reset settings to defaults"]', ['select[name="what"]', 'button[type="submit"]']);
+				await closeAll(t, f);
+				await go(t, f, 'system', 'doctor');
+				await press(t, f, `${body('doctor')} [data-setting="system.health.platform-diagnostics"]`);
+				await fits('Support details', '.drawer-wrap aside.drawer[aria-label="Support details"]', ['button.primary']);
+				await closeAll(t, f);
+				await go(t, f, 'system', 'updates');
+				await press(t, f, 'button.pm7-server-gap-consumer:has-text("Release notes")');
+				await fits('Release notes', '.drawer-wrap aside.drawer[aria-label="Release notes"]', []);
+				await closeAll(t, f);
+				await go(t, f, 'system', 'backup', 'backup');
+				await press(t, f, `${body('backup')} [data-action="pm51-backup-kit-test"]:not([aria-disabled="true"])`);
+				await fits('Test Recovery Kit', '.drawer-wrap aside.drawer[aria-label="Test Recovery Kit"]', ['[data-action="pm51-backup-handoff-stepup"]']);
+				await closeAll(t, f);
+			});
 		}
 	};
 
