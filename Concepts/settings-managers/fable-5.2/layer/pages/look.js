@@ -160,8 +160,47 @@
       { was: 'Four rows are under “Terminal look”; 43 more look rows (bezel, background, effects, cursor) are under “Terminal”, whose heading says “Which shell runs, where it starts, and how panes come back”.', now: 'Every terminal look row is on this page, grouped as Text, Cursor, Background, Effects and Bezel. How the terminal behaves is in Code & tools › Terminal.' }
     ]
   });
+  /* ------------------------------------------------------------------ Text & motion: the same idea, an example beside the rows */
+  const TXT = { scale: 'general.visual.ui-scale', size: 'general.visual.font-size', room: 'general.visual.interface-density', lines: 'general.visual.line-height', still: 'general.visual.reduce-animations', speed: 'general.visual.animation-speed', contrast: 'general.visual.high-contrast', focus: 'general.visual.focus-indicator' };
+  const SPEED = { fast: 0.55, measured: 1, cinematic: 1.8 };
+  const isOn = (v) => v === true || /^(on|true|yes)$/i.test(String(v));
+  let lastText = null, saidText = '';
+  const textNow = () => ({ scale: String(val(TXT.scale) || ''), size: String(val(TXT.size) || ''), room: lab(TXT.room), lines: String(val(TXT.lines) || ''), still: isOn(val(TXT.still)), speed: String(val(TXT.speed) || 'Measured'), contrast: isOn(val(TXT.contrast)), focus: lab(TXT.focus) });
+  const sayText = (c) => {
+    if (lastText) {
+      if (c.scale !== lastText.scale) saidText = `Size of everything: <b>${h(c.scale)}</b>. The whole app grew or shrank, this example with it.`;
+      else if (c.size !== lastText.size) saidText = `Text size: <b>${h(c.size)}</b>. Read the two messages.`;
+      else if (c.lines !== lastText.lines) saidText = `Line spacing: <b>${h(c.lines)}</b>. Look at the space between the lines of the longer message.`;
+      else if (c.room !== lastText.room) saidText = `Spacing: <b>${h(c.room)}</b>. Look at the room around the messages and between the buttons.`;
+      else if (c.still !== lastText.still) saidText = c.still ? 'Reduce motion is <b>on</b>. The panel in the example no longer slides; it is simply there.' : 'Reduce motion is <b>off</b>. The panel in the example slides again.';
+      else if (c.speed !== lastText.speed) saidText = `Animation speed: <b>${h(c.speed)}</b>. Watch how quickly the panel slides.`;
+      else if (c.contrast !== lastText.contrast) saidText = `High contrast is <b>${c.contrast ? 'on' : 'off'}</b>. Look at the edges of the boxes.`;
+      else if (c.focus !== lastText.focus) saidText = `Keyboard outline: <b>${h(c.focus)}</b>. Look at the button on the right, which has the keyboard on it.`;
+    }
+    lastText = c;
+    return saidText || 'These change the whole app at once. The example shows each one on its own: text, room, movement, edges and the keyboard outline.';
+  };
+  const textExample = (c) => `
+    <figure class="smx-lk-ex" aria-label="An example of text, spacing, movement and outlines with these choices">
+      <div class="smx-lkt-stage" aria-hidden="true">
+        <div class="smx-lkt-read" style="line-height:${Number(c.lines) || 1.4}">
+          <p class="smx-lkt-you">Add a dark mode to the recipe page</p>
+          <p class="smx-lkt-ai">Done. I changed 3 files and the tests pass. The switch is in the page header, and it remembers what you chose the next time you open the page.</p>
+        </div>
+        <div class="smx-lkt-row"><span class="smx-lkt-btn">A button</span><span class="smx-lkt-btn is-focus">The keyboard is here</span></div>
+        <div class="smx-lkt-move" style="--smx-speed:${SPEED[c.speed.toLowerCase()] || 1}"><i></i><span>${c.still ? 'A panel, simply there' : 'A panel sliding in'}</span></div>
+      </div>
+      <figcaption class="smx-lk-ex-cap">Text <b>${h(c.size)}</b> · line spacing ${h(c.lines)} · ${h(c.room.toLowerCase())} · ${c.still ? 'no movement' : 'movement ' + h(c.speed.toLowerCase())} · ${c.contrast ? 'high contrast · ' : ''}${h(c.focus.toLowerCase())} outline</figcaption>
+      <p class="smx-lk-said" aria-live="polite"><i aria-hidden="true"></i><span>${sayText(c)}</span></p>
+    </figure>`;
   SMX.extend('look/text', {
-    changes: [{ was: 'Size, spacing, motion and contrast are split between “Size & readability” and a “Fine-tuning” fold, mixed with the wallpaper.', now: 'Three short groups: Size, Motion, Easier to see. They change the whole app at once, this page included.' }]
+    cls: 'is-wide smx-look',
+    purpose: 'Make everything easier to read, and calm the movement down if you like. The example beside the choices shows each one.',
+    lead: (ctx) => [{ key: 'example', html: textExample(textNow()) }],
+    changes: [
+      { was: 'Size, spacing, motion and contrast are split between “Size & readability” and a “Fine-tuning” fold, mixed with the wallpaper. Nothing shows what “Animation speed”, “Line spacing” or the keyboard outline will look like before you pick.', now: 'Three short groups (Size, Motion, Easier to see) beside an example that shows text, room, a sliding panel, edges and the keyboard outline, and says which one you just changed.' },
+      { was: '“Animation speed” (Fast, Measured, Cinematic) is saved but nothing on the page follows it: no style, attribute or variable changes (2,189 variables compared).', now: 'The example shows what the choice is meant to do: the panel slides faster or slower. The defect is on the list for PMConcept7.' }
+    ]
   });
   SMX.extend('look/window', {
     changes: [{ was: '“Window & panels” and “When Puppet Master opens” sit among the look settings of App & Input.', now: 'Their own page: where panels sit, what the app opens on, what comes back after a crash.' }]

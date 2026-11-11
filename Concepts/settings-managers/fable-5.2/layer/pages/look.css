@@ -103,3 +103,22 @@
 #smx-root .smx-lk-sw:hover { border-color: var(--k3-line); }
 #smx-root .smx-lk-sw.is-on { border-color: var(--k3-accent); background: var(--k3-accent-soft, transparent); color: var(--k3-text-1); font-weight: 650; }
 #smx-root .smx-lk-sw i { width: 26px; height: 26px; border-radius: 50%; background: var(--sw); box-shadow: inset 0 0 0 1px rgb(0 0 0 / .18); }
+
+/* ---- Text & motion: the example shows text, room, movement, edges and the keyboard outline -------------------------- */
+#smx-root .smx-lkt-stage { display: grid; gap: var(--lg, 12px); padding: var(--xl, 16px); border: var(--border-width, 1px) solid var(--border); border-radius: var(--border-radius, 6px); background: var(--surface); color: var(--text-primary); font-family: var(--body-font, inherit); font-size: 1rem; }
+#smx-root .smx-lkt-read { display: grid; gap: var(--md, 8px); }
+#smx-root .smx-lkt-read p { margin: 0; padding: var(--md, 8px) var(--lg, 12px); border-radius: var(--border-radius, 6px); max-width: 94%; }
+#smx-root .smx-lkt-you { justify-self: end; background: color-mix(in srgb, var(--accent-primary) 20%, var(--surface-elevated, var(--surface))); }
+#smx-root .smx-lkt-ai { background: var(--surface-elevated, var(--surface)); border: 1px solid var(--border); }
+#smx-root .smx-lkt-row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--lg, 12px); padding: 4px; }
+#smx-root .smx-lkt-btn { padding: var(--sm, 4px) var(--lg, 12px); border: var(--border-width, 1px) solid var(--border); border-radius: var(--border-radius, 6px); font-weight: 600; font-size: .86rem; }
+#smx-root .smx-lkt-btn.is-focus { outline: 2px solid var(--accent-primary); outline-offset: 2px; }
+html[data-focus="high-contrast"] #smx-root .smx-lkt-btn.is-focus { outline: 3px solid var(--text-primary, #fff); }
+html[data-focus="color-blind"] #smx-root .smx-lkt-btn.is-focus { outline: 3px dashed rgb(0, 114, 178); }
+html[data-focus="color-blind"][data-theme$="-dark"] #smx-root .smx-lkt-btn.is-focus { outline-color: rgb(86, 180, 233); }
+#smx-root .smx-lkt-move { position: relative; height: 44px; overflow: hidden; border: 1px dashed var(--border); border-radius: var(--border-radius, 6px); font-size: .8rem; color: var(--text-secondary); }
+#smx-root .smx-lkt-move i { position: absolute; inset: 4px auto 4px 4px; width: 46%; border-radius: var(--border-radius, 6px); background: color-mix(in srgb, var(--accent-primary) 30%, var(--surface-elevated, var(--surface))); border: 1px solid var(--border); animation: smxLktSlide calc(var(--motion-med, 200ms) * 7 * var(--smx-speed, 1)) var(--ease-default, ease-in-out) infinite alternate; }
+#smx-root .smx-lkt-move span { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); }
+@keyframes smxLktSlide { 0%, 18% { transform: translateX(-104%); } 82%, 100% { transform: translateX(0); } }
+html[data-motion="reduced"] #smx-root .smx-lkt-move i { animation: none; }
+@media (prefers-reduced-motion: reduce) { #smx-root .smx-lkt-move i { animation: none; } }

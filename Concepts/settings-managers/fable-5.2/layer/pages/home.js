@@ -21,6 +21,10 @@
       const st = ctx.st; const needs = allNeeds(st);
       const ready = d.providers(st).filter(d.providerReady).length;
       const home = d.homeServer(st); const away = d.routeAway(st);
+      // the last backup that ran, in PMConcept7's own words ("Today · 2:00 AM"): only the day is said here
+      const ran = (((st.backup || {}).history || [])[0] || {}).time || '';
+      const backup = ran ? String(ran).split(/\s*·\s*/)[0].toLowerCase() : 'none yet';
+      const MOST = 8;
       const groups = [];
       let g = null;
       for (const c of SMX.chapters) { if (!g || g.name !== c.group) { g = { name: c.group, items: [] }; groups.push(g); } g.items.push(c); }
@@ -28,9 +32,9 @@
       return [
         { key: 'summary', html: ui.summary({ icon: needs.some((n) => n.tone !== 'info') ? 'alert' : 'check', tone: needs.some((n) => n.tone !== 'info') ? 'attention' : 'ready', lines: [
           needs.length ? `Puppet Master is working. ${ui.b(needs.length === 1 ? 'One thing' : needs.length + ' things')} could use a moment of yours.` : 'Everything is set up and working.',
-          `${ui.word(d.plural(ready, 'AI provider'), { go: 'ai' })} ready · projects kept on ${ui.word(home ? home.name : 'no computer yet', { go: 'computers' })} · away from home ${ui.word(away ? 'works' : 'not set up', { go: 'computers/away' })} · last backup ${ui.word('today', { go: 'keeping/backups' })}`
+          `${ui.word(d.plural(ready, 'AI provider'), { go: 'ai' })} ready · projects kept on ${ui.word(home ? home.name : 'no computer yet', { go: 'computers' })} · away from home ${ui.word(away ? 'works' : 'not set up', { go: 'computers/away' })} · last backup ${ui.word(backup, { go: 'keeping' })}`
         ] }) },
-        { key: 'needs', html: ui.needs(needs.slice(0, 6)) },
+        { key: 'needs', html: ui.needs(needs.slice(0, MOST)) + (needs.length > MOST ? ui.note(`${needs.length - MOST} more ${needs.length - MOST === 1 ? 'is' : 'are'} on the chapters marked with a dot in the list on the left.`) : '') },
         { key: 'tasks', html: ui.tasks([
           { icon: 'brain', title: 'Add an AI provider', sub: 'Sign in to one you pay for, or try the free ones', action: 'pm51-providers-add' },
           { icon: 'phone', title: 'Use it on another device', sub: 'Pair a phone, a tablet or another computer', action: 'pm51-servers-pair' },
