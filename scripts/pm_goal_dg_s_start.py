@@ -250,6 +250,22 @@ class NativeOwner(W.DGOwner, A.ActivationOwner):
                                                 last=self.state.get(self.ctx.goal_run_id, {}).get('last'))
         return self.transition(self.ctx.goal_run_id, 'start_event_pending', 0, 'active', cause_ref=cause_ref)
 
+    def advance(self, status='running'):
+        """A later lawful native advance (new immutable body revision, pointer CAS)."""
+        current = self.current()
+        body = copy.deepcopy(current['body'])
+        body['record']['revision'] = NR.uint64(body['record']['revision'] + 1, 'native/advance')
+        body['record']['status'] = status
+        body['physical_key'] = self.body_key(body['record']['revision'])
+        control = self.control_wrapper(body)
+        self.ctx.storage.transact([
+            dict(table='workflow_goal_run_body', key=body['physical_key'], expected=None, value=body),
+            dict(table='workflow_goal_run_control', key=control['physical_key'], expected=None, value=control),
+            dict(table='workflow_goal_run_current', key=self.current_key(), expected=current['pointer']['version'],
+                 value=dict(qualification=QUALIFICATION, body_key=body['physical_key'],
+                            control_key=control['physical_key'], revision=body['record']['revision']))])
+        return body
+
     def extra_state(self):
         return dict(state=self.state)
 
@@ -302,6 +318,33 @@ class GoalOwner(W.WholeSourceOwner):
                                             for w in writes}
         return handle
 
+    def live_key(self):
+        return self.ctx.run_key('goal_live_stop')
+
+    def latch_stop(self):
+        """The host Stop owner latches a real Stop (a Storage write by this owner)."""
+        cell = self.ctx.storage.cell('goal_live_stop', self.live_key())
+        epoch = 0 if cell is None else cell['value']['user_stop_epoch']
+        self.ctx.storage.transact([dict(table='goal_live_stop', key=self.live_key(),
+                                        expected=None if cell is None else cell['version'],
+                                        value=dict(qualification=QUALIFICATION, latched=True,
+                                                   user_stop_epoch=epoch + 1))])
+
+    def current_argument(self):
+        """Fresh CurrentGoalArgument from this owner's live state; no Storage write."""
+        refs = self.inventory('OriginalGoalArgument')
+        require('goal/original_withdrawn', len(refs) == 1)
+        record = self._originals[refs[0]]
+        value = A.CODECS[self.custody_codec][1](record['raw'])
+        live = self.ctx.storage.cell('goal_live_stop', self.live_key())
+        if live is not None:
+            value['stop']['record'].update(latched=live['value']['latched'],
+                                           user_stop_epoch=live['value']['user_stop_epoch'])
+        self.edition.goal_bank.validate(self.edition.goal_arg + '#/$defs/CurrentGoalArgument', value,
+                                        'goal/current_argument')
+        self.issue(self.edition.goal_arg + '#/$defs/CurrentGoalArgument', value, kind='CurrentGoalArgument')
+        return value
+
     def context_commitment(self, handle, goal_argument):
         """GoalContextCommitment: selectors of the cells holding this argument's wrappers."""
         ref = self._ref(handle)
@@ -337,6 +380,29 @@ class D01Owner(W.WholeSourceOwner):
     def pointer_key(self):
         return self.ctx.run_key('executor_workflow_current_pointer')
 
+    def current_source(self, native):
+        """Fresh CurrentSource from present Storage truth; rebinding reuses this
+        owner's original selector cells and writes nothing."""
+        e, ctx = self.edition, self.ctx
+        refs = self.inventory('d01_current')
+        require('d01/original_withdrawn', len(refs) == 1)
+        value = A.CODECS[self.custody_codec][1](self._originals[refs[0]]['raw'])
+        fam = d01_families(e)
+        pointer = ctx.storage.cell(fam['pointer'], self.pointer_key())
+        head = W.resolve_selector(ctx.storage, pointer['value']['record']['workflow_head'], 'd01/current_head')
+        wf = value['workflow']
+        wf['current_body'] = copy.deepcopy(native['body']['record'])
+        wf['current_control'] = copy.deepcopy(native['control']['record'])
+        h = copy.deepcopy(head['record'])
+        for k in list(wf['head']):
+            if k in h:
+                wf['head'][k] = h[k]
+        wf['heads'] = [copy.deepcopy(wf['head'])]
+        value['pointer'] = copy.deepcopy(pointer['value']['record'])
+        e.bank.validate(e.d01 + '#/$defs/CurrentSource', value, 'd01/current_source')
+        self.issue(e.d01 + '#/$defs/CurrentSource', value, kind='current_source')
+        return value
+
 
 class StartStorageParticipant(W.DGOwner):
     """``owner.storage.workflow_start.commit_original.v2``: the lower publisher.
@@ -350,14 +416,16 @@ class StartWorld:
     """One TEST_ONLY execution: Storage, registry, recorder and every owner."""
 
     def __init__(self, work, edition=None, *, faults=None, reopen=False, token=None, project='TEST_ONLY-project-α',
-                 goal='TEST_ONLY:goal:1', run='TEST_ONLY:goal_run:é-🦊', thread='TEST_ONLY:thread:1'):
+                 goal='TEST_ONLY:goal:1', run='TEST_ONLY:goal_run:é-🦊', thread='TEST_ONLY:thread:1',
+                 segment_target_bytes=65536):
         self.work = Path(work)
         self.edition = edition or W.v3_edition()
         self.registry = A.OwnerRegistry()
         self.recorder = self.registry.recorder
         storage_dir = self.work / 'storage'
-        self.storage = (S.TestOwnerStorage.open(storage_dir, faults=faults) if reopen
-                        else S.TestOwnerStorage.create(storage_dir, faults=faults))
+        self.storage = (S.TestOwnerStorage.open(storage_dir, faults=faults, segment_target_bytes=segment_target_bytes)
+                        if reopen else S.TestOwnerStorage.create(storage_dir, faults=faults,
+                                                                 segment_target_bytes=segment_target_bytes))
         self.recorder.observe('storage:' + self.storage.storage_instance_id, self.storage.observe)
         self.token = token or W.new_token()
         self.ctx = W.Context(self.storage, project, goal, run, thread, self.token)
@@ -752,7 +820,8 @@ class StartOwner(W.DGOwner):
         require('start/birth_descriptor', birth['descriptor_install_tx'] == d['install_tx'])
         native = self.world.owners['native'].current()
         body, control = native['body'], native['control']
-        require('start/native_status', body['record']['status'] == 'ready')
+        require('start/revision_conflict', body['record']['status'] == 'ready' and
+                body['record']['revision'] == birth['body']['record']['revision'])
         require('start/native_activation', body['record']['activation_state']['state'] == 'start_event_pending')
         require('start/native_control_join', control['record']['body_record_sha256'] == cdigest(body['record'])
                 and control['record']['revision'] == body['record']['revision'])
@@ -883,6 +952,11 @@ class StartOwner(W.DGOwner):
         e, ctx = self.edition, self.ctx
         storage = ctx.storage
         with self.recorder.call(self.owner_id, 'commit_start', request) as slot:
+            done = storage.reservation_state(request.get('operation_id')) if type(request) is dict else None
+            if done is not None and done['state'] == 'published':
+                result = self.dedupe(request)
+                slot.set(result)
+                return result
             src, refs = self.acquire_all(handles)
             if 'after_acquire' in edits:
                 edits['after_acquire'](self.world, src)
@@ -938,8 +1012,6 @@ class StartOwner(W.DGOwner):
             reservation = storage.reservation_state(op)
             if reservation is not None and reservation['state'] in ('appended', 'receipted'):
                 raise W.DGRefusal('start/pending_fenced')
-            if reservation is not None and reservation['state'] == 'published':
-                raise W.DGRefusal('start/already_committed')
             events, handle, outcome = self.world.appender.append_original(op, append_request, [submission],
                                                                          durability_class='barrier')
             require('start/dedupe_unavailable', outcome['status'] == 'appended')
@@ -952,6 +1024,8 @@ class StartOwner(W.DGOwner):
             e.bank.validate(e.custody + '#/$defs/FullOriginalAppend', original_append, 'start/original_append')
             union = self.publication_union(op, request, src, native, candidate, after_body, after_control,
                                            original_append, edits)
+            if 'before_publish' in edits:
+                edits['before_publish'](self.world)
             tx = StartStorageParticipantOps.commit_original(self.world, handle, union)
             receipt = self.world.owners['native'].transition_receipt(op, request['causation_ref'],
                                                                      native['body']['record']['revision'])
@@ -1215,6 +1289,24 @@ class StartOwner(W.DGOwner):
         out = binder.bind(out)
         binder.commit()
         return out
+
+    def dedupe(self, request):
+        """Same original operation after publication: the first Event, first receipt
+        and transition, with no second append/CAS/effect and no full result replay."""
+        e = self.edition
+        e.bank.validate(e.custody + '#/$defs/Request', request, 'start/request')
+        storage = self.ctx.storage
+        r = storage.reservation_state(request['operation_id'])
+        require('start/dedupe_unavailable', r is not None and r['state'] == 'published' and len(r['event_ids']) == 1)
+        control = self.world.owners['native'].start_control()['value']
+        require('start/dedupe_unavailable', control['record']['original_operation_id'] == request['operation_id'])
+        custody = storage.first_custody(r['event_ids'][0])
+        native = self.world.owners['native']
+        transitions = native.inventory('transition')
+        return dict(kind='dedupe', classification='committed', event_id=r['event_ids'][0],
+                    first_append_receipt=custody['first_append_receipt'],
+                    committed_start=control['record']['committed_start'], transition_refs=transitions,
+                    terminal_tx=r['terminal']['tx_id'])
 
     # ---- passive classification ------------------------------------------
     def recover_start(self, operation_id):

@@ -329,10 +329,11 @@ class Binder:
     """Binds a skeleton to the world. Selector targets become Storage cells
     written by the issuing owner in one transaction."""
 
-    def __init__(self, ctx, owner_id, family_prefix):
+    def __init__(self, ctx, owner_id, family_prefix, read_only=False):
         self.ctx = ctx
         self.owner_id = owner_id
         self.prefix = family_prefix
+        self.read_only = read_only
         self.writes = []
         self._cells = {}
 
@@ -389,6 +390,10 @@ class Binder:
         schema_id = node['schema_id'] if node['schema_id'] != 'x' else 'pm.storage_value.TEST_ONLY.%s.v1' % family
         schema_version = node['schema_version'] if node['schema_version'] != 'x' else '1.0.0'
         key = ctx.run_key(family, self.owner_id, self.prefix, '/'.join(str(p) for p in path))
+        if key not in self._cells and self.read_only:
+            existing = ctx.storage.cell(family, key)
+            require('binder/passive_unbound_selector', existing is not None)
+            self._cells[key] = existing['value']
         if key not in self._cells:
             record = dict(qualification=QUALIFICATION, family_id=family, schema_id=schema_id,
                           schema_version=schema_version, issuing_owner=self.owner_id,
