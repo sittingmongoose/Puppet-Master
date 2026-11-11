@@ -531,13 +531,14 @@ export default async function (t) {
         await t.page.mouse.wheel(0, p.wheel.delta);
         await f.waitForTimeout(150);
       }
-      if ((!p.onTop || p.hits < 3) && p.coverIn && !folding && await makeRoom(roomState, p)) return reach(loc, at);
+      if ((!p.onTop || p.hits < 3) && p.coverIn && !folding && await makeRoom(roomState, p, loc)) return reach(loc, at);
       return { ...p, wheeled };
     };
     // Press where reach found the control: Playwright's own click (it re-checks the target and retries while the
     // layout still moves) when the point was on top already; a real press at the point when the wheel had to bring
     // it into a scroller's exposed band, where Playwright's actionability check would wait on the strip above it.
     const pressAt = async (loc, p, opts = {}) => {
+      await t.check(`${target} ${roomState}: control (${p.what}) is still shown before its press`, await loc.isVisible(), JSON.stringify(p), { hard: true });
       if (!p.wheeled && p.onTop) await loc.click(opts.at ? { position: opts.at, button: opts.button } : { button: opts.button });
       else await t.page.mouse.click(off.x + p.x, off.y + p.y, opts.button ? { button: opts.button } : {});
     };
@@ -577,37 +578,63 @@ export default async function (t) {
     // as a person would (real presses on aria-expanded="true" controls that are not tabs or popup triggers), assert each
     // fold took, and say which control asked for the room. Returns how many folded; a second call finds none.
     // T69 (opus-recheck-kit8 finding B): only the expanded region that holds what covers the control folds (the nearest
-    // ancestor of the expanded control that contains the cover and not the covered control), never every expanded region
+    // region actually owned by the expanded control, containing the cover and not the covered control), never every expanded region
     // of the panel; and a fold that hides a popup trigger the census would press fails by name (hard), so nothing the
     // census walks is skipped at this size while it is covered at no other.
-    const makeRoom = async (state, why) => {
+    const makeRoom = async (state, why, targetControl) => {
       folding = true;
+      let covered;
       try {
-        const folds = await panel.evaluate(p => {
+        // Keep the original target: reach() on a fold control replaces the hit-test markers.
+        covered = typeof targetControl.elementHandle === 'function' ? await targetControl.elementHandle() : targetControl;
+        const folds = await panel.evaluate((p, covered) => {
           document.querySelectorAll('[data-shelf-fold]').forEach(e => e.removeAttribute('data-shelf-fold'));
           // The panel's regions outside every scroller (the panel itself counts when it scrolls); never a row of a tree or list.
           const scs = [p, ...p.querySelectorAll('*')].filter(a => a.scrollHeight > a.clientHeight + 4 && /auto|scroll/.test(getComputedStyle(a).overflowY) && a.checkVisibility() && a.clientHeight > 0);
-          const cover = document.querySelector('[data-shelf-cover]'), covered = document.querySelector('[data-shelf-covered]');
+          const cover = document.querySelector('[data-shelf-cover]');
           document.querySelectorAll('[data-shelf-fold-region]').forEach(e => e.removeAttribute('data-shelf-fold-region'));
-          const regionOf = e => { if (!cover) return null; for (let a = e; a && a !== p; a = a.parentElement) if (a.contains(cover) && !(covered && a.contains(covered))) return a; return null; };
+          // The region must be the one this control actually folds. Walking arbitrarily up from a nested
+          // Technical details head used to call its whole footer the region, then fold the target's card.
+          const regionOf = e => {
+            const card = e.closest('.pm7-post-card');
+            const region = e.matches('.d-fold') && card ? (card.closest('.d-jj-foot, .pm7-scm-git-footer') || card) : e.closest('[data-acc]');
+            return region && cover && region.contains(cover) && !region.contains(covered) && !card?.contains(covered) ? region : null;
+          };
           return [...p.querySelectorAll('[aria-expanded="true"]')].filter(e => e.checkVisibility() && !/^(tab|treeitem|row|option|gridcell|listitem)$/.test(e.getAttribute('role') || '') && !e.hasAttribute('aria-haspopup') && !scs.some(sc => sc.contains(e)))
             .map(e => ({ e, region: regionOf(e) })).filter(x => x.region)
             .map(({ e, region }, i) => { e.setAttribute('data-shelf-fold', String(i)); region.setAttribute('data-shelf-fold-region', String(i));
               return { i, label: (e.getAttribute('aria-label') || e.closest('[class]').className || '').toString().slice(0, 60), region: (region.tagName + '.' + String(region.className?.baseVal ?? region.className).trim().split(/\s+/).slice(0, 2).join('.')).slice(0, 60) }; });
-        });
+        }, covered);
         const triggersIn = (i) => panel.evaluate((p, i) => { const r = p.querySelector(`[data-shelf-fold-region="${i}"]`); return r ? [...r.querySelectorAll('[aria-haspopup]:not([aria-haspopup="false"])')].filter(e => e.checkVisibility()).map(e => e.getAttribute('aria-controls') || (e.getAttribute('aria-label') || e.textContent).trim().replace(/\s+/g, ' ').slice(0, 40)) : []; }, i);
+        let foldedCount = 0;
         for (const fo of folds) {
-          const ctl = panel.locator(`[data-shelf-fold="${fo.i}"]`), before = await triggersIn(fo.i), fp = await reach(ctl);
-          await t.page.mouse.click(off.x + fp.x, off.y + fp.y);
+          // A preceding fold can hide a queued child. Resolve the locator and its real region again;
+          // never reach or press that stale child, and never fold an ancestor of the original target.
+          const ctl = panel.locator(`[data-shelf-fold="${fo.i}"]`);
+          const eligible = () => ctl.evaluate((e, covered) => {
+            const card = e.closest('.pm7-post-card');
+            const region = e.matches('.d-fold') && card ? (card.closest('.d-jj-foot, .pm7-scm-git-footer') || card) : e.closest('[data-acc]');
+            return e.isConnected && e.checkVisibility() && e.getAttribute('aria-expanded') === 'true' &&
+              !!region && !region.contains(covered) && !card?.contains(covered);
+          }, covered).catch(() => false);
+          if (!await eligible()) continue;
+          const before = await triggersIn(fo.i), fp = await reach(ctl);
+          if (!await eligible()) continue;
+          await t.check(`${target} ${state} short panel: expanded control (${fo.label}) is on top before folding`, fp.onTop, JSON.stringify(fp), { hard: true });
+          await pressAt(ctl, fp);
           const folded = await f.waitForFunction(e => e.getAttribute('aria-expanded') === 'false', await ctl.elementHandle(), { timeout: 2000 }).then(() => true, () => false);
           await t.check(`${target} ${state} short panel: pressing its expanded control (${fo.label}) folds it to make room for the list`, folded,
             JSON.stringify({ fold: fo, covered: { what: why.what, onTop: why.onTop, hits: why.hits, by: why.coverOf } }), { hard: true });
           const after = await triggersIn(fo.i), hidden = before.filter(x => !after.includes(x));
           await t.check(`${target} ${state} short panel: the folded region (${fo.region}) hid no popup trigger the census walks`, !hidden.length, JSON.stringify({ hidden, before }), { hard: true });
+          foldedCount++;
+          // Re-hit-test the original target after every fold instead of acting on the rest of a stale
+          // parent/child snapshot. If it still needs room, reach() discovers the next visible control.
+          break;
         }
-        if (folds.length) await f.waitForTimeout(500);
-        return folds.length;
-      } finally { folding = false; }
+        if (foldedCount) await f.waitForTimeout(500);
+        return foldedCount;
+      } finally { if (covered && covered !== targetControl) await covered.dispose(); folding = false; }
     };
     // Every popup trigger the panel shows (PMMenu wrappers and the rail skin's own), by mouse, Enter, Space and ArrowDown.
     const popupCensus = async (state) => {
@@ -846,23 +873,53 @@ export default async function (t) {
         await control.click();
         await t.check(`${target} ${engine ? engine + ' ' : ''}tab ${tab} active`,await control.evaluate(e=>e.classList.contains('active')||e.getAttribute('aria-selected')==='true'),'',{hard:true});
       }
-      // Stable handles: the set of collapsed accordions shrinks after each click.
-      const heads=await panel.locator('[data-acc] > [data-collapse]').elementHandles();
+      // Stable identities, freshly resolved for each reach after a possible makeRoom fold.
+      const headIds=await panel.locator('[data-acc] > [data-collapse]').evaluateAll(es=>es.map((e,i)=>{
+        e.setAttribute('data-shelf-head',String(i));return i;
+      }));
+      const heads=headIds.map(i=>panel.locator(`[data-shelf-head="${i}"]`));
       for (let pass=0;pass<20;pass++) {
         let opened=false;
         for(const head of heads) if(await head.isVisible() && !await head.evaluate(e=>e.closest('[data-acc]').classList.contains('open'))) {
+          // Real-page negative controls: leave the original hard checks in charge of the result.
+          if (t.args.selftest === 'accordion-closed') await head.evaluate(e => {
+            e.addEventListener('click', ev => { ev.preventDefault(); ev.stopImmediatePropagation(); }, { capture: true, once: true });
+          });
+          if (t.args.selftest === 'folded-target') await head.evaluate(e => {
+            e.closest('.d-jj-card')?.classList.add('d-folded');
+          });
           // Centre it in its own scroller with the wheel: at the scroller's edge a short panel's sticky
           // footer (Source Control's Publish card at 1280x500) covers it.
           const hp = await reach(head, {x:8,y:8});
           await t.check(`${target} accordion head on top where it is pressed`, hp.onTop, JSON.stringify(hp), {hard:true});
           // T55: listen to the head's own scrollers before the press, so the rail's reveal scroll is seen from its start
-          await head.evaluate(e => { const W = window.__shelfReveal = { at: performance.now(), scs: [] };
-            for (let a = e.parentElement; a; a = a.parentElement) if (a.scrollHeight > a.clientHeight) {
-              const s = { el: a, scrolled: 0, ended: 0 }; W.scs.push(s);
-              a.addEventListener('scroll', () => { s.scrolled = performance.now(); }, { passive: true });
-              a.addEventListener('scrollend', () => { s.ended = performance.now(); }, { passive: true });
-            } });
+          await head.evaluate(e => { window.__shelfReveal?.abort?.abort();
+            const abort = new AbortController(), W = window.__shelfReveal = { at: performance.now(), scs: [], abort };
+            for (let a = e.parentElement; a; a = a.parentElement) if (/auto|scroll|hidden/.test(getComputedStyle(a).overflowY)) {
+              const s = { el: a, from: a.scrollTop, last: a.scrollTop, scrolled: 0, ended: 0, events: 0, unchanged: 0 }; W.scs.push(s);
+              a.addEventListener('scroll', ev => {
+                if (ev.target !== a) return;
+                s.events++;
+                // scrollIntoViewIfNeeded/reach can leave a queued scroll event. An event at the position
+                // already observed before the press is not a new scroll and earns no new scrollend.
+                if (a.scrollTop !== s.last) { s.scrolled = performance.now(); s.last = a.scrollTop; }
+                else s.unchanged++;
+              }, { passive: true, signal: abort.signal });
+              a.addEventListener('scrollend', ev => { if (ev.target === a) s.ended = performance.now(); }, { passive: true, signal: abort.signal });
+            }
+            window.addEventListener('click', ev => {
+              if (!e.contains(ev.target)) return;
+              W.clicked = performance.now();
+              for (const s of W.scs) Object.assign(s, { from: s.el.scrollTop, last: s.el.scrollTop, scrolled: 0, ended: 0, events: 0, unchanged: 0 });
+            }, { capture: true, signal: abort.signal });
+          });
+          if (t.args.selftest === 'reveal-scrollend') await head.evaluate(() => {
+            for (const s of window.__shelfReveal.scs) s.el.addEventListener('scrollend', ev => {
+              if (ev.target === s.el) ev.stopImmediatePropagation();
+            }, { capture: true, signal: window.__shelfReveal.abort.signal });
+          });
           await pressAt(head, hp, { at: {x:8,y:8} });
+          await head.evaluate(() => { window.__shelfReveal.at = performance.now(); });
           await t.check(`${target} displayed accordion expanded`,await head.evaluate(e=>e.closest('[data-acc]').classList.contains('open')),JSON.stringify(await head.evaluate((e,hp)=>{const r=e.getBoundingClientRect(),h=document.elementFromPoint(hp.x,hp.y);return {text:e.textContent.trim().replace(/\s+/g,' ').slice(0,40),cls:e.className,acc:e.closest('[data-acc]').className,r:[r.x,r.y,r.width,r.height].map(Math.round),hp,hitNow:h?.tagName+'.'+(h?.className?.baseVal??h?.className),own:!!h&&(h===e||e.contains(h))};},hp)),{hard:true});
           // The rail skin scrolls an expander opened near the bottom into view 120 ms after the click, smoothly
           // (15-jj.js, 30-motion.js revealInView): let that reveal finish before the next press, or the next head moves
@@ -870,8 +927,8 @@ export default async function (t) {
           // wait is the reveal's own completion, not a guess from the scroll position (a 250 ms floor and a silent 3 s
           // cap): the rail decides at its own delay (REVEAL_MS, pinned: 120 ms, 0 under reduced motion) after the click's
           // frame, and a scroll it starts ends with that scroller's scrollend. So: wait out the delay and two frames, then
-          // every head scroller that scrolled since the press must reach its scrollend; one that does not within
-          // REVEAL_END_MS fails by name.
+          // every head scroller that actually moved and still has scroll range must reach its own scrollend;
+          // one that does not within REVEAL_END_MS fails by name. Start the delay after the press completed.
           const reveal = await head.evaluate((e, [ms, endMs]) => new Promise(res => {
             const W = window.__shelfReveal, reduced = matchMedia('(prefers-reduced-motion: reduce)').matches || document.documentElement.dataset.motion === 'reduced';
             const decide = W.at + (reduced ? 0 : ms);
@@ -881,20 +938,29 @@ export default async function (t) {
               await raf2();
               const t1 = performance.now();
               for (;;) {
-                const open = W.scs.filter(s => s.scrolled && s.ended < s.scrolled);
-                if (!open.length) return res({ ok: true, ms: Math.round(performance.now() - W.at), scrolled: W.scs.filter(s => s.scrolled).length });
-                if (performance.now() - t1 > endMs) return res({ ok: false, ms: Math.round(performance.now() - W.at), open: open.map(s => s.el.className.toString().slice(0, 40)) });
+                const open = W.scs.filter(s => s.el.scrollHeight > s.el.clientHeight && s.scrolled && s.ended < s.scrolled);
+                const finish = ok => {
+                  const scrollers = W.scs.map(s => ({ cls: String(s.el.className), from: s.from, top: s.el.scrollTop,
+                    client: s.el.clientHeight, scroll: s.el.scrollHeight, events: s.events, unchanged: s.unchanged, scrolled: s.scrolled, ended: s.ended }));
+                  W.abort.abort();
+                  res({ ok, ms: Math.round(performance.now() - W.at), scrolled: W.scs.filter(s => s.scrolled).length,
+                    ...(ok ? {} : { open: open.map(s => s.el.className.toString().slice(0, 40)) }), scrollers });
+                };
+                if (!open.length) return finish(true);
+                if (performance.now() - t1 > endMs) return finish(false);
                 await new Promise(r => requestAnimationFrame(r));
               }
             })();
           }), [REVEAL_MS, REVEAL_END_MS]);
+          if (t.args.traceReveal) t.log('SHELF-REVEAL ' + JSON.stringify({ target, state,
+            head: await head.evaluate(e => ({ label: e.textContent.trim().replace(/\s+/g,' ').slice(0,60),
+              card: e.closest('.d-jj-row')?.querySelector('.sh-nm-txt')?.textContent, section: e.closest('[data-jj-shelf]')?.dataset.jjShelf })), ...reveal }));
           await t.check(`${target} accordion reveal finished (the rail's own scroll ended) before the next press`, reveal.ok, JSON.stringify(reveal), { hard: true });
           opened=true;
         }
         if(!opened)break;
         await t.check(`${target} accordion traversal bounded`,pass<19,'',{hard:true});
       }
-      for(const head of heads)await head.dispose();
       const discover = async () => panel.locator(selectors.wrap).evaluateAll((ws,sel)=>ws.map((w,i)=>{
         const e=w.querySelector(sel);
         if(!e)return null;

@@ -74,7 +74,15 @@
 #panel-settings .o55-group-head { padding: 14px 18px 4px; }
 #panel-settings .o55-group-title { margin: 0; font-size: 14px; font-weight: 720; letter-spacing: -.01em; color: var(--k3-text-1); }
 #panel-settings .o55-group-help { margin: 3px 0 0; font-size: 12px; line-height: 1.45; color: var(--k3-text-3); max-width: 70ch; }
-#panel-settings .o55-group > .setting-list { padding: 2px 14px 6px 18px; }
+#panel-settings .o55-group > .setting-list { --o55-list-inset-l: 18px; --o55-list-inset-r: 14px; padding: 2px 14px 6px 18px; }
+/* FO-124: a hovered row's paint reaches the card's own edge instead of stopping abruptly at the list's side padding.
+   The row carries the list's inline inset itself (negative margin out, same padding in). A grouped row already had
+   4px of its own on the right, so that stays on top of the inset and labels, controls and the About column keep
+   their x. An inline row had none. The hover tint and the row separators span the card under its border. Every
+   padding regime names its own insets through the two variables; a list that names none keeps its rows inside. */
+#panel-settings .settings-section.o55-group > .setting-list > .setting-row.o55-row,
+#panel-settings .pm51-mgr .pm51-settings-inline .setting-list > .setting-row.o55-row { margin-left: calc(-1 * var(--o55-list-inset-l, 0px)); margin-right: calc(-1 * var(--o55-list-inset-r, 0px)); padding-left: var(--o55-list-inset-l, 0px); padding-right: var(--o55-list-inset-r, 0px); }
+#panel-settings .settings-section.o55-group > .setting-list > .setting-row.o55-row { padding-right: calc(var(--o55-list-inset-r, 0px) + 4px); }
 #panel-settings .pm51-settings-inline { display: flex; flex-direction: column; gap: 14px; }
 #panel-settings .pm51-settings-inline > .settings-section.o55-group + .settings-section.o55-group { margin-top: 0; }
 
@@ -145,10 +153,19 @@ html[data-motion="reduced"] #panel-settings .setting-row.o55-row.is-flash, html[
    row and the hint gives way with an ellipsis (its full text is the toast shown when a greyed choice is clicked). */
 .pm51-popout-item .pm51-popout-label { flex: 1 0 auto; max-width: 100%; min-width: min(50%, max-content); }
 .pm51-popout-item .pm51-popout-meta { flex: 0 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: right; }
+/* Menus (FO-123) keep the full line. This file loads after styles.css, so the menu rule has to win here too. */
+.pm51-menu .pm51-popout-item .pm51-popout-label,
+.pm51-menu .pm51-popout-item .pm51-popout-meta { flex: 0 0 auto; max-width: none; min-width: max-content; overflow: visible; text-overflow: clip; white-space: nowrap; text-align: left; }
+.pm51-menu.is-wrapped .pm51-popout-item .pm51-popout-label,
+.pm51-menu.is-wrapped .pm51-popout-item .pm51-popout-meta { flex: 1 1 auto; min-width: 0; max-width: 100%; white-space: normal; }
 /* A manager's own rows line their controls up with setting rows, which keep 50px on the right for their About
    button, so switches and menus in one card form one column. */
 #panel-settings .pm51-mgr .pm51-section-body .pm51-rows > .pm51-row > .pm51-row-control { padding-right: 50px; }
 @media (max-width: 760px) { #panel-settings .pm51-mgr .pm51-section-body .pm51-rows > .pm51-row > .pm51-row-control { padding-right: 0; } }
+/* FO-129: two row lists in one card are one column. The 10px block gap is for a note or a field group, not for the next row. */
+#panel-settings .pm51-section-body > :is(.pm51-rows, .o55-home, .setting-list.o55-bound-rows) + :is(.pm51-rows, .o55-home, .setting-list.o55-bound-rows) { margin-top: 0; }
+#panel-settings .pm51-section-body > .pm51-rows + .setting-list.o55-bound-rows > .setting-row.o55-row:first-child,
+#panel-settings .pm51-section-body > .o55-home + .setting-list.o55-bound-rows > .setting-row.o55-row:first-child { border-top: 1px solid var(--k3-line); }
 /* In a list's detail pane (about 380px beside the list) a row's value and its button share the control column: the value
    keeps room to be read and the button drops under it, instead of the label or the value being squeezed to a sliver. */
 #panel-settings .pm51-detail .pm51-rows > .pm51-row > .pm51-row-control { flex-wrap: wrap; }
@@ -156,7 +173,7 @@ html[data-motion="reduced"] #panel-settings .setting-row.o55-row.is-flash, html[
 #panel-settings .settings-section.o55-group.o55-sec-off { display: none; }
 /* The owner line a placed group names (placement `owner`): one quiet sentence and its buttons, drawn like a row
    inside the group, not as a boxed strip across its edges. */
-#panel-settings .settings-section.o55-group > .owner-redirects.o55-owner-line { display: flex; align-items: center; flex-wrap: nowrap; gap: 8px; margin: 6px 14px 0 18px; padding: 10px 4px 10px 0; border: 0; border-top: 1px solid var(--k3-line); background: none; }
+#panel-settings .settings-section.o55-group > .owner-redirects.o55-owner-line { display: flex; align-items: center; flex-wrap: nowrap; gap: 8px; margin: 6px 0 0; padding: 10px 14px 10px 18px; border: 0; border-top: 1px solid var(--k3-line); background: none; }
 #panel-settings .o55-owner-line > span { margin-right: auto; font-size: 12.5px; line-height: 1.45; color: var(--k3-text-2); max-width: 60ch; }
 #panel-settings .o55-owner-line > .btn { flex: none; }
 #panel-settings .settings-section.o55-group > .owner-redirects.o55-owner-line + .setting-list > .setting-row:first-child { border-top: 1px solid var(--k3-line); }
@@ -169,3 +186,10 @@ html[data-motion="reduced"] #panel-settings .setting-row.o55-row.is-flash, html[
 #panel-settings .o55-changed.o55-needed i { background: var(--k3-amber); box-shadow: 0 0 0 3px var(--k3-amber-soft); }
 /* A plain page's More options sits after its groups with the same gap. */
 #panel-settings .o55-page-more { margin-top: 14px; }
+/* FO-129: a plain page's More options keeps the page's own rhythm: no nested card box around its groups (the manager
+   pages already flatten .pm51-advanced this way, 20-managers.css), so its groups line up with every other group on the
+   page instead of sitting 15px inside a second border, and the gaps between them are the page's own 14px. */
+#panel-settings .o55-page-more > .pm51-advanced { border: 0; border-radius: 0; background: none; }
+#panel-settings .o55-page-more > .pm51-advanced > summary { min-height: 0; padding: 0 0 10px; }
+#panel-settings .o55-page-more > .pm51-advanced > .pm51-advanced-body { padding: 0; border-top: 0; }
+#panel-settings .o55-page-more > .pm51-advanced > .pm51-advanced-body > * + * { margin-top: 14px; }

@@ -54,6 +54,56 @@
     "light": "src/walls/stars-light.webp"
    },
    "default_for": null
+  },
+  {
+   "id": "console",
+   "name": "Console",
+   "description": "A cornered screen frame with small instrument panels at the sides and a grid floor at the bottom.",
+   "files": {
+    "dark": "src/walls/console-dark.webp",
+    "light": "src/walls/console-light.webp"
+   },
+   "default_for": null
+  },
+  {
+   "id": "gridsun",
+   "name": "Grid Sun",
+   "description": "A banded sun low over a rolling wireframe plain, with a thin orbit line and a star.",
+   "files": {
+    "dark": "src/walls/gridsun-dark.webp",
+    "light": "src/walls/gridsun-light.webp"
+   },
+   "default_for": null
+  },
+  {
+   "id": "neongrid",
+   "name": "Neon Grid",
+   "description": "A bright blue grid floor running to a glowing horizon under a field of small stars.",
+   "files": {
+    "dark": "src/walls/neongrid-dark.webp",
+    "light": "src/walls/neongrid-light.webp"
+   },
+   "default_for": null
+  },
+  {
+   "id": "rainbow",
+   "name": "Rainbow Stripe",
+   "description": "A double-line rounded frame with five colored stripes that drop down the right side and turn along the bottom.",
+   "files": {
+    "dark": "src/walls/rainbow-dark.webp",
+    "light": "src/walls/rainbow-light.webp"
+   },
+   "default_for": null
+  },
+  {
+   "id": "synthsun",
+   "name": "Synth Sun",
+   "description": "A striped gradient sun above layered mountain ridges and a set of horizon lines.",
+   "files": {
+    "dark": "src/walls/synthsun-dark.webp",
+    "light": "src/walls/synthsun-light.webp"
+   },
+   "default_for": null
   }
  ]
 }

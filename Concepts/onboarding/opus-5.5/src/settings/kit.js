@@ -240,17 +240,73 @@ function sproutCorner(el, anchor) {
 }
 function sproutOpen(el, anchor) { window.PM6_SPROUT.open(el, null, null, { origin: sproutCorner(el, anchor) }); }
 function sproutClose(el, done) { window.PM6_SPROUT.close(el, done); }
-function positionPopout(pop, anchor, { align = 'left', width = 0 } = {}) {
+function popoutFrame() {
   const vw = window.innerWidth, vh = window.innerHeight;
+  let top = 8, bottom = vh - 8;
+  /* The global status bar is position:fixed at z-index above every popout, 25px along the bottom. A box pinned to
+     the viewport's edge draws under that bar, so its last rows cannot be hit (FO-123, the short preview pane). */
+  const bar = document.querySelector('.pm7-statusbar');
+  if (bar) {
+    const b = bar.getBoundingClientRect();
+    if (b.height > 0 && b.bottom > vh - 2 && b.top < vh) bottom = Math.min(bottom, Math.round(b.top) - 8);
+  }
+  return { vw, vh, top, bottom };
+}
+/* The width a menu needs so every item's label and hint are one full line. Children are width:100% and labels
+   ellipsize, so the popout's own scrollWidth stays at the narrow box; each child's scrollWidth is the unclipped text. */
+function menuContentWidth(pop) {
+  let need = 210;
+  pop.querySelectorAll('.pm51-menu-item, .pm51-popout-title').forEach(item => {
+    if (item.classList.contains('pm51-popout-title')) { need = Math.max(need, Math.ceil(item.scrollWidth) + 8); return; }
+    const cs = getComputedStyle(item);
+    const pad = (parseFloat(cs.paddingLeft) || 0) + (parseFloat(cs.paddingRight) || 0);
+    const gap = parseFloat(cs.columnGap || cs.gap) || 0;
+    const kids = [...item.children];
+    const sum = kids.reduce((s, k) => s + Math.ceil(Math.max(k.scrollWidth, k.getBoundingClientRect().width)), 0);
+    need = Math.max(need, Math.ceil(pad + gap * Math.max(0, kids.length - 1) + sum));
+  });
+  const pcs = getComputedStyle(pop);
+  const pad = (parseFloat(pcs.paddingLeft) || 0) + (parseFloat(pcs.paddingRight) || 0);
+  const border = (parseFloat(pcs.borderLeftWidth) || 0) + (parseFloat(pcs.borderRightWidth) || 0);
+  return Math.ceil(need + pad + border + 2);
+}
+function positionPopout(pop, anchor, { align = 'left', width = 0 } = {}) {
+  const { vw, vh, top: frameTop, bottom: frameBottom } = popoutFrame();
   const r = anchor && anchor.getBoundingClientRect ? anchor.getBoundingClientRect() : { left: vw - 240, right: vw - 16, top: 16, bottom: 16, width: 224 };
-  pop.style.display = 'block'; pop.style.top = ''; pop.style.bottom = ''; pop.style.maxHeight = '';
-  const w = Math.min(vw - 16, Math.max(width || 0, align === 'right' ? 210 : r.width, 200));
+  pop.style.display = 'block'; pop.style.top = ''; pop.style.bottom = ''; pop.style.height = '';
+  /* The stylesheet caps every popout at min(420px, 70vh). Measuring under that cap reports the clamped box, so a
+     menu that fits the screen was then given that clamped height back and its last rows stayed cut (FO-123). */
+  pop.style.maxHeight = 'none';
+  /* FO-123, the words (Jared's screen 04): a menu was fixed at 210px, and at most 320px, so "Use the sign-in
+     already on the server" ellipsized. The box follows the text, and stops at the viewport; only a line that
+     cannot fit the viewport wraps, still in full. */
+  const cap = vw - 16;
+  let w;
+  if (pop.classList.contains('pm51-menu') && !width) {
+    const need = menuContentWidth(pop);
+    pop.classList.toggle('is-wrapped', need > cap);
+    w = Math.max(210, Math.min(cap, need));
+    pop.style.maxWidth = cap + 'px';
+  } else w = Math.min(cap, Math.max(width || 0, align === 'right' ? 210 : r.width, 200));
   pop.style.width = w + 'px';
   const ph = pop.offsetHeight;
   let left = align === 'right' ? r.right - w : r.left; left = Math.max(8, Math.min(vw - w - 8, left));
-  const below = vh - r.bottom - 8, above = r.top - 8;
+  const below = frameBottom - r.bottom, above = r.top - frameTop;
   const placeBelow = below >= Math.min(ph, 240) || below >= above;
-  if (placeBelow) { pop.style.top = Math.round(r.bottom + 6) + 'px'; pop.style.maxHeight = Math.max(120, Math.min(420, below - 6)) + 'px'; }
+  const fitsBelow = placeBelow && below - 6 >= ph, fitsAbove = !placeBelow && above - 6 >= ph;
+  if (fitsBelow) { pop.style.top = Math.round(r.bottom + 6) + 'px'; pop.style.maxHeight = Math.max(120, Math.min(420, below - 6)) + 'px'; }
+  else if (fitsAbove) { pop.style.bottom = Math.round(vh - r.top + 6) + 'px'; pop.style.maxHeight = Math.max(120, Math.min(420, above - 6)) + 'px'; }
+  /* FO-123 (Jared 2026-11-09 #5, "adding accounts has the drop down cut off"): a short viewport with the trigger near
+     its edge leaves neither side room for the whole box, and clamping the height to the room beside the trigger cut
+     the last rows off a box that fits the screen. When the content fits the open area above the status bar, the box
+     takes that room against the open area's edge, covering the trigger if it must, instead of cutting its rows;
+     a box too tall for the screen at all still scrolls inside the clamp below. */
+  else if (ph <= frameBottom - frameTop) {
+    if (below >= above) pop.style.bottom = Math.round(vh - frameBottom) + 'px';
+    else pop.style.top = frameTop + 'px';
+    pop.style.maxHeight = ph + 'px';
+  }
+  else if (placeBelow) { pop.style.top = Math.round(r.bottom + 6) + 'px'; pop.style.maxHeight = Math.max(120, Math.min(420, below - 6)) + 'px'; }
   else { pop.style.bottom = Math.round(vh - r.top + 6) + 'px'; pop.style.maxHeight = Math.max(120, Math.min(420, above - 6)) + 'px'; }
   pop.style.left = Math.round(left) + 'px';
   pop.dataset.sprout = (placeBelow ? 't' : 'b') + (align === 'right' ? 'r' : 'l');
@@ -425,7 +481,12 @@ assistantPick = function (anchor, kind, current, onPick) {
     }
   }, true);
   document.addEventListener('pointerdown', e => { const p = pmActive; if (!p) return; if (p.el.contains(e.target) || (p.trigger && p.trigger.contains && p.trigger.contains(e.target)) || (p.anchor && p.anchor.contains && p.anchor.contains(e.target))) return; popoutClose({ restoreFocus: false }); }, true);
-  document.addEventListener('scroll', e => { const p = pmActive; if (!p) return; if (p.el.contains(e.target)) return; if (p.kind === 'menu' || !p.anchor || !p.anchor.isConnected) { popoutClose({ restoreFocus: false }); return; } positionPopout(p.el, p.anchor, { align: p.align, width: p.width }); }, true);
+  /* A scroll closes a menu (or moves a popout) only when it can move what the popout hangs from: the page, or a scroller
+     that holds the anchor. Another scroller elsewhere (the chat's transcript following its stream, a list beside it)
+     moves nothing under the menu, and closing on it shut the Add account menu just after it opened (FO-123 / batch 10
+     landing: the chat's dock auto-scrolled at that moment). */
+  const pm51ScrollMoves = (p, t) => !p.anchor || t === document || t === document.documentElement || t === document.body || !t.contains || t.contains(p.anchor);
+  document.addEventListener('scroll', e => { const p = pmActive; if (!p) return; if (p.el.contains(e.target)) return; if (!pm51ScrollMoves(p, e.target)) return; if (p.kind === 'menu' || !p.anchor || !p.anchor.isConnected) { popoutClose({ restoreFocus: false }); return; } positionPopout(p.el, p.anchor, { align: p.align, width: p.width }); }, true);
   window.addEventListener('resize', () => popoutClose({ restoreFocus: false }));
   document.addEventListener('focusin', e => { const p = pmActive; if (!p) return; if (p.el.contains(e.target) || e.target === p.trigger || (p.anchor && p.anchor.contains && p.anchor.contains(e.target))) return; popoutClose({ restoreFocus: false }); });
 })();
@@ -553,7 +614,7 @@ openDrawer = function ({ title, subtitle = '', pill = '', status = null, eyebrow
   const px = Number(width) || PANEL_SIZES[size] || 0;
   wrap.innerHTML = `<aside class="drawer pm51-panel${cls ? ' ' + cls : ''}${tone ? ' tone-' + a(tone) : ''}" role="dialog" aria-modal="true" aria-label="${a(title)}" data-mode="${a(panelMode)}" data-size="${a(size || 'default')}" ${px ? `style="width:${px}px"` : ''}>
     <header class="pm51-panel-head pm51-hero${tone ? ' tone-' + a(tone) : ''}">
-      <div class="pm51-hero-top"><span class="pm51-hero-icon">${icon(iconName)}</span><div class="pm51-panel-copy">${eyebrow ? `<div class="pm51-hero-eyebrow">${h(eyebrow)}</div>` : ''}<div class="pm51-panel-title">${h(title)}</div>${subtitle ? `<div class="pm51-panel-sub">${h(subtitle)}</div>` : ''}</div><button type="button" class="icon-btn pm51-panel-close" data-action="close-overlay" aria-label="Close">${icon('close')}</button></div>
+      <div class="pm51-hero-top"><span class="pm51-hero-icon">${PM51.headGlyph ? PM51.headGlyph(iconName, 22) : icon(iconName)}</span><div class="pm51-panel-copy">${eyebrow ? `<div class="pm51-hero-eyebrow">${h(eyebrow)}</div>` : ''}<div class="pm51-panel-title">${h(title)}</div>${subtitle ? `<div class="pm51-panel-sub">${h(subtitle)}</div>` : ''}</div><button type="button" class="icon-btn pm51-panel-close" data-action="close-overlay" aria-label="Close">${icon('close')}</button></div>
       ${statusHtml ? `<div class="pm51-hero-status">${statusHtml}</div>` : ''}${summary ? `<p class="pm51-hero-summary">${h(summary)}</p>` : ''}${factsHtml}${railHtml}
     </header>
     <div class="pm51-panel-body">${body}</div>
@@ -649,10 +710,12 @@ pageHeader = function () { return ''; };
 /* NP-STATUS: the rail health line and the home attention rows are base-page static markup; the slot is
    spliced in here (the established renderer-wrap pattern) instead of editing the base page. */
 const pm51OriginalRenderDomainRail = renderDomainRail;
+/* FO-135: the rail's "Project: … · concept fixture" line named the project a second time (the toolbar's project button
+   names it and opens the project menu) and showed a demo word; it is left out. */
 renderDomainRail = function () {
   return String(pm51OriginalRenderDomainRail.apply(this, arguments)).replace(
     '<div class="side-health">',
-    `<div class="side-health pm-has-mark">${PM51.mark('warning', 'attention')}`);
+    `<div class="side-health pm-has-mark">${PM51.mark('warning', 'attention')}`).replace(/\s*<div class="rail-project">[^<]*<\/div>/, '');
 };
 const pm51OriginalRenderHome = renderHome;
 renderHome = function () {
@@ -670,13 +733,16 @@ PM51.setTab = (id, tab) => { PM51.s().tabs[id] = tab; };
 PM51.sel = (id, fallback) => PM51.s().sel[id] || fallback;
 PM51.setSel = (id, value) => { PM51.s().sel[id] = value; };
 
+/* How a manager's redraw lands its page body: replaced here; 28-in-place.js patches a mounted body in place instead, so a
+   save (a switch, a choice) never replays the page's entrance (FO-130). */
+PM51.commitBody = (body, html) => { body.innerHTML = html; };
 PM51.refresh = function (wsId, { swap = true } = {}) {
   popoutClose({ restoreFocus: false });
   const body = root.querySelector(`[data-continuous-workspace-body="${cssEscape(wsId)}"]`);
   const domain = getDomain();
   const ws = body && domain.workspaces.find(w => w.id === wsId);
   if (!body || !ws) { saveState(); renderApp({ soft: !state.home }); return; }
-  body.innerHTML = renderContinuousWorkspaceBody(ws, domain);
+  PM51.commitBody(body, renderContinuousWorkspaceBody(ws, domain));
   body.dataset.workspaceMounted = 'true';
   body.querySelectorAll('.manager-section').forEach(sec => sec.classList.add('section-block', 'is-revealed'));
   body.querySelectorAll('.pm51-settings-inline .settings-section').forEach(sec => sec.classList.add('section-block', 'is-revealed', 'pm51-instant'));

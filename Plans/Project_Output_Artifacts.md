@@ -558,7 +558,7 @@ ContractRef: Gate:GATE-001, Gate:GATE-005, Gate:GATE-009
    - Certification-cycle `changes_applied_summary` contains no write-protected artifact paths (no requirements.md, plan.md); derived outputs such as `quickstart.md` may be regenerated
    - All Auditor cycle report `content_hash` values match the SHA-256 of their `content_bytes`
    - For each Auditor cycle report, `provider` and `model` match the resolved Auditor validation loop provider/model from sweep start (`Plans/assistant-chat-design.md §26`, `Plans/Models_System.md`)
-   - Reports come from a deterministic, headless Auditor loop with no human approval gates inside the audit/repair/re-audit loop (`Plans/chain-wizard-flexibility.md §12`)
+   - Reports come from a deterministic, headless Auditor loop with no human approval gates inside the audit/repair/re-audit loop (`Plans/assistant-chat-design.md §26`)
 
 9) **Post-loop artifact finality**
    - The canonical `.puppet-master/project/**` artifact tree validated by this document MUST represent the post-sweep artifact set after bounded Auditor repair and certification/block disposition for the associated `workflow_run_id`
@@ -607,7 +607,7 @@ Rules:
 
 ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Contracts_V0.md
 
-ContractRef: Plans/Contracts_V0.md#3.3 Requirements quality events, Plans/chain-wizard-flexibility.md#12. Auditor Invariant Loop (Mandatory Invariant Sweep)
+ContractRef: Plans/Contracts_V0.md#3.3 Requirements quality events, Plans/assistant-chat-design.md#26. Auditor Audit-To-Repair Loop Model/Provider Settings (Invariant Sweep) And Loop Specification
 
 Required canonical fields:
 - auditor_cycle_report
@@ -2294,7 +2294,7 @@ negative_constraints:
 preserved_contractrefs:
   - "ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Runtime_Artifacts_Panel.md"
   - "ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Contracts_V0.md"
-  - "ContractRef: Plans/Contracts_V0.md#3.3 Requirements quality events, Plans/chain-wizard-flexibility.md#12. Auditor Invariant Loop (Mandatory Invariant Sweep)"
+  - "ContractRef: Plans/Contracts_V0.md#3.3 Requirements quality events, Plans/assistant-chat-design.md#26. Auditor Audit-To-Repair Loop Model/Provider Settings (Invariant Sweep) And Loop Specification"
 owner_hints:
   - "Plans/Project_Output_Artifacts.md"
 ```

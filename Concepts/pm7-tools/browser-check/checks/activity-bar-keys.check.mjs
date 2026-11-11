@@ -92,7 +92,7 @@ function railAtRest() {
 // middle 60% is read, and the scanline counts when one of its pixels now stands at 3:1 or more against what was painted
 // there before (WCAG 1.4.11); 90% of each side's scanlines must count, so a side the bar's edge cuts, a side in the
 // accent of a lit tile, and a side missing altogether all fail. NieR marks a key focus with four target brackets
-// (19-nier-parts.js, 3 px outside the item): each corner of the item must hold 6 or more such pixels.
+// (19-nier-parts.js, 3 px outside its target): each corner of the tile or item must hold 6 or more such pixels.
 const lum = (r, g, b) => { const c = [r, g, b].map(v => { v /= 255; return v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; }); return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]; };
 const contrastAt = (rest, focus, x, y) => {
   if (x < 0 || y < 0 || x >= rest.width || y >= rest.height) return 1;
@@ -162,6 +162,10 @@ function sides(rest, focus, tile, ox, oy, both = false) {
 // each side read at the tile's edge and at the item's, the one that holds the mark (a ring may sit on the tile or go
 // round the whole item, names included)
 const bestSides = (a, b) => Object.fromEntries(Object.keys(a).map(k => [k, (b[k].share > a[k].share || (b[k].share === a[k].share && b[k].median > a[k].median)) ? b[k] : a[k]]));
+const bestCorners = (rest, focus, b, ox, oy) => {
+  const tile = corners(rest, focus, b.tile, ox, oy), item = corners(rest, focus, b.item, ox, oy);
+  return Object.fromEntries(Object.keys(tile).map(k => [k, Math.max(tile[k], item[k])]));
+};
 function corners(rest, focus, item, ox, oy) {
   const L = Math.round(item.x - ox), T = Math.round(item.y - oy), Rr = Math.round(item.x + item.w - ox), B = Math.round(item.y + item.h - oy);
   const corner = (cx, cy, dx, dy) => { let n = 0; for (let y = cy - 6; y < cy + 8; y++) for (let x = cx - 6; x < cx + 8; x++) { const xx = dx > 0 ? x : 2 * cx - x, yy = dy > 0 ? y : 2 * cy - y; if (contrastAt(rest, focus, xx, yy) >= 3) n++; } return n; };
@@ -600,7 +604,8 @@ async function fo98(t, f, { at, kb, key, sentinel, rest, full, off }) {
   await agree('the rail skin mounted again');
 }
 
-const SIZES = [[1920, 1100], [1390, 860], [1280, 500], [1024, 768], [740, 900]];
+// The narrow names-shown cells catch corner/name geometry first; the full five-size matrix is unchanged.
+const SIZES = [[1024, 768], [740, 900], [1280, 500], [1390, 860], [1920, 1100]];
 
 async function run(t, w, h) {
   const full = w === 1920;
@@ -676,7 +681,7 @@ async function run(t, w, h) {
     if (b.brackets) await f.waitForFunction(it => { const r = document.getElementById('o55np-reticle'); if (!r || !r.hasAttribute('data-on')) return false;
       const c = [...r.children].map(i => i.getBoundingClientRect()); if (c.length !== 4) return false;
       const box = [Math.min(...c.map(q => q.left)), Math.min(...c.map(q => q.top)), Math.max(...c.map(q => q.right)), Math.max(...c.map(q => q.bottom))];
-      return [it.x - 3, it.y - 3, it.x + it.w + 3, it.y + it.h + 3].every((v, i) => Math.abs(v - box[i]) <= 8); }, b.item, { timeout: 1500 }).catch(() => {});
+      return [it.x - 3, it.y - 3, it.x + it.w + 3, it.y + it.h + 3].every((v, i) => Math.abs(v - box[i]) <= 8); }, b.tile, { timeout: 1500 }).catch(() => {});
     if (b.brackets) await f.evaluate(() => new Promise(done => { const r = document.getElementById('o55np-reticle'), t0 = performance.now(); let last = '', still = 0;
       const step = () => { const now = r ? [...r.children].map(i => i.style.transform + getComputedStyle(i).translate).join('|') : ''; still = now === last ? still + 1 : 0; last = now;
         if (still >= 3 || performance.now() - t0 > 1500) done(); else requestAnimationFrame(step); }; requestAnimationFrame(step); }));
@@ -684,8 +689,8 @@ async function run(t, w, h) {
     let r1 = await t.pixels(region);
     // a read of NieR's brackets taken while one corner was still on its way in (K-F96c-4, a false stop: tl 0, bl 8 once,
     // passing on a rerun): read once more after 500 ms, the focus unmoved. A corner still short then is a real fault.
-    if (b.brackets && !Object.values(corners(r0, r1, b.item, region.x - off.x, region.y - off.y)).every(n => n >= 6)) {
-      t.log(`${target}: NieR's brackets read short ${JSON.stringify(corners(r0, r1, b.item, region.x - off.x, region.y - off.y))}; read again after 500 ms`);
+    if (b.brackets && !Object.values(bestCorners(r0, r1, b, region.x - off.x, region.y - off.y)).every(n => n >= 6)) {
+      t.log(`${target}: NieR's brackets read short ${JSON.stringify(bestCorners(r0, r1, b, region.x - off.x, region.y - off.y))}; read again after 500 ms`);
       await f.waitForTimeout(500);
       if ((await key()).key === target) r1 = await t.pixels(region);
     }
@@ -708,7 +713,7 @@ async function run(t, w, h) {
       t.log(`debug ${target} over ` + JSON.stringify(await f.evaluate(([x, y, w, hh]) => [[x + 1, y + hh / 2], [x + w / 2, y + 1], [x + w / 2, y + hh - 1]].map(([px, py]) => document.elementsFromPoint(px, py).slice(0, 3).map(e => (e.id ? '#' + e.id : '') + '.' + String(e.className?.baseVal ?? e.className).split(' ').slice(0, 2).join('.'))), [b.tile.x, b.tile.y, b.tile.w, b.tile.h])));
     }
     return { key: target, lit: b.lit, focused: now.key === target && !moved, moved, brackets: b.brackets, clip: b.brackets ? null : b.clip,
-      ...(b.brackets ? { corners: corners(r0, r1, b.item, ox, oy) } : { sides: bestSides(sides(r0, r1, b.tile, ox, oy, both), sides(r0, r1, b.item, ox, oy, both)) }),
+      ...(b.brackets ? { corners: bestCorners(r0, r1, b, ox, oy) } : { sides: bestSides(sides(r0, r1, b.tile, ox, oy, both), sides(r0, r1, b.item, ox, oy, both)) }),
       ...(named ? { names: lettersCrossed(r0, bare, r1, nameBoxes.map(q => ({ x: q.x + off.x - region.x, y: q.y + off.y - region.y, w: q.w, h: q.h }))) } : {}) };
   };
   // The mark as it is now, after a key or a click acted on the focused control (K-F96b-1: a panel closing or changing
@@ -725,7 +730,7 @@ async function run(t, w, h) {
     if (b.brackets) await f.waitForFunction(it => { const r = document.getElementById('o55np-reticle'); if (!r || !r.hasAttribute('data-on')) return false;
       const c = [...r.children].map(i => i.getBoundingClientRect()); if (c.length !== 4) return false;
       const box = [Math.min(...c.map(q => q.left)), Math.min(...c.map(q => q.top)), Math.max(...c.map(q => q.right)), Math.max(...c.map(q => q.bottom))];
-      return [it.x - 3, it.y - 3, it.x + it.w + 3, it.y + it.h + 3].every((v, i) => Math.abs(v - box[i]) <= 8); }, b.item, { timeout: 1500 }).catch(() => {});
+      return [it.x - 3, it.y - 3, it.x + it.w + 3, it.y + it.h + 3].every((v, i) => Math.abs(v - box[i]) <= 8); }, b.tile, { timeout: 1500 }).catch(() => {});
     if (b.brackets) await f.evaluate(() => new Promise(done => { const r = document.getElementById('o55np-reticle'), t0 = performance.now(); let last = '', still = 0;
       const step = () => { const now = r ? [...r.children].map(i => i.style.transform + getComputedStyle(i).translate).join('|') : ''; still = now === last ? still + 1 : 0; last = now;
         if (still >= 3 || performance.now() - t0 > 1500) done(); else requestAnimationFrame(step); }; requestAnimationFrame(step); }));
@@ -744,7 +749,7 @@ async function run(t, w, h) {
     await focusQuiet(await before(target)); await kb.press('Tab'); await f.waitForTimeout(150);
     const ox = region.x - off.x, oy = region.y - off.y;
     return { key: target, lit: b.lit, focused: !moved, moved, brackets: b.brackets, clip: b.brackets ? null : b.clip,
-      ...(b.brackets ? { corners: corners(r0, r1, b.item, ox, oy) } : { sides: bestSides(sides(r0, r1, b.tile, ox, oy, both), sides(r0, r1, b.item, ox, oy, both)) }) };
+      ...(b.brackets ? { corners: bestCorners(r0, r1, b, ox, oy) } : { sides: bestSides(sides(r0, r1, b.tile, ox, oy, both), sides(r0, r1, b.item, ox, oy, both)) }) };
   };
   // Frames where the lens carries the mark away from the focused control (F96b-2), sampled every frame from just before
   // a key until 900 ms after it; only a page whose rail lens can carry the mark (Glass with Liquid Glass on) can count any.
@@ -1045,6 +1050,11 @@ async function run(t, w, h) {
     t.log(`${at} ${look} names shown, marks ${JSON.stringify(wide.map(brief))}`);
     await t.check(`${at} ${look}, names shown: a key focus mark on every side at 3:1 or more${both3} on Chat, lit Files, Search and Pipelines, and no name's letters in view are crossed or touched`,
       wide.every(ok) && wide[1]?.lit && wide.every(r => r && r.names && r.names.letters >= 15 && r.names.crossed === 0), JSON.stringify(wide.map(brief)));
+    // FO-96 NieR tile-anchor witness: retain native narrow-rail names and Pipelines corners on both surfaces.
+    if (/^nier-/.test(look) && (w === 1024 || w === 740)) {
+      await sentinel('#activityBar'); await byTab('repository_automation')(); await f.waitForTimeout(450);
+      await t.crop(`${at}-names-pipelines-${surface}-${look}`, f.locator('#activityBar'), `${at} ${look}: all four corners frame Pipelines' tile without touching its name`);
+    }
     if (t.args.crops) {
       await sentinel('#activityBar'); await byTab('files')(); await f.waitForTimeout(450);
       await t.crop(`${at}-names-files-${surface}-${look}`, f.locator('#activityBar'), `${at} ${look}: names shown, lit Files with the key focus mark`);

@@ -37,7 +37,9 @@ function inkBox(a, b) {
    every world), by index, by a circle's radius, by "the rest after the frame", or against a named point */
 const CASES = [
 	{ id: 'restore: rewind in its circle', prop: 'restore', frame: { r: 15 }, glyph: 'after' },
-	{ id: 'restore: circle in its box', prop: 'restore', frame: { point: [0, 11] }, glyph: { r: 15 } },
+	/* the box's visible face below its lid, -10..38 (the body is -16..38, the lid covers it to -10): centre 14, as the kit's
+	   emblem field below its band (sol-review-b9a, lead ruling 1109041410-795a) */
+	{ id: 'restore: circle in its box', prop: 'restore', frame: { point: [0, 14] }, glyph: { r: 15 } },
 	{ id: 'vault: dial in its ring', prop: 'vault', frame: { r: 18 }, glyph: 'after-norect' },
 	...['folder', 'history', 'cloud', 'check', 'globe', 'dot', 'nas', 'restore', 'stack'].map((icon) => ({ id: `block ${icon}: in its block`, prop: 'block', params: { icon, hue: 'a' }, frame: { idx: [0] }, glyph: 'rest' })),
 	{ id: 'kit: key in its circle', prop: 'kit', frame: { r: 11 }, glyph: 'after' },
@@ -50,7 +52,9 @@ const CASES = [
 	{ id: 'orb: label in its circle', prop: 'orb', params: { lit: true, label: 'Cl', hue: 'e' }, frame: { r: 22 }, glyph: { tag: 'text' } },
 	{ id: 'qr: finder in its corner', prop: 'qr', frame: { idx: [1] }, glyph: { idx: [2, 3] } },
 	{ id: 'key: hole in its bow', prop: 'key', frame: { point: [-20, 0] }, glyph: { idx: [1] } },
-	{ id: 'globe: meridians in its circle', prop: 'globe', frame: { idx: [0] }, glyph: { idx: [1] } }
+	{ id: 'globe: meridians in its circle', prop: 'globe', frame: { idx: [0] }, glyph: { idx: [1] } },
+	/* the card's face below its header bar, x -40..40, y -20..34 (sol-review-b9a): the branch graph's line, curve and three commits */
+	{ id: 'forge: graph in its card', prop: 'forge', frame: { point: [0, 7] }, glyph: { idx: [4, 5, 6, 7, 8] } }
 ];
 
 /* build one prop in the harness and mark its frame (qa5-f) and symbol (qa5-g); returns the harness's rect */
@@ -77,7 +81,7 @@ const BUILD = (spec) => {
 	fEls.forEach((e) => e.classList.add('qa5-f'));
 	gEls.forEach((e) => e.classList.add('qa5-g'));
 	const b = host.getBoundingClientRect();
-	return { x: b.left, y: b.top, w: b.width, h: b.height, nf: fEls.length, ng: gEls.length };
+	return { x: b.left, y: b.top, w: b.width, h: b.height, nf: fEls.length, ng: gEls.length, glyphTags: gEls.map(e => e.tagName.toLowerCase()) };
 };
 const PAINT5 = (mode) => {
 	let st = document.getElementById('qa5-paint');
@@ -106,10 +110,13 @@ async function run(t, mode) {
 			for (const c of CASES) {
 				const built = await f.evaluate(BUILD, { look, prop: c.prop, params: c.params || null, frame: c.frame, glyph: c.glyph });
 				if (!built.ng || (!built.nf && !c.frame.point)) { fails.push(`${c.id}: frame or symbol not found (f=${built.nf} g=${built.ng})`); continue; }
+				if (c.prop === 'forge' && built.glyphTags.join(',') !== 'path,path,circle,circle,circle') { fails.push(`${c.id}: expected the branch path, merge curve and three commits, got ${built.glyphTags}`); continue; }
 				const clip = { x: Math.round(off.x + built.x), y: Math.round(off.y + built.y), width: 480, height: 480 };
 				const shot = async (m) => { await f.evaluate(PAINT5, m); await t.page.waitForTimeout(50); return decodePng(await t.page.screenshot({ clip, animations: 'disabled', caret: 'hide' })); };
 				const A = await shot(''), B = await shot('g'), C = c.frame.point ? null : await shot('f');
 				await f.evaluate(PAINT5, '');
+				if (t.args.crops && ['restore', 'forge'].includes(c.prop) && c.frame.point) await t.crop(`${c.prop}-visible-face-${look}-${mode}`,
+					{ x: off.x + built.x + 156, y: off.y + built.y + 160, width: 168, height: 168 }, `${c.prop} emblem centred in its visible field, native 2 px per prop unit`);
 				const g = inkBox(A, B);
 				const fc = c.frame.point ? { cx: (120 + c.frame.point[0]) * SCALE, cy: (120 + c.frame.point[1]) * SCALE } : inkBox(A, C);
 				if (!g || !fc) { fails.push(`${c.id}: ${!g ? 'no symbol ink' : 'no frame ink'}`); continue; }
@@ -119,7 +126,7 @@ async function run(t, mode) {
 			}
 			await f.evaluate(UNBUILD);
 			t.log(`${look}: ${log.join('; ')}`);
-			t.check(`${look}: every framed stage symbol centred (${CASES.length} cases, ${TOL} units)`, !fails.length, fails.slice(0, 8).join(' | '));
+			await t.check(`${look}: every framed stage symbol centred (${CASES.length} cases, ${TOL} units)`, !fails.length, fails.slice(0, 8).join(' | '));
 		});
 	}
 }

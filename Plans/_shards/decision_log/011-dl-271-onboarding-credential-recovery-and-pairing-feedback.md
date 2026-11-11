@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L26794-L29224
+Source lines: L26794-L29606
 
-Source SHA256: `735c90883175c4ca22608056d55f04e0f68a450dae4a09b8ef2b092041996c95`
+Source SHA256: `e5672b6ff50e8a865b498558df91e27315b6ba2b9a48e63cfce3e2086293d658`
 
 ---
 
@@ -2438,4 +2438,386 @@ preserved_exact_tokens:
   - "state_changed"
 owner_hints:
   - Plans/UI_Command_Catalog.md
+```
+
+### DL-471 - Unrouted Command Coverage And Typed Notification Provider Profiles
+
+```yaml
+plan_unit_id: DL-471
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-471 implements the Q5b follow-up authorized by DL-341 resolution 5 and Jared's 2026-11-08 stream C
+  question 3 answer, quoted verbatim in owner_decisions. Nine ids were examined, including the subsequently
+  identified cmd.docker.container.stats. Seven live commands receive typed definitions in their existing
+  command_contract owners: cmd.docker.bake and cmd.docker.container.stats in CRAU-115;
+  cmd.git.worktree.merge, cmd.git.worktree.open_topology and cmd.git.worktree.repair in W-095;
+  cmd.debug.record_verification and cmd.debug.run_cleanup in CS-125. UCC-132 and UCC-142 already register
+  merge and the debug phase commands; UCC-231 makes the other four existing owner/catalog registrations
+  addressable. UCC-230's outside_range_commands is a closed concrete list with registration evidence,
+  explicit owner unit and inherited row group. Every listed id receives all ordinary definition checks,
+  including exactly-one coverage. DL-471 Q-ID1 decides cmd.docker.remove is a compatibility_alias of cmd.docker.container.delete.
+  DL-471 Q-ID2 decides cmd.git.worktree is a non-dispatch family token.
+  Both are recorded in UCC-230 non_definition_tokens, with no independent definition.
+  Amended after review: selectors must be supplied and non-null; evidence line hints are checked.
+  Amended after review (2026-11-09 13:25Z): reject direct external unions in owner_request/owner_result and scope line hints to the cited unit/field, excluding the map itself; Jared: "Narrow fix, quick check, land (Recommended)".
+  Amended after review: merge keeps the complete expected_lease and adds observed topology_generation
+  and source_location_id fences, required when leased. Q-ID5e: Jared, 2026-11-09 about 04:12Z, relayed by
+  pm7-build (pm-mail 1109042811-84aa), chose "Two separate fields (Recommended)": the two fences are sibling
+  arguments beside expected_lease, with W-095's exact fence names and the approved lease untouched.
+  Amended after review: unions declare in_record or external discriminator supply; required matching
+  branch consts and explicit external use-site sources are checked, including discriminator deletion.
+  CV-369 adds pm.typed_contracts.v1 with all thirty-five CV-298 provider fields and the six provider
+  branches, using UCC-230 field/type/default/provenance rules and reference-only secrets. The generic
+  webhook predicate is closed to default 2xx plus zero to five atoms from CV-298's six named kinds.
+  Both F3-717 profile args now name CV-369/NotificationDestinationProfileV1. Markdown contract refs
+  require Plans/<Doc>.md#<UNIT-ID>/<ContractName> that resolves to a named typed_contracts definition;
+  a bare unit ref is an error. The checker validates block placement/format, fields, defaults,
+  provenance and closed discriminator branches, not merely the existence of a PlanUnit. JSON and
+  Primitive refs retain their existing forms. Current owner units are reused; CV-369 is a schema
+  owner, not a new command owner. The two debug states phase_not_reached and preservation_hold_active
+  map to blocked_state_required, decided by DL-471 Q-DB3, with exact owner words retained as detail.
+  Jared's 2026-11-09 answer approves all 46 recommended choices, recorded below as decided by the owner.
+  Whole-profile replacement and immutable provider on update are decided by DL-471 Q-F2/Q-F3.
+  Repair's undefined operation remains unavailable without mutation, decided by DL-471 Q-ID7b. No new wiring,
+  handler, provider API claim, readiness acceptance or governance reseal is certified by this packet.
+owner_decisions:
+  - 'Jared, 2026-11-09 about 02:05Z, relayed by pm7-build in pm-mail 1109020252-acf7, verbatim: "Approve all 46 (Recommended)". Question packet: /mnt/Cursor/share/puppet-master/2026-11-04-program/streams/C-Q5B-QUESTIONS.md; SHA-256 5d7b3869093d4daed0c8088812ad4475c183fe5d5a552689ed61cb28de3bac30.'
+  - 'DL-341 resolution 5, pm7-build, 2026-11-07T14:03Z, verbatim: "(5) Out of this branch, but not dropped: Jared wants everything finalized, so the eight unrouted ids become a follow-up packet (Q5b) in your queue, done before the final reseal."'
+  - 'Jared, 2026-11-08, stream C question 3 (row 607), verbatim: "Define them now (Recommended)".'
+  - 'Chosen option, verbatim: "Stream C writes typed profile schemas for the six providers. Choices that canon leaves open are marked as gaps, as the Q5 definitions do, and secrets stay reference-only. C binds F3-717 to them, and a checker rule stops a bare reference from counting as a typed schema. A CV-298 owner approves."'
+command_outcomes:
+  - command_id: cmd.docker.bake
+    standing: live
+    canon: 'CRAU-011: "expose cmd.docker.build.*, cmd.docker.bake, cmd.docker.bake.*, and preview commands"; UCC reserved namespace and catalog.docker_bake production wiring.'
+    outcome: CRAU-115 definition; UCC-231 registration coverage; DL-471 Q-ID3 decides the existing Bake-run operation, shape, result and readiness checks.
+  - command_id: cmd.docker.remove
+    standing: compatibility_alias
+    canon: 'Catalog section 2.5A: "Removes a stopped container"; later boundary: "Legacy Docker rows normalize into canonical" families and "MUST NOT introduce new payload shapes"; DL-341: "Canon names no target for this row".'
+    outcome: "Decided by DL-471 Q-ID1: compatibility_alias to cmd.docker.container.delete."
+  - command_id: cmd.docker.container.stats
+    standing: live
+    canon: 'Catalog section 2.5A: "Shows live or cached container stats with freshness markers".'
+    outcome: CRAU-115 definition and UCC-231 registration coverage; DL-471 Q-ID4 decides the existing live/cached projection and freshness markers.
+  - command_id: cmd.git.worktree.merge
+    standing: live
+    canon: 'UCC-132: "cmd.git.worktree.merge mints the project-scope worktree merge the UCC-054 family lacked"; W-081: "only after exact-result approval, fresh target observation, permission admission, and FileSafe protection".'
+    outcome: W-095 definition, retaining real Project scope, exact-result approval and independent Permissions/FileSafe fences.
+  - command_id: cmd.debug.record_verification
+    standing: live
+    canon: 'CS-065: "records the verification outcome that lets an investigation leave attention_required"; UCC-142 registers the row.'
+    outcome: CS-125 definition; verification outcome/evidence shape and result receipts are decided by DL-471 Q-DB1/Q-DB4.
+  - command_id: cmd.debug.run_cleanup
+    standing: live
+    canon: 'CS-065: "mutation-capable and dispatches only behind confirmation class two_step"; UCC-142 registers the row.'
+    outcome: CS-125 definition; confirmation and current holds remain mandatory; current owner-held state, disabled mappings and result receipts are decided by DL-471 Q-DB2/Q-DB3/Q-DB4.
+  - command_id: cmd.git.worktree.open_topology
+    standing: live
+    canon: 'GitHub_Integration Worktree Topology Commands: "Command IDs: `cmd.git.worktree.open_topology`".'
+    outcome: W-095 definition and UCC-231 registration coverage; DL-471 Q-ID6 decides the existing topology projection.
+  - command_id: cmd.git.worktree.repair
+    standing: live
+    canon: 'GitHub_Integration Worktree Topology Commands includes "`cmd.git.worktree.repair`" and names destructive confirmation fields.'
+    outcome: W-095 definition and UCC-231 registration coverage; DL-471 Q-ID7a/Q-ID7b decide selected-worktree admission and unavailability without mutation until the exact operation is defined.
+  - command_id: cmd.git.worktree
+    standing: family_alias
+    canon: 'Wiring_Matrix.production.json catalog.git_worktree: "ui_command_id": "cmd.git.worktree", "handler_location": "handlers::git::worktree"; no concrete operation or catalog registration precedes this packet.'
+    outcome: "Decided by DL-471 Q-ID2: non-dispatch family token."
+decided_by_owner:
+  - "Decided by DL-471 Q-ID1: compatibility_alias of cmd.docker.container.delete."
+  - "Decided by DL-471 Q-ID2: a non-dispatch family token, with the concrete commands handling actions."
+  - "Decided by DL-471 Q-ID3: the shared Bake-run operation and shape used in the draft, with no independently invented payload."
+  - "Decided by DL-471 Q-ID4: the existing projection, keeping cached metrics visible with freshness markers."
+  - "Decided by DL-471 Q-ID5a: the bounded owner string until the owner defines a shared enum."
+  - "Decided by DL-471 Q-ID5b: refs, all revalidated against the exact target and generation before mutation."
+  - "Decided by DL-471 Q-ID5c: the complete typed observed lease, mandatory whenever the selected worktree has a lease and compared to current owner fences."
+  - 'Decided by DL-471 Q-ID5e: the observed topology_generation and source_location_id fences are sibling arguments beside expected_lease (Jared, 2026-11-09, "Two separate fields (Recommended)").'
+  - "Decided by DL-471 Q-ID5d: direct typed args plus the custody-preserving receipt ref for this packet."
+  - "Decided by DL-471 Q-ID6: the existing topology projection, as the draft defines it."
+  - "Decided by DL-471 Q-ID7a: the draft's exact selected-worktree shape, with `target_worktree_id == worktree_id` and detached targets refused until represented explicitly."
+  - "Decided by DL-471 Q-ID7b: keeping it unavailable without mutation until the exact repair operation is defined. The current command list alone does not specify an algorithm."
+  - "Decided by DL-471 Q-DB1: the explicit bounded record in the draft."
+  - "Decided by DL-471 Q-DB2: current owner-held state, with no caller hold override."
+  - "Decided by DL-471 Q-DB3: `blocked_state_required` for both, retaining the exact owner state as display detail."
+  - "Decided by DL-471 Q-DB4: receipt refs, with no successful result fabricated from dispatch alone."
+  - "Decided by DL-471 Q-S1/Q-D1/Q-G1/Q-P1/Q-T1: required credential refs, as the draft types them."
+  - "Decided by DL-471 Q-C1: the required policy-record ref."
+  - "Decided by DL-471 Q-D2/Q-T2: sensitive refs, preserving their exact CV-298 field names."
+  - "Decided by DL-471 Q-S2: optional sensitive ref."
+  - "Decided by DL-471 Q-S3: the explicit enum with plain default."
+  - "Decided by DL-471 Q-S4: the draft enum, keeping broad mentions disabled."
+  - "Decided by DL-471 Q-D3: the single compound policy for this packet, with no raw avatar URL."
+  - "Decided by DL-471 Q-D4: the bounded ref list, admitting no broad-mention token."
+  - "Decided by DL-471 Q-G2: the three-value draft enum."
+  - "Decided by DL-471 Q-G3: the bounded empty-by-default list."
+  - "Decided by DL-471 Q-G4: a required validated non-secret template ref."
+  - "Decided by DL-471 Q-G5: the draft milliseconds shape."
+  - "Decided by DL-471 Q-G6: optional, preserving the existing default."
+  - "Decided by DL-471 Q-G7: the flat all/any draft, with the default 2xx test retained."
+  - "Decided by DL-471 Q-G8: the typed `kind` union and the exact bounds written in CV-369."
+  - "Decided by DL-471 Q-G9: literal refs, excluding raw secrets and arbitrary bodies."
+  - "Decided by DL-471 Q-N1: sensitive refs, with no raw server URL or topic."
+  - "Decided by DL-471 Q-N2: optional credentials with explicit owner admission; destination enablement and live-send authority still apply."
+  - "Decided by DL-471 Q-N3: the optional bounded integer."
+  - "Decided by DL-471 Q-N4: the bounded list."
+  - "Decided by DL-471 Q-N5: the draft enum, with no raw click URL."
+  - "Decided by DL-471 Q-P2: a sensitive ref."
+  - "Decided by DL-471 Q-P3: the draft bounded integer, subject to owner/provider validation."
+  - "Decided by DL-471 Q-P4: the bounded selector for this packet, without certifying provider support."
+  - "Decided by DL-471 Q-P5: the explicit draft object, with the cross-field rules enforced by the owner."
+  - "Decided by DL-471 Q-T1: a required sensitive ref. Bot credential completeness and optional thread custody are decided in items 16 and 18."
+  - "Decided by DL-471 Q-T3: the draft enum with plain default; those decided tokens are not claimed as existing canon API facts."
+  - "Decided by DL-471 Q-T4: false, as typed in the draft."
+  - "Decided by DL-471 Q-F1: the nested named contract."
+  - "Decided by DL-471 Q-F2: whole-profile replacement; omitted profile leaves it unchanged."
+  - "Decided by DL-471 Q-F3: immutable provider."
+remaining_open_gaps:
+  - None from the 46 owner questions. Other inherited field/type and definition choices in the owner units remain outside this answer.
+  - Repair's exact mutation algorithm remains undefined by the decided unavailable-until-defined policy; this is not an open gap.
+gui_related: false
+gui_classification_reason: Records routing, type definitions and decided owner choices; no new GUI behavior.
+depends_on: [DL-333, DL-341, CV-298, UCC-132, UCC-142]
+unblocks: []
+acceptance_criteria:
+  - All nine ids have a source-backed standing; DL-471 decides the two prior standing questions.
+  - The closed external list routes exactly seven live definitions and retains all existing checker rules.
+  - All six provider profiles are typed, all secrets are refs, both F3-717 profile refs are named and bare unit refs fail.
+  - All 46 recommendations are decided by the owner; unrelated inherited gaps remain explicit and Repair stays unavailable until defined.
+  - The checker and self-tests pass, including positive/negative cases and reverted-copy proofs for new rules.
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, runtime handlers or production build tasks are created.
+validation_surfaces:
+  - python3 scripts/pm-command-payload-defs-check.py --json
+  - python3 scripts/pm-command-payload-defs-check.py --self-test
+  - python3 scripts/pm-plan-index.py validate
+risk_class: unrouted_commands_and_untyped_notification_profiles
+reasoning_tier: high
+context_scope: q5b_command_and_profile_closure
+implementation_surfaces: [Plans/UI_Command_Catalog.md, Plans/Contracts_V0.md, Plans/FinalGUISpec.md, Plans/Containers_Registry_and_Unraid.md, Plans/WorktreeGitImprovement.md, Plans/Commands_System.md, scripts/pm-command-payload-defs-check.py]
+node_compile_hint: {mode: owner_decision_record, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/owner-answers/q5b/BRIEF.md"
+  - "DL-341 resolution 5, pm7-build, 2026-11-07T14:03Z."
+  - "Jared, 2026-11-08, stream C question 3 (row 607): Define them now (Recommended)."
+preserved_exact_tokens: [DL-471, pm.command_payload_definitions.v1, pm.typed_contracts.v1, outside_range_commands, unresolved_tokens, cmd.docker.bake, cmd.docker.remove, cmd.docker.container.stats, cmd.git.worktree.merge, cmd.debug.record_verification, cmd.debug.run_cleanup, cmd.git.worktree.open_topology, cmd.git.worktree.repair, cmd.git.worktree, NotificationDestinationProfileV1]
+negative_constraints:
+  - Do not silently resolve a standing conflict, call a bare ref a typed schema, or present recommendations as owner answers.
+  - Do not rename or delete existing command canon, expand closed error sets, or expose raw secrets.
+owner_hints: [Plans/UI_Command_Catalog.md, Plans/Contracts_V0.md, Plans/FinalGUISpec.md]
+```
+
+### DL-472 - Auditor Loop And TargetedRevisionPass Live Owners (As-Is Move)
+
+```yaml
+plan_unit_id: DL-472
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'DL-472 records Jared''s owner decision of 2026-11-08, relayed by pm7-build 1108230613-1863: "The
+  generic Auditor invariant loop moves into Plans/assistant-chat-design.md §26, which is retitled to cover the loop''s
+  specification as well as its settings. TargetedRevisionPass moves into Plans/PRD_Builder.md, next to PRDB-007
+  ("PRD Builder doc (Recommended)"). Plans/Planning_Wizard.md references it rather than restating it. Both move
+  as-is. References are redirected, and one Decision Log entry records the move. No redesign: do not change what
+  the rules say, only where they live."
+
+
+  CWF §12.1–§12.5, including its report-lineage tail, moves into assistant-chat-design §26.10–§26.14, retaining
+  §26.1–§26.9 numbers. ACD-269 owns the generic loop and carries the machine-form rules and acceptance criteria
+  from retired CWF-082–CWF-087, without activating legacy pass aliases. CWF-117''s mixed Builder per-stage filtering
+  remains retired source; ACD §26.7 and ACD-268 retain live provider capability filtering. CWF §5.5.2 and the targeted-revision
+  bundle state and doc-level state portion of §5.5.0 move into PRD_Builder PRDB-014 immediately after PRDB-007.
+  Planning_Wizard PWIZ-007''s targeted-revision use points to PRDB-014 rather than repeating the contract.
+
+
+  Redirected references: ACD §26.1, §26.9 and its ContractRef, ACD-269 canonical text, acceptance criteria, implementation
+  surfaces, owner hints and preserved ContractName token now name ACD §26 for loop ownership. ACD §26.5 and §26.9
+  OpenCode settings citations now name Provider_OpenCode §10.1. The moved loop''s Requirements Completion Contract
+  and escalation citations name Decision_Policy DP-066 and Planning_Wizard PWIZ-038; its optional final-review citation
+  names Crosswalk §3.16, and its retired workflow ContractRef names Planning_Wizard PWIZ-038. Project_Output_Artifacts
+  §9 item 8 (Auditor reports), its requirements-quality ContractRef and the POA-029 exact-token mirror, and Contracts_V0''s
+  requirements-quality event ContractRef and CV-099 exact-token mirror name ACD §26. Crosswalk §3.15 owner and ContractRef,
+  §3.16''s TargetedRevisionPass ContractRef, and C-035 implementation surfaces and owner hints name PRD_Builder
+  PRDB-014 (document-level surfaces name PRD_Builder). Planning_Wizard references PRDB-014 at its targeted-revision
+  use. ACD §8.7''s targeted-revision ContractRef, ACD-049''s implementation surfaces and owner hints, and the
+  Contracts_V0 runtime event catalog''s targeted-revision owner sentence name PRD_Builder PRDB-014 in place of the
+  retired document. The reference sweep also redirects assistant-chat-design ACD-253 implementation surfaces and
+  owner hints, ACD-254 and ACD-264 implementation surfaces, and Contracts_V0 CV-099 implementation surfaces to
+  assistant-chat-design (removing duplicate document-level entries). Crosswalk §3.14 owner and ContractRef and C-034
+  canonical text, implementation surfaces and owner hints name PRD_Builder PRDB-014 for annotations (document-level
+  surfaces name PRD_Builder). Crosswalk §3.13B''s shared ContractRef, §3.16 owner and C-036 implementation surfaces
+  and owner hints retain the retired reference for the unmoved navigation/final-review material and add PRD_Builder
+  PRDB-014 for the annotation portion (document-level surfaces name PRD_Builder). FinalGUISpec''s Assistant Planning
+  UX addendum §2 Deep Plan ContractRef names PRD_Builder PRDB-014. Plans/Decision_Log.md DL-472 records these
+  redirected references.
+
+
+  No rule changed; redesign is out of scope. Changes to moved prose are section numbers and cross-references only,
+  with one bracketed editor''s note retaining the historical Contract Unification sentence/reference because PWIZ-038
+  owns the lifecycle rather than the detailed retired pass. CWF §12 and §5.5.2 retain their old text and gain live-owner
+  pointers. Historical changelog and source_lineage references, including DL-330''s earlier scope boundary, remain
+  history. This record does not reseal governance, regenerate shards/indexes, or redesign the loop, revision semantics,
+  wizard lifecycle, settings or provider capability contracts.'
+gui_related: false
+gui_classification_reason: Records owner relocation only; moved GUI behavior is owned by the named workflow units.
+depends_on:
+- ACD-269
+- PRDB-014
+unblocks: []
+acceptance_criteria:
+- Auditor loop specification and settings have a live home in ACD §26, owned by ACD-269.
+- TargetedRevisionPass has a live home in PRDB-014; Planning Wizard and Crosswalk consume it.
+- Moved rules retain wording except section numbers, cross-references and the documented editor note; no redesign.
+- Historical CWF text and legacy pass aliases remain retired source.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-command-payload-defs-check.py --json
+risk_class: owner_routing_to_retired_document
+reasoning_tier: high
+context_scope: closure_owner_answers_20261109
+implementation_surfaces:
+- Plans/chain-wizard-flexibility.md
+- Plans/assistant-chat-design.md
+- Plans/PRD_Builder.md
+- Plans/Planning_Wizard.md
+- Plans/Crosswalk.md
+- Plans/Contracts_V0.md
+- Plans/Project_Output_Artifacts.md
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+source_lineage:
+- Jared owner decision, 2026-11-08, relayed by pm7-build 1108230613-1863; quoted in the Q1 implementation brief
+- /mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/owner-answers/q1-auditor-home/BRIEF.md
+preserved_exact_tokens:
+- DL-472
+- TargetedRevisionPass
+- ACD-269
+- PRDB-014
+negative_constraints:
+- No rule changed; redesign is out of scope.
+owner_hints:
+- Plans/assistant-chat-design.md
+- Plans/PRD_Builder.md
+```
+
+### DL-470 - Append Audit-004's Correction And Check Its Repairs
+
+```yaml
+plan_unit_id: DL-470
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared answered stream C question 2 on 2026-11-08, through pm7-build: "Append a correction" and
+  "Also repair anything that needs to be repaired". PLS-027 implements the append-only correction for
+  audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity: preserve the June files, correct the original
+  PASS_WITH_WARNINGS to BLOCKED for its five actionable source rows, and identify the 16 matrix-covered rows
+  that never required repair. On 2026-11-09 about 04:35Z, Jared answered exactly "Owner-named rows only (Recommended)"
+  through pm7-build (pm-mail relay 1109044810-9b5f). These 16 exemptions are the owner's judgment on the record,
+  individually named below in owner_judged_rows. The 14 previously_closed atom-fidelity rows already reported no
+  unclosed gap; the invalid migration invocation was superseded within the audit; and the passing audit-closure
+  check's skipped-matrix warning was audit housekeeping. For each validator-results record, whether it "never
+  needed a fix" is the owner's per-record judgment; owner_named_rows names the exact two records and their
+  canonical JSON SHA-256 pins. The validator checks those pins, exact list equality for the audit, matrix coverage
+  and its classifier; it does not prove cleanliness from free-form evidence. Registry row 280 remains the
+  historical record of adding the matrix, not evidence that its passing source result needed a canonical repair.
+  No matrix or registry row is removed or relabelled, no missing coverage is excused, and no evidence hash is
+  restamped. Check the five repairs and the whole closure chain against current text and repair bounded defects
+  separately in the same packet, listing every repair. Existing registry staleness still needs PLS-025 re-audit
+  evidence; the correction alone cannot clear it, reseal governance or authorize runtime/build work.
+owner_judged_rows:
+- source_artifact: atom_fidelity_matrix.jsonl
+  source_row: 2
+  reason: "Rename Chain Wizard and Plan Wizard to Planning Wizard: status compiled_to_plan, classification previously_closed, no missing exact tokens or negative constraints; source notes say closed/revalidated without reopening."
+- source_artifact: atom_fidelity_matrix.jsonl
+  source_row: 8
+  reason: "Planning Wizard uses one typed thread family: status compiled_to_plan, classification previously_closed, no missing exact tokens or negative constraints; source notes say closed/revalidated without reopening."
+- source_artifact: atom_fidelity_matrix.jsonl
+  source_row: 83
+  reason: "Discover project-local test capabilities before WorkNode binding: status compiled_to_plan, classification previously_closed, no missing exact tokens or negative constraints; source notes say closed/revalidated without reopening."
+- source_artifact: atom_fidelity_matrix.jsonl
+  source_row: 84
+  reason: "Research current testing methods online: status compiled_to_plan, classification previously_closed, no missing exact tokens or negative constraints; source notes say closed/revalidated without reopening."
+- source_artifact: atom_fidelity_matrix.jsonl
+  source_row: 85
+  reason: "Record online testing research provenance: status compiled_to_plan, classification previously_closed, no missing exact tokens or negative constraints; source notes say closed/revalidated without reopening."
+- source_artifact: atom_fidelity_matrix.jsonl
+  source_row: 101
+  reason: "Use exact final action label Approve And Build: status compiled_to_plan, classification previously_closed, no missing exact tokens or negative constraints; source notes say closed/revalidated without reopening."
+- source_artifact: atom_fidelity_matrix.jsonl
+  source_row: 102
+  reason: "Approval freezes an immutable Approved Plan Pack: status compiled_to_plan, classification previously_closed, no missing exact tokens or negative constraints; source notes say closed/revalidated without reopening."
+- source_artifact: atom_fidelity_matrix.jsonl
+  source_row: 103
+  reason: "Approved plans and indexes are downstream authority: status compiled_to_plan, classification previously_closed, no missing exact tokens or negative constraints; source notes say closed/revalidated without reopening."
+- source_artifact: atom_fidelity_matrix.jsonl
+  source_row: 104
+  reason: "Approval transaction is atomic and outbox-backed: status compiled_to_plan, classification previously_closed, no missing exact tokens or negative constraints; source notes say closed/revalidated without reopening."
+- source_artifact: atom_fidelity_matrix.jsonl
+  source_row: 105
+  reason: "PlanApproved is idempotent: status compiled_to_plan, classification previously_closed, no missing exact tokens or negative constraints; source notes say closed/revalidated without reopening."
+- source_artifact: atom_fidelity_matrix.jsonl
+  source_row: 106
+  reason: "Automatically launch Plan Compile after approval: status compiled_to_plan, classification previously_closed, no missing exact tokens or negative constraints; source notes say closed/revalidated without reopening."
+- source_artifact: atom_fidelity_matrix.jsonl
+  source_row: 107
+  reason: "Navigate immediately to Orchestrator Plan Compile: status compiled_to_plan, classification previously_closed, no missing exact tokens or negative constraints; source notes say closed/revalidated without reopening."
+- source_artifact: atom_fidelity_matrix.jsonl
+  source_row: 109
+  reason: "Preserve design-only v1 and add runtime-capable v2: status compiled_to_plan, classification previously_closed, no missing exact tokens or negative constraints; source notes say closed/revalidated without reopening."
+- source_artifact: atom_fidelity_matrix.jsonl
+  source_row: 110
+  reason: "Runtime contract carries explicit launch and adapter policy: status compiled_to_plan, classification previously_closed, no missing exact tokens or negative constraints; source notes say closed/revalidated without reopening."
+- source_artifact: validator_results.json
+  source_row: invalid_invocations.pm_plan_migration_validate
+  reason: "Superseded invalid invocation: missing --run-dir caused returncode 2 with no side effects; the corrected pm_plan_migration_validate invocation passed in the same audit."
+  record_sha256: 88a0f3c54d5e3e0c59f6a10ba8644228f275087db986bb1de26b20edcce1f10d
+- source_artifact: validator_results.json
+  source_row: results.pm_audit_closure_validate_audit_004
+  reason: "The source result is status pass, returncode 0, no side effects."
+  record_sha256: 5ff3757ec7b5b357950eff8afd0c6e6efef5cdbeb7bddea66404b0d5f91142f7
+owner_named_rows:
+- audit_id: audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity
+  source_artifact: validator_results.json
+  source_row: invalid_invocations.pm_plan_migration_validate
+  record_sha256: 88a0f3c54d5e3e0c59f6a10ba8644228f275087db986bb1de26b20edcce1f10d
+- audit_id: audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity
+  source_artifact: validator_results.json
+  source_row: results.pm_audit_closure_validate_audit_004
+  record_sha256: 5ff3757ec7b5b357950eff8afd0c6e6efef5cdbeb7bddea66404b0d5f91142f7
+gui_related: false
+gui_classification_reason: Records an audit-governance decision with no GUI change.
+split_recommended: false
+depends_on: [PLS-012, PLS-025, PLS-026]
+unblocks: []
+acceptance_criteria:
+- The hash-bound correction exposes historical and corrected status without editing the June report or matrix.
+- The 21 source rows, five repairs, terminal projections and registry chains are checked and every repair is listed.
+validation_surfaces:
+- python3 scripts/pm-audit-closure.py self-test
+- python3 scripts/pm-audit-closure.py validate
+risk_class: governance_integrity
+reasoning_tier: high
+context_scope: semantic_audit_closure
+implementation_surfaces:
+- Plans/Planning_Ledger_System.md
+- scripts/pm-audit-closure.py
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- 'Jared, 2026-11-09 about 04:35Z, via pm7-build (pm-mail relay 1109044810-9b5f): "Owner-named rows only (Recommended)".'
+- 'Jared, 2026-11-08 about 22:45Z, via pm7-build (relay 1108225102-4e43): "Append a correction";
+  "Also repair anything that needs to be repaired" (stream C question 2).'
+- /mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/owner-answers/q2-audit004/BRIEF.md
+preserved_exact_tokens:
+- Owner-named rows only (Recommended)
+- DL-470
+- Append a correction
+- Also repair anything that needs to be repaired
+- BLOCKED
+owner_hints:
+- Plans/Planning_Ledger_System.md
 ```

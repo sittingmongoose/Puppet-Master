@@ -437,6 +437,15 @@
   background: var(--surface-2); color: var(--text); font-size: 11px;
 }
 .bc-allow-banner .spacer, .bc-allow-banner span { flex: 1 1 auto; }
+/* FO-128: the hold's compact ladder (Deny, then Allow [Once | For session | Always…]) and its Always chooser */
+/* the lock stays on the sentence's line in every look (Retro's wider type wrapped the whole sentence under it) */
+.bc-allow-banner > svg, .bc-allow-banner > :first-child:not(.bc-allow-say) { flex: none; }
+.bc-allow-banner .bc-allow-say { flex: 1 1 240px; min-width: 0; }
+.bc-allow-banner .bc-allow-acts { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; min-width: 0; }
+.bc-allow-banner .bc-allow-acts span { flex: none; }
+.bc-allow-banner .bc-allow-acts.is-always { flex: 1 1 100%; }
+.bc-allow-banner .bc-allow-acts .soft-button { border: 1px solid var(--border-strong); background: var(--pmx-soft-fill, transparent); color: var(--text); }
+.bc-allow-banner .bc-allow-acts .soft-button:hover { background: var(--surface-3); }
 .bc-sim-row { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px; }
 .bc-list-row.is-stale { border-left: 2px solid var(--warning); padding-left: 5px; }
 .bc-list-chip {

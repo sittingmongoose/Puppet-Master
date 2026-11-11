@@ -15,7 +15,7 @@ every other look keeps its own material.
 | File | What |
 |---|---|
 | `src/lg.css` | The material: tokens, the one slab and the painted frost, the toolbar band and the sidebar, the title bar, the lens, the rail, Usage, press and light, the CPU path (7b), clarity, accessibility, and the concept's own control |
-| `src/lg.js` | The plates, the lenses and their liquid motion, the pointer light, the press, the menu bloom, the sweep, focus recede, GPU/CPU detection and `window.PM_LG` |
+| `src/lg.js` | The plates, the lenses and their liquid motion, the press, the menu bloom, the sweep, focus recede, GPU/CPU detection and `window.PM_LG` |
 | `src/wallpapers.json` | Tide and Pearl, baked by `tools/bake.mjs`: the wall, and its frost (the wall as the 34 px, 160 % slab sees it) |
 | `index.html` | The live concept in the Concept Hub: the published PMConcept7 in a frame, with the three sources injected (needs http) |
 | `tools/build_proto.py --out <file>` | The same as one file for the share folder; never writes into `Concepts/` |
@@ -26,6 +26,10 @@ Attributes on `<html>`:
 - `data-lg-clarity` 0..4 (2, the default, is canon's numbers);
 - `data-lg-frost="painted"`, which the drag engine sets while a plate is carried (Jared's option A, a 140 ms crossfade);
 - `data-lg-rt` (Reduce Transparency) and `data-lg-hc` (Increase Contrast).
+
+FO-121 removes the surface circle around the pointer in every look. The shared PMH hover layer keeps its box-edge
+hairline, inset band, radial proximity mask and timing; its rest-rectangle shadow/bloom stays. There is no separate
+Glass sheet-pointer light or cursor-light warm-up. Shared pointer tracking, materials, shader warm-up and lens prewarm remain.
 
 Current URL controls are `?lgtier=gpu|cpu` and the visit-only wallpaper override `?lgwall=<id>`.
 `PM_LG.set` keeps `data-lg` on; the off switch and Alt+Shift+L shortcut are retired.

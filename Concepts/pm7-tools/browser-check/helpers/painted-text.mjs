@@ -3,7 +3,7 @@ const luminance=c=>c.map(v=>v/255).map(v=>v<=.04045?v/12.92:((v+.055)/1.055)**2.
 const contrast=(a,b)=>(Math.max(luminance(a),luminance(b))+.05)/(Math.min(luminance(a),luminance(b))+.05);
 // Four actual paints: original ink, bare ground, and black/white masks. Preserve opacity
 // so an invisible body cannot acquire a synthetic opaque mask and falsely pass.
-export async function paintedText(el,{coverage=250}={}){
+export async function paintedText(el,{coverage=250,onBackground=null}={}){
  const meta=await el.evaluate(e=>{const r=document.createRange();r.selectNodeContents(e);const b=r.getBoundingClientRect(),a=e.getBoundingClientRect();return{x:b.x-a.x,y:b.y-a.y,w:b.width,h:b.height};});
  const styles=await el.evaluate(e=>[e,...e.querySelectorAll('*')].map(n=>n.getAttribute('style')));
  const fill=async color=>el.evaluate((e,color)=>[e,...e.querySelectorAll('*')].forEach(n=>{n.style.setProperty('-webkit-text-fill-color',color,'important');n.style.setProperty('text-shadow','none','important');}),color);
@@ -20,9 +20,10 @@ export async function paintedText(el,{coverage=250}={}){
   const i=(y*ink.width+x)*4;
   if(![0,1,2].every(j=>white.data[i+j]-black.data[i+j]>=coverage))continue;
   const a=[...ink.data.slice(i,i+3)],b=[...ground.data.slice(i,i+3)];
+  if(onBackground&&b.some((v,k)=>Math.abs(v-onBackground[k])>8))continue;
   stems.push({contrast:contrast(a,b),ink:a,ground:b,x,y});
  }
- return {count:stems.length,paintedCount:stems.filter(s=>s.contrast>=1.5).length,minimum:Math.min(...stems.map(s=>s.contrast)),brightest:[...stems].sort((a,b)=>luminance(b.ground)-luminance(a.ground))[0]};
+ return {count:stems.length,paintedCount:stems.filter(s=>s.contrast>=1.5).length,minimum:Math.min(...stems.map(s=>s.contrast)),lowest:[...stems].sort((a,b)=>a.contrast-b.contrast).slice(0,4),brightest:[...stems].sort((a,b)=>luminance(b.ground)-luminance(a.ground))[0]};
 }
 
 // Floating prose can move by a fraction of a pixel. A fixed screen crop avoids

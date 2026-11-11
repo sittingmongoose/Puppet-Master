@@ -149,11 +149,13 @@
     restore(p) {
       let s = p.shadow(40, 38);
       s += p.rect(-38, -16, 76, 54, 8, 'body', 'd') + p.rect(-42, -26, 84, 16, 5, 'shade', 'd');
-      /* QA-5: the circle sits on the body's centre (0, 11) and the rewind mark is centred on it by its ink: as
-         drawn against a circle at 12 its painted ink centred (-1.9, -1.9) off it (stage-symbol-centre, Basic
-         and Glass), so the pair is carried (2, 0.9) as the circle takes (0, 11) */
-      s += p.circle(0, 11, 15, 'panel', 'd');
-      s += `<g transform="translate(2 0.9)"><path d="M-8 4A10 10 0 1 1 -9 16" ${p.fam === 'friendly' ? `stroke="${p.w.ink}"` : `stroke="${p.w.ink}"`} stroke-width="${p.fam === 'retro' ? 2.4 : 2.6}" fill="none" stroke-linecap="round"/>` + p.path('M-12 -1L-7 6L-14 7Z', 'ink') + '</g>';
+      /* QA-5: the circle sits on the centre of the body's visible face, below the lid: the body runs -16..38 but
+         the lid covers it to -10, so the face Jared sees is -10..38, centre 14 (sol-review-b9a; at the body's own
+         centre, 11, it read 3 units high). The rewind mark is centred on the circle by its ink: as drawn against a
+         circle at 12 its painted ink centred (-1.9, -1.9) off it, so the pair is carried (2, 3.9) as the circle
+         takes (0, 14) */
+      s += p.circle(0, 14, 15, 'panel', 'd');
+      s += `<g transform="translate(2 3.9)"><path d="M-8 4A10 10 0 1 1 -9 16" ${p.fam === 'friendly' ? `stroke="${p.w.ink}"` : `stroke="${p.w.ink}"`} stroke-width="${p.fam === 'retro' ? 2.4 : 2.6}" fill="none" stroke-linecap="round"/>` + p.path('M-12 -1L-7 6L-14 7Z', 'ink') + '</g>';
       return { svg: s, ties: [[-30, -26], [30, -26]], foot: 40 };
     },
     // the sign sizes itself to the name: one line as large as fits, then two or three smaller lines, and only

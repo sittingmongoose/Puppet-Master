@@ -168,10 +168,17 @@
      draws its check in 2 steps, and the brand's counter rolls. Under YoRHa headers only (elsewhere the rail simply
      changes), and an end state under Reduced Motion and on a low-resource computer. The ink block is the current
      chapter's own (its ::after, 11-window-nier.css: 4 px in from each side, 22 px down, 23 px tall); on the narrow
-     window, where the rail shows its boxes only, the block walks box to box. */
+     window, where the rail shows its boxes only, the block walks box to box. With Pip on the rail he stands in for the
+     current box (10-window.css: it takes no width) and the narrow window draws no ink box (11-window-nier.css), so there
+     is no block to walk: inkOf is null and the chapters change as the rail redraws, Pip walking (QA-1 round 2: the
+     block was sized from a box that takes no width, 6 px wide, and stepped under Pip, while the switcher's chip, sized
+     to the whole item, ran past the header) */
   function inkOf(li, navR) {
     const r = li.getBoundingClientRect();
-    if (r.width < 34) { const n = li.querySelector('.o55-railnode'), q = n ? n.getBoundingClientRect() : r; return { x: q.left - navR.left - 3, y: q.top - navR.top - 3, w: q.width + 6, h: q.height + 6 }; }
+    if (r.width < 34) {
+      const n = li.querySelector('.o55-railnode'), q = n ? n.getBoundingClientRect() : null;
+      return q && q.width >= 1 ? { x: q.left - navR.left - 3, y: q.top - navR.top - 3, w: q.width + 6, h: q.height + 6 } : null;
+    }
     /* the block walks at the height of the box it ends as, read from that ::after (with Pip on the rail the box sits
        under the names, 10-window.css; the 22 px and 23 px written here before walked it 12 px above where it landed) */
     const a = getComputedStyle(li, '::after'), top = parseFloat(a.top), h = parseFloat(a.height);
@@ -195,6 +202,7 @@
     brand(true, wasHeld);
     if (!a || !to || to === from) return Promise.resolve(false);
     const b = inkOf(to, navR);
+    if (!b) return Promise.resolve(false);
     nav.querySelectorAll(':scope > .o55nw-railcur').forEach((n) => n.remove());
     const blk = document.createElement('i');
     blk.className = 'o55nw-railcur'; blk.setAttribute('aria-hidden', 'true');

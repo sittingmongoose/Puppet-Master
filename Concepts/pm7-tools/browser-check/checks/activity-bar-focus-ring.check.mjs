@@ -30,6 +30,7 @@
 //     e3ba1fee9c, whose clip was set by script, left the whole ring above the bar after the refocus and Ctrl+2.
 // All five tests on either surface (--set sandbox=1); --set looks= picks the looks.
 import { decodePng } from '../helpers/activity-cover-pixels.mjs';
+import { nierReticleEscape } from '../helpers/nier-reticle-escape.mjs';
 
 const settle = async (t, f, look) => {
   await t.app.look(look);
@@ -304,4 +305,4 @@ async function openingMotion(t) {
   await f.evaluate(() => { document.getElementById('fo96-ring-quiet')?.remove(); document.getElementById('fo96-ring-s')?.remove(); });
 }
 
-export const tests = { 'forced colors': forcedColors, 'scroll box': scrollBox, 'pointer only': pointerOnly, 'wheel flick': wheelFlick, 'opening motion': openingMotion };
+export const tests = { 'forced colors': forcedColors, 'scroll box': scrollBox, 'pointer only': pointerOnly, 'wheel flick': wheelFlick, 'opening motion': openingMotion, 'NieR scroll box': nierReticleEscape };

@@ -4,7 +4,7 @@ Source: `Plans/FinalGUISpec.md`
 
 Source lines: L4541-L4650
 
-Source SHA256: `ac979d5ec9795e46cb348b196b8add6a6532c65f9cf72f26888649cbb226c4e0`
+Source SHA256: `c7328f20a2fc64be53897a8c9c54878904bdd3342af494a62164ebd92d586a31`
 
 ---
 
@@ -43,7 +43,7 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/sto
 - document review, annotations, and targeted revision remain available
 - Deep Plan remains more intensive than Plan at the same PT
 
-ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/Crosswalk.md
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/PRD_Builder.md#PRDB-014, ContractName:Plans/Crosswalk.md
 
 **Shared TODO tracker rules:**
 - the sticky plan panel is the authoritative TODO tracker

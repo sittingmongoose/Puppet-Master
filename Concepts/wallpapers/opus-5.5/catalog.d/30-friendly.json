@@ -54,6 +54,56 @@
     "light": "src/walls/stripes-light.webp"
    },
    "default_for": null
+  },
+  {
+   "id": "lagoon",
+   "name": "Lagoon",
+   "description": "Glassy bubbles and soft clouds drifting over a glowing round pool.",
+   "files": {
+    "dark": "src/walls/lagoon-dark.webp",
+    "light": "src/walls/lagoon-light.webp"
+   },
+   "default_for": null
+  },
+  {
+   "id": "confetti",
+   "name": "Confetti",
+   "description": "Pastel discs, pills and dot patches gathered in the corners around an open middle.",
+   "files": {
+    "dark": "src/walls/confetti-dark.webp",
+    "light": "src/walls/confetti-light.webp"
+   },
+   "default_for": null
+  },
+  {
+   "id": "silk",
+   "name": "Silk",
+   "description": "Wide satin bands in plum, teal and pearl sweeping across the lower half.",
+   "files": {
+    "dark": "src/walls/silk-dark.webp",
+    "light": "src/walls/silk-light.webp"
+   },
+   "default_for": null
+  },
+  {
+   "id": "bluewave",
+   "name": "Blue Wave",
+   "description": "Quiet layered swells along the bottom, one of them edged with a thin bright blue line.",
+   "files": {
+    "dark": "src/walls/bluewave-dark.webp",
+    "light": "src/walls/bluewave-light.webp"
+   },
+   "default_for": null
+  },
+  {
+   "id": "softhorizon",
+   "name": "Soft Horizon",
+   "description": "A wide soft arc over gentle blue waves, with a few rounded squares floating at the sides.",
+   "files": {
+    "dark": "src/walls/softhorizon-dark.webp",
+    "light": "src/walls/softhorizon-light.webp"
+   },
+   "default_for": null
   }
  ]
 }

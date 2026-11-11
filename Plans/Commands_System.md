@@ -10740,6 +10740,13 @@ canonical_text: >-
   aliases; the strict schema overlay keeps the common envelope and the closed code sets. The
   CS-009 boundary stands: cmd.debug.* remains the assistant-investigation family and classical DAP
   dispatch uses only cmd.run_debug.*, which is not defined here.
+  Amended 2026-11-09 (DL-471): cmd.debug.record_verification and cmd.debug.run_cleanup extend this
+  block through the explicit UCC-142 external routes. CS-065 and section 7.4 retain verification/evidence,
+  two-step cleanup confirmation and preservation holds; the payload/result encodings and
+  the two owner-state-to-closed-code mappings are decided by DL-471 Q-DB1, Q-DB2, Q-DB3 and Q-DB4.
+  Plans/Decision_Log.md#DL-471, Q-DB3 decided by the owner: [cmd.debug.record_verification], disabled_reason_codes = ["blocked_state_required", "stale_projection"]. map phase_not_reached to blocked_state_required under DL-333 resolution 6, retaining the exact owner state as detail.
+  Plans/Decision_Log.md#DL-471, Q-DB3 decided by the owner: [cmd.debug.run_cleanup], disabled_reason_codes = ["blocked_state_required", "stale_projection"]. both map to blocked_state_required under DL-333 resolution 6 and keep exact owner details.
+  Plans/Decision_Log.md#DL-471, Q-DB2 decided by the owner: [cmd.debug.run_cleanup], omitted:preservation_policy = "omitted". the owner reloads current holds and the exact cleanup manifest, never takes a caller override, and revalidates target identity/evidence under assistant-chat-design section 1.0B.
 gui_related: true
 gui_classification_reason: Defines the arguments of user-visible Debug Mode investigation commands (Assistant Chat, editor, evidence panel).
 depends_on: [UCC-230, UCC-077, CS-009, CS-042, DL-333, DL-341]
@@ -10760,7 +10767,7 @@ node_compile_hint: {mode: command_payload_definitions, create_worknodes: false, 
 source_lineage:
   - "T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521, 2026-11-05T02:48:03Z: Jared's answer \"approve all\" to Q5"
   - "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/owner-answers/q5/inventory.jsonl"
-preserved_exact_tokens: [cmd.debug.start, cmd.debug.stop, cmd.debug.pause, cmd.debug.resume, cmd.debug.add_breakpoint, cmd.debug.remove_breakpoint, cmd.debug.clear_breakpoints, cmd.debug.view_evidence, cmd.debug.step, cmd.debug.collect_snapshot]
+preserved_exact_tokens: [cmd.debug.start, cmd.debug.stop, cmd.debug.pause, cmd.debug.resume, cmd.debug.add_breakpoint, cmd.debug.remove_breakpoint, cmd.debug.clear_breakpoints, cmd.debug.view_evidence, cmd.debug.step, cmd.debug.collect_snapshot, cmd.debug.record_verification, cmd.debug.run_cleanup]
 negative_constraints:
   - Do not add payload fields to UI_Command_Catalog command rows.
   - Do not define a payload for an alias, retired, non-alias or source-lineage token; the grouped token cmd.debug.* is a family alias and never dispatches.
@@ -10774,6 +10781,44 @@ command_payload_definitions:
   owner_unit: CS-125
   overlay: Plans/UI_Command_Catalog.md#UCC-230
   definitions:
+    - command_id: cmd.debug.record_verification
+      ucc_units: [UCC-142]
+      command_kind: domain_action
+      response_kind: owner_operation
+      args:
+        thread_id: {type: id, required: true, default: none, provenance: canon, source: "CS-042 assistant-thread investigation family; UCC-230 debug row-group identity thread_id, always"}
+        investigation_id: {type: id, required: true, default: none, provenance: canon, source: "Contracts_V0 section 3.5 debug.investigation.verification_recorded names investigation_id; UCC-230 identity_aliases maps debug_session_id to investigation_id"}
+        verification_state: {type: enum, values: [resolved, still_failing], required: true, default: none, provenance: canon, source: 'Plans/Decision_Log.md#DL-471, Q-DB1 decided by the owner: required resolved/still_failing.'}
+        verification_strength: {type: string, required: true, default: none, constraints: {min_length: 1, max_length: 256}, provenance: canon, source: 'Plans/Decision_Log.md#DL-471, Q-DB1 decided by the owner: required bounded non-secret owner strength string.'}
+        verification_summary: {type: string, required: true, default: none, constraints: {min_length: 1, max_length: 1024}, provenance: canon, source: 'Plans/Decision_Log.md#DL-471, Q-DB1 decided by the owner: 1..1024 characters, redacted.'}
+        artifact_refs: {type: list, required: true, default: none, item: {type: ref}, constraints: {min_items: 1, max_items: 32, unique_items: true}, provenance: canon, source: 'Plans/Decision_Log.md#DL-471, Q-DB1 decided by the owner: require one to thirty-two unique evidence artifact refs at command admission.'}
+      owner_request: none
+      result:
+        response: Plans/ui_command_response.schema.json
+        owner_result: local:DebugVerificationResultV1
+      error_codes: [invalid_args, permission_denied, blocked_state_required, stale_projection, handler_unavailable, internal_error]
+      disabled_reason_codes: [blocked_state_required, stale_projection]
+      owner_state_codes:
+        - {owner_state: phase_not_reached, code: blocked_state_required}
+      aliases: []
+    - command_id: cmd.debug.run_cleanup
+      ucc_units: [UCC-142]
+      command_kind: domain_action
+      response_kind: owner_operation
+      args:
+        thread_id: {type: id, required: true, default: none, provenance: canon, source: "CS-042 assistant-thread investigation family; UCC-230 debug row-group identity thread_id, always"}
+        investigation_id: {type: id, required: true, default: none, provenance: canon, source: "CS-065 cleanup acts on the current investigation; UCC-230 identity_aliases types investigation_id as the debug-session identity"}
+        confirmation_ref: {type: ref, required: true, default: none, provenance: canon, source: "CS-065 and UCC-142 require two_step confirmation for run_cleanup; UCC-230 types common confirmation_ref as ref"}
+      owner_request: none
+      result:
+        response: Plans/ui_command_response.schema.json
+        owner_result: local:DebugCleanupResultV1
+      error_codes: [invalid_args, permission_denied, blocked_state_required, stale_projection, handler_unavailable, internal_error]
+      disabled_reason_codes: [blocked_state_required, stale_projection]
+      owner_state_codes:
+        - {owner_state: phase_not_reached, code: blocked_state_required}
+        - {owner_state: preservation_hold_active, code: blocked_state_required}
+      aliases: []
     - command_id: cmd.debug.start
       ucc_units: [UCC-077]
       command_kind: domain_action
@@ -11185,6 +11230,12 @@ command_payload_definitions:
             (Commands_System.md:703); stale_projection is the 2.0B clause.
       aliases: []
   results:
+    DebugVerificationResultV1:
+      fields:
+        receipt_ref: {type: ref, required: true, default: none, provenance: canon, source: 'Plans/Decision_Log.md#DL-471, Q-DB4 decided by the owner: required receipt ref to the recorded exact investigation/outcome/evidence, carried only after the owner write succeeds.'}
+    DebugCleanupResultV1:
+      fields:
+        receipt_ref: {type: ref, required: true, default: none, provenance: canon, source: 'Plans/Decision_Log.md#DL-471, Q-DB4 decided by the owner: required receipt ref to the verified cleanup outcome or preserved residue, never implying resolved from dispatch alone.'}
     DebugInvestigationStartResultV1:
       fields:
         investigation_id: {type: id, required: true, default: none, provenance: gap, gap_note: "the started investigation; canon names investigation_id in debug.investigation.started (Contracts_V0.md:1532) and the investigation header (assistant-chat-design.md:1319), typed id by the UCC-230 alias for debug_session_id (DL-341), but no result contract carries it"}

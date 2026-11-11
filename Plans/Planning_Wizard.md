@@ -565,6 +565,8 @@ owner_hints:
 - Plans/Project_Output_Artifacts.md
 ```
 
+Targeted revision uses `Plans/PRD_Builder.md#PRDB-014` (`Primitive:TargetedRevisionPass`).
+
 
 ### PWIZ-008 - Project Context, Discovery, Setup Authority, And Currentness
 

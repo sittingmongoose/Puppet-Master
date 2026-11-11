@@ -21,6 +21,9 @@
 //   step rail, the segments and the chosen option are pixel-identical between main and this build (Reduce Motion, both
 //   surfaces), less the GPU's own noise: the same page loaded twice differs by up to 1 level on Glass Light's frosted
 //   ground, so a pixel counts as changed past 2 levels. --set glassCrops=<dir> writes each pair (main, build).
+//   The step rail's crop is logged, not judged: QA-1 round 2 changed Glass's rail lens on purpose (3 px above and below
+//   the word instead of 6, so it clears Pip's feet; pm-fo-lead's ruling 1109004538-40f3 accepts it for the onboarding
+//   step rail only). The other five Glass places stay strict.
 // - film (--set film=1, alone, with --record; --set parts=tabs,bar,rail,onb, looks=): every move above, marked, with a
 //   person's click, for frame-by-frame review of the hop, the squash and the snap.
 //   --set looks=friendly-light,...   --set sizes=1920x1080,1024x768,740x900,390x844   --set base=<page>
@@ -59,6 +62,13 @@ const READ = () => {
 		read(p) {
 			const item = [...document.querySelectorAll(p.item)].find((e) => { const r = e.getBoundingClientRect(); return r.width > 1 && r.height > 1 && getComputedStyle(e).visibility !== 'hidden'; });
 			if (!item) return { found: false };
+			if (p.type === 'onb' && p.label) {
+				const label = item.querySelector(p.label), style = label && getComputedStyle(label), b = label?.getBoundingClientRect();
+				if (!label || style.display === 'none' || style.visibility === 'hidden' || !b.width || !b.height) {
+					const strip = item.closest(p.strip), chips = strip ? [...strip.querySelectorAll('lg-under .lg-lens,lg-over .lg-lens')].filter(e => { const c = getComputedStyle(e), r = e.getBoundingClientRect(); return c.visibility !== 'hidden' && c.display !== 'none' && +c.opacity > .05 && r.width > 1 && r.height > 1; }).length : 0;
+					return { found: true, hiddenRailLabel: true, visibleChips: chips };
+				}
+			}
 			let chip = null, under = false, cs, pseudo = null;
 			if (p.kind === 'strip') {
 				const strip = item.closest(p.strip);
@@ -100,7 +110,7 @@ const SHELL = [
 	{ page: 'Settings', name: 'Settings left bar', kind: 'strip', strip: '#pm-settings-root .rail-scroll', item: '#pm-settings-root .rail-scroll :is(.side-link[data-action="home"], .domain-link).active', type: 'tab' },
 	{ page: 'Settings chapter', name: 'Settings section tabs', kind: 'strip', strip: '#pm-settings-root nav.workspace-tabs', item: '#pm-settings-root nav.workspace-tabs .workspace-tab.is-current', type: 'tab', optional: true },
 	{ page: 'Settings chapter', name: 'Settings segmented choice', kind: 'self', item: '#pm-settings-root .segmented > button[aria-checked="true"]', type: 'seg', optional: true, inPlace: true },
-	{ page: 'Planning Wizard', name: 'Planning Wizard work type', kind: 'strip', strip: '#panel-wizard .pm6-wiz-intent-row', item: '#panel-wizard .pm6-wiz-intent-chip.sel', type: 'seg', optional: true }
+	{ page: 'Planning Wizard', name: 'Planning Wizard work type', kind: 'strip', strip: '#panel-wizard .pm6-wiz-intent-row', item: '#panel-wizard .pm6-wiz-intent-chip.sel', type: 'seg', px: true, fillAndWords: true }
 ];
 const ONB = [
 	{ screen: 'begin', name: 'onboarding step rail', kind: 'strip', strip: '#pm-o55-onboarding .o55-raillist', item: '#pm-o55-onboarding .o55-railitem[data-state="current"]', label: '.o55-raillabel', type: 'onb', px: true },
@@ -128,6 +138,14 @@ async function goPage(t, f, name) {
 	}
 	await f.evaluate((n) => { const e = [...document.querySelectorAll('nav.page-tabs .page-tab')].find((x) => x.textContent.trim().startsWith(n)); if (e) e.click(); }, name);
 	await t.page.waitForTimeout(1800);
+	if (name === 'Planning Wizard') {
+		// Usage/Orchestrator can leave the demo's run at Final review. Use its real replay control to expose the choice.
+		const choice = f.locator('#panel-wizard .pm6-wiz-intent-chip[data-demo-arg="product"]');
+		if (!await choice.isVisible()) await f.locator('#panel-wizard [data-demo-action="wizard.replay"]').click();
+		await choice.click();
+		await t.page.mouse.move(1900, 1000);
+		await t.page.waitForTimeout(700);
+	}
 }
 
 /* painted pixels round a chip: its inside (a pixel of fill clear of the words and the rim), its edge (the rim's pixel, or
@@ -140,7 +158,8 @@ async function pixels(t, f, rec, rimW) {
 	const at = (px, py) => { const i = (Math.round(py) * png.width + Math.round(px)) * 4; return [png.data[i], png.data[i + 1], png.data[i + 2]]; };
 	const cx = x + off[0] - clip.x, cy = y + off[1] - clip.y, my = cy + h / 2;
 	/* inside: left of the words, past the rim */
-	const inX = Math.min(cx + rimW + 2, lr[0] + off[0] - clip.x - 2);
+	// Wizard's shared button border meets the chip's rim. Read past both edges, in the blank left padding.
+	const inX = rec.fillAndWords ? cx + 7 : Math.min(cx + rimW + 2, lr[0] + off[0] - clip.x - 2);
 	const inside = at(Math.max(cx + rimW + 1, inX), my);
 	const edge = at(cx + Math.max(0, rimW - 1) + 0.5 * (rimW ? 0 : 1), my);
 	const ground = at(cx + w / 2, Math.max(0, cy - 3));
@@ -153,6 +172,7 @@ async function placeChecks(t, f, p, look, tag, wide = true) {
 	const rec = await f.evaluate((p) => window.__sel.read(p), p);
 	/* below 1920 x 1080 a place the layout folds away (the rail, Usage's range) is not asked for; the page tabs always are */
 	if (!rec.found) { if (p.optional || (!wide && p.name !== 'page tabs')) { t.log(`${p.name} not shown here (${tag})`); return null; } return t.check(`${p.name} ${tag}: chosen item shown`, false, 'no chosen item visible', {}); }
+	if (rec.hiddenRailLabel) { await t.check(`${p.name} ${tag}: hidden rail label intentionally has no chip`, rec.visibleChips === 0, JSON.stringify(rec)); return null; }
 	await t.check(`${p.name} ${tag}: has its chip`, !!rec.chip, JSON.stringify(rec));
 	if (!rec.chip) return null;
 	if (p.type === 'card') {
@@ -176,13 +196,13 @@ async function pixelChecks(t, f, p, rec, look, tag) {
 	const W = WANT[look], want = W[p.type] || W.tab;
 	if (p.type === 'card') return;
 	const rimW = want[1] ? want[2] : 0;
-	const px = await pixels(t, f, rec, rimW);
+	const px = await pixels(t, f, { ...rec, fillAndWords: p.fillAndWords }, rimW);
 	await t.check(`${p.name} ${tag}: painted inside is the fill`, near(px.inside, hex(want[0]), 14), `inside ${px.inside} want ${want[0]}`);
 	/* the chip shows against the ground by its outline or by its fill, whichever stands out more (Friendly Dark's ink
 	   outline is as dark as its bar, and its mint fill carries the edge there) */
 	const edgeVs = Math.max(ratio(px.edge, px.ground), ratio(px.edge, px.groundL), ratio(px.inside, px.ground), ratio(px.inside, px.groundL));
 	t.log(`MEASURE ${p.name} ${tag}: painted chip vs ground ${edgeVs.toFixed(2)} (edge ${px.edge}, inside ${px.inside}, ground ${px.ground})`);
-	await t.check(`${p.name} ${tag}: painted chip 3:1 against the ground beside it (outline or fill)`, edgeVs >= 3, `edge ${px.edge} inside ${px.inside} ground ${px.ground}/${px.groundL} ${edgeVs.toFixed(2)}`);
+	if (!p.fillAndWords) await t.check(`${p.name} ${tag}: painted chip 3:1 against the ground beside it (outline or fill)`, edgeVs >= 3, `edge ${px.edge} inside ${px.inside} ground ${px.ground}/${px.groundL} ${edgeVs.toFixed(2)}`);
 	const lab = p.label ? `${p.item} ${p.label}` : p.item;
 	try {
 		const pt = await paintedText(f.locator(lab).first());
@@ -231,6 +251,48 @@ async function openApp(t, surface, onboarding, query) {
 }
 
 export const tests = {
+	async 'wizard work type'(t) {
+		await t.viewport(1920, 1080);
+		await t.emulate({ reducedMotion: 'reduce' });
+		const p = SHELL.find(p => p.page === 'Planning Wizard');
+		for (const surface of t.app.surfaces()) for (const look of LOOKS) {
+			const f = await openApp(t, surface, false, '');
+			await t.app.look(look);
+			await goPage(t, f, 'Planning Wizard');
+			const tag = `${look} ${surface}`, rec = await placeChecks(t, f, p, look, tag);
+			await t.check(`wizard ${tag}: Brand-new product is chosen and has a chip`, !!rec?.chip && await f.locator(`${p.item}[data-demo-arg="product"]`).count() === 1, JSON.stringify(rec), { hard: true });
+			const px = await pixels(t, f, { ...rec, fillAndWords: true }, WANT[look].seg[2]);
+			await t.check(`wizard ${tag}: painted fill is the neutral material within 3 levels`, near(px.inside, hex(WANT[look].seg[0]), 3), JSON.stringify({ inside: px.inside, want: WANT[look].seg[0] }));
+			await pixelChecks(t, f, p, rec, look, tag);
+			const words = await paintedText(f.locator(p.item));
+			await t.check(`wizard ${tag}: chosen words have painted stems at 4.5:1`, words.count > 0 && words.minimum >= 4.5, JSON.stringify(words));
+			await t.crop(`wizard-${look}-${surface}`, f.locator(p.strip), 'Neutral work-type chip and its chosen words');
+		}
+	},
+	async 'wizard other looks unchanged'(t) {
+		if (!t.args.base) { t.log('requires --set base=<batch9a build> for paired wizard crops'); return; }
+		await t.viewport(1920, 1080); await t.emulate({ reducedMotion: 'reduce' });
+		const base = /^[a-z][a-z0-9+.-]+:/i.test(t.args.base) ? t.args.base : pathToFileURL(path.resolve(t.args.base)).href;
+		for (const surface of t.app.surfaces()) for (const look of ['retro-light', 'retro-dark', 'nier-light', 'nier-dark', 'glass-light', 'glass-dark']) {
+			const images = [];
+			for (const which of ['base', 'build']) {
+				let f;
+				if (which === 'build') f = await openApp(t, surface, false, '');
+				else {
+					const u = `${base}?o55=off&cb=${Date.now()}`;
+					if (surface === 'sandbox') await t.openInSandbox(u); else await t.goto(u);
+					await t.until('base wizard page ready', () => document.documentElement.getAttribute('data-pmr-ready') === '1' && !!window.PM_THEME, null, { timeout: 60000, hard: true });
+					f = t.root === t.page ? t.page.mainFrame() : t.root;
+				}
+				await t.app.look(look); await goPage(t, f, 'Planning Wizard'); await f.waitForTimeout(1600);
+				images.push(decodePng(await f.locator('#panel-wizard .pm6-wiz-intent-row').screenshot()));
+			}
+			const [a, b] = images, sameSize = a.width === b.width && a.height === b.height;
+			let changed = 0;
+			if (sameSize) for (let i = 0; i < a.data.length; i += 4) if ([0, 1, 2].some(k => Math.abs(a.data[i + k] - b.data[i + k]) > 2)) changed++;
+			await t.check(`wizard ${look} ${surface}: unchanged native row paint against batch9a`, sameSize && changed === 0, JSON.stringify({ size: [a.width, a.height, b.width, b.height], changed }));
+		}
+	},
 	async 'places'(t) {
 		for (const surface of t.app.surfaces()) {
 			for (const size of list(t.args.sizes, ['1920x1080'])) {
@@ -291,6 +353,7 @@ export const tests = {
 						out.tilt = kf.some((k) => /rotate\((-?[\d.]+)deg\)/.test(k.transform) && Math.abs(parseFloat(/rotate\((-?[\d.]+)deg\)/.exec(k.transform)[1])) > 1.5);
 						out.squash = kf.some((k) => { const m = /scale\(([\d.]+),\s*([\d.]+)\)/.exec(k.transform); return m && +m[1] > +m[2] + 0.1; });
 						out.twins = G ? G.children.length : 0;
+						out.copyData = [...F.querySelectorAll('.lg-twin')].flatMap(c => [c, ...c.querySelectorAll('*')].flatMap(n => [...n.attributes].filter(a => a.name.startsWith('data-')).map(a => a.name)));
 						/* the copies stay on their tabs: the copy layer's transform is the block's inverse at every frame */
 						const fa = a, ga = G.getAnimations()[0], bad = [];
 						for (const tt of [0.2, 0.45, 0.7, 0.9]) {
@@ -314,6 +377,7 @@ export const tests = {
 				if (res.block) {
 					await t.check(`motion ${tag}: ${hop ? 'hop 440 ms with a tilt and a squash' : 'snap 110 ms, no tilt or squash'}`, hop ? res.dur === 440 && res.tilt && res.squash : res.dur === 110 && !res.tilt && !res.squash, JSON.stringify(res));
 					await t.check(`motion ${tag}: inverted words copied into the block`, res.twins >= 2, `twins ${res.twins}`);
+					await t.check(`motion ${tag}: visual copies carry no data hooks`, res.copyData.length === 0, JSON.stringify(res.copyData));
 					await t.check(`motion ${tag}: the copies stay on their tabs (copy layer is the block's inverse)`, res.bad.length === 0, JSON.stringify(res.bad));
 				}
 				await t.check(`motion ${tag}: the chip lands on the chosen tab and the block goes`, res.landed && res.chosen, JSON.stringify(res));
@@ -535,6 +599,8 @@ export const tests = {
 					/* the same page twice differs by up to one level on Glass Light's frosted ground (main against main,
 					   e154b6459f: 60,844 pixels of the step rail by 1), so a pixel is changed when it differs by more than 2 */
 					let changed = 0; if (diff > 0) for (let i = 0; i < A.data.length; i += 4) if (Math.max(Math.abs(A.data[i] - B.data[i]), Math.abs(A.data[i + 1] - B.data[i + 1]), Math.abs(A.data[i + 2] - B.data[i + 2])) > 2) changed++;
+					/* (QA-1 round 2: the step rail's lens changed on purpose, accepted for the step rail only; see the header) */
+					if (n === 'step rail') { t.log(`glass unchanged step rail ${look} ${surface}: not judged (QA-1 round 2 changed the rail lens on purpose): ${A.width}x${A.height} vs ${B.width}x${B.height}, ${changed} pixels by more than 2`); continue; }
 					await t.check(`glass unchanged ${n} ${look} ${surface}: pixel for pixel (GPU noise of 2 levels aside)`, diff >= 0 && changed === 0, `${A.width}x${A.height} vs ${B.width}x${B.height}, ${diff} pixels differ (max ${maxd}), ${changed} by more than 2`);
 				}
 			}

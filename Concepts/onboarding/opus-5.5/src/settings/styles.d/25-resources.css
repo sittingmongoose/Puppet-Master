@@ -93,6 +93,9 @@
   #panel-settings .pm51-detail .setting-row.o55-row { grid-template-columns: minmax(0, 1fr) 30px; }
   #panel-settings .pm51-detail .setting-row.o55-row .setting-control { grid-column: 1 / 2; grid-row: 2; justify-content: flex-start; max-width: none; }
   #panel-settings .pm51-detail .setting-row.o55-row .o55-about { grid-column: 2; grid-row: 1; }
+  /* FO-129: a kit row in the same pane stacks under its label too, so the card shares one column start. */
+  #panel-settings .pm51-mgr .pm51-detail .pm51-rows > .pm51-row { grid-template-columns: minmax(0, 1fr); }
+  #panel-settings .pm51-mgr .pm51-detail .pm51-section-body .pm51-rows > .pm51-row > .pm51-row-control { justify-content: flex-start; padding-right: 0; }
   #panel-settings .pm51-detail .o55-ready-end { margin-left: 0; }
   #panel-settings .pm51-detail .pm51-section-head { flex-wrap: wrap; row-gap: 8px; }
 }

@@ -386,8 +386,14 @@ html[data-density="compact"] #panel-settings .pm51-all .all-settings-window .set
 .pm51-popout-search svg { width: 13px; height: 13px; color: var(--text-muted, #8f8ab0); flex: 0 0 auto; }
 .pm51-popout-search input { flex: 1 1 auto; min-width: 0; border: 0; outline: 0; background: transparent; color: var(--text-primary, #f4f2ff); font: 600 12px/1.3 var(--body-font, Inter, system-ui, sans-serif); }
 .pm51-popout-empty { padding: 10px; font-size: 11.5px; color: var(--text-muted, #8f8ab0); }
-.pm51-menu { min-width: 210px; max-width: 320px; padding: 4px 0; }
+.pm51-menu { min-width: 210px; max-width: calc(100vw - 16px); padding: 4px 0; }
 .pm51-menu .pm51-popout-item { padding: 8px 12px; font-size: 11px; letter-spacing: .02em; border-radius: 0; }
+/* FO-123: a menu item's own words stay whole. The box grows to the line (kit.js); a line wider than the
+   viewport wraps instead of ellipsizing. Hints follow the same rule so they do not squeeze the label. */
+.pm51-menu .pm51-popout-item .pm51-popout-label,
+.pm51-menu .pm51-popout-item .pm51-popout-meta { flex: 0 0 auto; max-width: none; min-width: max-content; overflow: visible; text-overflow: clip; white-space: nowrap; }
+.pm51-menu.is-wrapped .pm51-popout-item .pm51-popout-label,
+.pm51-menu.is-wrapped .pm51-popout-item .pm51-popout-meta { flex: 1 1 auto; min-width: 0; max-width: 100%; white-space: normal; }
 .pm51-menu .pm51-popout-item.is-danger { color: var(--accent-red, #f27791); }
 .pm51-menu .pm51-popout-item[aria-disabled="true"]:hover { background: transparent; }
 html[data-theme^="glass"] .pm51-popout { background: var(--pm6-glass-plate, var(--surface-elevated, #171b31)); border: 1px solid var(--glass-hairline, rgba(255,255,255,.14)); box-shadow: inset 0 1px 0 var(--glass-edge, rgba(255,255,255,.12)), var(--pm6-glass-drop, var(--elev-3, 0 14px 36px rgba(0,0,0,.25))); border-radius: 12px; }
@@ -481,7 +487,7 @@ html[data-theme^="glass"] #panel-settings :is(.pm51-stat, .pm51-advanced, .pm51-
 #panel-settings .pm51-mgr .pm51-settings-inline .section-description { margin: 3px 0 0; font-size: 11.5px; line-height: 1.45; color: var(--k3-text-3); max-width: 70ch; }
 #panel-settings .pm51-mgr .pm51-settings-inline .section-heading-row > .btn { display: none; }
 #panel-settings .pm51-mgr .pm51-settings-inline .owner-redirects { margin: 0 16px 8px; }
-#panel-settings .pm51-mgr .pm51-settings-inline .setting-list { border: 0; border-top: 1px solid var(--k3-line); border-radius: 0; background: transparent; box-shadow: none; padding: 4px 16px 6px; }
+#panel-settings .pm51-mgr .pm51-settings-inline .setting-list { border: 0; border-top: 1px solid var(--k3-line); border-radius: 0; background: transparent; box-shadow: none; padding: 4px 16px 6px; --o55-list-inset-l: 16px; --o55-list-inset-r: 16px; }
 #panel-settings .pm51-mgr .pm51-settings-inline .setting-row { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) auto auto; align-items: center; gap: 8px 14px; min-height: 46px; height: auto; margin: 0; padding: 8px 0; border: 0; border-top: 1px solid var(--k3-line); background: transparent; box-shadow: none; overflow: visible; transition: background 170ms ease; }
 #panel-settings .pm51-mgr .pm51-settings-inline .setting-row:first-child { border-top: 0; }
 #panel-settings .pm51-mgr .pm51-settings-inline .setting-row:hover { background: rgba(var(--accent-primary-rgb), .035); }

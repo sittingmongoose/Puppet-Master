@@ -8919,14 +8919,41 @@ canonical_text: >-
   owner state it shows as a disabled reason, with the closed code owner_state_code_map gives it, which must be one
   of its disabled_reason_codes. Owner states maintenance_cutoffs_pending (DL-403, DL-446, DL-447) and
   dedup_hold_pending (DL-444, DL-445) map to not_configured, and the thirteen CRAU-095 local-runtime reason codes map to the closed codes the
-  map lists.
+  map lists. Amended 2026-11-09 (DL-471): outside_range_commands is a closed list of additional concrete
+  command ids, each with catalog_unit, owner_unit, the inherited row_group and a registration evidence line.
+  Exactly one definition is required in that owner unit, under every ordinary field, identity, envelope,
+  provenance, kind, result and closed-code rule. No namespace or other out-of-range token is admitted by
+  that list. unresolved_tokens can record standing questions with evidence, a question_id, judgment and
+  alternative. The two packet standings are decided by DL-471 Q-ID1/Q-ID2 and now appear in
+  non_definition_tokens; unresolved_tokens is empty.
+  A Markdown contract ref is typed only as Plans/<Doc>.md#<UNIT-ID>/<ContractName>, naming a contract in
+  a pm.typed_contracts.v1 block directly after that schema_contract unit's fence in the same owner doc.
+  A bare Plans/<Doc>.md#<UNIT-ID> is an error. The block has only typed_contracts at top level and no
+  plan_unit_id key; its body has exactly format, owner_unit, vocabulary (this unit), and contracts. Each
+  named contract is a nonempty fields record checked by this vocabulary's field/default/provenance rules,
+  or a closed union with exactly discriminator, discriminator_source and branches, naming fields records
+  in that same block. discriminator_source is required: in_record requires every branch to carry the
+  named selector as a required const equal to its branch key; external requires every contract use site
+  (including list items) to declare discriminator_source: {arg: <selector>} or
+  discriminator_source: {owner: <record>.<selector>}. arg names an existing sibling selector enum;
+  owner names the owner-held record and selector (create uses {arg: provider}, update uses
+  {owner: stored_destination.provider}). Owner selection is revalidated against that immutable stored
+  record. Source maps have exactly one key and nonempty identifier/path values ending in the selector;
+  arg must match the discriminator name. Source maps on other types or in_record uses are refused.
+  Branch keys are exact selector values.
+  An enclosing enum selector must equal the union's branch keys. Named refs, including forward refs,
+  resolve against the actual typed blocks, never merely a PlanUnit id. YAML merges, comments, duplicate
+  keys, unknown block/contract keys, misplaced blocks and review/evidence references are refused as for
+  command definitions. No other contract-ref form changes.
 gui_related: false
 gui_classification_reason: Records where command payload types live and how they are checked; no GUI behavior changes.
 split_recommended: false
-depends_on: [DL-333, CV-333, UCC-109, DL-341]
+depends_on: [DL-333, CV-333, UCC-109, DL-341, DL-471]
 unblocks: []
 acceptance_criteria:
   - "Every expected UCC-049..UCC-105 command has exactly one definition, in the owner unit this map routes it to, or is listed in contested."
+  - "Every outside_range_commands entry has exactly one definition in its explicit owner unit under all ordinary rules; no other out-of-range command joins scope (DL-471)."
+  - "Every Markdown contract ref names a checked typed_contracts definition by unit/ContractName; bare unit refs fail, and discriminator branches match their named contracts and enclosing selector enum (DL-471)."
   - "row_groups equal the overlay's row-specific identity cells, and envelope equals the overlay's payload_required and payload_optional bullets."
   - "Every non_definition_tokens entry quotes the canon that marks it, and every token a unit's compatibility or stale note marks is listed."
   - "Every judgment a definition makes is in its judgments list with a key, a choice and a gap_note; no judgment claims provenance and no canon field records one; no definitions block holds a YAML comment, whatever it says (any # comment in the fence is a C11 finding), or a string that names review or evidence material (a C11 finding too) (DL-341)."
@@ -8970,7 +8997,7 @@ preserved_exact_tokens:
   - owner_state_codes
 negative_constraints:
   - Do not add payload fields to UI_Command_Catalog command rows.
-  - Do not define a payload for an alias, retired, non-alias, source-lineage, outside-range or contested token.
+  - Do not define a payload for an alias, retired, non-alias, source-lineage, unresolved or contested token, or an outside-range token absent from outside_range_commands.
   - Do not expand the overlay's closed error or disabled-reason sets; map owner states to closed codes instead.
   - Do not record an identity exemption anywhere but this map, and only with a decision.
   - Do not write a YAML comment in a definitions block, and do not record a judgment in a canon field; record it in the definition's judgments list.
@@ -9015,7 +9042,7 @@ command_payload_definition_map:
   - forbidden_when
   contract_ref_forms:
   - Plans/<file>.schema.json#/$defs/<Name>
-  - Plans/<Doc>.md#<UNIT-ID>
+  - Plans/<Doc>.md#<UNIT-ID>/<ContractName> (a contract in that unit's pm.typed_contracts.v1 block; bare unit refs are errors)
   - Primitive:RouteTarget
   - Primitive:OpenSubject
   - Primitive:ExecutionContext
@@ -9154,6 +9181,17 @@ command_payload_definition_map:
         evidence:
           doc: Plans/UI_Command_Catalog.md
           quote: '`cmd.git.worktree.unlock` | Unlock Worktree | Removes lock from worktree'
+      - command_id: cmd.git.worktree.merge
+        evidence:
+          doc: Plans/WorktreeGitImprovement.md
+          unit: W-081
+          field: canonical_text
+          quote: Non-thread child integration uses cmd.git.worktree.merge only after exact-result approval
+      - command_id: cmd.git.worktree.repair
+        evidence:
+          doc: Plans/GitHub_Integration.md
+          quote: '`cmd.git.worktree.repair`'
+        note: "Decided by DL-471 Q-ID7b: conservatively mutation-capable; handler_unavailable without mutation until the exact owner repair operation is defined."
       not_mutating:
       - command_id: cmd.git.worktree.request_prune
         evidence:
@@ -9760,7 +9798,59 @@ command_payload_definition_map:
     - cmd.docker.container.view_logs
     basis: Wildcards only; its canonical_text names the Docker/Hosts ids. Adds the 11 host ids, cmd.docker.run and
       cmd.docker.container.open; covers cmd.docker.container.view_logs, attach_shell, cleanup.scan and cleanup.prune.
+  outside_range_commands:
+  - command_id: cmd.docker.bake
+    catalog_unit: UCC-231
+    owner_unit: CRAU-115
+    row_group: UCC-049..UCC-053
+    evidence: {doc: Plans/UI_Command_Catalog.md, unit: UCC-231, field: canonical_text, line: 21889, quote: "cmd.docker.bake is the live bare Bake command exposed by CRAU-011"}
+  - command_id: cmd.docker.container.stats
+    catalog_unit: UCC-231
+    owner_unit: CRAU-115
+    row_group: UCC-049..UCC-053
+    evidence: {doc: Plans/UI_Command_Catalog.md, unit: UCC-231, field: canonical_text, line: 21890, quote: "cmd.docker.container.stats shows live or cached container stats with freshness markers"}
+  - command_id: cmd.git.worktree.merge
+    catalog_unit: UCC-132
+    owner_unit: W-095
+    row_group: UCC-054..UCC-055
+    evidence: {doc: Plans/UI_Command_Catalog.md, unit: UCC-132, field: canonical_text, line: 13084, quote: "cmd.git.worktree.merge mints the project-scope worktree merge the UCC-054 family lacked"}
+  - command_id: cmd.git.worktree.open_topology
+    catalog_unit: UCC-231
+    owner_unit: W-095
+    row_group: UCC-054..UCC-055
+    evidence: {doc: Plans/UI_Command_Catalog.md, unit: UCC-231, field: canonical_text, line: 21892, quote: "cmd.git.worktree.open_topology and cmd.git.worktree.repair are the live project-scope ids listed"}
+  - command_id: cmd.git.worktree.repair
+    catalog_unit: UCC-231
+    owner_unit: W-095
+    row_group: UCC-054..UCC-055
+    evidence: {doc: Plans/UI_Command_Catalog.md, unit: UCC-231, field: canonical_text, line: 21892, quote: "cmd.git.worktree.open_topology and cmd.git.worktree.repair are the live project-scope ids listed"}
+  - command_id: cmd.debug.record_verification
+    catalog_unit: UCC-142
+    owner_unit: CS-125
+    row_group: UCC-077..UCC-083
+    evidence: {doc: Plans/UI_Command_Catalog.md, unit: UCC-142, field: canonical_text, line: 14068, quote: "cmd.debug.record_verification and cmd.debug.run_cleanup are registered with the"}
+  - command_id: cmd.debug.run_cleanup
+    catalog_unit: UCC-142
+    owner_unit: CS-125
+    row_group: UCC-077..UCC-083
+    evidence: {doc: Plans/UI_Command_Catalog.md, unit: UCC-142, field: canonical_text, line: 14068, quote: "cmd.debug.record_verification and cmd.debug.run_cleanup are registered with the"}
+  unresolved_tokens: []
   non_definition_tokens:
+  - token: cmd.docker.remove
+    disposition: compatibility_alias
+    targets: [cmd.docker.container.delete]
+    evidence:
+      doc: Plans/Decision_Log.md
+      unit: DL-471
+      field: canonical_text
+      quote: "DL-471 Q-ID1 decides cmd.docker.remove is a compatibility_alias of cmd.docker.container.delete."
+  - token: cmd.git.worktree
+    disposition: family_alias
+    evidence:
+      doc: Plans/Decision_Log.md
+      unit: DL-471
+      field: canonical_text
+      quote: "DL-471 Q-ID2 decides cmd.git.worktree is a non-dispatch family token."
   - token: cmd.browser.*
     disposition: family_alias
     evidence:
@@ -10361,6 +10451,14 @@ command_payload_definition_map:
         recorded aliases
     note: 'DL-341: the bare K8s-era form; UCC-052 compatibility_only_notes also marks it a compatibility alias.'
   owner_state_code_map:
+  - owner_state: phase_not_reached
+    maps_to: blocked_state_required
+    sources:
+    - "Plans/Commands_System.md CS-065 and Plans/UI_Command_Catalog.md UCC-142 name phase_not_reached outside the closed overlay set. Decided by DL-471 Q-DB3: blocked_state_required under DL-333 resolution 6; retain the exact owner state as display detail."
+  - owner_state: preservation_hold_active
+    maps_to: blocked_state_required
+    sources:
+    - "Plans/Commands_System.md CS-065 and Plans/UI_Command_Catalog.md UCC-142 name preservation_hold_active outside the closed overlay set. Decided by DL-471 Q-DB3: blocked_state_required under DL-333 resolution 6; retain the exact owner state as display detail."
   - owner_state: access_url_unresolved
     maps_to: not_configured
     sources:
@@ -21777,3 +21875,51 @@ Q5 resolution 9b (DL-333): UCC-100, UCC-101 and UCC-102 named these command fami
 | `cmd.teacher.guide.do_it` | Do It | Runs an explicitly safe action for the user through its stable command after confirmation and permission gates; a mutation always needs confirmation | `teacher_guidance_active && action_explicitly_safe && confirmation_given` | `domain_action` |
 
 ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Wiring_Matrix.md
+
+## Command registration coverage supplement (DL-471, 2026-11-09)
+
+### UCC-231 - Existing Docker And Worktree Command Registration Coverage
+
+```yaml
+plan_unit_id: UCC-231
+unit_type: command_contract
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: >-
+  cmd.docker.bake is the live bare Bake command exposed by CRAU-011 and the catalog's reserved Docker
+  namespace, with a production wiring row catalog.docker_bake. cmd.docker.container.stats shows live or
+  cached container stats with freshness markers under section 2.5A's docker_available and container_selected
+  preconditions. cmd.git.worktree.open_topology and cmd.git.worktree.repair are the live project-scope ids listed
+  by Plans/GitHub_Integration.md Worktree Topology Commands. This unit makes those existing registrations
+  addressable for UCC-230's closed outside_range_commands list without adding args to catalog rows.
+  CRAU-115 defines the two Docker payloads and W-095 the two worktree payloads. The bare Bake operation's
+    relation to bake.run, stats' view/result behavior, topology's distinct view and repair's admission and
+  unavailable-until-defined policy are decided by DL-471 Q-ID3/Q-ID4/Q-ID6/Q-ID7a/Q-ID7b. Repair has no admitted
+  mutation algorithm yet and returns handler_unavailable without mutation until its owner defines one.
+  No new production wiring row or API behavior is certified by registration. DL-471 Q-ID1 decides cmd.docker.remove is a compatibility_alias of cmd.docker.container.delete.
+  DL-471 Q-ID2 decides cmd.git.worktree is a non-dispatch family token. UCC-230 records both dispositions. UCC-132 already registers merge and UCC-142 the two debug phase commands.
+gui_related: false
+gui_classification_reason: Makes existing command registrations addressable; owner docs retain behavior.
+depends_on: [DL-471, CRAU-011, UCC-049, UCC-054, UCC-132, UCC-142]
+unblocks: [CRAU-115, W-095]
+acceptance_criteria:
+  - Only the four preserved existing commands are registered by this coverage supplement.
+  - UCC-230 routes them explicitly and requires exactly one owner definition under all ordinary rules.
+  - DL-471 records the owner-decided standings and semantics, including Repair staying unavailable until its operation is defined; no implicit command or wiring scope expansion occurs.
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests or production build tasks are created.
+validation_surfaces:
+  - python3 scripts/pm-command-payload-defs-check.py --json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: unrouted_command_registration_drift
+reasoning_tier: high
+context_scope: command_registration_coverage
+implementation_surfaces: [Plans/UI_Command_Catalog.md]
+node_compile_hint: {mode: command_registration_coverage, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - "DL-341 coordinator resolution 5; DL-471 quotes the owner decisions."
+preserved_exact_tokens: [cmd.docker.bake, cmd.docker.container.stats, cmd.git.worktree.open_topology, cmd.git.worktree.repair]
+negative_constraints:
+  - Do not infer repair mutations, manufacture new provider semantics, or certify production wiring here.
+  - Do not rename or delete the unresolved legacy rows.
+owner_hints: [Plans/Containers_Registry_and_Unraid.md, Plans/WorktreeGitImprovement.md, Plans/GitHub_Integration.md]
+```

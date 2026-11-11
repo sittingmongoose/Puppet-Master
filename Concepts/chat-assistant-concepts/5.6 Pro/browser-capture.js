@@ -1142,12 +1142,77 @@
       + '<button class="text-button" data-action="bc-verify-isolation">Verify isolation</button>.</p>'
       + renderAllowBanner(ctx);
   }
-  /* B20: the explicit single-use allow for Ask-held actions. */
+  /* FO-128 (Jared, 2026-11-11: "I agree"): a held action is a tool's permission ask with the same compact ladder as the
+     chat's bar, Deny then Allow [Once | For session | Always…] (Permissions_System 6.1), owned by dock-asks.js
+     (PM56_ASKS) and drawn here. Once keeps B20's single-use grant (run the action again); For session and Always grant
+     the same and are remembered under the same rules as every ask (dock-asks.js covers: For session keyed by thread,
+     run and lane, here the thread and this browser session; Always by its place), so a later hold they cover runs at
+     once with its one-line receipt. Without dock-asks the banner keeps Allow once and Deny. */
+  function holdSpec(caps, actionLabel) {
+    var labels = caps.map(function (c) { return CAP_LABEL[c] || c; }).join(' + ');
+    return { id: 'bc-hold:' + caps.slice().sort().join('+'), external: true, tool: 'browser', target: actionLabel + ' (' + labels + ')',
+      pattern: caps.slice().sort().join(' + '), runId: 'bc:' + session().id, who: 'The agent', verb: 'use browser capture: ' + labels,
+      rule: labels + ' policy is Ask' };
+  }
+  /* FO-128: a single-use grant (B20) is the chat's that answered Once: another chat's run never consumes it */
+  function onceHere(ctx, g) { return !g || !g.thread || g.thread === (ctx.state && ctx.state.selectedThread); }
+  function grantCovers(caps, actionLabel) { var A = window.PM56_ASKS; return !!(A && A.covered && A.covered(holdSpec(caps, actionLabel))); }
+  function holdExpired(ctx, hold) {
+    var caps = hold.capabilities || [hold.capability];
+    return ctx.state.permissions !== hold.permissions || caps.some(function (c) {
+      var before = hold.policies ? hold.policies[c] : hold.policy;
+      return ((P().policy || {})[c] || 'on') !== before;
+    });
+  }
+  /* the ladder's answer for the hold (dock-asks.js resolves the ask, then calls here; it writes the one-line receipt
+     unless this returns 'refused'). An expired hold (permissions or policy changed since it was held) is refused for
+     every allowing answer: no single-use grant, and no For session or Always grant either (Permissions_System: drift
+     invalidates the prior approval instead of silently reusing it), so the next run holds afresh. */
+  function answerHold(ctx, how) {
+    var hold = P().pendingAllow;
+    if (!hold) return true;
+    P().pendingAllow = null;
+    if (how === 'deny') return false;
+    if (holdExpired(ctx, hold)) {
+      ctx.toast('Approval expired', 'Permissions or policy changed while the action was held. Run it again to hold a fresh approval.');
+      return 'refused';
+    }
+    /* Once is B20's single-use grant, bound to this chat; For session and Always set none: the grant dock-asks.js now
+       holds covers the re-run itself (with its one-line receipt), in its own scope only */
+    var caps = hold.capabilities || [hold.capability];
+    if (how === 'once') {
+      P().allowOnce = P().allowOnce || {};
+      caps.forEach(function (c) { P().allowOnce[c] = { at: nowIso(), thread: ctx.state.selectedThread }; });
+    }
+    ctx.toast(how === 'once' ? 'Allowed once' : how === 'session' ? 'Allowed for this session' : 'Always allowed',
+      hold.actionLabel + (how === 'once' ? ' may run one time. Run the action again; the grant is consumed, not blanket.' : ' may run now. Run it again; later holds like it run without asking.'));
+    return false;
+  }
+  function holdLadder(ctx, hold, heldCaps) {
+    var A = window.PM56_ASKS, SH = window.PM56_SHELL;
+    if (!A || !A.ensure || !SH || !SH.pmxAskButtons) return null;
+    var spec = holdSpec(heldCaps, hold.actionLabel);
+    A.list().forEach(function (x) { if (/^bc-hold:/.test(x.id) && x.id !== spec.id) A.drop(x.id); });
+    spec.onAnswer = function (c, how) { return answerHold(c, how); };
+    var a = A.ensure(spec), p = a && A.parts(a);
+    if (!p) return '';
+    if (p.extra) return '<div class="bc-allow-acts is-always" data-k="bc-allow-acts">' + p.extra + '</div>';
+    return '<div class="bc-allow-acts" data-k="bc-allow-acts" role="group" aria-label="' + esc(p.label) + '">' + SH.pmxAskButtons(p.answers, function (b) {
+      return '<button type="button" class="soft-button pmx-dock-ans" data-k="ans:' + esc(b.label) + '" data-action="' + esc(b.action) + '" ' + b.attrs +
+        (b.aria ? ' aria-label="' + esc(b.aria) + '"' : '') + '>' + esc(b.label) + '</button>';
+    }) + '</div>';
+  }
+  /* B20: the explicit allow for Ask-held actions. */
   function renderAllowBanner(ctx) {
     var hold = P().pendingAllow;
-    if (!hold) return '';
+    if (!hold) { if (window.PM56_ASKS) PM56_ASKS.list().forEach(function (x) { if (/^bc-hold:/.test(x.id)) PM56_ASKS.drop(x.id); }); return ''; }
     var heldCaps = hold.capabilities || [hold.capability];
     var heldLabel = heldCaps.map(function (c) { return CAP_LABEL[c] || c; }).join(' + ');
+    var ladder = holdLadder(ctx, hold, heldCaps);
+    if (ladder !== null) return '<div class="bc-allow-banner" data-k="bc-allow-banner" role="alert">'
+      + ctx.icon('lock', 12)
+      + '<span class="bc-allow-say"><b>Held for approval</b> — ' + esc(hold.actionLabel) + ' (' + esc(heldLabel) + ' policy is Ask). Nothing was captured or sent.</span>'
+      + ladder + '</div>';
     return '<div class="bc-allow-banner" data-k="bc-allow-banner" role="alert">'
       + ctx.icon('lock', 12)
       + '<span><b>Held for approval</b> — ' + esc(hold.actionLabel) + ' (' + esc(heldLabel) + ' policy is Ask). Nothing was captured or sent.</span>'
@@ -1448,18 +1513,20 @@
        change before the allow expires it. B20-R3-F2: grants are a per-capability
        set (null when empty) so sibling approvals never overwrite each other;
        holds carry the full outstanding set with single-cap aliases kept. */
-    if (P().allowOnce && P().allowOnce[capId]) {
+    if (P().allowOnce && P().allowOnce[capId] && onceHere(ctx, P().allowOnce[capId])) {
       delete P().allowOnce[capId];
       if (!Object.keys(P().allowOnce).length) P().allowOnce = null;
       return true;
     }
+    /* FO-128: a For session grant or an Always rule that covers the hold lets it run now (one-line receipt) */
+    if (grantCovers([capId], actionLabel)) return true;
     var already = P().pendingAllow && (P().pendingAllow.capability === capId
       || (P().pendingAllow.capabilities && P().pendingAllow.capabilities.indexOf(capId) >= 0));
     P().pendingAllow = { capability: capId, capabilities: [capId], actionLabel: actionLabel, at: nowIso(),
       permissions: ctx.state.permissions, policy: v, policies: {} };
     P().pendingAllow.policies[capId] = v;
-    ctx.toast('Approval needed', actionLabel + ' needs a one-time allow (' + (CAP_LABEL[capId] || capId) + ' policy is Ask). Use Allow once below, then run the action again.');
-    if (!already) ctx.addReceipt('bc-allow-hold', 'Held · ' + actionLabel, 'Policy Ask holds this action until you explicitly allow it once. Nothing was captured or sent.');
+    ctx.toast('Approval needed', actionLabel + ' needs a one-time allow (' + (CAP_LABEL[capId] || capId) + ' policy is Ask). ' + (window.PM56_ASKS ? 'Answer below (Deny, Once, For session or Always), then run the action again.' : 'Use Allow once below, then run the action again.'));
+    if (!already) ctx.addReceipt('bc-allow-hold', 'Held · ' + actionLabel, (window.PM56_ASKS ? 'Policy Ask holds this action until you answer it. Nothing was captured or sent.' : 'Policy Ask holds this action until you explicitly allow it once. Nothing was captured or sent.'));
     ctx.renderApp();
     return false;
   }
@@ -1511,8 +1578,18 @@
       var pv = (P().policy || {})[c];
       if (pv == null) pv = 'on';
       if (pv !== 'ask') return false;
-      return !(P().allowOnce && P().allowOnce[c]);
+      return !(P().allowOnce && P().allowOnce[c] && onceHere(ctx, P().allowOnce[c]));
     });
+    /* FO-128 C1: grants compose. The set's own For session grant or Always rule covers it whole; otherwise each
+       capability its own grant or rule covers is subtracted, so a Screenshots grant and a DOM grant made one at a time
+       together let an operation that needs both run. The receipts are written only when the operation then runs; what
+       is left is held as one set (Once grants above stay all-or-nothing, single-use and the answering chat's). */
+    if (missing.length) {
+      var A = window.PM56_ASKS, used = [], whole = A && A.grantOf ? A.grantOf(holdSpec(missing, actionLabel)) : null;
+      if (whole) { used.push([missing.slice(), whole]); missing = []; }
+      else if (A && A.grantOf) missing = missing.filter(function (c) { var g = A.grantOf(holdSpec([c], actionLabel)); if (g) { used.push([[c], g]); return false; } return true; });
+      if (!missing.length) used.forEach(function (u) { A.noteGrant(holdSpec(u[0], actionLabel), u[1]); });
+    }
     if (missing.length) {
       var prev = P().pendingAllow;
       var sameHold = prev && prev.capabilities && prev.capabilities.length === missing.length
@@ -1521,13 +1598,13 @@
       P().pendingAllow = { capability: missing[0], capabilities: missing.slice(), actionLabel: actionLabel,
         at: nowIso(), permissions: ctx.state.permissions, policy: 'ask', policies: {} };
       missing.forEach(function (c) { P().pendingAllow.policies[c] = 'ask'; });
-      ctx.toast('Approval needed', actionLabel + ' needs a one-time allow (' + labels + ' policy is Ask). Use Allow once below, then run the action again.');
-      if (!sameHold) ctx.addReceipt('bc-allow-hold', 'Held · ' + actionLabel, 'Policy Ask holds this action until you explicitly allow it once. Nothing was captured or sent.');
+      ctx.toast('Approval needed', actionLabel + ' needs a one-time allow (' + labels + ' policy is Ask). ' + (window.PM56_ASKS ? 'Answer below (Deny, Once, For session or Always), then run the action again.' : 'Use Allow once below, then run the action again.'));
+      if (!sameHold) ctx.addReceipt('bc-allow-hold', 'Held · ' + actionLabel, (window.PM56_ASKS ? 'Policy Ask holds this action until you answer it. Nothing was captured or sent.' : 'Policy Ask holds this action until you explicitly allow it once. Nothing was captured or sent.'));
       ctx.renderApp();
       return false;
     }
     if (P().allowOnce) {
-      capIds.forEach(function (c) { delete P().allowOnce[c]; });
+      capIds.forEach(function (c) { if (P().allowOnce[c] && onceHere(ctx, P().allowOnce[c])) delete P().allowOnce[c]; });
       if (!Object.keys(P().allowOnce).length) P().allowOnce = null;
     }
     return true;

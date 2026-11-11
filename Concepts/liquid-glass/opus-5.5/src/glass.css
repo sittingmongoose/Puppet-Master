@@ -180,17 +180,13 @@ html[data-theme^="glass"]:not(#lgz) .main-area { flex: 1 1 0% !important; }
 @property --lg-mat { syntax: '<number>'; inherits: false; initial-value: 1; }
 /* the per-sheet bakes are read only by the sheet's own background, so they do not inherit: a scroll that moves a sheet's
    frost (--lg-fx / --lg-fy, every frame) and a new ring or spec map restyle that sheet alone, not every element inside it
-   (a Usage card holds 100 to 400; Jared #3 and #13, 2026-10-14). The same for the pointer's light on a sheet (--lg-glow,
-   Glass Light): the pointer entering a sheet restyled all it holds. */
+   (a Usage card holds 100 to 400; Jared #3 and #13, 2026-10-14). */
 @property --lg-fx { syntax: '*'; inherits: false; }
 @property --lg-fy { syntax: '*'; inherits: false; }
 @property --lg-ring { syntax: '*'; inherits: false; }
 @property --lg-spec { syntax: '*'; inherits: false; }
 /* a menu's light map in nine parts, laid out as background layers (glass.js lightSlices, B6 packets 3/4) */
 @property --lg-spec9 { syntax: '*'; inherits: false; }
-@property --lg-px { syntax: '*'; inherits: false; }
-@property --lg-py { syntax: '*'; inherits: false; }
-@property --lg-glow { syntax: '*'; inherits: false; }
 /* Frost belongs to the sheet's own background and the onboarding scrim. The painter supplies it through a rule
    scoped to those readers, so changing an image neither inherits through every row nor mutates html's inline style. */
 @property --lg-frost-heavy { syntax: '*'; inherits: false; }
@@ -223,19 +219,19 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is([data-lg-kind="panel"], [d
   -webkit-backdrop-filter: none !important; backdrop-filter: none !important;
 }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) [data-lg-kind="panel"] {
-  background: var(--lg-spec, none) 0 0 / 100% 100% no-repeat, var(--lg-glow, none) 0 0 / 100% 100% no-repeat, linear-gradient(180deg, var(--lg-head-shade), transparent 30px), linear-gradient(rgb(from var(--lg-tint-panel) r g b / calc((alpha * var(--lg-ga-k) + var(--lg-ga-add)) * var(--lg-mat))), rgb(from var(--lg-tint-panel) r g b / calc((alpha * var(--lg-ga-k) + var(--lg-ga-add)) * var(--lg-mat)))),
+  background: var(--lg-spec, none) 0 0 / 100% 100% no-repeat, linear-gradient(180deg, var(--lg-head-shade), transparent 30px), linear-gradient(rgb(from var(--lg-tint-panel) r g b / calc((alpha * var(--lg-ga-k) + var(--lg-ga-add)) * var(--lg-mat))), rgb(from var(--lg-tint-panel) r g b / calc((alpha * var(--lg-ga-k) + var(--lg-ga-add)) * var(--lg-mat)))),
     var(--lg-ring, none) 0 0 / 100% 100% no-repeat, var(--lg-frost-heavy, none) var(--lg-fx, 0px) var(--lg-fy, 0px) / var(--lg-vw, 100vw) var(--lg-vh, 100vh) no-repeat !important;
   border-radius: var(--lg-r-sheet) !important;
   box-shadow: inset 0 1px 0 var(--lg-edge-top), inset 0 -1px 1px var(--lg-edge-bot), 0 30px 60px -30px var(--lg-shadow), 0 2px 10px var(--lg-shadow-near) !important;
 }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) [data-lg-kind="card"] {
-  background: var(--lg-spec, none) 0 0 / 100% 100% no-repeat, var(--lg-glow, none) 0 0 / 100% 100% no-repeat, linear-gradient(180deg, var(--lg-head-shade), transparent 30px), linear-gradient(rgb(from var(--lg-tint-card) r g b / calc((alpha * var(--lg-ga-k) + var(--lg-ga-add)) * var(--lg-mat))), rgb(from var(--lg-tint-card) r g b / calc((alpha * var(--lg-ga-k) + var(--lg-ga-add)) * var(--lg-mat)))),
+  background: var(--lg-spec, none) 0 0 / 100% 100% no-repeat, linear-gradient(180deg, var(--lg-head-shade), transparent 30px), linear-gradient(rgb(from var(--lg-tint-card) r g b / calc((alpha * var(--lg-ga-k) + var(--lg-ga-add)) * var(--lg-mat))), rgb(from var(--lg-tint-card) r g b / calc((alpha * var(--lg-ga-k) + var(--lg-ga-add)) * var(--lg-mat)))),
     var(--lg-ring, none) 0 0 / 100% 100% no-repeat, var(--lg-frost-heavy, none) var(--lg-fx, 0px) var(--lg-fy, 0px) / var(--lg-vw, 100vw) var(--lg-vh, 100vh) no-repeat !important;
   border-radius: var(--lg-r-card) !important;
   box-shadow: inset 0 1px 0 var(--lg-edge-top), inset 0 -1px 1px var(--lg-edge-bot), 0 22px 44px -24px var(--lg-shadow), 0 2px 6px var(--lg-shadow-near) !important;
 }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) [data-lg-kind="bar"] {
-  background: var(--lg-spec, none) 0 0 / 100% 100% no-repeat, var(--lg-glow, none) 0 0 / 100% 100% no-repeat, linear-gradient(180deg, var(--lg-head-shade), transparent 30px), linear-gradient(rgb(from var(--lg-tint-bar) r g b / calc((alpha * var(--lg-ga-k) + var(--lg-ga-add)) * var(--lg-mat))), rgb(from var(--lg-tint-bar) r g b / calc((alpha * var(--lg-ga-k) + var(--lg-ga-add)) * var(--lg-mat)))),
+  background: var(--lg-spec, none) 0 0 / 100% 100% no-repeat, linear-gradient(180deg, var(--lg-head-shade), transparent 30px), linear-gradient(rgb(from var(--lg-tint-bar) r g b / calc((alpha * var(--lg-ga-k) + var(--lg-ga-add)) * var(--lg-mat))), rgb(from var(--lg-tint-bar) r g b / calc((alpha * var(--lg-ga-k) + var(--lg-ga-add)) * var(--lg-mat)))),
     var(--lg-ring, none) 0 0 / 100% 100% no-repeat, var(--lg-frost-light, none) var(--lg-fx, 0px) var(--lg-fy, 0px) / var(--lg-vw, 100vw) var(--lg-vh, 100vh) no-repeat !important;
   border-radius: var(--lg-r-bar) !important;
   box-shadow: inset 0 1px 0 var(--lg-edge-top), inset 0 -1px 1px var(--lg-edge-bot), 0 16px 34px -18px var(--lg-shadow), 0 1px 4px var(--lg-shadow-near) !important;
@@ -249,7 +245,6 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) [data-lg-kind="bar"] {
    or ring-cached rim. The vars are written inline by glass.js, hence !important. */
 html[data-lg="on"][data-theme^="glass"]:not(#lgz).lg-drag-flat :is([data-lg-kind="panel"], [data-lg-kind="card"], [data-lg-kind="bar"]) {
   --lg-spec: none !important;
-  --lg-glow: none !important;
   --lg-ring: none !important;
   box-shadow: inset 0 1px 0 var(--lg-edge-top), inset 0 -1px 1px var(--lg-edge-bot) !important;
 }
@@ -280,7 +275,7 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz):not(#lgy) :is([data-lg-kind="p
   pointer-events: none; transform: none; translate: none; scale: none; rotate: none;
   filter: none; -webkit-mask: none; mask: none; clip-path: none; mix-blend-mode: normal;
   visibility: visible; transition: none;
-  --lg-spec: inherit; --lg-glow: inherit; --lg-fx: inherit; --lg-fy: inherit; --lg-mat: inherit; --lg-ga-k: inherit; --lg-ga-add: inherit;
+  --lg-spec: inherit; --lg-fx: inherit; --lg-fy: inherit; --lg-mat: inherit; --lg-ga-k: inherit; --lg-ga-add: inherit;
   --lg-xf-ring: inherit; --lg-xf-x: inherit; --lg-xf-y: inherit;
   box-shadow: inset 0 1px 0 var(--lg-edge-top), inset 0 -1px 1px var(--lg-edge-bot);
   opacity: 1; will-change: opacity;
@@ -289,15 +284,15 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz):not(#lgy) :is([data-lg-kind="p
 /* a fade that replaces a running one starts again from 1 under the other name */
 html[data-lg="on"][data-theme^="glass"]:not(#lgz):not(#lgy) :is([data-lg-kind="panel"], [data-lg-kind="card"], [data-lg-kind="bar"])[data-lg-xf="b"]::after { animation-name: lg-xf-b; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz):not(#lgy) [data-lg-kind="panel"][data-lg-xf]::after {
-  background: var(--lg-spec, none) 0 0 / 100% 100% no-repeat, var(--lg-glow, none) 0 0 / 100% 100% no-repeat, linear-gradient(180deg, var(--lg-head-shade), transparent 30px), linear-gradient(rgb(from var(--lg-tint-panel) r g b / calc((alpha * var(--lg-ga-k) + var(--lg-ga-add)) * var(--lg-mat))), rgb(from var(--lg-tint-panel) r g b / calc((alpha * var(--lg-ga-k) + var(--lg-ga-add)) * var(--lg-mat)))),
+  background: var(--lg-spec, none) 0 0 / 100% 100% no-repeat, linear-gradient(180deg, var(--lg-head-shade), transparent 30px), linear-gradient(rgb(from var(--lg-tint-panel) r g b / calc((alpha * var(--lg-ga-k) + var(--lg-ga-add)) * var(--lg-mat))), rgb(from var(--lg-tint-panel) r g b / calc((alpha * var(--lg-ga-k) + var(--lg-ga-add)) * var(--lg-mat)))),
     var(--lg-xf-ring, none) 0 0 / 100% 100% no-repeat, var(--lg-xf-heavy, none) var(--lg-fx, 0px) var(--lg-fy, 0px) / var(--lg-vw, 100vw) var(--lg-vh, 100vh) no-repeat;
 }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz):not(#lgy) [data-lg-kind="card"][data-lg-xf]::after {
-  background: var(--lg-spec, none) 0 0 / 100% 100% no-repeat, var(--lg-glow, none) 0 0 / 100% 100% no-repeat, linear-gradient(180deg, var(--lg-head-shade), transparent 30px), linear-gradient(rgb(from var(--lg-tint-card) r g b / calc((alpha * var(--lg-ga-k) + var(--lg-ga-add)) * var(--lg-mat))), rgb(from var(--lg-tint-card) r g b / calc((alpha * var(--lg-ga-k) + var(--lg-ga-add)) * var(--lg-mat)))),
+  background: var(--lg-spec, none) 0 0 / 100% 100% no-repeat, linear-gradient(180deg, var(--lg-head-shade), transparent 30px), linear-gradient(rgb(from var(--lg-tint-card) r g b / calc((alpha * var(--lg-ga-k) + var(--lg-ga-add)) * var(--lg-mat))), rgb(from var(--lg-tint-card) r g b / calc((alpha * var(--lg-ga-k) + var(--lg-ga-add)) * var(--lg-mat)))),
     var(--lg-xf-ring, none) 0 0 / 100% 100% no-repeat, var(--lg-xf-heavy, none) var(--lg-fx, 0px) var(--lg-fy, 0px) / var(--lg-vw, 100vw) var(--lg-vh, 100vh) no-repeat;
 }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz):not(#lgy) [data-lg-kind="bar"][data-lg-xf]::after {
-  background: var(--lg-spec, none) 0 0 / 100% 100% no-repeat, var(--lg-glow, none) 0 0 / 100% 100% no-repeat, linear-gradient(180deg, var(--lg-head-shade), transparent 30px), linear-gradient(rgb(from var(--lg-tint-bar) r g b / calc((alpha * var(--lg-ga-k) + var(--lg-ga-add)) * var(--lg-mat))), rgb(from var(--lg-tint-bar) r g b / calc((alpha * var(--lg-ga-k) + var(--lg-ga-add)) * var(--lg-mat)))),
+  background: var(--lg-spec, none) 0 0 / 100% 100% no-repeat, linear-gradient(180deg, var(--lg-head-shade), transparent 30px), linear-gradient(rgb(from var(--lg-tint-bar) r g b / calc((alpha * var(--lg-ga-k) + var(--lg-ga-add)) * var(--lg-mat))), rgb(from var(--lg-tint-bar) r g b / calc((alpha * var(--lg-ga-k) + var(--lg-ga-add)) * var(--lg-mat)))),
     var(--lg-xf-ring, none) 0 0 / 100% 100% no-repeat, var(--lg-xf-light, none) var(--lg-fx, 0px) var(--lg-fy, 0px) / var(--lg-vw, 100vw) var(--lg-vh, 100vh) no-repeat;
 }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz):not(#lgy) :is([data-lg-kind="panel"], [data-lg-kind="card"], [data-lg-kind="bar"])[data-lg-fixed][data-lg-xf]::after {
@@ -316,9 +311,8 @@ html[data-lg="on"][data-theme="glass-dark"]:not(#lgz) [data-lg-kind="menu"][data
 html[data-lg="on"][data-theme="glass-light"]:not(#lgz) [data-lg-kind="menu"][data-lg-dense] { --lg-tint-menu: rgba(250, 251, 253, .88); }
 html[data-lg="on"][data-theme="glass-dark"][data-lg-tier="cpu"]:not(#lgz) [data-lg-kind="menu"][data-lg-dense] { --lg-tint-menu: rgba(12, 15, 28, .97); }
 html[data-lg="on"][data-theme="glass-light"][data-lg-tier="cpu"]:not(#lgz) [data-lg-kind="menu"][data-lg-dense] { --lg-tint-menu: rgba(252, 253, 255, .97); }
-/* the pointer's light is the shared hover light only (22-hover.css: the sheen and the edge catch on a hovered card, tile or
-   row), as in Basic and Friendly; Glass's own sheet light (#lg-shine, Glass Light's --lg-glow) is gone (Jared, QA round 2
-   Q20). --lg-shine-c is still the arrival sweep's colour. */
+/* FO-121: the shared hover layer (22-hover.css) paints box edges only. The old sheet-level pointer light
+   has no painter or tokens. --lg-shine-c below belongs to the arrival sweep. */
 html[data-lg="on"][data-theme="glass-dark"]:not(#lgz) { --lg-shine-c: rgba(255, 255, 255, .06); }
 html[data-lg="on"][data-theme="glass-light"]:not(#lgz) { --lg-shine-c: transparent; }
 /* the arrival sweep: one band of light across the window as the glass condenses */
@@ -853,6 +847,13 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-o55-onboarding .o55-seg { 
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-o55-onboarding .o55-seg button { background: transparent !important; box-shadow: none !important; border: 0 !important; border-radius: 8px !important; color: var(--text-secondary) !important; position: relative; z-index: 1; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-o55-onboarding .o55-seg button.o55-on { color: var(--text-primary) !important; font-weight: 650; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-o55-onboarding .o55-railitem[data-state="current"] .o55-raillabel { color: var(--text-primary) !important; font-weight: 650; }
+/* QA-1 round 2: the rail's lens is the current word with 3 px above and below it, as Friendly's and Basic's chips are
+   (60-switcher-looks.css), and still 6 px at each side (the word's box is 3 px wider each side, given back by its
+   margins, so nothing moves). With 6 px all round its top edge lay over Pip's feet: he hangs from the string with his
+   figure ending 31 px down the header and the word starting at 35, and the lens painted from 28 (rail-section-bounds,
+   Glass Dark, every width, 31 px of his figure under the lens) */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-o55-onboarding .o55-raillist { --lg-lens-pad: 3px; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-o55-onboarding .o55-raillist .o55-raillabel { padding-left: 3px; padding-right: 3px; margin-left: -3px; margin-right: -3px; }
 /* switches: the same curved glass switch as the app */
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-o55-onboarding .o55-switch {
   width: 38px !important; height: 22px !important; border-radius: 11px !important; background: var(--lg-switch-off) !important;

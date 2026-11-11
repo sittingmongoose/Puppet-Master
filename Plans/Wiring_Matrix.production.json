@@ -39720,6 +39720,69 @@
         "Assert cmd.git.worktree.list records dispatch receipt cmd.git.worktree.list.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
       ]
     },
+    "catalog.git_worktree_open_topology": {
+      "ui_element_id": "catalog.git_worktree_open_topology",
+      "ui_location": "Source Control surface",
+      "ui_command_id": "cmd.git.worktree.open_topology",
+      "handler_location": "handlers::git::worktree_open_topology",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.git.worktree.open_topology must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.git.worktree.open_topology must expose projected state selector and disabled reason before dispatch",
+        "cmd.git.worktree.open_topology dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.git.worktree.open_topology must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.git.worktree.open_topology must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
+        "W-095 / UCC-231 / DL-471 Q-ID6: shell_view with local_projection response; require repo_id and reveal this repository's existing topology projection, with owner_request none and owner_result none.",
+        "No worktree mutation, new topology projection, or persisted domain event; return only the existing projection and dispatch receipt.",
+        "W-095 disabled_reason_codes are [not_configured] for missing repository tooling; keep handler_unavailable truthful when the planned route has no implementation."
+      ],
+      "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler or runtime exists. owner_doc_ref: Plans/WorktreeGitImprovement.md#W-095; Plans/UI_Command_Catalog.md#UCC-231; Plans/Decision_Log.md#DL-471 Q-ID6; Plans/GitHub_Integration.md Worktree Topology Commands. Production wiring contract for cmd.git.worktree.open_topology; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.git_worktree_open_topology.availability",
+      "disabled_reason_projection": "state.commands.git_worktree_open_topology.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "W-095 / DL-471 Q-ID6: reveal the existing repository topology projection and record only a no-persist dispatch receipt; no mutation or persisted domain event.",
+        "receipt_or_event_refs": [
+          "cmd.git.worktree.open_topology.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.git_worktree_open_topology exposes a stable role/name/description matching cmd.git.worktree.open_topology.",
+        "keyboard_access": "catalog.git_worktree_open_topology is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.git_worktree_open_topology preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.git_worktree_open_topology surfaces state.commands.git_worktree_open_topology.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.git_worktree_open_topology.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "A future dispatcher fixture must prove cmd.git.worktree.open_topology reaches the planned handlers::git::worktree_open_topology route with required repo_id and W-095 shell_view/local_projection contract; no owner request or owner result is invented. This target string is not implementation evidence."
+        },
+        {
+          "test_id": "wiring.catalog.git_worktree_open_topology.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.git_worktree_open_topology.availability and disabled copy reads state.commands.git_worktree_open_topology.disabled_reason. Prove not_configured for missing repository tooling and truthful handler_unavailable before implementation."
+        },
+        {
+          "test_id": "wiring.catalog.git_worktree_open_topology.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "W-095 / DL-471 Q-ID6: reveal the existing repository topology projection and record only a no-persist dispatch receipt; no mutation or persisted domain event."
+        },
+        {
+          "test_id": "wiring.catalog.git_worktree_open_topology.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        },
+        {
+          "test_id": "wiring.catalog.git_worktree_open_topology.regression",
+          "evidence_kind": "event_test",
+          "requirement": "Assert cmd.git.worktree.open_topology reveals only the existing topology projection for repo_id and records cmd.git.worktree.open_topology.dispatch_receipt; refuse invalid args or unavailable routing without mutation and emit no persisted domain event."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.git.worktree.open_topology reveals only the existing topology projection for repo_id and records cmd.git.worktree.open_topology.dispatch_receipt; refuse invalid args or unavailable routing without mutation and emit no persisted domain event."
+      ]
+    },
     "catalog.git_worktree_lock": {
       "ui_element_id": "catalog.git_worktree_lock",
       "ui_location": "Source Control surface",
@@ -40226,6 +40289,67 @@
       ],
       "event_test_requirements": [
         "Assert cmd.git.worktree.request_prune records dispatch receipt cmd.git.worktree.request_prune.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.git_worktree_repair": {
+      "ui_element_id": "catalog.git_worktree_repair",
+      "ui_location": "Source Control surface",
+      "ui_command_id": "cmd.git.worktree.repair",
+      "handler_location": "handlers::git::worktree_repair",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "Registered production intent only (UCC-231); unavailable until its repair operation is defined (DL-471 Q-ID7b). Availability is handler_unavailable; no live handler or mutation is admitted.",
+        "The handler_location is a reserved future routing identity following the worktree sibling convention, not an admitted repair operation or executable handler. Do not dispatch an owner request; W-095 owner_request is none.",
+        "W-095 / DL-471 Q-ID7a: preserve the exact selected-worktree args, target_worktree_id == worktree_id, expected path and branch, confirmation and fresh independent permission fences; detached targets remain refused until explicitly represented.",
+        "W-095 classifies this as domain_action / owner_operation conservatively; no algorithm or successful WorktreeRepairResultV1 is fabricated from registration or dispatch.",
+        "Retain W-095 disabled_reason_codes blocked_state_required, stale_projection, permission_required for their owner fences; handler_unavailable is the operation-unavailable refusal, not a newly invented domain blocker.",
+        "Refusal produces only the shared command response/receipt; no mutation or persisted domain event."
+      ],
+      "evidence_required": "handler_status: planned; no live handler. unavailable until its repair operation is defined (DL-471 Q-ID7b). Plans/WorktreeGitImprovement.md#W-095; Plans/UI_Command_Catalog.md#UCC-231; Plans/Decision_Log.md#DL-471 Q-ID7a/Q-ID7b. The future routing identity is not runtime evidence. Required refusal evidence: unavailable projection, dispatcher refusal without an owner request or mutation, shared response/receipt, accessibility and regression checks. No runtime certification is claimed.",
+      "state_selector": "state.commands.git_worktree_repair.availability",
+      "disabled_reason_projection": "state.commands.git_worktree_repair.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "Return handler_unavailable without mutation or persisted domain event; unavailable until its repair operation is defined (DL-471 Q-ID7b). Record only the refusal dispatch receipt; never fabricate successful repair.",
+        "receipt_or_event_refs": [
+          "cmd.git.worktree.repair.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.git_worktree_repair exposes a stable role/name/description matching cmd.git.worktree.repair.",
+        "keyboard_access": "catalog.git_worktree_repair is keyboard reachable where visible; activation remains refused with handler_unavailable and cannot mutate.",
+        "focus_management": "catalog.git_worktree_repair preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "Announce handler_unavailable: unavailable until its repair operation is defined (DL-471 Q-ID7b). Surface state.commands.git_worktree_repair.disabled_reason and the applicable owner fence without inventing a repair operation."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.git_worktree_repair.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Prove cmd.git.worktree.repair refuses handler_unavailable before any owner request or mutation; handlers::git::worktree_repair is only a reserved future routing identity, not a live handler."
+        },
+        {
+          "test_id": "wiring.catalog.git_worktree_repair.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Prove state.commands.git_worktree_repair.availability stays unavailable: unavailable until its repair operation is defined (DL-471 Q-ID7b). Read state.commands.git_worktree_repair.disabled_reason; preserve W-095 owner fence mappings."
+        },
+        {
+          "test_id": "wiring.catalog.git_worktree_repair.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "Return handler_unavailable without mutation or persisted domain event; unavailable until its repair operation is defined (DL-471 Q-ID7b). Record only the refusal dispatch receipt; never fabricate successful repair."
+        },
+        {
+          "test_id": "wiring.catalog.git_worktree_repair.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Prove accessible name, keyboard reachability, deterministic focus return and announcement of handler_unavailable with the DL-471 Q-ID7b explanation; activation cannot mutate."
+        },
+        {
+          "test_id": "wiring.catalog.git_worktree_repair.regression",
+          "evidence_kind": "event_test",
+          "requirement": "Assert cmd.git.worktree.repair returns handler_unavailable and only a refusal dispatch receipt, with no owner request, successful repair, mutation, or persisted domain event until its exact owner operation is defined (W-095 / DL-471 Q-ID7b)."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.git.worktree.repair returns handler_unavailable and only a refusal dispatch receipt, with no owner request, successful repair, mutation, or persisted domain event until its exact owner operation is defined (W-095 / DL-471 Q-ID7b)."
       ]
     },
     "catalog.git_worktree_reuse": {

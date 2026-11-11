@@ -381,7 +381,7 @@ ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan
 - Runtime lineage is object-first, not attempt-first, so blocked episodes, scheduler passes, and graph generations remain intelligible across runtime-artifact, graph, evidence, history, and ledger consumers.
 - SCM/runtime flows replace tier-bound worktree identity with the lane/worktree plus execution-context model; `/runtime` and `/worktree` routes carry lane/package/seam context rather than reviving per-tier worktree ownership.
 
-ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Glossary.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Models_System.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/human-in-the-loop.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/usage-feature.md, ContractName:Plans/Tools.md, ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/Personas.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Widget_System.md, ContractName:Plans/FileManager.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Progression_Gates.md, ContractName:Plans/plan_graph.schema.json, ContractName:Plans/Run_Graph_View.md, ContractName:Plans/Provider_OpenCode.md
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Glossary.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Models_System.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/human-in-the-loop.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/usage-feature.md, ContractName:Plans/Tools.md, ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/PRD_Builder.md#PRDB-014, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/Personas.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Widget_System.md, ContractName:Plans/FileManager.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Progression_Gates.md, ContractName:Plans/plan_graph.schema.json, ContractName:Plans/Run_Graph_View.md, ContractName:Plans/Provider_OpenCode.md
 
 ## References
 
@@ -399,7 +399,7 @@ ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan
 
 
 ### 3.14 DocumentInlineNotes
-**Owner:** GUI contract in `Plans/FinalGUISpec.md`; persistence contract in `Plans/storage-plan.md`; workflow semantics in `Plans/chain-wizard-flexibility.md` and `Plans/interview-subagent-integration.md`; chat-handoff rules in `Plans/assistant-chat-design.md`.
+**Owner:** GUI contract in `Plans/FinalGUISpec.md`; persistence contract in `Plans/storage-plan.md`; workflow semantics in `Plans/PRD_Builder.md#PRDB-014` and `Plans/interview-subagent-integration.md`; chat-handoff rules in `Plans/assistant-chat-design.md`.
 
 Rules:
 - This primitive now covers durable document annotations on the legacy `note_record.v1` substrate.
@@ -418,12 +418,12 @@ ContractRef: Primitive:DocumentInlineNotes, ContractName:Plans/FinalGUISpec.md, 
 - `Send selection to chat` is a thread-scoped chip/handoff path; it must not be collapsed into the durable `/annotation` lifecycle, and it does not create patch-apply semantics.
 - Supported `source_surface` values include `assistant_deep_plan`, `interview_doc_pane`, and `document_viewer`; unsupported or `/no-source-map` surfaces are `send-to-chat-only` unless they define stable semantic anchor IDs.
 
-ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/interview-subagent-integration.md
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/PRD_Builder.md#PRDB-014, ContractName:Plans/interview-subagent-integration.md
 
 ---
 
 ### 3.15 TargetedRevisionPass
-**Owner:** Workflow semantics in `Plans/chain-wizard-flexibility.md` and `Plans/interview-subagent-integration.md`; UI placement in `Plans/FinalGUISpec.md`; prompt and persistence details in `Plans/Prompt_Pipeline.md` and `Plans/storage-plan.md`.
+**Owner:** Workflow semantics in `Plans/PRD_Builder.md#PRDB-014` and `Plans/interview-subagent-integration.md`; UI placement in `Plans/FinalGUISpec.md`; prompt and persistence details in `Plans/Prompt_Pipeline.md` and `Plans/storage-plan.md`.
 
 Rules:
 - `Resubmit with Annotations` triggers a targeted revision pass scoped to documents with open durable annotations, or a user-selected subset.
@@ -431,7 +431,7 @@ Rules:
 - Targeted revision may apply requested edits and/or answer question/comment annotations.
 - For each input annotation, the runtime records `addressed | still_open | cannot_apply`, `addressed_explanation`, and `updated_anchor?`.
 
-ContractRef: Primitive:TargetedRevisionPass, ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/storage-plan.md
+ContractRef: Primitive:TargetedRevisionPass, ContractName:Plans/PRD_Builder.md#PRDB-014, ContractName:Plans/storage-plan.md
 
 - Targeted revision MUST NOT trigger Multi-Pass Review.
 - Conflicting or stale mutating annotations are excluded from automatic revision until resolved.
@@ -447,7 +447,7 @@ ContractRef: ContractName:Plans/interview-subagent-integration.md, ContractName:
 ---
 
 ### 3.16 FinalReviewGate
-**Owner:** Workflow semantics in `Plans/chain-wizard-flexibility.md` and `Plans/interview-subagent-integration.md`; artifact taxonomy and restore semantics in `Plans/storage-plan.md`.
+**Owner:** Workflow semantics in `Plans/chain-wizard-flexibility.md`, `Plans/PRD_Builder.md#PRDB-014`, and `Plans/interview-subagent-integration.md`; artifact taxonomy and restore semantics in `Plans/storage-plan.md`.
 
 Rules:
 - Multi-Pass Review is final-review only: enabled only when all bundle docs are Approved/Done and no durable annotations remain open.
@@ -456,7 +456,7 @@ Rules:
 - Final review runs once by default; rerun explicit only.
 - Final gate is a single decision: `Accept | Reject | Edit`.
 
-ContractRef: Primitive:TargetedRevisionPass, ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/storage-plan.md
+ContractRef: Primitive:TargetedRevisionPass, ContractName:Plans/PRD_Builder.md#PRDB-014, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/storage-plan.md
 
 ## Recovery Terminology Canonical Alignment (2026-03-08)
 
@@ -2276,7 +2276,7 @@ status: accepted
 owner_doc: Plans/Crosswalk.md
 canonical_text: >-
   DocumentInlineNotes routes durable document annotation behavior across
-  FinalGUISpec, storage-plan, chain-wizard-flexibility,
+  FinalGUISpec, storage-plan, PRD_Builder,
   interview-subagent-integration, and assistant-chat-design; user-facing
   Annotations preserve note_record.v1 continuity, operation shapes, lifecycle,
   anchoring selectors, deterministic re-anchoring, coexistence/conflict rules,
@@ -2300,7 +2300,7 @@ implementation_surfaces:
   - Plans/Crosswalk.md
   - Plans/FinalGUISpec.md
   - Plans/storage-plan.md
-  - Plans/chain-wizard-flexibility.md
+  - Plans/PRD_Builder.md
   - Plans/interview-subagent-integration.md
   - Plans/assistant-chat-design.md
 node_compile_hint:
@@ -2322,7 +2322,7 @@ owner_hints:
   - Plans/Crosswalk.md
   - Plans/FinalGUISpec.md
   - Plans/storage-plan.md
-  - Plans/chain-wizard-flexibility.md
+  - Plans/PRD_Builder.md
   - Plans/interview-subagent-integration.md
   - Plans/assistant-chat-design.md
 ```
@@ -2358,7 +2358,7 @@ reasoning_tier: high
 context_scope: targeted_revision_pass_boundary
 implementation_surfaces:
   - Plans/Crosswalk.md
-  - Plans/chain-wizard-flexibility.md
+  - Plans/PRD_Builder.md
   - Plans/interview-subagent-integration.md
   - Plans/FinalGUISpec.md
   - Plans/Prompt_Pipeline.md
@@ -2383,7 +2383,7 @@ negative_constraints:
   - "V1 is note-based embedded-document review upgraded into structured annotations; direct `patch-apply` behavior is out of scope."
 owner_hints:
   - Plans/Crosswalk.md
-  - Plans/chain-wizard-flexibility.md
+  - Plans/PRD_Builder.md
   - Plans/interview-subagent-integration.md
   - Plans/Prompt_Pipeline.md
   - Plans/storage-plan.md
@@ -2421,6 +2421,7 @@ context_scope: final_review_gate_boundary
 implementation_surfaces:
   - Plans/Crosswalk.md
   - Plans/chain-wizard-flexibility.md
+  - Plans/PRD_Builder.md
   - Plans/interview-subagent-integration.md
   - Plans/storage-plan.md
 node_compile_hint:
@@ -2438,6 +2439,7 @@ negative_constraints:
 owner_hints:
   - Plans/Crosswalk.md
   - Plans/chain-wizard-flexibility.md
+  - Plans/PRD_Builder.md
   - Plans/interview-subagent-integration.md
   - Plans/storage-plan.md
 ```

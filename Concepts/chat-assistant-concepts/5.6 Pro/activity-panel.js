@@ -1294,15 +1294,33 @@
     var tid = ctx.state.selectedThread, now = Date.now(), timed = [];
     var mine = W.items({ thread: tid, kind: ['process', 'agent', 'scheduled'], view: 'thread:' + tid });
     var mark = function (it) { return ctx.icon(it.kind === 'agent' ? 'robot' : it.kind === 'scheduled' ? 'clock' : 'processes', 16); };
-    var line = function (it, tone, sentence, time, label) {
+    var line = function (it, tone, sentence, time, label, ask) {
       var d = it.kind === 'agent' ? 'subagents' : 'processes';
       return { key: 'work:' + it.id, tone: tone, at: it.startedAt || 0, html: S.pmxDockLine({ key: 'pmx-dock:work:' + it.id, tone: tone, markHtml: mark(it),
         kindWord: esc(ctx, wt(it.kind === 'agent' ? 'dock.agent' : it.kind === 'scheduled' ? 'dock.scheduled' : 'dock.process')), sentence: sentence,
         time: time ? '<span data-work-time="' + esc(ctx, it.id) + '">' + esc(ctx, time) + '</span>' : '',
+        attrs: ask ? 'data-work-detail="' + esc(ctx, it.id) + '"' : '', ask: ask || null,
         action: { action: 'work-dock-review', attrs: 'data-id="' + esc(ctx, it.id) + '" data-domain="' + d + '"', label: label } }) };
     };
+    /* FO-128 (Jared, 2026-11-09, item 9): a process's prompt is answered in the line, with the answers Activity Detail
+       offers it (D13: the quick answers of a plain yes/no prompt, the safe one first, then Answer in Terminal; any other
+       prompt only Answer in Terminal). They are the Detail's own [data-work-act] buttons inside [data-work-detail], so
+       48-work.js's one handler sends each through PM_WORK (cmd.work.send_input) exactly as Detail does. Details opens
+       Activity Detail at the process for the rest. An agent's question keeps its line: it is answered in words, in
+       its thread. */
+    var askOf = function (it) {
+      if (it.kind !== 'process' || !it.ask) return null;
+      var quick = W.canSendInput && W.canSendInput(it) ? it.quick : [];
+      var answers = quick.map(function (q) {
+        return { attrs: 'data-work-act="answer" data-value="' + esc(ctx, q) + '"', label: esc(ctx, q), hint: esc(ctx, wt('dock.sends', { reply: /^y/i.test(q) ? 'y' : 'n' })) };
+      });
+      answers.push({ attrs: 'data-work-act="terminal"', label: esc(ctx, wt('act.answerTerminal')), hint: esc(ctx, wt('dock.terminalHint')), quiet: true });
+      return { question: '<code>' + esc(ctx, it.ask) + '</code>', answers: answers, label: wt('dock.answerLabel', { title: it.title }) };
+    };
     W.sort(mine.filter(W.needsYou)).forEach(function (it) {
-      out.push(line(it, 'needs', esc(ctx, it.title) + ' · ' + esc(ctx, it.ask || W.word(it)), '', wt('dock.review')));
+      var ask = askOf(it);
+      out.push(ask ? line(it, 'needs', esc(ctx, it.title), W.time(it), wt('dock.details'), ask)
+        : line(it, 'needs', esc(ctx, it.title) + ' · ' + esc(ctx, it.ask || W.word(it)), '', wt('dock.review')));
     });
     W.sort(mine.filter(function (it) { return it.kind === 'process' && W.isLive(it) && !W.needsYou(it); })).forEach(function (it) {
       if (!dockFresh(tid, it, now)) return;
@@ -1314,14 +1332,11 @@
     dockExpiry(ctx, tid, timed, now);
     return out;
   }
-  var dockOn = false;
-  function provideDock() {
-    if (dockOn || !(window.PM56_PMX && window.PM56_PMX.dock)) return;
-    dockOn = true;
-    window.PM56_PMX.dock.provide(workDock);
-  }
-  provideDock();
-  if (!dockOn) document.addEventListener('DOMContentLoaded', provideDock, { once: true });
+  /* pmx-system.js loads after this file: the provider is queued for it (it takes the queue as it loads, before the first
+     render) rather than waiting for DOMContentLoaded, which on a slow load came after the first render and left the
+     dock without its work lines until some unrelated render */
+  if (window.PM56_PMX && window.PM56_PMX.dock) window.PM56_PMX.dock.provide(workDock);
+  else (window.PM56_PMX_DOCK_QUEUE = window.PM56_PMX_DOCK_QUEUE || []).push(workDock);
   /* Review / Show keeps the work projection's stable identity through Activity Detail. */
   EXT.action('work-dock-review', function (ctx, btn) {
     var id = btn && btn.dataset.id, d = btn && btn.dataset.domain, W = window.PM_WORK, it = W && id ? W.item(id) : null;

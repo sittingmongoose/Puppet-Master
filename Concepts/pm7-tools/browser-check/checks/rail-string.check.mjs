@@ -28,7 +28,11 @@ const GEOMETRY = () => {
 	const cur = strip && strip.querySelector('.o55-railitem[data-state="current"]');
 	const label = cur && cur.querySelector('.o55-raillabel');
 	const sb = strip && strip.getBoundingClientRect();
-	const lenses = [...win.querySelectorAll('.lg-lens')].filter((e) => !e.closest('.o55-layer.o55-out') && !e.closest('.lg-lenses-under'))
+	/* the strip's own chip first (an under-layer: Friendly's sticker, Basic's block, Retro's and NieR's chips), else the
+	   window's lens layer, as rail-chip reads it (SOL-QA1-K1: the under-layer chips were left out, so those looks were
+	   judged by their label plus 6 px instead) */
+	const own = strip ? [...strip.querySelectorAll('.lg-lens')] : [];
+	const lenses = (own.length ? own : [...win.querySelectorAll('.lg-lens')].filter((e) => !e.closest('.o55-layer.o55-out') && !e.closest('.lg-lenses-under')))
 		.map((e) => ({ b: e.getBoundingClientRect(), op: +getComputedStyle(e).opacity }))
 		.filter((x) => x.b.width > 0 && x.b.height > 0 && x.op > 0.05 && sb && x.b.right > sb.left && x.b.left < sb.right && x.b.top < hb.bottom && x.b.bottom > hb.top)
 		.sort((a, b) => Math.abs(((a.b.top + a.b.bottom) / 2) - ((sb.top + sb.bottom) / 2)) - Math.abs(((b.b.top + b.b.bottom) / 2) - ((sb.top + sb.bottom) / 2)));
