@@ -9,6 +9,11 @@ import { loadT } from './load.mjs';
 globalThis.getComputedStyle = () => ({ getPropertyValue: () => '' });
 let rafs = 0;
 globalThis.requestAnimationFrame = () => ++rafs;
+/* the view's cursor blink and header clock (intervals that run only while they have something to show, 2026-11-10):
+   counted here, never started */
+const timers = new Map(); let timerIds = 0;
+globalThis.setInterval = (fn, ms) => { const id = ++timerIds; timers.set(id, ms); return id; };
+globalThis.clearInterval = (id) => { timers.delete(id); };
 const win = {};
 const T = loadT(['00-core.js', '70-view.js'], { window: win, document: { documentElement: { getAttribute: () => null }, createElement: () => ({ getContext: () => null, style: {}, classList: { add() {}, toggle() {} }, appendChild() {} }) } });
 const P = T.View.prototype;
@@ -20,7 +25,8 @@ function view() {
   const v = Object.create(P);
   Object.assign(v, {
     hostVisible: true, onScreen: true, visible: true, raf: 0, fullPending: false, pop: null,
-    term: { images: { pause: on => log.push('images ' + (on ? 'paused' : 'running')) } },
+    blinkTimer: 0, clockTimer: 0,
+    term: { commands: [], images: { pause: on => log.push('images ' + (on ? 'paused' : 'running')) } },
     fx: { visible: on => log.push('fx ' + on) },
     layout: () => log.push('layout'), _groundSoon: () => {}
   });
@@ -86,6 +92,34 @@ test('shown by the host while off screen: stays hidden until it is on screen', (
   offScreen(v, false);
   assert.equal(v.visible, true);
   assert.equal(rafs, 1);
+});
+
+/* the cursor's blink and the header's clock (70-view.js _timers): every terminal kept both going behind other tabs and
+   pages, about 5.5 blink and 3 clock callbacks a second with the page at rest */
+test('off screen with no command running: the blink and the clock stop, and both run again on screen', () => {
+  const { v } = view();
+  v._timers();
+  assert.equal(timers.get(v.blinkTimer), 530);
+  assert.equal(timers.get(v.clockTimer), 1000);
+  const blink = v.blinkTimer, clock = v.clockTimer;
+  offScreen(v, true);
+  assert.equal(v.blinkTimer, 0);
+  assert.equal(v.clockTimer, 0);
+  assert.ok(!timers.has(blink) && !timers.has(clock), 'the intervals themselves are cleared');
+  offScreen(v, false);
+  assert.equal(timers.get(v.blinkTimer), 530);
+  assert.equal(timers.get(v.clockTimer), 1000);
+});
+test('off screen while a command runs: the blink stops, the clock keeps its elapsed time current', () => {
+  const { v } = view();
+  v.term.commands.push({ state: 'running' });
+  v._timers();
+  offScreen(v, true);
+  assert.equal(v.blinkTimer, 0);
+  assert.equal(timers.get(v.clockTimer), 1000);
+  v.term.commands[0].state = 'done';
+  v._timers();
+  assert.equal(v.clockTimer, 0, 'the command ended while hidden: nothing left to count');
 });
 
 /* the host's look (B5): a terminal not visible keeps the change for when it shows; a visible one applies it after the
