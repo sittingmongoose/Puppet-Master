@@ -39,6 +39,7 @@
 #panel-settings .pm51-servers-fp { display: block; margin-top: 6px; }
 #panel-settings .pm51-servers-demo { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; margin-top: 12px; font-size: 12px; color: var(--k3-text-3); }
 #panel-settings .pm51-servers-demo-c { min-height: 26px; padding: 3px 10px; border: 1px dashed color-mix(in srgb, var(--k3-text-1) 30%, transparent); border-radius: 999px; background: transparent; color: var(--k3-text-2); font: inherit; font-size: 12px; cursor: pointer; }
+#panel-settings :is(.pm51-servers-demo, .pm51-servers-demo-c)[hidden] { display: none; }
 #panel-settings .pm51-servers-demo-c:is(:hover, :focus-visible), #panel-settings .pm51-servers-demo-c.is-on { border-color: var(--accent-primary); color: var(--k3-text-1); background: rgba(var(--accent-primary-rgb), .08); }
 #panel-settings .pm51-servers-conf { padding: 10px 12px; border: 1px solid var(--k3-line); border-radius: 8px; background: var(--k3-bg-2); font-family: var(--mono-font, ui-monospace, monospace); font-size: 11px; line-height: 1.55; color: var(--k3-text-2); white-space: pre-wrap; overflow-wrap: anywhere; }
 `);
@@ -567,8 +568,39 @@
       tsRun(w);
     }, TS_STEP_MS);
   }
-  /* the Connect step is drawn again for each answer while it is showing; a closed window keeps nothing */
-  function tsPaint(w) { const wrap = [...portalRoot().querySelectorAll('.drawer-wrap')].find(x => x._o55Wizard === w); if (!wrap || wrap.dataset.closing === '1' || w.step() !== w.draft.connectAt) return; w.go(w.step()); }
+  /* Each answer updates the Connect step where it stands (the steps' marks, the part below them, the demo answers'
+     state), as onboarding's away setup morphs its own screen: the wizard's go() would draw the whole step again with its
+     step-change entrance, the pane back at its top and focus on the title, on every 900 ms answer (batch 11 lane A
+     recheck). Focus stays where it is; when the control holding it goes away (Start, Sign in, Try again), the step's own
+     next control takes it, else the steps list. A step not showing is drawn from the state when it is shown again. */
+  const tsHost = w => { const wrap = [...portalRoot().querySelectorAll('.drawer-wrap')].find(x => x._o55Wizard === w); return wrap && wrap.dataset.closing !== '1' && w.step() === w.draft.connectAt ? wrap.querySelector('.o55g-layer:not(.o55g-out) [data-ts-host]') : null; };
+  function tsPaint(w) {
+    const host = tsHost(w); if (!host) return;
+    const d = w.draft, T = d.ts, had = document.activeElement, fresh = document.createElement('div');
+    fresh.innerHTML = tsConnect(d);
+    const next = fresh.firstElementChild;
+    host.setAttribute('data-ts-state', T.state);
+    /* the steps: each row's mark, tone and status, in place */
+    const rows = [...host.querySelectorAll('[data-ts-steps] > .pm51-step')], want = [...next.querySelectorAll('[data-ts-steps] > .pm51-step')];
+    if (rows.length !== want.length) host.querySelector('[data-ts-steps]').replaceWith(next.querySelector('[data-ts-steps]'));
+    else rows.forEach((li, k) => {
+      const nw = want[k];
+      if (li.className !== nw.className) li.className = nw.className;
+      for (const sel of ['.pm51-step-n', '.pm51-step-end']) { const a0 = li.querySelector(sel), b0 = nw.querySelector(sel); if (a0 && b0 && a0.innerHTML !== b0.innerHTML) a0.innerHTML = b0.innerHTML; }
+    });
+    /* the part below the steps, only when what it says changed */
+    for (const part of ['[data-ts-body]', '[data-ts-foot]']) { const was = host.querySelector(part), now = next.querySelector(part); if (was && now && was.innerHTML !== now.innerHTML) was.innerHTML = now.innerHTML; }
+    /* the demo answers: the same buttons, shown while a step ahead can give them, pressed or not */
+    const demo = host.querySelector('[data-ts-demo]'), ndemo = next.querySelector('[data-ts-demo]');
+    if (demo && ndemo) {
+      demo.hidden = ndemo.hidden;
+      demo.querySelectorAll('[data-code]').forEach(b => { const nb = ndemo.querySelector(`[data-code="${b.dataset.code}"]`); if (!nb) return; b.hidden = nb.hidden; b.classList.toggle('is-on', nb.classList.contains('is-on')); b.setAttribute('aria-pressed', nb.getAttribute('aria-pressed')); });
+    }
+    if (had && had !== document.body && (!had.isConnected || had.closest('[hidden]'))) {
+      const to = host.querySelector('[data-ts-body] button:not([hidden])') || host.querySelector('[data-ts-steps]');
+      if (to) try { to.focus({ preventScroll: true }); } catch (_e) { to.focus(); }
+    }
+  }
   function tsConnect(d) {
     const T = d.ts, n = homeServer().name, plan = tsPlan(d), head = d.flavor === 'headscale' ? 'Headscale' : 'Tailscale';
     const rows = plan.map((st, i) => {
@@ -577,25 +609,21 @@
         status: failed ? 'Didn’t work' : here && T.state === 'waiting' ? 'Waiting for you' : here && T.state === 'running' ? 'In progress' : undefined };
     });
     const ident = PM51.kv([['Connection for', `${n}, the server, with its own private name`], ['Your other computers', 'The Puppet Master app on each signs in once there; nothing extra to install'], ['A browser tab', 'Can’t join: use Remote Link, or the Tailscale app on that device']]);
-    let out = `<div data-ts-state="${a(T.state)}">` + PM51.steps(rows) + '</div>';
-    if (T.state === 'done') {
-      out += PM51.panelSection(d.flavor === 'headscale' ? 'Registered' : 'Signed in', PM51.kv(d.flavor === 'headscale' ? [['Headscale', d.hsAddress], ['Private name', `${slugHost(n)}.headscale.internal · example`], ['Who can connect', 'Only devices your Headscale knows']] : [['Signed in as', 'you@example.com · example'], ['Private name', `${tailName()} · example`], ['Who can connect', 'Only your signed-in devices']]), '', { icon: 'network' })
-        + PM51.panelSection('Which installation is connected', ident, '', { icon: 'system' });
-      return out;
-    }
-    if (T.state === 'failed' && T.fail) {
-      out += PM51.note(TS_FAIL[T.fail.code].words(n), 'attention') + `<div class="pm51-perm-actions">${PM51.btn({ label: 'Try again', primary: true, icon: 'refresh', action: 'pm51-servers-ts-retry' })}</div>`;
-      return out;
-    }
-    if (!T.started) return out + PM51.note(d.flavor === 'headscale' ? `${n} asks your Headscale server to let it in. Nothing is set up until you press Start.` : `Built into Puppet Master: nothing extra to install. ${n} gets its own private connection; nothing is set up until you press Start.`, 'info')
+    const steps = PM51.steps(rows).replace('class="pm51-steps"', 'class="pm51-steps" data-ts-steps tabindex="-1"');
+    let body = '';
+    const st = plan[T.step];
+    if (T.state === 'done') body = PM51.panelSection(d.flavor === 'headscale' ? 'Registered' : 'Signed in', PM51.kv(d.flavor === 'headscale' ? [['Headscale', d.hsAddress], ['Private name', `${slugHost(n)}.headscale.internal · example`], ['Who can connect', 'Only devices your Headscale knows']] : [['Signed in as', 'you@example.com · example'], ['Private name', `${tailName()} · example`], ['Who can connect', 'Only your signed-in devices']]), '', { icon: 'network' })
+      + PM51.panelSection('Which installation is connected', ident, '', { icon: 'system' });
+    else if (T.state === 'failed' && T.fail) body = PM51.note(TS_FAIL[T.fail.code].words(n), 'attention') + `<div class="pm51-perm-actions">${PM51.btn({ label: 'Try again', primary: true, icon: 'refresh', action: 'pm51-servers-ts-retry' })}</div>`;
+    else if (!T.started) body = PM51.note(d.flavor === 'headscale' ? `${n} asks your Headscale server to let it in. Nothing is set up until you press Start.` : `Built into Puppet Master: nothing extra to install. ${n} gets its own private connection; nothing is set up until you press Start.`, 'info')
       + PM51.panelSection('Which installation signs in', ident, '', { icon: 'system' })
       + `<div class="pm51-perm-actions">${PM51.btn({ label: 'Start', primary: true, icon: 'link', action: 'pm51-servers-ts-start' })}</div>`;
-    const st = plan[T.step];
-    if (T.state === 'waiting' && st) out += PM51.note(st.wait, 'info') + `<div class="pm51-perm-actions">${PM51.btn({ label: st.button, primary: true, icon: st.person === 'tsSignIn' ? 'external' : 'check', action: 'pm51-servers-ts-person', data: { person: st.person } })}</div>`;
-    /* demo answers (O55 demo hints): the next step that can give one gives it, once */
-    const codes = [...new Set(plan.slice(T.step).flatMap(x => x.fail || []))];
-    if (codes.length) out += `<div class="pm51-servers-demo" role="group" aria-label="Try another answer"><span class="pm51-servers-demo-k">Try another answer:</span>${codes.map(c => `<button type="button" class="pm51-servers-demo-c${T.once === c ? ' is-on' : ''}" data-action="pm51-servers-ts-demo" data-code="${a(c)}" aria-pressed="${T.once === c ? 'true' : 'false'}">${h(TS_FAIL[c].hint)}</button>`).join('')}</div>`;
-    return out + `<p class="pm51-ps-help">${h(`${head} answers each step here. You can close this and finish it later under Away From Home.`)}</p>`;
+    else if (T.state === 'waiting' && st) body = PM51.note(st.wait, 'info') + `<div class="pm51-perm-actions">${PM51.btn({ label: st.button, primary: true, icon: st.person === 'tsSignIn' ? 'external' : 'check', action: 'pm51-servers-ts-person', data: { person: st.person } })}</div>`;
+    /* demo answers (O55 demo hints): every answer the plan can give is one button, shown while a step ahead can give it */
+    const all = [...new Set(plan.flatMap(x => x.fail || []))], ahead = new Set(T.started && !['done', 'failed'].includes(T.state) ? plan.slice(T.step).flatMap(x => x.fail || []) : []);
+    const demo = `<div class="pm51-servers-demo" data-ts-demo role="group" aria-label="Try another answer"${ahead.size ? '' : ' hidden'}><span class="pm51-servers-demo-k">Try another answer:</span>${all.map(c => `<button type="button" class="pm51-servers-demo-c${T.once === c ? ' is-on' : ''}" data-action="pm51-servers-ts-demo" data-code="${a(c)}" aria-pressed="${T.once === c ? 'true' : 'false'}"${ahead.has(c) ? '' : ' hidden'}>${h(TS_FAIL[c].hint)}</button>`).join('')}</div>`;
+    const foot = T.started && T.state !== 'done' ? `<p class="pm51-ps-help">${h(`${head} answers each step here. You can close this and finish it later under Away From Home.`)}</p>` : '';
+    return `<div data-ts-host data-ts-state="${a(T.state)}">${steps}<div data-ts-body>${body}</div>${demo}<div data-ts-foot>${foot}</div></div>`;
   }
   /* ---- Remote Link: the owner issues the link and the short code (opaque; nothing in either comes from the server) ---- */
   const opaque = n => { const A = 'abcdefghijkmnpqrstuvwxyz23456789'; let s = ''; const r = new Uint32Array(n); (window.crypto || {}).getRandomValues ? window.crypto.getRandomValues(r) : r.forEach((_, i) => { r[i] = Math.floor(Math.random() * 1e9); }); r.forEach(x => { s += A[x % A.length]; }); return s; };
@@ -648,9 +676,20 @@
       + (d.hosting === 'file'
         ? PM51.panelSection(`2. The settings file for ${d.proxy}`, copyBox(awayConfig(d), 'Proxy settings') + `<p class="pm51-ps-help">${h(CERT_NOTE)}</p>` + PM51.rows([{ label: `I’ve added it to ${d.proxy}`, help: 'Add the file to your proxy and reload it, then switch this on.', control: PM51.toggle(!!d.added, { action: 'pm51-servers-w-aflag', data: { key: 'added' }, label: `I’ve added it to ${d.proxy}` }) }]), '', { icon: 'file' })
         : PM51.panelSection('2. Your proxy', `<p class="pm51-ps-text">${h(`Your proxy already sends ${d.domain} to ${home.name}. Nothing is made for it; the next step checks that the address reaches ${home.name}, live updates included.`)}</p>`, '', { icon: 'file' }));
+    return `<div data-rl-host>${rlBody(d)}</div>`;
+  }
+  function rlBody(d) {
+    const home = homeServer();
     return d.link ? PM51.panelSection('Your link', copyBox(d.link, 'Remote Link') + (d.code ? copyBox(d.code, 'Short code') : '') + PM51.kv([['Made by', 'The Remote Link service · example'], ['Relay', d.relay ? 'Only when a direct connection is not possible' : 'Off'], ['Pairing', 'Each device that connects still asks you to approve it']]), 'On another device choose Connect this device, then paste the link or type the short code.', { icon: 'link' })
-      : d.linking ? PM51.steps([{ title: `${home.name} is asking the Remote Link service for its link`, tone: 'info', status: 'In progress' }])
-      : PM51.note(`${home.name} gets a link only your devices know. Nothing is opened on your router.`, 'info') + btn('Create link', 'pm51-servers-w-link', 'link');
+      : d.linking ? PM51.steps([{ title: `${home.name} is asking the Remote Link service for its link`, tone: 'info', status: 'In progress' }]).replace('class="pm51-steps"', 'class="pm51-steps" tabindex="-1"')
+      : PM51.note(`${home.name} gets a link only your devices know. Nothing is opened on your router.`, 'info') + `<div class="pm51-perm-actions">${PM51.btn({ label: 'Create link', primary: true, icon: 'link', action: 'pm51-servers-w-link' })}</div>`;
+  }
+  /* (the link's answer is written where the step stands, like the Tailscale steps: tsPaint) */
+  function rlPaint(w) {
+    const wrap = [...portalRoot().querySelectorAll('.drawer-wrap')].find(x => x._o55Wizard === w);
+    const host = wrap && wrap.dataset.closing !== '1' && w.step() === w.draft.connectAt ? wrap.querySelector('.o55g-layer:not(.o55g-out) [data-rl-host]') : null; if (!host) return;
+    const had = document.activeElement; host.innerHTML = rlBody(w.draft);
+    if (had && had !== document.body && !had.isConnected) { const to = host.querySelector('button') || host.querySelector('[tabindex]'); if (to) try { to.focus({ preventScroll: true }); } catch (_e) { to.focus(); } }
   }
   const awayConnectCheck = d => d.kind === 'tailscale' && !(d.ts && d.ts.state === 'done') ? (d.ts && d.ts.state === 'failed' ? 'That step didn’t work. Try again, or close this and finish it later.' : d.ts && d.ts.started ? 'Wait for the steps to finish.' : 'Press Start first.')
     : d.kind === 'remote-link' && !d.link ? 'Create the link first.' : d.kind === 'vpn' && !d.vpnOn ? 'Connect this device to the VPN first, then switch it on.'
@@ -1476,8 +1515,8 @@
   });
   PM51.on('servers-w-link', el => {
     const w = PM51.wizardOf(el); if (!w || w.draft.linking) return; const d = w.draft;
-    d.linking = true; w.go(w.step());
-    window.setTimeout(() => { if (!d.linking) return; Object.assign(d, issueRemoteLink(), { linking: false }); const wrap = [...portalRoot().querySelectorAll('.drawer-wrap')].find(x => x._o55Wizard === w); if (wrap && wrap.dataset.closing !== '1' && w.step() === d.connectAt) w.go(w.step()); }, TS_STEP_MS);
+    d.linking = true; rlPaint(w);
+    window.setTimeout(() => { if (!d.linking) return; Object.assign(d, issueRemoteLink(), { linking: false }); rlPaint(w); }, TS_STEP_MS);
   });
   PM51.on('servers-route-redo', el => { const r = routeById(ds(el, 'id')); if (!r) return; closeOverlay(); awayWizard(r.kind); });
   PM51.on('servers-route-remove', el => { const r = routeById(ds(el, 'id')); if (r) removeRoute(r); });

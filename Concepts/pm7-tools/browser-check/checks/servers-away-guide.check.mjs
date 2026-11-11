@@ -100,6 +100,41 @@ export const tests = {
 		await cont(f);
 		await t.check('then Check', /Does it work from here/.test(await title(f)), await title(f));
 	},
+	async '1.06: each answer updates the step where it stands: no redraw, no entrance replay, focus and scroll kept'(t) {
+		/* (batch 11 lane A recheck: every answer used to draw the whole step again with its step-change entrance, the pane
+		   back at its top and focus on the title; 1280x500 so the step scrolls) */
+		await t.viewport(1280, 500);
+		const f = await t.app.open({ settleMs: 1500 });
+		await f.locator('#tab-settings').click();
+		await f.waitForSelector('#pm-settings-root .domain-link[data-domain="system"]', { timeout: 15000 });
+		await f.evaluate(() => PM51.go('system', 'servers')); await sleep(f, 800);
+		await f.locator(`${BLOCK} [role="tab"][data-action="pm51-tab"][data-manager="servers"][data-tab="away"]`).first().click(); await sleep(f, 600);
+		await setUp(f, 'tailscale'); await cont(f);
+		await press(f, 'Start'); await untilTs(f, ['waiting']);
+		/* watch the step: its content node, outgoing copies and entrance replays, from here to the end of the run */
+		await f.evaluate((W) => {
+			const win = document.querySelector(W), pane = win.querySelector('.o55g-pane'), main = win.querySelector('.o55g-layer:not(.o55g-out) .o55g-main');
+			main.__tsMark = true; window.__tsWatch = { outs: 0, entrances: 0 };
+			window.__tsObs = new MutationObserver((ms) => { for (const m of ms) { if (m.type === 'childList') m.addedNodes.forEach((n) => { if (n.classList && n.classList.contains('o55g-out')) window.__tsWatch.outs++; }); if (m.type === 'attributes' && m.target === pane && pane.classList.contains('o55g-entering')) window.__tsWatch.entrances++; } });
+			window.__tsObs.observe(pane, { childList: true, attributes: true, attributeFilter: ['class'] });
+		}, WIN);
+		await press(f, 'Sign in to Tailscale');
+		await untilTs(f, ['running']);
+		const before = await f.evaluate((W) => { const layer = document.querySelector(`${W} .o55g-layer:not(.o55g-out)`); layer.scrollTop = layer.scrollHeight; const a = document.activeElement; a.__tsFocus = true; return { scroll: layer.scrollTop, max: layer.scrollHeight - layer.clientHeight, focus: a.tagName + '.' + a.className + (a.hasAttribute('data-ts-steps') ? '[steps]' : '') }; }, WIN);
+		const s = await untilTs(f, ['done']);
+		const after = await f.evaluate((W) => { const layer = document.querySelector(`${W} .o55g-layer:not(.o55g-out)`), main = document.querySelector(`${W} .o55g-layer:not(.o55g-out) .o55g-main`), a = document.activeElement; window.__tsObs.disconnect(); return { sameStep: !!(main && main.__tsMark), outs: window.__tsWatch.outs, entrances: window.__tsWatch.entrances, scroll: layer.scrollTop, sameFocus: !!a.__tsFocus, focus: a.tagName + '.' + a.className, title: a.classList.contains('o55g-title') }; }, WIN);
+		t.log(JSON.stringify({ before, after }));
+		await t.check('the run finished', s === 'done', s);
+		await t.check('the step was never drawn again: the same content, no outgoing copy, no entrance replay', after.sameStep && after.outs === 0 && after.entrances === 0, JSON.stringify(after));
+		await t.check('focus stayed where it was (never moved to the title)', after.sameFocus && !after.title, JSON.stringify({ before: before.focus, after: after.focus }));
+		await t.check('the pane kept its scroll (no jump to the top)', before.scroll > 0 && after.scroll >= before.scroll - 2, JSON.stringify({ before: before.scroll, after: after.scroll }));
+		/* a demo answer pressed keeps its button and its focus */
+		await closeAll(f); await setUp(f, 'tailscale'); await cont(f); await press(f, 'Start'); await untilTs(f, ['waiting']);
+		const chip = f.locator(`${WIN} .o55g-layer:not(.o55g-out) [data-action="pm51-servers-ts-demo"][data-code="denied"]`);
+		await chip.focus(); await chip.press('Enter'); await sleep(f, 300);
+		const kept = await f.evaluate((W) => { const a = document.activeElement; return { code: a.getAttribute('data-code'), pressed: a.getAttribute('aria-pressed') }; }, WIN);
+		await t.check('a demo answer pressed by keyboard keeps focus and shows it is chosen', kept.code === 'denied' && kept.pressed === 'true', JSON.stringify(kept));
+	},
 	async '1.06: a refused or expired sign-in goes back to a fresh sign-in; an approval failure asks again'(t) {
 		const f = await openAway(t);
 		for (const [hint, words] of [['Tailscale says no', /didn.t allow it/], ['Sign-in runs out', /ran out before it finished/]]) {
