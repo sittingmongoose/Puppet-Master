@@ -1190,6 +1190,7 @@
       const el = this.tipBox;
       /* (toggle with a force that matches leaves the attribute alone: remove() wrote `class` every frame, one mutation
          record a frame for the bubble's observer and its forced layout, and for every document-wide class observer; PERF-1) */
+      this.tipMoving = false;
       if (!el || !el.classList.contains('on') || this.layoutName !== 'portrait') { this.ps.liftT = 0; this.bubble.classList.toggle('pst-hush', false); return; }
       // it holds still while the pointer is on it, so its close button is easy to hit (once it has its place: a new note
       // that opens under a resting pointer was left at the stage's corner, past its edge in Friendly's tilt; tip_fit)
@@ -1212,6 +1213,8 @@
       const k = Math.min(1, (dt || .016) * 5); this.tipXY[0] += (goal[0] - this.tipXY[0]) * k; this.tipXY[1] += (goal[1] - this.tipXY[1]) * k;
       /* (and never past the stage's edges while it eases after Pip) */
       this.tipXY[1] = clamp(this.tipXY[1], top, Math.max(top, by - h - foot)); this.tipXY[0] = clamp(this.tipXY[0], 8, Math.max(8, bx - w - 8));
+      /* (still easing after Pip: a draw is due each frame until it is there, PERF-1) */
+      this.tipMoving = Math.abs(goal[0] - this.tipXY[0]) > .05 || Math.abs(goal[1] - this.tipXY[1]) > .05;
       const tf = `translate(${R(this.tipXY[0])}px, ${R(this.tipXY[1])}px)`, tx = R(clamp(p[0] - this.tipXY[0], 14, w - 14)) + 'px';
       if (el._tipTf !== tf) { el._tipTf = tf; el.style.transform = tf; }
       if (el._tipTx !== tx) { el._tipTx = tx; el.style.setProperty('--tx', tx); }
@@ -1293,6 +1296,8 @@
       /* (on a steady cadence: each draw is due one step after the last was due, so a frame that comes a little late
          does not push every later draw back; Retro Light then draws ten times a second, Retro Dark twenty) */
       if (fps && !this.reduced) { const step = 1 / fps; if (this.t - this.frameT < step - 0.006) return; this.frameT = this.t - this.frameT > 2 * step ? this.t : this.frameT + step; }
+      /* (and elsewhere only when a draw is due: the displacement gate, drawDue) */
+      else if (!this.still() && !this.dirty && !this.drawDue()) return;
       /* (a change is drawn only once a frame is: cleared before Retro's stepped gate, a still stage that skipped one never
          drew it, and a sign kept 1024's place at 860 after a resize) */
       this.dirty = false;
@@ -1432,10 +1437,7 @@
          that lands before it talks is already below it. Its observers keep it; it is read here only until it is first
          seen, before this frame's writes, so the read forces no layout; PERF-1) */
       if (f === 'nier' && !this.nierBox) { const nb = this.boxInScene(this.bubble, 6); if (nb) this.nierBox = nb; }
-      // mood: a transient feeling wins over the scene's own
-      if (this.moodOverride && this.t > this.moodUntil) this.moodOverride = null;
-      const base = (this.spec.pip && this.spec.pip.mood) || 'idle';
-      const mood = this.sleepZ ? 'sleep' : (this.moodOverride || base);
+      const mood = this.moodNow();
       this.renderHead(mood);
       this.animFace();
       let H = this.headAt(ps.C.x, ps.C.y, ps.th, ps.dy);
@@ -1460,32 +1462,12 @@
         const d = slack > 1 ? `M${R(e.T[0])} ${R(e.T[1])}Q${R((e.T[0] + e.E[0]) / 2 + (i ? 1 : -1) * slack * .25)} ${R((e.T[1] + e.E[1]) / 2 + slack * .55)} ${R(e.E[0])} ${R(e.E[1])}` : `M${R(e.T[0])} ${R(e.T[1])}L${R(e.E[0])} ${R(e.E[1])}`;
         sa(this.pstrs[i], 'd', d); sa(this.pglow[i], 'd', d);
       });
-      // where the eyes look: at the target prop, at an idle glance, or at the pointer
-      const pip = this.spec.pip || {};
-      let look = [0, 0];
-      const tgt = pip.look && this.props.get(pip.look);
       const hc = this.headCentre();
-      const atTarget = (p) => { const vx = p[0] - hc[0], vy = p[1] - hc[1], l = Math.hypot(vx, vy) || 1; return [vx / l * 2.2, vy / l * 1.5]; };
-      const tipP = this.tipLook > this.t && !this.reduced ? this.tipAt() : null;
-      if (tipP) look = atTarget(tipP);
-      else if (this.idleLook) look = this.idleLook;
-      else if (Array.isArray(pip.look)) look = pip.look;
-      else if (tgt && tgt.pos && this.t - (this.busyT || -9) < 2.5) look = atTarget(tgt.pos);
-      // the pointer, or where it was last seen (a pointer that leaves the window is not forgotten)
-      else if (!this.reduced && PIP.h.part('gaze') && this.box && pointer.t > 0) {
-        // the pointer, in stage units
-        const m = this.map || { k: 1, ox: 0, oy: 0 }, px = (pointer.x - this.box.left - m.ox) / m.k, py = (pointer.y - this.box.top - m.oy) / m.k;
-        const vx = px - hc[0], vy = py - hc[1], l = Math.hypot(vx, vy) || 1, k = Math.min(1, l / 120);
-        look = [vx / l * 2.3 * k, vy / l * 1.6 * k];
-      } else if (tgt && tgt.pos) look = atTarget(tgt.pos);
-      ps.lookT = look;
+      this.aimEyes();
       if (this.eyesEl) sa(this.eyesEl, 'transform', `translate(${R(ps.look[0])} ${R(ps.look[1])})`);
       // blink
-      if (this.blinkEl && !this.reduced && PIP.h.part('blinks')) {
-        if (this.t > ps.nextBlink) { ps.blinkAt = this.t; ps.nextBlink = this.t + 2.2 + Math.random() * 3.4; }
-        const b = ps.blinkAt != null ? this.t - ps.blinkAt : 9, k = b < .16 ? Math.max(.1, Math.abs(1 - b / .08)) : 1;
-        sa(this.blinkEl, 'transform', `translate(0 ${this.blinkY}) scale(1 ${R(k)}) translate(0 ${-this.blinkY})`);
-      }
+      const blink = this.blinkK();
+      if (this.blinkEl && !this.reduced && PIP.h.part('blinks')) sa(this.blinkEl, 'transform', `translate(0 ${this.blinkY}) scale(1 ${R(blink)}) translate(0 ${-this.blinkY})`);
       // props
       this.keepOff = f === 'nier' ? this.nierBox || null : this.bubbleKeepOff || null;
       this.pipKeep = this.pipHead(null, { H, ang, sx, sy });
@@ -1570,9 +1552,91 @@
       if (f !== 'nier') this.placeBubble(H, ang);
       this.tipH = H; this.tipAng = ang;
       if (this.tipBox) this.placeTip(H, ang, this.t - (this.tipLast || this.t)); this.tipLast = this.t;
-      // big swings can be heard
-      if (!this.reduced && this.t - (this.swT || 0) > .07) { this.swT = this.t; this.loopSnd('swing', clamp((Math.abs(ps.thv) - .25) / 1.6, 0, 1)); }
+      this.motionSounds();
+      /* (what this draw showed, for the displacement gate: drawDue) */
+      this.drawnPose = this.poseVec(); this.blinkDrawn = blink;
+    }
+    // what the face shows now: a transient feeling wins over the scene's own
+    moodNow() {
+      if (this.moodOverride && this.t > this.moodUntil) this.moodOverride = null;
+      const base = (this.spec.pip && this.spec.pip.mood) || 'idle';
+      return this.sleepZ ? 'sleep' : (this.moodOverride || base);
+    }
+    // the lid in a blink, 1 open; a blink starts when one is due, drawn or not
+    blinkK() {
+      const ps = this.ps;
+      if (!this.blinkEl || this.reduced || !PIP.h.part('blinks')) return 1;
+      if (this.t > ps.nextBlink) { ps.blinkAt = this.t; ps.nextBlink = this.t + 2.2 + Math.random() * 3.4; }
+      const b = ps.blinkAt != null ? this.t - ps.blinkAt : 9;
+      return b < .16 ? Math.max(.1, Math.abs(1 - b / .08)) : 1;
+    }
+    // where the eyes look: at the target prop, at an idle glance, or at the pointer (the eyes ease to it in step())
+    aimEyes() {
+      const ps = this.ps, pip = this.spec.pip || {};
+      let look = [0, 0];
+      const tgt = pip.look && this.props.get(pip.look);
+      const hc = this.headCentre();
+      const atTarget = (p) => { const vx = p[0] - hc[0], vy = p[1] - hc[1], l = Math.hypot(vx, vy) || 1; return [vx / l * 2.2, vy / l * 1.5]; };
+      const tipP = this.tipLook > this.t && !this.reduced ? this.tipAt() : null;
+      if (tipP) look = atTarget(tipP);
+      else if (this.idleLook) look = this.idleLook;
+      else if (Array.isArray(pip.look)) look = pip.look;
+      else if (tgt && tgt.pos && this.t - (this.busyT || -9) < 2.5) look = atTarget(tgt.pos);
+      // the pointer, or where it was last seen (a pointer that leaves the window is not forgotten)
+      else if (!this.reduced && PIP.h.part('gaze') && this.box && pointer.t > 0) {
+        // the pointer, in stage units
+        const m = this.map || { k: 1, ox: 0, oy: 0 }, px = (pointer.x - this.box.left - m.ox) / m.k, py = (pointer.y - this.box.top - m.oy) / m.k;
+        const vx = px - hc[0], vy = py - hc[1], l = Math.hypot(vx, vy) || 1, k = Math.min(1, l / 120);
+        look = [vx / l * 2.3 * k, vy / l * 1.6 * k];
+      } else if (tgt && tgt.pos) look = atTarget(tgt.pos);
+      ps.lookT = look;
+    }
+    // big swings can be heard, and sleep
+    motionSounds() {
+      if (!this.reduced && this.t - (this.swT || 0) > .07) { this.swT = this.t; this.loopSnd('swing', clamp((Math.abs(this.ps.thv) - .25) / 1.6, 0, 1)); }
       this.loopSnd('snore', this.sleepZ ? 1 : 0);
+    }
+    /* PERF-1 step 4, the displacement gate (Jared's card vm.pm7-perf--P1, answer A): Pip at rest is never still (the
+       hand's sway, breathing, NieR's bob), but it moves about 0.01 px a frame, and every draw cost a whole-document
+       layerization. A draw is due when something drawn has moved at least a tenth of a pixel since the last draw, or
+       when something must draw every frame while it lasts: particles, a change of face, a blink, a feeling ending,
+       Pip's sleeping z's, NieR's HUD flying in or its glitch, a note easing after Pip, a set block's strings lifting
+       away. What is drawn is the exact pose at today's precision: slow drift is sampled less often, never moved. */
+    drawDue() {
+      this.aimEyes(); this.motionSounds();
+      if (this.fx.length || this.faceOut || this.faceT0 != null || this.moodNow() !== this.curMood) return true;
+      if (this.blinkK() !== this.blinkDrawn) return true;
+      if (this.sleepZ && !this.reduced && this.famName !== 'nier' && this.t - (this.lastZ || 0) > .9) return true;
+      if (this.famName === 'nier' && this.hudBusy && this.hudBusy()) return true;
+      if (this.tipBox && this.tipMoving) return true;
+      for (const pr of this.props.values()) if (pr.spec.ground && pr.landed && this.t - pr.landT < .6) return true;
+      const v = this.poseVec(), d = this.drawnPose;
+      if (!d || d.length !== v.length) return true;
+      for (let i = 0; i < v.length; i++) if (!(Math.abs(v[i] - d[i]) < .1)) return true;
+      return false;
+    }
+    /* the drawn pose as screen pixels: the head's four corners (with its tilt, hop, breathing and squash, NieR's bob), the
+       control bar's ends (its rock), the eyes' offset, NieR's bracket breathing, and each prop's drawing corners where
+       placeProp hangs it (its pivot, length, swing, fit offset and scale), its opacity (a .0025 step counts) and squash */
+    poseVec() {
+      const ps = this.ps, Lay = this.L, k = (this.map && this.map.k) || 1, v = [];
+      let hd = this.headAt(ps.C.x, ps.C.y, ps.th, ps.dy), ang = ps.th * .9 + ps.tilt;
+      if (this.fam.bob && !this.reduced) { hd = [hd[0], hd[1] + Math.sin(this.t * 1.35) * this.fam.bob * Lay.s / 2.6]; ang += Math.sin(this.t * .9) * .025; }
+      const br = this.reduced || !PIP.h.part('idle-life') ? 0 : (this.fam.breathe || 0) * Math.sin(this.t * (this.sleepZ ? 1.5 : 2.2));
+      const sx = ps.sx * (1 - br * .4), sy = ps.sy * (1 + br);
+      for (const q of [[0, 0], [64, 0], [0, 62], [64, 62]]) { const p = this.headXf(q, hd, ang, sx, sy); v.push(p[0] * k, p[1] * k); }
+      for (const q of [[0, 0], [64, 29]]) { const p = this.ctlXf(q, ps.C, ps.phi); v.push(p[0] * k, p[1] * k); }
+      v.push(ps.look[0] * Lay.s * k, ps.look[1] * Lay.s * k);
+      if (this.famName === 'nier' && this.hudPulse) v.push(this.hudPulse() * k);
+      this.props.forEach((pr) => {
+        const tg = this.propTarget(pr), sc = tg.sc * (pr.scale / (pr.spec.scale || 1)), bb = pr.bb || [0, 0, 0, 0];
+        const tm = [pr.ties.reduce((m, t) => m + t[0], 0) / pr.ties.length, tg.tieY];
+        const hang = [pr.ax + Math.sin(pr.a) * Math.max(0, pr.len), Lay.anchorY + Math.cos(pr.a) * Math.max(0, pr.len)];
+        const f = this.fit(pr, hang, sc, tm), s2 = sc * f.f;
+        for (const [x, y] of [[bb[0], bb[1]], [bb[0] + bb[2], bb[1] + bb[3]]]) { const c = rot([(x - tm[0]) * s2, (y - tm[1]) * s2], pr.a); v.push((hang[0] + f.dx + c[0]) * k, (hang[1] + f.dy + c[1]) * k); }
+        v.push(pr.op * 40, (pr.sq || 0) * (pr.foot || 0) * s2 * k);
+      });
+      return v;
     }
     /* Speech follows the head. Reserve obstacles in that same frame through the head's whole small motion,
        rather than keeping a pixel edge as a head-relative offset: a wiggle then dragged that offset away from
