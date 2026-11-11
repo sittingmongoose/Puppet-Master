@@ -157,6 +157,13 @@ html[data-o55-nier="on"] .pmed-cz .pmed-art-syntax { background:
 .pmed-cz.pmed-pass :is(.pmt-cz-scrim > i, .pmt-cz-frame, .pmt-cz-dialog) { pointer-events: none; }
 /* prepared (kept between visits, clipped away), its parts take no pointers either (26-customize.css, the parked screen) */
 .pmed-cz.pmed-prepared :is(.pmt-cz-scrim > i, .pmt-cz-frame, .pmt-cz-dialog) { pointer-events: none; }
+/* and its parts draw nothing, as the terminal's parked screen does (26-customize.css): at opacity 0 under the clip the
+   sheet was still painted, about 370 display items (a sixth of the page's) that every re-layerize of the page walked
+   (one each time a composited hover transition starts or ends, 20-28 a second while Usage scrolls), with 3-16 layers
+   of its preview (the head's backdrop blur, the canvas, the thumbs). A forced re-layerize, RTX 3090, Basic Dark: Usage
+   2.7-3.05 -> 2.4 ms, Home 2.55 -> 2.27 ms. The dialog's own box stays visible for Liquid Glass, as on the terminal's
+   screen; the class's removal shows the parts in the click's frame, painted there (lane H, 2026-11-11). */
+.pmed-cz.pmed-prepared > :is(.pmt-cz-scrim, .pmt-cz-frame), .pmed-cz.pmed-prepared .pmt-cz-dialog > * { visibility: hidden; }
 /* Static scheme pictures keep their measured size while the browser skips
    drawing them below the scrollport. Their original contents appear before
    they enter view; no tile or effect is replaced by a placeholder. */
