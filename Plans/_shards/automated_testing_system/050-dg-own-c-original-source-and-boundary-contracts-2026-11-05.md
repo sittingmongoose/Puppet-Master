@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L7479-L7706
+Source lines: L7479-L7708
 
-Source SHA256: `a35b2430726e936bca5ca7807a12c92e9b85edc6af7b4fdec9bf5839e27cbc15`
+Source SHA256: `9b77b5d0e20ee2c988ef0ac07b923a239fcad4c2926ef6d3b51ccc9ba47f6300`
 
 ---
 
@@ -234,5 +234,7 @@ negative_constraints:
   or governance seal.
 - No full oracle PASS from schema, size or source-shaped component controls.
 ```
+
+Amended 2026-11-11 (DG-CF2, DL-045; newly authored TEST_ONLY selection for exactly goal_run.certified CF-06, CF-07, CF-08, CF-09 and P7): these five groups select `scripts/pm_goal_dg_cf2_oracles.py`, its coordinator world `scripts/pm_goal_dg_cf2_world.py`, native participants `scripts/pm_goal_dg_cf2_native.py` and readers `scripts/pm_goal_dg_cf2_consumer.py`, on the shared TEST_ONLY owner adapters of `Plans/goal_own_c_contracts/protocol.md` (Shared TEST_ONLY owner adapters). Registered test owners perform every modeled issuance from their own execution; Storage assigns sequences, times, transaction identifiers and seeds; each compact coordinator record, Event, first custody, full-value result, durable group, Standard receipt and capture origin, native Standard result and origin, and D01 update, head, lineage origin and current pointer is validated against its whole root in its original isolated realm. CF-06 runs F5a pre-append admission against the actual complete pre-append Storage source, F5b frame then CURRENT/manifest barriers, F5c original first custody for every member of the actual durable group (including an unrelated scope's member) and F5d EventPhase plus the held return, with exact same-operation retry, Storage dedupe of an equal retry, altered-retry conflict, replay-only refusal and a real child-process interruption matrix (fresh-process classification, refused re-entry). CF-07 publishes the native and D01 afterimages and compact Commit/Origin/Control in one Storage transaction, keeps current certification fenced until readback and Release, and classifies every cut passively without completing it. CF-08 acquires `owner.storage.certified_event.read_guard.v1` at each participant entry and final boundary and applies the Q3 supplement at every declared participant-method occurrence. CF-09 keeps retained metadata, full Event inspection, historical and current reads separate. P7 requires the fresh coordinator read_current tuple, the released guard, exact equality with the complete current generic prefix and a final fence after the last helper. Every negative starts from the valid path and changes one invariant with dependent copies coherent. The whole native current-source roots (OriginalCertificationSource, the current member of PublishedWorkflow, CertificationCandidateResult), CurrentGoalArgument and WholeProducerSource stay inputs composed by their own owners (CF-02/CF-03, S1, the Goal binding owners); this selection does not author them. native evidence stays NOT_RUN and is a separate claim; a planning PASS must never read as native proof.
 
 ContractRef: ContractName:Plans/goal_run_projection_reference_contracts/certified.md
