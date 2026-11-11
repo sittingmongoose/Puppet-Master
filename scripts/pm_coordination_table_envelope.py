@@ -31,6 +31,12 @@ def p_8(value, context):
 def p_9(value, context):
     return None if value['identity_recipe'] is True else 'identity_recipe'
 
+def p_10(value, context):
+    return None if value['envelope_occurred_at'] is True else 'envelope_occurred_at'
+
+def p_11(value, context):
+    return None if value['envelope_storage_time'] is True else 'envelope_storage_time'
+
 def envelope_case():
     table = g.GuardTable([
         g.Guard('unknown_event_type', g.Invariant('/unknown_event_type', 'the unknown event type observation holds'), 'unknown_event_type', p_0),
@@ -41,6 +47,8 @@ def envelope_case():
         g.Guard('redaction_profile', g.Invariant('/redaction_profile', 'the redaction profile observation holds'), 'redaction_profile', p_5),
         g.Guard('replay_only_not_appendable', g.Invariant('/replay_only_not_appendable', 'the replay only not appendable observation holds'), 'replay_only_not_appendable', p_6),
         g.Guard('replay_policy', g.Invariant('/replay_policy', 'the replay policy observation holds'), 'replay_policy', p_7),
+        g.Guard('envelope_occurred_at', g.Invariant('/envelope_occurred_at', 'the envelope occurred at observation holds'), 'envelope_occurred_at', p_10),
+        g.Guard('envelope_storage_time', g.Invariant('/envelope_storage_time', 'the envelope storage time observation holds'), 'envelope_storage_time', p_11),
         g.Guard('occurred_at_join', g.Invariant('/occurred_at_join', 'the occurred at join observation holds'), 'occurred_at_join', p_8),
         g.Guard('identity_recipe', g.Invariant('/identity_recipe', 'the identity recipe observation holds'), 'identity_recipe', p_9),
     ])
@@ -53,6 +61,8 @@ def envelope_case():
         table.require('redaction_profile', value)
         table.require('replay_only_not_appendable', value)
         table.require('replay_policy', value)
+        table.require('envelope_occurred_at', value)
+        table.require('envelope_storage_time', value)
         table.require('occurred_at_join', value)
         table.require('identity_recipe', value)
         return True

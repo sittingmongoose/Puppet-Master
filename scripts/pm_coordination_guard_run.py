@@ -202,6 +202,9 @@ class Witnesses:
         core["retired_generations"][0]["checkpoint_core"]["project_id"] = "project_other"
         core["retired_generations"][0]["checkpoint_core"]["publication_id"] = "publication-retired-only"
         self.add("projection_value", "checkpoint_retired_core_other_key", "retired core project", c.projection_value_failures("checkpoint", core))
+        stamped = copy.deepcopy(file_row)
+        stamped["observed_at_utc"] = "2026-09-25T24:00:00Z"
+        self.add("projection_value", "projection_timestamp", "hour 24", c.projection_value_failures("file_projection", stamped))
 
     def ledger(self):
         c = self.c
@@ -268,6 +271,8 @@ class Witnesses:
         check("replay_only_not_appendable", lambda r: r.update(replay_policy="projector_replay_only"))
         check("replay_policy", lambda r: r.update(replay_policy="append_once"))
         check("occurred_at_join", lambda r: r.update(occurred_at_utc="2026-01-02T03:04:05Z"))
+        check("envelope_occurred_at", lambda r: r.update(occurred_at_utc="2026-09-25T24:00:00Z"))
+        check("envelope_storage_time", lambda r: r.update(observed_at_utc="2026-09-25T04:00:00+00:00"))
         check("unknown_event_type", lambda r: r.update(event_type="coordination.not_a_family"))
         check("identity_recipe", lambda r: r.update(event_id="evt_coordination_" + "ab" * 32))
 

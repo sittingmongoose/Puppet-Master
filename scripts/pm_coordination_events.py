@@ -18,7 +18,6 @@ from __future__ import annotations
 
 import base64
 import copy
-import datetime as dt
 import hashlib
 import importlib.util
 import json
@@ -38,12 +37,19 @@ if str(ROOT / "scripts") not in sys.path:
 
 from pm_coordination_guard_bridge import gate_code, gate_items
 from pm_coordination_numbers import (
+    SEALED_TIMESTAMP_PROFILE,
+    TIMESTAMP_FIELDS,
     application_bounds_match,
+    coordination_timestamp,
     decimal_integer,
     epoch_token,
     integer_slot_code,
+    retained_override_refused,
+    retained_record_verifies,
     retained_retry_matches,
+    timestamp_accepted,
 )
+from pm_event_datetime import EVENT_RECORD, STORAGE_UTC_Z
 from pm_event_numbers import Refusal, current_append_policy
 PAYLOAD_PATH = "Plans/coordination_event_payloads.schema.json"
 PAYLOAD_SCHEMA_URI = "https://puppetmaster.local/schemas/coordination_event_payloads/1.0.0/coordination_event_payloads.schema.json"
@@ -311,17 +317,14 @@ def normalize_observed_path(worktree_root: str, observed: str) -> str | None:
 
 
 def valid_utc(value: Any) -> bool:
-    """CV-353 rule 5: an RFC 3339 UTC timestamp ending in Z that names a real calendar instant."""
-    if not isinstance(value, str):
-        return False
-    match = re.fullmatch(r"([0-9]{4})-([0-9]{2})-([0-9]{2})T([0-9]{2}):([0-9]{2}):([0-9]{2})(?:\.[0-9]{1,9})?Z", value)
-    if not match:
-        return False
-    try:
-        dt.datetime(*(int(part) for part in match.groups()))
-    except ValueError:
-        return False
-    return True
+    """CV-353 rule 5 via CV-1101 date_time, profile coordination_utc_z.
+
+    The owner schema pattern still requires uppercase T and at most nine
+    fraction digits. This predicate is what refuses a calendar, a leap second
+    on the wrong day, hour 24 and a trailing LF, and what accepts a real leap
+    second and year 0000. The spelling is not rewritten.
+    """
+    return coordination_timestamp(value)
 
 
 def static_payload_rejection(event_type: str, payload: dict[str, Any], root: Path = ROOT) -> str | None:
@@ -366,7 +369,7 @@ def schema_registry(root: Path = ROOT) -> Registry:
 
 @lru_cache(maxsize=64)
 def definition_validator(document_uri: str, definition: str, root: Path = ROOT) -> Draft202012Validator:
-    """Validator for one $defs entry; format is not asserted (calendar validity is valid_utc)."""
+    """Validator for one $defs entry. jsonschema format is not installed; valid_utc calls date_time."""
     schema = {"$schema": "https://json-schema.org/draft/2020-12/schema", "$ref": f"{document_uri}#/$defs/{definition}"}
     return Draft202012Validator(schema, registry=schema_registry(root))
 
@@ -646,14 +649,40 @@ def _gate_projection(items: list[str]) -> list[str]:
     return [item for item in items if item in proved_names or item in entailed_names]
 
 
+# Projection copies of CV-353 timestamps. Null is the withdrawn_at_utc absence, not a timestamp.
+PROJECTION_TIME_FIELDS = TIMESTAMP_FIELDS + (
+    "first_observed_at_utc",
+    "last_observed_at_utc",
+    "updated_at_utc",
+    "withdrawn_at_utc",
+    "published_at_utc",
+)
+
+
+def projection_timestamp_bad(value: Any) -> bool:
+    """True when a string at a projection timestamp field misses coordination_utc_z."""
+    if isinstance(value, dict):
+        for key, item in value.items():
+            if key in PROJECTION_TIME_FIELDS and type(item) is str and not coordination_timestamp(item):
+                return True
+            if isinstance(item, (dict, list)) and projection_timestamp_bad(item):
+                return True
+    elif isinstance(value, list):
+        return any(projection_timestamp_bad(item) for item in value)
+    return False
+
+
 def projection_value_failures(definition: str, value: Any, root: Path = ROOT) -> list[str]:
     if not projection_valid(definition, value, root):
         return _gate_projection(["schema"])
+    failures: list[str] = []
+    if projection_timestamp_bad(value):
+        failures.append("projection_timestamp")
     if definition == "checkpoint":
-        return _gate_projection(checkpoint_failures(value))
-    if definition == "file_projection" and value["path_hash"] != path_hash(value["path_ref"]):
-        return _gate_projection(["path_hash_recipe"])
-    return _gate_projection([])
+        failures.extend(checkpoint_failures(value))
+    elif definition == "file_projection" and value["path_hash"] != path_hash(value["path_ref"]):
+        failures.append("path_hash_recipe")
+    return _gate_projection(failures)
 
 
 # --- Admission ledger and the registry rows it prepares (DL-045, DL-077, DL-078) -----------------------------------
@@ -1350,6 +1379,11 @@ def envelope_rejection(record: dict[str, Any], storage_instance_id: str, recover
                 failed.append("replay_only_not_appendable")
         elif policy != "dedupe_by_idempotency_key":
             failed.append("replay_policy")
+        if not timestamp_accepted(record.get("occurred_at_utc"), EVENT_RECORD):
+            failed.append("envelope_occurred_at")
+        if any(not timestamp_accepted(record.get(field), STORAGE_UTC_Z)
+               for field in ("observed_at_utc", "persisted_at_utc")):
+            failed.append("envelope_storage_time")
         if record.get("occurred_at_utc") != body.get(FAMILY_TIME[event_type]):
             failed.append("occurred_at_join")
         epoch = key_recovery_epoch(body.get("idempotency_key", ""))
@@ -1573,6 +1607,153 @@ def ats_oracle_failures(fixtures: dict[str, Any] | None = None, *, root: Path = 
     return _gate("ats", [{"error": "ats_native_oracle_not_named", "detail": missing}] if missing else [])
 
 
+def timestamp_profile_failures(*, root: Path = ROOT) -> list[dict[str, Any]]:
+    """The 15 payload date-time fields, their projection copies, and the envelope times.
+
+    jsonschema does not enforce format. The owner pattern still refuses a
+    lowercase t, a lowercase z, an offset and more than nine fraction digits.
+    date_time is what decides the calendar, the leap second, hour 24 and a
+    trailing LF. coordination_utc_z is sealed; event_record is not selected
+    for these payload fields.
+    """
+    from pm_event_datetime import EVENT_RECORD as broad
+    from pm_event_datetime import date_time
+
+    failures: list[dict[str, Any]] = []
+
+    def fail(case_id: str, detail: Any) -> None:
+        failures.append({"error": "timestamp_profile", "case_id": case_id, "detail": detail})
+
+    schema = load(PAYLOAD_PATH, root)
+    found = []
+    for name, definition in schema.get("$defs", {}).items():
+        properties = definition.get("properties", {}) if isinstance(definition, dict) else {}
+        for field, node in properties.items():
+            if isinstance(node, dict) and node.get("format") == "date-time":
+                found.append((name, field, node))
+    expected = {
+        ("agent_registered", "started_at_utc"),
+        ("agent_status_updated", "observed_at_utc"),
+        ("agent_operation_updated", "observed_at_utc"),
+        ("agent_file_ownership_updated", "observed_at_utc"),
+        ("agent_unregistered", "finished_at_utc"),
+        ("agent_crashed", "detected_at_utc"),
+        ("agent_aborted", "aborted_at_utc"),
+        ("debug_mirror_exported", "exported_at_utc"),
+        ("agent_registeredApplicationV1", "started_at_utc"),
+        ("agent_status_updatedApplicationV1", "observed_at_utc"),
+        ("agent_operation_updatedApplicationV1", "observed_at_utc"),
+        ("agent_file_ownership_updatedApplicationV1", "observed_at_utc"),
+        ("agent_unregisteredApplicationV1", "finished_at_utc"),
+        ("agent_crashedApplicationV1", "detected_at_utc"),
+        ("agent_abortedApplicationV1", "aborted_at_utc"),
+    }
+    if {(name, field) for name, field, _node in found} != expected or SEALED_TIMESTAMP_PROFILE != "coordination_utc_z":
+        fail("census", sorted(name + "/" + field for name, field, _node in found))
+        return failures
+    accepts = (
+        "2016-12-31T23:59:60Z",
+        "0000-01-01T00:00:00Z",
+        "2026-09-25T04:10:00.123456789Z",
+    )
+    profile_refuses = (
+        "2026-02-30T04:10:00Z",
+        "2026-09-25T24:00:00Z",
+        "2026-09-25T04:10:00Z\n",
+        "2026-09-25T23:59:60Z",
+        "2026-09-25T04:60:00Z",
+    )
+    pattern_refuses_profile_accepts = (
+        "2026-09-25t04:10:00Z",
+        "2026-09-25T04:10:00.1234567890123Z",
+    )
+    pattern_and_profile_refuse = (
+        "2026-09-25T04:10:00+00:00",
+        "2026-09-25T04:10:00-00:00",
+        "2026-09-25T04:10:00z",
+    )
+    if date_time("2026-09-25T04:10:00+00:00", profile=broad) != "2026-09-25T04:10:00+00:00":
+        fail("broad-profile-offset", "event_record should admit a numeric offset")
+    if coordination_timestamp("2026-09-25T04:10:00+00:00"):
+        fail("coordination-profile-offset", "coordination_utc_z admitted an offset")
+
+    class _Subclass(str):
+        pass
+
+    fixtures = load(FIXTURE_PATH, root)
+    bases = {}
+    for case in fixtures["payloads"]:
+        bases.setdefault(case["event_type"], case["payload"])
+    for name, field, node in found:
+        checker = Draft202012Validator(node)
+        for value in accepts:
+            if not checker.is_valid(value) or not coordination_timestamp(value):
+                fail(f"{name}/{field}/accept/{value}", "pattern or profile refused an owner-valid form")
+        for value in profile_refuses:
+            if not checker.is_valid(value) or coordination_timestamp(value):
+                fail(f"{name}/{field}/profile-refuse/{value!r}", "pattern rejected it, or the profile accepted it")
+        for value in pattern_refuses_profile_accepts:
+            if checker.is_valid(value) or not coordination_timestamp(value):
+                fail(f"{name}/{field}/pattern-only/{value}", "owner pattern and profile disagreed with the recorded split")
+        for value in pattern_and_profile_refuse:
+            if checker.is_valid(value) or coordination_timestamp(value):
+                fail(f"{name}/{field}/both-refuse/{value}", "pattern or profile accepted a non-Z form")
+        event_type = next((item for item, definition in DEF_BY_TYPE.items() if definition == name), None)
+        if event_type is None:
+            continue
+        payload = bases[event_type]
+        time_field = FAMILY_TIME.get(event_type, field)
+        for value in accepts:
+            rejection = payload_rejection(event_type, dict(payload, **{time_field: value}), root)
+            if rejection is not None:
+                fail(f"payload/{event_type}/accept/{value}", rejection)
+        for value in profile_refuses:
+            rejection = payload_rejection(event_type, dict(payload, **{time_field: value}), root)
+            if rejection != "valid_utc_datetime":
+                fail(f"payload/{event_type}/refuse/{value!r}", rejection)
+        if payload_rejection(event_type, dict(payload, **{time_field: _Subclass(accepts[0])}), root) != "valid_utc_datetime":
+            fail(f"payload/{event_type}/subclass", "a str subclass must refuse as valid_utc_datetime")
+    record = next(case["record"] for case in fixtures["valid_events"] if case["event_type"] == "coordination.agent_registered")
+    context = fixtures["storage_context"]
+    store, epoch = context["storage_instance_id"], context["recovery_epoch"]
+    hour = dict(record, occurred_at_utc="2026-09-25T24:00:00Z")
+    if envelope_rejection(hour, store, epoch) != "envelope_occurred_at":
+        fail("envelope/hour-24", envelope_rejection(hour, store, epoch))
+    offset = dict(record, observed_at_utc="2026-09-25T04:00:00+00:00")
+    if envelope_rejection(offset, store, epoch) != "envelope_storage_time":
+        fail("envelope/offset", envelope_rejection(offset, store, epoch))
+    lowered = dict(record, persisted_at_utc="2026-09-25T04:00:00.200000z")
+    if envelope_rejection(lowered, store, epoch) != "envelope_storage_time":
+        fail("envelope/lowercase-z", envelope_rejection(lowered, store, epoch))
+    trailed = dict(record, persisted_at_utc="2026-09-25T04:00:00.200000Z\n")
+    if envelope_rejection(trailed, store, epoch) != "envelope_storage_time":
+        fail("envelope/trailing-lf", envelope_rejection(trailed, store, epoch))
+    leap = "2016-12-31T23:59:60Z"
+    leap_record = dict(record, occurred_at_utc=leap, payload=dict(record["payload"], started_at_utc=leap))
+    if envelope_rejection(leap_record, store, epoch) is not None:
+        fail("envelope/leap", envelope_rejection(leap_record, store, epoch))
+    file_row = next(case["value"] for case in fixtures["projection_values"] if case["definition"] == "file_projection")
+    if projection_value_failures("file_projection", dict(file_row, observed_at_utc="2026-09-25T24:00:00Z"), root) != ["projection_timestamp"]:
+        fail("projection/hour-24", projection_value_failures("file_projection", dict(file_row, observed_at_utc="2026-09-25T24:00:00Z"), root))
+    if projection_value_failures("file_projection", dict(file_row, observed_at_utc="2026-09-25T04:10:00Z\n"), root) != ["projection_timestamp"]:
+        fail("projection/trailing-lf", "trailing LF was not the projection timestamp row")
+    if projection_value_failures("file_projection", dict(file_row, observed_at_utc=leap), root):
+        fail("projection/leap", "a legitimate leap second was refused")
+    retained_good = json.dumps({"started_at_utc": leap, "date_time_profile": "event_record"}).encode()
+    retained_bad = json.dumps({"observed_at_utc": "2026-09-25T24:00:00Z", "date_time_profile": "event_record"}).encode()
+    if not retained_record_verifies(retained_good) or retained_record_verifies(retained_bad) or not retained_override_refused():
+        fail("retained-profile", {
+            "good": retained_record_verifies(retained_good),
+            "bad": retained_record_verifies(retained_bad),
+            "override": retained_override_refused(),
+        })
+    if not retained_retry_matches("coordination-sp320-string-array-v1", "ab" * 32, "ab" * 32):
+        fail("retained-retry", "exact digest retry no longer resolves")
+    if retained_retry_matches("forged-recipe", "ab" * 32, "ab" * 32):
+        fail("retained-forged", "a forged recipe id resolved")
+    return failures
+
+
 def validate(*, root: Path = ROOT) -> dict[str, Any]:
     """Run every static check; the report claims no admission and no native proof."""
     failures: list[dict[str, Any]] = []
@@ -1590,6 +1771,7 @@ def validate(*, root: Path = ROOT) -> dict[str, Any]:
         failures.extend(dict(failure, check=name) for failure in check(root=root))
     fixtures = fixture_report(root=root)
     failures.extend(dict(failure, check="fixtures") for failure in fixtures.pop("failures"))
+    failures.extend(dict(failure, check="timestamp_profile") for failure in timestamp_profile_failures(root=root))
     ledger = load(LEDGER_PATH, root)
     statuses = {row["event_type"]: row["admission_status"] for row in ledger["rows"]}
     return {

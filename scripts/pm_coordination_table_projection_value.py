@@ -34,9 +34,13 @@ def p_9(value, context):
 def p_10(value, context):
     return None if value['retired_checkpoint_range_or_cursor'] is True else 'retired_checkpoint_range_or_cursor'
 
+def p_11(value, context):
+    return None if value['projection_timestamp'] is True else 'projection_timestamp'
+
 def projection_value_case():
     table = g.GuardTable([
         g.Guard('schema', g.Invariant('/schema', 'the schema observation holds'), 'schema', p_0),
+        g.Guard('projection_timestamp', g.Invariant('/projection_timestamp', 'the projection timestamp observation holds'), 'projection_timestamp', p_11),
         g.Guard('path_hash_recipe', g.Invariant('/path_hash_recipe', 'the path hash recipe observation holds'), 'path_hash_recipe', p_1),
         g.Guard('checkpoint_scope_partition', g.Invariant('/checkpoint_scope_partition', 'the checkpoint scope partition observation holds'), 'checkpoint_scope_partition', p_2),
         g.Guard('checkpoint_token_storage_instance', g.Invariant('/checkpoint_token_storage_instance', 'the checkpoint token storage instance observation holds'), 'checkpoint_token_storage_instance', p_3),
@@ -50,6 +54,7 @@ def projection_value_case():
     ])
     def check(value):
         table.require('schema', value)
+        table.require('projection_timestamp', value)
         table.require('path_hash_recipe', value)
         table.require('checkpoint_scope_partition', value)
         table.require('checkpoint_token_storage_instance', value)
