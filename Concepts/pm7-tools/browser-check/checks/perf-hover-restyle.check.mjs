@@ -20,15 +20,15 @@
 import { muteSound } from '../helpers/quiet-page.mjs';
 import { LOOKS } from '../browser-check.config.mjs';
 
-// First runs, Windows 120 Hz, medians of 4 (main5.html = origin/main -> the change, lane J's j-3):
-//   Usage card to card   Basic 242 -> 95, Glass 245 -> 96, NieR 343 -> 70
-//   Files row to row     Basic 85 -> 87, Glass 173 -> 81, NieR 153 -> 137
-//   rail menu rows       Basic 77 -> 79, Glass 125 -> 73, NieR 90 -> 88
-//   title-bar control    Basic 75 -> 85, Glass 136 -> 67, NieR 114 -> 112
-//   press on a window button  Basic 26 -> 21, Glass 53 -> 53, NieR 127 -> 106
-//   tab switch, notification: no difference between the builds (guards: what each costs today, with room)
-// A bound sits above the change's worst look and below main's worst; a scenario where the builds match keeps a guard.
-const BOUND = { usage: 170, files: 150, rail: 108, titlebar: 124, tab: 400, notify: 300, press: 117 };
+// Ten looks x both surfaces, Windows 120 Hz, medians of 4, origin/main's page (main5) -> this branch (j-6):
+//   Usage card to card   main 216-297 in every cell -> 62-160                         bound 190 (bites in all 20)
+//   Files row to row     main 81-179 -> 78-150 (main over 160 in 7 cells)             bound 160 (bites in those)
+//   rail menu rows, title-bar control: 67-143 on both builds, the high and low values trading places between runs
+//   whatever the build (the hover light's own frames): guards at 180, not bites
+//   press on a window button 5-106 on both, tab switch 49-97, notification 69-90: guards
+// So the change is measured where whole subtrees are big (a Usage card's charts); rows, whose subtrees are small, move
+// little. A bound sits above the change's worst cell and below main's worst; where the builds match it is a guard.
+const BOUND = { usage: 190, files: 160, rail: 180, titlebar: 180, tab: 400, notify: 300, press: 150 };
 
 const CATS = ['devtools.timeline', 'disabled-by-default-devtools.timeline', 'blink.user_timing'].join(',');
 
@@ -186,10 +186,11 @@ export default async function (t) {
 				const [fam, mode] = look.split('-');
 				await f.evaluate(([a, b]) => window.O55.ui.applyLook(a, b), [fam, mode]).catch(() => {});
 				await t.page.waitForTimeout(2200);
-				const btn = await f.evaluate(() => {
+				// a look change can leave the window mid-transition: wait up to 5 s for a button that is on top
+				const btn = await f.waitForFunction(() => {
 					const b = [...document.querySelectorAll('#pm-o55-onboarding .o55-layer:not(.o55-out) .o55-btn')].find((e) => { const r = e.getBoundingClientRect(); return r.width > 30 && r.height > 20 && !e.hasAttribute('aria-disabled') && document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2)?.closest('.o55-btn') === e; });
 					if (!b) return null; const r = b.getBoundingClientRect(); return { x: Math.round(r.left + r.width / 2), y: Math.round(r.top + r.height / 2), w: r.width };
-				});
+				}, null, { timeout: 5000, polling: 200 }).then((h) => h.jsonValue(), () => null);
 				const off = await frameOffset(t, f);
 				let r = { name: 'press', judged: false, why: 'no button' };
 				if (btn) {
