@@ -24,14 +24,27 @@ const hideMinimap = (f) => f.addStyleTag({ content: '.pmw-ed-canvas { visibility
 /* how many lines the tallest value that sits beside its label takes (a stacked or long one has the plate's width) */
 const tallestBeside = (f) => f.evaluate(() => Math.max(0, ...Array.from(document.querySelectorAll('#pjxc .pjxc-facts:not([data-v3-stack]) > .pmu-fact:not([data-v3-long]) > .pmu-factv')).map((v) => Math.round(v.getBoundingClientRect().height / (parseFloat(getComputedStyle(v).lineHeight) || 19)))));
 
+/* This file is about v3. The kit is also run with ?split=v2 on the page (the other files then test v2): here that run
+   first shows the page did open on v2, then goes to v3 by the strip, so every check below holds in both runs. */
+const askedV2 = (t) => /[?&]split=v2\b/.test(String(t.args.page || ''));
+async function open(t) {
+	const f = await t.app.open(t);
+	if (!askedV2(t)) return f;
+	await t.equal('?split=v2: the page opened on v2', await f.evaluate(() => document.documentElement.getAttribute('data-pjx-read')), null);
+	await t.page.click('#opt button[data-read="v3"]');
+	await t.app.until(t, f, '?split=v2: the strip then shows v3', () => document.documentElement.getAttribute('data-pjx-read') === 'v3', null, 8000);
+	return f;
+}
+
 export const tests = {
 	async 'opens on v3, switches both ways, keeps what was open'(t) {
-		const f = await t.app.open(t);
+		const f = await open(t);
 		await f.evaluate(() => window.PJX.split.select('tastebook'));
 		await t.page.waitForTimeout(300);
 		let s = await state(f);
-		await t.equal('opens on v3 (attribute)', s.read, 'v3');
-		await t.equal('opens on v3 (strip)', await pressed(t), 'v3');
+		const how = askedV2(t) ? 'v3 by the strip' : 'opens on v3';
+		await t.equal(`${how} (attribute)`, s.read, 'v3');
+		await t.equal(`${how} (strip)`, await pressed(t), 'v3');
 		await t.equal('it is still concept C', s.mounted, 'c');
 		await t.equal('v3: a fact gives its cells to the plate’s grid', s.factDisplay, 'contents');
 		await t.check('v3: values are left-aligned', s.valAlign === 'left' || s.valAlign === 'start', s.valAlign);
@@ -102,7 +115,7 @@ export const tests = {
 		await t.equal('the strip shows v2', await pressed(t), 'v2');
 	},
 	async 'plates: values beside their labels, a dense plate stacked, a sentence under its label'(t) {
-		const f = await t.app.open(t);
+		const f = await open(t);
 		await f.evaluate(() => window.PJX.split.select('tastebook'));
 		await t.page.waitForTimeout(400);
 		// full width with the chat open: two columns of plates, each about 340 px
@@ -129,7 +142,7 @@ export const tests = {
 		await t.app.until(t, f, '640: one column of facts', () => { const g = document.querySelector('#pjxc .pjxc-facts'); return !!g && getComputedStyle(g).gridTemplateColumns.split(' ').length === 1; }, null, 10000);
 	},
 	async 'audit: every Project and New Project in v3'(t) {
-		const f = await t.app.open(t);
+		const f = await open(t);
 		await hideMinimap(f);
 		for (const id of ['tastebook', 'experiment', 'harbor', 'docs-site', 'recipe-app', 'garden-notes', 'photo-sorter', 'legacy-app']) {
 			await f.evaluate((i) => window.PJX.split.select(i), id);
@@ -146,7 +159,7 @@ export const tests = {
 		}
 	},
 	async 'audit: narrower windows and the dialogs in v3'(t) {
-		const f = await t.app.open(t);
+		const f = await open(t);
 		await hideMinimap(f);
 		for (const m of ['fromchat', 'chatmove', 'agent', 'work']) {
 			await t.app.moment(t, m);
@@ -164,7 +177,7 @@ export const tests = {
 	/* the 2026-11-10 fix pass's parts (SPEC-split-v3 R9): Where work runs' rows, the sync paused on a clash, and the
 	   dialogs Split opens. In v3 they follow the page; in v2 they are as the fix pass made them. */
 	async 'fix-pass parts: work rows, the paused sync and Split’s dialogs in v3, and unchanged in v2'(t) {
-		const f = await t.app.open(t);
+		const f = await open(t);
 		await hideMinimap(f);
 		const rows = () => f.evaluate(() => {
 			const cs = (s) => { const e = document.querySelector(s); return e ? getComputedStyle(e) : null; };
