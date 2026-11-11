@@ -20,7 +20,6 @@ import struct
 import blake3
 from functools import lru_cache
 from pathlib import Path
-from datetime import datetime
 from jsonschema import Draft202012Validator
 from referencing import Resource
 from referencing.jsonschema import DRAFT202012
@@ -217,7 +216,8 @@ def real_admission(family, registry=None):
     return 'registered_requires_independent_depth' if tables.refused('membership', {'registered_matches': matches}) else 'missing_event_registration'
 
 def instant(value):
-    return datetime.fromisoformat(value.upper().replace('Z','+00:00'))
+    """Comparable order key of one EventRecord-profile timestamp (CV-1101)."""
+    return schema_graph.instant_key(value)
 
 def decode_original(raw, codec):
     """Decode one original body with the codec its write-time edition selected.
@@ -544,6 +544,8 @@ def materialization_failures(family, candidate, bank):
     refused = tables.codes('mat_integer_slots', facts)
     if refused: return refused
     source,event,custody=(candidate[k] for k in ('source','event','custody'))
+    refused = schema_graph.storage_timestamp_codes(event)
+    if refused: return refused
     refused = tables.codes('mat_numbers', {'bank_epoch_type': type(bank['writer_epoch']).__name__})
     if refused: return refused
     refused = tables.codes('mat_replay', {'replay_policy': event['replay_policy']})
@@ -681,6 +683,8 @@ def issued_failures(family, value, expected, bank):
             registry=validator('materialization')._registry, format_checker=schema_graph.format_checker())
         refused = tables.codes('issued_schema', schema_facts(selected, value[key]))
         if refused: return refused
+    refused = schema_graph.storage_timestamp_codes(event)
+    if refused: return refused
     payload, payload_errors = event_payload(family, event, bank)
     if payload_errors: return payload_errors
     _, selected = context(family)
@@ -1040,6 +1044,14 @@ def check(families=FAMILIES, pack=None):
             expected={k:case['candidate'][k] for k in ('event','custody')}
             for stored in ('issued','retained_boundary'):
                 found += issued_failures(family,case['bank'][stored].get(expected['event']['event_id']),expected,case['bank'])
+            # CV-1101 storage_utc_z: these former grammar positives put a numeric
+            # offset or a lowercase z on observed_at_utc. EventRecord still
+            # accepts that string; the storage profile refuses it.
+            if case['id'].endswith(('.format.offset', '.format.lowercase')):
+                if found != ['date_time_storage', 'date_time_storage', 'date_time_storage']:
+                    failures.append(case['id']+':storage_profile:'+','.join(found))
+                counts[family]['negative']+=1
+                continue
             if found:failures.append(case['id']+':'+','.join(found))
             counts[family]['positive']+=1
         base=row['positive'][0]

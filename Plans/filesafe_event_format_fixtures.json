@@ -35,92 +35,119 @@
     {
       "id": "date_time.missing_zone",
       "value": "2026-02-01T10:00:00",
-      "accepted": false
+      "accepted": false,
+      "reason": "date_time_syntax"
     },
     {
       "id": "date_time.space_separator",
       "value": "2026-02-01 10:00:00Z",
-      "accepted": false
+      "accepted": false,
+      "reason": "date_time_syntax"
     },
     {
       "id": "date_time.wrong_separator",
       "value": "2026/02/01T10:00:00Z",
-      "accepted": false
+      "accepted": false,
+      "reason": "date_time_syntax"
     },
     {
       "id": "date_time.invalid_month",
       "value": "2026-13-01T10:00:00Z",
-      "accepted": false
+      "accepted": false,
+      "reason": "date_time_month"
     },
     {
       "id": "date_time.invalid_day",
       "value": "2026-02-30T10:00:00Z",
-      "accepted": false
+      "accepted": false,
+      "reason": "date_time_day"
     },
     {
       "id": "date_time.non_leap_day",
       "value": "2025-02-29T10:00:00Z",
-      "accepted": false
+      "accepted": false,
+      "reason": "date_time_day"
     },
     {
       "id": "date_time.hour_24",
       "value": "2026-02-01T24:00:00Z",
-      "accepted": false
+      "accepted": false,
+      "reason": "date_time_hour"
     },
     {
       "id": "date_time.invalid_minute",
       "value": "2026-02-01T10:60:00Z",
-      "accepted": false
+      "accepted": false,
+      "reason": "date_time_minute"
     },
     {
       "id": "date_time.leap_second",
       "value": "2026-06-30T23:59:60Z",
-      "accepted": false
+      "accepted": false,
+      "reason": "date_time_leap_second"
     },
     {
       "id": "date_time.empty_fraction",
       "value": "2026-02-01T10:00:00.Z",
-      "accepted": false
+      "accepted": false,
+      "reason": "date_time_syntax"
     },
     {
       "id": "date_time.comma_fraction",
       "value": "2026-02-01T10:00:00,1Z",
-      "accepted": false
+      "accepted": false,
+      "reason": "date_time_syntax"
     },
     {
       "id": "date_time.invalid_offset_hour",
       "value": "2026-02-01T10:00:00+24:00",
-      "accepted": false
+      "accepted": false,
+      "reason": "date_time_offset_hour"
     },
     {
       "id": "date_time.invalid_offset_minute",
       "value": "2026-02-01T10:00:00+01:60",
-      "accepted": false
+      "accepted": false,
+      "reason": "date_time_offset_minute"
     },
     {
       "id": "date_time.trailing_lf",
       "value": "2026-02-01T10:00:00Z\n",
-      "accepted": false
+      "accepted": false,
+      "reason": "date_time_syntax"
     },
     {
       "id": "date_time.leading_space",
       "value": " 2026-02-01T10:00:00Z",
-      "accepted": false
+      "accepted": false,
+      "reason": "date_time_syntax"
     },
     {
       "id": "date_time.missing_seconds",
       "value": "2026-02-01T10:00Z",
-      "accepted": false
+      "accepted": false,
+      "reason": "date_time_syntax"
     },
     {
       "id": "date_time.unicode_digits",
       "value": "\uff12\uff10\uff12\uff16-02-01T10:00:00Z",
-      "accepted": false
+      "accepted": false,
+      "reason": "date_time_syntax"
     },
     {
       "id": "date_time.year_zero",
       "value": "0000-02-01T10:00:00Z",
-      "accepted": false
+      "accepted": true
+    },
+    {
+      "id": "date_time.real_leap_second",
+      "value": "2016-12-31T23:59:60Z",
+      "accepted": true
+    },
+    {
+      "id": "date_time.offset_leap_second",
+      "value": "2017-01-01T00:59:60+01:00",
+      "accepted": true
     }
   ]
 }

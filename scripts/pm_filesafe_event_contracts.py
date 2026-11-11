@@ -8,15 +8,12 @@ from pathlib import Path
 import base64
 import copy
 import hashlib
-from datetime import datetime, timedelta, timezone
 import json
 from jsonschema import Draft202012Validator
 import pm_filesafe_schema_graph as schema_graph
 import pm_filesafe_tables as tables
 from pm_event_numbers import Refusal, qualified_jcs
 ROOT = Path(__file__).resolve().parents[1]
-EPOCH = datetime(1970, 1, 1, tzinfo=timezone.utc)
-MICROSECOND = timedelta(microseconds=1)
 
 
 def partition(scope):
@@ -34,9 +31,8 @@ def identity(event_type, payload):
 
 
 def instant_us(value):
-    """Exact UTC microseconds of an RFC 3339 instant (observation for window rows)."""
-    moment = datetime.fromisoformat(value.upper().replace('Z', '+00:00'))
-    return (moment - EPOCH) // MICROSECOND
+    """Order key of one EventRecord-profile timestamp (observation for window rows)."""
+    return schema_graph.instant_key(value)
 
 
 def override_scope_semantic(grant, payload):

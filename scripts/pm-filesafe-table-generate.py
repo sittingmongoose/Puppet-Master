@@ -31,13 +31,11 @@ def P(phase, title, rows):
 
 SPEC = [
     # ---------------------------------------------------------------- schema graph
-    P('date_time_grammar', 'Selected date-time format: full-string RFC 3339 grammar (interim; CV-1101 is part 2B)', [
-        R('DT01_grammar', '/match', 'the whole string matches the selected date-time grammar', 'date_time_grammar', "value['match'] is not True"),
+    P('date_time_event_record', 'CV-1101 date_time with the EventRecord profile at every schema format: date-time', [
+        R('DT01_event_record', '/reason', 'pm_event_datetime.date_time accepts the string under the EventRecord profile', 'date_time_event_record', "value['reason'] is not None"),
     ]),
-    P('date_time_fields', 'Selected date-time format: calendar and offset ranges (interim; CV-1101 is part 2B)', [
-        R('DT02_calendar', '/calendar_valid', 'year, month, day, hour, minute and second form a real calendar instant (no leap second)', 'date_time_calendar', "value['calendar_valid'] is not True"),
-        R('DT03_offset_hour', '/offset_hour', 'a numeric offset hour is at most 23', 'date_time_offset_hour', "value['offset_hour'] is not None and value['offset_hour'] > 23"),
-        R('DT04_offset_minute', '/offset_minute', 'a numeric offset minute is at most 59', 'date_time_offset_minute', "value['offset_minute'] is not None and value['offset_minute'] > 59"),
+    P('date_time_storage', 'CV-253 date_time with the storage_utc_z profile on observed_at_utc and persisted_at_utc', [
+        R('DT02_storage', '/reason', 'pm_event_datetime.date_time accepts the string under the storage_utc_z profile', 'date_time_storage', "value['reason'] is not None"),
     ]),
     P('schema_references', 'Eager schema reference closure over every selected resource', [
         R('SR01_resolved', '/unresolved', 'every $ref and $dynamicRef in every selected resource resolves offline', 'unresolved_schema_ref', "len(value['unresolved']) != 0"),

@@ -1,8 +1,8 @@
 """Static Card 2 Project retention oracles; native deletion/holds remain NOT_RUN."""
-from datetime import datetime, timedelta, timezone
 import json
 from pathlib import Path
 
+import pm_filesafe_schema_graph as schema_graph
 import pm_filesafe_tables as tables
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -20,12 +20,13 @@ def load(path):
     return json.loads((ROOT / path).read_text())
 
 
-MICROSECOND = timedelta(microseconds=1)
-EPOCH = datetime(1970, 1, 1, tzinfo=timezone.utc)
-
-
 def instant_us(value):
-    return (datetime.fromisoformat(value.replace('Z', '+00:00')) - EPOCH) // MICROSECOND
+    return schema_graph.instant_key(value)
+
+
+def _plus_seconds(value, seconds):
+    base = instant_us(value)
+    return (base[0] + seconds * 1_000_000, *base[1:])
 
 
 def binding_failures(family, graph):
@@ -77,8 +78,7 @@ def outcome(case, policy):
         'retain_indefinitely': policy['retain_indefinitely'], 'protection_refs': case['protection_refs']})
     if decided is not None:
         return decided
-    expiry = (datetime.fromisoformat(case['original_saved_at_utc'].replace('Z', '+00:00'))
-              + timedelta(seconds=policy['ttl_seconds']) - EPOCH) // MICROSECOND
+    expiry = _plus_seconds(case['original_saved_at_utc'], policy['ttl_seconds'])
     return tables.first('retention_compact_age', {'now_us': instant_us(case['now_utc']), 'expiry_us': expiry}) or 'compact_expired'
 
 
@@ -98,8 +98,7 @@ def run_year_outcome(case, policy):
         'protection_refs': case['protection_refs'], 'run_completed_present': case['run_completed_at_utc'] is not None})
     if decided is not None:
         return decided
-    expiry = (datetime.fromisoformat(case['run_completed_at_utc'].replace('Z', '+00:00'))
-              + timedelta(seconds=policy['ttl_seconds']) - EPOCH) // MICROSECOND
+    expiry = _plus_seconds(case['run_completed_at_utc'], policy['ttl_seconds'])
     return tables.first('runyear_compact_age', {'now_us': instant_us(case['now_utc']), 'expiry_us': expiry}) or 'compact_expired'
 
 

@@ -90,6 +90,10 @@ def witnesses(families=None):
                             lambda f=family, p=policy: A.retention_binding_failures(f, p)))
         out.append((f'{family}/membership', family, 'control', lambda f=family: A.real_admission(f)))
         for case in row['positive']:
+            if case['id'].endswith(('.format.offset', '.format.lowercase')):
+                out.append((f'{family}/storage_profile/{case["id"]}', family, 'negative',
+                            lambda case=case, f=family: A.materialization_failures(f, case['candidate'], case['bank'])))
+                continue
             def positive(case=case, f=family):
                 found = A.materialization_failures(f, case['candidate'], case['bank'])
                 expected = {k: case['candidate'][k] for k in ('event', 'custody')}
@@ -136,7 +140,45 @@ def witnesses(families=None):
     fmt = json.loads((ROOT / 'Plans/filesafe_event_format_fixtures.json').read_text())
     for case in fmt['cases']:
         out.append(('shared/format/' + case['id'], 'shared', 'negative' if not case['accepted'] else 'control',
-                    lambda case=case: SG.date_time(case['value'])))
+                    lambda case=case: SG.format_errors(case['value'])))
+
+    class _StrSub(str):
+        pass
+    out.append(('shared/format/str_subclass', 'shared', 'negative',
+                lambda: SG.format_errors(_StrSub('2026-02-01T10:00:00Z'))))
+
+    if families is None or 'filesafe.command_denied' in families:
+        denied = next(row for row in pack['families'] if row['event_type'] == 'filesafe.command_denied')
+
+        def stamped(field, value, denied=denied):
+            base = denied['positive'][0]
+            candidate, bank = copy.deepcopy((base['candidate'], base['bank']))
+            eid = candidate['event']['event_id']
+            copies = [candidate, bank['issued'][eid]]
+            boundary = (bank.get('retained_boundary') or {}).get(eid)
+            if isinstance(boundary, dict) and 'event' in boundary:
+                copies.append(boundary)
+            for item in copies:
+                item['event'][field] = value
+                item['custody']['original_event_value_commitment']['sha256'] = A.full_commitment(item['event'])
+            return candidate, bank
+
+        def storage_witness(field, value, retained, stamped=stamped):
+            candidate, bank = stamped(field, value)
+            found = A.materialization_failures('filesafe.command_denied', candidate, bank)
+            if retained:
+                expected = {k: candidate[k] for k in ('event', 'custody')}
+                found = found + A.retained_failures('filesafe.command_denied', candidate['event']['event_id'], expected, bank)
+            return found
+
+        for name, field, value, kind in (
+                ('storage_leap', 'observed_at_utc', '2016-12-31T23:59:60Z', 'control'),
+                ('storage_year0', 'persisted_at_utc', '0000-01-01T00:00:00Z', 'control'),
+                ('storage_offset', 'observed_at_utc', '2026-11-04T12:00:01+00:00', 'negative'),
+                ('storage_lower_z', 'persisted_at_utc', '2026-11-04T12:00:02z', 'negative')):
+            out.append((f'shared/storage/{name}', 'filesafe.command_denied', kind,
+                        lambda field=field, value=value, kind=kind, storage_witness=storage_witness:
+                        storage_witness(field, value, kind == 'negative')))
     out.append(('shared/fixture_census', 'shared', 'control',
                 lambda: A.check(families=(), pack={'families': [{'event_type': f} for f in A.FAMILIES]})['failures']))
     import pm_filesafe_p2a_cases as p2a
