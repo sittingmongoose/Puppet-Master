@@ -90,8 +90,8 @@ for (const surface of ['normal', 'sandbox']) {
 				const by = e.getAttribute('aria-labelledby');
 				if (by) return by.split(/\s+/).map((id) => { const n = document.getElementById(id); return n ? txt(n) : ''; }).join(' ').trim();
 				const al = e.getAttribute('aria-label'); if (al && al.trim()) return al.trim();
-				if (e.id && /^(INPUT|TEXTAREA|SELECT)$/.test(e.tagName)) { const l = document.querySelector(`label[for="${CSS.escape(e.id)}"]`); if (l) return txt(l); }
-				const wrap = /^(INPUT|TEXTAREA|SELECT)$/.test(e.tagName) && e.closest('label'); if (wrap) return txt(wrap);
+				// The native association includes label[for] and enclosing labels, including buttons and multiple labels.
+				if (e.labels && e.labels.length) return [...e.labels].map(txt).join(' ');
 				if (e.matches('input[type="button"], input[type="submit"], input[type="reset"]')) return e.value;
 				if (e.matches('input[type="image"]') && e.alt) return e.alt;
 				if (e.matches('a[href], button, [role="button"], [role="radio"], [role="checkbox"], [role="switch"]') && txt(e)) return txt(e);
