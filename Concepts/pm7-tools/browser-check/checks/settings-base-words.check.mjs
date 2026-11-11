@@ -122,7 +122,7 @@ for (const surface of ['normal', 'sandbox']) {
 				}
 			}
 			return { where, roots: roots.length, hits: [...new Set(hits)], pickers };
-		}, [where, 'Available in|Where it is available|Where it\'s available|Use it in|Use it for|Where it is saved|Save new personas for|This project only|All my projects|All your projects', only]);
+		}, [where, 'Available in|Where it is available|Where it\'s available|Use it in|Use it for|Where it is saved|This project only|All my projects|All your projects', only]);
 		const judge = async (r, wantPicker) => {
 			await t.check(`Commands › ${r.where}: no retired or mixed scope words`, r.roots > 0 && r.hits.length === 0, r.roots ? r.hits.join(' | ') : 'nothing open');
 			if (wantPicker) await t.check(`Commands › ${r.where}: the scope picker is named “Where it’s available”`, r.pickers.length > 0 && r.pickers.every((x) => x.name === 'Where it’s available' && (!x.trigger || x.trigger === 'Where it’s available')), JSON.stringify(r.pickers));
@@ -146,14 +146,54 @@ for (const surface of ['normal', 'sandbox']) {
 			// Start: the first example; Write: give it a name nobody has; then How it runs
 			await f.waitForSelector('.o55g-primary', { timeout: 8000 });
 			await f.evaluate(() => { const tile = [...document.querySelectorAll('[data-action="pm51-commands-example"]')].find((x) => x.getClientRects().length); if (tile) tile.click(); });
-			await f.locator('.o55g-primary').first().click();
-			await f.waitForSelector('.o55-cmd-name', { timeout: 8000 });
+			// a card picks and may move on by itself: press Continue only while the Start step still shows
+			const shown = (sel) => f.evaluate((sel) => [...document.querySelectorAll(sel)].some((x) => x.getClientRects().length), sel);
+			await t.page.waitForTimeout(700);
+			if (!(await shown('.o55-cmd-name'))) await f.locator('.o55g-primary').first().click();
+			await f.waitForFunction(() => [...document.querySelectorAll('.o55-cmd-name')].some((x) => x.getClientRects().length), null, { timeout: 8000 });
 			await f.evaluate(() => { const set = (sel, v) => { const e = document.querySelector(sel); if (e) { e.value = v; e.dispatchEvent(new Event('input', { bubbles: true })); } }; const val = (sel) => (document.querySelector(sel) || {}).value; set('.o55-cmd-name', 'fo131-check'); if (!val('.o55-cmd-desc')) set('.o55-cmd-desc', 'A check'); if (!val('.o55-cmd-text')) set('.o55-cmd-text', 'Hello'); });
-			await f.locator('.o55g-primary').first().click();
-			const step = await f.waitForSelector('select.o55-cmd-scope', { state: 'attached', timeout: 8000 }).then(() => true).catch(() => false);
-			if (await t.check('Commands › New command reaches “How it runs”', step)) await judge(await scan('the set-up’s How it runs step'), true);
+			await f.locator('.o55g-primary').first().click();   // Write → How it runs, once
+			const step = await f.waitForFunction(() => [...document.querySelectorAll('select.o55-cmd-scope')].some((x) => x.parentElement && x.parentElement.getClientRects().length), null, { timeout: 8000 }).then(() => true).catch(() => false);
+			if (await t.check('Commands › New command reaches “How it runs”', step)) {
+				// the step cross-fades in: read again until its picker is inside an open sheet (up to 4 s)
+				let r = await scan('the set-up’s How it runs step');
+				for (let k = 0; k < 20 && !r.pickers.length; k++) { await t.page.waitForTimeout(200); r = await scan('the set-up’s How it runs step'); }
+				if (!r.pickers.length) r.pickers = [{ diag: await f.evaluate(() => [...document.querySelectorAll('select.o55-cmd-scope')].map((x) => { const anc = []; for (let e = x.parentElement; e && anc.length < 8; e = e.parentElement) anc.push((e.tagName + '.' + String(e.className).split(' ').slice(0, 2).join('.')).slice(0, 40)); return { vis: x.getClientRects().length, opts: [...x.options].map((o) => o.textContent.trim()), anc }; })) }];
+				await judge(r, true);
+			}
 			for (let k = 0; k < 3; k++) { await t.page.keyboard.press('Escape'); await t.page.waitForTimeout(250); }
 		}
+		// P's rule on the recheck's four notes: the persona scope is a setting row and keeps its inventory label; the
+		// Permissions summary row is a value, "Where it applies"; the Details panel says a global value applies
+		// "Everywhere, …". (Skills' review lead is wording inside the add-skill wizard, read in code review.)
+		for (let k = 0; k < 3; k++) { await t.page.keyboard.press('Escape'); await t.page.waitForTimeout(200); }
+		const plabel = await f.evaluate(() => PM51.rowLabel(PM51.setting('personas.library.custom-scope')));
+		await t.check('Personas › the persona scope row keeps its label “Save new personas for”', plabel === 'Save new personas for', plabel);
+		await go(t, f, 'safety', 'permissions');
+		const perm = await f.evaluate(() => { const b = document.querySelector('[data-continuous-workspace-body="permissions"]'); const labs = b ? [...b.querySelectorAll('.pm51-row-label')].filter((x) => x.getClientRects().length).map((x) => x.textContent.trim()) : []; return { where: labs.includes('Where it applies'), applies: labs.includes('Applies') }; });
+		await t.check('Safety › Permissions › In short: “Where it applies”, not “Applies”', perm.where && !perm.applies, JSON.stringify(perm));
+		const ins = await f.evaluate(async () => {
+			const ref = window.PM12_REFERENCE, ids = [];
+			if (ref && ref.byCat) for (const c of Object.values(ref.byCat)) for (const r of c.settings || []) if (Array.isArray(r.scope) && r.scope.length === 1 && r.scope[0] === 'global') ids.push(r.id);
+			for (const id of ids.slice(0, 40)) {
+				try { PM51.revealSetting(id); } catch (e) { continue; }
+				for (let i = 0; i < 30; i++) {
+					await new Promise((r) => setTimeout(r, 100));
+					const b = [...document.querySelectorAll(`.details-btn[data-setting="${CSS.escape(id)}"]`)].find((x) => x.getClientRects().length);
+					if (!b) continue;
+					b.click();
+					for (let j = 0; j < 30; j++) {
+						await new Promise((r) => setTimeout(r, 100));
+						const h = [...document.querySelectorAll('.o55-insp-block h4')].find((x) => x.getClientRects().length && x.textContent.trim() === 'Where it applies');
+						if (h) return { id, text: h.parentElement.querySelector('p').textContent.trim() };
+					}
+					break;
+				}
+			}
+			return { id: null, text: '' };
+		});
+		await t.check('Details panel › a global value: “Where it applies: Everywhere, unless a project sets its own.”', /^Everywhere, unless a project sets its own/.test(ins.text), JSON.stringify(ins));
+		await t.page.keyboard.press('Escape');
 		// Source Control › Git identity: a computer's setting
 		await t.page.keyboard.press('Escape');
 		await go(t, f, 'source', 'source-manager');
