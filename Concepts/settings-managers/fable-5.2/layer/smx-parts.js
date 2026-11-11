@@ -113,10 +113,8 @@
   SMX.labelOf = (id) => { const w = SMX.words[id]; if (w && w.label) return w.label; try { const s = kit().setting(id); return (s && (kit().rowLabel(s) || s.label)) || id; } catch (e) { return id; } };
 
   /* a page that is planned but whose manager-drawn parts are not rebuilt in this cut */
-  ui.pending = (p) => {
-    const hows = [...new Set(Object.values(p.covers || {}).map(String))].filter((x) => !/own list/.test(x)).slice(0, 4);
-    return `<section class="panel-card pm51-section smx-pending"><div class="pm51-section-head"><div class="pm51-section-copy"><h3 class="pm51-section-title">Not rebuilt in this cut</h3><p class="pm51-section-help">This page’s settings are all here. Its lists and guided steps${hows.length ? ` (${h(hows.join(' ').replace(/\s+/g, ' ').slice(0, 180))})` : ''} are still drawn by today’s manager, which opens with one press. The finished chapters (AI providers, Computers & remote access, Look & feel, Memory, Planning, Source control, Backups, Safety, Health) show where this one is going.</p></div><div class="pm51-section-actions">${ui.btn({ label: 'Open it as it is today', icon: 'external', do: 'see-today' })}</div></div></section>`;
-  };
+  /* a page that is in the plan but not built yet says so in plain words, whatever it draws (bare: it draws no rows) */
+  ui.pending = (p, bare) => `<section class="panel-card pm51-section smx-pending"><div class="pm51-section-head"><div class="pm51-section-copy"><h3 class="pm51-section-title">This page is not redesigned yet</h3><p class="pm51-section-help">${bare ? 'Its settings, lists and guided steps open in the page as it is today, with one press.' : 'Its settings are below, in their new place. Its lists and guided steps still open in the page as it is today, with one press.'} The other chapters show where this one is going.</p></div><div class="pm51-section-actions">${ui.btn({ label: 'Open it as it is today', icon: 'external', do: 'see-today' })}</div></div></section>`;
 
   /* a line of text that reads as a sentence and holds real controls */
   ui.sentence = (html, o = {}) => `<div class="smx-sentence${o.cls ? ' ' + o.cls : ''}">${html}</div>`;

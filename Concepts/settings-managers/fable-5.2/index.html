@@ -188,6 +188,7 @@
   $('width').addEventListener('change', (e) => { frame.style.width = e.target.value ? e.target.value + 'px' : '100%'; });
   $('reduced').addEventListener('change', (e) => send({ cmd: 'motion', reduced: e.target.checked }));
   document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') { send({ cmd: 'escape' }); return; }   // closes "What changed here" or "Everything that moved" from up here too
     if (e.ctrlKey || e.metaKey || e.altKey || /input|select|textarea/i.test((e.target && e.target.tagName) || '')) return;
     if (e.key === 'r' || e.key === 'R') { UI.view = 'new'; paint(); send({ cmd: 'view', view: 'new' }); }
     if (e.key === 't' || e.key === 'T') { UI.view = 'today'; paint(); send({ cmd: 'view', view: 'today' }); }

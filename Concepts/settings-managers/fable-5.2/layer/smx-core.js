@@ -205,6 +205,15 @@
     const inOverlay = (t) => !!(t && t.closest && t.closest('.pm51-popout, #pm-settings-portals'));
     D.addEventListener('click', (e) => { pressed = e.target; if (inOverlay(e.target)) usedAt = W.performance.now(); }, true);
     D.addEventListener('keydown', (e) => { if (e.key === 'Enter' && inOverlay(e.target)) usedAt = W.performance.now(); }, true);
+    // Escape puts away the search results or a review panel wherever the focus is (it used to need the focus inside
+    // these pages), unless a menu, dialog or panel of PMConcept7's is open: that one closes first, by its own handler.
+    D.addEventListener('keydown', (e) => {
+      if (e.key !== 'Escape' || SMX.view !== 'new' || !layerEl || !layerEl.firstChild) return;
+      if (menuOpen() || D.querySelector('#pm-settings-portals .drawer-wrap.is-open, #pm-settings-portals [role="dialog"]')) return;
+      const q = navEl && navEl.querySelector('[data-smx-search]');
+      if (SMX.layerOpen === 'find' && q) { q.value = ''; SMX.query = ''; }
+      closeLayer(); e.stopPropagation(); SMX.report && SMX.report('state');
+    }, true);
     W.addEventListener('scroll', (e) => {
       const pop = SMX.view === 'new' && menuOpen();
       const t = e.target;
@@ -374,10 +383,10 @@
     // to them, so nothing PMConcept7 offers is out of reach from here.
     // (a planned page with no rows at all is such a page too: everything on it is its manager's own drawing)
     const bare = !((p.sections || []).length + (p.more || []).length + (p.expert || []).length);
-    if (SMX.ui && (p.pending || (p.planned && !p.extended && (bare || (p.covers && Object.keys(p.covers).length))))) push({ key: 'pending', html: SMX.ui.pending(p) });
+    if (SMX.ui && (p.pending || (p.planned && !p.extended))) push({ key: 'pending', html: SMX.ui.pending(p, bare) });
     const sec = (s, i, level) => {
       if (s.when && !s.when(ctx)) return null;
-      if (s.html) return { key: `${level}-${s.key || i}`, html: `<div data-smx-anchor="${esc(s.key || '')}">${fn(s.html, ctx)}</div>`, fixed: !!s.fixed };
+      if (s.html) return { key: `${level}-${s.key || i}`, html: `<div data-smx-anchor="${esc(s.key || '')}"${s.count ? ` data-smx-count="${Number(s.count) || 0}"` : ''}>${fn(s.html, ctx)}</div>`, fixed: !!s.fixed };
       const ids = SMX.idsOf(s);
       // `also`: settings that belong with these rows but have their home on another page; said in words, with the way there
       const also = s.also && SMX.ui ? SMX.ui.elsewhere(s.also, { title: s.alsoTitle || (ids.length ? 'Part of this, decided on another page' : s.title || 'Decided on another page'), help: s.alsoHelp || '', here: p.id }) : '';
@@ -392,10 +401,12 @@
       const parts = (list || []).map((s, i) => sec(s, i, level)).filter(Boolean).map(uniq);
       if (!parts.length) return;
       const key = `${p.id}:${level}`; const open = !!SMX.local.openMore[key];
-      const count = (list || []).reduce((n, s) => n + (s.html ? (s.count || 0) : SMX.idsOf(s).length), 0);
+      // the rows it holds NOW: a section that shows only in some state (the extras of one look) is not counted while it is off
+      const count = (list || []).reduce((n, s) => n + (s.when && !s.when(ctx) ? 0 : s.html ? (s.count || 0) : SMX.idsOf(s).length), 0);
+      const said = (n) => (n ? ` · ${n} setting${n === 1 ? '' : 's'}` : '');
       // a part is redrawn when its words change, not only when their length does (a count going from 3 to 4 stayed 3)
       out.push({ key: `${level}-fold`, fixed: true, sig: parts.map((x) => x.key + ':' + (x.sig || hash(x.html))).join('|') + (open ? ':o' : ':c'),
-        html: `<details class="smx-fold smx-fold-${level}"${open ? ' open' : ''} data-smx-fold="${esc(key)}"><summary>${SMX.icon('fold')}<span class="smx-fold-label">${esc(label)}</span><span class="smx-fold-help">${esc(help)}${count ? ` · ${count} setting${count === 1 ? '' : 's'}` : ''}</span></summary><div class="smx-fold-body">${parts.map((x) => x.html).join('')}</div></details>` });
+        html: `<details class="smx-fold smx-fold-${level}"${open ? ' open' : ''} data-smx-fold="${esc(key)}"><summary>${SMX.icon('fold')}<span class="smx-fold-label">${esc(label)}</span><span class="smx-fold-help">${esc(help)}<span class="smx-fold-count">${said(count)}</span></span></summary><div class="smx-fold-body">${parts.map((x) => x.html).join('')}</div></details>` });
     };
     fold(p.more, 'more', p.moreLabel || 'More options', p.moreHelp || 'Less common choices');
     fold(p.expert, 'expert', p.expertLabel || 'For experts', p.expertHelp || 'Safe to leave alone');
@@ -456,7 +467,19 @@
       prev = n;
     }
     drawn.keys = keys;
-    try { kit().upgradeSelects && null; } catch (e) { /* nothing */ }
+    recount(wrap);
+  }
+  /* A fold says how many rows it holds NOW. PMConcept7 hides a row while what it depends on is off (the strength of an
+     effect that is switched off), so the number is counted from the rows on the page, not from the plan: "6 settings"
+     used to open on 4 rows. A part drawn by hand counts as it declares (count: n) unless it holds more rows than that. */
+  function recount(wrap) {
+    wrap.querySelectorAll(':scope > .smx-block > details[data-smx-fold]').forEach((d) => {
+      const out = d.querySelector(':scope > summary .smx-fold-count'); const body = d.querySelector(':scope > .smx-fold-body'); if (!out || !body) return;
+      let n = 0;
+      for (const part of body.children) { const rows = part.querySelectorAll('.setting-row:not(.o55-dep-off)').length; n += Math.max(rows, Number(part.getAttribute('data-smx-count')) || 0); }
+      const text = n ? ` · ${n} setting${n === 1 ? '' : 's'}` : '';
+      if (out.textContent !== text) out.textContent = text;
+    });
   }
   SMX.render = render;
 
@@ -501,12 +524,14 @@
     // a button or control that sits inside a row that opens does its own job only (it used to open the row as well)
     const inner = t.closest('button, a, input, select, textarea, label, [data-action], [data-smx-do], [role="switch"], [role="button"]');
     if (go && inner && inner !== go && go.contains(inner)) { /* the inner control's own handlers take it from here */ }
-    else if (go && host.contains(go)) { e.preventDefault(); SMX.go(go.getAttribute('data-smx-go'), { reveal: go.getAttribute('data-smx-reveal') || '', anchor: go.getAttribute('data-smx-anchor-to') || '' }); return; }
+    else if (go && host.contains(go)) { e.preventDefault(); closeTheirs(); SMX.go(go.getAttribute('data-smx-go'), { reveal: go.getAttribute('data-smx-reveal') || '', anchor: go.getAttribute('data-smx-anchor-to') || '' }); return; }
+    // a click anywhere but the results and the search box puts the results away
+    if (SMX.layerOpen === 'find' && layerEl && !layerEl.contains(t) && !t.closest('[data-smx-search]')) closeLayer();
     if (t.closest('[data-smx-borrowed]')) return;   // a borrowed click on its way to the Settings engine
     const doer = t.closest('[data-smx-do]');
     if (doer && host.contains(doer)) {
       const name = doer.getAttribute('data-smx-do');
-      if (name === 'back') { SMX.back(); return; }
+      if (name === 'back') { closeTheirs(); SMX.back(); return; }
       const f = SMX.acts[name];
       if (f) { e.preventDefault(); try { f(doer, e); } catch (err) { W.console.error('SMX action failed', name, err); } soon(); }
       return;
@@ -516,6 +541,14 @@
       const d = sum.parentElement; setTimeout(() => { SMX.local.openMore[d.getAttribute('data-smx-fold')] = d.open; }, 0);
     }
   }
+  /* One of PMConcept7's side panels (a test run's details) stays open until it is closed, and would lie over the page
+     the person goes to next. Going somewhere by hand closes it the way a click beside it does. (A page change the
+     engine asks for, in the middle of a guided flow, closes nothing.) */
+  function closeTheirs() {
+    try { kit().closePopouts(); } catch (e) { /* none open */ }
+    D.querySelectorAll('#pm-settings-portals .drawer-wrap.is-open:not([data-closing])').forEach((w) => { try { w.dispatchEvent(new W.MouseEvent('mousedown', { bubbles: true, cancelable: true, view: W })); } catch (e) { /* it stays */ } });
+  }
+  SMX.closeTheirs = closeTheirs;
   function onInput(e) {
     const q = e.target.closest('[data-smx-search]');
     if (q) { SMX.query = q.value; SMX.search && SMX.search.show(q.value, q); }
@@ -533,7 +566,6 @@
   }
   function onKey(e) {
     if ((e.key === 'Enter' || e.key === ' ') && e.target.matches && e.target.matches('.smx-thing.is-clickable')) { e.preventDefault(); e.target.click(); return; }
-    if (e.key === 'Escape' && layerEl && layerEl.firstChild) { closeLayer(); e.stopPropagation(); }
     const q = e.target.closest && e.target.closest('[data-smx-search]');
     if (q && SMX.search) SMX.search.key(e);
   }

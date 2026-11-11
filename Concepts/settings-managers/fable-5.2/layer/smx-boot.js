@@ -10,7 +10,8 @@
   const D = W.document, H = D.documentElement;
   const wait = SMX.wait;
 
-  const look = () => { const t = H.getAttribute('data-theme') || 'basic-dark'; return t; };
+  // NieR is painted over Basic (the theme mark stays basic-…): it is reported as its own look, so the strip keeps saying NieR
+  const look = () => { const t = H.getAttribute('data-theme') || 'basic-dark'; let n = false; try { n = !!(W.PM_NIER && W.PM_NIER.on && W.PM_NIER.on()); } catch (e) { n = false; } return n ? 'nier-' + (t.split('-')[1] || 'dark') : t; };
   function note() {
     const m = SMX.match(SMX.route); if (!m) return '';
     const p = m.page; const ctx = { st: SMX.st(), local: SMX.local, params: m.params };
@@ -29,19 +30,34 @@
   }
   SMX.report = report;
 
-  /* a look, through PMConcept7's own theme owner; a review control, so it is not saved */
+  /* A look, through PMConcept7's own theme owner, and SAVED like a choice made on the Look & feel page. It used to be
+     an unsaved preview: the Look page then showed the saved look's choices under another look, and any choice made
+     there snapped the app back (review R1, F7). "Reset demo" puts the look back. Asked again if it did not take
+     (right after start the theme owner is sometimes not listening yet). */
   async function setLook(id) {
     const [family, mode] = String(id).split('-');
-    try {
-      const T = W.PM_THEME, N = W.PM_NIER;
-      const nier = family === 'nier';
-      T.setMode(mode, { persist: false });
-      if (!nier && N && N.on && N.on()) await N.set(false, { persist: false });
-      try { T.setFamily(family, { persist: false }); } catch (e) { if (!nier) throw e; }
-      if (nier && !(H.getAttribute('data-theme') || '').startsWith('nier') && N) await N.set(true, { persist: false });
-      T.setMode(mode, { persist: false });
-      for (let i = 0; i < 50; i++) { const t = H.getAttribute('data-theme') || ''; if ((nier ? t.startsWith('nier') : t === id) && t.endsWith('-' + mode)) break; await wait(100); }
-    } catch (e) { W.console.error('Settings managers concept: could not set the look', id, e); }
+    const nier = family === 'nier';
+    const label = String(id).split('-').map((x) => (x === 'nier' ? 'NieR' : x.charAt(0).toUpperCase() + x.slice(1))).join(' ');   // how PMConcept7 stores a look
+    // NieR is painted over the Basic look: the page's theme mark stays basic-…, and PM_NIER.on() says it is painted
+    const shown = () => { const t = H.getAttribute('data-theme') || ''; const n = !!(W.PM_NIER && W.PM_NIER.on && W.PM_NIER.on()); return nier ? (n && t.endsWith('-' + mode)) : (!n && t === id); };
+    const is = () => shown() && (!W.PM7_SETTINGS_TOME || String(SMX.val('general.visual.theme') || '') === label);
+    for (let attempt = 0; attempt < 3 && !is(); attempt++) {
+      try {
+        const tome = W.PM7_SETTINGS_TOME, T = W.PM_THEME, N = W.PM_NIER;
+        if (tome && tome.setChromeThemeFamily && tome.setChromeThemeMode) {
+          // the way the look menu in PMConcept7's title bar saves a look (NieR included: the engine plays its moment)
+          tome.setChromeThemeFamily(family); tome.setChromeThemeMode(mode);
+          // NieR is saved by that, but only its own switch puts it on screen (or takes it off again)
+          if (N && N.set) { const painted = !!(N.on && N.on()); if (nier !== painted) await N.set(nier); }
+        } else {
+          T.setMode(mode, { persist: false });
+          if (!nier && N && N.on && N.on()) await N.set(false, { persist: false });
+          try { T.setFamily(family, { persist: false }); } catch (e) { if (!nier) throw e; }
+          if (nier && !(H.getAttribute('data-theme') || '').startsWith('nier') && N) await N.set(true, { persist: false });
+        }
+      } catch (e) { W.console.error('Settings managers concept: could not set the look', id, e); }
+      for (let i = 0; i < 40 && !is(); i++) await wait(100);
+    }
     await wait(300);
     SMX.tick(true);
     report('look-done');
@@ -68,6 +84,7 @@
       case 'changes': if (SMX.view === 'new') { SMX.showChanges(); report('state'); } break;
       case 'moved': if (SMX.view !== 'new') SMX.setView('new'); SMX.showMoved(); report('state'); break;
       case 'look': setLook(m.look); break;
+      case 'escape': if (SMX.layerOpen) { SMX.closeLayer(); report('state'); } break;
       case 'motion': H.setAttribute('data-motion', m.reduced ? 'reduced' : ''); if (!m.reduced) H.removeAttribute('data-motion'); SMX.reduced = !!m.reduced; break;
       case 'reset': try { W.PM12_KIMI.reset(); } catch (e) { /* engine not ready */ } SMX.resetLocal(); SMX.search && SMX.search.reset(); SMX.setView('new'); SMX.go('home', { replace: true }); SMX.toast('Demo reset', 'Every example value is back where it started.', 'info'); break;
       default: break;
