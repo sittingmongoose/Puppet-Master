@@ -1,8 +1,9 @@
 /* Settings managers, rethought (Fable 5.2): the look customizers (Editor appearance, Terminal appearance, Customize Pip,
    Adjust NieR). These are PMConcept7's own dialogs; nothing in them is rebuilt. Today each puts its example at the top
-   of one long scroll (the editor's options are about eight windows tall), so the example is gone as soon as you reach an
-   option. Here the example stays beside the options for as long as the dialog is open, at full size, and a line under it
-   says what you just changed and where to look. Applies only while the redesign is shown (html[data-smx-view="new"]). */
+   of one long scroll (the editor's options are about eight windows tall); once you scroll, a small copy of the example
+   (389 by 176, about a third of its size) follows you. Here the example itself stays beside the options for as long as
+   the dialog is open, at full size, and a line under it says what you just changed and where to look.
+   Applies only while the redesign is shown (html[data-smx-view="new"]). */
 
 /* ---- Editor and Terminal appearance: the example on the left, the options on the right ----------------------------- */
 html[data-smx-view="new"] .pmt-cz:not(.pmt-cz-parked) .pmt-cz-dialog:not(.pmt-cz-beside) { left: max(20px, calc(50vw - 660px)) !important; width: min(1320px, calc(100vw - 40px)) !important; }
@@ -23,12 +24,20 @@ html[data-smx-view="new"] .pmt-cz .pmt-cz-dialog:not(.pmt-cz-beside) .pmt-cz-doc
 .smx-cz-said-mark { flex: none; width: 8px; height: 8px; margin-top: 4px; border-radius: 50%; background: var(--pmt-cz-accent, currentColor); }
 .smx-cz-pulse { animation: smxCzPulse 900ms ease-out 1; }
 @keyframes smxCzPulse { 0% { box-shadow: 0 0 0 0 var(--pmt-cz-accent, rgba(100, 181, 246, .9)); } 100% { box-shadow: 0 0 0 10px transparent; } }
-/* a close-up drawn over the example for a choice the sample text cannot show (a ruler, wrapping, a scroll effect) */
-.smx-cz-closeup { position: absolute; inset: 0; z-index: 6; display: grid; grid-template-rows: auto minmax(0, 1fr); background: var(--pmt-cz-ground, #1e1e1e); color: var(--pmw-text, inherit); }
-.smx-cz-closeup-cap { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 6px 10px; border-bottom: 1px solid var(--pmt-cz-line, rgba(128, 128, 128, .3)); font-size: 11px; color: var(--pmw-text-2, inherit); }
+/* a close-up under the example, for a choice the sample cannot show or shows too small to notice. It never covers
+   the example; the quick sets and the meter step aside while it is there, so everything still fits beside the options */
+.smx-cz-closeup { position: relative; display: block; border: 1px dashed var(--pmt-cz-line, rgba(128, 128, 128, .4)); border-radius: var(--pmt-cz-r, 8px); background: var(--pmt-cz-ground, #1e1e1e); color: var(--pmw-text, inherit); overflow: hidden; }
+.smx-cz-closeup-cap { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 5px 10px; border-bottom: 1px solid var(--pmt-cz-line, rgba(128, 128, 128, .3)); font-size: 11px; color: var(--pmw-text-2, inherit); }
 .smx-cz-closeup-cap b { font-weight: 650; color: var(--pmw-text, inherit); }
 .smx-cz-closeup-cap button { font: inherit; color: inherit; background: transparent; border: 1px solid var(--pmt-cz-line, rgba(128, 128, 128, .3)); border-radius: 6px; padding: 2px 8px; cursor: pointer; }
-.smx-cz-closeup-body { position: relative; min-height: 0; overflow: hidden; }
+.smx-cz-closeup-body { position: relative; max-height: 200px; overflow: hidden; }
+html[data-smx-view="new"] .pmt-cz-top:has(.smx-cz-closeup) .pmt-cz-sets, html[data-smx-view="new"] .pmt-cz-top:has(.smx-cz-closeup) .pmt-cz-meter { display: none !important; }
+html[data-smx-view="new"] .pmt-cz .pmt-cz-dialog:not(.pmt-cz-beside) .pmt-cz-top > * { min-width: 0; max-width: 100%; }
+/* PMConcept7 decides how many fields fit side by side when the dialog opens, for options as wide as the dialog. Here
+   the options have a column of their own, so two fields always stack; nothing overlaps whichever tab is showing. */
+html[data-smx-view="new"] .pmt-cz .pmt-cz-dialog:not(.pmt-cz-beside) .pmt-cz-group .pmt-cz-grid2,
+html[data-smx-view="new"] .pmt-cz .pmt-cz-dialog:not(.pmt-cz-beside) .pmt-cz-group .pmt-cz-row { grid-template-columns: minmax(0, 1fr) !important; }
+html[data-smx-view="new"] .pmt-cz .pmt-cz-dialog:not(.pmt-cz-beside) .pmt-cz-group .pmt-cz-seg { flex-wrap: wrap; }
 /* when the dialog is too narrow for two columns the example stays on top, smaller, and still does not scroll away */
 @container pmt-cz (max-width: 900px) {
   html[data-smx-view="new"] .pmt-cz .pmt-cz-dialog:not(.pmt-cz-beside) .pmt-cz-body { grid-template-columns: minmax(0, 1fr); }

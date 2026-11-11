@@ -1,25 +1,24 @@
 /* Settings managers, rethought (Fable 5.2): the look customizers, part two.
-   smx-customizers.css keeps the example beside the options. This file makes the example answer the second complaint:
-   "make sure that example section actually shows what is being changed".
+   smx-customizers.css keeps the example beside the options, at full size, for as long as a dialog is open. (PMConcept7
+   leaves its example at the top of one long scroll and lets a small copy, 389 by 176, follow you down.) This file
+   does the rest of what the owner asked for: "make sure that example section actually shows what is being changed".
    - The options are tabs, one group at a time, instead of one scroll eight windows long ("Everything" still shows the
      long list).
-   - A line under the example names what you just changed, in the words on screen, and says where to look.
-   - The example then proves it. Where PMConcept7 already has a "Try it" for that kind of change (move the caret, type,
-     go to a problem, step back, ring the bell) it is run for you. Where the sample cannot show the choice at rest (a
-     ruler at column 80, ligatures at 13 px, wrapping) the example turns into a close-up drawn for that one choice.
-   - Customize Pip and Adjust NieR keep their example at the top of the sheet, with the same line under it.
-   The dialogs are PMConcept7's own; nothing in them is rebuilt (window.SMX.cz).
-
-   SMX.cz.note(dialog, /key or label/, 'where to look')               a hint for a choice the sample does show
-   SMX.cz.closeup(dialog, /key or label/, {title, draw(body, info)})  a close-up for a choice it cannot show
-   dialog: 'editor' | 'terminal' | 'pip' | 'nier'. info: {key, name, choice, value, on, group, help, root}. */
+   - A line under the example names what you just changed, in the words on screen, and says where in the example to
+     look. PMConcept7's own notes (it has one for rulers and one for indentation) are quoted in that line.
+   - Where PMConcept7 already has a "Try it" for that kind of change (move the caret, type, go to a problem, step
+     back, ring the bell) it is run for you.
+   - What the example shows by itself was measured in this layout, option by option (the share of the example's
+     pixels that change). Most options show well. A few change very little (ligatures 0.13 %, indent guides 0.33 %) or
+     nothing (rulers, how changes are laid out, tab size): for those a close-up appears under the example. It never
+     covers the example.
+   - Customize Pip and Adjust NieR keep their picture at the top of the sheet, with the same line under it.
+   The dialogs are PMConcept7's own; nothing in them is rebuilt (window.SMX.cz). */
 (function (W) {
   'use strict';
   const SMX = W.SMX; if (!SMX || SMX.cz) return;
   const D = W.document;
-  const CZ = SMX.cz = { notes: { editor: [], terminal: [], pip: [], nier: [] }, closeups: { editor: [], terminal: [], pip: [], nier: [] } };
-  CZ.note = (dialog, pattern, text) => { CZ.notes[dialog].push([pattern, text]); };
-  CZ.closeup = (dialog, pattern, def) => { CZ.closeups[dialog].push([pattern, def]); };
+  const CZ = SMX.cz = { paused: false };   // paused: a test is measuring what a dialog shows by itself
   const esc = SMX.h;
   const T = (s) => String(s || '').replace(/\s+/g, ' ').trim();
   const txt = (n, sel) => { const x = n && n.querySelector(sel); return x ? T(x.textContent) : ''; };
@@ -30,8 +29,8 @@
   function describe(target, root) {
     const ctl = target.closest('button, input, select, textarea, [role="switch"], [role="radio"], [role="option"], [role="slider"]');
     if (!ctl || ctl.closest('.pmt-cz-top, .pmt-cz-nav, .pmt-cz-head, .pmt-cz-foot, .smx-cz-closeup, .smx-cz-said, .pmt-cz-ghead, .pmt-cz-findrow, .pipe-top, .o55nc-top, .pipe-ghead')) return null;
-    const keyEl = ctl.closest('[data-key], [data-tok], [data-pipe-part], [data-part], [data-chip], [data-opt]');
-    const key = keyEl ? (keyEl.dataset.key || keyEl.dataset.tok || keyEl.dataset.pipePart || keyEl.dataset.part || keyEl.dataset.chip || keyEl.dataset.opt || '') : '';
+    const keyEl = ctl.closest('[data-key], [data-tok], [data-pipe-part], [data-o55nc-key], [data-part], [data-chip], [data-opt]');
+    const key = keyEl ? (keyEl.dataset.key || keyEl.dataset.tok || keyEl.dataset.pipePart || keyEl.dataset.o55ncKey || keyEl.dataset.part || keyEl.dataset.chip || keyEl.dataset.opt || '') : '';
     const groupEl = ctl.closest('.pmt-cz-group, .o55nc-group, .pipe-group');
     const group = groupEl ? (groupEl.dataset.pipeGroup || txt(groupEl, 'h3, h4, .pmt-cz-gtitle') || '').split(/ {2,}|\d/)[0].trim() : '';
     const set = ctl.closest('[role="radiogroup"]');
@@ -54,7 +53,7 @@
     }
     if (!name) name = key;
     if (!name) return null;
-    return { key, name: name.slice(0, 60), choice: choice.split(/ {2,}/)[0].slice(0, 40), help, kind, group, root, ctl, value: keyEl && keyEl.dataset.value != null ? keyEl.dataset.value : '' };
+    return { key, name: name.slice(0, 60), choice: choice.split(/ {2,}/)[0].slice(0, 40), help, kind, group, groupKey: groupEl ? (groupEl.dataset.group || '') : '', root, ctl, value: keyEl && keyEl.dataset.value != null ? keyEl.dataset.value : '' };
   }
   /* read the state the control ended in (a chip's on or off, a slider's number) once PMConcept7 has applied it */
   function settle(info) {
@@ -70,44 +69,75 @@
     return info.choice ? `<b>${esc(info.name)}</b> is now <b>${esc(info.choice)}</b>.` : `You changed <b>${esc(info.name)}</b>.`;
   };
 
-  /* ------------------------------------------------------------------ PMConcept7's own "Try it", run for the change it shows */
-  const TRY = {
-    editor: [['try-move', /^caret/, 'The caret just moved through the example so you can see it.'], ['try-type', /^(font|fontSize|fontWeight|lineHeight|letterSpacing)$/, 'A few letters were just typed into the example in it.'], ['try-problem', /^(lineHighlight|diagnostics|gotoHighlightMs)$/, 'The example just jumped to a problem to show it.'], ['try-dim', /^inactiveDim$/, 'The example just dimmed the way an editor you are not in will.']],
-    terminal: [['try-cursor', /^cursor/, 'The cursor just moved through the example so you can see it.'], ['try-bell', /^bell$/, 'The bell just rang in the example.'], ['try-dim', /^inactiveDim$/, 'The example just dimmed the way a terminal you are not in will.'], ['degauss', /^(crt|curvature)$/, 'The tube in the example just wobbled, the way an old monitor settles.']]
-  };
-  function tryIt(root, kind, info) {
-    for (const [act, re, text] of (TRY[kind] || [])) {
-      if (!re.test(info.key)) continue;
-      const b = root.querySelector(`.pmt-cz-top [data-act="${act}"]`);
-      if (!b || b.hidden || b.disabled || b.getAttribute('aria-disabled') === 'true') return '';
-      W.setTimeout(() => { if (b.isConnected) b.click(); }, 220);
-      if (info.key === 'bell' && /off|none/i.test(info.choice + ' ' + info.value)) return 'A bell was just sent to the example, and it stayed quiet.';
-      return text;
-    }
-    return '';
+  /* ------------------------------------------------------------------ what the example does for each option
+     Measured 2026-11-11 in this layout with PMConcept7's own live example (share of its pixels that change when the
+     option is switched; a still example changes 0.02 %):
+       editor    smooth scrolling 20.7, scroll past end 16.2, text glow 10.5, scanlines 7.4, fade editors 4.7,
+                 highlight the line 3.4, wrap 2.4, bold keywords 0.8, bracket pairs 0.5, indent guides 0.33,
+                 line numbers 0.25, show spaces 0.2, ligatures 0.13, problems 0.13; nothing: rulers, how changes are
+                 laid out, saving by itself, tab size, tabs or spaces
+       terminal  bezel 26.8, phosphor glow 11.7, full CRT 10.7, dim terminals 5.5, font rendering 2.4, scanlines 2.0,
+                 minimum contrast 1.1, bold as bright 0.4; nothing at rest: cursor shape and trail (they show when
+                 the cursor moves), flicker (it is slow and faint), the bell, copy on highlight
+     try:    PMConcept7's own "Try it" button that shows the change; it is pressed for you
+     where:  where in the example to look
+     small:  the change is real but tiny; the close-up shows it larger
+     none:   the example cannot show it; the close-up (or the plain truth) stands in
+     up:     the close-up drawn under the example */
+  const EDITOR = [
+    [/^caret/, { try: 'try-move', where: 'The caret just moved through the example so you can see it.' }],
+    [/^(font|fontSize|fontWeight|lineHeight|letterSpacing)$/, { try: 'try-type', where: 'A few letters were just typed into the example in it.' }],
+    [/^ligatures$/, { small: true, where: 'Look at -> on line 3 and != on line 7 of the example.', up: 'ligatures' }],
+    [/^(scheme|schemePair|syntax|contrast|italicComments|boldKeywords)$|^tok/, { where: 'Look at the comment on line 1 and the coloured words below it.' }],
+    [/^bracketPairs$/, { where: 'Look at the nested brackets on lines 6 to 8.' }],
+    [/^lineNumberMode$/, { where: 'Look at the numbers down the left edge.' }],
+    [/^lineHighlight$/, { where: 'Look at line 4, where the caret is.' }],
+    [/^(indentGuides|activeIndent)$/, { small: true, where: 'Look at the thin lines down the left of lines 4 to 9.', up: 'guides' }],
+    [/^whitespace$/, { where: 'Look for the faint dots between the words, and at the ends of lines.' }],
+    [/^rulers$/, { none: true, up: 'rulers' }],
+    [/^(wordWrap|wrapColumn)$/, { where: 'Look at the long line near the bottom: it folds, or runs off the side.' }],
+    [/^minimap$/, { where: 'Look at the right edge of the example.' }],
+    [/^(stickyScroll|stickyLines)$/, { none: true, up: 'sticky', why: 'The sample is too short to scroll.' }],
+    [/^(smoothScroll|scrollPastEnd|reveal)$/, { where: 'The example scrolls by itself to show it.' }],
+    [/^inactiveDim$/, { try: 'try-dim', where: 'The example just dimmed the way an editor you are not in will.' }],
+    [/^(scanlines|glow)$/, { where: 'It draws over the whole example.' }],
+    [/^(diagnostics|gotoHighlightMs)$/, { try: 'try-problem', where: 'The example just jumped to a problem to show it.' }],
+    [/^diffLayout$/, { none: true, up: 'diff' }],
+    [/^tabSize$/, { none: true, up: 'tabs' }],
+    [/^(autosave|insertSpaces|detectIndent)$/, { none: true, why: 'This one changes how the editor behaves, not how it looks.' }]
+  ];
+  const TERMINAL = [
+    [/^cursor/, { try: 'try-cursor', where: 'The cursor just moved through the example so you can see it.' }],
+    [/^bell$/, { try: 'try-bell', where: 'The bell just rang in the example.', off: 'A bell was just sent to the example, and it stayed quiet.' }],
+    [/^inactiveDim$/, { try: 'try-dim', where: 'The example just dimmed the way a terminal you are not in will.' }],
+    [/^(crt|curvature)$/, { try: 'degauss', where: 'Look at the curved glass and the corners of the example.' }],
+    [/^flicker$/, { where: 'It is slow and faint on purpose: watch the example for a few seconds.' }],
+    [/^(scanlines|scanStrength|glow|glowStrength|burnIn|crtMask|noise|effects)$/, { where: 'It draws over the whole example: look at the bright text and the edges.' }],
+    [/^bezel/, { where: 'Look at the frame around the example.' }],
+    [/^(ground|bg|opacity|padding)/, { where: 'Look behind the text of the example.' }],
+    [/^(scheme|schemePair|minContrast|font|fontSize|fontWeight|lineHeight|letterSpacing|fontRendering|ligatures|boldBright|sixtyfour)/, { where: 'All the text in the example redraws with it.' }],
+    [/^(copyOnSelect|stickyHeader|smoothScroll)$/, { none: true, why: 'This one changes how the terminal behaves, not how it looks.' }]
+  ];
+  const ruleFor = (kind, key) => { const hit = (kind === 'editor' ? EDITOR : kind === 'terminal' ? TERMINAL : []).find(([re]) => re.test(key)); return hit ? hit[1] : null; };
+  function pressTry(root, act) {
+    const b = root.querySelector(`.pmt-cz-top [data-act="${act}"]`);
+    if (!b || b.hidden || b.disabled || b.getAttribute('aria-disabled') === 'true') return false;
+    W.setTimeout(() => { if (b.isConnected) b.click(); }, 220);
+    return true;
   }
 
   /* ------------------------------------------------------------------ the line under the example, and close-ups */
   const said = (root) => root.querySelector('.smx-cz-said');
   const setSaid = (line, kind, html) => { line.setAttribute('data-kind', kind); line.querySelector('.smx-cz-said-text').innerHTML = html; };
-  function closeCloseup(root) { const c = root.querySelector('.smx-cz-closeup'); if (c) c.remove(); }
-  function say(root, kind, info) {
+  const closeCloseup = (root) => { const c = root.querySelector('.smx-cz-closeup'); if (c) c.remove(); };
+  /* PMConcept7's own notes about an option (rulers, indentation): whatever it says now that it did not say before */
+  const notesOf = (root) => [...root.querySelectorAll('.pmt-cz-note, .pmt-cz-pnote')].map((n) => T(n.textContent)).filter(Boolean);
+  function say(root, kind, info, before) {
     const line = said(root); if (!line) return;
     settle(info);
     const preview = root.querySelector('.pmt-cz-preview, .pipe-stage, .o55nc-pv');
-    const hay = `${info.key} ${info.name}`;
-    const up = (CZ.closeups[kind] || []).find(([re]) => re.test(hay));
-    const note = (CZ.notes[kind] || []).find(([re]) => re.test(hay));
     closeCloseup(root);
-    if (up && preview) {
-      const box = root.querySelector('.pmt-cz-pvbox') || preview;
-      const c = D.createElement('div'); c.className = 'smx-cz-closeup';
-      c.innerHTML = `<div class="smx-cz-closeup-cap"><span>Close-up: <b>${esc(up[1].title || info.name)}</b></span><button type="button" data-smx-cz-back>Back to the example</button></div><div class="smx-cz-closeup-body"></div>`;
-      box.appendChild(c);
-      try { up[1].draw(c.querySelector('.smx-cz-closeup-body'), info); } catch (e) { W.console.error('close-up failed', e); }
-      c.querySelector('[data-smx-cz-back]').addEventListener('click', () => { closeCloseup(root); setSaid(line, 'plain', 'Back on the live example.'); });
-      setSaid(line, 'closeup', `${sentence(info)} The sample cannot show this one at rest, so the example is showing a close-up of it.`);
-    } else if (kind === 'pip') {
+    if (kind === 'pip') {
       const play = root.querySelector('.pipe-play');
       const can = play && play.getAttribute('aria-disabled') !== 'true' && /faces|motion|look/i.test(info.group);
       if (can) W.setTimeout(() => { if (play.isConnected) play.click(); }, 220);
@@ -115,8 +145,25 @@
     } else if (kind === 'nier') {
       setSaid(line, 'plain', `${sentence(info)} ${esc(info.help)} ${/look|pointer/i.test(info.group) ? 'Look at the small menu above, and at the page behind this sheet.' : 'It shows in the app itself: look at the page behind this sheet.'}`);
     } else {
-      const ran = tryIt(root, kind, info);
-      setSaid(line, 'plain', `${sentence(info)} ${esc(ran || (note ? note[1] : info.group === 'Behavior' ? 'This one changes how it behaves, not how it looks, so the example stays as it is.' : 'The example shows it now.'))}`);
+      const rule = ruleFor(kind, info.key) || {};
+      const own = notesOf(root).find((t) => !before.includes(t));                          // the dialog's own note, if it wrote one
+      const ownText = own ? ` The dialog says: “${esc(own)}”` : '';
+      const off = info.on === false || /^(off|none)$/i.test(info.choice);
+      let where = '';
+      if (rule.try && pressTry(root, rule.try)) where = (off && rule.off) || rule.where;
+      else if (rule.none) where = rule.why || 'The sample cannot show this one.';
+      else if (rule.small) where = `It is a small change. ${rule.where}`;
+      else where = rule.where || (info.groupKey === 'behavior' ? 'This one changes how it behaves, not how it looks, so the example stays as it is.' : 'The example shows it now.');
+      const up = rule.up && UPS[rule.up];
+      if (up) {
+        const c = D.createElement('div'); c.className = 'smx-cz-closeup';
+        c.innerHTML = `<div class="smx-cz-closeup-cap"><span>Close-up: <b>${esc(up.title)}</b></span><button type="button" data-smx-cz-back>Hide</button></div><div class="smx-cz-closeup-body"></div>`;
+        line.insertAdjacentElement('afterend', c);
+        try { up.draw(c.querySelector('.smx-cz-closeup-body'), info); } catch (e) { W.console.error('close-up failed', e); }
+        c.querySelector('[data-smx-cz-back]').addEventListener('click', () => closeCloseup(root));
+        where += rule.none ? ' A close-up under the example shows it.' : ' The close-up under the example shows it larger.';
+      }
+      setSaid(line, up ? 'closeup' : 'plain', `${sentence(info)} ${esc(where)}${ownText}`);
     }
     if (preview) { preview.classList.remove('smx-cz-pulse'); void preview.offsetWidth; preview.classList.add('smx-cz-pulse'); }
   }
@@ -164,10 +211,11 @@
     if (kind === 'pip' || kind === 'nier') root.style.setProperty('--smx-cz-pin', (after.offsetHeight + 8) + 'px');
     let last = 0;
     const on = (e) => {
-      if (SMX.view !== 'new') return;
+      if (SMX.view !== 'new' || CZ.paused) return;
       const info = describe(e.target, root); if (!info) return;
       const now = Date.now(); if (now - last < 60) return; last = now;
-      W.setTimeout(() => say(root, kind, info), 40);
+      const before = notesOf(root);
+      W.setTimeout(() => say(root, kind, info, before), 60);
     };
     root.addEventListener('click', on, true);
     root.addEventListener('change', on, true);
@@ -207,70 +255,42 @@
   }
   W.setInterval(() => { scan(); comeBack(); }, 400);
 
-  /* ------------------------------------------------------------------ hints for choices the live sample does show */
-  CZ.note('editor', /bracket/i, 'Look at the nested brackets on lines 6 to 8.');
-  CZ.note('editor', /lineNumber|line numbers/i, 'Look at the numbers down the left edge.');
-  CZ.note('editor', /minimap/i, 'Look at the right edge of the example.');
-  CZ.note('editor', /scheme|syntax|contrast|italic|bold|token/i, 'Look at the comment on line 1 and the coloured words below it.');
-  CZ.note('terminal', /scanline|glow|crt|curvature|burn|grain|noise|flicker|mask/i, 'It draws over the whole example: look at its edges and at the bright text.');
-  CZ.note('terminal', /bezel/i, 'Look at the frame around the example.');
-  CZ.note('terminal', /ground|bg|opacity|padding/i, 'Look behind the text of the example.');
-  CZ.note('terminal', /scheme|contrast|font|weight|spacing|height|rendering|bold/i, 'All the text in the example redraws with it.');
-
-  /* ------------------------------------------------------------------ close-ups: small drawings for what the sample cannot show
-     Each reads what it can from the choice just made; they stand for the real surface, which a native build would use. */
+  /* ------------------------------------------------------------------ close-ups: small drawings for what the sample cannot show,
+     or shows too small to notice. They sit under the example, never over it, and read what was just chosen. */
   const mono = 'font: 12px/1.6 var(--pm-font-code, ui-monospace, monospace); white-space: pre;';
   const lines = (arr) => arr.map((l, i) => `<div style="display:flex;gap:10px"><span style="opacity:.45;width:18px;text-align:right">${i + 1}</span><span>${l}</span></div>`).join('');
-  const caption = (text) => `<div style="opacity:.7;margin-bottom:8px;white-space:normal;font:11.5px/1.4 var(--body-font, inherit)">${text}</div>`;
+  const caption = (text) => `<div style="opacity:.75;margin-bottom:6px;white-space:normal;font:11.5px/1.4 var(--body-font, inherit)">${text}</div>`;
   const isOff = (info) => info.on === false || /^(off|false|none|0)$/i.test(String(info.value));
-  CZ.closeup('editor', /ligature/i, { title: 'Ligatures', draw: (b, info) => {
-    const on = !isOff(info);
-    // drawn, not set in the font, so the difference shows whatever face is loaded here
-    const pair = (label, glyphs, chosen) => `<div style="flex:1;border:1px solid color-mix(in srgb, currentColor ${chosen ? 70 : 22}%, transparent);border-radius:6px;padding:10px 12px"><div style="font:600 11px/1.4 var(--body-font, inherit);opacity:.75;margin-bottom:6px">${label}${chosen ? ' (your choice)' : ''}</div><div style="font:30px/1.2 ui-monospace, 'JetBrains Mono', monospace;white-space:pre">${glyphs}</div></div>`;
-    b.innerHTML = `<div style="position:absolute;inset:12px;display:grid;align-content:start;gap:8px">${caption('The same four pairs of characters, drawn large. With ligatures on, each pair joins into one symbol; you still type two characters.')}<div style="display:flex;gap:10px">${pair('On', '→  ≠  ⇒  ≥', on)}${pair('Off', '-&gt;  !=  =&gt;  &gt;=', !on)}</div></div>`;
-  } });
-  CZ.closeup('editor', /^rulers|ruler/i, { title: 'Rulers', draw: (b, info) => {
-    const cols = String(info.value || info.choice).split(/[^\d]+/).map(Number).filter(Boolean);
-    const col = cols[0] || 80;
-    b.innerHTML = `<div style="position:absolute;inset:10px 12px;${mono}">${caption(cols.length ? `A faint line at column ${cols.join(' and ')}: a reminder of where a line gets long. The sample is too narrow to reach it.` : 'No ruler.')}${lines(['// a line that runs past the ruler so you can see where it sits ............', 'let total = steps.iter().map(|s| s.minutes).sum::&lt;u32&gt;();', 'short();'])}${cols.length ? `<i style="position:absolute;top:34px;bottom:0;left:calc(28px + ${Math.min(col, 96)} * .5ch);border-left:1px solid currentColor;opacity:.5"></i>` : ''}</div>`;
-  } });
-  CZ.closeup('editor', /wordWrap|wrapColumn|wrap/i, { title: 'Wrapping long lines', draw: (b, info) => {
-    const on = !isOff(info);
-    b.innerHTML = `<div style="position:absolute;inset:10px 12px;${mono}${on ? 'white-space:pre-wrap;' : ''}overflow:hidden">${caption(on ? 'On: the long line folds, so nothing runs off the side.' : 'Off: the long line runs off the side and you scroll sideways to read it.')}format!("Serves {} people and takes {} minutes from start to finish, including the time it rests", recipe.serves, recipe.total_minutes())</div>`;
-  } });
-  CZ.closeup('editor', /indentGuides|activeIndent|indent ?guide/i, { title: 'Indent guides', draw: (b, info) => {
-    const hay = (info.choice + ' ' + info.value).toLowerCase();
-    const off = /off|none/.test(hay) && info.key === 'indentGuides', rainbow = /rainbow/.test(hay);
-    const g = (n) => Array.from({ length: n }, (_, i) => `<i style="display:inline-block;width:2ch;border-left:1px solid ${off ? 'transparent' : rainbow ? ['#e06c75', '#e5c07b', '#98c379', '#61afef'][i % 4] : 'currentColor'};opacity:${rainbow ? .9 : .4}">&nbsp;</i>`).join('');
-    b.innerHTML = `<div style="position:absolute;inset:10px 12px;${mono}">${caption('Guides are the thin lines that show how deep each line sits. Five levels deep, so you can see them.')}${lines(['fn plan(recipe: &Recipe) {', g(1) + 'for step in &recipe.steps {', g(2) + 'if step.needs_oven {', g(3) + 'match step.heat {', g(4) + 'Heat::High =&gt; preheat(220),', g(3) + '}', g(2) + '}', g(1) + '}', '}'])}</div>`;
-  } });
-  CZ.closeup('editor', /whitespace|show spaces/i, { title: 'Showing spaces', draw: (b, info) => {
-    const v = (info.choice + ' ' + info.value).toLowerCase();
-    const dot = '<span style="opacity:.55">·</span>';
-    const all = /all|everywhere/.test(v), ends = all || /trail|end/.test(v), between = all || /bound|between/.test(v), sel = /select/.test(v);
-    const sp = (show) => (show ? dot : ' ');
-    b.innerHTML = `<div style="position:absolute;inset:10px 12px;${mono}">${caption('Spaces are invisible. This draws a faint dot where each one is.')}${lines([`let${sp(between)}total${sp(between)}=${sp(between)}1;${ends ? dot + dot + dot : '   '}`, `<span style="${sel ? 'background:color-mix(in srgb, currentColor 22%, transparent)' : ''}">serve(${sp(all || sel)}total${sp(all || sel)});</span>`])}</div>`;
-  } });
-  CZ.closeup('editor', /stickyScroll|stickyLines|sticky/i, { title: 'Sticky scroll', draw: (b) => {
-    b.innerHTML = `<div style="position:absolute;inset:10px 12px;${mono}overflow:hidden"><div style="position:absolute;left:0;right:0;top:0;padding:2px 0;border-bottom:1px solid color-mix(in srgb, currentColor 30%, transparent);background:var(--pmt-cz-ground,#1e1e1e)">impl Recipe {  <span style="opacity:.6">← stays in view while you read inside it</span></div><div style="padding-top:28px;animation:smxCzScroll 4s ease-in-out infinite alternate">${lines(['    let k = n as f32;', '    let steps: Vec&lt;_&gt; = self.steps.iter()', '        .map(|s| s.scale(k)).collect();', '    if steps.is_empty() {', '        return self.clone();', '    }', '    Recipe { serves: n, steps }', '}'])}</div></div><style>@keyframes smxCzScroll{to{transform:translateY(-60px)}}</style>`;
-  } });
-  CZ.closeup('editor', /smoothScroll|scrollPastEnd|reveal/i, { title: 'Scrolling', draw: (b, info) => {
-    const stepped = info.key === 'smoothScroll' && isOff(info);
-    b.innerHTML = `<div style="position:absolute;inset:10px 12px;${mono}overflow:hidden">${caption(info.key === 'scrollPastEnd' ? 'Lets the last line travel up the window, leaving empty room under it.' : info.key === 'reveal' ? 'New lines ease in as they arrive.' : stepped ? 'Off: the text jumps a few lines at a time.' : 'On: the text glides when you scroll.')}<div style="animation:smxCzScroll2 2.4s ${stepped ? 'steps(6)' : 'ease-in-out'} infinite alternate">${lines(Array.from({ length: 14 }, (_, i) => 'step_' + (i + 1) + '();'))}</div></div><style>@keyframes smxCzScroll2{to{transform:translateY(-110px)}}</style>`;
-  } });
-  CZ.closeup('editor', /^(scanlines|glow)|text glow/i, { title: 'Screen effects', draw: (b, info) => {
-    const on = !isOff(info), scan = info.key === 'scanlines';
-    b.innerHTML = `<div style="position:absolute;inset:12px;display:grid;align-content:start;gap:8px">${caption(scan ? 'Thin dark lines across the text, like an old screen. Drawn large here.' : 'A soft light around the letters. Drawn large here.')}<div style="position:relative;padding:12px 14px;border-radius:6px;border:1px solid color-mix(in srgb, currentColor 22%, transparent);font:28px/1.3 var(--pm-font-code, ui-monospace, monospace);${!scan && on ? 'text-shadow:0 0 10px currentColor, 0 0 2px currentColor;' : ''}">fn scaled()${scan && on ? '<i style="position:absolute;inset:0;border-radius:6px;background:repeating-linear-gradient(to bottom, transparent 0 3px, rgb(0 0 0 / .32) 3px 4px)"></i>' : ''}</div><div style="font:11.5px/1.4 var(--body-font, inherit);opacity:.7">${on ? 'On' : 'Off'}</div></div>`;
-  } });
-  CZ.closeup('editor', /tabSize|insertSpaces|detectIndent/i, { title: 'Indentation', draw: (b, info) => {
-    const n = Number(String(info.choice || info.value).replace(/\D+/g, '')) || 4;
-    const pad = (k) => '<span style="opacity:.4">' + '·'.repeat(n * k) + '</span>';
-    b.innerHTML = `<div style="position:absolute;inset:10px 12px;${mono}">${caption(info.key === 'tabSize' ? `Each level is pushed in by ${n} spaces.` : info.key === 'insertSpaces' ? 'Whether pressing Tab types spaces or one tab character. It looks the same; other tools may care.' : 'Reads each file and keeps the indentation it already uses.')}${lines(['fn plan() {', pad(1) + 'for step in steps {', pad(2) + 'cook(step);', pad(1) + '}', '}'])}</div>`;
-  } });
-  CZ.closeup('editor', /diffLayout/i, { title: 'How changes are shown', draw: (b, info) => {
-    const side = /side/i.test(info.choice + info.value);
-    const pane = (t, add) => `<div style="flex:1;border:1px solid color-mix(in srgb, currentColor 25%, transparent);border-radius:6px;padding:6px 8px;${mono}"><div style="font:600 11px/1.4 var(--body-font, inherit);opacity:.7;margin-bottom:4px">${t}</div>${add}</div>`;
-    const del = '<div style="background:rgb(240 80 80 / .18)">- serves: 2</div>', ins = '<div style="background:rgb(60 200 120 / .18)">+ serves: 4</div>';
-    b.innerHTML = `<div style="position:absolute;inset:12px;display:grid;align-content:start;gap:8px">${caption(side ? 'Side by side: the old file on the left, the new one on the right.' : 'In one column: the removed line above the line that replaced it.')}<div style="display:flex;gap:10px">${side ? pane('Before', del) + pane('After', ins) : pane('Changes', del + ins)}</div></div>`;
-  } });
+  const UPS = {
+    ligatures: { title: 'Ligatures', draw: (b, info) => {
+      const on = !isOff(info);
+      const pair = (label, glyphs, chosen) => `<div style="flex:1;border:1px solid color-mix(in srgb, currentColor ${chosen ? 70 : 22}%, transparent);border-radius:6px;padding:6px 10px"><div style="font:600 11px/1.4 var(--body-font, inherit);opacity:.75;margin-bottom:2px">${label}${chosen ? ' (your choice)' : ''}</div><div style="font:26px/1.2 ui-monospace, 'JetBrains Mono', monospace;white-space:pre">${glyphs}</div></div>`;
+      b.innerHTML = `<div style="display:grid;gap:6px;padding:8px 10px">${caption('The same four pairs, drawn large. With ligatures on, each pair joins into one symbol; you still type two characters.')}<div style="display:flex;gap:8px">${pair('On', '→  ≠  ⇒  ≥', on)}${pair('Off', '-&gt;  !=  =&gt;  &gt;=', !on)}</div></div>`;
+    } },
+    rulers: { title: 'Rulers', draw: (b, info) => {
+      const cols = String(info.value || info.choice).split(/[^\d]+/).map(Number).filter(Boolean);
+      const col = cols[0] || 0;
+      b.innerHTML = `<div style="position:relative;padding:8px 10px;${mono}">${caption(cols.length ? `A faint line at column ${cols.join(' and ')}, to show where a line gets long. The sample is narrower than that.` : 'No ruler.')}${lines(['// a line that runs past the ruler so you can see where it sits ............', 'let total = steps.iter().map(|s| s.minutes).sum::&lt;u32&gt;();', 'short();'])}${col ? `<i style="position:absolute;top:30px;bottom:6px;left:calc(38px + ${Math.min(col, 96)} * .5ch);border-left:1px solid currentColor;opacity:.5"></i>` : ''}</div>`;
+    } },
+    guides: { title: 'Indent guides', draw: (b, info) => {
+      const hay = (info.choice + ' ' + info.value).toLowerCase();
+      const off = /off|none/.test(hay) && info.key === 'indentGuides', rainbow = /rainbow/.test(hay);
+      const g = (n) => Array.from({ length: n }, (_, i) => `<i style="display:inline-block;width:2ch;border-left:1px solid ${off ? 'transparent' : rainbow ? ['#e06c75', '#e5c07b', '#98c379', '#61afef'][i % 4] : 'currentColor'};opacity:${rainbow ? .9 : .4}">&nbsp;</i>`).join('');
+      b.innerHTML = `<div style="padding:8px 10px;${mono}">${caption('The thin lines that show how deep each line sits, here five levels deep.')}${lines(['fn plan(recipe: &Recipe) {', g(1) + 'for step in &recipe.steps {', g(2) + 'if step.needs_oven {', g(3) + 'match step.heat {', g(4) + 'Heat::High =&gt; preheat(220),', g(3) + '}'])}</div>`;
+    } },
+    sticky: { title: 'Sticky scroll', draw: (b) => {
+      b.innerHTML = `<div style="position:relative;height:118px;padding:8px 10px;${mono}overflow:hidden"><div style="position:absolute;left:10px;right:10px;top:8px;padding:2px 0;border-bottom:1px solid color-mix(in srgb, currentColor 30%, transparent);background:var(--pmt-cz-ground,#1e1e1e);z-index:1">impl Recipe {  <span style="opacity:.6">← stays in view while you read inside it</span></div><div style="padding-top:26px;animation:smxCzScroll 4s ease-in-out infinite alternate">${lines(['    let k = n as f32;', '    let steps: Vec&lt;_&gt; = self.steps.iter()', '        .map(|s| s.scale(k)).collect();', '    if steps.is_empty() {', '        return self.clone();', '    }', '    Recipe { serves: n, steps }'])}</div></div><style>@keyframes smxCzScroll{to{transform:translateY(-60px)}}</style>`;
+    } },
+    tabs: { title: 'Tab size', draw: (b, info) => {
+      const n = Number(String(info.choice || info.value).replace(/\D+/g, '')) || 4;
+      const pad = (k) => '<span style="opacity:.4">' + '·'.repeat(n * k) + '</span>';
+      b.innerHTML = `<div style="padding:8px 10px;${mono}">${caption(`Each level is pushed in by ${n} spaces. The sample file keeps its own indentation, so it does not move.`)}${lines(['fn plan() {', pad(1) + 'for step in steps {', pad(2) + 'cook(step);', pad(1) + '}', '}'])}</div>`;
+    } },
+    diff: { title: 'How changes are shown', draw: (b, info) => {
+      const side = /side/i.test(info.choice + info.value);
+      const pane = (t, add) => `<div style="flex:1;border:1px solid color-mix(in srgb, currentColor 25%, transparent);border-radius:6px;padding:6px 8px;${mono}"><div style="font:600 11px/1.4 var(--body-font, inherit);opacity:.7;margin-bottom:4px">${t}</div>${add}</div>`;
+      const del = '<div style="background:rgb(240 80 80 / .18)">- serves: 2</div>', ins = '<div style="background:rgb(60 200 120 / .18)">+ serves: 4</div>';
+      b.innerHTML = `<div style="display:grid;gap:6px;padding:8px 10px">${caption(side ? 'Side by side: the old file on the left, the new one on the right. You see it when you open a change, not in this sample.' : 'In one column: the removed line above the line that replaced it. You see it when you open a change, not in this sample.')}<div style="display:flex;gap:8px">${side ? pane('Before', del) + pane('After', ins) : pane('Changes', del + ins)}</div></div>`;
+    } }
+  };
 })(window);
