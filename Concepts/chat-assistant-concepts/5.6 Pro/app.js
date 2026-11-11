@@ -2751,7 +2751,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const preTop=keepTopBefore();
     if(HOSTED) pmPatch(document.getElementById('pmRoot'),`<main class="pm-shell" data-pm56-hosted><div class="workspace"><section class="assistant-pane"><div class="${gridClass}">${historyPinned?renderHistory():''}${activityPinned?renderActivityPanel('dock'):''}${renderChat()}</div></section></div></main>`);
     else pmPatch(document.getElementById('pmRoot'),`<main class="pm-shell">${renderHeader()}<div class="workspace ${state.editorRevealed?'editor-revealed':''}">${renderEditor()}<div class="resizer main-resizer" data-resize="editor"></div><section class="assistant-pane"><div class="${gridClass}">${historyPinned?renderHistory():''}${activityPinned?renderActivityPanel('dock'):''}${renderChat()}</div></section></div>${renderStatusBar()}</main>`);
-    document.getElementById('pmRoot').setAttribute('aria-busy','false');
+    { const r=document.getElementById('pmRoot'); if(r.getAttribute('aria-busy')!=='false') r.setAttribute('aria-busy','false'); } // only when it differs: each full render rewrote it, a write every DOM watcher of the page heard (pm7-perf lane K)
     const post=snapScroll();
     const flips=cut?[]:flipHeights(flipTargets, flipBefore);
     if(!cut){ keepTopAfter(preTop,post); flipMoves(moveTargets, moveBefore); }
