@@ -11,7 +11,7 @@ FIELDS names every observation the rows read; the checker passes no other.
 """
 import pm_guard_isolation as g
 
-FIELDS = ('wrapper_schema_valid', 'wrapper_packed_size')
+FIELDS = ('wrapper_schema_valid', 'wrapper_packed_size', 'wrapper_integers_exact')
 
 
 def WR01_schema(value, context):
@@ -19,7 +19,15 @@ def WR01_schema(value, context):
 
 
 def WR02_limit(value, context):
-    return 'application_wrapper_limit' if value['wrapper_packed_size'] > 16384 else None
+    return 'application_wrapper_limit' if value['wrapper_packed_size'] is not None and value['wrapper_packed_size'] > 16384 else None
+
+
+def WR07_physical(value, context):
+    return 'application_wrapper_encoding' if value['wrapper_packed_size'] is None else None
+
+
+def WR08_integers(value, context):
+    return 'application_wrapper_schema' if value['wrapper_integers_exact'] is not True else None
 
 
 def case(value):
@@ -27,10 +35,14 @@ def case(value):
     table = g.GuardTable([
         g.Guard('WR01_schema', g.Invariant('/<application_wrapper>', 'conforms to the StorageApplicationV2 wrapper schema'), 'application_wrapper_schema', WR01_schema),
         g.Guard('WR02_limit', g.Invariant('/<application_wrapper>', 'the complete MessagePack wrapper is at most 16384 bytes'), 'application_wrapper_limit', WR02_limit),
+        g.Guard('WR07_physical', g.Invariant('/<application_wrapper>', 'encodes under the CV-366 APP_PHYSICAL profile: shared storage_value_bytes'), 'application_wrapper_encoding', WR07_physical),
+        g.Guard('WR08_integers', g.Invariant('/<application_wrapper integer slots>', 'every integer slot, including the inline record, is an exact current integer'), 'application_wrapper_schema', WR08_integers),
     ])
 
     def check(value):
         table.require('WR01_schema', value, context)
         table.require('WR02_limit', value, context)
+        table.require('WR07_physical', value, context)
+        table.require('WR08_integers', value, context)
         return True
     return g.Case(table, check, context)

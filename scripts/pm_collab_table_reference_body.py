@@ -27,7 +27,7 @@ def RF05_json_object(value, context):
 
 
 def RF06_canonical(value, context):
-    return 'reference_canonical' if value['canonical_sha256'] is not None and value['canonical_sha256'] != value['body_sha256'] else None
+    return 'reference_canonical' if value['canonical_sha256'] != value['body_sha256'] else None
 
 
 def case(value):
@@ -36,7 +36,7 @@ def case(value):
         g.Guard('RF03_size', g.Invariant('/payload_ref', 'declared size equals the body byte length'), 'reference_size', RF03_size),
         g.Guard('RF04_hash', g.Invariant('/payload_ref', 'declared BLAKE3 equals the body hash'), 'reference_hash', RF04_hash),
         g.Guard('RF05_json_object', g.Invariant('/payload_ref', 'the body decodes to a JSON object'), 'reference_json', RF05_json_object),
-        g.Guard('RF06_canonical', g.Invariant('/payload_ref', 'the body is its own canonical JSON'), 'reference_canonical', RF06_canonical),
+        g.Guard('RF06_canonical', g.Invariant('/payload_ref', 'the body is its own canonical JSON (a body with no lossless canonical form has none)'), 'reference_canonical', RF06_canonical),
     ])
 
     def check(value):

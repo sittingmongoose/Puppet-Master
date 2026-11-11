@@ -41,10 +41,15 @@ phase('payload_object', 'CV-460 payload layer 1: the payload is a JSON object.',
 phase('payload_schema', 'CV-460 payload layer 1: the closed family/edition schema occurrence.', [
     ('PS01_payload_schema', '/payload', 'conforms to the closed family edition schema', 'schema', "value['payload_schema_valid'] is not True"),
 ])
+phase('payload_numbers', 'CV-1100 current input (sweep part 2B): every payload integer slot holds an exact current integer.', [
+    ('PN01_integer_slots', '/<integer slots>', 'every schema integer slot (type integer, integer const or enum) is an exact current integer: shared current_integer with the slot bounds',
+     'number_domain', "value['integer_slots_exact'] is not True"),
+])
 phase('payload_rules', 'CV-460 payload layers 2-6: epoch, timestamp, identity recipe and family arithmetic.', [
     ('PR01_epoch_integer', '/recovery_epoch', 'is an exact int', 'epoch_type', "value['epoch_type'] != 'int'"),
     ('PR02_epoch_nonnegative', '/recovery_epoch', 'an int epoch is not negative', 'epoch_type', "value['epoch_negative'] is True"),
-    ('PR03_family_timestamp', '/<family timestamp>', 'is a UTC timestamp ending in Z', 'valid_utc_datetime', "value['family_timestamp_valid'] is not True"),
+    ('PR03_family_timestamp', '/<family timestamp>', 'passes the shared CV-1101 date_time predicate, STORAGE_UTC_Z profile (UTC ending in uppercase Z)', 'valid_utc_datetime',
+     "value['family_timestamp_valid'] is not True"),
     ('PR04_idempotency_recipe', '/idempotency_key', 'equals the SP-460/CV-366 recipe for the payload and epoch', 'identity_recipe',
      "value['idempotency_key'] != value['expected_idempotency_key']"),
     ('PR05_revision_rule', '/previous_definition_revision', 'configuration_changed: equals definition_revision - 1', 'revision_rule',
@@ -56,6 +61,19 @@ phase('payload_rules', 'CV-460 payload layers 2-6: epoch, timestamp, identity re
 # ================================================================ decision layer: EventRecord joins (CV-460 rule 7)
 phase('envelope_schema', 'CV-460 rule 7: the EventRecord schema occurrence.', [
     ('EV01_record_schema', '/', 'conforms to the EventRecord schema', 'event_record_schema', "value['record_schema_valid'] is not True"),
+])
+phase('envelope_datetime', 'CV-1101 (sweep part 2B): EventRecord timestamps through the shared date_time predicate, one profile per field.', [
+    ('EV15_occurred_at_format', '/occurred_at_utc', 'passes the shared date_time predicate, EVENT_RECORD profile (CV-317/CV-1101)', 'event_record_schema',
+     "value['occurred_at_valid'] is not True"),
+    ('EV16_observed_at_format', '/observed_at_utc', 'passes the shared date_time predicate, STORAGE_UTC_Z profile (CV-253)', 'event_record_schema',
+     "value['observed_at_valid'] is not True"),
+    ('EV17_persisted_at_format', '/persisted_at_utc', 'passes the shared date_time predicate, STORAGE_UTC_Z profile (CV-253)', 'event_record_schema',
+     "value['persisted_at_valid'] is not True"),
+])
+phase('envelope_numbers', 'CV-1100/SP-1100 (sweep part 2B): EventRecord integer slots of a current record.', [
+    ('EV18_sequence_id', '/sequence_id', 'is a Storage uint64: shared storage_uint64', 'event_record_schema', "value['sequence_id_exact'] is not True"),
+    ('EV19_producer_sequence_id', '/producer_sequence_id', 'is null or an exact current integer of at least 0: shared current_integer', 'event_record_schema',
+     "value['producer_sequence_exact'] is not True"),
 ])
 phase('envelope_family', 'CV-460 rule 7: the record names the boundary family.', [
     ('EV02_event_type', '/event_type', 'equals the boundary event family', 'event_type', "value['record_event_type'] != value['boundary_event_type']"),
@@ -89,6 +107,8 @@ phase('representation', 'SP-337 representation: inline limit and reference route
     ('RP01_inline_limit', '/payload', 'an inline body encodes in at most 16384 UTF-8 bytes', 'inline_limit',
      "value['inline_size'] is not None and value['inline_size'] > 16384"),
     ('RP02_reference_body', '/payload', 'a referenced body leaves payload empty', 'reference_inline_body', "value['reference_body_empty'] is False"),
+    ('RP03_event_value', '/', 'the stored record encodes under the SP-236/SP-1100 EVENT_VALUE profile: shared storage_value_bytes', 'event_value_encoding',
+     "value['event_value_encodable'] is not True"),
 ])
 phase('reference_format', 'SP-337 reference: grammar and presence.', [
     ('RF01_format', '/payload_ref', 'is a full-match payload:blake3 application/json reference', 'reference_format', "value['reference_format_valid'] is not True"),
@@ -98,8 +118,8 @@ phase('reference_body', 'SP-337 reference: size, hash, JSON object and canonical
     ('RF03_size', '/payload_ref', 'declared size equals the body byte length', 'reference_size', "value['declared_size'] != value['body_size']"),
     ('RF04_hash', '/payload_ref', 'declared BLAKE3 equals the body hash', 'reference_hash', "value['declared_blake3'] != value['body_blake3']"),
     ('RF05_json_object', '/payload_ref', 'the body decodes to a JSON object', 'reference_json', "value['body_is_object'] is not True"),
-    ('RF06_canonical', '/payload_ref', 'the body is its own canonical JSON', 'reference_canonical',
-     "value['canonical_sha256'] is not None and value['canonical_sha256'] != value['body_sha256']"),
+    ('RF06_canonical', '/payload_ref', 'the body is its own canonical JSON (a body with no lossless canonical form has none)', 'reference_canonical',
+     "value['canonical_sha256'] != value['body_sha256']"),
 ])
 
 # ================================================================ retention (DL-092, RP-CHAT-THREAD-LIFETIME)
@@ -124,6 +144,12 @@ phase('retention_values_c', 'DL-092 retention values (version).', retention_rows
 # ================================================================ checkpoint (SP-278 adoption)
 phase('checkpoint_schema', 'Projection checkpoint schema occurrence.', [
     ('CK01_schema', '/', 'conforms to the checkpoint schema', 'checkpoint_schema', "value['checkpoint_schema_valid'] is not True"),
+])
+phase('checkpoint_values', 'CV-1101 and CV-1100/SP-1100 (sweep part 2B): checkpoint timestamps and integer slots.', [
+    ('CK20_times', '/<checkpoint timestamps>', 'every checkpoint timestamp passes the shared date_time predicate, STORAGE_UTC_Z profile', 'checkpoint_schema',
+     "value['checkpoint_times_valid'] is not True"),
+    ('CK21_integers', '/<checkpoint integer slots>', 'every integer slot is an exact current integer; the SP-278/SP-460 Storage fields are uint64', 'checkpoint_schema',
+     "value['checkpoint_integers_exact'] is not True"),
 ])
 phase('checkpoint_instance', 'Checkpoint storage instance copies and partition.', [
     ('CK02_checkpoint_instance', '/storage_instance_id', 'equals the live storage instance', 'checkpoint_instance', "value['checkpoint_instance'] != value['storage_instance_id']"),
@@ -156,6 +182,10 @@ phase('checkpoint_event', 'Checkpoint last-event scope joins (the event then pas
     ('CK17_event_scope', '/<last_event>/scope_kind', 'equals the checkpoint scope_kind', 'checkpoint_event', "value['event_scope_kind'] != value['checkpoint_scope_kind']"),
     ('CK18_event_project', '/<last_event>/project_id', 'equals the checkpoint project_id', 'checkpoint_event', "value['event_project_id'] != value['checkpoint_project_id']"),
 ])
+phase('checkpoint_recipe', 'SP-1101 (sweep part 2B): the checkpoint last event is resolved once from sealed custody and verified by its frozen recipe.', [
+    ('CK22_last_event_custody', '/<last_event>', 'the shared RetainedDispatcher resolves the last event from sealed custody and its frozen recipe verifies it', 'checkpoint_event',
+     "value['dispatch_refusal'] is not None"),
+])
 phase('checkpoint_empty_cursor', 'An empty checkpoint cursor matches an empty context cursor.', [
     ('CK19_empty_cursor', '/source_cursor', 'a null cursor has a null context cursor', 'checkpoint_cursor', "value['context_cursor_is_null'] is not True"),
 ])
@@ -174,6 +204,13 @@ phase('historical_flags', 'Retained-history controls and the original record joi
     ('HI08_original', '/', 'equals the captured original record', 'historical_forged', same('record_sha256', 'original_record_sha256')),
 ])
 
+phase('historical_recipe', 'SP-1101 (sweep part 2B): the retained original is resolved once from sealed custody and verified by its frozen recipe.', [
+    ('HR01_recipe_custody', '/', 'the shared RetainedDispatcher resolves this original from sealed custody and its frozen recipe verifies it', 'historical_original_recipe',
+     "value['dispatch_refusal'] is not None"),
+    ('HR02_write_epoch', '/<context>/write_epoch', 'equals the write epoch of the authenticated original', 'historical_original_recipe',
+     "value['dispatch_refusal'] is None and value['context_write_epoch'] != value['custody_write_epoch']"),
+])
+
 # ================================================================ prepared source custody (SP-460..478)
 FAM = repr(FAMILIES)
 phase('source_object', 'Prepared source holder is an object.', [
@@ -184,6 +221,14 @@ phase('source_family', 'Prepared source names one of the 18 families.', [
 ])
 phase('source_schema', 'Prepared source schema occurrence for its family.', [
     ('SO03_schema', '/', 'conforms to the family prepared-source schema', 'source_schema', "value['source_schema_valid'] is not True"),
+])
+phase('source_times', 'CV-1101 (sweep part 2B): Collaborative Workflows owner timestamps in the prepared source.', [
+    ('SO06_owner_times', '/owner_record/**, /review_target_pack/** (utc_timestamp)', 'every owner timestamp passes the shared date_time predicate, EVENT_RECORD profile; the owner pattern is unchanged',
+     'source_schema', "value['owner_times_valid'] is not True"),
+])
+phase('source_numbers', 'CV-1100/SP-1100 (sweep part 2B): prepared-source integer slots outside the semantic body.', [
+    ('SO07_integer_slots', '/<integer slots outside semantic_body>', 'every integer slot is an exact current integer; recovery_epoch is a Storage uint64', 'source_schema',
+     "value['integer_slots_exact'] is not True"),
 ])
 phase('source_context_type', 'Independently read source controls are an object.', [
     ('SO04_context_object', '/<context>', 'is an object', 'source_context_missing', "value['context_type'] != 'dict'"),
@@ -302,7 +347,12 @@ phase('prepared_join', 'Prepared event: body and envelope metadata copies.', [
 ])
 phase('wrapper_shape', 'SP-351 application wrapper schema and complete MessagePack size.', [
     ('WR01_schema', '/<application_wrapper>', 'conforms to the StorageApplicationV2 wrapper schema', 'application_wrapper_schema', "value['wrapper_schema_valid'] is not True"),
-    ('WR02_limit', '/<application_wrapper>', 'the complete MessagePack wrapper is at most 16384 bytes', 'application_wrapper_limit', "value['wrapper_packed_size'] > 16384"),
+    ('WR02_limit', '/<application_wrapper>', 'the complete MessagePack wrapper is at most 16384 bytes', 'application_wrapper_limit',
+     "value['wrapper_packed_size'] is not None and value['wrapper_packed_size'] > 16384"),
+    ('WR07_physical', '/<application_wrapper>', 'encodes under the CV-366 APP_PHYSICAL profile: shared storage_value_bytes', 'application_wrapper_encoding',
+     "value['wrapper_packed_size'] is None"),
+    ('WR08_integers', '/<application_wrapper integer slots>', 'every integer slot, including the inline record, is an exact current integer', 'application_wrapper_schema',
+     "value['wrapper_integers_exact'] is not True"),
 ])
 phase('wrapper_join', 'SP-351 application wrapper record and header joins.', [
     ('WR03_record', '/<application_wrapper>/record', 'the inline or referenced record equals owner_record', 'application_wrapper_record',
@@ -310,6 +360,13 @@ phase('wrapper_join', 'SP-351 application wrapper record and header joins.', [
     ('WR04_instance', '/<application_wrapper>/storage_instance_id', 'equals the source storage instance', 'application_wrapper_identity', "value['wrapper_instance'] != value['value_instance']"),
     ('WR05_server', '/<application_wrapper>/server_id', 'equals the body Server', 'application_wrapper_identity', "value['wrapper_server'] != value['body_server']"),
     ('WR06_scope', '/<application_wrapper>/scope', 'equals the record application scope', 'application_wrapper_identity', same('wrapper_scope_sha256', 'record_scope_sha256')),
+])
+phase('projection_value_schema', 'A projection row value conforms to its definition.', [
+    ('PV01_schema', '/', 'conforms to its projection definition', 'projection_value', "value['projection_schema_valid'] is not True"),
+])
+phase('projection_value_times', 'CV-1101 (sweep part 2B): projection row timestamps.', [
+    ('PV02_times', '/<projection timestamps>', 'every projection timestamp passes the shared date_time predicate, STORAGE_UTC_Z profile', 'projection_value',
+     "value['projection_times_valid'] is not True"),
 ])
 phase('read_token', 'SP-278 durable read token exemption is the canonical token only.', [
     ('TK01_canonical_token', '/<storage value>', 'is the canonical nine-field durable read token', 'read_token_exemption', "value['canonical_read_token'] is not True"),
@@ -614,9 +671,10 @@ phase('int_probe', 'Every contract probe returns its expected first refusal.', [
 phase('fix_numeric', 'Fixture: numeric vectors and family numeric identity.', [
     ('IF01_numeric_canonical', '/numeric_vectors/<i>', 'decodes to its canonical text', 'numeric_canonical', "value['actual_canonical'] != value['canonical']"),
 ])
-phase('fix_numeric_family', 'Fixture: an alternate numeric spelling keeps every identity and stays valid.', [
-    ('IF02_numeric_identity', '/numeric_family_cases/<i>', 'alternate spelling gives the same identities', 'numeric_identity', "value['original_identities'] != value['alternate_identities']"),
-    ('IF03_numeric_valid', '/numeric_family_cases/<i>', 'alternate spelling is a valid payload', 'numeric_identity', "value['alternate_rejection'] is not None"),
+phase('fix_numeric_family', 'Fixture: an alternate numeric spelling keeps every v1 identity and is refused as a current input (CV-1100).', [
+    ('IF02_numeric_identity', '/numeric_family_cases/<i>', 'alternate spelling gives the same v1 identities', 'numeric_identity', "value['original_identities'] != value['alternate_identities']"),
+    ('IF03_numeric_current', '/numeric_family_cases/<i>/current_rejection', 'the alternate spelling as a current input refuses exactly as the case records (CV-1100)', 'numeric_identity',
+     "value['alternate_rejection'] != value['expected_current_rejection']"),
 ])
 phase('fix_payload', 'Fixture: positive payloads accept in their edition; negatives refuse at their layer.', [
     ('IF04_positive_payload', '/payloads/<i>', 'accepts', 'positive_payload', "value['positive_rejection'] is not None"),

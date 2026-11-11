@@ -27,7 +27,6 @@ from urllib.parse import urljoin
 from blake3 import blake3
 import base64
 import copy
-import datetime as dt
 import hashlib
 import math
 import gc
@@ -44,6 +43,15 @@ from typing import Any
 
 from jsonschema import Draft202012Validator
 from referencing import Registry, Resource
+
+if str(Path(__file__).resolve().parent) not in sys.path:
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+# Sweep part 2B: the gated shared number rule (CV-1100, SP-1100, SP-1101) and the shared CV-1101 date-time
+# predicate. Every local recipe ID, preimage, prefix and tuple position stays DC's own (SP-460, CV-366).
+from pm_event_numbers import (APP_PHYSICAL, EVENT_VALUE, FrozenRecipe, JsonNumber, OriginalBinding,  # noqa: E402
+                              OriginalCustody, ParsedDecimal, RecipeTuple, Refusal, RetainedDispatcher,
+                              current_integer, loads_current_json, qualified_jcs, storage_uint64, storage_value_bytes)
+from pm_event_datetime import EVENT_RECORD, STORAGE_UTC_Z, date_time  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 PAYLOAD_PATH = "Plans/collaboration_event_payloads.schema.json"
@@ -105,9 +113,8 @@ ATTEMPT_FAMILIES = {"collaboration.participant_started", "collaboration.particip
 # phase it is about to evaluate; it never decides acceptance. A reused boundary (payload, envelope, reference,
 # source) is a phase chain of its callers; a caller that forwards a reused boundary's refusal under its own
 # legacy code (for example "payload" or "checkpoint_event") still refuses through that boundary's row.
-if str(Path(__file__).resolve().parent) not in sys.path:
-    sys.path.insert(0, str(Path(__file__).resolve().parent))
 import pm_collab_p2a_cases  # noqa: E402  (sweep part 2A witnesses)
+import pm_collab_p2b_cases  # noqa: E402  (sweep part 2B witnesses)
 _TABLE_ROWS: dict[str, list] = {}
 # Set to a list only by the guard-table suite builder (scripts/pm_collab_guard_suites.py); never by a checker path.
 RECORDER = None
@@ -190,7 +197,13 @@ def load(path: str, root: Path = ROOT) -> Any:
 
 
 def decode_json(raw):
-    """Decode mathematical integers before binary64 can round a decimal/exponent spelling."""
+    """DC's v1 (frozen) decoder: mathematical integers before binary64 can round a decimal/exponent spelling.
+
+    It reads DC's own Plans data and, inside the SP-1101 frozen v1 verifier, retained originals; it is not the
+    current-input parser. Current raw input (SP-337 bodies, wrapper record references) goes through
+    decode_current (the shared loads_current_json, CV-1100). Integer tokens of any length become exact ints
+    through the shared JsonNumber (no binary64, no Python 4,300-digit int() limit, no global setting).
+    """
     def number(token):
         exact = Decimal(token)
         if exact == exact.to_integral_value():
@@ -208,8 +221,23 @@ def decode_json(raw):
                 raise ValueError("duplicate JSON key")
             result[key] = value
         return result
-    return json.loads(raw, parse_float=number, object_pairs_hook=pairs,
+    def integer(token):
+        try:
+            return JsonNumber(token, True).exact()
+        except Refusal as exc:
+            raise ValueError(exc.reason) from None
+    return json.loads(raw, parse_float=number, parse_int=integer, object_pairs_hook=pairs,
                       parse_constant=lambda value: (_ for _ in ()).throw(ValueError(value)))
+
+
+def decode_current(raw):
+    """CV-1100 current raw input: the shared loads_current_json (exact ints of any length; -0, leading zeros,
+    non-finite tokens, duplicate keys, lone surrogates and malformed text refuse; fractional and exponent tokens
+    stay exact ParsedDecimal, never converted to an integer). Raises ValueError on a refusal, as decode_json did."""
+    try:
+        return loads_current_json(raw)
+    except Refusal as exc:
+        raise ValueError(exc.reason) from None
 
 
 def memory_floor():
@@ -228,14 +256,36 @@ def memory_floor():
         time.sleep(10)
 
 
-def canonical(value: Any) -> str:
-    """DL-077 JSON plus one numerical representation for each admitted mathematical value.
+def exact_decimal(n: int) -> str:
+    """The exact decimal text of an int of any length, without Python's 4,300-digit str() limit or a global setting."""
+    if n < 0:
+        return "-" + exact_decimal(-n)
+    chunks = []
+    while n >= 10 ** 9:
+        n, low = divmod(n, 10 ** 9)
+        chunks.append("%09d" % low)
+    chunks.append(str(n))
+    return "".join(reversed(chunks))
 
-    Exact integers stay arbitrary precision after lossless decimal decoding.
-    Already-decoded unsafe integral binary64 values refuse rather than authenticate
-    a rounded source. Other admitted finite floats use their shortest decimal.
+
+def canonical(value: Any) -> str:
+    """DC's local DL-077 JSON commitment (SP-460, recipe v1): one numerical representation for each admitted
+    mathematical value. It is DC's own payload/row/reference recipe (CV-1100 keeps local recipes with their owner),
+    not EventRecord JCS and not a physical profile.
+
+    Exact integers stay arbitrary precision (exact_decimal). Already-decoded unsafe integral binary64 values
+    refuse rather than authenticate a rounded source. Other admitted finite floats use their shortest decimal.
+    An exact ParsedDecimal/Decimal from current raw input takes the same form when binary64 holds it exactly
+    and refuses otherwise, as the v1 decoder did. The bytes of every value v1 accepted are unchanged.
     """
     def normalize(node):
+        if isinstance(node, Decimal):
+            if not node.is_finite():
+                raise ValueError("nonfinite JSON number")
+            as_float = float(node)
+            if not math.isfinite(as_float) or Decimal(repr(as_float)) != node:
+                raise ValueError("JSON number cannot round-trip losslessly")
+            node = as_float
         if isinstance(node, float):
             if not math.isfinite(node) or (node.is_integer() and abs(node) > 9007199254740991):
                 raise ValueError("nonfinite or already-rounded JSON number")
@@ -245,7 +295,26 @@ def canonical(value: Any) -> str:
         if isinstance(node, list):
             return [normalize(child) for child in node]
         return node
-    return json.dumps(normalize(value), sort_keys=True, separators=(",", ":"), ensure_ascii=False, allow_nan=False)
+
+    def text(node):
+        if node is None:
+            return "null"
+        if node is True:
+            return "true"
+        if node is False:
+            return "false"
+        if isinstance(node, int):
+            return exact_decimal(node)
+        if isinstance(node, (float, str)):
+            return json.dumps(node, ensure_ascii=False, allow_nan=False)
+        if isinstance(node, (list, tuple)):
+            return "[" + ",".join(text(child) for child in node) + "]"
+        if isinstance(node, dict):
+            if any(not isinstance(key, str) for key in node):
+                raise TypeError("non-string JSON key")
+            return "{" + ",".join(json.dumps(key, ensure_ascii=False) + ":" + text(node[key]) for key in sorted(node)) + "}"
+        raise TypeError("not JSON: " + type(node).__name__)
+    return text(normalize(value))
 
 
 def row_sha256(value: Any) -> str:
@@ -253,8 +322,9 @@ def row_sha256(value: Any) -> str:
 
 
 def jcs(value: Any) -> str:
-    """RFC 8785 for the arrays of strings and nulls the identity recipes hash."""
-    return json.dumps(value, separators=(",", ":"), ensure_ascii=False, allow_nan=False)
+    """Actual RFC 8785 (the shared qualified_jcs, CV-1100) for the arrays of strings and nulls the SP-460
+    identity recipes hash; every numeric subject component is already DC's canonical decimal string."""
+    return qualified_jcs(value).decode("utf-8")
 
 
 def sha(text: str) -> str:
@@ -304,14 +374,16 @@ def same_fact(left, right):
     except (TypeError,ValueError):return False
 
 
-def valid_utc(value: Any) -> bool:
-    if not isinstance(value, str) or not value.endswith("Z"):
-        return False
+def shared_timestamp(value: Any, profile: str) -> bool:
+    """The shared CV-1101 predicate (pm_event_datetime.date_time) with the field owner's explicit profile.
+
+    True only for an exact str the predicate returns unchanged; any Refusal (syntax, calendar, range, offset,
+    leap second, zone profile, a str subclass or a non-string) is False. The string is never rewritten.
+    """
     try:
-        dt.datetime.fromisoformat(value[:-1] + "+00:00")
-    except ValueError:
+        return date_time(value, profile=profile) == value
+    except Refusal:
         return False
-    return True
 
 
 # --- schema validation --------------------------------------------------------------------------------------
@@ -340,10 +412,186 @@ def schema_registry(root: Path = ROOT) -> Registry:
     return Registry(retrieve=retrieve).with_resources(resources).crawl()
 
 
+class _ExactInt(int):
+    """An exact int whose repr never runs Python's 4,300-digit str() conversion.
+
+    jsonschema writes repr(instance) into the text of every candidate error, even inside a discarded not/anyOf
+    branch, so an exact integer of more than 4,300 digits made schema validation raise (the DX/DS15/DF/DM crash
+    class, found in DC at sweep part 2B). Only the message text changes; type, value and comparisons are the int's.
+    """
+
+    def __repr__(self):
+        return "<exact integer of %d bits>" % int(self).bit_length()
+
+    __str__ = __repr__
+
+
+_HUGE = 10 ** 4000
+
+
+def message_safe(instance):
+    """The instance unchanged, or (only when it holds an int of 4,001 or more digits) a copy with each such int
+    wrapped in _ExactInt. Values are never rounded, capped or rewritten."""
+    stack, found = [instance], False
+    while stack and not found:
+        node = stack.pop()
+        if type(node) is int:
+            found = abs(node) >= _HUGE
+        elif isinstance(node, dict):
+            stack.extend(node.values())
+        elif isinstance(node, list):
+            stack.extend(node)
+    if not found:
+        return instance
+
+    def wrap(node):
+        if type(node) is int and abs(node) >= _HUGE:
+            return _ExactInt(node)
+        if isinstance(node, dict):
+            return {k: wrap(v) for k, v in node.items()}
+        if isinstance(node, list):
+            return [wrap(v) for v in node]
+        return node
+    return wrap(instance)
+
+
+def _unwrap(value):
+    return int(value) if type(value) is _ExactInt else value
+
+
+class SafeValidator:
+    """A jsonschema validator whose is_valid/iter_errors never raise on an exact integer of any length."""
+
+    __slots__ = ("_inner",)
+
+    def __init__(self, inner):
+        self._inner = inner
+
+    def is_valid(self, instance):
+        return self._inner.is_valid(message_safe(instance))
+
+    def iter_errors(self, instance):
+        return self._inner.iter_errors(message_safe(instance))
+
+    def __getattr__(self, name):
+        return getattr(self._inner, name)
+
+
 @lru_cache(maxsize=256)
 def validator(document_uri: str, pointer: str, root: Path = ROOT) -> Draft202012Validator:
     schema = {"$schema": "https://json-schema.org/draft/2020-12/schema", "$ref": f"{document_uri}{pointer}"}
-    return Draft202012Validator(schema, registry=schema_registry(root))
+    return SafeValidator(Draft202012Validator(schema, registry=schema_registry(root)))
+
+
+# --- sweep part 2B: schema-directed CV-1100 integer slots and CV-1101 timestamp slots ----------------------
+# Both walks are the schema's own evaluation (jsonschema follows $ref, allOf/anyOf/oneOf, if/then/else,
+# properties, items and additionalProperties); a slot is a schema node, never a field-name or number guess.
+# Each runs only after the plain schema row accepted, so its verdict differs from that row by its own
+# predicate alone. No blanket walk over a joined record: each boundary passes its own schema pointer.
+from jsonschema import validators as _validators  # noqa: E402
+from jsonschema.exceptions import ValidationError as _ValidationError  # noqa: E402
+
+_BASE = Draft202012Validator.VALIDATORS
+# SP-1100's named Storage uint64 fields (and SP-278's cursor/token offsets and generations).
+STORAGE_UINT64_FIELDS = frozenset({"sequence_id", "segment_generation", "selected_segment_generation", "manifest_generation", "recovery_epoch",
+                                   "first_retained_sequence_id", "index_through_sequence_id", "last_sequence_id", "byte_offset", "frame_end_offset"})
+
+
+def _json_number(value):
+    return isinstance(value, (int, float, Decimal)) and not isinstance(value, bool)
+
+
+def _slot_bounds(schema):
+    return {k: schema[k] for k in ("minimum", "maximum") if type(schema.get(k)) is int}
+
+
+def _integer_type(validator, types, instance, schema):
+    yield from _BASE["type"](validator, types, instance, schema)
+    names = [types] if isinstance(types, str) else list(types)
+    if "integer" in names and "number" not in names and _json_number(instance):
+        try:
+            current_integer(_unwrap(instance), **_slot_bounds(schema))
+        except Refusal as exc:
+            yield _ValidationError("CV-1100 integer slot: " + exc.reason)
+
+
+def _integer_const(validator, const, instance, schema):
+    yield from _BASE["const"](validator, const, instance, schema)
+    if type(const) is int and _json_number(instance):
+        try:
+            current_integer(_unwrap(instance))
+        except Refusal as exc:
+            yield _ValidationError("CV-1100 integer const slot: " + exc.reason)
+
+
+def _integer_enum(validator, enums, instance, schema):
+    yield from _BASE["enum"](validator, enums, instance, schema)
+    if any(type(e) is int for e in enums) and _json_number(instance):
+        try:
+            current_integer(_unwrap(instance))
+        except Refusal as exc:
+            yield _ValidationError("CV-1100 integer enum slot: " + exc.reason)
+
+
+def _uint64_properties(validator, properties, instance, schema):
+    yield from _BASE["properties"](validator, properties, instance, schema)
+    if isinstance(instance, dict):
+        for name in sorted(STORAGE_UINT64_FIELDS & properties.keys() & instance.keys()):
+            if _json_number(instance[name]):
+                try:
+                    storage_uint64(_unwrap(instance[name]))
+                except Refusal as exc:
+                    yield _ValidationError("SP-1100 Storage uint64 " + name + ": " + exc.reason)
+
+
+IntegerSlotValidator = _validators.extend(Draft202012Validator, {"type": _integer_type, "const": _integer_const, "enum": _integer_enum,
+                                                                 "properties": _uint64_properties})
+
+
+@lru_cache(maxsize=256)
+def integer_validator(document_uri: str, pointer: str, root: Path = ROOT):
+    """The schema at uri+pointer with the shared current_integer at every integer slot and storage_uint64 at SP-1100's fields."""
+    schema = {"$schema": "https://json-schema.org/draft/2020-12/schema", "$ref": f"{document_uri}{pointer}"}
+    return SafeValidator(IntegerSlotValidator(schema, registry=schema_registry(root)))
+
+
+def integer_slots_exact(document_uri, pointer, instance, root=ROOT):
+    return integer_validator(document_uri, pointer, root).is_valid(instance)
+
+
+@lru_cache(maxsize=16)
+def timestamp_nodes(root: Path = ROOT):
+    """id() of each owner timestamp definition object in the schema registry, mapped to (owner group, profile).
+
+    CWC utc_timestamp/utc_timestampApplicationV1: Collaborative Workflows owner records, RFC 3339 with offsets, so
+    the EVENT_RECORD profile (the owner pattern still requires uppercase T and Z). Projection timestamp: DC's
+    projector rows and checkpoint, uppercase-Z pattern, so the STORAGE_UTC_Z profile."""
+    registry = schema_registry(root)
+    cwc = registry.contents(load(CWC_PATH, root)["$id"])["$defs"]
+    projection = registry.contents(load(PROJECTION_PATH, root)["$id"])["$defs"]
+    return {id(cwc["utc_timestamp"]): ("cwc", EVENT_RECORD), id(cwc["utc_timestampApplicationV1"]): ("cwc", EVENT_RECORD),
+            id(projection["timestamp"]): ("projection", STORAGE_UTC_Z)}
+
+
+def _timestamp_pattern(group, root):
+    def pattern(validator, value, instance, schema):
+        yield from _BASE["pattern"](validator, value, instance, schema)
+        found = timestamp_nodes(root).get(id(schema))
+        if found is not None and found[0] == group and isinstance(instance, str) and not shared_timestamp(instance, found[1]):
+            yield _ValidationError("CV-1101 " + found[1] + " timestamp")
+    return pattern
+
+
+@lru_cache(maxsize=64)
+def timestamp_validator(document_uri: str, pointer: str, group: str, root: Path = ROOT):
+    """The schema at uri+pointer with the shared date_time predicate added at each timestamp definition of one owner group."""
+    cls = _validators.extend(Draft202012Validator, {"pattern": _timestamp_pattern(group, root)})
+    schema = {"$schema": "https://json-schema.org/draft/2020-12/schema", "$ref": f"{document_uri}{pointer}"}
+    return SafeValidator(cls(schema, registry=schema_registry(root)))
+
+
+def owner_times_valid(document_uri, pointer, group, instance, root=ROOT):
+    return timestamp_validator(document_uri, pointer, group, root).is_valid(instance)
 
 
 def payload_def(event_type: str, edition: str) -> str:
@@ -354,15 +602,25 @@ def edition_of(payload: dict[str, Any]) -> str:
     return "application" if payload.get("scope_kind") == "application" else "project"
 
 
-def payload_rejection(event_type: str, payload: Any, recovery_epoch: int, root: Path = ROOT) -> str | None:
-    """First failing layer of CV-460 for one payload: schema, then the static rules in their order."""
+def payload_rejection(event_type: str, payload: Any, recovery_epoch: int, root: Path = ROOT, current_input: bool = True) -> str | None:
+    """First failing layer of CV-460 for one payload: schema, then the static rules in their order.
+
+    current_input=False is the SP-1101 frozen v1 reading of a retained original: CV-1100's current integer-token
+    grammar (PN01) never runs on it ("This current-input grammar does not replace an older retained reader's
+    admitted grammar"); CV-1101 date-time does (a skipped format check never authorizes invalid history).
+    """
     uri = load(PAYLOAD_PATH, root)["$id"]
     code = refusal("payload_object", {"payload_is_object": isinstance(payload, dict)})
     if code:
         return code
-    code = refusal("payload_schema", {"payload_schema_valid": validator(uri, "#/$defs/" + payload_def(event_type, edition_of(payload)), root).is_valid(payload)})
+    definition = "#/$defs/" + payload_def(event_type, edition_of(payload))
+    code = refusal("payload_schema", {"payload_schema_valid": validator(uri, definition, root).is_valid(payload)})
     if code:
         return code
+    if current_input:
+        code = refusal("payload_numbers", {"integer_slots_exact": integer_slots_exact(uri, definition, payload, root)})
+        if code:
+            return code
     try:
         expected_key = idempotency_key(event_type, payload, recovery_epoch)
     except (TypeError, ValueError):
@@ -372,7 +630,8 @@ def payload_rejection(event_type: str, payload: Any, recovery_epoch: int, root: 
     return refusal("payload_rules", {
         "epoch_type": type(recovery_epoch).__name__,
         "epoch_negative": recovery_epoch < 0 if type(recovery_epoch) is int else None,
-        "family_timestamp_valid": valid_utc(payload[FAMILY_TS[event_type]]),
+        # CV-460 family timestamp ("RFC 3339 UTC ending in Z"): the shared CV-1101 predicate, terminal uppercase Z.
+        "family_timestamp_valid": shared_timestamp(payload[FAMILY_TS[event_type]], STORAGE_UTC_Z),
         "idempotency_key": payload["idempotency_key"], "expected_idempotency_key": expected_key,
         "previous_definition_revision": payload["previous_definition_revision"] if config else None,
         "expected_previous_definition_revision": payload["definition_revision"] - 1 if config else None,
@@ -637,11 +896,31 @@ def retention_blockers(root=ROOT):
 
 # --- EventRecord joins --------------------------------------------------------------------------------------
 
-def envelope_rejection(event_type: str, record: dict[str, Any], storage_instance_id: str, recovery_epoch: int, root: Path = ROOT, payload_store: dict[str, str] | None = None, current_writer: bool = True) -> str | None:
-    """First failing EventRecord join of CV-460 rule 7, in the order the fixtures name them."""
+def envelope_rejection(event_type: str, record: dict[str, Any], storage_instance_id: str, recovery_epoch: int, root: Path = ROOT, payload_store: dict[str, str] | None = None, current_writer: bool = True, current_input: bool = True) -> str | None:
+    """First failing EventRecord join of CV-460 rule 7, in the order the fixtures name them.
+
+    current_writer=False skips the current-writer replay rule; current_input=False (the SP-1101 frozen v1 reading of a
+    retained original) also skips CV-1100's current integer-token grammar (EV18, EV19, PN01). CV-1101 runs on both.
+    """
     code = refusal("envelope_schema", {"record_schema_valid": validator(load(EVENT_RECORD_PATH, root)["$id"], "", root).is_valid(record)})
     if code:
         return code
+    code = refusal("envelope_datetime", {"occurred_at_valid": shared_timestamp(record["occurred_at_utc"], EVENT_RECORD),
+                                         "observed_at_valid": shared_timestamp(record["observed_at_utc"], STORAGE_UTC_Z),
+                                         "persisted_at_valid": shared_timestamp(record["persisted_at_utc"], STORAGE_UTC_Z)})
+    if code:
+        return code
+    if current_input:
+        def exact(value, check):
+            try:
+                check(value)
+            except Refusal:
+                return False
+            return True
+        code = refusal("envelope_numbers", {"sequence_id_exact": exact(record["sequence_id"], storage_uint64),
+                                            "producer_sequence_exact": record["producer_sequence_id"] is None or exact(record["producer_sequence_id"], lambda v: current_integer(v, minimum=0))})
+        if code:
+            return code
     code = refusal("envelope_family", {"record_event_type": record["event_type"], "boundary_event_type": event_type})
     if code:
         return code
@@ -674,15 +953,29 @@ def envelope_rejection(event_type: str, record: dict[str, Any], storage_instance
         if code:
             return code
         # The payload boundary refuses through its own rows; this join forwards it as "payload".
-        if payload_rejection(event_type, p, recovery_epoch, root):
+        if payload_rejection(event_type, p, recovery_epoch, root, current_input):
             return "payload"
     return None
 
 
+def event_value_encodable(record):
+    """SP-236/SP-1100: the stored record has canonical EVENT_VALUE MessagePack bytes (shared storage_value_bytes)."""
+    try:
+        storage_value_bytes(record, profile=EVENT_VALUE)
+    except Refusal:
+        return False
+    return True
+
+
 def representation_rejection(record):
     inline = record["payload_ref"] is None
-    return refusal("representation", {"inline_size": len(canonical(record["payload"]).encode("utf-8")) if inline else None,
-                                      "reference_body_empty": None if inline else record["payload"] == {}})
+    try:
+        inline_size = len(canonical(record["payload"]).encode("utf-8")) if inline else None
+    except (TypeError, ValueError):
+        inline_size = None
+    return refusal("representation", {"inline_size": inline_size,
+                                      "reference_body_empty": None if inline else record["payload"] == {},
+                                      "event_value_encodable": event_value_encodable(record)})
 
 
 def reference_rejection(ref, body):
@@ -691,7 +984,7 @@ def reference_rejection(ref, body):
     if code:
         return code
     raw = body.encode("utf-8"); parts = ref.split(":")
-    try: p = decode_json(body)
+    try: p = decode_current(body)
     except (ValueError, TypeError): p = None
     obj = isinstance(p, dict)
     return refusal("reference_body", {"declared_size": parts[3], "body_size": str(len(raw)), "declared_blake3": parts[2], "body_blake3": blake3(raw).hexdigest(),
@@ -707,7 +1000,7 @@ def resolved_payload(record, payload_store=None):
     body=(payload_store or {}).get(ref)
     error=reference_rejection(ref,body)
     if error:return None,error
-    return (decode_json(body) if body is not None else None),None
+    return (decode_current(body) if body is not None else None),None
 
 
 def payload_reference(p):
@@ -765,6 +1058,10 @@ def checkpoint_rejection(value, context, root=ROOT):
     code = refusal("checkpoint_schema", {"checkpoint_schema_valid": validator(uri, "#/$defs/checkpoint", root).is_valid(value)})
     if code:
         return code
+    code = refusal("checkpoint_values", {"checkpoint_times_valid": owner_times_valid(uri, "#/$defs/checkpoint", "projection", value, root),
+                                         "checkpoint_integers_exact": integer_slots_exact(uri, "#/$defs/checkpoint", value, root)})
+    if code:
+        return code
     token = value["index_read_token"]
     actual = context["storage_instance_id"]
     code = refusal("checkpoint_instance", {
@@ -801,8 +1098,14 @@ def checkpoint_rejection(value, context, root=ROOT):
                                             "event_project_id": event["project_id"], "checkpoint_project_id": value["project_id"]})
         if code:
             return code
+        # SP-1101: the last event is a retained original. Its frozen recipe is selected once from sealed custody,
+        # never by the read token; its identity domain is the original's write epoch from that custody.
+        dispatch, custody_epoch = dispatch_original(event, actual, root)
+        code = refusal("checkpoint_recipe", {"dispatch_refusal": dispatch})
+        if code:
+            return code
         # The last event passes the historical EventRecord boundary through its own rows (forwarded code).
-        if envelope_rejection(event["event_type"], event, actual, token["source_selection"]["recovery_epoch"], root, context.get("payload_store"), current_writer=False):
+        if envelope_rejection(event["event_type"], event, actual, custody_epoch, root, context.get("payload_store"), current_writer=False, current_input=False):
             return "checkpoint_event"
     else:
         return refusal("checkpoint_empty_cursor", {"context_cursor_is_null": context["source_cursor"] is None})
@@ -827,8 +1130,162 @@ def historical_rejection(event_type, record, context, root=ROOT):
         "record_sha256": canonical_sha(record), "original_record_sha256": canonical_sha(context.get("original_record"))})
     if code:
         return code
-    # Only the typed original write epoch supplies the identity domain; the current-writer replay phase is skipped.
-    return envelope_rejection(event_type, record, context["storage_instance_id"], epoch, root, context.get("payload_store"), current_writer=False)
+    # SP-1101: one frozen recipe is selected from sealed original custody (the shared RetainedDispatcher), never from
+    # the caller's controls; the context write epoch is a disclosed copy that must equal the custody's.
+    dispatch, custody_epoch = dispatch_original(record, context["storage_instance_id"], root)
+    code = refusal("historical_recipe", {"dispatch_refusal": dispatch, "context_write_epoch": epoch, "custody_write_epoch": custody_epoch})
+    if code:
+        return code
+    # The custody's write epoch supplies the identity domain; the current-writer replay phase and the current
+    # integer-token grammar are skipped (frozen v1 reading); CV-1101 date-time still applies.
+    return envelope_rejection(event_type, record, context["storage_instance_id"], custody_epoch, root, context.get("payload_store"), current_writer=False, current_input=False)
+
+
+# --- SP-1101 retained-original dispatch (sweep part 2B) ------------------------------------------------------
+# The shared RetainedDispatcher is composed once with DC's original owner (a sealed lookup standing in for native
+# Storage custody) and the exact RecipeTuple -> FrozenRecipe map. Neither comes from request data: a case's
+# controls, a label or a verified flag select nothing. The owner returns custody only for EVENT_VALUE bytes sealed
+# at composition by DC's own writer builders (committed fixture originals and the part 2B retained builders in
+# scripts/pm_collab_p2b_cases.py); the case under check never adds to it. The frozen v1 verifier decodes those
+# bytes and recomputes every original join, the identity under the original write epoch and the payload v1 rules,
+# against the pinned original resources. Native custody, authentication and durability remain NOT_RUN.
+V1_RESOURCES = ("Plans/event_record.schema.json", "Plans/collaboration_event_payloads.schema.json")
+# SHA-256 of the v1 original resource manifest (path and SHA-256 of each file above), pinned at sweep part 2B.
+V1_RESOURCE_MANIFEST_SHA256 = "7dfecfd0a8f4437df3bbeeb14ec6adc1b1afdbed579afe7b646e2f7bcf1f950d"
+V1_RECIPE = dict(owner_source_id="storage.collaboration_append.v1", owner_edition="1.0.0", registry_revision="prepared_not_admitted",
+                 identity_recipe="SP-460 collabop_/collaboration@1/application@1/evt_collaboration_ v1",
+                 producer_recipe="CV-460 payload-only producer_digest, DC canonical v1",
+                 physical_profile=EVENT_VALUE, full_value_profile="CV-339 original_event_value_commitment v1",
+                 local_source_profile="collaboration_prepared_source.v1", payload_profile="SP-337 application/json, DC canonical v1")
+
+
+def resource_manifest_sha256(root=ROOT):
+    return sha("".join(path + " " + hashlib.sha256((root / path).read_bytes()).hexdigest() + "\n" for path in V1_RESOURCES))
+
+
+def recipe_tuple(record, **override):
+    """The exact v1 recipe tuple of an original record (family edition, envelope edition, pinned resources)."""
+    scope = record["scope_kind"]
+    fields = dict(V1_RECIPE, envelope_schema_id=record["schema_id"], envelope_schema_version=record["schema_version"],
+                  payload_schema_id=f"pm.collaboration_event.{TOKEN[record['event_type']]}." + ("application.v1" if scope == "application" else "v1"),
+                  payload_schema_version="1.0.0", resource_manifest_sha256=V1_RESOURCE_MANIFEST_SHA256)
+    fields.update(override)
+    return RecipeTuple(**fields)
+
+
+def original_operation(idempotency_key):
+    """The owner operation id an SP-460/CV-366 idempotency key names (collaboration@1:op or application@1:hex:hex(op))."""
+    if type(idempotency_key) is not str:
+        return None
+    if idempotency_key.startswith("collaboration@1:"):
+        return idempotency_key[len("collaboration@1:"):]
+    parts = idempotency_key.split(":")
+    if len(parts) == 3 and parts[0] == "application@1":
+        try:
+            return bytes.fromhex(parts[2]).decode("utf-8")
+        except (ValueError, UnicodeError):
+            return None
+    return None
+
+
+def original_binding(record, storage_instance_id, root=ROOT):
+    """OriginalBinding of a record as presented (Storage instance, scope, Server/Project, family, identities and the
+    EVENT_VALUE byte commitment); the shared dataclass refuses a malformed field."""
+    payload = record["payload"] if isinstance(record.get("payload"), dict) else {}
+    server = payload.get("server_id") if record.get("scope_kind") == "application" else load(FIXTURE_PATH, root)["storage_context"]["server_id"]
+    return OriginalBinding(storage_instance_id=storage_instance_id, scope_kind=record.get("scope_kind"), server_id=server,
+                           project_id=record.get("project_id"), event_type=record.get("event_type"), event_id=record.get("event_id"),
+                           idempotency_key=record.get("idempotency_key"), owner_operation_id=original_operation(record.get("idempotency_key")),
+                           source_commitment=hashlib.sha256(storage_value_bytes(record, profile=EVENT_VALUE)).hexdigest())
+
+
+def original_ref(storage_instance_id, binding):
+    return "seglog:" + storage_instance_id + ":" + binding.event_id + "#" + binding.source_commitment
+
+
+class DCOriginalOwner:
+    """Sealed lookup standing in for the native original Storage owner (SP-1101 finite-fixture boundary)."""
+
+    def __init__(self):
+        self._sealed = {}
+
+    def seal(self, record, storage_instance_id, write_epoch, root=ROOT, recipe=None):
+        binding = original_binding(record, storage_instance_id, root)
+        record_bytes = storage_value_bytes(record, profile=EVENT_VALUE)
+        result = canonical({"result": "appended", "storage_instance_id": storage_instance_id, "write_epoch": write_epoch}).encode("utf-8")
+        receipt = canonical({"event_id": record["event_id"], "sequence_id": record["sequence_id"], "write_epoch": write_epoch}).encode("utf-8")
+        self._sealed[original_ref(storage_instance_id, binding)] = OriginalCustody(binding, recipe or recipe_tuple(record), record_bytes, result, receipt)
+
+    def authenticated_original(self, ref):
+        custody = self._sealed.get(ref)
+        if custody is None:
+            raise Refusal("original_unavailable")
+        return custody
+
+
+def frozen_v1_verifier(root):
+    def verify(custody):
+        # The pinned original resources: a replaced or rewritten resource is not the original recipe.
+        if resource_manifest_sha256(root) != V1_RESOURCE_MANIFEST_SHA256:
+            return False
+        try:
+            from pm_event_numbers import decode_storage_value
+            record = decode_storage_value(custody.record_bytes, profile=EVENT_VALUE)
+            result = decode_json(custody.result_bytes.decode("utf-8"))
+            receipt = decode_json(custody.receipt_bytes.decode("utf-8"))
+            if original_binding(record, result["storage_instance_id"], root) != custody.binding or recipe_tuple(record) != custody.recipe:
+                return False
+            if receipt != {"event_id": record["event_id"], "sequence_id": record["sequence_id"], "write_epoch": result["write_epoch"]}:
+                return False
+        except (Refusal, KeyError, TypeError, ValueError, UnicodeError):
+            return False
+        # The complete v1 original checks with the original write epoch: no current-writer replay rule and no CV-1100
+        # current-input grammar; CV-1101 date-time applies. Internal row evaluations are derivation, not recorded.
+        global RECORDER
+        saved, RECORDER = RECORDER, None
+        try:
+            return envelope_rejection(record["event_type"], record, result["storage_instance_id"], result["write_epoch"], root,
+                                      current_writer=False, current_input=False) is None
+        finally:
+            RECORDER = saved
+    return verify
+
+
+@lru_cache(maxsize=4)
+def original_dispatcher(root=ROOT):
+    """Composition: seal DC's writer-built originals, install the exact v1 recipe map, return the shared dispatcher."""
+    fx = load(FIXTURE_PATH, root)
+    siid, epoch = fx["storage_context"]["storage_instance_id"], fx["storage_context"]["recovery_epoch"]
+    owner = DCOriginalOwner()
+    for c in fx["valid_events"]:
+        owner.seal(c["record"], siid, epoch, root)
+        compatibility = copy.deepcopy(c["record"]); compatibility["replay_policy"] = "projector_replay_only"
+        owner.seal(compatibility, siid, epoch, root)
+    for context in fx["checkpoint_contexts"].values():
+        if context.get("last_event") is not None:
+            owner.seal(context["last_event"], context["storage_instance_id"], context["index_read_token"]["source_selection"]["recovery_epoch"], root)
+    for sealed in pm_collab_p2b_cases.sealed_originals(sys.modules[__name__], root):
+        owner.seal(sealed["record"], sealed["storage_instance_id"], sealed["write_epoch"], root,
+                   recipe_tuple(sealed["record"], **sealed["recipe_override"]) if sealed.get("recipe_override") else None)
+    recipes = {}
+    verifier = FrozenRecipe(frozen_v1_verifier(root))
+    for et in EVENT_TYPES:
+        for scope in ("project", "application"):
+            for schema_version in ("2.0.0",):
+                recipes[recipe_tuple({"scope_kind": scope, "event_type": et, "schema_id": "pm.event.v0", "schema_version": schema_version})] = verifier
+    return RetainedDispatcher(owner, recipes)
+
+
+def dispatch_original(record, storage_instance_id, root=ROOT):
+    """(None, original write epoch) when the shared dispatcher resolves and verifies the original; else (reason, None)."""
+    try:
+        binding = original_binding(record, storage_instance_id, root)
+        custody = original_dispatcher(root).resolve(original_ref(storage_instance_id, binding), binding, disclose=lambda b: True)
+        return None, decode_json(custody.result_bytes.decode("utf-8"))["write_epoch"]
+    except Refusal as exc:
+        return exc.reason, None
+    except (KeyError, TypeError, AttributeError):
+        return "original_query", None
 
 
 def source_storage_key(value):
@@ -845,6 +1302,12 @@ def source_rejection(value, root=ROOT, physical_key=None, source_context=None):
     if code:
         return code
     code = refusal("source_schema", {"source_schema_valid": validator(schema["$id"], "#/$defs/" + TOKEN[et], root).is_valid(value)})
+    if code:
+        return code
+    code = refusal("source_times", {"owner_times_valid": owner_times_valid(schema["$id"], "#/$defs/" + TOKEN[et], "cwc", value, root)})
+    if code:
+        return code
+    code = refusal("source_numbers", {"integer_slots_exact": integer_slots_exact(schema["$id"], "#/$defs/" + TOKEN[et], value, root)})
     if code:
         return code
     code = refusal("source_context_type", {"context_type": type(source_context).__name__})
@@ -1069,7 +1532,8 @@ def application_wrapper_rejection(source_case, root=ROOT):
         wrapper=source_case.get("application_wrapper")
         uri=load("Plans/application_workflow_contracts.schema.json",root)["$id"]
         code=refusal("wrapper_shape", {"wrapper_schema_valid": validator(uri,"#/$defs/"+definition+"StorageApplicationV2",root).is_valid(wrapper),
-                                       "wrapper_packed_size": len(msgpack.packb(wrapper,use_bin_type=True))})
+                                       "wrapper_packed_size": app_physical_size(wrapper),
+                                       "wrapper_integers_exact": integer_slots_exact(uri,"#/$defs/"+definition+"StorageApplicationV2",wrapper,root)})
         if code:return code
         if wrapper["record_ref"] is None:
             original=wrapper["record"]
@@ -1077,7 +1541,7 @@ def application_wrapper_rejection(source_case, root=ROOT):
             ref=wrapper["record_ref"];body=source_case.get("payload_store",{}).get(ref)
             error=reference_rejection(ref,body)
             if error:return error
-            original=decode_json(body) if body is not None else None
+            original=decode_current(body) if body is not None else None
         ac=record["application_context"]
         return refusal("wrapper_join", {
             "wrapper_record_sha256": None if original is None else (canonical_sha(original) or ""), "owner_record_sha256": canonical_sha(record),
@@ -1085,6 +1549,14 @@ def application_wrapper_rejection(source_case, root=ROOT):
             "wrapper_server": wrapper["server_id"], "body_server": value["semantic_body"]["server_id"],
             "wrapper_scope_sha256": canonical_sha(wrapper["scope"]), "record_scope_sha256": canonical_sha(ac["scope"])})
     return None
+
+
+def app_physical_size(value):
+    """CV-366/SP-1100 APP_PHYSICAL MessagePack byte length (shared storage_value_bytes), or None when the profile refuses."""
+    try:
+        return len(storage_value_bytes(value, profile=APP_PHYSICAL))
+    except Refusal:
+        return None
 
 
 def source_record_ref(et, p):
@@ -1459,6 +1931,28 @@ class Reducer:
 
 # --- fixture report -----------------------------------------------------------------------------------------
 
+def projection_value_rejection(definition, value, root=ROOT):
+    """A projection row value: its definition (PV01), then CV-1101 at each projection timestamp (PV02)."""
+    uri = load(PROJECTION_PATH, root)["$id"]
+    code = refusal("projection_value_schema", {"projection_schema_valid": validator(uri, "#/$defs/" + definition, root).is_valid(value)})
+    if code:
+        return code
+    return refusal("projection_value_times", {"projection_times_valid": owner_times_valid(uri, "#/$defs/" + definition, "projection", value, root)})
+
+
+def numeric_current_rejection(case, root=ROOT):
+    """A numeric-family alternate as a current input: raw text through decode_current (the shared loads_current_json),
+    a typed alternate as given; then the complete payload boundary with that recovery epoch. "raw:<reason>" when the
+    shared parser refuses the raw text."""
+    epoch = load(FIXTURE_PATH, root)["storage_context"]["recovery_epoch"]
+    try:
+        payload = decode_current(case["alternate_raw_json"]) if "alternate_raw_json" in case else case["alternate_payload"]
+        recovery_epoch = decode_current(case["epoch_raw_json"]) if "epoch_raw_json" in case else float(epoch)
+    except ValueError as exc:
+        return "raw:" + str(exc)
+    return payload_rejection(case["event_type"], payload, recovery_epoch, root)
+
+
 def fixture_report(root: Path = ROOT, fixtures: dict[str, Any] | None = None) -> dict[str, Any]:
     fx = fixtures if fixtures is not None else load(FIXTURE_PATH, root)
     ctx = fx["storage_context"]
@@ -1473,12 +1967,16 @@ def fixture_report(root: Path = ROOT, fixtures: dict[str, Any] | None = None) ->
             actual=None
         collect(fails, "fix_numeric", {"actual_canonical": actual, "canonical": c["canonical"]}, {"case_id": c["case_id"]})
     for c in fx["numeric_family_cases"]:
+        # IF02: DC's v1 local recipes (SP-460) equate the alternate spelling, read by the v1 decoder. IF03: the same
+        # spelling as a current input (the shared loads_current_json for raw text, typed values as given) is refused
+        # by CV-1100 exactly as the case records (sweep part 2B changed this expectation from "valid").
         et=c["event_type"];before=c["payload"];after=decode_json(c["alternate_raw_json"]) if "alternate_raw_json" in c else c["alternate_payload"]
         original_epoch=c.get("epoch",epoch);alternate_epoch=decode_json(c["epoch_raw_json"]) if "epoch_raw_json" in c else float(epoch)
         a=[owner_operation_id(et,before,original_epoch),idempotency_key(et,before,original_epoch),event_id(et,before,siid,original_epoch),producer_digest(before),row_sha256(before)]
         b=[owner_operation_id(et,after,alternate_epoch),idempotency_key(et,after,alternate_epoch),event_id(et,after,siid,alternate_epoch),producer_digest(after),row_sha256(after)]
         collect(fails, "fix_numeric_family", {"original_identities": a, "alternate_identities": b,
-                                              "alternate_rejection": payload_rejection(et,after,int(alternate_epoch),root) if a == b else None},
+                                              "alternate_rejection": numeric_current_rejection(c, root),
+                                              "expected_current_rejection": c.get("current_rejection")},
                 {"case_id": c["case_id"]})
     for c in fx["payloads"]:
         payload_by_id[c["case_id"]] = c["payload"]
@@ -1548,15 +2046,14 @@ def fixture_report(root: Path = ROOT, fixtures: dict[str, Any] | None = None) ->
         event_error = prepared_event_rejection(c,c["event"],root) if rejection is None else None
         for code in collect([], "fix_prepared", {"source_rejection": rejection, "event_rejection": event_error}):
             fails.append({"check": code, "case_id": c["case_id"], "found": rejection if code == "prepared_source" else event_error})
-    puri = load(PROJECTION_PATH, root)["$id"]
     for c in fx["projection_values"]:
-        shaped=validator(puri, "#/$defs/" + c["definition"], root).is_valid(c["value"])
+        shaped=projection_value_rejection(c["definition"], c["value"], root) is None
         rejection=checkpoint_rejection(c["value"],fx["checkpoint_contexts"][c["case_id"]],root) if shaped and c["definition"] == "checkpoint" else None
         for code in collect([], "fix_projection", {"projection_valid": shaped, "checkpoint_rejection": rejection, "invalid_valid": False}):
             fails.append({"check": code, "case_id": c["case_id"], **({"found": rejection} if code == "checkpoint_semantics" else {})})
     for c in fx["invalid_projection_values"]:
         collect(fails, "fix_projection", {"projection_valid": True, "checkpoint_rejection": None,
-                                          "invalid_valid": validator(puri, "#/$defs/" + c["definition"], root).is_valid(c["value"])}, {"case_id": c["case_id"]})
+                                          "invalid_valid": projection_value_rejection(c["definition"], c["value"], root) is None}, {"case_id": c["case_id"]})
     for et, c in per.items():
         collect(fails, "fix_floor", {"positive": c["positive"], "negative": c["negative"], "vectors": c["vectors"], "sequences_appended": c["sequences_appended"],
                                      "sequences_refused": c["sequences_refused"], "valid_event_scopes": sorted(c["valid_events"]), "joins": sorted(c["joins"])},
@@ -1581,24 +2078,32 @@ def ats_failures(root: Path = ROOT) -> list[dict[str, Any]]:
 def stored_size_report(root=ROOT):
     """Synthetic encoded-size inventory, not execution of the native MessagePack codec."""
     fx=load(FIXTURE_PATH,root)
-    def size(value):
-        return {"json_utf8_bytes":len(canonical(value).encode("utf-8")),"messagepack_bytes":len(msgpack.packb(value,use_bin_type=True))}
+    def size(value, profile=None):
+        # Event records: SP-236 EVENT_VALUE; application wrappers: CV-366 APP_PHYSICAL (shared storage_value_bytes).
+        # Holder/projection/checkpoint rows are Storage values outside SP-1100's closed dispatch: msgpack inventory only.
+        if profile is None:
+            return {"json_utf8_bytes":len(canonical(value).encode("utf-8")),"messagepack_bytes":len(msgpack.packb(value,use_bin_type=True))}
+        try:
+            physical=len(storage_value_bytes(value,profile=profile))
+        except Refusal:
+            physical=None
+        return {"json_utf8_bytes":len(canonical(value).encode("utf-8")),"messagepack_bytes":physical,"profile":profile}
     rows=[]
     for kind,items in (("canonical_source",fx["prepared_sources"]),("derived_projection_or_checkpoint",fx["projection_values"])):
         for c in items:rows.append(dict(case_id=c["case_id"],kind=kind,**size(c["value"])))
     for c in fx["valid_events"]:
-        rows.append(dict(case_id=c["case_id"],kind="event_record",inline_body_bytes=len(canonical(c["record"]["payload"]).encode()),inline_limit_bytes=16384,**size(c["record"])))
+        rows.append(dict(case_id=c["case_id"],kind="event_record",inline_body_bytes=len(canonical(c["record"]["payload"]).encode()),inline_limit_bytes=16384,**size(c["record"],EVENT_VALUE)))
     for c in fx["prepared_sources"]:
         if "application_wrapper" in c:
-            rows.append(dict(case_id=c["case_id"],kind="required_application_wrapper",limit_bytes=16384,**size(c["application_wrapper"])))
+            rows.append(dict(case_id=c["case_id"],kind="required_application_wrapper",limit_bytes=16384,**size(c["application_wrapper"],APP_PHYSICAL)))
     for c in wrapper_boundary_cases(root):
-        rows.append(dict(case_id=c["boundary_label"],kind="application_wrapper_boundary",limit_bytes=16384,expected=c["expected"],event_record=size(c["event"]),source_holder=size(c["value"]),wrapper=size(c["application_wrapper"]),payload_packs={ref:len(body.encode()) for ref,body in c.get("payload_store",{}).items()}))
+        rows.append(dict(case_id=c["boundary_label"],kind="application_wrapper_boundary",limit_bytes=16384,expected=c["expected"],event_record=size(c["event"],EVENT_VALUE),source_holder=size(c["value"]),wrapper=size(c["application_wrapper"],APP_PHYSICAL),payload_packs={ref:len(body.encode()) for ref,body in c.get("payload_store",{}).items()}))
     for probe in contract_probes(root,include_shapes=False):
         if probe["domain"]=="envelope" and ":large_reference:" in probe["case_id"]:
             body,_=resolved_payload(probe["value"],probe["payload_store"])
             holder=copy.deepcopy(next(c["value"] for c in fx["prepared_sources"] if c["value"]["event_type"]==probe["event_type"] and c["value"]["semantic_body"]["scope_kind"]=="project"))
             holder["semantic_body"]=body;holder["semantic_sha256"]=producer_digest(body)
-            rows.append(dict(case_id=probe["case_id"],kind="large_reference",semantic_body=size(body),event_record=size(probe["value"]),source_holder_candidate=size(holder),payload_pack_bytes=len(canonical(body).encode())))
+            rows.append(dict(case_id=probe["case_id"],kind="large_reference",semantic_body=size(body),event_record=size(probe["value"],EVENT_VALUE),source_holder_candidate=size(holder),payload_pack_bytes=len(canonical(body).encode())))
     return {"boundary":"SP-337 caps the EventRecord inline body at 16384 UTF-8 bytes; SP-351 separately caps each complete MessagePack application wrapper at 16384 bytes, including header/reference fields. Both mandatory parts independently externalize above their own boundary. Complete source-holder/projection/checkpoint sizes are inventoried without inventing a new redb cap. Encodings are synthetic, not native codec or durability proof.","values":rows}
 
 
@@ -1907,6 +2412,7 @@ def contract_probes(root=ROOT, include_shapes=True):
     probes += copy.deepcopy(fx["transition_cases"])
     probes += round_two_probes(root)
     probes += pm_collab_p2a_cases.probes(sys.modules[__name__], root)
+    probes += pm_collab_p2b_cases.probes(sys.modules[__name__], root)
     if include_shapes:
         for c in fx.get("schema_valid_cases",[]):
             add("shape",c["case_id"],c["value"],None,path=c["path"],definition=c["definition"])
@@ -2123,14 +2629,14 @@ def wrapper_boundary_cases(root=ROOT):
         low,high=0,20000
         while low<high:
             mid=(low+high+1)//2
-            if len(msgpack.packb(candidate(mid)["application_wrapper"],use_bin_type=True))<=16384:low=mid
+            if (app_physical_size(candidate(mid)["application_wrapper"]) or 0)<=16384:low=mid
             else:high=mid-1
         exact=candidate(low)
-        if len(msgpack.packb(exact["application_wrapper"],use_bin_type=True))!=16384:
+        if app_physical_size(exact["application_wrapper"])!=16384:
             raise AssertionError("wrapper exact boundary: "+definition)
         exact.update(boundary_label=definition+":wrapper_16384",expected=None);cases.append(exact)
         over=candidate(low+1)
-        if len(msgpack.packb(over["application_wrapper"],use_bin_type=True))!=16385:
+        if app_physical_size(over["application_wrapper"])!=16385:
             raise AssertionError("wrapper over boundary: "+definition)
         over.update(boundary_label=definition+":wrapper_16385",expected="application_wrapper_limit");cases.append(over)
         routed=copy.deepcopy(over);ref,body=payload_reference(routed["value"]["owner_record"])
@@ -2169,6 +2675,7 @@ def evaluate_probe(probe, root=ROOT):
     if d=="reference": return reference_rejection(v["ref"],v["body"])
     if d=="source": return source_rejection(v,root,probe["physical_key"],probe["source_context"])
     if d=="checkpoint": return checkpoint_rejection(v,probe["context"],root)
+    if d=="projection": return projection_value_rejection(probe["definition"],v,root)
     if d=="historical": return historical_rejection(probe["event_type"],v,probe["context"],root)
     if d=="transition":
         reducer=Reducer([],siid,epoch);reducer.__dict__=thaw_prestate(probe["prestate"])
@@ -2300,7 +2807,13 @@ def integrity_cases(root=ROOT):
     case("ats_failures","ats_case_ids",LEDGER_PATH,lambda d:d["rows"][0]["validation_case_ids"].append("not_cited_in_owner"))
     case("probe_failures","contract_probe",FIXTURE_PATH,lambda f:f["transition_cases"][0].__setitem__("expected",None))
     cases += pm_collab_p2a_cases.integrity_cases(sys.modules[__name__], root)
+    cases += pm_collab_p2b_cases.integrity_cases(sys.modules[__name__], root)
     return cases
+
+
+# Caches that read schemas or fixtures through load(); an integrity override clears every one (sweep part 2B adds
+# the slot validators, the timestamp node map and the SP-1101 composition).
+CACHED = ("validator", "schema_registry", "schema_bases", "doc_units", "integer_validator", "timestamp_validator", "timestamp_nodes", "original_dispatcher")
 
 
 def evaluate_integrity(case, root=ROOT, namespace=None):
@@ -2309,7 +2822,7 @@ def evaluate_integrity(case, root=ROOT, namespace=None):
     overrides=case.get("overrides",{});texts=case.get("texts",{})
     ns["load"]=lambda path,where=root:overrides[path] if path in overrides else original_load(path,where)
     ns["read_owner"]=lambda path,where=root:texts[path] if path in texts else original_read(path,where)
-    for name in ("validator","schema_registry","schema_bases","doc_units"):ns[name].cache_clear()
+    for name in CACHED:ns[name].cache_clear()
     try:
         result=ns[case["target"]](root)
         if isinstance(result,tuple):result=result[0]
@@ -2317,7 +2830,7 @@ def evaluate_integrity(case, root=ROOT, namespace=None):
         return [e["check"] for e in result]
     finally:
         ns["load"]=original_load;ns["read_owner"]=original_read
-        for name in ("validator","schema_registry","schema_bases","doc_units"):ns[name].cache_clear()
+        for name in CACHED:ns[name].cache_clear()
 
 
 def integrity_failures(root=ROOT):

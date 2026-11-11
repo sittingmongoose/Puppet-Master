@@ -11,7 +11,7 @@ FIELDS names every observation the rows read; the checker passes no other.
 """
 import pm_guard_isolation as g
 
-FIELDS = ('inline_size', 'reference_body_empty')
+FIELDS = ('inline_size', 'reference_body_empty', 'event_value_encodable')
 
 
 def RP01_inline_limit(value, context):
@@ -22,15 +22,21 @@ def RP02_reference_body(value, context):
     return 'reference_inline_body' if value['reference_body_empty'] is False else None
 
 
+def RP03_event_value(value, context):
+    return 'event_value_encoding' if value['event_value_encodable'] is not True else None
+
+
 def case(value):
     context = None
     table = g.GuardTable([
         g.Guard('RP01_inline_limit', g.Invariant('/payload', 'an inline body encodes in at most 16384 UTF-8 bytes'), 'inline_limit', RP01_inline_limit),
         g.Guard('RP02_reference_body', g.Invariant('/payload', 'a referenced body leaves payload empty'), 'reference_inline_body', RP02_reference_body),
+        g.Guard('RP03_event_value', g.Invariant('/', 'the stored record encodes under the SP-236/SP-1100 EVENT_VALUE profile: shared storage_value_bytes'), 'event_value_encoding', RP03_event_value),
     ])
 
     def check(value):
         table.require('RP01_inline_limit', value, context)
         table.require('RP02_reference_body', value, context)
+        table.require('RP03_event_value', value, context)
         return True
     return g.Case(table, check, context)

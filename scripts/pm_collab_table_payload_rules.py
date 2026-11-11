@@ -43,7 +43,7 @@ def case(value):
     table = g.GuardTable([
         g.Guard('PR01_epoch_integer', g.Invariant('/recovery_epoch', 'is an exact int'), 'epoch_type', PR01_epoch_integer),
         g.Guard('PR02_epoch_nonnegative', g.Invariant('/recovery_epoch', 'an int epoch is not negative'), 'epoch_type', PR02_epoch_nonnegative),
-        g.Guard('PR03_family_timestamp', g.Invariant('/<family timestamp>', 'is a UTC timestamp ending in Z'), 'valid_utc_datetime', PR03_family_timestamp),
+        g.Guard('PR03_family_timestamp', g.Invariant('/<family timestamp>', 'passes the shared CV-1101 date_time predicate, STORAGE_UTC_Z profile (UTC ending in uppercase Z)'), 'valid_utc_datetime', PR03_family_timestamp),
         g.Guard('PR04_idempotency_recipe', g.Invariant('/idempotency_key', 'equals the SP-460/CV-366 recipe for the payload and epoch'), 'identity_recipe', PR04_idempotency_recipe),
         g.Guard('PR05_revision_rule', g.Invariant('/previous_definition_revision', 'configuration_changed: equals definition_revision - 1'), 'revision_rule', PR05_revision_rule),
         g.Guard('PR06_review_counts', g.Invariant('/requested_reviewer_count', 'artifact_finalized: completed + failed equals requested'), 'review_counts', PR06_review_counts),
