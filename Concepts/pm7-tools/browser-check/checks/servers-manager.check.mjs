@@ -15,6 +15,15 @@
 // Runs on the surface the switch picks (--set sandbox=1 for T3's preview).
 const sleep = (f, ms) => f.waitForTimeout(ms);
 const BLOCK = '.workspace-block[data-workspace-block="servers"]';
+/* close whatever sheet, window or dialog is open, by its own Close (the engine's closeOverlay is not a global) */
+async function closeAll(f) {
+	for (let i = 0; i < 4; i++) {
+		const b = f.locator('.overlay [data-action="close-overlay"], .drawer-wrap:not([data-closing="1"]) .o55g-close, .drawer-wrap:not([data-closing="1"]) .pm51-panel-close').first();
+		if (!(await b.count())) break;
+		await b.click().catch(() => {}); await f.waitForTimeout(450);
+	}
+	await f.waitForTimeout(300);
+}
 
 async function openServers(t, tab) {
 	await t.viewport(1440, 900);
@@ -69,7 +78,7 @@ export const tests = {
 		await sleep(f, 600);
 		const head = f.locator(`${BLOCK} [aria-label="More actions"], ${BLOCK} [data-pm-hover-label="More actions"]`).first();
 		await head.click(); await sleep(f, 400);
-		const item = f.locator('.popover [role="menuitem"], .popover button').filter({ hasText: /^\s*Connect/ }).first();
+		const item = f.locator('.pm51-menu [role="menuitem"]').filter({ hasText: /^\s*Connect/ }).first();
 		await t.check('the menu offers Connect', (await item.count()) > 0, '');
 		await item.click();
 		await f.waitForFunction(() => { const s = PM51.s().serverProject.servers.find((x) => x.id === 'this'); return s.state !== 'Checking' && s.state !== 'Offline'; }, null, { timeout: 5000 }).catch(() => {});
@@ -84,10 +93,10 @@ export const tests = {
 		await f.evaluate(() => { const s = PM51.s().serverProject.servers.find((x) => x.id === 'truenas'); s.state = 'Offline'; s.signIn = { method: 'ssh', user: 'admin' }; PM51.setSel('servers', 'truenas'); PM51.refresh('servers', { swap: false }); });
 		await sleep(f, 500);
 		await head.click(); await sleep(f, 400);
-		await f.locator('.popover [role="menuitem"], .popover button').filter({ hasText: /^\s*Connect/ }).first().click();
+		await f.locator('.pm51-menu [role="menuitem"]').filter({ hasText: /^\s*Connect/ }).first().click();
 		await f.waitForFunction(() => { const s = PM51.s().serverProject.servers.find((x) => x.id === 'truenas'); return s.state !== 'Checking' && s.state !== 'Offline'; }, null, { timeout: 5000 }).catch(() => {});
-		const st2 = await f.evaluate(() => { const s = PM51.s().serverProject.servers.find((x) => x.id === 'truenas'); return { state: s.state, toast: [...document.querySelectorAll('.toast')].map((x) => x.innerText).join(' | ') }; });
-		await t.check('an SSH server with no key stays Needs attention and says why', st2.state === 'Needs attention' && /no key is attached/i.test(st2.toast), JSON.stringify(st2));
+		const st2 = await f.evaluate((B) => { const s = PM51.s().serverProject.servers.find((x) => x.id === 'truenas'); const row = [...document.querySelectorAll(`${B} .pm51-row`)].find((x) => /^\s*Signs in with/.test(x.innerText)); return { state: s.state, row: row ? row.innerText.replace(/\s+/g, ' ') : '' }; }, BLOCK);
+		await t.check('an SSH server with no key stays Needs attention, and its details say why', st2.state === 'Needs attention' && /no key is attached/i.test(st2.row), JSON.stringify(st2));
 
 		/* Test connection on a server that needs attention, with its key now attached */
 		await f.evaluate(() => { const S = PM51.s().serverProject, s = S.servers.find((x) => x.id === 'truenas'); s.signIn = { method: 'pair' }; s.lastCheck = 'Not checked yet'; PM51.refresh('servers', { swap: false }); });
@@ -106,12 +115,12 @@ export const tests = {
 		const lan = f.locator(`${BLOCK} .pm51-servers-route[data-route="lan"] .pm51-item-title`).first();
 		await lan.click(); const a = await untilOpen(f, /Local network/i);
 		await t.check('clicking the Local network row body opens its sheet', a.some((x) => /Local network/i.test(x)), JSON.stringify(a));
-		await f.evaluate(() => closeOverlay()); await sleep(f, 500);
+		await closeAll(f);
 		const ts = f.locator(`${BLOCK} .pm51-servers-route[data-route="tailscale"] .pm51-item-meta`).first();
 		await ts.click(); const b = await f.waitForSelector('.o55g-win, .o55g-window, [data-pm51-wizard]', { timeout: 4000 }).then(() => true).catch(() => false);
 		const title = await f.evaluate(() => { const w = document.querySelector('.o55g-win, .o55g-window, [data-pm51-wizard]'); return w ? w.innerText.slice(0, 120) : ''; });
 		await t.check('clicking the Tailscale row (not set up) opens its setup', b && /Tailscale/.test(title), title);
-		await f.evaluate(() => closeOverlay()); await sleep(f, 500);
+		await closeAll(f);
 		/* a button inside the row keeps its own action: moving a route down changes the order and opens nothing */
 		const before = await f.evaluate(() => PM51.s().serverProject.remoteAccess.routes.find((r) => r.id === 'tailscale').priority);
 		await f.locator(`${BLOCK} .pm51-servers-route[data-route="tailscale"] [data-action="pm51-servers-route-move"][data-dir="down"]`).first().click(); await sleep(f, 600);
@@ -127,7 +136,7 @@ export const tests = {
 		await f.locator('.drawer-wrap [data-action="pm51-servers-device-rename"]').first().click();
 		s = await untilOpen(f, /^Rename MacBook Air/);
 		await t.check('Rename opens its dialog', s.some((x) => /^Rename MacBook Air/.test(x)), JSON.stringify(s));
-		await f.keyboard.press('Escape');
+		await t.page.keyboard.press('Escape');
 		s = await untilOpen(f, /^MacBook Air$/);
 		await t.check('Escape on Rename brings the device panel back', s.some((x) => /^MacBook Air$/.test(x)), JSON.stringify(s));
 		await f.locator('.drawer-wrap [data-action="pm51-servers-device-rename"]').first().click();
@@ -165,7 +174,7 @@ export const tests = {
 		await t.check('Project details opens a panel', s.length > 0, JSON.stringify(s));
 		await t.check('it has no developer text', !DEV.test(body), (body.match(DEV) || [''])[0]);
 		await t.check('it says where the workspace lives and where its files are', /Home server/.test(body) && /Home TrueNAS/.test(body) && /Files/.test(body), body.slice(0, 300));
-		await f.evaluate(() => closeOverlay()); await sleep(f, 500);
+		await closeAll(f);
 		await f.locator(`${BLOCK} button`, { hasText: 'Where the files are' }).first().click();
 		s = await untilOpen(f, /Where the files are/);
 		body = await f.evaluate(() => { const w = [...document.querySelectorAll('.drawer-wrap:not([data-closing="1"])')].pop(); return w ? w.innerText : ''; });

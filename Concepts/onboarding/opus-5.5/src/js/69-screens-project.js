@@ -382,10 +382,14 @@
     const snap = tome.projectSnapshot(id); if (!snap || !snap.settings) return [];
     const key = id + '@' + (snap.revision || 0); if (OWN.has(key)) return OWN.get(key);
     const canon = new Map(Object.values((window.PM12_REFERENCE && window.PM12_REFERENCE.byCat) || {}).flatMap((c) => c.settings || []).map((r) => [r.id, r]));
+    /* (your usual settings are the ones in use now, which a new Project starts on: a value equal to them is not its own) */
+    const live = (window.PM12_KIMI && window.PM12_KIMI.getState && (window.PM12_KIMI.getState() || {}).settings) || {};
+    const usualOf = (sid, row) => (Object.prototype.hasOwnProperty.call(live, sid) ? live[sid] : row.default);
     const pv = st.draftPreview(id, null), out = [];
     if (pv && pv.ok) Object.values(pv.groups).forEach((list) => list.forEach((x) => {
-      const row = canon.get(x.id); if (!row || LOOK_IDS.includes(x.id) || JSON.stringify(x.value) === JSON.stringify(row.default)) return;
-      out.push({ id: x.id, label: row.label || x.id, value: x.value, usual: row.default, kind: kindOf(x.id), cat: st.categoryFor(x.id) });
+      const row = canon.get(x.id); if (!row || LOOK_IDS.includes(x.id)) return;
+      const usual = usualOf(x.id, row); if (JSON.stringify(x.value) === JSON.stringify(usual)) return;
+      out.push({ id: x.id, label: row.label || x.id, value: x.value, usual, kind: kindOf(x.id), cat: st.categoryFor(x.id) });
     }));
     OWN.set(key, out); return out;
   }

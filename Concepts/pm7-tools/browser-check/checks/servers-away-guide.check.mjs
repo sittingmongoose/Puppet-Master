@@ -22,6 +22,15 @@ import { pagePath } from '../helpers/onboarding-fields.mjs';
 
 const sleep = (f, ms) => f.waitForTimeout(ms);
 const BLOCK = '.workspace-block[data-workspace-block="servers"]';
+/* close whatever sheet, window or dialog is open, by its own Close (the engine's closeOverlay is not a global) */
+async function closeAll(f) {
+	for (let i = 0; i < 4; i++) {
+		const b = f.locator('.overlay [data-action="close-overlay"], .drawer-wrap:not([data-closing="1"]) .o55g-close, .drawer-wrap:not([data-closing="1"]) .pm51-panel-close').first();
+		if (!(await b.count())) break;
+		await b.click().catch(() => {}); await f.waitForTimeout(450);
+	}
+	await f.waitForTimeout(300);
+}
 const WIN = '.o55g-win';
 
 async function openAway(t) {
@@ -42,17 +51,18 @@ async function setUp(f, route) {
 	await f.waitForSelector(WIN, { timeout: 5000 });
 	await sleep(f, 700);
 }
-const title = (f) => f.evaluate((W) => { const e = document.querySelector(`${W} .o55g-title`); return e ? e.textContent.trim() : ''; }, WIN);
-const main = (f) => f.evaluate((W) => { const e = document.querySelector(`${W} .o55g-main`); return e ? e.innerText : ''; }, WIN);
+/* (a step being drawn again keeps the outgoing pane a moment: always read the newest) */
+const title = (f) => f.evaluate((W) => { const e = [...document.querySelectorAll(`${W} .o55g-layer:not(.o55g-out) .o55g-title`)].pop(); return e ? e.textContent.trim() : ''; }, WIN);
+const main = (f) => f.evaluate((W) => { const e = [...document.querySelectorAll(`${W} .o55g-layer:not(.o55g-out) .o55g-main`)].pop(); return e ? e.innerText : ''; }, WIN);
 async function cont(f) { await f.locator(`${WIN} .o55g-primary`).first().click(); await sleep(f, 700); }
-const tsState = (f) => f.evaluate((W) => { const e = document.querySelector(`${W} [data-ts-state]`); return e ? e.dataset.tsState : ''; }, WIN);
+const tsState = (f) => f.evaluate((W) => { const e = [...document.querySelectorAll(`${W} .o55g-layer:not(.o55g-out) [data-ts-state]`)].pop(); return e ? e.dataset.tsState : ''; }, WIN);
 async function untilTs(f, want, ms = 9000) {
 	const end = Date.now() + ms; let s = '';
 	while (Date.now() < end) { s = await tsState(f); if (want.includes(s)) return s; await sleep(f, 150); }
 	return s;
 }
-const phases = (f) => f.evaluate((W) => [...document.querySelectorAll(`${W} [data-ts-state] .pm51-step`)].map((li) => ({ t: li.querySelector('.pm51-step-title').textContent.trim(), done: li.classList.contains('is-done'), s: (li.querySelector('.pm51-step-end') || {}).textContent || '' })), WIN);
-async function press(f, label) { await f.locator(`${WIN} .o55g-main button`, { hasText: label }).first().click(); await sleep(f, 300); }
+const phases = (f) => f.evaluate((W) => { const box = [...document.querySelectorAll(`${W} .o55g-layer:not(.o55g-out) [data-ts-state]`)].pop(); return (box ? [...box.querySelectorAll('.pm51-step')] : []).map((li) => ({ t: li.querySelector('.pm51-step-title').textContent.trim(), done: li.classList.contains('is-done'), s: (li.querySelector('.pm51-step-end') || {}).textContent || '' })); }, WIN);
+async function press(f, label) { await f.locator(`${WIN} .o55g-layer:not(.o55g-out) .o55g-main`).last().locator('button', { hasText: label }).first().click(); await sleep(f, 300); }
 
 export const tests = {
 	async '1.05 + 1.06: Tailscale is built in, says which installation joins, and runs the owner’s staged steps'(t) {
@@ -101,7 +111,7 @@ export const tests = {
 			await press(f, 'Try again');
 			const s2 = await untilTs(f, ['waiting']), ph2 = await phases(f);
 			await t.check(`${hint}: Try again goes back to a fresh sign-in`, s2 === 'waiting' && ph2[0].done && !ph2[1].done && /Waiting for you/.test(ph2[1].s), JSON.stringify({ s2, ph2 }));
-			await f.evaluate(() => closeOverlay()); await sleep(f, 600);
+			await closeAll(f);
 		}
 		await setUp(f, 'tailscale'); await cont(f);
 		await press(f, 'Start'); await untilTs(f, ['waiting']);
@@ -132,7 +142,7 @@ export const tests = {
 	async '1.07-1.09: a web address: Puppet Master makes the file or checks yours; no Caddy run for you, no certificate promise'(t) {
 		const f = await openAway(t);
 		await setUp(f, 'domain');
-		const opts = await f.evaluate((W) => ({ host: [...document.querySelectorAll(`${W} select.o55-aw-host option`)].map((o) => o.textContent.trim()), proxy: [...document.querySelectorAll(`${W} select.o55-aw-proxy option`)].map((o) => o.textContent.trim()) }), WIN);
+		const opts = await f.evaluate((W) => ({ host: [...document.querySelectorAll(`${W} .o55g-layer:not(.o55g-out) select.o55-aw-host option`)].map((o) => o.textContent.trim()), proxy: [...document.querySelectorAll(`${W} .o55g-layer:not(.o55g-out) select.o55-aw-proxy option`)].map((o) => o.textContent.trim()) }), WIN);
 		let body = await main(f);
 		await t.check('Who runs it: Make the settings file, or I have one already', JSON.stringify(opts.host) === JSON.stringify(['Make the settings file', 'I have one already']), JSON.stringify(opts.host));
 		await t.check('the file is for Caddy, NGINX or Traefik, Caddy first; no Nginx Proxy Manager file', JSON.stringify(opts.proxy) === JSON.stringify(['Caddy', 'NGINX', 'Traefik']), JSON.stringify(opts.proxy));
@@ -149,11 +159,11 @@ export const tests = {
 		await f.locator(`${WIN} [data-action="pm51-servers-w-aflag"][data-key="added"]`).first().click();
 		await cont(f);
 		await t.check('then Check', /Does it work from here/.test(await title(f)), await title(f));
-		await f.evaluate(() => closeOverlay()); await sleep(f, 600);
+		await closeAll(f);
 		await setUp(f, 'domain');
 		await f.evaluate((W) => { const el = document.querySelector(`${W} select.o55-aw-host`); el.value = 'existing'; el.dispatchEvent(new Event('change', { bubbles: true })); }, WIN);
 		await sleep(f, 600);
-		const own = await f.evaluate((W) => ({ proxy: !!document.querySelector(`${W} select.o55-aw-proxy`), text: (document.querySelector(`${W} .o55g-main`) || {}).innerText || '' }), WIN);
+		const own = await f.evaluate((W) => ({ proxy: !!document.querySelector(`${W} .o55g-layer:not(.o55g-out) select.o55-aw-proxy`), text: (document.querySelector(`${W} .o55g-layer:not(.o55g-out) .o55g-main`) || {}).innerText || '' }), WIN);
 		await t.check('I have one already: no proxy kind to pick, nothing made for it', !own.proxy && /Nothing is made for your proxy/.test(own.text), JSON.stringify({ proxy: own.proxy, text: own.text.slice(0, 300) }));
 		await f.locator(`${WIN} .o55-aw-dom`).fill('pm.example.com');
 		await f.locator(`${WIN} [data-action="pm51-servers-w-aflag"][data-key="forwarded"]`).first().click();
@@ -169,12 +179,12 @@ export const tests = {
 		await f.locator(`${WIN} [data-action="pm51-servers-w-aflag"][data-key="vpnOn"]`).first().click();
 		await cont(f);
 		await f.locator(`${WIN} [data-action="pm51-servers-key-check"]`).first().click(); await sleep(f, 700);
-		const rows = await f.evaluate((W) => [...document.querySelectorAll(`${W} .o55g-main .pm51-step-title`)].map((e) => e.textContent.trim()), WIN);
+		const rows = await f.evaluate((W) => [...document.querySelectorAll(`${W} .o55g-layer:not(.o55g-out) .o55g-main .pm51-step-title`)].map((e) => e.textContent.trim()), WIN);
 		t.log(JSON.stringify(rows));
 		const need = [/reachable/i, /understand each other/i, /your server/i, /Sign-in and pairing/i, /Live updates/i, /stream/i, /upload and download/i, /Links open/i, /Sign-in pages return/i];
 		await t.check('reachability, protocol, identity, sign-in and pairing, live updates, streams, transfers, links, callbacks', need.every((re) => rows.some((r) => re.test(r))), JSON.stringify(rows));
 		await t.check('no certificate is called valid', !rows.some((r) => /certificate/i.test(r)), JSON.stringify(rows));
-		await f.evaluate(() => closeOverlay()); await sleep(f, 500);
+		await closeAll(f);
 		/* the row's own Check route reports the same checks */
 		await f.evaluate(() => { const r = PM51.s().serverProject.remoteAccess.routes.find((x) => x.id === 'vpn'); r.status = 'ready'; r.enabled = true; PM51.s().serverProject.remoteAccess.vpn = { kind: 'WireGuard', address: '10.8.0.2' }; PM51.refresh('servers', { swap: false }); });
 		await sleep(f, 400);
@@ -188,7 +198,7 @@ export const tests = {
 		await setUp(f, 'remote-link');
 		await cont(f);
 		await press(f, 'Create link');
-		await f.waitForFunction((W) => /https:\/\//.test((document.querySelector(`${W} .o55g-main`) || {}).innerText || ''), WIN, { timeout: 5000 }).catch(() => {});
+		await f.waitForFunction((W) => /https:\/\//.test((document.querySelector(`${W} .o55g-layer:not(.o55g-out) .o55g-main`) || {}).innerText || ''), WIN, { timeout: 5000 }).catch(() => {});
 		const body = await main(f);
 		const link = (body.match(/https:\/\/\S+/) || [''])[0], code = (body.match(/\b[A-Z0-9]{4}-[A-Z0-9]{4}\b/) || [''])[0];
 		const S = await f.evaluate(() => { const s = PM51.s().serverProject, h = s.servers.find((x) => x.id === s.homeServer); return { id: h.id, slug: h.name.toLowerCase().replace(/[^a-z0-9]+/g, '-') }; });
