@@ -163,11 +163,18 @@
       facts: [['Why', 'The prior host connection dropped during step 7. The checkpoint is intact; no command will be replayed twice.'],
         ['Scope', 'Reconnect host · restore browser session · continue from checkpoint · no schema mutation'],
         ['Hosts', hosts.map(function (h) { return esc(h.label) + ' (' + esc(h.state) + ')'; }).join(' · ') || 'Windows native']],
-      onAnswer: function (c, how) {
-        var A = window.PM56_APP;
-        if (A && A.act) A.act(how === 'deny' ? 'deny-permission' : 'approve-permission');
-        return how === 'deny';
-      } });
+      onAnswer: function (c, how) { appAct(how === 'deny' ? 'deny-permission' : 'approve-permission'); return how === 'deny'; } });
+  }
+  /* the app's own action: PM56_APP.act where the chat is hosted (PMConcept7); on the chat's own page, which has no
+     PM56_APP, the same hidden-button press app.js's click handler reads */
+  function appAct(name) {
+    var A = window.PM56_APP;
+    if (A && A.act) return A.act(name);
+    var b = document.createElement('button');
+    b.type = 'button'; b.hidden = true; b.setAttribute('data-action', name);
+    document.body.appendChild(b);
+    try { b.click(); } finally { b.remove(); }
+    return true;
   }
 
   function provide() {
