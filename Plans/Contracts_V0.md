@@ -24625,9 +24625,14 @@ canonical_text: alert.acknowledged 1.0.0 uses only Plans/event_payloads/attentio
   that field's own schema bounds, with no lane-wide cap. Refuse floats (including integral/exponent spellings), Boolean values,
   negative-zero tokens and leading zeros before schema/semantic use, identity hashing or retry comparison; never coerce
   retained originals, whose write-time recipe SP-1101 selects. Storage-assigned sequence/frontier fields retain their u64
-  physical domain (SP-1100), with the same exact integer representation. Timestamps use full-match RFC3339 YYYY-MM-DD[Tt]hh:mm:ss[.digits](Z|z|+hh:mm|-hh:mm),
-  required zone, valid Gregorian date/time and offset, one or more fractional digits when present, and no leap seconds,
-  trailing whitespace or trailing LF. Enforce date-time and UUID formats without optional package dependencies.
+  physical domain (SP-1100), with the same exact integer representation. Timestamps follow CV-1101 through the shared date_time predicate with the owner profile of each field. Payload,
+  state and record date-time fields, EventRecord occurred_at_utc and the first-receipt acknowledged_at_utc take the
+  EventRecord profile (RFC 3339 with T or t, Z, z or a signed offset, real calendar and offset ranges, a legitimate
+  offset-adjusted leap second, year 0000 and any number of fractional digits; a missing zone, space separator,
+  trailing LF or illegitimate second 60 refuses), and Storage-assigned observed_at_utc/persisted_at_utc take the
+  CV-253 storage_utc_z profile. Strings are never rewritten; instants compare exactly with offsets applied, every
+  fractional digit kept and a leap second ordered within its minute. Enforce date-time and UUID formats without
+  optional package dependencies.
   The family-specific input-domain and guard oracle is scripts/pm-dg6a-domain-check.py alongside its full family checker.
 gui_related: false
 gui_classification_reason: Storage/event contract, no new UI.
@@ -24677,9 +24682,14 @@ canonical_text: alert.dismissed 1.0.0 uses only Plans/event_payloads/attention/a
   that field's own schema bounds, with no lane-wide cap. Refuse floats (including integral/exponent spellings), Boolean values,
   negative-zero tokens and leading zeros before schema/semantic use, identity hashing or retry comparison; never coerce
   retained originals, whose write-time recipe SP-1101 selects. Storage-assigned sequence/frontier fields retain their u64
-  physical domain (SP-1100), with the same exact integer representation. Timestamps use full-match RFC3339 YYYY-MM-DD[Tt]hh:mm:ss[.digits](Z|z|+hh:mm|-hh:mm),
-  required zone, valid Gregorian date/time and offset, one or more fractional digits when present, and no leap seconds,
-  trailing whitespace or trailing LF. Enforce date-time and UUID formats without optional package dependencies.
+  physical domain (SP-1100), with the same exact integer representation. Timestamps follow CV-1101 through the shared date_time predicate with the owner profile of each field. Payload,
+  state and record date-time fields, EventRecord occurred_at_utc and the first-receipt acknowledged_at_utc take the
+  EventRecord profile (RFC 3339 with T or t, Z, z or a signed offset, real calendar and offset ranges, a legitimate
+  offset-adjusted leap second, year 0000 and any number of fractional digits; a missing zone, space separator,
+  trailing LF or illegitimate second 60 refuses), and Storage-assigned observed_at_utc/persisted_at_utc take the
+  CV-253 storage_utc_z profile. Strings are never rewritten; instants compare exactly with offsets applied, every
+  fractional digit kept and a leap second ordered within its minute. Enforce date-time and UUID formats without
+  optional package dependencies.
   The family-specific input-domain and guard oracle is scripts/pm-dg6a-domain-check.py alongside its full family checker.
 gui_related: false
 gui_classification_reason: Storage/event contract, no new UI.
@@ -24728,9 +24738,14 @@ canonical_text: alert.rule_muted 1.0.0 uses only Plans/event_payloads/attention/
   that field's own schema bounds, with no lane-wide cap. Refuse floats (including integral/exponent spellings), Boolean values,
   negative-zero tokens and leading zeros before schema/semantic use, identity hashing or retry comparison; never coerce
   retained originals, whose write-time recipe SP-1101 selects. Storage-assigned sequence/frontier fields retain their u64
-  physical domain (SP-1100), with the same exact integer representation. Timestamps use full-match RFC3339 YYYY-MM-DD[Tt]hh:mm:ss[.digits](Z|z|+hh:mm|-hh:mm),
-  required zone, valid Gregorian date/time and offset, one or more fractional digits when present, and no leap seconds,
-  trailing whitespace or trailing LF. Enforce date-time and UUID formats without optional package dependencies.
+  physical domain (SP-1100), with the same exact integer representation. Timestamps follow CV-1101 through the shared date_time predicate with the owner profile of each field. Payload,
+  state and record date-time fields, EventRecord occurred_at_utc and the first-receipt acknowledged_at_utc take the
+  EventRecord profile (RFC 3339 with T or t, Z, z or a signed offset, real calendar and offset ranges, a legitimate
+  offset-adjusted leap second, year 0000 and any number of fractional digits; a missing zone, space separator,
+  trailing LF or illegitimate second 60 refuses), and Storage-assigned observed_at_utc/persisted_at_utc take the
+  CV-253 storage_utc_z profile. Strings are never rewritten; instants compare exactly with offsets applied, every
+  fractional digit kept and a leap second ordered within its minute. Enforce date-time and UUID formats without
+  optional package dependencies.
   The family-specific input-domain and guard oracle is scripts/pm-dg6a-domain-check.py alongside its full family checker.
 gui_related: false
 gui_classification_reason: Storage/event contract, no new UI.
@@ -24779,9 +24794,14 @@ canonical_text: alert.snoozed 1.0.0 uses only Plans/event_payloads/attention/ale
   that field's own schema bounds, with no lane-wide cap. Refuse floats (including integral/exponent spellings), Boolean values,
   negative-zero tokens and leading zeros before schema/semantic use, identity hashing or retry comparison; never coerce
   retained originals, whose write-time recipe SP-1101 selects. Storage-assigned sequence/frontier fields retain their u64
-  physical domain (SP-1100), with the same exact integer representation. Timestamps use full-match RFC3339 YYYY-MM-DD[Tt]hh:mm:ss[.digits](Z|z|+hh:mm|-hh:mm),
-  required zone, valid Gregorian date/time and offset, one or more fractional digits when present, and no leap seconds,
-  trailing whitespace or trailing LF. Enforce date-time and UUID formats without optional package dependencies.
+  physical domain (SP-1100), with the same exact integer representation. Timestamps follow CV-1101 through the shared date_time predicate with the owner profile of each field. Payload,
+  state and record date-time fields, EventRecord occurred_at_utc and the first-receipt acknowledged_at_utc take the
+  EventRecord profile (RFC 3339 with T or t, Z, z or a signed offset, real calendar and offset ranges, a legitimate
+  offset-adjusted leap second, year 0000 and any number of fractional digits; a missing zone, space separator,
+  trailing LF or illegitimate second 60 refuses), and Storage-assigned observed_at_utc/persisted_at_utc take the
+  CV-253 storage_utc_z profile. Strings are never rewritten; instants compare exactly with offsets applied, every
+  fractional digit kept and a leap second ordered within its minute. Enforce date-time and UUID formats without
+  optional package dependencies.
   The family-specific input-domain and guard oracle is scripts/pm-dg6a-domain-check.py alongside its full family checker.
 gui_related: false
 gui_classification_reason: Storage/event contract, no new UI.
@@ -24831,9 +24851,14 @@ canonical_text: panel.redocked current payload 2.0.0 is the closed Plans/event_p
   that field's own schema bounds, with no lane-wide cap. Refuse floats (including integral/exponent spellings), Boolean values,
   negative-zero tokens and leading zeros before schema/semantic use, identity hashing or retry comparison; never coerce
   retained originals, whose write-time recipe SP-1101 selects. Storage-assigned sequence/frontier fields retain their u64
-  physical domain (SP-1100), with the same exact integer representation. Timestamps use full-match RFC3339 YYYY-MM-DD[Tt]hh:mm:ss[.digits](Z|z|+hh:mm|-hh:mm),
-  required zone, valid Gregorian date/time and offset, one or more fractional digits when present, and no leap seconds,
-  trailing whitespace or trailing LF. Enforce date-time and UUID formats without optional package dependencies.
+  physical domain (SP-1100), with the same exact integer representation. Timestamps follow CV-1101 through the shared date_time predicate with the owner profile of each field. Payload,
+  state and record date-time fields, EventRecord occurred_at_utc and the first-receipt acknowledged_at_utc take the
+  EventRecord profile (RFC 3339 with T or t, Z, z or a signed offset, real calendar and offset ranges, a legitimate
+  offset-adjusted leap second, year 0000 and any number of fractional digits; a missing zone, space separator,
+  trailing LF or illegitimate second 60 refuses), and Storage-assigned observed_at_utc/persisted_at_utc take the
+  CV-253 storage_utc_z profile. Strings are never rewritten; instants compare exactly with offsets applied, every
+  fractional digit kept and a leap second ordered within its minute. Enforce date-time and UUID formats without
+  optional package dependencies.
   The family-specific input-domain and guard oracle is scripts/pm-dg6a-domain-check.py alongside its full family checker.
 gui_related: false
 gui_classification_reason: Event custody and validation, no new UI.
@@ -24888,9 +24913,14 @@ canonical_text: panel.undocked current payload 2.0.0 is the closed Plans/event_p
   that field's own schema bounds, with no lane-wide cap. Refuse floats (including integral/exponent spellings), Boolean values,
   negative-zero tokens and leading zeros before schema/semantic use, identity hashing or retry comparison; never coerce
   retained originals, whose write-time recipe SP-1101 selects. Storage-assigned sequence/frontier fields retain their u64
-  physical domain (SP-1100), with the same exact integer representation. Timestamps use full-match RFC3339 YYYY-MM-DD[Tt]hh:mm:ss[.digits](Z|z|+hh:mm|-hh:mm),
-  required zone, valid Gregorian date/time and offset, one or more fractional digits when present, and no leap seconds,
-  trailing whitespace or trailing LF. Enforce date-time and UUID formats without optional package dependencies.
+  physical domain (SP-1100), with the same exact integer representation. Timestamps follow CV-1101 through the shared date_time predicate with the owner profile of each field. Payload,
+  state and record date-time fields, EventRecord occurred_at_utc and the first-receipt acknowledged_at_utc take the
+  EventRecord profile (RFC 3339 with T or t, Z, z or a signed offset, real calendar and offset ranges, a legitimate
+  offset-adjusted leap second, year 0000 and any number of fractional digits; a missing zone, space separator,
+  trailing LF or illegitimate second 60 refuses), and Storage-assigned observed_at_utc/persisted_at_utc take the
+  CV-253 storage_utc_z profile. Strings are never rewritten; instants compare exactly with offsets applied, every
+  fractional digit kept and a leap second ordered within its minute. Enforce date-time and UUID formats without
+  optional package dependencies.
   The family-specific input-domain and guard oracle is scripts/pm-dg6a-domain-check.py alongside its full family checker.
 gui_related: false
 gui_classification_reason: Event custody and validation, no new UI.
@@ -24953,9 +24983,14 @@ canonical_text: concern.created current 1.0.0 selects the existing closed Plans/
   that field's own schema bounds, with no lane-wide cap. Refuse floats (including integral/exponent spellings), Boolean values,
   negative-zero tokens and leading zeros before schema/semantic use, identity hashing or retry comparison; never coerce
   retained originals, whose write-time recipe SP-1101 selects. Storage-assigned sequence/frontier fields retain their u64
-  physical domain (SP-1100), with the same exact integer representation. Timestamps use full-match RFC3339 YYYY-MM-DD[Tt]hh:mm:ss[.digits](Z|z|+hh:mm|-hh:mm),
-  required zone, valid Gregorian date/time and offset, one or more fractional digits when present, and no leap seconds,
-  trailing whitespace or trailing LF. Enforce date-time and UUID formats without optional package dependencies.
+  physical domain (SP-1100), with the same exact integer representation. Timestamps follow CV-1101 through the shared date_time predicate with the owner profile of each field. Payload,
+  state and record date-time fields, EventRecord occurred_at_utc and the first-receipt acknowledged_at_utc take the
+  EventRecord profile (RFC 3339 with T or t, Z, z or a signed offset, real calendar and offset ranges, a legitimate
+  offset-adjusted leap second, year 0000 and any number of fractional digits; a missing zone, space separator,
+  trailing LF or illegitimate second 60 refuses), and Storage-assigned observed_at_utc/persisted_at_utc take the
+  CV-253 storage_utc_z profile. Strings are never rewritten; instants compare exactly with offsets applied, every
+  fractional digit kept and a leap second ordered within its minute. Enforce date-time and UUID formats without
+  optional package dependencies.
   The family-specific input-domain and guard oracle is scripts/pm-dg6a-domain-check.py alongside its full family checker.
 gui_related: false
 gui_classification_reason: Event identity, authority, custody and storage contract; existing GUI action model is

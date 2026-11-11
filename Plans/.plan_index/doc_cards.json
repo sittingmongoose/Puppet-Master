@@ -4618,7 +4618,7 @@
         "scripts/pm_event_datetime.py",
         "scripts/pm_event_numbers.py"
       ],
-      "line_count": 24996,
+      "line_count": 25031,
       "path": "Plans/Contracts_V0.md",
       "plan_unit_count": 370,
       "plan_unit_ids": [
@@ -5355,7 +5355,7 @@
         "worktree_lane_context_loss",
         "worktree_lifecycle_record_loss"
       ],
-      "sha256": "915a5d70a535da1648206df8f6e1eb125446b43b17fc2153de05ef2abcdc7dfc",
+      "sha256": "648b4a708cfecf703a1f7bdb2288ababa8fd875cd99dbbbd82472e719101879b",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 369,
@@ -8924,7 +8924,7 @@
         "wand_sheet_presentation_drift",
         "web_client_stack_or_parity_drift"
       ],
-      "sha256": "e59e65208760e79cdcd9514386f8e52e6e82dfb577e10a31b921dc0796bd9d0f",
+      "sha256": "95ad57449f79828dd3aa0c785fc4e77d33e869248480bf4bf274f68ca9d4dd54",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 668,
@@ -19368,7 +19368,7 @@
         "usage_view_state_becomes_second_policy_or_preview_store",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "2fe6b112148ca80dd4e36969ffaa1f98e80e4e005385f59b385db71fa299b254",
+      "sha256": "71d3012bc9a51d4ec743cdfe9c16404acedf848e86ca9958b843bde155d69b7b",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 346,
@@ -21754,7 +21754,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-10T21:09:44Z",
+  "generated_at_utc": "2026-11-11T17:01:19Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
