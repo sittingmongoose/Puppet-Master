@@ -1,4 +1,4 @@
-// browser-check config for the Projects concept (Split v2 and v3), a runtime layer over PMConcept7.
+// browser-check config for the Projects concept (Split v3), a runtime layer over PMConcept7.
 //   python3 Concepts/projects-redesign/opus-5.5/tools/build_standalone.py <dir>      (writes <dir>/projects-concepts.html)
 //   browser-check run Concepts/projects-redesign/opus-5.5/tools/checks --set page=<dir>/projects-concepts.html
 // The single file carries PMConcept7 in the review page's frame (#pm7, srcdoc), so it opens as file:// with no server.

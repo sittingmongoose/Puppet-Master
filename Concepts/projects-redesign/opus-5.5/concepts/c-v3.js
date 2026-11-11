@@ -1,22 +1,22 @@
-/* Projects concepts (Opus 5.5): Split v3, "easier to read". The switch.
+/* Projects concepts (Opus 5.5): Split v3, "easier to read". What the stylesheet cannot do by itself.
 
-   Split v3 is not a second concept with its own renderer: it is Split (concept C, concepts/c.js) shown with
-   concepts/c-v3.css. So everything Split does, and everything fixed in it later, is in v3 too, and switching between v2
-   and v3 keeps the chosen Project, an open New Project and every answer exactly where they were.
+   Split v3 is the Split concept (concept C, concepts/c.js) shown with concepts/c-v3.css. It replaced Split v2 on
+   2026-11-11 (Jared: "We are replacing v2 with v3"), so there is no switch: this file sets data-pjx-read="v3" on <html>
+   when it loads, and every rule in c-v3.css is anchored on that attribute. Nothing of c.js or c.css is changed, so
+   everything Split does, and everything fixed in it later, is in v3.
 
-   This file turns the stylesheet on and off: it sets data-pjx-read="v3" on <html>, which every rule in c-v3.css is
-   anchored on. The review strip asks for it by message ({ source: 'pjx-host', cmd: 'read', read: 'v3' | 'v2' }); key 4
-   shows v3 and key 3 goes back to v2, as 1, 2, 3 and 0 pick the concepts. It tells the strip which one shows
-   ({ source: 'pjx', type: 'read', read }).
-
-   One thing a stylesheet cannot know is how long a value is. While v3 shows, each plate's facts are measured against
-   the plate's own width, and marked for c-v3.css:
+   One thing a stylesheet cannot know is how long a value is. Each plate's facts are measured against the plate's own
+   width, and marked for c-v3.css:
    - data-v3-stack on the facts: most of this plate's values would not fit on one line beside their labels (Backup,
      Where work runs in a half-width plate), so every label goes above its value and the plate reads one way;
    - data-v3-long on a fact: this one value would need more than two lines beside its label (a sentence), or is one
      line that cannot wrap and does not fit there (a folder path, which Split shortens in the middle only when it must),
      so it alone goes under its label, the plate wide.
-   Nothing else in Split's markup is touched, and the marks go when v2 comes back. */
+   Nothing else in Split's markup is touched.
+
+   PJX.read.set('v2') takes the attribute and the marks off again, which leaves Split's base layout (c.css alone). No
+   control reaches it: it is there for tools/checks/split-v3.check.mjs, which measures v3 against that layout on the
+   same state (nothing more cut off, the same widths). PJX.read.set('v3') puts v3 back. */
 (function (W) {
   'use strict';
   const PJX = W.PJX;
@@ -73,6 +73,8 @@
     if (ro) { ro.disconnect(); ro = null; }
     watched = null;
     const pnl = D.getElementById('panel-projects');
+    // loaded before PMConcept7 has its Projects panel: look again shortly
+    if (on && !pnl) { W.setTimeout(() => { if (get() === 'v3' && !mo) watch(true); }, 250); return; }
     if (on && pnl && W.MutationObserver) {
       mo = new W.MutationObserver(mark); mo.observe(pnl, { childList: true, subtree: true, characterData: true });
       if (W.ResizeObserver) { ro = new W.ResizeObserver(mark); ro.observe(pnl); }
@@ -84,7 +86,6 @@
       D.querySelectorAll('#pjxc .pjxc-facts[data-v3-stack]').forEach((g) => g.removeAttribute('data-v3-stack'));
     }
   }
-  function report() { if (W.parent !== W) { try { W.parent.postMessage({ source: 'pjx', type: 'read', read: get() }, '*'); } catch (e) { /* no parent */ } } }
   function set(v) {
     const next = v === 'v3' ? 'v3' : 'v2';
     if (next !== get()) {
@@ -93,24 +94,8 @@
       // the page lays itself out by measuring (the head's fit, the notes' place): draw it again at the new sizes
       try { PJX.rerender(); } catch (e) { /* nothing mounted yet */ }
     }
-    report();
   }
 
-  W.addEventListener('message', (ev) => {
-    const m = ev.data;
-    if (!m || m.source !== 'pjx-host' || ev.source !== W.parent) return;
-    if (m.cmd === 'read') set(m.read);
-    else if (m.cmd === 'hello') report();
-  });
-
-  // 4 shows Split v3, 3 goes back to Split v2 (never while typing, never with a modifier, never in a dialog)
-  D.addEventListener('keydown', (e) => {
-    if (e.ctrlKey || e.metaKey || e.altKey || e.defaultPrevented || D.querySelector('.pjx-dlg-back')) return;
-    const t = e.target, tag = (t && t.tagName) || '';
-    if (/input|select|textarea/i.test(tag) || (t && t.isContentEditable)) return;
-    if (!(W.PM_PAGES && W.PM_PAGES.current === 'projects')) return;
-    if (e.key === '4') { set('v3'); PJX.config({ opt: 'c' }); } else if (e.key === '3') set('v2');
-  });
-
   PJX.read = { get, set };
+  set('v3');
 })(window);

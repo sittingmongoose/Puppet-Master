@@ -10,17 +10,21 @@ onboarding wizard without its theatrics; account for every way a project can be 
 control. The review behind these concepts (Opus 5.5, GPT-6 Astra, Muse Wonder Full) is in
 `/mnt/Cursor/share/puppet-master/2026-10-30-projects-refresh/`.
 
-## Split v3 (2026-11-10): Split v2, easier to read
+## Split v3 (2026-11-10): Split, set for reading. It replaces Split v2
 
 Jared, 2026-11-10: "I like the new split design it made. However, one issue I have with it is its a little hard to
 read, my eyes tend to glaze over when i look at it. So I think it needs some mild adjustments to make it easier to
 parse ... The content is good and the layout is pretty good, its just the details, spacing, etc that need help."
 
+Jared, 2026-11-11, after the first build ("Yes that looks better") and a night of both being tested side by side:
+"why are you running against both v2 and v3? We are replacing v2 with v3. Why waste the time and tokens?" So Split v3
+is the Split concept now. The strip has one **C · Split v3** button on key 3; the v2 button, key 4 and `?split=v2` are
+gone, and the kit runs once.
+
 Split v3 is Split v2 with the same parts, the same words and the same layout, set differently. It is not a second
-renderer: `concepts/c.js` draws both, `concepts/c-v3.css` restyles it while `<html>` carries `data-pjx-read="v3"`, and
-`concepts/c-v3.js` only sets that attribute (and marks long values, below). So every fix made to Split is in v3 too, and
-switching between **C · Split v3** (key 4) and **C · Split v2** (key 3) keeps the chosen Project, an open New Project
-and every answer where they were. The page opens on v3; `index.html?split=v2` opens on v2.
+renderer: `concepts/c.js` and `concepts/c.css` are Split's as they were, `concepts/c-v3.css` restyles the page while
+`<html>` carries `data-pjx-read="v3"`, and `concepts/c-v3.js` sets that attribute when it loads (and marks long values,
+below). So every fix made to Split is in v3, and nothing under `Concepts/` was removed to make the change.
 
 What made v2 tiring, and what v3 changes:
 
@@ -48,16 +52,15 @@ Move a chat) are the one place v3 reaches outside the page: their lists of choic
 fact lines read at the page's size and their fields' labels are in the text face. Menus, the chat, its History and
 the History row's menu are not v3's and are the same in both.
 
-Its checks are `tools/checks/split-v3.check.mjs` in this folder's kit: the switch on the strip and by key, what
-switching keeps, v2 left exactly as it was, how each plate's facts are set, the fix pass's parts in v3 and unchanged in
-v2 (the Settle the clash dialog in all ten looks), and browser-check's audit (overflow, clipped text, covered controls)
-on every demo Project, New Project and its moments, at 1280, 1024, 860 and 640 px, and in all ten looks with the demo
-set, on first run and with 40 projects. On each of those states it also measures v3 against v2 for what the audit
-cannot see: v3 cuts off no text v2 shows whole, every plate's glyph stays beside its title, and an open question's
-answers start on the question's own edge, and the questions' card and an open question's answers are exactly as wide
-as in v2. The kit's other checks run in v3 unchanged, since the page opens on it;
-`--set page=file://<dir>/projects-concepts.html?split=v2` runs the kit in v2 (this file then shows the page opened on
-v2 and goes to v3 by the strip).
+Its checks are `tools/checks/split-v3.check.mjs` in this folder's kit: that Split opens as v3 from the strip and by
+key, how each plate's facts are set, the fix pass's parts (the Settle the clash dialog in all ten looks), and
+browser-check's audit (overflow, clipped text, covered controls) on every demo Project, New Project and its moments,
+at 1280, 1024, 860 and 640 px, and in all ten looks with the demo set, on first run and with 40 projects. On each of
+those states it also measures v3 against Split's base layout (what `c.css` alone lays out; `PJX.read.set('v2')` shows
+it for the measure, no control does) for what the audit cannot see: v3 cuts off no text the base layout shows whole,
+every plate's glyph stays beside its title, an open question's answers start on the question's own edge, and the
+questions' card and an open question's answers are exactly as wide. The kit's other checks run on the same page, which
+is v3.
 
 Review r2 (2026-11-11, `REVIEW-concept-B-r2-opus-high.md`) found two places where v3's own gaps broke a layout v2
 sizes for its gaps: at 860 px every plate head put its glyph on a line of its own (N4), and in Retro the chosen
@@ -67,8 +70,7 @@ questions card 18 px narrower than v2's, so `np.css`'s narrow step applied at fu
 shortened in the middle where v2 shows it whole. The rule v3 now keeps, written at the top of `c-v3.css`: it changes
 no side padding and no column gap along the widths Split's layout steps are measured on (`pjxcpage`, `pjxcsteps`,
 `pjxcsec`), and no gap an offset in `c.css` or `np.css` is worked out from. So every step of v2's layout falls at the
-same window width in v3, and flipping between the two never re-flows the page. A path that does not fit beside its
-label goes under it, the plate wide.
+same window width in v3. A path that does not fit beside its label goes under it, the plate wide.
 
 ## Split v2 (pass 2, 2026-11-02): the chosen concept
 
@@ -201,8 +203,8 @@ differ only in layout and presentation:
 
 The strip under PMConcept7 is for reviewing and is not part of the design.
 
-- **Concept**: C · Split v3, C · Split v2 and Today; A and B (pass 1, frozen) sit behind **More concepts** (keys 1, 2, 3,
-  4 and 0). The strip opens on C · Split v3.
+- **Concept**: C · Split v3 and Today; A and B (pass 1, frozen) sit behind **More concepts** (keys 1, 2, 3 and 0 still
+  work). The strip opens on C.
 - **Look**: all ten, switched through PMConcept7's own theme menu.
 - **Projects**: the demo set, first run with none yet, or 40 projects.
 - **Window width**: full, 1280, 1024, 860 or 640 px.
@@ -241,8 +243,8 @@ The strip under PMConcept7 is for reviewing and is not part of the design.
 | `layer/work.js` | `PJX.work`: where work runs (records home, work choice, default and allowed Computers, work rows, Why this computer, the change form, New Project's block). |
 | `layer/chat.js` | `PJX.chat`: chats with no project inside PMConcept7 (Home's and the chat's New split, the title-bar row, History's No project group, the no-project chat view) and the hand-off to both conversions. |
 | `layer/fix.css` | The fix pass's parts, in the chat's, Home's and Usage's own material. |
-| `concepts/a|b|c.*` | Each concept's layout (C is Split v2). |
-| `concepts/c-v3.css`, `concepts/c-v3.js` | Split v3: the stylesheet that sets Split's page for reading, and the switch (`PJX.read.get()`, `PJX.read.set('v3' \| 'v2')`; messages `{ source: 'pjx-host', cmd: 'read', read }` in and `{ source: 'pjx', type: 'read', read }` out). |
+| `concepts/a|b|c.*` | Each concept's layout (C is Split; with `c-v3.*` below it shows as Split v3). |
+| `concepts/c-v3.css`, `concepts/c-v3.js` | Split v3: the stylesheet that sets Split's page for reading, and the script that turns it on at load and marks long values. `PJX.read.get()`; `PJX.read.set('v2' \| 'v3')` shows Split's base layout or v3 again, for the checks only. |
 
 ## What it would touch in Plans
 
