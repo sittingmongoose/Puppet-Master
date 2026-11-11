@@ -390,6 +390,25 @@ phase('control_withdrawn', 'Withdrawn control stays withdrawn (validate_control_
 phase('historical_mode', 'Reader mode input (validate_original_models).', [
     ('HM01_mode_bool', '/historical', 'is an exact boolean', 'invalid historical mode', "value['mode_type'] != 'bool'"),
 ])
+phase('retained_dispatch', 'SP-1101 authenticated retained original selection (shared RetainedDispatcher, '
+      'dispatch_retained_original).', [
+    ('OD01_original_custody', '/custody_model/original_custody/{append custody key}',
+     "the sealed issuance custody holds a well-formed write-time recipe record for the original", 'original_unavailable',
+     "value['dispatch_refusal'] == 'original_unavailable'"),
+    ('OD02_recipe_installed', '/custody_model/original_custody/{append custody key}',
+     'the recorded write-time recipe tuple has an installed frozen verifier', 'recipe_unsupported',
+     "value['dispatch_refusal'] == 'recipe_unknown'"),
+])
+# Unprovable by construction (no input reaches it alone): the reader passes no recipe override and a schema-valid
+# original_ref; the owner always returns an OriginalCustody of bytes; the binding is projected from the same
+# original on both sides from fields the operation custody verdict OC01 guarantees; the frozen verifier returns
+# True or raises its own table refusal; disclosure is checked by the existing trace and control rows. Kept as a
+# check in its own table so the gated tool credits the two reachable rows.
+phase('retained_dispatch_other', 'SP-1101 retained dispatch: any other refusal reason (shared RetainedDispatcher).', [
+    ('OD03_dispatch_other', '/custody_model/original_custody/{append custody key}',
+     'has no other dispatch refusal (override, query, authority, binding, bytes, verification, disclosure)',
+     'retained_dispatch', "value['dispatch_refusal'] not in (None, 'original_unavailable', 'recipe_unknown')"),
+])
 phase('operation_row', 'Selected operation custody row lookup (validate_original_models).', [
     ('OW01_operation_present', '/custody_model/operation_rows/{operation_key}', 'the selected operation custody row is present',
      'operation custody row missing', not_true('row_present')),

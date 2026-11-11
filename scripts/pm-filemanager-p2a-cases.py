@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Write the DFM sweep part 2A witnesses (Plans/filemanager_event_p2a_cases.json) from named specs.
+"""Write the DFM sweep part 2A and 2B witnesses (Plans/filemanager_event_p2a_cases.json) from named specs.
 
 Usage: python3 scripts/pm-filemanager-p2a-cases.py [--check]
 
@@ -27,6 +27,8 @@ _spec.loader.exec_module(dfm)
 OUT = ROOT / dfm.P2A_CASES
 KEY = "filemanager_operation_custody.v1:" + "1" * 64
 KEY2 = "filemanager_operation_custody.v1:" + "2" * 64
+FAMILIES = tuple(k + "." + a for k in ("file", "folder")
+                 for a in ("copied", "created", "deleted", "exported", "moved", "renamed"))  # table PY01..PY12 order
 
 
 def control_base(row):
@@ -248,6 +250,151 @@ def specs(row):
                                 ("control-withdrawn-reader-before", "CW03_reader_before", (2, 2, False))):
         eb, ea = withdrawn(*args)
         add(label, target, control_api(row, eb, ea, 2, [], valid_issued=2, valid_edits=valid_withdrawn))
+    out.extend(p2b_specs(row))
+    return out
+
+
+# --- sweep part 2B: CV-1101 date-time profiles and SP-1101 retained dispatch ---------------------------------
+# Malformed RFC 3339 forms (the SWEEP-12 nine first) and owner-valid forms of the shared event_record profile.
+TS_MALFORMED = (
+    ("non-date", "not-a-date"), ("missing-zone", "2026-11-04T00:00:00"), ("space-separator", "2026-11-04 00:00:00Z"),
+    ("month-13", "2026-13-04T00:00:00Z"), ("day-31-november", "2026-11-31T00:00:00Z"), ("hour-24", "2026-11-04T24:00:00Z"),
+    ("trailing-lf", "2026-11-04T00:00:00Z\n"), ("empty-fraction", "2026-11-04T00:00:00.Z"),
+    ("double-fraction", "2026-11-04T00:00:00.1.2Z"), ("minute-60", "2026-11-04T00:60:00Z"),
+    ("false-leap-second", "2026-11-04T23:59:60Z"), ("offset-hour-24", "2026-11-04T00:00:00+24:00"),
+    ("feb-29-common-year", "2026-02-29T00:00:00Z"))
+TS_HISTORICAL_MALFORMED = ("missing-zone", "trailing-lf", "false-leap-second")
+TS_VALID = (
+    ("lowercase-t", "2026-11-04t00:00:00Z"), ("lowercase-z", "2026-11-04T00:00:00z"),
+    ("offset", "2026-11-04T05:30:00+05:30"), ("negative-zero-offset", "2026-11-04T00:00:00-00:00"),
+    ("leap-second", "2016-12-31T23:59:60Z"), ("offset-leap-second", "2017-01-01T05:29:60+05:30"),
+    ("long-fraction", "2026-11-04T00:00:00.123456789012345678901234Z"), ("year-zero", "0000-01-01T00:00:00Z"),
+    ("leap-day", "2024-02-29T00:00:00Z"))
+# CV-253 storage_utc_z at Storage-assigned observed_at_utc/persisted_at_utc: uppercase Z only, any fraction.
+STORAGE_REFUSED = (("plus-zero", "2026-11-04T00:00:00+00:00"), ("minus-zero", "2026-11-04T00:00:00-00:00"),
+                   ("lowercase-z", "2026-11-04T00:00:00z"), ("offset", "2026-11-04T05:30:00+05:30"))
+STORAGE_VALID = (("observed_at_utc", "long-fraction", "2026-11-04T00:00:00.000000001Z"),
+                 ("persisted_at_utc", "leap-second", "2016-12-31T23:59:60Z"))
+
+
+def p2b(steps, **extra):
+    return dict({"scenario": "p2a", "steps": steps, "stage": "p2b"}, **extra)
+
+
+def ts_steps(value):
+    """One source timestamp: payload ts, with its exact-string copies (EventRecord occurred_at_utc, settled_at_utc)."""
+    return [["set", "payload", ["ts"], value], ["set", "event", ["occurred_at_utc"], value],
+            ["set", "operation", ["settlement", "settled_at_utc"], value], ["synchronize"]]
+
+
+def schema_rule(document, definition, control_path, path, value, control=None):
+    case = {"scenario": "schema-rule", "stage": "p2b", "document": document, "definition": definition,
+            "mutation": {"path": path, "value": value}}
+    if control is None:
+        case["control_path"] = control_path
+    else:
+        case["control"] = control
+    return case
+
+
+def p2b_specs(row):
+    """(label, target row or None for a control, case) of the part 2B witnesses for one family."""
+    name = row["event_type"]
+    payload_row = "PY%02d_%s_payload" % (FAMILIES.index(name) + 1, name.replace(".", "_"))
+    m = row["trace"]["custody_model"]
+    out = []
+
+    def add(label, target, case):
+        out.append((label, target, case))
+
+    # CV-1101 at the family ts and its exact copies (SWEEP-12: these were accepted before part 2B).
+    for label, value in TS_MALFORMED:
+        add("ts-" + label, payload_row, p2b(ts_steps(value)))
+        if label in TS_HISTORICAL_MALFORMED:
+            add("ts-" + label + "-history", payload_row, p2b(ts_steps(value), historical=True))
+    for label, value in TS_VALID:
+        add("ts-" + label + "-control", None, p2b(ts_steps(value)))
+        add("ts-" + label + "-history-control", None, p2b(ts_steps(value), historical=True))
+    # CV-1101 at the companion accepted_at_utc (no other copy) and the issued AppendReceipt acknowledged_at_utc.
+    for label, value in (("missing-zone", "2026-11-04T00:00:00"), ("space-separator", "2026-11-04 00:00:00Z"),
+                         ("day-32", "2026-11-32T00:00:00Z")):
+        add("accepted-at-" + label, "OC01_operation_custody",
+            p2b([["set", "operation", ["accepted_command", "accepted_at_utc"], value], ["copies"]]))
+    add("accepted-at-offset-control", None,
+        p2b([["set", "operation", ["accepted_command", "accepted_at_utc"], "2026-11-03T19:00:00-05:00"], ["copies"]]))
+    for label, target, value in (("receipt-acknowledged-missing-zone", "OC01_operation_custody", "2026-11-04T00:00:00"),
+                                 ("receipt-acknowledged-offset-control", None, "2026-11-04T05:30:00.5+05:30")):
+        add(label, target, p2b([["set", "operation", ["first_append_receipt", "acknowledged_at_utc"], value],
+                                ["set", "append", ["first_append_receipt", "acknowledged_at_utc"], value],
+                                ["set", "model", ["result", "first_append_receipt", "acknowledged_at_utc"], value], ["copies"]]))
+    # CV-253 storage_utc_z at the original EventRecord's Storage fields (every commitment and copy moved).
+    for field in dfm.STORAGE_TIMESTAMP_FIELDS:
+        short = field.split("_")[0]
+        for label, value in STORAGE_REFUSED:
+            add(f"event-{short}-{label}", "OC01_operation_custody",
+                p2b([["set", "event", [field], value], ["resync_event"], ["copies"]]))
+    for field, label, value in STORAGE_VALID:
+        short = field.split("_")[0]
+        add(f"event-{short}-{label}-control", None, p2b([["set", "event", [field], value], ["resync_event"], ["copies"]]))
+        add(f"event-{short}-{label}-history-control", None,
+            p2b([["set", "event", [field], value], ["resync_event"], ["copies"]], historical=True))
+    add("event-observed-plus-zero-history", "OC01_operation_custody",
+        p2b([["set", "event", ["observed_at_utc"], STORAGE_REFUSED[0][1]], ["resync_event"], ["copies"]], historical=True))
+    add("event-persisted-lowercase-z-history", "OC01_operation_custody",
+        p2b([["set", "event", ["persisted_at_utc"], STORAGE_REFUSED[2][1]], ["resync_event"], ["copies"]], historical=True))
+    # A retry's Storage-assigned metadata is outside CV-339 retry equality, but still a CV-253 field of its record.
+    add("retry-observed-plus-zero", "ER01_event_record",
+        p2b([["set", "model", ["retry_event", "observed_at_utc"], STORAGE_REFUSED[0][1]]]))
+    add("retry-persisted-lowercase-z", "ER01_event_record",
+        p2b([["set", "model", ["retry_event", "persisted_at_utc"], STORAGE_REFUSED[2][1]]]))
+    add("retry-observed-fraction-control", None,
+        p2b([["set", "model", ["retry_event", "observed_at_utc"], "2026-11-04T09:00:00.000000001Z"]]))
+    # Each other EventRecord/receipt/companion boundary, isolated (one JSON edit of its own valid record).
+    retry = ["trace", "custody_model", "retry_event"]
+    add("rule-request-observed-plus-zero", "FQ01_full_value_request",
+        schema_rule(dfm.RECEIPTS, "#/$defs/full_value_request", ["trace", "custody_model", "request"],
+                    ["event", "observed_at_utc"], STORAGE_REFUSED[0][1]))
+    add("rule-event-occurred-missing-zone", "ER01_event_record",
+        schema_rule("event_record.schema.json", "#", retry, ["occurred_at_utc"], "2026-11-04T00:00:00"))
+    add("rule-event-occurred-offset-control", None,
+        schema_rule("event_record.schema.json", "#", retry, ["occurred_at_utc"], "2026-11-04T05:30:00+05:30"))
+    add("rule-event-persisted-offset", "ER01_event_record",
+        schema_rule("event_record.schema.json", "#", retry, ["persisted_at_utc"], STORAGE_REFUSED[3][1]))
+    add("rule-custody-acknowledged-space", "CV01_custody_v2",
+        schema_rule(dfm.RECEIPTS, "#/$defs/custody_v2", ["trace", "custody_model", "append_rows", m["append_key"]],
+                    ["first_append_receipt", "acknowledged_at_utc"], "2026-11-04 00:00:00Z"))
+    add("rule-result-acknowledged-month-13", "FR01_full_value_result",
+        schema_rule(dfm.RECEIPTS, "#/$defs/full_value_result", ["trace", "custody_model", "result"],
+                    ["first_append_receipt", "acknowledged_at_utc"], "2026-13-04T00:00:00Z"))
+    operation = ["trace", "custody_model", "operation_rows", m["operation_key"]]
+    add("rule-settlement-settled-trailing-lf", "RO01_operation_definition",
+        schema_rule(dfm.CONTRACTS, "#/$defs/settlement", operation + ["settlement"], ["settled_at_utc"],
+                    "2026-11-04T00:00:00Z\n"))
+    noncompletion = {"terminal_status": "cancelled", "effect_state": "no_effect",
+                     "evidence_refs": ["pmref:evidence:original-cancellation"], "settled_at_utc": "2026-11-04T00:00:00Z"}
+    add("rule-noncompletion-settled-hour-24", "RO01_operation_definition",
+        schema_rule(dfm.CONTRACTS, "#/$defs/noncompletion", None, ["settled_at_utc"], "2026-11-04T24:00:00Z",
+                    control=noncompletion))
+    add("rule-noncompletion-settled-leap-second-control", None,
+        schema_rule(dfm.CONTRACTS, "#/$defs/noncompletion", None, ["settled_at_utc"], "2016-12-31T23:59:60Z",
+                    control=noncompletion))
+    # SP-1101: the retained reader's recipe comes only from sealed issuance custody (custody_model.original_custody).
+    key = m["append_key"]
+    add("dispatch-custody-missing", "OD01_original_custody",
+        p2b([["set", "model", ["original_custody"], {}]], historical=True))
+    add("dispatch-custody-other-original", "OD01_original_custody",
+        p2b([["set", "model", ["original_custody"], {"event_append_receipt_custody.v1:storage1:" + "0" * 64:
+                                                     m["original_custody"][key]}]], historical=True))
+    add("dispatch-custody-malformed-manifest", "OD01_original_custody",
+        p2b([["set", "model", ["original_custody", key, "resource_manifest_sha256"], "not-a-manifest"]], historical=True))
+    add("dispatch-edition-unknown", "OD02_recipe_installed",
+        p2b([["set", "model", ["original_custody", key, "write_time_edition"], "DFM-prepared-v0"]], historical=True))
+    add("dispatch-resource-replaced", "OD02_recipe_installed",
+        p2b([["set", "model", ["original_custody", key, "resource_manifest_sha256"], "0" * 64]], historical=True))
+    add("dispatch-request-recipe-ignored-control", None,
+        p2b([["set", "trace", ["write_time_edition"], "DFM-prepared-v0"],
+             ["set", "trace", ["resource_manifest_sha256"], "0" * 64]], historical=True))
+    add("dispatch-current-route-no-custody-read-control", None, p2b([["set", "model", ["original_custody"], {}]]))
     return out
 
 
@@ -258,7 +405,9 @@ def build():
         name = row["event_type"]
         cases = []
         for label, target, spec in specs(row):
-            case = dict(json.loads(json.dumps(spec)), name=f"{name}:p2a:{label}", valid=target is None)
+            spec = json.loads(json.dumps(spec))
+            case = dict(spec, name=f"{name}:{spec.pop('stage', 'p2a')}:{label}", valid=target is None)
+            case.pop("stage", None)
             if target is not None:
                 case["expected_row"] = target
             try:

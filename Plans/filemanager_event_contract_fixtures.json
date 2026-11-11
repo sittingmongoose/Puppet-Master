@@ -1265,6 +1265,12 @@
             "recovery_epoch": 1,
             "event_id": "evt_file_copied_5d78c14c80d5656de10a2de522d037898f8cadc37287137cb8d5d590040d7f48",
             "scope_partition": "project~Zml4dHVyZTE"
+          },
+          "original_custody": {
+            "event_append_receipt_custody.v1:storage1:5ff4e244510a48186392ec4c7e8633e077f6b1506f656cd8d53be536ed74064e": {
+              "write_time_edition": "DFM-prepared-v1",
+              "resource_manifest_sha256": "89c0b7276fa27f017894bda1c0c2e555d08e1ebaf80805b551d0f7cbbe5f0f2f"
+            }
           }
         }
       },
@@ -124621,6 +124627,12 @@
             "recovery_epoch": 1,
             "event_id": "evt_file_created_a2777dd3358e451198dc0055ca12d518189729853f3f758702fb63812ca1d9e5",
             "scope_partition": "project~Zml4dHVyZTE"
+          },
+          "original_custody": {
+            "event_append_receipt_custody.v1:storage1:ed16b1990467bd5315d8902b2092214fba4b622b828877106bab5c32e1e45ba1": {
+              "write_time_edition": "DFM-prepared-v1",
+              "resource_manifest_sha256": "9d863f3874f5c507e906edeaecf25c29ecdfedcad7fa497b2a9fb55f3858a971"
+            }
           }
         }
       },
@@ -205782,6 +205794,12 @@
             "recovery_epoch": 1,
             "event_id": "evt_file_deleted_79fa6f405e3cc7bdb8d39eec110bde7245fd0f9d7da146d16be89b1603dc7d13",
             "scope_partition": "project~Zml4dHVyZTE"
+          },
+          "original_custody": {
+            "event_append_receipt_custody.v1:storage1:4a6a4ca53b535fa5030ddca39173af1110bacdf5f50d1ac9e18dd79556d1eacf": {
+              "write_time_edition": "DFM-prepared-v1",
+              "resource_manifest_sha256": "3d0c83e2e48988aed89a5ec1630b2713ec80fbf0f851611a285d6f1575263ab9"
+            }
           }
         }
       },
@@ -283110,6 +283128,12 @@
             "recovery_epoch": 1,
             "event_id": "evt_file_exported_1564a40615a920559c7f7be546a6060604c149468da6cfac67a72789ffe3058d",
             "scope_partition": "project~Zml4dHVyZTE"
+          },
+          "original_custody": {
+            "event_append_receipt_custody.v1:storage1:4c45a5298d9b33c37ef870a6677b2d97bb4fc2591d7d915411c5d2f66d561a38": {
+              "write_time_edition": "DFM-prepared-v1",
+              "resource_manifest_sha256": "036d8fd1fd8a5111cf6fcd836ae90c095f80289e23baf0765f242603ac841879"
+            }
           }
         }
       },
@@ -369044,6 +369068,12 @@
             "recovery_epoch": 1,
             "event_id": "evt_file_moved_da8168e6497f89f00b3f8306fc808a9e575f07936128942b98ced59e14bf4ec9",
             "scope_partition": "project~Zml4dHVyZTE"
+          },
+          "original_custody": {
+            "event_append_receipt_custody.v1:storage1:eec754ab0a83fe45eb1343a98256048f55d250629bbaa57ce6c7606cc283e097": {
+              "write_time_edition": "DFM-prepared-v1",
+              "resource_manifest_sha256": "4164f3810404cf79d1eb8b8794e3c5b3d79cdab9850f9a46f8d966a052d32ddb"
+            }
           }
         }
       },
@@ -457882,6 +457912,12 @@
             "recovery_epoch": 1,
             "event_id": "evt_file_renamed_85114ee9f82ab792e30c375b9f03d4a46de79ac26ff2631121475a71963eba26",
             "scope_partition": "project~Zml4dHVyZTE"
+          },
+          "original_custody": {
+            "event_append_receipt_custody.v1:storage1:b752eafce85fe4955184762b003e485b5d075e9f0ac858acf1ac21145d9a10f6": {
+              "write_time_edition": "DFM-prepared-v1",
+              "resource_manifest_sha256": "ee3346f29d028c92a1a4650631f91f5957b9b891c526e4fdfaf2233a7049c020"
+            }
           }
         }
       },
@@ -543386,6 +543422,12 @@
             "recovery_epoch": 1,
             "event_id": "evt_folder_copied_0309357f1e87ebda282115e776b67c6a1098571a476708a5ea38e4a73d3a9f72",
             "scope_partition": "project~Zml4dHVyZTE"
+          },
+          "original_custody": {
+            "event_append_receipt_custody.v1:storage1:8e1c0389b87adc7e79fa3a85a89da7b0db946246794e6021c1e5fbf5cf5976f5": {
+              "write_time_edition": "DFM-prepared-v1",
+              "resource_manifest_sha256": "6a78d89cdadc49bd39c2f7ed98163297e45e96106e2f300699ad8843786fa207"
+            }
           }
         }
       },
@@ -630599,6 +630641,12 @@
             "recovery_epoch": 1,
             "event_id": "evt_folder_created_b0cf069dde12d7f245c9ae2afc9e621b12ff6741d249a24f31a79e06e98da66e",
             "scope_partition": "project~Zml4dHVyZTE"
+          },
+          "original_custody": {
+            "event_append_receipt_custody.v1:storage1:d10d536c7d6aef60b77f41708af5a978a5d41598081ac81bc4adfb3a76e6d199": {
+              "write_time_edition": "DFM-prepared-v1",
+              "resource_manifest_sha256": "4f3219e8b50a5b05315e1b4879842cb9f052283c312e02e1c546891887037689"
+            }
           }
         }
       },
@@ -711749,6 +711797,12 @@
             "recovery_epoch": 1,
             "event_id": "evt_folder_deleted_ec5de6486fb265711d0f6b5777d0928a543ba74c702222caaea40c8ca6082f81",
             "scope_partition": "project~Zml4dHVyZTE"
+          },
+          "original_custody": {
+            "event_append_receipt_custody.v1:storage1:ed7cddf68089f290461bd407efd3bbbeb4c1b4663863a463f40a4211aec08fbc": {
+              "write_time_edition": "DFM-prepared-v1",
+              "resource_manifest_sha256": "1a9e1096b93056239b29581c8ce21aeb4657d708d4dacf97c0b33a3be6be52f8"
+            }
           }
         }
       },
@@ -790740,6 +790794,12 @@
             "recovery_epoch": 1,
             "event_id": "evt_folder_exported_1b011cce1b407328c186f3d1716eb2e26fcdfe00166883c3cffc81bf5f40c6c1",
             "scope_partition": "project~Zml4dHVyZTE"
+          },
+          "original_custody": {
+            "event_append_receipt_custody.v1:storage1:b4b158054e128444108a55c26a6e84f1887eca1286f2570028a53b3ccb158f9f": {
+              "write_time_edition": "DFM-prepared-v1",
+              "resource_manifest_sha256": "634833dc1002970999f1fe68baa9d632e993e62c86de4e2cbbe2d4846f20990e"
+            }
           }
         }
       },
@@ -878329,6 +878389,12 @@
             "recovery_epoch": 1,
             "event_id": "evt_folder_moved_42a1131a3610b2c29bb9ea832909578148fbc07056fe2820a4de2edd8c996f58",
             "scope_partition": "project~Zml4dHVyZTE"
+          },
+          "original_custody": {
+            "event_append_receipt_custody.v1:storage1:6e2c4c9429e6049fdc17745ef833060a8ac168d441906509715accd504638967": {
+              "write_time_edition": "DFM-prepared-v1",
+              "resource_manifest_sha256": "b763685d21003b71a37e80cfba8b7f2079b37c86411c68718be8bc21bd46f522"
+            }
           }
         }
       },
@@ -967665,6 +967731,12 @@
             "recovery_epoch": 1,
             "event_id": "evt_folder_renamed_25bb90ca60000a2cdc321fd370bd23e5102ede34f3f91cd31eee751eab0ce95a",
             "scope_partition": "project~Zml4dHVyZTE"
+          },
+          "original_custody": {
+            "event_append_receipt_custody.v1:storage1:43f7f5a6cf4c5cc47526b58f67b335d393b0af967a6b3c9854b333c7284eb001": {
+              "write_time_edition": "DFM-prepared-v1",
+              "resource_manifest_sha256": "d8f6a234a6fa18f64b5bab5a9aacc59985d2d925246bb42f080b03455e811ea8"
+            }
           }
         }
       },

@@ -30,9 +30,12 @@ ROOT = Path(__file__).resolve().parents[1]
 SCHEMA_BASE = "https://puppetmaster.local/schemas/"
 if str(ROOT / "scripts") not in sys.path:
     sys.path.insert(0, str(ROOT / "scripts"))
-from pm_event_numbers import (  # noqa: E402  (NUMRULE number scope, gated at a16f67c1ef)
-    EVENT_VALUE, Refusal, current_integer, full_value_commitment as cv339_commitment, producer_semantic_digest,
-    qualified_jcs, storage_value_bytes)
+from pm_event_numbers import (  # noqa: E402  (NUMRULE number scope a16f67c1ef; SP-1101 dispatch at 58c2816ff3)
+    EVENT_VALUE, FrozenRecipe, OriginalBinding, OriginalCustody, RecipeTuple, Refusal, RetainedDispatcher,
+    current_integer, full_value_commitment as cv339_commitment, producer_semantic_digest, qualified_jcs,
+    storage_value_bytes)
+from pm_event_datetime import (  # noqa: E402  (CV-1101 shared date-time predicate, gated at 58c2816ff3)
+    EVENT_RECORD, STORAGE_UTC_Z, date_time, format_checker as datetime_format_checker)
 
 # --- Method B guard tables (sweep part 2A) ------------------------------------------------------------------
 TABLE_PREFIX = "pm_filemanager_table_"
@@ -211,15 +214,108 @@ def schema_phase(path, fragment):
     return RUNTIME_SCHEMAS.get((path, key)) or RULE_GROUPS[path]
 
 
+# --- CV-1101 date-time (sweep part 2B) ---------------------------------------------------------------------
+# The shared predicate pm_event_datetime.date_time is installed explicitly through the shared format_checker
+# (a bare FormatChecker() registers no date-time checker in this environment and skipped every timestamp:
+# SWEEP-12). Its event_record profile (RFC 3339 5.6/5.7) checks every format: date-time of every document
+# this checker validates: payload ts, companion accepted_at_utc/settled_at_utc, EventRecord occurred_at_utc,
+# AppendReceipt acknowledged_at_utc and the Storage registry's generated_at_utc. CV-253's stricter storage_utc_z
+# profile is added at the Storage-assigned observed_at_utc/persisted_at_utc of every EventRecord, located by
+# resource identity: the instance paths where the validated schema applies the installed EventRecord resource
+# (its root or its frozen 1.0.0 compatibility reader), following the owner schemas' own $ref/combinator graph.
+# The shared datetime_validator and the whole-Plans inventory gate run at batch-2 integration (SWEEP-P2B
+# addendum 2). No timestamp string is ever rewritten; joins stay exact-string (CE06, SI05).
+DATE_TIME_FORMAT = datetime_format_checker(profile=EVENT_RECORD)
+STORAGE_TIMESTAMP_FIELDS = ("observed_at_utc", "persisted_at_utc")
+EVENT_RECORD_DOCUMENT = "event_record.schema.json"
+_APPLICATORS = ("allOf", "anyOf", "oneOf", "then", "else")
+_EVENT_RECORD_SITES = {}
+
+
+def event_record_nodes(registry):
+    """The installed EventRecord resource nodes CV-253 classifies (Plans/event_datetime_inventory.json)."""
+    root = registry.contents(SCHEMA_BASE + EVENT_RECORD_DOCUMENT)
+    return (root, root["$defs"]["event_record_1_0_0_compatibility_reader"])
+
+
+def event_record_sites(path, fragment):
+    """Instance paths (tuples; '*' for any array item) where the schema applies an EventRecord node."""
+    cached = _EVENT_RECORD_SITES.get((id(SCHEMAS), path, fragment))
+    if cached is not None and cached[0] is SCHEMAS:
+        return cached[1]
+    nodes = event_record_nodes(SCHEMAS)
+    found = set()
+
+    def walk(node, resolver, at, stack):
+        if not isinstance(node, dict) or id(node) in stack:
+            return
+        if any(node is n for n in nodes):
+            found.add(at)
+            return
+        stack = stack | {id(node)}
+        if isinstance(node.get("$ref"), str):
+            resolved = resolver.lookup(node["$ref"])
+            walk(resolved.contents, resolved.resolver, at, stack)
+        for key in _APPLICATORS:
+            children = node.get(key)
+            for child in (children if isinstance(children, list) else [children] if isinstance(children, dict) else []):
+                walk(child, resolver, at, stack)
+        for name, child in (node.get("properties") or {}).items():
+            walk(child, resolver, at + (name,), stack)
+        for key in ("items", "additionalProperties"):
+            if isinstance(node.get(key), dict):
+                walk(node[key], resolver, at + ("*",), stack)
+        for child in node.get("prefixItems") or []:
+            walk(child, resolver, at + ("*",), stack)
+        for child in (node.get("patternProperties") or {}).values():
+            walk(child, resolver, at + ("*",), stack)
+
+    resolver = SCHEMAS.resolver(SCHEMA_BASE + path)
+    start = resolver.lookup(SCHEMA_BASE + path + fragment)
+    walk(start.contents, start.resolver, (), frozenset())
+    sites = tuple(sorted(found))
+    _EVENT_RECORD_SITES[(id(SCHEMAS), path, fragment)] = (SCHEMAS, sites)
+    return sites
+
+
+def storage_timestamp_error(sites, value):
+    """The first CV-253 storage_utc_z refusal at an EventRecord's observed_at_utc/persisted_at_utc, or None."""
+    def located(node, at, rest):
+        if not rest:
+            yield at, node
+        elif rest[0] == "*":
+            for key, child in (enumerate(node) if type(node) is list else node.items() if type(node) is dict else ()):
+                yield from located(child, at + (key,), rest[1:])
+        elif type(node) is dict and rest[0] in node:
+            yield from located(node[rest[0]], at + (rest[0],), rest[1:])
+
+    for site in sites:
+        for at, record in located(value, (), site):
+            if type(record) is not dict:
+                continue
+            for field in STORAGE_TIMESTAMP_FIELDS:
+                if field in record and isinstance(record[field], str):
+                    try:
+                        date_time(record[field], profile=STORAGE_UTC_Z)
+                    except Refusal as refusal:
+                        return (f"{record[field]!r} is not a CV-253 storage_utc_z date-time ({refusal.reason})",
+                                list(at) + [field])
+    return None
+
+
 def validate_shape(path, definition, value):
     fragment = definition if definition.startswith("#") else ("#/$defs/" + definition if definition else "")
     uri = SCHEMA_BASE + path + fragment
     with exact_integer_text():
         error = next(jsonschema.Draft202012Validator({"$ref": uri}, registry=SCHEMAS,
-                                                     format_checker=jsonschema.FormatChecker()).iter_errors(value), None)
+                                                     format_checker=DATE_TIME_FORMAT).iter_errors(value), None)
         message = None if error is None else str(error)
-    refuse(schema_phase(path, fragment), {"schema_valid": error is None}, message=message,
-           schema=None if error is None else {"validator": error.validator, "path": list(error.absolute_path)})
+    schema = None if error is None else {"validator": error.validator, "path": list(error.absolute_path)}
+    if error is None:
+        storage = storage_timestamp_error(event_record_sites(path, fragment), value)
+        if storage is not None:
+            message, schema = storage[0], {"validator": "format", "path": storage[1]}
+    refuse(schema_phase(path, fragment), {"schema_valid": schema is None}, message=message, schema=schema)
 
 
 def same_value(left, right):
@@ -383,6 +479,7 @@ def synchronize_fixture(name, payload, trace, external_body=True, external_opera
     if old_key != m["append_key"]:
         del m["append_rows"][old_key]
         m["append_rows"][m["append_key"]] = stored
+        move_original_custody(m, old_key, m["append_key"])
     m["checkpoint_binding"]["event_id"] = event["event_id"]
     control = m["control_rows"][m["control_key"]]
     m["final_operation"], m["final_control"], m["final_append"] = map(copy.deepcopy, (op, control, stored))
@@ -394,6 +491,13 @@ def synchronize_fixture(name, payload, trace, external_body=True, external_opera
     m["backup_binding"] = copy.deepcopy({
         "operation": m["final_operation_value"], "control": control, "append": stored,
         "storage_instance_id": op["storage_instance_id"], "payload_rows": m["payload_rows"]})
+
+
+def move_original_custody(model, old_key, new_key):
+    """Fixture construction: the sealed SP-1101 custody record follows its original's append custody key."""
+    catalogue = model.get("original_custody")
+    if type(catalogue) is dict and old_key != new_key and old_key in catalogue:
+        catalogue[new_key] = catalogue.pop(old_key)
 
 
 def fixture_copies(trace):
@@ -439,7 +543,8 @@ def fixture_producer_digest(event):
 def fixture_event(trace, event):
     """Recompute fixture commitments/copies after a non-digest event mutation."""
     model = trace["custody_model"]
-    stored = model["append_rows"].pop(model["append_key"])
+    old_key = model["append_key"]
+    stored = model["append_rows"].pop(old_key)
     stored["event_id"], stored["idempotency_key"] = event["event_id"], event["idempotency_key"]
     stored["first_append_receipt"]["event_id"] = event["event_id"]
     stored["original_event_value_commitment"] = full_value_commitment(event)
@@ -447,6 +552,7 @@ def fixture_event(trace, event):
     model["append_key"] = ("event_append_receipt_custody.v1:" + stored["storage_instance_id"] + ":" +
                            hashlib.sha256(event["event_id"].encode()).hexdigest())
     model["append_rows"][model["append_key"]] = stored
+    move_original_custody(model, old_key, model["append_key"])
     model["request"] = {"event": copy.deepcopy(event)}
     model["retry_event"] = copy.deepcopy(event)
     model["result"] = {k: copy.deepcopy(stored[k]) for k in
@@ -1203,12 +1309,128 @@ def validate_original_models(event_type, payload, trace, *, operation_candidate=
                                 "history_settled": row["phase"] == "history_settled"})
     # All remaining joins consume a historical complete event and issued receipt.
     # Current append/retry and terminal publication still enforce writer policy.
-    # A retained historical original is governed by its authenticated written value.
+    # A retained historical original is governed by its authenticated written value:
+    # SP-1101 selects its write-time recipe from sealed custody, then that frozen verifier runs.
     if not historical or operation_candidate is not None:
         validate_writer(row["complete_event"])
         validate_writer(model["retry_event"])
-    validate_historical_operation(event_type, payload, trace, model, row,
-                                  physical_operation, selected_operation)
+        validate_historical_operation(event_type, payload, trace, model, row,
+                                      physical_operation, selected_operation)
+    else:
+        dispatch_retained_original(event_type, payload, trace, model, row,
+                                   physical_operation, selected_operation)
+
+
+# --- SP-1101 retained originals (shared RetainedDispatcher, sweep part 2B) -----------------------------------
+# The custody model's original_custody map is the finite fixture's independent sealed lookup (SP-1101) of
+# Storage's issuance custody: keyed by the original's append custody key, it records the write-time edition and
+# the SHA-256 manifest of the frozen resources the original was written against. The installed tuple -> frozen
+# verifier map is built from this head's resource bytes at composition, outside request data; the selection
+# reads no payload, trace or caller field, takes no override and never tries current then legacy. An original
+# whose recorded edition or manifest is not installed (an unknown edition, a replaced same-URI resource)
+# resolves to no verifier (recipe_unsupported); one without a well-formed custody record is unavailable. The
+# twelve families were never admitted, so one edition exists. Its frozen verifier is validate_historical_operation
+# over the pinned resources, with CV-1101's event_record profile at every format: date-time and CV-253's
+# storage_utc_z at EventRecord observed_at_utc/persisted_at_utc; it never runs a current writer or live-state
+# guard. Owner and reader read the same original in this static model, so the binding equality is structural;
+# native custody authentication remains NOT_RUN.
+DFM_SERVER = "filemanager-static-oracle"
+DFM_EDITIONS = ("DFM-prepared-v1",)
+FROZEN_COMMON_RESOURCES = (CONTRACTS, EVENT_RECORD_DOCUMENT, RECEIPTS, "storage_value_registry.schema.json")
+CUSTODY_ENTRY_FIELDS = ("write_time_edition", "resource_manifest_sha256")
+
+
+@functools.lru_cache(maxsize=None)
+def resource_manifest(event_type):
+    """SHA-256 of the frozen resource manifest: [path, SHA-256 of the file bytes] for every pinned resource."""
+    paths = FROZEN_COMMON_RESOURCES + (PAYLOAD_DOCUMENT + event_type.replace(".", "_") + ".schema.json",)
+    rows = [["Plans/" + p, hashlib.sha256((ROOT / "Plans" / p).read_bytes()).hexdigest()] for p in paths]
+    return hashlib.sha256(qualified_jcs(rows)).hexdigest()
+
+
+def recipe_tuple(event, payload_schema_version, edition, manifest):
+    """The SP-1101 tuple: the original's own immutable schema discriminators plus its sealed edition/manifest."""
+    family = event["event_type"]
+    return RecipeTuple(
+        envelope_schema_id=event["schema_id"], envelope_schema_version=event["schema_version"],
+        payload_schema_id=event["payload_schema_id"], payload_schema_version=payload_schema_version,
+        owner_source_id="pm.storage_value.filemanager_operation_custody.v1", owner_edition=edition,
+        registry_revision="prepared-unadmitted:" + family,
+        identity_recipe="F-150..F-161 SHA-256 of RFC 8785 six-string array (CV-1100 qualified)",
+        producer_recipe="CV-317 producer projection under CV-1100 qualified JCS", physical_profile=EVENT_VALUE,
+        full_value_profile="pm.storage.original_event_value_commitment.v1@1.0.0",
+        local_source_profile="SP-339 canonical MessagePack operation_custody_value/family_control_value",
+        payload_profile="SP-337 pm-payload-ref:v1 BLAKE3 of SP-1100 EVENT_VALUE bytes",
+        resource_manifest_sha256=manifest)
+
+
+def installed_recipes(event_type, verify):
+    """The exact tuple -> frozen verifier map, installed from this head's resources outside request data."""
+    slug = event_type.replace(".", "_")
+    current = {"event_type": event_type, "schema_id": "pm.event.v0", "schema_version": "2.0.0",
+               "payload_schema_id": "pm.file_manager_event." + slug + ".schema.v1"}
+    return {recipe_tuple(current, "1.0.0", edition, resource_manifest(event_type)): FrozenRecipe(verify)
+            for edition in DFM_EDITIONS}
+
+
+def append_custody_key(row):
+    """The original's issuance (append) custody key, derived as custody_identity derives it."""
+    return ("event_append_receipt_custody.v1:" + row["storage_instance_id"] + ":" +
+            hashlib.sha256(row["complete_event"]["event_id"].encode()).hexdigest())
+
+
+def original_binding(row):
+    """The SP-1101 binding of the original operation's complete event (fields its schema verdict guarantees)."""
+    event = row["complete_event"]
+    return OriginalBinding(
+        storage_instance_id=row["storage_instance_id"], scope_kind=event["scope_kind"], server_id=DFM_SERVER,
+        project_id=event["project_id"], event_type=event["event_type"], event_id=event["event_id"],
+        idempotency_key=event["idempotency_key"], owner_operation_id=row["operation_id"],
+        source_commitment=full_value_commitment(event)["sha256"])
+
+
+class DfmOriginalOwner:
+    """The original owner over the model's sealed custody: authenticated originals, never request data."""
+
+    def __init__(self, model, original):
+        self.model, self.original = model, original
+
+    def authenticated_original(self, original_ref):
+        catalogue = self.model.get("original_custody")
+        entry = catalogue.get(original_ref) if type(catalogue) is dict else None
+        if (type(entry) is not dict or tuple(sorted(entry)) != tuple(sorted(CUSTODY_ENTRY_FIELDS))
+                or any(type(entry[f]) is not str or not entry[f] for f in CUSTODY_ENTRY_FIELDS)
+                or re.fullmatch(r"[0-9a-f]{64}", entry["resource_manifest_sha256"]) is None
+                or original_ref != append_custody_key(self.original)):
+            raise Refusal("original_unavailable")
+        event = self.original["complete_event"]
+        recipe = recipe_tuple(event, self.original["settlement"]["payload"]["schema_version"],
+                              entry["write_time_edition"], entry["resource_manifest_sha256"])
+        return OriginalCustody(binding=original_binding(self.original), recipe=recipe,
+                               record_bytes=storage_value_bytes(event, profile=EVENT_VALUE),
+                               result_bytes=canonical_msgpack(self.original["settlement"]),
+                               receipt_bytes=canonical_msgpack(self.original["first_append_receipt"]))
+
+
+def dispatch_retained_original(event_type, payload, trace, model, row, physical_operation, selected_operation):
+    """Resolve one retained original through SP-1101, then verify it under its frozen recipe only."""
+    def verify(custody):
+        if custody.record_bytes != storage_value_bytes(row["complete_event"], profile=EVENT_VALUE):
+            return False
+        try:
+            validate_historical_operation(event_type, payload, trace, model, row, physical_operation, selected_operation)
+        except Refusal as leaked:  # every frozen-verifier refusal is a table row; a leak must stay loud
+            raise RuntimeError("frozen verifier leaked refusal " + leaked.reason) from leaked
+        return True
+
+    try:
+        RetainedDispatcher(DfmOriginalOwner(model, selected_operation), installed_recipes(event_type, verify)).resolve(
+            append_custody_key(selected_operation), original_binding(row), disclose=lambda binding: True)
+        reason = None
+    except Refusal as refusal:
+        reason = refusal.reason
+    refuse("retained_dispatch", {"dispatch_refusal": reason})
+    refuse("retained_dispatch_other", {"dispatch_refusal": reason})
 
 
 def validate_historical_operation(event_type, payload, trace, model, row,
@@ -1462,7 +1684,8 @@ def validate_owner_adoption(name, owner_unit, owner):
 
 def validate_registry_contracts(registry, registry_schema, schema):
     with exact_integer_text():
-        error = next(jsonschema.Draft202012Validator(registry_schema).iter_errors(registry), None)
+        error = next(jsonschema.Draft202012Validator(registry_schema, format_checker=DATE_TIME_FORMAT).iter_errors(registry),
+                     None)
         message = None if error is None else str(error)
     refuse("schema_storage_registry", {"schema_valid": error is None}, message=message,
            schema=None if error is None else {"validator": error.validator, "path": list(error.absolute_path)})
@@ -1549,6 +1772,13 @@ def integrity_witnesses(inputs):
                                          owner.replace("PENDING_RETENTION_DECISION", "PENDING-RETENTION"))),
         ("integrity/control/registry", None, registry_case(lambda c: None)),
         ("integrity/registry-schema", "RG01_storage_registry", registry_case(lambda c: c.update(unexpected_top_level=True))),
+        # CV-1101 (sweep part 2B): the registry verdict runs the shared date-time predicate at generated_at_utc.
+        ("integrity/control/registry-generated-at-offset", None,
+         registry_case(lambda c: c.update(generated_at_utc="2026-08-14T05:30:00.25+05:30"))),
+        ("integrity/registry-generated-at-no-zone", "RG01_storage_registry",
+         registry_case(lambda c: c.update(generated_at_utc="2026-08-14T00:00:00"))),
+        ("integrity/registry-generated-at-lf", "RG01_storage_registry",
+         registry_case(lambda c: c.update(generated_at_utc="2026-08-14T00:00:00Z\n"))),
         ("integrity/registry-properties-drift", "RD01_properties",
          registry_case(lambda c: entry(c)["value_schema"]["properties"].update(extra_probe={"type": "string"}))),
         ("integrity/registry-required-drift", "RD02_required",

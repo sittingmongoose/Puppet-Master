@@ -114,7 +114,7 @@ def coherent_producer(row, value):
 
 def schema_accepts(fragment_uri, value):
     validator = jsonschema.Draft202012Validator({"$ref": dfm.SCHEMA_BASE + fragment_uri}, registry=dfm.SCHEMAS,
-                                                format_checker=jsonschema.FormatChecker())
+                                                format_checker=dfm.DATE_TIME_FORMAT)
     with dfm.exact_integer_text():
         return next(validator.iter_errors(value), None) is None
 
