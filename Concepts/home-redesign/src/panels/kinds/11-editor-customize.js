@@ -702,7 +702,7 @@ function* construct(opts) {
     append(function () {
       tiles.forEach(function (tile, i) {
         if (heights[i] === null) { tile.removeAttribute('data-pmed-sized'); return; }
-        tile.style.containIntrinsicBlockSize = 'auto ' + heights[i] + 'px'; tile.setAttribute('data-pmed-sized', '');
+        tile.style.containIntrinsicBlockSize = 'auto ' + heights[i] + 'px'; if (!tile.hasAttribute('data-pmed-sized')) tile.setAttribute('data-pmed-sized', '');
       });
       root.classList.add('pmed-contained'); contained = true;
     });

@@ -143,7 +143,7 @@
     /* the key (mark or swatch) first: titleFits and fitSub measure the room beside it, and a hidden key read on the first
        sync made the subtitle 34 px too generous (FINAL-REVIEW-3 must-fix 8: Muse Code "Standby · alex@orbit.example" cut
        at 140 / 185 px in Glass Dark 1440) */
-    if (keyEl) { var k = keyHtml(def, ctx, form); if (keyEl._pmu !== k) { keyEl.innerHTML = k; keyEl._pmu = k; keyEl.hidden = !k; } }
+    if (keyEl) { var k = keyHtml(def, ctx, form); if (keyEl._pmu !== k) { keyEl.innerHTML = k; keyEl._pmu = k; if (keyEl.hidden !== !k) keyEl.hidden = !k; } }
     var full = text(def.title, ctx), sub = text(def.meta, ctx);
     /* the short title only where the whole title does not fit its line (final fix M8: provider tiles keep their Settings
        names wherever they fit) */
