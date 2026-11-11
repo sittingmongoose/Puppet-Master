@@ -40,4 +40,4 @@ here** says what was wrong on that page and what the redesign does, **Everything
 
 `{"do":"coverage"}` in the driver (see `AUTHORS.md`) reports that every setting has a place, none is placed twice, and
 none is planned on a page that fails to draw it. The review of today's Settings, the audits and the defect list are in
-the share folder `puppet-master/2026-11-10-settings-managers/`.
+the share folder `puppet-master/2026-11-11-settings-managers/`.
