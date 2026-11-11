@@ -16,14 +16,18 @@
 //             tick; inside a block of the svg's own size the layout stays in the svg.
 //
 // Then, per look, on Settings and Home, after the page has settled and with the idle warm-up queue off (?pm-warm=0,
-// its own check is perf-warm-watch): main-thread frames a second are at most 45% of the screen's refresh rate (before:
-// 97 to 99% on 120 Hz and on 60 Hz; after: 4 to 15% on the 120 Hz Windows host), whole-document layouts a second at
-// most 20% of it (before: about one a frame), and no animationiteration event reached a listener.
+// its own check is perf-warm-watch), a 4 s trace:
+//   - main-thread frames a second are at most 65% of the screen's refresh rate. First runs, 120 Hz Windows host,
+//     2026-11-11: 94 to 99% before in all four looks; 3 to 21% after (3 to 25 frames a second: what is left is timers,
+//     so the count does not grow with the refresh rate, and 65% keeps room on a 60 Hz screen too);
+//   - whole-document layouts are at most 10 a second (a count, not a share: before, one a frame in Basic and Glass,
+//     117 to 120 a second, and 14 to 25 a second in Retro and NieR whose glyphs step; after, 0 to 4.2);
+//   - no animationiteration event reached a listener.
 //
 // --set looks=<a,b>   default basic-dark,glass-dark,retro-dark,nier-dark; all ten with looks=all
 // --set settle=<ms>   wait after load before the first measurement (default 40000: start-up work and the chat's demo run)
 // --set ms=<ms>       length of each trace (default 4000)
-// --set frames=<pct>  the frames bound, percent of the refresh rate (default 45); --set layouts=<pct> (default 20)
+// --set frames=<pct>  the frames bound, percent of the refresh rate (default 65); --set layouts=<n> a second (default 10)
 // Runs on both surfaces (--set sandbox=0 and 1). A cell that could not be judged (no trace, no refresh rate) fails.
 import { traceWindow } from '../helpers/frame-trace.mjs';
 import { muteSound, refreshRate, parkPointer } from '../helpers/quiet-page.mjs';
@@ -64,7 +68,7 @@ const STRUCTURE = () => {
 
 export default async function (t) {
 	const looks = String(t.args.looks || 'basic-dark,glass-dark,retro-dark,nier-dark') === 'all' ? ALL : String(t.args.looks || 'basic-dark,glass-dark,retro-dark,nier-dark').split(',').filter(Boolean);
-	const ms = Number(t.args.ms || 4000), framesPct = Number(t.args.frames || 45), layoutsPct = Number(t.args.layouts || 20);
+	const ms = Number(t.args.ms || 4000), framesPct = Number(t.args.frames || 65), layoutsMax = Number(t.args.layouts || 10);
 	const W = 1920, H = 1080;
 	await t.viewport(W, H);
 	await muteSound(t.page);
@@ -117,10 +121,10 @@ export default async function (t) {
 			try { x = await traceWindow(cdp, { ms, url: f.url() }); } catch (e) { err = String(e && e.message || e); }
 			const judged = !!x && x.secs > ms / 1000 * 0.8 && hz > 20 && hz < 400;
 			if (!judged) { await t.check(`${at}: the rest trace could be judged`, false, err || `trace ${x ? x.secs + ' s' : 'missing'}, refresh ${hz.toFixed(1)} Hz`); continue; }
-			const fr = x.mainFrames.perSec, pct = fr / hz * 100, lay = x.wholeLayoutsPerSec, layPct = lay / hz * 100, it = (x.dispatched && x.dispatched.animationiteration) || 0;
+			const fr = x.mainFrames.perSec, pct = fr / hz * 100, lay = x.wholeLayoutsPerSec, it = (x.dispatched && x.dispatched.animationiteration) || 0;
 			t.log(`${at}: ${hz.toFixed(0)} Hz, main frames ${fr}/s (${pct.toFixed(0)}%), frame p50 ${x.mainFrames.p50} p95 ${x.mainFrames.p95} ms, main thread ${Math.round(x.cost.main)} ms/s, layouts ${x.layoutPerSec}/s of which whole-document ${lay}/s, drawn ${x.drawn.perSec}/s`);
 			await t.check(`${at}: main-thread frames at rest are at most ${framesPct}% of the refresh rate`, pct <= framesPct, `${fr}/s of ${hz.toFixed(0)} Hz = ${pct.toFixed(0)}%`);
-			await t.check(`${at}: whole-document layouts at rest are at most ${layoutsPct}% of the refresh rate`, layPct <= layoutsPct, `${lay}/s of ${hz.toFixed(0)} Hz = ${layPct.toFixed(0)}%`);
+			await t.check(`${at}: whole-document layouts at rest are at most ${layoutsMax} a second`, lay <= layoutsMax, `${lay}/s (${x.layoutPerSec}/s layouts of any kind)`);
 			await t.check(`${at}: no animationiteration event reaches a listener at rest`, it === 0, `${it} dispatched in ${x.secs} s`);
 		}
 

@@ -9,7 +9,8 @@
 //
 // With the onboarding window open on its first stage screen and nobody touching it, a DevTools trace is taken and the
 // script time of every function that runs in script#pm-hover-tags-js (told by its lines in the built page,
-// helpers/built-source.mjs) is added up: at most --set ms (default 3) ms a second. To know the stage really was
+// helpers/built-source.mjs) is added up: at most --set ms (default 7) ms a second (first runs, 2026-11-11, Windows:
+// 15.9, 14.9 and 25.1 before in Basic, Glass and NieR Dark; 2.0, 3.0 and 2.5 after). To know the stage really was
 // redrawing, the same trace must show the stage's own loop at work (script time in js/58-rig.js of 20 ms a second or
 // more); a stage that stood still fails as "could not judge".
 //
@@ -23,7 +24,7 @@ import { pageSource, blocksOf, blockAt, fileRegion } from '../helpers/built-sour
 
 export default async function (t) {
 	const looks = String(t.args.looks || 'basic-dark,glass-dark,nier-dark').split(',').filter(Boolean);
-	const max = Number(t.args.ms || 3), screen = String(t.args.screen || 'where');
+	const max = Number(t.args.ms || 7), screen = String(t.args.screen || 'where');
 	const W = 1920, H = 1080;
 	await t.viewport(W, H);
 	await muteSound(t.page);
@@ -52,14 +53,16 @@ export default async function (t) {
 		let x = null, err = '';
 		try { x = await traceWindow(cdp, { ms: 4000, url: f.url(), allScripts: true }); } catch (e) { err = String(e && e.message || e); }
 		if (!x || !(x.secs > 3)) { await t.check(`${look}: the trace could be judged`, false, err || `trace ${x ? x.secs + ' s' : 'missing'}`); continue; }
-		let tagMs = 0, rigMs = 0; const tagRows = [];
+		let tagMs = 0, rigMs = 0, glassMs = 0; const tagRows = [], glassRows = [];
 		for (const [key, ms, n] of x.scripts) {
 			const line = lineOf(key); if (line < 0) continue;
 			if (line >= rig.from && line <= rig.to) rigMs += ms;
 			const b = blockAt(blocks, line);
 			if (b && b.id === 'pm-hover-tags-js') { tagMs += ms; tagRows.push(`${key} ${ms} ms/s x${n}/s`); }
+			if (b && b.id === 'lg-js') { glassMs += ms; glassRows.push(`${key} ${ms} ms/s x${n}/s`); }
 		}
 		t.log(`${look}: main thread ${Math.round(x.cost.main)} ms/s, ${x.mainFrames.perSec} main frames/s; the stage's own script ${rigMs.toFixed(1)} ms/s; hover tags ${tagMs.toFixed(2)} ms/s (${tagRows.slice(0, 4).join(' | ') || 'no call'})`);
+		t.log(`${look}: Liquid Glass's script (script#lg-js) ${glassMs.toFixed(2)} ms/s (${glassRows.slice(0, 5).join(' | ') || 'no call'})`);
 		const moving = rigMs >= 20;
 		await t.check(`${look}: Pip's stage is redrawing while measured`, moving, `${rigMs.toFixed(1)} ms/s of script in js/58-rig.js${moving ? '' : ': could not judge'}`);
 		if (moving) await t.check(`${look}: the hover tags do at most ${max} ms of script a second for the stage's redraws`, tagMs <= max, `${tagMs.toFixed(2)} ms/s: ${tagRows.slice(0, 4).join(' | ') || 'no call'}`);

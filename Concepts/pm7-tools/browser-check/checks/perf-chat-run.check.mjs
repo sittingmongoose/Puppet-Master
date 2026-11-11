@@ -1,23 +1,31 @@
 // The 5.6 chat's Working run asks for frames only when something moves, and rests under the onboarding window
 // (2026-11-10 performance pass: lane C, 2abe397798, and lane C2, 8fc3ff34ce).
 //
-// RUN. A Working run that the reader only watches used to keep two loops going on every screen refresh (the held
-// room's and the follow's: about 1.25 frame callbacks per refresh between them) and re-patched its card on every work
-// tick whether or not anything in it had changed. Measured on the 120 Hz host: script 256 -> 63 ms a second, a frame's
-// median 9.4 -> 6.4 ms, dropped frames 32 -> 11 a second. Here, on Home, with a run restarted (PM56_DEMO.startWorking())
-// and nobody touching the page:
-//   - the frame callbacks asked for by the chat's own code are at most --set chat (default 30) percent of the screen's
-//     refresh rate. "The chat's own code" is told by where the asking stack runs: the built page's script#pm56-js,
-//     #pm56-app-js and #pm56-port-js blocks (helpers/built-source.mjs), never by a line range typed here;
-//   - nothing in the chat's Working card or Orbit card is rewritten with the value it holds;
-//   - the run is really running (its clock advances with the wall clock), and a transcript that was following is still
-//     at the bottom at the end. Stream F's orbit-panel-hold and chat-sweep own the room and the layout.
+// RUN. A Working run that the reader only watches used to keep two loops going whether or not anything moved: the held
+// room's (roomFrame, every frame for as long as the run held its room) and the follow's (kickFollow, kicked by every
+// patch). Lane C's own numbers on the 120 Hz host, means of 12 windows: kickFollow 63 -> 31 callbacks a second,
+// roomFrame 52 -> 15, script 256 -> 63 ms a second, a frame's median 9.4 -> 6.4 ms, dropped frames 32 -> 11 a second.
+// Here, on Home, with a run restarted (PM56_DEMO.startWorking()) and nobody touching the page, counted over the WHOLE
+// run (its phases differ: a 4 s window gave 83 to 221 a second before and 24 to 56 after, depending on where it fell):
+//   - the frame callbacks asked for by roomFrame and kickFollow together are at most --set loops (default 80) a second.
+//     They are told by the asking function's name AND by where it runs: the built page's script#pm56-js, #pm56-app-js
+//     and #pm56-port-js blocks (helpers/built-source.mjs). If neither name is seen at all the cell fails as not judged
+//     (a renamed loop must not pass by being invisible);
+//   - the run is really running (its clock advances with the wall clock and it ends), its card is being written, and a
+//     transcript that was following is still at the bottom half-way through (at its end the run shows its answer
+//     from the top, on both builds). Stream F's orbit-panel-hold and chat-sweep own
+//     the room and the layout.
+//   (Not asserted: "a tick whose card is unchanged writes nothing". In the demo's run every tick changes the card, so
+//   the page before the fix shows no such write either: 29 card records a second on both builds.)
 //
 // REST. Under the onboarding window the chat cannot be seen and its demo clock is paused, but its run kept ticking and
 // patching: 28 dropped frames a second in the window, 0.6 after. With a run in progress the window is opened
 // (O55.ui.open(), what Run Onboarding Again does), held for --set hold (default 4000) ms, and closed:
-//   - while it is open the run's clock and step stand still, none of the run's loops asks for a frame, no work tick
-//     fires and nothing in the chat's cards or its status bar is written;
+//   - while it is open the run's clock and step stand still, no work tick fires, the run's loops ask for at most 3
+//     frame callbacks a second between them (before: 250) and at most 2 patches land in the chat's cards and status
+//     bar (a patch = one delivery of DOM records, however many nodes it rewrites; before: a patch every tick, 68
+//     records in 4 s). Not zero: the chat still redraws itself whole now and then under the window (seen twice in
+//     eight cells, 2026-11-11: one render, 2 and 45 card records), which is one frame's work, not a loop;
 //   - at the close the clock is where it was at the opening, then carries on with the wall clock, the card updates
 //     again, a following transcript is at the bottom again and a held room is still held;
 //   - and, in the first look only (--set ends=all for every look), a run that was due to end while the window was open
@@ -39,7 +47,7 @@ export default async function (t) {
 	const want = String(t.args.looks || 'basic-dark,glass-dark,retro-dark,nier-dark');
 	const looks = want === 'all' ? ALL : want.split(',').filter(Boolean);
 	const parts = String(t.args.parts || 'run,rest').split(',');
-	const chatPct = Number(t.args.chat || 30), ms = Number(t.args.ms || 4000), hold = Number(t.args.hold || 4000);
+	const loopsMax = Number(t.args.loops || 80), hold = Number(t.args.hold || 4000);
 	const W = 1920, H = 1080;
 	await t.viewport(W, H);
 	await muteSound(t.page);
@@ -90,20 +98,24 @@ export default async function (t) {
 			const w0 = await work(), v0 = await view();
 			await f.evaluate(() => { window.__cbp.arm(); });
 			await f.evaluate(DOM_LISTEN);
-			await t.page.waitForTimeout(ms);
+			// the whole run, to its own end (60 s at most)
+			// the follow is judged while rows land, half-way through; at its end the run shows its answer from the top
+			const until = Date.now() + 60000; let w1 = w0, vMid = null;
+			while (!w1.completed && Date.now() < until) { await t.page.waitForTimeout(500); w1 = await work(); if (!vMid && !w1.completed && (w1.clock ?? 0) >= 12) vMid = await view(); }
 			const cb = await f.evaluate(() => window.__cbp.read());
 			const dw = await f.evaluate(DOM_READ, PLACES);
-			const w1 = await work(), v1 = await view();
-			const adv = (w1.clock ?? 0) - (w0.clock ?? 0), ran = w0.running && adv >= cb.secs - 1.5;
-			if (!ran) { await t.check(`${look} run: a Working run is in progress while measured`, false, `clock ${w0.clock} -> ${w1.clock} in ${cb.secs.toFixed(1)} s, running ${w0.running}/${w1.running}: could not judge`); }
+			const adv = (w1.clock ?? 0) - (w0.clock ?? 0), ran = w0.running && w1.completed && adv >= cb.secs - 3;
+			if (!ran) { await t.check(`${look} run: a Working run ran to its end while measured`, false, `clock ${w0.clock} -> ${w1.clock} in ${cb.secs.toFixed(1)} s, running ${w0.running}, completed ${w1.completed}: could not judge`); }
 			else {
-				const chat = ofChat(cb.raf), rate = perSec(chat, cb.secs), pct = rate / hz * 100;
-				t.log(`${look} run: ${hz.toFixed(0)} Hz; frame callbacks ${perSec(cb.raf, cb.secs).toFixed(1)}/s, the chat's ${rate.toFixed(1)}/s (${pct.toFixed(0)}%): ${show(chat, cb.secs)}`);
-				t.log(`${look} run: card records ${dw.places.card.records} (${(dw.places.card.records / dw.secs).toFixed(1)}/s), same-value ${dw.places.card.same}; clock ${w0.clock} -> ${w1.clock}`);
-				await t.check(`${look} run: the chat asks for at most ${chatPct}% of the refresh rate in frame callbacks`, pct <= chatPct, `${rate.toFixed(1)}/s of ${hz.toFixed(0)} Hz = ${pct.toFixed(0)}%: ${show(chat, cb.secs)}`);
-				await t.check(`${look} run: nothing in the Working card is rewritten with the value it holds`, dw.places.card.found > 0 && dw.places.card.same === 0, `${dw.places.card.same} same-value writes of ${dw.places.card.records} records: ${dw.places.card.eg.join('; ')}`);
-				await t.check(`${look} run: the card is still being written (the run shows its progress)`, dw.places.card.records > 0, `${dw.places.card.records} records in ${dw.secs.toFixed(1)} s`);
-				if (v0.gap != null && v0.gap <= 24) await t.check(`${look} run: a following transcript is still at the bottom`, v1.gap <= 24, `gap ${v0.gap} -> ${v1.gap} px`);
+				const chat = ofChat(cb.raf), named = (re) => perSec(chat.filter(([, site]) => re.test(site)), cb.secs);
+				const room = named(/^roomFrame\b/), follow = named(/^kickFollow\b/), pair = room + follow;
+				t.log(`${look} run: ${hz.toFixed(0)} Hz, ${cb.secs.toFixed(1)} s (clock ${w0.clock} -> ${w1.clock}); frame callbacks ${perSec(cb.raf, cb.secs).toFixed(1)}/s, the chat's ${perSec(chat, cb.secs).toFixed(1)}/s: roomFrame ${room.toFixed(1)}/s, kickFollow ${follow.toFixed(1)}/s; ${show(chat, cb.secs)}`);
+				t.log(`${look} run: card records ${dw.places.card.records} (${(dw.places.card.records / dw.secs).toFixed(1)}/s), same-value ${dw.places.card.same}`);
+				const seen = room > 0 || follow > 0;
+				await t.check(`${look} run: the room's and the follow's loops are seen by name`, seen, seen ? `roomFrame ${room.toFixed(1)}/s, kickFollow ${follow.toFixed(1)}/s` : `neither roomFrame nor kickFollow asked for a frame from the chat's blocks: could not judge (${show(chat, cb.secs)})`);
+				if (seen) await t.check(`${look} run: over the whole run roomFrame and kickFollow ask for at most ${loopsMax} frame callbacks a second`, pair <= loopsMax, `${pair.toFixed(1)}/s (roomFrame ${room.toFixed(1)}, kickFollow ${follow.toFixed(1)}) over ${cb.secs.toFixed(1)} s`);
+				await t.check(`${look} run: the card is being written (the run shows its progress)`, dw.places.card.found > 0 && dw.places.card.records > 0, `${dw.places.card.records} records in ${dw.secs.toFixed(1)} s`);
+				if (v0.gap != null && v0.gap <= 24) await t.check(`${look} run: a following transcript is still at the bottom half-way through the run`, !!vMid && vMid.gap <= 24, vMid ? `gap ${v0.gap} px at the start, ${vMid.gap} px at 12 s of the run's clock` : 'the run never reached 12 s on its clock: could not judge');
 			}
 		}
 
@@ -130,10 +142,10 @@ export default async function (t) {
 				// blink in the composer and the chat's MutationObservers answering the page's own writes into the chat
 				const chatRaf = ofChat(cb.raf), own = chatRaf.filter(([, s]) => !/^(blinkTick|blinkOne|MutationObserver\.)/.test(s));
 				const ticks = ofChat(cb.timers).filter(([, s]) => /workTick|armWorkTimer/.test(s));
-				t.log(`${look} rest: under the window ${hold} ms: the chat's frame callbacks ${show(chatRaf, cb.secs)}; its timers ${show(ofChat(cb.timers), cb.secs)}; card records ${dw.places.card.records}, status bar ${dw.places.bar.records}`);
-				await t.check(`${look} rest: none of the run's loops asks for a frame while the window is open`, own.length === 0, show(own, cb.secs));
+				t.log(`${look} rest: under the window ${hold} ms: the chat's frame callbacks ${show(chatRaf, cb.secs)}; its timers ${show(ofChat(cb.timers), cb.secs)}; card ${dw.places.card.batches} patches (${dw.places.card.records} records), status bar ${dw.places.bar.batches} (${dw.places.bar.records})`);
+				await t.check(`${look} rest: the run's loops ask for at most 3 frame callbacks a second while the window is open`, perSec(own, cb.secs) <= 3, `${perSec(own, cb.secs).toFixed(1)}/s: ${show(own, cb.secs)}`);
 				await t.check(`${look} rest: no work tick fires while the window is open`, ticks.length === 0, show(ticks, cb.secs));
-				await t.check(`${look} rest: nothing is written in the chat's cards or its status bar while the window is open`, dw.places.card.found > 0 && dw.places.card.records === 0 && dw.places.bar.records === 0, `card ${dw.places.card.records} records, status bar ${dw.places.bar.records}${dw.places.card.found ? '' : ' (no card found: could not judge)'}`);
+				await t.check(`${look} rest: at most 2 patches land in the chat's cards and its status bar while the window is open`, dw.places.card.found > 0 && dw.places.card.batches + dw.places.bar.batches <= 2, `card ${dw.places.card.batches} patches (${dw.places.card.records} records), status bar ${dw.places.bar.batches} (${dw.places.bar.records})${dw.places.card.found ? '' : ' (no card found: could not judge)'}`);
 				await closeWin();
 				const atClose = { work: await work(), view: await view() };
 				await t.check(`${look} rest: at the close the clock is where it was at the opening`, atClose.work.clock >= atOpen.work.clock && atClose.work.clock - atOpen.work.clock <= 0.5 + 1e-9, `${atOpen.work.clock} -> ${atClose.work.clock}`);

@@ -8,8 +8,11 @@
 // starts a run.
 //
 // In each NieR look, with real wheel input:
-//   - scrolling Usage's board and scrolling Settings: the page really scrolled (scroll events were seen, none of them
-//     inside the chat or on a box holding it) and that file called elementsFromPoint zero times;
+//   - scrolling Usage's board and scrolling Settings for 2 s: the page really scrolled (scroll events were seen, none of
+//     them inside the chat or on a box holding it) and that file made at most --set runs (default 3) runs of 25
+//     elementsFromPoint calls. Not zero: the Pod also looks after each render of the chat (its afterRender slot), and
+//     the chat may render once while the other page scrolls. First runs, 2026-11-11, Windows: 8 to 14 runs (200 to 350
+//     calls) before the fix, 0 or 1 after;
 //   - scrolling the chat's own transcript on Home: that file did call it (the Pod still looks, so it still steps back).
 // Calls are attributed by the asking stack: its innermost page frame must lie inside the file's lines in the built page
 // (the build's own marker `/* ---- pm7-port/js/70-nier-pod-shy.js ---- */`, helpers/built-source.mjs).
@@ -46,7 +49,7 @@ const PROBE = () => {
 
 export default async function (t) {
 	const looks = String(t.args.looks || 'nier-dark,nier-light').split(',').filter(Boolean);
-	const W = 1920, H = 1080;
+	const W = 1920, H = 1080, runs = Number(t.args.runs || 3);
 	await t.viewport(W, H);
 	await muteSound(t.page);
 	await t.page.addInitScript(PROBE);
@@ -91,7 +94,7 @@ export default async function (t) {
 			t.log(`${look} ${view}: ${r.scrolls.n} scroll events (${r.scrolls.chat} inside the chat or on a box holding it), elementsFromPoint from the Pod's file ${n}, from elsewhere ${r.calls.reduce((a, [, k]) => a + k, 0) - n}`);
 			const judged = r.scrolls.n > 0 && r.scrolls.chat === 0;
 			await t.check(`${look} ${view}: the wheel scrolled this page and not the chat`, judged, `${r.scrolls.n} scroll events, ${r.scrolls.chat} of them the chat's${judged ? '' : ': could not judge'}`);
-			if (judged) await t.check(`${look} ${view}: scrolling it starts no hit test of the Pod's`, n === 0, `${n} elementsFromPoint calls from ${FILE}`);
+			if (judged) await t.check(`${look} ${view}: scrolling it for 2 s starts at most ${runs} runs of the Pod's hit test`, n <= runs * 25, `${n} elementsFromPoint calls from ${FILE} = ${Math.ceil(n / 25)} runs of up to 25`);
 			await parkPointer(t.page, W, H);
 		}
 

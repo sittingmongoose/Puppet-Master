@@ -7,18 +7,25 @@
 //
 // In the page: evaluate(DOM_LISTEN), wait, then evaluate(DOM_READ, places) with places = [[key, selector], ...]. A
 // record belongs to the first place whose selector matches its target or an ancestor (closest). Returns
-// { secs, records, same, places: { key: { found, records, same, eg } }, others: [[where what, n], ...] }.
+// { secs, records, same, places: { key: { found, records, same, batches, eg } }, others: [[where what, n], ...],
+//   otherSame, otherPerSecond: [n, ...], otherMedian }.
 // `found` counts the elements the selector matches now, so a caller can fail a place that is not in the page.
+// `batches` is how many separate deliveries to the observer held a record for the place: one patch of a card is one
+// batch however many nodes it rewrites, eight ticks are eight. `otherPerSecond` is the same-value writes outside every
+// place in each second listened to, and `otherMedian` their median: a writer that rewrites every second shows in the
+// median, one redraw that rewrites two hundred attributes once does not (it shows in `otherSame` and `others`).
 export const DOM_LISTEN = () => {
-	const recs = [];
-	const mo = new MutationObserver((list) => { for (const r of list) recs.push(r); });
+	const recs = [], when = []; let batch = 0;
+	const mo = new MutationObserver((list) => { batch++; const now = performance.now(); for (const r of list) { recs.push(r); when.push([batch, now]); } });
 	mo.observe(document.documentElement, { subtree: true, attributes: true, attributeOldValue: true, characterData: true, characterDataOldValue: true, childList: true });
-	window.__domw = { mo, recs, t0: performance.now() };
+	window.__domw = { mo, recs, when, t0: performance.now(), last: () => batch };
 };
 
 export const DOM_READ = (places) => {
-	const { mo, recs, t0 } = window.__domw; for (const r of mo.takeRecords()) recs.push(r); mo.disconnect(); delete window.__domw;
-	const secs = (performance.now() - t0) / 1000;
+	const { mo, recs, when, t0, last } = window.__domw; const end = performance.now();
+	for (const r of mo.takeRecords()) { recs.push(r); when.push([last() + 1, end]); }
+	mo.disconnect(); delete window.__domw;
+	const secs = (end - t0) / 1000;
 	const el = (n) => (n && n.nodeType === 1 ? n : n && n.parentElement);
 	const desc = (e) => { if (!e) return '(detached)'; const c = typeof e.className === 'string' ? e.className : (e.className && e.className.baseVal) || ''; return e.tagName.toLowerCase() + (e.id ? '#' + e.id : '') + (c.trim() ? '.' + c.trim().split(/\s+/).slice(0, 2).join('.') : ''); };
 	const where = (e) => { const out = []; for (let p = e, i = 0; p && p !== document.documentElement && i < 3; p = p.parentElement, i++) out.unshift(desc(p)); return out.join(' > '); };
@@ -35,15 +42,23 @@ export const DOM_READ = (places) => {
 		} else if (r.type === 'childList' && r.removedNodes.length && r.removedNodes.length === r.addedNodes.length && ser(r.removedNodes) === ser(r.addedNodes)) { same.add(r); what.set(r, 'children'); }
 	}
 	const out = { secs, records: recs.length, same: same.size, places: {}, others: [] };
-	for (const [key, sel] of places) out.places[key] = { found: document.querySelectorAll(sel).length, records: 0, same: 0, eg: [] };
-	const others = new Map();
-	for (const r of recs) {
-		const e = el(r.target); if (!e) continue;
+	for (const [key, sel] of places) out.places[key] = { found: document.querySelectorAll(sel).length, records: 0, same: 0, batches: 0, eg: [] };
+	const others = new Map(), seen = {}, bins = new Array(Math.max(1, Math.ceil(secs))).fill(0);
+	for (let i = 0; i < recs.length; i++) {
+		const r = recs[i], e = el(r.target); if (!e) continue;
 		const p = places.find(([, sel]) => e.closest(sel));
-		if (p) { const o = out.places[p[0]]; o.records++; if (same.has(r)) { o.same++; if (o.eg.length < 4) o.eg.push(desc(e) + ' ' + what.get(r)); } }
-		else if (same.has(r)) { const k = where(e) + ' ' + what.get(r); others.set(k, (others.get(k) || 0) + 1); }
+		if (p) {
+			const o = out.places[p[0]]; o.records++;
+			const set = seen[p[0]] || (seen[p[0]] = new Set()); if (!set.has(when[i][0])) { set.add(when[i][0]); o.batches++; }
+			if (same.has(r)) { o.same++; if (o.eg.length < 4) o.eg.push(desc(e) + ' ' + what.get(r)); }
+		} else if (same.has(r)) {
+			const k = where(e) + ' ' + what.get(r); others.set(k, (others.get(k) || 0) + 1);
+			bins[Math.min(bins.length - 1, Math.max(0, Math.floor((when[i][1] - t0) / 1000)))]++;
+		}
 	}
 	out.others = [...others].sort((a, b) => b[1] - a[1]).slice(0, 12);
 	out.otherSame = [...others].reduce((a, [, n]) => a + n, 0);
+	out.otherPerSecond = bins;
+	out.otherMedian = bins.slice().sort((x, y) => x - y)[bins.length >> 1];
 	return out;
 };
