@@ -74,6 +74,70 @@
     }, 250);
   }
 
+  /* ------------------------------------------------------------------ (B-press) a press survives a redraw
+     The chat below redraws itself whole on every change anywhere in the app, and History's No project group is rebuilt
+     when its chats change. A redraw between pointer-down and pointer-up swapped the control under the pointer for a new
+     node, so the click never fired. Nothing about what is drawn changes here, only when: while a press that started on
+     one of this layer's own controls is in progress, a redraw is held, and it runs once right after the press ends. The
+     browser dispatches click in the same task as pointer-up, so the held redraw (a 0 ms timer from pointer-up) always
+     comes after the click. A Space press on a button clicks on key-up, so it is held the same way. A press that never
+     ends (the pointer captured elsewhere) lets go after 2 s. */
+  const ZONE = '.pjx-npc, .pjx-npg, .pjx-flymenu, .pjx-home-new, .pjx-tb-noproj, .pjx-newsplit';
+  const P = { on: false, id: 0, held: false, heldGroup: false, cap: 0 };
+  function pressStart(e) {
+    const t = e.target && e.target.closest ? e.target.closest(ZONE) : null;
+    if (!t) return;
+    P.on = true; P.id++;
+    clearTimeout(P.cap); P.cap = setTimeout(pressEnd, 2000);
+  }
+  function pressEnd() {
+    if (!P.on) return;
+    const id = P.id;
+    setTimeout(() => {
+      if (P.id !== id || !P.on) return;   // a new press started meanwhile: it holds the redraw on
+      P.on = false; clearTimeout(P.cap);
+      const draw = P.held, group = P.heldGroup; P.held = false; P.heldGroup = false;
+      if (draw) paint();
+      if (group) soon();
+    }, 0);
+  }
+  W.addEventListener('pointerdown', pressStart, true);
+  W.addEventListener('pointerup', pressEnd, true);
+  W.addEventListener('pointercancel', pressEnd, true);
+  W.addEventListener('keydown', (e) => { if (e.key === ' ' && !e.repeat && e.target && e.target.closest && e.target.closest('button, [role="button"], [role="menuitem"]')) pressStart(e); }, true);
+  W.addEventListener('keyup', (e) => { if (e.key === ' ') pressEnd(); }, true);
+  W.addEventListener('blur', pressEnd);
+
+  /* ------------------------------------------------------------------ (B-press) where the chat lives
+     PMConcept7 reconciles everything under #pmRoot against its own template on each of its renders, and drops any child
+     the template doesn't name: the chat used to sit inside its .chat-stage, so every PMConcept7 render removed it, and it
+     came back only on the next animation frame. In between the chat had no header at all (a task could find none), and a
+     press on it was cancelled (a click never fires when its press's node is removed). The chat now lives beside #pmRoot,
+     in a host of its own inside the chat frame (the frame isn't reconciled), drawn over the stage's exact box. The host
+     carries pm56-host, so the chat's look is the same, and takes the stage's own background, colour and corners. */
+  let placedStage = null, stageRO = null;
+  function hostOf(r) {
+    let host = r.querySelector(':scope > .pjx-npc-host');
+    if (!host) { host = h('div.pm56-host.pjx-npc-host', { 'data-pmh-tag': 'literal' }); r.appendChild(host); }
+    return host;
+  }
+  function placeHost() {
+    const r = ROOT(), host = r && r.querySelector(':scope > .pjx-npc-host');
+    if (!host) return;
+    const stage = r.querySelector('#pmRoot .chat-stage'), npc = host.querySelector(':scope > .pjx-npc');
+    if (!stage || !npc) { if (!host.hidden) host.hidden = true; return; }
+    if (host.hidden) host.hidden = false;
+    if (stage !== placedStage && W.ResizeObserver) {
+      if (!stageRO) stageRO = new W.ResizeObserver(() => placeHost());
+      if (placedStage) stageRO.unobserve(placedStage);
+      stageRO.observe(stage); placedStage = stage;
+    }
+    const op = host.offsetParent || r, a = op.getBoundingClientRect(), b = stage.getBoundingClientRect(), cs = getComputedStyle(stage);
+    const want = { left: Math.round(b.left - a.left - op.clientLeft + op.scrollLeft) + 'px', top: Math.round(b.top - a.top - op.clientTop + op.scrollTop) + 'px', width: Math.round(b.width) + 'px', height: Math.round(b.height) + 'px',
+      backgroundColor: cs.backgroundColor, backgroundImage: cs.backgroundImage, color: cs.color, borderRadius: cs.borderRadius };
+    Object.keys(want).forEach((k) => { if (host.style[k] !== want[k]) host.style[k] = want[k]; });
+  }
+
   /* ------------------------------------------------------------------ the chat view, drawn over the chat stage */
   let V = null;   // { id, draft, comp, notice, text }
   function openChat(id) { if (!chatOf(id)) return; V = { id, draft: false, notice: null, text: '' }; showChat(); closeFlyout(); paint(); later(() => focusIn('.pjx-npc-title')); }
@@ -187,16 +251,18 @@
     paint(); later(() => focusIn('.pjx-npc-input'));
   }
   function paint() {
+    if (P.on) { P.held = true; return; }   // (B-press) the press under way gets its click first
     const r = ROOT(), stage = r && r.querySelector('.chat-stage');
     if (!stage) return;
     let el = D.querySelector('.pjx-npc');
-    if (!V || (!V.draft && !chatOf(V.id))) { if (el) el.remove(); r.removeAttribute('data-pjx-npc'); V = null; return; }
+    if (!V || (!V.draft && !chatOf(V.id))) { if (el) el.remove(); r.removeAttribute('data-pjx-npc'); V = null; placeHost(); return; }
     const c = V.draft ? null : chatOf(V.id);
-    if (c && gone(c) && !V.moved) { V = null; if (el) el.remove(); r.removeAttribute('data-pjx-npc'); return; }
+    if (c && gone(c) && !V.moved) { V = null; if (el) el.remove(); r.removeAttribute('data-pjx-npc'); placeHost(); return; }
     if (c && V.moved && !gone(c)) V.moved = false;
     const mr = c && V.moved ? movedRec(c.id) : null;
-    // a narrow window folds PMConcept7's chat to a sliver: then the chat opens as a panel over the page's right side
-    const floating = r.getBoundingClientRect().width < 300, host = floating ? D.body : stage;
+    // a narrow window folds PMConcept7's chat to a sliver: then the chat opens as a panel over the page's right side;
+    // otherwise it sits in its own host over the stage (B-press: never inside PMConcept7's reconciled tree)
+    const floating = r.getBoundingClientRect().width < 300, host = floating ? D.body : hostOf(r);
     if (el && el.parentElement !== host) { host.appendChild(el); }
     if (el) el.classList.toggle('is-floating', floating);
     if (!el) {
@@ -252,19 +318,24 @@
     } else inner.appendChild(h('div.pjx-npc-empty', null, h('b', { text: w('nc.draftEmpty') }), h('span', { text: w('nc.draftEmptySub', { computer: comp(V.comp).name }) })));
     const tx = h('div.transcript.pjx-npc-tx', null, inner);
     // (its own classes: PMConcept7's chat claims its composer classes for its own state)
-    const ta = h('textarea.pjx-npc-input', { rows: '2', 'aria-label': w('nc.composer'), placeholder: c ? w('nc.composerPh', { chat: c.title }) : w('nc.composerDraft') });
+    const ta = h('textarea.pjx-npc-input', { 'data-c-key': 'npc:input', rows: '2', 'aria-label': w('nc.composer'), placeholder: c ? w('nc.composerPh', { chat: c.title }) : w('nc.composerDraft') });
     ta.value = V.text || '';
-    ta.addEventListener('input', () => { V.text = ta.value; });
-    ta.addEventListener('focus', () => { V.focusInput = true; });
-    ta.addEventListener('blur', () => { V.focusInput = false; });
+    // (B-press) a field that is swapped out or closed reports blur on its way out: by then the chat may be closed (V null)
+    ta.addEventListener('input', () => { if (V) V.text = ta.value; });
+    ta.addEventListener('focus', () => { if (V) V.focusInput = true; });
+    ta.addEventListener('blur', () => { if (V && ta.isConnected) V.focusInput = false; });
     ta.addEventListener('keydown', (e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); } });
     const sendB = h('button.pjx-btn.is-primary.pjx-npc-send', { type: 'button', 'data-c-key': 'npc:send' }, h('span.pjx-np-bico', { html: icon('send', 14), 'aria-hidden': 'true' }), h('span', { text: w('nc.send') }));
     sendB.addEventListener('click', () => send());
     const composer = h('div.pjx-npc-comp', null, c && !mr ? needsRow(c) : null, h('div.pjx-npc-box', null, h('div.pjx-npc-field', null, ta), h('div.pjx-npc-tools', null, h('span.pjx-npc-hint', { text: c ? w('nc.composerHint', { computer: comp(c.runsOn).name }) : w('nc.composerHintDraft') }), sendB)));
-    const hadFocus = el.contains(D.activeElement) && D.activeElement.getAttribute && D.activeElement.getAttribute('data-c-key');
+    // (B-press) what has the focus, and the field's caret, are read before the swap: a focused field that is swapped out
+    // may report blur on its way out, which would otherwise leave the focus nowhere and lose the next keys and Enter
+    const act = D.activeElement, hadFocus = el.contains(act) && act.getAttribute && act.getAttribute('data-c-key');
+    const caret = hadFocus === 'npc:input' && act.value === ta.value ? [act.selectionStart, act.selectionEnd] : null;
     el.replaceChildren(h('div.pmu-shell.pjx-npc-shell', null, head, folder, tx, composer));
     // the words and the caret survive a redraw (and a re-mount, when PMConcept7 redraws its chat stage)
-    if (V.focusInput) { try { ta.focus({ preventScroll: true }); ta.setSelectionRange(ta.value.length, ta.value.length); } catch (e) { /* not focusable yet */ } }
+    if (!floating) placeHost();
+    if (V.focusInput || hadFocus === 'npc:input') { try { ta.focus({ preventScroll: true }); const c0 = caret || [ta.value.length, ta.value.length]; ta.setSelectionRange(c0[0], c0[1]); } catch (e) { /* not focusable yet */ } }
     else if (hadFocus) { const f = el.querySelector('[data-c-key="' + hadFocus + '"]'); if (f) f.focus({ preventScroll: true }); }
     tx.scrollTop = tx.scrollHeight;
   }
@@ -348,13 +419,15 @@
       if (hs) {
         const have = hs.querySelector(':scope > .pjx-npg');
         const sig = list().map((c) => c.id + ':' + c.when).join('|') + '#' + (V && V.id);
-        if (!have || have.getAttribute('data-sig') !== sig) {
+        if ((!have || have.getAttribute('data-sig') !== sig) && P.on && have) P.heldGroup = true;   // (B-press) rebuilt after the press
+        else if (!have || have.getAttribute('data-sig') !== sig) {
           const g = groupNode(); g.setAttribute('data-sig', sig);
           const arch = Array.from(hs.children).find((x) => /^\s*archived/i.test(x.textContent || '') && x !== have);
           if (have) have.replaceWith(g); else if (arch) hs.insertBefore(g, arch); else hs.appendChild(g);
         }
       }
       if (V && r.querySelector('.chat-stage') && !D.querySelector('.pjx-npc')) paint();
+      placeHost();
     }
     // Home's board bar: New chat, a split (Home is where you start something)
     const hb = D.querySelector('#panel-dashboard .pmw-hrow-actions');

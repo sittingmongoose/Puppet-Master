@@ -26,9 +26,20 @@ export const tests = {
 					await t.app.page(t, f, 'dashboard');
 					await t.app.click(t, f, '#projectMenuBtn', { noScroll: true });
 					await t.app.click(t, f, '#projectMenu .pjx-tb-noproj', { noScroll: true, wait: 300 });
-					// the chat column may still be opening: measure once its width holds still
-					await f.waitForFunction(() => new Promise((res) => { const e = document.querySelector('.pjx-npc-head'); if (!e) return res(false); const a = e.getBoundingClientRect().width; setTimeout(() => res(a > 0 && Math.abs(e.getBoundingClientRect().width - a) < 0.5), 250); }), null, { timeout: 8000 }).catch(() => {});
-					const hd = await f.evaluate(() => { const hdr = document.querySelector('.pjx-npc .pjx-npc-head'); if (!hdr) return 'no header'; const r = hdr.getBoundingClientRect(); const out = Array.from(hdr.children).filter((c) => { const b = c.getBoundingClientRect(); return b.width > 0 && (b.right > r.right + 1 || b.left < r.left - 1); }).map((c) => c.className); return out.join(','); });
+					// the chat column may still be opening: measure once its width holds still. (B-press) The wait and the reading are
+					// one call in the page, so what is measured is the header that held still; the redraw that could leave the chat
+					// without a header between two calls is fixed in the layer and checked by press.check.mjs
+					const hd = await f.evaluate(() => new Promise((res) => {
+						const t0 = performance.now(); let last = -1;
+						const measure = (hdr) => { const r = hdr.getBoundingClientRect(); return Array.from(hdr.children).filter((c) => { const b = c.getBoundingClientRect(); return b.width > 0 && (b.right > r.right + 1 || b.left < r.left - 1); }).map((c) => c.className).join(','); };
+						const tick = () => {
+							const hdr = document.querySelector('.pjx-npc .pjx-npc-head'), wd = hdr ? hdr.getBoundingClientRect().width : -1;
+							if (hdr && wd > 0 && Math.abs(wd - last) < 0.5) return res(measure(hdr));
+							if (performance.now() - t0 > 8000) return res(hdr ? measure(hdr) : 'no header');
+							last = wd; setTimeout(tick, 250);
+						};
+						tick();
+					}));
 					await t.check(`${look} ${w}: the no-project chat header fits`, !hd, hd);
 					if (width === '') await t.crop(`npc-${look}`, f.locator('#pmw-chat56 .chat-stage'), `No-project chat, ${look}`);
 					await f.evaluate(() => window.PJX.chat.close());
