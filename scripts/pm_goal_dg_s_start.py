@@ -56,6 +56,11 @@ CRASH_EXIT = 73
 PREPARE_CUTS = ('after_prepare',)
 
 
+def d01_families(edition):
+    node = edition.bank.lookup(edition.d01 + '#/$defs/WorkflowUpdateAfterimages').contents
+    return {k: v['allOf'][1]['properties']['family_id']['const'] for k, v in node['properties'].items()}
+
+
 def partition_of(project_id):
     return 'project~' + K(project_id)
 
@@ -94,7 +99,7 @@ class DescriptorOwner(W.DGOwner):
         goal_digest, goal_pointer = self.edition.goal_bank.original.resource_origins[self.edition.goal_arg]
         pins.append(dict(retrieval_uri=self.edition.goal_arg, whole_sha256=goal_digest, json_pointer=goal_pointer))
         value = dict(qualification=QUALIFICATION, edition=self.edition.name, coordinator_profile=self.edition.profile,
-                     issuer_method=START_METHOD, storage_method=STORAGE_METHOD, d01_method=D01_METHOD,
+                     issuer_method=self.edition.start_method, storage_method=self.edition.storage_method, d01_method=D01_METHOD,
                      schema_resources=pins, installed_at_utc=self.ctx.now())
         if edit:
             value = edit(value)
@@ -656,20 +661,20 @@ class StartWorld:
         cs['run_control']['cancellation'] = None
         cs['run_control']['pending_operation_id'] = None
         b.commit()
-        head_cell = dict(schema_id='pm.storage_value.executor_workflow_workflow_head.v4', schema_version='4.0.0',
-                         record=copy.deepcopy(head))
+        head_cell = W.skeleton(e.bank, e.d01 + '#/$defs/StorageWorkflowHead')
+        head_cell['record'] = copy.deepcopy(head)
+        fam = d01_families(e)
         e.bank.validate(e.d01 + '#/$defs/StorageWorkflowHead', head_cell, 'd01/head')
-        ctx.storage.transact([dict(table='executor_workflow_workflow_head', key=d01.head_key(D01_HEAD_REVISION),
+        ctx.storage.transact([dict(table=fam['workflow_head'], key=d01.head_key(D01_HEAD_REVISION),
                                    expected=None, value=head_cell)])
-        pointer = dict(schema_id='pm.storage_value.executor_workflow_current_pointer.v2', schema_version='2.0.0',
-                       record=dict(scope=copy.deepcopy(ctx.scope), revision=D01_HEAD_REVISION,
-                                   workflow_head=W.selector_for(ctx, 'executor_workflow_workflow_head',
+        pointer = W.skeleton(e.bank, e.d01 + '#/$defs/StorageCurrentPointer')
+        pointer.update(record=dict(scope=copy.deepcopy(ctx.scope), revision=D01_HEAD_REVISION,
+                                   workflow_head=W.selector_for(ctx, fam['workflow_head'],
                                                                 d01.head_key(D01_HEAD_REVISION), head_cell),
                                    inventory_head=None, scheduler_control=None,
                                    last_origin_operation_id='TEST_ONLY:birth:' + ctx.token, pending_operation_id=None))
         e.bank.validate(e.d01 + '#/$defs/StorageCurrentPointer', pointer, 'd01/pointer')
-        ctx.storage.transact([dict(table='executor_workflow_current_pointer', key=d01.pointer_key(), expected=None,
-                                   value=pointer)])
+        ctx.storage.transact([dict(table=fam['pointer'], key=d01.pointer_key(), expected=None, value=pointer)])
         cs['pointer'] = copy.deepcopy(pointer['record'])
         if edit:
             cs = edit(cs)
@@ -733,7 +738,7 @@ class StartOwner(W.DGOwner):
         require('start/request_scope', same(request['scope'], ctx.scope))
         d = src['descriptor']
         require('start/descriptor_profile', d['coordinator_profile'] == e.profile)
-        require('start/descriptor_methods', d['issuer_method'] == START_METHOD and d['storage_method'] == STORAGE_METHOD)
+        require('start/descriptor_methods', d['issuer_method'] == e.start_method and d['storage_method'] == e.storage_method)
         bank_pins = {p['retrieval_uri']: p['whole_sha256'] for p in d['schema_resources']}
         for uri in (e.custody, e.d01, e.activation, e.consumer):
             require('start/descriptor_schema_pin', bank_pins.get(uri) == e.bank.original.resource_origins[uri][0])
@@ -759,7 +764,7 @@ class StartOwner(W.DGOwner):
         head = cs['workflow']['head']
         W.resolve_selector(storage, head['current_body'], 'start/d01_head_body')
         W.resolve_selector(storage, head['current_control'], 'start/d01_head_control')
-        pointer = storage.cell('executor_workflow_current_pointer', self.world.owners['d01'].pointer_key())
+        pointer = storage.cell(d01_families(self.edition)['pointer'], self.world.owners['d01'].pointer_key())
         require('start/d01_pointer', pointer is not None and pointer['value']['record']['revision'] == head['revision']
                 and same(pointer['value']['record'], cs['pointer']))
         W.resolve_selector(storage, pointer['value']['record']['workflow_head'], 'start/d01_pointer_head')
@@ -1040,12 +1045,12 @@ class StartOwner(W.DGOwner):
         cand.update(storage_instance_id=ctx.sid, physical_key=self._key(cand['schema_id'].split('.')[-2]
                                                                           .replace('_v6', '') + '.v2', op))
         r = cand['record']
-        pointer = ctx.storage.cell('executor_workflow_current_pointer', self.world.owners['d01'].pointer_key())
+        pointer = ctx.storage.cell(d01_families(self.edition)['pointer'], self.world.owners['d01'].pointer_key())
         r.update(scope=copy.deepcopy(ctx.scope), operation_id=op, transaction_id=self.tx_id(op),
                  owner=copy.deepcopy(ctx.workflow_owner),
                  before_body=self._selector_of(before_body, 'workflow_goal_run_body'),
                  before_control=self._selector_of(before_control, 'workflow_goal_run_control'),
-                 before_d01_pointer=W.selector_for(ctx, 'executor_workflow_current_pointer',
+                 before_d01_pointer=W.selector_for(ctx, d01_families(self.edition)['pointer'],
                                                    self.world.owners['d01'].pointer_key(), pointer['value']),
                  before_start_control=self._selector_of(src['native_birth']['start_control'], 'workflow_start_control'),
                  prepared_outbox=W.selector_for(ctx, 'workflow_start_prepared_outbox',
@@ -1108,7 +1113,7 @@ class StartOwner(W.DGOwner):
         before_c = self.body_commitment(before_body, before_control)
         after_c = self.body_commitment(after_body, after_control)
         consumer = W.skeleton(e.bank, e.consumer + '#/$defs/RetainedNativeStart')
-        pointer_cell = ctx.storage.cell('executor_workflow_current_pointer', d01.pointer_key())
+        pointer_cell = ctx.storage.cell(d01_families(self.edition)['pointer'], d01.pointer_key())
         prev_head_sel = copy.deepcopy(pointer_cell['value']['record']['workflow_head'])
         W.resolve_selector(ctx.storage, prev_head_sel, 'd01/previous_head')
         new_revision = NR.uint64(pointer_cell['value']['record']['revision'] + 1, 'd01/revision')
@@ -1124,13 +1129,13 @@ class StartOwner(W.DGOwner):
                   after_control=copy.deepcopy(after_c['control']), cause='owner_status',
                   original_owner_result=commit_sel, original_owner_origin=origin_sel)
         ur['transition'].update(rule='original_workflow_start', before=before_c, after=after_c,
-                                original_writer_method=START_METHOD, original_owner_result=commit_sel,
+                                original_writer_method=e.start_method, original_owner_result=commit_sel,
                                 original_owner_origin=origin_sel)
         for k in ('owner',):
             if k in ur:
                 ur[k] = copy.deepcopy(ctx.workflow_owner)
         update_key = update.get('physical_key') or self._key('executor_workflow_workflow_update.v4', op)
-        update_sel = dict(storage_instance_id=ctx.sid, family_id='executor_workflow_workflow_update',
+        update_sel = dict(storage_instance_id=ctx.sid, family_id=d01_families(self.edition)['workflow_update'],
                           physical_key=update_key, schema_id=update['schema_id'],
                           schema_version=update['schema_version'], physical_value_sha256=cdigest(update))
         head = consumer['original_d01_head']
@@ -1146,14 +1151,14 @@ class StartOwner(W.DGOwner):
                   workflow_owner_epoch=ctx.workflow_owner['owner_epoch'])
         if 'pending_operation_id' in hr:
             hr['pending_operation_id'] = None
-        head_sel = dict(storage_instance_id=ctx.sid, family_id='executor_workflow_workflow_head', physical_key=head_key,
+        head_sel = dict(storage_instance_id=ctx.sid, family_id=d01_families(self.edition)['workflow_head'], physical_key=head_key,
                         schema_id=head['schema_id'], schema_version=head['schema_version'],
                         physical_value_sha256=cdigest(head))
         new_pointer = copy.deepcopy(pointer_cell['value'])
         new_pointer['record'].update(revision=new_revision, workflow_head=head_sel, last_origin_operation_id=op,
                                      pending_operation_id=None)
         e.bank.validate(e.d01 + '#/$defs/StorageCurrentPointer', new_pointer, 'd01/new_pointer')
-        pointer_sel = dict(storage_instance_id=ctx.sid, family_id='executor_workflow_current_pointer',
+        pointer_sel = dict(storage_instance_id=ctx.sid, family_id=d01_families(self.edition)['pointer'],
                            physical_key=d01.pointer_key(), schema_id=new_pointer['schema_id'],
                            schema_version=new_pointer['schema_version'], physical_value_sha256=cdigest(new_pointer))
         d01_origin = consumer['original_d01_origin']
@@ -1289,12 +1294,12 @@ class StartStorageParticipantOps:
                      expected=union['start_control_version'], value=union['control']),
                 dict(table='workflow_start_origin', key=union['origin']['physical_key'], expected=None,
                      value=union['origin']),
-                dict(table='executor_workflow_workflow_update', key=union['update_key'], expected=None,
+                dict(table=d01_families(world.edition)['workflow_update'], key=union['update_key'], expected=None,
                      value=union['update']),
-                dict(table='executor_workflow_workflow_head', key=union['head_key'], expected=None, value=union['head']),
+                dict(table=d01_families(world.edition)['workflow_head'], key=union['head_key'], expected=None, value=union['head']),
                 dict(table='executor_workflow_lineage_origin', key=union['d01_origin_key'], expected=None,
                      value=union['d01_origin']),
-                dict(table='executor_workflow_current_pointer', key=world.owners['d01'].pointer_key(),
+                dict(table=d01_families(world.edition)['pointer'], key=world.owners['d01'].pointer_key(),
                      expected=union['prev_pointer_version'], value=union['pointer']),
             ]
             op = c['operation_id']

@@ -150,7 +150,15 @@ def v3_edition():
             consumer='https://puppetmaster.local/proposals/goal_run_started_consumer.v1.schema.json',
             goal_arg='https://puppetmaster.local/proposals/workflow_start_goal_argument.v2.schema.json',
             profile='workflow_start_original.v2', selection=selection)
+        _methods(_EDITIONS['v3'])
     return _EDITIONS['v3']
+
+
+def _methods(edition):
+    origin = skeleton(edition.bank, edition.custody + '#/$defs/StorageOrigin')['record']
+    edition.start_method = origin['issuer_method']
+    edition.storage_method = origin['storage_method']
+    return edition
 
 
 # ------------------------------------------------------------------ skeletons
@@ -536,3 +544,83 @@ ACTIVATION_SOURCES = ('native_compile', 'certified_graph', 'native_intake', 'pro
 
 def new_token():
     return uuid.uuid4().hex[:12]
+
+
+# ------------------------------------------------------------------ native-v7 composition
+
+V7_CONSUMER = 'https://puppetmaster.local/proposals/goal_run_started_consumer.native_v7.v1.schema.json'
+V7_CUSTODY = 'https://puppetmaster.local/proposals/workflow_start_original_custody.v6.schema.json'
+V7_D01 = 'https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json'
+CERTIFIED = 'Plans/goal_run_certified_consumer_contracts/'
+
+
+def _content_locations(declaration):
+    from pm_goal_test_demo_r1 import content_index
+    index = content_index()
+    out = {}
+    for entry in declaration['resources']:
+        path = index.get(entry.get('sha256'))
+        if path is not None:
+            out[entry['path'] + '@' + entry['sha256']] = str(path.relative_to(ROOT))
+    return out
+
+
+def v7_composition_report():
+    """Explicit native-v7 selection: the native realm, its one inherited exact
+    edge target in its original hash, and the started native-v7 companion, with
+    every companion->native/event reference checked against imports.json."""
+    realms = json.loads((ROOT / CERTIFIED / 'resource-realms.json').read_text())
+    imports = json.loads((ROOT / CERTIFIED / 'imports.json').read_text())
+    require('v7/no_network', imports['network_fallback'] is False and imports['whole_bank_merge'] is False)
+    native = realms['native']
+    edge = next(e for e in imports['inherited_exact_edges'] if 'native' in e['from_realms'])
+    target_realm = realms[edge['to_realm']]
+    target = [r for r in target_realm['resources'] if r['retrieval_uri'] == edge['to_retrieval_uri']]
+    require('v7/edge_target_unique', len(target) == 1 and target[0]['sha256'] == edge['whole_target_sha256'])
+    companion = [r for r in realms['companions']['resources'] if r['retrieval_uri'] == V7_CONSUMER]
+    require('v7/companion_unique', len(companion) == 1)
+    declared = {(i['from_schema_location'], i['literal_reference']) for i in imports['imports']
+                if i['from_realm'] == 'companions' and i['from_whole_sha256'] == companion[0]['sha256']}
+    document = json.loads((ROOT / companion[0]['path']).read_text())
+    native_uris = {r['retrieval_uri'] for r in native['resources']}
+    used = []
+
+    def walk(node, path):
+        if type(node) is dict:
+            ref = node.get('$ref')
+            if type(ref) is str and not ref.startswith('#') and not ref.startswith(V7_CONSUMER):
+                used.append(('/' + '/'.join(path) + '/$ref', ref))
+            for k, v in node.items():
+                walk(v, path + [k.replace('~', '~0').replace('/', '~1')])
+        elif type(node) is list:
+            for i, v in enumerate(node):
+                walk(v, path + [str(i)])
+    walk(document, [])
+    undeclared = [u for u in used if u not in declared]
+    require('v7/undeclared_cross_realm_reference', not undeclared)
+    to_native = [u for u in used if u[1].split('#')[0] in native_uris]
+    return dict(native=native, edge_target=target[0], companion=companion[0], used=used, to_native=len(to_native),
+                declared=len(declared))
+
+
+def v7_edition():
+    if 'v7' not in _EDITIONS:
+        report = v7_composition_report()
+        resources = list(report['native']['resources']) + [report['edge_target'], report['companion']]
+        declaration = dict(network_fallback=False, merge_with_other_realms=False, resources=resources)
+        original = OriginalBank(declaration, _content_locations(declaration))
+        realms = json.loads((ROOT / CERTIFIED / 'resource-realms.json').read_text())
+        goal = OriginalBank(realms['goal'], _content_locations(realms['goal']))
+        edition = Edition('native_v7', Bank(original, 'certified_native+edge+started_native_v7_companion'),
+                          Bank(goal, 'certified_goal'), custody=V7_CUSTODY, d01=V7_D01,
+                          activation='https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json',
+                          consumer=V7_CONSUMER,
+                          goal_arg='https://puppetmaster.local/proposals/workflow_start_goal_argument.v2.schema.json',
+                          profile=None)
+        origin = skeleton(edition.bank, V7_CUSTODY + '#/$defs/StorageOrigin')
+        edition.profile = origin['record']['coordinator_profile']
+        edition.composition = dict((k, v) for k, v in report.items() if k in ('to_native', 'declared'))
+        edition.composition['used'] = len(report['used'])
+        _methods(edition)
+        _EDITIONS['v7'] = edition
+    return _EDITIONS['v7']
