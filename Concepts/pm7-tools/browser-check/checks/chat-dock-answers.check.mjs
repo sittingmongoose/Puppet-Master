@@ -16,7 +16,12 @@
 //   grants    For session is remembered (Permissions_System 6.1, FinalGUISpec 15.7): after For session on the Studio's ask,
 //             the next one never asks (the decision closes on its own, one "Allowed by this session's grant" receipt);
 //             an ask its pattern doesn't match still asks; a bash grant "psql *" covers a later psql call and a pending one,
-//             not pg_dump; a Deny also refuses the other pending asks that share its approval ask, one receipt each.
+//             not pg_dump; a grant in one run never covers another run's ask in the same thread (canon's approval scope
+//             with run and lane); a Deny also refuses the other pending asks that share its approval ask (and no other
+//             run's), one receipt each. Each step starts from an empty bar and fails rather than throws, so every
+//             assertion is reached on any build.
+//   rules     an Always rule covers by its place: This project only that project's chats (never a chat with no project
+//             or another project), This computer any ask on this computer, Everywhere any computer.
 //   helper    the Crew helper that waits for your OK (Rollback Auditor, recovery-collaboration) has the same ladder in its
 //             card's decision row, under the command it would run shown whole, and in its dock line once the card is out of view;
 //             Once from the line lets it go on and the run says so; Always from the card opens the chooser in the card.
@@ -147,16 +152,28 @@ async function placesCase(t, surface) {
 	await t.check(`${surface}: a page suggests its origin`, r.web.s === 'https://docs.example.com/*', JSON.stringify(r.web));
 }
 
+// Press an answer in an ask's dock line, or fail (not throw) when the line is not there, so every later step still runs
+async function press(t, f, key, value, name) {
+	const loc = line(f, key).locator(`[data-value="${value}"]`);
+	const n = await loc.count();
+	await t.check(`${name}: its line is in the dock`, n === 1, key);
+	if (n === 1) await loc.click();
+	return n === 1;
+}
+// Clear every pending ask of dock-asks' own (not a helper's) and render, so a step starts from an empty bar
+const clearAsks = (f) => f.evaluate(() => { PM56_ASKS.list().forEach((a) => { if (!a.external) PM56_ASKS.drop(a.id); }); PM56_APP.render(); });
+
 async function grantsCase(t, surface) {
 	const f = await ready(t, surface); if (!f) return;
 	await t.emulate({ reducedMotion: 'reduce' });
 	await f.evaluate(() => PMW.chatCol.setWidth(600));
 	const titlesAfter = (n) => f.evaluate((n) => PM56_APP.activeThread().messages.slice(n).map((m) => m.type + '|' + m.title), n);
 	const count = () => f.evaluate(() => PM56_APP.activeThread().messages.length);
+	const pendingIds = () => f.evaluate(() => PM56_ASKS.list().map((a) => a.id));
 	// the Studio's ask: For session, then asked again
 	await openStudio(f);
 	await t.until(`${surface}: the Studio asks`, (k) => !!document.querySelector(`#pmRoot .composer > .pmx-dock [data-k="${k}"]`), STUDIO);
-	await line(f, STUDIO).locator('[data-value="session"]').click();
+	await press(t, f, STUDIO, 'session', `${surface}: the Studio's For session`);
 	await t.until(`${surface}: For session closes the decision`, () => !PM56_APP.ctx().state.decision && !PM56_ASKS.list().some((a) => a.id === 'perm-studio-host'));
 	let n = await count();
 	await f.evaluate(() => { window.__fo128Seen = 0; window.__fo128Watch = setInterval(() => { if (document.querySelector('#pmRoot .composer > .pmx-dock [data-k="pmx-dock:perm-studio-host"]')) window.__fo128Seen++; }, 16); });
@@ -167,31 +184,86 @@ async function grantsCase(t, surface) {
 	await t.check(`${surface}: the second matching ask never asked in the bar`, seen === 0, `seen ${seen} times`);
 	let added = await titlesAfter(n);
 	await t.check(`${surface}: and wrote one line saying the session's grant allowed it`, JSON.stringify(added) === '["permission-answer|Allowed by this session’s grant: reconnect the Windows execution host"]', JSON.stringify(added));
+	await f.evaluate(() => { const c = PM56_APP.ctx(); if (c.state.decision) { c.state.decision = null; PM56_APP.render(); } });
 	// an ask the grant does not match still asks
+	await clearAsks(f);
 	const other = await f.evaluate(() => PM56_ASKS.ask({ tool: 'host', target: 'Reconnect to Linux container and resume the rehearsal', pattern: 'Linux container', who: 'The agent', verb: 'reconnect the Linux container' }));
 	await t.check(`${surface}: a non-matching ask asks`, !!other && await line(f, `pmx-dock:${other}`).count() === 1, String(other));
-	await f.evaluate((i) => { PM56_ASKS.drop(i); PM56_APP.render(); }, other);
-	// bash: a psql grant covers a later psql call and a pending one, not pg_dump
+	// bash: a psql grant covers a pending and a later psql call, not pg_dump
+	await clearAsks(f);
 	const ids = await f.evaluate(() => [
 		PM56_ASKS.ask({ tool: 'bash', target: 'psql "$STAGING_DATABASE_URL" -c "EXPLAIN ANALYZE SELECT 1"', who: 'Query Analyzer' }, true),
 		PM56_ASKS.ask({ tool: 'bash', target: 'psql "$STAGING_DATABASE_URL" -c "SELECT count(*) FROM recipes"', who: 'Query Analyzer' }, true),
 		PM56_ASKS.ask({ tool: 'bash', target: 'pg_dump --schema-only tastebook', who: 'Schema Reviewer' }, true)]);
 	await f.evaluate(() => PM56_APP.render());
-	await line(f, `pmx-dock:${ids[0]}`).locator('[data-value="session"]').click();
-	await t.until(`${surface}: the pending psql ask is allowed with it`, (i) => !PM56_ASKS.list().some((a) => a.id === i), ids[1]);
-	await t.check(`${surface}: pg_dump still asks`, await f.evaluate((i) => PM56_ASKS.list().some((a) => a.id === i), ids[2]));
+	await press(t, f, `pmx-dock:${ids[0]}`, 'session', `${surface}: psql For session`);
+	await t.page.waitForTimeout(300);
+	let pend = await pendingIds();
+	await t.check(`${surface}: the pending psql ask is allowed with it, pg_dump still asks`, !pend.includes(ids[1]) && pend.includes(ids[2]), JSON.stringify(pend));
 	n = await count();
 	const later = await f.evaluate(() => PM56_ASKS.ask({ tool: 'bash', target: 'psql -c "SELECT 2"', who: 'Query Analyzer' }));
 	await t.page.waitForTimeout(300);
 	added = await titlesAfter(n);
 	await t.check(`${surface}: a later psql call is allowed without asking`, later === null && JSON.stringify(added) === '["permission-answer|Allowed by this session’s grant: run a command"]', JSON.stringify({ later, added }));
-	// Deny refuses the pending asks that share its approval ask
-	const dup = await f.evaluate(() => PM56_ASKS.ask({ tool: 'bash', target: 'pg_dump --data-only tastebook', who: 'Schema Reviewer' }));
+	// parallel runs in one thread (canon: approval scope must not become same-session across lanes): a For session in one
+	// run never covers another run's ask, pending or later
+	await clearAsks(f);
+	const runs = await f.evaluate(() => [
+		PM56_ASKS.ask({ tool: 'bash', target: 'pg_restore -d rehearsal_a snapshots/0007_pre.dump', who: 'Rollback Auditor', runId: 'run-a', laneId: 'auditor' }, true),
+		PM56_ASKS.ask({ tool: 'bash', target: 'pg_restore -d rehearsal_b snapshots/0007_pre.dump', who: 'Rollback Auditor', runId: 'run-b', laneId: 'auditor' }, true)]);
+	await f.evaluate(() => PM56_APP.render());
+	await press(t, f, `pmx-dock:${runs[0]}`, 'session', `${surface}: run A's For session`);
+	await t.page.waitForTimeout(300);
+	pend = await pendingIds();
+	await t.check(`${surface}: run B's pending ask still asks`, pend.includes(runs[1]), JSON.stringify(pend));
+	const laterA = await f.evaluate(() => PM56_ASKS.ask({ tool: 'bash', target: 'pg_restore -d rehearsal_a snapshots/0008_pre.dump', who: 'Rollback Auditor', runId: 'run-a', laneId: 'auditor' }));
+	const laterB = await f.evaluate(() => PM56_ASKS.ask({ tool: 'bash', target: 'pg_restore -d rehearsal_b snapshots/0008_pre.dump', who: 'Rollback Auditor', runId: 'run-b', laneId: 'auditor' }));
+	await t.check(`${surface}: a later ask in run A is covered, one in run B asks`, laterA === null && !!laterB, JSON.stringify({ laterA, laterB }));
+	// Deny refuses the pending asks that share its approval ask, and no other run's; its own fresh asks, so it runs on any build
+	await clearAsks(f);
+	const deny = await f.evaluate(() => [
+		PM56_ASKS.ask({ tool: 'bash', target: 'pg_dump --schema-only tastebook', who: 'Schema Reviewer' }, true),
+		PM56_ASKS.ask({ tool: 'bash', target: 'pg_dump --data-only tastebook', who: 'Schema Reviewer' }, true),
+		PM56_ASKS.ask({ tool: 'bash', target: 'pg_dump --data-only tastebook', who: 'Schema Reviewer', runId: 'run-c', laneId: 'reviewer' }, true)]);
+	await f.evaluate(() => PM56_APP.render());
 	n = await count();
-	await line(f, `pmx-dock:${ids[2]}`).locator('[data-value="deny"]').click();
-	await t.until(`${surface}: Deny answers both pg_dump asks`, (i) => !PM56_ASKS.list().some((a) => i.includes(a.id)), [ids[2], dup]);
+	await press(t, f, `pmx-dock:${deny[0]}`, 'deny', `${surface}: pg_dump Deny`);
+	await t.page.waitForTimeout(300);
+	pend = await pendingIds();
 	added = await titlesAfter(n);
+	await t.check(`${surface}: Deny answers both pg_dump asks of its scope, not run C's`, !pend.includes(deny[0]) && !pend.includes(deny[1]) && pend.includes(deny[2]), JSON.stringify(pend));
 	await t.check(`${surface}: one Denied line each`, JSON.stringify(added) === '["permission-answer|Denied: run a command","permission-answer|Denied: run a command"]', JSON.stringify(added));
+	await clearAsks(f);
+}
+
+// An Always rule covers by its place (Permissions_System 6.1): This project only that project's chats, never a chat with
+// no project; This computer every ask on this computer, project or not; Everywhere every ask
+async function rulesCase(t, surface) {
+	const f = await ready(t, surface); if (!f) return;
+	await t.emulate({ reducedMotion: 'reduce' });
+	await f.evaluate(() => PMW.chatCol.setWidth(600));
+	const always = async (spec, place, name) => {
+		await clearAsks(f);
+		const id = await f.evaluate((s) => PM56_ASKS.ask(s), spec);
+		if (!(await press(t, f, `pmx-dock:${id}`, 'always', name))) return;
+		const pl = line(f, `pmx-dock:${id}`).locator(`[data-action="perm-place"][data-value="${place}"]`);
+		await t.check(`${name}: offers ${place}`, await pl.count() === 1);
+		if (await pl.count() !== 1) return;
+		await pl.click();
+		await line(f, `pmx-dock:${id}`).locator('[data-action="perm-save"]').click();
+		await t.until(`${name}: saved`, (i) => !PM56_ASKS.list().some((a) => a.id === i), id);
+	};
+	const asksAgain = (spec) => f.evaluate((s) => { const i = PM56_ASKS.ask(s, true); if (i) PM56_ASKS.drop(i); PM56_APP.render(); return i !== null; }, spec);
+	await always({ tool: 'bash', target: 'ls -la web', who: 'The agent' }, 'project', `${surface}: an ls rule for This project`);
+	await t.check(`${surface}: This project covers a later ask in the project`, !(await asksAgain({ tool: 'bash', target: 'ls -l api', who: 'The agent' })));
+	await t.check(`${surface}: but never a chat with no project`, await asksAgain({ tool: 'bash', target: 'ls -l /tmp', who: 'The agent', project: false }));
+	await t.check(`${surface}: nor another project`, await asksAgain({ tool: 'bash', target: 'ls -l', who: 'The agent', projectId: 'pantry' }));
+	await always({ tool: 'bash', target: 'du -sh web', who: 'The agent' }, 'computer', `${surface}: a du rule for This computer`);
+	await t.check(`${surface}: This computer covers a chat with no project on this computer`, !(await asksAgain({ tool: 'bash', target: 'du -sh /tmp', who: 'The agent', project: false })));
+	await t.check(`${surface}: but not a call that runs on another computer`, await asksAgain({ tool: 'bash', target: 'du -sh /data', who: 'The agent', computer: 'gpu-box' }));
+	await always({ tool: 'bash', target: 'df -h', who: 'The agent' }, 'everywhere', `${surface}: a df rule for Everywhere`);
+	await t.check(`${surface}: Everywhere covers another computer with no project`, !(await asksAgain({ tool: 'bash', target: 'df -h /data', who: 'The agent', computer: 'gpu-box', project: false })));
+	await clearAsks(f);
 }
 
 async function helperCase(t, surface) {
@@ -280,6 +352,7 @@ for (const surface of ['normal', 'sandbox']) {
 	tests[`FO-128 Studio Ask permission in the bar ${surface}`] = (t) => studioCase(t, surface);
 	tests[`FO-128 Always places follow canon ${surface}`] = (t) => placesCase(t, surface);
 	tests[`FO-128 For session is remembered, Deny covers its ask ${surface}`] = (t) => grantsCase(t, surface);
+	tests[`FO-128 Always rules cover by their place ${surface}`] = (t) => rulesCase(t, surface);
 	tests[`FO-128 Crew helper card and line ${surface}`] = (t) => helperCase(t, surface);
 	tests[`FO-128 ten looks, two chat widths ${surface}`] = (t) => looksCase(t, surface);
 }

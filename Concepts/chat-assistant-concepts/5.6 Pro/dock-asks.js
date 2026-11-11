@@ -56,8 +56,11 @@
     return PLACES.filter(function (p) { return !(p[0] === 'everywhere' && PATH_TOOLS[a.tool]) && !(p[0] === 'project' && a.project === false); });
   }
 
-  /* spec: { id, thread, tool, target, who, whoKind, verb, cwd, why, rule, project, pattern, facts: [[label, html]], at,
-     external, onAnswer(ctx, how, { pattern, place }) -> true when the owner writes its own receipt } */
+  /* spec: { id, thread, tool, target, who, whoKind, verb, cwd, why, rule, project, projectId, computer, runId, laneId,
+     pattern, facts: [[label, html]], at, external, onAnswer(ctx, how, { pattern, place }) -> true when the owner writes
+     its own receipt }. project false is a chat with no project; projectId names the project (the demo's one, 'current',
+     by default); computer names where the call runs ('this' by default); runId and laneId are the execution entity and
+     lane that asked (canon's execution_entity_id and lane_id), when the asker has them. */
   function make(o) {
     var c = EXT.ctx && EXT.ctx();
     var a = { id: o.id || 'perm-' + (++seq), ui: { always: false, place: null, pattern: null, details: false } };
@@ -70,6 +73,8 @@
     a.who = o.who || a.who || 'The agent'; a.whoKind = o.whoKind != null ? o.whoKind : (a.whoKind || '');
     a.verb = o.verb || a.verb || ''; a.cwd = o.cwd != null ? o.cwd : (a.cwd || ''); a.why = o.why != null ? o.why : (a.why || '');
     a.rule = o.rule != null ? o.rule : (a.rule || ''); a.project = o.project != null ? o.project !== false : a.project !== false;
+    a.projectId = a.project ? (o.projectId || a.projectId || 'current') : null; a.computer = o.computer || a.computer || 'this';
+    a.runId = o.runId != null ? String(o.runId) : (a.runId || ''); a.laneId = o.laneId != null ? String(o.laneId) : (a.laneId || '');
     a.facts = o.facts || a.facts || null; a.external = !!(o.external != null ? o.external : a.external);
     a.onAnswer = o.onAnswer || a.onAnswer || null; a.at = o.at || a.at || Date.now();
     a.suggested = o.pattern || suggest(a.tool, a.target);
@@ -96,14 +101,25 @@
   }
 
   /* ------------------------------------------------------------------ what a For session or Always answer covers */
-  /* Permissions_System 6.1 and FinalGUISpec 15.7: For session is held under the approval scope (this chat session: the
-     thread) until it ends, and covers later asks of the same tool that its pattern matches; Always is the person's rule
-     (the demo has one project and one computer, so every place it names covers every thread here). A later ask that one
-     covers is allowed without asking, and a pending one is allowed with it. The match is the pattern itself (an ask
+  /* Permissions_System 6.1 and FinalGUISpec 15.7. For session is held under the approval scope until the chat session
+     ends: canon keys it by approval_scope_key with the execution entity and lane that asked ("approval scope must not
+     silently become same-session if lanes are parallel"), so the key here is the thread, the run (runId) and the lane
+     (laneId) with the tool. Where the demo's asker has no run or lane (the Studio's ask, an agent's own call) both are
+     '' and the key falls back to the thread. Always is the person's durable rule, kept across runs and lanes, and covers
+     by the place it was saved for: This project only asks from chats in that project (never a chat with no project),
+     This computer every ask that runs on this computer (any project, or none), Everywhere every ask. A later ask that a
+     grant covers is allowed without asking, and a pending one is allowed with it. The match is the pattern itself (an ask
      whose own suggestion is the same pattern) or its glob over the call (* and ** match anything). */
   function globRe(p) { return new RegExp('^' + String(p).replace(/[.+?^${}()|[\]\\]/g, '\\$&').replace(/\*+/g, '.*') + '$'); }
+  function scopeKey(a) { return [a.thread, a.runId, a.laneId].join('\u0001'); }
+  function placeCovers(g, a) {
+    if (g.place === 'project') return a.project !== false && !!a.projectId && a.projectId === g.projectId;
+    if (g.place === 'computer') return a.computer === g.computer;
+    return g.place === 'everywhere';
+  }
   function covers(g, a) {
-    if (g.tool !== a.tool || (g.scope === 'session' && g.thread !== a.thread)) return false;
+    if (g.tool !== a.tool) return false;
+    if (g.scope === 'session' ? g.key !== scopeKey(a) : !placeCovers(g, a)) return false;
     if (g.pattern === a.suggested) return true;
     if (!a.target) return false;
     try { return globRe(g.pattern).test(a.target); } catch (e) { return false; }
@@ -125,8 +141,9 @@
       if (ctx.renderApp) ctx.renderApp();
     }, 0);
   }
-  /* the asks that share one approval ask (FinalGUISpec 15.7: a Deny refuses them all): same thread, tool and pattern */
-  function sameAsk(a, b) { return a !== b && a.thread === b.thread && a.tool === b.tool && a.suggested === b.suggested; }
+  /* the asks that share one approval ask (FinalGUISpec 15.7: a Deny refuses them all): the same approval scope (thread,
+     run and lane, as For session's key) with the same tool and pattern */
+  function sameAsk(a, b) { return a !== b && scopeKey(a) === scopeKey(b) && a.tool === b.tool && a.suggested === b.suggested; }
   function drop(id) { var a = find(id), i = asks.indexOf(a); if (i >= 0) asks.splice(i, 1); }
   function pending(id) { return !!autoIds[id]; }
   function find(id) { for (var i = 0; i < asks.length; i++) if (asks[i].id === id) return asks[i]; return null; }
@@ -255,7 +272,7 @@
     var rule = { pattern: patternOf(a), place: a.ui.place };
     var said = settle(ctx, a, how, rule);
     if (how === 'session' || how === 'always') {
-      var g = { scope: how === 'session' ? 'session' : 'rule', tool: a.tool, pattern: rule.pattern, thread: a.thread, place: rule.place };
+      var g = { scope: how === 'session' ? 'session' : 'rule', tool: a.tool, pattern: rule.pattern, key: scopeKey(a), place: rule.place, projectId: a.projectId, computer: a.computer };
       grants.push(g);
       /* the pending asks it covers are allowed with it */
       asks.slice().forEach(function (b) { if (covers(g, b)) { asks.splice(asks.indexOf(b), 1); autoAllow(b, g); } });

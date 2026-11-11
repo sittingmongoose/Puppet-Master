@@ -1321,7 +1321,8 @@
     var A = window.PM56_ASKS;
     if (!A || !A.ensure || !b) return null;
     var q = b.blockedAsk || {};
-    return A.ensure({ id: 'collab:' + run.id + ':' + b.id, external: true, thread: run.threadId, tool: q.tool || 'helper', target: q.target || '', cwd: q.cwd || '',
+    /* its approval scope is its run and its own lane (the helper), so a grant or a Deny in one run never reaches another */
+    return A.ensure({ id: 'collab:' + run.id + ':' + b.id, external: true, thread: run.threadId, runId: run.id, laneId: b.id, tool: q.tool || 'helper', target: q.target || '', cwd: q.cwd || '',
       verb: q.tool ? '' : 'go on with its part', pattern: q.tool ? '' : b.role + ' · ' + KIND_LABEL[run.kind],
       who: b.role, whoKind: KIND_LABEL[run.kind] + ' helper', why: b.blockedReason || '', rule: 'Inherits Agent mode’s permissions on this thread',
       onAnswer: function (ctx, how, rule) { answerHelper(ctx, run.id, b.id, how, rule); return true; } });
