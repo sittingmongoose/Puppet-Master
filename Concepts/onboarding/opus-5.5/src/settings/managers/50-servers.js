@@ -789,7 +789,7 @@
         { label: 'File authority', help: 'Which copy of the files wins when they differ.', value: P.fileAuthority || 'Server host' },
         { label: 'Sync mode', value: P.syncMode || 'Continuous metadata + on-demand artifacts' }
       ]),
-      PM51.section({ title: 'Technical details', body: PM51.kv([['Server identity', fingerprint(home)], ['Home server address', home.address], ['Project path', S.sourceLocation.path], ['Diagnostics', 'Reachability, identity, file authority, continuity']]) + `<div class="pm51-servers-actions" style="margin-top:10px">${PM51.btn({ label: 'Project details', small: true, icon: 'info', action: 'pm51-servers-project-details', ui: 'ui.project.open_details' })}${PM51.btn({ label: 'Where the files are', small: true, icon: 'folder', action: 'pm51-servers-files-details', ui: 'ui.project.source_location.open_details' })}</div>` })
+      PM51.section({ title: 'Technical details', body: PM51.kv([['Server identity', fingerprint(home)], ['Home server address', home.address], ['Project path', S.sourceLocation.path], ['Diagnostics', 'Reachability, identity, file authority, continuity']]) + `<div class="pm51-servers-actions" style="margin-top:10px">${pm7ConsumerButton('local', 'ui.project.open_details', 'Project details')}${pm7ConsumerButton('local', 'ui.project.source_location.open_details', 'Where the files are')}</div>` })
     ].join(''));
     return workspace + status + advanced;
   }
@@ -1252,29 +1252,6 @@
       { label: 'Path or address', name: 'path', value: S.sourceLocation.path, autofocus: true, full: true, help: 'For a code service or SSH computer, paste the address.' }
     ]), saveLabel: 'Use this location', onSave: data => { const path = String(data.path || '').trim(); if (!path) return false; S.sourceLocation = { kind: String(data.kind), path }; if (state.projectSync) state.projectSync.location = path; refresh(); } });
   });
-  /* Project details and Where the files are say what this workspace is and where its files live, in the page's own
-     words (N-2: they opened the concept's typed-consumer stub, "Typed owner-local projection only…", EventRecord and
-     runtime-receipt lines, with nothing for a person). */
-  const PLAIN_AUTHORITY = { 'Server host': 'The home server’s copy', 'Server': 'The home server’s copy', 'This device': 'This device’s copy' };
-  const PLAIN_SYNC = { 'Continuous metadata + on-demand artifacts': 'Changes are kept in step all the time; large files come down when you open them' };
-  PM51.on('servers-project-details', () => {
-    const S = sp(), home = homeServer(), P = state.projectSync || {}, last = (S.move.history || [])[0], pref = preferredRoute();
-    const thisDevice = S.devices.find(d => d.current || d.thisDevice) || S.devices.find(d => d.name === 'Windows Workstation') || S.devices[0];
-    const name = (typeof projectDisplayName === 'function' ? projectDisplayName() : '') || 'This workspace';
-    PM51.panel({ title: name, subtitle: 'This workspace', icon: 'folder', facts: [{ label: 'Lives on', value: home.name }, { label: 'Runs on', value: runLabel() }, { label: 'Devices', value: String(S.devices.length) }],
-      body: PM51.panelSection('Where it lives', PM51.kv([['Home server', `${home.name} · ${home.address}`], ['Runs on', runLabel()], ['Files', `${S.sourceLocation.kind} · ${S.sourceLocation.path}`], ['Which copy wins', PLAIN_AUTHORITY[P.fileAuthority] || P.fileAuthority || 'The home server’s copy'], ['This device', thisDevice ? thisDevice.name : 'Unknown']]), '', { icon: 'server' })
-        + PM51.panelSection('Reaching it', PM51.kv([['Right now', `Connected · ${actualRoute().name}`], ['Away from home', pref ? pref.name : 'None set up yet'], ['Paired devices', S.devices.map(d => d.name).join(', ') || 'None']]), '', { icon: 'route' })
-        + PM51.panelSection('Changes', PM51.kv([['Last change', S.status.lastChange], ['Work in progress', S.status.work ? 'Saved from this device' : 'None'], ['Last move or copy', last ? `${last.kind || 'Move'} · ${last.destination} · ${last.time}` : 'None yet'], ['Open conflicts', String(S.conflicts.open || 0)]]), '', { icon: 'history' })
-        + `<div class="pm51-servers-actions">${PM51.btn({ label: 'Change where the files are…', small: true, icon: 'folder', action: 'pm51-servers-files' })}${PM51.btn({ label: 'Move or copy…', small: true, icon: 'copy', action: 'pm51-servers-goto-move' })}</div>` });
-  });
-  PM51.on('servers-files-details', () => {
-    const S = sp(), home = homeServer(), P = state.projectSync || {};
-    PM51.panel({ title: 'Where the files are', subtitle: `${S.sourceLocation.kind} · ${S.sourceLocation.path}`, icon: 'folder',
-      body: PM51.panelSection('This workspace’s files', PM51.kv([['Kind', S.sourceLocation.kind], ['Folder', S.sourceLocation.path], ['On', `${home.name} · ${home.address}`], ['Which copy wins', PLAIN_AUTHORITY[P.fileAuthority] || P.fileAuthority || 'The home server’s copy'], ['Keeping in step', PLAIN_SYNC[P.syncMode] || P.syncMode || PLAIN_SYNC['Continuous metadata + on-demand artifacts']], ['Open conflicts', String(S.conflicts.open || 0)]]), '', { icon: 'folder' })
-        + PM51.note('Your devices open these files through the home server. Changing the place does not move the files; Move & Copy does that.', 'info')
-        + `<div class="pm51-servers-actions">${PM51.btn({ label: 'Change…', small: true, icon: 'edit', action: 'pm51-servers-files', data: { 'command-id': 'cmd.project.source_location.update' } })}</div>` });
-  });
-  PM51.on('servers-goto-move', () => { closeOverlay(); PM51.setTab(ID, 'move'); refresh(); });
   PM51.on('servers-conflict-policy', conflictPolicyDialog);
   PM51.on('servers-diagnostics', el => diagnostics(ds(el, 'scope') || 'home'));
   PM51.on('servers-help', () => PM51.panel({

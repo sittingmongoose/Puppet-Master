@@ -10,8 +10,8 @@
 //   nothing was open. Now the device's panel comes back when the sub-action closes, with the new name after a rename.
 // - N-1: after Home & Location › Home server was changed, the roster still called the old server "Home server", so two
 //   servers claimed it. Exactly one server is the home server, and it is the one chosen.
-// - N-2: Technical details › "Project details" and "Where the files are" opened developer stubs ("Typed owner-local
-//   projection only…", EventRecord, runtime receipt). They say what the workspace is and where its files live.
+// (N-2, the developer text behind "Project details" and "Where the files are", is lane fo-b11-d's: the shared cause in
+// pm7TypedConsumerResult, pm-fo-lead's ruling 1111051211.)
 // Runs on the surface the switch picks (--set sandbox=1 for T3's preview).
 const sleep = (f, ms) => f.waitForTimeout(ms);
 const BLOCK = '.workspace-block[data-workspace-block="servers"]';
@@ -162,26 +162,4 @@ export const tests = {
 		s = await openTitle(f);
 		await t.check('closing the device panel itself closes it (nothing comes back)', !s.length, JSON.stringify(s));
 	},
-	async 'N-2: Project details and Where the files are say what the workspace is and where its files live'(t) {
-		const f = await openServers(t, 'home');
-		await f.evaluate((B) => { const d = document.querySelector(`${B} details.pm51-advanced`); if (d) d.open = true; }, BLOCK);
-		await sleep(f, 400);
-		const DEV = /Typed owner-local|projection only|concept_local_controller|EventRecord|Runtime receipt|Not emitted|Not issued|Exact return|Native binding|semantic owner/i;
-		await f.locator(`${BLOCK} button`, { hasText: 'Project details' }).first().click();
-		let s = await untilOpen(f, /.+/);
-		let body = await f.evaluate(() => { const w = [...document.querySelectorAll('.drawer-wrap:not([data-closing="1"])')].pop(); return w ? w.innerText : ''; });
-		t.log(body.slice(0, 400));
-		await t.check('Project details opens a panel', s.length > 0, JSON.stringify(s));
-		await t.check('it has no developer text', !DEV.test(body), (body.match(DEV) || [''])[0]);
-		await t.check('it says where the workspace lives and where its files are', /Home server/.test(body) && /Home TrueNAS/.test(body) && /Files/.test(body), body.slice(0, 300));
-		await closeAll(f);
-		await f.locator(`${BLOCK} button`, { hasText: 'Where the files are' }).first().click();
-		s = await untilOpen(f, /Where the files are/);
-		body = await f.evaluate(() => { const w = [...document.querySelectorAll('.drawer-wrap:not([data-closing="1"])')].pop(); return w ? w.innerText : ''; });
-		const path = await f.evaluate(() => PM51.s().serverProject.sourceLocation.path);
-		await t.check('Where the files are opens its panel', s.some((x) => /Where the files are/.test(x)), JSON.stringify(s));
-		await t.check('it has no developer text', !DEV.test(body), (body.match(DEV) || [''])[0]);
-		await t.check('it names the folder and the server it is on', body.includes(path) && /Home TrueNAS/.test(body), JSON.stringify({ path, body: body.slice(0, 300) }));
-		await t.shot('servers-files-details', 'Where the files are, in plain words');
-	}
 };
