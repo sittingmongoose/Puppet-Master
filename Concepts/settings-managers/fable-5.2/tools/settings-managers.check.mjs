@@ -11,7 +11,51 @@ const open = async (t) => {
 };
 const fail = (msg) => { throw new Error(msg); };
 
+/* The page a person opens is the review page: PMConcept7 in a frame, with a strip above it. This test runs only when
+   that file is given: --set host=<out>/settings-managers.html */
+const openHost = async (t) => {
+	await t.viewport(1600, 1000);
+	await t.page.goto('file://' + t.args.host, { waitUntil: 'commit', timeout: 120000 });   // 39 MB with PMConcept7 inside: do not wait for load
+	const deadline = Date.now() + 120000;
+	for (;;) {
+		const frame = t.page.frames().find((f) => f !== t.page.mainFrame());
+		let ok = false;
+		try { ok = !!frame && await frame.evaluate(() => !!(window.SMX && window.SMX.booted)); } catch (e) { ok = false; }
+		if (ok) return frame;
+		if (Date.now() > deadline) fail('the redesign did not start inside the review page within two minutes');
+		await t.page.waitForTimeout(500);
+	}
+};
+
 export const tests = {
+	async 'the review page: redesign and today at the same place, what changed, everything that moved'(t) {
+		if (!t.args.host) return;
+		const frame = await openHost(t);
+		const top = t.page;
+		const state = async () => frame.evaluate(() => ({ view: window.SMX.view, route: window.SMX.route, layer: window.SMX.layerOpen || '', ws: window.PM12_KIMI.getState().workspace, home: window.PM12_KIMI.getState().home }));
+		await frame.evaluate(() => window.SMX.go('computers/away'));
+		await top.waitForTimeout(600);
+		await top.click('#changes');
+		await top.waitForTimeout(600);
+		let s = await state();
+		const changes = await frame.evaluate(() => (document.querySelector('#smx-root .smx-layer') || {}).textContent || '');
+		if (!/Manage|Set up|way in/i.test(changes)) fail('"What changed here" showed nothing about this page: ' + changes.slice(0, 120));
+		await top.keyboard.press('Escape');
+		await top.click('#moved');
+		await top.waitForTimeout(900);
+		const moved = await frame.evaluate(() => ({ rows: document.querySelectorAll('#smx-root .smx-layer tr').length, totals: (document.querySelector('#smx-root .smx-rv-totals') || {}).textContent || '' }));
+		if (!/settings in PMConcept7/.test(moved.totals) || /still have none|drawn twice/.test(moved.totals)) fail('"Everything that moved" does not say that every setting has one place: ' + moved.totals.slice(0, 200));
+		if (moved.rows < 10) fail(`"Everything that moved" lists only ${moved.rows} moved settings`);
+		await frame.evaluate(() => window.SMX.closeLayer());
+		await top.click('#view button[data-v="today"]');
+		await top.waitForTimeout(1500);
+		s = await state();
+		if (s.view !== 'today' || s.home || s.ws !== 'servers') fail('"Today" did not show PMConcept7\'s own manager for this page: ' + JSON.stringify(s));
+		await top.click('#view button[data-v="new"]');
+		await top.waitForTimeout(900);
+		s = await state();
+		if (s.view !== 'new' || s.route !== 'computers/away') fail('"Redesign" did not come back to the same page: ' + JSON.stringify(s));
+	},
 	async 'every setting has one place, and every planned row is drawn'(t) {
 		const { f, errors } = await open(t);
 		const r = await f.evaluate(() => ({ c: window.SMX.coverage(), undrawn: window.SMX.undrawn() }));
