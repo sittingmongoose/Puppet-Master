@@ -39,9 +39,18 @@ Two things v3 also repairs because they are about reading: on the chosen library
 was dark blue on the blue fill (it now takes the row's ink), and Retro and NieR, which rule their group heads
 themselves, get no second rule.
 
+The 2026-11-10 fix pass's parts follow the same rules in v3. In Where work runs, where each piece of work went is a
+value (regular weight; a Computer somebody chose keeps its weight and colour), the rows are one lightly ruled list, and
+"Why this computer", which is on every row, keeps its link colour and takes its underline when pointed at or focused.
+A sync paused on a clash is a status on the Online copy plate, like any other. The dialogs Split opens (Settle the
+clash, Why this computer, From a chat, Move a chat) are the one place v3 reaches outside the page: their lists of
+choices are ruled like the page's and their fact lines read at the page's size. The chat, its History and the History
+row's menu are not v3's and are the same in both.
+
 Its checks are `tools/checks/split-v3.check.mjs` in this folder's kit: the switch on the strip and by key, what
-switching keeps, v2 left exactly as it was, how each plate's facts are set, and browser-check's audit (overflow, clipped
-text, covered controls) on every demo Project, New Project and its moments, and at 1280, 1024, 860 and 640 px. The
+switching keeps, v2 left exactly as it was, how each plate's facts are set, the fix pass's parts in v3 and unchanged in
+v2 (the Settle the clash dialog in all ten looks), and browser-check's audit (overflow, clipped text, covered controls)
+on every demo Project, New Project and its moments, and at 1280, 1024, 860 and 640 px. The
 kit's other checks run in v3 unchanged, since the page opens on it; `--set page=file://<dir>/projects-concepts.html?split=v2`
 runs them in v2. It was also looked at in Basic, Friendly, Glass, Retro and NieR, with 40 projects and on first run.
 
