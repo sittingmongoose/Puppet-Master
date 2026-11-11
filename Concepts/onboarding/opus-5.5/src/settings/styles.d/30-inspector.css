@@ -131,7 +131,7 @@ html[data-motion="reduced"] #panel-settings .o55-pick-inline.is-entering { anima
 #panel-settings .o55-pick-chip.is-on { border-color: color-mix(in srgb, var(--k3-accent) 50%, transparent); background: var(--k3-accent-soft); color: var(--k3-text-1); }
 #panel-settings .o55-pick-chip:focus-visible { outline: 2px solid var(--k3-accent); outline-offset: 1px; }
 #panel-settings .o55-pick-inline .o55-pick-search { position: static; margin: 0; }
-#panel-settings .o55-pick-inline .o55-pick-list { max-height: min(320px, 46vh); overflow-y: auto; margin: 0 -4px; padding: 0 4px; scrollbar-width: thin; }
+#panel-settings .o55-pick-inline .o55-pick-list { position: relative; max-height: min(320px, 46vh); overflow-y: auto; margin: 0 -4px; padding: 0 4px; scrollbar-width: thin; }
 #panel-settings .o55-pick-inline .o55-pick-group:first-child { padding-top: 2px; }
 
 /* the side panels' head tile (PM51.panel's hero, styles.css): the same quiet tile and PM glyph as the Details panel's;
