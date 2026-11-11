@@ -539,128 +539,182 @@
   }
 
   /* ------------------------------------------------------------------ 11.18 What asks you, in Regular and in YOLO
-     loom's chat, one run: every action that can ask, and what it does in the run mode the strip shows. Ordinary tool
-     asks and git push or publish don't ask in YOLO (Jared, 2026-11-03); a path outside the project, a deletion on the
-     remote and a looser rule from someone else's repository still ask. No skipped ask becomes an Always rule (S16) */
+     loom's chat, one run. Round A-r3 rebuilt this moment from one rule model: the README's "Always allow: the rule
+     model", each cell resting on a line of Plans/Permissions_System.md. MODEL holds tables B, C and E; covers() is
+     table D; isBroad() is table F. No step has an exception of its own: every step is settled by the same code */
+  const MODEL = {
+    /* B. the answers each kind of step offers, whether YOLO still asks, and the one rule kind that may cover it.
+       command: §6.1 keeps deny, once, for session and always; §8.0 step 2, yolo clamps tool permissions to allow.
+       path: §3.3, external_directory "Default remains `ask`, including YOLO"; only the allowlist bypasses it.
+       remote (push, publish): PS-146, Regular keeps its exact-effect approvals and yolo pushes and publishes without
+       another yes; a push approval is bound to its branch and commit, so a kept rule could never be reused.
+       remote-delete: PS-146, remote branch deletion "still ask[s] with exact targets in ordinary YOLO" */
+    kinds: {
+      command: { answers: ['once', 'session', 'always', 'no'], yoloAsks: false, rule: 'command' },
+      path: { answers: ['once', 'session', 'always', 'no'], yoloAsks: true, rule: 'path' },
+      remote: { answers: ['once', 'session', 'no'], yoloAsks: false, rule: null },
+      'remote-delete': { answers: ['once', 'no'], yoloAsks: true, rule: null }
+    },
+    /* C. how long an answer lasts. step: this step only (§6.1 "Once authorizes one invocation"; §2.3 deny blocks the
+       invocation). run: the same request later in this run and this run mode, gone at a new run or a switch of Run
+       mode (§6.1 "for session is ephemeral under approval_scope_key"; PS-113; §2 Rules 3). rule: a kept rule, in every
+       later run and both run modes until you remove it (§6.1 "Always is the durable person-choice path"; PS-144) */
+    lasts: { once: 'step', session: 'run', always: 'rule', no: 'step' },
+    /* E. where a rule may apply: Everywhere only for a command rule that isn't host-dependent (PS-144 "Rules about a
+       file, directory, executable location, root or other host-dependent target never offer Everywhere"; §6.1 "paths
+       never offer Everywhere"). Nothing is preselected */
+    places: (rule, host) => (rule === 'command' && !host ? ['project', 'computer', 'everywhere'] : ['project', 'computer'])
+  };
   const ASKS = [
-    { id: 'test', what: 'Run npm test', cmd: 'npm test', kind: 'tool', path: false, yolo: 'run', report: 'Ran npm test: 214 passed.',
-      patterns: [['npm test', 'exactly this command'], ['npm test *', 'npm test with any arguments'], ['npm *', 'every npm command, publish too']],
-      samples: ['npm test', 'npm test -- --watch', 'npm run build', 'npm publish'] },
-    { id: 'release', what: 'Run the release script', cmd: './scripts/release.sh v1.4.0', kind: 'tool', path: true, yolo: 'run', report: 'Ran ./scripts/release.sh v1.4.0: tagged v1.4.0.',
+    { id: 'test', what: 'Run npm test', kind: 'command', cmd: 'npm test', target: 'npm test', report: 'Ran npm test: 214 passed.',
+      patterns: [['npm test', 'exactly this command'], ['npm test *', 'npm test with any arguments'], ['npm *', 'every npm command']],
+      samples: ['npm test', 'npm test -- --watch', 'npm run build', 'npm install left-pad'] },
+    { id: 'release', what: 'Run the release script', kind: 'command', cmd: './scripts/release.sh v1.4.0', target: './scripts/release.sh v1.4.0', report: 'Ran ./scripts/release.sh v1.4.0: tagged v1.4.0.',
       patterns: [['./scripts/release.sh v1.4.0', 'exactly this command'], ['./scripts/release.sh *', 'this script with any arguments'], ['./scripts/*', 'every script in that folder']],
       samples: ['./scripts/release.sh v1.4.0', './scripts/release.sh v1.5.0', './scripts/deploy.sh', 'npm test'] },
-    { id: 'push', what: 'Push to GitHub', cmd: 'git push origin feature/tags', kind: 'push', yolo: 'run', report: 'Pushed 3 commits to origin/feature/tags. A push can’t be undone exactly; a later push can change it back.' },
-    { id: 'publish', what: 'Publish the image', cmd: 'docker push ghcr.io/jared/loom:1.4.0', kind: 'publish', yolo: 'run', report: 'Published ghcr.io/jared/loom:1.4.0 (private). A published image can’t be unpublished by Undo.' },
-    { id: 'outside', what: 'Read a folder outside loom', cmd: 'read ~/Documents/taxes', kind: 'path', path: true, yolo: 'ask', why: 'A path outside the project that isn’t granted still asks.', report: 'Read ~/Documents/taxes: 3 files.',
-      patterns: [['read ~/Documents/taxes', 'this folder only'], ['read ~/Documents/taxes/*', 'this folder and what’s in it'], ['read ~/Documents/*', 'everything in Documents']],
-      samples: ['read ~/Documents/taxes', 'read ~/Documents/taxes/2025.pdf', 'read ~/Documents/photos'] },
+    { id: 'push', what: 'Push to GitHub', kind: 'remote', cmd: 'git push origin feature/tags', target: 'git push origin feature/tags', report: 'Pushed 3 commits to origin/feature/tags. A push can’t be undone exactly; a later push can change it back.' },
+    { id: 'publish', what: 'Publish the image', kind: 'remote', cmd: 'docker push ghcr.io/jared/loom:1.4.0', target: 'docker push ghcr.io/jared/loom:1.4.0', report: 'Published ghcr.io/jared/loom:1.4.0 (private). A published image can’t be unpublished by Undo.' },
+    { id: 'outside', what: 'Read a folder outside loom', kind: 'path', cmd: 'read ~/Documents/taxes', target: '~/Documents/taxes', why: 'A path outside the project that isn’t granted still asks.', report: 'Read ~/Documents/taxes: 3 files.',
+      patterns: [['~/Documents/taxes', 'this folder only'], ['~/Documents/taxes/**', 'this folder and every folder in it'], ['~/Documents/**', 'everything in Documents']],
+      samples: ['~/Documents/taxes', '~/Documents/taxes/2025/w2.pdf', '~/Documents/photos'] },
     // the same command again later in the run: For this session on the first one covers it, Allow once doesn't
-    { id: 'test2', what: 'Run npm test again, after the fix', cmd: 'npm test', kind: 'tool', path: false, yolo: 'run', report: 'Ran npm test again: 214 passed.',
-      patterns: [['npm test', 'exactly this command'], ['npm test *', 'npm test with any arguments'], ['npm *', 'every npm command, publish too']],
-      samples: ['npm test', 'npm test -- --watch', 'npm run build', 'npm publish'] },
-    { id: 'delete', what: 'Delete a branch on GitHub', cmd: 'git push origin --delete old-ui', kind: 'remote-delete', yolo: 'ask', why: 'Deleting on the remote still asks, naming the branch (Y1).' }
+    { id: 'test2', what: 'Run npm test again, after the fix', kind: 'command', cmd: 'npm test', target: 'npm test', report: 'Ran npm test again: 214 passed.',
+      patterns: [['npm test', 'exactly this command'], ['npm test *', 'npm test with any arguments'], ['npm *', 'every npm command']],
+      samples: ['npm test', 'npm test -- --watch', 'npm run build', 'npm install left-pad'] },
+    { id: 'delete', what: 'Delete a branch on GitHub', kind: 'remote-delete', cmd: 'git push origin --delete old-ui', target: 'git push origin --delete old-ui', why: 'Deleting on the remote still asks, naming the branch.', report: 'Deleted the branch old-ui on origin. No safe Undo: push it again from a local copy to bring it back.' }
   ];
-  /* a rule is host-dependent when what it allows depends on one computer: a file, a folder, a program's location, a
-     script by path, the root. Such a rule never offers Everywhere (Permissions_System, guided-flows 8.04): it is hidden,
-     not greyed, with one line saying why */
-  /* review A-r1 finding 6: host-dependence comes from the request target (the step's own command) as well as from the
-     typed pattern, so your own pattern can never bring Everywhere back on a step about a script, a folder or a path */
+  const ruleKind = (a) => MODEL.kinds[a.kind].rule;
+  /* E. host-dependent: what the rule allows depends on one computer. A folder rule always is; a command rule is when
+     its step is about a script or a path, when its pattern names a path or a script, when its program is a file
+     command (read, rm and the like), or when its program is a wildcard (*, ./scripts/*: programs at every location) */
   const hostText = (t) => /(^|\s)(~|\.{1,2}\/|\/|[A-Za-z]:\\)/.test(t) || /\.(sh|ps1|bat|cmd|exe|py)\b/.test(t);
-  /* a rule about files (read, write, rm and the like) targets paths on one computer: it is host-dependent too */
-  const PATH_VERBS = /^(sudo\s+)?(read|write|edit|list|open|cat|less|head|tail|ls|cp|mv|rm|rmdir|mkdir|touch|chmod|chown|find|grep|tar|zip|unzip)\b/i;
-  const hostDependent = (pattern, a) => !!(a && a.path) || (!!a && !!a.cmd && hostText(a.cmd)) || hostText(String(pattern || '')) || PATH_VERBS.test(String(pattern || '').trim());
-  /* broad: a bare *, a shell or an interpreter followed by * (it runs anything), or the third suggestion */
-  const SHELLS = /^(sudo\s+)?(bash|sh|zsh|fish|dash|ksh|csh|tcsh|pwsh|powershell|cmd(\.exe)?|env|eval|exec|xargs|python[0-9.]*|node|deno|bun|ruby|perl|php|lua|osascript)\b/i;
-  /* review A-r2 N3: any command followed only by * is broad (rm -rf *, sudo *, npx *, git *, read *): one word, its
-     flags, then * allows everything that command can do */
-  const isBroad = (pattern, a) => { const p = String(pattern || '').trim(); return p === '*' || /^\*(\s|$)/.test(p) || /^\S+(\s+-{1,2}\S+)*\s+\*$/.test(p) || (SHELLS.test(p) && /\*/.test(p)) || (!!a && !!a.patterns && !!a.patterns[2] && p === a.patterns[2][0]); };
-  /* * matches anything; a trailing " *" (any arguments) also matches none, so npm test * covers npm test itself, and a
-     trailing "/*" (what's in a folder) covers the folder too */
-  const globRe = (p) => { const t = p.trim(), args = /\s\*$/.test(t), inside = !args && /\/\*$/.test(t), core = args ? t.replace(/\s\*$/, '') : inside ? t.replace(/\/\*$/, '') : t; return new RegExp('^' + core.split('*').map((x) => x.replace(/[.+?^${}()|[\]\\]/g, '\\$&')).join('.*') + (args ? '(\\s.*)?' : inside ? '(/.*)?' : '') + '$'); };
+  const FILE_CMDS = /^(read|write|edit|list|open|cat|less|head|tail|ls|cp|mv|rm|rmdir|mkdir|touch|chmod|chown|find|grep|tar|zip|unzip)$/i;
+  const words = (p) => { const w = String(p || '').trim().split(/\s+/).filter(Boolean); return w[0] === 'sudo' ? w.slice(1) : w; };
+  const hostDependent = (pattern, a) => { const p = String(pattern || '').trim(), w = words(p); return (!!a && ruleKind(a) === 'path') || (!!a && hostText(a.target)) || hostText(p) || (!!w[0] && (FILE_CMDS.test(w[0]) || w[0].includes('*'))) || p === '*'; };
+  /* F. broad: the preview warns, and the rule can still be made. A command rule is broad when its program is a
+     wildcard (*, ./scripts/*), when it starts with sudo and has a *, when a shell or interpreter runs * or inline code,
+     or when one program word, with or without flags, is followed by * (npm *, npx *, git *, rm -rf *, read *). A named
+     script or subcommand followed by * is not (./scripts/release.sh *, npm test *, git push origin *). A folder rule
+     is broad when it reaches past the folder the step asked for (~/Documents/**) */
+  const SHELLS = /^(bash|sh|zsh|fish|dash|ksh|csh|tcsh|pwsh|powershell|cmd(\.exe)?|env|eval|exec|xargs|python[0-9.]*|node|deno|bun|ruby|perl|php|lua|osascript)$/i;
+  const isScript = (w) => /[\\/]/.test(w) || /\.(sh|ps1|bat|cmd|exe|py|js|mjs|ts|rb|pl|php|lua)$/i.test(w);
+  const isBroad = (pattern, a) => {
+    const p = String(pattern || '').trim(); if (!p) return false;
+    if (a && ruleKind(a) === 'path') { const lit = p.split('*')[0].replace(/\/+$/, ''); return p.includes('*') && lit !== a.target && !lit.startsWith(a.target + '/'); }
+    const all = p.split(/\s+/), w = words(p);
+    if (all[0] === 'sudo' && p.includes('*')) return true;
+    if (!w.length || w[0].includes('*')) return true;
+    if (SHELLS.test(w[0])) { if (!p.includes('*')) return false; const next = w.slice(1).find((x) => !x.startsWith('-')); return !next || !isScript(next); }
+    return /\s\*$/.test(p) && w.slice(1, -1).every((x) => x.startsWith('-')) && !isScript(w[0]);
+  };
+  /* §3.1: * matches zero or more characters and ? exactly one; a trailing " *" makes the rest optional ("git *" matches
+     "git"). A folder rule's trailing "/**" (or "/*") covers the folder itself as well as everything in it */
+  const globRe = (pattern, path) => {
+    let t = String(pattern).trim(), tail = '';
+    if (/\s\*$/.test(t)) { t = t.replace(/\s\*$/, ''); tail = '(\\s.*)?'; } else if (path && /\/\*{1,2}$/.test(t)) { t = t.replace(/\/\*{1,2}$/, ''); tail = '(/.*)?'; }
+    return new RegExp('^' + [...t].map((ch) => (ch === '*' ? '.*' : ch === '?' ? '.' : ch.replace(/[.+^${}()|[\]\\]/g, '\\$&'))).join('') + tail + '$');
+  };
+  const test = (pattern, target, path) => { try { return globRe(pattern, path).test(target); } catch (e) { return false; } };
+  /* D. a rule covers a step only when the step's kind takes that rule kind and the pattern matches the step's target:
+     a command rule covers commands, never a path, a push, a publish or a deletion on the remote ("Domain classes remain
+     separate from generic tool allow"; PS-146 "No generic tool allow ... is substitute for ... domain authority"); a
+     folder rule (the outside-folder list, §3.3) covers paths only; nothing covers a push, a publish or a deletion */
+  const covers = (rule, a) => !!rule && rule.kind === ruleKind(a) && test(rule.pattern, a.target, rule.kind === 'path');
+  const PLACE = { project: ['In this project', 'loom', 'in loom'], computer: ['On this computer', 'This computer', 'on This computer'], everywhere: ['Everywhere', 'every project and computer', 'everywhere'] };
+  const RULE_WORD = { command: 'command rule', path: 'folder rule' };
   function approvals() {
-    const st = { done: {}, rules: [], edit: null, session: [] };
+    const st = { done: {}, rules: [], edit: null, session: [], run: 0 };
     const yolo = () => S.runMode === 'yolo';
+    const asks = (a) => !yolo() || MODEL.kinds[a.kind].yoloAsks;
+    const at = (a) => ASKS.indexOf(a);
+    /* settle each later step that is still open, from the tables alone: YOLO's own allow first (§8.0 step 2), then a
+       kept rule (D), then a session answer given earlier in this run (C); otherwise the step asks */
+    const settle = () => ASKS.forEach((x) => {
+      if (st.done[x.id]) return;
+      if (!asks(x)) { st.done[x.id] = { mark: 'complete', word: 'Ran, not asked', text: x.report, by: 'mode' }; return; }
+      const r = st.rules.find((y) => y.at < at(x) && covers(y, x));
+      if (r) { st.done[x.id] = { mark: 'complete', word: 'Allowed by your rule', text: `${x.report} Your ${RULE_WORD[r.kind]} ${r.pattern} (${PLACE[r.where][2]}) allowed it.`, by: 'rule' }; return; }
+      const s = st.session.find((y) => y.at < at(x) && y.kind === x.kind && y.target === x.target);
+      if (s) st.done[x.id] = { mark: 'complete', word: 'Allowed for this session', text: `${x.report} The same request was allowed for this session earlier in this run, so it didn’t ask again.`, by: 'session' };
+    });
+    const answer = (a, kind, s) => {
+      if (!MODEL.kinds[a.kind].answers.includes(kind)) return;
+      if (kind === 'once') st.done[a.id] = { mark: 'complete', word: 'Allowed once', text: a.report, by: 'once' };
+      else if (kind === 'session') { st.done[a.id] = { mark: 'complete', word: 'Allowed for this session', text: `${a.report} For the rest of this run in ${yolo() ? 'YOLO' : 'Regular'}; a new run or another run mode asks again. No rule is kept.`, by: 'session' }; st.session.push({ kind: a.kind, target: a.target, at: at(a) }); }
+      else if (kind === 'no') st.done[a.id] = { mark: 'off', word: 'Not allowed', text: 'Not run. The assistant is told no and says so in the chat; nothing is kept, so the next request asks again.', by: 'no' };
+      st.edit = null; settle(); draw(s);
+    };
     /* Always allow: you choose the exact pattern (a suggestion, or your own words) and where it applies; nothing is
-       chosen for you, the preview says what it matches, and only then is the rule written (guided-flows 8.03) */
+       chosen for you, the preview says what it matches, and only then is the rule kept (guided-flows 8.03) */
     const editor = (a) => {
-      const e = st.edit, pat = e.pattern != null ? e.pattern : '';
-      const host = pat ? hostDependent(pat, a) : hostDependent(a.cmd, a);
-      if (host && e.where === 'everywhere') e.where = null;
-      let matches = [], misses = [];
-      if (pat.trim()) { try { const re = globRe(pat); a.samples.forEach((x) => (re.test(x) ? matches : misses).push(x)); } catch (er) { /* a half-typed pattern */ } }
-      const broad = !!pat && isBroad(pat, a);
+      const e = st.edit, pat = e.pattern != null ? e.pattern : '', kind = ruleKind(a);
+      const host = hostDependent(pat || a.target, a);
+      const places = MODEL.places(kind, host);
+      if (e.where && !places.includes(e.where)) e.where = null;
+      const matches = [], misses = [];
+      if (pat.trim()) a.samples.forEach((x) => (test(pat, x, kind === 'path') ? matches : misses).push(x));
+      const broad = !!pat.trim() && isBroad(pat, a);
       const radios = a.patterns.map(([p, what], i) => `<label class="psx-radio${pat === p && !e.own ? ' is-on' : ''}"><input type="radio" name="psx-pat-${a.id}" value="${i}" data-pat="${i}"${pat === p && !e.own ? ' checked' : ''}><span><b><code>${esc(p)}</code></b><small>${esc(what)}</small></span></label>`).join('')
         + `<label class="psx-radio${e.own ? ' is-on' : ''}"><input type="radio" name="psx-pat-${a.id}" value="own" data-pat="own"${e.own ? ' checked' : ''}><span><b>Your own pattern</b><small>* matches anything</small></span></label>`
         + (e.own ? `<input class="psx-input" data-pat-own="1" value="${esc(pat)}" aria-label="Your own pattern" spellcheck="false" autocomplete="off">` : '');
-      const places = [['project', 'In this project', 'loom'], ['computer', 'On this computer', 'This computer']].concat(host ? [] : [['everywhere', 'Everywhere', 'every project and computer']]);
-      const whereHtml = places.map(([k, l, m]) => `<label class="psx-radio${e.where === k ? ' is-on' : ''}"><input type="radio" name="psx-where-${a.id}" value="${k}" data-where="${k}"${e.where === k ? ' checked' : ''}><span><b>${esc(l)}</b><small>${esc(m)}</small></span></label>`).join('');
+      const whereHtml = places.map((k) => `<label class="psx-radio${e.where === k ? ' is-on' : ''}"><input type="radio" name="psx-where-${a.id}" value="${k}" data-where="${k}"${e.where === k ? ' checked' : ''}><span><b>${esc(PLACE[k][0])}</b><small>${esc(PLACE[k][1])}</small></span></label>`).join('');
       const ready = pat.trim() && e.where;
+      const scope = kind === 'path' ? 'A folder rule goes on the outside-folder list. It covers only the paths it matches, in both run modes, and never a command.' : 'A command rule covers only the commands it matches: never a path outside the project, a push, a publish or a deletion on the remote.';
       return `<li class="psx-li psx-always" data-always="${a.id}"><div class="psx-always-body">
         <div class="psx-h">Always allow: what it matches</div><div class="psx-copy-choice" role="radiogroup" aria-label="What the rule matches">${radios}</div>
         ${pat.trim() ? `<p class="psx-p" data-k="preview">${mark(broad ? 'warning' : 'info')} <b>Matches:</b> ${esc(matches.join(' · ') || 'none of these')}${misses.length ? `. <b>Still asks:</b> ${esc(misses.join(' · '))}` : ''}.${broad ? ' This one is broad.' : ''}</p>` : `<p class="psx-p psx-muted">Choose a pattern to see what it would match.</p>`}
+        <p class="psx-p psx-muted" data-k="covers">${esc(scope)}</p>
         <div class="psx-h">Where it applies</div><div class="psx-copy-choice" role="radiogroup" aria-label="Where the rule applies">${whereHtml}</div>
-        ${host ? `<p class="psx-p psx-muted" data-k="noeverywhere">${mark('info')} Everywhere isn’t offered: this rule is about a path, a folder or a program’s location on one computer.</p>` : ''}
+        ${places.includes('everywhere') ? '' : `<p class="psx-p psx-muted" data-k="noeverywhere">${mark('info')} Everywhere isn’t offered: ${kind === 'path' ? 'a folder rule is about a path on one computer' : 'this rule is about a path, a folder or a program’s location on one computer'}.</p>`}
         <div class="psx-li-end" style="justify-content:flex-start"><button type="button" class="psx-tb is-primary" data-always-save="${a.id}"${ready ? '' : ' aria-disabled="true"'}>Add the rule</button><button type="button" class="psx-tb" data-always-cancel="${a.id}">Cancel</button></div>
       </div></li>`;
     };
+    const LABEL = { once: 'Allow once', session: 'For this session', always: 'Always allow…', no: 'Don’t allow' };
+    const pendingSub = (a) => (yolo() ? `YOLO still asks: ${a.why}` : a.kind === 'remote' ? 'Regular asks before a push or a publish.' : a.kind === 'remote-delete' ? 'It asks every time, naming the branch, in both run modes.' : a.kind === 'path' ? 'It asks before reaching outside the project.' : 'Regular asks before it runs.');
     const draw = (s) => {
       s.body.innerHTML = `<p class="psx-p">“Tag the release and ship it.” What each step does in ${yolo() ? '<b>YOLO</b>' : '<b>Regular</b>'}; switch Run mode in the strip to see the other.</p>`
         + `<ul class="psx-list psx-ask">${ASKS.map((a) => {
           const d = st.done[a.id];
-          let end = '';
-          if (d) end = PSX.st(d.mark, d.word);
-          else if (yolo() && a.yolo === 'run') end = PSX.st('working', 'Runs without asking');
-          // the four answers Permissions_System 6.1 keeps: once, for this session (ephemeral), always (a durable rule you
-          // shape), and don't allow; a deletion on the remote is answered one at a time
-          else end = `<button type="button" class="psx-tb is-primary" data-ask="${a.id}" data-a="once">Allow once</button>${a.kind !== 'remote-delete' ? `<button type="button" class="psx-tb" data-ask="${a.id}" data-a="session">For this session</button>` : ''}${a.patterns ? `<button type="button" class="psx-tb" data-ask="${a.id}" data-a="always" aria-expanded="${st.edit && st.edit.id === a.id ? 'true' : 'false'}">Always allow…</button>` : ''}<button type="button" class="psx-tb" data-ask="${a.id}" data-a="no">Don’t allow</button>`;
-          const sub = d ? d.text : yolo() && a.yolo === 'ask' ? `YOLO still asks: ${a.why}` : yolo() ? 'No yes needed in YOLO; the chat reports what ran.' : a.kind === 'push' || a.kind === 'publish' ? 'Regular asks before a push or a publish.' : 'Regular asks before it runs.';
-          const row = `<li class="psx-li"><span><span class="psx-li-name">${esc(a.what)}</span><span class="psx-li-sub" style="display:block"><code>${esc(a.cmd)}</code> · ${esc(sub)}</span></span><span class="psx-li-end">${end}</span></li>`;
+          const end = d ? PSX.st(d.mark, d.word) : MODEL.kinds[a.kind].answers.map((k, i) => `<button type="button" class="psx-tb${i === 0 ? ' is-primary' : ''}" data-ask="${a.id}" data-a="${k}"${k === 'always' ? ` aria-expanded="${st.edit && st.edit.id === a.id ? 'true' : 'false'}"` : ''}>${LABEL[k]}</button>`).join('');
+          const row = `<li class="psx-li" data-step="${a.id}" data-state="${d ? d.by : 'asks'}"><span><span class="psx-li-name">${esc(a.what)}</span><span class="psx-li-sub" style="display:block"><code>${esc(a.cmd)}</code> · ${esc(d ? d.text : pendingSub(a))}</span></span><span class="psx-li-end">${end}</span></li>`;
           return row + (st.edit && st.edit.id === a.id && !d ? editor(a) : '');
         }).join('')}<li class="psx-li"><span><span class="psx-li-name">Use the looser rule open-recipes brings</span><span class="psx-li-sub" style="display:block">Held in both run modes until you accept it (S15). See moment 11.13.</span></span><span class="psx-li-end">${PSX.st('paused', 'Held')}</span></li></ul>`
-        + `<div class="psx-h">Always rules</div>${st.rules.length ? `<ul class="psx-list">${st.rules.map((r) => `<li class="psx-li"><span class="psx-li-name"><code>${esc(r.pattern)}</code></span><span class="psx-li-end psx-muted">${esc(r.where)}</span></li>`).join('')}</ul>` : `<p class="psx-p psx-muted">None made. ${yolo() ? 'YOLO skips the asks, so it makes no Always rule; you can still make one in Permissions, choosing its pattern and its place.' : 'Always allow asks what the rule matches and where it applies: This project, This computer or Everywhere, never chosen for you, and never Everywhere for a rule about a path, a folder or a program’s location.'}</p>`}`;
+        + `<div class="psx-h">Always rules</div>${st.rules.length ? `<ul class="psx-list" data-k="rules">${st.rules.map((r) => `<li class="psx-li"><span class="psx-li-name"><code>${esc(r.pattern)}</code></span><span class="psx-li-end psx-muted">${esc(RULE_WORD[r.kind].replace(/^./, (c) => c.toUpperCase()))} · ${esc(PLACE[r.where][0])}</span></li>`).join('')}</ul>` : `<p class="psx-p psx-muted">None made. ${yolo() ? 'What YOLO runs without asking never becomes a rule; one is kept only when you choose Always allow on a step that still asks.' : 'Always allow asks what the rule matches and where it applies: This project, This computer or Everywhere, never chosen for you, and never Everywhere for a rule about a path, a folder or a program’s location.'}</p>`}`;
       s.body.querySelectorAll('[data-ask]').forEach((b) => b.addEventListener('click', () => {
         const a = ASKS.find((x) => x.id === b.dataset.ask);
-        if (b.dataset.a === 'once') { st.done[a.id] = { mark: 'complete', word: 'Allowed once', text: a.report || 'Allowed once.' }; st.edit = null; draw(s); }
-        else if (b.dataset.a === 'session') {
-          /* review A-r2 N1, Permissions_System PS-113 and §2 Rules 3: a session answer belongs to this run and this run
-             mode (approval_scope_key holds run and mode). A new run or a switch of Run mode asks again, and YOLO still
-             asks for a path outside the project (§3.3). It makes no rule */
-          st.done[a.id] = { mark: 'complete', word: 'Allowed for this session', text: `${a.report} For the rest of this run in ${yolo() ? 'YOLO' : 'Regular'}; a new run or another run mode asks again. No rule is kept.` };
-          st.session.push(a.cmd);
-          ASKS.filter((x) => x.id !== a.id && x.cmd === a.cmd && !st.done[x.id]).forEach((x) => { st.done[x.id] = { mark: 'complete', word: 'Allowed for this session', text: `${x.report} The same request was allowed for this session earlier in this run, so it didn’t ask again.` }; });
-          st.edit = null; draw(s);
-        }
-        else if (b.dataset.a === 'no') { st.done[a.id] = { mark: 'off', word: 'Not allowed', text: 'Not run. The assistant stops at this step and says why.' }; st.edit = null; draw(s); }
-        else { st.edit = st.edit && st.edit.id === a.id ? null : { id: a.id, pattern: null, own: false, where: null }; draw(s); focusIn(s, a.id); }
+        if (b.dataset.a === 'always') { st.edit = st.edit && st.edit.id === a.id ? null : { id: a.id, pattern: null, own: false, where: null }; draw(s); focusIn(s, a.id); }
+        else answer(a, b.dataset.a, s);
       }));
       const ed = s.body.querySelector('[data-always]');
       if (ed) {
         const a = ASKS.find((x) => x.id === ed.dataset.always);
-        ed.querySelectorAll('[data-pat]').forEach((r) => r.addEventListener('change', () => { if (r.dataset.pat === 'own') { st.edit.own = true; st.edit.pattern = st.edit.pattern || a.cmd; } else { st.edit.own = false; st.edit.pattern = a.patterns[+r.dataset.pat][0]; } draw(s); const f = s.body.querySelector(r.dataset.pat === 'own' ? '[data-pat-own]' : `[data-pat="${r.dataset.pat}"]`); if (f) f.focus(); }));
+        ed.querySelectorAll('[data-pat]').forEach((r) => r.addEventListener('change', () => { if (r.dataset.pat === 'own') { st.edit.own = true; st.edit.pattern = st.edit.pattern || a.target; } else { st.edit.own = false; st.edit.pattern = a.patterns[+r.dataset.pat][0]; } draw(s); const f = s.body.querySelector(r.dataset.pat === 'own' ? '[data-pat-own]' : `[data-pat="${r.dataset.pat}"]`); if (f) f.focus(); }));
         const own = ed.querySelector('[data-pat-own]');
         if (own) own.addEventListener('input', () => { st.edit.pattern = own.value; const pos = own.selectionStart; draw(s); const f = s.body.querySelector('[data-pat-own]'); if (f) { f.focus(); try { f.setSelectionRange(pos, pos); } catch (er) { /* fine */ } } });
         ed.querySelectorAll('[data-where]').forEach((r) => r.addEventListener('change', () => { st.edit.where = r.dataset.where; draw(s); const f = s.body.querySelector(`[data-where="${r.dataset.where}"]`); if (f) f.focus(); }));
         ed.querySelector('[data-always-cancel]').addEventListener('click', () => { st.edit = null; draw(s); const f = s.body.querySelector(`[data-ask="${a.id}"][data-a="always"]`); if (f) f.focus(); });
         ed.querySelector('[data-always-save]').addEventListener('click', (ev) => {
           if (ev.currentTarget.getAttribute('aria-disabled') === 'true') { PSX.note({ title: 'Choose both first', body: 'Pick what the rule matches and where it applies. Nothing is chosen for you.', mark: 'info' }); return; }
-          const where = st.edit.where === 'project' ? 'Always in loom' : st.edit.where === 'computer' ? 'Always on This computer' : 'Always, everywhere';
-          always(a, st.edit.pattern.trim(), where, s);
+          always(a, st.edit.pattern.trim(), st.edit.where, s);
         });
       }
       s.setActions([{ label: 'Run it again', run: () => PSX.approvals.draw() }, { spacer: true }, { label: 'Close', primary: true, run: () => s.close() }]);
     };
     const focusIn = (s, id) => { const f = s.body.querySelector(`[data-always="${id}"] input`); if (f) try { f.focus(); } catch (e) { /* gone */ } };
-    const always = (a, pattern, where, s) => { st.rules.push({ cmd: a.cmd, pattern, where, host: hostDependent(pattern, a) }); st.edit = null; st.done[a.id] = { mark: 'complete', word: 'Allowed', text: `${a.report || 'Allowed.'} Always rule: ${pattern}, ${where.replace(/^Always /, '').replace(/^, /, '')}.` }; draw(s); PSX.note({ title: `Always allowed ${pattern}.`, body: `${where}. Change it in Permissions.`, mark: 'complete' }); };
+    const always = (a, pattern, where, s) => {
+      const kind = ruleKind(a);
+      if (!kind || !MODEL.places(kind, hostDependent(pattern, a)).includes(where)) return;
+      st.rules.push({ kind, pattern, where, at: at(a) });
+      st.edit = null;
+      st.done[a.id] = { mark: 'complete', word: 'Allowed, rule kept', text: `${a.report} Kept as a ${RULE_WORD[kind]}: ${pattern}, ${PLACE[where][2]}.`, by: 'always' };
+      settle(); draw(s);
+      PSX.note({ title: `Always allowed ${pattern}.`, body: `${PLACE[where][0]}, as a ${RULE_WORD[kind]}. Change it in Permissions.`, mark: 'complete' });
+    };
     const s = PSX.sheet({ title: 'What asks you', kicker: 'loom’s chat · one run', sub: 'Approvals in Regular and in YOLO.', size: 'wide', body: '' });
-    // in YOLO the steps that don't ask have run by the time you look: the chat shows the report for each. A new run
-    // mode is a new run, so the strip's switch shows the other mode's answers at once
-    const start = () => {
-      // a new run (Run it again, or a switch of Run mode) starts with no session answers: they belonged to the last run
-      st.done = {}; st.edit = null; st.session = []; st.run = (st.run || 0) + 1;
-      // an Always rule you made applies to every later run it matches; a path rule is on the external-folder allowlist
-      ASKS.forEach((x) => { const r = st.rules.find((y) => { try { return globRe(y.pattern).test(x.cmd); } catch (e) { return false; } }); if (r) st.done[x.id] = { mark: 'complete', word: 'Allowed by your rule', text: `${x.report} Your Always rule ${r.pattern} (${r.where.replace(/^Always /, '').replace(/^, /, '')}) allowed it.` }; });
-      if (yolo()) ASKS.filter((a) => a.yolo === 'run').forEach((a) => { st.done[a.id] = { mark: 'complete', word: 'Ran, not asked', text: a.report }; }); draw(s); };
-    PSX.approvals = { sheet: s, draw: () => { if (s.back.isConnected) start(); }, st, hostDependent, isBroad };
+    // a new run (Run it again, or a switch of Run mode) starts with no answers and no session answers; kept rules
+    // apply to the whole of every later run
+    const start = () => { st.done = {}; st.edit = null; st.session = []; st.run += 1; st.rules.forEach((r) => { r.at = -1; }); settle(); draw(s); };
+    PSX.approvals = { sheet: s, draw: () => { if (s.back.isConnected) start(); }, st, MODEL, ASKS, covers, hostDependent, isBroad, test };
     start();
   }
 
@@ -705,10 +759,11 @@
   }
   async function run(id) {
     const fn = M[id]; if (!fn) return;
-    // every moment starts from a fresh demo: the world, defaults, computers, the device in use and the context
+    // every moment starts from a fresh demo: the world, defaults, computers, the device in use and the context.
+    // review A-r3 R3-6: the moment is set before the reset reports state, so the strip never shows the last caption
+    S.moment = id;
     if (PSX.reset) PSX.reset({ keepMoment: true }); else { reset(); PSX.closeSheets(); }
     await wait(120);
-    S.moment = id;
     try { await fn(); } catch (e) { console.error('[psx moment]', id, e); }
     PSX.report && PSX.report('state');
   }
