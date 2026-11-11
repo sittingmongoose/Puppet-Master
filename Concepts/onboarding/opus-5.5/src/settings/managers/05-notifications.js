@@ -515,7 +515,9 @@
         { label: 'Delivery history', icon: 'history', onClick: () => { PM51.setTab(ID, 'history'); PM51.refresh(ID); } }
       ], d.name),
       body: PM51.section({ title: 'Destination', body: PM51.scoped.rows(rows) + own })
-        + PM51.section({ title: 'Alerts that arrive here', help: 'Switch an alert on to send it here too. The same choice is on each alert under Events.', body: PM51.rows(events().map(e => ({ label: e.name, help: `${e.priority || 'Normal'}${e.enabled ? '' : ' · this alert is off'}`, control: PM51.toggle(e.destinations.includes(d.name), { action: 'pm51-notifications-event-dest', data: { event: e.id, dest: d.id }, label: `Send ${e.name} to ${d.name}` }) }))) + ((N().agents || []).some(g => g.destinations.includes(d.name)) ? PM51.note(`Agents that also send here: ${(N().agents || []).filter(g => g.destinations.includes(d.name)).map(g => g.name).join(', ')}.`, 'info') : '') })
+        /* A3 B-2: each switch says whether the alert arrives here, so an alert that is off is never shown on beside
+           "off" words. Switching one on here sends it here and turns the alert on; off stops it arriving here only. */
+        + PM51.section({ title: 'Alerts that arrive here', help: 'Switch an alert on to send it here. An alert that is off arrives nowhere; switching it on here turns it on. The same choices are on each alert under Events.', body: PM51.rows(events().map(e => ({ label: e.name, help: `${e.priority || 'Normal'}${e.enabled ? '' : ' · this alert is off'}`, control: PM51.toggle(e.enabled && e.destinations.includes(d.name), { action: 'pm51-notifications-event-dest', data: { event: e.id, dest: d.id, arrives: '1' }, label: `Send ${e.name} to ${d.name}` }) }))) + ((N().agents || []).some(g => g.destinations.includes(d.name)) ? PM51.note(`Agents that also send here: ${(N().agents || []).filter(g => g.destinations.includes(d.name)).map(g => g.name).join(', ')}.`, 'info') : '') })
         + destAdvanced(d)
     };
   }
@@ -941,10 +943,17 @@
   });
   PM51.on('notifications-event-dest', el => {
     const e = eventById(ds(el, 'event')); const d = dests().find(x => x.id === ds(el, 'dest')); if (!e || !d) return;
-    const on = !e.destinations.includes(d.name);
-    e.destinations = on ? [...e.destinations, d.name] : e.destinations.filter(n => n !== d.name);
+    /* a destination's own list (data-arrives) switches whether the alert arrives here: on also turns an alert that is
+       off on; an alert's own sheet keeps its separate "Alert is on" switch, so there each switch is the route alone */
+    const arrives = ds(el, 'arrives') === '1';
+    const routed = e.destinations.includes(d.name);
+    const on = arrives ? !(e.enabled && routed) : !routed;
+    e.destinations = on ? (routed ? e.destinations : [...e.destinations, d.name]) : e.destinations.filter(n => n !== d.name);
+    const turnedOn = arrives && on && !e.enabled;
+    if (turnedOn) e.enabled = true;
     el.classList.toggle('on', on); el.setAttribute('aria-checked', on ? 'true' : 'false'); saveState();
     PM51.refresh(ID, { swap: false }); refreshEventSheet(e);
+    if (turnedOn) PM51.toast(`${e.name} is on`, `It arrives in ${d.name}${e.destinations.length > 1 ? ` and ${e.destinations.length - 1} other place${e.destinations.length > 2 ? 's' : ''}` : ''}.`, 'info');
   });
   /* One handler for every event-sound dropdown: row, Event sounds list, and the sheet. The body re-renders so
      metas and the library's "Used by" follow; the sheet only swaps its own preview button and facts. */

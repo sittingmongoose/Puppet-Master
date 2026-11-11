@@ -276,11 +276,19 @@
   const fakeB64 = (seed, n) => { let x = 2166136261; for (const c of String(seed)) x = Math.imul(x ^ c.charCodeAt(0), 16777619) >>> 0; let out = ''; for (let i = 0; i < n; i++) { x = (Math.imul(x ^ (x >>> 13), 1103515245) + 12345) >>> 0; out += B64[(x >>> 7) % 64]; } return out; };
   const makePublic = (type, seed, comment) => /rsa/i.test(type) ? `ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQ${fakeB64(seed, 60)} ${comment}` : `ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAI${fakeB64(seed, 43)} ${comment}`;
   const keyFp = pub => `SHA256:${fakeB64('fp' + pub, 10)}…${fakeB64('tail' + pub, 4)}`;
+  /* The key a code service's Git pushes with: its own, or, for push access over SSH set up before keys were recorded,
+     the newest key here, recorded once. Key uses and Source Control both read it here, so a key lists its code
+     service from the start, not only after Source Control's Defaults tab has drawn (R10). */
+  function forgeKeyId(f) {
+    if (!f) return '';
+    if (f.pushKeyId === undefined && f.pushAccess === 'Ready' && f.pushVia !== 'https' && keys().length) f.pushKeyId = (keys().find(k => !k.old) || keys()[0]).id;
+    return f.pushKeyId || '';
+  }
   function keyUses(id) {
     const out = [];
     sshRemotes().forEach(f => { if (f.keyId === id) out.push(f.name); });
     sp().servers.forEach(s => { if (s.signIn && s.signIn.keyId === id) out.push(s.name); });
-    ((state.sourceControl || {}).forges || []).forEach(f => { if (f.pushKeyId === id) out.push(`${f.name} (Git)`); });
+    ((state.sourceControl || {}).forges || []).forEach(f => { if (forgeKeyId(f) === id) out.push(`${f.name} (Git)`); });
     return out;
   }
   function copyText(text, what) { const done = () => PM51.toast(`${what} copied`, text.length > 90 ? text.slice(0, 88) + '…' : text); try { navigator.clipboard.writeText(text).then(done, done); } catch (_e) { done(); } }
@@ -626,7 +634,13 @@
   /* Source Control's Git sign-in uses the same keys and steps. */
   /* the proxy settings file, shared with onboarding's away setup (RV-4: Download and Copy on its step) */
   PM51.sysAway = { awayConfig };
-  PM51.sysSsh = { keys, keyById, keyUses, keyPick, keyCollect, keyCheck, pubOf, keyLabel, commitKey, placeStep, placeCollect, placeCheck, checkStep, keyWizard, copyBox, keyFp };
+  /* recorded at load (and after any reload of the saved state), so a code service's key is the same from the start
+     for Key uses, Source Control and Details alike, whichever page draws first */
+  const pinForgeKeys = () => ((state.sourceControl || {}).forges || []).forEach(forgeKeyId);
+  const pm51ServersEnsureStateShape = ensureStateShape;
+  ensureStateShape = function () { const r = pm51ServersEnsureStateShape.apply(this, arguments); try { pinForgeKeys(); } catch (e) { /* never block boot */ } return r; };
+  try { pinForgeKeys(); } catch (e) { /* the first reader records it */ }
+  PM51.sysSsh = { keys, keyById, keyUses, forgeKeyId, keyPick, keyCollect, keyCheck, pubOf, keyLabel, commitKey, placeStep, placeCollect, placeCheck, checkStep, keyWizard, copyBox, keyFp };
 
   /* ---------- Home & Location -------------------------------------------- */
   function renderHome() {
