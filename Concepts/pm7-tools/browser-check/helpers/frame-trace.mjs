@@ -117,7 +117,7 @@ export function summarise(trace, { url } = {}) {
 	};
 	// main thread split
 	const mainKey = [...threads].find(([k, n]) => n === 'CrRendererMain' && Number(k.split(':')[0]) === rpid)?.[0];
-	const split = {}, other = new Map(); let frameMs = [], mainFrames = 0, styleCount = 0, layoutCount = 0, styleElems = 0;
+	const split = {}, other = new Map(); let frameMs = [], mainFrames = 0, styleCount = 0, layoutCount = 0, wholeLayouts = 0, styleElems = 0; const dispatched = {};
 	const scripts = new Map();
 	if (mainKey) {
 		const [pid, tid] = mainKey.split(':').map(Number);
@@ -130,7 +130,8 @@ export function summarise(trace, { url } = {}) {
 		for (const e of evs) {
 			if (e.name === 'ProxyMain::BeginMainFrame') { mainFrames++; frameMs.push(e.dur / 1000); }
 			else if (e.name === 'UpdateLayoutTree') { styleCount++; styleElems += e.args?.elementCount || 0; }
-			else if (e.name === 'Layout') layoutCount++;
+			else if (e.name === 'Layout') { layoutCount++; if (e.args?.beginData?.partialLayout === false) wholeLayouts++; }
+			else if (e.name === 'EventDispatch') { const ty = e.args?.data?.type; if (ty) dispatched[ty] = (dispatched[ty] || 0) + 1; }
 			else if (e.name === 'FunctionCall' || e.name === 'FireAnimationFrame' || e.name === 'TimerFire') {
 				const d = e.args?.data || {};
 				const k = e.name === 'FunctionCall' ? `${d.functionName || '(anonymous)'}@${d.lineNumber ?? '?'}:${d.columnNumber ?? '?'}` : null;
@@ -174,12 +175,17 @@ export function summarise(trace, { url } = {}) {
 	}
 	return {
 		secs: r2(secs),
+		gpuPid: gpuPid ?? null,
 		cost,
 		split,
 		other: [...other].sort((a, b) => b[1] - a[1]).slice(0, 8).map(([n, us]) => [n, perSec(us)]),
 		mainFrames: { perSec: r1(mainFrames / secs), p50: r2(q(frameMs, 0.5)), p95: r2(q(frameMs, 0.95)), max: r2(frameMs[frameMs.length - 1] || 0) },
 		style: { perSec: r1(styleCount / secs), elementsPerSec: Math.round(styleElems / secs) },
 		layoutPerSec: r1(layoutCount / secs),
+		// layouts that started at the document's root rather than at a boundary inside it (a glyph's svg, a contained card)
+		wholeLayoutsPerSec: r1(wholeLayouts / secs),
+		// DOM events the page's listeners were called for, by type, in the window (Chrome dispatches one only where a listener hears it)
+		dispatched,
 		drawn: { perSec: r1(draws.length / secs), gapP50: r2(q(gaps, 0.5)), gapP95: r2(q(gaps, 0.95)), gapMax: r2(gaps[gaps.length - 1] || 0), drawP50: r2(q(drawDur, 0.5)), drawP95: r2(q(drawDur, 0.95)) },
 		frames: { beginPerSec: r1(beginFrames / secs), drawPerSec: r1(drawFrames / secs), droppedPerSec: r1(droppedFrames / secs) },
 		notComposited: [...failed].sort((a, b) => b[1] - a[1]).slice(0, 12),
@@ -192,7 +198,10 @@ export function summarise(trace, { url } = {}) {
 // Trace `ms` of whatever `during` does (or of nothing), and summarise it. One trace per window keeps each small.
 export async function traceWindow(cdp, { ms = 3000, during, url, keep } = {}) {
 	await cdp.send('Tracing.start', { categories: TRACE_CATEGORIES, transferMode: 'ReturnAsStream', bufferUsageReportingInterval: 0 });
-	const until = Date.now() + ms;
+	// `at` (wall clock, ms) and the summary's `gpuPid` let a sampler outside the browser be matched to this window: the
+	// GPU thread's busy time in a trace is the GPU process's CPU side, not the load on the graphics card itself
+	const at = Date.now();
+	const until = at + ms;
 	try { if (during) await during(until); } finally {
 		const left = until - Date.now(); if (left > 0) await new Promise((r) => setTimeout(r, left));
 	}
@@ -204,5 +213,5 @@ export async function traceWindow(cdp, { ms = 3000, during, url, keep } = {}) {
 	await cdp.send('IO.close', { handle: stream });
 	const text = parts.join('');
 	if (keep) (await import('node:fs')).writeFileSync(keep, text);
-	return summarise(JSON.parse(text), { url });
+	return { at, ...summarise(JSON.parse(text), { url }) };
 }
