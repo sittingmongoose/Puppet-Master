@@ -132,6 +132,16 @@ for (const surface of ['normal', 'sandbox']) {
 			const after = await shot(pv);
 			const n = differ(before, after);
 			await t.check(`${name}: installing or removing it changes the preview`, n >= 40 + noise, `${n} pixels changed (noise ${noise})`);
+			// the tile draws it itself (the app's own World layer can show through a NieR sheet, which is not the preview)
+			if (key !== 'ground') {
+				const own = await f.evaluate((k) => {
+					const box = document.querySelector('.o55nc'), pv = document.querySelector('.o55nc-pv');
+					const on = (box.getAttribute('data-parts') || '').split(/\s+/).includes(k);
+					const layer = pv && [...pv.children].find((c) => c.classList.contains(`o55nc-pv-${k === 'sweep' ? 'sweep' : 'particles'}`));
+					return { on, layer: !!layer, shown: !!layer && getComputedStyle(layer).display !== 'none' };
+				}, key);
+				await t.check(`${name}: the tile has its own layer for it, shown while it is installed`, own.layer && own.shown === own.on, JSON.stringify(own));
+			}
 			await chip.click();
 			await t.page.waitForTimeout(400);
 		}
