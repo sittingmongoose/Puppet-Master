@@ -24,7 +24,13 @@
 
   function C() { return EXT.ctx(); }
   function reduced() { var M = window.PM56_MOTION; return !!(M && M.reduced && M.reduced()); }
-  function now() { return window.PM56_CLOCK ? window.PM56_CLOCK.now() : performance.now(); }
+  /* pm7-perf lane C2: while PMConcept7's onboarding window is open over the app (PM56_HOST.onRest, 00-host.js) this
+     module's clock stands still and its loops (streams, directors, the held room) ask for no frames; when the window
+     has gone each carries on from where it stopped: a reply's words, a spring, a hold's timing. rest.ms is the time
+     the window has taken so far, in motion time. */
+  var rest = { on: false, at: 0, ms: 0 };
+  function clockNow() { return window.PM56_CLOCK ? window.PM56_CLOCK.now() : performance.now(); }
+  function now() { return (rest.on ? rest.at : clockNow()) - rest.ms; }
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
   function sound(ev) { try { if (window.PM56_SOUND) window.PM56_SOUND.play(ev); } catch (e) { } }
   function voice() { var tr = document.querySelector('.transcript'); return (tr && tr.getAttribute('data-voice')) || 'basic'; }
@@ -184,7 +190,7 @@
     return st;
   }
 
-  function kick() { if (!loop) loop = requestAnimationFrame(frame); }
+  function kick() { if (!loop && !rest.on) loop = requestAnimationFrame(frame); }
 
   function arrivedChars(st, t) {
     var n = 0;
@@ -540,7 +546,7 @@
     kidMO.observe(inner, { childList: true, subtree: true, attributes: true, characterData: true });
   }
   var kidRO = null, kidMO = null;
-  function wakeRoom() { if (room.on && !room.raf) room.raf = requestAnimationFrame(roomTick); }
+  function wakeRoom() { if (room.on && !room.raf && !rest.on) room.raf = requestAnimationFrame(roomTick); }
   /* An item changed size while the loop slept. This runs after layout, so it reads the list now and raises the held
      height as the loop would have this frame; the loop, woken, writes it in the next frame's layout. Written here, a
      whole-pixel floor a fraction over the content would resize the list inside this delivery, which the browser
@@ -809,6 +815,7 @@
   // Room measurements follow this frame's natural layout. Reading the last card in rAF forced a
   // second page layout during a width drag; the room's writes still land before the same frame paints.
   function roomTick(ts) {
+    if (rest.on) { room.raf = 0; return; }   /* (lane C2: a frame asked for as the window opened; wire() wakes it) */
     var pending = room.raf;
     if (window.PM_AFTER_LAYOUT) window.PM_AFTER_LAYOUT(function () { if (room.raf === pending) roomFrame(ts); });
     else roomFrame(ts);
@@ -1328,7 +1335,26 @@
     if (!c || !c.registerTurnOwner) return;
     wired = true;
     /* ...and once a 700 ms tick: a run that stops running with nothing in the list changing still lets its room go */
-    setInterval(function () { watchRoom(); wakeRoom(); }, 700);
+    setInterval(function () { if (rest.on) return; watchRoom(); wakeRoom(); }, 700);
+    /* lane C2 (rest, top): the onboarding window opens: the loops stop where they are; it has gone: they carry on, a
+       release's next step timed from the clock (which skipped the window) rather than from the last frame's stamp */
+    var H = window.PM56_HOST;
+    if (H && H.onRest) {
+      if (H.resting && H.resting()) { rest.on = true; rest.at = clockNow(); }
+      H.onRest(function (on) {
+        if (on === rest.on) return;
+        if (on) {
+          rest.at = clockNow(); rest.on = true;
+          if (loop) { cancelAnimationFrame(loop); loop = 0; }
+          if (room.raf) { cancelAnimationFrame(room.raf); room.raf = 0; }
+          return;
+        }
+        rest.ms += clockNow() - rest.at; rest.on = false;
+        room.lastTs = null;
+        wakeRoom();
+        if (streams.size || directors.size) kick();
+      });
+    }
     c.registerTurnOwner(owner);
     c.onWorkComplete(onComplete);
     if (c.onWorkShrink) c.onWorkShrink(holdShrink);

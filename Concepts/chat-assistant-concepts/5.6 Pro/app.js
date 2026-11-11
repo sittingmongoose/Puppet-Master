@@ -3282,7 +3282,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     if(el.scrollTop===cur&&tAtBottom(el)){ writeScrollInstant(el,max); glideTs=0; followMoved=false; syncJumpBottom(); return; }
     glideRAF=requestAnimationFrame(glideStep);
   }
-  function kickFollow(){ if(tStick&&!glideRAF){ glideTs=0; glideRAF=requestAnimationFrame(glideStep); } }
+  function kickFollow(){ if(tStick&&!glideRAF&&!workResting()){ glideTs=0; glideRAF=requestAnimationFrame(glideStep); } }   /* (not under PMConcept7's onboarding window: lane C2, armWorkTimer) */
   function followIfSticky(){ kickFollow(); }
   /* pm7-perf lane C: whether the transcript's size, its list's size or its scroll position may have changed since the
      glide last came to rest at the bottom (its observer, a scroll event, a write of ours). A patch's follow (restoreScroll)
@@ -4522,10 +4522,25 @@ suggested path                    migration 0043, reversible</div></div></sectio
      time because renderers gate them on the half-second clock. */
   function armWorkTimer(){
     clearInterval(workTimer);
+    if(workResting()){ workTimer=null; return; }   /* (pm7-perf lane C2, below: armed when the window has gone) */
     /* 500ms of MOTION time: a film tool that slows the clock slows the tick too. */
     workTimer=setInterval(workTick,window.PM56_CLOCK?window.PM56_CLOCK.ms(500):500);
   }
   window.addEventListener('pm56-clock-scale',()=>{ if(workTimer) armWorkTimer(); });
+  /* pm7-perf lane C2: while PMConcept7's onboarding window is open over the app (PM56_HOST.onRest, 00-host.js) the
+     work clock stands still: no tick, so no card or status-bar patch, and no follow glide (kickFollow). The clock
+     advances by ticks, so when the window has gone it carries on from where it stopped, and a run that would have
+     ended meanwhile ends then. A chain's next run falling due meanwhile waits for what was left of its delay
+     (onRecComplete). Under the window the run went on: its tick twice a second, glide and room frames 96-145 a second. */
+  function workResting(){ return !!(HOSTED&&HOST.resting&&HOST.resting()); }
+  var restAt=performance.now(), seqPark=null;   /* (a window open from the page's load rested from about then) */
+  if(HOSTED&&HOST.onRest) HOST.onRest(on=>{
+    if(on){ restAt=performance.now(); clearInterval(workTimer); workTimer=null; cancelGlide(); return; }
+    if(runningRecs().length) armWorkTimer();
+    const p=seqPark; seqPark=null;
+    if(p&&seqTimer===p.id) seqTimer=setTimeout(p.fn,p.left);
+    followMoved=true; kickFollow();
+  });
   function workTick(){
     // Hosted: a shell/Home resize drag owns the frame budget. The demo clock advances a fixed step
     // per tick, so skipping ticks while body.pm-resizing simply pauses the timeline mid-drag; the
@@ -4615,7 +4630,9 @@ suggested path                    migration 0043, reversible</div></div></sectio
        (turn-stream.js). */
     if(def.next&&D.workRuns[def.next.run]){
       const nid=def.next.run, pid=rec.id||rec.runId, delay=def.next.delayMs||1200;
-      const go=()=>{ clearTimeout(seqTimer); seqTimer=setTimeout(()=>{ seqTimer=null; startWorkingRec(nid,pid); },delay); };
+      /* (falling due under PMConcept7's onboarding window, it waits there, still counted as pending in seqTimer, for the
+         part of its delay the window took: armWorkTimer's rest hook arms it again) */
+      const go=()=>{ clearTimeout(seqTimer); seqTimer=setTimeout(function due(){ if(workResting()){ seqPark={fn:due,id:seqTimer,left:Math.min(delay,Math.max(0,performance.now()-restAt))}; return; } seqTimer=null; startWorkingRec(nid,pid); },delay); };
       if(hold) heldNextRuns[pid]=go; else go();
     }
   }
