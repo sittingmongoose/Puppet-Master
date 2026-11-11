@@ -937,9 +937,11 @@
     return PMU.motion.tween({ from: 0, to: 1, dur: dur || 420, delay: delay || 0, ease: 'linear',
       step: function (v, t) {
         var x = t == null ? v : t, k = 1 - Math.pow(1 - x, 3);
-        jobs.forEach(function (j) { j.el.setAttribute('d', pathFrom(j.sk, j.a.map(function (a0, i) { return a0 + (j.b[i] - a0) * k; }))); });
+        /* a stepped voice (NieR) holds k between steps: the same d is not written again (208 same-value writes in two
+           beats on NieR Dark Home, pm7-perf lane K) */
+        jobs.forEach(function (j) { var d = pathFrom(j.sk, j.a.map(function (a0, i) { return a0 + (j.b[i] - a0) * k; })); if (j.el.getAttribute('d') !== d) j.el.setAttribute('d', d); });
       },
-      done: function () { jobs.forEach(function (j) { j.el.setAttribute('d', j.d1); }); } });
+      done: function () { jobs.forEach(function (j) { if (j.el.getAttribute('d') !== j.d1) j.el.setAttribute('d', j.d1); }); } });
   };
   /* marks that ride a morphing path (Jared 2026-10-09, item 3: a dot "doesn't follow its line"). A path morphs by a JS
      tween (the area and line morphs, livePatchSvg, the spark), stepping k = ease-out cubic of its linear t on the rAF
