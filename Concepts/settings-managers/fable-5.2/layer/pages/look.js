@@ -142,19 +142,28 @@
 
   /* ------------------------------------------------------------------ Editor look and Terminal look: the page leads to Customize */
   const own = (text) => (/follow|look/i.test(text) ? 'the look’s own' : text);
+  /* the font and its size as one phrase that always reads as a sentence. It read "the look’s own at Font default" and
+     "JetBrains Mono at 13" (review R1, F13): a font that follows the look has no name, and a size is a number of px. */
+  const fontWords = (familyId, sizeId) => {
+    const fam = lab(familyId), size = lab(sizeId);
+    const famOwn = !fam || /follow|look|theme|default|inherit/i.test(fam);
+    const n = (String(size).match(/\d+(\.\d+)?/) || [''])[0];
+    const sz = n ? (/[a-z%]/i.test(String(size).replace(/font|default/ig, '')) ? String(size) : `${n} px`) : '';
+    return famOwn ? (sz ? `the look’s own font at ${sz}` : 'the look’s own font and size') : (sz ? `${fam} at ${sz}` : `${fam} at its usual size`);
+  };
   const customize = (o) => ui.summary({ icon: o.icon, lines: [o.line, 'Customize shows every choice on a live example that stays beside the options, and says what each change did.'], side: ui.btn({ label: o.button, icon: 'sliders', action: o.action, primary: true }) });
   SMX.extend('look/editor', {
     lead: (ctx) => [{ key: 'open', html: customize({ icon: 'code', button: 'Customize the editor', action: 'pm51-o55-editor-customize',
-      line: `The editor uses ${ui.b(own(lab('code.editing.color-scheme')))} colours and ${ui.b(own(lab('code.editing.font-family')))} at ${ui.b(lab('code.editing.font-size'))}.` }) }],
+      line: `The editor uses ${ui.b(own(lab('code.editing.color-scheme')))} colours and ${ui.b(fontWords('code.editing.font-family', 'code.editing.font-size'))}.` }) }],
     changes: [
       { was: 'Editor appearance opens with its example at the top of one scroll 6,166 px long in a 747 px window (eight windows of options). Once you scroll, the example is out of sight and a small copy of it (389 × 176, about a third of its size) follows you instead.', now: 'The example itself stays beside the options at full size for as long as the dialog is open. The options are six tabs (Colors, Text, Caret, Lines & guides, Motion & effects, Behavior) instead of one scroll; “Everything” still shows them as one list.' },
       { was: 'Most choices do show in the example, but nothing says where to look, and some changes are tiny: measured on the example, turning ligatures on changes 0.13 % of it and indent guides 0.33 %. A few cannot show at all: rulers at column 80 (the sample is narrower; a note says so), how changes are laid out, tab size. The caret choices show only if you press “Move the caret” yourself.', now: 'A line under the example names what you changed and says where to look. The caret travels when you change the caret, text is typed when you change the font, and the example jumps to a problem when you change how problems show (PMConcept7’s own “Try it”, pressed for you). For the tiny and the invisible ones a close-up appears under the example; it never covers it.' },
-      { was: 'The page lists 13 editor look rows and hides 25 more behind “More options”; the same choices are also in Customize under different labels.', now: 'The page leads with Customize. The rows stay, as “the basics” and a full list, for people who prefer a list.' }
+      { was: 'The page lists 13 editor look rows and hides 24 more behind “More options”; the same choices are also in Customize under different labels.', now: 'The page leads with Customize. The rows stay, as “the basics” and a full list, for people who prefer a list.' }
     ]
   });
   SMX.extend('look/terminal', {
     lead: (ctx) => [{ key: 'open', html: customize({ icon: 'terminal', button: 'Customize the terminal', action: 'pm51-o55-terminal-customize',
-      line: `The terminal uses ${ui.b(own(lab('code.terminal.theme')))} colours and ${ui.b(own(lab('code.terminal.font-family')))} at ${ui.b(lab('code.terminal.font-size'))}.` }) }],
+      line: `The terminal uses ${ui.b(own(lab('code.terminal.theme')))} colours and ${ui.b(fontWords('code.terminal.font-family', 'code.terminal.font-size'))}.` }) }],
     changes: [
       { was: 'Terminal appearance has the same shape as the editor’s: an example at the top of 5,049 px of options, and a small copy (372 × 170) that follows you with fewer lines of the sample. Cursor shape and trail, the bell and flicker change nothing in a still example.', now: 'The example stays beside the options, which are six tabs (Colors, Text, Cursor, Background, Effects, Behavior). Changing the cursor moves it; changing the bell rings it; a line under the example names what changed and where to look.' },
       { was: 'Four rows are under “Terminal look”; 43 more look rows (bezel, background, effects, cursor) are under “Terminal”, whose heading says “Which shell runs, where it starts, and how panes come back”.', now: 'Every terminal look row is on this page, grouped as Text, Cursor, Background, Effects and Bezel. How the terminal behaves is in Code & tools › Terminal.' }

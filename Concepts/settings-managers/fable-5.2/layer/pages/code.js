@@ -267,7 +267,7 @@
   const needsFor = (st, kind, id) => needs(st).filter((n) => n.kind === kind && (id === undefined || n.id === id));
   /* on a thing's own page a need is said in that page's words, with no way "to" the page; a note that only informs stays in its card */
   const own = (list) => list.flatMap((n) => n.parts || [n]).filter((n) => n.tone !== 'info').map((n) => Object.assign({}, n, { title: n.ownTitle || n.title, detail: n.ownDetail || n.detail, also: null }));
-  (SMX.needSources = SMX.needSources || []).push((st) => needs(st).filter((n) => n.home));
+  (SMX.needSources = SMX.needSources || []).push(Object.assign((st) => needs(st), { chapter: 'code' }));
 
   /* GitHub is a plugin, a connection and a set of tools at once (and a code service, and an AI provider's sign-in).
      Wherever one of them appears, this says which is which. `self` is the one the reader is looking at. */

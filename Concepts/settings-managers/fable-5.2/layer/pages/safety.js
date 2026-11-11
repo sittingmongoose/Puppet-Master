@@ -195,7 +195,7 @@
     ...waiting(st).map((x) => ({ title: `“${x.action}” is waiting for your answer`, detail: [x.from, x.risk].filter(Boolean).join(' · '), fix: { label: 'Answer it', go: 'safety/asking' } })),
     ...guardsOff()
   ];
-  (SMX.needSources = SMX.needSources || []).push(needs);
+  (SMX.needSources = SMX.needSources || []).push(Object.assign(needs, { chapter: 'safety' }));
   /* the chapter says its state on Settings Home, as the two finished chapters do */
   const chapter = SMX.chapters.find((c) => c.id === 'safety');
   if (chapter && !chapter.status) chapter.status = (ctx) => { const n = waiting(ctx.st).length, off = guardsOff().length, p = current(ctx.st); return n ? { tone: 'attention', text: `${n} waiting for you` } : off ? { tone: 'attention', text: 'A guard is off' } : { tone: 'ready', text: p ? p.name : 'Set up' }; };

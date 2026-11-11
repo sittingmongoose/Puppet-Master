@@ -39,7 +39,12 @@
   for (const [id, home] of [['onboarding', ['doctor', 'Setup and tour']], ['teacher', ['doctor', 'Setup and tour']], ['feature-flags', ['advanced', 'Sharing with the makers']], ['developer-mode', ['advanced', 'Sharing with the makers']]]) { if (!SMX.handIds.includes(id)) SMX.handIds.push(id); if (!SMX.handHomes[id]) SMX.handHomes[id] = home; }
 
   /* ================================================================== the checkup: what it found, in plain words */
-  const groups = (st) => (((st.pm51 || {}).doctor || {}).groups) || [];
+  /* PMConcept7's example checkup says the pairing code has expired while its Servers manager holds a live one, so Home
+     raised an alarm that the page it sent you to denied (review R1, F4). A finding that the thing itself contradicts
+     is shown as working, in the thing's own words, everywhere the checkup is read. */
+  const liveCode = (st) => { const p = d.sp(st).pairing || {}; return p.code ? String(p.expiresIn || '') : ''; };
+  const effective = (g, f, st) => (g.id === 'devices' && f.id === 'pairing' && f.state === 'Needs attention' && liveCode(st) ? Object.assign({}, f, { state: 'Ready', title: 'Pairing code', detail: `A code is ready. It stops working in ${liveCode(st)}.`, impact: '', fix: '' }) : f);
+  const groups = (st) => ((((st.pm51 || {}).doctor || {}).groups) || []).map((g) => Object.assign({}, g, { findings: (g.findings || []).map((f) => effective(g, f, st)) }));
   const findings = (st) => groups(st).flatMap((g) => (g.findings || []).map((f) => ({ g, f, key: `${g.id}:${f.id}` })));
   const STATE = { Ready: ['Working', 'ready'], 'Needs attention': ['Needs you', 'attention'], 'Not set up': ['Not set up', 'off'], Unavailable: ['Not available', 'off'], Checking: ['Checking', 'info'] };
   const stateOf = (f) => STATE[f.state] || [String(f.state || ''), 'off'];
@@ -71,7 +76,8 @@
   const checking = (st) => findings(st).some((x) => x.f.state === 'Checking');
   const lastCheck = (st) => String((st.pm51 || {}).doctorLastCheck || '2 min ago');
   const needy = (st) => findings(st).filter((x) => x.f.state === 'Needs attention');
-  const needLine = (x) => { const k = fixOf(x); return { title: k.title, detail: k.detail, fix: fixBtn(x) }; };
+  /* a finding belongs to the chapter that fixes it (its card and mark carry it, not Health's), and what is optional is worth a look, no more */
+  const needLine = (x) => { const k = fixOf(x); const to = k.go || areaOf(x.g)[3] || 'system'; return Object.assign({ title: k.title, detail: k.detail, fix: fixBtn(x), chapter: String(to).split('/')[0] }, /^(updates|optional):/.test(x.key) ? { tone: 'info' } : {}); };
 
   /* One fix for every finding. PMConcept7 sends each fix to its old manager and promises to check again on return; the
      same promise is kept here: the finding's area is checked again the next time the checkup is shown. */
@@ -113,11 +119,12 @@
     try { for (const f of (SMX.needSources || [])) { if (f === homeNeeds) continue; try { others = others.concat(f(st) || []); } catch (e) { /* a chapter that fails adds nothing */ } } } finally { asking = false; }
     return needy(st).filter((x) => { const re = WORDS[x.key]; return !(re && others.some((n) => re.test(`${n.title || ''} ${n.detail || ''}`))); }).map(needLine);
   };
-  (SMX.needSources = SMX.needSources || []).push(homeNeeds);
+  (SMX.needSources = SMX.needSources || []).push(Object.assign(homeNeeds, { chapter: 'system' }));
   const U = (st) => st.updates || { currentVersion: '', availableVersion: '', history: [] };
   const hasUpdate = (st) => { const u = U(st); return !!u.availableVersion && u.availableVersion !== u.currentVersion; };
   const chapter = SMX.chapters.find((c) => c.id === 'system');
-  if (chapter && !chapter.status) chapter.status = (ctx) => { const n = needy(ctx.st).length; return n ? { tone: 'attention', text: `${n} ${n === 1 ? 'needs' : 'need'} you` } : hasUpdate(ctx.st) ? { tone: 'info', text: 'An update is ready' } : { tone: 'ready', text: 'Working' }; };
+  // what the checkup finds about other chapters is on THEIR cards (it used to be counted here a second time)
+  if (chapter && !chapter.status) chapter.status = (ctx) => (hasUpdate(ctx.st) ? { tone: 'info', text: 'An update is ready' } : { tone: 'ready', text: 'Working' });
 
   const areaWorst = (g) => { const fs = g.findings || []; const n = fs.filter((f) => f.state === 'Needs attention').length; if (fs.some((f) => f.state === 'Checking')) return { text: 'Checking', tone: 'info' }; if (n) return { text: `${n} ${n === 1 ? 'needs' : 'need'} you`, tone: 'attention' }; const s = fs.filter((f) => f.state === 'Not set up').length; if (s) return { text: `${s} not set up`, tone: 'off' }; return { text: 'Working', tone: 'ready' }; };
   const areaSub = (g) => { const open = (g.findings || []).filter((f) => f.state !== 'Ready'); return open.length ? open.map((f) => nameOf({ g, f, key: `${g.id}:${f.id}` })).join(' · ') : (g.findings || []).map((f) => serviceText(f.title)).join(' · '); };

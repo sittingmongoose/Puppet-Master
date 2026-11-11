@@ -344,8 +344,8 @@
     for (const c of SMX.chapters) {
       if (c.group !== group) { group = c.group; out.push(`<div class="smx-nav-group">${esc(group)}</div>`); }
       const open = c.id === curCh;
-      let status = null; try { status = c.status ? c.status(ctx) : null; } catch (e) { status = null; }
-      const mark = status && status.tone && status.tone !== 'ready' && status.tone !== 'off' ? `<span class="smx-nav-mark tone-${SMX.tone(status.tone)}" title="${esc(status.text || '')}"></span>` : '';
+      let status = null; try { status = SMX.chapterStatus ? SMX.chapterStatus(c, ctx) : (c.status ? c.status(ctx) : null); } catch (e) { status = null; }
+      const mark = status && status.tone && status.tone !== 'ready' && status.tone !== 'off' ? `<span class="smx-nav-mark tone-${SMX.tone(status.tone)}" role="img" aria-label="${esc(status.text || '')}" title="${esc(status.text || '')}"></span>` : '';   // the dot has words for a screen reader and for the hover hint
       out.push(`<div class="smx-nav-ch${open ? ' is-open' : ''}"><button type="button" class="smx-nav-item${cur.page.id === c.id ? ' is-current' : ''}${open ? ' is-open' : ''}" data-smx-go="${esc(c.id)}"${open ? ' aria-expanded="true"' : ' aria-expanded="false"'}>${SMX.icon(c.icon)}<span>${esc(c.title)}</span>${mark}</button>`);
       if (open) {
         const pages = SMX.pages.filter((p) => p.chapter === c.id && p.nav && p.id !== c.id && !p.id.includes(':'));

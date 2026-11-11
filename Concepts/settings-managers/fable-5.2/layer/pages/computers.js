@@ -57,6 +57,27 @@
   }
 
   /* ------------------------------------------------------------------ Overview */
+  /* the two folders for new work, said in words */
+  const FOLDERS = [['code.execution.projects-folder', 'New projects go in', 'Each new project gets a folder of its own inside this one.'], ['code.execution.no-project-chats-folder', 'Chats with no project keep their files in', 'A folder is made here the first time such a chat needs one.']];
+  const folderWords = (id) => {
+    const v = SMX.val(id); let o = null;
+    if (v && typeof v === 'object') o = v; else { try { o = JSON.parse(String(v || '')); } catch (e) { o = null; } }
+    if (!v || v === 'Automatic') return 'Chosen by Puppet Master';
+    if (o && o.relative_path != null) return /home_relative/.test(String(o.kind || '')) ? `“${o.relative_path}”, in the home folder of the computer that does the work` : `“${o.relative_path}”`;
+    if (o && (o.path || o.absolute_path)) return String(o.path || o.absolute_path);
+    return String(v).length > 70 ? String(v).slice(0, 68) + '…' : String(v);
+  };
+  SMX.act('computers-folder-choose', (el) => { const row = SMX.host().querySelector(`[id="setting-${W.CSS.escape(el.getAttribute('data-id'))}"]`); const b = row && row.querySelector('[data-action="browse-setting-path"], button'); if (b) b.click(); else SMX.toast('Not available in this preview', 'The folder cannot be chosen here.', 'info'); });
+  /* what needs you about your computers: on this chapter's first page, on Settings Home, in the chapter's card and mark */
+  const needs = (st) => {
+    const S = sp(st);
+    return [
+      ...S.servers.filter((s) => !/connected/i.test(s.state)).map((s) => ({ tone: 'blocked', title: `${s.name} is not answering`, detail: 'Work that needs it waits until it is back.', fix: { label: 'Check it', action: 'pm51-servers-test', data: { id: s.id } } })),
+      ...S.pending.map((p) => ({ title: `${p.name} is asking to join`, detail: 'Approve it only if this is your device.', fix: { label: 'Review', go: 'computers/devices' } })),
+      ...S.servers.filter((s) => s.updateReady).map((s) => ({ tone: 'info', title: `${s.name} has an update ready`, detail: `It runs version ${s.version}.`, fix: { label: 'See the update', go: 'system/updates' } }))
+    ];
+  };
+  (SMX.needSources = SMX.needSources || []).push(Object.assign(needs, { chapter: 'computers' }));
   SMX.page({
     id: 'computers', chapter: 'computers', icon: 'computer', noPagesList: true,
     title: 'Computers & remote access',
@@ -65,7 +86,6 @@
     keywords: ['server', 'servers', 'nas', 'home server', 'device', 'devices', 'remote', 'ssh', 'computer'],
     lead: (ctx) => {
       const st = ctx.st, S = sp(st), home = d.homeServer(st);
-      const upd = S.servers.filter((s) => s.updateReady);
       const down = S.servers.filter((s) => !/connected/i.test(s.state));
       return [
         { key: 'summary', html: ui.summary({ icon: 'computer', tone: down.length ? 'attention' : 'ready', lines: [
@@ -73,11 +93,7 @@
           `${ui.word(d.plural(S.devices.length, 'device'), { go: 'computers/devices' })} can use Puppet Master. Away from home ${ui.word(awayWord(st), { go: 'computers/away' })}.`
         ], side: ui.btn({ label: 'Check everything', icon: 'test', action: 'pm51-servers-diagnostics', data: { scope: 'home' } }) }) },
         { key: 'map', html: map(st) },
-        { key: 'needs', html: ui.needs([
-          ...down.map((s) => ({ tone: 'blocked', title: `${s.name} is not answering`, detail: 'Work that needs it waits until it is back.', fix: { label: 'Check it', action: 'pm51-servers-test', data: { id: s.id } } })),
-          ...S.pending.map((p) => ({ title: `${p.name} is asking to join`, detail: 'Approve it only if this is your device.', fix: { label: 'Review', go: 'computers/devices' } })),
-          ...upd.map((s) => ({ tone: 'info', title: `${s.name} has an update ready`, detail: `It runs version ${s.version}.`, fix: { label: 'See the update', go: 'system/updates' } }))
-        ]) },
+        { key: 'needs', html: ui.needs(SMX.needsOf('computers', st)) },
         { key: 'tasks', html: ui.tasks([
           { icon: 'phone', title: 'Use it on another device', sub: 'Pair a phone, a tablet or another computer', action: 'pm51-servers-pair' },
           { icon: 'globe', title: 'Reach it away from home', sub: d.routeAway(st) ? 'Add or change a way in' : 'Set up a private way in', action: 'pm51-servers-away-new' },
@@ -365,11 +381,14 @@
         ]) }) }
       ];
     },
-    sections: [{ key: 'folders', title: 'Folders for new work', help: 'Where a new project, or a chat that has no project, puts its files.', ids: ['code.execution.projects-folder', 'code.execution.no-project-chats-folder'] }],
-    expert: [{ key: 'tech', html: (ctx) => { const st = ctx.st, S = sp(st), home = d.homeServer(st), ps = st.projectSync || {}; return ui.card({ title: 'Technical details', body: ui.facts([['Which copy wins', ps.fileAuthority || 'Server host'], ['How devices stay in step', ps.syncMode || '—'], ['Server address', home ? home.address : '—'], ['Project path', S.sourceLocation.path || '—'], ['Last check before a move', (S.move && S.move.preflight) || 'Not run yet'], ['Last destination', (S.move && S.move.destination) || 'None'], ['Commands', 'cmd.project.move.preflight · cmd.project.move.start · cmd.project.duplicate_with_history']]) + ui.links([{ label: 'Check the Server and devices', action: 'pm51-servers-diagnostics', data: { scope: 'home' } }, { label: 'Check that a move would work', action: 'pm51-servers-diagnostics', data: { scope: 'move' } }]) }); } }],
+    /* PMConcept7's two rows show their stored value: {"kind":"execution_host_home_relative","relative_path":"Projects"}
+       in a text box (review R1, F12). Here the value is said in words, with PMConcept7's own Choose; the rows themselves
+       are under For experts, for whoever wants the exact value. */
+    sections: [{ key: 'folders', html: () => ui.card({ title: 'Folders for new work', help: 'Where a new project, or a chat that has no project, puts its files.', body: ui.rows(FOLDERS.map(([id, label, help]) => ({ label, help, value: folderWords(id), covers: id, control: ui.btn({ label: 'Choose…', icon: 'folder', do: 'computers-folder-choose', data: { id } }) }))) }), count: 2 }],
+    expert: [{ key: 'folders-exact', title: 'The two folders, as they are stored', help: 'The same two choices in the form Puppet Master keeps them. Leave these alone unless you were asked to change them.', ids: FOLDERS.map((f) => f[0]) }, { key: 'tech', html: (ctx) => { const st = ctx.st, S = sp(st), home = d.homeServer(st), ps = st.projectSync || {}; return ui.card({ title: 'Technical details', body: ui.facts([['Which copy wins', ps.fileAuthority || 'Server host'], ['How devices stay in step', ps.syncMode || '—'], ['Server address', home ? home.address : '—'], ['Project path', S.sourceLocation.path || '—'], ['Last check before a move', (S.move && S.move.preflight) || 'Not run yet'], ['Last destination', (S.move && S.move.destination) || 'None'], ['Commands', 'cmd.project.move.preflight · cmd.project.move.start · cmd.project.duplicate_with_history']]) + ui.links([{ label: 'Check the Server and devices', action: 'pm51-servers-diagnostics', data: { scope: 'home' } }, { label: 'Check that a move would work', action: 'pm51-servers-diagnostics', data: { scope: 'move' } }]) }); } }],
     changes: [
       { was: 'Where the project lives is split: “Home server” and “Files” on the Home & Location tab; Move, Copy, Import and conflicts on the Move & Copy tab.', now: 'One page: where it lives, then the three guided ways to move, copy or bring in, then what happens on a conflict.' },
-      { was: '“Projects folder” and “Folder for chats with no project” are in Code & Tools › Containers under “Building & publishing images”.', now: 'They are here, under “Folders for new work”.' },
+      { was: '“Projects folder” and “Folder for chats with no project” are in Code & Tools › Containers under “Building & publishing images”.', now: 'They are here, under “Folders for new work”, said in words (PMConcept7 shows the stored value, a line of code, in a text box); the stored form is under “For experts”.' },
       { was: 'The conflict choice is one long sentence per option (“Preserve both, pause affected work, and show a three-way comparison”), with “File authority” and “Sync mode” shown as bare facts.', now: 'The row says when a conflict happens, with an example; the two bare facts are under “For experts”.' }
     ]
   });

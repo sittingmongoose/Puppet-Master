@@ -144,7 +144,7 @@
     }
     return out;
   };
-  (SMX.needSources = SMX.needSources || []).push(webProblems);
+  (SMX.needSources = SMX.needSources || []).push(Object.assign(webProblems, { chapter: 'ai' }));
 
   /* ================================================================== Web research: the overview */
   const webPage = SMX.extend('ai/web', {
@@ -463,7 +463,7 @@
     }
     return out;
   };
-  (SMX.needSources = SMX.needSources || []).push(mediaProblems);
+  (SMX.needSources = SMX.needSources || []).push(Object.assign(mediaProblems, { chapter: 'ai' }));
 
   /* ================================================================== Pictures, voice & video: the overview */
   const mediaPage = SMX.extend('ai/media', {
@@ -651,7 +651,7 @@
     let ready = []; try { ready = (kit().readyModels() || []).map((o) => o.value); } catch (e) { ready = []; }
     return ready.includes(v) ? [] : [{ title: 'The model Back Seat Driver uses cannot answer right now', detail: 'Until it can, the backup model is used.', fix: { label: 'Choose another', go: 'ai/advisor', reveal: BSD.model } }];
   };
-  (SMX.needSources = SMX.needSources || []).push(bsdProblems);
+  (SMX.needSources = SMX.needSources || []).push(Object.assign(bsdProblems, { chapter: 'ai' }));
   const thingRows = (items) => `<div class="smx-things">${items.map((it) => `<div class="smx-thing is-clickable" role="button" tabindex="0" data-smx-go="${h(it.go)}"><span class="smx-thing-avatar smx-am-sev tone-${h(it.tone)}">${SMX.icon(it.icon)}</span><span class="smx-thing-copy"><span class="smx-thing-name">${h(it.name)} <span class="smx-thing-tag">${h(it.tag)}</span></span><span class="smx-thing-sub">${h(it.sub)}</span><span class="smx-thing-sub">${h(it.sub2)}</span></span><span class="smx-thing-end">${ui.status(it.status[0], it.status[1])}<span class="smx-thing-go">${SMX.icon('go')}</span></span></div>`).join('')}</div>`;
 
   /* ================================================================== Back Seat Driver: the page */

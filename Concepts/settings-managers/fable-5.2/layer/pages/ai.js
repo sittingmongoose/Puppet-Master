@@ -25,11 +25,16 @@
   const routeName = (r) => ROUTE_NAMES[r.id] || r.name;
   const plain = (p) => d.providerState(p);   // "Ready" only when it can answer now (see smx-ia.js)
   const toneOf = (p) => ({ Ready: 'ready', Off: 'off', 'Not installed': 'off', 'Not set up': 'off', Checking: 'info' }[plain(p)] || 'attention');
+  /* PMConcept7's example data can say a provider "needs sign-in" while its account still reads signed in. One state
+     decides here, and signed-out wins: while a provider needs sign-in, none of its accounts is in use or ready. */
+  const signedOut = (p) => !!p && plain(p) === 'Needs sign-in';
   const inUse = (a) => !!a.active && a.enabled !== false;
-  const active = (p) => (p.accounts || []).filter(inUse);
+  const active = (p) => (signedOut(p) ? [] : (p.accounts || []).filter(inUse));
   const ordered = (p) => { const accs = p.accounts || []; const order = (p.routing && p.routing.accountOrder) || []; return order.map((id) => accs.find((x) => x.id === id)).filter(Boolean).concat(accs.filter((x) => !order.includes(x.id))); };
-  const usedFirst = (p) => ordered(p).find(inUse);
-  const isSetUp = (p) => !['Not set up', 'Not installed', 'Off'].includes(plain(p)) || (p.accounts || []).length > 0 || p.status === 'disabled';
+  const usedFirst = (p) => (signedOut(p) ? undefined : ordered(p).find(inUse));
+  /* "yours": it can answer, or it needs you, or you set it up and turned it off. A provider that reads "Not set up" or
+     "Not installed" is one you can add, even if the example data carries an account entry for it. */
+  const isSetUp = (p) => { const w = plain(p); return !['Not set up', 'Not installed'].includes(w) && (w !== 'Off' || (p.accounts || []).some((a) => a.active)); };
   const count = (n, w) => `${n} ${w}${n === 1 ? '' : 's'}`;
   const statusLabel = (st, p) => {
     const base = plain(p);
@@ -42,7 +47,7 @@
   const seatless = (a) => /seat/i.test(String(a.health || ''));
   const usage = (a) => (a && a.usage && typeof a.usage === 'object' ? a.usage : { text: typeof (a || {}).usage === 'string' ? a.usage : '', windows: {} });
   const limitHit = (a) => /limit/i.test(String(a.health || '')) || Object.values(usage(a).windows || {}).some((w) => w && typeof w === 'object' && Number(w.pct) >= 100);
-  const accStatus = (a) => (!a.active ? ['Needs sign-in', 'attention'] : a.enabled === false ? ['Not in use', 'off'] : seatless(a) ? ['Needs a seat', 'attention'] : limitHit(a) ? ['Limit reached', 'blocked'] : (a.health && !/^(healthy|ready|ok)$/i.test(a.health)) ? [a.health, 'attention'] : ['Ready', 'ready']);
+  const accStatus = (a, p) => (!a.active || signedOut(p) ? ['Needs sign-in', 'attention'] : a.enabled === false ? ['Not in use', 'off'] : seatless(a) ? ['Needs a seat', 'attention'] : limitHit(a) ? ['Limit reached', 'blocked'] : (a.health && !/^(healthy|ready|ok)$/i.test(a.health)) ? [a.health, 'attention'] : ['Ready', 'ready']);
   const WINDOW_LABELS = { fiveHour: '5-hour limit', weekly: 'Weekly limit', monthly: 'Monthly limit' };
   const windowLabel = (p, k) => { const v = (p.windows || {})[k]; return (typeof v === 'string' && v ? v.replace(/window/i, 'limit') : WINDOW_LABELS[k]) || k; };
   const windowsOf = (p, a) => Object.entries(usage(a).windows || {}).filter(([, w]) => w && typeof w === 'object' && w.pct != null).map(([k, w]) => ({ key: k, label: windowLabel(p, k), pct: Number(w.pct), reset: w.reset || '' }));
@@ -78,13 +83,13 @@
     const out = [];
     for (const p of all(st)) {
       const w = plain(p);
-      if (w === 'Needs sign-in') out.push({ title: `${p.name} needs you to sign in again`, detail: 'Its models are not available until you do.', fix: { label: 'Sign in', action: 'pm51-providers-signin', data: { provider: p.id } }, also: { label: 'Open', go: `ai/provider/${p.id}` } });
+      if (w === 'Needs sign-in') out.push({ title: `${p.name} needs you to sign in again`, detail: 'Its models are not available until you do.', fix: { label: 'Sign in', action: 'pm51-providers-signin', data: { provider: p.id } } });
       else if (w === 'Needs attention') out.push({ title: p.id === 'github-copilot' ? 'GitHub Copilot cannot be used yet' : `${p.name} needs attention`, detail: p.id === 'github-copilot' ? 'The sign-in works, but this GitHub account has no Copilot seat.' : (p.statusLabel || ''), fix: { label: 'See what to do', go: `ai/provider/${p.id}` } });
-      if (isSetUp(p)) for (const a of (p.accounts || [])) if (!a.active) out.push({ tone: 'info', title: `${a.nickname} (${p.name}) is signed out`, detail: 'Work skips it until you sign in again.', fix: { label: 'Sign in again', action: 'pm51-providers-account-signin', data: { provider: p.id, account: a.id } } });
+      if (isSetUp(p) && !signedOut(p)) for (const a of (p.accounts || [])) if (!a.active) out.push({ tone: 'info', title: `${a.nickname} (${p.name}) is signed out`, detail: 'Work skips it until you sign in again.', fix: { label: 'Sign in again', action: 'pm51-providers-account-signin', data: { provider: p.id, account: a.id } } });
     }
     return out;
   };
-  (SMX.needSources = SMX.needSources || []).push(needs);
+  (SMX.needSources = SMX.needSources || []).push(Object.assign(needs, { chapter: 'ai' }));
 
   /* ------------------------------------------------------------------ the one rule, in words */
   const ruleWords = (st) => {
@@ -118,19 +123,19 @@
       const hit = (p) => !q || [p.name, p.vendor, p.product, p.kind, p.connect].some((x) => String(x || '').toLowerCase().includes(q));
       const everyMine = all(st).filter(isSetUp), everyRest = all(st).filter((p) => !isSetUp(p));
       const mine = everyMine.filter(hit); const rest = everyRest.filter(hit);
-      const ready = everyMine.filter((p) => plain(p) === 'Ready').length; const r = ruleWords(st); const nd = needs(st);
-      const wait = everyMine.filter((p) => toneOf(p) === 'attention').length, begun = everyMine.filter((p) => toneOf(p) === 'off').length;
+      const ready = everyMine.filter((p) => plain(p) === 'Ready').length; const r = ruleWords(st); const nd = SMX.needsOf('ai', st);
+      const nw = SMX.needWords(nd);
       const order = { attention: 0, ready: 1, info: 1, off: 2 };
       const thing = (p) => { const first = usedFirst(p); return { initials: initials(p.name), name: p.name, tag: KIND[p.bill] || '', sub: statusLabel(st, p), meters: first ? meters(p, first, 1) : '', status: { text: plain(p), tone: toneOf(p) }, go: `ai/provider/${p.id}` }; };
       return [
         { key: 'summary', html: ui.summary({ icon: 'brain', tone: nd.some((n) => n.tone !== 'info') ? 'attention' : 'ready', lines: [
-          `${ui.b(count(ready, 'AI provider'))} can answer now${wait ? `, ${ui.b(String(wait))} need${wait === 1 ? 's' : ''} you` : ''}${begun ? `, ${begun} ${begun === 1 ? 'is' : 'are'} started but not finished` : ''}; ${everyRest.length} more can be added.`,
+          `${ui.b(count(ready, 'AI provider'))} can answer now${nd.length ? `. ${ui.b(nw.title)}` : ''}${everyRest.length ? `${nd.length ? '; ' : '; '}${everyRest.length} more can be added` : ''}.`,
           `${ui.word(model(st), { go: 'ai/models' })} answers unless a job needs something else.`,
           r.on ? `When an account has ${ui.word(r.sw, { go: 'ai/limits' })}, work moves to your next account${r.down ? `; if a whole provider is down it ${ui.word('moves to another provider', { go: 'ai/limits' })}` : ''}.` : `Accounts ${ui.word('never switch by themselves', { go: 'ai/limits' })}: work stops when one runs out.`
         ], side: ui.btn({ label: 'Add an AI provider', icon: 'plus', primary: true, small: false, action: 'pm51-providers-add' }) }) },
         { key: 'needs', html: ui.needs(nd) },
         { key: 'filter', html: all(st).length > 8 ? `<label class="smx-filter"><span class="icon" aria-hidden="true">${SMX.icon('search')}</span><input type="search" data-smx-input="ai-filter" data-smx-key="ai-filter" placeholder="Filter the AI providers by name" aria-label="Filter the AI providers by name" autocomplete="off"></label>` : '' },
-        { key: 'mine', html: ui.things({ title: 'Your AI providers', help: 'The ones you have signed in to or started to set up. Open one to see its accounts.', items: mine.slice().sort((a, b) => (order[toneOf(a)] - order[toneOf(b)])).map(thing), empty: q ? { icon: 'search', title: `None of your providers matches “${q}”`, text: rest.length ? 'There is a match among the ones you can add, below.' : 'Try fewer letters.' } : { icon: 'brain', title: 'No AI provider yet', text: 'Puppet Master needs at least one to do anything.', fix: { label: 'Add an AI provider', action: 'pm51-providers-add' } } }) },
+        { key: 'mine', html: ui.things({ title: 'Your AI providers', help: 'The ones you have signed in to. Open one to see its accounts.', items: mine.slice().sort((a, b) => (order[toneOf(a)] - order[toneOf(b)])).map(thing), empty: q ? { icon: 'search', title: `None of your providers matches “${q}”`, text: rest.length ? 'There is a match among the ones you can add, below.' : 'Try fewer letters.' } : { icon: 'brain', title: 'No AI provider yet', text: 'Puppet Master needs at least one to do anything.', fix: { label: 'Add an AI provider', action: 'pm51-providers-add' } } }) },
         { key: 'tasks', html: ui.tasks([
           { icon: 'sparkle', title: 'Choose which model does what', sub: 'One everyday model, or a different one for some jobs', go: 'ai/models' },
           { icon: 'swap', title: 'Decide what happens when one runs out', sub: 'Switch accounts, switch providers, or stop and ask', go: 'ai/limits' },
@@ -143,7 +148,7 @@
     },
     covers: Object.assign({}, D('providers-home', 'On each provider’s page, or on each account’s page.'), { 'ai.accounts.provider-connections': 'The list “Your AI providers” on this page.', 'ai.usage.provider-health': 'The link “Check every provider” on this page.', 'ai.usage.refresh-models': 'The link “Look for new models” on this page.', 'system.advanced.binary-rescan': 'The link “Find installed apps again” on this page.' }),
     changes: [
-      { was: 'The page opens on three counters and a list of all 22 providers, set up or not, beside the full detail of the first one. The counters (12 ready, 1 needs attention, 8 not set up) add up to 21 while the list says 22, and “Ready 12” counts seven providers that have no model switched on, each marked “Ready” above the words “Getting it ready”.', now: 'It opens on sentences: how many providers can answer now (one that is listed but has no model on is “started but not finished”, not ready), how many need you, and which model answers; then what happens when an account runs out. Then only the providers you have; the others are one click away under “more providers you can add”. The filter box narrows both lists.' },
+      { was: 'The page opens on three counters and a list of all 22 providers, set up or not, beside the full detail of the first one. The counters (12 ready, 1 needs attention, 8 not set up) add up to 21 while the list says 22, and “Ready 12” counts seven providers that have no model switched on, each marked “Ready” above the words “Getting it ready”.', now: 'It opens on sentences: how many providers can answer now (one with no model switched on does not count), what needs you (the same things the list under it holds), and which model answers; then what happens when an account runs out. Then only the providers you have; the others are one click away under “more providers you can add”. The filter box narrows both lists.' },
       { was: 'Every account of the selected provider is opened in place, so the Claude page alone carries four copies of the same 14 controls.', now: 'A provider has its own page and an account has its own page. The list shows each provider’s tightest limit, so you can see who is about to run out without opening anything.' },
       { was: '“Check every service” appears twice on the page; the three footer links repeat under all four tabs.', now: 'Each appears once, here.' },
       { was: 'Three warnings live on Settings Home and in the rail, none with a button.', now: '“Needs you” lists them here and on Home, each with the one button that fixes it.' },
@@ -189,17 +194,17 @@
       if (!p) return [{ key: 'gone', html: ui.card({ title: 'This provider is no longer in your list', body: ui.btn({ label: 'Back to AI providers', go: 'ai' }) }) }];
       const r = p.readiness || {}; const first = usedFirst(p); const accs = ordered(p); const ready = plain(p) === 'Ready';
       const cli = p.kind === 'CLI', url = p.kind === 'URL', free = p.id === 'free-models';
-      const facts = free ? [`${routes(st).filter((x) => x.enabled).length} of ${routes(st).length} free routes are on`] : [cli ? (r.installed ? `installed (version ${p.version})` : 'not installed yet') : '', url ? (p.address ? `reaches ${p.address}` : 'no address yet') : r.signedIn ? `signed in${first ? ' as ' + first.identity : ''}` : 'not signed in', url ? '' : `${count(active(p).length, 'account')} in use`, `${count((p.models || []).filter((m) => m.enabled).length, 'model')} ready`].filter(Boolean);
+      const facts = free ? [`${routes(st).filter((x) => x.enabled).length} of ${routes(st).length} free routes are on`] : [cli ? (r.installed ? `installed (version ${p.version})` : 'not installed yet') : '', url ? (p.address ? `reaches ${p.address}` : 'no address yet') : r.signedIn && !signedOut(p) ? `signed in${first ? ' as ' + first.identity : ''}` : 'not signed in', url ? '' : `${count(active(p).length, 'account')} in use`, `${count((p.models || []).filter((m) => m.enabled).length, 'model')} ready`].filter(Boolean);
       const blocks = [];
       const prim = ready && p.nextAction === 'addaccount' ? null : primaryFor(p);
-      blocks.push({ key: 'summary', html: ui.summary({ icon: 'brain', tone: toneOf(p), lines: [`${ui.b(p.name)} ${ready ? 'is ready' : plain(p) === 'Off' ? 'is turned off' : 'is not ready yet'}: ${facts.map(h).join(', ')}.`, `Last checked ${h(String(p.lastCheck || 'not yet'))}.${p.pairNote ? ' ' + h(p.pairNote) : ''}`], side: (prim && !ready ? ui.btn(Object.assign({ primary: true, small: false }, prim)) : '') + (p.pair && find(st, p.pair) ? ui.btn({ label: `${find(st, p.pair).bill === 'use' ? 'Paying by use instead?' : 'Have the plan instead?'} ${find(st, p.pair).name}`, go: `ai/provider/${p.pair}`, ghost: true }) : '') }) });
+      blocks.push({ key: 'summary', html: ui.summary({ icon: 'brain', tone: toneOf(p), lines: [`${ui.b(p.name)} ${ready ? 'is ready' : plain(p) === 'Off' ? 'is turned off' : 'is not ready yet'}: ${facts.map(h).join(', ')}.`, `${/\d|ago|today|yesterday|now/i.test(String(p.lastCheck || '')) ? 'Last checked ' + h(String(p.lastCheck)) + '.' : p.lastCheck ? h(String(p.lastCheck).replace(/\.$/, '')) + '.' : 'Not checked yet.'}${p.pairNote ? ' ' + h(p.pairNote) : ''}`], side: (prim && !ready ? ui.btn(Object.assign({ primary: true, small: false }, prim)) : '') + (p.pair && find(st, p.pair) ? ui.btn({ label: `${find(st, p.pair).bill === 'use' ? 'Paying by use instead?' : 'Have the plan instead?'} ${find(st, p.pair).name}`, go: `ai/provider/${p.pair}`, ghost: true }) : '') }) });
       if (!ready && plain(p) !== 'Off' && !free) {
-        const steps = [cli || p.kind === 'Server' ? [cli ? 'Install it' : 'A server', !!r.installed, cli ? 'Puppet Master installs it on your Server, only from the official provider, and only when you choose Install.' : 'Let Puppet Master run one, or use one you already run.'] : null, [url ? 'Its address' : (p.signIn || []).every((s) => s[0] === 'apikey') ? 'A key' : 'Sign in', !!r.signedIn, url ? 'The address of the model server on your network.' : (p.signIn || []).map((s) => s[1]).join(', ') || 'Sign in.'], url ? null : ['An account in use', !!r.accountChosen, (p.accounts || []).length ? 'Turn on an account below, or sign in to one again.' : 'Appears once you sign in.'], ['Models', !!r.modelsReady, p.id === 'github-copilot' ? 'This GitHub account has no Copilot seat, so no models can run.' : 'They appear by themselves after you sign in.']].filter(Boolean);
+        const steps = [cli || p.kind === 'Server' ? [cli ? 'Install it' : 'A server', !!r.installed, cli ? 'Puppet Master installs it on your Server, only from the official provider, and only when you choose Install.' : 'Let Puppet Master run one, or use one you already run.'] : null, [url ? 'Its address' : (p.signIn || []).every((s) => s[0] === 'apikey') ? 'A key' : 'Sign in', !!r.signedIn && !signedOut(p), url ? 'The address of the model server on your network.' : (p.signIn || []).map((s) => s[1]).join(', ') || 'Sign in.'], url ? null : ['An account in use', !!r.accountChosen && !signedOut(p), (p.accounts || []).length ? 'Turn on an account below, or sign in to one again.' : 'Appears once you sign in.'], ['Models', !!r.modelsReady && !signedOut(p), p.id === 'github-copilot' ? 'This GitHub account has no Copilot seat, so no models can run.' : 'They appear by themselves after you sign in.']].filter(Boolean);
         let stepsHtml = ''; try { let nextDone = false; stepsHtml = kit().steps(steps.map(([title, done, desc]) => { const next = !done && !nextDone; if (next) nextDone = true; return { title, desc, done, status: next ? 'Next' : '', tone: 'info' }; })); } catch (e) { stepsHtml = ''; }
         blocks.push({ key: 'ready', html: ui.card({ title: 'Getting it ready', help: 'Each step turns green by itself. The button above does the next one.', body: stepsHtml }) });
       }
       if (!free && !url && (accs.length || p.kind !== 'Server')) blocks.push({ key: 'accounts', html: ui.things({ title: 'Accounts', help: accs.length > 1 ? 'Tried from the top. When the first runs out, the next one takes over.' : accs.length === 1 ? 'Add another account to keep working when this one runs out.' : '', add: (p.signIn || []).length ? { label: 'Add an account', action: 'pm51-providers-add-account', data: { provider: p.id } } : null, cls: 'smx-accounts',
-        items: accs.map((a, i) => { const [word, t] = accStatus(a); return { initials: String(i + 1), name: a.nickname, tag: first && first.id === a.id ? 'Used first' : '', sub: `${a.identity} · ${a.method}`, meters: meters(p, a) || `<span class="smx-quiet-line">${h(usage(a).text || 'Usage appears after sign-in')}</span>`, status: { text: word, tone: t }, go: `ai/provider/${p.id}/${a.id}`, side: accs.length > 1 ? `<span class="smx-order">${ui.btn({ icon: 'up', label2: `Try ${a.nickname} earlier`, action: 'pm51-providers-account-move', data: { provider: p.id, account: a.id, dir: -1 }, ghost: true, disabled: i === 0, reason: 'It is already first.' })}${ui.btn({ icon: 'down', label2: `Try ${a.nickname} later`, action: 'pm51-providers-account-move', data: { provider: p.id, account: a.id, dir: 1 }, ghost: true, disabled: i === accs.length - 1, reason: 'It is already last.' })}</span>` : '' }; }),
+        items: accs.map((a, i) => { const [word, t] = accStatus(a, p); return { initials: String(i + 1), name: a.nickname, tag: first && first.id === a.id ? 'Used first' : '', sub: `${a.identity} · ${a.method}`, meters: meters(p, a) || `<span class="smx-quiet-line">${h(usage(a).text || 'Usage appears after sign-in')}</span>`, status: { text: word, tone: t }, go: `ai/provider/${p.id}/${a.id}`, side: accs.length > 1 ? `<span class="smx-order">${ui.btn({ icon: 'up', label: 'Try earlier', label2: `Try ${a.nickname} earlier`, action: 'pm51-providers-account-move', data: { provider: p.id, account: a.id, dir: -1 }, ghost: true, disabled: i === 0, reason: 'It is already first.' })}${ui.btn({ icon: 'down', label: 'Try later', label2: `Try ${a.nickname} later`, action: 'pm51-providers-account-move', data: { provider: p.id, account: a.id, dir: 1 }, ghost: true, disabled: i === accs.length - 1, reason: 'It is already last.' })}</span>` : '' }; }),
         empty: { icon: 'user', title: 'No accounts yet', text: r.installed ? 'Signing in adds the first one.' : 'Accounts appear here after you install and sign in.' } }) });
       if (free) {
         const item = (x) => ({ icon: 'route', name: routeName(x), sub: x.enabled ? [x.models && x.models.length ? x.models.join(', ') : 'No models yet', x.limit].filter(Boolean).join(' · ') : ['Off', x.limit].filter(Boolean).join(' · '), sub2: x.status === 'attention' ? x.signIn : '', status: { text: x.status === 'active' ? 'Ready' : x.status === 'attention' ? 'Needs attention' : 'Off', tone: x.status === 'active' ? 'ready' : x.status === 'attention' ? 'attention' : 'off' }, side: toggle(!!x.enabled, { action: 'pm51-providers-route-toggle', data: { route: x.id }, label: routeName(x) }), action: 'pm51-providers-route', data: { route: x.id } });
@@ -243,18 +248,18 @@
       const st = ctx.st; const { p, a } = accOf(ctx);
       if (!p || !a) return [{ key: 'gone', html: ui.card({ title: 'This account is no longer there', body: ui.btn({ label: 'Back to AI providers', go: 'ai' }) }) }];
       const data = { provider: p.id, account: a.id }; const opt = { scope: ACC, data };
-      const [word, t] = accStatus(a); const first = usedFirst(p);
+      const [word, t] = accStatus(a, p); const first = usedFirst(p); const out = !a.active || signedOut(p);
       const key = p.keyOnlyFor ? sval(a, 'ai.accounts.codex-auth-family') === p.keyOnlyFor : ((p.signIn || []).length > 0 && (p.signIn || []).every((s) => s[0] === 'apikey')) || /key|credential/i.test(String(a.method || ''));
-      const ready = p.status !== 'disabled' && (p.readiness || {}).installed && inUse(a) && !seatless(a);
+      const ready = p.status !== 'disabled' && (p.readiness || {}).installed && inUse(a) && !signedOut(p) && !seatless(a);
       const catalog = p.models || []; const on = catalog.filter((m) => ((a.models || []).find((x) => x.id === m.id) || {}).enabled);
       const PLAN = { Included: 'Included in your plan', Metered: 'Pay per use', Plan: 'Included in the coding plan', Free: 'Free route', Unknown: 'Plan unknown until sign-in', Unavailable: 'Unavailable' };
-      const modelsBody = !catalog.length ? ui.note('Models appear here after sign-in.') : !ready ? `<p class="smx-quiet-line">${h(!a.active ? 'They come back after you sign in again.' : a.enabled === false ? 'Turn the account on first.' : seatless(a) ? 'This account needs a seat first.' : 'After setup.')}</p>` : ui.rows([{ label: 'The model this account uses', help: 'Unless a job or a Goal picks another.', control: on.length ? select(a.defaultModel, on.map((m) => [m.id, m.name]), { action: 'pm51-providers-account-model-default', data, label: 'Default model' }) : '<span class="pm51-row-value is-muted">Turn on a model first</span>' }, ...catalog.map((m) => { const am = (a.models || []).find((x) => x.id === m.id); return { label: m.name, help: `${PLAN[m.plan] || m.plan || ''}${m.context && !/N\/A|Unknown/.test(m.context) ? ' · ' + m.context + ' context' : ''}`, control: am ? toggle(!!am.enabled, { action: 'pm51-providers-account-model', data: { provider: p.id, account: a.id, model: m.id }, label: m.name }) : '<span class="pm51-row-value is-muted">Not on this account</span>' }; })]);
+      const modelsBody = !catalog.length ? ui.note('Models appear here after sign-in.') : !ready ? `<p class="smx-quiet-line">${h(out ? 'They come back after you sign in again.' : a.enabled === false ? 'Turn the account on first.' : seatless(a) ? 'This account needs a seat first.' : 'After setup.')}</p>` : ui.rows([{ label: 'The model this account uses', help: 'Unless a job or a Goal picks another.', control: on.length ? select(a.defaultModel, on.map((m) => [m.id, m.name]), { action: 'pm51-providers-account-model-default', data, label: 'Default model' }) : '<span class="pm51-row-value is-muted">Turn on a model first</span>' }, ...catalog.map((m) => { const am = (a.models || []).find((x) => x.id === m.id); return { label: m.name, help: `${PLAN[m.plan] || m.plan || ''}${m.context && !/N\/A|Unknown/.test(m.context) ? ' · ' + m.context + ' context' : ''}`, control: am ? toggle(!!am.enabled, { action: 'pm51-providers-account-model', data: { provider: p.id, account: a.id, model: m.id }, label: m.name }) : '<span class="pm51-row-value is-muted">Not on this account</span>' }; })]);
       const ownSw = (a.props || {})[SW]; const hasOwn = ownSw !== undefined && ownSw !== null && ownSw !== ''; const openRule = hasOwn || SMX.local.flags['rule:' + p.id + '/' + a.id];
       let inherited = ''; try { inherited = left((pol().account.get(p.id, a.id, SW) || {}).inherited); } catch (e) { inherited = ''; }
       const rule = !openRule ? ui.rows([{ label: 'When this account runs low', help: `Follows ${p.name}’s rule: work moves on at ${inherited}.`, control: ui.btn({ label: 'Give this account its own level', do: 'ai-rule-own', data: { key: p.id + '/' + a.id } }) }])
         : ui.rows([{ label: 'Move on from this account at', help: `Only for ${a.nickname}.`, control: `<span data-smx-do-change="ai-rule-set" data-provider="${h(p.id)}" data-account="${h(a.id)}" data-id="${h(SW)}">${select(hasOwn ? String(ownSw) : '', levelOpts([5, 10, 15, 20, 25, 30], ownSw, `${p.name}’s rule · ${inherited}`), { action: 'pm51-noop', label: `Switch level for ${a.nickname}` })}</span>${ui.btn({ label: `Use ${p.name}’s rule again`, icon: 'refresh', do: 'ai-rule-clear', data: { provider: p.id, account: a.id } })}` }]);
       return [
-        { key: 'summary', html: ui.summary({ icon: 'user', tone: t, lines: [`${ui.b(a.nickname)} is ${h(word.toLowerCase())}${first && first.id === a.id ? ' and is used first' : ''}.`, a.active ? '' : 'Work skips it until you sign in again.'], side: a.active ? '' : ui.btn({ label: 'Sign in again', icon: 'user', primary: true, small: false, action: 'pm51-providers-account-signin', data }) }) },
+        { key: 'summary', html: ui.summary({ icon: 'user', tone: t, lines: [`${ui.b(a.nickname)} is ${h(word.toLowerCase())}${first && first.id === a.id ? ' and is used first' : ''}.`, out ? 'Work skips it until you sign in again.' : ''], side: !out ? '' : !a.active ? ui.btn({ label: 'Sign in again', icon: 'user', primary: true, small: false, action: 'pm51-providers-account-signin', data }) : ui.btn({ label: `Sign in to ${p.name}`, icon: 'user', primary: true, small: false, action: 'pm51-providers-signin', data: { provider: p.id } }) }) },
         { key: 'usage', html: windowsOf(p, a).length ? ui.card({ title: 'How much is used', body: `<div class="smx-meters">${meters(p, a)}</div>` }) : '' },
         { key: 'about', html: ui.card({ title: 'This account', body: srows([
           srow('ai.accounts.account-name', a.nickname, Object.assign({}, opt, { label: 'Nickname', help: 'Only the name shown in Puppet Master.', noChanged: true })),
@@ -281,25 +286,19 @@
 
   /* ================================================================== Which model does what */
   const JOB_IDS = ['ai.models.overseer-model', 'ai.models.worker-model', 'ai.models.gui-worker-model', 'ai.models.high-effort-worker-model', 'ai.models.auditor-model', 'ai.models.goal-worker-model', 'ai.models.goal-verifier-model', 'ai.models.subagent-model', 'ai.models.teach-model', 'ai.models.thread-title-model'];
-  const followsEveryday = (v) => v == null || v === '' || /^(same as|automatic|default|inherit)/i.test(String(v));
+  /* "(Default)", "(Inherit)", "Automatic", empty: the job follows the everyday model. The brackets were not matched, so
+     the page said "9 jobs use a model of their own" when one did (review R1, F2). The row's own words are asked too. */
+  const followsEveryday = (v, id) => v == null || v === '' || /^\W*(same as|automatic|auto|default|inherit)/i.test(String(v)) || (!!id && /^\W*same as/i.test(SMX.valueText(id)));
   SMX.page({
     id: 'ai/models', chapter: 'ai', nav: 'Which model does what', icon: 'sparkle',
     title: 'Which model does what',
     purpose: 'One model answers everything unless you give a job its own. This page is the only place that choice is made.',
-    blurb: (ctx) => { const n = JOB_IDS.filter((id) => SMX.has(id) && !followsEveryday(SMX.val(id))).length; return `${model(ctx.st)} answers${n ? ` · ${count(n, 'job')} use${n === 1 ? 's' : ''} another model` : ' everything'}`; },
+    blurb: (ctx) => { const n = JOB_IDS.filter((id) => SMX.has(id) && !followsEveryday(SMX.val(id), id)).length; return `${model(ctx.st)} answers${n ? ` · ${count(n, 'job')} use${n === 1 ? 's' : ''} another model` : ' everything'}`; },
     legacy: [['ai', 'providers', 'models', 'providers']],
     keywords: ['model', 'default model', 'thinking', 'reasoning', 'effort', 'temperature', 'opus', 'sonnet', 'gpt'],
     lead: (ctx) => {
-      const st = ctx.st; const own = JOB_IDS.filter((id) => SMX.has(id) && !followsEveryday(SMX.val(id)));
-      const others = [
-        ['Back Seat Driver', SMX.val('safety.approvals.bsd-model'), 'ai/advisor'],
-        ['Making pictures', SMX.val('media.image.model'), 'ai/media'],
-        ['Reading pictures while planning', SMX.val('planning.interview.vision-provider'), 'planning'],
-        ['Each persona', 'A persona can prefer its own model', 'memory/personas'],
-        ['Each of your commands', 'A command can name its own model', 'code/commands'],
-        ['Each account', 'An account has the model it uses by default', 'ai']
-      ].filter((x) => x[1] != null);
-      SMX.local.modelOthers = others; SMX.local.modelOwn = own.length;
+      const own = JOB_IDS.filter((id) => SMX.has(id) && !followsEveryday(SMX.val(id), id));
+      SMX.local.modelOwn = own.length;
       return [];
     },
     sections: [
@@ -307,7 +306,15 @@
       { key: 'jobs-head', html: () => { const n = SMX.local.modelOwn || 0; return ui.summary({ icon: 'sparkle', tone: 'info', lines: [n ? `${ui.b(count(n, 'job'))} ${n === 1 ? 'uses' : 'use'} a model of ${n === 1 ? 'its' : 'their'} own. Every other job uses the everyday model.` : 'Every job uses the everyday model. That is right for most people.', 'A stronger model for the hardest jobs and a cheaper one for small ones can save money. You can change one job below without touching the rest.'] }); } },
       S('providers-jobs', { title: 'A model for each job', help: 'Leave one on “Same as the everyday model” and it follows it.' }),
       S('providers-jobs-more', { title: 'Goals, helpers and small jobs' }),
-      { key: 'elsewhere', html: () => ui.card({ title: 'Other places that pick a model', help: 'These belong to one thing each, so they are set where that thing is. They are listed here so you can always answer “which model will do this?”.', body: `<div class="smx-things">${(SMX.local.modelOthers || []).map(([name, v, go]) => `<div class="smx-thing is-clickable" role="button" tabindex="0" data-smx-go="${h(go)}"><span class="smx-thing-copy"><span class="smx-thing-name">${h(name)}</span><span class="smx-thing-sub">${h(String(v))}</span></span><span class="smx-thing-end"><span class="smx-thing-go">${SMX.icon('go')}</span></span></div>`).join('')}</div>` }) },
+      // each row says the choice in the words its own row uses (it showed stored values: "Default", "auto")
+      { key: 'elsewhere', html: () => ui.elsewhere([
+        { id: 'safety.approvals.bsd-model', name: 'Back Seat Driver' },
+        { id: 'media.image.provider', name: 'Making pictures' },
+        { id: 'planning.interview.vision-provider', name: 'Reading pictures while planning' },
+        ['Each persona', 'A persona can prefer its own model', 'memory/personas', ''],
+        ['Each of your commands', 'A command can name its own model', 'code/commands', ''],
+        ['Each account', 'An account has the model it uses by default', 'ai', '']
+      ], { title: 'Other places that pick a model', help: 'These belong to one thing each, so they are set where that thing is. They are listed here so you can always answer “which model will do this?”.' }) },
       S('providers-everyday', { key: 'everyday-more', title: 'Knowing what answered', help: 'So nothing swaps without you seeing it.', ids: ['general.interaction.provider-disclosure', 'ai.usage.auto-refresh-discovery'] })
     ],
     more: [S('providers-presets', { title: 'Your own presets and nicknames' })],

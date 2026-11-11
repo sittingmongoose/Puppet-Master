@@ -118,7 +118,7 @@
     for (const p of places(st)) if (p !== main && p.state === 'Needs sign-in') out.push({ tone: 'info', title: `${p.name} needs you to sign in`, detail: 'Nothing is backed up there until you do.', fix: { label: 'Sign in', action: 'pm51-backup-dest-signin', data: { id: p.id } } });
     return out;
   };
-  (SMX.needSources = SMX.needSources || []).push((st) => needs(st).filter((n) => n.home));
+  (SMX.needSources = SMX.needSources || []).push(Object.assign((st) => needs(st), { chapter: 'keeping' }));
   const chapter = SMX.chapters.find((c) => c.id === 'keeping');
   if (chapter && !chapter.status) chapter.status = (ctx) => { const n = needs(ctx.st).filter((x) => x.home).length; const last = latest(ctx.st); return n ? { tone: 'attention', text: n === 1 ? '1 needs you' : `${n} need you` } : last ? { tone: 'ready', text: `Backed up ${when(last.time).split(' at ')[0]}` } : { tone: 'off', text: 'No backup yet' }; };
 

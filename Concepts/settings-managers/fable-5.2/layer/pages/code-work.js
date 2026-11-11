@@ -179,7 +179,7 @@
     if (!t.triggers.beforeCompletion || t.triggers.beforeCompletion === 'None') out.push({ title: 'Nothing is checked before a job is called done', detail: 'The assistant can report a job as finished without running a single test.', fix: { label: 'Choose a test profile', go: 'code/testing', anchor: 'when' } });
     return out;
   };
-  (SMX.needSources = SMX.needSources || []).push(testNeeds);
+  (SMX.needSources = SMX.needSources || []).push(Object.assign((st) => [...testNeeds(st), ...failedGate(st)], { chapter: 'code' }));
   /* a run of the profile that guards "done" that failed: it needs you, but it is not a fault of the setup */
   const failedGate = (st) => { const t = T(st), r = lastRun(st, t.triggers.beforeCompletion); return r && !testOff() && /fail/i.test(String(r.result)) ? [{ tone: 'info', title: `${r.profile} ended with ${String(r.result).toLowerCase()} ${whenOf(r)}`, detail: 'A job is not called done until this test profile passes.', fix: { label: 'See what failed', action: 'pm51-testing-open-run', data: { index: r.index } } }] : []; };
 

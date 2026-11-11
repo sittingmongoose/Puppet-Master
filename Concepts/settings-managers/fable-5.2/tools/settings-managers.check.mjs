@@ -227,5 +227,86 @@ export const tests = {
 		if (r.err) fail(r.err);
 		if (r.now !== r.route) fail(`saving the sound dialog on ${r.route} threw the page to ${r.now} (the engine went through ${r.seen.join(', ')})`);
 		if (!r.home) fail('the engine was not parked again after the dialog was saved: ' + r.seen.join(', '));
+	},
+	/* Review round 1 found a summary that said 2, the list under it 3, and chapter cards that counted differently again. */
+	async 'what needs you is counted one way: Home, the chapter cards, the marks in the list, each chapter\'s own list'(t) {
+		const { f } = await open(t);
+		const r = await f.evaluate(async () => {
+			const S = window.SMX, wait = (ms) => new Promise((res) => setTimeout(res, ms));
+			const st = S.st(), all = S.needsAll(st), w = S.needWords(all), bad = [];
+			S.go('home'); await wait(500);
+			const q = (sel) => ((document.querySelector('#smx-root ' + sel) || {}).textContent || '').trim();
+			if (all.length && !q('.smx-summary-lead').includes(w.title)) bad.push(`Home's first sentence does not say "${w.title}": ${q('.smx-summary-lead')}`);
+			if (all.length && q('.smx-needs-title') !== w.title) bad.push(`Home's list is headed "${q('.smx-needs-title')}", the count is "${w.title}"`);
+			const shown = document.querySelectorAll('#smx-root .smx-need').length, more = q('.smx-needs-more');
+			if (shown !== Math.min(all.length, 8)) bad.push(`Home lists ${shown} of ${all.length} needs`);
+			if (all.length > 8 && !more.startsWith(String(all.length - 8))) bad.push(`Home does not say how many more there are: "${more}"`);
+			const ctx = { st, local: S.local };
+			for (const c of S.chapters) {
+				const mine = S.needWords(S.needsOf(c.id, st)), s = S.chapterStatus(c, ctx);
+				if (mine.hard && (!s || s.text !== mine.short)) bad.push(`${c.id}: ${mine.hard} need you, its card says "${s ? s.text : ''}"`);
+				const card = [...document.querySelectorAll('#smx-root .smx-chapter')].find((b) => b.getAttribute('data-smx-go') === c.id);
+				if (mine.hard && card && !card.textContent.includes(mine.short)) bad.push(`${c.id}: the card on Home does not show "${mine.short}"`);
+				const nav = document.querySelector(`#smx-root .smx-nav [data-smx-go="${c.id}"] .smx-nav-mark`);
+				if (mine.hard && (!nav || nav.getAttribute('aria-label') !== mine.short)) bad.push(`${c.id}: the mark in the list says "${nav ? nav.getAttribute('aria-label') : 'nothing'}", not "${mine.short}"`);
+			}
+			const orphans = all.filter((n) => !n.chapter || !S.chapters.some((c) => c.id === n.chapter));
+			if (orphans.length) bad.push('needs that belong to no chapter: ' + orphans.map((n) => n.title).join(' | '));
+			// a chapter's first page: its sentence and its list say the same
+			S.go('ai'); await wait(500);
+			const ai = S.needWords(S.needsOf('ai', st));
+			if (ai.hard + ai.soft) { if (q('.smx-needs-title') !== ai.title) bad.push(`AI providers lists "${q('.smx-needs-title')}", the count is "${ai.title}"`); if (!q('.smx-summary-lead').includes(ai.title)) bad.push('AI providers: the first sentence and the list disagree: ' + q('.smx-summary-lead')); }
+			const two = [...document.querySelectorAll('#smx-root .smx-need')].filter((n) => n.querySelectorAll('button.btn').length > 1).length;
+			if (two) bad.push(`${two} needs on AI providers carry two buttons`);
+			return { bad, total: all.length };
+		});
+		if (r.bad.length) fail(r.bad.join(' || '));
+	},
+	async 'a provider and its accounts tell one story; a job that follows the everyday model is not counted as its own'(t) {
+		const { f } = await open(t);
+		const r = await f.evaluate(async () => {
+			const S = window.SMX, wait = (ms) => new Promise((res) => setTimeout(res, ms)), bad = [];
+			const st = S.st();
+			for (const p of S.d.providers(st)) {
+				if (S.d.providerState(p) !== 'Needs sign-in') continue;
+				S.go('ai/provider/' + p.id); await wait(350);
+				const page = document.querySelector('#smx-root .smx-page'), text = page.innerText;
+				if (/signed in as|\b[1-9]\d* accounts? in use/i.test((page.querySelector('.smx-summary-lead') || {}).textContent || '')) bad.push(`${p.name} needs sign-in, and its first sentence says it is signed in or in use`);
+				if ([...page.querySelectorAll('.smx-accounts .smx-thing')].some((x) => /\bReady\b/.test(x.textContent))) bad.push(`${p.name} needs sign-in, and one of its accounts reads "Ready"`);
+				if (!text) bad.push(p.name + ' drew nothing');
+			}
+			S.go('ai/models'); await wait(600);
+			const said = (document.querySelector('#smx-root [data-smx-block="main-jobs-head"] .smx-summary-lead') || {}).textContent || '';
+			const ids = ['ai.models.overseer-model', 'ai.models.worker-model', 'ai.models.gui-worker-model', 'ai.models.high-effort-worker-model', 'ai.models.auditor-model', 'ai.models.goal-worker-model', 'ai.models.goal-verifier-model', 'ai.models.subagent-model', 'ai.models.teach-model', 'ai.models.thread-title-model'].filter(S.has);
+			const own = ids.filter((id) => !/^\W*(same as|automatic|auto|default|inherit)/i.test(S.valueText(id)) && !/^\W*(same as|automatic|auto|default|inherit)/i.test(String(S.val(id) == null ? '' : S.val(id)))).length;
+			const n = (said.match(/^(\d+) jobs? uses?/) || [])[1];
+			if (own === 0 ? !/Every job uses the everyday model/.test(said) : Number(n) !== own) bad.push(`"Which model does what" says "${said.slice(0, 70)}", and ${own} of ${ids.length} jobs have a model of their own`);
+			return { bad };
+		});
+		if (r.bad.length) fail(r.bad.join(' || '));
+	},
+	async 'a panel of PMConcept7\'s is closed by going somewhere; Escape puts the search results away from anywhere; a look chosen in the strip is the saved look'(t) {
+		const { f } = await open(t);
+		const r = await f.evaluate(async () => {
+			const S = window.SMX, wait = (ms) => new Promise((res) => setTimeout(res, ms)), bad = [];
+			const drawers = () => document.querySelectorAll('#pm-settings-portals .drawer-wrap.is-open:not([data-closing])').length;
+			S.go('code/test-runs'); await wait(600);
+			const run = document.querySelector('#smx-root .smx-page [data-action="pm51-testing-open-run"]');
+			if (run) { run.click(); await wait(900); if (!drawers()) bad.push('a test run did not open its panel, so closing it proves nothing'); const nav = document.querySelector('#smx-root .smx-nav [data-smx-go="code/debug"]'); nav.click(); await wait(900); if (drawers()) bad.push('the panel of a test run stayed open over ' + S.route); }
+			S.go('home'); await wait(300);
+			const q = document.querySelector('#smx-root [data-smx-search]'); q.focus(); q.value = 'phone'; q.dispatchEvent(new Event('input', { bubbles: true })); await wait(200);
+			if (S.layerOpen !== 'find') bad.push('typing in the search box showed no results');
+			q.blur(); document.body.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true, cancelable: true })); await wait(200);
+			if (S.layerOpen) bad.push('Escape left the search results open when the focus was not in the box');
+			await S.setLook('glass-dark'); S.go('look'); await wait(900);
+			if (!/^Glass/.test(String(S.val('general.visual.theme')))) bad.push('Glass chosen in the strip is not the saved look: ' + S.val('general.visual.theme'));
+			if (!/Only for the Glass look|transparen/i.test(document.querySelector('#smx-root .smx-page').innerText)) bad.push('Look & feel does not show the Glass choices under Glass');
+			const sw = [...document.querySelectorAll('#smx-root .smx-lk-sws button')][3]; if (sw) { sw.click(); await wait(1200); }
+			if (document.documentElement.getAttribute('data-theme') !== 'glass-dark') bad.push('picking an accent threw the look back to ' + document.documentElement.getAttribute('data-theme'));
+			await S.setLook('basic-dark'); await wait(500);
+			if (!/^Basic/.test(String(S.val('general.visual.theme')))) bad.push('the look did not go back to Basic: ' + S.val('general.visual.theme'));
+			return { bad };
+		});
+		if (r.bad.length) fail(r.bad.join(' || '));
 	}
 };

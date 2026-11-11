@@ -140,7 +140,7 @@
     const n = list.filter(unchecked).length;
     return n ? [{ tone: 'info', title: `${count(n, 'note')} the assistant made ${n === 1 ? 'is' : 'are'} waiting for you to check`, detail: 'It does not rely on a note it noticed by itself until someone confirms it.', fix: Object.assign({ label: n === 1 ? 'Check it' : 'Check them' }, here ? { do: 'lane-jump', data: { to: 'memories-first' } } : { go: 'memory' }) }] : [];
   };
-  (SMX.needSources = SMX.needSources || []).push((st) => needs(st, false));
+  (SMX.needSources = SMX.needSources || []).push(Object.assign((st) => needs(st, false), { chapter: 'memory' }));
 
   /* ================================================================== Memories (the chapter's first page) */
   const FIRST = {

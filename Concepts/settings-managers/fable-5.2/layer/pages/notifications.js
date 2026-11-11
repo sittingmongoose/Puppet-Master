@@ -252,7 +252,7 @@
     }
     return out;
   };
-  (SMX.needSources = SMX.needSources || []).push((st) => needs(st).filter((n) => n.tone !== 'info'));
+  (SMX.needSources = SMX.needSources || []).push(Object.assign((st) => needs(st), { chapter: 'notifications' }));
   const chapter = SMX.chapters.find((c) => c.id === 'notifications');
   if (chapter && !chapter.status) chapter.status = (ctx) => { const n = needs(ctx.st).filter((x) => x.tone !== 'info').length; const on = alerts(ctx.st).filter((e) => e.enabled).length; return !isOn(MASTER) ? { tone: 'off', text: 'Off' } : n ? { tone: 'attention', text: n === 1 ? '1 needs you' : `${n} need you` } : { tone: 'ready', text: `${plural(on, 'alert')} on` }; };
 

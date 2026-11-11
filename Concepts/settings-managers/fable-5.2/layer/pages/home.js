@@ -9,7 +9,7 @@
 
   /* what needs you, gathered from every chapter. A chapter adds a function: (st) => [{tone, title, detail, fix}] */
   SMX.needSources = SMX.needSources || [];
-  const allNeeds = (st) => { const out = []; for (const f of SMX.needSources) { try { out.push(...(f(st) || [])); } catch (e) { /* a chapter that fails adds nothing */ } } return out; };
+  const allNeeds = (st) => SMX.needsAll(st);   // counted one way everywhere: smx-parts.js
   SMX.allNeeds = allNeeds;
 
   SMX.page({
@@ -28,15 +28,15 @@
       const groups = [];
       let g = null;
       for (const c of SMX.chapters) { if (!g || g.name !== c.group) { g = { name: c.group, items: [] }; groups.push(g); } g.items.push(c); }
-      // a chapter that says nothing about itself still shows when something of its own needs the person
-      const waiting = (c) => needs.filter((n) => n.chapter === c.id || (n.fix && typeof n.fix.go === 'string' && (n.fix.go === c.id || n.fix.go.startsWith(c.id + '/'))));
-      const card = (c) => { let s = null; try { s = c.status ? c.status(ctx) : null; } catch (e) { s = null; } if (!s) { const w = waiting(c); if (w.length) s = { tone: w.some((n) => n.tone !== 'info') ? 'attention' : 'info', text: `${w.length} need${w.length === 1 ? 's' : ''} you` }; } return `<button type="button" class="smx-chapter" data-smx-go="${h(c.id)}"><span class="smx-chapter-icon">${SMX.icon(c.icon)}</span><span class="smx-chapter-copy"><span class="smx-chapter-name">${h(c.title)}</span><span class="smx-chapter-blurb">${h(c.blurb || '')}</span></span>${s ? `<span class="smx-chapter-status">${ui.status(s.text, s.tone)}</span>` : ''}</button>`; };
+      // a chapter's card says what needs you there in the same numbers as the list above it and the mark in the list on the left
+      const nw = SMX.needWords(needs);
+      const card = (c) => { let s = null; try { s = SMX.chapterStatus(c, ctx); } catch (e) { s = null; } return `<button type="button" class="smx-chapter" data-smx-go="${h(c.id)}"><span class="smx-chapter-icon">${SMX.icon(c.icon)}</span><span class="smx-chapter-copy"><span class="smx-chapter-name">${h(c.title)}</span><span class="smx-chapter-blurb">${h(c.blurb || '')}</span></span>${s ? `<span class="smx-chapter-status">${ui.status(s.text, s.tone)}</span>` : ''}</button>`; };
       return [
-        { key: 'summary', html: ui.summary({ icon: needs.some((n) => n.tone !== 'info') ? 'alert' : 'check', tone: needs.some((n) => n.tone !== 'info') ? 'attention' : 'ready', lines: [
-          needs.length ? `Puppet Master is working. ${ui.b(needs.length === 1 ? 'One thing' : needs.length + ' things')} could use a moment of yours.` : 'Everything is set up and working.',
+        { key: 'summary', html: ui.summary({ icon: nw.hard ? 'alert' : 'check', tone: nw.hard ? 'attention' : 'ready', lines: [
+          needs.length ? `Puppet Master is working. ${ui.b(nw.title)}.` : 'Everything is set up and working.',
           `${ui.word(d.plural(ready, 'AI provider'), { go: 'ai' })} ready · projects kept on ${ui.word(home ? home.name : 'no computer yet', { go: 'computers' })} · away from home ${ui.word(away ? 'works' : 'not set up', { go: 'computers/away' })} · last backup ${ui.word(backup, { go: 'keeping' })}`
         ] }) },
-        { key: 'needs', html: ui.needs(needs.slice(0, MOST)) + (needs.length > MOST ? ui.note(`${needs.length - MOST} more ${needs.length - MOST === 1 ? 'is' : 'are'} on the chapters marked with a dot in the list on the left.`) : '') },
+        { key: 'needs', html: ui.needs(needs, { max: MOST }) },
         { key: 'tasks', html: ui.tasks([
           { icon: 'brain', title: 'Add an AI provider', sub: 'Sign in to one you pay for, or try the free ones', action: 'pm51-providers-add' },
           { icon: 'phone', title: 'Use it on another device', sub: 'Pair a phone, a tablet or another computer', action: 'pm51-servers-pair' },

@@ -60,9 +60,47 @@
   ui.b = (text) => `<strong>${h(text)}</strong>`;
 
   /* ------------------------------------------------------------------ what needs you: one line and one way forward each */
-  ui.needs = (items) => {
-    const list = items.filter(Boolean); if (!list.length) return '';
-    return `<section class="smx-needs" aria-label="Needs you"><h3 class="smx-needs-title">${SMX.icon('alert')}<span>${list.length === 1 ? 'One thing needs you' : `${list.length} things need you`}</span></h3>${list.map((n) => `<div class="smx-need tone-${SMX.tone(n.tone || 'attention')}"><div class="smx-need-copy"><div class="smx-need-title">${h(n.title)}</div>${n.detail ? `<div class="smx-need-detail">${h(n.detail)}</div>` : ''}</div>${n.fix ? ui.btn(Object.assign({ primary: true }, n.fix)) : ''}${n.also ? ui.btn(n.also) : ''}</div>`).join('')}</section>`;
+  /* What needs the person is counted and said ONE way (review R1, F3: a summary said 2, the list under it 3, and two
+     chapter cards counted differently again). Things that stop something "need you"; things that do not (an account
+     you signed out of, an update that is ready) are "worth a look". The title, a chapter's card and the mark beside a
+     chapter in the list on the left all use these words. */
+  SMX.needWords = (list) => {
+    const hard = list.filter((n) => n && n.tone !== 'info').length, soft = list.filter(Boolean).length - hard;
+    const t = (n, one, many) => (n === 1 ? one : `${n} ${many}`);
+    return { hard, soft,
+      title: hard && soft ? `${t(hard, 'One thing needs', 'things need')} you, and ${t(soft, 'one more is', 'more are')} worth a look` : hard ? `${t(hard, 'One thing needs', 'things need')} you` : soft ? `${t(soft, 'One thing is', 'things are')} worth a look` : 'Nothing needs you',
+      short: hard ? `${hard} need${hard === 1 ? 's' : ''} you` : soft ? `${soft} to look at` : '' };
+  };
+  ui.needs = (items, o = {}) => {
+    const every = items.filter(Boolean); if (!every.length) return '';
+    // what stops something comes first; a long list is cut and says how many more there are, and where
+    const sorted = every.filter((n) => n.tone !== 'info').concat(every.filter((n) => n.tone === 'info'));
+    const list = o.max && sorted.length > o.max ? sorted.slice(0, o.max) : sorted;
+    const rest = sorted.length - list.length;
+    return `<section class="smx-needs" aria-label="Needs you"><h3 class="smx-needs-title">${SMX.icon('alert')}<span>${h(SMX.needWords(every).title)}</span></h3>${list.map((n) => `<div class="smx-need tone-${SMX.tone(n.tone || 'attention')}"><div class="smx-need-copy"><div class="smx-need-title">${h(n.title)}</div>${n.detail ? `<div class="smx-need-detail">${h(n.detail)}</div>` : ''}</div>${n.fix ? ui.btn(Object.assign({ primary: true }, n.fix)) : ''}${n.also ? ui.link(n.also) : ''}</div>`).join('')}${rest > 0 ? `<p class="smx-needs-more">${h(o.more || `${rest} more ${rest === 1 ? 'is' : 'are'} on the chapters marked with a dot in the list on the left.`)}</p>` : ''}</section>`;
+  };
+
+  /* Every need of every chapter, from the functions the chapters add to SMX.needSources. A need belongs to the chapter
+     that reports it (the function carries `chapter`), unless the need names one itself (the checkup reports things
+     that other chapters fix). SMX.chapterStatus is a chapter's state for its card on Home and its mark in the list on
+     the left: what needs you there, counted this one way, comes before the chapter's own words. */
+  const chapterOfRoute = (r) => { if (!r) return ''; const m = SMX.match(String(r)); return m ? m.page.chapter : String(r).split('/')[0]; };
+  SMX.needsAll = (st) => {
+    const out = [];
+    for (const f of (SMX.needSources || [])) {
+      let list = []; try { list = f(st) || []; } catch (e) { list = []; }
+      for (const n of list) if (n) { if (!n.chapter) n.chapter = f.chapter || chapterOfRoute((n.fix && n.fix.go) || (n.also && n.also.go)); out.push(n); }
+    }
+    return out;
+  };
+  SMX.needsOf = (chapterId, st) => SMX.needsAll(st).filter((n) => n.chapter === chapterId);
+  SMX.chapterStatus = (c, ctx) => {
+    const w = SMX.needWords(SMX.needsOf(c.id, ctx.st));
+    let own = null; try { own = c.status ? c.status(ctx) : null; } catch (e) { own = null; }
+    if (w.hard) return { tone: 'attention', text: w.short };
+    if (own && own.tone === 'off') return own;   // "Off" is said before "2 to look at"
+    if (w.soft) return { tone: 'info', text: w.short };
+    return own;
   };
 
   /* ------------------------------------------------------------------ tasks: the few things people come here to do */

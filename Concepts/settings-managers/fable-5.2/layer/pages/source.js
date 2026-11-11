@@ -189,7 +189,7 @@
     if (old.length) out.push({ tone: 'info', title: `${count(old.length, 'working copy', 'working copies')} ${old.length === 1 ? 'is' : 'are'} no longer used`, detail: `${old.map((w) => w.name).join(', ')}. Removing ${old.length === 1 ? 'it' : 'them'} frees space; the branches are kept.`, fix: { label: 'Clean up', action: 'pm51-source-cleanup' } });
     return out;
   };
-  (SMX.needSources = SMX.needSources || []).push((st) => { settle(st); return needs(st).filter((n) => n.home); });
+  (SMX.needSources = SMX.needSources || []).push(Object.assign((st) => { settle(st); return needs(st); }, { chapter: 'source' }));
   /* the chapter says its own state on Settings Home and in the navigation */
   const chapter = SMX.chapters.find((c) => c.id === 'source');
   if (chapter && !chapter.status) chapter.status = (ctx) => { const n = needs(ctx.st).filter((x) => x.home).length; const on = forges(ctx.st).filter(connected); return n ? { tone: 'attention', text: n === 1 ? '1 needs you' : `${n} need you` } : on.length ? { tone: 'ready', text: `Saved to ${on[0].name}` } : { tone: 'off', text: 'No online copy' }; };
