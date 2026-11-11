@@ -22,8 +22,9 @@ html[data-o55-open] body > [data-o55-held], html[data-o55-open] body > [data-o55
    The impossible t7.t7.t7:not(*) arm preserves the retired spinners' (0,2,1) specificity (the Wizard's and the
    Orchestrator's rings and Projects' .pm6-spin are the system loader now, held here as .pml-nier). */
 html[data-o55-open][data-o55-nier-parts] body > [data-o55-held] :is(.o55-spin, .thread-working-pulse, .pml-nier, t7.t7.t7:not(*)) { animation-play-state: paused !important; }
-/* the solid backdrop (60-ui-core.js): on a computer that cannot composite the app beneath at full rate, the app is
-   not drawn at all while the window is open; the scrim then lies over the page's own ground */
+/* the solid backdrop (60-ui-core.js): the app beneath is not drawn at all while the window is open, on every computer
+   (PERF-2, Jared's choice B, 2026-11-11; it was for computers that could not composite the app beneath at full rate);
+   the scrim lies over the page's own ground */
 html[data-o55-open][data-o55-solid] body > [data-o55-held] { visibility: hidden !important; }
 .o55-scrim { position: absolute; inset: 0; background: color-mix(in srgb, var(--background) 74%, transparent); }
 /* The click paints this dim before the window is built (the open used to stay undimmed through that work).

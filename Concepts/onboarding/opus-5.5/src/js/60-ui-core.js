@@ -826,7 +826,6 @@
     if (!hold) { leave(); focusHeading(); skin('screen', layer, dir); O55.motion.real.setTimeout(armStageTokens, 1600); return; }
     O55.motion.release(() => {
       S.root.classList.remove('o55-hold');
-      if (dir === 'open') checkSolid(); /* the opening is the window's busiest motion: measured while it plays */
       /* The opening may be the skin's to play first (NieR's cold open: the window opens empty, a boot log runs where the
          title will be and its line becomes the title's rule). The screen waits for the skin's promise, or for a key or
          a press, which shows it at once (a key also lands on its primary); the stage shows when the promise says
@@ -1285,26 +1284,18 @@
     O55.motion.setLowResource(!!S.env.lowResource, 'scenario');
     if (O55.tour && O55.tour.reset) O55.tour.reset({ silent: true, force: true });
   }
-  /* Solid backdrop. A computer that cannot draw the dimmed app beneath at full rate (no GPU: the app's live backdrop
-     blurs, paper grounds and translucent layers composited in software, one pass per frame of motion in the window)
-     gets a solid backdrop instead, so the window's own motion stays at 60 fps; a fast computer keeps the dimmed live
-     app. Known at once when the browser renders in software (O55.motion.softwareRendered), otherwise measured over the
-     first opening (the app then goes once the scrim covers it); kept for the page, and the app comes back as the
-     window starts to close. */
-  let SOLID = null;
+  /* Solid backdrop. The app beneath the window is not drawn while the window is open: the scrim lies over the page's
+     own ground (10-window.css). It was the answer for a computer that could not draw the dimmed app beneath at full
+     rate (no GPU, measured over the first opening); since PERF-2 (Jared's choice B, 2026-11-11: "plain dimmed
+     background on every computer") it is every computer's: each redraw of Pip re-sorted the layers of the whole app
+     beneath (pm7-perf lane G, in-page trial: layer work 214 -> 54 ms a second in Basic, 259 -> 86 in Glass; main
+     thread 680 -> 546 and 877 -> 721). The app comes back as the window starts to close, and the Guided Tour, whose
+     subject is the app, never has it. O55.solid.set(false) still draws the app beneath, for a check about it. */
+  let SOLID = true;
   const setSolid = (on) => { const h = document.documentElement; if (h.hasAttribute('data-o55-solid') !== !!on) h.toggleAttribute('data-o55-solid', !!on); };
-  function checkSolid() {
-    if (SOLID !== null || document.hidden || O55.motion.reduced()) return;
-    O55.motion.sampleFrames(900).then((r) => {
-      if (SOLID !== null || document.hidden) return;
-      /* fewer than a dozen frames in 0.9 s is itself the answer (a Glass skin without a GPU draws three a second) */
-      SOLID = r.n < 12 || r.median > 21;
-      if (SOLID && S.open && !S.root.classList.contains('o55-opening')) setSolid(true);
-    });
-  }
-  O55.solid = { get: () => SOLID, set(v) { SOLID = v == null ? null : !!v; setSolid(!!SOLID && S.open); } };
-  /* (asking the browser whether it renders in software builds a WebGL context, 180 ms on the VM: done once while the
-     page is idle after it loads, never inside the window's opening) */
+  O55.solid = { get: () => SOLID, set(v) { SOLID = v == null ? true : !!v; setSolid(!!SOLID && S.open); } };
+  /* (the idle warm queue still asks whether the browser renders in software, 11-motion-start.js: the question builds a
+     WebGL context, 180 ms on the VM, so it is asked once while the page is idle after it loads) */
   const warm = () => { try { O55.motion.softwareRendered(); } catch (_) {} };
   if (typeof window.requestIdleCallback === 'function') window.requestIdleCallback(warm, { timeout: 6000 }); else window.setTimeout(warm, 3000);
 
@@ -1426,8 +1417,7 @@
        stays until this root is on screen, so the dim never drops out between the two. */
     if (!wasShown && !O55.motion.reduced()) r.classList.add('o55-hold');
     clearOpenScrim();
-    /* known in advance on a computer that renders in software: the backdrop is solid from the first frame */
-    if (SOLID === null && O55.motion.softwareRendered()) SOLID = true;
+    /* the backdrop is solid from the window's first frame (a window already on screen keeps what it has) */
     if (SOLID && !wasShown) setSolid(true);
     O55.motion.settled(r.querySelector('.o55-win'), { subtree: false, fallback: 2800 }).then(() => { if (S.open) { r.classList.remove('o55-opening', 'o55-scrim-lit'); if (SOLID) setSolid(true); } });
     const pane = r.querySelector('.o55-pane'); pane.innerHTML = '';
