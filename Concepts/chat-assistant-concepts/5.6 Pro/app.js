@@ -4210,7 +4210,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     return extRender('submenu',{id});
   }
   /* items: [value, description, label (defaults to value), fine line]. F0b (d, i). */
-  function renderCapabilitySub(title,items,current,action){ return `<div class="menu-head"><strong>${esc(title)}</strong></div>${items.map(o=>`<button class="menu-item ${current===o[0]?'active':''}" data-action="${action}" data-value="${esc(o[0])}"><span class="menu-copy"><strong>${esc(o[2]||o[0])}</strong><span class="menu-sub">${esc(o[1])}</span>${o[3]?`<span>${esc(o[3])}</span>`:''}</span>${current===o[0]?icon('check',11):''}</button>`).join('')}`; }
+  function renderCapabilitySub(title,items,current,action){ return `<div class="menu-head"><strong>${esc(title)}</strong></div>${items.map(o=>`<button class="menu-item ${current===o[0]?'active':''}" data-action="${action}" data-value="${esc(o[0])}"><span class="menu-copy"><strong>${esc(o[2]||o[0])}</strong><span class="menu-sub">${esc(o[1])}</span>${o[3]?`<span class="menu-sub">${esc(o[3])}</span>`:''}</span>${current===o[0]?icon('check',11):''}</button>`).join('')}`; }
   /* Lines shown while thinking (DL-234): how much of the reasoning While it thinks keeps in view. The choices are
      thought-stream.js's, so the list is offered only where that module draws the thinking. */
   function renderThoughtLines(){

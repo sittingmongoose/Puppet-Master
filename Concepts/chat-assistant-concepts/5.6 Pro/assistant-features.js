@@ -649,7 +649,7 @@
       '</button>';
     if(override){
       out+='<button class="menu-item af-wand-subrow" data-action="af-eli5-reset">'+
-        '<span class="menu-icon"></span><span class="menu-copy"><span>Follow my usual setting ('+(F.eli5.appDefault?'On':'Off')+')</span></span></button>';
+        '<span class="menu-icon"></span><span class="menu-copy"><span class="menu-sub">Follow my usual setting ('+(F.eli5.appDefault?'On':'Off')+')</span></span></button>';
     }
     return out;
   }
