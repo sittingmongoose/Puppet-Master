@@ -191,7 +191,9 @@ const FIT = ([affected]) => {
 			const past = (clipsX && right > padR + 1) || (clipsY && bottom > padB + 1);
 			if (!ellipsis && (past || scrolls || tall)) out.cut.push(`${label} text ${Math.round(left)}..${Math.round(right)} in ${Math.round(padL)}..${Math.round(padR)}${scrolls ? ` scrollX ${el.scrollWidth}>${el.clientWidth}` : ''}${tall ? ` scrollY ${el.scrollHeight}>${el.clientHeight}` : ''}`);
 			// wrapped: a control that draws its label on one line must still draw one line box
-			if (oneLine(el, cs) && rects.length > 1 && !ellipsis) out.wrapped.push(`${label} ${rects.length} line boxes`);
+			// one line = every painted rect on the same line box; an icon and its label are two rects on one line
+			const lines = new Set(rects.map((r) => Math.round(r.top))).size;
+			if (oneLine(el, cs) && lines > 1 && !ellipsis) out.wrapped.push(`${label} ${lines} lines`);
 		}
 	}
 	return out;
