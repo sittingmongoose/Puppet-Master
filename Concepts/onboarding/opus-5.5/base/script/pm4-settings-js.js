@@ -6645,10 +6645,11 @@ if(state.projectSyncTab==='move')return `<div class="card-grid two"><section cla
   }
 
   function confirmDialog(title, message, confirmLabel, onConfirm, danger = false) {
+    const warning = !!danger;
     return openDialog({
       title,
-      subtitle: message,
-      body: `<div class="alert-strip ${danger ? 'danger' : 'info'}">${icon(danger ? 'alert' : 'info')}<div>${escapeHtml(message)}</div></div>`,
+      subtitle: warning ? '' : message,
+      body: warning ? `<div class="alert-strip danger">${icon('alert')}<div>${escapeHtml(message)}</div></div>` : '',
       saveLabel: confirmLabel,
       onSave: () => { onConfirm?.(); return true; }
     });
