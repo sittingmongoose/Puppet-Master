@@ -52,10 +52,10 @@ Only Fable 5.2 designed or wrote pages. Other models read, audited and reviewed 
 - **Everything that is not a row** (lists, menus, guided steps, 429 distinct actions on 3,084 controls) was compared
   feature by feature with a census of PMConcept7; the result is in the share folder.
 - **What must stay true**: `browser-check run Concepts/settings-managers/fable-5.2/tools --set page=<out>/settings-managers-app.html`
-  (add `--set host=<out>/settings-managers.html` for the review page) runs 12 tests: coverage, every page draws, the
+  (add `--set host=<out>/settings-managers.html` for the review page) runs 13 tests: coverage, every page draws, the
   examples stay in view, a borrowed menu belongs to its thing, the page stays put after a menu or a saved dialog, what
   needs you is counted one way, a provider and its accounts tell one story, panels close, Escape works, a look chosen
-  in the strip is saved.
+  in the strip is saved, and, 780 and 860 wide, no page scrolls sideways and every control is named by its label.
 
 The review of today's Settings, the audits, the defect list and the list of what is still open are in the share
 folder `puppet-master/2026-11-11-settings-managers/`.
