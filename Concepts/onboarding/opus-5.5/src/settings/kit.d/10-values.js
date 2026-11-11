@@ -103,14 +103,14 @@ function o55Select(setting, value, opts) {
   const list = opts.slice();
   const cur = value == null ? '' : String(value);
   if (!list.map(String).includes(cur)) list.unshift(cur); /* never pretend the first choice is the current one */
-  return PM51.dropdown(cur, list.map(o => { const why = PM51.choiceReason(setting.id, o, cur); return Object.assign({ value: o, label: PM51.valueLabel(setting.id, o), meta: PM51.valueHint(setting.id, o) }, why ? { disabled: true, reason: why, why: true } : {}); }), { action: 'change-setting', data: { setting: setting.id }, label: setting.label, search: list.length > 10 });
+  return PM51.dropdown(cur, list.map(o => { const why = PM51.choiceReason(setting.id, o, cur); return Object.assign({ value: o, label: PM51.valueLabel(setting.id, o), meta: PM51.valueHint(setting.id, o) }, why ? { disabled: true, reason: why, why: true } : {}); }), { action: 'change-setting', data: { setting: setting.id }, label: PM51.rowLabel(setting), search: list.length > 10 });
 }
 function o55Segmented(setting, value, opts) {
-  return `<div class="segmented o55-seg" role="radiogroup" aria-label="${a(setting.label)}">${opts.map(o => { const on = String(o) === String(value); return `<button type="button" role="radio" class="${on ? 'active' : ''}" aria-checked="${on}" data-action="set-setting" data-setting="${a(setting.id)}" data-value="${a(o)}">${h(PM51.valueLabel(setting.id, o))}</button>`; }).join('')}</div>`;
+  return `<div class="segmented o55-seg" role="radiogroup" aria-label="${a(PM51.rowLabel(setting))}">${opts.map(o => { const on = String(o) === String(value); return `<button type="button" role="radio" class="${on ? 'active' : ''}" aria-checked="${on}" data-action="set-setting" data-setting="${a(setting.id)}" data-value="${a(o)}">${h(PM51.valueLabel(setting.id, o))}</button>`; }).join('')}</div>`;
 }
 function o55Multi(setting, value, opts) {
   const on = Array.isArray(value) ? value.map(String) : [];
-  return `<div class="chip-select o55-chips" role="group" aria-label="${a(setting.label)}">${opts.map(o => { const sel = on.includes(String(o)); return `<button type="button" class="${sel ? 'active' : ''}" aria-pressed="${sel}" data-action="toggle-multi-setting" data-setting="${a(setting.id)}" data-value="${a(o)}">${sel ? icon('check') : ''}<span>${h(PM51.valueLabel(setting.id, o))}</span></button>`; }).join('')}</div>`;
+  return `<div class="chip-select o55-chips" role="group" aria-label="${a(PM51.rowLabel(setting))}">${opts.map(o => { const sel = on.includes(String(o)); return `<button type="button" class="${sel ? 'active' : ''}" aria-pressed="${sel}" data-action="toggle-multi-setting" data-setting="${a(setting.id)}" data-value="${a(o)}">${sel ? icon('check') : ''}<span>${h(PM51.valueLabel(setting.id, o))}</span></button>`; }).join('')}</div>`;
 }
 /* A bound may follow another setting (rows.d `maxFrom` / `minFrom`, an id or {id, offset}): tabs reopened next time
    can't exceed the tabs allowed open, and the fewest questions per topic stays below the most. */
@@ -131,7 +131,7 @@ function o55Number(setting, value) {
      `scale` divides for display and multiplies back when saving */
   const scale = Number(row.scale) || 1;
   const shown = Number.isFinite(n) && !(row.zero && n === 0) ? (scale === 1 ? n : +(n / scale).toFixed(2)) : '';
-  return `<label class="o55-num"><input class="text-control" type="number" inputmode="decimal" step="${a(row.step || 'any')}"${bounds} value="${a(shown)}" placeholder="${a(row.placeholder || '')}" data-action="${scale === 1 ? 'input-setting' : 'o55-scaled-input'}" data-setting="${a(setting.id)}" data-scale="${scale}" data-value-suffix="${a(suffix)}" aria-label="${a(setting.label)}">${unit ? `<span class="o55-unit">${h(unit)}</span>` : ''}</label>`;
+  return `<label class="o55-num"><input class="text-control" type="number" inputmode="decimal" step="${a(row.step || 'any')}"${bounds} value="${a(shown)}" placeholder="${a(row.placeholder || '')}" data-action="${scale === 1 ? 'input-setting' : 'o55-scaled-input'}" data-setting="${a(setting.id)}" data-scale="${scale}" data-value-suffix="${a(suffix)}" aria-label="${a(PM51.rowLabel(setting))}">${unit ? `<span class="o55-unit">${h(unit)}</span>` : ''}</label>`;
 }
 function o55Inherited(setting, value) {
   const n = Number(value);
@@ -205,7 +205,7 @@ function o55Structured(setting, value) {
   const plural = row.nouns || (noun.endsWith('y') ? noun.slice(0, -1) + 'ies' : noun + 's');
   const preview = count ? PM51.valueText(setting, value) : '';
   const text = count ? `${count} ${count === 1 ? noun : plural}` : (row.empty || `No ${plural} yet`);
-  return `<button type="button" class="o55-struct" data-action="open-structured-setting" data-setting="${a(setting.id)}" aria-label="${a(`${setting.label}: ${text}. Edit`)}"><span class="o55-struct-copy"><span class="o55-struct-count">${h(text)}</span>${preview ? `<span class="o55-struct-preview">${h(preview)}</span>` : ''}</span>${icon(count ? 'edit' : 'plus')}</button>`;
+  return `<button type="button" class="o55-struct" data-action="open-structured-setting" data-setting="${a(setting.id)}" aria-label="${a(`${PM51.rowLabel(setting)}: ${text}. Edit`)}"><span class="o55-struct-copy"><span class="o55-struct-count">${h(text)}</span>${preview ? `<span class="o55-struct-preview">${h(preview)}</span>` : ''}</span>${icon(count ? 'edit' : 'plus')}</button>`;
 }
 function o55Credential(setting) {
   const saved = !!(PM51.s().o55Keys || {})[setting.id];
@@ -224,7 +224,7 @@ function o55Action(setting) {
 const o55Shown = (setting, value) => { const row = O55R[setting.id] || {}; return row.wordsDefault && row.placeholder && value === setting.value ? '' : value; };
 function o55Text(setting, value) {
   const row = O55R[setting.id] || {}; value = o55Shown(setting, value);
-  return `<input class="text-control" value="${a(value == null ? '' : value)}" placeholder="${a(row.placeholder || '')}" data-action="input-setting" data-setting="${a(setting.id)}" aria-label="${a(setting.label)}"${row.wide ? ' data-wide="1"' : ''}/>`;
+  return `<input class="text-control" value="${a(value == null ? '' : value)}" placeholder="${a(row.placeholder || '')}" data-action="input-setting" data-setting="${a(setting.id)}" aria-label="${a(PM51.rowLabel(setting))}"${row.wide ? ' data-wide="1"' : ''}/>`;
 }
 const O55_PROJECT_BASE = '${PROJECT_ROOT}/';
 function o55Path(setting, value) {
@@ -232,7 +232,7 @@ function o55Path(setting, value) {
   /* a path kept relative to the project reads as "project/…"; typing keeps the ${PROJECT_ROOT}/ part */
   const base = typeof value === 'string' && value.startsWith(O55_PROJECT_BASE) ? O55_PROJECT_BASE : '';
   const shown = base ? value.slice(base.length) : value;
-  return `<div class="path-control o55-path${base ? ' has-base' : ''}">${base ? `<span class="o55-path-base" title="Inside your project folder">project/</span>` : ''}<input class="text-control" value="${a(shown == null ? '' : shown)}" placeholder="${a(row.placeholder || 'Automatic')}" data-action="${base ? 'o55-path-input' : 'input-setting'}" data-setting="${a(setting.id)}"${base ? ` data-base="${a(base)}"` : ''} aria-label="${a(setting.label)}"><button type="button" class="btn small" data-action="browse-setting-path" data-setting="${a(setting.id)}">${icon('folder')}<span>Choose</span></button></div>`;
+  return `<div class="path-control o55-path${base ? ' has-base' : ''}">${base ? `<span class="o55-path-base" title="Inside your project folder">project/</span>` : ''}<input class="text-control" value="${a(shown == null ? '' : shown)}" placeholder="${a(row.placeholder || 'Automatic')}" data-action="${base ? 'o55-path-input' : 'input-setting'}" data-setting="${a(setting.id)}"${base ? ` data-base="${a(base)}"` : ''} aria-label="${a(PM51.rowLabel(setting))}"><button type="button" class="btn small" data-action="browse-setting-path" data-setting="${a(setting.id)}">${icon('folder')}<span>Choose</span></button></div>`;
 }
 function o55Status(setting, value) {
   const row = O55R[setting.id] || {};
@@ -262,7 +262,7 @@ renderControl = function (setting, value) {
     case 'text': return o55Text(setting, value);
     case 'path': return o55Path(setting, value);
     case 'status': return o55Status(setting, value);
-    case 'toggle': return `<button type="button" class="toggle ${value ? 'on' : ''}" role="switch" aria-checked="${!!value}" data-action="toggle-setting" data-setting="${a(setting.id)}" aria-label="${a(setting.label)}"></button>`;
+    case 'toggle': return `<button type="button" class="toggle ${value ? 'on' : ''}" role="switch" aria-checked="${!!value}" data-action="toggle-setting" data-setting="${a(setting.id)}" aria-label="${a(PM51.rowLabel(setting))}"></button>`;
     default: return o55KitControl(Object.assign({}, setting, { control }), value);
   }
 };

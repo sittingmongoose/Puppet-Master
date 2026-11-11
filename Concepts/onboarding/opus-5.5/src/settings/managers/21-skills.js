@@ -85,7 +85,7 @@
   function reviewStep(d) {
     const where = d.where || 'Project';
     return PM51.panelSection(d.name, PM51.kv([['When it is used', d.description || '—'], ['It may', (MAY.find(m => m[0] === d.may) || [d.may, d.may])[1]], ['It needs', (d.needs || []).length ? d.needs.join(', ') : 'Nothing extra']]), '', { icon: 'sliders' })
-      + PM51.panelSection('Where it is saved', PM51.select(where, [['Project', 'This project (.puppet-master/skills)'], ['Global', 'Every project (your skills folder)']], { cls: 'o55-skl-where', label: 'Where it is saved' }), `As ${slug(d.name)}/SKILL.md. You can edit it by hand too.`, { icon: 'folder' })
+      + PM51.panelSection('Where it’s available', PM51.select(where, [{ value: 'Project', label: 'This project', meta: '.puppet-master/skills' }, { value: 'Global', label: 'Every project', meta: 'Your skills folder' }], { cls: 'o55-skl-where', label: 'Where it’s available' }), `As ${slug(d.name)}/SKILL.md. You can edit it by hand too.`, { icon: 'folder' })
       + PM51.rows([{ label: 'Turn it on now', help: 'Off adds it but keeps it out of the way until you switch it on.', control: PM51.toggle(d.turnOn !== false, { action: 'pm51-skills-won', label: 'Turn it on now' }) }]);
   }
   function skillWizard() {

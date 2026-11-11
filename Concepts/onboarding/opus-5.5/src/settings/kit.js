@@ -705,10 +705,12 @@ pageHeader = function () { return ''; };
 /* NP-STATUS: the rail health line and the home attention rows are base-page static markup; the slot is
    spliced in here (the established renderer-wrap pattern) instead of editing the base page. */
 const pm51OriginalRenderDomainRail = renderDomainRail;
+/* FO-135: the rail's "Project: … · concept fixture" line named the project a second time (the toolbar's project button
+   names it and opens the project menu) and showed a demo word; it is left out. */
 renderDomainRail = function () {
   return String(pm51OriginalRenderDomainRail.apply(this, arguments)).replace(
     '<div class="side-health">',
-    `<div class="side-health pm-has-mark">${PM51.mark('warning', 'attention')}`);
+    `<div class="side-health pm-has-mark">${PM51.mark('warning', 'attention')}`).replace(/\s*<div class="rail-project">[^<]*<\/div>/, '');
 };
 const pm51OriginalRenderHome = renderHome;
 renderHome = function () {
@@ -726,13 +728,16 @@ PM51.setTab = (id, tab) => { PM51.s().tabs[id] = tab; };
 PM51.sel = (id, fallback) => PM51.s().sel[id] || fallback;
 PM51.setSel = (id, value) => { PM51.s().sel[id] = value; };
 
+/* How a manager's redraw lands its page body: replaced here; 28-in-place.js patches a mounted body in place instead, so a
+   save (a switch, a choice) never replays the page's entrance (FO-130). */
+PM51.commitBody = (body, html) => { body.innerHTML = html; };
 PM51.refresh = function (wsId, { swap = true } = {}) {
   popoutClose({ restoreFocus: false });
   const body = root.querySelector(`[data-continuous-workspace-body="${cssEscape(wsId)}"]`);
   const domain = getDomain();
   const ws = body && domain.workspaces.find(w => w.id === wsId);
   if (!body || !ws) { saveState(); renderApp({ soft: !state.home }); return; }
-  body.innerHTML = renderContinuousWorkspaceBody(ws, domain);
+  PM51.commitBody(body, renderContinuousWorkspaceBody(ws, domain));
   body.dataset.workspaceMounted = 'true';
   body.querySelectorAll('.manager-section').forEach(sec => sec.classList.add('section-block', 'is-revealed'));
   body.querySelectorAll('.pm51-settings-inline .settings-section').forEach(sec => sec.classList.add('section-block', 'is-revealed', 'pm51-instant'));

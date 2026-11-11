@@ -209,7 +209,7 @@
         const rec = Object.assign(base ? clone(base) : { tone: '', route: routes()[0] || 'Balanced route', tools: ['Standard tools'], prompt: '' }, { id: newId('persona'), name: d.name, description: d.description || (base ? base.description : ''), group: 'Custom', locked: false, crews: [], chat: true });
         rec.props = Object.assign({}, (base && base.props) || {}, { [S.style]: d.style, [S.model]: d.model });
         personas().push(rec); ps().show = 'all'; PM51.setSel(ID, rec.id); PM51.setTab(ID, 'personas'); saveState(); refresh();
-        const where = String(PM51.value('personas.library.custom-scope') || 'project') === 'global' ? 'all your projects' : 'this project';
+        const where = String(PM51.value('personas.library.custom-scope') || 'project') === 'global' ? 'every project' : 'this project';   /* FO-131 */
         PM51.toast('Persona created', `${d.name} is saved for ${where}. Fine-tune it below.`);
       }
     });
