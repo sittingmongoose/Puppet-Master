@@ -238,6 +238,7 @@ export default async function (t) {
 				}, t1);
 			}));
 			const off = wk.after('pm-still:off', 'pm-still:off');
+			if (a.still) t.log(`${at}: WAKE ${off && off.found ? `${off.first} elements, ${off.firstFrameMs} ms first frame` : 'no recalc seen'}; loops on again at most ${woke.worst} ms after the move; wake trace longest main frame ${wk.sum.mainFrames.max} ms, by ${named(wk.sum) || 'no script'}`);
 			if (a.still) {
 				await t.check(`${at}: one pointer move wakes the page and every held loop runs again within 100 ms`, woke.woke && !woke.still && woke.bad.length === 0, `${woke.n} held; ${woke.bad.length ? 'not running: ' + woke.bad.slice(0, 5).join('; ') : 'all running'}${woke.still ? '; still after the move' : ''}`);
 				await t.check(`${at}: each loop goes on from where it was held (no restart, no jump)`, woke.late.length === 0, woke.late.length ? woke.late.slice(0, 5).join('; ') : `each started again at most ${woke.worst} ms after the waking move`);
