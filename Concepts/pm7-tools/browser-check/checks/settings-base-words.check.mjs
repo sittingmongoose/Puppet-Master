@@ -1,5 +1,6 @@
 // Stream F batch 10, base-page words in Settings (Jared's 2026-11-09 Settings feedback, handed over by stream P).
-// FO-134: a switch (and every value control the row renderer draws) is named by its row's own label, not the inventory's
+// FO-134: every placed value control on every Settings page (each chapter, page and manager tab: switches, boxes,
+//   sliders, text areas, pickers, choice groups) is named by its row's own label, not the inventory's
 //   ("Show Actual Model Used"), and a real hover over a switch on Providers & Accounts › Models shows that label with
 //   what a press does ("Turn this setting on." / "...off."), never "Change this setting.".
 // FO-135: the Settings rail has no "Project: … · concept fixture" line; a chapter page's toolbar project button names the project.
@@ -67,6 +68,72 @@ for (const surface of ['normal', 'sandbox']) {
 		}, null, { timeout: 6000 }).then((h) => h.jsonValue()).catch(() => '');
 		const detail = want.on ? 'Turn this setting off.' : 'Turn this setting on.';
 		await t.check(`Models: hovering "${want.label}" shows its label and what a press does`, !!tag && tag.includes(want.label) && tag.includes(detail) && !/Change this setting/.test(tag), `tag "${tag}"`);
+	};
+
+	/* FO-134 / sol-review-l1s L1S-N1: every placed value control on every Settings page, not just Models: each
+	   chapter, each page in it (mounted), each manager tab. A row that places a setting (data-setting-id) names its value
+	   controls (a text or number box, a text area, a slider, a select or its dropdown, a switch, a choice group) by its
+	   own visible label: the accessible name contains it ("Name: 3 items. Edit" counts). The name is computed as a
+	   screen reader does for these elements: aria-labelledby, aria-label, a <label for>, then the text of an enclosing
+	   <label> (a slider's "80"), then title. Controls are not pre-selected by having a name. --set chapters=ai,code */
+	tests[`FO-134 every placed value control is named by its row (${surface})`] = async (t) => {
+		if (!t.app.surfaces().includes(surface)) { await t.check(`${surface} surface not asked for`, true); return; }
+		const f = await settings(t, surface);
+		const domains = t.args.chapters ? String(t.args.chapters).split(',') : await f.evaluate(() => [...new Set([...document.querySelectorAll('#pm-settings-root [data-action="navigate-domain"]')].map((b) => b.dataset.domain))]);
+		const all = [], seen = new Set();
+		const READ = () => {
+			const VALUE = 'input:not([type="hidden"]), textarea, select, [role="switch"], [role="slider"], [role="combobox"], .pm51-dd-trigger, [role="radiogroup"], [role="group"], [role="spinbutton"], [contenteditable="true"]';
+			const own = (lab) => lab ? [...lab.childNodes].filter((n) => n.nodeType === 3).map((n) => n.textContent).join('').replace(/\s+/g, ' ').trim() : '';
+			const txt = (e) => (e.textContent || '').replace(/\s+/g, ' ').trim();
+			const nameOf = (e) => {
+				const by = e.getAttribute('aria-labelledby');
+				if (by) return by.split(/\s+/).map((id) => { const n = document.getElementById(id); return n ? txt(n) : ''; }).join(' ').trim();
+				const al = e.getAttribute('aria-label'); if (al && al.trim()) return al.trim();
+				if (e.id && /^(INPUT|TEXTAREA|SELECT)$/.test(e.tagName)) { const l = document.querySelector(`label[for="${CSS.escape(e.id)}"]`); if (l) return txt(l); }
+				const wrap = /^(INPUT|TEXTAREA|SELECT)$/.test(e.tagName) && e.closest('label'); if (wrap) return txt(wrap);
+				if (e.getAttribute('title')) return e.getAttribute('title').trim();
+				return '';
+			};
+			const out = [];
+			const ROWS = ['.setting-row[data-setting-id]', '.setting-row[id^="setting-"]', '.o55-field[data-setting-id]'].map((x) => '#panel-settings [data-continuous-workspace-body] ' + x).join(', ');
+			for (const row of document.querySelectorAll(ROWS)) {
+				const id = row.getAttribute('data-setting-id') || row.id.replace(/^setting-/, '');
+				const label = own(row.querySelector('.setting-label, .o55-field-label'));
+				const box = row.querySelector(':scope > .setting-control') || row;
+				if (!label) continue;
+				for (const e of box.querySelectorAll(VALUE)) {
+					if (e.closest('[aria-hidden="true"]') || (e.tagName === 'INPUT' && /^(hidden|button|submit|reset|image)$/.test(e.type))) continue;
+					if (e.closest('.setting-row, .o55-field') !== row) continue;   /* a row nested inside this one names its own */
+					if (e.matches('[role="radio"], [role="option"], [role="menuitem"]')) continue;
+					const name = nameOf(e);
+					out.push({ id, label, kind: (e.getAttribute('role') || e.tagName.toLowerCase()) + (e.type && e.tagName === 'INPUT' ? ':' + e.type : ''), name: name.slice(0, 80), ok: name.toLowerCase().includes(label.toLowerCase()) });
+				}
+			}
+			return out;
+		};
+		const take = async (where) => { for (const x of await f.evaluate(READ)) { const k = x.id + '|' + x.kind + '|' + x.name; if (seen.has(k)) continue; seen.add(k); all.push(Object.assign({ where }, x)); } };
+		for (const d of domains) {
+			await f.locator(`#pm-settings-root [data-action="navigate-domain"][data-domain="${d}"]`).first().click();
+			await t.settle();
+			const wss = await f.evaluate(() => [...document.querySelectorAll('[data-continuous-workspace-body]')].map((b) => b.dataset.continuousWorkspaceBody));
+			for (const ws of wss) {
+				await f.evaluate(([dd, w]) => PM51.go(dd, w), [d, ws]);
+				await f.waitForSelector(`[data-continuous-workspace-body="${ws}"][data-workspace-mounted="true"]`, { timeout: 15000 }).catch(() => {});
+				await t.page.waitForTimeout(250);
+				await take(`${d}/${ws}`);
+				const tabs = await f.evaluate((w) => [...document.querySelectorAll(`[data-continuous-workspace-body="${w}"] .pm51-tabs .manager-tab[data-tab]`)].map((b) => b.dataset.tab), ws);
+				for (const tab of tabs) {
+					await f.evaluate(([w, tb]) => PM51.switchTab(w, tb), [ws, tab]);
+					await t.page.waitForTimeout(700);
+					await take(`${d}/${ws}/${tab}`);
+				}
+			}
+		}
+		const bad = all.filter((x) => !x.ok);
+		const kinds = {}; for (const x of all) kinds[x.kind] = (kinds[x.kind] || 0) + 1;
+		t.log(`walked ${domains.length} chapters: ${all.length} value controls on ${new Set(all.map((x) => x.id)).size} placed rows; kinds ${JSON.stringify(kinds)}`);
+		if (bad.length) t.log('unnamed or misnamed: ' + JSON.stringify(bad.map((x) => `${x.where} ${x.id} ${x.kind} "${x.name}" vs "${x.label}"`)));
+		await t.check(`every placed value control on every Settings page is named by its row (${all.length} controls)`, all.length >= 200 && bad.length === 0, `${bad.length} not: ` + bad.slice(0, 8).map((x) => `${x.id} ${x.kind} "${x.name}" vs "${x.label}"`).join('; '));
 	};
 
 	tests[`FO-135 no rail project line (${surface})`] = async (t) => {

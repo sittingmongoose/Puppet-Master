@@ -855,7 +855,7 @@
     if (block(svc)) { opts[0].disabled = true; opts[0].reason = block(svc); opts[0].why = true; }
     const vals = SWITCH_LEFT.slice(); const n = pctLeft(own); if (n !== null && !vals.includes(n)) { vals.push(n); vals.sort((x, y) => x - y); }
     vals.forEach(v => { const why = String(v) === String(own) ? '' : block(v); opts.push(Object.assign({ value: String(v), label: leftText(v) }, why ? { disabled: true, reason: why, why: true } : {})); });
-    return PM51.dropdown(own === undefined ? '' : String(own), opts, { action: 'pm51-scoped-select', data: { scope: ACC, setting: SW_ID, provider: p.id, account: acc.id }, label: `Switch level for ${acc.nickname}`, width: 264 });
+    return PM51.dropdown(own === undefined ? '' : String(own), opts, { action: 'pm51-scoped-select', data: { scope: ACC, setting: SW_ID, provider: p.id, account: acc.id }, label: `${PM51.rowLabel(PM51.setting(SW_ID))}, ${acc.nickname}`, width: 264 });   /* FO-134: the row's own label, then whose */
   }
   /* the compact field in the account's "When it runs low"; "changed" means the account has its own value */
   function accountPolicyField(p, acc, id, label, control) {

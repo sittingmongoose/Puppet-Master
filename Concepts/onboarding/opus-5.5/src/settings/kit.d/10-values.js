@@ -263,9 +263,23 @@ renderControl = function (setting, value) {
     case 'path': return o55Path(setting, value);
     case 'status': return o55Status(setting, value);
     case 'toggle': return `<button type="button" class="toggle ${value ? 'on' : ''}" role="switch" aria-checked="${!!value}" data-action="toggle-setting" data-setting="${a(setting.id)}" aria-label="${a(PM51.rowLabel(setting))}"></button>`;
-    default: return o55KitControl(Object.assign({}, setting, { control }), value);
+    default: return o55Named(setting, o55KitControl(Object.assign({}, setting, { control }), value));
   }
 };
+/* FO-134 (sol-review-l1s L1S-N1): a control the inherited renderer draws (a slider, a text area, a stepper, a reorder
+   list, a resource, ...) is named by its row's own label as the ones above are: every value element in it with no name
+   of its own takes PM51.rowLabel, and a box of choices or of + and - becomes a group with that name. A slider's
+   enclosing <label> held only its number ("80"), a text area had no name at all. */
+const O55_VALUE_EL = 'input:not([type="hidden"]), textarea, select, [role="switch"], [role="slider"], [role="combobox"], .pm51-dd-trigger';
+const O55_VALUE_GROUP = '.segmented, .chip-select, .stepper, .reorder-control, .swatches';
+function o55Named(setting, html) {
+  if (!setting || !html || typeof html !== 'string' || !/<(input|textarea|select|button|div)/.test(html)) return html;
+  const tpl = document.createElement('template'); tpl.innerHTML = html;
+  const name = PM51.rowLabel(setting), unnamed = e => !e.hasAttribute('aria-label') && !e.hasAttribute('aria-labelledby');
+  tpl.content.querySelectorAll(O55_VALUE_EL).forEach(e => { if (unnamed(e)) e.setAttribute('aria-label', name); });
+  tpl.content.querySelectorAll(O55_VALUE_GROUP).forEach(e => { if (!e.hasAttribute('role')) e.setAttribute('role', 'group'); if (unnamed(e)) e.setAttribute('aria-label', name); });
+  return tpl.innerHTML;
+}
 
 /* ---------- rows ---------------------------------------------------------------------------------------------- */
 /* One row everywhere (manager sections, plain pages, composed rows): label, one plain sentence, the control, and a
