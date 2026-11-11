@@ -6,9 +6,13 @@ matrix (multi-row observations, rows without a single-row negative), then runs
 the tool once per phase table, serially, behind its MemoryGate. Credit is copied
 from the tool's own report rows; this driver adds none.
 usage: python3 scripts/pm-ds-guard-tables.py --out <dir> [--phase P]... [--collect-only] [--no-unit-tests]
+       [--save-collection FILE] [--load-collection FILE] [--low-timeout SECONDS]
+A table whose tool run raises (for example the MemoryGate low-memory timeout) is recorded
+with tool_status 'error' and can be rerun alone from a saved collection with --phase.
 """
 import argparse
 import gzip
+import pickle
 import hashlib
 import json
 import sys
@@ -30,6 +34,9 @@ def main():
     parser.add_argument('--max-rss', type=int, default=6144)
     parser.add_argument('--pause-when-low', type=int, default=10)
     parser.add_argument('--resume-at', type=int, default=11)
+    parser.add_argument('--low-timeout', type=int, default=2700)
+    parser.add_argument('--save-collection', type=Path)
+    parser.add_argument('--load-collection', type=Path)
     args = parser.parse_args()
     args.out.mkdir(parents=True, exist_ok=True)
     started = time.monotonic()
@@ -40,11 +47,18 @@ def main():
                         'pm_browser_workspace_created.py', 'pm_browser_workspace_created_v2.py',
                         'pm_browser_workspace_reset.py', 'pm-browser-event-admission.py')})
     inputs = {str(p.relative_to(root)): hashlib.sha256(p.read_bytes()).hexdigest() for p in sources}
-    collected, counts = suites.collect(progress=lambda label: None, include_unit_tests=not args.no_unit_tests,
-                                       only=args.only_source)
+    if args.load_collection:
+        with gzip.open(args.load_collection, 'rb') as handle:
+            collected, counts = pickle.load(handle)
+    else:
+        collected, counts = suites.collect(progress=lambda label: None, include_unit_tests=not args.no_unit_tests,
+                                           only=args.only_source)
+    if args.save_collection:
+        with gzip.open(args.save_collection, 'wb') as handle:
+            pickle.dump((collected, counts), handle)
     summary = dict(tool_sha256=inputs['scripts/pm_guard_isolation.py'], source_sha256=inputs,
                    collect_seconds=round(time.monotonic() - started, 1), counts=counts, suites=[])
-    gate = g.MemoryGate(args.max_rss, args.pause_when_low, args.resume_at, 30, 2700)
+    gate = g.MemoryGate(args.max_rss, args.pause_when_low, args.resume_at, 30, args.low_timeout)
     for phase in suites.phases():
         if args.phase and phase not in args.phase:
             continue
@@ -68,7 +82,13 @@ def main():
             stops = [e for e in g.prescan_sources(path) if e['kind'] in g.STATIC_STOP_KINDS]
             suite = suites.suite_for(phase, slot)
             t = time.monotonic()
-            report = g.run(suite, memory=gate) if suite is not None and not stops else g.prescan_report(stops)
+            try:
+                report = g.run(suite, memory=gate) if suite is not None and not stops else g.prescan_report(stops)
+            except Exception as exc:  # recorded and rerunnable with --phase; never credited
+                entry.update(tool_status='error', error=repr(exc), proved=[], unproved=rows)
+                print(f"{phase} ERROR {exc!r}", file=sys.stderr, flush=True)
+                summary['suites'].append(entry)
+                continue
             name = f'{phase}.json.gz'
             with gzip.open(args.out / name, 'wt') as handle:
                 handle.write(json.dumps(report, indent=1, sort_keys=True, default=str) + '\n')
