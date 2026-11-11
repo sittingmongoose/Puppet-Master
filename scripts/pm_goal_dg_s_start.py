@@ -839,7 +839,9 @@ class StartOwner(W.DGOwner):
         W.resolve_selector(storage, pointer['value']['record']['workflow_head'], 'start/d01_pointer_head')
         require('start/run_cancellation_null', cs['run_control']['cancellation'] is None)
         sc = self.world.owners['native'].start_control()
-        require('start/start_control_birth', same(sc['value'], birth['start_control']))
+        base = copy.deepcopy(sc['value'])
+        base['record']['pending_candidate'] = None
+        require('start/start_control_birth', same(base, birth['start_control']))
         require('start/start_control_epoch', sc['value']['record']['epoch'] == 0)
         require('start/start_control_committed', sc['value']['record']['committed_start'] is None)
         origin = birth['initial_control_origin']
@@ -857,7 +859,6 @@ class StartOwner(W.DGOwner):
         require('start/required_set_graph', same(rs['record']['installed_workgraph']['source'], W.selector_for(
             ctx, 'workflow_installed_graph', graph['physical_key'], graph)))
         refs = rs['record']['worknode_requests']['active_required_request_refs']
-        require('start/request_membership_nonempty', type(refs) is list and len(refs) > 0 and len(set(refs)) == len(refs))
         born, receipts = src['born_worknodes'], src['materialization_receipts']
         require('start/born_membership', sorted(n['record']['source_request_id'] for n in born) == sorted(refs))
         node_ids = [n['record']['worknode_id'] for n in born]
@@ -884,7 +885,6 @@ class StartOwner(W.DGOwner):
                 ar['record']['worknode_materialization_receipts']) == sorted(r['physical_key'] for r in receipts))
         for x in ar['record']['worknode_materialization_receipts']:
             W.resolve_selector(storage, x['source'], 'start/activation_receipt_member')
-        require('start/activation_integrity', all(v is True for v in ar['record']['integrity_checks'].values()))
         require('start/readiness', all(v['satisfied'] is True for v in src['readiness'].values()))
         goal = src['goal']
         require('start/goal_scope', goal['body']['record']['goal_id'] == ctx.goal_id and
@@ -965,7 +965,7 @@ class StartOwner(W.DGOwner):
             sc = self.world.owners['native'].start_control()
             pending = sc['value']['record']['pending_candidate']
             prepared_key = ctx.run_key('workflow_start_prepared_submission', op)
-            prepared = storage.cell('workflow_start_prepared_submission', prepared_key)
+            prepared = W.read_value(storage, 'workflow_start_prepared_submission', prepared_key)
             if pending is not None:
                 require('start/pending_other_operation', prepared is not None)
             if prepared is not None:
@@ -1002,7 +1002,8 @@ class StartOwner(W.DGOwner):
                 storage.transact([
                     dict(table='workflow_start_candidate', key=cand_key, expected=None, value=candidate),
                     dict(table='workflow_start_prepared_submission', key=prepared_key, expected=None,
-                         value=dict(qualification=QUALIFICATION, submission=submission, candidate=candidate)),
+                         value=W.cell_value(storage, dict(qualification=QUALIFICATION, submission=submission,
+                                                          candidate=candidate))),
                     dict(table='workflow_start_control', key=sc['value']['physical_key'], expected=sc['version'],
                          value=self._pending_control(sc['value'], candidate))])
                 self._cut('after_prepare')

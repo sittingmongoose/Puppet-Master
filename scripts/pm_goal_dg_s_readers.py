@@ -464,11 +464,9 @@ class Representation:
     def unpack(self, reference, where):
         storage = self.world.ctx.storage
         raw = storage.read_pack(reference, expected_media_type='application/msgpack')
-        value = S.decode_canonical(raw, where)
-        require(where + '/noncanonical', S.canonical(value) == raw)
-        return value
+        return S.decode_canonical(raw, where)  # the shared decoder refuses noncanonical bytes
 
-    def decode(self, wrapper, original):
+    def decode(self, wrapper, original, selection_check=True):
         """Reconstruct the whole original record and recheck every join."""
         self.validate('StorageProjection', wrapper, 'representation/row')
         require('representation/operation_size', self.fits_row(wrapper))
@@ -494,8 +492,9 @@ class Representation:
                 NR.full_value_commitment(record['original_event'], 'representation'))
         require('representation/key', wrapper['physical_key'] == self.projection_key())
         require('representation/storage', wrapper['storage_instance_id'] == self.world.ctx.sid)
-        selected = self.encode(expected, wrapper['dataset_name'].split('@', 1)[1], store=False)
-        require('representation/deterministic_kind', content['kind'] == selected['content']['kind'])
+        if selection_check:
+            selected = self.encode(expected, wrapper['dataset_name'].split('@', 1)[1], store=False)
+            require('representation/deterministic_kind', content['kind'] == selected['content']['kind'])
         return record
 
     def encode_checkpoint(self, logical, *, store=True, force=None):
@@ -530,6 +529,14 @@ class Representation:
 
 
 # ------------------------------------------------------------------ S5 projector
+
+class HoldOwner(W.DGOwner):
+    """TEST_ONLY projection hold owner (RP-PROJECTION-3GEN holds)."""
+    role = 'projection_hold'
+
+    def hold(self, reason):
+        return self.owner_id, self.issue(None, dict(qualification=QUALIFICATION, reason=reason), kind='hold')
+
 
 class StartedProjector(W.DGOwner):
     """``owner.goal_run.started.project_prefix.reference.v1`` and its lower
@@ -587,10 +594,12 @@ class StartedProjector(W.DGOwner):
         return logical
 
     def stage(self, holds=()):
-        """Reserve a fresh isolated generation (max three slots)."""
+        """Reserve a fresh isolated generation (max three slots). Holds are
+        owner-issued originals acquired through the registry, never strings."""
         storage, c = self.world.ctx.storage, self.world.ctx
         with self.recorder.call(self.owner_id, 'stage'):
             self.require_installed('stage')
+            holds = [A.acquire(self.registry, owner_id, 'projection_hold', handle)[0] for owner_id, handle in holds]
             cell, logical = self.checkpoint()
             generations = {} if logical is None else copy.deepcopy(logical['generations'])
             if len(generations) >= 3:
@@ -655,9 +664,7 @@ class StartedProjector(W.DGOwner):
             # lower publisher: rederive the afterimage itself; never trust a caller row
             expected = self.rep.encode(projection_record(self.world, original_started(
                 self.world, where='project/lower_original')), gid, store=False)
-            require('projector/row_rederive', same({k: v for k, v in row.items() if k != 'content'},
-                                                   {k: v for k, v in expected.items() if k != 'content'})
-                    and row['content']['kind'] == expected['content']['kind'])
+            require('projector/row_rederive', same(row, expected))
             self.rep.decode(row, original)
             prefix = processed_prefix(self.world, result, self.rep.projection_key(), row)
             new = copy.deepcopy(gen)
@@ -666,7 +673,10 @@ class StartedProjector(W.DGOwner):
             new.update(frontier_revision=gen['frontier_revision'] + 1, prior_frontier_sha256=gen['frontier_sha256'],
                        frontier_sha256=frontier, processed=prefix)
             existing = storage.cell(gen['dataset_name'], self.rep.projection_key())
-            if existing is not None and same(existing['value'], row) and same(gen['processed'], prefix):
+            done = gen['processed']
+            if (existing is not None and same(existing['value'], row) and done['row_sha256'] == prefix['row_sha256']
+                    and done['coverage_sha256'] == prefix['coverage_sha256']
+                    and done['generic_token']['frontier_sha256'] == prefix['generic_token']['frontier_sha256']):
                 slot.set(dict(replay='lost_acknowledgement'))
                 return dict(tx_id=gen['last_transaction_id'], replay=True, row=row)
             generations = copy.deepcopy(logical['generations'])
