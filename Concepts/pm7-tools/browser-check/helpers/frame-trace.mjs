@@ -216,3 +216,54 @@ export async function traceWindow(cdp, { ms = 3000, during, url, keep, allScript
 	if (keep) (await import('node:fs')).writeFileSync(keep, text);
 	return { at, ...summarise(JSON.parse(text), { url, allScripts }) };
 }
+
+// The trace's events, parsed, for a caller that measures windows of its own (traceWindow summarises the whole trace).
+export async function traceEvents(cdp, { ms = 3000, during } = {}) {
+	await cdp.send('Tracing.start', { categories: TRACE_CATEGORIES, transferMode: 'ReturnAsStream', bufferUsageReportingInterval: 0 });
+	const until = Date.now() + ms;
+	try { if (during) await during(until); } finally {
+		const left = until - Date.now(); if (left > 0) await new Promise((r) => setTimeout(r, left));
+	}
+	const complete = new Promise((resolve) => cdp.once('Tracing.tracingComplete', resolve));
+	await cdp.send('Tracing.end');
+	const { stream } = await complete;
+	const parts = [];
+	for (;;) { const r = await cdp.send('IO.read', { handle: stream, size: 1 << 22 }); parts.push(r.base64Encoded ? Buffer.from(r.data, 'base64').toString('utf8') : r.data); if (r.eof) break; }
+	await cdp.send('IO.close', { handle: stream });
+	const t = JSON.parse(parts.join(''));
+	return Array.isArray(t) ? t : t.traceEvents || [];
+}
+
+// What the page's main thread did in the `span` ms after each user-timing mark whose name starts with `prefix`
+// (performance.mark in the page, e.g. just before a click): its busy time, its main frames and the longest, and the
+// elements restyled (UpdateLayoutTree elementCount) with the time those restyles took, each restyle on its own, and the
+// ten dearest event names by self time. The renderer is the one that wrote the marks. Returns [{ name, mainMs, frames,
+// longestFrameMs, styleElements, styleMs, layouts, styles: [[ms after the mark, elements, ms]], top: [[name, ms]] }].
+export function afterMarks(events, { prefix, span = 300 } = {}) {
+	const marks = events.filter((e) => (e.cat || '').includes('blink.user_timing') && typeof e.name === 'string' && e.name.startsWith(prefix) && (e.ph === 'R' || e.ph === 'I' || e.ph === 'n' || e.ph === 'b'));
+	if (!marks.length) return [];
+	const pid = marks[0].pid;
+	const names = new Map(); for (const e of events) if (e.ph === 'M' && e.name === 'thread_name') names.set(e.pid + ':' + e.tid, e.args.name);
+	const mainTid = [...names].find(([k, n]) => n === 'CrRendererMain' && Number(k.split(':')[0]) === pid)?.[0]?.split(':')[1];
+	const evs = threadEvents(events, pid, Number(mainTid));
+	const out = [];
+	for (const m of marks) {
+		const a = m.ts, b = m.ts + span * 1000;
+		let busy = 0, end = -Infinity, frames = 0, longest = 0, elems = 0, styleUs = 0, layouts = 0;
+		const styles = [], inWin = [];
+		for (const e of evs) {
+			if (e.ts + e.dur < a || e.ts > b) continue;
+			inWin.push(e);
+			const s = Math.max(a, e.ts), f = Math.min(b, e.ts + e.dur);
+			if (f > end) { busy += f - Math.max(s, end); end = f; }
+			if (e.name === 'ProxyMain::BeginMainFrame') { frames++; longest = Math.max(longest, e.dur); }
+			else if (e.name === 'UpdateLayoutTree') { const n = e.args?.elementCount || 0; elems += n; styleUs += e.dur; styles.push([Math.round((e.ts - a) / 1000), n, r1(e.dur / 1000)]); }
+			else if (e.name === 'Layout') layouts++;
+		}
+		// the dearest names by self time in the window, and each restyle: [ms after the mark, elements, ms]
+		const { self } = selfTimes(inWin);
+		const top = [...self].sort((x, y) => y[1] - x[1]).slice(0, 10).map(([n, us]) => [n, r1(us / 1000)]);
+		out.push({ name: m.name, mainMs: r1(busy / 1000), frames, longestFrameMs: r1(longest / 1000), styleElements: elems, styleMs: r1(styleUs / 1000), layouts, styles, top });
+	}
+	return out;
+}
