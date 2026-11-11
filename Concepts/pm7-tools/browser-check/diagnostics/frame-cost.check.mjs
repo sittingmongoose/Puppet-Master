@@ -316,14 +316,26 @@ export default async function (t) {
 		}
 	}
 	if (onboarding) {
+		// one load; the look is chosen as the window chooses it (O55.ui.applyLook: PM_THEME alone does not repaint the
+		// window's preview) and each screen is reached without a reload
 		const screens = String(t.args.screens || 'welcome').split(',').filter(Boolean);
-		for (const look of looks) for (const screen of screens) {
-			const f = await t.app.open({ onboarding: true, query: 'o55=screen=' + screen + (warmQuery ? '&' + warmQuery : '') });
-			await f.evaluate(() => document.fonts.ready.then(() => true));
-			await t.app.look(look);
-			await f.waitForFunction(() => !(window.PM_THEME_TRANSITION?.busy?.() || window.PM_LOOK_COVERED?.()), null, { timeout: 20000 }).catch(() => {});
-			await t.page.waitForTimeout(3500);
-			await measure(f, look, 'onboarding:' + screen);
+		const f = await t.app.open({ onboarding: true, query: 'o55=screen=' + screens[0] + (warmQuery ? '&' + warmQuery : '') });
+		await f.waitForFunction(() => !!document.querySelector('#pm-o55-onboarding .o55-win') && window.O55 && O55.ui && typeof O55.ui.applyLook === 'function', null, { timeout: 60000 });
+		await f.evaluate(() => document.fonts.ready.then(() => true));
+		if (t.args.css) await f.evaluate((css) => { const s = document.createElement('style'); s.id = 'fc-trial'; s.textContent = css; document.head.appendChild(s); }, String(t.args.css));
+		await t.page.waitForTimeout(Number(t.args.settle ?? 30000));
+		for (const look of looks) {
+			const [fam, mode] = look.split('-');
+			await f.evaluate(([fm, m]) => window.O55.ui.applyLook(fm, m), [fam, mode]);
+			const ok = await f.waitForFunction(([fm, m]) => { const th = document.documentElement.getAttribute('data-theme') || ''; const nier = document.documentElement.getAttribute('data-o55-nier') === 'on'; return (fm === 'nier' ? nier : !nier && th.startsWith(fm + '-')) && th.endsWith('-' + m); }, [fam, mode], { timeout: 20000 }).then(() => true, () => false);
+			await t.check(`onboarding look ${look} applied`, ok, await f.evaluate(() => document.documentElement.getAttribute('data-theme') + ' nier ' + document.documentElement.getAttribute('data-o55-nier')));
+			await t.page.waitForTimeout(Number(t.args.lookSettle ?? 5000));
+			for (const screen of screens) {
+				const at = await f.evaluate((id) => { try { window.O55.ui.go(id, { noHistory: true }); } catch (e) { return String(e); } return window.O55.S.sess.screen; }, screen);
+				await t.check(`onboarding screen ${screen} opened`, at === screen, String(at));
+				await t.page.waitForTimeout(Number(t.args.viewSettle ?? 6000));
+				await measure(f, look, 'onboarding:' + screen);
+			}
 		}
 	}
 	await cdp.detach().catch(() => {});
