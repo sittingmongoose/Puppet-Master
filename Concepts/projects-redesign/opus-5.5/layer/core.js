@@ -91,7 +91,7 @@
     return [
       {
         id: 'tastebook', name: 'tastebook', glyph: 'rocket', active: true, lifecycle: 'listed', order: 0, runsOn: 'here',
-        home: 'here', work: { mode: 'auto', allowed: ['here', 'homenas', 'studio'] }, workers: [{ c: 'here', task: 'Run #47 · Compiling the seam graph', mode: 'auto' }, { c: 'homenas', task: 'Lane web · running its tests', mode: 'auto' }, { c: 'studio', task: 'Rendering the recipe photos', mode: 'chosen', by: 'Jared', why: 'needs the GPU' }],
+        home: 'here', work: { mode: 'auto', allowed: ['here', 'homenas', 'studio'] }, workers: [{ c: 'here', task: 'Run #47 · Compiling the seam graph', mode: 'auto' }, { c: 'homenas', task: 'Lane web · running its tests', mode: 'auto' }, { c: 'studio', task: 'Rendering the recipe photos', mode: 'chosen', by: 'Jared', why: 'needs the GPU' }, { c: null, task: 'Lane docs · build the site', mode: 'auto', queued: true }],
         stack: ['SvelteKit', 'Rust · Axum', 'Postgres', 'Docker'],
         where: { kind: 'local', label: 'This computer', path: '~/Projects/tastebook' },
         opened: 'Active now', openedRank: 0,
@@ -116,8 +116,8 @@
         attention: [{ code: 'signed_out', key: 'waiting', title: 'Sign in to GitLab again', text: 'Merge requests and pipelines need it. Sending changes over SSH still works; 1 change is ready to send.', actions: ['sign_in', 'details'] }]
       },
       {
-        id: 'loom', name: 'loom', glyph: 'layers', active: false, lifecycle: 'listed', order: 2, runsOn: 'here',
-        home: 'here', work: { mode: 'chosen', chosen: 'studio', by: 'Jared', allowed: ['here', 'studio'] }, workers: [],
+        id: 'loom', name: 'loom', glyph: 'layers', active: false, lifecycle: 'listed', order: 2, runsOn: 'studio',
+        home: 'here', work: { mode: 'chosen', by: 'Jared', allowed: ['here', 'studio'] }, workers: [],
         stack: ['Rust', 'Slint'],
         where: { kind: 'local', label: 'This computer', path: '~/Projects/loom' },
         opened: 'Yesterday', openedRank: 2,
@@ -1006,9 +1006,9 @@
       const p = get(id); if (!p || !pol) return;
       const name = (c) => (ENV.computers.find((x) => x.id === c) || { name: c }).name;
       await run(id, 'computer', 'Changing where work runs', [{ label: 'Checking ' + pol.allowed.map(name).join(', '), ms: 700 }, { label: 'Saving the work choice', ms: 500 }], () => {
-        p.runsOn = pol.def; p.work = { mode: pol.mode, chosen: pol.mode === 'chosen' ? pol.chosen : null, by: pol.mode === 'chosen' ? 'Jared' : null, allowed: pol.allowed.slice() };
+        p.runsOn = pol.def; p.work = { mode: pol.mode, by: pol.mode === 'chosen' ? 'Jared' : null, allowed: pol.allowed.slice() };
       }, { cmd: 'cmd.project.execution_policy.set' });
-      toast(p.name + ': ' + (pol.mode === 'auto' ? 'Auto' : 'Chosen: ' + name(pol.chosen)), (pol.mode === 'auto' ? 'New work goes to the best of ' + pol.allowed.map(name).join(', ') + '. ' : 'New work runs on ' + name(pol.chosen) + '; the default Computer stays ' + name(pol.def) + '. ') + 'Running work stays where it is, and no files moved.', 'success');
+      toast(p.name + ': ' + (pol.mode === 'auto' ? 'Auto' : 'Chosen: ' + name(pol.def)), (pol.mode === 'auto' ? 'New work goes to the best of ' + pol.allowed.map(name).join(', ') + '; ' + name(pol.def) + ' breaks ties. ' : 'New Project work runs on ' + name(pol.def) + ', the default Computer. ') + 'Running work stays where it is, and no files moved.', 'success');
     },
     moveComputer(id) { const p = get(id); if (p) toast('Move ' + p.name, 'Opens Move to take ' + p.name + ' to another computer. Its files, history and settings go with it.', 'info'); },
     /* cmd.source_control.repository.bind after the check (6.9.2); a folder with no link needs the add-remote Gap */

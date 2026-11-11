@@ -1349,7 +1349,7 @@
     const inside0 = d.way === 'online' ? (inside(s) || {}).result || {} : info || {};
     return {
       id: slugId + '-' + PJX.uid('n').split('-').pop(), name, glyph, active: false, lifecycle, order: PJX.all().length, runsOn: d.runsOn,
-      home: d.runsOn, work: { mode: (d.work && d.work.mode) || 'auto', chosen: d.work && d.work.mode === 'chosen' && PJX.work ? PJX.work.npChosen(s) : null, by: d.work && d.work.mode === 'chosen' ? 'Jared' : null, allowed: PJX.work ? PJX.work.npAllowed(s) : [d.runsOn] }, workers: [],
+      home: d.runsOn, work: { mode: (d.work && d.work.mode) || 'auto', by: d.work && d.work.mode === 'chosen' ? 'Jared' : null, allowed: PJX.work ? PJX.work.npAllowed(s) : [d.runsOn] }, workers: [],
       stack: (info && info.stack) || [], where, opened: 'Just added', openedRank: -0.5,
       activity: listed ? { key: 'idle', word: 'Ready', text: d.way === 'restore' ? 'Restored from a backup · plan or open it' : 'Ready to plan in the Planning Wizard', at: 'just now', runs: 0 } : { key: 'waiting', word: 'Setup didn’t finish', text: '', at: 'just now', runs: 0 },
       history: { backend, branch, defaultBranch: it0 === 'contribute' || it0 === 'offer' ? 'main' : null, worktrees: listed ? 1 : 0, changed: (info && info.changed) || 0, submodules: inside0.submodules || null, lfs: inside0.lfs || null, hooks: inside0.hooks || null, filesafe: d.filesafe },
@@ -1383,7 +1383,9 @@
       backup_destination: d.backup.dest === 'none' ? null : bkFamily(s), backup_place: d.backup.dest === 'none' ? null : bkPlace(s),
       backup_include: d.backup.dest === 'none' ? null : d.backup.include, backup_leave_out: d.backup.include === 'some' ? Object.keys(d.backup.leaveOut).filter((k) => d.backup.leaveOut[k]) : [],
       backup_retention: d.backup.dest === 'none' ? null : d.backup.keep === 'custom' ? Object.assign({ kind: 'custom' }, d.backup.keepCustom) : { kind: 'standard' }, secrets_in_draft: false,
-      work_placement: (d.work && d.work.mode) || 'auto', chosen_execution_host: d.work && d.work.mode === 'chosen' && PJX.work ? PJX.work.npChosen(s) : null, default_execution_host: d.runsOn, allowed_execution_hosts: PJX.work ? PJX.work.npAllowed(s) : [d.runsOn], records_home: d.runsOn
+      // pm.work_placement.project_policy.v1: requested_mode chosen sends new work to default_computer; there is no other
+      // Project-level Computer (a single run's pin is placement_choice, on the run)
+      requested_mode: (d.work && d.work.mode) || 'auto', default_computer: d.runsOn, allowed_computers: PJX.work ? PJX.work.npAllowed(s) : [d.runsOn], records_home: d.runsOn
     };
   }
 
