@@ -5,6 +5,13 @@
 
 /* ------------------------------------------------------------------ the chat: New is a split, No project in History */
 #pmw-chat56 .chat-header .pjx-newsplit { width: 18px; min-width: 18px; margin-left: -6px; padding: 0; }
+/* (B-press) the chevron's own host beside #pmRoot, placed by chat.js placeSplit() where it used to sit in the header; the
+   header keeps its room by the title's start margin (6 px, PMConcept7's own, plus --pjx-split-r) */
+#pmw-chat56 > .pjx-split-host { position: absolute; z-index: 15; display: flex; align-items: center; width: 18px; }
+#pmw-chat56 > .pjx-split-host[hidden] { display: none; }
+#pmw-chat56 > .pjx-split-host > .pjx-split-wrap { display: contents !important; }
+#pmw-chat56 > .pjx-split-host .pjx-newsplit { margin-left: 0; }
+#pmw-chat56[data-pjx-split] #pmRoot .chat-stage > .chat-header > .chat-title { margin-inline-start: calc(6px + var(--pjx-split-r, 22px)); }
 .history-flyout .pjx-npg { margin: 6px 0 10px; padding-top: 8px; border-top: 1px solid color-mix(in srgb, currentColor 14%, transparent); }
 .history-flyout .pjx-npg-head { display: flex; align-items: center; gap: 6px; padding: 2px 10px 4px 12px; font-size: 10.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; opacity: .78; }
 .history-flyout .pjx-npg-count { font-weight: 600; opacity: .7; }

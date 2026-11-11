@@ -116,9 +116,19 @@
      in a host of its own inside the chat frame (the frame isn't reconciled), drawn over the stage's exact box. The host
      carries pm56-host, so the chat's look is the same, and takes the stage's own background, colour and corners. */
   let placedStage = null, stageRO = null;
+  /* a host of the layer's own carries what PMConcept7 puts on its hosts: the look (data-theme, which hundreds of its
+     rules key on) and the chat's state classes. PM56_HOST keeps every .pm56-host in step when the look changes; a host
+     made later takes them from #pmRoot when it is made and whenever it is placed */
+  const HOST_STATE = ['pm56-reduced', 'pm-theming', 'pmx-title-morphing', 'tx-flying'];
+  function likeRoot(host) {
+    const pr = D.getElementById('pmRoot'); if (!pr) return;
+    const t = pr.getAttribute('data-theme'); if (t && host.getAttribute('data-theme') !== t) host.setAttribute('data-theme', t);
+    HOST_STATE.forEach((c) => { const on = pr.classList.contains(c); if (host.classList.contains(c) !== on) host.classList.toggle(c, on); });
+  }
   function hostOf(r) {
     let host = r.querySelector(':scope > .pjx-npc-host');
     if (!host) { host = h('div.pm56-host.pjx-npc-host', { 'data-pmh-tag': 'literal' }); r.appendChild(host); }
+    likeRoot(host);
     return host;
   }
   function placeHost() {
@@ -127,6 +137,7 @@
     const stage = r.querySelector('#pmRoot .chat-stage'), npc = host.querySelector(':scope > .pjx-npc');
     if (!stage || !npc) { if (!host.hidden) host.hidden = true; return; }
     if (host.hidden) host.hidden = false;
+    likeRoot(host);
     if (stage !== placedStage && W.ResizeObserver) {
       if (!stageRO) stageRO = new W.ResizeObserver(() => placeHost());
       if (placedStage) stageRO.unobserve(placedStage);
@@ -135,6 +146,46 @@
     const op = host.offsetParent || r, a = op.getBoundingClientRect(), b = stage.getBoundingClientRect(), cs = getComputedStyle(stage);
     const want = { left: Math.round(b.left - a.left - op.clientLeft + op.scrollLeft) + 'px', top: Math.round(b.top - a.top - op.clientTop + op.scrollTop) + 'px', width: Math.round(b.width) + 'px', height: Math.round(b.height) + 'px',
       backgroundColor: cs.backgroundColor, backgroundImage: cs.backgroundImage, color: cs.color, borderRadius: cs.borderRadius };
+    Object.keys(want).forEach((k) => { if (host.style[k] !== want[k]) host.style[k] = want[k]; });
+  }
+
+  /* ------------------------------------------------------------------ (B-press) the New thread split's chevron
+     It used to be inserted into PMConcept7's chat header, beside New thread, and every PMConcept7 render dropped it (the
+     header is reconciled like the rest of #pmRoot): it came back on the next frame, and a press across a render was
+     lost. It now lives in a host of its own beside #pmRoot, drawn where it used to sit. The header keeps its room: the
+     title's start margin grows by the chevron's width plus one gap less its old -6 px overlap (--pjx-split-r, set
+     here from the header's own gap), so the title stays where it was. Inside the host the chevron sits in a wrapper that
+     keeps the chat-header class with display: contents, so PMConcept7's header button rules give it the same look. */
+  let splitRO = null, splitHeader = null;
+  function splitHost(r) {
+    let host = r.querySelector(':scope > .pjx-split-host');
+    if (!host) {
+      const ch = h('button.icon-button.pjx-newsplit', { type: 'button', 'data-c-key': 'chat:newsplit', 'aria-haspopup': 'menu', html: icon('chevron-down', 12) });
+      tip(ch, w('nc.new.menu'), w('nc.new.menuTip'));
+      ch.addEventListener('click', () => newMenu(ch));
+      host = h('div.pm56-host.pjx-split-host', { 'data-pmh-tag': 'literal' }, h('div.chat-header.pjx-split-wrap', null, ch));
+      r.appendChild(host);
+    }
+    likeRoot(host);
+    return host;
+  }
+  function placeSplit() {
+    const r = ROOT(); if (!r) return;
+    const host = splitHost(r), head = r.querySelector('#pmRoot .chat-stage > .chat-header'), title = head && head.querySelector(':scope > .chat-title');
+    const tb = title && title.getBoundingClientRect();
+    if (!head || !tb || tb.width < 1 || head.getBoundingClientRect().height < 1) { if (!host.hidden) host.hidden = true; return; }
+    if (head !== splitHeader && W.ResizeObserver) {
+      if (!splitRO) splitRO = new W.ResizeObserver(() => placeSplit());
+      if (splitHeader) splitRO.unobserve(splitHeader);
+      splitRO.observe(head); splitHeader = head;
+    }
+    // the room in the header: one gap plus the chevron's 18 px, less its old -6 px overlap
+    const gap = parseFloat(getComputedStyle(head).columnGap) || 0, room = Math.round(gap + 12) + 'px';
+    if (r.style.getPropertyValue('--pjx-split-r') !== room) r.style.setProperty('--pjx-split-r', room);
+    if (!r.hasAttribute('data-pjx-split')) { r.setAttribute('data-pjx-split', ''); return void W.requestAnimationFrame(() => placeSplit()); }
+    if (host.hidden) host.hidden = false;
+    const op = host.offsetParent || r, a = op.getBoundingClientRect(), hb = head.getBoundingClientRect(), t2 = title.getBoundingClientRect();
+    const want = { left: Math.round(t2.left - gap - 24 - a.left - op.clientLeft + op.scrollLeft) + 'px', top: Math.round(hb.top - a.top - op.clientTop + op.scrollTop) + 'px', height: Math.round(hb.height) + 'px' };
     Object.keys(want).forEach((k) => { if (host.style[k] !== want[k]) host.style[k] = want[k]; });
   }
 
@@ -407,14 +458,9 @@
   function ensure() {
     const r = ROOT();
     if (r) {
-      // the chat header's New thread becomes a split: a chevron beside it offers No project and another Project
-      const nt = r.querySelector('.chat-header [data-action="new-thread"]');
-      if (nt && !(nt.nextElementSibling && nt.nextElementSibling.classList.contains('pjx-newsplit'))) {
-        const ch = h('button.icon-button.pjx-newsplit', { type: 'button', 'data-c-key': 'chat:newsplit', 'aria-haspopup': 'menu', html: icon('chevron-down', 12) });
-        tip(ch, w('nc.new.menu'), w('nc.new.menuTip'));
-        ch.addEventListener('click', () => newMenu(ch));
-        nt.insertAdjacentElement('afterend', ch);
-      }
+      // the chat header's New thread becomes a split: a chevron beside it offers No project and another Project (it lives
+      // in its own host now, placed over the room kept for it in the header: placeSplit)
+      placeSplit();
       const fl = flyout(), hs = (fl && fl.querySelector('.history-scroll')) || r.querySelector('.history-scroll');
       if (hs) {
         const have = hs.querySelector(':scope > .pjx-npg');
