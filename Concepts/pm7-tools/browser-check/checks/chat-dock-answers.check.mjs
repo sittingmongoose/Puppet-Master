@@ -26,7 +26,11 @@
 //             once with one "Allowed by this session's grant" line and no banner; Deny clears the hold with one "Denied"
 //             line and captures nothing; Always opens the chooser in the banner and Escape leaves it.
 //   rules     an Always rule covers by its place: This project only that project's chats (never a chat with no project
-//             or another project), This computer any ask on this computer, Everywhere any computer.
+//             or another project), This computer any ask on this computer, Everywhere any computer; and on the real path
+//             (no project passed: the asking chat's is read), a Studio rule saved in Query performance does not reach a
+//             Batch 19 demo chat, which is its own project. Capture: the chat page's projectless thread is not offered
+//             This project; a rule saved in one Batch 19 chat does not cover another's hold; an expired hold grants
+//             nothing; after a banner answer the keyboard is on the capture toolbar.
 //   helper    the Crew helper that waits for your OK (Rollback Auditor, recovery-collaboration) has the same ladder in its
 //             card's decision row, under the command it would run shown whole, and in its dock line once the card is out of view;
 //             Once from the line lets it go on and the run says so; Always from the card opens the chooser in the card.
@@ -270,6 +274,25 @@ async function rulesCase(t, surface) {
 	await always({ tool: 'bash', target: 'du -sh web', who: 'The agent' }, 'computer', `${surface}: a du rule for This computer`);
 	await t.check(`${surface}: This computer covers a chat with no project on this computer`, !(await asksAgain({ tool: 'bash', target: 'du -sh /tmp', who: 'The agent', project: false })));
 	await t.check(`${surface}: but not a call that runs on another computer`, await asksAgain({ tool: 'bash', target: 'du -sh /data', who: 'The agent', computer: 'gpu-box' }));
+	// the real path: the Studio's ask names no project, so the asking chat's is used. A This project rule saved in Query
+	// performance (bound to the host project) does not reach a Batch 19 demo chat, which is its own project
+	await clearAsks(f);
+	await openStudio(f);
+	await t.until(`${surface}: the Studio asks in Query performance`, (k) => !!document.querySelector(`#pmRoot .composer > .pmx-dock [data-k="${k}"]`), STUDIO);
+	const host = await f.evaluate(() => (PM56_ASKS.list().find((a) => a.id === 'perm-studio-host') || {}).projectId || '');
+	if (await press(t, f, STUDIO, 'always', `${surface}: the Studio's Always`)) {
+		await line(f, STUDIO).locator('[data-action="perm-place"][data-value="project"]').click();
+		await line(f, STUDIO).locator('[data-action="perm-save"]').click();
+	}
+	await t.until(`${surface}: the This project rule is saved`, () => !PM56_APP.ctx().state.decision);
+	await f.evaluate(() => PM56_APP.demoAction('b19-start', { flow: 'intake' }));
+	await t.until(`${surface}: a Batch 19 chat is open`, () => /^batch19-/.test(PM56_APP.ctx().state.selectedThread));
+	const b19 = await f.evaluate(() => PM56_APP.activeThread().projectId || '');
+	await openStudio(f);
+	await t.until(`${surface}: the Studio asks again in the Batch 19 chat (${b19}), not allowed by the rule from ${host}`, (k) => !!document.querySelector(`#pmRoot .composer > .pmx-dock [data-k="${k}"]`), STUDIO);
+	await t.check(`${surface}: the two chats are different projects`, !!host && !!b19 && host !== b19, JSON.stringify({ host, b19 }));
+	await f.evaluate(() => { const c = PM56_APP.ctx(); c.state.decision = null; PM56_APP.render(); PM56_APP.switchThread('query'); });
+	await t.until(`${surface}: back in Query performance`, () => PM56_APP.ctx().state.selectedThread === 'query');
 	await always({ tool: 'bash', target: 'df -h', who: 'The agent' }, 'everywhere', `${surface}: a df rule for Everywhere`);
 	await t.check(`${surface}: Everywhere covers another computer with no project`, !(await asksAgain({ tool: 'bash', target: 'df -h /data', who: 'The agent', computer: 'gpu-box', project: false })));
 	await clearAsks(f);
@@ -294,7 +317,7 @@ async function captureCase(t, surface) {
 	const f = surface === 'sandbox' ? await t.openInSandbox(url, { settleMs: 300 }) : (await t.page.goto(url), t.page);
 	await f.waitForFunction(() => window.PM56_EXT && PM56_EXT.ctx && window.PM56_ASKS && window.PM56_BROWSER, null, { timeout: 30000 });
 	const BANNER = '[data-k="bc-allow-banner"]';
-	const act = (name) => f.evaluate((n) => { const b = document.createElement('button'); b.type = 'button'; b.hidden = true; b.setAttribute('data-action', n); document.body.appendChild(b); b.click(); b.remove(); }, name);
+	const act = (name) => f.evaluate((n) => { const b = document.createElement('button'); b.type = 'button'; b.hidden = true; if (n === 'b19-start-intake') { b.setAttribute('data-action', 'b19-start'); b.setAttribute('data-flow', 'intake'); } else b.setAttribute('data-action', n); document.body.appendChild(b); b.click(); b.remove(); }, name);
 	const shoot = async () => { await f.locator('.bc-toolbar [data-action="bc-full-shot"]').first().click(); await t.page.waitForTimeout(400); };
 	const titlesAfter = (n) => f.evaluate((n) => PM56_EXT.ctx().thread.messages.slice(n).map((m) => m.type + '|' + m.title), n);
 	const count = () => f.evaluate(() => PM56_EXT.ctx().thread.messages.length);
@@ -316,15 +339,31 @@ async function captureCase(t, surface) {
 	// Always opens the chooser in the banner; Escape leaves it
 	await banner.locator('[data-value="always"]').click();
 	await t.until(`${surface}: the banner's Always opens its chooser`, () => !!document.querySelector('[data-k="bc-allow-banner"] .pmx-ask-always'));
+	// the chat page's ordinary thread has no project (only PMConcept7 binds one), so This project is not offered
 	const places = await banner.locator('[data-action="perm-place"]').evaluateAll((bs) => bs.map((b) => b.dataset.value + ':' + b.getAttribute('aria-pressed')));
-	await t.check(`${surface}: three places, none chosen`, JSON.stringify(places) === '["project:false","computer:false","everywhere:false"]', JSON.stringify(places));
+	await t.check(`${surface}: a chat with no project: This computer and Everywhere, none chosen`, JSON.stringify(places) === '["computer:false","everywhere:false"]', JSON.stringify(places));
 	await t.page.keyboard.press('Escape');
 	await t.until(`${surface}: Escape leaves the chooser`, () => !document.querySelector('[data-k="bc-allow-banner"] .pmx-ask-always') && !!document.querySelector('[data-k="bc-allow-banner"] [data-value="session"]'));
-	// For session: the hold clears, the action runs again, and a later hold runs at once
+	// an expired hold (permissions changed since it was held) grants nothing: For session on it stores no grant, writes no
+	// allowing line, and the next run holds afresh
 	let n = await count();
+	const perm0 = await f.evaluate(() => { const st = PM56_EXT.ctx().state, was = st.permissions; st.permissions = was === 'Ask' ? 'Auto' : 'Ask'; return was; });
 	await banner.locator('[data-value="session"]').click();
-	await t.until(`${surface}: For session clears the hold`, (b) => !document.querySelector(b), BANNER);
+	await t.until(`${surface}: For session on an expired hold clears it`, (b) => !document.querySelector(b), BANNER);
 	let added = await titlesAfter(n);
+	await t.check(`${surface}: an expired hold writes no allowing line and stores no grant`, !added.some((x) => /^permission-answer\|Allowed/.test(x)) && await f.evaluate(() => !PM56_ASKS.grants().some((g) => g.pattern === 'screenshots') && !(PM56_BROWSER.state().allowOnce || {}).screenshots), JSON.stringify(added));
+	await shoot();
+	await t.until(`${surface}: the next run holds afresh`, (b) => !!document.querySelector(b), BANNER);
+	await f.evaluate((p) => { PM56_EXT.ctx().state.permissions = p; }, perm0);
+	await shoot();
+	await t.until(`${surface}: held under the restored permissions`, (b) => !!document.querySelector(b), BANNER);
+	// For session: the hold clears, the keyboard goes to the capture toolbar, the action runs again, and a later hold runs at once
+	n = await count();
+	await f.locator(BANNER).locator('[data-value="session"]').focus();
+	await t.page.keyboard.press('Enter');
+	await t.until(`${surface}: For session clears the hold`, (b) => !document.querySelector(b), BANNER);
+	await t.until(`${surface}: the keyboard goes to the capture toolbar, not the page`, () => document.activeElement && document.activeElement.matches('.bc-toolbar .bc-tool-btn'));
+	added = await titlesAfter(n);
 	await t.check(`${surface}: For session writes one line`, added.filter((x) => x.startsWith('permission-answer|')).length === 1 && added.includes('permission-answer|Allowed for this session: screenshots'), JSON.stringify(added));
 	await shoot();
 	await t.check(`${surface}: the action runs again without a hold`, await f.locator(BANNER).count() === 0 && await f.evaluate(() => !PM56_BROWSER.state().pendingAllow));
@@ -340,6 +379,24 @@ async function captureCase(t, surface) {
 	await t.until(`${surface}: Deny clears the hold`, (b) => !document.querySelector(b), BANNER);
 	added = await titlesAfter(n);
 	await t.check(`${surface}: Deny writes one Denied line and grants nothing`, JSON.stringify(added) === '["permission-answer|Denied: use browser capture: DOM and components"]' && await f.evaluate(() => !(PM56_BROWSER.state().allowOnce || {}).dom), JSON.stringify(added));
+	// a This project rule stays in its project, on the real path: Batch 19's demo chats are each their own project
+	const b19 = async () => { await act('b19-start-intake'); await t.page.waitForTimeout(600); await act('bc-open'); await t.until(`${surface}: the internal browser reopens`, () => !!document.querySelector('.bc-toolbar [data-action="bc-full-shot"]')); };
+	await f.evaluate(() => { const st = PM56_BROWSER.state(); st.policy = Object.assign({}, st.policy, { screenshots: 'ask' }); PM56_BROWSER.state().pendingAllow = null; });
+	await b19();
+	const p1 = await f.evaluate(() => PM56_EXT.ctx().thread.projectId || '');
+	await shoot();
+	await t.until(`${surface}: held in the first Batch 19 chat (${p1})`, (b) => !!document.querySelector(b), BANNER);
+	await f.locator(BANNER).locator('[data-value="always"]').click();
+	await t.until(`${surface}: its chooser offers This project`, () => !!document.querySelector('[data-k="bc-allow-banner"] [data-action="perm-place"][data-value="project"]'));
+	await f.locator(BANNER).locator('[data-action="perm-place"][data-value="project"]').click();
+	await f.locator(BANNER).locator('[data-action="perm-save"]').click();
+	await t.until(`${surface}: the This project rule is saved`, (b) => !document.querySelector(b), BANNER);
+	await b19();
+	const p2 = await f.evaluate(() => PM56_EXT.ctx().thread.projectId || '');
+	n = await count();
+	await shoot();
+	added = await titlesAfter(n);
+	await t.check(`${surface}: another project's chat (${p2}) is held, not allowed by the rule`, p1 && p2 && p1 !== p2 && await f.locator(BANNER).count() === 1 && !added.some((x) => x.startsWith('permission-answer|Allowed by your rule')), JSON.stringify({ p1, p2, added }));
 }
 
 async function helperCase(t, surface) {
