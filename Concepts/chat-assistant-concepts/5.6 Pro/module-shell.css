@@ -1105,11 +1105,11 @@ p.pmx-meta, .pmx-meta{margin:0;font:var(--pmx-fs-meta);font-weight:var(--pmx-w-r
 .pmx-decision-q code{font:500 12px/18px var(--font-mono);color:var(--text);}
 .pmx-ask-lead{margin:0;font:var(--pmx-fs-meta);color:var(--muted);}
 .pmx-ask-seg-in{display:inline-flex;min-width:0;}
-:is(.pmx-dock, .pmx-decision) .pmx-ask-seg-in > .soft-button{padding:0 10px;}
-:is(.pmx-dock, .pmx-decision) .pmx-ask-seg-in > .soft-button + .soft-button{margin-left:-1px;}
-:is(.pmx-dock, .pmx-decision) .pmx-ask-seg-in > .soft-button:not(:first-child){border-top-left-radius:0;border-bottom-left-radius:0;}
-:is(.pmx-dock, .pmx-decision) .pmx-ask-seg-in > .soft-button:not(:last-child){border-top-right-radius:0;border-bottom-right-radius:0;}
-:is(.pmx-dock, .pmx-decision) .pmx-ask-seg-in > .soft-button:is(:hover, :focus-visible){position:relative;z-index:1;}
+:is(.pmx-dock, .pmx-decision, .bc-allow-banner) .pmx-ask-seg-in > .soft-button{padding:0 10px;}
+:is(.pmx-dock, .pmx-decision, .bc-allow-banner) .pmx-ask-seg-in > .soft-button + .soft-button{margin-left:-1px;}
+:is(.pmx-dock, .pmx-decision, .bc-allow-banner) .pmx-ask-seg-in > .soft-button:not(:first-child){border-top-left-radius:0;border-bottom-left-radius:0;}
+:is(.pmx-dock, .pmx-decision, .bc-allow-banner) .pmx-ask-seg-in > .soft-button:not(:last-child){border-top-right-radius:0;border-bottom-right-radius:0;}
+:is(.pmx-dock, .pmx-decision, .bc-allow-banner) .pmx-ask-seg-in > .soft-button:is(:hover, :focus-visible){position:relative;z-index:1;}
 /* the Always chooser (Permissions_System 6.1 and 3.4: the suggested pattern is editable and the place is chosen, never
    preselected) and a request's details, in a dock line or a card's decision row */
 .pmx-ask-always{flex:1 1 100%;display:flex;flex-direction:column;gap:8px;min-width:0;}
@@ -1121,7 +1121,7 @@ p.pmx-meta, .pmx-meta{margin:0;font:var(--pmx-fs-meta);font-weight:var(--pmx-w-r
 .pmx-ask-where .soft-button[aria-pressed="true"]{border-color:var(--accent);background:var(--pmx-accent-halo);font-weight:700;}
 .pmx-ask-always-acts{display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:6px;}
 .pmx-ask-always-acts :is(.primary-button, .text-button){height:30px;min-height:30px;padding:0 12px;font:600 12px/16px var(--font-ui);}
-:is(.pmx-dock, .pmx-decision) .pmx-ask-always-acts .primary-button[aria-disabled="true"]{opacity:.45;cursor:not-allowed;}
+:is(.pmx-dock, .pmx-decision, .bc-allow-banner) .pmx-ask-always-acts .primary-button[aria-disabled="true"]{opacity:.45;cursor:not-allowed;}
 .pmx-ask-always-note{margin:0;font:var(--pmx-fs-meta);font-weight:var(--pmx-w-reg);color:var(--muted);}
 .pmx-ask-facts{flex:1 1 100%;display:grid;grid-template-columns:auto minmax(0,1fr);gap:2px 12px;margin:2px 0 0;font:var(--pmx-fs-meta);font-weight:var(--pmx-w-reg);}
 .pmx-ask-facts dt{color:var(--muted);}

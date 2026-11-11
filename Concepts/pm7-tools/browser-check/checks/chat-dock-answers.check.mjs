@@ -20,6 +20,11 @@
 //             with run and lane); a Deny also refuses the other pending asks that share its approval ask (and no other
 //             run's), one receipt each. Each step starts from an empty bar and fails rather than throws, so every
 //             assertion is reached on any build.
+//   capture   browser capture's held action (Jared, 2026-11-11: "I agree"; on the 5.6 Pro chat's own page, where the hold
+//             lives: --set chatPage=<build>, else built into the run folder) offers the same compact ladder on its banner,
+//             in canon's order and on one row; For session lets the action run again and a later hold it covers runs at
+//             once with one "Allowed by this session's grant" line and no banner; Deny clears the hold with one "Denied"
+//             line and captures nothing; Always opens the chooser in the banner and Escape leaves it.
 //   rules     an Always rule covers by its place: This project only that project's chats (never a chat with no project
 //             or another project), This computer any ask on this computer, Everywhere any computer.
 //   helper    the Crew helper that waits for your OK (Rollback Auditor, recovery-collaboration) has the same ladder in its
@@ -33,6 +38,10 @@
 //             Reduced Motion alternates between reduce and no-preference by look.
 // Both surfaces (--set sandbox=0|1 picks one). On the page before FO-128 the process line has only Review: the process
 // test fails at "offers No and Yes", and the others at the missing PM56_ASKS.
+import fs from 'node:fs';
+import path from 'node:path';
+import { execFileSync } from 'node:child_process';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 import { LOOKS } from '../browser-check.config.mjs';
 
 const CHAT_W = [600, 400];
@@ -266,6 +275,73 @@ async function rulesCase(t, surface) {
 	await clearAsks(f);
 }
 
+// Browser capture's hold lives in the 5.6 Pro chat's own page: in PMConcept7 its dialog becomes the Home Browser tab,
+// which holds nothing (pm7-port/js/63-surfaces-browser.js). The page is --set chatPage=<build>, else built here from this
+// checkout (5.6 Pro/build.py, under a second).
+function chatPageUrl(t) {
+	let p = t.args.chatPage;
+	if (!p) {
+		p = path.join(t.run.dir, 'chat56-fo128.html');
+		if (!fs.existsSync(p)) execFileSync('python3', [fileURLToPath(new URL('../../../chat-assistant-concepts/5.6 Pro/build.py', import.meta.url)), '--out', p], { stdio: 'pipe' });
+	}
+	return pathToFileURL(path.resolve(p)).href + '?cb=' + Date.now();
+}
+async function captureCase(t, surface) {
+	if (!t.app.surfaces().includes(surface)) { t.log(`skipped: the sandbox switch leaves out the ${surface} surface`); return; }
+	await t.viewport(1440, 900);
+	await t.emulate({ reducedMotion: 'reduce' });
+	const url = chatPageUrl(t);
+	const f = surface === 'sandbox' ? await t.openInSandbox(url, { settleMs: 300 }) : (await t.page.goto(url), t.page);
+	await f.waitForFunction(() => window.PM56_EXT && PM56_EXT.ctx && window.PM56_ASKS && window.PM56_BROWSER, null, { timeout: 30000 });
+	const BANNER = '[data-k="bc-allow-banner"]';
+	const act = (name) => f.evaluate((n) => { const b = document.createElement('button'); b.type = 'button'; b.hidden = true; b.setAttribute('data-action', n); document.body.appendChild(b); b.click(); b.remove(); }, name);
+	const shoot = async () => { await f.locator('.bc-toolbar [data-action="bc-full-shot"]').first().click(); await t.page.waitForTimeout(400); };
+	const titlesAfter = (n) => f.evaluate((n) => PM56_EXT.ctx().thread.messages.slice(n).map((m) => m.type + '|' + m.title), n);
+	const count = () => f.evaluate(() => PM56_EXT.ctx().thread.messages.length);
+	const render = () => f.evaluate(() => PM56_EXT.ctx().renderApp());
+	await act('bc-open');
+	await t.until(`${surface}: the internal browser is open`, () => !!document.querySelector('.bc-toolbar [data-action="bc-full-shot"]'));
+	await f.evaluate(() => { const st = PM56_BROWSER.state(); st.policy = Object.assign({}, st.policy || {}, { screenshots: 'ask' }); });
+	await render();
+	// held: the ladder, in order, one row
+	await shoot();
+	await t.until(`${surface}: Full Screenshot is held`, (b) => !!document.querySelector(b), BANNER);
+	const banner = f.locator(BANNER);
+	const ladder = await banner.locator('[data-action="perm-answer"]').evaluateAll((bs) => bs.map((b) => b.dataset.value + '=' + b.textContent.trim() + '/' + b.getAttribute('aria-label')));
+	await t.check(`${surface}: the hold offers canon's ladder, short words, in order`, JSON.stringify(ladder) === JSON.stringify(['deny=Deny/Deny', 'once=Once/Allow once', 'session=For session/Allow for this session', 'always=Always…/Always allow…']), JSON.stringify(ladder));
+	const row = await banner.evaluate((b) => { const d = b.querySelector('[data-value="deny"]'), o = b.querySelector('[data-value="once"]'); return d && o ? Math.abs(d.getBoundingClientRect().top - o.getBoundingClientRect().top) : 99; });
+	await t.check(`${surface}: one compact row`, row <= 1, `rows apart ${row}`);
+	for (const v of ['deny', 'once', 'session', 'always']) await t.visible(banner.locator(`[data-value="${v}"]`), `${surface}: ${v} on top`);
+	await t.page.screenshot({ path: path.join(t.run.dir, `capture-held-${surface}.png`) }).catch(() => {});
+	// Always opens the chooser in the banner; Escape leaves it
+	await banner.locator('[data-value="always"]').click();
+	await t.until(`${surface}: the banner's Always opens its chooser`, () => !!document.querySelector('[data-k="bc-allow-banner"] .pmx-ask-always'));
+	const places = await banner.locator('[data-action="perm-place"]').evaluateAll((bs) => bs.map((b) => b.dataset.value + ':' + b.getAttribute('aria-pressed')));
+	await t.check(`${surface}: three places, none chosen`, JSON.stringify(places) === '["project:false","computer:false","everywhere:false"]', JSON.stringify(places));
+	await t.page.keyboard.press('Escape');
+	await t.until(`${surface}: Escape leaves the chooser`, () => !document.querySelector('[data-k="bc-allow-banner"] .pmx-ask-always') && !!document.querySelector('[data-k="bc-allow-banner"] [data-value="session"]'));
+	// For session: the hold clears, the action runs again, and a later hold runs at once
+	let n = await count();
+	await banner.locator('[data-value="session"]').click();
+	await t.until(`${surface}: For session clears the hold`, (b) => !document.querySelector(b), BANNER);
+	let added = await titlesAfter(n);
+	await t.check(`${surface}: For session writes one line`, added.filter((x) => x.startsWith('permission-answer|')).length === 1 && added.includes('permission-answer|Allowed for this session: screenshots'), JSON.stringify(added));
+	await shoot();
+	await t.check(`${surface}: the action runs again without a hold`, await f.locator(BANNER).count() === 0 && await f.evaluate(() => !PM56_BROWSER.state().pendingAllow));
+	n = await count();
+	await shoot();
+	added = await titlesAfter(n);
+	await t.check(`${surface}: a later hold runs at once, one line saying the session's grant allowed it`, await f.locator(BANNER).count() === 0 && added.includes('permission-answer|Allowed by this session’s grant: use browser capture: Screenshots / recording'), JSON.stringify(added));
+	// Deny: a DOM hold, cleared with one line, nothing granted
+	await f.evaluate(() => { const st = PM56_BROWSER.state(); st.policy = Object.assign({}, st.policy, { dom: 'ask' }); st.pendingAllow = { capability: 'dom', capabilities: ['dom'], actionLabel: 'Send with browser references', at: new Date().toISOString(), permissions: PM56_EXT.ctx().state.permissions, policy: 'ask', policies: { dom: 'ask' } }; PM56_EXT.ctx().renderApp(); });
+	await t.until(`${surface}: the DOM hold shows`, (b) => !!document.querySelector(b), BANNER);
+	n = await count();
+	await f.locator(BANNER).locator('[data-value="deny"]').click();
+	await t.until(`${surface}: Deny clears the hold`, (b) => !document.querySelector(b), BANNER);
+	added = await titlesAfter(n);
+	await t.check(`${surface}: Deny writes one Denied line and grants nothing`, JSON.stringify(added) === '["permission-answer|Denied: use browser capture: DOM and components"]' && await f.evaluate(() => !(PM56_BROWSER.state().allowOnce || {}).dom), JSON.stringify(added));
+}
+
 async function helperCase(t, surface) {
 	const f = await ready(t, surface, 'recovery-collaboration'); if (!f) return;
 	await t.emulate({ reducedMotion: 'reduce' });
@@ -353,6 +429,7 @@ for (const surface of ['normal', 'sandbox']) {
 	tests[`FO-128 Always places follow canon ${surface}`] = (t) => placesCase(t, surface);
 	tests[`FO-128 For session is remembered, Deny covers its ask ${surface}`] = (t) => grantsCase(t, surface);
 	tests[`FO-128 Always rules cover by their place ${surface}`] = (t) => rulesCase(t, surface);
+	tests[`FO-128 browser capture's hold has the ladder ${surface}`] = (t) => captureCase(t, surface);
 	tests[`FO-128 Crew helper card and line ${surface}`] = (t) => helperCase(t, surface);
 	tests[`FO-128 ten looks, two chat widths ${surface}`] = (t) => looksCase(t, surface);
 }
