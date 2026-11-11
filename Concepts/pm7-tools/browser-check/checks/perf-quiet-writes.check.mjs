@@ -19,12 +19,22 @@
 // `el.textContent = same` and `el.innerHTML = same` do), is a same-value write. None may land in the three places above,
 // and none at all in a shelf counter whose row has no box. Every other same-value write is listed in the log (NOTE)
 // with its element and its count, so a new one is seen before it is a cost; and in a typical second (the median of
-// the seconds listened to) at most --set others (default 2) of them land. The median, not the total: some redraws
-// rewrite many values once (Home's Usage chart rewrote 208 path `d` attributes with the values they held in one beat,
-// NieR Dark, 2026-11-11; the parked Customize screens rewrite about 170 attributes once after a look change). Those
-// are logged with their totals and are on the performance list; a writer that rewrites every second, as the four
-// above did, fails here. Then the Artifacts shelf is opened: the counter shows the current count in the first frame it
-// is drawn and goes on counting.
+// the seconds listened to) at most --set others (default 2) of them land, and in the whole window at most --set total
+// (default 12). Two redraws rewrote many values at once, and are pinned by the total since they write only what
+// differs (lane K, 2026-11-11):
+//   Usage chart  a Live beat that left a chart where it was tweened every frame from the shape to the same shape and
+//                rewrote the d of every band, edge and line (208 writes in one beat, NieR Dark Home), the plot's width
+//                and height on each re-render, and the count-ups' settled frames (.pmu-num); Home listens --set homeMs
+//                (default 20000) so a beat lands in the window;
+//   Customize    the terminal's and the editor's parked Customize screens redraw themselves unseen 3 to 10 s after a look
+//                change and rewrote about 170 values they held (tabindex, hidden, the sliders' outputs). The check
+//                listens from the look change for --set lookListen ms (default 14000) and allows at most --set burst
+//                (default 40) same-value writes there: main's page wrote 336 in NieR Dark; what is left on lane K's build
+//                (37 in NieR Dark, 12 in Basic Dark) is mostly the terminal view's own (70-view.js: its three canvases'
+//                width and height, which also clear them, and the preview root's class) and is logged;
+//   chat         #pmRoot's aria-busy, rewritten "false" on every full render of the chat.
+// Then the Artifacts shelf is opened: the counter shows the current count in the first frame it is drawn and goes on
+// counting.
 //
 // --set looks=<a,b>  default basic-dark,nier-dark (the writers do not depend on the look); looks=all for all ten
 // --set settle=<ms>  wait after load (default 40000)
@@ -51,7 +61,7 @@ const STATE = () => {
 export default async function (t) {
 	const want = String(t.args.looks || 'basic-dark,nier-dark');
 	const looks = want === 'all' ? ALL : want.split(',').filter(Boolean);
-	const ms = Number(t.args.ms || 12000), othersMax = Number(t.args.others || 2);
+	const ms = Number(t.args.ms || 12000), homeMs = Number(t.args.homeMs || 20000), othersMax = Number(t.args.others || 2), totalMax = Number(t.args.total ?? 12), burstMax = Number(t.args.burst ?? 40);
 	const W = 1920, H = 1080;
 	await t.viewport(W, H);
 	await muteSound(t.page);
@@ -62,19 +72,24 @@ export default async function (t) {
 	for (const look of looks) {
 		await t.app.look(look);
 		await f.waitForFunction(() => !(window.PM_THEME_TRANSITION?.busy?.() || window.PM_LOOK_COVERED?.()), null, { timeout: 20000 }).catch(() => {});
-		// 14 s, not 5: the terminal's and the editor's parked Customize screens redraw themselves, unseen, 3 to 10 s after a
-		// look change (their settle, then an idle moment or their 10 s backstop), and that one redraw rewrites about 170
-		// attributes with the values they hold (tabindex, hidden, the sliders' outputs: first run, 2026-11-11). It is a
-		// burst per look change, not a rate at rest, so it must be over before the listening starts. It is logged by
-		// --set lookSettle=5000 and is on the performance list as a fix of its own.
-		await t.page.waitForTimeout(Number(t.args.lookSettle ?? 14000));
+		// the look change's own aftermath: the parked Customize screens redraw themselves, unseen, 3 to 10 s after it (their
+		// settle, then an idle moment or their 10 s backstop); that redraw must write only what differs. Listened to from
+		// the cover's end for --set lookListen ms.
+		{
+			await f.evaluate(DOM_LISTEN);
+			await t.page.waitForTimeout(Number(t.args.lookListen ?? 14000));
+			const r = await f.evaluate(DOM_READ, PLACES);
+			t.log(`${look} after the look change: ${r.records} DOM records in ${r.secs.toFixed(1)} s, ${r.same} same-value, elsewhere ${r.otherSame} (per second ${r.otherPerSecond.join(' ')})`);
+			for (const [k, n] of r.others) t.log(`  NOTE same-value write after the look change x${n}: ${k}`);
+			await t.check(`${look}: after the look change, at most ${burstMax} same-value writes outside the places above (the parked Customize screens' redraw)`, r.otherSame <= burstMax, `${r.otherSame} in ${r.secs.toFixed(1)} s; ${r.others.slice(0, 3).map(([k, n]) => k + ' x' + n).join('; ')}`);
+		}
 		for (const [view, pageId] of [['settings', 'settings'], ['home', 'dashboard']]) {
 			await f.evaluate((id) => PM_PAGES.go(id), pageId);
 			await parkPointer(t.page, W, H);
 			await t.page.waitForTimeout(Number(t.args.viewSettle ?? 5000));
 			const st = await f.evaluate(STATE);
 			await f.evaluate(DOM_LISTEN);
-			await t.page.waitForTimeout(ms);
+			await t.page.waitForTimeout(view === 'home' ? homeMs : ms);
 			const r = await f.evaluate(DOM_READ, PLACES);
 			const at = `${look} ${view}`, per = (n) => (n / r.secs).toFixed(1) + '/s', P = r.places;
 			t.log(`${at}: ${r.records} DOM records in ${r.secs.toFixed(1)} s (${per(r.records)}), ${r.same} same-value: status bar ${P.status.same}, notice age ${P.notice.same}, Orchestrator page ${P.orchestrator.same}, elsewhere ${r.otherSame} (per second ${r.otherPerSecond.join(' ')})`);
@@ -83,6 +98,7 @@ export default async function (t) {
 			await t.check(`${at}: the front notice's age is not rewritten with the text it holds`, P.notice.found > 0 && P.notice.same === 0, P.notice.found ? `${P.notice.same} same-value writes (${per(P.notice.same)}) ${P.notice.eg.join('; ')}` : 'no .pmn-front-when: could not judge');
 			await t.check(`${at}: the Orchestrator page, not shown, is not rewritten with the values it holds`, st.orchestrator && !st.orchestratorShown && P.orchestrator.same === 0, !st.orchestrator ? 'no #panel-orchestrator: could not judge' : st.orchestratorShown ? 'the Orchestrator page is shown here: could not judge' : `${P.orchestrator.same} same-value writes (${per(P.orchestrator.same)}) ${P.orchestrator.eg.join('; ')}`);
 			await t.check(`${at}: in a typical second at most ${othersMax} same-value writes land anywhere else`, r.otherMedian <= othersMax, `median ${r.otherMedian} a second; per second ${r.otherPerSecond.join(' ')}; ${r.otherSame} in all`);
+			await t.check(`${at}: in the whole window at most ${totalMax} same-value writes land anywhere else (no redraw rewrites what it holds)`, r.otherSame <= totalMax, `${r.otherSame} in ${r.secs.toFixed(1)} s; ${r.others.slice(0, 3).map(([k, n]) => k + ' x' + n).join('; ')}`);
 			for (const [key, id] of [['art', 'artLiveElapsed'], ['tst', 'tstLiveElapsed']]) {
 				const s = st[key];
 				if (!s.found) { await t.check(`${at}: the shelf counter #${id} could be judged`, false, 'not in the page'); continue; }
