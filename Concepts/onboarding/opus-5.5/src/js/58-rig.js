@@ -1181,7 +1181,9 @@
     // the note hangs under Pip and drifts after it, slowly enough to read while Pip sways
     placeTip(H, ang, dt) {
       const el = this.tipBox;
-      if (!el || !el.classList.contains('on') || this.layoutName !== 'portrait') { this.ps.liftT = 0; this.bubble.classList.remove('pst-hush'); return; }
+      /* (toggle with a force that matches leaves the attribute alone: remove() wrote `class` every frame, one mutation
+         record a frame for the bubble's observer and its forced layout, and for every document-wide class observer; PERF-1) */
+      if (!el || !el.classList.contains('on') || this.layoutName !== 'portrait') { this.ps.liftT = 0; this.bubble.classList.toggle('pst-hush', false); return; }
       // it holds still while the pointer is on it, so its close button is easy to hit (once it has its place: a new note
       // that opens under a resting pointer was left at the stage's corner, past its edge in Friendly's tilt; tip_fit)
       if (this.tipXY && el.matches(':hover')) return;
