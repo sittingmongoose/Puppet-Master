@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L5446-L27012
+Source lines: L5446-L27013
 
-Source SHA256: `47bdc54078fbaccc26be55db33e7ef25785c8f170d671be0fa69ddd2375af69c`
+Source SHA256: `c5957077f2c168bc1f73c05b9ae87b863ea363be0a7b1c647e73ba278fbb7aea`
 
 ---
 
@@ -6031,8 +6031,9 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Settings provider and web rows preserve row-level health/error disclosure, last-failure
-  messaging, availability, support-tier visibility, readiness state, provider identity, and
-  contextual help without moving provider routing ownership out of Tools. Jared confirms Needs attention for an AI service with no model chosen (DL-474, 2026-11-11); the roster consumes owner readiness rather than storing a second status.
+  messaging, availability plus support-tier visibility in Settings, availability plus support-tier
+  visibility in /web help/autocomplete, readiness state, provider identity, and contextual help
+  without moving provider routing ownership out of Tools. Jared confirms Needs attention for an AI service with no model chosen (DL-474, 2026-11-11); the roster consumes owner readiness rather than storing a second status.
 gui_related: true
 gui_classification_reason: >-
   This unit defines visible Settings row disclosure and help/autocomplete behavior.

@@ -983,7 +983,8 @@ canonical_text: >-
   paths (USER-SETTINGS-MANAGER-REFRESH-20260908), and may present canonical ordinary settings inline within the
   manager workspace that owns their topic without changing manager_id keys or the inventory (USER-SETTINGS-MANAGER-REFRESH-20260909).
   Each entry has one stable manager_id, owner route, lazy summary projection, supported actions, exact unavailable
-  reasons, and a details path; operational behavior remains in the retained owner. Amended Q22, Jared 2026-10-30
+  reasons, and a details path; the home applies lazy hydration, so summaries stay compact and only the selected
+  manager's details load; operational behavior remains in the retained owner. Amended Q22, Jared 2026-10-30
   (DL-257): the current family/variant and inventory census supersede earlier counts. The 38 keys stay fixed.
   SSYS-061 classifies each descriptor with scope_model and declared project_switch_ids, retaining owner-specific
   fields and adding level/level_key for ordinary value targets. Project is conditionally required only by the
@@ -2461,14 +2462,14 @@ unit_type: integration_contract
 status: accepted
 owner_doc: Plans/Settings_System.md
 canonical_text: >-
-  Settings retains exactly 38 manager descriptors while presenting one visible Data Backup and Retention grouping
-  over three stable typed child/detail descriptors; extending the existing Source Control manager for separate
-  Forgejo, Gitea, repository-hosting, and automation-binding identity; and projecting Remote Access through one
-  normal human Tailscale card plus Advanced Connection engine detail. Every action routes to its semantic owner
-  with exact scope, target, generation, continuation, availability, disabled reason, and return focus. Settings
-  owns no forge adapter, Backup engine, scheduler, key service, connector process, auth broker, Doctor probe,
-  handler, or EventRecord family. Amended Q22, Jared 2026-10-30 (DL-257): the current family/variant and inventory
-  census supersede earlier counts.
+  Settings retains exactly 38 manager descriptors inside the retained K3 Tome Tabs shell while presenting one visible
+  Data Backup and Retention grouping over three stable typed child/detail descriptors; extending the existing Source
+  Control manager for separate Forgejo, Gitea, repository-hosting, and automation-binding identity; and projecting
+  Remote Access through one normal human Tailscale card plus Advanced Connection engine detail. Every action routes
+  to its semantic owner with exact scope, target, generation, continuation, availability, disabled reason, and
+  return focus. Settings owns no forge adapter, Backup engine, scheduler, key service, connector process, auth broker,
+  Doctor probe, handler, or EventRecord family. Amended Q22, Jared 2026-10-30 (DL-257): the current family/variant
+  and inventory census supersede earlier counts.
 
 
   DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed
