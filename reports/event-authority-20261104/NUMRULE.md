@@ -2413,3 +2413,586 @@ Each `hw-tb5-*` mutation is the review's blind edit, committed with its rule and
 The full date-time `--mutations` replay (590 rows, about 2 h 45 min in batch 4) was not rerun. A caught row is judged by its own committed witness alone, and this batch changes no production code and no existing check; the only rows whose judgment changes are the 12 declared survivors, which must now survive 23 more witnesses, and they do (above).
 
 Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/TOOLS-BATCH5/numrule/` (`results/`: the date-time self-test, the `hw-tb5` replay, the survivors over their new witnesses, both blind replays (the number one before pinning B-N10 and B-N12 too), the number `--mutations` run and the `--scope all` run; `tools/`: the run scripts, `dt_survivors.py` and the review's `blind_run.py`).
+
+
+## Sol max gate finding 1 (REAL): fix
+
+**Source:** `REVIEW-gate-solmax-numrule.md` finding 1 (`SOL-NUM-GATE-20261107-01`): a REAL false pass of `datetime_validator` on the committed EventRecord schema row. Fixed at once, outside the tool batch (`test-tool-bar.md`).
+
+- **Base:** `a16f67c1ef` on `plans/ea-numrule-20261105`. Worked in one local sparse worktree (`Plans`, `scripts`, `reports`); fast-forward push, no force.
+- **Commits:** `a73b395e54` (the fix, its negatives and the mutation set) and this report.
+- **Files touched:** `scripts/pm_event_datetime.py`, `scripts/pm_event_datetime_selfcheck.py`, `scripts/pm_event_datetime_mutations.json`, and this report. No schema, corpus, inventory, exclusion or number-scope file changed.
+
+### Location, cause and fix
+
+| | |
+|---|---|
+| **Where** | `scripts/pm_event_datetime.py:108` (was `:106`), `format_checker`'s `check`. |
+| **Why** | It selected values by exact type: `True if type(value) is not str else date_time(...)`. JSON Schema treats a `str` subclass or a stdlib `StrEnum` member as a string. Such a value skipped the predicate, so `Plans/event_record.schema.json#/$defs/date_time_string` accepted `not-a-dateZ` at `occurred_at_utc`, `observed_at_utc` and `persisted_at_utc`. The Storage terminal-`Z` pattern also matches its final `Z`. Direct `date_time` already refused it (`date_time_type`). |
+| **Fix** | Select with `isinstance(value, str)`: every value the validator treats as a string calls `date_time`, which refuses a non-exact `str` with `date_time_type`. Non-strings still pass the format check (`datetime_unit_format_checker_non_string_passes`). Schema bytes are unchanged. |
+
+### The new negatives
+
+They are self-checks in `pm_event_datetime_selfcheck.py`, so every suite runs them: the date-time `--self-test`; `--scope all`, through `regression_checks` → `run_all`, listed among its owner integration checks; and the replay, in its intact run, as `check:` witnesses and in `survivor_witnesses()`, so every declared survivor must survive them.
+
+- **`datetime_validator_real_eventrecord_<field>_<kind>_refused`**, six checks: each of `occurred_at_utc`, `observed_at_utc` and `persisted_at_utc`, for `str_subclass` (the existing `StrSub`) and `str_enum` (a stdlib `enum.StrEnum` member). Each runs `datetime_validator` over the complete committed EventRecord schema, built from `Plans/seglog_frame_v2_wire_fixtures.json` `base_event`:
+  - `base_event` is valid;
+  - with the field replaced by the host value, for `not-a-dateZ` and for `base_event`'s own valid text alike, every error is a `format` error at that field whose cause is `date_time_type`;
+  - the JSON round trip of the malformed value is a plain `str` and is still refused (`date_time_syntax`).
+- **`datetime_unit_format_checker_str_subclass_runs_predicate`:** the checker itself, under `event_record` and `storage_utc_z`, refuses both kinds with both texts (`date_time_type`) and still accepts a valid plain string.
+
+### Mutation set
+
+- **`hw-solgate-format-exact-str-selection`** (new; rule `format.type-independent`) restores `type(value) is not str`. Its witness is `check:datetime_validator_real_eventrecord_occurred_at_utc_str_subclass_refused`. Under the mutant, with one witness per run, each of the seven new checks fails. Each of the five existing format and EventRecord checks passes, which is the gap the review found: `datetime_unit_format_checker_non_string_passes`, `_runs_predicate`, `_storage_profile`, `datetime_validator_real_inventory_format_installed` and `_envelope_storage_fields`.
+- **`hw-format-non-string` and `hw-format-profile-ignored`:** `find` and `replace` re-pointed at the changed line; each is still caught by its committed witness.
+- **Rule `format.type-independent`:** its text now states the selection. Format applies to every value JSON Schema treats as a string and to nothing else. A non-string passes. A string, a `str` subclass or `StrEnum` member included, runs the predicate, which refuses a non-exact `str`.
+- **Generated points:** 495, the same keys; none new, none stale. No committed row moves: 17 points of `pm_event_datetime.py` shift two lines, and committed entries carry no line. No inventory row or pin moves: the scan universe is `Plans/`, and no committed file pins these scripts.
+
+### Other exact-type string gates
+
+An AST listing of every `type(x) is [not] str` in `pm_event_datetime*.py`, `pm_event_numbers.py` and `pm_event_index_binding.py` finds 25 sites. The format checker was the only place where a string-like value skipped its check, so nothing else changed:
+
+- **Every other gate refuses.** Driven with `StrSub` and a `StrEnum` member, each refuses: `date_time_type`, `date_time_profile` (in `date_time` and `format_checker`), `integer_token`, `json_number_token`, `replay_policy`, `json_input_type`, `jcs_type`, `jcs_key_type`, `physical_type`, `physical_key_type`, `binding_domain`, `payload_id_type`, `payload_media`, `recipe_tuple`, `original_binding`, `original_scope` and `original_query`. `binding_bytes` raises `TypeError`. None accepts.
+- **`pm_event_numbers.py:176`** (the walk in `loads_exact`) sees only `json.loads` output: built-in `str`, behind the exact-type `raw` gate.
+- **The hits in `_mutations.py` and `_selfcheck.py`** are tool code: AST constants and test assertions.
+- **The inventory and the value probe** select with `isinstance`, which includes subclasses, so nothing skips there.
+
+### Rerun results
+
+| Check | Base `a16f67c1ef` | Now `a73b395e54` |
+|---|---|---|
+| reviewer's `host-input-repro.py`, unmodified | 6 false passes; output equal to the review's `host-input-repro.json` | **0 false passes:** all six refused. The 9 JSON round-trip controls are still refused, `base_event` is still valid, and direct `date_time` is unchanged. |
+| date-time `--self-test` | pass, 616 checks | **pass, 623 checks** (618 + 5 freshness), 0 failures, 0 freshness problems; 495 points, 12 declared survivors, 103 hand-written mutations; 4 min 42 s |
+| `--self-test --scope all` | pass, 13,626 cases, 937 owner integration checks | **pass, 13,626 of 13,626 cases**, every case outcome identical to the review's base record; **944 owner integration checks all true** (937 + the 7 new); date-time inventory identical (233 nodes: 133 Storage, 89 other-owner, 3 automatic, 8 roles, 0 unclassified); 14 min 13 s, 479 MB peak |
+| number `--self-test --scope numbers` | pass, 580 cases, 63 owner checks | **JSON-equal to the review's base record** |
+| number `--scope numbers --mutations` | 423: 418 caught, 5 declared survivors | **JSON-equal to the review's base record** |
+| date-time `--mutations`, the full replay | NOT_RUN in the gate review (blocked by this finding) | **598 of 598 rows: 586 caught, each by its committed witness (`witness_failed`), 12 declared survivors, 0 undeclared**; 0 build errors, 0 runner exceptions, 0 not applied, `problems` empty; 72 of 72 rules caught; 96 of 96 statement rows caught, 12 reason rows; every chunk's intact run 618 of 618 self-checks; survivors 1,540 to 1,691 s each, against a 3,600 s limit |
+
+The replay ran detached as 12 `--only` chunks through the gate's own CLI (`pm_event_datetime_mutations.main`), because a full run is longer than 2 hours on one command. `verify_partition.py` shows, with the CLI's own substring rule, that the chunks partition the 598 committed rows exactly: 0 overlap, 0 missing. The first plan's chunks A and B each held four or five survivors. Both were stopped and re-split, one survivor per sub-chunk and closed under substring selection, so `site:…#1` travels with its `predicate:site:…#1:…` rows. No result of the stopped runs is used; their logs are in `replay/stopped/`. `merge_replay.py` joins the chunks the way `run_mutations` aggregates a full run: the rows, then the rule and statement verdicts over every row, then the totals. Each declared survivor survived the complete `survivor_witnesses()` suite, 8,039 witnesses (618 self-checks, 6,539 cases, 870 regression and 12 integration checks; 8,025 at the base), with the seven new checks included. A first launch was stopped after four minutes, with no result used: my first rewrite of the mutation set had escaped two `’` characters as `\u2019`. The JSON meant the same, but the bytes differed. The set was rewritten byte-faithfully, the commit amended before any push, and every run reported here for `a73b395e54` was started again at that commit.
+
+Runs used a disposable venv over the system Python 3.14.4 that pins `msgpack==1.1.2`, with `rfc8785` 0.1.4, `blake3` 1.0.11 and `jsonschema` 4.19.2, the review's versions. Available memory was at least 15 GiB at every check. Scratch and runs stayed on the VM's local disk; only the cited evidence below was copied to the share.
+
+Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/sol-gate-p1/`. `SHA256SUMS` binds every file in it.
+
+| Evidence | SHA-256 |
+|---|---|
+| `results/host-input-repro-fix.json.gz` (the reviewer's script, unmodified, at `a73b395e54`) | `23df149a015872995e96dcea2f5edfbae6bc5bd2b49e7492b00b15e9c886280a` |
+| `results/host-input-repro-base.json.gz` (at `a16f67c1ef`, equal to the review's record) | `348e025f33be2f434585f2fff3e26a3ee4c3ec8723a4442d3a0bb941d9a150e7` |
+| `results/p1-mutant.json.gz` (the new mutant over each check, one run per witness) | `73b02a8229608777fe9ef84b1cec4cb0cdb49050e056b916599afcc073a413b5` |
+| `results/host-string-sweep.json.gz` (the 25 exact-type gates and their host-value outcomes) | `be8d3d026eb694850b427366830eb77c8b41233c2ecfe66d1fd99d5d098ad293` |
+| `results/dt-selftest.json.gz` | `e5e306c12bbb57184aa56378a0df8bc9e7b40034fac2c608f4f1edf2b890a81e` |
+| `results/scope-all.json.gz` | `ed9e896d525fca3d16c8c8ff6c780a65475f9df1e63cb7c8d282557b9f940b3f` |
+| `results/num-selftest.json.gz` | `f0eeae179d0be4f43576f93e20bc96d82631955a0f8cfd23e20ddb990a371f82` |
+| `results/num-mutations.json.gz` | `5d603b662a00a239d082981f9e524e851892d00a49138eb707eb2d28052f8d42` |
+| `results/points-fix.json.gz` (495 points; `points-base.json.gz` beside it) | `01d4f64a81e331f339cdcc48b887590374e33aac1113627e18257f4c666de617` |
+| `replay/merged.json.gz` (all 598 rows; the 12 chunks beside it) | `faaa1fbd9a5ffb55cddb0474934077f36bf6bafc40a73ce1557e67d6aa3418b7` |
+| `replay/merged.summary.json.gz` | `fa784c820de0cf4bb5c634f8e1327fff26c76339f519ac7374323aa6fe24fd87` |
+| `results/survivor-witnesses.json.gz` (the suite a declared survivor must survive) | `cbe92c1a22f255df309c307e64354fbd8eb194a7afe9ae5bbefba5d11450a899` |
+| `replay/plan2.json.gz` (the partition check) | `3950bfd23a1aebe6457d19cd36d836e7abedca231f244330677c303877bffa54` |
+
+The drivers are in `tools/`: the review's `host-input-repro.py`, `p1_mutant.py`, `host_string_sweep.py`, `points.py`, `plan_chunks.py`, `resplit.py`, `verify_partition.py`, `run_chunk.py` and `merge_replay.py`. `results/run-input-sha256.txt.gz` pins the inputs every run read.
+
+
+## Fix round 17 (date-time): survivor classes
+
+**Source:** the blind Opus pre-check of `0b2ed73b4d`, `REVIEW-numrule-datetime-p1fix-opus.md` (claude_me), scored 15 of 20 (bar: 18). Nothing in it was REAL. TOOL-ISSUES T161-T166. The brief was `lanes/NUMRULE-DT-FIX17.md`: close each survivor's whole class, not just its one mutation.
+
+- **Base:** `0b2ed73b4d` on `plans/ea-numrule-20261105`. Worked in one local sparse worktree (`Plans`, `scripts`, `reports`, `tests`). Pushed fast-forward, no force.
+- **Commits:** `fb04d2f19b` (the fixes, the checks and the mutation set) and this report.
+- **Files touched:** `scripts/pm_event_datetime.py`, `scripts/pm_event_datetime_inventory.py`, `scripts/pm_event_datetime_selfcheck.py`, `scripts/pm_event_datetime_mutations.py`, `scripts/pm_event_datetime_mutations.json` and this report. `git diff 0b2ed73b4d..HEAD -- 'scripts/pm_event_numbers*' Plans` is empty.
+- **Production behaviour is unchanged on every committed input** (Rerun results, below): every inventory row and classification, the battery and its pin, the inventory pin, and the committed-tree scan, byte for byte.
+- **Behaviour findings:** none. No fix changed a committed result.
+
+### Class 1 (T161, B05): finite parameter domains, covered exhaustively
+
+**Location, cause, fix.** The legacy profile's fraction length was tested at 0, 3, 8, 10 and 12 digits but never 6, so `len(fraction) not in (6, 9)` survived. The hand-written cases came from examples, not from the domains. The fix is an owner profile table in `pm_event_datetime_selfcheck.py` (`PROFILE_TABLE`: for each profile, the zones and fraction lengths CV-1101 lets it admit). For every profile and every domain, the cases are generated from that table and from the grammar's own ranges: every value in the domain and each boundary just outside it. Expected outcomes come from the table and the grammar, never from the gate's code. The test keeps its own copy of the IERS C72 insertion days and its own month lengths and leap-year rule.
+
+**Instances found** (every finite parameter domain the gate checks):
+
+| Domain | Where the gate checks it | Cases now (per profile, all four profiles) |
+|---|---|---|
+| Profile names | `pm_event_datetime.py:18` (`PROFILES`), `:57`, `:99` | `datetime_unit_profile_domain_table_complete`: the table's profiles equal `PROFILES`, in order |
+| Fraction length | `pm_event_datetime.py:20` (grammar), `:91` (legacy: exactly 9) | 0-24, 30 and 40 digits, an empty fraction and a non-digit (`_fraction_length`) |
+| Zone forms and case | `:21` (grammar), `:88` (Z-only profiles) | 10 zone spellings in the domain and 18 just outside (`_zone`) |
+| Offset hour | `:79` | every hour 00-23 with each sign; 24 and 99; one and three digits (`_offset_hour`) |
+| Offset minute | `:81` | every minute 00-59 with each sign; 60 and 99; one and three digits (`_offset_minute`) |
+| Date/time separator | `:20` (`[Tt]`) | `T`, `t`; 8 spellings just outside (`_separator`) |
+| Date and time field separators | `:20` | `-` and `:`; each swapped or dropped (`_date_time_separators`) |
+| Year (width 4) | `:20` | every year 0000-9999; 3 and 5 digits, a sign (`_year`) |
+| Month | `:66` | 01-12; 00, 13, 99; one and three digits (`_month`) |
+| Day per month | `:68` | every day of every month in 2026, 2024, 1900, 2000, 0000 and 2100; day 00 and last + 1; widths (`_day`) |
+| Hour, minute | `:70`, `:72` | every value; 24 or 60, and 99; widths (`_hour`, `_minute`) |
+| Second | `:74`, `:84` | 00-59; 60 off a leap instant (`date_time_leap_second`); 61, 99; widths (`_second`) |
+| Leap seconds | `:29` (`_LEAP_DAYS`), `:84-87` | every month end of 1971-2027 at `23:59:60`: accepted exactly on the 27 C72 days (`_leap_second`) |
+| Format checker per profile | `:96-112` | the checker conforms exactly where the table accepts, over the fraction, zone, offset and separator domains (`_checker_and_validator`) |
+| Bound validator per profile | `:329` (`_bind`) | the same values through `_bound({"format": "date-time"}, profile=…)` |
+| Dialects | `:259-271` | each of the four supported URIs with and without `#`; 15 spellings just outside, non-strings included (`datetime_unit_profile_domain_dialects`) |
+| Inventory classification and profile | `pm_event_datetime_inventory.py:645-648`; the inventory schema's enums | all 9 classifications under both inventory profiles (`classification_profile_conflict` exactly on disagreement); 4 profiles outside the enum (`datetime_unit_profile_domain_inventory_classification`) |
+
+The value probe's tables (`SWEEP_ZONES`, `NON_TIMESTAMP_CONTROLS`, `ANNOTATIONS`, `ASSERTIONS`, `REFERENCES`, `UNIONS`, `DYNAMIC`, `pm_event_datetime_value_probe.py:40-69`) and the year-sweep range (`:90`, `:113`) are not profile parameters. Each entry is already an enumerated `data_table_entry` point with its own witness, and `datetime_unit_year_sweep_complete` checks the range.
+
+**New checks:** 59. That is 13 domains × 4 profiles, 4 checker-and-validator checks, the completeness check, the dialect domain and the inventory domain. **The self-test fails** when a gate profile has no table row, a profile or domain has no generated check or no case, a value the table names lacks its own case or a boundary case either side of it, or the leap domain disagrees with the C72 table.
+
+### Class 2 (T162, B08): composed schema keywords stand alone
+
+**Location, cause, fix.** `pm_event_datetime.py:143-144` composes `{"type": "string", "format": "date-time", "pattern": "Z(?![\s\S])"}` on each Storage field of a Storage-classified node. Every committed Storage field schema already refuses non-strings (212 of 212), so dropping `type` survived. The fix is a synthetic selection whose own field schemas are empty (`UNTYPED_STORAGE`), so the composed keyword is the only thing that can refuse. For each keyword, the plain validator over the same schema accepts every value, the bound validator refuses each one, and the only error is that keyword's.
+
+**Instances found** (every place the gate adds schema keywords to a selected field): one composition, `_eventrecord_storage_properties` (`:138-145`), with three keywords and two hooks: `iter_errors` at the root (`:229`) and `descend` at every fragment, references included (`:241`). The gate's other schema construction, the value probe's selector (`pm_event_datetime_value_probe.py:226`), wraps a `$ref` and adds no keyword to a field.
+
+**New checks:** `datetime_unit_composition_{type,format,pattern}_alone_{root,through_reference}` (6). **Drop-one mutations** (each caught by its own check): `hw-fix17-B08-composition-type-dropped` (the reviewer's edit), `hw-fix17-composition-format-dropped`, `hw-fix17-composition-pattern-dropped`, and `hw-fix17-composition-descend-dropped` (the `descend` hook).
+
+### Class 3 (T163, T164; I03, I05): the inventory scan decodes closed
+
+**Location, cause, fix.** `mentions_field` and `schema_candidate` decoded only `\u` escapes (`pm_event_datetime_inventory.py:132-147` at the base). A serialized string was parsed once, with no depth bound. A candidate that did not start with `{`, `[` or `"` after `lstrip()` was skipped silently. That included a byte order mark before the brace, and JSON whose quotes or braces appear only as escapes. Keys were never examined. And no witness exercised the escaped-mention or serialized-array branches. The fix:
+
+- **`_json_layers` (`:136-150`):** the text, then each layer with every JSON escape decoded (`\"`, `\\`, `\/`, `\b`, `\f`, `\n`, `\r`, `\t` and `\u` alike), to the fixed point. Every layer is shorter, so the list is finite. `mentions_field` (`:153`) and `schema_candidate` (`:158`) test every layer.
+- **`inspect.serialized` (`:405-419`):** a candidate string that is JSON is parsed (object, array or string) and inspected one level deeper, up to `SERIALIZED_DEPTH = 8` strings (`:131`). A candidate string otherwise refuses by name:
+  - JSON-shaped but unreadable, after whitespace or byte order marks (`_JSON_SHAPED`, `:129`): `unreadable_schema_string_container`;
+  - JSON only once unescaped (no pointer reaches it): `escaped_schema_string_container`;
+  - one more string past the bound: `serialized_depth_exceeded`.
+
+  A candidate is skipped only when no layer of it is JSON-shaped: prose.
+- **`inspect.strings` (`:421-434`):** a key that is, or unescapes to, a JSON container refuses (`serialized_key_container`), because a key has no pointer of its own.
+- **Inline code (`:253`):** inline code whose braces appear only as escapes is a container too.
+- **Measured on the committed tree before the change** (`measure_scan.py`): 282 scanned files; the deepest serialized string is 1 deep (6,488 strings); 40,452 non-JSON candidate strings, none with any escape; 0 byte-order-marked or escaped containers; 0 JSON-shaped keys; 0 inline code with escaped braces; 0 wrong-typed declaring keywords. With the new code the committed scan is byte-identical (`scan-base.json` = `scan-new.json`: 233 rows, 0 errors, gate pass).
+
+**Other scanners and decoders searched for the same skip-on-unknown shape:**
+
+| Instance | Verdict |
+|---|---|
+| `declarations` (`:170-224`): a declaring keyword of another JSON type (for example `"required": "observed_at_utc"`, `"properties": [...]`) was read as declaring nothing | **Fixed** (`:165-182`). One that names either field raises `unreadable field declaration keyword: <key>` (fail closed, in the scan and in runtime admission alike). One that names neither, such as data with `"required": true`, still declares nothing. |
+| `_markdown_blocks` inline filter (`:253`) | **Fixed** (above) |
+| `inspect.strings` keys | **Fixed** (above) |
+| `_exclusion_schema_paths` skips undecodable files and fences (`:295`, `:301`, `:307`) and does not decode serialized strings | **Not fail-open, unchanged.** A file or fence that does not parse as JSON cannot be a loadable JSON schema. The references that make another file loadable are read from the referrer, which parsed. A string inside a document is never a resource a resolver loads. The scan itself still refuses every undecodable mentioning container, unless an exclusion pins it. |
+| `decoded_documents` (`:227`) skips blank JSONL lines | **Not a declaration.** A blank line holds nothing; any other undecodable line raises. |
+| `container` / the file loop skip non-candidates (`:439`, `:463`) | **Closed.** A candidate is now any escape layer naming a field or a wildcard keyword. Text with no candidate in any layer cannot declare either field. |
+| Value probe `_PositivePaths` (`pm_event_datetime_value_probe.py:436-440`, `:488-490`) | **Closed by design.** Only annotations and same-instance assertions are skipped; every other keyword is recorded as unproven and routes to review. |
+| Value probe sibling contexts skip boolean sibling schemas (`:264-273`) | **Equivalent** (the V04 argument). Without a dependency keyword, which is recorded and withholds automatic credit, a sibling key can only remove accepted instances. |
+
+**New checks** (21): an escaped-only mention with no declaration in a `Plans/*.md` JSON fence (`fence:3`) and in a JSON file with doubly escaped raw text; the same mention in a JSONL line, indented code, inline code, an HTML block, a JSON value escaped three times and a UTF-16 file; a declaration in a serialized array (the reviewer's I05 input); one in a doubly serialized object (`json:string:/x:string:`); one exactly 8 strings deep (found, and read back by `_source_document`) and one 9 deep (refused); escaped containers (4 spellings); byte-order-marked, NBSP-led and quote-escaped containers, with prose control; container keys (3 spellings); inline code with escaped braces; one wrong-typed declaring keyword per keyword (7) and a control; runtime admission of a wrong-typed keyword; and `_json_layers` itself.
+
+**Mutations:** `hw-fix17-I03-mentions-not-decoded`, re-pointed (the reviewer's find text named the old `while` loop, which `_json_layers` replaced; the semantic edit is the same: `mentions_field` stops decoding). `hw-fix17-I05-serialized-objects-only` is the reviewer's edit. `hw-fix17-shape-ignores-bom`, `-shape-objects-only`, `-escape-unicode-only`, `-escaped-layers-unchecked`, `-keys-not-scanned`, `-depth-unbounded` and `-depth-not-carried` cover the decoders. Generated points cover every new refusal site, the depth boundary, `_DECLARING_TYPES` entry by entry, and the two new loop domains. `_json_layers` was written so that disabling its `append` still ends at the fixed point. A first version looped forever under that mutant, which the replay would have counted as a runner exception, never as caught.
+
+### Class 4 (T166): the bound validator cannot be loosened after construction
+
+**Location, cause, fix.** The bound `evolve` (`pm_event_datetime.py:140-146` at the base, `:183-189` now) forwarded any change, so `datetime_validator(schema).evolve(format_checker=None)` dropped the date-time check. The same change at construction raises `TypeError`. The fix fixes the binding at construction (`_bind`, `:329-340`). A `_Binding` (`:148-158`) records the checker, the closed registry and the selection. Every construction runs `post_init` (`:193-210`), whether it comes from the bound `evolve`, jsonschema's own internal evolve (`schema` and `_resolver` only), `attrs.evolve` or `copy.replace`. `post_init` raises `TypeError` when the binding is forged, or when the checker, the registry, the resolver (a legacy `RefResolver`, or a `_resolver` over another registry's retrieval) or the selection differs. After construction, assignment to any of the fixed attributes (`_FIXED_ATTRIBUTES`, `:161`) raises `TypeError` (`setattr_`, `:212-216`). Reading the deprecated `.resolver` property, which would install a legacy `RefResolver`, raises too. The gate's checker (`format_checker`, `:96-112`; `_fixed_checker_class`, `:115-135`) holds its table as a read-only mapping and refuses attribute assignment and deletion. So `checks()`, item assignment, reassignment and deletion of `checkers` all raise, and deleting it can never fall back to the stock class table.
+
+**Routes found and closed** (`bypass_routes.py`, a timestamp behind a `$ref`; base `0b2ed73b4d` → head):
+
+| Route | Base | Head |
+|---|---|---|
+| `evolve(format_checker=None)` / `=FormatChecker()` | accepts `not-a-dateZ` | `TypeError: datetime_validator_fixed_format_checker` |
+| `evolve(_resolver=<resolver over another registry>)`, and the same through `attrs.evolve` | accepts | `TypeError: datetime_validator_fixed_resolver` |
+| `evolve(resolver=<legacy RefResolver>)` | fails on use | `TypeError: datetime_validator_fixed_resolver` |
+| `evolve(registry=…)` | ignored | `TypeError: datetime_validator_fixed_registry` |
+| `attrs.evolve(v, format_checker=None)`, `copy.replace(v, format_checker=…)` | accepts | `TypeError: datetime_validator_fixed_format_checker` |
+| `v.format_checker = None` / `= FormatChecker()`, `v._resolver = …` | accepts | `TypeError: datetime_validator_fixed: <attribute>` |
+| `v._registry = …`, `v._ref_resolver = …`, `v.storage_selection = …`, `v.datetime_binding = …` | inert or fails on use | `TypeError: datetime_validator_fixed: <attribute>` |
+| reading `v.resolver` (deprecated) | installs a legacy resolver; fails on use | `TypeError: datetime_validator_fixed: _ref_resolver` |
+| `v.format_checker.checkers.pop("date-time")`, item replacement, `checks("date-time")`, reassigning or deleting `checkers` | accepts | `TypeError` or `AttributeError` (read-only mapping) |
+| `copy.copy(v)` | fails on use (the copy loses `storage_selection`) | the same |
+| control: `evolve(schema=…)` | checks timestamps | checks timestamps; same checker, same binding |
+
+Out of scope, and said so: `object.__setattr__`, writing `__dict__` directly, or rebuilding the registry through the private `v._resolver._registry` can rebind any Python object. Neither the gate nor jsonschema can stop that.
+
+**Committed callers:** `git grep` of `evolve(`, `attrs.evolve`, `copy.replace(` and `__replace__` at `0b2ed73b4d`, Plans excluded, finds one call: `scripts/pm_ui_command_response.py:69`, on another validator. No committed code evolves, replaces or assigns into a `datetime_validator`, still true at the head. No caller touches `.format_checker`, `.checkers`, `._resolver`, `._registry` or `storage_selection` of one.
+
+**New checks** (21): each `evolve` route (7), a forged binding (2 forms), `attrs.evolve` and `copy.replace`, the `evolve(schema=…)` control, assignment to each fixed attribute (6), the deprecated `.resolver`, an ordinary attribute still assignable, the checker's table, the table through a validator, and the construction reference (`datetime_validator(…, format_checker=…)` raises `TypeError`). **Mutations:** every new refusal site and both resolver predicates as generated points; `_FIXED_ATTRIBUTES` entry by entry; and `hw-fix17-checker-table-mutable`, `-checker-attributes-assignable`, `-binding-unchecked`, `-assignment-unchecked` and `-never-fixed`. They sit under a new rule, `validator.binding-fixed` (CV-1101), named by statement rows `CV-1101:canonical_text:5.1` and `5.2` and `CV-1101:negative_constraints:2.1`. `hw-validator-no-checker` and `hw-validator-profile-ignored` are re-pointed at `_bind`; their witness and rule are unchanged.
+
+### Class 5 (T165, V04): an equivalent survivor, declared
+
+`hw-fix17-V04-automatic-empty-context-only` is the reviewer's edit at `pm_event_datetime_value_probe.py:364`, declared with the reviewer's checked reason. Automatic credit already requires no dependencies. `constraint_paths` records `required`, `dependent*`, `dependencies`, `min/maxProperties`, `unevaluatedProperties`, `const`, `enum` and every applicator at each map node it reaches. Without them a 2020-12 object's validity is a conjunction over its keys, so the empty-context sweep implies every context's. It names rule `probe.automatic-credit`.
+
+**Tool fix this needed:** the rules-table check demanded that every hand-written mutation's rule list it, but a rule is caught only when every listed mutation makes its witness fail. So no hand-written survivor could pass both. `check_rules_table` (`pm_event_datetime_mutations.py`) now applies the set's own stated rule ("Declared survivors are never listed"). A declared survivor, hand-written or generated, names its rule and is listed by none, and listing one is a problem. `datetime_gate_bar_detects_listed_survivor` checks all three cases.
+
+### The pre-check mutations in the hand-written set
+
+| Pre-check | Committed as | Rule | Witness |
+|---|---|---|---|
+| B05 | `hw-fix17-B05-legacy-six-digit-fraction` (the reviewer's edit) | `profile.legacy-output` | `datetime_unit_profile_domain_legacy_normalization_output_fraction_length` |
+| B08 | `hw-fix17-B08-composition-type-dropped` (the reviewer's edit) | `composition.storage-utc-z` | `datetime_unit_composition_type_alone_root` |
+| I03 | `hw-fix17-I03-mentions-not-decoded` (re-pointed, same semantics) | `scan.mentioning-container` | `datetime_unit_scan_escaped_mention_fence_unclassified` |
+| I05 | `hw-fix17-I05-serialized-objects-only` (the reviewer's edit) | `scan.decoding` | `datetime_unit_scan_serialized_list_declaration` |
+| V04 | `hw-fix17-V04-automatic-empty-context-only` (the reviewer's edit) | `probe.automatic-credit` | declared survivor (above) |
+
+Rule texts updated: `composition.storage-utc-z` (all three keywords, both hooks, each alone), `scan.decoding` (every escape layer, the depth bound, the named refusals) and `scan.fail-closed` (wrong-typed declaring keywords). New rule: `validator.binding-fixed`. Under the 11:03Z clarification the next pre-check writes its own unsteered 20, so committing these five does not weaken it.
+
+Before the full replay, every new generated point (32) and every new or re-pointed witnessed hand-written mutation (23) was run against its own witness under the gate's own `installed()`. Each witness fails by returning `False`, never by an exception (`why_caught.py`).
+
+### Totals
+
+| | Base `0b2ed73b4d` | Now `fb04d2f19b` |
+|---|---:|---:|
+| Enumerated sites (generated points) | 495 | **526**: 32 new, 1 moved (`unreadable_schema_string_container` from `scan.inspect.strings` to `scan.inspect.serialized`), same witness |
+| Generated declared survivors | 12 | 12 (unchanged) |
+| Hand-written mutations | 103 | **123**: 20 new, 4 re-pointed (`hw-validator-no-checker`, `hw-validator-profile-ignored`, `hw-scan-escapes-not-decoded`, `hw-scan-inline-code-ignored`) |
+| Hand-written declared survivors | 0 | 1 (V04) |
+| Owner statements / rows | 108 / 108 (96 with rules, 12 reasons) | 108 / 108 (96 with rules, 12 reasons) |
+| Rules | 72 | **73** (`validator.binding-fixed`) |
+| Self-checks | 618 | **726** (108 new) |
+| Replay rows | 598 | **649** |
+
+### Rerun results
+
+| Check | Result at `fb04d2f19b` |
+|---|---|
+| date-time `--self-test` | **pass**: 731 checks (726 + 5 freshness), 0 failures, 0 freshness problems; 5 min 21 s, 114 MB |
+| `--self-test --scope all`, fresh process | **pass**: 13,626 of 13,626 cases; every case outcome identical to the reviewer's base record of `0b2ed73b4d` (`scope-all-compare.json`: 0 changed, 0 added); date-time inventory identical (233 nodes: 133 Storage, 89 other-owner, 3 automatic, 8 roles, 0 unclassified); 1,052 owner integration checks all true (the 944 base checks unchanged and the 108 new); guard isolation identical; 16 min 59 s, 745 MB |
+| committed-tree scan, base code vs new code | **byte-identical** output (233 rows, 0 errors; `scan-base.json` = `scan-new.json`), and the gate passes with the committed inventory pin |
+| production behaviour | every committed row classification, the battery and its pin (`datetime_unit_battery_committed`), and the inventory pin unchanged |
+| date-time `--mutations`, every row | **649 of 649: 636 caught, each by its own committed witness (`witness_failed`); 13 declared survivors (12 generated and V04), each surviving the complete `survivor_witnesses()` suite (1,620 to 1,984 s each); 0 undeclared survivors; 0 build errors, 0 runner exceptions, 0 not applied; `problems` empty; 73 of 73 rules caught; 96 of 96 statement rows caught, 12 reason rows; every chunk's intact run 726 of 726 self-checks** |
+| the five pre-check mutations | B05, B08, I03 and I05 each caught by its own new witness; V04 a declared survivor that survives every witness |
+| number scope | `git diff --stat 0b2ed73b4d..HEAD -- 'scripts/pm_event_numbers*'` empty; `Plans/` unchanged |
+
+**How the replay ran:**
+- **Chunks.** It ran detached as 17 `--only` chunks through the gate's own CLI (`run_chunk.py` → `pm_event_datetime_mutations.main`): one chunk per declared survivor, closed under the CLI's substring rule (`plan17.py`), and four chunks of 156 witnessed rows. `verify_partition.py` shows with that rule that the chunks partition all 649 rows exactly: 0 overlap, 0 missing. `merge_replay.py` joins them the way `run_mutations` aggregates a full run.
+- **Memory gate.** A scheduler started a chunk only at 13.5 GB available or more. Below 10 GB it would have stopped the newest chunk and requeued it from the start; that never happened. PM7 browser tests had priority.
+- **Lead holds.** The lead held every heavy run from 06:05Z to 13:39Z, while stream F used the memory.
+- **The reboot.** The VM rebooted at about 16:18Z. Chunks S-01 to S-06 had already written complete results, and those were kept. S-07 to S-09, which were running, and the 8 queued chunks were rerun from the start; their interrupted logs are in `replay/stopped/`. No partial result is used: a chunk writes its result only when it ends.
+- **Before the reboot.** The work was pushed as `wip/ea-numrule-fix17-20261108` at `fb04d2f19b`.
+
+**Environment.** A disposable venv over the system Python 3.14.4 pinned `msgpack==1.1.2`, with `jsonschema` 4.19.2, `rfc8785` 0.1.4 and `blake3` 1.0.11, the review's versions. Scratch and runs stayed on the VM's local disk; only cited evidence went to the share.
+
+Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix17/` (`SHA256SUMS` binds every file in it).
+
+| Evidence | SHA-256 |
+|---|---|
+| `results/dt-selftest-final.json` | `e33b8e6846180129704612c279b1714b8491416af9a6a116106ca109b4f40ed8` |
+| `results/scope-all-final.json.gz` | `a517ece340ec56d2140d02ac461584965168f6f128a906f4e0de20979bac5650` |
+| `results/scope-all-compare.json` (against the reviewer's `scope-all-0b2ed73b4d.json.gz`) | `b3fac990354a3635365e219a4e75601bf1d8d28e8c4dcf95e36e650a911abb5b` |
+| `results/scan-new.json` (equal to `scan-base.json`) | `8e41d66382c0b66a7383a0c0125f69c12d20109a26cf676e5862e1a2bc0d3c82` |
+| `results/measure-base.json` (the committed tree's decoding inputs) | `2ed9277376d00be6b2fa5bcd8642ee0e2450f0f94bed7aa4b7d5a9deb0ca7c31` |
+| `results/bypass-base.json` / `bypass-head.json` (the T166 routes) | `c33f4c2a26e9d41b9a8e0254564d7e698792d201903eebc1f55a0353ccee0371` / `9f4737f9dc693d803f8cd07c73291871b371bdb60fd709a9ab9e6b9a6893c57a` |
+| `results/new-points-witnessed.json` (32 points, own witness each) | `a3112f39bd3b9178d439dc4b03f18c97f87b2ed1ff88e049974c9021b29a6931` |
+| `results/new-hand-witnessed.json` (23 hand-written, own witness each) | `f459f9cdeaef1794eb78b1bce006744f4458f5b2ec8920d6749f41076d4e44e1` |
+| `results/points-head.json` (526 points; `points-base.json` beside it) | `8c8e7a15f89de56dda6f475b34843907153dc20dc8971be1799de5a7108595b3` |
+| `replay/merged.json` (all 649 rows; the 17 chunks beside it) | `f6e851a15cb24f8ceb7d081276b36b9e6fc13deb5a706c6f8a6486ca2091efc5` |
+| `replay/merged.summary.json` | `2212c1cd1e64c1baaa9e5507808d69f2be68643ec848dfcdc3ff3371b3ab790e` |
+| `replay/plan.json` / `replay/partition-check.json` | `970a3ad978c34713282dee67400bdf31b2933a07985dc4748403025dd0b48b9a` / `e03bfa57bb2885f222f09f201c422aa1a5d989cb5398792a4831a187784a8c07` |
+
+The drivers are in `tools/`: `measure_scan.py`, `scan_dump.py`, `bypass_routes.py`, `check_points.py`, `why_caught.py`, `new_hand.py`, `edit_set.py`, `plan17.py`, `scheduler.py`, `final_runs.sh`, `compare_scope_all.py`, `mark_tool_issues.py`, and the earlier round's `run_chunk.py`, `verify_partition.py`, `merge_replay.py` and `points.py`.
+
+## Sol max gate r2 findings 1-2 (REAL): fix
+
+**Source:** the Sol max gate review of `f03506f7bf`, `reviews/GATES/REVIEW-gate-solmax-numrule-datetime-r2.md` (GPT-6.1 Sol, reasoning max, codex_gmail; a gate): NOT_READY, blind sample 20/20, two REAL findings, each a committed-schema false pass with unchanged helper code. The brief was `lanes/NUMRULE-DT-FIX18.md`: fix each as a whole class, since both classes had leaked before.
+
+- **Base:** `f03506f7bf` on `plans/ea-numrule-20261105`. Worked in one local sparse worktree (`Plans`, `scripts`, `reports`, `tests`). Pushed fast-forward, no force.
+- **Commits:** `cfd2cf93dd` (both fixes, the per-node controls, the checks and the mutation set), `f6e020484e` (a resumed run re-checks by identity; see Finding 2), `bd5c958342` (one existing mutation re-witnessed; see Finding 1's mutations) and this report.
+- **Files touched:** `scripts/pm_event_datetime.py`, `scripts/pm_event_datetime_inventory.py`, `scripts/pm_event_datetime_selfcheck.py`, `scripts/pm_event_datetime_mutations.json`, the new `scripts/pm_event_datetime_node_controls.json`, and this report. `git diff --stat f03506f7bf..HEAD -- 'scripts/pm_event_numbers*' Plans` is empty: no number-scope file and no committed Plans byte changed.
+- **Results that changed** (everything else is identical; Rerun results, below):
+  1. The 12 source rows of finding 1 now refuse a malformed `occurred_at_utc`. Each refused 0 of the 5 malformed strings at the base and refuses all 5 now, at that field.
+  2. The 16 configuration-change routes of finding 2 now raise, at the route or at use. Seven of them were false passes on the committed EventRecord at the base, the reviewer's among them.
+  3. Composed errors at an inline-nested classified node now carry the fragment's own path. At the base the overlay's errors lost the path segment of the `descend` that reached the node (`['batch', 0, 'observed_at_utc']` for `batch[0].ev.observed_at_utc`). This was a diagnostic defect, not a false pass: validity was right and the error was still at the field. It was fixed because the new per-node checks require the refusal at the field.
+
+### Finding 1: required timestamp checks keyed by classification, not by annotation
+
+| | |
+|---|---|
+| **Where** | `scripts/pm_event_datetime.py:138-145` at the base: `_eventrecord_storage_properties` composed only the Storage fields (`observed_at_utc`, `persisted_at_utc`) a node's inventory row names. |
+| **Why** | An EventRecord's source `occurred_at_utc` got the CV-1101 predicate only from the original schema's own `format: date-time`, through the installed checker. Twelve committed rows declare it as `{"type": "string"}` alone, so `"not-a-time"`, `"2026-02-30T00:00:00Z"`, a space separator, a trailing LF and a missing zone all passed. CV-1101 requires the predicate there too, retained history included ("Accidental past acceptance by a validator that skipped format is not an owner-valid legacy grammar"). |
+| **Fix** | The source fields come from the node's classification. `SOURCE_FIELDS = {"EventRecord": ("occurred_at_utc",)}` (`pm_event_datetime_inventory.py:24`). `StorageSelection.classified` (`:873-882`) returns a node's Storage fields and its source fields from one admission. `_eventrecord_storage_properties` (`pm_event_datetime.py:140-158`) composes the Storage profile as before (type, the enforced format, the terminal-Z pattern) and passes each source field to `_source_timestamp` (`:164-179`). That function composes `type: string` (`_SOURCE_FIELD`, `:161`) and the broad EventRecord predicate, `date_time(value, profile=EVENT_RECORD)`, whatever profile the validator runs, for every value the validator treats as a string. A refusal is a `format` error at the field whose cause is the predicate's own `Refusal`. The two profiles stay separate: lowercase, offsets and long fractions stay valid at a source field, and a Storage field still refuses `+00:00`. Composed errors now carry the fragment's own path (`descend`, `:521-535`). Original resource bytes are untouched. |
+
+**Instances: every classified node and field** (`results/nodes-base.json`, `results/nodes-head.json`; the table at the end of this section). The inventory classifies 133 nodes with a Storage profile:
+
+| Class | Nodes | Fields the gate enforces (profile) |
+|---|---:|---|
+| EventRecord | 98 | `occurred_at_utc` ×98 (broad EventRecord), `observed_at_utc` ×98 and `persisted_at_utc` ×71 (strict Storage) |
+| event_record_index | 27 | `persisted_at_utc` ×27 (strict) |
+| original_storage_fields | 6 | `observed_at_utc`, `persisted_at_utc` (strict) |
+| Storage issued original fields | 2 | `observed_at_utc`, `persisted_at_utc` (strict) |
+
+That is 310 classified fields. A node can be of several kinds: 49 sit in `anyOf`/`oneOf`/`allOf` branches, 44 are adapter or frame events and frozen append inputs (the reviewer's `historical_admission/anyOf/0/properties/source_event` among them), 34 are retained 1.0.0 compatibility readers, 23 are copied source or predecessor inputs, 16 are registry family value schemas, 3 are resource roots and 19 are other definitions. `occurred_at_utc` is declared through `$ref` at 57 nodes, with `format` at 29, and as `{"type": "string"}` alone at 12. Those 12 are the reviewer's rows, all in `Plans/restore_point_deleted_read_adapter.schema.json`.
+
+| | Base `f03506f7bf` | Head |
+|---|---|---|
+| Fields refusing every malformed string at the field (5 strings each) | 298 of 310 | **310 of 310** |
+| The 12 `{"type": "string"}` source fields | accept all 5 | refuse all 5 at the field (`format`, the predicate's own cause) |
+| Committed controls valid | 133 of 133 | 133 of 133 |
+| Strict profile: Storage fields refusing `+00:00` | 212 of 212 | 212 of 212 |
+| Broad profile: source fields accepting `2026-01-01t00:00:00.123456789012345678901+05:30` | 98 of 98 | 98 of 98 |
+
+The 12 rows that changed are exactly the review's `affected-source-rows.json`; no other row changed.
+
+**Outside the inventory.** 82 committed envelope-shaped nodes (producer submissions, producer inputs, `event_semantics` and frozen producer inputs) declare `occurred_at_utc` but no Storage field, so the inventory's field universe never classifies them (`results/uninventoried-envelopes.json`). Every one carries `format` (32) or a `$ref` to a date-time definition (50). Under the enforced checker, 79 refuse `not-a-time` and accept a broad string; the other 3 reference resources in other files, which the sweep did not preload. They are producer-side lane boundaries, which CV-1101 leaves to each adopting lane (statement `CV-1101:canonical_text:5.4`, a checked no-mutation reason). This is an integration note, not a gate change. Statement `guide:Shared calls:9.6` ("Unformatted source fields retain their original types without acquiring a timestamp predicate") is about other-owner named fields (`owner_schema`). Those still acquire nothing, which is checked: `datetime_unit_source_composition_classification_keyed`.
+
+**New checks** (`pm_event_datetime_selfcheck.py`, section P1, from `:4019`):
+- **`datetime_node_<12 hex>`, 133 checks**, one per Storage-classified node, registered at import from the committed inventory (`_register_node_checks`, `:4125`).
+  - Each validates the node's committed control through a neutral `{"$ref": <resource>#<pointer>}`, with the node's complete committed resource preloaded.
+  - It sets each classified field to `not-a-time` and requires refusal with every error at that field and a `date_time_syntax` cause.
+  - It requires a Storage field to refuse `+00:00` and a source field to accept a lowercase, offset, long-fraction string.
+  - The reviewer's row is `datetime_node_dc560a51379d`.
+- **`datetime_node_controls_complete`:** the controls table and the inventory agree node for node. Each object is keyed by its own digest and carries every classified field, every node has a registered check, and the 12 unformatted source rows are among them. A node added to the inventory gets a registered check at import that fails until its control is committed, and this check fails with it.
+- **The controls, `scripts/pm_event_datetime_node_controls.json`:** 133 nodes and 14 distinct objects. Each is copied from the committed Plans object named as its source, where a survey of 1,378 Plans JSON files found it valid at the node (`tools/find_instances2.py`, `tools/make_controls.py`). Contract fixtures were preferred.
+  - 34 nodes, the 1.0.0 compatibility readers, use the 1.0.0 `plan_approved_event` of `Plans/.implementation_readiness/pnc019_certification_receipt.json`, the only committed 1.0.0 event valid there.
+  - 5 nodes use objects of `Plans/event_number_recipe_corpus.json`.
+  - The copies keep the checks stable across later reseals of those files.
+- **`datetime_validator_real_source_row_refused`:** the review's exact input. It is the committed `restore_point.deleted` fixture, with `persisted_at_utc` and `sequence_id` added, at the source row. It runs through `evolve(schema=row)` and through the neutral reference. Each malformed string is refused at the field, while the original row alone accepts it. Four broad strings stay valid.
+- **Units over a synthetic EventRecord node whose `occurred_at_utc` is untyped:** `datetime_unit_source_composition_type_alone`, `_predicate_alone` (each refusal code), `_host_string` (`str` subclass and `StrEnum` member, `date_time_type`), `_broad_profile_exact` (under all four validator profiles), `_classification_keyed` (no other class, and no `owner_schema` node, composes it; an original `format` does not add a second code) and `_absent_field`. Also `datetime_unit_composition_error_path_nested` (inline under a property and an array item, and through a reference).
+
+**Mutations:**
+- **Generated points:** `SOURCE_FIELDS 'EventRecord'` and `_SOURCE_FIELD 'type'`.
+- **Hand-written:**
+  - `hw-fix18-source-overlay-removed` removes the classification-keyed overlay, as the brief asks; it is caught by `datetime_node_dc560a51379d`.
+  - `hw-fix18-source-by-annotation` composes only where the original has `format`; it is caught by the same check.
+  - `hw-fix18-source-profile-strict`, `-source-type-dropped`, `-source-exact-str`, `-source-error-path-dropped` and `-descend-path-prefix-dropped` are each caught by their own unit check.
+- **One existing mutation re-witnessed** (`bd5c958342`, found by the full replay): `hw-solgate-format-exact-str-selection` restores the checker's exact-`str` selection. Its witness was `datetime_validator_real_eventrecord_occurred_at_utc_str_subclass_refused`, but the source composition now refuses a `str` subclass or `StrEnum` member at `occurred_at_utc` as well, so that check no longer fails under the mutant. The witness moves to the `observed_at_utc` check of the same family, where only the checker applies. The checker and the composition now each refuse host strings at `occurred_at_utc`, by design.
+- **New rule:** `composition.source-by-classification` (CV-1101), named by statement rows `CV-1101:canonical_text:1.1`, `1.5`, `6.2` and `6.3`, `acceptance_criteria:1.1` and `3.1`, and `negative_constraints:2.1`.
+
+### Finding 2: the bound configuration is checked at every use, not only at construction
+
+| | |
+|---|---|
+| **Where** | `scripts/pm_event_datetime.py:206` at the base (`_bound_validator.post_init`) and `:244` (`_validate_reference`). |
+| **Why** | Every check of the binding ran at construction, and the resolver check compared only the retrieval callback's identity. A resolver over `registry.with_resource(<pinned URI>, Resource({}, DRAFT202012))`, which keeps that callback, passed `evolve(_resolver=...)`. Nothing compared the configuration when a validation ran, so the committed `base_original_event` with `observed_at_utc: "not-a-time"` validated. This is the third leak of one class, after T166 (`evolve(format_checker=None)`) and T189 (deleting the marker). |
+| **Fix** | **Verify at use.** `_bind` (`:646-661`) builds the resolver jsonschema itself would build and issues `_Pins` (`:230-258`, registered in `_ISSUED`) of the whole configuration. That covers the checker, its table object and its `date-time` entry, the closed registry and the resolver's registry (`_RegistryPins`, `:206-222`: every resource URI with its content object and specification, every anchor, the uncrawled URIs and the retrieval callback), and the selection's URI pins, nodes, rows (`_row_pin`, `:225`) and resources. Every validating entry point runs `_guarded` (`:408-434`): `iter_errors`, `descend` and reference resolution (`:547-555`), and `is_valid` and `validate` (`:556-565`), which call the class's own guarded `iter_errors`, never an attribute of the instance. At an entry, `_verify_use` (`:326-363`) compares, in order: the binding and its issued pins, the marker, the dialect class with its keyword table and type checker and no shadowing instance attribute (`_verify_dialect`, `:314-323`), the checker (identity, class, attributes, table, entry), no legacy resolver, the closed registry, every resolver (`_verify_resolver`, `:300-311`: its base URI and dynamic scope pinned, and its registry equal to the pins resource by resource and anchor by anchor, `_verify_registry`, `:275-297`), and the selection (`_verify_selection`, `:366-384`). Content is re-hashed last through `verify_resources`. Any difference raises `DatetimeAdmissionError` before anything validates. A step nested in a verified run on the same thread checks the same objects by identity (`_verify_step`, `:387-400`). A run that resumes after yielding an error re-checks every object by identity, because the caller's code ran in between. It skips the re-hash, because that run has already refused its instance and the next entry re-hashes (`f6e020484e`: at `cfd2cf93dd` the resume re-hashed too, and listing every error of a large resource took about 25 times longer; it now takes 18% longer than at the base). **Kept and extended at construction:** every refusal of round 17 stands. `post_init` (`:464-491`) now also requires issued pins with the same checker, registry and selection. A resolver over another registry object must read exactly the pinned map (`datetime_validator_fixed_resolver: <code>`), and a crawled copy of the same map is accepted. **T189:** the marker and every fixed attribute cannot be deleted or reassigned (`delattr_`, `:502-506`; `_FIXED_ATTRIBUTES`, `:196`, now with `_datetime_fixed`), and no ordinary assignment can shadow a method or a class table (`setattr_`, `:493-500`). The explicit-resolver URI check of `descend` moved into `_verify_resolver`, keeping its code (`datetime_resource_not_preloaded`). |
+
+**Instances: every route of the class**, on the committed EventRecord with the committed `base_original_event` (`tools/bypass18.py`; `results/bypass-base.json`, `results/bypass-head.json`):
+
+| Route (fresh validator each time) | Base `f03506f7bf` | Head |
+|---|---|---|
+| reviewer: evolve(_resolver=registry mapping the pinned URI to {}) | **false pass** | refused at the route: TypeError datetime_validator_fixed_resolver: datetime_validator_use_uncrawled |
+| T166: evolve(format_checker=None) | refused at the route: TypeError datetime_validator_fixed_format_checker | refused at the route: TypeError datetime_validator_fixed_format_checker |
+| T189: del v._datetime_fixed, then v.format_checker = None | use raised: TypeError datetime_validator_fixed_format_checker | refused at the route: TypeError datetime_validator_fixed: _datetime_fixed |
+| T189 around the guard: object.__delattr__ marker, then v.format_checker = None | use raised: TypeError datetime_validator_fixed_format_checker | use refused: datetime_validator_use_marker |
+| assignment: object.__setattr__(v, 'format_checker', FormatChecker()) | use raised: TypeError datetime_validator_fixed_format_checker | use refused: datetime_validator_use_format_checker |
+| assignment: object.__setattr__(v, '_resolver', resolver over the changed map) | **false pass** | use refused: datetime_validator_use_uncrawled |
+| assignment: v.iter_errors = lambda *a, **k: iter(()) | **false pass** | refused at the route: TypeError datetime_validator_fixed: iter_errors |
+| assignment: v.__dict__['storage_selection'] = another selection | use refused: datetime_resource_not_preloaded: <EventRecord> | use refused: datetime_validator_use_selection |
+| deletion: del v.storage_selection | use raised: AttributeError 'InventoryDatetimeValidator' object has no attribute 'storage_selection' | refused at the route: TypeError datetime_validator_fixed: storage_selection |
+| copy: copy.copy(v) | use raised: AttributeError 'InventoryDatetimeValidator' object has no attribute 'storage_selection' | use refused: datetime_validator_use_binding |
+| substituted registry: object.__setattr__(v, '_registry', Registry()) | use raised: TypeError datetime_validator_fixed_registry | use refused: datetime_validator_use_registry |
+| changed resource map in place: the bound registry's resource replaced by {} | **false pass** | use refused: datetime_validator_use_resource_map |
+| in-place edit: the date-time definition's format removed | use refused: datetime_schema_changed_after_admission | use refused: datetime_schema_changed_after_admission |
+| in-place edit: the selection's root row downgraded to owner_schema | **false pass** | use refused: datetime_validator_use_selection_nodes |
+| in-place edit: the bound class's keyword table loses format | **false pass** | use refused: datetime_validator_use_dialect |
+| in-place edit: the checker's table entry replaced (through gc) | **false pass** | use refused: datetime_validator_use_format_checker |
+| control: evolve(schema={'$ref': <EventRecord>}) | refused as invalid | refused as invalid |
+| control: resolver over a crawled copy of the same map | refused as invalid | refused as invalid |
+
+The base has seven false passes: the reviewer's and six more of the same class. At the head every route raises and both controls validate normally. Outside what any gate can defend, and said so: rewriting the gate's own code (its module, its bound classes' methods or the private pin objects through `object.__setattr__`), and giving the instance a class that is not a bound validator class, after which none of the gate's code runs. A subclass of a bound class is refused (`datetime_validator_use_dialect`).
+
+**Committed callers:** `git grep` of `evolve(`, `attrs.evolve`, `copy.replace(` and `__replace__` outside `Plans` and the gate's own files finds one call, `scripts/pm_ui_command_response.py:69`, on another validator. No committed code evolves, replaces, assigns into or deletes from a `datetime_validator`.
+
+**New checks** (section P2), each from a fresh validator, each with the untouched validator still validating:
+- **The reviewer's input, unchanged:** `datetime_validator_real_eventrecord_resolver_map_refused`. The resolver is refused at construction, refused at use when installed around construction, and the intact validator still accepts the committed event and refuses the invalid one.
+- **T166 and T189:** round 17's `datetime_unit_bound_evolve_*` and `_setattr_*` checks stand. New: `datetime_unit_use_deletion_refused`, and `datetime_unit_use_t189_marker_then_checker_refused` (`object.__delattr__` of the marker, then an ordinary checker reassignment, refused at use).
+- **New routes, at least one per category:**
+  - **Evolve:** `_resolver_map_refused_at_construction` (an uncrawled URI added, a resource replaced, an anchor removed) and `_forged_pins_refused_at_construction` (genuine pins paired with another checker, registry or selection, pins `_bind` never issued, no pins).
+  - **Assignment** (`datetime_unit_use_<route>_refused`): `checker_object_setattr`, `checker_other_profile`, `checker_clone_same_table`, `ref_resolver_installed`, `registry_substituted`, `resolver_not_a_resolver`, `resolver_base_unpinned`, `resolver_scope_unpinned`, `shadow_iter_errors`, `shadow_type_checker`, `binding_*` (six), `marker_false`, `dialect_subclass`, `selection_substituted` and `selection_class_changed`. Also `datetime_unit_use_assignment_shadow_refused` and `_marker_assignment_refused`.
+  - **Deletion:** `marker_deleted`, the T189 route and `datetime_unit_use_deletion_refused`.
+  - **Copy:** `datetime_unit_use_copy_refused`.
+  - **Substituted registry:** `resolver_registry_type`, `resolver_retrieval`, `resolver_uncrawled`, `resolver_resource_added` and `_removed`, and `closed_registry_retrieval_edited`.
+  - **Changed resource contents:** `datetime_unit_use_each_*`, which change every resource and anchor in turn, so a walk that stopped at the first item is caught: contents, specification, a renamed URI, an anchor's kind, name, resource and key, and an added anchor. Also `selection_uri_pins_edited`, `selection_resource_dropped`, `datetime_unit_use_each_selection_node_entry_refused` and `_each_selection_resource_entry_refused`, `datetime_unit_use_selection_nodes_refused` (a row's profile, fields, digest or class edited in place, or the nodes cleared), `datetime_unit_use_class_tables_refused`, the four `checker_*` table routes, and `datetime_validator_real_eventrecord_in_place_edits_refused` (on the committed EventRecord: the registry's resource replaced, the date-time definition loosened, the root row downgraded to `owner_schema`, the URI pins edited).
+  - **Run state:** `datetime_unit_use_resumed_run_reverified` (a checker swapped while a run was suspended raises at the next step, and a `descend` called meanwhile is its own entry point) and `datetime_unit_use_nested_step_verified` (each step check). Also `datetime_unit_use_pins_fixed` and `datetime_unit_validate_raises_first_error`.
+- **Controls:**
+  - `datetime_validator_real_eventrecord_preloaded_controls`: an ordinarily preloaded committed map validates normally, and an evolve that changes only the schema still validates and checks every timestamp field through the same binding.
+  - The crawled-copy control in `_resolver_map_refused_at_construction`.
+  - Round 17's `datetime_unit_bound_evolve_schema_only_still_checks` and `datetime_unit_bound_other_attributes_assignable`.
+
+**Mutations:**
+- **Generated points:** every new refusal site and predicate, and the walk and loop points of the registry, selection and scope checks. Each is witnessed by its own check.
+  - Four existing data points (`_FIXED_ATTRIBUTES` `'format_checker'`, `'_registry'`, `'_resolver'`, `'_ref_resolver'`) are re-witnessed by `datetime_unit_use_deletion_refused`. Assigning those slot names is now refused by the class-name rule as well, so only deletion still tells the four entries apart.
+  - Two routes (`marker_deleted`, `resolver_base_unpinned`) use an instance that reaches no reference or property, so that the entry check is the only one that can refuse. A resolver's base URI is pushed onto the dynamic scope of every resolver derived from it, and the validator's own first steps are step-checked, so either would repeat the same code.
+- **Hand-written:**
+  - `hw-fix18-at-use-check-skipped` skips the at-use fingerprint check, as the brief asks; it is caught by `datetime_unit_use_checker_object_setattr_refused`.
+  - Each of these is caught by its own check: `-reverify-after-yield-dropped`, `-nested-step-unchecked`, `-is-valid-instance-iter-errors`, `-validate-instance-iter-errors`, `-explicit-resolver-unchecked`, `-closed-registry-unchecked`, `-entry-rehash-skipped`, `-row-pin-no-{digest,fields,profile,classification}`, `-shadow-names-unguarded` and `-delattr-unguarded`.
+- **New rule:** `validator.verified-at-use` (CV-1101), named by `CV-1101:canonical_text:5.1`, `5.2` and `6.3` and `negative_constraints:2.1`. `validator.binding-fixed` lists the new construction, assignment, deletion and pin sites. `admission.pinned-resources` names the scope site in `_verify_resolver` in place of the stale `descend` site.
+- **Re-pointed, same semantics** (their find text moved): `hw-validator-no-checker` (the checker's table emptied, since a `None` checker no longer constructs), `hw-composition-extra-field`, `hw-admission-skipped-on-descend`, `hw-admission-no-resource-verification` and `hw-fix17-composition-descend-dropped`.
+
+Before the full replay, every new generated point (78 and the 4 re-witnessed) and every new or re-pointed hand-written mutation (26) was run against its own witness under the gate's own `installed()`. Each was caught (`results/new-points-witnessed.json`, `results/hand-witnessed.json`, `results/hand-r2-witnessed.json`).
+
+### Totals
+
+| | Base `f03506f7bf` | Now |
+|---|---:|---:|
+| Enumerated sites (generated points) | 526 | **603**: 78 new, 1 stale removed (the `descend` URI check, now in `_verify_resolver` with the same code) |
+| Generated declared survivors | 12 | 12 (unchanged) |
+| Hand-written mutations | 123 | **144**: 21 new; 5 re-pointed at moved text and 1 re-witnessed, same semantics |
+| Hand-written declared survivors | 1 | 1 (V04, unchanged) |
+| Owner statements / rows | 108 / 108 (96 with rules, 12 reasons) | 108 / 108 (96 with rules, 12 reasons); 9 rows name a new rule |
+| Rules | 73 | **75** (`composition.source-by-classification`, `validator.verified-at-use`) |
+| Self-checks | 726 | **927** (201 new: 133 per-node, the controls check, 67 others) |
+| Replay rows | 649 | **747** |
+| `--scope all` owner integration checks | 1,052 | **1,253** (the 1,052 unchanged and the 201 new) |
+
+### Rerun results
+
+| Check | Result |
+|---|---|
+| date-time `--self-test` at `bd5c958342` | **pass**: 932 checks (927 + 5 freshness), 0 failures, 0 freshness problems; 603 points, 12 declared survivors, 144 hand-written mutations, 75 rules, 108 statement rows; 4 min 10 s, 117 MB |
+| `--self-test --scope all`, fresh process | **pass**: 13,626 of 13,626 cases, every case outcome identical to round 17's record of the same code (`fb04d2f19b`, whose scripts equal the base's; `scope-all-compare.json`: 0 changed, 0 added); date-time inventory identical (233 nodes: 133 Storage, 89 other-owner, 3 automatic, 8 roles, 0 unclassified); 1,253 owner integration checks all true (the 1,052 base checks unchanged and the 201 new); guard isolation identical; 11 min 51 s, 819 MB. The same at `cfd2cf93dd` and at `f6e020484e`. |
+| committed-tree scan, base code vs new code | **byte-identical** (233 rows, 0 errors, gate pass; SHA-256 `8e41d66382c0b66a7383a0c0125f69c12d20109a26cf676e5862e1a2bc0d3c82`, the same bytes as round 17's `scan-new.json`) |
+| production behaviour | every committed row classification, the battery and its pin (`datetime_unit_battery_committed`), the inventory and its pin (`datetime_inventory_complete_and_classified`) unchanged. Changed: the 12 source rows, the 16 routes and the composed-error path, as listed at the top of this section |
+| the gate reviewer's evidence inputs, unmodified (`resolver-probe.py`, `real-row-probe.py`, `field-reference-audit.py`; SHA-256 equal to the review's copies) | **base:** every output byte-identical to the review's evidence, `resolver-results.json`, `real-row-results.json`, `row-reference-results.json` and `field-reference-results.json` alike (the resolver change is accepted and validates the invalid event; 216 source false passes over the 12 rows). **Head:** the resolver input is refused at construction (`TypeError: datetime_validator_fixed_resolver: datetime_validator_use_uncrawled`). The source row refuses `not-a-time`, the 30 February, the space separator and the trailing LF at `occurred_at_utc` and still accepts the four broad strings. The field audit has **0 mismatches of 9,610 cases** (216 at the base), and the row-reference proof refuses its false-pass input. The two probes' closing assertions, which expect the false pass, fail, as they should. Head field audit 1 min 34 s (base 1 min 43 s). |
+| date-time `--mutations`, every row | **747 of 747: 734 caught, each by its own committed witness (`witness_failed`); 13 declared survivors (12 generated and V04), each surviving the complete `survivor_witnesses()` suite (1,405 to 1,582 s each, against 3,600 s); 0 undeclared survivors; 0 build errors, 0 runner exceptions, 0 not applied; `problems` empty; 75 of 75 rules caught; 96 of 96 statement rows caught, 12 reason rows; every chunk's intact run 927 of 927 self-checks** |
+| the brief's hand-written mutations | `hw-fix18-source-overlay-removed` (the classification-keyed overlay removed) is caught by `datetime_node_dc560a51379d`; `hw-fix18-at-use-check-skipped` (the at-use fingerprint check skipped) is caught by `datetime_unit_use_checker_object_setattr_refused` |
+| number scope | `git diff --stat f03506f7bf..HEAD -- 'scripts/pm_event_numbers*' Plans` is empty |
+
+**How the replay ran:**
+- **Chunks.** It ran detached as 18 `--only` chunks through the gate's own CLI (`run_chunk.py` → `pm_event_datetime_mutations.main`): one chunk per declared survivor, closed under the CLI's substring rule (`plan17.py`), and five chunks of 144 or 145 witnessed rows. `verify_partition.py` shows with that rule that the chunks partition all 747 rows exactly: 0 overlap, 0 missing. `merge_replay.py` joins them the way `run_mutations` aggregates a full run.
+- **Commits.** The chunks ran at `f6e020484e` from 23:13Z to 02:59Z. Chunk P-04 found the one undeclared survivor, `hw-solgate-format-exact-str-selection`; after its witness moved (`bd5c958342`), P-04 was rerun at `bd5c958342` and passed (144 of 144). Its first result is in `replay/superseded/`. The other 17 chunks ran at `f6e020484e`. Its code and committed set equal `bd5c958342`'s except for that one witness string, which only P-04's row reads. S-13 was still running when the string changed; its gate-bar self-checks read the set again and check only that each witness exists.
+- **A stopped first launch.** A first launch at `cfd2cf93dd` was stopped after 21 minutes to make the resume change. None of its results is used; its logs are in `replay/stopped-cfd2cf93dd/`.
+- **Memory gate.** A scheduler started a chunk only at 13.5 GB available or more, and would have stopped the newest chunk below 10 GB; that never happened. The lowest reading at a check was 13.7 GB. PM7 work had priority.
+
+**Environment.** A disposable venv over the system Python 3.14.4 pinned `msgpack==1.1.2`, with `jsonschema` 4.19.2, `referencing` 0.36.2, `attrs` 25.4.0, `rfc8785` 0.1.4, `blake3` 1.0.11 and `markdown-it-py` 3.0.0, the versions of round 17 and of the review. Scratch and runs stayed on the VM's local disk; only cited evidence went to the share. The route table, the node table and the reviewer inputs ran at `f6e020484e`, whose scripts are byte-identical to `bd5c958342`'s except for the mutation set.
+
+Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix18/`. `SHA256SUMS` binds every file in it.
+
+| Evidence | SHA-256 |
+|---|---|
+| `results/nodes-base.json / nodes-head.json` (every classified node and field, base and head) | `12f7b66240b49c5511bba31a40738c7794e7005d99e5a2879c34c61da270b60c` / `792c0771097451bc511a6f0a5e85ee718b90f30bee4a674550ed8d7e21ced8db` |
+| `results/bypass-base.json / bypass-head.json` (the route table) | `449ecebf8ae36eb1ee559b239cb1f2e5b4a6c7170bd6b280c587aceea49ac888` / `9e7efcba82f8509dea1e813e1448cfdff65a70a409f83d3e0d3c755cc1fb82c8` |
+| `results/scan-base.json` (equal to scan-head.json) | `8e41d66382c0b66a7383a0c0125f69c12d20109a26cf676e5862e1a2bc0d3c82` |
+| `results/scope-all.json.gz` (at bd5c958342) | `0fe93126ba961a5b993c325f54ca7009922fe0a438d12b921a704416fce58dfa` |
+| `results/scope-all-compare.json` (against round 17's record of the same code) | `e5ce7c37c2d909d9953de3bf8c4e321cddd3899ba8e155e7cc3a3facaf624396` |
+| `results/dt-selftest-final.json` | `ef7b14bf6f06606045f54889a7b62d4c18f4373703556f429a3f8b143983737d` |
+| `results/new-points-witnessed.json / hand-witnessed.json / hand-r2-witnessed.json` | `6247c052570d96d8094625ab802132bd0413fcbd13e246e75ba19bfb2c4c95cf` / `681d02ac1b94779cb1383818fc1736104fc6ed2f8b0c27b1ddad7d32790d9021` / `51bf126c9fc6003a5f4abf8b1e97dcd35f9884c23e297b1f141c689808644296` |
+| `results/uninventoried-envelopes.json` (the 82 producer-side nodes) | `1edf4078cfe3f4ff3769da42cbc5d82b5ac80518e71fe28b897aae3a88b09e77` |
+| `results/instances3.json` (the control survey) | `5301a597025e040024e1178dbf1c7d10597aaec4ade9e9c2944ba0b75dc3b436` |
+| `reviewer-inputs/base/field-reference-results.json.gz / head/...` (the review's field audit, unmodified) | `4a5c99b2c6315eace4b1a60cb9f0e24fc5e1b2b4eba478afe42e1ad4d24efda7` / `8a37ae9028509372f4c7d70fbf9a7d837da9cfe1d4263c15dde20b7c0aa3e48a` |
+| `reviewer-inputs/head/resolver-results.json / real-row-results.json` | `c1a615b0d400c11be1f8bd4917c23b890647321c359dfeb4ea3731f9c388d1ee` / `3eaa5f39eed9a76c6ed340f40f650b771609678380d7fb3c49442df5a5282131` |
+| `replay/merged.json.gz` (all 747 rows; the 18 chunks beside it) | `75e6066af79d83d8bef8b6d3f2e4040c4c1c4b070781279cd814bdc722124257` |
+| `replay/merged.summary.json` | `992aa76019662da376c7979e08162b079e369230e74798631d5f55918c65ac82` |
+| `replay/plan.json / partition-check.json` | `f6a2a55b831dc7e290715fb1e5a7df3e71394b29fa5b58604cd837e7661b8ca5` / `1909917231e1f4262b44f01dd9831817d720eafaed70a254a6552420bec25d12` |
+
+The drivers are in `tools/`: `find_instances2.py` and `make_controls.py` (the controls), `node_table.py` (the node table), `bypass18.py` (the route table), `edit_set18.py` (the mutation set), `run_new.py`, `reviewer_inputs.sh` and `scope_all.sh`. Round 17's `check_points.py`, `plan17.py`, `scheduler.py`, `run_chunk.py`, `verify_partition.py`, `merge_replay.py`, `compare_scope_all.py` and `scan_dump.py` were used unchanged.
+
+### Every classified node, base and head
+
+Five malformed strings per field (`not-a-time`, `2026-02-30T00:00:00Z`, `2026-01-01 00:00:00Z`, `2026-01-01T00:00:00Z` with a trailing LF, `2026-01-01T00:00:00`), each set into the node's committed control; "refused" means every one refused with every error at that field. In parentheses is how the original declares the field. The 12 rows that changed are in bold; paths are under `Plans/`.
+
+| # | Check | Path | Pointer | Class | Fields: base → head |
+|---:|---|---|---|---|---|
+| 1 | `datetime_node_5b6967490d44` | `event_index_consumer_adoption.schema.json` | `/$defs/original_creation_commit_transaction/properties/companion_value/properties/frozen_append_input` | EventRecord | observed refused → refused (format); occurred refused → refused (format) |
+| 2 | `datetime_node_ec18030784fc` | `event_record.schema.json` | `` | EventRecord | observed refused → refused ($ref); persisted refused → refused ($ref); occurred refused → refused ($ref) |
+| 3 | `datetime_node_c4cedcdc4988` | `event_record.schema.json` | `/$defs/event_record_1_0_0_compatibility_reader` | EventRecord | observed refused → refused ($ref); persisted refused → refused ($ref); occurred refused → refused ($ref) |
+| 4 | `datetime_node_fcd46b6945fb` | `executor_cancellation_contracts/schemas/process-normalized-producer.v1.schema.json` | `/$defs/event_record_1_0_0_compatibility_reader` | EventRecord | observed refused → refused ($ref); persisted refused → refused ($ref); occurred refused → refused ($ref) |
+| 5 | `datetime_node_3340e58a5be2` | `executor_cancellation_contracts/schemas/workflow-cancel-producer.v1.schema.json` | `/$defs/event_record_1_0_0_compatibility_reader` | EventRecord | observed refused → refused ($ref); persisted refused → refused ($ref); occurred refused → refused ($ref) |
+| 6 | `datetime_node_8a07a56e7dfc` | `executor_cancellation_contracts/schemas/workflow-start-custody.v2.schema.json` | `/$defs/Event_event_record_1_0_0_compatibility_reader` | EventRecord | observed refused → refused ($ref); persisted refused → refused ($ref); occurred refused → refused ($ref) |
+| 7 | `datetime_node_0bd21f8f826c` | `executor_cancellation_contracts/schemas/workflow-start-custody.v2.schema.json` | `/$defs/EventRecord` | EventRecord | observed refused → refused ($ref); persisted refused → refused ($ref); occurred refused → refused ($ref) |
+| 8 | `datetime_node_44b81dc521e2` | `goal_certified_producer_source_contracts/schemas/producer-submission.v1.schema.json` | `/$defs/event_record_1_0_0_compatibility_reader` | EventRecord | observed refused → refused ($ref); persisted refused → refused ($ref); occurred refused → refused ($ref) |
+| 9 | `datetime_node_742298bb94b5` | `goal_run_cancelled_consumer_contracts/consumer.schema.json` | `/$defs/GenericIndexRow` | event_record_index | persisted refused → refused (format) |
+| 10 | `datetime_node_c9f03a1b6381` | `goal_run_certified_consumer_contracts/companions/cancelled-consumer.schema.json` | `/$defs/GenericIndexRow` | event_record_index | persisted refused → refused (format) |
+| 11 | `datetime_node_ceb6b288b33f` | `goal_run_certified_consumer_contracts/companions/started-consumer.schema.json` | `/$defs/GenericIndexRow` | event_record_index | persisted refused → refused (format) |
+| 12 | `datetime_node_af06012d4e9e` | `goal_run_started_consumer_contracts/consumer.schema.json` | `/$defs/GenericIndexRow` | event_record_index | persisted refused → refused (format) |
+| 13 | `datetime_node_3535264fbbdf` | `home_layout_pending_receipt.schema.json` | `/$defs/PendingAppendOrigin/properties/event` | EventRecord | observed refused → refused ($ref); persisted refused → refused ($ref); occurred refused → refused ($ref) |
+| 14 | `datetime_node_a03fce012a62` | `home_layout_pending_receipt.schema.json` | `/$defs/PendingAppendOrigin/properties/event/$defs/event_record_1_0_0_compatibility_reader` | EventRecord | observed refused → refused ($ref); persisted refused → refused ($ref); occurred refused → refused ($ref) |
+| 15 | `datetime_node_6bd9a317d430` | `home_layout_pending_receipt_v2_reader.schema.json` | `/$defs/PendingAppendOrigin/properties/event` | EventRecord | observed refused → refused ($ref); persisted refused → refused ($ref); occurred refused → refused ($ref) |
+| 16 | `datetime_node_1f127be5fdc1` | `home_layout_pending_receipt_v2_reader.schema.json` | `/$defs/PendingAppendOrigin/properties/event/$defs/event_record_1_0_0_compatibility_reader` | EventRecord | observed refused → refused ($ref); persisted refused → refused ($ref); occurred refused → refused ($ref) |
+| 17 | `datetime_node_31928233bc68` | `platform_capability_decision_contracts.schema.json` | `/$defs/e_event_record_1_0_0_compatibility_reader` | EventRecord | observed refused → refused ($ref); persisted refused → refused ($ref); occurred refused → refused ($ref) |
+| 18 | `datetime_node_abc4104953f6` | `platform_capability_decision_contracts.schema.json` | `/$defs/decision/properties/original_storage_fields/anyOf/0` | original_storage_fields | observed refused → refused (format); persisted refused → refused (format) |
+| 19 | `datetime_node_63f68d023438` | `platform_capability_decision_contracts.schema.json` | `/$defs/decision/allOf/1/then/properties/original_storage_fields` | original_storage_fields | observed refused → refused (format); persisted refused → refused (format) |
+| 20 | `datetime_node_61d3d550fac8` | `restore_point_created_contracts.schema.json` | `/$defs/creation_companion/properties/frozen_append_input` | EventRecord | observed refused → refused (format); occurred refused → refused (format) |
+| 21 | `datetime_node_7f0056755410` | `restore_point_deleted_contracts.schema.json` | `/$defs/deletion_commit/properties/frozen_append_input` | EventRecord | observed refused → refused (format); occurred refused → refused (format) |
+| 22 | `datetime_node_65358cfc360f` | `restore_point_deleted_contracts.schema.json` | `/$defs/native_append_input` | EventRecord | observed refused → refused (format); occurred refused → refused (format) |
+| 23 | `datetime_node_bcf8edca46b4` | `restore_point_deleted_owner_controls.schema.json` | `/properties/original_B1/properties/operation_value/properties/frozen_append_input` | EventRecord | observed refused → refused (format); occurred refused → refused (format) |
+| 24 | `datetime_node_c245e30f647a` | `restore_point_deleted_owner_controls.schema.json` | `/properties/original_B3/properties/operation_value/properties/frozen_append_input` | EventRecord | observed refused → refused (format); occurred refused → refused (format) |
+| 25 | `datetime_node_aab2177eedff` | `restore_point_deleted_read_adapter.schema.json` | `/properties/checkpoint_publication/anyOf/0/properties/initial_generic/properties/current_source/properties/frames/items/properties/event` | EventRecord | observed refused → refused (string); persisted refused → refused (string); **occurred accepted → refused** (string) |
+| 26 | `datetime_node_18284f3e4872` | `restore_point_deleted_read_adapter.schema.json` | `/properties/checkpoint_publication/anyOf/0/properties/initial_generic/properties/datasets/properties/event_record_index.v2@eig_021034ede9def436ce18337942b1dbec65956db172e409fea70f27735421f67b/properties/event_record_index.v2:project~0Zml4dHVyZS1wcm9qZWN0:00000000000000000008:evt_run_start_fb2c064e705715c5917582df0777bba6bb3b78026bf546019b8294d20cb64751` | event_record_index | persisted refused → refused (string) |
+| 27 | `datetime_node_1c36bb0192b8` | `restore_point_deleted_read_adapter.schema.json` | `/properties/checkpoint_publication/anyOf/0/properties/initial_generic/properties/datasets/properties/event_record_index.v2@eig_021034ede9def436ce18337942b1dbec65956db172e409fea70f27735421f67b/properties/event_record_index.v2:project~0cHJvamVjdC1B:00000000000000000007:er_rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521` | event_record_index | persisted refused → refused (string) |
+| 28 | `datetime_node_c70a6d0e43ce` | `restore_point_deleted_read_adapter.schema.json` | `/properties/checkpoint_publication/anyOf/0/properties/initial_generic/properties/datasets/properties/event_record_index.v2@eig_021034ede9def436ce18337942b1dbec65956db172e409fea70f27735421f67b/properties/event_record_index.v2:project~0cHJvamVjdC1B:00000000000000000009:historical-delete-event-A` | event_record_index | persisted refused → refused (string) |
+| 29 | `datetime_node_b059b7c5205a` | `restore_point_deleted_read_adapter.schema.json` | `/properties/checkpoint_publication/anyOf/0/properties/initial_generic/properties/datasets/properties/event_record_index.v2@eig_a9d362d1dfe09f4d8df28fcc583910e2e7251eeea9a49d08ef4be2e3d90385fb/properties/event_record_index.v2:project~0Zml4dHVyZS1wcm9qZWN0:00000000000000000008:evt_run_start_fb2c064e705715c5917582df0777bba6bb3b78026bf546019b8294d20cb64751` | event_record_index | persisted refused → refused (string) |
+| 30 | `datetime_node_0b846ace3327` | `restore_point_deleted_read_adapter.schema.json` | `/properties/checkpoint_publication/anyOf/0/properties/initial_generic/properties/datasets/properties/event_record_index.v2@eig_a9d362d1dfe09f4d8df28fcc583910e2e7251eeea9a49d08ef4be2e3d90385fb/properties/event_record_index.v2:project~0Zml4dHVyZS1wcm9qZWN0:00000000000000000010:nonmatching-run-second` | event_record_index | persisted refused → refused (string) |
+| 31 | `datetime_node_d6e02b323462` | `restore_point_deleted_read_adapter.schema.json` | `/properties/checkpoint_publication/anyOf/0/properties/initial_generic/properties/datasets/properties/event_record_index.v2@eig_a9d362d1dfe09f4d8df28fcc583910e2e7251eeea9a49d08ef4be2e3d90385fb/properties/event_record_index.v2:project~0cHJvamVjdC1B:00000000000000000007:er_rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521` | event_record_index | persisted refused → refused (string) |
+| 32 | `datetime_node_66698f6f0a3a` | `restore_point_deleted_read_adapter.schema.json` | `/properties/checkpoint_publication/anyOf/0/properties/initial_generic/properties/datasets/properties/event_record_index.v2@eig_a9d362d1dfe09f4d8df28fcc583910e2e7251eeea9a49d08ef4be2e3d90385fb/properties/event_record_index.v2:project~0cHJvamVjdC1B:00000000000000000009:er_rpd_debe1ee5aea6267fc0c591f863cd9376a0bef3243d1931ac0710f654b02f8d64` | event_record_index | persisted refused → refused (string) |
+| 33 | `datetime_node_7c72bf7ff811` | `restore_point_deleted_read_adapter.schema.json` | `/properties/checkpoint_publication/anyOf/0/properties/initial_generic/properties/source_by_generation/properties/eig_021034ede9def436ce18337942b1dbec65956db172e409fea70f27735421f67b/properties/frames/items/properties/event` | EventRecord | observed refused → refused (string); persisted refused → refused (string); **occurred accepted → refused** (string) |
+| 34 | `datetime_node_0613b3d27aa4` | `restore_point_deleted_read_adapter.schema.json` | `/properties/checkpoint_publication/anyOf/0/properties/initial_generic/properties/source_by_generation/properties/eig_a9d362d1dfe09f4d8df28fcc583910e2e7251eeea9a49d08ef4be2e3d90385fb/properties/frames/items/properties/event` | EventRecord | observed refused → refused (string); persisted refused → refused (string); **occurred accepted → refused** (string) |
+| 35 | `datetime_node_2ca7f2bee9da` | `restore_point_deleted_read_adapter.schema.json` | `/properties/creation_context/anyOf/0/properties/generic/properties/current_source/properties/frames/items/properties/event` | EventRecord | observed refused → refused (string); persisted refused → refused (string); **occurred accepted → refused** (string) |
+| 36 | `datetime_node_345b6f5484cc` | `restore_point_deleted_read_adapter.schema.json` | `/properties/creation_context/anyOf/0/properties/generic/properties/datasets/properties/event_record_index.v2@eig_d2e7acc50c2edd797a870bfed4c97a285b92517316602f26c3b8465bf95ede5c/properties/event_record_index.v2:project~0Zml4dHVyZS1wcm9qZWN0:00000000000000000008:evt_run_start_fb2c064e705715c5917582df0777bba6bb3b78026bf546019b8294d20cb64751` | event_record_index | persisted refused → refused (string) |
+| 37 | `datetime_node_483a27afbb3c` | `restore_point_deleted_read_adapter.schema.json` | `/properties/creation_context/anyOf/0/properties/generic/properties/datasets/properties/event_record_index.v2@eig_d2e7acc50c2edd797a870bfed4c97a285b92517316602f26c3b8465bf95ede5c/properties/event_record_index.v2:project~0cHJvamVjdC1B:00000000000000000007:er_rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521` | event_record_index | persisted refused → refused (string) |
+| 38 | `datetime_node_ef73117660a8` | `restore_point_deleted_read_adapter.schema.json` | `/properties/creation_context/anyOf/0/properties/generic/properties/source_by_generation/properties/eig_d2e7acc50c2edd797a870bfed4c97a285b92517316602f26c3b8465bf95ede5c/properties/frames/items/properties/event` | EventRecord | observed refused → refused (string); persisted refused → refused (string); **occurred accepted → refused** (string) |
+| 39 | `datetime_node_c32b3b0638d1` | `restore_point_deleted_read_adapter.schema.json` | `/properties/creation_context/anyOf/0/properties/original_creation_commit_transaction/properties/companion_value/properties/frozen_append_input` | EventRecord | observed refused → refused (string); **occurred accepted → refused** (string) |
+| 40 | `datetime_node_68bf31ed34e7` | `restore_point_deleted_read_adapter.schema.json` | `/properties/creation_context/anyOf/0/properties/original_creation_source/properties/frames/items/properties/event` | EventRecord | observed refused → refused (string); persisted refused → refused (string); **occurred accepted → refused** (string) |
+| 41 | `datetime_node_28ecb7587910` | `restore_point_deleted_read_adapter.schema.json` | `/properties/creation_context/anyOf/0/properties/restore_created/properties/companion/properties/frozen_append_input` | EventRecord | observed refused → refused (string); **occurred accepted → refused** (string) |
+| 42 | `datetime_node_03cafb22c210` | `restore_point_deleted_read_adapter.schema.json` | `/properties/creation_context/anyOf/0/properties/restore_created/properties/event` | EventRecord | observed refused → refused (string); persisted refused → refused (string); **occurred accepted → refused** (string) |
+| 43 | `datetime_node_e5269bc0a71c` | `restore_point_deleted_read_adapter.schema.json` | `/properties/creation_context/anyOf/0/properties/restore_created/properties/index` | event_record_index | persisted refused → refused (string) |
+| 44 | `datetime_node_c294efb70805` | `restore_point_deleted_read_adapter.schema.json` | `/properties/creation_context/anyOf/0/properties/successor_handoff/properties/rebuilt_generic/properties/current_source/properties/frames/items/properties/event` | EventRecord | observed refused → refused (string); persisted refused → refused (string); **occurred accepted → refused** (string) |
+| 45 | `datetime_node_62e2ec654733` | `restore_point_deleted_read_adapter.schema.json` | `/properties/creation_context/anyOf/0/properties/successor_handoff/properties/rebuilt_generic/properties/datasets/properties/event_record_index.v2@eig_d2e7acc50c2edd797a870bfed4c97a285b92517316602f26c3b8465bf95ede5c/properties/event_record_index.v2:project~0Zml4dHVyZS1wcm9qZWN0:00000000000000000008:evt_run_start_fb2c064e705715c5917582df0777bba6bb3b78026bf546019b8294d20cb64751` | event_record_index | persisted refused → refused (string) |
+| 46 | `datetime_node_45fa209c8475` | `restore_point_deleted_read_adapter.schema.json` | `/properties/creation_context/anyOf/0/properties/successor_handoff/properties/rebuilt_generic/properties/datasets/properties/event_record_index.v2@eig_d2e7acc50c2edd797a870bfed4c97a285b92517316602f26c3b8465bf95ede5c/properties/event_record_index.v2:project~0cHJvamVjdC1B:00000000000000000007:er_rpc_6360d821e0e043c755cf97ae53689a2c75c1a86092305d2e2f8834d85da07521` | event_record_index | persisted refused → refused (string) |
+| 47 | `datetime_node_b16dd7487f03` | `restore_point_deleted_read_adapter.schema.json` | `/properties/creation_context/anyOf/0/properties/successor_handoff/properties/rebuilt_generic/properties/source_by_generation/properties/eig_d2e7acc50c2edd797a870bfed4c97a285b92517316602f26c3b8465bf95ede5c/properties/frames/items/properties/event` | EventRecord | observed refused → refused (string); persisted refused → refused (string); **occurred accepted → refused** (string) |
+| 48 | `datetime_node_8dbe296dcbd1` | `restore_point_deleted_read_adapter.schema.json` | `/properties/deletion_transactions/anyOf/0/properties/B1/properties/operation_value/properties/frozen_append_input` | EventRecord | observed refused → refused (format); occurred refused → refused (format) |
+| 49 | `datetime_node_1425abb5c068` | `restore_point_deleted_read_adapter.schema.json` | `/properties/deletion_transactions/anyOf/0/properties/B3/properties/operation_value/properties/frozen_append_input` | EventRecord | observed refused → refused (format); occurred refused → refused (format) |
+| 50 | `datetime_node_228eb6e6b551` | `restore_point_deleted_read_adapter.schema.json` | `/properties/event/anyOf/0` | EventRecord | observed refused → refused ($ref); persisted refused → refused ($ref); occurred refused → refused ($ref) |
+| 51 | `datetime_node_81b15f05d4ea` | `restore_point_deleted_read_adapter.schema.json` | `/properties/event/anyOf/0/$defs/event_record_1_0_0_compatibility_reader` | EventRecord | observed refused → refused ($ref); persisted refused → refused ($ref); occurred refused → refused ($ref) |
+| 52 | `datetime_node_e13e525c0b3b` | `restore_point_deleted_read_adapter.schema.json` | `/properties/generic/anyOf/0/properties/current_source/properties/frames/items/properties/event` | EventRecord | observed refused → refused ($ref); persisted refused → refused ($ref); occurred refused → refused ($ref) |
+| 53 | `datetime_node_cb05b6f0985c` | `restore_point_deleted_read_adapter.schema.json` | `/properties/generic/anyOf/0/properties/current_source/properties/frames/items/properties/event/$defs/event_record_1_0_0_compatibility_reader` | EventRecord | observed refused → refused ($ref); persisted refused → refused ($ref); occurred refused → refused ($ref) |
+| 54 | `datetime_node_73a45fa8131b` | `restore_point_deleted_read_adapter.schema.json` | `/properties/generic/anyOf/0/properties/datasets/additionalProperties/additionalProperties` | event_record_index | persisted refused → refused (format) |
+| 55 | `datetime_node_f1ee321f6059` | `restore_point_deleted_read_adapter.schema.json` | `/properties/generic/anyOf/0/properties/source_by_generation/additionalProperties/properties/frames/items/properties/event` | EventRecord | observed refused → refused ($ref); persisted refused → refused ($ref); occurred refused → refused ($ref) |
+| 56 | `datetime_node_c18867480fdc` | `restore_point_deleted_read_adapter.schema.json` | `/properties/generic/anyOf/0/properties/source_by_generation/additionalProperties/properties/frames/items/properties/event/$defs/event_record_1_0_0_compatibility_reader` | EventRecord | observed refused → refused ($ref); persisted refused → refused ($ref); occurred refused → refused ($ref) |
+| 57 | `datetime_node_dc560a51379d` | `restore_point_deleted_read_adapter.schema.json` | `/properties/historical_admission/anyOf/0/properties/source_event` | EventRecord | observed refused → refused (string); persisted refused → refused (string); **occurred accepted → refused** (string) |
+| 58 | `datetime_node_f299ec7c6000` | `restore_point_deleted_read_adapter.schema.json` | `/properties/index/anyOf/0` | event_record_index | persisted refused → refused (format) |
+| 59 | `datetime_node_ebfb9fd19abd` | `restore_point_deleted_read_adapter.schema.json` | `/properties/operation/anyOf/0/properties/frozen_append_input` | EventRecord | observed refused → refused (format); occurred refused → refused (format) |
+| 60 | `datetime_node_14a9423c0260` | `restore_point_deleted_read_adapter.schema.json` | `/properties/original_deletion_source/anyOf/0/properties/frames/items/properties/event` | EventRecord | observed refused → refused ($ref); persisted refused → refused ($ref); occurred refused → refused ($ref) |
+| 61 | `datetime_node_b17cfd4589a5` | `restore_point_deleted_read_adapter.schema.json` | `/properties/original_deletion_source/anyOf/0/properties/frames/items/properties/event/$defs/event_record_1_0_0_compatibility_reader` | EventRecord | observed refused → refused ($ref); persisted refused → refused ($ref); occurred refused → refused ($ref) |
+| 62 | `datetime_node_1382c0fff6f0` | `restore_point_deleted_read_adapter.schema.json` | `/properties/original_owner_resolution/anyOf/0/properties/original_B1/properties/operation_value/properties/frozen_append_input` | EventRecord | observed refused → refused (format); occurred refused → refused (format) |
+| 63 | `datetime_node_5ea20b932e2b` | `restore_point_deleted_read_adapter.schema.json` | `/properties/original_owner_resolution/anyOf/0/properties/original_B3/properties/operation_value/properties/frozen_append_input` | EventRecord | observed refused → refused (format); occurred refused → refused (format) |
+| 64 | `datetime_node_289e6394d917` | `restore_point_expired_contracts.schema.json` | `/$defs/expiry_commit/properties/frozen_append_input` | EventRecord | observed refused → refused (format); occurred refused → refused (format) |
+| 65 | `datetime_node_1f6b6d6df848` | `restore_point_expired_contracts.schema.json` | `/$defs/native_append_input` | EventRecord | observed refused → refused (format); occurred refused → refused (format) |
+| 66 | `datetime_node_35f0900db430` | `restore_point_expired_owner_resolution.schema.json` | `/$defs/E1/properties/pending_operation/properties/frozen_append_input` | EventRecord | observed refused → refused (format); occurred refused → refused (format) |
+| 67 | `datetime_node_d46e4c4554a0` | `restore_point_expired_owner_resolution.schema.json` | `/$defs/E3/properties/before_operation/properties/frozen_append_input` | EventRecord | observed refused → refused (format); occurred refused → refused (format) |
+| 68 | `datetime_node_94e8475cf1f2` | `restore_point_expired_owner_resolution.schema.json` | `/$defs/E3/properties/after_operation/properties/frozen_append_input` | EventRecord | observed refused → refused (format); occurred refused → refused (format) |
+| 69 | `datetime_node_6679e1d9ce9e` | `restore_point_retained_creation_read.schema.json` | `/properties/creation_companion/properties/value/properties/frozen_append_input` | EventRecord | observed refused → refused (format); occurred refused → refused (format) |
+| 70 | `datetime_node_cf60dbaf08b4` | `restore_point_retained_creation_read.schema.json` | `/properties/created_event` | EventRecord | observed refused → refused ($ref); persisted refused → refused ($ref); occurred refused → refused ($ref) |
+| 71 | `datetime_node_83dcc393d90e` | `restore_point_retained_creation_read.schema.json` | `/properties/created_event/$defs/event_record_1_0_0_compatibility_reader` | EventRecord | observed refused → refused ($ref); persisted refused → refused ($ref); occurred refused → refused ($ref) |
+| 72 | `datetime_node_3fdf572f50cf` | `restore_point_retained_creation_read.schema.json` | `/properties/created_event_index` | event_record_index | persisted refused → refused (format) |
+| 73 | `datetime_node_a1e3086ebf55` | `restore_point_retained_read.schema.json` | `/properties/creation_companion/properties/value/properties/frozen_append_input` | EventRecord | observed refused → refused (format); occurred refused → refused (format) |
+| 74 | `datetime_node_498192988b57` | `restore_point_retained_read.schema.json` | `/properties/terminal_companion/properties/value/oneOf/0/properties/frozen_append_input` | EventRecord | observed refused → refused (format); occurred refused → refused (format) |
+| 75 | `datetime_node_d77affd8378d` | `restore_point_retained_read.schema.json` | `/properties/terminal_companion/properties/value/oneOf/1/properties/frozen_append_input` | EventRecord | observed refused → refused (format); occurred refused → refused (format) |
+| 76 | `datetime_node_2d83c26c1cca` | `restore_point_retained_read.schema.json` | `/properties/created_event` | EventRecord | observed refused → refused ($ref); persisted refused → refused ($ref); occurred refused → refused ($ref) |
+| 77 | `datetime_node_eef47ceac35e` | `restore_point_retained_read.schema.json` | `/properties/created_event/$defs/event_record_1_0_0_compatibility_reader` | EventRecord | observed refused → refused ($ref); persisted refused → refused ($ref); occurred refused → refused ($ref) |
+| 78 | `datetime_node_0cb7f94bc8ce` | `restore_point_retained_read.schema.json` | `/properties/terminal_event` | EventRecord | observed refused → refused ($ref); persisted refused → refused ($ref); occurred refused → refused ($ref) |
+| 79 | `datetime_node_5b7ba9288905` | `restore_point_retained_read.schema.json` | `/properties/terminal_event/$defs/event_record_1_0_0_compatibility_reader` | EventRecord | observed refused → refused ($ref); persisted refused → refused ($ref); occurred refused → refused ($ref) |
+| 80 | `datetime_node_9f9876be79e4` | `restore_point_retained_read.schema.json` | `/properties/created_event_index` | event_record_index | persisted refused → refused (format) |
+| 81 | `datetime_node_bf77a724c4de` | `restore_point_retained_read.schema.json` | `/properties/terminal_event_index` | event_record_index | persisted refused → refused (format) |
+| 82 | `datetime_node_2d63d76d3a1a` | `restore_point_retained_read.schema.json` | `/allOf/0/then/properties/terminal_companion/properties/value/properties/frozen_append_input` | EventRecord | observed refused → refused (format); occurred refused → refused (format) |
+| 83 | `datetime_node_87f4c9cf1028` | `restore_point_retained_read.schema.json` | `/allOf/0/else/properties/terminal_companion/properties/value/properties/frozen_append_input` | EventRecord | observed refused → refused (format); occurred refused → refused (format) |
+| 84 | `datetime_node_c4a1a615196d` | `storage_boot_recovery_control.schema.json` | `/$defs/pending_event/$defs/event_record_1_0_0_compatibility_reader` | EventRecord | observed refused → refused ($ref); persisted refused → refused ($ref); occurred refused → refused ($ref) |
+| 85 | `datetime_node_fbec10e1c7e0` | `storage_boot_recovery_control.schema.json` | `/$defs/issued` | Storage issued original fields | observed refused → refused (format); persisted refused → refused (format) |
+| 86 | `datetime_node_cd7d91629133` | `storage_compaction_native_contracts.schema.json` | `/$defs/existing_event__event_record_1_0_0_compatibility_reader` | EventRecord | observed refused → refused ($ref); persisted refused → refused ($ref); occurred refused → refused ($ref) |
+| 87 | `datetime_node_cee2f052dcdd` | `storage_compaction_native_contracts.schema.json` | `/$defs/existing_event` | EventRecord | observed refused → refused ($ref); persisted refused → refused ($ref); occurred refused → refused ($ref) |
+| 88 | `datetime_node_ac8378eca95f` | `storage_compaction_native_contracts.schema.json` | `/$defs/existing_event_record_index` | event_record_index | persisted refused → refused (format) |
+| 89 | `datetime_node_33f764fc0ebb` | `storage_compaction_native_contracts.schema.json` | `/$defs/compaction_event` | EventRecord | observed refused → refused (format); persisted refused → refused (format); occurred refused → refused (format) |
+| 90 | `datetime_node_bd4ecf0fc662` | `storage_recovery_action_custody.schema.json` | `/$defs/event_event_record_1_0_0_compatibility_reader` | EventRecord | observed refused → refused ($ref); persisted refused → refused ($ref); occurred refused → refused ($ref) |
+| 91 | `datetime_node_418d6b4bcfe0` | `storage_value_registry.json` | `/families/8/value_schema` | event_record_index | persisted refused → refused (format) |
+| 92 | `datetime_node_eb7d65a38f15` | `storage_value_registry.json` | `/families/95/value_schema/properties/frozen_append_input` | EventRecord | observed refused → refused (format); occurred refused → refused (format) |
+| 93 | `datetime_node_896652eb2dc8` | `storage_value_registry.json` | `/families/103/value_schema/$defs/PendingAppendOrigin/properties/event` | EventRecord | observed refused → refused ($ref); persisted refused → refused ($ref); occurred refused → refused ($ref) |
+| 94 | `datetime_node_205f4396de6e` | `storage_value_registry.json` | `/families/103/value_schema/$defs/PendingAppendOrigin/properties/event/$defs/event_record_1_0_0_compatibility_reader` | EventRecord | observed refused → refused ($ref); persisted refused → refused ($ref); occurred refused → refused ($ref) |
+| 95 | `datetime_node_28c2cd4719e3` | `storage_value_registry.json` | `/families/112/value_schema/properties/frozen_append_input` | EventRecord | observed refused → refused (format); occurred refused → refused (format) |
+| 96 | `datetime_node_f9572e8dea81` | `storage_value_registry.json` | `/families/114/value_schema/properties/frozen_append_input` | EventRecord | observed refused → refused (format); occurred refused → refused (format) |
+| 97 | `datetime_node_226bed07563b` | `storage_value_registry.json` | `/families/118/value_schema/properties/original_storage_fields/anyOf/0` | original_storage_fields | observed refused → refused (format); persisted refused → refused (format) |
+| 98 | `datetime_node_b8ee89fa5df8` | `storage_value_registry.json` | `/families/118/value_schema/allOf/1/then/properties/original_storage_fields` | original_storage_fields | observed refused → refused (format); persisted refused → refused (format) |
+| 99 | `datetime_node_86814f449646` | `storage_value_registry.json` | `/families/118/value_schema/$defs/e_event_record_1_0_0_compatibility_reader` | EventRecord | observed refused → refused ($ref); persisted refused → refused ($ref); occurred refused → refused ($ref) |
+| 100 | `datetime_node_23657b957786` | `storage_value_registry.json` | `/families/118/value_schema/$defs/decision/properties/original_storage_fields/anyOf/0` | original_storage_fields | observed refused → refused (format); persisted refused → refused (format) |
+| 101 | `datetime_node_0ab3f0b8ceae` | `storage_value_registry.json` | `/families/118/value_schema/$defs/decision/allOf/1/then/properties/original_storage_fields` | original_storage_fields | observed refused → refused (format); persisted refused → refused (format) |
+| 102 | `datetime_node_4fccb1a76448` | `storage_value_registry.json` | `/families/119/value_schema/$defs/pending_event/$defs/event_record_1_0_0_compatibility_reader` | EventRecord | observed refused → refused ($ref); persisted refused → refused ($ref); occurred refused → refused ($ref) |
+| 103 | `datetime_node_63917440f6af` | `storage_value_registry.json` | `/families/119/value_schema/$defs/issued` | Storage issued original fields | observed refused → refused (format); persisted refused → refused (format) |
+| 104 | `datetime_node_6cf83776312e` | `storage_value_registry.json` | `/families/122/value_schema/$defs/event_event_record_1_0_0_compatibility_reader` | EventRecord | observed refused → refused ($ref); persisted refused → refused ($ref); occurred refused → refused ($ref) |
+| 105 | `datetime_node_9b76ea829a08` | `storage_value_registry.json` | `/families/129/value_schema/$defs/compaction_event` | EventRecord | observed refused → refused (format); persisted refused → refused (format); occurred refused → refused (format) |
+| 106 | `datetime_node_e53d640af1e2` | `storage_value_registry.json` | `/families/136/value_schema/$defs/existing_event_record_index` | event_record_index | persisted refused → refused (format) |
+| 107 | `datetime_node_98e53360c2e1` | `workflow_standard_source_contracts/inputs/event_record.schema.json` | `` | EventRecord | observed refused → refused ($ref); persisted refused → refused ($ref); occurred refused → refused ($ref) |
+| 108 | `datetime_node_fef981026e84` | `workflow_standard_source_contracts/inputs/event_record.schema.json` | `/$defs/event_record_1_0_0_compatibility_reader` | EventRecord | observed refused → refused ($ref); persisted refused → refused ($ref); occurred refused → refused ($ref) |
+| 109 | `datetime_node_33851bfc063c` | `workflow_standard_source_contracts/inputs/executor_cancellation_contracts/schemas/workflow-cancel-producer.v1.schema.json` | `/$defs/event_record_1_0_0_compatibility_reader` | EventRecord | observed refused → refused ($ref); persisted refused → refused ($ref); occurred refused → refused ($ref) |
+| 110 | `datetime_node_2da3a3b292c2` | `workflow_standard_source_contracts/inputs/executor_cancellation_contracts/schemas/workflow-start-custody.v2.schema.json` | `/$defs/Event_event_record_1_0_0_compatibility_reader` | EventRecord | observed refused → refused ($ref); persisted refused → refused ($ref); occurred refused → refused ($ref) |
+| 111 | `datetime_node_315862f12582` | `workflow_standard_source_contracts/inputs/executor_cancellation_contracts/schemas/workflow-start-custody.v2.schema.json` | `/$defs/EventRecord` | EventRecord | observed refused → refused ($ref); persisted refused → refused ($ref); occurred refused → refused ($ref) |
+| 112 | `datetime_node_2a0327e37dec` | `workflow_standard_source_contracts/inputs/goal_run_started_consumer_contracts/consumer.schema.json` | `/$defs/GenericIndexRow` | event_record_index | persisted refused → refused (format) |
+| 113 | `datetime_node_1968204deed3` | `workflow_standard_source_contracts/inputs/storage_compaction_native_contracts.schema.json` | `/$defs/existing_event__event_record_1_0_0_compatibility_reader` | EventRecord | observed refused → refused ($ref); persisted refused → refused ($ref); occurred refused → refused ($ref) |
+| 114 | `datetime_node_17026a6d3141` | `workflow_standard_source_contracts/inputs/storage_compaction_native_contracts.schema.json` | `/$defs/existing_event` | EventRecord | observed refused → refused ($ref); persisted refused → refused ($ref); occurred refused → refused ($ref) |
+| 115 | `datetime_node_7b84fdca850b` | `workflow_standard_source_contracts/inputs/storage_compaction_native_contracts.schema.json` | `/$defs/existing_event_record_index` | event_record_index | persisted refused → refused (format) |
+| 116 | `datetime_node_609a380a3f51` | `workflow_standard_source_contracts/inputs/storage_compaction_native_contracts.schema.json` | `/$defs/compaction_event` | EventRecord | observed refused → refused (format); persisted refused → refused (format); occurred refused → refused (format) |
+| 117 | `datetime_node_94a1f44e33a7` | `workflow_standard_source_contracts/native-v7/schemas/workflow-start-custody.v6.schema.json` | `/$defs/Event_event_record_1_0_0_compatibility_reader` | EventRecord | observed refused → refused ($ref); persisted refused → refused ($ref); occurred refused → refused ($ref) |
+| 118 | `datetime_node_369f3a3b8e25` | `workflow_standard_source_contracts/native-v7/schemas/workflow-start-custody.v6.schema.json` | `/$defs/EventRecord` | EventRecord | observed refused → refused ($ref); persisted refused → refused ($ref); occurred refused → refused ($ref) |
+| 119 | `datetime_node_0cbff9f2838b` | `workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/event_record.schema.json` | `` | EventRecord | observed refused → refused ($ref); persisted refused → refused ($ref); occurred refused → refused ($ref) |
+| 120 | `datetime_node_80e1c2969dd1` | `workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/event_record.schema.json` | `/$defs/event_record_1_0_0_compatibility_reader` | EventRecord | observed refused → refused ($ref); persisted refused → refused ($ref); occurred refused → refused ($ref) |
+| 121 | `datetime_node_757a2d9a9e49` | `workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/executor_cancellation_contracts/schemas/workflow-cancel-producer.v1.schema.json` | `/$defs/event_record_1_0_0_compatibility_reader` | EventRecord | observed refused → refused ($ref); persisted refused → refused ($ref); occurred refused → refused ($ref) |
+| 122 | `datetime_node_37fa8fb75191` | `workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/executor_cancellation_contracts/schemas/workflow-start-custody.v2.schema.json` | `/$defs/Event_event_record_1_0_0_compatibility_reader` | EventRecord | observed refused → refused ($ref); persisted refused → refused ($ref); occurred refused → refused ($ref) |
+| 123 | `datetime_node_555174bffb39` | `workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/executor_cancellation_contracts/schemas/workflow-start-custody.v2.schema.json` | `/$defs/EventRecord` | EventRecord | observed refused → refused ($ref); persisted refused → refused ($ref); occurred refused → refused ($ref) |
+| 124 | `datetime_node_9e778d84e553` | `workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/storage_compaction_native_contracts.schema.json` | `/$defs/existing_event__event_record_1_0_0_compatibility_reader` | EventRecord | observed refused → refused ($ref); persisted refused → refused ($ref); occurred refused → refused ($ref) |
+| 125 | `datetime_node_39984b6cc24f` | `workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/storage_compaction_native_contracts.schema.json` | `/$defs/existing_event` | EventRecord | observed refused → refused ($ref); persisted refused → refused ($ref); occurred refused → refused ($ref) |
+| 126 | `datetime_node_f71d175bf273` | `workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/storage_compaction_native_contracts.schema.json` | `/$defs/existing_event_record_index` | event_record_index | persisted refused → refused (format) |
+| 127 | `datetime_node_d250521ceece` | `workflow_standard_source_contracts/predecessor/v2/predecessor/v1/inputs/storage_compaction_native_contracts.schema.json` | `/$defs/compaction_event` | EventRecord | observed refused → refused (format); persisted refused → refused (format); occurred refused → refused (format) |
+| 128 | `datetime_node_d687a5376db8` | `workflow_standard_source_contracts/predecessor/v2/predecessor/v1/schemas/workflow-start-custody.v3.schema.json` | `/$defs/Event_event_record_1_0_0_compatibility_reader` | EventRecord | observed refused → refused ($ref); persisted refused → refused ($ref); occurred refused → refused ($ref) |
+| 129 | `datetime_node_d2114731cdcc` | `workflow_standard_source_contracts/predecessor/v2/predecessor/v1/schemas/workflow-start-custody.v3.schema.json` | `/$defs/EventRecord` | EventRecord | observed refused → refused ($ref); persisted refused → refused ($ref); occurred refused → refused ($ref) |
+| 130 | `datetime_node_c9db376dfe39` | `workflow_standard_source_contracts/predecessor/v2/schemas/workflow-start-custody.v4.schema.json` | `/$defs/Event_event_record_1_0_0_compatibility_reader` | EventRecord | observed refused → refused ($ref); persisted refused → refused ($ref); occurred refused → refused ($ref) |
+| 131 | `datetime_node_8ad4514db0a8` | `workflow_standard_source_contracts/predecessor/v2/schemas/workflow-start-custody.v4.schema.json` | `/$defs/EventRecord` | EventRecord | observed refused → refused ($ref); persisted refused → refused ($ref); occurred refused → refused ($ref) |
+| 132 | `datetime_node_a469d4e1a412` | `workflow_standard_source_contracts/schemas/workflow-start-custody.v5.schema.json` | `/$defs/Event_event_record_1_0_0_compatibility_reader` | EventRecord | observed refused → refused ($ref); persisted refused → refused ($ref); occurred refused → refused ($ref) |
+| 133 | `datetime_node_59ea7558c0f0` | `workflow_standard_source_contracts/schemas/workflow-start-custody.v5.schema.json` | `/$defs/EventRecord` | EventRecord | observed refused → refused ($ref); persisted refused → refused ($ref); occurred refused → refused ($ref) |
