@@ -445,14 +445,15 @@
   /* The key line: the only place a service's key is changed, and the home of its inventory row. */
   function keyLine(p, acc) {
     const id = accKeySetting(p, acc);
+    const label = 'API key';
     return `<div class="setting-row o55-row o55-scoped o55-keyrow"${id ? ` data-setting-id="${a(id)}"` : ''}>
-      <div class="setting-copy"><div class="setting-label">API key</div><div class="setting-description">Kept in ${h(keychainHome())}. Never shown again.</div></div>
-      <div class="setting-control"><span class="o55-key is-saved"><span class="o55-key-state">${icon('lock')}<span>Saved</span></span><button type="button" class="btn small" data-action="pm51-providers-apikey" data-provider="${a(p.id)}" data-account="${a(acc.id)}">${icon('refresh')}<span>Replace key</span></button></span></div>
+      <div class="setting-copy"><div class="setting-label">${h(label)}</div><div class="setting-description">Kept in ${h(keychainHome())}. Never shown again.</div></div>
+      <div class="setting-control">${o55Named(id ? PM51.setting(id) : null, `<span class="o55-key is-saved"><span class="o55-key-state">${icon('lock')}<span>Saved</span></span><button type="button" class="btn small" data-action="pm51-providers-apikey" data-provider="${a(p.id)}" data-account="${a(acc.id)}">${icon('refresh')}<span>Replace key</span></button></span>`, label)}</div>
       ${id ? `<button type="button" class="icon-btn details-btn o55-about" data-action="setting-details" data-setting="${a(id)}" aria-label="About the API key">${icon('help')}</button>` : '<span></span>'}
     </div>`;
   }
   function plainRow(label, help, control, cls) {
-    return `<div class="setting-row o55-row o55-scoped${cls ? ' ' + cls : ''}"><div class="setting-copy"><div class="setting-label">${h(label)}</div>${help ? `<div class="setting-description">${h(help)}</div>` : ''}</div><div class="setting-control">${control}</div><span></span></div>`;
+    return `<div class="setting-row o55-row o55-scoped${cls ? ' ' + cls : ''}"><div class="setting-copy"><div class="setting-label">${h(label)}</div>${help ? `<div class="setting-description">${h(help)}</div>` : ''}</div><div class="setting-control">${o55Named(null, control, label)}</div><span></span></div>`;
   }
   function accountBody(p, acc) {
     const data = { provider: p.id, account: acc.id };

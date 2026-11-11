@@ -243,7 +243,7 @@ function o55Status(setting, value) {
   return `<span class="o55-readout">${PM51.status(text, row.tone || PM51.tone(text))}</span>`;
 }
 const o55KitControl = renderControl;
-renderControl = function (setting, value) {
+const o55RenderValue = function (setting, value) {
   if (!setting) return o55KitControl(setting, value);
   const row = O55R[setting.id] || {};
   const control = row.control || setting.control;
@@ -263,20 +263,26 @@ renderControl = function (setting, value) {
     case 'path': return o55Path(setting, value);
     case 'status': return o55Status(setting, value);
     case 'toggle': return `<button type="button" class="toggle ${value ? 'on' : ''}" role="switch" aria-checked="${!!value}" data-action="toggle-setting" data-setting="${a(setting.id)}" aria-label="${a(PM51.rowLabel(setting))}"></button>`;
-    default: return o55Named(setting, o55KitControl(Object.assign({}, setting, { control }), value));
+    default: return o55KitControl(Object.assign({}, setting, { control }), value);
   }
 };
-/* FO-134 (sol-review-l1s L1S-N1): a control the inherited renderer draws (a slider, a text area, a stepper, a reorder
-   list, a resource, ...) is named by its row's own label as the ones above are: every value element in it with no name
-   of its own takes PM51.rowLabel, and a box of choices or of + and - becomes a group with that name. A slider's
-   enclosing <label> held only its number ("80"), a text area had no name at all. */
-const O55_VALUE_EL = 'input:not([type="hidden"]), textarea, select, [role="switch"], [role="slider"], [role="combobox"], .pm51-dd-trigger';
+/* FO-134: name every renderer's value elements, including buttons that open or reset a value.
+   Preserve the action/choice words and existing names; add the row label only when absent. */
+renderControl = function (setting, value) { return o55Named(setting, o55RenderValue(setting, value)); };
+const O55_VALUE_EL = 'a[href], button, [role="button"], [role="radio"], [role="checkbox"], input:not([type="hidden"]), textarea, select, [role="switch"], [role="slider"], [role="combobox"], .pm51-dd-trigger';
 const O55_VALUE_GROUP = '.segmented, .chip-select, .stepper, .reorder-control, .swatches';
-function o55Named(setting, html) {
-  if (!setting || !html || typeof html !== 'string' || !/<(input|textarea|select|button|div)/.test(html)) return html;
+function o55Named(setting, html, visibleLabel) {
+  if ((!setting && !visibleLabel) || !html || typeof html !== 'string' || !/<(a|input|textarea|select|button|div)/.test(html)) return html;
   const tpl = document.createElement('template'); tpl.innerHTML = html;
-  const name = PM51.rowLabel(setting), unnamed = e => !e.hasAttribute('aria-label') && !e.hasAttribute('aria-labelledby');
-  tpl.content.querySelectorAll(O55_VALUE_EL).forEach(e => { if (unnamed(e)) e.setAttribute('aria-label', name); });
+  const name = visibleLabel || PM51.rowLabel(setting), unnamed = e => !e.hasAttribute('aria-label') && !e.hasAttribute('aria-labelledby');
+  tpl.content.querySelectorAll(O55_VALUE_EL).forEach(e => {
+    const by = e.getAttribute('aria-labelledby');
+    const old = (by ? by.split(/\s+/).map(id => tpl.content.querySelector('#' + CSS.escape(id)) || document.getElementById(id)).filter(Boolean).map(n => n.textContent).join(' ') : '')
+      || e.getAttribute('aria-label') || (e.matches('input[type="button"], input[type="submit"], input[type="reset"]') ? e.value : '') || e.getAttribute('alt') || (e.matches('a[href], button, [role="button"], [role="radio"], [role="switch"], [role="checkbox"]') ? e.textContent.trim() : '') || e.getAttribute('title') || '';
+    if (old.toLowerCase().includes(name.toLowerCase())) return;
+    e.removeAttribute('aria-labelledby');
+    e.setAttribute('aria-label', name + (old ? ', ' + old : ''));
+  });
   tpl.content.querySelectorAll(O55_VALUE_GROUP).forEach(e => { if (!e.hasAttribute('role')) e.setAttribute('role', 'group'); if (unnamed(e)) e.setAttribute('aria-label', name); });
   return tpl.innerHTML;
 }
@@ -321,6 +327,7 @@ renderSettingRow = function (setting, section, workspace) {
   /* a choice named "Custom" gets the field it needs right under it (rows.d `custom`: which option, the field's
      label and an example); what is typed is kept per setting */
   if (row.custom && String(current) === String(row.custom.option)) control = `<div class="o55-custom">${control}<input class="text-control o55-custom-in" type="text" data-o55-custom="${a(setting.id)}" value="${a(((PM51.s().o55Custom || {})[setting.id]) || '')}" placeholder="${a(row.custom.placeholder || '')}" aria-label="${a(row.custom.label || 'Custom value')}" autocomplete="off" spellcheck="false"></div>`;
+  control = o55Named(setting, control);
   /* rows.d `needed`: an empty value that another switch depends on (the Unraid listing while templates are made
      after each publish) is marked like a change, in the attention color */
   const empty = current == null || current === '' || (Array.isArray(current) && !current.length) || (typeof current === 'object' && !Array.isArray(current) && !Object.keys(current).length);

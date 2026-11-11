@@ -57,7 +57,7 @@ PM51.scoped = {
     const row = O55R[id] || {};
     const label = opts.label || PM51.rowLabel(s), help = opts.help != null ? opts.help : PM51.rowHelp(s);
     const changed = !opts.noChanged && !o55Same(value, s.value) && !(value === '' && s.value == null);
-    const control = opts.control || PM51.scoped.control(id, value, opts);
+    const control = o55Named(s, opts.control || PM51.scoped.control(id, value, opts), label);
     const found = findSettingGlobal(id);
     const kind = row.control || s.control || '';
     const wide = row.layout === 'wide' || (kind === 'multiselect' && (opts.choices || o55Options(s)).length > 4);
@@ -211,7 +211,7 @@ renderSettingRow = function (setting) {
   if (!row.per) return html;
   const tpl = document.createElement('template'); tpl.innerHTML = html;
   const ctl = tpl.content.querySelector('.setting-control');
-  if (ctl) ctl.innerHTML = `<button type="button" class="btn small o55-routebtn" data-action="o55-reveal" data-setting="${a(setting.id)}"><span>${h(({ account: 'Set in each account', service: 'Set in each service', persona: 'Set in each persona', template: 'Set in each template', server: 'Set in each server', 'code-service': 'Set in each code service' })[row.per] || 'Set in each one')}</span>${icon('arrowRight')}</button>`;
+  if (ctl) ctl.innerHTML = o55Named(setting, `<button type="button" class="btn small o55-routebtn" data-action="o55-reveal" data-setting="${a(setting.id)}"><span>${h(({ account: 'Set in each account', service: 'Set in each service', persona: 'Set in each persona', template: 'Set in each template', server: 'Set in each server', 'code-service': 'Set in each code service' })[row.per] || 'Set in each one')}</span>${icon('arrowRight')}</button>`);
   tpl.content.querySelector('.setting-row')?.classList.remove('is-changed');
   tpl.content.querySelector('.o55-changed')?.remove();
   return tpl.innerHTML;

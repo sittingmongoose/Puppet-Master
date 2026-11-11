@@ -1,3 +1,4 @@
+import fs from 'node:fs';
 // Stream F batch 10, base-page words in Settings (Jared's 2026-11-09 Settings feedback, handed over by stream P).
 // FO-134: every placed value control on every Settings page (each chapter, page and manager tab: switches, boxes,
 //   sliders, text areas, pickers, choice groups) is named by its row's own label, not the inventory's
@@ -50,7 +51,7 @@ for (const surface of ['normal', 'sandbox']) {
 			return out;
 		});
 		// a list's button says its count after the name ("Name: 3 items. Edit")
-		const off = names.filter((x) => x.own && x.named !== x.own && !(x.named.startsWith(x.own + ': ') && x.named.endsWith('. Edit')));
+		const off = names.filter((x) => x.own && !x.named.toLowerCase().includes(x.own.toLowerCase()));
 		await t.check(`Models: ${names.length} drawn controls are named by their row's label`, names.length >= 5 && off.length === 0, off.slice(0, 6).map((x) => `${x.id}: "${x.named}" vs "${x.own}"`).join('; ') || `${names.length} controls`);
 		// a real hover over the first switch on Models
 		const sw = f.locator('[data-continuous-workspace-body="providers"] .setting-row .toggle[role="switch"][data-action="toggle-setting"]').first();
@@ -75,14 +76,14 @@ for (const surface of ['normal', 'sandbox']) {
 	   controls (a text or number box, a text area, a slider, a select or its dropdown, a switch, a choice group) by its
 	   own visible label: the accessible name contains it ("Name: 3 items. Edit" counts). The name is computed as a
 	   screen reader does for these elements: aria-labelledby, aria-label, a <label for>, then the text of an enclosing
-	   <label> (a slider's "80"), then title. Controls are not pre-selected by having a name. --set chapters=ai,code */
+	   <label> (a slider's "80"), button text, then title. Controls are not pre-selected by having a name. --set chapters=ai,code */
 	tests[`FO-134 every placed value control is named by its row (${surface})`] = async (t) => {
 		if (!t.app.surfaces().includes(surface)) { await t.check(`${surface} surface not asked for`, true); return; }
 		const f = await settings(t, surface);
 		const domains = t.args.chapters ? String(t.args.chapters).split(',') : await f.evaluate(() => [...new Set([...document.querySelectorAll('#pm-settings-root [data-action="navigate-domain"]')].map((b) => b.dataset.domain))]);
 		const all = [], seen = new Set();
 		const READ = () => {
-			const VALUE = 'input:not([type="hidden"]), textarea, select, [role="switch"], [role="slider"], [role="combobox"], .pm51-dd-trigger, [role="radiogroup"], [role="group"], [role="spinbutton"], [contenteditable="true"]';
+			const VALUE = 'a[href], button, [role="button"], [role="radio"], [role="checkbox"], input:not([type="hidden"]), textarea, select, [role="switch"], [role="slider"], [role="combobox"], .pm51-dd-trigger, [role="radiogroup"], [role="group"], [role="spinbutton"], [role="textbox"], [tabindex]:not([tabindex="-1"]), [contenteditable="true"]';
 			const own = (lab) => lab ? [...lab.childNodes].filter((n) => n.nodeType === 3).map((n) => n.textContent).join('').replace(/\s+/g, ' ').trim() : '';
 			const txt = (e) => (e.textContent || '').replace(/\s+/g, ' ').trim();
 			const nameOf = (e) => {
@@ -91,49 +92,83 @@ for (const surface of ['normal', 'sandbox']) {
 				const al = e.getAttribute('aria-label'); if (al && al.trim()) return al.trim();
 				if (e.id && /^(INPUT|TEXTAREA|SELECT)$/.test(e.tagName)) { const l = document.querySelector(`label[for="${CSS.escape(e.id)}"]`); if (l) return txt(l); }
 				const wrap = /^(INPUT|TEXTAREA|SELECT)$/.test(e.tagName) && e.closest('label'); if (wrap) return txt(wrap);
+				if (e.matches('input[type="button"], input[type="submit"], input[type="reset"]')) return e.value;
+				if (e.matches('input[type="image"]') && e.alt) return e.alt;
+				if (e.matches('a[href], button, [role="button"], [role="radio"], [role="checkbox"], [role="switch"]') && txt(e)) return txt(e);
 				if (e.getAttribute('title')) return e.getAttribute('title').trim();
 				return '';
 			};
 			const out = [];
-			const ROWS = ['.setting-row[data-setting-id]', '.setting-row[id^="setting-"]', '.o55-field[data-setting-id]'].map((x) => '#panel-settings [data-continuous-workspace-body] ' + x).join(', ');
+			const ROWS = ['.setting-row', '.o55-field'].map((x) => '#panel-settings [data-continuous-workspace-body] ' + x).join(', ');
 			for (const row of document.querySelectorAll(ROWS)) {
-				const id = row.getAttribute('data-setting-id') || row.id.replace(/^setting-/, '');
+				if (row.closest('[aria-hidden="true"]')) continue;
+				const id = row.getAttribute('data-setting-id') || row.id.replace(/^setting-/, '') || (row.closest('[data-continuous-workspace-body]').dataset.continuousWorkspaceBody + ': ' + own(row.querySelector('.setting-label, .o55-field-label')));
 				const label = own(row.querySelector('.setting-label, .o55-field-label'));
 				const box = row.querySelector(':scope > .setting-control') || row;
 				if (!label) continue;
+				const expected = [...box.querySelectorAll('a[href], button, input:not([type="hidden"]), select, textarea, [tabindex], [contenteditable="true"], [role]')].filter(e =>
+					!e.closest('[aria-hidden="true"]') && e.closest('.setting-row, .o55-field') === row &&
+					!e.matches('.details-btn, [data-action="setting-details"], [role="option"], [role="menuitem"], input[type="hidden"]') &&
+					(e.matches('a[href], button, input, select, textarea, [contenteditable="true"]') || e.tabIndex >= 0 || /^(button|switch|slider|combobox|spinbutton|textbox|checkbox|radio|radiogroup|group)$/.test(e.getAttribute('role'))));
+				for (const e of expected) if (!e.matches(VALUE)) out.push({ id, label, kind: 'coverage', index: expected.indexOf(e), name: 'interactive control omitted by selector', ok: false });
+				if (!expected.length && row.dataset.o55Kind && row.dataset.o55Kind !== 'status') out.push({ id, label, kind: 'coverage', index: -1, name: 'value row has no control', ok: false });
 				for (const e of box.querySelectorAll(VALUE)) {
-					if (e.closest('[aria-hidden="true"]') || (e.tagName === 'INPUT' && /^(hidden|button|submit|reset|image)$/.test(e.type))) continue;
+					if (e.closest('[aria-hidden="true"]') || (e.tagName === 'INPUT' && /^hidden$/.test(e.type))) continue;
 					if (e.closest('.setting-row, .o55-field') !== row) continue;   /* a row nested inside this one names its own */
-					if (e.matches('[role="radio"], [role="option"], [role="menuitem"]')) continue;
+					if (e.matches('[role="option"], [role="menuitem"]')) continue;
+					if (e.matches('.details-btn, [data-action="setting-details"]')) continue;
 					const name = nameOf(e);
-					out.push({ id, label, kind: (e.getAttribute('role') || e.tagName.toLowerCase()) + (e.type && e.tagName === 'INPUT' ? ':' + e.type : ''), name: name.slice(0, 80), ok: name.toLowerCase().includes(label.toLowerCase()) });
+					out.push({ id, label, kind: (e.getAttribute('role') || e.tagName.toLowerCase()) + (e.type && e.tagName === 'INPUT' ? ':' + e.type : ''), index: [...box.querySelectorAll(VALUE)].indexOf(e), name, ok: name.toLowerCase().includes(label.toLowerCase()) });
 				}
 			}
 			return out;
 		};
-		const take = async (where) => { for (const x of await f.evaluate(READ)) { const k = x.id + '|' + x.kind + '|' + x.name; if (seen.has(k)) continue; seen.add(k); all.push(Object.assign({ where }, x)); } };
+		const take = async (where) => { for (const x of await f.evaluate(READ)) { const k = x.id + '|' + x.kind + '|' + x.index + '|' + x.name; if (seen.has(k)) continue; seen.add(k); all.push(Object.assign({ where }, x)); } };
 		for (const d of domains) {
 			await f.locator(`#pm-settings-root [data-action="navigate-domain"][data-domain="${d}"]`).first().click();
+			await f.waitForSelector(`#pm-settings-root .domain-link.active[data-domain="${d}"]`, { timeout: 15000 });
 			await t.settle();
 			const wss = await f.evaluate(() => [...document.querySelectorAll('[data-continuous-workspace-body]')].map((b) => b.dataset.continuousWorkspaceBody));
 			for (const ws of wss) {
 				await f.evaluate(([dd, w]) => PM51.go(dd, w), [d, ws]);
-				await f.waitForSelector(`[data-continuous-workspace-body="${ws}"][data-workspace-mounted="true"]`, { timeout: 15000 }).catch(() => {});
-				await t.page.waitForTimeout(250);
+				await f.waitForSelector(`[data-continuous-workspace-body="${ws}"][data-workspace-mounted="true"]`, { timeout: 15000 });
+				await t.settle();
 				await take(`${d}/${ws}`);
 				const tabs = await f.evaluate((w) => [...document.querySelectorAll(`[data-continuous-workspace-body="${w}"] .pm51-tabs .manager-tab[data-tab]`)].map((b) => b.dataset.tab), ws);
 				for (const tab of tabs) {
-					await f.evaluate(([w, tb]) => PM51.switchTab(w, tb), [ws, tab]);
-					await t.page.waitForTimeout(700);
+					await f.evaluate(([w, tb]) => {
+						const old = document.querySelector(`[data-continuous-workspace-body="${w}"] .pm51-mgr > .manager-body:not(.o55-leaving)`);
+						if (old) old.setAttribute('data-fo134-old-body', 'true');
+						PM51.switchTab(w, tb);
+					}, [ws, tab]);
+					// Tab content is replaced after a presented frame; sandbox frames can take longer than 700 ms.
+					// Wait for the old body to leave instead of moving on and cancelling the pending switch.
+					await f.waitForFunction(([w, tb]) => {
+						const b = document.querySelector(`[data-continuous-workspace-body="${w}"]`);
+						return b && !b.querySelector('[data-fo134-old-body]') && b.querySelector(`.manager-tab.active[data-tab="${tb}"]`);
+					}, [ws, tab], { timeout: 15000 });
+					await t.settle();
 					await take(`${d}/${ws}/${tab}`);
 				}
 			}
 		}
+		// Full-walk floor includes the 778 value controls independently inventoried in the FO-134 recheck.
+		// The per-row census above also fails if VALUE misses a newly introduced interactive kind.
 		const bad = all.filter((x) => !x.ok);
 		const kinds = {}; for (const x of all) kinds[x.kind] = (kinds[x.kind] || 0) + 1;
+		const census = {}; for (const x of all) { const key = x.id + '|' + x.kind; census[key] = (census[key] || 0) + 1; }
+		if (t.args.namesCensus) fs.writeFileSync(String(t.args.namesCensus), JSON.stringify(census, null, 2) + '\n');
+		const fixture = new URL('./settings-value-controls.json', import.meta.url);
+		if (!t.args.chapters && !t.args.namesCensus) await t.check('the expected-control census fixture exists', fs.existsSync(fixture));
+		if (fs.existsSync(fixture) && !t.args.chapters) {
+			const expected = JSON.parse(fs.readFileSync(fixture, 'utf8'));
+			const missing = Object.entries(expected).filter(([key, n]) => (census[key] || 0) < n);
+			await t.check('every expected row contributes all its value controls', !missing.length,
+				missing.map(([key, n]) => `${key}: expected ${n}, walked ${census[key] || 0}`).join('; '));
+		}
 		t.log(`walked ${domains.length} chapters: ${all.length} value controls on ${new Set(all.map((x) => x.id)).size} placed rows; kinds ${JSON.stringify(kinds)}`);
 		if (bad.length) t.log('unnamed or misnamed: ' + JSON.stringify(bad.map((x) => `${x.where} ${x.id} ${x.kind} "${x.name}" vs "${x.label}"`)));
-		await t.check(`every placed value control on every Settings page is named by its row (${all.length} controls)`, all.length >= 200 && bad.length === 0, `${bad.length} not: ` + bad.slice(0, 8).map((x) => `${x.id} ${x.kind} "${x.name}" vs "${x.label}"`).join('; '));
+		await t.check(`every placed value control on every Settings page is named by its row (${all.length} controls)`, (t.args.chapters ? all.length > 0 : all.length >= 778) && bad.length === 0, `${bad.length} not: ` + bad.slice(0, 8).map((x) => `${x.id} ${x.kind} "${x.name}" vs "${x.label}"`).join('; '));
 	};
 
 	tests[`FO-135 no rail project line (${surface})`] = async (t) => {

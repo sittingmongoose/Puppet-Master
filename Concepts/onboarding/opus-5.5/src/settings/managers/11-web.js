@@ -211,7 +211,7 @@
   PM51.onInput('web-policy-input', el => { const r = byId(ds(el, 'route')); const n = Number(el.value); if (!Number.isFinite(n)) return; r.policy[ds(el, 'key')] = n; saveState(); });
 
   /* One row look everywhere in the detail: the kit's setting row, stacked when its value is a whole chain. */
-  const orow = ({ label, help, control, wide, home }) => `<div class="setting-row o55-row o55-scoped${wide ? ' is-wide' : ''}"${home ? ` data-setting-id="${a(home)}"` : ''}><div class="setting-copy"><div class="setting-label">${h(label)}</div>${help ? `<div class="setting-description">${h(help)}</div>` : ''}</div><div class="setting-control">${control}</div><span></span></div>`;
+  const orow = ({ label, help, control, wide, home }) => `<div class="setting-row o55-row o55-scoped${wide ? ' is-wide' : ''}"${home ? ` data-setting-id="${a(home)}"` : ''}><div class="setting-copy"><div class="setting-label">${h(label)}</div>${help ? `<div class="setting-description">${h(help)}</div>` : ''}</div><div class="setting-control">${o55Named(home ? PM51.setting(home) : null, control, label)}</div><span></span></div>`;
   const valueWith = (text, btn) => `<span class="pm51-row-value">${h(text)}</span>${btn ? PM51.btn(Object.assign({ small: true }, btn)) : ''}`;
   function detailFor(r) {
     const off = plain(r) === 'Off';
@@ -256,8 +256,9 @@
   function serviceItem(s) {
     const [label, t] = svcState(s);
     const usedBy = Object.keys(PM51.value(MATRIX) || {}).filter(k => chainOf(k).includes(s.name)).map(k => k === 'research' ? 'deep research' : (all().find(r => r.id === k) || { name: k }).name.toLowerCase());
+    const keyLabel = 'API key';
     const keyRow = s.keySetting ? PM51.bound.rows([s.keySetting])
-      : s.keyed ? `<div class="setting-list o55-bound-rows"><div class="setting-row o55-row o55-scoped o55-keyrow"><div class="setting-copy"><div class="setting-label">API key</div><div class="setting-description">From ${h(s.site || s.name)}. Kept in your server's keychain, never shown again.</div></div><div class="setting-control"><span class="o55-key${hasKey(s) ? ' is-saved' : ''}">${hasKey(s) ? `<span class="o55-key-state">${icon('lock')}<span>Saved</span></span>` : ''}<button type="button" class="btn small" data-action="pm51-web-key" data-service="${a(s.name)}">${icon(hasKey(s) ? 'refresh' : 'key')}<span>${hasKey(s) ? 'Replace key' : 'Add key'}</span></button></span></div><span></span></div></div>` : '';
+      : s.keyed ? `<div class="setting-list o55-bound-rows"><div class="setting-row o55-row o55-scoped o55-keyrow"><div class="setting-copy"><div class="setting-label">${h(keyLabel)}</div><div class="setting-description">From ${h(s.site || s.name)}. Kept in your server's keychain, never shown again.</div></div><div class="setting-control">${o55Named(null, `<span class="o55-key${hasKey(s) ? ' is-saved' : ''}">${hasKey(s) ? `<span class="o55-key-state">${icon('lock')}<span>Saved</span></span>` : ''}<button type="button" class="btn small" data-action="pm51-web-key" data-service="${a(s.name)}">${icon(hasKey(s) ? 'refresh' : 'key')}<span>${hasKey(s) ? 'Replace key' : 'Add key'}</span></button></span>`, keyLabel)}</div><span></span></div></div>` : '';
     const rows = (s.rows || []).length ? PM51.bound.rows(s.rows) : '';
     const failure = PM51.value('web.providers.health-disclosure') !== false && t !== 'ready' && t !== 'off' ? PM51.note(label === 'Needs a key' ? `Last check: ${svcLabel(s.name)} answered that it needs a key.` : `Last check: ${label}.`, 'attention') : '';
     return {

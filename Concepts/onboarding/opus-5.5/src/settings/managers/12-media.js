@@ -276,7 +276,7 @@
   });
 
   /* ---------- one ability --------------------------------------------------------------------------------------- */
-  const orow = ({ label, help, control, home, wide }) => `<div class="setting-row o55-row o55-scoped${wide ? ' is-wide' : ''}"${home ? ` data-setting-id="${a(home)}"` : ''}><div class="setting-copy"><div class="setting-label">${h(label)}</div>${help ? `<div class="setting-description">${h(help)}</div>` : ''}</div><div class="setting-control">${control}</div><span></span></div>`;
+  const orow = ({ label, help, control, home, wide }) => `<div class="setting-row o55-row o55-scoped${wide ? ' is-wide' : ''}"${home ? ` data-setting-id="${a(home)}"` : ''}><div class="setting-copy"><div class="setting-label">${h(label)}</div>${help ? `<div class="setting-description">${h(help)}</div>` : ''}</div><div class="setting-control">${o55Named(home ? PM51.setting(home) : null, control, label)}</div><span></span></div>`;
   const valueWith = (text, btn) => `<span class="pm51-row-value">${h(text)}</span>${btn ? PM51.btn(Object.assign({ small: true }, btn)) : ''}`;
   function ownRow(r, key) {
     const def = OWN[key]; const o = r.output || {}; const v = o[key];

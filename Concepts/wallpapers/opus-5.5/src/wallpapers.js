@@ -398,14 +398,15 @@
   }
 
   /* ---- the gallery ----------------------------------------------------------------------------------------------- */
+  function rowLabel() { return window.PM51.rowLabel(window.PM51.setting(ROW_ID.slice(8))); }
   function tile(id, name, label, detail) {
-    return '<button type="button" class="wpk-tile" role="radio" aria-checked="false" tabindex="-1" data-wpk-pick="' + esc(id) + '" aria-label="' + esc(label) + '"' +
+    return '<button type="button" class="wpk-tile" role="radio" aria-checked="false" tabindex="-1" data-wpk-pick="' + esc(id) + '" aria-label="' + esc(rowLabel() + ', ' + label) + '"' +
       ' data-pm-hover-label="' + esc(name) + '" data-pm-hover-detail="' + esc(detail) + '">' +
       '<span class="wpk-thumb"' + (id === 'look' ? ' data-wpk-own=""' : ' data-wpk-id="' + esc(id) + '"') + '><i class="wpk-check" aria-hidden="true"></i></span>' +
       '<span class="wpk-name">' + esc(name) + '</span></button>';
   }
   function rowHtml() {
-    var h = '<div class="setting-copy"><div class="setting-label" id="wpk-label">Wallpaper<span class="o55-changed" title="Changed from the default" hidden>' +
+    var h = '<div class="setting-copy"><div class="setting-label" id="wpk-label">' + esc(rowLabel()) + '<span class="o55-changed" title="Changed from the default" hidden>' +
       '<span class="pm-status-mark" data-status="change-modified" data-tone="changed" aria-hidden="true"></span><span>Changed</span></span></div>' +
       '<div class="setting-description" id="wpk-desc">Shows behind the panels in every look. Its light or dark print follows the look.</div></div>' +
       '<div class="wpk-gallery" role="radiogroup" aria-labelledby="wpk-label" aria-describedby="wpk-desc">' +

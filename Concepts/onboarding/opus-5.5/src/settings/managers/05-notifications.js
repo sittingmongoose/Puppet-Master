@@ -467,7 +467,7 @@
     commitIf(S.soundMap, Object.fromEntries(events().filter(e => e.sound && e.sound !== 'None').map(e => [e.name, e.sound])));
   }
   const masterOn = () => PM51.value(S.master) !== false;
-  const orow = ({ label, help, control, home }) => `<div class="setting-row o55-row o55-scoped"${home ? ` data-setting-id="${a(home)}"` : ''}><div class="setting-copy"><div class="setting-label">${h(label)}</div>${help ? `<div class="setting-description">${h(help)}</div>` : ''}</div><div class="setting-control">${control}</div><span></span></div>`;
+  const orow = ({ label, help, control, home }) => `<div class="setting-row o55-row o55-scoped"${home ? ` data-setting-id="${a(home)}"` : ''}><div class="setting-copy"><div class="setting-label">${h(label)}</div>${help ? `<div class="setting-description">${h(help)}</div>` : ''}</div><div class="setting-control">${o55Named(home ? PM51.setting(home) : null, control, label)}</div><span></span></div>`;
   const valueWith = (text, btn) => `<span class="pm51-row-value">${h(text)}</span>${btn ? PM51.btn(Object.assign({ small: true }, btn)) : ''}`;
   const quietLabel = d => (QUIET_CHOICES.find(x => x.value === d.quiet) || QUIET_CHOICES[0]).label;
   const hideAddress = s => { s = String(s || '').trim(); return !s ? '' : s.length <= 6 ? '••••' : s.slice(0, 2) + '••••' + s.slice(-4); };
