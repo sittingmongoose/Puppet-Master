@@ -1,1 +1,42 @@
-/* styles that only the pages in ai-more.js need; shared parts are in ../smx.css */
+/* styles that only the pages in ai-more.js need; shared parts are in ../smx.css
+   Colours, radii and shadows come only from the Settings tokens, so every look follows. No pills, no one-sided
+   stripes, text at least 11px, and layout answers to the width of the Settings area. */
+
+/* ---- an order of search services: the ones that run are numbered, a skipped one says why ------------------------ */
+#smx-root .smx-am-chain { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; min-width: 0; }
+#smx-root .smx-am-step { display: inline-flex; align-items: baseline; gap: 6px; font-size: 12.5px; font-weight: 600; color: var(--k3-text-1); }
+#smx-root .smx-am-step > b { display: inline-grid; place-items: center; min-width: 18px; height: 18px; padding: 0 4px; border: 1px solid var(--k3-line-strong); border-radius: var(--k3-radius-sm); font-size: 11px; font-weight: 700; line-height: 1; color: var(--k3-text-2); align-self: center; }
+#smx-root .smx-am-step.is-skipped { font-weight: 500; color: var(--k3-text-3); }
+#smx-root .smx-am-step.is-skipped > i { font-style: normal; font-size: 11.5px; }
+#smx-root .smx-am-step.is-skipped > i::before { content: '· '; }
+#smx-root .smx-am-then { display: inline-grid; color: var(--k3-text-3); }
+#smx-root .smx-am-then .icon, #smx-root .smx-am-then svg { width: 12px; height: 12px; stroke: currentColor; }
+#smx-root .pm51-row.is-wrap > .pm51-row-control { flex-wrap: wrap; justify-content: flex-start; gap: 8px 14px; padding-right: 0; }
+#smx-root .pm51-row.is-wrap > .pm51-row-control > .chip-select { justify-content: flex-start; margin: 0; }
+
+/* ---- a choice among a few, each saying what it means (how much Back Seat Driver watches) -------------------------- */
+#smx-root .smx-am-choices { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+#smx-root .smx-am-choice { display: grid; align-content: start; gap: 4px; padding: 12px 14px; border: 1px solid var(--k3-line); border-radius: var(--k3-radius-lg); background: var(--k3-surface-0, transparent); color: var(--k3-text-1); text-align: left; cursor: pointer; transition: border-color var(--k3-dur-fast, .12s), background var(--k3-dur-fast, .12s); }
+#smx-root .smx-am-choice:hover { border-color: var(--k3-accent); background: var(--k3-accent-soft-2); }
+#smx-root .smx-am-choice.is-on { border-color: var(--k3-accent); background: var(--k3-accent-soft); box-shadow: inset 0 0 0 1px var(--k3-accent); }
+#smx-root .smx-am-choice:focus-visible { outline: 2px solid var(--k3-accent); outline-offset: 1px; }
+#smx-root .smx-am-choice-name { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 13.5px; font-weight: 650; }
+#smx-root .smx-am-choice-name .icon, #smx-root .smx-am-choice-name svg { width: 15px; height: 15px; stroke: currentColor; color: var(--k3-accent-ink, var(--k3-accent)); }
+#smx-root .smx-am-choice-line { font-size: 12px; line-height: 1.45; color: var(--k3-text-2); }
+@container smx (max-width: 900px) { #smx-root .smx-am-choices { grid-template-columns: minmax(0, 1fr); } }
+
+/* ---- a note from Back Seat Driver: how serious it is, its text, and the references it recorded -------------------- */
+#smx-root .smx-am-sev.tone-blocked { color: var(--k3-red); }
+#smx-root .smx-am-sev.tone-attention { color: var(--k3-amber); }
+#smx-root .smx-am-sev.tone-off { color: var(--k3-text-3); }
+#smx-root .smx-am-text { margin: 0 0 10px; max-width: 72ch; font-size: 13px; line-height: 1.55; color: var(--k3-text-1); }
+#smx-root .smx-am-evidence { margin: 0 0 12px; padding: 0; list-style: none; display: grid; gap: 6px; }
+#smx-root .smx-am-evidence code { display: inline-block; max-width: 100%; white-space: normal; overflow-wrap: anywhere; font-size: 12px; }
+
+/* the kit's small choice bar, at a size that keeps its words readable */
+#smx-root .smx-am-filter { flex: none; }
+#smx-root .smx-am-filter .pm51-seg button { font-size: 11.5px; white-space: nowrap; }
+@container smx (max-width: 900px) {
+  #smx-root .smx-am-notes > .pm51-section-head { flex-wrap: wrap; row-gap: 10px; }
+  #smx-root .smx-am-notes .smx-am-filter { flex-basis: 100%; }
+}
