@@ -4,7 +4,10 @@
 // of every other single choice with more than 6 choices (the 11 long lists), is one picker (a combobox, the chat's
 // model selector) whose listbox unfolds inside the panel under it; a model setting's has a strip of maker marks that
 // filters it, a long list's has none. Every choice stays reachable through it, by pointer and by keys, in all ten
-// looks, at a standard and a narrow width, with Reduced Motion, on either surface (--set sandbox=0/1). Short lists
+// looks, at a standard and a narrow width, with Reduced Motion, on either surface (--set sandbox=0/1). A per-thing setting (a persona's
+// Preferred model, a Goal template's Kind of job) saves on the thing it was opened from and never as a shared value;
+// opened any other way its picker is read only (sol-review-l1s L1S-N2). Arrow keys keep the active row in view, the
+// search box has no show/hide hover tag, and long lists Jared did not choose stay tick lists. Short lists
 // (On/Off) and lists that take several choices stay tick lists. His #1 ("that logo looks terrible", most right-side
 // panels), pick icon B: the head tile of the Details panel and of every Settings side panel draws the PM glyph (PMG:
 // data-nx, a glyph PMG.has) in a quiet tile with no outer glow (every box-shadow layer inset). Semantics and geometry
@@ -366,10 +369,19 @@ export const tests = {
 					}, [id]);
 					await t.check(`${where}: Enter picks "${target.name}"; focus is back on the closed picker, which names it`, after.expanded === 'false' && after.focus && after.face === target.name, JSON.stringify(after));
 					/* the row's own select follows when it offers that same choice (Theme's row offers families instead) */
-					/* (a per-scope setting's row shows one scope's value, not the shared one the picker set) */
-					if (!b.per && after.rowOffers.some((x) => x.startsWith(target.name))) await t.check(`${where}: the row's own control follows`, (after.row || '').trim().startsWith(target.name), `row shows "${after.row}"`);
+					/* opened from its row, a per-thing setting saves on that thing, so its row follows too (L1S-N2) */
+					if (after.rowOffers.some((x) => x.startsWith(target.name))) await t.check(`${where}: the row's own control follows`, (after.row || '').trim().startsWith(target.name), `row shows "${after.row}"`);
 					const reset = f.locator('#panel-settings .detail-inspector [data-action="reset-setting"]').first();
-					if (b.per) await t.check(`${where}: a per-scope setting offers no single default to go back to`, !(await reset.count()), 'a reset button is shown');
+					if (b.per) {
+						await t.check(`${where}: a per-thing setting offers no single default to go back to`, !(await reset.count()), 'a reset button is shown');
+						/* put the thing's own value back through the same picker */
+						await f.locator('#panel-settings .detail-inspector .o55-insp-block [role="combobox"]').first().focus();
+						await t.page.keyboard.press('ArrowDown'); await t.page.waitForTimeout(300);
+						await t.page.keyboard.type(b.face.trim()); await t.page.waitForTimeout(200);
+						await t.page.keyboard.press('Enter'); await t.page.waitForTimeout(500);
+						const again = await f.evaluate(() => { const c = document.querySelector('#panel-settings .detail-inspector .o55-insp-block [role="combobox"]'); return c ? (((c.querySelector('strong') || c).firstChild || {}).textContent || '').trim() : ''; });
+						await t.check(`${where}: picking "${b.face.trim()}" again puts its value back`, again === b.face.trim(), `now "${again}"`);
+					}
 					else {
 						/* the default as the settings inventory names it (an earlier test may have left a saved value
 						   that is not the default: Theme on the last look of the all-looks pass) */
@@ -385,6 +397,87 @@ export const tests = {
 		}
 		t.log(`long lists opened: ${opened.join(', ')}; not reachable from a page in this fixture: ${unreachable.join(', ') || 'none'}`);
 		await t.check(`at least 7 of the long lists open from their pages (${opened.length} of ${ids.length})`, opened.length >= Math.min(7, ids.length), `not reachable: ${unreachable.join(', ')}`);
+	},
+
+	/* sol-review-l1s L1S-N2: a per-thing setting picked in Details is stored on the thing it was opened from, through
+	   that thing's own row: a persona's Preferred model (an editable persona, Frontend Craft when it is there) and a
+	   Goal template's Kind of job. The thing's row and its line in the Now list change, the shared setting does not, and
+	   picking its first value again puts it back. Opened any other way (here, as the "Next to it" links open it) the
+	   picker is read only: "What it can be", every choice unavailable, and a pick saves nothing anywhere. */
+	'FO-127 a per-thing setting saves on its thing': async (t) => {
+		const f = await t.app.open();
+		await t.viewport(1390, 900);
+		await f.locator('#tab-settings').click();
+		await t.settle();
+		const SNAP = (id) => {
+			const row = [...document.querySelectorAll('#pm-settings-root .o55-scoped')].find((r) => r.dataset.settingId === id && r.getClientRects().length);
+			const sel = row && row.querySelector('select[data-scope]');
+			const now = [...document.querySelectorAll('#panel-settings .detail-inspector .o55-insp-per li')].map((li) => li.textContent.replace(/\s+/g, ' ').trim());
+			const c = document.querySelector('#panel-settings .detail-inspector .o55-insp-block [role="combobox"]');
+			const block = c && c.closest('.o55-insp-block'), head = block && block.querySelector('h4');
+			return { owner: sel ? sel.value : null, ownerLabel: sel ? ((sel.options[sel.selectedIndex] || {}).textContent || '').trim() : null, shared: JSON.stringify(window.PM51 && PM51.value ? PM51.value(id) : null), now, face: c ? (((c.querySelector('strong') || c).firstChild || {}).textContent || '').trim() : '', head: head && head.firstChild ? head.firstChild.textContent.trim() : '' };
+		};
+		const pickByName = async (name) => {
+			await f.locator('#panel-settings .detail-inspector .o55-insp-block [role="combobox"]').first().focus();
+			await t.page.keyboard.press('ArrowDown'); await t.page.waitForTimeout(300);
+			await t.page.keyboard.type(name); await t.page.waitForTimeout(250);
+			await t.page.keyboard.press('Enter'); await t.page.waitForTimeout(600);
+		};
+		for (const [id, thing, prefer] of [['personas.tuning.default-model', 'persona', /frontend craft/i], ['planning.verification.goal-template', 'template', null]]) {
+			const pl = await f.evaluate((id) => PM51.placement.byId[id] || null, id);
+			if (!pl) { await t.check(`${thing}: ${id} is placed`, false); continue; }
+			await f.locator(`#pm-settings-root [data-action="navigate-domain"][data-domain="${pl.domain}"]`).first().click(); await t.settle();
+			if (pl.tab) { await f.locator(`#pm-settings-root [data-tab="${pl.tab}"]`).first().click().catch(() => {}); await t.settle(); }
+			if (prefer) { const r = f.locator('#pm-settings-root .resource-row').filter({ hasText: prefer }).first(); if (await r.count()) { await r.click(); await t.settle(); } }
+			await f.evaluate((id) => { const row = [...document.querySelectorAll('#pm-settings-root .o55-scoped')].find((r) => r.dataset.settingId === id); const d = row && row.closest('details:not([open])'); if (d) d.open = true; }, id);
+			const about = f.locator(`#pm-settings-root .o55-scoped[data-setting-id="${id}"] .o55-about`).first();
+			if (!(await about.count()) || !(await about.isVisible())) { await t.check(`${thing}: its own ${id} row is shown`, false, 'no visible scoped row to open Details from'); continue; }
+			const before = await f.evaluate(SNAP, id);
+			await about.evaluate((el) => el.scrollIntoView({ block: 'center' })); await about.click();
+			await f.waitForSelector('#panel-settings .detail-inspector .o55-insp-now.is-per', { timeout: 8000 }); await t.settle();
+			const opened = await f.evaluate(SNAP, id);
+			await t.check(`${thing}: opened from its row, the picker shows that ${thing}'s own value ("${before.ownerLabel}")`, !!before.ownerLabel && opened.face === before.ownerLabel && opened.head === 'Your choices', JSON.stringify({ face: opened.face, head: opened.head }));
+			const target = await f.evaluate(([id, cur]) => {
+				const row = [...document.querySelectorAll('#pm-settings-root .o55-scoped')].find((r) => r.dataset.settingId === id && r.getClientRects().length);
+				const sel = row.querySelector('select[data-scope]');
+				const all = [...sel.options].filter((o) => o.dataset.disabled !== '1').map((o) => ({ value: o.value, label: o.textContent.trim() }));
+				const own = (o) => all.filter((x) => x.label.toLowerCase().includes(o.label.toLowerCase())).length === 1;
+				const cand = all.filter((o) => o.value !== cur && own(o));
+				return cand.find((o) => /claude opus/i.test(o.label)) || cand[0] || null;
+			}, [id, before.owner]);
+			if (!target) { await t.check(`${thing}: a choice to pick`, false); continue; }
+			/* the picker shows a model's name, its service on the line under it */
+			await pickByName(target.label.split(' · ')[0]);
+			const after = await f.evaluate(SNAP, id);
+			await t.check(`${thing}: picking "${target.label}" stores it on that ${thing} (its row now ${target.value})`, after.owner === target.value, `row value ${after.owner}`);
+			await t.check(`${thing}: the shared ${id} is not written`, after.shared === before.shared, `${before.shared} became ${after.shared}`);
+			const changed = after.now.filter((x, i) => x !== opened.now[i]);
+			await t.check(`${thing}: exactly that ${thing}'s line in the Now list changes, to "${target.label}"`, changed.length === 1 && changed[0].includes(target.label.split(' · ')[0]), JSON.stringify(changed));
+			await t.check(`${thing}: the picker names the ${thing}'s new value`, after.face === target.label.split(' · ')[0], `face "${after.face}"`);
+			await pickByName(before.ownerLabel);
+			const back = await f.evaluate(SNAP, id);
+			await t.check(`${thing}: picking "${before.ownerLabel}" again puts it back, and the Now list with it`, back.owner === before.owner && JSON.stringify(back.now) === JSON.stringify(opened.now) && back.shared === before.shared, JSON.stringify({ owner: back.owner, shared: back.shared }));
+			await closeDetails(t, f);
+			/* opened as the "Next to it" links open it: not from the thing's row, so read only */
+			await f.evaluate(([id, pl]) => { const b = document.createElement('button'); b.type = 'button'; b.dataset.action = 'setting-details'; b.dataset.setting = id; b.dataset.workspace = pl.workspace || ''; b.dataset.section = pl.section || ''; document.querySelector('#pm-settings-root').appendChild(b); b.click(); b.remove(); }, [id, pl]);
+			await f.waitForSelector('#panel-settings .detail-inspector .o55-insp-head', { timeout: 8000 }); await t.settle();
+			const ro = await f.evaluate(SNAP, id);
+			await t.check(`${thing}: opened elsewhere, its picker is read only ("What it can be", no value of its own)`, ro.head === 'What it can be' && /^See the \d+ choices$/.test(ro.face), JSON.stringify({ head: ro.head, face: ro.face }));
+			const trig = f.locator('#panel-settings .detail-inspector .o55-insp-block [role="combobox"]').first();
+			if (await trig.count()) {
+				await trig.click(); await t.page.waitForTimeout(400);
+				const opts = await f.evaluate(() => { const c = document.querySelector('#panel-settings .detail-inspector [role="combobox"][aria-expanded="true"]'); const l = c && document.getElementById(c.getAttribute('aria-controls')); const o = l ? [...l.querySelectorAll('[role="option"]')] : []; return { n: o.length, off: o.filter((x) => x.getAttribute('aria-disabled') === 'true').length, sel: o.filter((x) => x.getAttribute('aria-selected') === 'true').length }; });
+				await t.check(`${thing}: read only, every one of its ${opts.n} choices is unavailable and none is selected`, opts.n > 1 && opts.off === opts.n && opts.sel === 0, JSON.stringify(opts));
+				const first = f.locator('#panel-settings .detail-inspector .o55-pick-list [role="option"]').first();
+				/* a click on an unavailable choice (Playwright will not press a disabled one, so the event is sent) */
+				if (await first.count()) await first.dispatchEvent('click');
+				await t.page.waitForTimeout(400);
+				await t.page.keyboard.press('Escape');
+			}
+			const still = await f.evaluate((id) => JSON.stringify(window.PM51 && PM51.value ? PM51.value(id) : null), id);
+			await t.check(`${thing}: read only, a pick saves nothing`, still === before.shared, `${before.shared} became ${still}`);
+			await closeDetails(t, f);
+		}
 	},
 
 	/* opus-recheck-b10d127 F1 (and its 1280x500 follow-up): walking the unfolded list with Page Down, Arrow Up, Page Up
