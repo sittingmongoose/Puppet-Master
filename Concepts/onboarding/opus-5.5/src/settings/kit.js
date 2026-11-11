@@ -373,7 +373,7 @@ function openListPopout({ anchor, trigger, options, current, search, title, widt
   pmActive = entry;
   positionPopout(pop, anchor, { width: entry.width });
   sproutOpen(pop, anchor);
-  if (trigger && trigger.setAttribute) { trigger.setAttribute('aria-expanded', 'true'); trigger.setAttribute('aria-controls', pop.id); }
+  if (trigger && trigger.setAttribute) { trigger.setAttribute('aria-haspopup', kind === 'menu' ? 'menu' : 'listbox'); trigger.setAttribute('aria-expanded', 'true'); trigger.setAttribute('aria-controls', pop.id); }
   const selIdx = options.findIndex(o => String(o.value) === String(current));
   const firstOk = options.findIndex(o => !o.disabled);
   setActiveOption(entry, selIdx >= 0 ? selIdx : firstOk, true);
@@ -415,6 +415,7 @@ openMenu = function (anchor, items, title = '') {
   pmActive = entry; menuAnchorEl = anchor || null;
   positionPopout(pop, anchor, { align: 'right' });
   sproutOpen(pop, anchor);
+  if (anchor && anchor.setAttribute) { anchor.setAttribute('aria-haspopup', 'menu'); anchor.setAttribute('aria-expanded', 'true'); anchor.setAttribute('aria-controls', pop.id); }
   pop.addEventListener('click', e => {
     const b = e.target.closest('.pm51-menu-item'); if (!b) return; e.preventDefault();
     const it = items[Number(b.dataset.index)]; if (!it) return;
