@@ -3020,9 +3020,16 @@
       if (sizeWatch) { sizeWatch.unobserve(n); sizeWatch.observe(n); }
     }
   }
+  /* A record from the decoration on Pip's onboarding stage (aria-hidden: its drawing, its bubble, its HUD), which the
+     stage rewrites on every frame it draws. That decoration holds no glass and its redraws remove none, so such a record
+     is not looked at: before, each one ran the strip scans below and asked for a lazy sync, on every frame the window was
+     open, in every look (pm7-perf, 2026-11-11; lane G: 9.5-15 ms of script a second). A record from anything else in the
+     window (a screen replaced, a card, a button) is handled as before. */
+  function pipDecoration(r) { var n = r.target; n = n && n.nodeType === 1 ? n : n && n.parentElement; return !!(n && n.closest && n.closest('#pm-o55-onboarding .pst [aria-hidden="true"]')); }
   var mo = new MutationObserver(function (recs) {
     var hot = false, menuHot = false, relevant = false, area = boardMoment() ? document.querySelector(BOARD_AREA) : null;
     for (var i = 0; i < recs.length; i++) {
+      if (pipDecoration(recs[i])) continue;
       /* an app redrew a strip and dropped its under-layer with the chip in it: the chip comes back in this frame, not after
          the lazy sync (an opaque chip gone for 140 ms left its inverted label on bare ground) */
       if (recs[i].type === 'childList' && recs[i].removedNodes.length) for (var u = 0; u < recs[i].removedNodes.length; u++) { var rn = recs[i].removedNodes[u]; if (rn.nodeType === 1 && rn.matches('.lg-lenses-under')) hot = true; }
