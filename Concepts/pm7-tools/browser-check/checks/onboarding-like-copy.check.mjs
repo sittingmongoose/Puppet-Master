@@ -155,7 +155,13 @@ export const tests = {
 		await toLike(t, f, 'Looks');
 		await press(f, 'pick', 'harbor'); await press(f, 'choose');
 		for (const look of LOOKS) {
-			await t.app.look(look); await f.waitForTimeout(350);
+			/* the onboarding window owns the look while it is open: its own look switch, then the painted state */
+			const [fam, mode] = look.split('-');
+			await f.evaluate(([a, b]) => { O55.S.lookOpen = false; O55.ui.applyLook(a, b); }, [fam, mode]);
+			await f.waitForFunction(([a, b]) => { const th = document.documentElement.getAttribute('data-theme') || '', nier = !!(window.PM_NIER && PM_NIER.on()); return th.endsWith('-' + b) && (a === 'nier' ? nier : th.startsWith(a) && !nier); }, [fam, mode], { timeout: 8000 }).catch(() => {});
+			await f.waitForTimeout(600);
+			const now = await f.evaluate(() => ({ theme: document.documentElement.getAttribute('data-theme'), nier: !!(window.PM_NIER && PM_NIER.on()) }));
+			await t.check(`${look}: the look is applied`, now.theme.endsWith('-' + mode) && (fam === 'nier' ? now.nier : now.theme.startsWith(fam) && !now.nier), JSON.stringify(now));
 			for (const [what, sel] of [['a kind', '.o55-like-kinds .o55-toggletitle'], ['a kind’s count', '.o55-like-kinds .o55-togglesub'], ['a single setting', '.o55-like-single .o55-togglesub'], ['a thing', '.o55-like-things .o55-toggletitle'], ['an account’s readiness', '.o55-like-accts .o55-rowmeta']]) {
 				const el = f.locator(`${LAYER} .o55-sheet ${sel}`).first();
 				await el.scrollIntoViewIfNeeded().catch(() => {});
