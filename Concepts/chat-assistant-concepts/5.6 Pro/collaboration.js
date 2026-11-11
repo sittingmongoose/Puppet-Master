@@ -237,6 +237,8 @@
       substitutionReason: unavailable ? (UNAVAILABLE_DEMO[reqId] + (eff ? ' Substituted within the same provider.' : ' No same-provider substitute was configured, so the slot is disabled rather than run on an arbitrary model.')) : null,
       evidenceNote: o.evidenceNote || '',
       blockedReason: o.blockedReason || null,
+      /* FO-128: the call a blocked helper waits on ({ tool, target, cwd }), so its OK is a permission ask with the ladder */
+      blockedAsk: o.blockedAsk || null,
       current: o.current || '',
       /* Additive Correction v4 (PART-001..006). `required` comes from the
          workflow DEFINITION, never from whether a model happened to be
@@ -393,7 +395,8 @@
       participants: [
         mkParticipant({ role: 'Migration Engineer', requestedModelId: 'sonnet46', persona: 'Implementer', status: 'working', current: 'Publishing the write-amplification comparison artifact.' }),
         mkParticipant({ role: 'Benchmark Runner', requestedModelId: 'qwen38-coder', persona: 'Implementer', status: 'waiting', current: 'Dependency ps-0/ps-1 satisfied; queued behind concurrency limit 3.' }),
-        mkParticipant({ role: 'Rollback Auditor', requestedModelId: 'glm52', persona: 'Reviewer', status: 'blocked', blockedReason: 'Rehearsing the rollback requires restoring a schema snapshot on a shared host; that needs explicit approval this participant cannot self-grant.' })
+        mkParticipant({ role: 'Rollback Auditor', requestedModelId: 'glm52', persona: 'Reviewer', status: 'blocked', blockedReason: 'Rehearsing the rollback requires restoring a schema snapshot on a shared host; that needs explicit approval this participant cannot self-grant.',
+          blockedAsk: { tool: 'bash', target: 'pg_restore --clean --if-exists -d tastebook_rehearsal snapshots/0007_pre.dump', cwd: '~/tastebook/api' } })
       ],
       crew: {
         boundPlanId: 'ap-index', boundPlanVersion: 5,
@@ -910,7 +913,9 @@
     var b = blockedHelper(run), noun = NOUN[run.kind];
     function mk(tone, strong, text, word) { return { tone: tone, strong: strong, text: text, word: word || 'Needs attention', plain: strong + (text ? ' ' + text : '') }; }
     if (c.coordinator_failed) return mk('warm', 'Needs attention', '· The ' + lead + ' stopped, ' + (run.kind === 'chat_room' ? 'so nobody is calling on speakers.' : 'so the final summary is missing.'));
-    if (b) return mk('warm', b.role + ' needs your OK', 'to go on. Only this ' + noun + ' waits; the others keep working.', 'Needs you');
+    /* FO-128: the card names the call (its decision row shows the command whole, helperQuestion), so the ladder under it
+       is answered knowing what it allows */
+    if (b) return mk('warm', b.role + ' needs your OK', (b.blockedAsk && b.blockedAsk.target ? 'to run a command.' : 'to go on.') + ' Only this ' + noun + ' waits; the others keep working.', 'Needs you');
     if (c.unresolved_required.length && c.failed_slots.length) {
       var failed = (run.participants || []).filter(function (p) { return c.failed_slots.indexOf(p.id) >= 0 && p.required; });
       var all = (run.participants || []).filter(function (p) { return p.required; }).length;
@@ -1304,9 +1309,35 @@
     if (!a || /\sdisabled[\s>]/.test(html)) return null;
     return { action: a[1], label: esc(l ? l[1] : 'Play the recording') };
   }
+  /* FO-128 (Jared, 2026-11-10: "Yes but in the more compact format"): a helper that waits for your OK is a tool's
+     permission ask, owned by dock-asks.js (PM56_ASKS): the card's decision row and the run's dock line both draw its
+     compact ladder (Deny, Once, For session, Always) from PM56_ASKS.parts, and every answer comes back to onAnswer here,
+     which changes the run's state directly, as the card's own Allow once and Don't allow did (answerHelper, below:
+     the helper goes on or is declined, its blocked assignments follow, and the run says which answer and scope; this
+     preview stands in for cmd.runtime.approve and cmd.runtime.decline). A For session grant or an Always rule that
+     already covers the helper's call lets it go on without asking (PM56_ASKS.ensure returns null meanwhile). Without
+     dock-asks the card keeps Allow once and Don't allow. */
+  function helperAsk(run, b) {
+    var A = window.PM56_ASKS;
+    if (!A || !A.ensure || !b) return null;
+    var q = b.blockedAsk || {};
+    /* its approval scope is its run and its own lane (the helper), so a grant or a Deny in one run never reaches another */
+    return A.ensure({ id: 'collab:' + run.id + ':' + b.id, external: true, thread: run.threadId, runId: run.id, laneId: b.id, tool: q.tool || 'helper', target: q.target || '', cwd: q.cwd || '',
+      verb: q.tool ? '' : 'go on with its part', pattern: q.tool ? '' : b.role + ' · ' + KIND_LABEL[run.kind],
+      who: b.role, whoKind: KIND_LABEL[run.kind] + ' helper', why: b.blockedReason || '', rule: 'Inherits Agent mode’s permissions on this thread',
+      onAnswer: function (ctx, how, rule) { answerHelper(ctx, run.id, b.id, how, rule); return true; } });
+  }
   function decisionActions(run, att) {
     if (att && att.actions) return att.actions.slice();
     var K = KIND_LABEL[run.kind], c = completionProjection(run), b = blockedHelper(run), out = [];
+    var ha = b && helperAsk(run, b), hp = ha && window.PM56_ASKS.parts(ha);
+    /* a grant already lets it go on: nothing to answer while that lands */
+    if (b && !ha && window.PM56_ASKS && window.PM56_ASKS.pending && window.PM56_ASKS.pending('collab:' + run.id + ':' + b.id)) return [];
+    if (hp) {
+      out = hp.answers.slice();
+      out.push({ action: 'collab-open-participant', attrs: 'data-participant="' + esc(b.id) + '"', label: 'Details', extra: true });
+      return out;
+    }
     if (c.attention_reason === 'vote_tie_unresolved') {
       out.push({ action: 'collab-brainstorm-synthesize', label: 'Write the plan', primary: true });
       out.push({ action: 'collab-brainstorm-next-round', label: 'One more debate round', soft: true });
@@ -1333,6 +1364,10 @@
     return out;
   }
 
+  /* the Always chooser replaces the ladder in the card while it is open; the command shows whole above it */
+  function helperParts(run) { var b = blockedHelper(run), A = window.PM56_ASKS; return b && A && A.parts ? A.parts('collab:' + run.id + ':' + b.id) : null; }
+  function helperExtra(run) { var a = helperParts(run); return a ? a.extra : ''; }
+  function helperQuestion(run) { var a = helperParts(run); return a ? a.question : ''; }
   function genericCardParts(run, ctx, face, st) {
     var S = S_(), K = KIND_LABEL[run.kind];
     var s = sentenceOf(run), att = st === 'attention' ? attentionOf(run) : null;
@@ -1340,7 +1375,7 @@
     var open = openActionOf(run);
     var parts = {
       sentence: { status: s.status, word: esc(s.word), reason: esc(s.reason) },
-      decision: att ? { tone: att.tone, glyph: att.tone === 'accent' ? 'ring-dot' : 'warn', sentence: '<b>' + esc(att.strong) + '</b>' + (att.text ? ' ' + esc(att.text) : ''), actions: decisionActions(run, att) } : null,
+      decision: att ? { tone: att.tone, glyph: att.tone === 'accent' ? 'ring-dot' : 'warn', sentence: '<b>' + esc(att.strong) + '</b>' + (att.text ? ' ' + esc(att.text) : ''), actions: decisionActions(run, att), extra: helperExtra(run), question: helperQuestion(run) } : null,
       track: trackOf(run, st),
       lanes: null,
       board: '',
@@ -1588,7 +1623,7 @@
         /* 7.12 one control set: while the run view is open beside the chat, the legacy follow-ons it draws (Write the plan,
            One more debate round, Next Round, Create To-Dos…) leave the card, and the card points at the view instead */
         if (viewing) { var kept = dacts.filter(function (x) { return !VIEW_FOLLOW_ON.test(x.action); }); if (kept.length !== dacts.length) { inView = true; dacts = kept; } }
-        var da = withRun(dacts, run); mark(dacts); body += S.pmxDecision({ key: 'dec:' + id, cls: 'collab-status', tone: dec.tone, glyph: dec.glyph, sentence: dec.sentence, actions: da });
+        var da = withRun(dacts, run); mark(dacts); body += S.pmxDecision({ key: 'dec:' + id, cls: 'collab-status', tone: dec.tone, glyph: dec.glyph, sentence: dec.sentence, actions: da, extra: dec.extra || '', question: dec.question || '' });
       }
       else body += S.pmxSentence({ key: 'collab-status', cls: 'collab-status', status: p.sentence.status, word: p.sentence.word, reason: p.sentence.reason });
       /* a collapsed card has no meta row: its track's count line carries the .collab-card-meta hook (B.5) */
@@ -1659,10 +1694,14 @@
       var wgf = WG_() && WG_().face(run);
       if (wgf && (wgf.attention || WG_().holds(run))) own = null;
       if (own && own.dock && own.dock.sentence) { say = own.dock.sentence; if ({ live: 1, needs: 1, yourmove: 1 }[own.dock.tone]) tone = own.dock.tone; }
+      /* FO-128: a helper that waits for your OK answers in the line, with the card's compact ladder; Details shows the card */
+      var hb = att && blockedHelper(run), ha = hb && helperAsk(run, hb), hp = ha && window.PM56_ASKS.parts(ha);
+      if (hb && !ha && window.PM56_ASKS && window.PM56_ASKS.pending && window.PM56_ASKS.pending('collab:' + run.id + ':' + hb.id)) return;
       out.push({ runId: run.id, tone: tone, at: Date.parse(run.createdAt) || 0,
         html: S.pmxDockLine({ key: 'pmx-dock:' + run.id, tone: tone, runId: run.id, markHtml: S.pmxKindMark(run.kind, 16), kindWord: esc(KIND_LABEL[run.kind]),
-          sentence: tone === 'live' ? esc(shownTitle(run)) + ' · ' + say : say, time: tone === 'live' ? esc(clockOf(run, st)) : '',
-          action: { action: 'pmx-dock-show', attrs: 'data-run="' + esc(run.id) + '"', label: tone === 'needs' ? 'Review' : 'Show' } }) });
+          sentence: hp ? hp.sentence : tone === 'live' ? esc(shownTitle(run)) + ' · ' + say : say, time: tone === 'live' ? esc(clockOf(run, st)) : '',
+          ask: hp ? { question: hp.question, answers: hp.answers, extra: hp.extra, label: hp.label } : null,
+          action: { action: 'pmx-dock-show', attrs: 'data-run="' + esc(run.id) + '"', label: hp ? 'Details' : tone === 'needs' ? 'Review' : 'Show' } }) });
     });
     return out;
   });
@@ -4177,23 +4216,40 @@
      once, or told no; the others were never blocked. Nothing else about the run changes. */
   function blockedOf(run, pid) { return (run.participants || []).filter(function (p) { return p.id === pid && p.status === 'blocked'; })[0] || null; }
   function assignmentsOf(run, p) { return ((run.crew && run.crew.assignments) || []).filter(function (a) { return a.status === 'blocked' && (a.participantId === p.id || a.assignedRole === p.role); }); }
+  /* FO-128: the ladder's answers for a blocked helper (dock-asks.js resolves the ask, then calls here): Once is the
+     approve below; For session and Always let it go on the same way and say the grant; Deny is the decline below */
+  var SCOPE_SAID = {
+    once: function (p) { return 'You allowed ' + p.role + ' once. The next time it needs this, it asks again.'; },
+    session: function (p, r) { return r.auto ? p.role + ' went on without asking: ' + r.pattern + ' is allowed for this session.' : 'You allowed ' + p.role + ' for this session: ' + r.pattern + ' runs without asking until this chat session ends.'; },
+    always: function (p, r) { return r.auto ? p.role + ' went on without asking: your rule allows ' + r.pattern + '.' : 'You made a rule: always allow ' + r.pattern + ' on ' + (r.place === 'project' ? 'this project' : r.place === 'computer' ? 'this computer' : 'every computer') + '. Change it in Settings › Permissions.'; }
+  };
+  function answerHelper(ctx, runId, pid, how, rule) {
+    var run = findRun(runId), p = run && blockedOf(run, pid);
+    if (!p) return;
+    if (how === 'deny') { declineHelper(run, p); return; }
+    p.status = 'working'; p.current = (how === 'once' ? 'Allowed once by you: ' : how === 'session' ? (rule && rule.auto ? 'Allowed by this session’s grant: ' : 'Allowed for this session by you: ') : 'Allowed by your rule: ') + String(p.blockedReason || 'going on.').replace(/;.*$/, '').replace(/\.?$/, '.'); p.blockedReason = '';
+    assignmentsOf(run, p).forEach(function (a) { a.status = 'in_progress'; });
+    if (run.status === 'blocked') run.status = 'running';
+    run.messages.push(mkMsg(run, { senderKind: 'system', senderName: 'System', messageType: 'message', body: SCOPE_SAID[how](p, rule || {}) }));
+  }
+  function declineHelper(run, p) {
+    p.status = 'failed'; p.outcome = 'not_allowed'; p.current = 'Not allowed by you. Its part was not done.'; p.blockedReason = '';
+    assignmentsOf(run, p).forEach(function (a) { a.status = 'skipped'; });
+    if (run.status === 'blocked') run.status = 'running';
+    run.messages.push(mkMsg(run, { senderKind: 'system', senderName: 'System', messageType: 'message', body: 'You didn’t allow ' + p.role + ' to go on. Its part was not done; the others keep working.' }));
+  }
+  /* the card's own Allow once and Don't allow (a build without dock-asks.js) are the ladder's Once and Deny */
   EXT.action('collab-approve', function (ctx, btn) {
     var run = findRun(btn.dataset.run), p = run && blockedOf(run, btn.dataset.participant);
     if (!p) return true;
-    p.status = 'working'; p.current = 'Allowed once by you: ' + String(p.blockedReason || 'going on.').replace(/;.*$/, '').replace(/\.?$/, '.'); p.blockedReason = '';
-    assignmentsOf(run, p).forEach(function (a) { a.status = 'in_progress'; });
-    if (run.status === 'blocked') run.status = 'running';
-    run.messages.push(mkMsg(run, { senderKind: 'system', senderName: 'System', messageType: 'message', body: 'You allowed ' + p.role + ' once. The next time it needs this, it asks again.' }));
+    answerHelper(ctx, run.id, p.id, 'once');
     ctx.renderApp();
     return true;
   });
   EXT.action('collab-deny', function (ctx, btn) {
     var run = findRun(btn.dataset.run), p = run && blockedOf(run, btn.dataset.participant);
     if (!p) return true;
-    p.status = 'failed'; p.outcome = 'not_allowed'; p.current = 'Not allowed by you. Its part was not done.'; p.blockedReason = '';
-    assignmentsOf(run, p).forEach(function (a) { a.status = 'skipped'; });
-    if (run.status === 'blocked') run.status = 'running';
-    run.messages.push(mkMsg(run, { senderKind: 'system', senderName: 'System', messageType: 'message', body: 'You didn’t allow ' + p.role + ' to go on. Its part was not done; the others keep working.' }));
+    declineHelper(run, p);
     ctx.renderApp();
     return true;
   });

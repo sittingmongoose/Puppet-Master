@@ -1,8 +1,8 @@
 :root:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]):not([data-o55-nier]) :is([data-pmh-kind="card"], [data-pmh-kind="tile"], [data-pmh-kind="row"]):not(.pmu-card)::after {
   content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; border-radius: inherit;
-  /* pre-painted: the sheen is the layer's flat tint, the hairline an inset line plus a soft inset band that follow any
-     border radius; only the mask moves with the pointer */
-  background: var(--pmf-sheen);
+  /* FO-121: only the inset hairline and band catch the pointer's light. No surface fill: it painted a circle
+     around the pointer. The edge's mask, intensity and timing stay shared with the proximity field. */
+  background: none;
   box-shadow: inset 0 0 0 1px var(--pmf-rim), inset 0 0 var(--pmf-band) 0 var(--pmf-rim2);
   -webkit-mask: radial-gradient(circle var(--pmf-r) at var(--pmh-x) var(--pmh-y), var(--pmf-mask)) no-repeat;
           mask: radial-gradient(circle var(--pmf-r) at var(--pmh-x) var(--pmh-y), var(--pmf-mask)) no-repeat;

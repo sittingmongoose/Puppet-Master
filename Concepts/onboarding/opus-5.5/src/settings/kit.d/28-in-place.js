@@ -288,6 +288,44 @@ PM51.swapRow = (el, next) => {
   try { o55cNode(el, next); } finally { o55cMode = was; }
 };
 
+/* ---------- a manager's save redraws its page in place (FO-130) ------------------------------------------------------ */
+/* A manager redraws its whole page after a change (PM51.refresh: an account's "Use this service", a dropdown, an order
+   arrow). The body used to be replaced, so every section on it was a new element that played its entrance again
+   (sectionReveal: a fade and a 10 px drop) about half a second after the click, the switch lost focus and hover, and
+   its own transition never ran: the whole page shook. A body that is already mounted is patched now, like the page and
+   a row: only what differs changes, and a section that is new still arrives as before. */
+PM51.patchInner = (live, html) => {
+  if (o55cMode || !live.firstElementChild) { live.innerHTML = html; return; }
+  const tpl = document.createElement('template'); tpl.innerHTML = html;
+  o55cMode = 'body';
+  try { o55cKids(live, tpl.content); } finally { o55cMode = null; }
+};
+PM51.commitBody = (body, html) => {
+  if (body.dataset.workspaceMounted !== 'true') { body.innerHTML = html; return; }
+  const act = document.activeElement;
+  if (act && act.matches && act.matches(O55C_HOLDS)) o55cHold(act, () => PM51.patchInner(body, html)); else PM51.patchInner(body, html);
+};
+/* The control that made a change keeps its place on screen. A part above it that grows or shrinks with the change (the
+   roster stacked above a detail in a narrow window, a status line) moved it, and the browser's own scroll anchoring
+   held another node: Web's "Search the web" jumped 68 px at 860. Its top is read before the redraw and the page is
+   scrolled back by the difference at once (the page scrolls smoothly otherwise). A control the redraw removed is let go. */
+function o55cHold(el, fn) {
+  const sc = el && el !== document.body && el.closest ? el.closest('#settings-document') : null;
+  if (!sc) return fn();
+  const was = el.getBoundingClientRect().top;
+  const r = fn();
+  if (el.isConnected) { const d = el.getBoundingClientRect().top - was; if (Math.abs(d) >= 1) sc.scrollTo({ top: sc.scrollTop + d, behavior: 'instant' }); }
+  return r;
+}
+/* only a control that sets a value (a switch, a box, a choice); a link or a jump that scrolls on purpose is left alone */
+const O55C_HOLDS = '[role="switch"], [role="checkbox"], [role="radio"], [aria-pressed]';
+const o55cHoldDispatch = dispatchAction;
+dispatchAction = function (action, el) {
+  if (!el || !el.matches || !el.matches(O55C_HOLDS)) return o55cHoldDispatch.apply(this, arguments);
+  const self = this, args = arguments;
+  return o55cHold(el, () => o55cHoldDispatch.apply(self, args));
+};
+
 /* ---------- coming back to Settings never replays an entrance -------------------------------------------------------- */
 /* Settings is display:none while another page shows, and a CSS animation starts over when its element is shown again, so
    coming back replayed the page's arrival, every revealed section's slide and the last manager tab swap. When Settings

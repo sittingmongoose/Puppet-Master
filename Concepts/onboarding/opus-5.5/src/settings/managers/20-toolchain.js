@@ -157,7 +157,7 @@
         ['Environment values', env.length ? env.map(e => e.split('=')[0]).join(', ') : 'None'],
         ['Project markers', (s.rootMarkers || []).length ? s.rootMarkers.join(', ') : 'None'],
         ['Startup options', s.initOptions || 'Defaults'],
-        ['Applies to', s.scope === 'User' ? 'All your projects' : 'This project'],
+        ['Where it’s available', s.scope === 'User' ? 'Every project' : 'This project'],   /* FO-131, P's rule: a thing you add is available in This project / Every project */
         ['Last check', s.lastTest || 'Not checked yet']
       ]),
       actionRow(
@@ -352,7 +352,7 @@
             + `<div class="o55-setup-fields">`
             + PM51.field(known.length ? 'Other files too (optional)' : 'Files it handles', `<input class="text-control o55-setup-mono tt-w-extra" value="${a(d.extra)}" placeholder="${a(known.length ? 'For example: *.ron, build.rs' : 'For example: *.ex, *.exs')}" autocomplete="off" spellcheck="false"/>`, 'Separate several with commas.')
             + (kind === 'formatters' ? PM51.field('When it tidies', PM51.segmented(d.onSave ? 'save' : 'ask', [['save', 'Every time I save'], ['ask', 'Only when I ask']], { action: 'pm51-toolchain-w-when', label: 'When it tidies' }), d.onSave ? 'Each file is tidied as you save it.' : 'Use Format document, or ask the assistant to tidy a file.') : '')
-            + PM51.field('Use it in', PM51.dropdown(d.scope, [{ value: 'Project', label: 'This project only' }, { value: 'User', label: 'All my projects' }], { cls: 'tt-w-scope', label: 'Use it in' }))
+            + PM51.field('Where it’s available', PM51.dropdown(d.scope, [{ value: 'Project', label: 'This project' }, { value: 'User', label: 'Every project' }], { cls: 'tt-w-scope', label: 'Where it’s available' }))
             + `</div>`;
         },
         collect: (wrap, d) => { const x = val(wrap, '.tt-w-extra'), sc = val(wrap, '.tt-w-scope'); if (x != null) d.extra = x; if (sc) d.scope = sc; },
@@ -384,7 +384,7 @@
           return PM51.kv([
             ['Language', langName(d)], [K.Noun, d.name], ['Program', programFor(kind, d) || 'Not set'], ['Comes from', FROM[d.from] || 'Not set'],
             ['Files', files.join(', ')], kind === 'formatters' ? ['Tidies', d.onSave ? 'Every time you save' : 'Only when you ask'] : null,
-            ['Used in', d.scope === 'User' ? 'All your projects' : 'This project'],
+            ['Where it’s available', d.scope === 'User' ? 'Every project' : 'This project'],
             [kind === 'lsps' ? 'Start arguments' : 'Arguments', d.args || 'None'], ['Environment values', lines(d.env).length ? lines(d.env).map(x => x.split('=')[0]).join(', ') : 'None'],
             kind === 'lsps' ? ['Project markers', d.markers || 'None'] : ['Settings file', d.config || 'None']
           ]) + PM51.note(d.from === 'install' ? 'Puppet Master installs it, then checks it answers. Example only: nothing is installed in this preview.' : d.checked ? 'It answered the check. You can check it again from the list at any time.' : 'Puppet Master checks it answers the first time it is needed. Example only in this preview.', 'info');
@@ -514,7 +514,7 @@
         + PM51.panelSection('Program', pathBlock({ kind, tool: x.tool || x.id, value: program, placeholder: '/usr/local/bin/…' }) + `<p class="pm51-field-help">Where it came from: ${h(sourceLabel(x.source))}. A new program counts once it answers Check.</p>`, '', { icon: 'download' })
         + PM51.panelSection(fmt ? 'Files it tidies' : 'Files it handles', PM51.field('Files', PM51.input(filesOf(kind, x).join(', '), { data: { field: 'files' }, cls: 'o55-setup-mono' }), 'A star stands for any name. Separate several with commas.')
           + (fmt ? PM51.field('When it tidies', PM51.select(x.onSave ? 'save' : 'ask', [['save', 'Every time I save'], ['ask', 'Only when I ask']], { data: { field: 'when' }, label: 'When it tidies' })) : '')
-          + PM51.field('Use it in', PM51.select(x.scope === 'User' ? 'User' : 'Project', [['Project', 'This project only'], ['User', 'All my projects']], { data: { field: 'scope' }, label: 'Use it in' })), '', { icon: 'file' })
+          + PM51.field('Where it’s available', PM51.select(x.scope === 'User' ? 'User' : 'Project', [['Project', 'This project'], ['User', 'Every project']], { data: { field: 'scope' }, label: 'Where it’s available' })), '', { icon: 'file' })
         + PM51.panelSection(fmt ? 'How it runs' : 'How it starts', PM51.field(fmt ? 'Arguments' : 'Start arguments', PM51.input((x.args || []).join(' '), { data: { field: 'args' }, cls: 'o55-setup-mono', placeholder: 'None' }))
           + PM51.field('Environment values', area('env', envOf(x).join('\n'), 'NAME=value'), 'One NAME=value per line. Keep passwords out: these are saved as plain text.')
           + (fmt

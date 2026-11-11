@@ -85,7 +85,7 @@
   function reviewStep(d) {
     const where = d.where || 'Project';
     return PM51.panelSection(d.name, PM51.kv([['When it is used', d.description || '—'], ['It may', (MAY.find(m => m[0] === d.may) || [d.may, d.may])[1]], ['It needs', (d.needs || []).length ? d.needs.join(', ') : 'Nothing extra']]), '', { icon: 'sliders' })
-      + PM51.panelSection('Where it is saved', PM51.select(where, [['Project', 'This project (.puppet-master/skills)'], ['Global', 'Every project (your skills folder)']], { cls: 'o55-skl-where', label: 'Where it is saved' }), `As ${slug(d.name)}/SKILL.md. You can edit it by hand too.`, { icon: 'folder' })
+      + PM51.panelSection('Where it’s available', PM51.select(where, [{ value: 'Project', label: 'This project', meta: '.puppet-master/skills' }, { value: 'Global', label: 'Every project', meta: 'Your skills folder' }], { cls: 'o55-skl-where', label: 'Where it’s available' }), `As ${slug(d.name)}/SKILL.md. You can edit it by hand too.`, { icon: 'folder' })
       + PM51.rows([{ label: 'Turn it on now', help: 'Off adds it but keeps it out of the way until you switch it on.', control: PM51.toggle(d.turnOn !== false, { action: 'pm51-skills-won', label: 'Turn it on now' }) }]);
   }
   function skillWizard() {
@@ -95,7 +95,7 @@
       steps: [
         { label: 'Start', title: 'Where does the skill come from?', lead: 'Write one yourself, or bring in one that already exists.', render: d => PM51.tiles(START.map(x => ({ title: x.title, text: x.text, icon: x.icon, selected: d.source === x.id, data: { source: x.id } })), { action: 'pm51-skills-source' }), check: d => d.source ? '' : 'Pick one to go on.' },
         { label: 'Details', icon: 'edit', title: d => d.source === 'catalog' ? 'Which skill would you like?' : d.source === 'github' ? 'Where is it on GitHub?' : d.source === 'folder' ? 'Which folder is it in?' : 'What is the skill for?', lead: d => d.source === 'catalog' ? 'Reviewed skills that work as soon as they are added.' : d.source === 'write' ? 'Say when it applies and what the assistant should do. Plain sentences are fine.' : 'Paste where it is, then read it. You see what it asks for before anything is added.', recap: d => d.name || '', render: detailsStep, collect: collectDetails, check: checkDetails },
-        { label: 'Review', icon: 'shield', title: 'Does this look right?', lead: 'What it may do, what it needs, and where it is saved.', render: reviewStep, collect: (wrap, d) => { const w = wrap.querySelector('.o55-skl-where'); if (w) d.where = w.value; const on = wrap.querySelector('[data-action="pm51-skills-won"]'); if (on) d.turnOn = on.classList.contains('on'); } }
+        { label: 'Review', icon: 'shield', title: 'Does this look right?', lead: 'What it may do, what it needs, and where it’s available.', render: reviewStep, collect: (wrap, d) => { const w = wrap.querySelector('.o55-skl-where'); if (w) d.where = w.value; const on = wrap.querySelector('[data-action="pm51-skills-won"]'); if (on) d.turnOn = on.classList.contains('on'); } }
       ],
       onFinish: d => {
         const miss = missingNeeds(d);

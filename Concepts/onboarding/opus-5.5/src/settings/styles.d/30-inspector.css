@@ -3,9 +3,17 @@
 #panel-settings .detail-inspector > .o55-insp-page { display: flex; flex-direction: column; min-height: 0; flex: 1 1 auto; }
 #panel-settings .o55-insp-head.detail-head { display: flex; align-items: center; gap: 12px; padding: 18px 18px 16px; border-bottom: 1px solid var(--k3-line);
   background: linear-gradient(180deg, color-mix(in srgb, var(--k3-accent) 10%, transparent), transparent 90%), var(--k3-surface-1); position: sticky; top: 0; z-index: 2; }
-#panel-settings .o55-insp-icon { width: 38px; height: 38px; flex: 0 0 auto; display: grid; place-items: center; border-radius: 11px; background: var(--k3-accent-soft); color: var(--k3-accent);
-  box-shadow: 0 0 0 1px color-mix(in srgb, var(--k3-accent) 28%, transparent), 0 8px 20px -10px color-mix(in srgb, var(--k3-accent) 70%, transparent); }
-#panel-settings .o55-insp-icon svg { width: 18px; height: 18px; }
+/* the head tile: the PM glyph in a quiet tile (FO-127, Jared #1 "that logo looks terrible", his pick icon B; the
+   accent fill, ring and glow are gone; the glyph is kit.d/30-inspector.js o55HeadGlyph) */
+#panel-settings .o55-insp-icon { width: 36px; height: 36px; flex: 0 0 auto; display: grid; place-items: center; border-radius: 10px; background: color-mix(in srgb, var(--k3-text-1) 5%, var(--k3-surface-1)); color: var(--k3-accent-ink, var(--k3-accent)); box-shadow: inset 0 0 0 1px var(--k3-line); }
+#panel-settings .o55-insp-icon svg { width: 20px; height: 20px; }
+/* the base .icon span is a fixed 16×16 box (pm4-settings-css.css), so every svg this panel sizes itself (the 18px
+   header glyph, the 12px tick, the small inline glyphs) sat at the top-left of a box that was not its size, its
+   centre off by half the difference — the tick read 2 px up and left of its mark, the header icon 1 px down and
+   right of the tile; each span here shrink-wraps its svg instead, so the centring boxes centre the glyph (FO-122) */
+#panel-settings .o55-insp-icon .icon, #panel-settings .o55-insp-mark .icon, #panel-settings .o55-insp-isdef .icon,
+#panel-settings .o55-insp-now-foot .o55-textbtn .icon, #panel-settings .o55-insp-tech > summary .icon,
+#panel-settings .o55-insp-techbody .o55-textbtn .icon { width: auto; height: auto; }
 #panel-settings .o55-insp-headcopy { min-width: 0; flex: 1 1 auto; }
 /* the crumbs sit on the head's accent tint, a step lighter than the panel (the muted ink read 3.4 to 4.4 there, the
    "›" faded to .6 read 2.2 to 2.7): words and separator take the secondary ink */
@@ -64,3 +72,75 @@
 #panel-settings .o55-insp-techbody code { font-family: var(--mono-font, ui-monospace, monospace); font-size: 11px; color: var(--k3-text-2); overflow-wrap: anywhere; }
 #panel-settings .o55-insp-techbody .o55-textbtn { align-self: flex-start; display: inline-flex; gap: 5px; align-items: center; }
 #panel-settings .o55-insp-techbody .o55-textbtn svg { width: 12px; height: 12px; }
+
+/* FO-127 (Jared #2; his picks, option b and all 11 long lists): a model setting's or long list's Your choices is the
+   chat's picker unfolding in the panel
+   (kit.d/30-inspector.js o55PickerHtml). The trigger is the chat's shared-picker-button (maker mark, name, small line,
+   chevron); the rows are its model menu's (28 px maker tile, name, one muted line, the tick); the maker tile is the
+   chat's .provider-mark gradient on this look's accents. */
+#panel-settings .o55-pick-count { font-weight: 600; color: var(--k3-text-3); }
+#panel-settings .o55-pick-trigger { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 10px; width: 100%; min-height: 48px; padding: 8px 12px; border: 1px solid var(--k3-line-strong, var(--k3-line)); border-radius: 10px; background: var(--k3-bg-1); color: var(--k3-text-1); font: inherit; text-align: left; cursor: pointer;
+  transition: border-color 160ms var(--k3-ease-out), background-color 160ms var(--k3-ease-out), box-shadow 160ms var(--k3-ease-out); }
+#panel-settings .o55-pick-trigger.is-model { grid-template-columns: 28px minmax(0, 1fr) auto; padding-left: 9px; }
+#panel-settings .o55-pick-trigger.has-dot { grid-template-columns: 16px minmax(0, 1fr) auto; }
+#panel-settings .o55-pick-trigger .o55-insp-dot, .o55-pick-item .o55-insp-dot { margin-top: 0; }
+#panel-settings .o55-pick-trigger:hover { border-color: color-mix(in srgb, var(--k3-accent) 45%, var(--k3-line)); background: var(--k3-bg-2); }
+#panel-settings .o55-pick-trigger[aria-expanded="true"] { border-color: var(--k3-accent); box-shadow: 0 0 0 3px var(--k3-accent-soft); }
+#panel-settings .o55-pick-trigger:focus-visible { outline: 2px solid var(--k3-accent); outline-offset: 2px; }
+#panel-settings .o55-pick-copy, .o55-pick-item .o55-pick-copy { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+#panel-settings .o55-pick-trigger .o55-pick-copy strong { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px; font-size: 13.5px; font-weight: 700; line-height: 1.3; color: var(--k3-text-1); }
+#panel-settings .o55-pick-trigger .o55-pick-copy small { font-size: 11.5px; color: var(--k3-text-3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+#panel-settings .o55-pick-copy em, .o55-pick-item .o55-pick-copy em { font-style: normal; font-size: 11px; font-weight: 600; color: var(--k3-text-3, var(--text-muted)); }
+#panel-settings .o55-pick-copy em::before, .o55-pick-item .o55-pick-copy em::before { content: '·'; margin-right: 6px; }
+#panel-settings .o55-pick-chev { display: grid; place-items: center; color: var(--k3-text-3); transition: transform 200ms var(--k3-ease-out); }
+#panel-settings .o55-pick-chev .icon { width: auto; height: auto; }
+#panel-settings .o55-pick-chev svg { width: 14px; height: 14px; }
+#panel-settings .o55-pick-trigger[aria-expanded="true"] .o55-pick-chev { transform: rotate(180deg); }
+.o55-pick-mark { width: 28px; height: 28px; flex: 0 0 auto; display: grid; place-items: center; border-radius: 8px; color: #fff;
+  background: linear-gradient(135deg, color-mix(in srgb, var(--accent-secondary, var(--accent-primary)) 80%, var(--surface, #12152a)), color-mix(in srgb, var(--accent-primary) 70%, var(--surface, #12152a))); }
+.o55-pick-mark svg { width: 15px; height: 15px; display: block; }
+.o55-pick-mark .o55-pick-letter { font-size: 12px; font-weight: 800; }
+#panel-settings .o55-pick-trigger .o55-pick-mark svg { width: 16px; height: 16px; }
+
+/* rows: the chat's .model-row */
+.pm51-popout-item.o55-pick-item { display: grid; grid-template-columns: minmax(0, 1fr) 16px; align-items: center; gap: 8px; min-height: 36px; padding: 6px 8px; border-radius: 9px; font-weight: 600; }
+.pm51-popout-item.o55-pick-item.is-model { grid-template-columns: 28px minmax(0, 1fr) 16px; min-height: 44px; padding: 5px 6px; }
+.pm51-popout-item.o55-pick-item.has-dot { grid-template-columns: 16px minmax(0, 1fr) 16px; }
+.pm51-popout-item.o55-pick-item[hidden], .o55-pick-group[hidden] { display: none; }
+.o55-pick-item .o55-pick-copy strong { display: flex; flex-wrap: wrap; align-items: baseline; gap: 5px; font-size: 12px; font-weight: 650; line-height: 1.3; color: inherit; }
+.o55-pick-item .o55-pick-copy small { font-size: 10.5px; font-weight: 500; color: var(--text-muted, #8f8ab0); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.o55-pick-item.has-why .o55-pick-copy small { white-space: normal; }
+.o55-pick-tick { display: grid; place-items: center; color: var(--accent-primary); }
+.o55-pick-tick .icon { width: auto; height: auto; }
+.o55-pick-tick svg { width: 13px; height: 13px; stroke-width: 2.4; }
+
+.o55-pick-group.pm51-popout-group:not(:first-child) { border-top: 0; margin-top: 2px; }
+.o55-pick-mark .icon { width: auto; height: auto; display: grid; place-items: center; }
+
+/* the unfolded list under the trigger, makers as a strip of marks (the chat's rail, laid flat) */
+#panel-settings .o55-pick-inline { display: flex; flex-direction: column; gap: 8px; margin-top: 8px; padding: 8px; border: 1px solid var(--k3-line); border-radius: 10px; background: var(--k3-bg-1); }
+#panel-settings .o55-pick-inline.is-entering { animation: o55-pick-unfold 220ms var(--k3-ease-out) both; }
+@keyframes o55-pick-unfold { from { opacity: 0; transform: translateY(-4px); clip-path: inset(0 0 100% 0 round 10px); } to { opacity: 1; transform: none; clip-path: inset(0 0 0 0 round 10px); } }
+html[data-motion="reduced"] #panel-settings .o55-pick-inline.is-entering { animation: none; }
+@media (prefers-reduced-motion: reduce) { #panel-settings .o55-pick-inline.is-entering { animation: none; } }
+#panel-settings .o55-pick-chips { display: flex; flex-wrap: wrap; gap: 4px; }
+#panel-settings .o55-pick-chip { position: relative; display: inline-grid; place-items: center; width: 32px; height: 30px; padding: 0; border: 1px solid transparent; border-radius: 8px; background: none; color: var(--k3-text-3); font: inherit; cursor: pointer; }
+#panel-settings .o55-pick-chip .icon { width: auto; height: auto; }
+#panel-settings .o55-pick-chip svg { width: 14px; height: 14px; }
+#panel-settings .o55-pick-chip:hover { background: var(--k3-bg-2); color: var(--k3-text-1); }
+#panel-settings .o55-pick-chip.is-on { border-color: color-mix(in srgb, var(--k3-accent) 50%, transparent); background: var(--k3-accent-soft); color: var(--k3-text-1); }
+#panel-settings .o55-pick-chip:focus-visible { outline: 2px solid var(--k3-accent); outline-offset: 1px; }
+#panel-settings .o55-pick-inline .o55-pick-search { position: static; margin: 0; }
+#panel-settings .o55-pick-inline .o55-pick-list { position: relative; max-height: min(320px, 46vh); overflow-y: auto; margin: 0 -4px; padding: 0 4px; scrollbar-width: thin; }
+#panel-settings .o55-pick-inline .o55-pick-group:first-child { padding-top: 2px; }
+
+/* the side panels' head tile (PM51.panel's hero, styles.css): the same quiet tile and PM glyph as the Details panel's;
+   a tone keeps its colour for the glyph and a faint ring */
+#panel-settings .pm51-hero-icon { width: 40px; height: 40px; border-radius: 11px; background: color-mix(in srgb, var(--k3-text-1) 5%, var(--k3-surface-1)); box-shadow: inset 0 0 0 1px var(--k3-line); color: var(--k3-accent-ink, var(--k3-accent)); }
+#panel-settings .pm51-hero-icon svg { width: 22px; height: 22px; }
+#panel-settings :is(.o55-insp-icon, .pm51-hero-icon) .icon { width: auto; height: auto; display: grid; place-items: center; }
+#panel-settings .pm51-hero.tone-ready .pm51-hero-icon { color: var(--k3-green); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--k3-green) 35%, transparent); }
+#panel-settings .pm51-hero.tone-attention .pm51-hero-icon { color: var(--k3-amber); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--k3-amber) 35%, transparent); }
+#panel-settings .pm51-hero.tone-blocked .pm51-hero-icon { color: var(--k3-red); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--k3-red) 35%, transparent); }
+/* a chosen or keyed row (NieR inverts it to ink): its tag and small line follow the row's own ink */
+#panel-settings .o55-pick-item:is(.is-active, [aria-selected="true"]) .o55-pick-copy :is(em, small) { color: inherit; opacity: .8; }
