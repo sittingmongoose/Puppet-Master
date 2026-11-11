@@ -149,7 +149,7 @@ Memory stayed at 7–11 GB available throughout; no heavy command was paused.
 
 ### Family grades (carried, not re-graded)
 
-The last review's family grades are carried unchanged per the sweep instruction: Astra `LANDING_READY_WITH_NOTES`, 6/6 families PASS as prepared, each 11 PASS + membership ABSENT (66 PASS / 6 ABSENT). This lane's own review of its timestamp fields is interim only until the shared date-time gate passes. No lane is READY on timestamp fields before that gate; native execution remains NOT_RUN and membership remains ABSENT until separate admission.
+The last review's family grades are carried unchanged per the sweep instruction: Astra `LANDING_READY_WITH_NOTES`, 6/6 families PASS as prepared, each 11 PASS + membership ABSENT (66 PASS / 6 ABSENT). This lane's own review of its timestamp fields is interim only until the shared date-time gate passes. That interim sentence is superseded by "Sweep part 2B" below: the shared `date_time` predicate now covers the fields named there, so the timestamp review is no longer interim for those fields. `datetime_validator` and the inventory gate run at batch-2 integration. No lane is READY on timestamp fields before that gate; native execution remains NOT_RUN and membership remains ABSENT until separate admission.
 
 ## For an Opus or Sol worker
 
@@ -172,7 +172,7 @@ Number-handling, date-time, guard-table and proof-machinery items, left for part
 
 **Fix commit:** `96418dcb51`. **Start:** text-pass head `0a8a2b4298`. **Rebase:** none; the text pass did not abort its rebase, so this round stayed on base `451738fc0b`. `Plans/` and `scripts/` are unchanged from `0a8a2b4298`.
 
-This lane's own review of its timestamp fields is interim only until the shared date-time gate passes.
+This lane's own review of its timestamp fields is interim only until the shared date-time gate passes. Superseded by "Sweep part 2B" below for every field that section's table names.
 
 | # | Item | Result | Commit |
 |---|---|---|---|
@@ -326,7 +326,7 @@ Each refusal of `scripts/pm_coordination_events.py` and `scripts/pm_coordination
 
 ## Sweep part 2B numbers: findings and responses
 
-Number merge: `59a4250e2e` merges `58c2816ff33365384d4039553f5efdb5370930e6`. Its number files match the gated scope `a16f67c1ef21796758f4209ff12c0f4d12b86ce9`. 163 generated conflicts, all under `Plans/_shards/**` and `Plans/.plan_index/**`, were regenerated. No other conflict. NUMRULE files are unedited. Date-time modules are merged and **not adopted**: no `pm_event_datetime.datetime_validator`, `date_time`, or inventory gate is called.
+Number merge: `59a4250e2e` merges `58c2816ff33365384d4039553f5efdb5370930e6`. Its number files match the gated scope `a16f67c1ef21796758f4209ff12c0f4d12b86ce9`. 163 generated conflicts, all under `Plans/_shards/**` and `Plans/.plan_index/**`, were regenerated. No other conflict. NUMRULE files are unedited. Date-time modules are merged and **not adopted** in this number pass: no `pm_event_datetime.datetime_validator`, `date_time`, or inventory gate is called. Sweep part 2B below adopts `date_time`. `datetime_validator` and the inventory gate stay uncalled in this tree; they run at batch-2 integration.
 
 - **Integer slots.** `scripts/pm_coordination_numbers.py:94` (`integer_slot_code`) calls `current_integer` at every integer slot of the payload definition, including `const` integers, with that slot's own minimum and maximum. `1.0` is refused after JSON Schema accepts it. Application-edition bounds must match the Project copy (`application_integer_bounds_match`).
 - **SP-320 preimage.** `event_id_preimage` (`scripts/pm_coordination_events.py:255`) still emits the string array. Epoch and revision are exact integers before decimalization (`decimal_integer`). The heartbeat comparison stays 300000 (`scripts/pm_coordination_wave2.py:39`); it is not a maximum.
@@ -342,10 +342,136 @@ Shards regenerated only for `Plans/storage-plan.md` and `Plans/orchestrator-suba
 
 ## Part 2B items
 
-Timestamp items only. The timestamp review in this pass is **interim only**.
+These three items are the date-time list left at the end of the number pass. Items 1 and 2 are closed in "Sweep part 2B" below. Item 3 stays open for batch integration. The timestamp review is no longer interim for the fields that section names.
 
-1. **CV-1101 date-time adoption — OPEN.** `scripts/pm_coordination_events.py:313` (`valid_utc`) and the 15 `"format": "date-time"` fields in `Plans/coordination_event_payloads.schema.json` (`:181`, `:253`, `:337`, `:424`, `:486`, `:569`, `:705`, `:764`, `:916`, `:1017`, `:1135`, `:1240`, `:1318`, `:1411`, `:1494`). Adopt `pm_event_datetime.datetime_validator` / `date_time` and the inventory gate when that adoption is scheduled. Not adopted here.
-2. **SP-1101 timestamp profile on the frozen recipe — OPEN.** Number-recipe selection is frozen as `coordination-sp320-string-array-v1`. Timestamp profile selection joins it only with item 1.
-3. **DO's copy of `pm_coordination_events.py` — OPEN for batch integration.** NUMRULE says DO carries another modified copy. These edits were made once, on this lane. The other consumer is not in this worktree.
+1. **CV-1101 date-time adoption.** Was open at `scripts/pm_coordination_events.py:313` (`valid_utc`) and the 15 `"format": "date-time"` fields in `Plans/coordination_event_payloads.schema.json` (`:181`, `:253`, `:337`, `:424`, `:486`, `:569`, `:705`, `:764`, `:916`, `:1017`, `:1135`, `:1240`, `:1318`, `:1411`, `:1494`). Closed by `date_time` in the next section. `datetime_validator` and the inventory gate run at batch-2 integration.
+2. **SP-1101 timestamp profile on the frozen recipe.** Number-recipe selection stays `coordination-sp320-string-array-v1`. The sealed `coordination_utc_z` profile joins that verifier in the next section.
+3. **DO's copy of `pm_coordination_events.py` — still open for batch integration.** NUMRULE says DO carries another modified copy. These edits were made once, on this lane. The other consumer is not in this worktree.
 
-No new product question. No new PlanUnit or family id. Ids remain **SP-540..545** and **OSI-650**. No pm-mail, subagent, registry admission, Decision Log edit, governance edit, browser, landing, or main push.
+## Sweep part 2B: findings and responses
+
+Branch `plans/ea-w2-coordination-20261104`. Part 2A head `2ec9d21d70`. Implementation `9a779cbabc`. The report commit's SHA is in the external `HEAD.txt`. No rebase. No `Plans/*.md` edit, so shards and the index were not regenerated.
+
+**6/6 families stay 11 PASS + membership ABSENT (66 PASS / 6 ABSENT), before and after.** Readiness: prepared for the batch-2 review. The timestamp review is no longer interim for the fields in the table below. `datetime_validator` and the inventory gate run at batch-2 integration. Membership stays ABSENT. Native execution stays NOT_RUN. This is not READY.
+
+### The merge
+
+Skipped. `58c2816ff33365384d4039553f5efdb5370930e6` is already an ancestor of `2ec9d21d70` (`git merge-base --is-ancestor` exits 0). The part 2A number merge is `59a4250e2e` ("merge the gated NUMRULE number scope (58c2816ff3) for sweep part 2B numbers"). There is no new part 2B merge commit. Neither addendum resolution was needed. `git diff 58c2816ff3 HEAD --` the NUMRULE paths (`scripts/pm_event_numbers.py`, `scripts/pm_event_numbers_corpus.py`, `scripts/pm_event_datetime.py`, `scripts/pm_event_datetime_inventory.py`, `Plans/event_datetime_inventory.json`, `scripts/pm_event_datetime_exclusions.json`, `Plans/event_number_recipe_corpus.json`) is empty.
+
+### Item 1: CV-1101 date-time
+
+`valid_utc` (`scripts/pm_coordination_events.py:319`) is now `coordination_timestamp` (`scripts/pm_coordination_numbers.py:196`), which is `pm_event_datetime.date_time` with the sealed profile `coordination_utc_z` (`SEALED_TIMESTAMP_PROFILE`, `scripts/pm_coordination_numbers.py:34`). A `Refusal` is false. The spelling is not rewritten. A `str` subclass refuses (`valid_utc_datetime`). The owner pattern on each of the 15 nodes is unchanged, so a lowercase `t`, a lowercase `z`, an offset, and more than nine fraction digits still refuse as `schema` before this predicate. jsonschema `format` is not installed.
+
+The same predicate covers projection copies (`projection_timestamp_bad`, `scripts/pm_coordination_events.py:662`; row `projection_timestamp`). Envelope `occurred_at_utc` uses `event_record` (`envelope_occurred_at`, `:1382`). Envelope `observed_at_utc` and `persisted_at_utc` use `storage_utc_z` (`envelope_storage_time`, `:1384`). Payload `observed_at_utc` is the producer observation time (CV-353 rule 8), so it stays `coordination_utc_z`, not the Storage profile.
+
+**Verify:** `python3 -B scripts/pm_coordination_events.py` exits 0, `"status": "pass"`, `failures: []`. The probe is `timestamp_profile_failures` (`:1610`), folded into `validate` at `:1774`.
+
+| Field | Where | Shared check and profile |
+|---|---|---|
+| `agent_registered.started_at_utc` and `agent_registeredApplicationV1.started_at_utc` | payload schema `:181`, `:1318` | `date_time`, **coordination_utc_z**, after the owner pattern. Code `valid_utc_datetime` (`:338`) for the Project event. The ApplicationV1 node is the same string check in the census; it is not an event type. |
+| `agent_status_updated.observed_at_utc` and its ApplicationV1 copy | `:253`, `:1411` | `date_time`, **coordination_utc_z** |
+| `agent_operation_updated.observed_at_utc` and its ApplicationV1 copy | `:337`, `:1240` | `date_time`, **coordination_utc_z** |
+| `agent_file_ownership_updated.observed_at_utc` and its ApplicationV1 copy | `:424`, `:1135` | `date_time`, **coordination_utc_z** |
+| `agent_unregistered.finished_at_utc` and its ApplicationV1 copy | `:486`, `:1494` | `date_time`, **coordination_utc_z** |
+| `agent_crashed.detected_at_utc` and its ApplicationV1 copy | `:569`, `:1017` | `date_time`, **coordination_utc_z** |
+| `agent_aborted.aborted_at_utc` and its ApplicationV1 copy | `:705`, `:916` | `date_time`, **coordination_utc_z** |
+| `debug_mirror_exported.exported_at_utc` | `:764` | `date_time`, **coordination_utc_z**. No ApplicationV1 copy. |
+| Projection timestamps (`started_at_utc`, `observed_at_utc`, `finished_at_utc`, `detected_at_utc`, `aborted_at_utc`, `exported_at_utc`, `first_observed_at_utc`, `last_observed_at_utc`, `updated_at_utc`, `withdrawn_at_utc`, `published_at_utc`), including copies under the projection `timestamp` / `timestampApplicationV1` pattern (`Plans/coordination_projection_contracts.schema.json:119`) | `PROJECTION_TIME_FIELDS`, `:653` | `date_time`, **coordination_utc_z**. Null `withdrawn_at_utc` is the absence, not a timestamp. Row `projection_timestamp`. |
+| EventRecord `occurred_at_utc` | envelope `:1382` | `date_time`, **event_record**. The join to the payload family timestamp is unchanged, so a live coordination event's `occurred_at_utc` stays uppercase Z. |
+| EventRecord `observed_at_utc`, `persisted_at_utc` | envelope `:1384` | `date_time`, **storage_utc_z** |
+
+**Leaks, each in `timestamp_profile_failures`:** `2026-09-25T24:00:00Z` and a trailing LF refuse as `valid_utc_datetime` on every Project payload family timestamp, as `projection_timestamp` on a file projection, and as `envelope_occurred_at` or `envelope_storage_time` on the envelope. February 30, a non-leap second 60, and minute 60 refuse the same way. The owner pattern still admits those strings; `date_time` is what refuses them.
+
+**Widening, stated plainly.** The previous `valid_utc` (regex plus `datetime.datetime`) refused every leap second and year 0000, and it accepted a `str` subclass. `date_time` accepts `2016-12-31T23:59:60Z` and `0000-01-01T00:00:00Z`, and it refuses a `str` subclass. Hour 24 and a trailing LF were already refused and stay refused. Lowercase `t` and a 13-digit fraction stay `schema` refusals even though `coordination_utc_z` would accept them.
+
+**Fixture expectations that changed:** none. `registered_offset_timestamp` stays `schema`. `registered_invalid_calendar_date` stays `valid_utc_datetime`. No `expected_rejection` value was edited.
+
+### Item 2: SP-1101 profile on the frozen recipe
+
+The recipe id stays `coordination-sp320-string-array-v1`. `RecipeTuple` has no date-time field. The frozen verifier (`_retained_dispatcher`, `scripts/pm_coordination_numbers.py:239`) requires `item.recipe is recipe`, `SEALED_TIMESTAMP_PROFILE == COORDINATION_UTC_Z`, and `timestamps_match_sealed_profile` (`:206`). A JSON field named `date_time_profile` is not a selector. `retained_override_refused` (`:272`) expects `caller_recipe_override`. The digest-only retry body is `b"{}"` (`retained_retry_matches`, `:297`), so an exact digest retry still resolves and a forged recipe id does not. `RetainedDispatcher` itself is the NUMRULE type and was not edited.
+
+**Verify:** the same checker command. Probes `retained-profile`, `retained-retry`, and `retained-forged` are inside `timestamp_profile_failures`.
+
+### Item 3: DO's copy
+
+Still open for batch integration. This lane edited `scripts/pm_coordination_events.py` once. DO's other copy is not in this worktree and was not edited.
+
+### Inventory gate and the combined self-test
+
+`datetime_validator` is not called in this tree. `python3 scripts/pm_event_datetime.py --self-test` is not credited: it has no entry point.
+
+`python3 -B scripts/pm_event_datetime_inventory.py` on this tree exits **1**. Nodes 233, unclassified nodes 0, **238 failure rows**, and **0** `inventory_node_changed`. None name a coordination file. The inventory and the exclusions file were not edited.
+
+| Rows | Error | Where |
+|---:|---|---|
+| 133 | `unclassified_mentioning_container` | `Plans/.plan_migration` |
+| 14 | `unclassified_mentioning_container` | `Plans/.plan_index` |
+| 41 | `stale_scan_exclusion` | `Plans/_shards` |
+| 38 | `unreadable_mentioning_container` | `Plans/_shards` |
+| 2 | `stale_scan_exclusion` | `Plans/.plan_index` |
+| 2 | `stale_scan_exclusion` | `Plans/Decision_Log.md` |
+| 2 | `unreadable_mentioning_container` | `Plans/Decision_Log.md` |
+| 2 | `stale_scan_exclusion` | `Plans/usage-feature.md` |
+| 2 | `unreadable_mentioning_container` | `Plans/usage-feature.md` |
+| 1 | `stale_scan_exclusion` | `Plans/Contracts_V0.md` |
+| 1 | `unreadable_mentioning_container` | `Plans/Contracts_V0.md` |
+
+`python3 scripts/pm_event_numbers.py --self-test` (scope all), run on this committed tree after `9a779cbabc`, exits **1** before any case: `case_execution: NOT_RUN_ADMISSION_REFUSED`, its only failing check `datetime_inventory_complete_and_classified`. Its `datetime_inventory.failures` are the same 238 rows as the inventory script above (0 coordination paths, 0 `inventory_node_changed`). `datetime_validator` and the inventory gate run at batch-2 integration.
+
+`python3 scripts/pm_event_numbers.py --self-test --scope numbers` exits **0**, `"status": "pass"`, 580/580 (276 positives, 304 negatives), failures `[]`. Credited exactly: number recipes only. DCO is not one of the six lanes that still owed numbers; those were adopted at `a6ad77775e`.
+
+### Guard tables
+
+The gated tool `scripts/pm_guard_isolation.py` at `004bdedd63` was not edited. `python3 -B scripts/pm_coordination_guard_run.py` exits **0**. The `MISSING` list is empty. 14 tables **PASS**, **119/119 rows proved**. Failure kinds empty on every table.
+
+| Table | Part 2A | Part 2B |
+|---|---:|---:|
+| payload_schema | 17/17 | 17/17 |
+| payload_instance | 7/7 | 7/7 |
+| projection_schema | 13/13 | 13/13 |
+| projection_value | 11/11 | **12/12** |
+| ledger | 9/9 | 9/9 |
+| registry | 4/4 | 4/4 |
+| preflight | 1/1 | 1/1 |
+| svr | 3/3 | 3/3 |
+| envelope | 10/10 | **12/12** |
+| fixtures | 22/22 | 22/22 |
+| validation | 5/5 | 5/5 |
+| ats | 2/2 | 2/2 |
+| transition | 8/8 | 8/8 |
+| wave2 | 4/4 | 4/4 |
+| **Total** | **116/116** | **119/119** |
+
+New rows, each with one witness: `projection_timestamp` (hour 24 on a file projection, `scripts/pm_coordination_guard_run.py:207`), `envelope_occurred_at` (hour 24 on `occurred_at_utc`, `:274`), `envelope_storage_time` (`+00:00` on `observed_at_utc`, `:275`). `payload_instance` was re-proved because `valid_utc` changed; its `valid_utc_datetime` witness is still February 30 (`:145`) and still returns only that code. The by-construction rows listed in the part 2A section stay in their own tables.
+
+### Grades
+
+| Cell | Before | After |
+|---|---|---|
+| All 11 graded cells, 6 families | 66 PASS | 66 PASS |
+| `membership_version`, 6 families | 6 ABSENT | 6 ABSENT |
+
+Timestamps were an interim caveat, not a PARTIAL cell. They are no longer a caveat for the fields in the table. No cell moves. Self-grade: 91 pins, 0 mismatches, 0 hash mismatches, against the worktree. `assessed_tree` stays `a6ad77775e974a4e2ac5c55cdd40850dc6fd164a`. Owner documents were not edited in this pass, so the pins were not rewritten.
+
+### Readiness
+
+Prepared for the batch-2 review. Not READY.
+
+- Done in this tree: the 15 payload date-time fields, their projection copies, and the three envelope times go through `date_time` with the profiles above. The frozen SP-320 verifier seals `coordination_utc_z`. Guard tables 119/119. Checker and wave2 exit 0.
+- At batch-2: refresh the inventory for the 238 rows above, then run `datetime_validator` and the inventory gate, and the combined self-test must pass. Item 3 (DO's other copy of this checker) is integrated there. Index fork drift stays with the integration rebase.
+- Unchanged: membership ABSENT, native execution NOT_RUN. Ids remain **SP-540..545** and **OSI-650**. No new PlanUnit, Decision Log entry, registry admission, or governance edit.
+
+**Stopped for Jared:** none.
+
+### Commands
+
+| Command | Exit | Result |
+|---|---:|---|
+| `python3 -B scripts/pm_coordination_events.py` (after `9a779cbabc`) | 0 | `"status": "pass"`, `failures: []` |
+| `python3 -B scripts/pm_coordination_wave2.py` | 0 | `"status": "pass"`, `failures: []` |
+| `python3 -B scripts/pm_coordination_guard_run.py` | 0 | 14 PASS, 119/119, MISSING empty |
+| `python3 scripts/pm_event_numbers.py --self-test --scope numbers` | 0 | `"status": "pass"`, 580/580 |
+| `python3 scripts/pm_event_numbers.py --self-test` (after `9a779cbabc`) | 1 | `NOT_RUN_ADMISSION_REFUSED`; only `datetime_inventory_complete_and_classified`; 238 rows, same as the inventory script |
+| `python3 -B scripts/pm_event_datetime_inventory.py` | 1 | 238 rows, table above; 0 `inventory_node_changed` |
+| `python3 scripts/pm_event_datetime.py --self-test` | — | not run; no entry point; not credited |
+
