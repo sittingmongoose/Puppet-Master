@@ -851,19 +851,35 @@ def recipe_tuple(row, edition):
         resource_manifest_sha256=frozen_resource_manifest(row))
 
 
-def original_binding(original):
-    """SP-1101 binding of one original (Storage, scope, Project, family, identity, value commitment), or None.
+# SP-1101 binds an original to its Server and original owner operation as well,
+# and no stored event, result or custody byte carries either. The static model
+# has one Server and no native owner operation id: a request names these two
+# constants, while the sealed source adapter reports the Server and owner
+# operation that hold its authenticated original (history_source_for).
+STATIC_SERVER_ID, STATIC_OWNER_OPERATION_ID = 'dr-static-server', 'dr-static-owner-operation'
+# Single-defect SP-1101 binding faults: the adapter reports another Server or
+# another original owner operation for an original whose bytes equal the
+# requested original, so only the binding comparison can refuse it.
+FOREIGN_PLACEMENTS = (('foreign_server', 'authenticated_server_id', 'dr-other-server'),
+                      ('foreign_owner_operation', 'authenticated_owner_operation_id', 'dr-other-owner-operation'))
 
-    The static model has one Server and no native owner operation id, so both
-    fields are fixed constants on the request and the authenticated side alike.
+
+def original_binding(original, server_id, owner_operation_id):
+    """SP-1101 binding of one original (Storage, scope, Server, Project, family, identity,
+    owner operation, value commitment), or None.
+
+    The requested side passes the request's Server and owner operation; the
+    authenticated side passes the adapter's. Every other field is read from the
+    original itself. An absent or empty fact makes no binding (None), so the
+    dispatcher refuses it as original_binding.
     """
     event, custody = at(original, 'event'), at(original, 'custody')
     try:
         return OriginalBinding(
             storage_instance_id=at(custody, 'storage_instance_id'), scope_kind=at(event, 'scope_kind'),
-            server_id='dr-static-server', project_id=at(event, 'project_id'), event_type=at(event, 'event_type'),
+            server_id=server_id, project_id=at(event, 'project_id'), event_type=at(event, 'event_type'),
             event_id=at(event, 'event_id'), idempotency_key=at(event, 'idempotency_key'),
-            owner_operation_id='dr-static-owner-operation',
+            owner_operation_id=owner_operation_id,
             source_commitment=at(custody, 'original_event_value_commitment', 'sha256'))
     except Refusal:
         return None
@@ -873,8 +889,9 @@ class SourceOwner:
     """Static original owner: its authenticated read is the frozen source adapter.
 
     The binding and the write-time recipe come from the adapter's authenticated
-    original and its recorded edition, never from the request, the event, the
-    supplied result or the supplied custody.
+    original, the Server and owner operation it reports for that original, and
+    its recorded edition, never from the request, the event, the supplied
+    result or the supplied custody.
     """
     def __init__(self, row, source):
         self.row, self.source = row, source
@@ -883,7 +900,9 @@ class SourceOwner:
         original = at(self.source, 'authenticated_original')
         edition = at(self.source, 'recorded_decoder')
         recipe = recipe_tuple(self.row, edition) if type(edition) is str and edition else None
-        return OriginalCustody(binding=original_binding(original), recipe=recipe, record_bytes=value_bytes(original),
+        binding = original_binding(original, at(self.source, 'authenticated_server_id'),
+                                   at(self.source, 'authenticated_owner_operation_id'))
+        return OriginalCustody(binding=binding, recipe=recipe, record_bytes=value_bytes(original),
                                result_bytes=value_bytes(at(original, 'result')),
                                receipt_bytes=value_bytes(at(original, 'result', 'first_append_receipt')))
 
@@ -915,7 +934,8 @@ def dispatch_original(row, requested, source, packs, editions, recipe_override=N
     recipes = {recipe_tuple(row, edition): frozen_verifier(row, packs, edition) for edition in editions}
     dispatcher = RetainedDispatcher(SourceOwner(row, source), recipes)
     try:
-        return dispatcher.resolve('dr-original', original_binding(requested), disclose=lambda binding: True,
+        return dispatcher.resolve('dr-original', original_binding(requested, STATIC_SERVER_ID, STATIC_OWNER_OPERATION_ID),
+                                  disclose=lambda binding: True,
                                   recipe_override=recipe_override), None
     except Refusal as refusal:
         return None, refusal.reason
@@ -1397,6 +1417,9 @@ def standing_oracles(check, row, full, first, fixtures, references):
     original_bytes = value_bytes(first)
     check(event,'S10_original_custody_full_resolution',resolve_history(row,first,historical_source,{})
           == 'metadata_and_authorized_refs' and value_bytes(first) == original_bytes)
+    for name, fact, value in FOREIGN_PLACEMENTS:
+        check(event, 'S10_original_custody_' + name + '_refused', resolve_history(
+              row, first, dict(historical_source, **{fact: value}), {}) == 'unavailable' and value_bytes(first) == original_bytes)
 
     for case in fixtures['historical_originals']['cases'] + fixtures['historical_numeric_originals']['cases']:
         if case['event_type'] != event:
@@ -1423,6 +1446,9 @@ def standing_oracles(check, row, full, first, fixtures, references):
         check(event, label + '_caller_recipe_refused', resolve_history(row, original, source, packs, recipe_override=HISTORICAL_V1) == 'unavailable')
         foreign = copy.deepcopy(source); foreign['authenticated_original']['event']['event_id'] += '-foreign'
         check(event, label + '_foreign_binding_refused', resolve_history(row, original, foreign, packs) == 'unavailable')
+        for name, fact, value in FOREIGN_PLACEMENTS:
+            check(event, label + '_' + name + '_refused',
+                  resolve_history(row, original, dict(source, **{fact: value}), packs) == 'unavailable')
         deleted = dict(source, body_deleted=True)
         check(event, label + '_body_deleted', resolve_history(row,original,deleted,packs) == 'metadata_only')
         forged = copy.deepcopy(original); forged['custody']['original_event_value_commitment']['sha256'] = '0'*64
@@ -1629,9 +1655,12 @@ def history_source_for(row, payload, authentic_original):
     """Freeze the synthetic source adapter's independently authenticated read.
 
     Caller-supplied candidate/custody is compared to this original, never used
-    to authenticate itself. Real authentication/receipt issuance stays NOT_RUN.
+    to authenticate itself. The adapter also reports the Server and original
+    owner operation holding the original (SP-1101 binding facts no stored byte
+    carries). Real authentication/receipt issuance stays NOT_RUN.
     """
     return dict(source_for(row,payload),authenticated_original=copy.deepcopy(authentic_original),
+                authenticated_server_id=STATIC_SERVER_ID, authenticated_owner_operation_id=STATIC_OWNER_OPERATION_ID,
                 recorded_decoder=HISTORICAL_V1)
 
 

@@ -168,6 +168,11 @@ def cases(m, rows, fixtures):
             lambda n, r=row, o=original, s=foreign: n.resolve_history(r, o, s, {}))
         add('H05', family, 'caller_recipe_override', lambda n, r=row, o=original, s=source: n.resolve_history(r, o, s, {}),
             lambda n, r=row, o=original, s=source: n.resolve_history(r, o, s, {}, recipe_override=n.HISTORICAL_V1))
+        # H05b alone: the adapter holds an original with the requested bytes for
+        # another Server or another original owner operation (binding-only facts).
+        for name, fact, value in m.FOREIGN_PLACEMENTS:
+            add('H05', family, name, lambda n, r=row, o=original, s=source: n.resolve_history(r, o, s, {}),
+                lambda n, r=row, o=original, s=dict(source, **{fact: value}): n.resolve_history(r, o, s, {}))
 
         if family.endswith('.restore_point'):
             restore_cases(m, fixtures, row, full, add)
@@ -206,6 +211,13 @@ def restore_cases(m, fixtures, row, full, add):
     add('O14', family, 'foreign_predecessor_binding',
         lambda n, s=src: n.observation_admissible(successor, full, row, {}, s),
         lambda n, s=bad: n.observation_admissible(successor, full, row, {}, s))
+    # O14 alone: the predecessor's adapter reports another Server or owner operation.
+    for name, fact, value in m.FOREIGN_PLACEMENTS:
+        bad = copy.deepcopy(src)
+        bad['predecessor_source'][fact] = value
+        add('O14', family, 'predecessor_' + name,
+            lambda n, s=src: n.observation_admissible(successor, full, row, {}, s),
+            lambda n, s=bad: n.observation_admissible(successor, full, row, {}, s))
 
 
 def shared_cases(m, add):
