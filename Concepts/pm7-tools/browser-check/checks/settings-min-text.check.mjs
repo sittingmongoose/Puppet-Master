@@ -320,6 +320,26 @@ for (const surface of ['normal', 'sandbox']) {
 				});
 			}
 			await t.check(`the ${looks.length} looks were measured`, looks.length === 10 || !!t.args.looks, `${looks.length}`);
+			/* The rendered walk sees the pages a person can open. This reads the built page's own rules instead, so a
+			   10.5 px declaration is caught even in a panel, picker or look the walk never opened: Settings is every
+			   rule whose selector names it (or a settings-only piece: the NieR chips, the picker, the inspector, the
+			   setup recap, the row badges). */
+			const tenHalf = await f.evaluate(() => {
+				const near = (sel) => /panel-settings|pm-settings-root|pm51-|o55nc-|o55-pick-|o55-insp-|o55g-|\.o55-changed|\.o55-risk/.test(sel || '');
+				const bad = [];
+				const walk = (list) => {
+					for (const r of list) {
+						if (r.cssRules) walk(r.cssRules);
+						const sel = r.selectorText;
+						if (!sel || !r.style) continue;
+						const fs = r.style.fontSize || '', f = r.style.font || '';
+						if (/^10\.5px$/.test(fs) || /(^|[\s/])10\.5px([\s/]|$)/.test(f)) if (near(sel)) bad.push(`${sel.slice(0, 70)} { ${fs || f} }`);
+					}
+				};
+				for (const sheet of document.styleSheets) { let rules; try { rules = sheet.cssRules; } catch (e) { continue; } walk(rules); }
+				return bad;
+			});
+			await t.check(`no Settings rule in the built page declares 10.5 px (${tenHalf.length} found)`, tenHalf.length === 0, tenHalf.slice(0, 6).join(' | '));
 			/* FO-159 names the 10.5 px set. Settings also paints older 9–10.3 px micro-labels (the page index's
 			   links, the rail's chapter headings and descriptions, key caps, side-card notes and health): they are
 			   not 10.5 px text and the item changes nothing else, so the check records them here instead of
