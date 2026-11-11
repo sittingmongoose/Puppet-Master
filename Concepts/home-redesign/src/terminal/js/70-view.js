@@ -162,8 +162,8 @@
     this._bindScrollbar();
     this.sticky.addEventListener('click', function () { if (self.stickyCmd) self.revealCommand(self.stickyCmd); });
 
-    this.blinkTimer = setInterval(function () { self._blinkTick(); }, 530);
-    this.clockTimer = setInterval(function () { self._updateHeader(); }, 1000);
+    this.blinkTimer = 0; this.clockTimer = 0;
+    this._timers();
     /* browser zoom and a move to another monitor change the device pixel ratio, often with no resize from the host:
        lay out again (layout() measures the cells anew) and re-arm the query for the new ratio */
     (function watchDpr() {
@@ -716,6 +716,7 @@
     if (e.type === 'exec') { this.lastExit = null; this._updateLabel(); }
     this.marksDirty = true;
     this._updateHeader();
+    this._timers();
     this.schedule();
   };
 
@@ -1254,8 +1255,20 @@
   View.prototype._visibility = function (show) {
     var on = !!(this.hostVisible && this.onScreen), was = this.visible;
     this.visible = on;
+    this._timers();
     if (on !== was) { if (this.term.images) this.term.images.pause(!on); if (this.fx) this.fx.visible(on); }
     if (on && (on !== was || show)) { if (this._lookStale) this._applyLook(); this.layout(); this._groundSoon(); this.schedule(true); }
+  };
+  /* the cursor's blink and the header's 1 s clock run only while they have something to do: the blink while the
+     terminal is visible (it did nothing otherwise), the clock while it is visible or a command runs, so a command's
+     elapsed time is still current when a hidden terminal comes back. Every terminal kept both going behind other tabs
+     and pages: about 5.5 blink and 3 clock callbacks a second at rest on Home and Settings (lane A, 2026-11-10) */
+  View.prototype._timers = function () {
+    var self = this, blink = this.visible && !this._gone, clock = !this._gone && (this.visible || !!this._running());
+    if (blink && !this.blinkTimer) this.blinkTimer = setInterval(function () { self._blinkTick(); }, 530);
+    else if (!blink && this.blinkTimer) { clearInterval(this.blinkTimer); this.blinkTimer = 0; }
+    if (clock && !this.clockTimer) this.clockTimer = setInterval(function () { self._updateHeader(); }, 1000);
+    else if (!clock && this.clockTimer) { clearInterval(this.clockTimer); this.clockTimer = 0; }
   };
   View.prototype.onShow = function () { this.hostVisible = true; this._visibility(true); };
   View.prototype.onHide = function () { this.hostVisible = false; this._visibility(); if (this.pop && this.closeAppearance) this.closeAppearance(true); };
@@ -1293,7 +1306,7 @@
   View.prototype.dispose = function () {
     /* out of the appearance registry, so a closed or restarted terminal is neither kept alive nor configured again;
        an open popover goes with its document listener, without taking the focus */
-    this.hostVisible = false; this.visible = false;
+    this.hostVisible = false; this.visible = false; this._gone = true;
     if (this.closeAppearance) this.closeAppearance(true);
     if (T.Appearance && T.Appearance.forget) T.Appearance.forget(this);
     this.disposers.forEach(function (d) { try { d(); } catch (e) {} });

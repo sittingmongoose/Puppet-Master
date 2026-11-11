@@ -1166,13 +1166,15 @@
     doc.addEventListener('visibilitychange', () => { staged.forEach((rec) => { if (rec.bar && !rec.leaving) { if (doc.hidden) rec.bar.pause(); else if (!held) rec.bar.play(); } }); });
     window.addEventListener('resize', () => { if (open) { placePanel(); pushStage(); } if (staged.size) clampStage(); });
 
-    /* times and lifetimes */
+    /* times and lifetimes. A time that reads the same ("2m ago" for a minute) is not written again: the same text written
+       every second replaced the text node, re-laid out the title bar and drew a frame at rest (lane A, 2026-11-10) */
+    const text = (el, v) => { if (el && el.textContent !== v) el.textContent = v; };
     setInterval(() => {
       if (!items.length) return;
       const now = Date.now();
       items.filter((it) => it.expires && it.expires <= now).forEach((it) => dismiss(it.id));
-      if (frontEl && items.length) { const t = ordered()[0]; if (t) frontEl.querySelector('.pmn-front-when').textContent = ago(t.createdAt); }
-      if (open) rowEls.forEach((r, id) => { const it = items.find((x) => x.id === id); if (!it) return; r.querySelector('.pmn-item-when').textContent = ago(it.createdAt); if (it.expires) r.querySelector('.pmn-item-life').textContent = T('expires', { n: Math.max(0, Math.ceil((it.expires - now) / 1000)) }); });
+      if (frontEl && items.length) { const t = ordered()[0]; if (t) text(frontEl.querySelector('.pmn-front-when'), ago(t.createdAt)); }
+      if (open) rowEls.forEach((r, id) => { const it = items.find((x) => x.id === id); if (!it) return; text(r.querySelector('.pmn-item-when'), ago(it.createdAt)); if (it.expires) text(r.querySelector('.pmn-item-life'), T('expires', { n: Math.max(0, Math.ceil((it.expires - now) / 1000)) })); });
     }, 1000);
     /* a look change: the empty art and the stack's glyphs follow it */
     new MutationObserver(() => { if (open && !items.length) fillEmpty(); }).observe(html, { attributes: true, attributeFilter: ['data-theme', 'data-o55-nier'] });

@@ -1343,6 +1343,12 @@
        its idle-warm queue (PM_WARM, 11-motion-start.js) the drawing is a step on it after the quiet time, admitted and
        judged as every warm step is, instead of this screen's own idle wait */
     var WARM_SETTLE_MS = 3000, WARM_IDLE_MS = 45, WARM_LATEST_MS = 10000, warmJob = 0, warmStep = 0, warmWait = 0, warmSince = 0, offWarm = null;
+    /* between a short idle slot and the next try it waits on a timer, 400 ms doubling to 2 s as PM_WARM's own retry
+       does (11-motion-start.js): asking for the next idle callback from inside a short one ran it about 110 times a
+       second at 0.85 ms each, for up to 10 s after every look or size change, on a page drawing frames (lane A,
+       2026-11-10). warmPause is that timer, kept apart from warmJob so a cancel never hands a timer id to
+       cancelIdleCallback */
+    var warmPause = 0, warmBack = 0;
     /* changed: something it shows may have changed while nothing watched it (kept from a terminal that went), so it
        draws again before it shows */
     var changed = false;
@@ -1353,7 +1359,16 @@
       if (settling()) { warmSoon(); return; }
       if (deadline === 'queue') { warmDraw(); return; }
       if (deadline && typeof deadline.timeRemaining === 'function' && !deadline.didTimeout && deadline.timeRemaining() < WARM_IDLE_MS && T.util.now() - warmSince < WARM_LATEST_MS) {
-        warmJob = requestIdleCallback(warm, { timeout: Math.max(1000, WARM_LATEST_MS - (T.util.now() - warmSince)) });
+        warmBack = warmBack ? Math.min(2000, warmBack * 2) : 400;
+        /* the last wait ends at the backstop, and the callback after it draws whatever slot it gets. Never a zero wait: an
+           idle callback asked for from a timer can run again in the same short idle period, back to back (tried: 480 a
+           second in the last second before the backstop) */
+        var wait = Math.max(16, Math.min(warmBack, WARM_LATEST_MS - (T.util.now() - warmSince)));
+        warmPause = setTimeout(function () {
+          warmPause = 0;
+          if (!closed || disposed) return;
+          warmJob = requestIdleCallback(warm, { timeout: Math.max(1000, WARM_LATEST_MS - (T.util.now() - warmSince)) });
+        }, wait);
         return;
       }
       warmDraw();
@@ -1444,6 +1459,7 @@
     }
     function warmCancel() {
       clearTimeout(warmWait); warmWait = 0;
+      clearTimeout(warmPause); warmPause = 0;
       if (warmStep && window.PM_WARM) window.PM_WARM.cancel(warmStep);
       if (warmJob) { if (window.cancelIdleCallback) cancelIdleCallback(warmJob); clearTimeout(warmJob); }
       warmJob = warmStep = 0;
@@ -1453,7 +1469,7 @@
        profile, the queue's session stop): the screen still has to be up to date when it shows */
     function warmIdle() { warmJob = window.requestIdleCallback ? requestIdleCallback(warm, { timeout: WARM_LATEST_MS }) : setTimeout(warm, 300); }
     function warmQueue() {
-      warmSince = T.util.now();
+      warmSince = T.util.now(); warmBack = 0;
       if (window.PM_WARM && !window.PM_WARM.state().off) {
         var id = warmStep = window.PM_WARM.add({ owner: 'terminal', name: 'customize:catch-up', run: function () { warm('queue'); return null; },
           until: function () { return closed && !disposed; },
@@ -1595,7 +1611,7 @@
       /* something changed while it was parked and its catch-up has not run yet (a look just switched, a screen kept from a
          terminal that went): drawn in the click, the browser would style and lay it out there, holding the menu
          (P2-02, F1A on the P1000) */
-      var owed = changed || !!(warmWait || warmJob || warmStep) || building || fitIds.length > 0;
+      var owed = changed || !!(warmWait || warmJob || warmStep || warmPause) || building || fitIds.length > 0;
       rasterCancel(); fitCancel();
       parkedWatch(false);
       var showing = ++visit;
@@ -1765,13 +1781,18 @@
     /* built in a really idle moment where it can (an idle period of 45 ms or more: nothing is drawing frames), never under
        a cover or a switch; after 4 s it takes the next idle moment, since a page with motion of its own never fully rests
        and a screen built late only makes the first click pay for it */
-    var since = T.util.now();
+    var since = T.util.now(), back = 0;
     var build = function (deadline, staged) {
       prepStep = 0;
       if ((prepared && !prepared.kept) || v.pop || !v.root.isConnected) { if (!prepared || prepared.kept) prepareLater(1500); return; }
       if (pageSettling()) { prepareLater(1500); return; }
+      /* a short slot waits on a timer before it asks again (400 ms doubling, never past the 4 s backstop), as the parked
+         catch-up's warm() does, rather than asking for the next idle callback from inside this one (lane A, 2026-11-10) */
       if (deadline && typeof deadline.timeRemaining === 'function' && !deadline.didTimeout && deadline.timeRemaining() < 45 && T.util.now() - since < 4000) {
-        requestIdleCallback(build, { timeout: Math.max(500, 4000 - (T.util.now() - since)) }); return;
+        back = back ? Math.min(2000, back * 2) : 400;
+        setTimeout(function () { requestIdleCallback(build, { timeout: Math.max(500, 4000 - (T.util.now() - since)) }); },
+          Math.max(16, Math.min(back, 4000 - (T.util.now() - since))));
+        return;
       }
       try { open(v, { prepare: true, staged: !!staged }); } catch (e) { console.error('[pmt] the Customize screen could not be prepared', e); }
     };

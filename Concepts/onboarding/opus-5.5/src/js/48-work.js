@@ -150,6 +150,10 @@
     list.forEach((x) => { const n = surfaceName(x.surface); by[n] = (by[n] || 0) + 1; });
     return Object.keys(by).map((k) => k + ' ' + by[k]).join(', ');
   }
+  /* the bar is painted on every 1 s tick: a value it already shows is not written again, since the same attribute or
+     hidden written again still restyles the page and wakes its DOM watchers (lane A, 2026-11-10: about 16 such writes a
+     second at rest, a main frame each tick) */
+  const put = (el, k, v) => { if (el.getAttribute(k) !== v) el.setAttribute(k, v); };
   function paintItem(b, kind, n, ask, c) {
     if (!b) return;
     const A = kind === 'agents', live = n > 0;
@@ -160,29 +164,29 @@
     else h += '<span><strong>' + n + '</strong> ' + T(A ? (n === 1 ? 'bar.agent' : 'bar.agents') : (n === 1 ? 'bar.process' : 'bar.processes')) + '</span>' +
       (ask ? askMark + '<span><strong>' + ask + '</strong> ' + T(A ? (ask === 1 ? 'bar.question' : 'bar.questions') : (ask === 1 ? 'bar.needsInputOne' : 'bar.needsInputMany')) + '</span></span>' : '');
     if (b.__wkHtml !== h) { b.innerHTML = h; b.__wkHtml = h; }
-    b.setAttribute('data-tone', live ? 'working' : 'idle');
-    b.setAttribute('data-ask', ask ? 'true' : 'false');
+    put(b, 'data-tone', live ? 'working' : 'idle');
+    put(b, 'data-ask', ask ? 'true' : 'false');
     const on = ui.open && ui.tab === kind;
-    b.setAttribute('aria-expanded', on ? 'true' : 'false');
+    put(b, 'aria-expanded', on ? 'true' : 'false');
     b.classList.toggle('is-open', on);
     const list = A ? items({ kind: 'agent' }).filter(isLive) : liveProcs();
     const askWords = A ? plural(ask, T('bar.question'), T('bar.questions')) : ask + ' ' + T(ask === 1 ? 'bar.needsInputOne' : 'bar.needsInputMany');
-    b.setAttribute('data-pm-hover-label', T(A ? 'bar.agentsLabel' : 'bar.processesLabel'));
-    b.setAttribute('data-pm-hover-detail', (n ? T(A ? 'bar.agentsRunning' : 'bar.processesRunning', { n: plural(n, T(A ? 'bar.agent' : 'bar.process'), T(A ? 'bar.agents' : 'bar.processes')), where: bySurface(list) })
+    put(b, 'data-pm-hover-label', T(A ? 'bar.agentsLabel' : 'bar.processesLabel'));
+    put(b, 'data-pm-hover-detail', (n ? T(A ? 'bar.agentsRunning' : 'bar.processesRunning', { n: plural(n, T(A ? 'bar.agent' : 'bar.process'), T(A ? 'bar.agents' : 'bar.processes')), where: bySurface(list) })
       : T(A ? 'bar.noneAgents' : 'bar.noneProcesses')) + (ask ? ' ' + T(A ? 'bar.asksAgents' : 'bar.asksProcesses', { n: askWords }) : '') +
       (!A && c.scheduled ? ' ' + T('bar.scheduled', { n: c.scheduled }) : '') + ' ' + T('bar.click'));
-    b.setAttribute('aria-label', T(A ? 'bar.ariaAgents' : 'bar.ariaProcesses', { n: n, ask: ask ? ', ' + askWords : '' }));
+    put(b, 'aria-label', T(A ? 'bar.ariaAgents' : 'bar.ariaProcesses', { n: n, ask: ask ? ', ' + askWords : '' }));
   }
   function paintBar(why) {
     const g = group(), w = W();
     if (!g) return;
     if (!w) { g.hidden = true; return; }
-    g.hidden = false;
+    if (g.hidden) g.hidden = false;
     const c = counts(), feed = w.feed ? w.feed() : { state: 'current' };
     const paint = () => {
       paintItem(g.querySelector('[data-status-action="agents"]'), 'agents', c.agents, c.questions, c);
       paintItem(g.querySelector('[data-status-action="processes"]'), 'processes', c.processes, c.needsInput, c);
-      g.setAttribute('data-work-words', words() ? 'on' : 'off');
+      put(g, 'data-work-words', words() ? 'on' : 'off');
     };
     if (why !== 'tick') wordsDontFit = false;
     paint();
@@ -190,12 +194,12 @@
     const stale = g.querySelector('[data-work-stale]');
     if (stale) {
       const on = feed.state === 'stale';
-      stale.hidden = !on;
+      if (stale.hidden !== !on) stale.hidden = !on;
       if (on) {
         const h = st('offline', 10) + '<span class="wk-dim">' + T('bar.stale') + '</span>';
         if (stale.__wkHtml !== h) { stale.innerHTML = h; stale.__wkHtml = h; }
-        stale.setAttribute('data-pm-hover-label', T('bar.staleLabel'));
-        stale.setAttribute('data-pm-hover-detail', T('bar.staleDetail', { ago: short(Date.now() - (feed.at || Date.now())) }));
+        put(stale, 'data-pm-hover-label', T('bar.staleLabel'));
+        put(stale, 'data-pm-hover-detail', T('bar.staleDetail', { ago: short(Date.now() - (feed.at || Date.now())) }));
       }
     }
   }

@@ -25,8 +25,8 @@
  *   ss-fail-static      under reduced motion, a danger ring for 1.4 s instead
  *   ss-snap             a thread switch: the control jumps to the new thread's state (two frames, then dropped);
  *                       a one-shot still pending from the thread left behind is dropped with it
- * The breathe's cadence changes only at a loop boundary, where the square is at full size, so it never jumps: an
- * animationiteration listener reads how long ago the last word arrived (under 900 ms -> flowing, else waiting).
+ * The breathe's cadence changes only at a loop boundary, where the square is at full size, so it never jumps: a
+ * timer set to the loop's next boundary reads how long ago the last word arrived (under 900 ms -> flowing, else waiting).
  * Glyph geometry (chip pixels, viewBox 0 0 24 24): the registry's `send` drawing scaled .58 about the centre for the
  * plane, .5 for the queue's two planes; every shape that morphs is M + 4x(L Q) + Z so CSS `d` interpolates point by
  * point (the same strings are in send-stop.css, which drives the morph; these d attributes are the static fallback).
@@ -78,6 +78,7 @@
     if (o.tid !== tid0) { if (tid0 !== undefined) { armSnap(); fx = null; clearTimeout(fxT); } tid0 = o.tid; }
     if (s === 'stop' && lastSs !== 'stop') { flow = (now() - lastTok < 900 || streaming(o.tid)) ? 'flowing' : 'waiting'; flowed = false; }
     if (s !== 'stop') flowed = false;
+    if (s === 'stop' && !beatT) beatT = setTimeout(beat, 50);
     if (s === 'queue' || s === 'full') { if (q) shownQ = q; }
     lastSs = s;
     var cls = '', t = now();
@@ -133,17 +134,39 @@
     });
   }
 
-  /* The breathe's depth and pace change only at an iteration boundary (the square at full size). */
-  document.addEventListener('animationiteration', function (e) {
-    if (e.animationName !== 'ss-breathe' && e.animationName !== 'ss-breathe-w') return;
-    var b = e.target && e.target.closest ? e.target.closest('.sendstop') : null;
-    if (!b || b.getAttribute('data-ss') !== 'stop') return;
-    var want = now() - lastTok < 900 ? 'flowing' : 'waiting';
-    if (want === flow) return;
-    flow = want; flowed = true;
-    b.setAttribute('data-flow', want);
-    b.setAttribute('data-flowed', '');
-  });
+  /* The breathe's depth and pace change only at an iteration boundary (the square at full size). While the chip is
+     Stop a timer set to the loop's next boundary makes the check, in the first task after the frame that crossed it,
+     as the animationiteration event did. Not that event: with one listener for it anywhere in the page, Chrome wakes
+     the main thread at every loop boundary of every CSS animation on the page, compositor ones too, for the rest of
+     the session (PMConcept7 at rest: about 10 of its 35-55 main frames a second; lane A, 2026-11-10). */
+  var beatT = 0, beatAnim = null, beatIter = -1;
+  function breath(b) {
+    var g = b.querySelector('.ss-g'), list = g && g.getAnimations ? g.getAnimations() : [];
+    for (var i = 0; i < list.length; i++) if (list[i].animationName === 'ss-breathe' || list[i].animationName === 'ss-breathe-w') return list[i];
+    return null;
+  }
+  function beat() {
+    beatT = 0;
+    var b = live();
+    if (!b || b.getAttribute('data-ss') !== 'stop') { beatAnim = null; return; }
+    var a = breath(b), t = a && a.playState === 'running' && a.effect ? a.effect.getComputedTiming() : null;
+    /* not styled yet, hidden or under reduced motion: no loop to follow, so look again later */
+    if (!t || typeof t.localTime !== 'number' || !(t.duration > 0)) { beatAnim = null; beatT = setTimeout(beat, 500); return; }
+    /* the loop's start delay (--ss-ld) still running: look again as it ends */
+    if (t.currentIteration == null) { beatAnim = null; beatT = setTimeout(beat, Math.max(16, t.delay - t.localTime + 4)); return; }
+    if (a === beatAnim && t.currentIteration > beatIter) {
+      var want = now() - lastTok < 900 ? 'flowing' : 'waiting';
+      if (want !== flow) {
+        flow = want; flowed = true;
+        b.setAttribute('data-flow', want);
+        b.setAttribute('data-flowed', '');
+        /* the new cadence is a new animation: follow it once it is styled */
+        beatAnim = null; beatT = setTimeout(beat, 50); return;
+      }
+    }
+    beatAnim = a; beatIter = t.currentIteration;
+    beatT = setTimeout(beat, Math.max(16, t.delay + (t.currentIteration + 1) * t.duration - t.localTime + 4));
+  }
 
   /* A pointer that sends stays over the chip as it turns into Stop; NieR's rust hover waits until that pointer has
      left once (a keyboard send leaves it armed, so the next pointer over Stop shows it at once). */
