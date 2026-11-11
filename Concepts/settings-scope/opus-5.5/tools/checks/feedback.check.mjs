@@ -165,8 +165,8 @@ const HEAD = () => {
 		pill: visible('#pm-settings-root .document-toolbar .project-pill'), rail: visible('#pm-settings-root .rail-project'),
 		stop: !!(bar && bar.querySelector('[data-psx-head="mine"]')),
 		// review A-r1 finding 2 and tool note C: the words saying what you see never overflow, ellipsis or not
-		ctxOverflow: (() => { const c = bar && bar.querySelector('.psx-head-ctx'); return c ? c.scrollWidth > c.clientWidth + 0.5 : true; })(),
-		ctxText: ((bar && bar.querySelector('.psx-head-ctx')) || {}).textContent || '', fit: main ? main.getAttribute('data-fit') : null
+		ctxOverflow: (() => { const c = bar && bar.querySelector('.psx-head-ctx'); return c ? c.scrollWidth > c.clientWidth + 0.5 || c.scrollHeight > c.clientHeight + 0.5 : true; })(),
+		ctxText: (((bar && bar.querySelector('.psx-head-ctx')) || {}).textContent || '').replace(/\u00a0/g, ' '), fit: main ? main.getAttribute('data-fit') : null
 	};
 };
 
@@ -289,7 +289,9 @@ export default async function (t) {
 			['no project', { project: 'none', on: null, device: 'here' }],
 			['tastebook on Home NAS', { project: 'tastebook', on: 'homenas', device: 'here' }],
 			['iPhone screen', { project: 'tastebook', on: null, device: 'iphone' }],
-			['harbor on Studio Mac with iPhone', { project: 'harbor', on: 'studio', device: 'iphone' }]
+			['harbor on Studio Mac with iPhone', { project: 'harbor', on: 'studio', device: 'iphone' }],
+			// review A-r2 N2: the worst case, a long project on a third computer, used from a device with a long name
+			['lighting-rig on Home NAS from Sam’s iPad', { strip: { cmd: 'ctx', device: 'ipad', project: 'lighting-rig', on: 'homenas' } }]
 		];
 		for (const lk of looks(t)) {
 			for (const [wname, w] of WIDTHS) {
@@ -301,7 +303,7 @@ export default async function (t) {
 				if (wname === '1920' || wname === '860') await pic(t, `head-own-${lk}-${wname}`, `The header in your own view, ${lk}, ${wname}`, '#pm-settings-root .document-toolbar');
 				const seen = [];
 				for (const [name, ctx] of VIEWS) {
-					if (ctx.cmd) { await reset(t); await look(t, lk); await page(t, 'models'); } else { await run(t, (c) => window.PSX.setCtx(c), ctx); await settle(t, 600); }
+					if (ctx.cmd) { await reset(t); await look(t, lk); await page(t, 'models'); } else if (ctx.strip) { await run(t, async (m) => { await window.PSX.command(m); }, ctx.strip); await settle(t, 700); } else { await run(t, (c) => window.PSX.setCtx(c), ctx); await settle(t, 600); }
 					// a look's own font may still be arriving: measure once it has, two frames later
 					await run(t, async () => { if (document.fonts) await document.fonts.ready; await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))); });
 					const h = await run(t, HEAD);
@@ -310,17 +312,22 @@ export default async function (t) {
 					await t.check(`${lk} · ${wname} · ${name}: the project is named once`, h.projCount === 1, h.text);
 					await t.check(`${lk} · ${wname} · ${name}: viewing is ${viewing ? 'shown, with Stop viewing' : 'not shown'}`, (h.viewing === '1') === viewing && h.stop === viewing, JSON.stringify([h.viewing, h.stop, h.text]));
 					await t.check(`${lk} · ${wname} · ${name}: no “my view”, no second project button, no rail project line`, !h.myView && !h.pill && !h.rail, JSON.stringify(h));
-					const names = [ctx.project && ctx.project !== 'none' ? ctx.project : name === 'no project' ? 'No project' : 'tastebook', ctx.on === 'homenas' ? 'Home NAS' : ctx.on === 'studio' ? 'Studio Mac' : 'This computer'].concat(ctx.device === 'iphone' ? ['iPhone'] : []);
+					const c0 = ctx.strip || ctx;
+					const names = [c0.project && c0.project !== 'none' ? c0.project : name === 'no project' ? 'No project' : 'tastebook', c0.on === 'homenas' ? 'Home NAS' : c0.on === 'studio' ? 'Studio Mac' : 'This computer'].concat(c0.device === 'iphone' ? ['iPhone'] : c0.device === 'ipad' ? ['Sam’s iPad'] : []);
 					await t.check(`${lk} · ${wname} · ${name}: every name shows whole, nothing cut (wording ${h.fit})`, !h.ctxOverflow && names.every((n) => h.ctxText.includes(n)), JSON.stringify([h.ctxText, names, h.ctxOverflow]));
+					if (name.startsWith('harbor on Studio Mac') && (wname === '1920' || wname === '860')) await pic(t, `head-viewing-${lk}-${wname}`, `Viewing harbor on Studio Mac with iPhone's screen, ${lk}, ${wname}: same box, framed, Stop viewing`, '#pm-settings-root .document-toolbar');
+					if (ctx.strip && (wname === '860' || wname === '1280')) await pic(t, `head-worst-${lk}-${wname}`, `lighting-rig on Home NAS, used from Sam’s iPad, ${lk}, ${wname}: every name whole`, '#pm-settings-root .document-toolbar');
 				}
 				const base = seen[0][1];
 				for (const [name, h] of seen.slice(1)) {
-					await t.equal(`${lk} · ${wname} · ${name}: the header box is where it was`, JSON.stringify([h.bar, h.main]), JSON.stringify([base.bar, base.main]));
+					// Sam's iPad is a Member's device: its notice line sits under the header (a change of device, not of view), so
+					// for that view the header row and Change are compared, not the toolbar under them
+					const actorView = /Sam’s iPad/.test(name);
+					await t.equal(`${lk} · ${wname} · ${name}: the header ${actorView ? 'row' : 'box'} is where it was`, JSON.stringify(actorView ? [h.main] : [h.bar, h.main]), JSON.stringify(actorView ? [base.main] : [base.bar, base.main]));
 					await t.equal(`${lk} · ${wname} · ${name}: Change is where it was`, JSON.stringify(h.change), JSON.stringify(base.change));
-					await t.equal(`${lk} · ${wname} · ${name}: the page under it is where it was`, JSON.stringify(h.first && h.first.slice(1, 2)), JSON.stringify(base.first && base.first.slice(1, 2)));
+					if (!actorView) await t.equal(`${lk} · ${wname} · ${name}: the page under it is where it was`, JSON.stringify(h.first && h.first.slice(1, 2)), JSON.stringify(base.first && base.first.slice(1, 2)));
 				}
-				// the last view is harbor on Studio Mac with iPhone's screen
-				if (wname === '1920' || wname === '860') await pic(t, `head-viewing-${lk}-${wname}`, `Viewing harbor on Studio Mac with iPhone's screen, ${lk}, ${wname}: same box, framed, Stop viewing`, '#pm-settings-root .document-toolbar');
+				await run(t, async () => { await window.PSX.command({ cmd: 'ctx', device: 'here' }); });
 			}
 		}
 		// Stop viewing goes back, and the keyboard stays on the header
@@ -526,6 +533,9 @@ export default async function (t) {
 		await pic(t, 'always-editor', 'Always allow for npm test: the pattern npm test * and In this project chosen by hand, with what it matches', '.psx-sheet');
 		await t.root.locator(`${sh} [data-always-save="test"]`).click(); await settle(t, 300);
 		await t.check('the rule is written with the chosen pattern and place', () => run(t, () => { const st = window.PSX.approvals.st; return st.rules.length === 1 && st.rules[0].pattern === 'npm test *' && st.rules[0].where === 'Always in loom'; }));
+		// a later run: the rule allows every npm test it matches, without asking
+		await run(t, () => window.PSX.approvals.draw()); await settle(t, 300);
+		await t.check('a later run: your Always rule allows both npm test steps without asking', () => run(t, () => { const tx = document.querySelector('.psx-sheet').innerText; return /Run npm test\n[\s\S]*?Allowed by your rule/.test(tx) && /Run npm test again, after the fix[\s\S]*?Allowed by your rule/.test(tx); }));
 		for (const id of ['release', 'outside']) {
 			await t.root.locator(`${sh} [data-ask="${id}"][data-a="always"]`).click(); await settle(t, 300);
 			e = await ed(id);
@@ -545,21 +555,50 @@ export default async function (t) {
 		const units = await run(t, () => {
 			const A = window.PSX.approvals, test = { cmd: 'npm test', path: false, patterns: [['npm test'], ['npm test *'], ['npm *']] }, rel = { cmd: './scripts/release.sh v1.4.0', path: true };
 			return { progLoc: A.hostDependent('/usr/local/bin/npm test', test), npmNot: !A.hostDependent('npm test *', test), relStar: A.hostDependent('*', rel),
-				star: A.isBroad('*', test), bash: A.isBroad('bash -c *', test), py: A.isBroad('python3 *', test), node: A.isBroad('node *', test), npmStar: A.isBroad('npm *', test), narrow: !A.isBroad('npm test *', test) };
+				star: A.isBroad('*', test), bash: A.isBroad('bash -c *', test), py: A.isBroad('python3 *', test), node: A.isBroad('node *', test), npmStar: A.isBroad('npm *', test), narrow: !A.isBroad('npm test *', test),
+				// review A-r2 N3: any command followed only by *
+				rm: A.isBroad('rm -rf *', test), sudo: A.isBroad('sudo *', test), npx: A.isBroad('npx *', test), git: A.isBroad('git *', test), read: A.isBroad('read *', test), narrow2: !A.isBroad('git push origin *', test),
+				readHost: A.hostDependent('read *', test), rmHost: A.hostDependent('rm -rf *', test), gitNotHost: !A.hostDependent('git *', test) };
 		});
 		await t.check('8.04: host-dependence comes from the step’s target and from the pattern (a program’s location yes, npm test * no, * on the release step yes)', units.progLoc && units.npmNot && units.relStar, JSON.stringify(units));
 		await t.check('8.03: broad = a bare *, a shell or an interpreter followed by *, or the broad suggestion; npm test * is not', units.star && units.bash && units.py && units.node && units.npmStar && units.narrow, JSON.stringify(units));
-		// Permissions_System 6.1: deny, once, for this session and always. For this session is ephemeral and makes no rule
+		await t.check('8.03: any command followed only by * is broad (rm -rf *, sudo *, npx *, git *, read *); git push origin * is not', units.rm && units.sudo && units.npx && units.git && units.read && units.narrow2, JSON.stringify(units));
+		await t.check('8.04: a rule about files (read *, rm -rf *) is host-dependent, so it never offers Everywhere; git * is not', units.readHost && units.rmHost && units.gitNotHost, JSON.stringify(units));
+		/* Permissions_System 6.1 (deny, once, for session, always), PS-113 and §2 Rules 3 (a session answer is keyed to
+		   the run and the run mode), §3.3 (a path outside the project still asks in YOLO). A fresh moment, no rules */
+		await run(t, async () => { window.PSX.closeSheets(); await window.PSX.command({ cmd: 'runmode', mode: 'regular' }); await window.PSX.command({ cmd: 'moment', id: '11.18' }); }); await settle(t, 800);
+		// on the page: your own rm -rf * on the npm test step reads broad and hides Everywhere
+		const trig = t.root.locator(`${sh} [data-ask="test2"][data-a="always"]`);
+		if (await trig.count()) {
+			await trig.click(); await settle(t, 300);
+			await t.root.locator(`${sh} [data-always="test2"] [data-pat="own"]`).check(); await settle(t, 250);
+			await t.root.locator(`${sh} [data-always="test2"] [data-pat-own]`).fill('rm -rf *'); await settle(t, 300);
+			const rr = await ed('test2');
+			await t.check('your own rm -rf * reads broad and offers no Everywhere', !!rr && /This one is broad/.test(rr.preview) && !rr.where.some((x) => /^everywhere/.test(x)) && rr.note, JSON.stringify(rr));
+			await t.root.locator(`${sh} [data-always-cancel="test2"]`).click(); await settle(t, 200);
+		} else await t.check('the npm test repeat offers Always allow', false, 'no Always allow… on test2');
+		await t.root.locator(`${sh} [data-ask="test"][data-a="session"]`).click(); await settle(t, 300);
+		const s1 = await run(t, () => { const tx = document.querySelector('.psx-sheet').innerText, st = window.PSX.approvals.st; return { test: /Run npm test\n[\s\S]*?Allowed for this session/.test(tx), again: /Run npm test again, after the fix[\s\S]*?Allowed for this session[\s\S]*?earlier in this run, so it didn’t ask again/.test(tx), words: /For the rest of this run in Regular; a new run or another run mode asks again\. No rule is kept\./.test(tx), doubled: /Allowed\. Allowed/.test(tx), rules: st.rules.length }; });
+		await t.check('For this session covers the same request later in this run, and makes no rule', s1.test && s1.again && s1.words && s1.rules === 0, JSON.stringify(s1));
+		await t.check('the session line doesn’t repeat itself (no “Allowed. Allowed”)', !s1.doubled, JSON.stringify(s1));
 		await t.root.locator(`${sh} [data-ask="outside"][data-a="session"]`).click(); await settle(t, 300);
-		const sess = await run(t, () => { const s = document.querySelector('.psx-sheet'); const st = window.PSX.approvals.st; return { word: /Read a folder outside loom[\s\S]*Allowed for this session/.test(s.innerText), rules: st.rules.length, session: st.session.slice() }; });
-		await t.check('For this session allows it until the session ends and makes no Always rule', sess.word && sess.rules === 1 && sess.session.includes('read ~/Documents/taxes'), JSON.stringify(sess));
+		await t.check('the outside folder can be allowed for this session in Regular, with its own report line', () => run(t, () => /Read a folder outside loom[\s\S]*?Allowed for this session[\s\S]*?Read ~\/Documents\/taxes: 3 files\./.test(document.querySelector('.psx-sheet').innerText)));
+		// a switch of Run mode is a new run: the session answers end, and YOLO still asks for the outside folder
+		await run(t, async () => { await window.PSX.command({ cmd: 'runmode', mode: 'yolo' }); }); await settle(t, 500);
+		const s2 = await run(t, () => { const tx = document.querySelector('.psx-sheet').innerText, st = window.PSX.approvals.st; return { yoloAsks: /Read a folder outside loom[\s\S]*?YOLO still asks: A path outside the project/.test(tx) && !!document.querySelector('.psx-sheet [data-ask="outside"][data-a="once"]'), sessionGone: st.session.length === 0, noCarry: !/Allowed for this session/.test(tx) }; });
+		await t.check('after a switch to YOLO the outside folder asks again (PS-113, §3.3) and no session answer carries over', s2.yoloAsks && s2.sessionGone && s2.noCarry, JSON.stringify(s2));
+		await run(t, async () => { await window.PSX.command({ cmd: 'runmode', mode: 'regular' }); }); await settle(t, 500);
+		const s3 = await run(t, () => ({ outside: !!document.querySelector('.psx-sheet [data-ask="outside"][data-a="once"]'), test: !!document.querySelector('.psx-sheet [data-ask="test"][data-a="once"]'), again: !!document.querySelector('.psx-sheet [data-ask="test2"][data-a="once"]') }));
+		await t.check('back in Regular it is a new run: npm test, its repeat and the outside folder ask again', s3.outside && s3.test && s3.again, JSON.stringify(s3));
+		await t.root.locator(`${sh} [data-ask="test"][data-a="once"]`).click(); await settle(t, 300);
+		await t.check('Allow once covers only that step: the repeat still asks', () => run(t, () => !!document.querySelector('.psx-sheet [data-ask="test2"][data-a="once"]')));
 		await run(t, () => window.PSX.approvals.draw()); await settle(t, 300);
-		await t.check('a run later in the same session doesn’t ask again for it', () => run(t, () => /Read a folder outside loom[\s\S]*Allowed for this session/.test(document.querySelector('.psx-sheet').innerText)));
+		await t.check('Run it again is a new run: nothing is allowed from the last one', () => run(t, () => !!document.querySelector('.psx-sheet [data-ask="test"][data-a="once"]') && !!document.querySelector('.psx-sheet [data-ask="outside"][data-a="once"]')));
 		await t.check('a deletion on the remote is answered one at a time (no For this session)', () => run(t, () => !document.querySelector('.psx-sheet [data-ask="delete"][data-a="session"]') && !!document.querySelector('.psx-sheet [data-ask="delete"][data-a="once"]')));
 		// YOLO: ordinary push and publish run without asking, and no Always rule is made
 		await run(t, async () => { await window.PSX.command({ cmd: 'runmode', mode: 'yolo' }); }); await settle(t, 500);
 		const y = await run(t, () => { const s = document.querySelector('.psx-sheet'); const tx = s ? s.innerText : ''; return { push: /Push to GitHub[\s\S]*Ran, not asked/.test(tx), publish: /Publish the image[\s\S]*Ran, not asked/.test(tx), rules: window.PSX.approvals.st.rules.length, none: /None made/.test(tx) }; });
-		await t.check('8.05-8.06: YOLO pushes and publishes without asking and makes no Always rule of its own', y.push && y.publish && y.rules === 1, JSON.stringify(y));
+		await t.check('8.05-8.06: YOLO pushes and publishes without asking and makes no Always rule', y.push && y.publish && y.rules === 0, JSON.stringify(y));
 		await run(t, async () => { await window.PSX.command({ cmd: 'runmode', mode: 'regular' }); window.PSX.closeSheets(); });
 	});
 
@@ -570,7 +609,9 @@ export default async function (t) {
 		if (!stripPath || !/settings-scope\.html$/.test(stripPath)) { await t.check('the strip page is given (--set strip=<path to settings-scope.html>)', false, stripPath); return; }
 		const errors = [];
 		const onErr = (e) => errors.push(String(e && e.message || e));
-		t.page.on('pageerror', onErr);
+		// review A-r2 T3: a console.error in the page or its frame fails it too
+		const onConsole = (m) => { if (m.type() === 'error') errors.push('console.error: ' + m.text()); };
+		t.page.on('pageerror', onErr); t.page.on('console', onConsole);
 		await t.goto(`${fileUrl(stripPath)}?cb=${Date.now()}`);
 		await t.until('the strip says what is shown', () => /The decided design/.test((document.getElementById('note') || {}).textContent || ''), null, { timeout: 30000 });
 		const frame = t.page.frames().find((f) => f !== t.page.mainFrame());
@@ -586,8 +627,8 @@ export default async function (t) {
 		await t.page.selectOption('#width', '860');
 		// the frame animates its width (0.2s): wait for it to arrive rather than for a fixed time
 		await t.until('Window width sets the frame to 860px', () => Math.round(document.getElementById('pm7').getBoundingClientRect().width) === 860, null, { timeout: 5000 });
-		t.page.off('pageerror', onErr);
-		await t.check('no uncaught error on the strip page', errors.length === 0, errors.join(' | '));
+		t.page.off('pageerror', onErr); t.page.off('console', onConsole);
+		await t.check('no uncaught error and no console.error on the strip page', errors.length === 0, errors.join(' | '));
 		await pic(t, 'strip-11-18', 'The strip page with Moments › 11.18 open, its caption and its sheet', null);
 	});
 }

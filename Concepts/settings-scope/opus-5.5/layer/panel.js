@@ -310,10 +310,10 @@
     if (def.home === 'computer') return `On ${placeName('computer', c.host || c.on)}`;
     if (!c.project) return `With no project, on ${placeName('computer', c.on)}`;
     if (def.screen) return `In ${c.project} · on this screen`;
-    // the where-work-runs wording (SIR-056, Auto by default): your own view names the default computer Auto starts from;
-    // looking at another computer names that one
+    // the where-work-runs wording (SIR-056, Auto by default): your own view shows the setting, Auto with its default
+    // computer, never an arrow (that names where a piece of work actually ran); looking at another computer names it
     const p0 = PSX.projectById(c.project), viewingComp = !!S.ctx.on && p0 && S.ctx.on !== p0.home;
-    return viewingComp ? `In ${c.project} · on ${placeName('computer', c.on)}` : `In ${c.project} · Auto → ${placeName('computer', c.on)}`;
+    return viewingComp ? `In ${c.project} · on ${placeName('computer', c.on)}` : `In ${c.project} · Auto (default: ${placeName('computer', c.on)})`;
   }
   function fromLine(id, r) {
     const c = PSX.ctxFull(S.ctx);
@@ -681,7 +681,7 @@
     const def = DEF[id];
     const have = new Set(r.varies.filter((v) => v.level === level).map((v) => v.key));
     let items;
-    if (level === 'project') items = PROJECTS.map((p) => ({ label: p.id, meta: have.has(p.id) ? 'has its own already' : `Auto → ${placeName('computer', p.home)}`, disabled: have.has(p.id) ? 'Has its own already' : blockedWrite({ level: 'project', key: p.id }), run: () => startNew(id, 'project', p.id) }));
+    if (level === 'project') items = PROJECTS.map((p) => ({ label: p.id, meta: have.has(p.id) ? 'has its own already' : `Auto (default: ${placeName('computer', p.home)})`, disabled: have.has(p.id) ? 'Has its own already' : blockedWrite({ level: 'project', key: p.id }), run: () => startNew(id, 'project', p.id) }));
     else if (level === 'device') items = Object.keys(DEVICES).map((k) => ({ label: DEVICES[k].name, meta: have.has(k) ? 'has its own already' : 'its screen', disabled: have.has(k) ? 'Has its own already' : null, run: () => startNew(id, 'device', k) }));
     else items = PSX.computerIds().map((k) => ({ label: COMPUTERS[k].name, meta: have.has(k) ? 'has its own already' : (k === 'studio' && !PSX.W.studioJoined ? 'not joined yet' : COMPUTERS[k].detail.split(' · ')[0]), disabled: have.has(k) ? 'Has its own already' : blockedWrite({ level: 'computer', key: k }), run: () => startNew(id, 'computer', k) }));
     // levels the row doesn't offer stay in the menu, focusable and greyed, with their short reason

@@ -223,8 +223,9 @@ A blind review of the branch (`REVIEW-concept-A-r1-opus-high.md` in the share fo
   picks Moments › 11.18, Compare options and a window width, and fails on any uncaught error.
 - **The viewing header** cut the device's name at 1280 and 860. The header now has shorter wordings, tried in order
   until one fits with nothing cut: "harbor on Studio Mac, with iPhone’s screen", "…, with iPhone", the same without
-  the word Viewing (the frame, the tint and Stop viewing still say it), then "harbor · Studio Mac · iPhone". It refits
-  when the window changes; the box never changes size.
+  the word Viewing (the frame, the tint and Stop viewing still say it), then "harbor · Studio Mac · iPhone", and last
+  (round A-r2) the same words on two lines inside the same box, a name never split across them, so the last step
+  always fits. It refits when the window changes; the box never changes size.
 - **The end column** is sized from the widest end word the concept can show, measured in the current look's own font
   once per look (Retro's monospace cut "Each AI service" at 124px). Every control in a section still lines up. A
   compact field's end word (the 210px fields beside a service) never shrinks; its label wraps instead.
@@ -233,12 +234,19 @@ A blind review of the branch (`REVIEW-concept-A-r1-opus-high.md` in the share fo
   value line and no Change. "Start custom themes from" has a value and stays same-everywhere.
 - **Always allow:** whether Everywhere is offered comes from the step's own target (a script or a folder) as well as
   from the pattern, so your own pattern never brings it back on the release step; a bare `*`, and a shell or an
-  interpreter followed by `*`, are flagged broad. Each ask also offers **For this session** (Permissions_System 6.1
-  keeps deny, once, for this session and always): it lasts until the chat session ends and makes no rule; a deletion
-  on the remote is answered one at a time.
-- **Where work runs:** the panel's Now card, the Change menu and the project lists say "Auto → This computer" (each
-  Project has a default computer and its work is Auto by default, SIR-056 on `plans/where-work-runs-20261109`), not
-  "works on This computer". The Change menu's search reads "Find a project, computer or device".
+  interpreter followed by `*`, are flagged broad; round A-r2 adds any command followed only by `*` (`rm -rf *`,
+  `sudo *`, `npx *`, `git *`, `read *`), and a rule about files (`read *`, `rm -rf *`) is host-dependent, so it never
+  offers Everywhere. Each ask also offers **For this session** (Permissions_System 6.1
+  keeps deny, once, for this session and always). *Corrected in round A-r2:* a session answer belongs to this run and
+  this run mode (PS-113's approval_scope_key holds the run and the mode; §2 Rule 3: drift invalidates it), so it
+  covers the same request later in the run (the run's second npm test) and ends with a new run or a switch of Run
+  mode; YOLO still asks for a folder outside the project (§3.3). It makes no rule; a deletion on the remote is
+  answered one at a time. An Always rule you make does apply to every later run it matches.
+- **Where work runs:** the panel's Now card, the Change menu and the project lists show the setting, "Auto (default:
+  This computer)" (each Project has a default computer and its work is Auto by default, SIR-056 on
+  `plans/where-work-runs-20261109`), not "works on This computer". The arrow "Auto → X" names where a piece of work
+  actually ran, so Settings never shows it (round A-r2). The Change menu's search reads "Find a project, computer or
+  device".
 - **The New Project moment** puts tastebook's accounts back when its sheet closes.
 - **The strip's Look** now always stores the look it paints. Choosing only light or dark (the family already chosen)
   happened in the theme menu, outside Settings, so the router never heard it and the next change of project or view
