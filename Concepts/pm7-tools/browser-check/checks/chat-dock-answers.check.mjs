@@ -40,6 +40,9 @@
 //             control), and no asking line scrolls sideways. Each answer is
 //             first scrolled into the dock's view: past its height budget the dock scrolls in place (pmx-system.css).
 //             Reduced Motion alternates between reduce and no-preference by look.
+//   late      a dock provider registered after the chat's first render still shows: with every DOMContentLoaded dock
+//             registration held 2.5 s (a slow load's order) the Migration dry run line is in the dock, and a probe
+//             provider registered with no render shows within a second (sol-recheck-b10l, loaded Nas1).
 // Both surfaces (--set sandbox=0|1 picks one). On the page before FO-128 the process line has only Review: the process
 // test fails at "offers No and Yes", and the others at the missing PM56_ASKS.
 import fs from 'node:fs';
@@ -402,6 +405,52 @@ async function captureCase(t, surface) {
 	await t.check(`${surface}: another project's chat (${p2}) is held, not allowed by the rule`, p1 && p2 && p1 !== p2 && await f.locator(BANNER).count() === 1 && !added.some((x) => x.startsWith('permission-answer|Allowed by your rule')), JSON.stringify({ p1, p2, added }));
 }
 
+// A dock provider that registers after the chat's first render still shows (sol-recheck-b10l, loaded Nas1: the work dock
+// waited for DOMContentLoaded, which came after the first render, and nothing re-rendered the composer). The page loads
+// with that order forced: an init script holds every DOMContentLoaded listener named provideDock until 2.5 s after the
+// event, as a slow load does; the Migration dry run line must still be in the dock. Then a probe provider registered
+// with no render must show within a second.
+async function lateCase(t, surface) {
+	if (!t.app.surfaces().includes(surface)) { t.log(`skipped: the sandbox switch leaves out the ${surface} surface`); return; }
+	await t.context.addInitScript(() => {
+		const add = EventTarget.prototype.addEventListener;
+		EventTarget.prototype.addEventListener = function (type, fn, opts) {
+			if (type === 'DOMContentLoaded' && fn && fn.name === 'provideDock') {
+				window.__lateHeld = (window.__lateHeld || 0) + 1;
+				return add.call(this, type, function (e) { setTimeout(() => fn.call(this, e), 2500); }, opts);
+			}
+			return add.call(this, type, fn, opts);
+		};
+	});
+	const f = await ready(t, surface);
+	if (!f) return;
+	const held = await f.evaluate(() => window.__lateHeld || 0);
+	t.log(`${surface}: DOMContentLoaded dock registrations held late: ${held}`);
+	await t.page.waitForTimeout(3000);
+	const shown = await f.evaluate(async () => {
+		const t0 = performance.now();
+		while (performance.now() - t0 < 4000) {
+			if (document.querySelector('#pmRoot .composer > .pmx-dock [data-k="pmx-dock:work:p-migrate"]')) return true;
+			await new Promise((r) => setTimeout(r, 50));
+		}
+		return false;
+	});
+	await t.check(`${surface}: with the late order forced, the Migration dry run line is in the dock`, shown, `held ${held}`);
+	const probe = await f.evaluate(async () => {
+		const S = PM56_SHELL;
+		const off = PM56_PMX.dock.provide(() => [{ key: 'late-probe', tone: 'needs', at: Date.now() + 1e6, html: S.pmxDockLine({ key: 'pmx-dock:late-probe', tone: 'needs', kindWord: 'Probe', sentence: 'registered after the first render' }) }]);
+		const t0 = performance.now();
+		let ms = -1;
+		while (performance.now() - t0 < 1500) {
+			if (document.querySelector('#pmRoot .composer > .pmx-dock [data-k="pmx-dock:late-probe"]')) { ms = Math.round(performance.now() - t0); break; }
+			await new Promise((r) => requestAnimationFrame(r));
+		}
+		off(); PM56_APP.render();
+		return ms;
+	});
+	await t.check(`${surface}: a provider registered after the first render shows at once, with no other render`, probe >= 0 && probe < 1000, `${probe} ms`);
+}
+
 async function helperCase(t, surface) {
 	const f = await ready(t, surface, 'recovery-collaboration'); if (!f) return;
 	await t.emulate({ reducedMotion: 'reduce' });
@@ -485,6 +534,7 @@ async function looksCase(t, surface) {
 export const tests = {};
 for (const surface of ['normal', 'sandbox']) {
 	tests[`FO-128 process prompt answers in the bar ${surface}`] = (t) => processCase(t, surface);
+	tests[`FO-128 a dock provider registered late still shows ${surface}`] = (t) => lateCase(t, surface);
 	tests[`FO-128 Studio Ask permission in the bar ${surface}`] = (t) => studioCase(t, surface);
 	tests[`FO-128 Always places follow canon ${surface}`] = (t) => placesCase(t, surface);
 	tests[`FO-128 For session is remembered, Deny covers its ask ${surface}`] = (t) => grantsCase(t, surface);
