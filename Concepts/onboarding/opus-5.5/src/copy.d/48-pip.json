@@ -781,24 +781,44 @@
       },
       "like": {
         "pick:fresh": {
-          "title": "Start fresh",
-          "text": "Puppet Master's standard settings. Right for a first Project, or when you want a clean start.",
-          "expert": "Puppet Master's default settings for a new Project."
+          "title": "Your usual settings",
+          "text": "The settings every Project shares. Right for a first Project, or when nothing else should come along.",
+          "expert": "No copy: the new Project follows your usual (global) settings from the moment it is made."
         },
         "group:pick": {
           "title": "Like another Project",
-          "text": "Reuses the settings of a Project you already trust. Never copied: sign-ins and keys, files, history, Goals and Plans.",
-          "expert": "Copies the chosen Project's settings into the new one. Never copied: credentials and keys, files, history, Goals and Plans."
+          "text": "Brings what makes that Project different: its own settings, its own things and which AI accounts it uses, once. Never copied: sign-ins themselves, keys, files, history, Goals and Plans.",
+          "expert": "A one-time detached copy of the source's own values (copy_basis own_values), owner things and account choices. Never copied: credentials, keys, files, history, Goals and Plans."
         },
         "choose": {
-          "title": "Choose settings",
-          "text": "Pick which groups of settings come along, like look, notifications or AI accounts.",
-          "expert": "Choose which settings categories are copied."
+          "title": "Advanced: choose what to copy",
+          "text": "Pick by kind of setting, one setting at a time, by thing, and whether the same AI accounts come along.",
+          "expert": "Selection by the eleven selector sets, single setting IDs, owner things and the account switch (SSYS-062)."
         },
         "group:cat": {
-          "title": "Settings to copy",
-          "text": "Each group is a set of settings from that Project. Switch one off to keep the standard ones for it.",
-          "expert": "A settings category from the source Project; switch it off to keep the defaults for it."
+          "title": "Kinds of settings",
+          "text": "Each kind is a set of that Project's settings. Switch one off and the new Project keeps your usual ones for it. About its own files starts off.",
+          "expert": "The disjoint selector sets (ten kinds plus About its own files, off by default); an excluded set keeps the usual values."
+        },
+        "group:pickrow": {
+          "title": "Single settings",
+          "text": "One of that Project's own settings, with your usual value beside its value. Switch it off to keep your usual one.",
+          "expert": "A picked_setting_ids entry inside the selected sets; off keeps the usual value."
+        },
+        "field:likeFind": {
+          "title": "Find a setting",
+          "text": "Type part of a setting's name to find it in the list.",
+          "expert": "Filters the source's own values by label or setting ID."
+        },
+        "group:thing": {
+          "title": "Its own things",
+          "text": "Something that Project owns, like an MCP server or a persona's version. Each says what it becomes in the new Project.",
+          "expert": "Owner things previewed through their owners: the copy, version or reach each becomes in the destination."
+        },
+        "accts": {
+          "title": "Use the same AI accounts and models",
+          "text": "Which AI accounts and models that Project uses come along. Sign-ins never move: each account is used where it is already signed in, or you sign in there later.",
+          "expert": "Copies provider/account/order choices only; readiness is resolved on the work computer (ready_here, check_there, sign_in_there, key_needed, not_installed, expired, cannot_move)."
         }
       },
       "online-service": {
@@ -1829,7 +1849,7 @@
       },
       "like": {
         "enter": "Copy a Project you already trust?",
-        "pick:fresh": "Fresh and new. Clean slate!",
+        "pick:fresh": "Your usual settings. Easy!",
         "group:pick": "Same setup as that one? Smart."
       },
       "online-service": {

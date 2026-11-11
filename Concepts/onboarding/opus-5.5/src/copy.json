@@ -956,29 +956,96 @@
   "like": {
     "eyebrow": "Your Project",
     "title": "Start like another Project?",
-    "lead": "Reuse the setup you already trust, or begin fresh.",
-    "fresh": "Start fresh",
-    "freshSub": "Puppet Master's standard settings",
+    "lead": "Use the setup you already trust, or just your usual settings.",
+    "fresh": "Your usual settings",
+    "freshSub": "The settings every Project shares",
     "updated": "Used {when}",
     "previewTitle": "What comes along",
-    "preview": "Uses the same {groups}. Your new files, history, Goals and Plans stay separate.",
-    "never": "Never copied: sign-ins and keys, files, history, Goals and Plans.",
-    "choose": "Choose settings",
+    "diffs": "Its {n} settings that differ from your usual ones: {kinds}.",
+    "diffsNone": "None of its settings come along: this Project starts on your usual settings.",
+    "things": "Its own things: {things}.",
+    "accounts": "The AI accounts and models it uses: {accounts}.",
+    "never": "Never copied: sign-ins themselves, keys, files, history, Goals and Plans.",
+    "separate": "They become this Project's own. Changing either Project later never changes the other; changes to your usual settings still reach both.",
+    "choose": "Advanced: choose what to copy",
     "chooseTitle": "Choose what to copy",
-    "from": "from {project}",
-    "unavailable": "{project} used an account that isn't on this computer. You'll sign in later.",
-    "count": "{n} settings",
-    "groups": {
-      "Appearance & input": "look and input",
-      "Notifications & sounds": "notifications",
-      "AI providers & accounts": "AI accounts",
-      "Model routing": "model choices",
-      "Goals & personas": "personas",
-      "Permissions": "permissions",
-      "Project & sync": "project options",
-      "Context & memory behavior": "memory settings",
-      "Testing profiles": "testing defaults",
-      "Source control": "history settings"
+    "unavailable": "{project} uses an AI account that isn't signed in on {computer}. The same account is kept; you sign in there after it's made.",
+    "kindsTitle": "Kinds of settings",
+    "kindCount": "{n} different",
+    "kindNone": "Nothing different",
+    "kinds": {
+      "appearance_workspace": {
+        "title": "Look and layout",
+        "word": "look and layout"
+      },
+      "assistant_chat": {
+        "title": "Assistant and chat",
+        "word": "assistant and chat"
+      },
+      "providers_accounts_models_routing": {
+        "title": "AI accounts and models",
+        "word": "AI accounts and models"
+      },
+      "planning_goal": {
+        "title": "Planning and Goals",
+        "word": "planning and Goals"
+      },
+      "orchestrator_automation": {
+        "title": "Automation",
+        "word": "automation"
+      },
+      "tools_integrations": {
+        "title": "Tools and connections",
+        "word": "tools and connections"
+      },
+      "testing_browser_devices": {
+        "title": "Testing, browser and devices",
+        "word": "testing, browser and devices"
+      },
+      "permissions_security": {
+        "title": "Permissions and safety",
+        "word": "permissions and safety"
+      },
+      "memory_retention_history": {
+        "title": "Memory and history",
+        "word": "memory and history"
+      },
+      "notifications_usage_budgets": {
+        "title": "Notifications & limits",
+        "word": "notifications & limits"
+      },
+      "project_only_rows": {
+        "title": "About its own files",
+        "word": "its own files"
+      }
+    },
+    "singleTitle": "Single settings",
+    "singleFind": "Find a setting",
+    "singlePlaceholder": "Name of a setting",
+    "singleRow": "Usual: {usual} → {project}: {value}",
+    "singleNone": "No settings of its own in the kinds you chose.",
+    "singleNoMatch": "No setting by that name.",
+    "on": "On",
+    "off": "Off",
+    "thingsTitle": "Its own things",
+    "thingRow": "{thing} · {kind}",
+    "thingNone": "{project} has no things of its own.",
+    "acctTitle": "AI accounts",
+    "acctSwitch": "Use the same AI accounts and models",
+    "acctSwitchSub": "Which accounts and models it uses. Sign-ins stay on the computer that does the work.",
+    "acctOff": "This Project uses your usual AI accounts and models.",
+    "thisComputer": "this computer",
+    "acct": {
+      "ready": "Ready on {computer}: already signed in there, the same account is used",
+      "checked": "Signed in on {computer} · checked before first use",
+      "signin": "Sign in on {computer} after it's made",
+      "install": "Install it on {computer} after it's made",
+      "state": {
+        "ready_here": "Ready",
+        "check_there": "Checked first",
+        "sign_in_there": "Sign in later",
+        "not_installed": "Install later"
+      }
     },
     "and": "and"
   },
@@ -1215,7 +1282,7 @@
       "deviceNew": "A new, empty folder: {device}",
       "devicePaired": "Files on {device}, through its Puppet Master"
     },
-    "fresh": "Start fresh",
+    "fresh": "Your usual settings",
     "copied": "Like {project}",
     "saved": "Saved with {kind}",
     "notSet": "Not set up now: {list}",
