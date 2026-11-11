@@ -225,9 +225,9 @@ const DETAIL = async (arg) => {
 	const frame = () => new Promise((r) => requestAnimationFrame(() => r()));
 	/* review A-r4 (where it stopped, fault a): no fixed wait. After a tab or a pick, wait until the condition holds and the
 	   manager's detail panes have kept the same text and height for three frames in a row (4s at most) */
-	const settled = async (ok) => {
+	const settled = async (ok, limit = 4000) => {
 		let last = null, same = 0; const t0 = performance.now();
-		while (performance.now() - t0 < 4000) {
+		while (performance.now() - t0 < limit) {
 			await frame();
 			if (ok && !ok()) { last = null; same = 0; continue; }
 			const sig = [...rootNow().querySelectorAll('.pm51-detail-content')].filter((d) => d.getClientRects().length).map((d) => `${d.innerText.length}:${Math.round(d.getBoundingClientRect().height)}`).join(',');
@@ -238,9 +238,12 @@ const DETAIL = async (arg) => {
 	const out = { n: 0, items: 0, bad: [], all: [], unsettled: [] };
 	// the tab must be current and its own panel drawn first: until then the panes and picks are still the last tab's
 	const tabOn = () => { const te = tabEl(); return !!te && te.getAttribute('aria-selected') === 'true'; };
-	/* the panel labelled for this tab; a manager whose panel isn't labelled per tab (Back Seat Driver's stages, the
-	   toolchain's formatters and others) gets 600ms after its tab is current, then the same three still frames */
-	const openTab = async () => { window.PM12_KIMI.dispatchAction('pm51-tab', { manager, tab }); const t0 = performance.now(); return settled(() => tabOn() && (!!panelNow() || performance.now() - t0 > 600)); };
+	/* the panel must be labelled for this tab. One still labelled for another tab of this manager is the last tab's,
+	   drawn late on a first visit (Permissions › Rules showed Profiles' list for over 600ms): wait for it. A manager
+	   whose panel carries no tab label at all (Back Seat Driver's stages, the toolchain's formatters and others) gets
+	   600ms after its tab is current. Then the same three still frames */
+	const panelState = () => { const te = tabEl(); const pid = te && te.getAttribute('aria-controls'); const p = pid && [...rootNow().querySelectorAll(`[id="${pid}"]`)].find(vis); if (!p) return 'none'; const lb = p.getAttribute('aria-labelledby') || ''; return lb === te.id ? 'ok' : lb.startsWith(`pm51-tab-${manager}-`) ? 'stale' : 'unlabelled'; };
+	const openTab = async () => { window.PM12_KIMI.dispatchAction('pm51-tab', { manager, tab }); const t0 = performance.now(); return settled(() => { if (!tabOn()) return false; const st = panelState(); return st === 'ok' || (st !== 'stale' && performance.now() - t0 > 600); }, 6000); };
 	if (!(await openTab())) { out.unsettled.push(`${mt} (the tab never became current)`); return out; }
 	const cv = window.__psxCv || (window.__psxCv = document.createElement('canvas').getContext('2d'));
 	const measure = (label, item) => {
