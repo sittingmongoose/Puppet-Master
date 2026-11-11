@@ -29,7 +29,7 @@ async function stress(f, on) {
 		window.__pjxStress.on = on;
 	}, on);
 }
-const stressCounts = (f) => f.evaluate(() => ({ emits: window.__pjxStress.emits, inPress: window.__pjxStress.inPress }));
+const stressCounts = (f) => f.evaluate(() => ({ emits: window.__pjxStress.emits, inPress: window.__pjxStress.inPress })).then((c) => Object.assign(c, { toastRetries }));
 /* where the frame's (0,0) is in main-frame pixels, and its scale (the review strip may draw the page scaled), as
    t.quickClick works it out */
 async function originOf(f) {
@@ -44,7 +44,7 @@ async function originOf(f) {
    handle from outside would go stale). Returns false when there is no control to press, and 'missed (...)' when the
    pointer-down landed on something else: a press not made, never counted as a lost click. sel is a selector, or
    [selector, words] for the first match whose text starts with those words */
-async function press(t, f, sel, want, hold = 45) {
+async function pressOnce(t, f, sel, want, hold) {
 	// a person waits for what covers a control before pressing (up to 4 s), and closes a notification toast lying over it
 	let r = null;
 	for (let k = 0; k < 20; k++) {
@@ -76,6 +76,21 @@ async function press(t, f, sel, want, hold = 45) {
 	if (want) { const landed = await f.evaluate(() => window.__pjxStress && window.__pjxStress.landed); if (!(want instanceof RegExp ? want.test(landed || '') : landed === want)) return 'missed (landed on ' + landed + ')'; }
 	return true;
 }
+/* a press whose pointer-down landed on a PMConcept7 notification toast (one that slid in between the look for covers
+   and the press) was a press on the toast, not on the control: the toasts are closed with their own dismiss buttons and
+   the press is made again (up to 3 times). It is never counted as lost or as kept; each retry is counted */
+let toastRetries = 0;
+async function press(t, f, sel, want, hold = 45) {
+	let a;
+	for (let k = 0; k < 4; k++) {
+		a = await pressOnce(t, f, sel, want, hold);
+		if (!(typeof a === 'string' && /landed on [^)]*pmn-/.test(a))) return a;
+		toastRetries++;
+		await f.evaluate(() => document.querySelectorAll('.pmn-toast .pmn-x').forEach((x) => x.click()));
+		await t.page.waitForTimeout(350);
+	}
+	return a;
+}
 const waitFor = (f, fn, arg, ms = 2500) => f.waitForFunction(fn, arg, { timeout: ms }).then(() => true).catch(() => false);
 const settle = async (t) => { await t.page.keyboard.press('Escape').catch(() => {}); await t.page.waitForTimeout(120); };
 /* one line per control: presses, losses and the redraw requests that fell inside presses (the proof the stress hit) */
@@ -83,7 +98,8 @@ async function report(t, f, name, lost, notes, before) {
 	const s = await stressCounts(f);
 	const inPress = s.inPress - before.inPress, missed = notes.filter((x) => /missed|covered|no control|setup/.test(x)).length;
 	// a valid round: every press landed on its control, and the stress put redraw requests inside the presses
-	await t.check(`${name}: ${lost - missed} of ${N} presses lost, ${missed} not made (${inPress} redraw requests inside presses, ${s.emits - before.emits} in all)`, lost === 0 && inPress >= N, notes.slice(0, 12).join(' | '));
+	const tr = toastRetries - (before.toastRetries || 0);
+	await t.check(`${name}: ${lost - missed} of ${N} presses lost, ${missed} not made (${inPress} redraw requests inside presses, ${s.emits - before.emits} in all${tr ? `; ${tr} press${tr === 1 ? '' : 'es'} made again after closing a toast` : ''})`, lost === 0 && inPress >= N, notes.slice(0, 12).join(' | '));
 }
 /* what a press result says when it isn't a made press */
 const made = (a) => a === true;
@@ -149,6 +165,23 @@ export const tests = {
 			}
 			await report(t, f, name, lost, n2, before);
 		}
+	},
+	async 'entry points under redraws: the chat header’s New thread split'(t) {
+		const f = await openApp(t);
+		await t.app.page(t, f, 'dashboard');
+		const before = await stressCounts(f); let lost = 0; const notes = [];
+		for (let i = 1; i <= N; i++) {
+			await stress(f, false);
+			await f.evaluate(() => window.PJX.chat.close()); await settle(t);
+			await stress(f, true);
+			const a = await press(t, f, '#pmw-chat56 .chat-header .pjx-newsplit', 'chat:newsplit');
+			const m = made(a) && await waitFor(f, () => !!document.querySelector('.pmr-menu.is-open [role="menuitem"]'));
+			const b = m && await press(t, f, ['.pmr-menu.is-open [role="menuitem"]', 'With no project'], /^With no project/);
+			const ok = made(b) && await waitFor(f, () => { const v = window.PJX.chat.view(); return !!(v && v.draft); });
+			if (!ok) { lost++; notes.push(i + ':' + (!made(a) ? 'chevron ' + why(a) : !m ? 'menu did not open' : !made(b) ? 'menu item ' + why(b) : 'no draft opened')); }
+		}
+		await stress(f, false);
+		await report(t, f, 'Chat header › New thread split › With no project', lost, notes, before);
 	},
 	async 'entry points under redraws: the title bar'(t) {
 		const f = await openApp(t);
