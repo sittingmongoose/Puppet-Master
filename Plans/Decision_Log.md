@@ -29665,6 +29665,15 @@ canonical_text: |-
 
   Q2 approves making Prefer pinned memories, When memories disagree, Crews can read project memories, the four memory source switches (Project files, Plans, Tool output and Manager records), a new Goal's Persona, a new Goal's Crew, Run test profile and Ask me to confirm searchable, explainable and resettable Settings choices. Admission must carry the semantic owner's actual values, default, scope and offered levels through SSYS-004/059 and the existing writer. The answer supplies no missing value/default/level rules and cannot by itself invent them or override AMS-026/054 memory isolation or Goal V2 ownership. Owner gaps must be adjudicated before the affected rows are registered; demo defaults and page-local state are source lineage only. Chat history already has memory.retention.history-retention and is not a fifth new source row.
 
+  Q2 disposition in this batch: 0 Q2 rows admitted. Approved but unregistered, pending these owner questions:
+  - Prefer pinned memories: whether AMS-020's pinned ranking boost may be switched off at all, the off and on scoring meaning, default and offered levels.
+  - When memories disagree: a retrieval-time disagreement policy, its values, default and offered levels; per-capture Teach resolution is not that policy.
+  - Crews can read project memories: an owner-approved successor to AMS-026/054 naming exactly what a Crew may read and what stays private, with values, default, levels and the command and storage contract.
+  - Project files, Plans, Tool output and Manager records source switches: whether each gates retrieval, capture or evidence use, with default and levels, without letting required context or verification evidence go missing.
+  - A new Goal's Persona and a new Goal's Crew: inherit the ordinary thread choice or seed a distinct preference; reference, default, none and inherit meaning, and levels, without adding GoalRecordV2 fields or starting collaboration by setting alone.
+  - Run test profile: a test-profile record and selection contract, default and levels, and absence and deletion behavior for completion evidence.
+  - Ask me to confirm: whether and how a human completion confirmation joins caller evidence, default and levels, and approval, cancellation and replay behavior.
+
   Q3 follows Personas P-010: personas.library.persona-tags is a free string tag input with suggested kinds phase, task, subtask, iteration, cross-phase, language, domain and framework, plus arbitrary freeform tags. The inventory's old seam/package/lane/node/cross-seam choices are replaced as suggestions, not migrated into a closed enum or used to rewrite existing free tags. Persona-owned scope, default empty list and existing layering remain.
 
   Q4 keeps Needs attention for AI roster services with no model chosen. F3-108 and SSYS-026 consume actual owner readiness; this records the existing behavior rather than introducing a second status engine or a new setting.
@@ -29677,6 +29686,7 @@ unblocks: []
 acceptance_criteria:
 - The signed A choices and exact selected labels are preserved with source hashes.
 - Inventory admission uses owner-defined values/defaults/levels; unresolved owners do not acquire invented policy.
+- This batch admits 0 Q2 rows and lists each pending owner question; a later decision admits each row only after its question is answered.
 - Persona tags remain free input with the owner suggestions and existing record ownership.
 - No chosen model renders Needs attention from owner readiness.
 - Without pausing retains the stored value hands-off and does not rename the permission profile.
