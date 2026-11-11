@@ -1257,16 +1257,23 @@ def original_dispatcher(root=ROOT):
     fx = load(FIXTURE_PATH, root)
     siid, epoch = fx["storage_context"]["storage_instance_id"], fx["storage_context"]["recovery_epoch"]
     owner = DCOriginalOwner()
+
+    def seal(record, storage_instance_id, write_epoch, override=None):
+        # Each original is sealed on its own: a writer-built record that cannot be sealed (no family edition, no
+        # EVENT_VALUE bytes) stays unsealed and later reads as unavailable; it never blocks the other originals.
+        try:
+            owner.seal(record, storage_instance_id, write_epoch, root, recipe_tuple(record, **override) if override else None)
+        except (Refusal, KeyError, TypeError, ValueError, AttributeError):
+            pass
     for c in fx["valid_events"]:
-        owner.seal(c["record"], siid, epoch, root)
+        seal(c["record"], siid, epoch)
         compatibility = copy.deepcopy(c["record"]); compatibility["replay_policy"] = "projector_replay_only"
-        owner.seal(compatibility, siid, epoch, root)
+        seal(compatibility, siid, epoch)
     for context in fx["checkpoint_contexts"].values():
         if context.get("last_event") is not None:
-            owner.seal(context["last_event"], context["storage_instance_id"], context["index_read_token"]["source_selection"]["recovery_epoch"], root)
+            seal(context["last_event"], context["storage_instance_id"], context["index_read_token"]["source_selection"]["recovery_epoch"])
     for sealed in pm_collab_p2b_cases.sealed_originals(sys.modules[__name__], root):
-        owner.seal(sealed["record"], sealed["storage_instance_id"], sealed["write_epoch"], root,
-                   recipe_tuple(sealed["record"], **sealed["recipe_override"]) if sealed.get("recipe_override") else None)
+        seal(sealed["record"], sealed["storage_instance_id"], sealed["write_epoch"], sealed.get("recipe_override"))
     recipes = {}
     verifier = FrozenRecipe(frozen_v1_verifier(root))
     for et in EVENT_TYPES:
@@ -2101,6 +2108,9 @@ def stored_size_report(root=ROOT):
     for probe in contract_probes(root,include_shapes=False):
         if probe["domain"]=="envelope" and ":large_reference:" in probe["case_id"]:
             body,_=resolved_payload(probe["value"],probe["payload_store"])
+            # The resolved body holds the shared parser's exact ParsedDecimal carriers; size the same value as typed
+            # JSON (the v1 decoder of its own canonical bytes) for this synthetic inventory.
+            body=decode_json(canonical(body))
             holder=copy.deepcopy(next(c["value"] for c in fx["prepared_sources"] if c["value"]["event_type"]==probe["event_type"] and c["value"]["semantic_body"]["scope_kind"]=="project"))
             holder["semantic_body"]=body;holder["semantic_sha256"]=producer_digest(body)
             rows.append(dict(case_id=probe["case_id"],kind="large_reference",semantic_body=size(body),event_record=size(probe["value"],EVENT_VALUE),source_holder_candidate=size(holder),payload_pack_bytes=len(canonical(body).encode())))
@@ -2891,12 +2901,12 @@ def self_test(root: Path = ROOT) -> dict[str, Any]:
         results["failure_cli_rejects_success_exit"]=exit_code==1
     finally:
         globals()["load"]=original_load
-        for cached in (validator,schema_registry,schema_bases,doc_units):cached.cache_clear()
+        for cached in CACHED:globals()[cached].cache_clear()
     app_path="Plans/application_workflow_contracts.schema.json"
     broken=copy.deepcopy(original_load(app_path,root))
     broken["$defs"]["CollaborationDefinitionStorageApplicationV2"]["properties"]["unvisited_probe"]={"$ref":broken["$id"]+"#/$defs/MISSING_UNVISITED"}
     globals()["load"]=lambda path,where=root:broken if path==app_path else original_load(path,where)
-    validator.cache_clear();schema_registry.cache_clear()
+    for cached in CACHED:globals()[cached].cache_clear()
     try:
         failures=reference_failures(root)
         results["unvisited_wrapper_reference_refused"]=len(failures)==1 and failures[0]["check"]=="unresolved_ref"
@@ -2904,7 +2914,7 @@ def self_test(root: Path = ROOT) -> dict[str, Any]:
         results["unresolved_wrapper_cli_rejects_success_exit"]=exit_code==1
     finally:
         globals()["load"]=original_load
-        validator.cache_clear();schema_registry.cache_clear()
+        for cached in CACHED:globals()[cached].cache_clear()
     return {"status": "pass" if all(results.values()) else "fail", "scenarios": results,"baseline":baseline}
 
 

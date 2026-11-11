@@ -48,6 +48,34 @@ def _storage_bad(original, i):
     return stem + kind
 
 
+def _timestamp_paths(node, path=()):
+    """Paths of every string under a key ending in _utc (the projection schema's timestamp positions)."""
+    if isinstance(node, dict):
+        for k, v in node.items():
+            if k.endswith("_utc") and type(v) is str:
+                yield path + (k,)
+            else:
+                yield from _timestamp_paths(v, path + (k,))
+    elif isinstance(node, list):
+        for i, v in enumerate(node):
+            yield from _timestamp_paths(v, path + (i,))
+
+
+def _get(node, path):
+    for k in path:
+        node = node[k]
+    return node
+
+
+def _set(node, path, value):
+    out = copy.deepcopy(node)
+    target = out
+    for k in path[:-1]:
+        target = target[k]
+    target[path[-1]] = value
+    return out
+
+
 def integer_slots(dc, root, event_type, payload):
     """Top-level integer slots of the payload's closed definition: (field, minimum or None, const or None, subject?)."""
     schema = dc.load(dc.PAYLOAD_PATH, root)["$defs"][dc.payload_def(event_type, dc.edition_of(payload))]
@@ -217,9 +245,11 @@ def probes(dc, root):
     for i, original in enumerate(fx["prepared_sources"]):
         v = original["value"]; et = v["event_type"]; record = v["owner_record"]
         if "created_at" in record and et not in ("collaboration.started", "collaboration.message_added"):
-            for j in range(2):
-                c = copy.deepcopy(original); c["value"]["owner_record"]["created_at"] = _bad_time(record["created_at"], i + 2 * j + (5 if j == 0 else 0))
-                prepared(dc.refresh_prepared(c, True), "owner_time:created_at:" + str(j), "source_schema")
+            # The trailing LF the unguarded owner pattern admitted (interim-review leak), then a calendar/range defect.
+            c = copy.deepcopy(original); c["value"]["owner_record"]["created_at"] = record["created_at"] + "\n"
+            prepared(dc.refresh_prepared(c, True), "owner_time:created_at:lf", "source_schema")
+            c = copy.deepcopy(original); c["value"]["owner_record"]["created_at"] = _bad_time(record["created_at"], i % 5)
+            prepared(dc.refresh_prepared(c, True), "owner_time:created_at:calendar", "source_schema")
             c = copy.deepcopy(original); c["value"]["owner_record"]["created_at"] = record["created_at"][:19] + "+05:30"
             prepared(dc.refresh_prepared(c, True), "owner_time:created_at:offset", None)
         if "review_target_pack" in v and "frozen_at" in v["review_target_pack"]:
@@ -230,18 +260,29 @@ def probes(dc, root):
             c["value"]["review_target_pack"]["frozen_at"] = bad; c["source_context"]["review_target_pack"]["frozen_at"] = bad
             prepared(c, "owner_time:frozen_at:hour_24", "source_schema")
 
-    # ---- CV-1101 checkpoint and projection timestamps (CK20, PV02; STORAGE_UTC_Z).
+    # ---- Projection row values through their own boundary: every committed value accepts; every invalid value is
+    # refused by its definition (PV01).
+    for c in fx["projection_values"]:
+        add("projection", c["case_id"] + ":value", c["value"], None, definition=c["definition"])
+    for c in fx["invalid_projection_values"]:
+        add("projection", c["case_id"] + ":invalid_value", c["value"], "projection_value", definition=c["definition"])
+
+    # ---- CV-1101 checkpoint and projection timestamps (CK20, PV02; STORAGE_UTC_Z), nested ones included.
     for i, c in enumerate(fx["projection_values"]):
         value, definition = c["value"], c["definition"]
-        stamps = [k for k, x in value.items() if k.endswith("_utc") and type(x) is str]
-        for j, field in enumerate(stamps):
-            bad = copy.deepcopy(value); bad[field] = _bad_time(value[field], i + j) if not _bad_time(value[field], i + j).endswith("\n") else value[field][:10] + "T24:00:00Z"
+        stamps = list(_timestamp_paths(value))
+        for j, path in enumerate(stamps):
+            old = _get(value, path)
+            new = _bad_time(old, i + j)
+            new = new if not new.endswith("\n") else old[:10] + "T24:00:00Z"
+            bad = _set(value, path, new)
+            name = c["case_id"] + ":time:" + "/".join(str(x) for x in path)
             if definition == "checkpoint":
-                add("checkpoint", c["case_id"] + ":time:" + field, bad, "checkpoint_schema", context=fx["checkpoint_contexts"][c["case_id"]])
+                add("checkpoint", name, bad, "checkpoint_schema", context=fx["checkpoint_contexts"][c["case_id"]])
             else:
-                add("projection", c["case_id"] + ":time:" + field, bad, "projection_value", definition=definition)
+                add("projection", name, bad, "projection_value", definition=definition)
         if stamps:
-            good = copy.deepcopy(value); good[stamps[0]] = "2016-12-31T23:59:60Z"
+            good = _set(value, stamps[0], "2016-12-31T23:59:60Z")
             if definition == "checkpoint":
                 add("checkpoint", c["case_id"] + ":time:leap_second", good, None, context=fx["checkpoint_contexts"][c["case_id"]])
             else:
