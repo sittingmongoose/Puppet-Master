@@ -23,10 +23,10 @@
     if (!p) return null;
     const n = svcName(p);
     if (p.status === 'active') return { title: `${n} ready`, state: 'Ready', fix: null, todo: null, impact: null };
-    if (p.status === 'disabled') return { title: `${n} turned off`, state: 'Not set up', fix: 'Open', todo: `Turn ${n} on under AI Providers if you want it.`, impact: `Work does not go to ${n} while it is off.` };
-    if (p.status === 'not-installed') return { title: `${n} not installed`, state: 'Not set up', fix: 'Open', todo: `Install ${n} from AI Providers.`, impact: `Work routed to ${n} falls back to another service.` };
-    if (!p.signedIn) return { title: `${n} signed out`, state: 'Needs attention', fix: 'Sign In Again', todo: `Sign in to ${n} from AI Providers.`, impact: `Work routed to ${n} falls back to another service.` };
-    return { title: `${n} needs attention`, state: 'Needs attention', fix: 'Open', todo: `Open ${n} under AI Providers to see what it needs.`, impact: `Work routed to ${n} may fall back to another service.` };
+    if (p.status === 'disabled') return { title: `${n} turned off`, state: 'Not set up', fix: 'Open', todo: `Turn ${n} on under Providers & Accounts if you want it.`, impact: `Work does not go to ${n} while it is off.` };
+    if (p.status === 'not-installed') return { title: `${n} not installed`, state: 'Not set up', fix: 'Open', todo: `Install ${n} from Providers & Accounts.`, impact: `Work routed to ${n} falls back to another service.` };
+    if (!p.signedIn) return { title: `${n} signed out`, state: 'Needs attention', fix: 'Sign In Again', todo: `Sign in to ${n} from Providers & Accounts.`, impact: `Work routed to ${n} falls back to another service.` };
+    return { title: `${n} needs attention`, state: 'Needs attention', fix: 'Open', todo: `Open ${n} under Providers & Accounts to see what it needs.`, impact: `Work routed to ${n} may fall back to another service.` };
   };
   const OWNED = {
     'ai:antigravity': () => providerFinding(provider(['antigravity'])),
