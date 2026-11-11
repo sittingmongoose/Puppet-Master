@@ -1150,7 +1150,10 @@ def check_rules_table(root, spec):
     and text, and every row matches a statement (else it is stale). A row names
     rules or says why no mutation applies. Every rule is named by a row and
     lists at least one mutation (a hand-written id or a generated point key);
-    every hand-written mutation names a rule that lists it.
+    every hand-written mutation names a rule that lists it, except a declared
+    survivor (fix round 17, V04): it names its rule, and no rule lists any
+    declared survivor, hand-written or generated, because a rule is caught
+    only when every mutation it lists makes its witness fail.
     """
     problems = []
     statements, extraction = owner_statements(root, spec["owner_text"])
@@ -1199,12 +1202,20 @@ def check_rules_table(root, spec):
         rule = rules.get(mutation.get("rule"))
         if rule is None:
             problems.append("hand-written mutation %s names no known rule" % mutation["id"])
+        elif mutation.get("survives"):
+            continue
         elif mutation["id"] not in rule["mutations"]:
             problems.append("mutation %s names rule %s, which does not list it" % (mutation["id"], rule["id"]))
-    points = set(spec.get("generated", {}).get("points", {}))
+    generated = spec.get("generated", {}).get("points", {})
+    points = set(generated)
+    survivors = {k for k, e in generated.items() if e.get("survives")} | {
+        m["id"] for m in spec.get("mutations", []) if m.get("survives")}
     for rule in rules.values():
         for name in rule["mutations"]:
-            if name not in hand and name not in points:
+            if name in survivors:
+                problems.append("rule %s lists the declared survivor %s; declared survivors are never listed"
+                                % (rule["id"], name))
+            elif name not in hand and name not in points:
                 problems.append("rule %s lists an unknown mutation: %s" % (rule["id"], name))
             elif name in hand and hand[name].get("rule") != rule["id"] and name not in rule.get("shared", ()):
                 problems.append("rule %s lists %s, which names rule %s; list it under shared"
