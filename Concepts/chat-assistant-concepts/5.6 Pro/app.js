@@ -2707,6 +2707,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     renderApp();
   }
   function renderApp(preserve=true){
+    renderGen++; appRenderGen++;
     syncActivityDomain();
     const wasFollowing=tStick, revealing=settleWorkGate();
     /* Round 3 (A): the render that hides a tail already on screen (armWorkGate g.cut) is a cut: no scroll capture,
@@ -2826,6 +2827,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
      nothing to patch, so callers can fall back to renderApp(). */
   function patchScope(live, html){
     if(!live||!live.isConnected||!html) return false;
+    renderGen++;
     const tpl=document.createElement('template'); tpl.innerHTML=String(html).trim();
     const src=tpl.content.firstElementChild; if(!src) return false;
     if(src.getAttribute('data-k')!==live.getAttribute('data-k')) return false;
@@ -3228,7 +3230,11 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   function followTarget(fn){ followTargetFn=typeof fn==='function'?fn:null; }
   const GLIDE_TAU=70;
   const GLIDE_DT_MAX=120;   /* a late frame still advances the glide by the time it took (to 120 ms); at 60 fps nothing changes */
-  function tEl(){ return scrollKeyEl('transcript'); }
+  /* pm7-perf lane C: the transcript, looked up once while it stays in the page. An attribute query walks the whole
+     document, and PMConcept7's is tens of thousands of nodes: tEl() alone was 25 ms a second of a Working run on Home
+     (CPU profile, Windows), from the glide, the jump pill and the room's checks. Only renderChat makes this element. */
+  var tElNode=null;   /* var, as the other state below: no read before its line runs can throw */
+  function tEl(){ if(tElNode&&tElNode.isConnected) return tElNode; tElNode=scrollKeyEl('transcript'); return tElNode; }
   function tAtBottom(el){
     el=el||tEl(); if(!el) return true;
     const limit=el.scrollHeight-el.clientHeight;
@@ -3237,7 +3243,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const target=tStick&&followTargetFn?followTargetFn(el,limit,true):null;
     return (target==null?limit:Math.min(limit,target))-el.scrollTop<=24;
   }
-  function writeScrollInstant(el,top){ try{ el.scrollTo({top, behavior:'instant'}); }catch(e){ const prev=el.style.scrollBehavior; el.style.scrollBehavior='auto'; el.scrollTop=top; el.style.scrollBehavior=prev; } tExpectTop=el.scrollTop; tLastTop=el.scrollTop; tLastCh=el.clientHeight; }
+  function writeScrollInstant(el,top){ try{ el.scrollTo({top, behavior:'instant'}); }catch(e){ const prev=el.style.scrollBehavior; el.style.scrollBehavior='auto'; el.scrollTop=top; el.style.scrollBehavior=prev; } tExpectTop=el.scrollTop; tLastTop=el.scrollTop; tLastCh=el.clientHeight; followMoved=true; }
   function cancelGlide(){ if(glideRAF){ cancelAnimationFrame(glideRAF); glideRAF=0; } glideTs=0; }
   /* The glide's time constant is real time; a late frame catches up the time it lost instead of falling further behind (P1, 2026-10-23: 302-367 ms on a loaded standalone). */
   function glideStep(ts){
@@ -3263,7 +3269,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const limit=el.scrollHeight-el.clientHeight, target=followTargetFn&&followTargetFn(el,limit);
     const max=target==null?limit:Math.min(limit,target), cur=el.scrollTop, d=max-cur;
     if(target!=null&&d<-.5){ writeScrollInstant(el,max); glideRAF=requestAnimationFrame(glideStep); return; }
-    if(d<=0.5){ glideTs=0; syncJumpBottom(); return; }
+    if(d<=0.5){ glideTs=0; followMoved=false; syncJumpBottom(); return; }
     const tn=performance.now(), dt=glideTs?Math.min(GLIDE_DT_MAX,Math.max(1,tn-glideTs)):16.7; glideTs=tn;
     let next;
     if(window.PM56_MOTION&&window.PM56_MOTION.reduced()) next=max;
@@ -3273,11 +3279,18 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     writeScrollInstant(el,next);
     /* Integer scroll offsets can round the final subpixel step back to cur forever (2px short at 120Hz). Finish
        that near-bottom settle so the next card starts a fresh glide instead of inheriting this idle one's clock. */
-    if(el.scrollTop===cur&&tAtBottom(el)){ writeScrollInstant(el,max); glideTs=0; syncJumpBottom(); return; }
+    if(el.scrollTop===cur&&tAtBottom(el)){ writeScrollInstant(el,max); glideTs=0; followMoved=false; syncJumpBottom(); return; }
     glideRAF=requestAnimationFrame(glideStep);
   }
   function kickFollow(){ if(tStick&&!glideRAF){ glideTs=0; glideRAF=requestAnimationFrame(glideStep); } }
   function followIfSticky(){ kickFollow(); }
+  /* pm7-perf lane C: whether the transcript's size, its list's size or its scroll position may have changed since the
+     glide last came to rest at the bottom (its observer, a scroll event, a write of ours). A patch's follow (restoreScroll)
+     kicks the glide only then: with nothing moved, each kick cost a frame and a forced layout to find it was there. */
+  var followMoved=true;
+  function kickFollowIfMoved(){
+    if(followMoved||(followTargetFn&&(!followTargetFn.active||followTargetFn.active()))) kickFollow();
+  }
   /* A turn module may hold the follow for a moment: a card about to fold frees
      far more room than the answer mounting under it needs, so chasing that
      answer first would scroll down only to be clamped back up by the fold. */
@@ -3306,7 +3319,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     return g;
   }
   function stickToBottom(instant){
-    tStick=true;
+    tStick=true; followMoved=true;
     const el=tEl();
     if(instant&&el){ cancelGlide(); writeScrollInstant(el,el.scrollHeight); requestAnimationFrame(()=>{ const e2=tEl(); if(e2&&tStick) writeScrollInstant(e2,e2.scrollHeight); syncJumpBottom(); }); return; }
     kickFollow();
@@ -3316,7 +3329,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     if(inner===tROTarget) return;
     if(tRO){ tRO.disconnect(); tRO=null; }
     tROTarget=inner;
-    if(inner){ tRO=new ResizeObserver(()=>kickFollow()); tRO.observe(inner); tRO.observe(el); }
+    if(inner){ tRO=new ResizeObserver(()=>{ followMoved=true; kickFollow(); }); tRO.observe(inner); tRO.observe(el); }
   }
   function inTranscript(t){ return !!(t&&t.closest&&t.closest('[data-scroll-key="transcript"]')); }
   const T_SCROLL_KEYS=new Set(['PageUp','PageDown','ArrowUp','ArrowDown','Home','End',' ']);
@@ -3336,7 +3349,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const r=el.getBoundingClientRect();
     if(e.clientX>r.left+el.clientWidth){ tDragging=true; tUserInputAt=performance.now(); tStick=false; cancelGlide(); }
   },{capture:true});
-  document.addEventListener('pointerup',()=>{ if(tDragging){ tDragging=false; tUserInputAt=performance.now(); const el=tEl(); if(el) tStick=tAtBottom(el); } },{capture:true});
+  document.addEventListener('pointerup',()=>{ if(tDragging){ tDragging=false; tUserInputAt=performance.now(); followMoved=true; const el=tEl(); if(el) tStick=tAtBottom(el); } },{capture:true});
   function scrollTargets(scope=document){
     const out=[...scope.querySelectorAll('[data-scroll-key]')];
     for(let el=scope.nodeType===1?scope:null;el;el=el.parentElement) if(el.hasAttribute('data-scroll-key')) out.push(el);
@@ -3393,16 +3406,18 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     return {total:g, el:big?big.el:null, h0:big?big.h0:0, h1:big?big.h1:0, instant};
   }
   function transcriptAwayFromBottom(){
-    const el=scrollKeyEl('transcript');
+    const el=tEl();
     if(!el) return false;
     const max=el.scrollHeight-el.clientHeight;
     if(max<=4) return false;
     return !tAtBottom(el);
   }
+  var jumpBtnNode=null;
   function syncJumpBottom(){
     const on=transcriptAwayFromBottom();
     jumpBottomVisible=on;
-    const btn=document.querySelector('.jump-bottom');
+    /* pm7-perf lane C: kept while it stays in the page (a whole-document query each call; see tEl) */
+    const btn=jumpBtnNode&&jumpBtnNode.isConnected?jumpBtnNode:(jumpBtnNode=document.querySelector('.jump-bottom'));
     if(btn) btn.classList.toggle('is-visible', on);
   }
   function onTranscriptScroll(){
@@ -3413,6 +3428,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
        anchoring is switched off for the transcript (turn-stage.css): it moved the
        view up when a card above shrank, which this rule would misread. */
     const el=tEl();
+    followMoved=true;
     if(el){
       const top=el.scrollTop, prev=tLastTop, ch=el.clientHeight, lastCh=tLastCh; tLastTop=top; tLastCh=ch;
       const ours=tExpectTop!=null&&Math.abs(top-tExpectTop)<=1;
@@ -3546,7 +3562,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
         const v=pos?pos[el.dataset.scrollKey]:null;
         if(v==null) return;
         if(el.dataset.scrollKey==='transcript'&&historyAnchored&&workHistoryAnchor) return;
-        if(v==='follow'){ kickFollow(); return; }
+        if(v==='follow'){ kickFollowIfMoved(); return; }
         /* The reader moved between the patch and this frame: their position
            wins over the one captured before the patch. */
         const post=opts&&opts.post;
@@ -3678,7 +3694,8 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     return content ? `<div class="lens-inline" data-k="lens-inline">${content}</div>` : '';
   }
   function syncInlineLens(){
-    const dock=document.querySelector('.lens-dock');
+    /* pm7-perf lane C: kept while it stays in the page (a whole-document query on every overlay render; see tEl) */
+    const dock=lensDockNode&&lensDockNode.isConnected?lensDockNode:(lensDockNode=document.querySelector('.lens-dock'));
     if(!dock)return;
     const html=renderInlineLens();
     /* Mounting the in-flow controls moves the transcript's viewport before
@@ -3694,7 +3711,8 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     }
   }
   let lastOverlayPayload='';
-  function renderOverlays(){
+  var lensDockNode=null;
+  function renderOverlays(opts){
     const root=document.getElementById('pmOverlayRoot');
     /* F0b (IMPACT A1-36): a scoped picker opened from a sheet goes with that sheet. Closing the
        sheet (x, Cancel, Save, Start) while its picker was open left the 560 px menu hanging at
@@ -3723,7 +3741,10 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     lastMenuSig=menuSig;
     syncHoverCard();
     runAfterRender('overlay',{patched});
-    requestAnimationFrame(positionOverlays);
+    /* pm7-perf lane C: a work tick that changed nothing drawn, with no menu or hover card to place, takes no frame:
+       what is left (the sprouts, syncChatDock) reads only what that tick did not touch. With a menu or a card open the
+       tick still re-places it, as every tick did. */
+    if(patched||!(opts&&opts.still)||state.menu||state.hover) requestAnimationFrame(positionOverlays);
   }
   /* F0b (e), the model-menu fold fix (DESIGN-SPEC 10.1 e; brief C.5, D-16). The 13th model
      was never below reach: scrollIntoView brings kimi-k3-turbo into the list. What missed was
@@ -4532,10 +4553,19 @@ suggested path                    migration 0043, reversible</div></div></sectio
     if(!runningRecs().length){ stopWorkTimer(); maybeFlushQueue(); }
   }
   const STAMP_KEEP=['data-role','data-msg-type','data-family','data-turn','data-turn-pos'];
+  /* pm7-perf lane C: a tick whose card would come out exactly as it is patches nothing. renderGen counts every render
+     of the app and every scoped patch; when nothing rendered since the last light tick, a card whose markup is the
+     string that tick patched it with is already that markup, and patchScope's measuring, scroll custody, hooks and
+     frames would only find so (about one tick in four of the classic run changes nothing drawn; each such patch also
+     stripped and re-set Pip's data-pip-run). The status bar likewise. lightTickGen is renderGen as the last light tick
+     left it, or -1 when something else rendered during that tick (a hook): what that render drew is not known here. */
+  var renderGen=0, appRenderGen=0, lightTickGen=-1, statusBarHtml=null, statusBarNode=null, statusBarGen=-1;
+  const lightTickHtml=new WeakMap();
   function lightTick(live){
-    const t=activeThread(), inner=document.querySelector('.transcript-inner');
+    const tr=tEl(), t=activeThread(), inner=tr&&tr.querySelector('.transcript-inner');
     if(!t||!inner) return false;
-    const recs=new Set(live), covered=new Set();
+    const recs=new Set(live), covered=new Set(), clean=renderGen===lightTickGen, gen0=renderGen;
+    let changed=false, own=0;
     for(const m of t.messages){
       if(m.type!=='working'||!messageVisible(m)) continue;
       const rec=workRecFor(m); if(!rec||!recs.has(rec)) continue;
@@ -4546,14 +4576,24 @@ suggested path                    migration 0043, reversible</div></div></sectio
       const node=inner.querySelector(`:scope > [data-k="${CSS.escape(km[1])}"]`);
       if(!node) return false;
       html=stampItem(html,STAMP_KEEP.map(a=>[a,node.getAttribute(a)]));
+      if(clean&&lightTickHtml.get(node)===html){ covered.add(rec); continue; }
       if(!patchScope(node,html)) return false;
+      lightTickHtml.set(node,html); changed=true; own++;
       covered.add(rec);
     }
     for(const r of live) if(!covered.has(r)) return false;
-    const sb=document.querySelector('.status-bar');
-    if(sb){ const tpl=document.createElement('template'); tpl.innerHTML=renderStatusBar(); if(tpl.content.firstElementChild) pmPatchNode(sb,tpl.content.firstElementChild); }
-    renderOverlays();
+    /* only renderApp makes the status bar (never hosted): looked up once per app render */
+    if(statusBarGen!==appRenderGen){ statusBarGen=appRenderGen; statusBarNode=document.querySelector('.status-bar'); statusBarHtml=null; }
+    const sb=statusBarNode&&statusBarNode.isConnected?statusBarNode:null;
+    if(sb){
+      const sbHtml=renderStatusBar();
+      if(sbHtml!==statusBarHtml){ statusBarHtml=sbHtml; const tpl=document.createElement('template'); tpl.innerHTML=sbHtml; if(tpl.content.firstElementChild) pmPatchNode(sb,tpl.content.firstElementChild); changed=true; }
+    }
+    /* nothing drawn changed: the overlays are re-patched only if their own markup changed, and keep their places */
+    renderOverlays(changed?null:{still:true});
+    /* every tick, changed or not: for a reader who is not following it is also what shows the pill as a card's FLIP grows */
     syncJumpBottom();
+    lightTickGen=renderGen===gen0+own?renderGen:-1;
     return true;
   }
   function stopWorkTimer(killSequence){ clearInterval(workTimer); workTimer=null; if(killSequence){ clearTimeout(seqTimer); seqTimer=null; for(const k in heldNextRuns) delete heldNextRuns[k]; } }

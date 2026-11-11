@@ -502,7 +502,10 @@
     var t = now();
     return t < room.quietUntil || (t < room.quietUntil + FOLD_QUIET_MAX && stillFolding());
   }
-  function roomInner() { var tr = document.querySelector('.chat-stage .transcript'); return tr && tr.querySelector('.transcript-inner'); }
+  /* pm7-perf lane C: the transcript is kept while it stays in the page; a whole-document query on each call cost 5 ms a
+     second of a Working run on Home (CPU profile, Windows) */
+  var roomTr = null;
+  function roomInner() { var tr = roomTr && roomTr.isConnected ? roomTr : (roomTr = document.querySelector('.chat-stage .transcript')); return tr && tr.querySelector('.transcript-inner'); }
   function roomFloor(px) {
     room.floorW = px == null ? null : px;   /* P5: the floor as written */
     if (px == null) document.documentElement.style.removeProperty('--tx-hold-min');
@@ -527,6 +530,37 @@
     /* while held this is the floored height, which is what the reader sees */
     roomRO = new ResizeObserver(function () { if (roomSeen && roomSeen.isConnected) room.lastH = roomSeen.offsetHeight; });
     roomRO.observe(inner);
+    /* pm7-perf lane C: the held room's loop sleeps while nothing in the list moves (roomFrame). A size change of any of
+       the list's items, or any change to the list, wakes it. */
+    if (kidRO) kidRO.disconnect();
+    if (kidMO) kidMO.disconnect();
+    kidRO = new ResizeObserver(roomResized);
+    for (var k = inner.firstElementChild; k; k = k.nextElementSibling) kidRO.observe(k);
+    kidMO = new MutationObserver(roomChanged);
+    kidMO.observe(inner, { childList: true, subtree: true, attributes: true, characterData: true });
+  }
+  var kidRO = null, kidMO = null;
+  function wakeRoom() { if (room.on && !room.raf) room.raf = requestAnimationFrame(roomTick); }
+  /* An item changed size while the loop slept. This runs after layout, so it reads the list now and raises the held
+     height as the loop would have this frame; the loop, woken, writes it in the next frame's layout. Written here, a
+     whole-pixel floor a fraction over the content would resize the list inside this delivery, which the browser
+     reports as a ResizeObserver loop. */
+  function roomResized() {
+    if (!room.on || room.raf) return;
+    if (!room.rel && !room.tier && !roomQuiet() && room.inner === roomSeen && roomSeen && roomSeen.isConnected) {
+      var g = naturalH(roomSeen);
+      if (g > room.h0 + 0.001) room.h0 = Math.ceil(g - 0.001);
+    }
+    wakeRoom();
+  }
+  function roomChanged(list) {
+    for (var i = 0; i < list.length; i++) {
+      var r = list[i], j;
+      if (r.type !== 'childList' || r.target !== roomSeen || !kidRO) continue;
+      for (j = 0; j < r.addedNodes.length; j++) if (r.addedNodes[j].nodeType === 1) kidRO.observe(r.addedNodes[j]);
+      for (j = 0; j < r.removedNodes.length; j++) if (r.removedNodes[j].nodeType === 1) kidRO.unobserve(r.removedNodes[j]);
+    }
+    wakeRoom();
   }
   function holdRoom() {
     if (reduced()) return;
@@ -543,7 +577,7 @@
     roomFloor(room.h0);
     if (!room.raf) room.raf = requestAnimationFrame(roomTick);
   }
-  function releaseRoom() { if (room.on && !room.rel) { room.rel = true; room.x = null; room.v = 0; room.last = now(); room.lastTs = null; room.pdt = null; room.floorAt = room.h0; room.lg = false; room.keep = 0; room.keepWas = 0; } }
+  function releaseRoom() { if (room.on && !room.rel) { room.rel = true; room.x = null; room.v = 0; room.last = now(); room.lastTs = null; room.pdt = null; room.floorAt = room.h0; room.lg = false; room.keep = 0; room.keepWas = 0; wakeRoom(); } }
   /* Round 3 (A): app.js rewound the transcript (rewindTranscript, a thread switch): no room is kept for what left,
      and the next hold measures the list as it is then (roomSeen cleared: holdShrink takes offsetHeight, watchRoom
      re-observes the list) */
@@ -621,6 +655,9 @@
     room.viewTs = ts; room.viewDt = dt; room.viewNat = nat;
     return Math.max(wanted, tr.scrollTop - Math.max(0, CLOSE_STEP * Math.min(1, sdt * 60) - growth));
   }
+  /* app.js asks this before a follow kick that has nothing else to wake it (kickFollowIfMoved): while a close's view
+     cut holds, the target moves every frame by itself */
+  closeFollowTarget.active = function () { return room.on && room.rel && room.lg && room.viewCut; };
   function closeViewStart() {
     var inner = roomInner(), tr = inner && inner.closest('.transcript'), c = C();
     room.viewTs = null; room.viewDt = null; room.viewNat = null; room.viewCut = false; room.viewCompleteTop = null; room.viewBody = null;
@@ -737,7 +774,7 @@
   function shrinkRelAt() { return runHoldsRoom() ? Infinity : now() + SHRINK_HOLD; }
   function holdShrink(fresh, finite, atLeast) {
     if (reduced() && !runHoldsRoom()) return;
-    if (room.on) { if (room.lg) { room.keepWas = room.keep; keepRoom(); } if (room.tier) { room.tier = false; if (!room.rel && room.floorW !== room.h0) roomFloor(room.h0); } if (finite === true) { room.transient = true; room.relAt = now() + SHRINK_HOLD; } else if (room.transient && !room.rel) room.relAt = shrinkRelAt(); return; }
+    if (room.on) { if (room.lg) { room.keepWas = room.keep; keepRoom(); } if (room.tier) { room.tier = false; if (!room.rel && room.floorW !== room.h0) roomFloor(room.h0); } if (finite === true) { room.transient = true; room.relAt = now() + SHRINK_HOLD; } else if (room.transient && !room.rel) room.relAt = shrinkRelAt(); wakeRoom(); return; }
     var c = C(); if (!c || (c.isSticky && !c.isSticky())) return;
     var inner = roomInner(); if (!inner) return;
     /* fresh: a hold that follows no shrink (watchRoom) takes the list as it is now */
@@ -759,7 +796,7 @@
      shrink a FLIP or a fold announces makes it an ordinary hold (holdShrink). */
   function holdTier(down) {
     if (reduced()) return;   /* there the dial changes at once and watchRoom holds the run's room from its start */
-    if (room.on) { if (down && room.lg) keepRoom(); if (down && room.transient && !room.rel) room.relAt = shrinkRelAt(); return; }
+    if (room.on) { if (down && room.lg) keepRoom(); if (down && room.transient && !room.rel) room.relAt = shrinkRelAt(); wakeRoom(); return; }
     if (!down && !runHoldsRoom()) return;
     /* the list's laid-out height is whole pixels; the floor starts at or above the content it holds. The content is read
        before the hold writes the floor, which it then writes once: read after that write, it restyled the whole page in
@@ -782,6 +819,7 @@
     if (!room.on || !inner || inner !== room.inner) { dropRoom(); return; }
     if (room.transient && !room.rel && room.relAt === Infinity && (!runHoldsRoom() || room.h0 - naturalH(inner) > RUN_ROOM_MAX)) room.relAt = now() + SHRINK_HOLD;
     if (room.transient && !room.rel && now() >= room.relAt) releaseRoom();
+    var still = false;
     if (!room.rel && !roomQuiet()) {
       /* after the fold the floor only ratchets up: a follow into content past
          it can then never be clamped back when something above shrinks */
@@ -790,12 +828,20 @@
          pixel when a subject's rows folded, 26.4 s), at most one write per pixel of growth. A tier hold writes only
          once the growth stops (each write restyles the page; written mid-growth it cost a 69 ms frame and a 30 px step). */
       if (grown > room.h0 + 0.001) { room.h0 = Math.ceil(grown - 0.001); if (!room.tier) roomFloor(room.h0); }
+      /* a growth roomResized took while this loop slept: written now, in the layout of the frame after it */
+      else if (!room.tier && room.floorW !== room.h0) roomFloor(room.h0);
       /* round 3 (hist): a growth still adding under half a pixel a frame (a spring's settle) has stopped: deferred
          past it, the floor stayed at the pre-growth height for a frame too many, and a fold nothing announced then
          clamped a following reader 67 px down (hosted Long agent turn, 14.4 s, 1 run in 9) */
       if (room.tier) { if (room.floorW !== room.h0 && !(grown > room.grownAt + 0.5)) roomFloor(room.h0); room.grownAt = grown; }
       /* round 3 (hist): the run's own height, the most the list held without what the reader opened */
       var ownH = grown - openedH(inner); if (ownH > room.own) room.own = ownH;
+      /* pm7-perf lane C: a run's room held with nothing moving (no release due, no tier write waiting, the list the
+         height it was last frame) has nothing to do each frame. Every frame of it read the list and kicked the
+         follow, and asked for the next frame: 64 main frames a second for a whole Working run on Home (Windows,
+         RTX 3090, 120 Hz). It sleeps until roomResized, roomChanged, a hold call or watchRoom's interval wakes it. */
+      still = room.transient && room.relAt === Infinity && !(room.tier && room.floorW !== room.h0) && Math.abs(grown - room.lastNat) < 0.01 && inner === roomSeen && !!kidRO;
+      room.lastNat = grown;
     }
     if (room.rel) {
       if (room.lg && room.viewCut && !runHoldsRoom()) {
@@ -880,6 +926,7 @@
     }
     try { C().followIfSticky(); } catch (e) { }
     if (room.rel && room.lg) lgMark(inner);
+    if (still) return;
     room.raf = requestAnimationFrame(roomTick);
   }
 
@@ -1280,7 +1327,8 @@
     var c; try { c = C(); } catch (e) { return; }
     if (!c || !c.registerTurnOwner) return;
     wired = true;
-    setInterval(watchRoom, 700);
+    /* ...and once a 700 ms tick: a run that stops running with nothing in the list changing still lets its room go */
+    setInterval(function () { watchRoom(); wakeRoom(); }, 700);
     c.registerTurnOwner(owner);
     c.onWorkComplete(onComplete);
     if (c.onWorkShrink) c.onWorkShrink(holdShrink);
