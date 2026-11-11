@@ -98,34 +98,63 @@
       if (this.gSlice.getAttribute('display') !== 'inline') this.gSlice.setAttribute('display', 'inline');
     },
     renderBrackets() {
-      const id = this.target, pr = id && this.props.get(id);
-      if (!pr || !pr.pos) { this.gHud.innerHTML = ''; return; }
+      const id = this.target, pr = id && this.props.get(id), sa = Hp.sa, el = Hp.el;
+      if (!pr || !pr.pos) { if (this.gHud.firstChild) this.gHud.textContent = ''; this.hudB = null; return; }
       const sc = this.propTarget(pr).sc, x = pr.pos[0], y = pr.pos[1], Lay = this.L;
       // brackets fly in and lock when the target changes, then breathe a little
       const inK = this.reduced ? 1 : ease((this.t - (this.tgtT || 0)) / .4);
       const lock = this.lockT != null && this.t - this.lockT < 1.2 ? 1 - Math.min(1, (this.t - this.lockT) / .25) : 0;
-      const pulse = this.reduced ? 0 : Math.sin(this.t * 3) * 1.2;
+      const pulse = this.hudPulse();
       const grow = (1 - inK) * 34 + lock * 14 + pulse;
       const hw = 58 * sc + grow, hh = Math.max(48, pr.foot + 8) * sc + grow, k = 12 * sc, c = this.w.ink;
-      const corner = (cx, cy, dx, dy) => `<path d="M${R(cx)} ${R(cy + dy * k)}V${R(cy)}H${R(cx + dx * k)}" fill="none" stroke="${c}" stroke-width="1.6"/>`;
-      let s = corner(x - hw, y - hh, 1, 1) + corner(x + hw, y - hh, -1, 1) + corner(x - hw, y + hh, 1, -1) + corner(x + hw, y + hh, -1, -1)
-        + `<path d="M${R(x - hw - 10)} ${R(y)}H${R(x - hw - 3)}M${R(x + hw + 3)} ${R(y)}H${R(x + hw + 10)}" stroke="${c}" stroke-width="1"/>`;
+      /* (made once per target and look, then each draw writes only the values that changed: rebuilding the HUD with
+         innerHTML inserted 5-7 nodes a frame, a whole-document layerization each; PERF-1. The marker's turn is a CSS
+         animation on its own element, 120 degrees a second from the angle it had, so it needs no draw at all) */
+      let B = this.hudB;
+      if (!B || B.id !== id || B.c !== c || B.g !== this.gHud || B.reduced !== this.reduced) {
+        this.gHud.textContent = '';
+        B = this.hudB = { id, c, g: this.gHud, reduced: this.reduced };
+        B.corners = [0, 1, 2, 3].map(() => el('path', { fill: 'none', stroke: c, 'stroke-width': '1.6' }, this.gHud));
+        B.ticks = el('path', { stroke: c, 'stroke-width': '1' }, this.gHud);
+        B.mark = el('g', null, this.gHud);
+        B.dia = el('rect', { x: '-3.5', y: '-3.5', width: '7', height: '7', fill: 'none', stroke: c, 'stroke-width': '1.2' }, B.mark);
+        if (this.reduced) B.dia.setAttribute('transform', 'rotate(45)');
+        else { B.dia.setAttribute('class', 'pst-nspin'); B.dia.style.animationDelay = `${-R(((this.t * 120) % 360) / 120)}s`; }
+      }
+      const corner = (cx, cy, dx, dy) => `M${R(cx)} ${R(cy + dy * k)}V${R(cy)}H${R(cx + dx * k)}`;
+      sa(B.corners[0], 'd', corner(x - hw, y - hh, 1, 1)); sa(B.corners[1], 'd', corner(x + hw, y - hh, -1, 1));
+      sa(B.corners[2], 'd', corner(x - hw, y + hh, 1, -1)); sa(B.corners[3], 'd', corner(x + hw, y + hh, -1, -1));
+      sa(B.ticks, 'd', `M${R(x - hw - 10)} ${R(y)}H${R(x - hw - 3)}M${R(x + hw + 3)} ${R(y)}H${R(x + hw + 10)}`);
       // the marker: a diamond turning above the target
-      const my = y - hh - 12, a = this.reduced ? 45 : (this.t * 120) % 360;
-      s += `<rect x="${R(x - 3.5)}" y="${R(my - 3.5)}" width="7" height="7" fill="none" stroke="${c}" stroke-width="1.2" transform="rotate(${R(a)} ${R(x)} ${R(my)})"/>`;
+      const my = y - hh - 12;
+      sa(B.mark, 'transform', `translate(${R(x)} ${R(my)})`);
       // a leader line from Pip to the target, drawn once the brackets lock, with its label at the elbow
+      let lab = null;
       if (inK > .6 && this.H) {
         const hc = this.headXf([50, 40], this.H, this.ang || 0, 1, 1), ex = x - hw - 4, ey = y - hh;
         const mx = hc[0] + Math.min(26, Math.max(10, (ex - hc[0]) * .3)), myy = Math.min(hc[1] - 16, ey);
         const len = Math.hypot(mx - hc[0], myy - hc[1]) + Math.abs(ex - mx), drawn = this.reduced ? 1 : ease((inK - .6) / .4);
-        s += `<path d="M${R(hc[0])} ${R(hc[1])}L${R(mx)} ${R(myy)}H${R(ex)}" fill="none" stroke="${c}" stroke-width="1" stroke-dasharray="${R(len)}" stroke-dashoffset="${R(len * (1 - drawn))}"/>`;
-        s += `<rect x="${R(hc[0] - 2)}" y="${R(hc[1] - 2)}" width="4" height="4" fill="${c}"/>`;
-        const lab = (this.hudEl && this.hudEl.querySelector('.pst-target') || {}).textContent || '';
-        if (drawn > .9 && mx + 6 < ex - 20 && Lay.w > 300) s += `<text x="${R(mx + 4)}" y="${R(myy - 5)}" font-family="'PM NieR Sans','Inter',sans-serif" font-size="8.5" letter-spacing="1.4" fill="${c}">${lab.replace(/&/g, '&amp;').replace(/</g, '&lt;').slice(0, 18)}</text>`;
-      }
-      this.gHud.innerHTML = s;
+        if (!B.lead) { B.lead = el('path', { fill: 'none', stroke: c, 'stroke-width': '1' }, this.gHud); B.dot = el('rect', { width: '4', height: '4', fill: c }, this.gHud); }
+        sa(B.lead, 'd', `M${R(hc[0])} ${R(hc[1])}L${R(mx)} ${R(myy)}H${R(ex)}`); sa(B.lead, 'stroke-dasharray', R(len)); sa(B.lead, 'stroke-dashoffset', R(len * (1 - drawn)));
+        sa(B.dot, 'x', R(hc[0] - 2)); sa(B.dot, 'y', R(hc[1] - 2));
+        const name = (this.hudEl && this.hudEl.querySelector('.pst-target') || {}).textContent || '';
+        if (drawn > .9 && mx + 6 < ex - 20 && Lay.w > 300) lab = { x: R(mx + 4), y: R(myy - 5), text: name.slice(0, 18) };
+      } else if (B.lead) { B.lead.remove(); B.dot.remove(); B.lead = B.dot = null; }
+      if (lab) {
+        if (!B.lab) B.lab = el('text', { 'font-family': "'PM NieR Sans','Inter',sans-serif", 'font-size': '8.5', 'letter-spacing': '1.4', fill: c }, this.gHud);
+        sa(B.lab, 'x', lab.x); sa(B.lab, 'y', lab.y); if (B.lab.textContent !== lab.text) B.lab.textContent = lab.text;
+      } else if (B.lab) { B.lab.remove(); B.lab = null; }
       const co = this.hudEl && this.hudEl.querySelector('.pst-ncoord');
-      if (co && this.t - (this.coT || 0) > .25) { this.coT = this.t; co.textContent = `X ${String(Math.round(x)).padStart(3, '0')} Y ${String(Math.round(y)).padStart(3, '0')}`; }
+      if (co && this.t - (this.coT || 0) > .25) { this.coT = this.t; const txt = `X ${String(Math.round(x)).padStart(3, '0')} Y ${String(Math.round(y)).padStart(3, '0')}`; if (co.textContent !== txt) co.textContent = txt; }
+    },
+    // the brackets' breathing (a draw is due once it has moved them a tenth of a pixel, like Pip; PERF-1)
+    hudPulse() { return this.reduced ? 0 : Math.sin(this.t * 3) * 1.2; },
+    // whether the HUD moves by itself this frame: the brackets flying in and locking, the leader drawing in, the glitch
+    hudBusy() {
+      const pr = this.target && this.props.get(this.target);
+      if (this.gSlice && (this.sliceT != null && !this.reduced && (this.t - this.sliceT) / .42 < 1 || this.gSlice.getAttribute('display') !== 'none')) return true;
+      if (!pr || !pr.pos || this.reduced) return false;
+      return this.t - (this.tgtT || 0) < .45 || (this.lockT != null && this.t - this.lockT < .3);
     }
   });
 })();

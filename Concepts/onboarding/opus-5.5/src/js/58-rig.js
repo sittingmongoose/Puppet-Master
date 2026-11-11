@@ -1497,26 +1497,52 @@
         this.fx.push({ e, kind: 'z', x: hc[0] + 40, y: hc[1] - 30, vx: 14, vy: -26, r: 0, vr: .4, life: 0, max: 2, g: 0 });
       }
       // soft shadows on the floor: Pip's and each prop's, smaller and fainter the higher they hang
+      /* (kept elements, each value written only when it changed: rebuilding them with innerHTML inserted new nodes on
+         every drawn frame, a whole-document layerization and a childList record for every page observer; PERF-1) */
       if (f === 'friendly' || f === 'glass') {
-        const sh = (x, y, r) => { const h = Math.max(0, Lay.ground - y), k = clamp(1 - h / (Lay.h * .9), .25, 1); return `<ellipse cx="${R(x)}" cy="${Lay.ground + 2}" rx="${R(r * (.6 + k * .5))}" ry="${R(r * .13 * (.6 + k * .5))}" fill="${this.w.shadow}" opacity="${R(k * .7)}"/>`; };
-        let out = sh(H[0], H[1] + 64 * Lay.s / 2.6, 46 * Lay.s / 2.6);
-        this.props.forEach((pr) => { if (pr.pos) out += sh(pr.pos[0], pr.pos[1] + pr.foot * (pr.spec.scale || 1) * Lay.propScale, 40 * (pr.spec.scale || 1) * Lay.propScale * pr.op); });
-        this.gShadow.innerHTML = out;
+        const shs = [[H[0], H[1] + 64 * Lay.s / 2.6, 46 * Lay.s / 2.6]];
+        this.props.forEach((pr) => { if (pr.pos) shs.push([pr.pos[0], pr.pos[1] + pr.foot * (pr.spec.scale || 1) * Lay.propScale, 40 * (pr.spec.scale || 1) * Lay.propScale * pr.op]); });
+        const g = this.gShadow, kids = g.children;
+        while (kids.length > shs.length) g.lastElementChild.remove();
+        while (kids.length < shs.length) el('ellipse', { cy: Lay.ground + 2, fill: this.w.shadow }, g);
+        shs.forEach(([x, y, r], i) => {
+          const e = kids[i], h = Math.max(0, Lay.ground - y), k = clamp(1 - h / (Lay.h * .9), .25, 1);
+          sa(e, 'cx', R(x)); sa(e, 'cy', Lay.ground + 2); sa(e, 'rx', R(r * (.6 + k * .5))); sa(e, 'ry', R(r * .13 * (.6 + k * .5))); sa(e, 'fill', this.w.shadow); sa(e, 'opacity', R(k * .7));
+        });
       }
       // Basic measures: a plumb line from Pip to the floor and a marker riding the ruler
       // and a protractor under the hand that reads Pip's swing, its marker on the angle of the string
+      /* (the protractor and ruler are made once for the layout and look, the arc and its ticks about the hand's spot;
+         each draw moves them and writes only the values that changed: the marker, the plumb line, the ruler's marker
+         and the two numbers; PERF-1) */
       if (f === 'basic') {
         const c = this.w.accent, ln = this.w.line, x = R(hc[0]), y0 = R(H[1] + 30 * Lay.s);
-        const r = Lay.rope * .52, cx = ps.C.x, cy = ps.C.y, A = (d) => d / 57.3, P = (q, rr) => `${R(cx + Math.sin(q) * rr)} ${R(cy + Math.cos(q) * rr)}`;
-        let tk = '';
-        for (let d = -30; d <= 30; d += 5) tk += `M${P(A(d), r)}L${P(A(d), r + (d % 15 ? 3.5 : 7))}`;
-        const th = clamp(ps.th, -A(34), A(34)), deg = ps.th * 57.3, lab = `${deg < -.05 ? '-' : ''}${Math.abs(deg).toFixed(1)}`;
-        const m = (q, rr) => [cx + Math.sin(q) * rr, cy + Math.cos(q) * rr], tip = m(th, r - 1), b1 = m(th - .045, r - 9), b2 = m(th + .045, r - 9), lp = m(A(-38), r + 4);
-        this.gShadow.innerHTML = `<path d="M${P(A(-30), r)}A${R(r)} ${R(r)} 0 0 0 ${P(A(30), r)}${tk}" fill="none" stroke="${ln}" stroke-opacity=".28" stroke-width="1"/>`
-          + `<path d="M${R(cx)} ${R(cy)}L${P(0, r + 7)}" stroke="${ln}" stroke-opacity=".18" stroke-dasharray="2 3"/>`
-          + `<path d="M${R(tip[0])} ${R(tip[1])}L${R(b1[0])} ${R(b1[1])}L${R(b2[0])} ${R(b2[1])}Z" fill="${c}"/>`
-          + (Lay.w > 300 ? `<text x="${R(lp[0])}" y="${R(lp[1])}" text-anchor="end" font-family="'Inter',system-ui,sans-serif" font-size="9" font-weight="600" fill="${ln}" opacity=".55">θ ${lab}<tspan dy="-3.5" font-size="6">o</tspan></text>` : '')
-          + `<path d="M${x} ${y0}V${Lay.ground - 6}" stroke="${ln}" stroke-opacity=".22" stroke-dasharray="2 4"/><path d="M${x} ${Lay.ground + 1}l-5 8h10z" fill="${c}"/><text x="${x}" y="${Lay.ground + 22}" text-anchor="middle" font-family="'Inter',system-ui,sans-serif" font-size="9" font-weight="600" fill="${ln}" opacity=".55">${Math.round(hc[0])}</text>`;
+        const r = Lay.rope * .52, cx = ps.C.x, cy = ps.C.y, A = (d) => d / 57.3, P = (q, rr) => `${R(Math.sin(q) * rr)} ${R(Math.cos(q) * rr)}`;
+        const pkey = [this.theme, r, Lay.w > 300, Lay.ground, c, ln].join('|');
+        let pt = this.protractor;
+        if (!pt || pt.key !== pkey || pt.g.parentNode !== this.gShadow) {
+          let tk = '';
+          for (let d = -30; d <= 30; d += 5) tk += `M${P(A(d), r)}L${P(A(d), r + (d % 15 ? 3.5 : 7))}`;
+          const lp = [Math.sin(A(-38)) * (r + 4), Math.cos(A(-38)) * (r + 4)], font = "'Inter',system-ui,sans-serif";
+          this.gShadow.textContent = '';
+          const g = el('g', null, this.gShadow);
+          el('path', { d: `M${P(A(-30), r)}A${R(r)} ${R(r)} 0 0 0 ${P(A(30), r)}${tk}`, fill: 'none', stroke: ln, 'stroke-opacity': '.28', 'stroke-width': '1' }, g);
+          el('path', { d: `M0 0L${P(0, r + 7)}`, stroke: ln, 'stroke-opacity': '.18', 'stroke-dasharray': '2 3' }, g);
+          pt = this.protractor = { key: pkey, g, marker: el('path', { fill: c }, g) };
+          if (Lay.w > 300) { pt.ang = el('text', { x: R(lp[0]), y: R(lp[1]), 'text-anchor': 'end', 'font-family': font, 'font-size': '9', 'font-weight': '600', fill: ln, opacity: '.55' }, g); pt.angT = document.createTextNode(''); pt.ang.appendChild(pt.angT); el('tspan', { dy: '-3.5', 'font-size': '6' }, pt.ang).textContent = 'o'; }
+          pt.plumb = el('path', { stroke: ln, 'stroke-opacity': '.22', 'stroke-dasharray': '2 4' }, this.gShadow);
+          pt.foot = el('path', { d: `M0 ${Lay.ground + 1}l-5 8h10z`, fill: c }, this.gShadow);
+          pt.num = el('text', { y: Lay.ground + 22, 'text-anchor': 'middle', 'font-family': font, 'font-size': '9', 'font-weight': '600', fill: ln, opacity: '.55' }, this.gShadow);
+        }
+        const th = clamp(ps.th, -A(34), A(34)), deg = ps.th * 57.3, lab = `θ ${deg < -.05 ? '-' : ''}${Math.abs(deg).toFixed(1)}`;
+        const m = (q, rr) => [Math.sin(q) * rr, Math.cos(q) * rr], tip = m(th, r - 1), b1 = m(th - .045, r - 9), b2 = m(th + .045, r - 9);
+        sa(pt.g, 'transform', `translate(${R(cx)} ${R(cy)})`);
+        sa(pt.marker, 'd', `M${R(tip[0])} ${R(tip[1])}L${R(b1[0])} ${R(b1[1])}L${R(b2[0])} ${R(b2[1])}Z`);
+        if (pt.angT && pt.angT.data !== lab) pt.angT.data = lab;
+        sa(pt.plumb, 'd', `M${x} ${y0}V${Lay.ground - 6}`);
+        sa(pt.foot, 'transform', `translate(${x} 0)`);
+        sa(pt.num, 'x', x);
+        const n = String(Math.round(hc[0])); if (pt.num.textContent !== n) pt.num.textContent = n;
       }
       // Retro: the vector terrain rolls toward you, and the phosphor remembers where Pip was
       if (this.gTerrain && !this.reduced) {

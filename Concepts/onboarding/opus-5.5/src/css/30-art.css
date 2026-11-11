@@ -264,6 +264,11 @@
 #pm-o55-onboarding .pst[data-fam="nier"] .pst-bubble::after { display: none; }
 #pm-o55-onboarding .pst[data-fam="nier"] .pst-bubble.on { animation: pstDlg .4s steps(5, end); }
 @keyframes pstDlg { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(-30px 0 0 0); } }
+/* NieR's target marker turns 120 degrees a second on its own, about its centre (the transform attribute's own origin), so
+   the stage need not redraw the HUD every frame for it (54-art-nier.js renderBrackets; PERF-1). Reduced Motion: drawn at 45
+   degrees with no animation */
+#pm-o55-onboarding .pst-hud .pst-nspin { transform-box: view-box; transform-origin: 0 0; animation: pstNspin 3s linear infinite; }
+@keyframes pstNspin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 #pm-o55-onboarding .pst-bn { position: absolute; left: 0; top: -19px; padding: 4px 12px 4px 10px; font-weight: 600; font-size: 9.5px; letter-spacing: .3em; background: var(--nbox); color: var(--ntext); }
 #pm-o55-onboarding .pst-bgo { position: absolute; right: 13px; bottom: 12px; width: 7px; height: 9px; background: currentColor; clip-path: polygon(0 0, 100% 50%, 0 100%); animation: stLed 1s steps(1, end) infinite; }
 #pm-o55-onboarding .pst-bubble.typing .pst-bgo { opacity: 0; animation: none; }
