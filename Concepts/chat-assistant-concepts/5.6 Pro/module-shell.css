@@ -1080,7 +1080,7 @@ p.pmx-meta, .pmx-meta{margin:0;font:var(--pmx-fs-meta);font-weight:var(--pmx-w-r
 .pmx-dock-line[data-ask] > .pmx-dock-say{grid-row:1;grid-column:2;white-space:normal;overflow:visible;}
 .pmx-dock-line[data-ask] > .pmx-clock{grid-row:1;grid-column:3;}
 .pmx-dock-line[data-ask] > .pmx-dock-act{grid-row:1;grid-column:4;}
-.pmx-dock-body{grid-row:2;grid-column:2 / -1;display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;min-width:0;padding-right:10px;}
+.pmx-dock-body{grid-row:2;grid-column:2 / -1;display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;min-width:0;padding-right:10px;container:pmxdockbody / inline-size;}
 /* the question asks for its whole width: the answers share its row only when it fits there on one line */
 .pmx-dock-q{flex:1 1 auto;min-width:0;max-width:100%;margin:0;font:var(--pmx-fs-sentence);color:var(--text);overflow-wrap:anywhere;}
 .pmx-dock-q code{font:500 12px/18px var(--font-mono);color:var(--text);}
@@ -1106,6 +1106,17 @@ p.pmx-meta, .pmx-meta{margin:0;font:var(--pmx-fs-meta);font-weight:var(--pmx-w-r
 .pmx-ask-lead{margin:0;font:var(--pmx-fs-meta);color:var(--muted);}
 .pmx-ask-seg-in{display:inline-flex;min-width:0;}
 :is(.pmx-dock, .pmx-decision, .bc-allow-banner) .pmx-ask-seg-in > .soft-button{padding:0 10px;}
+/* sol-review-l1c C2: the ladder is sized from the width that remains in the line, not from padding that assumes no
+   scrollbar. In a narrow chat (a 400 px chat leaves the body 331-341 px, 331 once the dock's own scrollbar shows) the
+   buttons' sides and the gaps tighten (never the text, which stays each look's size), so Retro's wider type (324 px at
+   its usual spacing) keeps Deny and the segmented control on one row whether the scrollbar shows or not; the row's
+   height never changes with the scrollbar, so no scrollbar/height feedback can keep it wrapped. */
+@container pmxdockbody (max-width: 359.98px){
+  .pmx-dock-body .pmx-dock-answers{gap:4px;}
+  .pmx-dock-body .pmx-dock-answers > .pmx-dock-ans{padding:0 9px;}
+  .pmx-dock-body .pmx-ask-seg{gap:4px;}
+  .pmx-dock-body .pmx-ask-seg-in > .soft-button.pmx-dock-ans{padding:0 8px;}
+}
 :is(.pmx-dock, .pmx-decision, .bc-allow-banner) .pmx-ask-seg-in > .soft-button + .soft-button{margin-left:-1px;}
 :is(.pmx-dock, .pmx-decision, .bc-allow-banner) .pmx-ask-seg-in > .soft-button:not(:first-child){border-top-left-radius:0;border-bottom-left-radius:0;}
 :is(.pmx-dock, .pmx-decision, .bc-allow-banner) .pmx-ask-seg-in > .soft-button:not(:last-child){border-top-right-radius:0;border-bottom-right-radius:0;}

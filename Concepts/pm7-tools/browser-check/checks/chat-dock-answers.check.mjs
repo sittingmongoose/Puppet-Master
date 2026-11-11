@@ -40,7 +40,8 @@
 //   looks     in all ten looks, at a 600 and a 400 px docked chat: every answer of every asking line (rest, and with the
 //             Always chooser open) and of the helper card's ladder is on top at its centre (native hit test), inside its
 //             line or card, at least 24 px tall, its words not clipped, the ladder one row (Deny beside the segmented
-//             control), and no asking line scrolls sideways. Each answer is
+//             control), and no asking line scrolls sideways; at 400 px also with the dock scrolling (a third asking line,
+//             its scrollbar showing) through a 1920x1080 -> 1390x900 -> back resize, the chat measured at 400 (C2). Each answer is
 //             first scrolled into the dock's view: past its height budget the dock scrolls in place (pmx-system.css).
 //             Reduced Motion alternates between reduce and no-preference by look.
 //   late      a dock provider registered after the chat's first render still shows: with every DOMContentLoaded dock
@@ -597,7 +598,22 @@ async function looksCase(t, surface) {
 				const r = await measure('#pmRoot .composer > .pmx-dock .pmx-dock-line[data-ask]');
 				await t.check(`${surface} ${look} ${w} bar ${state}: every answer on top and whole`, r.boxes >= 2 && r.buttons >= 7 && !r.bad.length, JSON.stringify(r));
 			}
-			await f.evaluate(() => { const a = PM56_ASKS.list().find((x) => x.id === 'perm-studio-host'); if (a) a.ui.always = false; });
+			await f.evaluate(() => { const a = PM56_ASKS.list().find((x) => x.id === 'perm-studio-host'); if (a) a.ui.always = false; PM56_APP.render(); });
+			if (w === 400) {
+				// sol-review-l1c C2: the dock scrolls (a third asking line) and the window goes 1920x1080 -> 1390x900 -> back
+				// with the chat measured at 400 px: the ladder stays one row with the dock's scrollbar showing, in every look,
+				// and no scrollbar/height feedback keeps it wrapped after widening back
+				const extra = await f.evaluate(() => PM56_ASKS.ask({ tool: 'bash', target: 'pg_dump --schema-only tastebook', who: 'Schema Reviewer' }));
+				for (const [vw, vh] of [[1920, 1080], [1390, 900], [1920, 1080]]) {
+					await t.viewport(vw, vh);
+					await f.evaluate(() => PMW.chatCol.setWidth(400));
+					await t.page.waitForTimeout(600);
+					const st = await f.evaluate(() => { const d = document.querySelector('#pmRoot .composer > .pmx-dock'), p = document.getElementById('chatPanel'); return { chat: p ? Math.round(p.getBoundingClientRect().width) : null, scroll: d ? d.scrollHeight > d.clientHeight + 1 : false, bar: d ? d.offsetWidth - d.clientWidth : 0 }; });
+					const r = await measure('#pmRoot .composer > .pmx-dock .pmx-dock-line[data-ask]');
+					await t.check(`${surface} ${look} 400 at ${vw}x${vh}, dock scrolling: the ladder stays one row`, st.chat === 400 && st.scroll && !r.bad.some((b) => /ladder wraps/.test(b)), JSON.stringify({ st, wraps: r.bad.filter((b) => /ladder wraps/.test(b)) }));
+				}
+				await f.evaluate((i) => { PM56_ASKS.drop(i); PM56_APP.render(); }, extra);
+			}
 			await thread_(t, f, 'recovery-collaboration');
 			await wheelMessages(t, f, -400, cardInView, `${look} ${w}: the Crew card's ladder is in view`);
 			await t.page.waitForTimeout(150);
