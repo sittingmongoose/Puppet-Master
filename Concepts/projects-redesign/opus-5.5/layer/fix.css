@@ -93,13 +93,16 @@ html[data-theme^="retro"] .history-flyout .pjx-npg-row, html[data-o55-nier="on"]
 
 /* ------------------------------------------------------------------ Where work runs (Project page and New Project) */
 .pjx-wk-rows { list-style: none; margin: 4px 0 0; padding: 0; display: flex; flex-direction: column; border-top: 1px solid var(--pmu-rule); }
-.pjx-wk-row { display: grid; grid-template-columns: 14px minmax(0, 1fr) auto; grid-template-areas: "m t why" ". w why"; gap: 2px 8px; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--pmu-rule); font-size: 12.5px; }
+.pjx-wk-row { display: grid; grid-template-columns: 14px minmax(0, 1fr); grid-template-areas: "m t" ". w" ". a"; gap: 2px 8px; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--pmu-rule); font-size: 12.5px; }
 .pjx-wk-row > .pjx-st-mark { grid-area: m; }
 .pjx-wk-task { grid-area: t; color: var(--pmu-ink); min-width: 0; overflow-wrap: anywhere; }
 .pjx-wk-where { grid-area: w; color: var(--pmu-ink-2); font-size: 12px; }
 .pjx-wk-to { font-weight: 600; color: var(--pmu-ink); }
 .pjx-wk-row[data-mode="chosen"] .pjx-wk-to { color: var(--pmg-ink-attention, var(--pmu-ink)); }
-.pjx-wk-why { grid-area: why; white-space: nowrap; font-size: 12px; }
+/* the row's two links on their own line: the plate is often a narrow bento column, where a side column squeezed the task */
+.pjx-wk-acts { grid-area: a; display: flex; flex-wrap: wrap; gap: 2px 16px; align-items: center; justify-self: start; margin-top: 2px; }
+.pjx-wk-why, .pjx-wk-pin { white-space: nowrap; font-size: 12px; }
+.pjx-wk-pin[aria-disabled="true"] { color: var(--pmu-ink-3, var(--pmu-ink-2)); text-decoration: none; cursor: default; }
 .pjx-wk-allowed { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 6px 14px; }
 .pjx-wk-np { margin-top: 4px; display: flex; flex-direction: column; gap: 8px; padding: 12px; border: 1px solid var(--pmu-rule); border-radius: min(var(--pmu-r-card, 10px), 10px); }
 .pjx-wk-whybody { display: flex; flex-direction: column; gap: 10px; }

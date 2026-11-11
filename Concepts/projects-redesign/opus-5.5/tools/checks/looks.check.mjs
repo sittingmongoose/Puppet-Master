@@ -17,7 +17,7 @@ export const tests = {
 					await t.page.waitForTimeout(250);
 					const w = width || 'full';
 					await t.check(`${look} ${w}: work plate present`, await f.evaluate(() => !!document.querySelector('[data-plate="work"] .pjx-wk-rows')));
-					const clip = await f.evaluate(() => Array.from(document.querySelectorAll('[data-plate="work"] .pmu-factv, [data-plate="work"] .pjx-wk-to, [data-plate="work"] .pjx-wk-why')).filter((e) => e.scrollWidth > e.clientWidth + 1).map((e) => e.textContent).join(' | '));
+					const clip = await f.evaluate(() => Array.from(document.querySelectorAll('[data-plate="work"] .pmu-factv, [data-plate="work"] .pjx-wk-to, [data-plate="work"] .pjx-wk-why, [data-plate="work"] .pjx-wk-pin')).filter((e) => e.scrollWidth > e.clientWidth + 1).map((e) => e.textContent).join(' | '));
 					await t.check(`${look} ${w}: nothing in the work plate is cut off`, !clip, clip);
 					if (width !== '1024') await t.crop(`work-${look}-${w}`, f.locator('[data-plate="work"]'), `Where work runs, ${look}, ${w}`);
 					await t.app.page(t, f, 'dashboard');

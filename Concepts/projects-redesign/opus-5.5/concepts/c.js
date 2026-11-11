@@ -1019,12 +1019,14 @@
       return plate('work', { icon: 'workflow', title: W_('wk.form.title'), sub: p.name, inplace: true, body: [f.node],
         footEl: formFoot(p, W_('wk.save'), f.changed(), W_('wk.same'), () => PJX.ACT.setWork(p.id, f.value()), 'cmd.project.execution_policy.set') });
     }
-    const n = (p.workers || []).length;
+    const n = WK.running(p);
     return plate('work', {
       icon: 'workflow', title: W_('wk.plate'), sub: WK.choiceWord(p) + (n ? ' · ' + W_(n === 1 ? 'wk.f.task' : 'wk.f.tasks', { n }) + ' running' : ''),
       meta: busy ? parts().st('working', op.label) : null,
       body: [busy ? working(op) : null, facts(WK.facts(p)), WK.rows(p)],
       foot: [act(W_('wk.change'), { cls: 'pmu-textbtn', icon: 'workflow', key: 'p:work', cmd: 'cmd.project.execution_policy.set', off: busy ? 'Working on it' : p.lifecycle === 'archived' ? 'Unarchive it first' : null, run: () => openForm(p, 'work') }),
+        // starting work: Auto (the Project's choice) or a Computer for this run only (a bounded run pin, SIR-056)
+        act(W_('wk.start.open'), { cls: 'pmu-textbtn', icon: 'play', key: 'p:startrun', cmd: 'cmd.work.start (+ run pin)', off: busy ? 'Working on it' : p.lifecycle === 'archived' ? 'Unarchive it first' : null, run: () => WK.startDialog(p) }),
         act(W_('wk.settingsLink'), { cls: 'pmu-textbtn', icon: 'settings', key: 'p:worksettings', cmd: 'cmd.settings.open', tip: W_('wk.settingsToast'), run: () => { PJX.toast(W_('wk.settingsToast'), W_('wk.settingsToastText'), 'info'); if (W.PM_PAGES) W.PM_PAGES.go('settings'); } })]
     });
   }
