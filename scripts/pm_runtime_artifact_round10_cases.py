@@ -107,21 +107,26 @@ def cases(m, rows, fixtures):
             lambda n, r=row, e=good: n.AppendModel(r, {}, receipt, fixtures['custody_template']).append(e, True),
             lambda n, r=row, e=bad: n.AppendModel(r, {}, receipt, fixtures['custody_template']).append(e, True))
 
-        if not family.endswith('.restore_point'):
-            # A08 / F14: a producer ordinal whose JCS decimal differs (2^60).
-            good = dict(full, producer_sequence_id=EXACT_2_53)
-            bad = dict(full, producer_sequence_id=DECIMAL_LOSS)
-            add('A08', family, 'producer_sequence_jcs_decimal',
-                lambda n, r=row, e=good: n.AppendModel(r, {}, receipt, fixtures['custody_template']).append(e, True),
-                lambda n, r=row, e=bad: n.AppendModel(r, {}, receipt, fixtures['custody_template']).append(e, True))
-            original = first_original(m, fixtures, family, good)
-            stored = copy.deepcopy(original)
-            stored['event'] = copy.deepcopy(bad)
-            stored['custody']['original_event_value_commitment'] = m.commitment(bad)
-            stored['result']['original_event_value_commitment'] = m.commitment(bad)
-            add('F14', family, 'producer_sequence_jcs_decimal',
-                lambda n, e=good, o=original: n.full_value_matches(e, o, o['result'], o['custody']),
-                lambda n, e=bad, o=stored: n.full_value_matches(e, o, o['result'], o['custody']))
+        # A08 / F14: a producer ordinal whose JCS decimal differs (2^60). For
+        # restore_point the ordinal is the identity revision, so the key that
+        # watches it is rebound (one source change, its dependent copy recomputed).
+        good = dict(full, producer_sequence_id=EXACT_2_53)
+        bad = dict(full, producer_sequence_id=DECIMAL_LOSS)
+        if family.endswith('.restore_point'):
+            good['idempotency_key'] = m.identity(family, good['payload'], EXACT_2_53)
+            bad['idempotency_key'] = m.identity(family, bad['payload'], DECIMAL_LOSS)
+        add('A08', family, 'producer_sequence_jcs_decimal',
+            lambda n, r=row, e=good: n.AppendModel(r, {}, receipt, fixtures['custody_template']).append(e, True),
+            lambda n, r=row, e=bad: n.AppendModel(r, {}, receipt, fixtures['custody_template']).append(e, True))
+        original = first_original(m, fixtures, family, good)
+        stored = copy.deepcopy(original)
+        stored['event'] = copy.deepcopy(bad)
+        stored['custody']['idempotency_key'] = bad['idempotency_key']
+        stored['custody']['original_event_value_commitment'] = m.commitment(bad)
+        stored['result']['original_event_value_commitment'] = m.commitment(bad)
+        add('F14', family, 'producer_sequence_jcs_decimal',
+            lambda n, e=good, o=original: n.full_value_matches(e, o, o['result'], o['custody']),
+            lambda n, e=bad, o=stored: n.full_value_matches(e, o, o['result'], o['custody']))
 
         # D04q / V05q for every family: a lone surrogate in the summary has no
         # RFC 8785 encoding (qualified_jcs unicode_scalar); the schema admits the string.
