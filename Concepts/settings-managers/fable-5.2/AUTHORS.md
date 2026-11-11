@@ -156,6 +156,13 @@ been opened once (`{"do":"view","view":"today"}`, then `{"do":"view","view":"new
   `const st = W.PM12_KIMI.getState(); …; W.PM12_KIMI.setState(st)`, confirm with `kit().confirm(title, text, label, onYes, danger)`,
   say what happened with `SMX.toast(title, text)`.
 - **Going somewhere:** `ui.btn({go: 'safety/limits'})`, `SMX.go(route)`.
+- **Rewording a row:** `SMX.reword({'setting.id': {label, help, action, unit}})` replaces a PMConcept7 row's words as it
+  is drawn (its id, value and control stay), and search and "Everything that moved" use the new words. Use it for
+  jargon in a row's label, and to make one choice read the same way wherever it appears.
+- **A field of your own** (a filter box): `<input data-smx-input="name" data-smx-key="name">` runs `SMX.act('name')`
+  on every keystroke and redraws the page. Keep the field in a block whose markup does not change as you type, and
+  read what was typed from the field itself (see the filter on `ai`).
+- **A button inside a row that opens** does only its own job; the row does not open as well.
 
 ## Nothing may be dropped
 

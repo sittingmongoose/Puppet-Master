@@ -416,7 +416,7 @@
       const reveal = st.detailSetting || '';
       park();
       if (reveal && SMX.where(reveal)) SMX.go(SMX.where(reveal).route, { reveal });
-      else if (to && to !== SMX.route) SMX.go(to);
+      else if (to && to !== SMX.route) { const cur = match(SMX.route); const mine = !!cur && (cur.page.legacy || []).some((lg) => lg[0] === st.domain && lg[1] === st.workspace); if (!mine) SMX.go(to); }
     }
     render(!!force);
   };

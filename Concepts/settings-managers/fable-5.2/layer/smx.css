@@ -5,7 +5,7 @@
    window. */
 
 /* ---- the two views ------------------------------------------------------------------------------------------- */
-#pm-settings-root.smx-on { position: relative; }
+#pm-settings-root.smx-on { position: relative; container: smxhost / inline-size; }
 #pm-settings-root.smx-on > .pm-shell { visibility: hidden; pointer-events: none; }
 #pm-settings-root:not(.smx-on) > #smx-root { display: none; }
 
@@ -192,12 +192,15 @@ html[data-theme^="glass"] #smx-root .smx-find, html[data-theme^="glass"] #smx-ro
 #smx-root .smx-rv-none { color: var(--k3-text-3); }
 
 /* ---- narrow Settings areas: the navigation folds to a strip above the page ----------------------------------------- */
-@container smx (max-width: 760px) {
+/* (the grid itself is restyled by its parent's query: a container cannot answer its own) */
+@container smxhost (max-width: 760px) {
   #smx-root { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr); }
-  #smx-root .smx-nav { height: auto; max-height: 42%; border-bottom: 1px solid var(--k3-line); }
+}
+@container smx (max-width: 760px) {
+  #smx-root .smx-nav { height: auto; max-height: none; overflow: visible; border-bottom: 1px solid var(--k3-line); }
   #smx-root .smx-nav-head { display: none; }
   #smx-root .smx-search { margin-top: 10px; }
-  #smx-root .smx-nav-list { display: flex; flex-wrap: wrap; align-content: flex-start; gap: 2px 4px; padding-bottom: 8px; }
+  #smx-root .smx-nav-list { flex: none; display: flex; flex-wrap: wrap; align-content: flex-start; gap: 2px 4px; padding-bottom: 8px; max-height: 236px; overflow-y: auto; }
   #smx-root .smx-nav-group { display: none; }
   #smx-root .smx-nav-ch { display: contents; }
   #smx-root .smx-nav-item { width: auto; min-height: 30px; }

@@ -42,14 +42,14 @@
           { icon: 'shield', title: 'Choose what it may do', sub: 'What the assistant asks you before doing', go: 'safety' }
         ], { title: 'People often come here to' }) },
         ...groups.map((grp, i) => ({ key: 'chapters-' + i, html: `<section class="smx-chapters"><h3 class="smx-kicker">${h(grp.name)}</h3><div class="smx-chapter-grid">${grp.items.map(card).join('')}</div></section>` })),
-        { key: 'setup', html: ui.card({ title: 'Setup and tour', help: 'Go through the first-time setup again, or let the tour show you around.', body: `<div class="smx-btn-row">${ui.btn({ label: 'Run setup again', icon: 'refresh', action: 'replay-onboarding' })}${ui.btn({ label: 'Start the Guided Tour', icon: 'play', action: 'restart-guided-tour' })}${ui.btn({ label: 'Pick up the tour where I left it', action: 'resume-guided-tour' })}</div>` }) }
+        { key: 'setup', html: ui.links([{ label: 'Run the first-time setup again, or take the tour', go: 'system/setup' }]) }
       ];
     },
     changes: [
       { was: 'Settings Home opens with a headline about search (“Find anything. Configure the essentials first.”) and a paragraph explaining Settings.', now: 'It opens with whether everything works, in one sentence, and a second line that names the four things most setups depend on. Each word is a link.' },
       { was: 'Nine chapter cards repeat the chapter list that is already in the rail beside them, with the same descriptions and no state.', now: 'The chapter cards say their state (“Working”, “1 needs you”, “Not set up”), so Home is a status board, not a second menu.' },
       { was: '“Essential setup” appears on Home and again in the rail, with a third “Settings health” box; three warnings are listed with no button to fix them.', now: 'One “Needs you” list, each line with one button. The rail has no duplicate boxes.' },
-      { was: 'Three separate rows for onboarding and the tour, one of them permanently disabled (“Resume the Guided Tour — No tour to pick up”).', now: 'One card, “Setup and tour”, at the bottom.' }
+      { was: 'Three separate rows for onboarding and the tour, one of them permanently disabled (“Resume the Guided Tour — No tour to pick up”).', now: 'One link at the bottom, to Health & updates › Setup & tour, which holds the three actions and says when there is no tour to pick up.' }
     ]
   });
 })(window);

@@ -75,6 +75,23 @@
     }).join('')}</div></section>`;
   };
 
+  /* PMConcept7's rows keep their ids, values and controls; their words can be replaced as a row is drawn, so one
+     choice reads the same way wherever it appears. SMX.reword({'setting.id': {label, help, action, unit}})
+     (written by the Backups builder; it lives here so every chapter, search and the moved list share it) */
+  SMX.words = SMX.words || {};
+  SMX.reword = (map) => {
+    Object.assign(SMX.words, map || {});
+    if (SMX.wordsOn) return; SMX.wordsOn = true;
+    const text = (row, sel, to) => { const n = row.querySelector(sel); if (!n) return; const t = [...n.childNodes].find((c) => c.nodeType === 3 && c.nodeValue.trim()); if (t) { if (t.nodeValue !== to) t.nodeValue = to; } else if (!n.firstChild) n.textContent = to; };
+    const fix = (row) => { const w = SMX.words[String(row.id || '').slice(8)]; if (!w) return; if (w.label) text(row, '.setting-label', w.label); if (w.help) text(row, '.setting-description', w.help); if (w.action) { const b = row.querySelector('.setting-control .btn span, .setting-control .o55-textbtn'); if (b && b.textContent !== w.action) b.textContent = w.action; } if (w.unit) { const u = row.querySelector('.o55-unit'); if (u && u.textContent !== w.unit) u.textContent = w.unit; } };
+    const ROW = '.setting-row[id^="setting-"]';
+    const scan = (n) => { if (!n || n.nodeType !== 1) return; if (n.matches(ROW)) fix(n); n.querySelectorAll(ROW).forEach(fix); };
+    const start = () => { const host = SMX.host && SMX.host(); if (!host) { W.setTimeout(start, 300); return; } new W.MutationObserver((list) => { for (const m of list) { const el = m.target && m.target.nodeType === 1 ? m.target : m.target && m.target.parentElement; const row = el && el.closest ? el.closest(ROW) : null; if (row) fix(row); for (const n of m.addedNodes) scan(n); } }).observe(host, { childList: true, subtree: true, characterData: true }); scan(host); };
+    start();
+  };
+  /* the words a setting goes by in the redesign: its reworded label, else PMConcept7's row label */
+  SMX.labelOf = (id) => { const w = SMX.words[id]; if (w && w.label) return w.label; try { const s = kit().setting(id); return (s && (kit().rowLabel(s) || s.label)) || id; } catch (e) { return id; } };
+
   /* a page that is planned but whose manager-drawn parts are not rebuilt in this cut */
   ui.pending = (p) => {
     const hows = [...new Set(Object.values(p.covers || {}).map(String))].filter((x) => !/own list/.test(x)).slice(0, 4);
@@ -121,6 +138,7 @@
       const s = kit().setting(id); if (!s) continue;
       let label = s.label, help = s.description || '';
       try { label = kit().rowLabel(s) || label; help = kit().rowHelp(s) || help; } catch (e) { /* inventory words */ }
+      const w = SMX.words[id]; if (w) { if (w.label) label = w.label; if (w.help) help = w.help; }   // the redesign's own words for this row
       const m = SMX.match(rec.route); const pg = m ? m.page : null;
       const pTitle = pg ? (typeof pg.nav === 'function' ? pg.nav(ctx) : (pg.nav || (typeof pg.title === 'function' ? pg.title(ctx) : pg.title))) : '';
       idx.push({ kind: 'setting', title: label, sub: `${pg ? chTitle(pg.chapter) : ''}${pTitle && pg && pg.id !== pg.chapter ? ' › ' + pTitle : ''}${rec.section ? ' › ' + rec.section : ''}`, route: rec.route, reveal: id, text: [label, s.label, help, id.replace(/[.\-]/g, ' ')].join(' ').toLowerCase(), weight: rec.level === 'main' || rec.level === 'drawn' ? 2 : 1 });
