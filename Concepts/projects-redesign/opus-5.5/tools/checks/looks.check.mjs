@@ -24,6 +24,21 @@ export const tests = {
 					await t.check(`${look} ${w}: an off Run this on… looks off`, !!(pins.off && pins.live && pins.off.off === 'true' && pins.live.off === null && pins.off.color !== pins.live.color && pins.off.line === 'none' && pins.live.line !== 'none'), JSON.stringify(pins));
 					if (width !== '1024') await t.crop(`work-${look}-${w}`, f.locator('[data-plate="work"]'), `Where work runs, ${look}, ${w}`);
 					await t.app.page(t, f, 'dashboard');
+					// (B-press) the New thread split's chevron lives in the layer's own host now: it keeps its place (one gap less
+					// 6 px after New thread, the title one gap plus 6 px after it, centred in the header, on top) and New
+					// thread's own look (colour, fill, corners, border, height, glyph)
+					if (width === '') {
+						const sp = await f.evaluate(() => {
+							const head = document.querySelector('#pmRoot .chat-stage > .chat-header'), nt = head && head.querySelector(':scope > [data-action="new-thread"]');
+							const ch = document.querySelector('#pmw-chat56 .chat-header .pjx-newsplit'), title = head && head.querySelector(':scope > .chat-title');
+							if (!head || !nt || !ch || !title) return { missing: [!!head, !!nt, !!ch, !!title] };
+							const st = (e) => { const s = getComputedStyle(e), svg = e.querySelector('svg'), sb = svg && svg.getBoundingClientRect(); return [s.color, s.backgroundColor, s.borderTopLeftRadius, s.borderTopWidth + ' ' + s.borderTopStyle + ' ' + s.borderTopColor, s.opacity, Math.round(e.getBoundingClientRect().height), sb ? Math.round(sb.width) + 'x' + Math.round(sb.height) : '-'].join(' | '); };
+							const gap = parseFloat(getComputedStyle(head).columnGap) || 0, n = nt.getBoundingClientRect(), c = ch.getBoundingClientRect(), tt = title.getBoundingClientRect(), hb = head.getBoundingClientRect();
+							const hit = document.elementFromPoint(c.left + c.width / 2, c.top + c.height / 2);
+							return { after: Math.round(c.left - n.right - (gap - 6)), title: Math.round(tt.left - c.right - (gap + 6)), mid: Math.round((c.top + c.height / 2) - (hb.top + hb.height / 2)), w: Math.round(c.width), same: st(ch) === st(nt), ch: st(ch), nt: st(nt), onTop: !!hit && ch.contains(hit) };
+						});
+						await t.check(`${look} ${w}: the New thread chevron keeps its place and New thread's look`, !sp.missing && Math.abs(sp.after) <= 1 && Math.abs(sp.title) <= 1 && Math.abs(sp.mid) <= 1 && sp.w === 18 && sp.same && sp.onTop, JSON.stringify(sp));
+					}
 					await t.app.click(t, f, '#projectMenuBtn', { noScroll: true });
 					await t.app.click(t, f, '#projectMenu .pjx-tb-noproj', { noScroll: true, wait: 300 });
 					// the chat column may still be opening: measure once its width holds still. (B-press) The wait and the reading are
@@ -41,6 +56,15 @@ export const tests = {
 						tick();
 					}));
 					await t.check(`${look} ${w}: the no-project chat header fits`, !hd, hd);
+					// (B-press) the chat lies exactly over the chat stage, under a host that carries the page's look
+					if (width === '') {
+						const box = await f.evaluate(() => {
+							const st = document.querySelector('#pmRoot .chat-stage'), npc = document.querySelector('.pjx-npc'); if (!st || !npc) return { missing: true };
+							const a = st.getBoundingClientRect(), b = npc.getBoundingClientRect(), host = npc.closest('.pm56-host'), root = document.getElementById('pmRoot');
+							return { d: [b.left - a.left, b.top - a.top, b.width - a.width, b.height - a.height].map(Math.round), theme: host && host.getAttribute('data-theme'), pageTheme: root && root.getAttribute('data-theme') };
+						});
+						await t.check(`${look} ${w}: the no-project chat lies over the chat stage and carries the page's look`, !box.missing && box.d.every((x) => Math.abs(x) <= 1) && !!box.theme && box.theme === box.pageTheme, JSON.stringify(box));
+					}
 					if (width === '') await t.crop(`npc-${look}`, f.locator('#pmw-chat56 .chat-stage'), `No-project chat, ${look}`);
 					await f.evaluate(() => window.PJX.chat.close());
 				}

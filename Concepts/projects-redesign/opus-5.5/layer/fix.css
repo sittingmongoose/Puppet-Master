@@ -36,6 +36,12 @@
    never reaches it. It takes the stage's background, colour and corners, and pm56-host gives the chat the chat's look */
 #pmw-chat56 > .pjx-npc-host { position: absolute; z-index: 20; display: flex; min-width: 0; min-height: 0; overflow: hidden; }
 #pmw-chat56 > .pjx-npc-host[hidden] { display: none; }
+/* PMConcept7's own .chat-stage transcript rules (padding, overflow anchoring, the hold height), mirrored for the chat's host,
+   which is no longer inside a .chat-stage; pm56col is the chat frame, so its column queries reach the host as before */
+#pmw-chat56 > .pjx-npc-host .transcript { padding-top: calc(18px + var(--lens-strip-h, 0px)); padding-bottom: 24px; overflow-anchor: none; }
+#pmw-chat56 > .pjx-npc-host .transcript-inner { min-height: var(--tx-hold-min, 0px); }
+@container pm56col (max-width: 172.2px) { #pmw-chat56 > .pjx-npc-host .transcript { padding-left: 11px; padding-right: 11px; } }
+@container pm56col (max-width: 66.4px) { #pmw-chat56 > .pjx-npc-host .transcript { padding-top: calc(12px + var(--lens-strip-h, 0px)); padding-bottom: 16px; } }
 #pmw-chat56 > .pjx-npc-host > .pjx-npc { position: relative; flex: 1 1 auto; display: flex; flex-direction: column; min-width: 0; min-height: 0; background: inherit; color: inherit; border-radius: inherit; }
 #pmw-chat56[data-pjx-npc] .chat-stage { background-clip: padding-box; }
 .pjx-npc > .pmu-shell { display: contents !important; }
