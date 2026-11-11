@@ -441,6 +441,78 @@ for (const surface of ['normal', 'sandbox']) {
 		await t.check('only the one setting went back to its default', left.every(([id, ch]) => (id === one ? !ch : ch)), JSON.stringify(left));
 	};
 
+	/* FO-164: a reset row ends at exactly what the dialog listed, and the dialog lists only rows that would change. The
+	   page keeps its storage here (no kit resetLayout, which blocks every later storage write: OPUS-FO163-T1), because
+	   the restore writes the saved project and reloads it; storage is cleared once, then the page is opened again. */
+	tests[`reset-ends: every listed row ends at its listed default; nothing unchanged is listed (${surface})`] = async (t) => {
+		if (await skip(t)) return;
+		await t.viewport(1920, 1080);
+		let f = await t.app.open({ sandbox: surface === 'sandbox' });
+		await f.evaluate(() => { try { localStorage.clear(); } catch (e) { /* the sandbox: no storage */ } });
+		f = await t.app.open({ sandbox: surface === 'sandbox' });
+		await f.locator('#tab-settings').click();
+		await t.settle();
+		const seed = () => f.evaluate(() => {
+			const S = PM12_KIMI.getState(); S.settings = S.settings || {}; S.changed = S.changed || {};
+			for (const id of ['system.health.readiness-badges', 'code.terminal.copy-on-select']) { const st = PM51.setting(id); S.settings[id] = !st.value; S.changed[id] = true; }
+			// a changed mark on a value that equals its default (the recheck's "Theme: Basic Dark → Basic Dark")
+			const th = PM51.setting('general.visual.theme'); S.settings['general.visual.theme'] = th.value; S.changed['general.visual.theme'] = true;
+			PM12_KIMI.setState(S);
+		});
+		const rowsOf = (d) => d.locator('.o55-reset-list [data-setting-id]').evaluateAll((els) => els.map((r) => {
+			const parts = [...r.children].map((c) => c.textContent.trim());
+			const val = (parts.length > 1 ? parts.slice(1).join(' ') : r.textContent).trim();
+			const [before, after] = val.split(' → ').map((x) => (x || '').trim());
+			return { id: r.dataset.settingId, before, after };
+		}));
+		const countOf = (d) => d.locator('.o55-reset-count, .o55-reset-preview > div.form-help').last().textContent().then((x) => { const m = /These (\d+) settings|This setting/.exec(x || ''); return m ? (m[1] ? Number(m[1]) : 1) : -1; }).catch(() => -1);
+		const ends = async (where, rows) => {
+			const now = await f.evaluate((ids) => ids.map((id) => { const st = PM51.setting(id); return st ? String(PM51.valueText(st, PM51.value(id))) : '?'; }), rows.map((r) => r.id));
+			const off = rows.map((r, i) => ({ ...r, now: now[i] })).filter((r) => r.now !== r.after);
+			await t.check(`${where}: every listed row now reads its listed default`, rows.length > 0 && off.length === 0, off.map((r) => `${r.id}: listed "${r.after}", now "${r.now}"`).join(' | ') || `${rows.length} rows`);
+		};
+		const open = async () => {
+			await go(t, f, 'system', 'advanced');
+			await press(t, f, `${body('advanced')} [data-setting="system.advanced.reset-defaults"]`);
+			const d = dialog(f, 'Reset settings to defaults');
+			await d.waitFor({ state: 'visible', timeout: 4000 }).catch(() => {});
+			return d;
+		};
+		// A section (Code & Execution: Copy when I highlight text)
+		await seed();
+		let d = await open();
+		await d.locator('select[name="what"]').selectOption('section');
+		await t.page.waitForTimeout(200);
+		await d.locator('select[name="cat"]').selectOption('code').catch(() => {});
+		await t.page.waitForTimeout(200);
+		const sec = await rowsOf(d);
+		await t.check('A section: no listed row keeps its value', sec.every((r) => r.before !== r.after), sec.filter((r) => r.before === r.after).map((r) => `${r.id}: ${r.before} → ${r.after}`).join(' | '));
+		await d.locator('button[type="submit"]').click();
+		await t.page.waitForTimeout(800);
+		await ends('A section', sec);
+		await closeAll(t, f);
+		// Everything
+		await seed();
+		d = await open();
+		await d.locator('select[name="what"]').selectOption('everything');
+		await t.page.waitForTimeout(250);
+		const all = await rowsOf(d), n = await countOf(d);
+		await t.check('Everything: no listed row keeps its value (Theme: Basic Dark → Basic Dark is not listed)', all.length > 0 && all.every((r) => r.before !== r.after), all.filter((r) => r.before === r.after).map((r) => `${r.id}: ${r.before} → ${r.after}`).join(' | ') || `${all.length} rows`);
+		await t.check('Everything: the count line counts the listed rows', n === all.length, `count ${n}, rows ${all.length}`);
+		const pin = all.find((r) => r.id === 'branching.worktrees.github-pinned-workflows');
+		await t.check('Everything lists Pinned workflows (moved at load)', !!pin, all.map((r) => r.id).join(', '));
+		await d.locator('button[type="submit"]').click();
+		await f.waitForFunction(() => !document.querySelector('.overlay [role="dialog"][aria-label="Reset settings to defaults"]'), null, { timeout: 6000 }).catch(() => {});
+		await t.page.waitForTimeout(1200);
+		await ends('Everything', all);
+		// the saved project, read again on a fresh load, still has the reset value (normal page; the sandbox keeps no storage)
+		if (surface === 'normal' && pin) {
+			f = await t.app.open({ sandbox: false });
+			const after = await f.evaluate((id) => String(PM51.valueText(PM51.setting(id), PM51.value(id))), pin.id);
+			await t.check('Everything: Pinned workflows still reads its listed default after the page loads again', after === pin.after, `listed "${pin.after}", after a reload "${after}"`);
+		}
+	};
+
 	tests[`words: plain drawers, protected paths, run pauses (${surface})`] = async (t) => {
 		if (await skip(t)) return;
 		const f = await settings(t, surface);

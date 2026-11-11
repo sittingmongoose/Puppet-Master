@@ -569,7 +569,10 @@ PM51.style(`
 #panel-settings .o55-reset-preview .pm51-kv-row > span:first-child { color: var(--k3-text-1); font-weight: 600; }
 `);
 function o55ResetDialog() {
-  const titles = CATEGORY_TITLES(), changed = allSettingsCatalog().filter(e => state.changed[e.setting.id]);
+  /* FO-164: a row is listed only when its value differs from its default (a changed mark alone listed "Theme: Basic
+     Dark → Basic Dark"); the count line counts the same list */
+  const same = (x, y) => JSON.stringify(x) === JSON.stringify(y) || (x != null && y != null && typeof x !== 'object' && typeof y !== 'object' && String(x) === String(y));
+  const titles = CATEGORY_TITLES(), changed = allSettingsCatalog().filter(e => state.changed[e.setting.id] && !same(settingValue(e.setting), e.setting.value));
   const cats = [...new Set(changed.map(e => e.category))];
   const name = e => PM51.rowLabel(e.setting), catName = c => titles.get(c) || humanize(c);
   const shown = (e, v) => { try { return String(PM51.valueText(e.setting, v)); } catch (_e) { return String(v); } };

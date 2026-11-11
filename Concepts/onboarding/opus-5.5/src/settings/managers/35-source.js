@@ -681,7 +681,19 @@
   PM51.owner(ID, id => { if (GH.includes(id)) { PM51.setTab(ID, 'services'); if (byId('github')) PM51.setSel(ID, 'github'); return; } const e = PM51.placement.byId[id]; if (e && e.tab) PM51.setTab(ID, e.tab); });
   [PRESET, FORCE, W + 'default-branch', W + 'worktree-base-dir', 'ai.accounts.github-host-policy', W + 'pre-merge-tests'].forEach(id => PM51.watch(id, () => refresh()));
   /* the pins that lived on each workflow move into the Pinned workflows row once */
-  migratePins = () => { const s0 = sc(); if (s0.o55Pins) return; s0.o55Pins = true; const was = workflows().filter(w => w.pinned).map(w => w.name); workflows().forEach(w => { delete w.pinned; }); if (was.length && !pinned().length && commitSettingValue(PIN, was)) saveState(); };
+  /* FO-164: the fixture's workflows carry their old pins again on every load (Source Control's state is not part of the
+     saved project), so "moved once" is remembered in the saved project itself (state.o55Migrations, which TOME.save
+     keeps and Reset settings to defaults leaves alone). Each load strips the old flags; only the first one moves them
+     into the row. Before this, a load after a reset (the row back to none) pinned them again. */
+  migratePins = () => {
+    const M = state.o55Migrations || (state.o55Migrations = {});
+    const was = workflows().filter(w => w.pinned).map(w => w.name);
+    workflows().forEach(w => { delete w.pinned; });
+    if (M.pins || sc().o55Pins) { M.pins = true; return; }
+    M.pins = true; sc().o55Pins = true;
+    if (was.length && !pinned().length) commitSettingValue(PIN, was);
+    saveState();
+  };
   /* R9: they move at load (and after any reload of the saved state), not when the Actions tab first draws, so the
      Pinned workflows row reads the same list everywhere (All Settings, search, Details) from the start */
   const pm51SourceEnsureStateShape = ensureStateShape;
