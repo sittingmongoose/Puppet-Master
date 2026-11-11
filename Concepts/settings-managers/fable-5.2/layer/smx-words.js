@@ -27,7 +27,9 @@
     'ai.usage.monthly-token-budget': { label: 'Monthly limit on tokens', help: 'AI use is counted in tokens: a token is a small piece of text, about three quarters of a word. This number feeds the warnings and the limits for one run. 0 means no limit.' },
     'system.advanced.cache-linter': { help: 'Warns you before a change makes every request cost more.' },
     'ai.usage.platform-filters': { label: 'AI providers on the Usage page' },
-    'ai.usage.quota-management': { label: 'Limits and budgets, all in one place', help: 'One screen to review and change every limit and budget together.' },
+    /* PMConcept7's "Quota and budget console … Open the console" leads to the tab its row is on. Here budgets are this page and
+       what happens at a plan's limit is the page "When an account runs out", so the row says that and its button goes there (pages/ai.js). */
+    'ai.usage.quota-management': { label: 'What happens when a plan runs low', help: 'This page is about money. Moving to another account before a plan’s limit is reached is on its own page.', action: 'When an account runs out' },
     'ai.usage.pressure-history': { label: 'When accounts ran low', help: 'A record of the times an account came close to a limit or was slowed down. It shows an account that is always tight.' },
     'ai.usage.pricing-version': { options: { 'Each service\'s current prices': 'Each AI provider’s current prices', 'Each service’s current prices': 'Each AI provider’s current prices' } },
     /* ---- Health & updates › Setup & tour */

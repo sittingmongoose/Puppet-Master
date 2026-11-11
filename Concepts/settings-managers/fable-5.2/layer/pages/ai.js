@@ -379,10 +379,14 @@
     expert: [Object.assign(S('providers-records'), { also: ['ai.usage.usage-retention'] })],
     changes: [
       { was: 'Spending limits, warnings and six display options of the Usage page (chart style, rows per page, export format) are one tab of equal-weight rows.', now: 'The limit and the warnings are the page. The Usage page’s display options are folded, with a note that they can be changed on the Usage page itself.' },
-      { was: 'Money limits are in four places: here, Permissions › Limits (per run), each persona (“Spending cap”) and Web (“Never spend more than”). No page points to the others.', now: 'This page links to the per-run limits and to web spending, and they link back.' }
+      { was: 'Money limits are in four places: here, Permissions › Limits (per run), each persona (“Spending cap”) and Web (“Never spend more than”). No page points to the others.', now: 'This page links to the per-run limits and to web spending, and they link back.' },
+      { was: 'A row “Quota and budget console” has a button “Open the console”. It leads to the tab the row is already on, so pressing it shows nothing.', now: 'The row says what the other page is for (“What happens when a plan runs low”) and its button goes there: “When an account runs out”. The dead button is a defect of PMConcept7’s and is listed in the build report.' }
     ]
   });
   SMX.act('open-usage', () => { try { W.PM_PAGES.go('usage'); } catch (e) { /* no Usage page */ } });
+  /* PMConcept7's row "Quota and budget console" has a button "Open the console" that leads to the tab the row is on, so
+     a press showed nothing (audit A2 B-7; here too, found by the sweep of 2026-11-11). The limits live on their own page. */
+  SMX.instead('ai.usage.quota-management', () => SMX.go('ai/limits'));
 
   /* ================================================================== Web research, media, the advisor: their rows; lists come from layer/pages/ai-more.js */
   SMX.page({

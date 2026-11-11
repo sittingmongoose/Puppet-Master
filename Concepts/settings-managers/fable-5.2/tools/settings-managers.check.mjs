@@ -65,20 +65,38 @@ export const tests = {
 		if (r.c.placed < 1000) fail(`only ${r.c.placed} settings placed; PMConcept7 has over 1,000`);
 		if (errors.length) fail('page errors: ' + errors.join(' | '));
 	},
-	async 'every page draws'(t) {
+	/* Also: every link a page draws leads to a page. A link to a route that does not exist lands on Home without a word
+	   ("Run a full checkup" on Computers did, until 2026-11-11). Pages with a parameter are opened through the links
+	   that lead to them, up to two of each kind. */
+	async 'every page draws, and every link on it leads to a page'(t) {
 		const { f, errors } = await open(t);
-		const empty = await f.evaluate(async () => {
-			const out = [];
-			for (const p of window.SMX.pages) {
-				if (p.id.includes(':')) continue;
-				window.SMX.go(p.id, { replace: true });
-				await new Promise((r) => setTimeout(r, 60));
+		const r = await f.evaluate(async () => {
+			const S = window.SMX, out = [], nowhere = [];
+			const fixed = S.pages.filter((p) => !p.id.includes(':')).map((p) => p.id);
+			const seen = new Set(fixed), per = {}, queue = fixed.slice();
+			while (queue.length) {
+				const id = queue.shift();
+				S.go(id, { replace: true });
+				await new Promise((res) => setTimeout(res, 60));
 				const page = document.querySelector('#smx-root .smx-page');
-				if (!page || window.SMX.route !== p.id || !page.querySelector('.smx-block') || !page.querySelector('.smx-title').textContent.trim()) out.push(p.id);
+				if (!page || S.route !== id || !page.querySelector('.smx-block') || !page.querySelector('.smx-title').textContent.trim()) { out.push(id); continue; }
+				page.querySelectorAll('details').forEach((d) => { d.open = true; });
+				for (const el of document.querySelectorAll('#smx-root [data-smx-go]')) {
+					const to = String(el.getAttribute('data-smx-go') || '').replace(/^\/+|\/+$/g, '');
+					const m = to && S.match(to);
+					if (!m) { nowhere.push(`${id}: "${(el.innerText || el.getAttribute('aria-label') || '').trim().slice(0, 40)}" -> ${to || '(empty)'}`); continue; }
+					if (seen.has(to) || !m.page.id.includes(':')) continue;
+					const n = (per[m.page.id] = per[m.page.id] || 0);
+					if (n >= 2) continue;
+					per[m.page.id] = n + 1; seen.add(to); queue.push(to);
+				}
 			}
-			return out;
+			S.go('home', { replace: true });
+			return { out, nowhere: [...new Set(nowhere)], opened: seen.size, kinds: Object.keys(per).length };
 		});
-		if (empty.length) fail('pages that did not draw: ' + empty.join(', '));
+		if (r.out.length) fail('pages that did not draw: ' + r.out.join(', '));
+		if (r.nowhere.length) fail('links that lead to no page: ' + r.nowhere.join(' | '));
+		if (r.opened < 150 || r.kinds < 30) fail(`only ${r.opened} pages were opened (${r.kinds} kinds of page with a parameter)`);
 		if (errors.length) fail('page errors: ' + errors.join(' | '));
 	},
 	async 'the look example stays in view while the choices scroll'(t) {
@@ -487,5 +505,54 @@ export const tests = {
 		await t.viewport(1600, 1000);
 		if (c.bad.length) fail(c.bad.join(' || '));
 		if (a.rows < 5) fail(`only ${a.rows} rows were on Look & feel`);
+	},
+	/* Found by pressing one button of every kind on every page (2026-11-11): two of PMConcept7's row buttons show nothing
+	   when pressed. "Reset Home layout" does reset, at once and without asking, and says so on the Home page only.
+	   "Open the console" leads to the tab its row is on. Here the first asks, resets and says so; the second leads to
+	   the page it means. */
+	async 'two row buttons that show nothing in PMConcept7 have a result here: Reset Home layout asks first; the limits row leads to its page'(t) {
+		const { f } = await open(t);
+		const r = await f.evaluate(async () => {
+			const S = window.SMX, wait = (ms) => new Promise((res) => setTimeout(res, ms)), bad = [];
+			const until = async (fn, ms = 3000) => { const end = performance.now() + ms; while (performance.now() < end) { if (fn()) return true; await wait(60); } return !!fn(); };
+			const notes = []; const N = window.PM_TITLEBAR_NOTIFY;
+			if (N && typeof N.push === 'function') { const push = N.push; N.push = function (x) { notes.push(String((x && x.title) || '')); return push.apply(this, arguments); }; }
+			const dialog = () => [...document.querySelectorAll('#pm-settings-portals .overlay [role="dialog"]')].find((d) => /Reset the Home layout\?/.test(d.textContent));
+			const SEL = '#smx-root .smx-page [data-action="run-setting-action"][data-setting="general.startup.reset-home-layout"]';
+			S.go('look/window'); await wait(700);
+			let b = document.querySelector(SEL);
+			if (!b) { bad.push('Window & startup has no "Reset Home layout" button'); return { bad }; }
+			b.removeAttribute('data-pm-home-reset-outcome');
+			b.click();
+			if (!await until(() => !!dialog())) { bad.push('"Reset Home layout" asked nothing'); return { bad }; }
+			if (b.getAttribute('data-pm-home-reset-outcome')) bad.push('the layout was reset before the question was answered');
+			// Cancel changes nothing
+			dialog().querySelector('.dialog-footer [data-action="close-overlay"]').click();
+			if (!await until(() => !dialog())) bad.push('Cancel did not close the question');
+			b = document.querySelector(SEL);
+			if (b.getAttribute('data-pm-home-reset-outcome')) bad.push('Cancel reset the layout anyway');
+			if (notes.some((n) => /Home layout reset/.test(n))) bad.push('Cancel was answered with "Home layout reset"');
+			// Reset layout resets it and says so here
+			b.click();
+			if (!await until(() => !!dialog())) { bad.push('"Reset Home layout" asked nothing the second time'); return { bad }; }
+			dialog().querySelector('button[type="submit"]').click();
+			if (!await until(() => !dialog())) bad.push('"Reset layout" did not close the question');
+			b = document.querySelector(SEL);
+			if (!await until(() => (document.querySelector(SEL) || b).getAttribute('data-pm-home-reset-outcome') === 'applied', 1500)) bad.push('"Reset layout" did not reset the Home layout (outcome: ' + (document.querySelector(SEL) || b).getAttribute('data-pm-home-reset-outcome') + ')');
+			if (!await until(() => notes.some((n) => /Home layout reset/.test(n)), 1500)) bad.push('nothing here said the layout was reset: ' + notes.join(' | '));
+			if (window.PM_PAGES && window.PM_PAGES.current !== 'settings') bad.push('resetting the Home layout left Settings for ' + window.PM_PAGES.current);
+			// the limits row on Spending leads to "When an account runs out"
+			S.go('ai/spending'); await wait(700);
+			document.querySelectorAll('#smx-root .smx-page details').forEach((d) => { d.open = true; }); await wait(150);
+			const c = document.querySelector('#smx-root .smx-page [data-action="run-setting-action"][data-setting="ai.usage.quota-management"]');
+			if (!c) bad.push('Spending has no row that leads to the limits');
+			else {
+				if (/console/i.test(c.textContent)) bad.push('the row still offers "' + c.textContent.trim() + '"');
+				c.click();
+				if (!await until(() => S.route === 'ai/limits')) bad.push('the limits row on Spending led to ' + S.route);
+			}
+			return { bad, notes };
+		});
+		if (r.bad.length) fail(r.bad.join(' || '));
 	}
 };

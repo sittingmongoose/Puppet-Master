@@ -55,11 +55,16 @@ Only Fable 5.2 designed or wrote pages. Other models read, audited and reviewed 
 - **Everything that is not a row** (lists, menus, guided steps, 429 distinct actions on 3,084 controls) was compared
   feature by feature with a census of PMConcept7; the result is in the share folder.
 - **What must stay true**: `browser-check run Concepts/settings-managers/fable-5.2/tools --set page=<out>/settings-managers-app.html`
-  (add `--set host=<out>/settings-managers.html` for the review page) runs 14 tests: coverage, every page draws, the
-  examples stay in view, a borrowed menu belongs to its thing, the page stays put after a menu or a saved dialog, what
-  needs you is counted one way, a provider and its accounts tell one story, panels close, Escape works, a look chosen
-  in the strip is saved, 780 and 860 wide no page scrolls sideways and every control is named by its label, and a
-  row's "About" opens PMConcept7's own panel here (choose in it, go back to the default, Escape from anywhere).
+  (add `--set host=<out>/settings-managers.html` for the review page) runs 15 tests: coverage, every page draws and
+  every link on it leads to a page, the examples stay in view, a borrowed menu belongs to its thing, the page stays
+  put after a menu or a saved dialog, what needs you is counted one way, a provider and its accounts tell one story,
+  panels close, Escape works, a look chosen in the strip is saved, 780 and 860 wide no page scrolls sideways and
+  every control is named by its label, a row's "About" opens PMConcept7's own panel here (choose in it, go back to
+  the default, Escape from anywhere), and the two row buttons that show nothing in PMConcept7 have a result here.
+- **Every button, pressed.** A sweep outside the repository (the evidence folder's `tools/sweep/`) opens all 164
+  pages (96 fixed, 68 through links), presses one button of each of the 336 PMConcept7 actions and each of the
+  concept's own on every page (982 presses, 26 minutes) and records what a person could have seen. It found a link
+  to a page that did not exist and two buttons that showed nothing; all three are fixed and tested above.
 
 The review of today's Settings, the audits, the defect list and the list of what is still open are in the share
 folder `puppet-master/2026-11-11-settings-managers/`.

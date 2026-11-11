@@ -86,6 +86,8 @@
     return def;
   };
   SMX.act = (name, f) => { SMX.acts[name] = f; };
+  SMX.insteads = {};
+  SMX.instead = (settingId, f) => { SMX.insteads[settingId] = f; };
   const chapterOf = (id) => SMX.chapters.find((c) => c.id === id);
   function match(route) {
     const parts = String(route || 'home').split('/').filter(Boolean);
@@ -187,6 +189,18 @@
     host.innerHTML = '<aside class="smx-nav" aria-label="Settings"></aside><main class="smx-main"><div class="smx-scroll" tabindex="-1"></div></main><div class="smx-layer"></div>';
     root.insertBefore(host, root.firstChild);   // first, so a setting's row here is the one the engine refreshes
     navEl = host.querySelector('.smx-nav'); mainEl = host.querySelector('.smx-main'); scrollEl = host.querySelector('.smx-scroll'); layerEl = host.querySelector('.smx-layer');
+    /* A row's own button ("run this setting's action") whose press does nothing a person can see: SMX.instead(id, f)
+       answers the press here instead, before PMConcept7's engine hears it. Two rows need it (found by pressing every
+       such button on every page, 2026-11-11): PMConcept7 loses the question of "Reset Home layout" within the press
+       that asks it, and "Open the console" leads to the tab its row is on. Each is a defect of PMConcept7's, listed in
+       the page's "What changed here". */
+    host.addEventListener('click', (e) => {
+      const b = e.target.closest && e.target.closest('[data-action="run-setting-action"][data-setting]');
+      const f = b && host.contains(b) ? SMX.insteads[b.getAttribute('data-setting')] : null;
+      if (!f || b.disabled || b.getAttribute('aria-disabled') === 'true') return;
+      e.preventDefault(); e.stopPropagation();
+      W.setTimeout(() => { try { f(b); } catch (err) { W.console.error('SMX.instead failed', err); } soon(60); }, 0);
+    }, true);
     host.addEventListener('click', onClick);
     host.addEventListener('input', onInput);
     host.addEventListener('change', onChange);

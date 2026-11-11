@@ -212,6 +212,30 @@
     ]
   });
   SMX.extend('look/window', {
-    changes: [{ was: '“Window & panels” and “When Puppet Master opens” sit among the look settings of App & Input.', now: 'Their own page: where panels sit, what the app opens on, what comes back after a crash.' }]
+    changes: [{ was: '“Window & panels” and “When Puppet Master opens” sit among the look settings of App & Input.', now: 'Their own page: where panels sit, what the app opens on, what comes back after a crash.' },
+      { was: '“Reset the layout” has a button “Reset Home layout” that seems to do nothing. It does reset the Home layout, at once and without asking, and its note (“Home layout restored”) is shown on the Home page, where nobody in Settings sees it. The question PMConcept7’s Settings means to ask (“Reset the Home layout?”) never appears, because another part of PMConcept7 takes the press first.', now: 'The button asks PMConcept7’s own question first. “Reset layout” then resets it and a note says so here. This is the intended behaviour; the defect is PMConcept7’s and is listed in the build report.' }]
   });
+  /* "Reset Home layout". PMConcept7 has two handlers for this one button. Its Home code (shims.settingsReset) listens on
+     the document before anything else, resets the layout at once, stops the press and shows its note on the Home page.
+     Its Settings code (the action o55-home-reset: a question, then the reset, then a note) therefore never runs, and in
+     Settings the button seems dead (found by pressing every such button on every page, 2026-11-11). Here the press is
+     taken one step earlier, at the window: the question is asked in PMConcept7's own dialog and words, and "Reset
+     layout" passes the press on to the Home code, which does the reset; the note is then shown where the person is. */
+  const RESET = 'general.startup.reset-home-layout';
+  const resetBtn = () => { const host = SMX.host && SMX.host(); return host ? host.querySelector(`[data-action="run-setting-action"][data-setting="${RESET}"]`) : null; };
+  let resetGo = false;
+  W.addEventListener('click', (e) => {
+    const b = e.target && e.target.closest ? e.target.closest(`[data-action="run-setting-action"][data-setting="${RESET}"]`) : null;
+    const host = SMX.host && SMX.host();
+    if (!b || !host || !host.contains(b) || SMX.view !== 'new') return;
+    if (resetGo) { resetGo = false; return; }   // the press that follows "Reset layout": PMConcept7's Home code takes it from here
+    e.preventDefault(); e.stopImmediatePropagation();
+    W.PM51.confirm('Reset the Home layout?', 'Home panels, docks, the terminal position and floating windows go back to the default. Open files, terminal sessions, the browser, dashboard widgets and chats are kept.', 'Reset layout', () => {
+      const now = resetBtn(); if (!now) return;
+      now.removeAttribute('data-pm-home-reset-outcome');
+      resetGo = true; now.click(); resetGo = false;
+      const ok = now.getAttribute('data-pm-home-reset-outcome') !== 'rejected';
+      SMX.toast(ok ? 'Home layout reset' : 'The Home layout could not be reset', ok ? 'Panels are back in their default places. Your open files, terminals and chats stayed.' : 'Nothing was changed.', ok ? 'success' : 'warning');
+    });
+  }, true);
 })(window);

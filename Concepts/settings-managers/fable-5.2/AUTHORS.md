@@ -202,6 +202,13 @@ whose result PMConcept7 draws into its own page does not, because that page is h
 then real and dead. Every row's "About" button was exactly that until 2026-11-11, on every page, through two review
 rounds. So press what you draw, and look at what happened.
 
+When a row's own button ("run this setting's action") shows nothing because of a defect in PMConcept7, answer the
+press here with `SMX.instead('<setting id>', (button) => …)` and say so in `changes` (two rows do: the limits row on
+Spending, whose PMConcept7 button leads to the tab it is on; and "Reset Home layout", which needs more than that
+because another part of PMConcept7 takes the press at the document, see `pages/look.js`). To find such buttons,
+press them all: `EVID/tools/sweep/dead-buttons.check.mjs` (run by `EVID/tools/final-run.sh sweep`) lists every press
+that showed nothing; check each by hand before you call it dead, because a sweep misses what it does not look at.
+
 The "About" panel itself needs nothing from a page. `layer/smx-details.js` lends the engine a place to draw it; the
 title, the choices, the value and the default follow `SMX.reword`; the line above the title names the page of this
 Settings that holds the row; "Next to it" lists the rows of the same section on that page. `SMX.details.close()`

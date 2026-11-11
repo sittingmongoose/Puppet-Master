@@ -105,7 +105,7 @@
           { icon: 'swap', title: 'Move or copy a project', sub: 'To another computer, or bring one in', go: 'computers/projects', anchor: 'move' }
         ], { title: 'What do you want to do?' }) },
         { key: 'pages', html: ui.pages('computers', ctx, { title: 'Everything in this chapter' }) },
-        { key: 'links', html: ui.links([{ label: 'How computers and devices work', action: 'pm51-servers-help' }, { label: 'Run a full checkup', go: 'system/health' }]) }
+        { key: 'links', html: ui.links([{ label: 'How computers and devices work', action: 'pm51-servers-help' }, { label: 'Run a full checkup', go: 'system' }]) }
       ];
     },
     changes: [
