@@ -1061,35 +1061,40 @@ export default async function (t) {
 		   thread about 75% of the time while three looks are picked 1.2s apart (past the greyed Look, as a fast hand or a
 		   script can). Every 150ms: the Look, whether it is greyed, and the look painted in the frame */
 		if (frame) {
-			await frame.evaluate(() => { window.__psxLoad = setInterval(() => { const t0 = performance.now(); while (performance.now() - t0 < 70) { /* load */ } }, 90); });
-			const seq = ['retro-dark', 'retro-light', 'glass-dark'];
-			const run5 = await t.page.evaluate(async (seq) => {
-				const sel = document.getElementById('look'), fr = document.getElementById('pm7');
-				const painted = () => { const H = fr.contentDocument.documentElement, th = H.getAttribute('data-theme') || 'basic-dark'; return H.getAttribute('data-o55-nier') === 'on' ? 'nier-' + (/-light$/.test(th) ? 'light' : 'dark') : th; };
-				const pick = (v) => { sel.disabled = false; sel.value = v; sel.dispatchEvent(new Event('change', { bubbles: true })); };
-				const out = []; const t0 = performance.now(); let i = 0, nextAt = 0, settledAt = null;
-				while (performance.now() - t0 < 40000) {
-					const now = performance.now() - t0;
-					if (i < seq.length && now >= nextAt) { pick(seq[i]); out.push({ t: Math.round(now), pick: seq[i] }); i++; nextAt = now + 1200; }
-					out.push({ t: Math.round(now), sel: sel.value, dis: sel.disabled, painted: painted() });
-					if (i >= seq.length && !sel.disabled && sel.value === painted() && painted() === seq[seq.length - 1]) { if (settledAt == null) settledAt = now; if (now - settledAt > 3000) break; } else settledAt = null;
-					await new Promise((r) => setTimeout(r, 150));
+			/* three loads and spacings, so the race shows on a fast machine as well as a slow one (the RTX 3090 didn't
+			   reproduce it at the lightest): busy 70 of every 90ms with picks 1.2s apart, then 150 of every 170ms with picks
+			   600ms and 250ms apart, each from a different look */
+			const CASES = [[70, 90, 1200, ['retro-dark', 'retro-light', 'glass-dark']], [150, 170, 600, ['friendly-dark', 'glass-light', 'retro-dark']], [150, 170, 250, ['basic-light', 'nier-dark', 'glass-dark']]];
+			for (const [busy, period, gap, seq] of CASES) {
+				await frame.evaluate(([b, p]) => { window.__psxLoad = setInterval(() => { const t0 = performance.now(); while (performance.now() - t0 < b) { /* load */ } }, p); }, [busy, period]);
+				const run5 = await t.page.evaluate(async ([seq, gap]) => {
+					const sel = document.getElementById('look'), fr = document.getElementById('pm7');
+					const painted = () => { const H = fr.contentDocument.documentElement, th = H.getAttribute('data-theme') || 'basic-dark'; return H.getAttribute('data-o55-nier') === 'on' ? 'nier-' + (/-light$/.test(th) ? 'light' : 'dark') : th; };
+					const pick = (v) => { sel.disabled = false; sel.value = v; sel.dispatchEvent(new Event('change', { bubbles: true })); };
+					const out = []; const t0 = performance.now(); let i = 0, nextAt = 0, settledAt = null;
+					while (performance.now() - t0 < 60000) {
+						const now = performance.now() - t0;
+						if (i < seq.length && now >= nextAt) { pick(seq[i]); out.push({ t: Math.round(now), pick: seq[i] }); i++; nextAt = now + gap; }
+						out.push({ t: Math.round(now), sel: sel.value, dis: sel.disabled, painted: painted() });
+						if (i >= seq.length && !sel.disabled && sel.value === painted() && painted() === seq[seq.length - 1]) { if (settledAt == null) settledAt = now; if (now - settledAt > 3000) break; } else settledAt = null;
+						await new Promise((r) => setTimeout(r, 150));
+					}
+					return out;
+				}, [seq, gap]);
+				await frame.evaluate(() => clearInterval(window.__psxLoad));
+				const samples = run5.filter((x) => x.sel), last = samples[samples.length - 1] || {};
+				const lastPickAt = Math.max(...run5.filter((x) => x.pick).map((x) => x.t));
+				// a greyed Look shows the latest pick; an open one shows the painted look, within one sample of a repaint
+				const stale = []; let since = null;
+				for (const x of samples) {
+					if (x.t < lastPickAt) continue;
+					const ok = x.dis ? x.sel === seq[seq.length - 1] : x.sel === x.painted;
+					if (!ok) { if (since == null) since = x.t; if (x.t - since > 450) stale.push(`${x.t}ms: Look ${x.sel}${x.dis ? ' (greyed)' : ''}, painted ${x.painted}`); } else since = null;
 				}
-				return out;
-			}, seq);
-			await frame.evaluate(() => clearInterval(window.__psxLoad));
-			const samples = run5.filter((x) => x.sel), last = samples[samples.length - 1] || {};
-			const lastPickAt = Math.max(...run5.filter((x) => x.pick).map((x) => x.t));
-			// a greyed Look shows the latest pick; an open one shows the painted look, within one sample of a repaint
-			const stale = []; let since = null;
-			for (const x of samples) {
-				if (x.t < lastPickAt) continue;
-				const ok = x.dis ? x.sel === seq[seq.length - 1] : x.sel === x.painted;
-				if (!ok) { if (since == null) since = x.t; if (x.t - since > 450) stale.push(`${x.t}ms: Look ${x.sel}${x.dis ? ' (greyed)' : ''}, painted ${x.painted}`); } else since = null;
+				const ends = !last.dis && last.sel === last.painted && last.painted === seq[seq.length - 1];
+				await t.check(`R3-5 under load (busy ${busy} of every ${period}ms, picks ${gap}ms apart, ${seq.join(' → ')}): after the last pick the Look names the look painted (or, while greyed, the one asked for), never an older one for more than a moment, and it ends open on the last look picked, painted`, stale.length === 0 && ends,
+					(stale.slice(0, 5).join(' | ') || 'no stale sample') + ' · end: ' + samples.slice(-3).map((x) => `${x.t}:${x.sel}/${x.painted}${x.dis ? '/greyed' : ''}`).join(' '));
 			}
-			const ends = !last.dis && last.sel === last.painted && last.painted === seq[seq.length - 1];
-			await t.check('R3-5 under load: after the last pick the Look names the look painted (or, while greyed, the one asked for), never an older one for more than a moment, and it ends open on the last look picked, painted', stale.length === 0 && ends,
-				(stale.slice(0, 5).join(' | ') || 'no stale sample') + ' · end: ' + samples.slice(-3).map((x) => `${x.t}:${x.sel}/${x.painted}${x.dis ? '/greyed' : ''}`).join(' '));
 		}
 		t.page.off('pageerror', onErr); t.page.off('console', onConsole);
 		await t.check('no uncaught error and no console.error on the strip page', errors.length === 0, errors.join(' | '));
