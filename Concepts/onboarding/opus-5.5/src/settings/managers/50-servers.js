@@ -37,6 +37,9 @@
 #panel-settings .pm51-servers-pair-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
 #panel-settings .pm51-servers-actions { display: flex; flex-wrap: wrap; gap: 8px; }
 #panel-settings .pm51-servers-fp { display: block; margin-top: 6px; }
+#panel-settings .pm51-servers-demo { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; margin-top: 12px; font-size: 12px; color: var(--k3-text-3); }
+#panel-settings .pm51-servers-demo-c { min-height: 26px; padding: 3px 10px; border: 1px dashed color-mix(in srgb, var(--k3-text-1) 30%, transparent); border-radius: 999px; background: transparent; color: var(--k3-text-2); font: inherit; font-size: 12px; cursor: pointer; }
+#panel-settings .pm51-servers-demo-c:is(:hover, :focus-visible), #panel-settings .pm51-servers-demo-c.is-on { border-color: var(--accent-primary); color: var(--k3-text-1); background: rgba(var(--accent-primary-rgb), .08); }
 #panel-settings .pm51-servers-conf { padding: 10px 12px; border: 1px solid var(--k3-line); border-radius: 8px; background: var(--k3-bg-2); font-family: var(--mono-font, ui-monospace, monospace); font-size: 11px; line-height: 1.55; color: var(--k3-text-2); white-space: pre-wrap; overflow-wrap: anywhere; }
 `);
 
@@ -482,28 +485,145 @@
   }
 
   /* ---------- Away from home, step by step ------------------------------------------------------------------------ */
+  /* FO-132 (GUIDED-FLOWS-CHECK rows 1.05-1.11), the same flow onboarding runs after its commit (src/js/71a-screens-away.js):
+     - Tailscale is Built into Puppet Master: the Server gets its own connection, each Puppet Master app on another computer
+       signs in once on its own, and a browser tab cannot join (Plans/Remote_Access_System.md RAS D7 B). Setting it up is
+       the owner's staged steps, each with its own answer: start, the person's sign-in, Tailscale's yes, device approval, the
+       private address and the test; a refused or expired sign-in starts again from a fresh sign-in, any other failure asks
+       its own step again (onboarding RV-9).
+     - A web address of your own: Puppet Master makes the settings file for Caddy, NGINX or Traefik (Caddy first), or only
+       checks a proxy you already run; the person's proxy runs it and keeps the certificate, and Nginx Proxy Manager is an
+       existing proxy only (Plans/Planning_Wizard.md DL-259 CERT-1, Plans/Remote_Access_System.md DL-259 D3 A).
+     - The check before a way in is called ready reports every check the owner runs: reachability, the app and server
+       understanding each other, the server's identity, sign-in and pairing, and live updates, streams, transfers, links
+       and callbacks (Planning_Wizard.md CERT-1). It never says a certificate is valid.
+     - Remote Link: the Remote Link service issues a protected https link and an opaque short code; nothing in either is
+       made from the server's name or id, and pairing stays its own step (DL-259 REMOTE-CODE-1). */
   const WAYS = [
-    { kind: 'tailscale', title: 'Tailscale', text: 'A private network between your devices. Sign in once; nothing is opened to the internet.', meta: 'Recommended', icon: 'network' },
+    { kind: 'tailscale', title: 'Tailscale', text: 'Built into Puppet Master. A private network between your devices; nothing is opened to the internet.', meta: 'Recommended', icon: 'network' },
     { kind: 'vpn', title: 'A VPN I already use', text: 'WireGuard, OpenVPN or another VPN you run. Puppet Master only uses it.', icon: 'shield' },
-    { kind: 'domain', title: 'My own web address', text: 'An address like pm.example.com through a reverse proxy. Needs port forwarding on your router.', icon: 'browser' },
+    { kind: 'domain', title: 'My own web address', text: 'An address like pm.example.com through your own reverse proxy. Needs port forwarding on your router.', icon: 'browser' },
     { kind: 'remote-link', title: 'Puppet Master Remote Link', text: 'No account, domain or router change. Direct when possible, relayed otherwise.', icon: 'link' }
   ];
-  const PROXIES = [['Caddy', 'Caddy (free certificate, simplest)'], ['NGINX', 'NGINX'], ['Traefik', 'Traefik'], ['Nginx Proxy Manager', 'Nginx Proxy Manager']];
+  /* the proxies Puppet Master makes a settings file for, Caddy first; Nginx Proxy Manager is only ever an existing proxy */
+  const PROXIES = [['Caddy', 'Caddy'], ['NGINX', 'NGINX'], ['Traefik', 'Traefik']];
+  const GENERATES = PROXIES.map(p => p[0]);
+  const HOSTING = [['file', 'Make the settings file'], ['existing', 'I have one already']];
+  const CERT_NOTE = 'Certificates stay on your side: Caddy gets one by itself, and for NGINX or Traefik the file shows where yours goes.';
   const wayName = d => (WAYS.find(w => w.kind === d.kind) || {}).title || 'this way in';
   const tailName = () => `${slugHost(homeServer().name)}.example-tailnet.ts.net`;
+  /* (an older saved setup said Puppet Master ran Caddy, or named Nginx Proxy Manager as a file to make: the file is made
+     for Caddy, and Nginx Proxy Manager is a proxy the person already runs) */
+  const hostingOf = dom => dom && (dom.hosting === 'existing' || dom.proxy === 'Nginx Proxy Manager') ? 'existing' : 'file';
+  const proxyOf = dom => dom && GENERATES.includes(dom.proxy) ? dom.proxy : 'Caddy';
   /* (addr: the Server the file sends visitors to; the onboarding wizard passes the new Server's own address, RV-4) */
   function awayConfig(d, addr) {
-    const at = addr || homeServer().address, up = `${at}:8443`;
+    const at = addr || homeServer().address;
     if (d.proxy === 'Traefik' || d.proxy === 'NGINX') return proxyConfig(d.domain, d.proxy, at);
-    if (d.proxy === 'Nginx Proxy Manager') return `# Nginx Proxy Manager › Proxy Hosts › Add (example)\nDomain names: ${d.domain}\nScheme: http   Forward host: ${at}   Port: 8443\nWebsockets support: on\nSSL: Request a new certificate, Force SSL`;
-    return `# Caddyfile (example)\n${d.domain} {\n  reverse_proxy ${up}\n}`;
+    return `# Caddyfile (example)\n${d.domain} {\n  reverse_proxy ${at}:8443\n}`;
+  }
+  /* ---- Tailscale and Headscale: the owner's steps, one answer each (onboarding's plan(), RAS-009/015) ---- */
+  const TS_FAIL = {
+    denied: { words: () => 'Tailscale didn’t allow it. Nothing was set up. Try again, or do this later.', hint: 'Tailscale says no' },
+    expired: { words: () => 'The Tailscale sign-in ran out before it finished. Try again for a fresh one.', hint: 'Sign-in runs out' },
+    needs_device_approval: { words: n => `Your Tailscale network needs an administrator to approve ${n}. Approve it on Tailscale’s admin page, then try again.`, hint: 'Needs an admin’s approval' },
+    route_failed: { words: n => `The private address answered, but the live connection didn’t work. Check that your network’s access rules let your devices reach ${n}, then try again.`, hint: 'Live connection fails' },
+    registration_denied: { words: n => `Your Headscale server didn’t let ${n} in. Check with whoever runs it, then try again.`, hint: 'Headscale says no' },
+    hs_unreachable: { words: () => 'Your Headscale server didn’t answer. Check its address and that it is running, then try again.', hint: 'Headscale can’t be reached' }
+  };
+  function tsPlan(d) {
+    const n = homeServer().name;
+    if (d.flavor === 'headscale') return [
+      { key: 'start', label: `Starting Puppet Master’s connection on ${n}` },
+      { key: 'register', label: `Asking your Headscale server to let ${n} in`, fail: ['registration_denied', 'hs_unreachable'] },
+      d.hsReg === 'Ask administrator' ? { key: 'approve', label: 'Waiting for your Headscale administrator', person: 'hsApproved', wait: `Whoever runs your Headscale server approves ${n} there. Press It’s approved when they have.`, button: 'It’s approved' } : null,
+      { key: 'address', label: 'Creating the private address' },
+      { key: 'test', label: 'Testing the web page, the app and the live connection', fail: ['route_failed'] }
+    ].filter(Boolean);
+    return [
+      { key: 'start', label: `Starting Puppet Master’s connection on ${n}` },
+      { key: 'signin', label: 'Signing in to Tailscale', person: 'tsSignIn', wait: 'Tailscale’s sign-in page opens on this device. Sign in there with your Tailscale account: Google, Microsoft, GitHub or Apple.', button: 'Sign in to Tailscale' },
+      { key: 'auth', label: 'Waiting for Tailscale to say yes', fail: ['denied', 'expired'] },
+      { key: 'approve', label: 'Waiting for device approval, if your Tailscale network asks for it', fail: ['needs_device_approval'] },
+      { key: 'address', label: 'Creating the private address' },
+      { key: 'test', label: 'Testing the web page, the app and the live connection', fail: ['route_failed'] }
+    ];
+  }
+  const tsFresh = () => ({ started: false, step: 0, done: [], state: 'idle', fail: null, people: {}, once: null, run: 0 });
+  const TS_STEP_MS = 900;
+  function tsRun(w) {
+    const d = w.draft, T = d.ts, plan = tsPlan(d), st = plan[T.step];
+    if (!T.started || ['running', 'failed', 'done'].includes(T.state)) return;
+    if (!st) { T.state = 'done'; return tsPaint(w); }
+    if (st.person && !T.people[st.person]) { T.state = 'waiting'; return tsPaint(w); }
+    T.state = 'running'; tsPaint(w);
+    const run = T.run, at = T.step;
+    window.setTimeout(() => {
+      if (d.ts !== T || T.run !== run || T.step !== at || T.state !== 'running') return;   // (asked again, or the window moved on)
+      const code = T.once && (st.fail || []).includes(T.once) ? T.once : null;
+      if (code) { T.once = null; T.state = 'failed'; T.fail = { step: st.key, code }; return tsPaint(w); }
+      T.done.push(st.key); T.step += 1; T.state = 'idle';
+      if (T.step >= plan.length) { T.state = 'done'; d.signedIn = true; return tsPaint(w); }
+      tsRun(w);
+    }, TS_STEP_MS);
+  }
+  /* the Connect step is drawn again for each answer while it is showing; a closed window keeps nothing */
+  function tsPaint(w) { const wrap = [...portalRoot().querySelectorAll('.drawer-wrap')].find(x => x._o55Wizard === w); if (!wrap || wrap.dataset.closing === '1' || w.step() !== w.draft.connectAt) return; w.go(w.step()); }
+  function tsConnect(d) {
+    const T = d.ts, n = homeServer().name, plan = tsPlan(d), head = d.flavor === 'headscale' ? 'Headscale' : 'Tailscale';
+    const rows = plan.map((st, i) => {
+      const done = T.done.includes(st.key), failed = T.state === 'failed' && T.fail && T.fail.step === st.key, here = i === T.step && !done && !failed;
+      return { title: st.label, done, tone: failed ? 'attention' : here && T.state === 'waiting' ? 'attention' : here && T.state === 'running' ? 'info' : undefined,
+        status: failed ? 'Didn’t work' : here && T.state === 'waiting' ? 'Waiting for you' : here && T.state === 'running' ? 'In progress' : undefined };
+    });
+    const ident = PM51.kv([['Connection for', `${n}, the server, with its own private name`], ['Your other computers', 'The Puppet Master app on each signs in once there; nothing extra to install'], ['A browser tab', 'Can’t join: use Remote Link, or the Tailscale app on that device']]);
+    let out = `<div data-ts-state="${a(T.state)}">` + PM51.steps(rows) + '</div>';
+    if (T.state === 'done') {
+      out += PM51.panelSection(d.flavor === 'headscale' ? 'Registered' : 'Signed in', PM51.kv(d.flavor === 'headscale' ? [['Headscale', d.hsAddress], ['Private name', `${slugHost(n)}.headscale.internal · example`], ['Who can connect', 'Only devices your Headscale knows']] : [['Signed in as', 'you@example.com · example'], ['Private name', `${tailName()} · example`], ['Who can connect', 'Only your signed-in devices']]), '', { icon: 'network' })
+        + PM51.panelSection('Which installation is connected', ident, '', { icon: 'system' });
+      return out;
+    }
+    if (T.state === 'failed' && T.fail) {
+      out += PM51.note(TS_FAIL[T.fail.code].words(n), 'attention') + `<div class="pm51-perm-actions">${PM51.btn({ label: 'Try again', primary: true, icon: 'refresh', action: 'pm51-servers-ts-retry' })}</div>`;
+      return out;
+    }
+    if (!T.started) return out + PM51.note(d.flavor === 'headscale' ? `${n} asks your Headscale server to let it in. Nothing is set up until you press Start.` : `Built into Puppet Master: nothing extra to install. ${n} gets its own private connection; nothing is set up until you press Start.`, 'info')
+      + PM51.panelSection('Which installation signs in', ident, '', { icon: 'system' })
+      + `<div class="pm51-perm-actions">${PM51.btn({ label: 'Start', primary: true, icon: 'link', action: 'pm51-servers-ts-start' })}</div>`;
+    const st = plan[T.step];
+    if (T.state === 'waiting' && st) out += PM51.note(st.wait, 'info') + `<div class="pm51-perm-actions">${PM51.btn({ label: st.button, primary: true, icon: st.person === 'tsSignIn' ? 'external' : 'check', action: 'pm51-servers-ts-person', data: { person: st.person } })}</div>`;
+    /* demo answers (O55 demo hints): the next step that can give one gives it, once */
+    const codes = [...new Set(plan.slice(T.step).flatMap(x => x.fail || []))];
+    if (codes.length) out += `<div class="pm51-servers-demo" role="group" aria-label="Try another answer"><span class="pm51-servers-demo-k">Try another answer:</span>${codes.map(c => `<button type="button" class="pm51-servers-demo-c${T.once === c ? ' is-on' : ''}" data-action="pm51-servers-ts-demo" data-code="${a(c)}" aria-pressed="${T.once === c ? 'true' : 'false'}">${h(TS_FAIL[c].hint)}</button>`).join('')}</div>`;
+    return out + `<p class="pm51-ps-help">${h(`${head} answers each step here. You can close this and finish it later under Away From Home.`)}</p>`;
+  }
+  /* ---- Remote Link: the owner issues the link and the short code (opaque; nothing in either comes from the server) ---- */
+  const opaque = n => { const A = 'abcdefghijkmnpqrstuvwxyz23456789'; let s = ''; const r = new Uint32Array(n); (window.crypto || {}).getRandomValues ? window.crypto.getRandomValues(r) : r.forEach((_, i) => { r[i] = Math.floor(Math.random() * 1e9); }); r.forEach(x => { s += A[x % A.length]; }); return s; };
+  const issueRemoteLink = () => ({ link: `https://link.remote.example/r/${opaque(22)}`, code: `${opaque(4)}-${opaque(4)}`.toUpperCase(), created: `Today · ${nowLabel()}` });
+  /* ---- the checks the owner runs before a way in is called ready (CERT-1); example answers ---- */
+  function routeCheckRows(kind, via) {
+    const home = homeServer();
+    return [
+      { title: 'Way in is set up', desc: via },
+      { title: 'Server reachable through it', desc: 'From this device' },
+      { title: 'App and server understand each other', desc: home.version && home.version !== '—' && !/not checked/i.test(home.version) ? `Puppet Master ${home.version} answers` : 'Puppet Master answers' },
+      { title: 'It is your server', desc: fingerprint(home) },
+      { title: 'Sign-in and pairing work', desc: 'Only paired devices get further' },
+      { title: 'Live updates get through', desc: 'WebSockets stay open' },
+      { title: 'Chats and terminals stream', desc: 'Long answers arrive as they are written' },
+      { title: 'Files upload and download', desc: 'A test file both ways' },
+      { title: 'Links open the right place', desc: 'A link to a Goal or chat opens it' },
+      { title: 'Sign-in pages return here', desc: kind === 'domain' ? `Callbacks come back to ${(ra().domain || {}).name || 'your address'}` : 'Callbacks come back through this way in' }
+    ];
   }
   function awayDetails(d) {
     const home = homeServer();
     if (d.kind === 'tailscale') return PM51.field('Which Tailscale', PM51.segmented(d.flavor, [['hosted', 'A Tailscale account'], ['headscale', 'My own Headscale server']], { action: 'pm51-servers-w-flavor', label: 'Which Tailscale' }))
-      + (d.flavor === 'headscale' ? `<div class="o55-setup-fields">${PM51.field('Headscale address', `<input class="text-control o55-aw-hs o55-setup-mono" value="${a(d.hsAddress)}" placeholder="https://headscale.example.net" autocomplete="off" spellcheck="false"/>`)}${PM51.field('How devices join', PM51.select(d.hsReg, [['Automatic', 'Automatically'], ['Ask administrator', 'An administrator approves each one'], ['One-time key', 'With a one-time key']], { cls: 'o55-aw-hsreg', label: 'How devices join' }))}${d.hsReg === 'One-time key' ? PM51.field('One-time key', '<input class="text-control o55-aw-hskey" type="password" autocomplete="off" placeholder="' + (d.hsKey ? 'Saved. Paste a new one to replace it' : 'Paste it here') + '"/>', 'From your Headscale server. Kept in the keychain, never shown again.') : ''}</div>` : PM51.note('On the next step you sign in with Google, Microsoft, GitHub or Apple. Nothing extra to install.', 'info'));
+      + (d.flavor === 'headscale' ? `<div class="o55-setup-fields">${PM51.field('Headscale address', `<input class="text-control o55-aw-hs o55-setup-mono" value="${a(d.hsAddress)}" placeholder="https://headscale.example.net" autocomplete="off" spellcheck="false"/>`)}${PM51.field('How devices join', PM51.select(d.hsReg, [['Automatic', 'Automatically'], ['Ask administrator', 'An administrator approves each one'], ['One-time key', 'With a one-time key']], { cls: 'o55-aw-hsreg', label: 'How devices join' }))}${d.hsReg === 'One-time key' ? PM51.field('One-time key', '<input class="text-control o55-aw-hskey" type="password" autocomplete="off" placeholder="' + (d.hsKey ? 'Saved. Paste a new one to replace it' : 'Paste it here') + '"/>', 'From your Headscale server. Kept in the keychain, never shown again.') : ''}</div>`
+        : PM51.note(`Built into Puppet Master: nothing extra to install. ${home.name} gets its own private connection when you sign in on the next step. The Puppet Master app on each of your other computers signs in once there; a browser tab can’t join, so from a browser use Remote Link or that device’s own Tailscale app.`, 'info'));
     if (d.kind === 'vpn') return `<div class="o55-setup-fields">${PM51.field('Which VPN', PM51.select(d.vpnKind, ['WireGuard', 'OpenVPN', 'Other'], { cls: 'o55-aw-vpnkind', label: 'Which VPN' }))}${PM51.field(`${home.name}’s address on the VPN`, `<input class="text-control o55-aw-vpnaddr o55-setup-mono" value="${a(d.vpnAddress)}" placeholder="10.8.0.2 or truenas.vpn" autocomplete="off" spellcheck="false"/>`, 'Ask whoever set up the VPN if you are not sure.')}</div>` + PM51.note('Puppet Master never changes your VPN. It only uses the address you give it.', 'info');
-    if (d.kind === 'domain') return `<div class="o55-setup-fields">${PM51.field('Web address', `<input class="text-control o55-aw-dom o55-setup-mono" value="${a(d.domain)}" placeholder="pm.example.com" autocomplete="off" spellcheck="false"/>`)}${PM51.field('Who runs the proxy', PM51.select(d.hosting, [['pm', 'Puppet Master sets it up (Caddy)'], ['file', 'Only make the settings file'], ['existing', 'I already have one']], { cls: 'o55-aw-host', label: 'Who runs the proxy' }))}${d.hosting === 'pm' ? '' : PM51.field('Which proxy', PM51.select(d.proxy, PROXIES, { cls: 'o55-aw-proxy', label: 'Which proxy' }))}</div>`
+    if (d.kind === 'domain') return `<div class="o55-setup-fields">${PM51.field('Web address', `<input class="text-control o55-aw-dom o55-setup-mono" value="${a(d.domain)}" placeholder="pm.example.com" autocomplete="off" spellcheck="false"/>`)}${PM51.field('Who runs it?', PM51.select(d.hosting, HOSTING, { cls: 'o55-aw-host', label: 'Who runs it?', action: 'pm51-servers-w-host' }))}${d.hosting === 'file' ? PM51.field('Which proxy', PM51.select(d.proxy, PROXIES, { cls: 'o55-aw-proxy', label: 'Which proxy' }), 'Puppet Master writes the settings file; your proxy runs it. Using Nginx Proxy Manager? Choose I have one already.') : ''}</div>`
+      + (d.hosting === 'file' ? PM51.note(CERT_NOTE, 'info') : PM51.note(`Puppet Master checks that this address reaches ${home.name} before using it. Nothing is made for your proxy.`, 'info'))
       + PM51.panelSection('Port forwarding on your router', `<p class="pm51-ps-text">${h(`Your router has to send web traffic (port 443) to ${home.name} at ${home.address}. This is called port forwarding; look for it in your router’s settings. Puppet Master can’t change your router.`)}</p>` + PM51.rows([{ label: `My router forwards port 443 to ${home.name}`, control: PM51.toggle(!!d.forwarded, { action: 'pm51-servers-w-aflag', data: { key: 'forwarded' }, label: 'My router forwards port 443' }) }]), '', { icon: 'route' })
       + PM51.note('This is a public address, so sign-in is still required. Tailscale or Remote Link keep the server private.', 'attention');
     return PM51.note('Nothing to fill in: no account, domain or router change. The server dials out, and traffic stays encrypted end to end.', 'info') + PM51.rows([{ label: 'Use the relay when a direct connection isn’t possible', help: 'Slower, still encrypted. Off means some networks cannot reach it.', control: PM51.toggle(!!d.relay, { action: 'pm51-servers-w-aflag', data: { key: 'relay' }, label: 'Use the relay' }) }]);
@@ -511,8 +631,8 @@
   function awayCollect(w, d) {
     const v = s => { const el = w.querySelector(s); return el ? String(el.value || '').trim() : null; };
     const hs = v('.o55-aw-hs'), reg = v('.o55-aw-hsreg'), key = v('.o55-aw-hskey'), vk = v('.o55-aw-vpnkind'), va = v('.o55-aw-vpnaddr'), dom = v('.o55-aw-dom'), host = v('.o55-aw-host'), px = v('.o55-aw-proxy');
-    if (hs != null) d.hsAddress = hs; if (reg) d.hsReg = reg; if (key) d.hsKey = true; if (vk) d.vpnKind = vk; if (va != null) d.vpnAddress = va;
-    if (dom != null) d.domain = dom.replace(/^https?:\/\//, '').replace(/\/.*$/, ''); if (host) { d.hosting = host; if (host === 'pm') d.proxy = 'Caddy'; } if (px) d.proxy = px;
+    if (hs != null && hs !== d.hsAddress) { d.hsAddress = hs; d.ts = tsFresh(); d.signedIn = false; } if (reg && reg !== d.hsReg) { d.hsReg = reg; d.ts = tsFresh(); d.signedIn = false; } if (key) d.hsKey = true; if (vk) d.vpnKind = vk; if (va != null) d.vpnAddress = va;
+    if (dom != null) d.domain = dom.replace(/^https?:\/\//, '').replace(/\/.*$/, ''); if (host && host !== d.hosting) { d.hosting = host; d.added = false; } if (px && GENERATES.includes(px) && px !== d.proxy) { d.proxy = px; d.added = false; }
   }
   function awayDetailsCheck(d) {
     if (d.kind === 'tailscale' && d.flavor === 'headscale') return !/^https:\/\/\S+\.\S+/.test(d.hsAddress) ? 'Enter the Headscale address, starting with https://.' : d.hsReg === 'One-time key' && !d.hsKey ? 'Paste the one-time key.' : '';
@@ -522,30 +642,35 @@
   }
   function awayConnect(d) {
     const home = homeServer(), btn = (label, act, ic) => `<div class="pm51-perm-actions">${PM51.btn({ label, primary: true, icon: ic, action: act })}</div>`;
-    if (d.kind === 'tailscale' && d.flavor === 'headscale') return d.signedIn ? PM51.panelSection('Registered', PM51.kv([['Headscale', d.hsAddress], ['Private name', `${slugHost(home.name)}.headscale.internal · example`], ['Who can connect', 'Only devices your Headscale knows']]), '', { icon: 'network' }) : PM51.note(`${home.name} joins your Headscale network${d.hsReg === 'Ask administrator' ? ' once an administrator approves it' : ''}.`, 'info') + btn('Register with Headscale', 'pm51-servers-w-signin', 'network');
-    if (d.kind === 'tailscale') return d.signedIn ? PM51.panelSection('Signed in', PM51.kv([['Signed in as', 'you@example.com · example'], ['Private name', `${tailName()} · example`], ['Who can connect', 'Only your signed-in devices']]), '', { icon: 'network' }) : PM51.steps([{ title: 'Sign in', desc: 'Google, Microsoft, GitHub or Apple, in your browser.' }, { title: 'Approve this device', desc: 'If your Tailscale asks for it, in its admin page.' }, { title: 'A private name', desc: `${home.name} gets a name that works from anywhere, only for your devices.` }]) + btn('Sign in to Tailscale', 'pm51-servers-w-signin', 'link');
+    if (d.kind === 'tailscale') return tsConnect(d);
     if (d.kind === 'vpn') return PM51.note(`Connect this device to your ${d.vpnKind} VPN the way you usually do, then switch this on.`, 'info') + PM51.rows([{ label: 'This device is on the VPN now', control: PM51.toggle(!!d.vpnOn, { action: 'pm51-servers-w-aflag', data: { key: 'vpnOn' }, label: 'This device is on the VPN now' }) }]);
     if (d.kind === 'domain') return PM51.panelSection('1. Point the address home', `<p class="pm51-ps-text">${h(`At the company where you bought ${d.domain}, add an A record that points it at your home’s public address (203.0.113.24 here, as an example).`)}</p>`, '', { icon: 'globe' })
-      + PM51.panelSection(d.hosting === 'pm' ? '2. Puppet Master sets up Caddy' : d.hosting === 'file' ? '2. The settings file for your proxy' : '2. Add this to your proxy', (d.hosting === 'pm' ? `<p class="pm51-ps-text">${h(`Caddy runs next to Puppet Master on ${home.name} and gets a free certificate by itself. This is what it uses:`)}</p>` : '') + copyBox(awayConfig(d), 'Proxy settings'), '', { icon: 'file' });
-    return d.link ? PM51.panelSection('Your link', copyBox(d.link, 'Remote Link') + PM51.kv([['Relay', d.relay ? 'Only when a direct connection is not possible' : 'Off'], ['Pairing', 'Your other devices use the same pairing code as at home']]), 'On another device choose Connect this device, then paste this link.', { icon: 'link' }) : PM51.note(`${home.name} gets a link only your devices know. Nothing is opened on your router.`, 'info') + btn('Create link', 'pm51-servers-w-link', 'link');
+      + (d.hosting === 'file'
+        ? PM51.panelSection(`2. The settings file for ${d.proxy}`, copyBox(awayConfig(d), 'Proxy settings') + `<p class="pm51-ps-help">${h(CERT_NOTE)}</p>` + PM51.rows([{ label: `I’ve added it to ${d.proxy}`, help: 'Add the file to your proxy and reload it, then switch this on.', control: PM51.toggle(!!d.added, { action: 'pm51-servers-w-aflag', data: { key: 'added' }, label: `I’ve added it to ${d.proxy}` }) }]), '', { icon: 'file' })
+        : PM51.panelSection('2. Your proxy', `<p class="pm51-ps-text">${h(`Your proxy already sends ${d.domain} to ${home.name}. Nothing is made for it; the next step checks that the address reaches ${home.name}, live updates included.`)}</p>`, '', { icon: 'file' }));
+    return d.link ? PM51.panelSection('Your link', copyBox(d.link, 'Remote Link') + (d.code ? copyBox(d.code, 'Short code') : '') + PM51.kv([['Made by', 'The Remote Link service · example'], ['Relay', d.relay ? 'Only when a direct connection is not possible' : 'Off'], ['Pairing', 'Each device that connects still asks you to approve it']]), 'On another device choose Connect this device, then paste the link or type the short code.', { icon: 'link' })
+      : d.linking ? PM51.steps([{ title: `${home.name} is asking the Remote Link service for its link`, tone: 'info', status: 'In progress' }])
+      : PM51.note(`${home.name} gets a link only your devices know. Nothing is opened on your router.`, 'info') + btn('Create link', 'pm51-servers-w-link', 'link');
   }
-  const awayConnectCheck = d => (d.kind === 'tailscale' && !d.signedIn) ? (d.flavor === 'headscale' ? 'Register with Headscale first.' : 'Sign in to Tailscale first.') : d.kind === 'remote-link' && !d.link ? 'Create the link first.' : d.kind === 'vpn' && !d.vpnOn ? 'Connect this device to the VPN first, then switch it on.' : '';
-  const awayVia = d => d.kind === 'tailscale' ? (d.flavor === 'headscale' ? `Headscale at ${d.hsAddress}` : 'Private Tailscale name') : d.kind === 'vpn' ? `${d.vpnKind} at ${d.vpnAddress}` : d.kind === 'domain' ? `${d.hosting === 'pm' ? 'Caddy' : d.proxy} at ${d.domain}` : 'Remote Link, direct or relayed';
+  const awayConnectCheck = d => d.kind === 'tailscale' && !(d.ts && d.ts.state === 'done') ? (d.ts && d.ts.state === 'failed' ? 'That step didn’t work. Try again, or close this and finish it later.' : d.ts && d.ts.started ? 'Wait for the steps to finish.' : 'Press Start first.')
+    : d.kind === 'remote-link' && !d.link ? 'Create the link first.' : d.kind === 'vpn' && !d.vpnOn ? 'Connect this device to the VPN first, then switch it on.'
+    : d.kind === 'domain' && d.hosting === 'file' && !d.added ? `Add the settings file to ${d.proxy} first, then switch it on.` : '';
+  const awayVia = d => d.kind === 'tailscale' ? (d.flavor === 'headscale' ? `Headscale at ${d.hsAddress}` : 'Private Tailscale name') : d.kind === 'vpn' ? `${d.vpnKind} at ${d.vpnAddress}` : d.kind === 'domain' ? `${d.hosting === 'file' ? d.proxy : 'Your proxy'} at ${d.domain}` : 'Remote Link, direct or relayed';
   function awayCheck(d) {
-    if (!d.checked) return PM51.note('Puppet Master tries to reach your server through the new way in, from this device.', 'info') + `<div class="pm51-perm-actions">${PM51.btn({ label: 'Check route', primary: true, icon: 'test', action: 'pm51-servers-key-check' })}</div>`;
-    return PM51.steps([{ title: 'Route is set up', desc: awayVia(d) }, { title: 'Server reachable through it', desc: 'From this device' }, { title: 'It is your server', desc: fingerprint(homeServer()) }, { title: 'Sign-in page answers', desc: 'Only paired devices get further' }].map(s => Object.assign({ status: 'Example', tone: 'info', done: true }, s)))
-      + PM51.note('Example data only. In the app the live connector proves this.', 'info') + `<div class="pm51-perm-actions">${PM51.btn({ label: 'Check again', small: true, icon: 'refresh', action: 'pm51-servers-key-check' })}</div>`;
+    if (!d.checked) return PM51.note('Puppet Master tries the new way in from this device: reaching the server, its identity, sign-in, live updates, streams, files, links and sign-in callbacks.', 'info') + `<div class="pm51-perm-actions">${PM51.btn({ label: 'Check route', primary: true, icon: 'test', action: 'pm51-servers-key-check' })}</div>`;
+    return PM51.steps(routeCheckRows(d.kind, awayVia(d)).map(s => Object.assign({ status: 'Example', tone: 'info', done: true }, s)))
+      + PM51.note('Example data only. In the app the live connector proves each of these.', 'info') + `<div class="pm51-perm-actions">${PM51.btn({ label: 'Check again', small: true, icon: 'refresh', action: 'pm51-servers-key-check' })}</div>`;
   }
   function awayWizard(kind) {
     const R = ra(), hs = R.headscale || {}, v = R.vpn || {}, dom = R.domain || {};
-    const draft = { kind: kind || '', flavor: hs.address ? 'headscale' : 'hosted', hsAddress: hs.address || '', hsReg: hs.registration || 'Automatic', hsKey: !!hs.keySaved, vpnKind: v.kind || 'WireGuard', vpnAddress: v.address || '', domain: dom.name || '', proxy: dom.proxy || 'Caddy', hosting: dom.hosting || 'pm', forwarded: !!dom.forwarded, relay: true, signedIn: false, link: (R.remoteLink || {}).link || '', vpnOn: false, checked: false, useIt: true };
+    const draft = { kind: kind || '', flavor: hs.address ? 'headscale' : 'hosted', hsAddress: hs.address || '', hsReg: hs.registration || 'Automatic', hsKey: !!hs.keySaved, vpnKind: v.kind || 'WireGuard', vpnAddress: v.address || '', domain: dom.name || '', proxy: proxyOf(dom), hosting: hostingOf(dom), forwarded: !!dom.forwarded, added: false, relay: true, signedIn: false, ts: tsFresh(), link: (R.remoteLink || {}).link || '', code: (R.remoteLink || {}).code || '', linking: false, vpnOn: false, checked: false, useIt: true, connectAt: kind ? 1 : 2 };
     const steps = [];
     if (!kind) steps.push({ label: 'Way', icon: 'route', title: `How should your devices reach ${homeServer().name} away from home?`, lead: 'At home everything already works. Pick one way in for when you are out; you can add more later.',
       render: d => PM51.tiles(WAYS.map(w => { const r = routeById(w.kind); return { title: w.title, text: w.text, meta: r && routeConfigured(r) ? 'Already set up; this sets it up again' : w.meta, icon: w.icon, selected: d.kind === w.kind, data: { kind: w.kind } }; }), { action: 'pm51-servers-w-way' }), check: d => d.kind ? '' : 'Pick one way in.' });
-    steps.push({ label: 'Details', icon: 'sliders', title: d => ({ tailscale: 'Which Tailscale?', vpn: 'Which VPN, and where is the server on it?', domain: 'Which address, and who runs the proxy?', 'remote-link': 'Nothing to fill in' })[d.kind] || 'Details', lead: d => d.kind === 'domain' ? 'Your own address goes through a reverse proxy in front of Puppet Master.' : d.kind === 'remote-link' ? 'Remote Link needs no account, domain or router change.' : 'Only what Puppet Master needs to find your server.',
+    steps.push({ label: 'Details', icon: 'sliders', title: d => ({ tailscale: 'Which Tailscale?', vpn: 'Which VPN, and where is the server on it?', domain: 'Which address, and who runs the proxy?', 'remote-link': 'Nothing to fill in' })[d.kind] || 'Details', lead: d => d.kind === 'domain' ? 'Your own address goes through a reverse proxy in front of Puppet Master. Your proxy runs it; Puppet Master can make its settings file.' : d.kind === 'remote-link' ? 'Remote Link needs no account, domain or router change.' : 'Only what Puppet Master needs to find your server.',
       render: awayDetails, collect: awayCollect, check: awayDetailsCheck, recap: d => d.kind === 'tailscale' ? (d.flavor === 'headscale' ? 'Headscale' : 'Tailscale account') : d.kind === 'vpn' ? d.vpnKind : d.kind === 'domain' ? d.domain : 'Nothing needed' });
-    steps.push({ label: 'Connect', icon: 'link', title: d => d.kind === 'tailscale' ? (d.flavor === 'headscale' ? 'Register with your Headscale' : 'Sign in to Tailscale once') : d.kind === 'vpn' ? 'Connect this device to the VPN' : d.kind === 'domain' ? 'Point the address and set up the proxy' : 'Create your link', lead: d => d.kind === 'domain' ? 'Two things outside Puppet Master, done once.' : 'Done once; after that it connects on its own.',
-      render: awayConnect, check: awayConnectCheck, recap: d => d.kind === 'tailscale' ? 'Signed in' : d.kind === 'remote-link' ? 'Link made' : d.kind === 'domain' ? 'Proxy ready' : 'On the VPN' });
+    steps.push({ label: 'Connect', icon: 'link', title: d => d.kind === 'tailscale' ? (d.flavor === 'headscale' ? `Setting up Headscale for ${homeServer().name}` : `Setting up Tailscale for ${homeServer().name}`) : d.kind === 'vpn' ? 'Connect this device to the VPN' : d.kind === 'domain' ? (d.hosting === 'file' ? 'Point the address and add the settings file' : 'Point the address at your proxy') : 'Create your link', lead: d => d.kind === 'domain' ? 'Things outside Puppet Master, done once.' : d.kind === 'tailscale' ? 'Each step says what it is doing.' : 'Done once; after that it connects on its own.',
+      render: awayConnect, check: awayConnectCheck, recap: d => d.kind === 'tailscale' ? (d.flavor === 'headscale' ? 'Registered' : 'Signed in') : d.kind === 'remote-link' ? 'Link made' : d.kind === 'domain' ? (d.hosting === 'file' ? 'File added' : 'Proxy ready') : 'On the VPN' });
     steps.push({ label: 'Check', icon: 'test', title: 'Does it work from here?', lead: 'Puppet Master tries the new way in from this device.', render: awayCheck, check: d => d.checked ? '' : 'Run Check route first.', recap: () => 'Works' });
     steps.push({ label: 'Recap', icon: 'check', title: d => `Save ${wayName(d)}?`, lead: 'Check it over. You can turn it off or remove it later.',
       render: d => { const r = routeById(d.kind); return PM51.panelSection(wayName(d), PM51.kv([['Goes through', awayVia(d)], ['Private', d.kind === 'domain' ? 'No: a public address with sign-in' : 'Yes: only your devices'], ['Tried', r ? `${ordinal(routePosition(r))}, after the routes above it` : '—']]), '', { icon: 'route' }) + PM51.rows([{ label: 'Use it when away', help: 'Off keeps the setup but skips it.', control: PM51.toggle(!!d.useIt, { action: 'pm51-servers-w-aflag', data: { key: 'useIt' }, label: 'Use it when away' }) }]); } });
@@ -553,8 +678,8 @@
       const R2 = ra(), r = routeById(d.kind); if (!r) return;
       if (d.kind === 'tailscale') R2.headscale = d.flavor === 'headscale' ? { address: d.hsAddress, registration: d.hsReg, keySaved: !!d.hsKey } : null;
       if (d.kind === 'vpn') R2.vpn = { kind: d.vpnKind, address: d.vpnAddress };
-      if (d.kind === 'domain') R2.domain = { name: d.domain, proxy: d.hosting === 'pm' ? 'Caddy' : d.proxy, hosting: d.hosting, forwarded: true, generated: true };
-      if (d.kind === 'remote-link') R2.remoteLink = { link: d.link, created: `Today · ${nowLabel()}`, relay: !!d.relay };
+      if (d.kind === 'domain') R2.domain = { name: d.domain, proxy: d.hosting === 'file' ? d.proxy : 'Your proxy', hosting: d.hosting, forwarded: true, generated: d.hosting === 'file' };
+      if (d.kind === 'remote-link') R2.remoteLink = { link: d.link, code: d.code, created: `Today · ${nowLabel()}`, relay: !!d.relay };
       r.status = d.useIt ? 'ready' : 'off'; r.enabled = !!d.useIt; r.lastCheck = 'Just now';
       PM51.setTab(ID, 'away'); refresh();
       PM51.toast(`${r.name} is set up`, `${d.useIt ? `Tried ${ordinal(routePosition(r))} when you are away. ` : 'Turned off for now. '}Example only: nothing outside this preview changed.`, 'info');
@@ -984,20 +1109,26 @@
       primary: null
     };
     if (r.kind === 'tailscale') {
-      const steps = [
-        { title: 'Sign in', desc: 'Use Google, Microsoft, GitHub, or Apple. Nothing extra to install.' },
-        { title: 'Approve device', desc: 'Confirm this device in your Tailscale admin page.' },
-        { title: 'Private address', desc: 'Your server gets a private name that works from anywhere.' },
-        { title: 'Test', desc: 'Puppet Master checks the new route from this device.' }
-      ];
+      /* the owner's steps, as the setup runs them (FO-132 row 1.06); the setup itself is the guided window */
+      const hsOn = !!(R.headscale && R.headscale.address);
+      const steps = (hsOn ? [
+        { title: 'Ask your Headscale server', desc: `${home.name} asks to join your Headscale network.` }
+      ] : [
+        { title: 'Sign in', desc: 'Tailscale’s sign-in page opens on this device: Google, Microsoft, GitHub or Apple.' },
+        { title: 'Tailscale says yes', desc: 'Puppet Master waits for Tailscale’s answer.' }
+      ]).concat([
+        { title: 'Device approval', desc: hsOn ? 'If an administrator approves each device, they approve this one.' : 'If your Tailscale network asks for it, approve this device on its admin page.' },
+        { title: 'Private address', desc: `${home.name} gets a private name that works from anywhere, only for your devices.` },
+        { title: 'Test', desc: 'The web page, the app and the live connection, from this device.' }
+      ]);
       return {
         summary: 'Built into Puppet Master. A private network between your devices, with nothing opened to the public internet.',
-        body: PM51.panelSection('Steps', railSteps(steps, settled ? 4 : configured ? 3 : 0, r.status === 'needs-sign-in'), '', { icon: 'route' })
-          + (configured ? PM51.panelSection('Details', PM51.kv([['Private address', 'home-truenas.example-tailnet.ts.net · example'], ['Signed in with', 'Google · example'], ['Who can connect', 'Only your signed-in devices']]), '', { icon: 'network' }) + useRouteCard(r) : '')
+        body: PM51.panelSection('Steps', railSteps(steps, settled || configured ? steps.length : 0, r.status === 'needs-sign-in'), '', { icon: 'route' })
+          + (configured ? PM51.panelSection('Details', PM51.kv([['Private address', `${tailName()} · example`], ['Signed in with', 'Google · example'], ['Who can connect', 'Only your signed-in devices']]), '', { icon: 'network' }) : '')
+          + PM51.panelSection('Which installation is connected', PM51.kv([['Connection for', `${home.name}, the server`], ['Your other computers', 'The Puppet Master app on each signs in once there'], ['A browser tab', 'Can’t join: use Remote Link, or the Tailscale app on that device']]), '', { icon: 'system' })
+          + (configured ? useRouteCard(r) : '')
           + PM51.note('Nothing is opened to the public internet. Only your signed-in devices can connect.', 'info'),
-        primary: r.status === 'not-set-up' ? { label: 'Start sign-in', run: () => { r.status = 'needs-sign-in'; refresh(); PM51.toast('Tailscale sign-in started', 'Example data only. In the real app a sign-in window opens next.', 'info'); } }
-          : r.status === 'needs-sign-in' ? { label: 'Continue sign-in', run: () => { r.status = 'needs-attention'; r.lastCheck = 'Never'; refresh(); PM51.toast('Tailscale is set up', 'Example data only. Run Check route to make sure it works from here.', 'info'); } }
-          : null
+        primary: r.status === 'not-set-up' || r.status === 'needs-sign-in' ? { label: r.status === 'not-set-up' ? 'Set up' : 'Continue setup', run: () => { closeOverlay(); awayWizard('tailscale'); return false; } } : null
       };
     }
     if (r.kind === 'vpn') {
@@ -1017,19 +1148,19 @@
       };
     }
     if (r.kind === 'domain') {
-      const dom = R.domain || { name: '', proxy: 'NGINX' };
-      const steps = [{ title: 'Point your domain', desc: 'Point the name at your home IP address.' }, { title: 'Generate proxy setup', desc: 'Copy the NGINX or Traefik block into your proxy.' }, { title: 'Test', desc: 'Puppet Master checks the address from this device.' }];
+      const dom = R.domain || { name: '', proxy: 'Caddy' }, own = hostingOf(dom) === 'existing', kind = proxyOf(dom);
+      const steps = [{ title: 'Point your domain', desc: 'Point the name at your home IP address.' }, own ? { title: 'Your proxy sends it here', desc: 'A proxy you already run; nothing is made for it.' } : { title: 'Add the settings file', desc: 'Puppet Master makes the file for Caddy, NGINX or Traefik; your proxy runs it and keeps the certificate.' }, { title: 'Test', desc: 'Reachability, identity, sign-in and live updates, from this device.' }];
       return {
-        summary: 'Your own address through NGINX or Traefik. It is a public address, so sign-in is still required.',
-        body: PM51.panelSection('Steps', railSteps(steps, settled ? 3 : configured ? (dom.generated ? 2 : 1) : 0, false), '', { icon: 'route' })
-          + PM51.panelSection('Your domain', PM51.field('Domain', PM51.input(dom.name || '', { action: 'pm51-servers-domain-name', placeholder: 'pm.example.com', label: 'Domain' }), 'Point this name at your home IP address.') + PM51.field('Proxy', PM51.dropdown(dom.proxy || 'NGINX', ['NGINX', 'Traefik'], { action: 'pm51-servers-domain-proxy', label: 'Proxy' })), '', { icon: 'browser' })
-          + PM51.panelSection('Proxy setup', `<div class="pm51-servers-actions">${PM51.btn({ label: 'Generate Setup', small: true, icon: 'file', action: 'pm51-servers-domain-generate' })}</div><div data-domain-config style="margin-top:10px">${dom.generated && dom.name ? `<div class="pm51-servers-conf">${h(proxyConfig(dom.name, dom.proxy))}</div>` : ''}</div>`, 'An example block for your proxy. Paste it and reload the proxy.', { icon: 'file' })
+        summary: 'Your own address through your own reverse proxy. Puppet Master makes its settings file; your proxy runs it. It is a public address, so sign-in is still required.',
+        body: PM51.panelSection('Steps', railSteps(steps, settled ? 3 : configured ? (own || dom.generated ? 2 : 1) : 0, false), '', { icon: 'route' })
+          + PM51.panelSection('Your domain', PM51.field('Domain', PM51.input(dom.name || '', { action: 'pm51-servers-domain-name', placeholder: 'pm.example.com', label: 'Domain' }), 'Point this name at your home IP address.') + (own ? PM51.field('Proxy', `<span class="pm51-row-value">Your own proxy · nothing is made for it</span>`) : PM51.field('Proxy', PM51.dropdown(kind, GENERATES, { action: 'pm51-servers-domain-proxy', label: 'Proxy' }))), '', { icon: 'browser' })
+          + (own ? '' : PM51.panelSection('Settings file', `<div class="pm51-servers-actions">${PM51.btn({ label: 'Make the settings file', small: true, icon: 'file', action: 'pm51-servers-domain-generate' })}</div><div data-domain-config style="margin-top:10px">${dom.generated && dom.name ? `<div class="pm51-servers-conf">${h(proxyConfig(dom.name, kind))}</div>` : ''}</div>`, `Add it to your proxy and reload it. ${CERT_NOTE}`, { icon: 'file' }))
           + (configured ? useRouteCard(r) : '')
           + PM51.note('A domain is a public address. Prefer Tailscale, your VPN, or Remote Link when you can.', 'info'),
         primary: !configured ? { label: 'Save', run: wrap => {
-          const name = fieldValue(wrap, 'input[data-action="pm51-servers-domain-name"]'), proxy = fieldValue(wrap, 'select[data-action="pm51-servers-domain-proxy"]') || 'NGINX';
+          const name = fieldValue(wrap, 'input[data-action="pm51-servers-domain-name"]'), proxy = own ? 'Your proxy' : fieldValue(wrap, 'select[data-action="pm51-servers-domain-proxy"]') || 'Caddy';
           if (!name) { PM51.toast('Enter a domain first', 'The route needs a name like pm.example.com.', 'warning'); return false; }
-          R.domain = { name, proxy, generated: !!(R.domain && R.domain.generated && R.domain.name === name) }; r.status = 'needs-attention'; r.lastCheck = 'Never'; refresh(); PM51.toast('Domain saved', 'Run Check route once your DNS points at home.', 'info');
+          R.domain = { name, proxy, hosting: own ? 'existing' : 'file', generated: !own && !!(R.domain && R.domain.generated && R.domain.name === name) }; r.status = 'needs-attention'; r.lastCheck = 'Never'; refresh(); PM51.toast('Domain saved', 'Run Check route once your DNS points at home.', 'info');
         } } : null
       };
     }
@@ -1038,10 +1169,10 @@
     return {
       summary: 'No account or domain needed. Direct when possible, relayed otherwise, and encrypted end to end either way.',
       body: PM51.panelSection('Steps', railSteps(steps, settled ? 3 : configured ? 2 : link ? 1 : 0, false), '', { icon: 'route' })
-        + (link ? PM51.panelSection('Your link', PM51.kv([['Link', link.link], ['Created', link.created], ['Relay', 'Only when a direct connection is not possible']]), '', { icon: 'link' }) : '')
+        + (link ? PM51.panelSection('Your link', PM51.kv([['Link', link.link], ['Short code', link.code || '—'], ['Made by', 'The Remote Link service · example'], ['Created', link.created], ['Relay', 'Only when a direct connection is not possible']]), '', { icon: 'link' }) : '')
         + (configured ? useRouteCard(r) : '')
         + PM51.note('Traffic stays encrypted end to end. The relay only passes it along.', 'info'),
-      primary: r.status === 'not-set-up' ? { label: 'Create link', run: () => { R.remoteLink = { link: `pm-link://${home.id}-${newCode().toLowerCase()}`, created: `Today · ${nowLabel()}` }; r.status = 'needs-sign-in'; refresh(); PM51.toast('Remote Link created', 'Example data only. Pair this device next.', 'info'); } }
+      primary: r.status === 'not-set-up' ? { label: 'Create link', run: () => { R.remoteLink = issueRemoteLink(); r.status = 'needs-sign-in'; refresh(); PM51.toast('Remote Link created', 'Example data only. Pair this device next.', 'info'); } }
         : r.status === 'needs-sign-in' ? { label: 'Pair this device', run: () => { r.status = 'needs-attention'; r.lastCheck = 'Never'; refresh(); PM51.toast('Device paired', 'Example data only. Run Check route to make sure the link works from here.', 'info'); } }
         : null
     };
@@ -1060,8 +1191,8 @@
   }
   function proxyConfig(name, proxy, addr) {
     return proxy === 'Traefik'
-      ? `# Traefik dynamic config (example)\nhttp:\n  routers:\n    puppet-master:\n      rule: "Host(\`${name}\`)"\n      service: puppet-master\n      tls:\n        certResolver: letsencrypt\n  services:\n    puppet-master:\n      loadBalancer:\n        servers:\n          - url: "http://${addr || homeServer().address}:8443"`
-      : `# NGINX server block (example)\nserver {\n  server_name ${name};\n  listen 443 ssl http2;\n  location / {\n    proxy_pass http://${addr || homeServer().address}:8443;\n    proxy_set_header Host $host;\n    proxy_set_header Upgrade $http_upgrade;\n    proxy_set_header Connection "upgrade";\n  }\n}`;
+      ? `# Traefik dynamic config (example)\nhttp:\n  routers:\n    puppet-master:\n      rule: "Host(\`${name}\`)"\n      service: puppet-master\n      tls:\n        certResolver: letsencrypt   # your own certificate resolver\n  services:\n    puppet-master:\n      loadBalancer:\n        servers:\n          - url: "http://${addr || homeServer().address}:8443"`
+      : `# NGINX server block (example)\nserver {\n  server_name ${name};\n  listen 443 ssl http2;\n  ssl_certificate     /path/to/your/fullchain.pem;   # your certificate\n  ssl_certificate_key /path/to/your/privkey.pem;     # its key\n  location / {\n    proxy_pass http://${addr || homeServer().address}:8443;\n    proxy_set_header Host $host;\n    proxy_set_header Upgrade $http_upgrade;\n    proxy_set_header Connection "upgrade";\n  }\n}`;
   }
   function checkSteps(r) {
     const R = ra(), home = homeServer();
@@ -1071,12 +1202,7 @@
       { title: 'Fast path in use', desc: 'No relay needed at home' }
     ];
     const via = r.kind === 'tailscale' ? 'Private Tailscale address' : r.kind === 'vpn' ? `VPN address ${(R.vpn || {}).address || ''}`.trim() : r.kind === 'domain' ? `${(R.domain || {}).proxy || 'Proxy'} at ${(R.domain || {}).name || 'your domain'}` : 'Remote Link, direct or relayed';
-    return [
-      { title: 'Route is set up', desc: via },
-      { title: 'Server reachable through the route', desc: 'Example data · the live connector proves this in the real app' },
-      { title: 'Identity matches', desc: fingerprint(home) },
-      { title: 'Sign-in page answers', desc: 'Example data' }
-    ];
+    return routeCheckRows(r.kind, via);
   }
   /* The one check per route. A configured route that passes becomes Ready and is turned on
      (reaching ready sets enabled = true); a route the user turned off keeps its Off state. The result opens when the
@@ -1321,8 +1447,8 @@
   PM51.onChange('servers-vpn-kind', () => {});
   PM51.on('servers-domain-generate', el => {
     const R = ra(), wrap = el.closest('.pm51-panel') || portalRoot();
-    const name = fieldValue(wrap, 'input[data-action="pm51-servers-domain-name"]') || 'pm.example.com', proxy = fieldValue(wrap, 'select[data-action="pm51-servers-domain-proxy"]') || 'NGINX';
-    R.domain = Object.assign({}, R.domain || {}, { name, proxy, generated: true }); saveState();
+    const name = fieldValue(wrap, 'input[data-action="pm51-servers-domain-name"]') || 'pm.example.com', picked = fieldValue(wrap, 'select[data-action="pm51-servers-domain-proxy"]'), proxy = GENERATES.includes(picked) ? picked : 'Caddy';
+    R.domain = Object.assign({}, R.domain || {}, { name, proxy, hosting: 'file', generated: true }); saveState();
     const holder = wrap.querySelector('[data-domain-config]'); if (holder) holder.innerHTML = `<div class="pm51-servers-conf">${h(proxyConfig(name, proxy))}</div>`;
     const step = wrap.querySelectorAll('.pm51-steps.pm51-rail .pm51-step')[1]; if (step && !step.classList.contains('is-done')) { step.classList.add('is-done'); const n = step.querySelector('.pm51-step-n'); if (n) n.innerHTML = icon('check'); const end = step.querySelector('.pm51-step-end'); if (end) end.innerHTML = ''; }
   });
@@ -1351,11 +1477,31 @@
   PM51.on('servers-w-dest', el => { const w = PM51.wizardOf(el); if (!w) return; moveCollect(el.closest('.drawer-wrap'), w.draft); const was = w.draft.dest; w.draft.dest = ds(el, 'dest'); w.draft.checked = false; if (w.draft.dest === 'other' || was === 'other') redraw(w); });
   PM51.on('servers-w-hist', el => { const w = PM51.wizardOf(el); if (!w) return; w.draft.hist = ds(el, 'hist'); w.next(); });
   PM51.on('servers-away-new', () => awayWizard());
-  PM51.on('servers-w-way', el => { const w = PM51.wizardOf(el); if (!w) return; if (w.draft.kind !== ds(el, 'kind')) { w.draft.checked = false; w.draft.signedIn = false; } w.draft.kind = ds(el, 'kind'); w.next(); });
-  PM51.on('servers-w-flavor', el => { const w = PM51.wizardOf(el); if (!w) return; awayCollect(el.closest('.drawer-wrap'), w.draft); w.draft.flavor = ds(el, 'value'); w.draft.signedIn = false; w.draft.checked = false; redraw(w); });
+  PM51.on('servers-w-way', el => { const w = PM51.wizardOf(el); if (!w) return; if (w.draft.kind !== ds(el, 'kind')) { w.draft.checked = false; w.draft.signedIn = false; w.draft.ts = tsFresh(); } w.draft.kind = ds(el, 'kind'); w.next(); });
+  PM51.on('servers-w-flavor', el => { const w = PM51.wizardOf(el); if (!w) return; awayCollect(el.closest('.drawer-wrap'), w.draft); w.draft.flavor = ds(el, 'value'); w.draft.signedIn = false; w.draft.ts = tsFresh(); w.draft.checked = false; redraw(w); });
   PM51.on('servers-w-aflag', el => { const w = PM51.wizardOf(el); if (!w) return; const k = ds(el, 'key'); w.draft[k] = !w.draft[k]; el.classList.toggle('on', !!w.draft[k]); el.setAttribute('aria-checked', String(!!w.draft[k])); });
-  PM51.on('servers-w-signin', el => { const w = PM51.wizardOf(el); if (!w) return; w.draft.signedIn = true; w.go(w.step()); PM51.toast(w.draft.flavor === 'headscale' ? 'Registered' : 'Signed in', 'Example only: no sign-in window opened in this preview.', 'info'); });
-  PM51.on('servers-w-link', el => { const w = PM51.wizardOf(el); if (!w) return; w.draft.link = `pm-link://${homeServer().id}-${newCode().toLowerCase()}`; w.go(w.step()); });
+  /* Tailscale / Headscale setup: Start, the person's own step, a demo answer, Try again (tsPlan) */
+  /* Who runs it? shows or hides the proxy to make a file for at once */
+  PM51.onChange('servers-w-host', el => { const w = PM51.wizardOf(el); if (!w) return; awayCollect(el.closest('.drawer-wrap'), w.draft); redraw(w); });
+  PM51.on('servers-ts-start', el => { const w = PM51.wizardOf(el); if (!w) return; const T = w.draft.ts; T.started = true; T.run += 1; tsRun(w); });
+  PM51.on('servers-ts-person', el => {
+    const w = PM51.wizardOf(el); if (!w) return; const T = w.draft.ts, who = ds(el, 'person'); if (T.state !== 'waiting') return;
+    if (who === 'tsSignIn') PM51.toast('Tailscale’s sign-in page', 'Example only: in the app it opens on this device, and Tailscale answers the next step.', 'info');
+    T.people = Object.assign({}, T.people, { [who]: true }); T.state = 'idle'; T.run += 1; tsRun(w);
+  });
+  PM51.on('servers-ts-demo', el => { const w = PM51.wizardOf(el); if (!w) return; const T = w.draft.ts, c = ds(el, 'code'); T.once = T.once === c ? null : c; tsPaint(w); });
+  /* a refused or expired sign-in is over: Try again goes back to a fresh sign-in; any other failure asks its step again */
+  PM51.on('servers-ts-retry', el => {
+    const w = PM51.wizardOf(el); if (!w) return; const d = w.draft, T = d.ts, plan = tsPlan(d), code = T.fail && T.fail.code;
+    const back = code === 'denied' || code === 'expired' ? plan.findIndex(x => x.person === 'tsSignIn') : -1;
+    if (back >= 0 && back < T.step) { const gone = plan.slice(back, T.step + 1).map(x => x.key); T.done = T.done.filter(k => !gone.includes(k)); T.people = Object.assign({}, T.people); delete T.people.tsSignIn; T.step = back; }
+    T.state = 'idle'; T.fail = null; T.run += 1; tsRun(w);
+  });
+  PM51.on('servers-w-link', el => {
+    const w = PM51.wizardOf(el); if (!w || w.draft.linking) return; const d = w.draft;
+    d.linking = true; w.go(w.step());
+    window.setTimeout(() => { if (!d.linking) return; Object.assign(d, issueRemoteLink(), { linking: false }); const wrap = [...portalRoot().querySelectorAll('.drawer-wrap')].find(x => x._o55Wizard === w); if (wrap && wrap.dataset.closing !== '1' && w.step() === d.connectAt) w.go(w.step()); }, TS_STEP_MS);
+  });
   PM51.on('servers-route-redo', el => { const r = routeById(ds(el, 'id')); if (!r) return; closeOverlay(); awayWizard(r.kind); });
   PM51.on('servers-route-remove', el => { const r = routeById(ds(el, 'id')); if (r) removeRoute(r); });
   function removeRoute(r) {
