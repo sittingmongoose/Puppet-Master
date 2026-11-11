@@ -49,10 +49,16 @@ def cut(*rows):
 
 
 def memory_check():
-    available = int(subprocess.check_output(['free', '-g'], text=True).splitlines()[1].split()[-1])
-    if available < 10:
-        raise RuntimeError(f'PAUSE: only {available} GB RAM available; need at least 10')
-    return available
+    """Pause (never abort) below 10 GB available; resume at 11 GB. Returns the GB available."""
+    def available():
+        return int(subprocess.check_output(['free', '-g'], text=True).splitlines()[1].split()[-1])
+    now = available()
+    if now < 10:
+        while now < 11:
+            print(f'PAUSE: {now} GB RAM available; resuming at 11', file=sys.stderr, flush=True)
+            time.sleep(60)
+            now = available()
+    return now
 
 
 ONLY_FAMILIES = None  # --family: run the trials over these families only (reported as such)
