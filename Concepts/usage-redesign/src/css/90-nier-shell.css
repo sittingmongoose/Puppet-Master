@@ -75,7 +75,7 @@ html[data-o55-nier="on"] #panel-usage .pmu-row:hover, html[data-o55-nier="on"] #
 html[data-o55-nier="on"] #panel-usage .pmu-menu { --pmu-menu-bg: var(--surface); --pmu-menu-border: var(--o55-nier-ink); --pmu-menu-shadow: 5px 5px 0 rgba(var(--o55-nier-ink-rgb), .22);
   --pmu-menu-hot: rgba(var(--o55-nier-ink-rgb), .10); --pmu-menu-active: rgba(var(--o55-nier-ink-rgb), .16); --pmu-menu-iconbg: transparent; }
 html[data-o55-nier="on"] #panel-usage .pmu-mitem.active { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); }
-html[data-o55-nier="on"] #panel-usage .pmu-mitem.active :is(.pmu-mcopy span, .pmu-mright, .pmu-mcheck, .pmu-micon) { color: var(--o55-nier-on-ink); }
+html[data-o55-nier="on"] #panel-usage .pmu-mitem.active :is(.pmu-mcopy :where(.pmu-msub):is(span), .pmu-mright, .pmu-mcheck, .pmu-micon) { color: var(--o55-nier-on-ink); }
 html[data-o55-nier="on"] #panel-usage .pmu-micon { color: var(--o55-nier-ink); box-shadow: inset 0 0 0 1px rgba(var(--o55-nier-ink-rgb), .5); }
 html[data-o55-nier="on"] #panel-usage .pmu-mcheck { color: var(--o55-nier-ink); }
 /* slice: the menu is a .pm-sprout, so the Slice part's own rules unfold and fold it (14-nier-parts.css) */
@@ -137,14 +137,14 @@ html[data-o55-nier-parts~="cursor"] #panel-usage .pmu-navbtn.o55np-cur-over .pmu
 html[data-o55-nier-parts~="cursor"] #panel-usage .pmu-navbtn.active .pmu-navicon,
 html[data-o55-nier-parts~="cursor"] #panel-usage .pmu-navbtn.active .pmu-navtext,
 html[data-o55-nier-parts~="cursor"] #panel-usage .pmu-poprow.o55np-cur-over .pmu-mlead,
-html[data-o55-nier-parts~="cursor"] #panel-usage .pmu-poprow.o55np-cur-over .pmu-mcopy b,
-html[data-o55-nier-parts~="cursor"] #panel-usage .pmu-poprow.o55np-cur-over .pmu-mcopy span,
+html[data-o55-nier-parts~="cursor"] #panel-usage .pmu-poprow.o55np-cur-over .pmu-mcopy :where(.pmu-mlabel):is(b),
+html[data-o55-nier-parts~="cursor"] #panel-usage .pmu-poprow.o55np-cur-over .pmu-mcopy :where(.pmu-msub):is(span),
 html[data-o55-nier-parts~="cursor"] #panel-usage .pmu-poprow.o55np-cur-over .pmu-mright,
 html[data-o55-nier-parts~="cursor"] #panel-usage .pmu-poprow.o55np-cur-over .pmu-mcheck,
 html[data-o55-nier-parts~="cursor"] #panel-usage .pmu-poprow.o55np-cur-over .pmu-mchev,
 html[data-o55-nier-parts~="cursor"] #panel-usage .pmu-poprow.active .pmu-mlead,
-html[data-o55-nier-parts~="cursor"] #panel-usage .pmu-poprow.active .pmu-mcopy b,
-html[data-o55-nier-parts~="cursor"] #panel-usage .pmu-poprow.active .pmu-mcopy span,
+html[data-o55-nier-parts~="cursor"] #panel-usage .pmu-poprow.active .pmu-mcopy :where(.pmu-mlabel):is(b),
+html[data-o55-nier-parts~="cursor"] #panel-usage .pmu-poprow.active .pmu-mcopy :where(.pmu-msub):is(span),
 html[data-o55-nier-parts~="cursor"] #panel-usage .pmu-poprow.active .pmu-mright,
 html[data-o55-nier-parts~="cursor"] #panel-usage .pmu-poprow.active .pmu-mcheck,
 html[data-o55-nier-parts~="cursor"] #panel-usage .pmu-poprow.active .pmu-mchev { color: inherit !important; -webkit-text-fill-color: currentColor; }
