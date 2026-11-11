@@ -615,9 +615,10 @@ def producer_observation(record, integer_paths):
         facts['formats_valid'] = True
     except ValueError:
         return facts, digest
-    # CV-253 / CV-1101: the record's Storage-assigned instants take the strict storage_utc_z profile.
+    # CV-253 / CV-1101: the record's Storage-assigned instants take the strict storage_utc_z profile. The producer
+    # projection excludes them, so a record without them (a producer-only record) has none to check.
     facts['storage_instants_valid'] = all(domain.instant(record[field], domain.STORAGE_UTC_Z)
-                                          for field in ('observed_at_utc', 'persisted_at_utc'))
+                                          for field in ('observed_at_utc', 'persisted_at_utc') if field in record)
     if not facts['storage_instants_valid']:
         return facts, digest
     sequence = record['producer_sequence_id']
