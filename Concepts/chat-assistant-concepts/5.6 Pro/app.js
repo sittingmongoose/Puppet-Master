@@ -2620,6 +2620,16 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       seen.add(at.name);
       if(skipValue && (at.name==='value'||at.name==='checked')) continue;
       if(HOSTED && at.name==='title' && el.hasAttribute('data-pm-hover-label') && !el.hasAttribute('title')) continue;
+      /* hosted: PMConcept7's NieR cursor gives the hovered row o55np-cur-over (the paper words key on it) and marks a
+         row once per pointerover; the template does not carry it, so a render under a resting pointer (a live work
+         tick) kept the ink bar and dropped the words' paper. Keeping the class here replaces the old
+         ':hover :where(*)' rule (pm7-port/css/42-nier-parts.css), which made Chrome's page-wide :hover set
+         "whole subtree" (lane J, 2026-11-11). */
+      if(HOSTED && at.name==='class' && el.classList.contains('o55np-cur-over') && !/(^|\s)o55np-cur-over(\s|$)/.test(at.value)){
+        const v=at.value+' o55np-cur-over';
+        if(el.getAttribute('class')!==v) el.setAttribute('class',v);
+        continue;
+      }
       if(el.getAttribute(at.name)!==at.value) el.setAttribute(at.name,at.value);
     }
     /* hosted: PMConcept7's hover controller bridges a disabled control to aria-disabled and marks it was-disabled;

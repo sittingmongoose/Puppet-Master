@@ -17,18 +17,16 @@
 
 /* ---------------------------------------------------------------- cursor: the bar's paper words survive a render */
 /* The chat's NieR rules put the bar's paper words on .o55np-cur-over, the class PMConcept7's cursor script gives the
-   hovered item; the chat's DOM patch writes each row's class list from its template, so a render (a live work tick, the
+   hovered item; the chat's DOM patch wrote each row's class list from its template, so a render (a live work tick, the
    model menu redrawing its detail as the pointer moves) dropped that class while the row stayed the ink bar under :hover,
    leaving the account, effort and preview words in dim ink on it (model menu, NieR dark: 117,115,101 on 209,205,183,
-   about 2.9:1). Here the same paper words follow :hover as well, for the chat's own cursor rows only (each restyle stays
-   inside one row); five classes outweigh every colour rule the chat gives those rows' words, so no !important. */
-html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] .pm56-host :is(.menu-item, .thread-row, .model-row, .effort-row, .pm-tops-item, .att-source-row, .qs-mention-item):hover :where(*) {
-  color: inherit; -webkit-text-fill-color: currentColor; --nx-ink: var(--o55-nier-on-ink);
-}
+   about 2.9:1). The patch now keeps the class (app.js pmSyncAttrs, hosted only). The ':hover :where(*)' rule that
+   covered it here is gone: a descendant with nothing to key on made Chrome's one :hover set for the whole page "whole
+   subtree", so every hover change in any look restyled the whole subtree of each element entering or leaving :hover
+   (lane I: 24 such invalidations in 4 s on one Usage card; lane J, 2026-11-11). */
+/* (the kbd and meta pill keep their paper-on-ink from nier-parts.css's .o55np-cur-over rule, now that the class survives
+   a render: a ':hover :is(kbd, ...)' copy here put the tag kbd into the page-wide :hover set) */
 html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] .pm56-host .menu-item:hover .menu-icon { background: transparent; box-shadow: none; }
-html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] .pm56-host .menu-item:hover :is(kbd, .meta-pill) {
-  background: var(--o55-nier-on-ink); color: var(--o55-nier-ink); border-color: var(--o55-nier-on-ink);
-}
 
 /* ---------------------------------------------------------------- cursor: run-view tabs */
 html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] .pm56-host .pmx-tabs { gap: 4px; }
