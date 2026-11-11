@@ -16,6 +16,10 @@
 //   their box and cut at both ends (-9.6 / 388.6 in 379), until a width change re-ran the decision. The fix keys the
 //   cache on the painted face too and re-runs the decision on html[data-theme]/[data-motion] and when a font finishes
 //   loading. --set probe=1 logs the decision over 1.5 s after the change.
+//   --set column=W is the reviewer's own route, needed where the labels' face is still on its way when the column is
+//   set (pages over http: a Windows --host run): the width is set at once and the look switched by the page's theme
+//   call (t.app.look), as their probe does, and the case fails main on the decision and on the overhanging labels.
+//   Without it the column is calibrated after everything settled, which is the deterministic guard for file:// runs.
 
 const READ = () => {
 	const box = document.querySelector('#pmRoot .composer-box[data-k="composer-box"]');
@@ -78,10 +82,21 @@ for (const surface of ['normal', 'sandbox']) {
 		// the review's window, and a narrow chat column by the page's own command; no viewport change anywhere here
 		const read = () => f.evaluate(READ);
 		const narrow = (w) => f.evaluate((x) => window.PMW.chatCol.setWidth(x), w);
-		await narrow(400);
-		await t.page.waitForTimeout(900);
-		const at400 = await read();
-		if (t.args.labels) {
+		/* --set column=W takes the reviewer's own width (400, the page's floor) and their order: the column is set at
+		   once, while the labels' face is still on its way (their pages are http, so the web fonts land late), which
+		   is the state their run caught. Otherwise the column is measured and set after everything has settled. */
+		const fixed = t.args.column ? Number(t.args.column) : null;
+		let at400 = null, col = fixed, set = null, before = null;
+		if (fixed) {
+			set = await narrow(col);
+			await f.waitForFunction((w) => { const c = document.querySelector('#chatPanel'); return !!c && Math.round(c.getBoundingClientRect().width) === w; }, col, { timeout: 15000 }).catch(() => {});
+			before = await read();
+		} else {
+			await narrow(400);
+			await t.page.waitForTimeout(900);
+			at400 = await read();
+		}
+		if (t.args.labels && at400) {
 			// diagnostic: what each look's labels weigh in this 400 px column, and what the rule makes of it
 			for (const look of ['basic-light', 'basic-dark', 'friendly-light', 'friendly-dark', 'retro-light', 'retro-dark', 'glass-light', 'glass-dark', 'nier-light', 'nier-dark']) {
 				await t.app.look(look);
@@ -96,24 +111,31 @@ for (const surface of ['normal', 'sandbox']) {
 		   for it — is calibrated from what each look's labels weigh here: Basic Light is 383.7 px and Friendly Dark
 		   398.1 px, and the column's own chrome takes 23 px, so a 423 px column (400 px of room) holds the first and
 		   not the second. The column is set once, before the look changes; the look change itself resizes nothing. */
-		const offset = Math.round(at400.colW - at400.room);
-		await t.app.look('friendly-dark');
-		const other = await read();
-		await t.app.look('basic-light');
-		await t.page.waitForTimeout(400);
-		const col = Math.max(400, Math.round((Math.ceil(at400.labeled + 8) + Math.ceil(other.labeled + 8)) / 2) + offset);
-		const set = await narrow(col);
-		await t.page.waitForTimeout(900);
-		const before = await read();
+		if (!fixed) {
+			const offset = Math.round(at400.colW - at400.room);
+			await t.app.look('friendly-dark');
+			const other = await read();
+			await t.app.look('basic-light');
+			await t.page.waitForTimeout(400);
+			col = Math.max(400, Math.round((Math.ceil(at400.labeled + 8) + Math.ceil(other.labeled + 8)) / 2) + offset);
+			set = await narrow(col);
+			await t.page.waitForTimeout(900);
+			before = await read();
+		}
 		if (t.args.probe) t.log('before: ' + JSON.stringify(before));
-		await t.check(`the route starts on Basic Light in a ${col} px column, its labels shown`, !!before && set.ok === true && before.theme === 'basic-light' && before.compact === false && before.labelsShown === true && fits(before), JSON.stringify({ set, at400: { labeled: at400.labeled, room: at400.room }, before }));
-		// the review's change, in its order: motion back to normal, then Friendly Dark through the title bar's own
-		// look menu (the family and mode switches), as a person changes it. No viewport or column change.
+		await t.check(`the route starts on Basic Light in a ${col} px column${fixed ? ' (the reviewer\'s width)' : ', its labels shown'}`, !!before && set.ok === true && before.theme === 'basic-light' && before.boxW >= 340 && before.boxW <= 470 && (fixed ? true : before.compact === false && before.labelsShown === true && fits(before)), JSON.stringify({ set, at400: at400 && { labeled: at400.labeled, room: at400.room }, before }));
+		// the review's change, in its order: motion back to normal, then Friendly Dark. With --set column= (the
+		// reviewer's own route) the look is switched by the page's own theme call, as their probe does; otherwise
+		// through the title bar's look menu, as a person changes it. No viewport or column change either way.
 		await t.emulate({ reducedMotion: 'no-preference' });
-		await f.locator('#themeSelect').click();
-		await f.locator('#themeMenu .pm6-tt-mode[data-mode-value="dark"]').click({ timeout: 8000 }).catch(() => {});
-		if (!(await f.locator('#themeMenu').isVisible().catch(() => false))) await f.locator('#themeSelect').click();
-		await f.locator('#themeMenu .pm6-tt-family[data-family="friendly"]').click();
+		if (fixed) {
+			await t.app.look('friendly-dark');
+		} else {
+			await f.locator('#themeSelect').click();
+			await f.locator('#themeMenu .pm6-tt-mode[data-mode-value="dark"]').click({ timeout: 8000 }).catch(() => {});
+			if (!(await f.locator('#themeMenu').isVisible().catch(() => false))) await f.locator('#themeSelect').click();
+			await f.locator('#themeMenu .pm6-tt-family[data-family="friendly"]').click();
+		}
 		await f.waitForFunction(() => (document.documentElement.getAttribute('data-theme') || '') === 'friendly-dark', null, { timeout: 20000 }).catch(() => {});
 		const timeline = [];
 		for (const ms of (t.args.probe ? [0, 60, 200, 500, 1000, 1500] : [1200])) {
