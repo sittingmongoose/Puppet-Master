@@ -1997,7 +1997,7 @@
         "tests/test_pm_evidence_artifact_binding_modes.py",
         "tests/test_pm_working_notebook_contracts.py"
       ],
-      "line_count": 8715,
+      "line_count": 8720,
       "path": "Plans/Automated_Testing_System.md",
       "plan_unit_count": 96,
       "plan_unit_ids": [
@@ -2168,7 +2168,7 @@
         "wonderer_grilling_contract_coverage",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "9abfb49d1bd8150a90fc86ad87aab03fc0cbb72ebc68f4f1caaddd66d9a5a51a",
+      "sha256": "22dd1434f19fbb6fd3173a5dc57757908806c400714aece13475160bade23f33",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 95,
@@ -2328,6 +2328,7 @@
         "python3 scripts/pm7-canon-check.py",
         "python3 scripts/pm_collaboration_events.py",
         "python3 scripts/pm_coordination_events.py",
+        "python3 scripts/pm_event_numbers.py --self-test --scope numbers",
         "reports/event-authority-20260911/step-08-current-child-scope-validation.md",
         "reports/event-authority-20261104/DC-binding-search.md",
         "scratchpad/pm-integration-20260831/audits/onboarding-doctor-128-current-runner/audit_runner.py",
@@ -4668,7 +4669,7 @@
         "scripts/pm_event_datetime.py",
         "scripts/pm_event_numbers.py"
       ],
-      "line_count": 26221,
+      "line_count": 26222,
       "path": "Plans/Contracts_V0.md",
       "plan_unit_count": 382,
       "plan_unit_ids": [
@@ -5417,7 +5418,7 @@
         "worktree_lane_context_loss",
         "worktree_lifecycle_record_loss"
       ],
-      "sha256": "800e442ce13d9c02959163ac6db5db09f4383f7bb45a22caef549ef42d643d5d",
+      "sha256": "b776a0d5bd373a3ad07b324ac18387570062c6388faba994f5606941540c0675",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 381,
@@ -18923,7 +18924,7 @@
         "scripts/pm-implementation-readiness.py",
         "scripts/pm_event_numbers.py"
       ],
-      "line_count": 31554,
+      "line_count": 31556,
       "path": "Plans/storage-plan.md",
       "plan_unit_count": 362,
       "plan_unit_ids": [
@@ -19414,7 +19415,7 @@
         "usage_view_state_becomes_second_policy_or_preview_store",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "91ef89940a97133fcdc3bf32f439e97841484bd4d9cae13e8329ba74894eaa7e",
+      "sha256": "f5d024c5189a8485c6ab61a969657c75d6ad89bfd2685b9c4a6b7d3819ddb855",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 358,
@@ -21820,7 +21821,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-11T00:58:22Z",
+  "generated_at_utc": "2026-11-11T01:30:44Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L7239-L8714
+Source lines: L7239-L8719
 
-Source SHA256: `9abfb49d1bd8150a90fc86ad87aab03fc0cbb72ebc68f4f1caaddd66d9a5a51a`
+Source SHA256: `22dd1434f19fbb6fd3173a5dc57757908806c400714aece13475160bade23f33`
 
 ---
 
@@ -50,7 +50,9 @@ This is a **newly authored owner contract under DL-090** (DL-091 for `collaborat
 | `COLLAB-DELETE-01` | Deletion of the chat a run belongs to, with and without a hold | Content-free tombstone at once; unheld active copies purged within 24 hours and deleted backup bytes within 30 days; a hold delays physical purge but never restores visibility; projection rows of that chat's runs are removed |
 | `COLLAB-APP-01` | An application-scope run before the owner adopts the app source graph | No application payload is appended (requires_owner_adoption); the Project path is unaffected |
 
-Round-two static obligations include coherent source contradictions through the full prepared-event path for all eighteen families; Start/Resume running/waiting/blocked counterparts; nested application contexts; definition roster and per-slot requiredness; original proposal/vote attempts and constraints; original Plan-create output; Review vote targets/counts; and exact remaining owner-control fields. Each of the four application wrappers has complete MessagePack boundary positives at 16,384 bytes, inline refusal at 16,385 and a valid SP-337 reference counterpart, plus missing/forged pack negatives. Number vectors include safe-integer boundaries, large decimal/exponent equivalence, negative zero, leading zeros and lossy-decimal refusal through identity and digest paths. Historical and retention controls test exact types, including string booleans/numbers, null, arrays and objects. Guard-table proof runs one table at a time behind the tool's memory gate. Every row records its flipping negatives and the unchanged refusals; neither an isolated helper substitution nor a retained earlier proof replaces a fresh whole-lane run. All native obligations remain NOT_RUN.
+Round-two static obligations include coherent source contradictions through the full prepared-event path for all eighteen families; Start/Resume running/waiting/blocked counterparts; nested application contexts; definition roster and per-slot requiredness; original proposal/vote attempts and constraints; original Plan-create output; Review vote targets/counts; and exact remaining owner-control fields. Each of the four application wrappers has complete MessagePack boundary positives at 16,384 bytes, inline refusal at 16,385 and a valid SP-337 reference counterpart, plus missing/forged pack negatives. Number vectors include safe-integer boundaries, large decimal/exponent equivalence, negative zero, leading zeros and lossy-decimal refusal through DC's v1 identity and digest recipes; as current input each alternate spelling refuses exactly as its case records (CV-1100). Historical and retention controls test exact types, including string booleans/numbers, null, arrays and objects. Guard-table proof runs one table at a time behind the tool's memory gate. Every row records its flipping negatives and the unchanged refusals; neither an isolated helper substitution nor a retained earlier proof replaces a fresh whole-lane run. All native obligations remain NOT_RUN.
+
+Sweep part 2B adopts the gated shared rules. Every family timestamp, EventRecord timestamp, Collaborative Workflows owner timestamp in a prepared source, checkpoint timestamp and projection timestamp is checked by CV-1101's shared `pm_event_datetime.date_time` with its owner's profile, with witnesses for hour 24, an illegitimate second 60, an impossible date, minute 60, month 13, offsets and lowercase `z` where CV-253 forbids them, and the trailing LF an unguarded owner pattern admitted, plus leap-second and long-fraction positives. Every integer slot of a current payload, EventRecord, prepared source, application wrapper and checkpoint is checked by the shared `current_integer` (Storage fields by `storage_uint64`), raw SP-337 bodies are parsed by the shared `loads_current_json`, identity preimages use the shared `qualified_jcs`, and the stored EventRecord and application wrappers use the shared `storage_value_bytes` with EVENT_VALUE and APP_PHYSICAL. Historical and checkpoint last-event reads resolve one frozen v1 recipe through the shared `RetainedDispatcher`; integral-float, negative-zero and uint64-maximum originals stay readable, while coherent forgeries, unsealed originals, an unsupported recipe tuple, a 24:00:00Z original and a disclosed write epoch that differs from custody refuse. The shared number corpus runs through the SP-337 reference route and the inline route of one event per family, with expectations composed from the shared helpers, and the 4,400-digit integer reaches every boundary without a crash. `python3 scripts/pm_event_numbers.py --self-test --scope numbers` must pass; the shared date-time inventory gate and `datetime_validator` run at batch-2 integration.
 
 ```yaml
 plan_unit_id: ATS-230
@@ -69,6 +71,8 @@ canonical_text: >-
   and integrity refusal is one named table row proved by its own single-defect negatives, including all family/scope replay-only writer refusals, retained compatibility
   history, eager reference closure, physical bindings, source custody, checkpoint semantics, payload-store
   boundaries, true-end lexical/type guards, numeric equivalents and owner-bound completion requirements.
+  Timestamps use CV-1101's shared predicate with each owner's profile; current integer slots, Storage uint64
+  fields and physical bytes use the shared CV-1100/SP-1100 calls; retained originals use SP-1101 dispatch.
 gui_related: false
 gui_classification_reason: "Defines persisted event contracts, identity, custody and checks, not presentation."
 split_recommended: false
@@ -81,6 +85,7 @@ acceptance_criteria:
 validation_surfaces:
   - "python3 scripts/pm_collaboration_events.py"
   - "python3 scripts/pm-collab-guard-tables.py --out <dir>"
+  - "python3 scripts/pm_event_numbers.py --self-test --scope numbers"
   - "Plans/collaboration_event_contract_fixtures.json"
   - "Plans/collaboration_event_payloads.schema.json"
   - "Plans/collaboration_projection_contracts.schema.json"
@@ -124,7 +129,7 @@ ContractRef: ContractName:Plans/storage-plan.md#SP-460, ContractName:Plans/Contr
 
 **Round-1 full-lane oracles (B1–B8).** `scripts/pm_collaboration_events.py` owns every new oracle; no test file is added. Each family and scope exercises typed durable source custody, inline/reference payload parity and size boundaries, true-end identifiers, sibling/unknown family refusal, replay-only writer refusal and retained historical reads after live changes, with withdrawn/forged refusals. Checkpoint contexts supply independent source-token/frame/event joins. Completion tests authoritative requiredness and CWR-031 End. All schema references are resolved, including unused optional paths. `scripts/pm-collab-guard-tables.py` runs the gated guard tool over every guard table and publishes the check-11 table: row, own negatives that become accepted when that row alone is cut, and every other negative that keeps its exact refusal. An unexercised or masked row fails the proof. Failure CLI expectations require nonzero, and all native obligations remain NOT_RUN.
 
-**Additional mandatory round-one probes.** Canonical numeric vectors cover `1`, `1.0`, `1e0`, `-0`, `-0.0`, illegal `01`, fractions, large exact integers and nonfinite forms; all 36 family/scope envelopes keep the same identity and digest under equivalent admitted numeric forms. Wrong-type vectors cover string booleans/numbers, nulls, arrays and nested objects. Retained replay-only compatibility originals are accepted after live changes through the historical reader, while current append/retry still refuses them. Full stored holder/projection/checkpoint encoded sizes are measured without treating the EventRecord 16 KiB inline boundary as a redb value cap.
+**Additional mandatory round-one probes.** Canonical numeric vectors cover `1`, `1.0`, `1e0`, `-0`, `-0.0`, illegal `01`, fractions, large exact integers and nonfinite forms; all 36 family/scope envelopes keep the same v1 identity and digest under equivalent numeric forms, and as current input those forms refuse under CV-1100 (sweep part 2B). Wrong-type vectors cover string booleans/numbers, nulls, arrays and nested objects. Retained replay-only compatibility originals are accepted after live changes through the historical reader, while current append/retry still refuses them. Full stored holder/projection/checkpoint encoded sizes are measured without treating the EventRecord 16 KiB inline boundary as a redb value cap.
 
 ### ATS-231 - Oracles of collaboration.created
 
