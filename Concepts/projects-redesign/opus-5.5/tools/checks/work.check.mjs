@@ -28,6 +28,7 @@ export const tests = {
 		await t.app.click(t, f, '[data-c-key="wk:chosen:studio"]');
 		const sel = await f.evaluate(() => ({ chosen: (document.querySelector('[data-c-key^="wk:chosen:"][aria-checked="true"]') || {}).textContent, def: (document.querySelector('[data-c-key^="wk:def:"][aria-checked="true"]') || {}).textContent }));
 		await t.check('Chosen: Studio Mac while the default stays This computer', /^Studio Mac/.test(sel.chosen || '') && /^This computer/.test(sel.def || ''), JSON.stringify(sel));
+		await t.check('the form’s fact lines keep their mark beside their words', await f.evaluate(() => Array.from(document.querySelectorAll('[data-plate="work"] .pjxc-form > .pjx-np-line')).every((l) => { const m = l.querySelector('.pjx-np-mk'), x = l.querySelector('.pjx-np-text'); return m && x && Math.abs(m.getBoundingClientRect().top - x.getBoundingClientRect().top) < 8; })));
 		await t.crop('work-form', f.locator('[data-plate="work"]'), 'Change where work runs: Chosen Studio Mac, default This computer (LOOK: F3 after)');
 		await t.app.click(t, f, '[data-plate="work"] [data-c-key="f:save"]');
 		await t.app.until(t, f, 'saved: Chosen: Studio Mac by Jared', () => /Chosen: Studio Mac by Jared/.test((document.querySelector('[data-plate="work"] .pmu-cardsub') || {}).textContent || ''), null, 10000);
