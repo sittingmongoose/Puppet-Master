@@ -41,7 +41,7 @@ const ALL = ['basic-light', 'basic-dark', 'friendly-light', 'friendly-dark', 'gl
 // In the page: every animation, endless or not, with what it is; the endless ones that run are kept for (c)
 const CENSUS = () => {
 	const desc = (el) => { if (!el) return 'none'; const c = typeof el.className === 'string' ? el.className : (el.className && el.className.baseVal) || ''; return el.tagName.toLowerCase() + (el.id ? '#' + el.id : '') + (c.trim() ? '.' + c.trim().split(/\s+/).slice(0, 3).join('.') : ''); };
-	const out = { still: document.documentElement.hasAttribute('data-pm-still'), hasScript: !!window.PM_STILL, mirrored: window.PM_STILL ? PM_STILL.mirrored() : 0, run: [], held: 0, exempt: [], finPaused: [], finRun: 0 };
+	const out = { still: document.documentElement.hasAttribute('data-pm-still'), hasScript: !!window.PM_STILL, mirrored: window.PM_STILL ? PM_STILL.mirrored() : 0, run: [], held: 0, exempt: [], finPaused: [], finRun: 0, finList: [] };
 	const keep = [];
 	for (const a of document.getAnimations()) {
 		let it = 1; try { it = a.effect.getTiming().iterations; } catch (e) { /* none */ }
@@ -53,7 +53,7 @@ const CENSUS = () => {
 			if (a.playState === 'running') { if (caret) out.exempt.push(what); else { out.run.push(what); keep.push(a); } }
 			else if (a.playState === 'paused') { out.held++; keep.push(a); }
 		} else if (a.playState === 'paused') out.finPaused.push(what);
-		else if (a.playState === 'running') out.finRun++;
+		else if (a.playState === 'running') { out.finRun++; if (out.finList.length < 6) { let d = 0; try { d = Math.round(a.effect.getComputedTiming().activeDuration); } catch (e) { /* none */ } out.finList.push(`${what} (${d} ms)`); } }
 	}
 	window.__stillKeep = keep;
 	return out;
@@ -227,8 +227,11 @@ export default async function (t) {
 			const rest = await trace(cdp, { ms, url });
 			const x = rest.sum;
 			t.log(`${at}: STILL drawn ${x.drawn.perSec}/s, main frames ${x.mainFrames.perSec}/s, main ${Math.round(x.cost.main)} ms/s, GPU ${Math.round(x.cost.gpuMain)} ms/s, viz ${Math.round(x.cost.viz)} ms/s; toggle ${on && on.found ? `${on.total} elements in ${on.steps} recalcs (largest ${on.max}, ${on.maxMs} ms; ${on.totalMs} ms in all)` : 'not seen'}`);
-			await t.check(`${at}: still, the compositor draws at most ${drawnMax} frames a second`, x.drawn.perSec <= drawnMax, `${x.drawn.perSec}/s (gap p50 ${x.drawn.gapP50} ms)`);
-			await t.check(`${at}: still, the main thread renders at most ${mainMax} frames a second`, x.mainFrames.perSec <= mainMax, `${x.mainFrames.perSec}/s, ${Math.round(x.cost.main)} ms/s`);
+			// what still moves when the bound fails: finite animations (a progress creep is information and is not held)
+			const moving = x.drawn.perSec > drawnMax || x.mainFrames.perSec > mainMax ? await f.evaluate(CENSUS) : null;
+			const why = moving && moving.finList.length ? `; running finite: ${moving.finList.join('; ')}` : moving ? '; no animation runs: a timer, a transition or script draws' : '';
+			await t.check(`${at}: still, the compositor draws at most ${drawnMax} frames a second`, x.drawn.perSec <= drawnMax, `${x.drawn.perSec}/s (gap p50 ${x.drawn.gapP50} ms)${why}`);
+			await t.check(`${at}: still, the main thread renders at most ${mainMax} frames a second`, x.mainFrames.perSec <= mainMax, `${x.mainFrames.perSec}/s, ${Math.round(x.cost.main)} ms/s${why}${x.scripts && x.scripts.length ? '; dearest script ' + x.scripts.slice(0, 2).map((r) => r[0] + ' ' + r[1] + ' ms/s').join(', ') : ''}`);
 			if (a.still) await t.check(`${at}: going still restyles at most ${toggleMax} elements in any one frame`, !!(on && on.found) && on.max <= toggleMax, on && on.found ? `largest ${on.max} elements (${on.maxMs} ms of style); ${on.total} in ${on.steps} recalcs over the spread` : 'no style recalc after the state went on (or no mark): could not judge');
 
 			// (c) one real move wakes it, and each held loop goes on from where it was
