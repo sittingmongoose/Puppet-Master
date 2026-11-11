@@ -8,19 +8,22 @@
 // Settings' Theme and Light-or-dark rows, so Settings keeps it; astra-review-l1s found a temporary look reset to Basic
 // Dark by Settings' own saves). --set look= one look (default basic-dark); --set looks=all (or a list) runs the
 // functional pass in each, one page each, clearing the saved look after; --set lookBite=1 paints Basic Dark back right before
-// each guard (it must fail).
+// each guard (it must fail); --set motion=reduce (the system's Reduced Motion) or app (the app's Reduce animations).
 import { LOOKS } from '../browser-check.config.mjs';
-import { setLookBySetting, guardPaintedLook } from '../helpers/settings-look.mjs';
+import { setLookBySetting, guardPaintedLook, setMotionMedia, setMotionApp } from '../helpers/settings-look.mjs';
 
 export default async function (t) {
 	const [w, h] = String(t.args.size || '860x900').split('x').map(Number);
 	const looks = t.args.looks ? (String(t.args.looks) === 'all' ? LOOKS : String(t.args.looks).split(',')) : [String(t.args.look || 'basic-dark')];
+	const motion = String(t.args.motion || 'no-preference');   // no-preference | reduce (the system's) | app (Reduce animations)
+	await setMotionMedia(t, motion);
 	await t.viewport(w, h);
 	for (const look of looks) {
 		const f = await t.app.open();
 		await f.locator('#tab-settings').click();
 		await t.settle();
 		await setLookBySetting(t, f, look);
+		await setMotionApp(t, f, motion);
 		await f.evaluate(() => PM51.go('ai', 'providers'));
 		await f.waitForSelector('[data-continuous-workspace-body="providers"][data-workspace-mounted="true"]');
 		await f.locator('#pm-settings-root .resource-row[data-provider="claude-code"]').first().click();

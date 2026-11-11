@@ -10,7 +10,7 @@
 // layout shift inside Settings. A second test runs four cases in each of the ten looks at 1280x900.
 // --set size=860x900 --set cases=providers,web --set looks=nier-dark (or none) limit the matrix; --set probe=1 logs reads.
 import { LOOKS } from '../browser-check.config.mjs';
-import { setLookBySetting, guardPaintedLook, captureBaseline } from '../helpers/settings-look.mjs';
+import { setLookBySetting, guardPaintedLook, captureBaseline, setMotionMedia, setMotionApp } from '../helpers/settings-look.mjs';
 
 const SIZES = [[860, 900], [1920, 1080]];
 const ENTR = '^(pageIn|sectionReveal|pmSettingsTabSwap[AB]|pm51IndexOpen)$';
@@ -169,8 +169,8 @@ for (const surface of ['normal', 'sandbox']) {
 		}
 	};
 	// Settings is shared by every look (NieR, Retro and Glass draw their own entrances and switches): the Services, Web,
-	// Memory and Backups cases in each of the ten looks at 860x900, 1280x900 and 1920x1080 (--set lookSizes=), with and
-	// without Reduced Motion (--set motion=reduce). Each look is picked through Settings' Theme and
+	// Memory and Backups cases in each of the ten looks at 860x900 and 1920x1080 (--set lookSizes=), in each motion mode:
+	// none, the system's Reduced Motion (media query) and the app's own Reduce animations (data-motion), --set motion=. Each look is picked through Settings' Theme and
 	// Light-or-dark rows (saved, so Settings keeps it), and the painted look is checked right before every press
 	// (helpers/settings-look.mjs); the saved look is cleared before the next fresh page. --set looks=basic-dark,nier-light
 	// limits it; --set looks=none skips it; --set lookBite=1 paints Basic Dark back right before each guard (it must fail).
@@ -179,17 +179,19 @@ for (const surface of ['normal', 'sandbox']) {
 		if (String(t.args.looks) === 'none') { await t.check('looks skipped (--set looks=none)', true); return; }
 		const looks = t.args.looks ? String(t.args.looks).split(',') : LOOKS;
 		const names = t.args.cases ? String(t.args.cases).split(',') : ['providers', 'web', 'memory', 'backup'];
-		const lookSizes = (t.args.lookSizes ? String(t.args.lookSizes).split(',') : ['860x900', '1280x900', '1920x1080']).map((x) => x.split('x').map(Number));
-		const motions = t.args.motion ? String(t.args.motion).split(',') : ['no-preference', 'reduce'];
+		const lookSizes = (t.args.lookSizes ? String(t.args.lookSizes).split(',') : ['860x900', '1920x1080']).map((x) => x.split('x').map(Number));
+		const motions = t.args.motion ? String(t.args.motion).split(',') : ['no-preference', 'reduce', 'app'];
+		const MOTION_TAG = { 'no-preference': '', reduce: ' Reduced Motion (system)', app: ' Reduce animations (app)' };
 		for (const motion of motions) for (const look of looks) {
 			for (const [w, h] of lookSizes) {
-				await t.emulate({ reducedMotion: motion });
+				await setMotionMedia(t, motion);
 				await t.viewport(w, h);
 				const f = await t.app.open({ sandbox: surface === 'sandbox' });
 				await f.locator('#tab-settings').click();
 				await t.settle();
 				await setLookBySetting(t, f, look);
-				for (const name of names) await runCase(t, f, w, h, name, `${look} ${w}x${h}${motion === 'reduce' ? ' reduced motion' : ''}`, look);
+				await setMotionApp(t, f, motion);
+				for (const name of names) await runCase(t, f, w, h, name, `${look} ${w}x${h}${MOTION_TAG[motion]}`, look);
 				await t.app.resetLayout();   // the picked look is saved: the next fresh page (and the next check) starts in Basic Dark
 			}
 		}

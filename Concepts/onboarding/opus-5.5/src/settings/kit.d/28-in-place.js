@@ -306,10 +306,10 @@ PM51.commitBody = (body, html) => {
      section that had not been marked yet (the scroll reveal does not mark one under Reduced Motion) would play its
      entrance then: Web's "Search the web" off faded "Who does it" to .55 and dropped it 10 px in Glass Light and NieR
      Light with Reduced Motion (astra-review-l1s, FO-130). Such a section is revealed with no entrance (pm51-instant). */
-  const kept = [...body.querySelectorAll('.manager-section:not(.is-revealed)')];
+  /* Set before the patch, so the control's place is read with every kept section already in its final pose. */
+  body.querySelectorAll('.manager-section:not(.is-revealed)').forEach(sec => sec.classList.add('pm51-instant'));
   const act = document.activeElement;
   if (act && act.matches && act.matches(O55C_HOLDS)) o55cHold(act, () => PM51.patchInner(body, html)); else PM51.patchInner(body, html);
-  kept.forEach(sec => { if (sec.isConnected) sec.classList.add('pm51-instant'); });
 };
 /* The control that made a change keeps its place on screen. A part above it that grows or shrinks with the change (the
    roster stacked above a detail in a narrow window, a status line) moved it, and the browser's own scroll anchoring

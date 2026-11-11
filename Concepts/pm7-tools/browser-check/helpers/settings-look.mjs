@@ -112,9 +112,21 @@ export async function guardPaintedLook(t, f, look, where) {
 	const mode = look.split('-')[1];
 	const modeOk = !!s && (mode === 'light' ? s.lum > 0.5 : s.lum < 0.5);
 	const dist = s && base ? Math.max(...s.rgb.map((v, i) => Math.abs(v - base.rgb[i]))) : null;
-	const notBasic = look === 'basic-dark' ? true : dist !== null && dist > 6;
+	const notBasic = look === 'basic-dark' ? true : dist !== null && dist > 3;   // Friendly Dark samples 6 levels from Basic Dark
 	const ok = attr && modeOk && notBasic;
 	await t.check(`${where}: measured under ${look} (painted ${got.theme}${got.nier ? ', NieR on' : ''}; sample rgb(${s ? s.rgb.join(',') : '?'}), ${s ? (s.lum > 0.5 ? 'light' : 'dark') : '?'}${look === 'basic-dark' ? '' : `, ${dist === null ? 'no Basic Dark sample' : dist + ' from Basic Dark'}`})`, ok,
 		!attr ? 'the page shows another look than the cell names' : !modeOk ? 'the painted page is not the look\'s light or dark' : 'the painted page is still Basic Dark');
 	return ok;
+}
+
+/* motion for a Settings check: 'no-preference', 'reduce' (the browser's Reduced Motion media query) or 'app' (the app's
+   own Reduce animations setting, general.visual.reduce-animations, which sets html[data-motion="reduced"]; set through
+   the settings host as the Settings row does, after the page is open). Call setMotionMedia before t.app.open and
+   setMotionApp after it. */
+export async function setMotionMedia(t, motion) { await t.emulate({ reducedMotion: motion === 'reduce' ? 'reduce' : 'no-preference' }); }
+export async function setMotionApp(t, f, motion) {
+	if (motion !== 'app') return true;
+	await f.evaluate(() => window.PM12_KIMI.setSettingFromHost('general.visual.reduce-animations', true, true, true));
+	const ok = await f.waitForFunction(() => document.documentElement.getAttribute('data-motion') === 'reduced', null, { timeout: 8000 }).then(() => true).catch(() => false);
+	return t.check('the app\'s own Reduce animations is on (html[data-motion="reduced"])', ok);
 }
