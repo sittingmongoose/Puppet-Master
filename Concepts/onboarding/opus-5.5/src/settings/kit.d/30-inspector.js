@@ -108,13 +108,23 @@ function o55PickItems(pm, idBase) {
 /* The active row of the unfolded list, kept wholly inside the list's own visible box. kit.js's setActiveOption scrolls
    by offsetTop with a pad for a popout's sticky search; here the list is the scroller, its search sits above it, and an
    option's offsetParent was not the list (the unfolding box, or the Details panel under Reduced Motion), so Arrow Up and
-   every step under Reduced Motion left the row out of view. The row is placed against the list's rect instead. */
+   every step under Reduced Motion left the row out of view. The row is placed against the list's rect instead, and then
+   against every scroller that holds the list up to the Details panel (its body), so a short window (1280x500), where
+   the list itself runs past the panel's scrolled view, still shows the row: each scroller moves the least it must. */
 function o55InlineActive(entry, index) {
   setActiveOption(entry, index, false);
   const node = entry.el.querySelector(`[role="option"][data-index="${index}"]`); if (!node) return;
-  const lr = entry.el.getBoundingClientRect(), nr = node.getBoundingClientRect(), m = 4;
-  if (nr.top < lr.top + m) entry.el.scrollTop -= Math.ceil(lr.top + m - nr.top);
-  else if (nr.bottom > lr.bottom - m) entry.el.scrollTop += Math.ceil(nr.bottom - (lr.bottom - m));
+  const m = 4;
+  const reveal = scroller => {
+    const sr = scroller.getBoundingClientRect(), nr = node.getBoundingClientRect();
+    if (nr.top < sr.top + m) scroller.scrollTop -= Math.ceil(sr.top + m - nr.top);
+    else if (nr.bottom > sr.bottom - m) scroller.scrollTop += Math.ceil(nr.bottom - (sr.bottom - m));
+  };
+  reveal(entry.el);
+  for (let el = entry.el.parentElement; el && el !== document.body; el = el.parentElement) {
+    if (el.scrollHeight > el.clientHeight + 1 && /(auto|scroll)/.test(getComputedStyle(el).overflowY)) reveal(el);
+    if (el.classList.contains('detail-inspector')) break;
+  }
 }
 function o55InlineMove(entry, delta, edge) {
   const nodes = [...entry.el.querySelectorAll('[role="option"]')].filter(n => !n.hidden && n.getAttribute('aria-disabled') !== 'true');

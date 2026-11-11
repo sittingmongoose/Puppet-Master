@@ -387,9 +387,10 @@ export const tests = {
 		await t.check(`at least 7 of the long lists open from their pages (${opened.length} of ${ids.length})`, opened.length >= Math.min(7, ids.length), `not reachable: ${unreachable.join(', ')}`);
 	},
 
-	/* opus-recheck-b10d127 F1: walking the unfolded list with Page Down, Arrow Up, Page Up and Arrow Down keeps the
-	   active row (the search box's aria-activedescendant) wholly inside the list's visible box after every key, in a
-	   model setting and two long lists, with motion and under Reduced Motion. The old scroll used offsetTop against
+	/* opus-recheck-b10d127 F1 (and its 1280x500 follow-up): walking the unfolded list with Page Down, Arrow Up, Page Up
+	   and Arrow Down keeps the active row (the search box's aria-activedescendant) wholly visible after every key (inside
+	   the list, the Details panel's scrolled view, the window and above the status bar), in a model setting and two long
+	   lists, at 1390x900, 1280x500 and 740x900 (--set arrowSizes=), with motion and under Reduced Motion. The old scroll used offsetTop against
 	   another box: Arrow Up hid the row, and under Reduced Motion every step did. */
 	'FO-127 arrow keys keep the active row in view': async (t) => {
 		const f = await t.app.open();
@@ -404,14 +405,29 @@ export const tests = {
 			const id = search && search.getAttribute('aria-activedescendant');
 			const n = id && document.getElementById(id);
 			if (!list || !n) return { ok: false, why: 'no open list or no active option' };
-			const lr = list.getBoundingClientRect(), nr = n.getBoundingClientRect();
-			return { ok: nr.top >= lr.top - 0.5 && nr.bottom <= lr.bottom + 0.5, top: Math.round(nr.top - lr.top), bottom: Math.round(lr.bottom - nr.bottom), name: n.textContent.trim().slice(0, 30), focus: document.activeElement === search };
+			/* what a person can see: the list, every scroller that holds it (the Details panel's body), the window,
+			   and above the status bar */
+			const clip = { top: 0, bottom: innerHeight, by: 'window' };
+			for (let el = list; el && el !== document.documentElement; el = el.parentElement) {
+				const cs = getComputedStyle(el);
+				if (el !== list && cs.overflowY === 'visible' && cs.overflowX === 'visible') continue;
+				const r = el.getBoundingClientRect();
+				if (r.top > clip.top) { clip.top = r.top; clip.byTop = el.className.split(' ')[0] || el.tagName; }
+				if (r.bottom < clip.bottom) { clip.bottom = r.bottom; clip.by = el.className.split(' ')[0] || el.tagName; }
+			}
+			const sb = document.querySelector('.pm7-statusbar');
+			if (sb) { const b = sb.getBoundingClientRect(); if (b.height > 0 && b.top < clip.bottom) { clip.bottom = b.top; clip.by = 'status bar'; } }
+			const nr = n.getBoundingClientRect();
+			return { ok: nr.top >= clip.top - 0.5 && nr.bottom <= clip.bottom + 0.5, top: Math.round(nr.top - clip.top), bottom: Math.round(clip.bottom - nr.bottom), by: nr.bottom > clip.bottom + 0.5 ? clip.by : clip.byTop, name: n.textContent.trim().slice(0, 30), focus: document.activeElement === search };
 		};
 		const KEYS = [...Array(8).fill('PageDown'), ...Array(20).fill('ArrowUp'), ...Array(3).fill('PageUp'), ...Array(20).fill('ArrowDown')];
-		for (const motion of ['no-preference', 'reduce']) {
+		const sizes = (t.args.arrowSizes ? String(t.args.arrowSizes) : '1390x900,1280x500,740x900').split(',').map((x) => x.split('x').map(Number));
+		for (const [w, h] of sizes) for (const motion of ['no-preference', 'reduce']) {
 			await t.emulate({ reducedMotion: motion });
 			for (const id of ['code.terminal.background-image', SETTING, 'code.editing.color-scheme']) {
+				await t.viewport(1390, 900);
 				if (!(await openDetails(t, f, id))) continue;
+				if (w !== 1390 || h !== 900) { await t.viewport(w, h); await t.page.waitForTimeout(500); }
 				await f.locator('#panel-settings .detail-inspector .o55-insp-block [role="combobox"]').first().focus();
 				await t.page.keyboard.press('ArrowDown');
 				await t.page.waitForTimeout(350);
@@ -420,16 +436,17 @@ export const tests = {
 				for (const k of KEYS) {
 					await t.page.keyboard.press(k);
 					const v = await f.evaluate(VIS);
-					if (!v.ok) misses.push(`${k}: ${v.why || `top ${v.top}, bottom ${v.bottom} (${v.name})`}`);
+					if (!v.ok) misses.push(`${k}: ${v.why || `top ${v.top}, bottom ${v.bottom}, cut by ${v.by} (${v.name})`}`);
 					if (!v.focus) lostFocus++;
 				}
-				await t.check(`arrows ${motion} ${id}: the active row stays wholly in the list's view over ${KEYS.length} keys`, misses.length === 0, `${misses.length} out of view: ${misses.slice(0, 4).join(' | ')}`);
-				await t.check(`arrows ${motion} ${id}: focus stays in the search box while walking`, lostFocus === 0, `${lostFocus} keys left focus elsewhere`);
+				await t.check(`arrows ${w}x${h} ${motion} ${id}: the active row stays wholly in view (list, Details panel, window, above the status bar) over ${KEYS.length} keys`, misses.length === 0, `${misses.length} out of view: ${misses.slice(0, 4).join(' | ')}`);
+				await t.check(`arrows ${w}x${h} ${motion} ${id}: focus stays in the search box while walking`, lostFocus === 0, `${lostFocus} keys left focus elsewhere`);
 				await t.page.keyboard.press('Escape');
 				await closeDetails(t, f);
 			}
 		}
 		await t.emulate({ reducedMotion: 'no-preference' });
+		await t.viewport(1390, 900);
 	},
 
 	/* opus-recheck-b10d127 F3: the picker's search box is a menu's search field, not a show/hide toggle: hovering it
