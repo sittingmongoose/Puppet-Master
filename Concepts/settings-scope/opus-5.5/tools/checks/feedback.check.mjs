@@ -220,8 +220,6 @@ const DETAIL = async (arg) => {
 	const vis = (e) => !!e && e.getClientRects().length > 0;
 	const tabEl = () => [...document.querySelectorAll(`#pm-settings-root [data-action="pm51-tab"][data-manager="${manager}"][data-tab="${tab}"]`)].find(vis) || null;
 	const rootNow = () => { const te = tabEl(); return (te && te.closest('.pm51-mgr')) || document.getElementById('pm-settings-root'); };
-	// the tab's own panel, once it has been drawn for this tab (a panel still labelled by the last tab is the last tab's)
-	const panelNow = () => { const te = tabEl(); const pid = te && te.getAttribute('aria-controls'); const p = pid && [...rootNow().querySelectorAll(`[id="${pid}"]`)].find(vis); return p && p.getAttribute('aria-labelledby') === te.id ? p : null; };
 	const frame = () => new Promise((r) => requestAnimationFrame(() => r()));
 	/* review A-r4 (where it stopped, fault a): no fixed wait. After a tab or a pick, wait until the condition holds and the
 	   manager's detail panes have kept the same text and height for three frames in a row (4s at most) */
@@ -238,12 +236,14 @@ const DETAIL = async (arg) => {
 	const out = { n: 0, items: 0, bad: [], all: [], unsettled: [] };
 	// the tab must be current and its own panel drawn first: until then the panes and picks are still the last tab's
 	const tabOn = () => { const te = tabEl(); return !!te && te.getAttribute('aria-selected') === 'true'; };
-	/* the panel must be labelled for this tab. One still labelled for another tab of this manager is the last tab's,
-	   drawn late on a first visit (Permissions › Rules showed Profiles' list for over 600ms): wait for it. A manager
-	   whose panel carries no tab label at all (Back Seat Driver's stages, the toolchain's formatters and others) gets
-	   600ms after its tab is current. Then the same three still frames */
-	const panelState = () => { const te = tabEl(); const pid = te && te.getAttribute('aria-controls'); const p = pid && [...rootNow().querySelectorAll(`[id="${pid}"]`)].find(vis); if (!p) return 'none'; const lb = p.getAttribute('aria-labelledby') || ''; return lb === te.id ? 'ok' : lb.startsWith(`pm51-tab-${manager}-`) ? 'stale' : 'unlabelled'; };
-	const openTab = async () => { window.PM12_KIMI.dispatchAction('pm51-tab', { manager, tab }); const t0 = performance.now(); return settled(() => { if (!tabOn()) return false; const st = panelState(); return st === 'ok' || (st !== 'stale' && performance.now() - t0 > 600); }, 6000); };
+	/* the panel's content must have changed from what was there before the tab was asked for: until it does, its
+	   panes and picks are the last tab's (Permissions › Rules showed Profiles' list for over 600ms on a first visit).
+	   Labels can't tell: some managers keep the panel labelled for another tab when drawn (Back Seat Driver's stages,
+	   Media's files, the toolchain's formatters). A tab that was already open shows the same content, so 2.5s after its
+	   tab is current it counts as drawn. Then the same three still frames */
+	const panelEl = () => { const te = tabEl(); const pid = te && te.getAttribute('aria-controls'); return (pid && [...rootNow().querySelectorAll(`[id="${pid}"]`)].find(vis)) || rootNow(); };
+	const sigOf = () => { const p = panelEl(); const tx = p.innerText || ''; return `${tx.length}|${tx.slice(0, 400)}|${[...p.querySelectorAll('button[data-action="pm51-select"]')].map((e) => e.dataset.id).join(',')}`; };
+	const openTab = async () => { const before = sigOf(); window.PM12_KIMI.dispatchAction('pm51-tab', { manager, tab }); const t0 = performance.now(); return settled(() => tabOn() && (sigOf() !== before || performance.now() - t0 > 2500), 7000); };
 	if (!(await openTab())) { out.unsettled.push(`${mt} (the tab never became current)`); return out; }
 	const cv = window.__psxCv || (window.__psxCv = document.createElement('canvas').getContext('2d'));
 	const measure = (label, item) => {
@@ -264,13 +264,13 @@ const DETAIL = async (arg) => {
 	};
 	const sel = `button[data-action="pm51-select"][data-manager="${manager}"]`;
 	const name = (e) => (e.innerText || '').trim().split('\n')[0];
-	const picks = [...(panelNow() || rootNow()).querySelectorAll(sel)].filter((e) => vis(e) && e.dataset.id && (!only || name(e) === only)).map((e) => ({ id: e.dataset.id, name: name(e) }));
+	const picks = [...panelEl().querySelectorAll(sel)].filter((e) => vis(e) && e.dataset.id && (!only || name(e) === only)).map((e) => ({ id: e.dataset.id, name: name(e) }));
 	if (!picks.length && !only) measure(mt, '');
 	for (const p of picks) {
 		const q = `${sel}[data-id="${CSS.escape(p.id)}"]`;
 		// a pick can change the list (or leave the tab): the tab is opened again whenever this item isn't in its panel
-		let b = (panelNow() || { querySelector: () => null }).querySelector(q);
-		if (!b) { await openTab(); b = (panelNow() || { querySelector: () => null }).querySelector(q); }
+		let b = panelEl().querySelector(q);
+		if (!b) { await openTab(); b = panelEl().querySelector(q); }
 		if (!b) { out.unsettled.push(`${mt} › ${p.name} (gone from the tab)`); continue; }
 		b.click();
 		const ok = await settled(() => { const nb = rootNow().querySelector(q); return !!nb && (nb.getAttribute('aria-current') === 'true' || nb.classList.contains('active')); });
