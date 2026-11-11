@@ -269,6 +269,9 @@
 
   /* number roll: from the value on screen to the new one (first time from 0), tabular, no overshoot. The element keeps
      the shown value in data-shown so a later change counts from it (DESIGN-SPEC 8.5, A1 8.1). */
+  /* a text written only when it differs (a count that lands on the value it shows, a decode's settled frames): a write of
+     the same text still replaces the node, restyles and wakes every DOM watcher of the page (pm7-perf lane K) */
+  function setText(el, s) { if (el.firstElementChild || el.textContent !== s) el.textContent = s; }
   charts.roll = function (el, to, format, opts) {
     if (!el) return null;
     opts = opts || {};
@@ -280,15 +283,15 @@
     if (!finite(to)) { el.textContent = opts.missing || '-'; el.removeAttribute('data-shown'); return null; }
     el.setAttribute('data-shown', String(to));
     /* a quiet entrance writes its numbers final (WOW-SPEC-3 3.3: supporting values never roll on an entrance) */
-    if (reduced() || from === to || opts.instant || opts.quiet || (first && quietNow())) { el.textContent = opts.finalText != null ? opts.finalText : format(to); return null; }
+    if (reduced() || from === to || opts.instant || opts.quiet || (first && quietNow())) { setText(el, opts.finalText != null ? opts.finalText : format(to)); return null; }
     /* every roll is an odometer since the WOW round (WOW-SPEC 3.1, 3.6; PMU.film.odometer): digit columns on the compositor */
     if (opts.finalText == null && PMU.film && PMU.film.odometer) {
       el._pmuRoll = PMU.film.odometer(el, to, format, { from: first ? null : from, change: !first, delay: opts.delay || 0, dur: opts.dur, spins: opts.spins });
       return el._pmuRoll;
     }
-    el.textContent = format(from);
-    el._pmuRoll = tw(opts.dur || (first ? 1000 : 520), 'count', function (k) { el.textContent = format(k >= 1 ? to : from + (to - from) * k); },
-      function () { el._pmuRoll = null; el.textContent = opts.finalText != null ? opts.finalText : format(to); }, opts.delay || 0);
+    setText(el, format(from));
+    el._pmuRoll = tw(opts.dur || (first ? 1000 : 520), 'count', function (k) { setText(el, format(k >= 1 ? to : from + (to - from) * k)); },
+      function () { el._pmuRoll = null; setText(el, opts.finalText != null ? opts.finalText : format(to)); }, opts.delay || 0);
     return el._pmuRoll;
   };
   /* value-change pulse (WOW-SPEC 3.6): the reading flashes once (a pre-painted glow layer, opacity only) and a light
