@@ -1,13 +1,13 @@
-# DDBG guard tables: per-row cut results (sweep part 2A)
+# DDBG guard tables: per-row cut results (sweep part 2B)
 
-Generated from the guard-isolation tool's JSON reports (tool `scripts/pm_guard_isolation.py` at `004bdedd63`). Columns: the row's own negatives; how many flipped to accepted when the row was cut; how many other controls and negatives kept their exact result and trace; masked negatives (own negatives still refused when cut); other cases whose result changed. Schema rows are labelled `<definition>#<pointer>`; code rows by name.
+Generated from the guard-isolation tool's JSON reports (tool `scripts/pm_guard_isolation.py` at `004bdedd63`): the nine suites part 2B changed were rerun at part 2B; the other 24 are the part 2A reports, carried because their inputs, scanned module and tool are unchanged at the part 2B head (four with renumbered negative ids only; see DDBG.md "Step 6"). Columns: the row's own negatives; how many flipped to accepted when the row was cut; how many other controls and negatives kept their exact result and trace; masked negatives (own negatives still refused when cut); other cases whose result changed. Schema rows are labelled `<definition>#<pointer>`; code rows by name.
 
 | Suite | Status | Controls | Proved | Negatives | Evaluations | Cut results | Failure kinds |
 |---|---|---:|---|---:|---:|---|---|
 | `envelope_suite` | PASS | 2 | 13 / 13 | 63 | 2600 | 63 flips, 0 masked, 0 unrelated changes | none |
 | `payload_context_item_added_suite` | PASS | 1 | 36 / 36 | 36 | 4033 | 36 flips, 0 masked, 0 unrelated changes | none |
 | `payload_context_item_state_changed_suite` | PASS | 1 | 23 / 23 | 23 | 1680 | 23 flips, 0 masked, 0 unrelated changes | none |
-| `payload_exported_suite` | PASS | 1 | 28 / 28 | 28 | 2465 | 28 flips, 0 masked, 0 unrelated changes | none |
+| `payload_exported_suite` | PASS | 1 | 24 / 24 | 24 | 1825 | 24 flips, 0 masked, 0 unrelated changes | none |
 | `payload_imported_suite` | PASS | 1 | 24 / 24 | 24 | 1825 | 24 flips, 0 masked, 0 unrelated changes | none |
 | `payload_verification_recorded_suite` | PASS | 1 | 23 / 23 | 23 | 1680 | 23 flips, 0 masked, 0 unrelated changes | none |
 | `payload_instrumentation_state_changed_suite` | PASS | 31 | 13 / 13 | 13 | 1760 | 13 flips, 0 masked, 0 unrelated changes | none |
@@ -15,29 +15,30 @@ Generated from the guard-isolation tool's JSON reports (tool `scripts/pm_guard_i
 | `payload_started_suite` | PASS | 11 | 16 / 16 | 17 | 1372 | 17 flips, 0 masked, 0 unrelated changes | none |
 | `payload_values_started_suite` | PASS | 11 | 25 / 25 | 25 | 2736 | 25 flips, 0 masked, 0 unrelated changes | none |
 | `payload_target_bound_suite` | PASS | 1 | 9 / 9 | 11 | 336 | 11 flips, 0 masked, 0 unrelated changes | none |
-| `payload_values_target_bound_suite` | PASS | 1 | 28 / 28 | 28 | 2465 | 28 flips, 0 masked, 0 unrelated changes | none |
+| `payload_values_target_bound_suite` | PASS | 1 | 26 / 26 | 26 | 2133 | 26 flips, 0 masked, 0 unrelated changes | none |
 | `payload_state_changed_suite` | PASS | 14 | 9 / 9 | 9 | 644 | 9 flips, 0 masked, 0 unrelated changes | none |
 | `payload_values_state_changed_suite` | PASS | 14 | 24 / 24 | 24 | 2774 | 24 flips, 0 masked, 0 unrelated changes | none |
-| `family_suite` | PASS | 72 | 4 / 4 | 6 | 1014 | 6 flips, 0 masked, 0 unrelated changes | none |
-| `lifecycle_suite` | PASS | 16 | 21 / 21 | 43 | 3776 | 43 flips, 0 masked, 0 unrelated changes | none |
+| `family_suite` | PASS | 72 | 3 / 3 | 3 | 750 | 3 flips, 0 masked, 0 unrelated changes | none |
+| `lifecycle_suite` | **not yet run** | | | | | | |
 | `instrumentation_source_suite` | PASS | 14 | 11 / 11 | 11 | 850 | 11 flips, 0 masked, 0 unrelated changes | none |
-| `instrumentation_source_values_suite` | PASS | 14 | 19 / 19 | 27 | 2378 | 27 flips, 0 masked, 0 unrelated changes | none |
-| `instrumentation_detail_suite` | PASS | 36 | 19 / 19 | 19 | 3190 | 19 flips, 0 masked, 0 unrelated changes | none |
+| `instrumentation_source_values_suite` | PASS | 14 | 16 / 16 | 24 | 1862 | 24 flips, 0 masked, 0 unrelated changes | none |
+| `instrumentation_detail_suite` | PASS | 36 | 18 / 18 | 18 | 2970 | 18 flips, 0 masked, 0 unrelated changes | none |
 | `instrumentation_detail_required_suite` | PASS | 36 | 15 / 15 | 15 | 2346 | 15 flips, 0 masked, 0 unrelated changes | none |
 | `instrumentation_detail_values_a_suite` | PASS | 3 | 15 / 15 | 15 | 828 | 15 flips, 0 masked, 0 unrelated changes | none |
 | `instrumentation_detail_values_d_suite` | PASS | 7 | 15 / 15 | 15 | 1012 | 15 flips, 0 masked, 0 unrelated changes | none |
 | `instrumentation_detail_values_b_suite` | PASS | 13 | 10 / 10 | 30 | 1333 | 30 flips, 0 masked, 0 unrelated changes | none |
-| `instrumentation_detail_values_c_suite` | PASS | 19 | 16 / 16 | 20 | 1911 | 20 flips, 0 masked, 0 unrelated changes | none |
+| `instrumentation_detail_values_c_suite` | PASS | 19 | 7 / 7 | 11 | 660 | 11 flips, 0 masked, 0 unrelated changes | none |
 | `instrumentation_joins_suite` | PASS | 36 | 11 / 11 | 11 | 1598 | 11 flips, 0 masked, 0 unrelated changes | none |
 | `instrumentation_suite` | PASS | 37 | 12 / 12 | 12 | 1813 | 12 flips, 0 masked, 0 unrelated changes | none |
 | `instrumentation_handoff_suite` | PASS | 36 | 12 / 12 | 12 | 1776 | 12 flips, 0 masked, 0 unrelated changes | none |
 | `instrumentation_retry_suite` | PASS | 36 | 13 / 13 | 15 | 2040 | 15 flips, 0 masked, 0 unrelated changes | none |
-| `retry_request_suite` | PASS | 2 | 10 / 10 | 10 | 372 | 10 flips, 0 masked, 0 unrelated changes | none |
+| `retry_request_suite` | PASS | 2 | 7 / 7 | 7 | 198 | 7 flips, 0 masked, 0 unrelated changes | none |
 | `admission_suite` | PASS | 9 | 5 / 5 | 54 | 1008 | 54 flips, 0 masked, 0 unrelated changes | none |
-| `retained_suite` | PASS | 9 | 9 / 9 | 81 | 2520 | 81 flips, 0 masked, 0 unrelated changes | none |
+| `retained_suite` | PASS | 23 | 15 / 15 | 136 | 7314 | 136 flips, 0 masked, 0 unrelated changes | none |
 | `references_suite` | PASS | 1 | 4 / 4 | 5 | 78 | 5 flips, 0 masked, 0 unrelated changes | none |
+| `shared_suite` | PASS | 56 | 16 / 16 | 90 | 7154 | 90 flips, 0 masked, 0 unrelated changes | none |
 
-Totals: 513 rows, 513 proved, 517 controls, 746 negatives, 59541 evaluations.
+Totals: 491 rows, 491 proved, 571 controls, 823 negatives, 64316 evaluations.
 
 ### `envelope_suite`: PASS, 13 of 13 rows proved (report SHA-256 `89a873b87be80dd09c0747f6f92ff2c03ef363de6496e1d162f093c015798e2f`)
 
@@ -126,38 +127,34 @@ Totals: 513 rows, 513 proved, 517 controls, 746 negatives, 59541 evaluations.
 | `payload#/properties/reason_code/maxLength` | 1 | 1 | 22 | 0 | 0 | yes |
 | `payload#/additionalProperties/$boolean` | 1 | 1 | 22 | 0 | 0 | yes |
 
-### `payload_exported_suite`: PASS, 28 of 28 rows proved (report SHA-256 `b3b63468c3be0f8644ad23693e9a182899e1d1878b21ce711ab388dffd9d29c0`)
+### `payload_exported_suite`: PASS, 24 of 24 rows proved (report SHA-256 `fb912b47aeeb356e7973c75e68d45021f92856df92fb688132b319fca9fd1495`)
 
 | Row | Own negatives | Flip when cut | Other cases unchanged | Masked | Unrelated changes | Proved |
 |---|---:|---:|---:|---:|---:|---|
-| `payload#/type` | 1 | 1 | 27 | 0 | 0 | yes |
-| `payload#/required/schema_version` | 1 | 1 | 27 | 0 | 0 | yes |
-| `payload#/required/investigation_id` | 1 | 1 | 27 | 0 | 0 | yes |
-| `payload#/required/operation_id` | 1 | 1 | 27 | 0 | 0 | yes |
-| `payload#/required/bundle_id` | 1 | 1 | 27 | 0 | 0 | yes |
-| `payload#/required/schema_id` | 1 | 1 | 27 | 0 | 0 | yes |
-| `payload#/required/item_count` | 1 | 1 | 27 | 0 | 0 | yes |
-| `payload#/required/artifact_count` | 1 | 1 | 27 | 0 | 0 | yes |
-| `payload#/required/redaction_profile` | 1 | 1 | 27 | 0 | 0 | yes |
-| `payload#/properties/schema_version/const` | 1 | 1 | 27 | 0 | 0 | yes |
-| `payload#/properties/investigation_id/type` | 1 | 1 | 27 | 0 | 0 | yes |
-| `payload#/properties/investigation_id/minLength` | 1 | 1 | 27 | 0 | 0 | yes |
-| `payload#/properties/investigation_id/maxLength` | 1 | 1 | 27 | 0 | 0 | yes |
-| `payload#/properties/operation_id/type` | 1 | 1 | 27 | 0 | 0 | yes |
-| `payload#/properties/operation_id/minLength` | 1 | 1 | 27 | 0 | 0 | yes |
-| `payload#/properties/operation_id/maxLength` | 1 | 1 | 27 | 0 | 0 | yes |
-| `payload#/properties/bundle_id/type` | 1 | 1 | 27 | 0 | 0 | yes |
-| `payload#/properties/bundle_id/minLength` | 1 | 1 | 27 | 0 | 0 | yes |
-| `payload#/properties/bundle_id/maxLength` | 1 | 1 | 27 | 0 | 0 | yes |
-| `payload#/properties/schema_id/const` | 1 | 1 | 27 | 0 | 0 | yes |
-| `payload#/properties/item_count/type` | 1 | 1 | 27 | 0 | 0 | yes |
-| `payload#/properties/item_count/minimum` | 1 | 1 | 27 | 0 | 0 | yes |
-| `payload#/properties/artifact_count/type` | 1 | 1 | 27 | 0 | 0 | yes |
-| `payload#/properties/artifact_count/minimum` | 1 | 1 | 27 | 0 | 0 | yes |
-| `payload#/properties/redaction_profile/type` | 1 | 1 | 27 | 0 | 0 | yes |
-| `payload#/properties/redaction_profile/minLength` | 1 | 1 | 27 | 0 | 0 | yes |
-| `payload#/properties/redaction_profile/maxLength` | 1 | 1 | 27 | 0 | 0 | yes |
-| `payload#/additionalProperties/$boolean` | 1 | 1 | 27 | 0 | 0 | yes |
+| `payload#/type` | 1 | 1 | 23 | 0 | 0 | yes |
+| `payload#/required/schema_version` | 1 | 1 | 23 | 0 | 0 | yes |
+| `payload#/required/investigation_id` | 1 | 1 | 23 | 0 | 0 | yes |
+| `payload#/required/operation_id` | 1 | 1 | 23 | 0 | 0 | yes |
+| `payload#/required/bundle_id` | 1 | 1 | 23 | 0 | 0 | yes |
+| `payload#/required/schema_id` | 1 | 1 | 23 | 0 | 0 | yes |
+| `payload#/required/item_count` | 1 | 1 | 23 | 0 | 0 | yes |
+| `payload#/required/artifact_count` | 1 | 1 | 23 | 0 | 0 | yes |
+| `payload#/required/redaction_profile` | 1 | 1 | 23 | 0 | 0 | yes |
+| `payload#/properties/schema_version/const` | 1 | 1 | 23 | 0 | 0 | yes |
+| `payload#/properties/investigation_id/type` | 1 | 1 | 23 | 0 | 0 | yes |
+| `payload#/properties/investigation_id/minLength` | 1 | 1 | 23 | 0 | 0 | yes |
+| `payload#/properties/investigation_id/maxLength` | 1 | 1 | 23 | 0 | 0 | yes |
+| `payload#/properties/operation_id/type` | 1 | 1 | 23 | 0 | 0 | yes |
+| `payload#/properties/operation_id/minLength` | 1 | 1 | 23 | 0 | 0 | yes |
+| `payload#/properties/operation_id/maxLength` | 1 | 1 | 23 | 0 | 0 | yes |
+| `payload#/properties/bundle_id/type` | 1 | 1 | 23 | 0 | 0 | yes |
+| `payload#/properties/bundle_id/minLength` | 1 | 1 | 23 | 0 | 0 | yes |
+| `payload#/properties/bundle_id/maxLength` | 1 | 1 | 23 | 0 | 0 | yes |
+| `payload#/properties/schema_id/const` | 1 | 1 | 23 | 0 | 0 | yes |
+| `payload#/properties/redaction_profile/type` | 1 | 1 | 23 | 0 | 0 | yes |
+| `payload#/properties/redaction_profile/minLength` | 1 | 1 | 23 | 0 | 0 | yes |
+| `payload#/properties/redaction_profile/maxLength` | 1 | 1 | 23 | 0 | 0 | yes |
+| `payload#/additionalProperties/$boolean` | 1 | 1 | 23 | 0 | 0 | yes |
 
 ### `payload_imported_suite`: PASS, 24 of 24 rows proved (report SHA-256 `dd6841faed12fe6485a4d2a1e49d2fff783ea0ffc996949b426f689575a27b81`)
 
@@ -325,38 +322,36 @@ Totals: 513 rows, 513 proved, 517 controls, 746 negatives, 59541 evaluations.
 | `payload#/required/binding_state` | 1 | 1 | 10 | 0 | 0 | yes |
 | `payload#/additionalProperties/$boolean` | 1 | 1 | 10 | 0 | 0 | yes |
 
-### `payload_values_target_bound_suite`: PASS, 28 of 28 rows proved (report SHA-256 `6494beb53376dbe5e43bc50aeeb14b6a2efe53e9d3949836150819cf64224992`)
+### `payload_values_target_bound_suite`: PASS, 26 of 26 rows proved (report SHA-256 `487265fb9ffb5014664760c1d0105cb6b8a972d01d723b7d2ddf378a01bfff40`)
 
 | Row | Own negatives | Flip when cut | Other cases unchanged | Masked | Unrelated changes | Proved |
 |---|---:|---:|---:|---:|---:|---|
-| `payload.values#/properties/schema_version/const` | 1 | 1 | 27 | 0 | 0 | yes |
-| `payload.values#/properties/investigation_id/type` | 1 | 1 | 27 | 0 | 0 | yes |
-| `payload.values#/properties/investigation_id/minLength` | 1 | 1 | 27 | 0 | 0 | yes |
-| `payload.values#/properties/investigation_id/maxLength` | 1 | 1 | 27 | 0 | 0 | yes |
-| `payload.values#/properties/operation_id/type` | 1 | 1 | 27 | 0 | 0 | yes |
-| `payload.values#/properties/operation_id/minLength` | 1 | 1 | 27 | 0 | 0 | yes |
-| `payload.values#/properties/operation_id/maxLength` | 1 | 1 | 27 | 0 | 0 | yes |
-| `payload.values#/properties/target_kind/enum` | 1 | 1 | 27 | 0 | 0 | yes |
-| `payload.values#/properties/target_bindings/type` | 1 | 1 | 27 | 0 | 0 | yes |
-| `payload.values#/properties/target_bindings/required/owner_ref` | 1 | 1 | 27 | 0 | 0 | yes |
-| `payload.values#/properties/target_bindings/required/target_ref` | 1 | 1 | 27 | 0 | 0 | yes |
-| `payload.values#/properties/target_bindings/required/binding_revision` | 1 | 1 | 27 | 0 | 0 | yes |
-| `payload.values#/properties/target_bindings/required/source_sha256` | 1 | 1 | 27 | 0 | 0 | yes |
-| `payload.values#/properties/target_bindings/properties/owner_ref/type` | 1 | 1 | 27 | 0 | 0 | yes |
-| `payload.values#/properties/target_bindings/properties/owner_ref/minLength` | 1 | 1 | 27 | 0 | 0 | yes |
-| `payload.values#/properties/target_bindings/properties/owner_ref/maxLength` | 1 | 1 | 27 | 0 | 0 | yes |
-| `payload.values#/properties/target_bindings/properties/target_ref/type` | 1 | 1 | 27 | 0 | 0 | yes |
-| `payload.values#/properties/target_bindings/properties/target_ref/minLength` | 1 | 1 | 27 | 0 | 0 | yes |
-| `payload.values#/properties/target_bindings/properties/target_ref/maxLength` | 1 | 1 | 27 | 0 | 0 | yes |
-| `payload.values#/properties/target_bindings/properties/binding_revision/type` | 1 | 1 | 27 | 0 | 0 | yes |
-| `payload.values#/properties/target_bindings/properties/binding_revision/minimum` | 1 | 1 | 27 | 0 | 0 | yes |
-| `payload.values#/properties/target_bindings/properties/source_sha256/type` | 1 | 1 | 27 | 0 | 0 | yes |
-| `payload.values#/properties/target_bindings/properties/source_sha256/minLength` | 1 | 1 | 27 | 0 | 0 | yes |
-| `payload.values#/properties/target_bindings/properties/source_sha256/maxLength` | 1 | 1 | 27 | 0 | 0 | yes |
-| `payload.values#/properties/target_bindings/additionalProperties/$boolean` | 1 | 1 | 27 | 0 | 0 | yes |
-| `payload.values#/properties/binding_state/type` | 1 | 1 | 27 | 0 | 0 | yes |
-| `payload.values#/properties/binding_state/minLength` | 1 | 1 | 27 | 0 | 0 | yes |
-| `payload.values#/properties/binding_state/maxLength` | 1 | 1 | 27 | 0 | 0 | yes |
+| `payload.values#/properties/schema_version/const` | 1 | 1 | 25 | 0 | 0 | yes |
+| `payload.values#/properties/investigation_id/type` | 1 | 1 | 25 | 0 | 0 | yes |
+| `payload.values#/properties/investigation_id/minLength` | 1 | 1 | 25 | 0 | 0 | yes |
+| `payload.values#/properties/investigation_id/maxLength` | 1 | 1 | 25 | 0 | 0 | yes |
+| `payload.values#/properties/operation_id/type` | 1 | 1 | 25 | 0 | 0 | yes |
+| `payload.values#/properties/operation_id/minLength` | 1 | 1 | 25 | 0 | 0 | yes |
+| `payload.values#/properties/operation_id/maxLength` | 1 | 1 | 25 | 0 | 0 | yes |
+| `payload.values#/properties/target_kind/enum` | 1 | 1 | 25 | 0 | 0 | yes |
+| `payload.values#/properties/target_bindings/type` | 1 | 1 | 25 | 0 | 0 | yes |
+| `payload.values#/properties/target_bindings/required/owner_ref` | 1 | 1 | 25 | 0 | 0 | yes |
+| `payload.values#/properties/target_bindings/required/target_ref` | 1 | 1 | 25 | 0 | 0 | yes |
+| `payload.values#/properties/target_bindings/required/binding_revision` | 1 | 1 | 25 | 0 | 0 | yes |
+| `payload.values#/properties/target_bindings/required/source_sha256` | 1 | 1 | 25 | 0 | 0 | yes |
+| `payload.values#/properties/target_bindings/properties/owner_ref/type` | 1 | 1 | 25 | 0 | 0 | yes |
+| `payload.values#/properties/target_bindings/properties/owner_ref/minLength` | 1 | 1 | 25 | 0 | 0 | yes |
+| `payload.values#/properties/target_bindings/properties/owner_ref/maxLength` | 1 | 1 | 25 | 0 | 0 | yes |
+| `payload.values#/properties/target_bindings/properties/target_ref/type` | 1 | 1 | 25 | 0 | 0 | yes |
+| `payload.values#/properties/target_bindings/properties/target_ref/minLength` | 1 | 1 | 25 | 0 | 0 | yes |
+| `payload.values#/properties/target_bindings/properties/target_ref/maxLength` | 1 | 1 | 25 | 0 | 0 | yes |
+| `payload.values#/properties/target_bindings/properties/source_sha256/type` | 1 | 1 | 25 | 0 | 0 | yes |
+| `payload.values#/properties/target_bindings/properties/source_sha256/minLength` | 1 | 1 | 25 | 0 | 0 | yes |
+| `payload.values#/properties/target_bindings/properties/source_sha256/maxLength` | 1 | 1 | 25 | 0 | 0 | yes |
+| `payload.values#/properties/target_bindings/additionalProperties/$boolean` | 1 | 1 | 25 | 0 | 0 | yes |
+| `payload.values#/properties/binding_state/type` | 1 | 1 | 25 | 0 | 0 | yes |
+| `payload.values#/properties/binding_state/minLength` | 1 | 1 | 25 | 0 | 0 | yes |
+| `payload.values#/properties/binding_state/maxLength` | 1 | 1 | 25 | 0 | 0 | yes |
 
 ### `payload_state_changed_suite`: PASS, 9 of 9 rows proved (report SHA-256 `35b06e07771bec69ab901013049eef9c459d084846ac37f33ab5d5b00e752609`)
 
@@ -401,40 +396,13 @@ Totals: 513 rows, 513 proved, 517 controls, 746 negatives, 59541 evaluations.
 | `payload.values#/properties/phase/enum` | 1 | 1 | 23 | 0 | 0 | yes |
 | `payload.values#/properties/verification_strength/enum` | 1 | 1 | 23 | 0 | 0 | yes |
 
-### `family_suite`: PASS, 4 of 4 rows proved (report SHA-256 `ea39a7ba98cb0cff23232364544f52a2c8631b54868718ac911b8e73835e843e`)
+### `family_suite`: PASS, 3 of 3 rows proved (report SHA-256 `24f0a891a123ddb5d6458e379500addf035d4fe81d82a099fd25b7883186dbb2`)
 
 | Row | Own negatives | Flip when cut | Other cases unchanged | Masked | Unrelated changes | Proved |
 |---|---:|---:|---:|---:|---:|---|
-| `family.explicit_yolo` | 1 | 1 | 5 | 0 | 0 | yes |
-| `family.planning_approval` | 1 | 1 | 5 | 0 | 0 | yes |
-| `family.context_no_op` | 1 | 1 | 5 | 0 | 0 | yes |
-| `family.payload_size` | 3 | 3 | 3 | 0 | 0 | yes |
-
-### `lifecycle_suite`: PASS, 21 of 21 rows proved (report SHA-256 `9359fc7dd654682f26e539a09d53b72159a3744bcafda03032ebe8e442aae683`)
-
-| Row | Own negatives | Flip when cut | Other cases unchanged | Masked | Unrelated changes | Proved |
-|---|---:|---:|---:|---:|---:|---|
-| `lifecycle.stale_state` | 1 | 1 | 42 | 0 | 0 | yes |
-| `lifecycle.stale_phase` | 1 | 1 | 42 | 0 | 0 | yes |
-| `lifecycle.no_op` | 1 | 1 | 42 | 0 | 0 | yes |
-| `lifecycle.terminal` | 1 | 1 | 42 | 0 | 0 | yes |
-| `lifecycle.state_reason` | 11 | 11 | 32 | 0 | 0 | yes |
-| `lifecycle.attention_reason` | 1 | 1 | 42 | 0 | 0 | yes |
-| `lifecycle.blocked_reason` | 1 | 1 | 42 | 0 | 0 | yes |
-| `lifecycle.verification` | 1 | 1 | 42 | 0 | 0 | yes |
-| `lifecycle.cleanup` | 1 | 1 | 42 | 0 | 0 | yes |
-| `lifecycle_source#/type` | 1 | 1 | 42 | 0 | 0 | yes |
-| `lifecycle_source#/required/state` | 1 | 1 | 42 | 0 | 0 | yes |
-| `lifecycle_source#/required/phase` | 1 | 1 | 42 | 0 | 0 | yes |
-| `lifecycle_source#/required/verification_qualified` | 1 | 1 | 42 | 0 | 0 | yes |
-| `lifecycle_source#/required/cleanup_completed` | 1 | 1 | 42 | 0 | 0 | yes |
-| `lifecycle_source#/required/documented_preservation_hold` | 1 | 1 | 42 | 0 | 0 | yes |
-| `lifecycle_source#/properties/state/enum` | 1 | 1 | 42 | 0 | 0 | yes |
-| `lifecycle_source#/properties/phase/enum` | 1 | 1 | 42 | 0 | 0 | yes |
-| `lifecycle_source#/properties/verification_qualified/type` | 5 | 5 | 38 | 0 | 0 | yes |
-| `lifecycle_source#/properties/cleanup_completed/type` | 5 | 5 | 38 | 0 | 0 | yes |
-| `lifecycle_source#/properties/documented_preservation_hold/type` | 5 | 5 | 38 | 0 | 0 | yes |
-| `lifecycle_source#/additionalProperties/$boolean` | 1 | 1 | 42 | 0 | 0 | yes |
+| `family.explicit_yolo` | 1 | 1 | 2 | 0 | 0 | yes |
+| `family.planning_approval` | 1 | 1 | 2 | 0 | 0 | yes |
+| `family.context_no_op` | 1 | 1 | 2 | 0 | 0 | yes |
 
 ### `instrumentation_source_suite`: PASS, 11 of 11 rows proved (report SHA-256 `ea217c53416a07df369aa1871968ec92c313751244e1547991481a556a25e0ca`)
 
@@ -452,53 +420,49 @@ Totals: 513 rows, 513 proved, 517 controls, 746 negatives, 59541 evaluations.
 | `instrumentation_source#/required/handoff_pending` | 1 | 1 | 10 | 0 | 0 | yes |
 | `instrumentation_source#/additionalProperties/$boolean` | 1 | 1 | 10 | 0 | 0 | yes |
 
-### `instrumentation_source_values_suite`: PASS, 19 of 19 rows proved (report SHA-256 `99bf8f14ba16a2148a38132b6975f65b9743c9a2fc08e5fd7e6526fb5caf9f04`)
+### `instrumentation_source_values_suite`: PASS, 16 of 16 rows proved (report SHA-256 `c560de779c5fb563a753d4cbd10f61e4c78f12602abf8d36414bb509e2fc8cbc`)
 
 | Row | Own negatives | Flip when cut | Other cases unchanged | Masked | Unrelated changes | Proved |
 |---|---:|---:|---:|---:|---:|---|
-| `instrumentation_source.values#/properties/instrumentation_id/type` | 1 | 1 | 26 | 0 | 0 | yes |
-| `instrumentation_source.values#/properties/instrumentation_id/minLength` | 1 | 1 | 26 | 0 | 0 | yes |
-| `instrumentation_source.values#/properties/instrumentation_id/maxLength` | 1 | 1 | 26 | 0 | 0 | yes |
-| `instrumentation_source.values#/properties/scope_kind/type` | 1 | 1 | 26 | 0 | 0 | yes |
-| `instrumentation_source.values#/properties/scope_kind/minLength` | 1 | 1 | 26 | 0 | 0 | yes |
-| `instrumentation_source.values#/properties/scope_kind/maxLength` | 1 | 1 | 26 | 0 | 0 | yes |
-| `instrumentation_source.values#/properties/target_ref/type` | 1 | 1 | 26 | 0 | 0 | yes |
-| `instrumentation_source.values#/properties/target_ref/minLength` | 1 | 1 | 26 | 0 | 0 | yes |
-| `instrumentation_source.values#/properties/target_ref/maxLength` | 1 | 1 | 26 | 0 | 0 | yes |
-| `instrumentation_source.values#/properties/owner_ref/type` | 1 | 1 | 26 | 0 | 0 | yes |
-| `instrumentation_source.values#/properties/owner_ref/minLength` | 1 | 1 | 26 | 0 | 0 | yes |
-| `instrumentation_source.values#/properties/owner_ref/maxLength` | 1 | 1 | 26 | 0 | 0 | yes |
-| `instrumentation_source.values#/properties/state/enum` | 1 | 1 | 26 | 0 | 0 | yes |
-| `instrumentation_source.values#/properties/cleanup_result/enum` | 1 | 1 | 26 | 0 | 0 | yes |
-| `instrumentation_source.values#/properties/retry_count/type` | 1 | 1 | 26 | 0 | 0 | yes |
-| `instrumentation_source.values#/properties/retry_count/minimum` | 1 | 1 | 26 | 0 | 0 | yes |
-| `instrumentation_source.values#/properties/retry_count/maximum` | 1 | 1 | 26 | 0 | 0 | yes |
-| `instrumentation_source.values#/properties/previous_attempt_failed/type` | 5 | 5 | 22 | 0 | 0 | yes |
-| `instrumentation_source.values#/properties/handoff_pending/type` | 5 | 5 | 22 | 0 | 0 | yes |
+| `instrumentation_source.values#/properties/instrumentation_id/type` | 1 | 1 | 23 | 0 | 0 | yes |
+| `instrumentation_source.values#/properties/instrumentation_id/minLength` | 1 | 1 | 23 | 0 | 0 | yes |
+| `instrumentation_source.values#/properties/instrumentation_id/maxLength` | 1 | 1 | 23 | 0 | 0 | yes |
+| `instrumentation_source.values#/properties/scope_kind/type` | 1 | 1 | 23 | 0 | 0 | yes |
+| `instrumentation_source.values#/properties/scope_kind/minLength` | 1 | 1 | 23 | 0 | 0 | yes |
+| `instrumentation_source.values#/properties/scope_kind/maxLength` | 1 | 1 | 23 | 0 | 0 | yes |
+| `instrumentation_source.values#/properties/target_ref/type` | 1 | 1 | 23 | 0 | 0 | yes |
+| `instrumentation_source.values#/properties/target_ref/minLength` | 1 | 1 | 23 | 0 | 0 | yes |
+| `instrumentation_source.values#/properties/target_ref/maxLength` | 1 | 1 | 23 | 0 | 0 | yes |
+| `instrumentation_source.values#/properties/owner_ref/type` | 1 | 1 | 23 | 0 | 0 | yes |
+| `instrumentation_source.values#/properties/owner_ref/minLength` | 1 | 1 | 23 | 0 | 0 | yes |
+| `instrumentation_source.values#/properties/owner_ref/maxLength` | 1 | 1 | 23 | 0 | 0 | yes |
+| `instrumentation_source.values#/properties/state/enum` | 1 | 1 | 23 | 0 | 0 | yes |
+| `instrumentation_source.values#/properties/cleanup_result/enum` | 1 | 1 | 23 | 0 | 0 | yes |
+| `instrumentation_source.values#/properties/previous_attempt_failed/type` | 5 | 5 | 19 | 0 | 0 | yes |
+| `instrumentation_source.values#/properties/handoff_pending/type` | 5 | 5 | 19 | 0 | 0 | yes |
 
-### `instrumentation_detail_suite`: PASS, 19 of 19 rows proved (report SHA-256 `ae17e507a815098dc7009684733814a0384d7d23d302e83b29fd0a211cc35110`)
+### `instrumentation_detail_suite`: PASS, 18 of 18 rows proved (report SHA-256 `ba25dfc8995adccd56325aafa59139e2ce41adbe7e0702a7162faddd21fe4463`)
 
 | Row | Own negatives | Flip when cut | Other cases unchanged | Masked | Unrelated changes | Proved |
 |---|---:|---:|---:|---:|---:|---|
-| `instr.detail_available` | 1 | 1 | 18 | 0 | 0 | yes |
-| `instr.detail_size` | 1 | 1 | 18 | 0 | 0 | yes |
-| `instrumentation_change_detail#/properties/detail/type` | 1 | 1 | 18 | 0 | 0 | yes |
-| `instrumentation_change_detail#/properties/detail/required/instrumentation_id` | 1 | 1 | 18 | 0 | 0 | yes |
-| `instrumentation_change_detail#/properties/detail/required/operation_id` | 1 | 1 | 18 | 0 | 0 | yes |
-| `instrumentation_change_detail#/properties/detail/required/target_ref` | 1 | 1 | 18 | 0 | 0 | yes |
-| `instrumentation_change_detail#/properties/detail/required/previous_owner_ref` | 1 | 1 | 18 | 0 | 0 | yes |
-| `instrumentation_change_detail#/properties/detail/required/owner_ref` | 1 | 1 | 18 | 0 | 0 | yes |
-| `instrumentation_change_detail#/properties/detail/required/proof_ref` | 1 | 1 | 18 | 0 | 0 | yes |
-| `instrumentation_change_detail#/properties/detail/required/recovery_ref` | 1 | 1 | 18 | 0 | 0 | yes |
-| `instrumentation_change_detail#/properties/detail/required/linked_work_ref` | 1 | 1 | 18 | 0 | 0 | yes |
-| `instrumentation_change_detail#/properties/detail/required/remaining_obligation_refs` | 1 | 1 | 18 | 0 | 0 | yes |
-| `instrumentation_change_detail#/properties/detail/required/whole_lane_never_needed_undoing` | 1 | 1 | 18 | 0 | 0 | yes |
-| `instrumentation_change_detail#/properties/detail/required/no_leftovers` | 1 | 1 | 18 | 0 | 0 | yes |
-| `instrumentation_change_detail#/properties/detail/required/removal_verified` | 1 | 1 | 18 | 0 | 0 | yes |
-| `instrumentation_change_detail#/properties/detail/required/retry_authorized` | 1 | 1 | 18 | 0 | 0 | yes |
-| `instrumentation_change_detail#/properties/detail/required/previous_attempt_failed` | 1 | 1 | 18 | 0 | 0 | yes |
-| `instrumentation_change_detail#/properties/detail/required/handoff_approved` | 1 | 1 | 18 | 0 | 0 | yes |
-| `instrumentation_change_detail#/properties/detail/additionalProperties/$boolean` | 1 | 1 | 18 | 0 | 0 | yes |
+| `instr.detail_available` | 1 | 1 | 17 | 0 | 0 | yes |
+| `instrumentation_change_detail#/properties/detail/type` | 1 | 1 | 17 | 0 | 0 | yes |
+| `instrumentation_change_detail#/properties/detail/required/instrumentation_id` | 1 | 1 | 17 | 0 | 0 | yes |
+| `instrumentation_change_detail#/properties/detail/required/operation_id` | 1 | 1 | 17 | 0 | 0 | yes |
+| `instrumentation_change_detail#/properties/detail/required/target_ref` | 1 | 1 | 17 | 0 | 0 | yes |
+| `instrumentation_change_detail#/properties/detail/required/previous_owner_ref` | 1 | 1 | 17 | 0 | 0 | yes |
+| `instrumentation_change_detail#/properties/detail/required/owner_ref` | 1 | 1 | 17 | 0 | 0 | yes |
+| `instrumentation_change_detail#/properties/detail/required/proof_ref` | 1 | 1 | 17 | 0 | 0 | yes |
+| `instrumentation_change_detail#/properties/detail/required/recovery_ref` | 1 | 1 | 17 | 0 | 0 | yes |
+| `instrumentation_change_detail#/properties/detail/required/linked_work_ref` | 1 | 1 | 17 | 0 | 0 | yes |
+| `instrumentation_change_detail#/properties/detail/required/remaining_obligation_refs` | 1 | 1 | 17 | 0 | 0 | yes |
+| `instrumentation_change_detail#/properties/detail/required/whole_lane_never_needed_undoing` | 1 | 1 | 17 | 0 | 0 | yes |
+| `instrumentation_change_detail#/properties/detail/required/no_leftovers` | 1 | 1 | 17 | 0 | 0 | yes |
+| `instrumentation_change_detail#/properties/detail/required/removal_verified` | 1 | 1 | 17 | 0 | 0 | yes |
+| `instrumentation_change_detail#/properties/detail/required/retry_authorized` | 1 | 1 | 17 | 0 | 0 | yes |
+| `instrumentation_change_detail#/properties/detail/required/previous_attempt_failed` | 1 | 1 | 17 | 0 | 0 | yes |
+| `instrumentation_change_detail#/properties/detail/required/handoff_approved` | 1 | 1 | 17 | 0 | 0 | yes |
+| `instrumentation_change_detail#/properties/detail/additionalProperties/$boolean` | 1 | 1 | 17 | 0 | 0 | yes |
 
 ### `instrumentation_detail_required_suite`: PASS, 15 of 15 rows proved (report SHA-256 `8f44d01a7982610303f5e2d0894a6120efe84fe1169fe0e1dee3e6e4496e035d`)
 
@@ -575,26 +539,17 @@ Totals: 513 rows, 513 proved, 517 controls, 746 negatives, 59541 evaluations.
 | `instrumentation_change_detail.values_b#/properties/detail/properties/invasive/type` | 5 | 5 | 25 | 0 | 0 | yes |
 | `instrumentation_change_detail.values_b#/properties/detail/properties/restore_receipt_verified/type` | 5 | 5 | 25 | 0 | 0 | yes |
 
-### `instrumentation_detail_values_c_suite`: PASS, 16 of 16 rows proved (report SHA-256 `6c23a55042044e2120b0f0911199305a409bad084494c5d7af0d636b7f0adcf9`)
+### `instrumentation_detail_values_c_suite`: PASS, 7 of 7 rows proved (report SHA-256 `5b9748259b2953f97367455c76c1146f5a3d65e1640b57a0784cb3005b66eeb4`)
 
 | Row | Own negatives | Flip when cut | Other cases unchanged | Masked | Unrelated changes | Proved |
 |---|---:|---:|---:|---:|---:|---|
-| `instrumentation_change_detail.values_c#/properties/detail/properties/permission_verified/type` | 5 | 5 | 15 | 0 | 0 | yes |
-| `instrumentation_change_detail.values_c#/properties/detail/properties/overlap_present/type` | 1 | 1 | 19 | 0 | 0 | yes |
-| `instrumentation_change_detail.values_c#/properties/detail/properties/target_leftovers_present/type` | 1 | 1 | 19 | 0 | 0 | yes |
-| `instrumentation_change_detail.values_c#/properties/detail/properties/target_leftovers_promoted/type` | 1 | 1 | 19 | 0 | 0 | yes |
-| `instrumentation_change_detail.values_c#/properties/detail/properties/retry_count_before/type` | 1 | 1 | 19 | 0 | 0 | yes |
-| `instrumentation_change_detail.values_c#/properties/detail/properties/retry_count_before/minimum` | 1 | 1 | 19 | 0 | 0 | yes |
-| `instrumentation_change_detail.values_c#/properties/detail/properties/retry_count_before/maximum` | 1 | 1 | 19 | 0 | 0 | yes |
-| `instrumentation_change_detail.values_c#/properties/detail/properties/retry_count_after/type` | 1 | 1 | 19 | 0 | 0 | yes |
-| `instrumentation_change_detail.values_c#/properties/detail/properties/retry_count_after/minimum` | 1 | 1 | 19 | 0 | 0 | yes |
-| `instrumentation_change_detail.values_c#/properties/detail/properties/retry_count_after/maximum` | 1 | 1 | 19 | 0 | 0 | yes |
-| `instrumentation_change_detail.values_c#/properties/detail/properties/attempt_number/type` | 1 | 1 | 19 | 0 | 0 | yes |
-| `instrumentation_change_detail.values_c#/properties/detail/properties/attempt_number/minimum` | 1 | 1 | 19 | 0 | 0 | yes |
-| `instrumentation_change_detail.values_c#/properties/detail/properties/attempt_number/maximum` | 1 | 1 | 19 | 0 | 0 | yes |
-| `instrumentation_change_detail.values_c#/properties/detail/properties/transition_kind/enum` | 1 | 1 | 19 | 0 | 0 | yes |
-| `instrumentation_change_detail.values_c#/properties/detail/properties/handoff_kind/enum` | 1 | 1 | 19 | 0 | 0 | yes |
-| `instrumentation_change_detail.values_c#/properties/detail/properties/handoff_committed/type` | 1 | 1 | 19 | 0 | 0 | yes |
+| `instrumentation_change_detail.values_c#/properties/detail/properties/permission_verified/type` | 5 | 5 | 6 | 0 | 0 | yes |
+| `instrumentation_change_detail.values_c#/properties/detail/properties/overlap_present/type` | 1 | 1 | 10 | 0 | 0 | yes |
+| `instrumentation_change_detail.values_c#/properties/detail/properties/target_leftovers_present/type` | 1 | 1 | 10 | 0 | 0 | yes |
+| `instrumentation_change_detail.values_c#/properties/detail/properties/target_leftovers_promoted/type` | 1 | 1 | 10 | 0 | 0 | yes |
+| `instrumentation_change_detail.values_c#/properties/detail/properties/transition_kind/enum` | 1 | 1 | 10 | 0 | 0 | yes |
+| `instrumentation_change_detail.values_c#/properties/detail/properties/handoff_kind/enum` | 1 | 1 | 10 | 0 | 0 | yes |
+| `instrumentation_change_detail.values_c#/properties/detail/properties/handoff_committed/type` | 1 | 1 | 10 | 0 | 0 | yes |
 
 ### `instrumentation_joins_suite`: PASS, 11 of 11 rows proved (report SHA-256 `fdc2a4cc53ea5be63d45b1869ec6fa6d8e0a9b7b742feb1cadab0dcd05fcf39b`)
 
@@ -664,20 +619,17 @@ Totals: 513 rows, 513 proved, 517 controls, 746 negatives, 59541 evaluations.
 | `instr.install_overlap` | 1 | 1 | 14 | 0 | 0 | yes |
 | `instr.install_target_leftovers` | 1 | 1 | 14 | 0 | 0 | yes |
 
-### `retry_request_suite`: PASS, 10 of 10 rows proved (report SHA-256 `c2be36be9abc24bae8c3e05eb90a490497136956beca6370c8e50f2440bd870d`)
+### `retry_request_suite`: PASS, 7 of 7 rows proved (report SHA-256 `78bb87c42aca1b010b6aba137d6cc5dd73ada5019c2ae901fef57f8436fcccda`)
 
 | Row | Own negatives | Flip when cut | Other cases unchanged | Masked | Unrelated changes | Proved |
 |---|---:|---:|---:|---:|---:|---|
-| `retry.authorization` | 1 | 1 | 9 | 0 | 0 | yes |
-| `retry.ceiling` | 1 | 1 | 9 | 0 | 0 | yes |
-| `cleanup_retry_request#/type` | 1 | 1 | 9 | 0 | 0 | yes |
-| `cleanup_retry_request#/required/retries_used` | 1 | 1 | 9 | 0 | 0 | yes |
-| `cleanup_retry_request#/required/authorized` | 1 | 1 | 9 | 0 | 0 | yes |
-| `cleanup_retry_request#/properties/retries_used/type` | 1 | 1 | 9 | 0 | 0 | yes |
-| `cleanup_retry_request#/properties/retries_used/minimum` | 1 | 1 | 9 | 0 | 0 | yes |
-| `cleanup_retry_request#/properties/retries_used/maximum` | 1 | 1 | 9 | 0 | 0 | yes |
-| `cleanup_retry_request#/properties/authorized/type` | 1 | 1 | 9 | 0 | 0 | yes |
-| `cleanup_retry_request#/additionalProperties/$boolean` | 1 | 1 | 9 | 0 | 0 | yes |
+| `retry.authorization` | 1 | 1 | 6 | 0 | 0 | yes |
+| `retry.ceiling` | 1 | 1 | 6 | 0 | 0 | yes |
+| `cleanup_retry_request#/type` | 1 | 1 | 6 | 0 | 0 | yes |
+| `cleanup_retry_request#/required/retries_used` | 1 | 1 | 6 | 0 | 0 | yes |
+| `cleanup_retry_request#/required/authorized` | 1 | 1 | 6 | 0 | 0 | yes |
+| `cleanup_retry_request#/properties/authorized/type` | 1 | 1 | 6 | 0 | 0 | yes |
+| `cleanup_retry_request#/additionalProperties/$boolean` | 1 | 1 | 6 | 0 | 0 | yes |
 
 ### `admission_suite`: PASS, 5 of 5 rows proved (report SHA-256 `33705f53fdbc2d6773b550e62e29689d306e20083a4b39fee202382d835c3aee`)
 
@@ -689,19 +641,25 @@ Totals: 513 rows, 513 proved, 517 controls, 746 negatives, 59541 evaluations.
 | `admission.registered` | 9 | 9 | 45 | 0 | 0 | yes |
 | `admission.retention` | 9 | 9 | 45 | 0 | 0 | yes |
 
-### `retained_suite`: PASS, 9 of 9 rows proved (report SHA-256 `e033281c7b72d37c5b9871c8196412b570aecc40cf01d852296ff1b3f34ae7f3`)
+### `retained_suite`: PASS, 15 of 15 rows proved (report SHA-256 `a996576070588fabd3ebcaf358324febd72f5a2d21f5475935267484a3320c00`)
 
 | Row | Own negatives | Flip when cut | Other cases unchanged | Masked | Unrelated changes | Proved |
 |---|---:|---:|---:|---:|---:|---|
-| `retained.withdrawn` | 9 | 9 | 72 | 0 | 0 | yes |
-| `retained.admission` | 9 | 9 | 72 | 0 | 0 | yes |
-| `retained.recipe` | 9 | 9 | 72 | 0 | 0 | yes |
-| `retained.family` | 9 | 9 | 72 | 0 | 0 | yes |
-| `retained.identity` | 9 | 9 | 72 | 0 | 0 | yes |
-| `retained.body` | 9 | 9 | 72 | 0 | 0 | yes |
-| `retained.sequence` | 9 | 9 | 72 | 0 | 0 | yes |
-| `retained.observed` | 9 | 9 | 72 | 0 | 0 | yes |
-| `retained.persisted` | 9 | 9 | 72 | 0 | 0 | yes |
+| `retained.withdrawn` | 9 | 9 | 127 | 0 | 0 | yes |
+| `retained.admission` | 9 | 9 | 127 | 0 | 0 | yes |
+| `retained.recipe` | 9 | 9 | 127 | 0 | 0 | yes |
+| `retained.family` | 9 | 9 | 127 | 0 | 0 | yes |
+| `retained.original_identity` | 9 | 9 | 127 | 0 | 0 | yes |
+| `retained.identity` | 9 | 9 | 127 | 0 | 0 | yes |
+| `retained.original_qualified` | 9 | 9 | 127 | 0 | 0 | yes |
+| `retained.body` | 9 | 9 | 127 | 0 | 0 | yes |
+| `retained.sequence` | 18 | 18 | 118 | 0 | 0 | yes |
+| `retained.observed` | 9 | 9 | 127 | 0 | 0 | yes |
+| `retained.persisted` | 9 | 9 | 127 | 0 | 0 | yes |
+| `retained.original_occurred` | 11 | 11 | 125 | 0 | 0 | yes |
+| `retained.original_observed` | 6 | 6 | 130 | 0 | 0 | yes |
+| `retained.original_persisted` | 6 | 6 | 130 | 0 | 0 | yes |
+| `retained.original_sequence` | 5 | 5 | 131 | 0 | 0 | yes |
 
 ### `references_suite`: PASS, 4 of 4 rows proved (report SHA-256 `3094c44a8b40480eef31edb1366f9cefc1db13c15f6389d788a250531d3046c3`)
 
@@ -711,3 +669,24 @@ Totals: 513 rows, 513 proved, 517 controls, 746 negatives, 59541 evaluations.
 | `references.base_known` | 1 | 1 | 4 | 0 | 0 | yes |
 | `references.target_exists` | 1 | 1 | 4 | 0 | 0 | yes |
 | `references.target_schema` | 1 | 1 | 4 | 0 | 0 | yes |
+
+### `shared_suite`: PASS, 16 of 16 rows proved (report SHA-256 `33dda72d13442a83ca9e3999ec252054c1a976a8b4ddc49917dab6379282c87d`)
+
+| Row | Own negatives | Flip when cut | Other cases unchanged | Masked | Unrelated changes | Proved |
+|---|---:|---:|---:|---:|---:|---|
+| `shared.occurred_at_utc` | 16 | 16 | 74 | 0 | 0 | yes |
+| `shared.observed_at_utc` | 7 | 7 | 83 | 0 | 0 | yes |
+| `shared.persisted_at_utc` | 7 | 7 | 83 | 0 | 0 | yes |
+| `shared.producer_sequence_id` | 4 | 4 | 86 | 0 | 0 | yes |
+| `shared.sequence_id` | 5 | 5 | 85 | 0 | 0 | yes |
+| `shared.item_count` | 4 | 4 | 86 | 0 | 0 | yes |
+| `shared.artifact_count` | 4 | 4 | 86 | 0 | 0 | yes |
+| `shared.binding_revision` | 4 | 4 | 86 | 0 | 0 | yes |
+| `shared.detail_retry_count_before` | 6 | 6 | 84 | 0 | 0 | yes |
+| `shared.detail_retry_count_after` | 6 | 6 | 84 | 0 | 0 | yes |
+| `shared.detail_attempt_number` | 6 | 6 | 84 | 0 | 0 | yes |
+| `shared.source_retry_count` | 6 | 6 | 84 | 0 | 0 | yes |
+| `shared.retries_used` | 6 | 6 | 84 | 0 | 0 | yes |
+| `shared.producer` | 7 | 7 | 83 | 0 | 0 | yes |
+| `shared.payload_size` | 1 | 1 | 89 | 0 | 0 | yes |
+| `shared.detail_size` | 1 | 1 | 89 | 0 | 0 | yes |
