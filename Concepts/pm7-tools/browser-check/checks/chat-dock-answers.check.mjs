@@ -18,7 +18,8 @@
 //             Once from the line lets it go on and the run says so; Always from the card opens the chooser in the card.
 //   looks     in all ten looks, at a 600 and a 400 px docked chat: every answer of every asking line (rest, and with the
 //             Always chooser open) and of the helper card's ladder is on top at its centre (native hit test), inside its
-//             line or card, at least 24 px tall, its words not clipped, and no asking line scrolls sideways. Each answer is
+//             line or card, at least 24 px tall, its words not clipped, the ladder one row (Deny beside the segmented
+//             control), and no asking line scrolls sideways. Each answer is
 //             first scrolled into the dock's view: past its height budget the dock scrolls in place (pmx-system.css).
 //             Reduced Motion alternates between reduce and no-preference by look.
 // Both surfaces (--set sandbox=0|1 picks one). On the page before FO-128 the process line has only Review: the process
@@ -193,6 +194,9 @@ async function looksCase(t, surface) {
 				const hit = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2);
 				if (!hit || (hit !== b && !b.contains(hit))) out.bad.push(`${name} covered by ${hit ? hit.tagName + '.' + String(hit.className).slice(0, 40) : 'nothing'}`);
 			});
+			// the compact ladder is one row: Deny and the segmented control share their line (Jared: "the more compact format")
+			const deny = box.querySelector('[data-action="perm-answer"][data-value="deny"]'), once = box.querySelector('[data-action="perm-answer"][data-value="once"]');
+			if (deny && once && !box.querySelector('.pmx-ask-always') && Math.abs(deny.getBoundingClientRect().top - once.getBoundingClientRect().top) > 1) out.bad.push(`${box.dataset.k || box.className.split(' ')[0]} ladder wraps: Deny at ${Math.round(deny.getBoundingClientRect().top)}, Once at ${Math.round(once.getBoundingClientRect().top)}`);
 		});
 		return out;
 	}, sel);
