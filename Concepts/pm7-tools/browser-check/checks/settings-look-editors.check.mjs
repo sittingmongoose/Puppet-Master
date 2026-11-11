@@ -12,7 +12,8 @@
 //   pairing, contrast, import, font, cursor, background, effects, CRT, bezel, dimming, smooth scrolling, bell) is under
 //   "Terminal look". About 43 of them sat under "Terminal".
 // B-13: Adjust NieR's preview tile draws the World's layers: installing or removing Particles, Sweep line or Ground
-//   changes the tile's painted pixels (Ground did; Particles and Sweep line drew nothing).
+//   changes the tile's painted pixels (Ground did; Particles and Sweep line drew nothing). Every capture is a still one
+//   (two in a row agree), so the app's own Scan sweep crossing the tile is never read as a change.
 // B-16: Customize Pip keeps its picture in view: scrolled to the end of the sheet, a Preview dock with the team shows
 //   inside the sheet's box; under the pointer it steps aside and lets the pointer reach what it floats over; back at the
 //   top it is gone (the stage scrolled away with nothing in its place).
@@ -50,6 +51,20 @@ async function settingsLook(t, f, look) {
 }
 /* the painted pixels of one element that differ by more than 24 levels between two captures */
 const shot = async (loc) => decodePng(await loc.screenshot());
+/* a still capture of an element: captures until two in a row agree (8 px or fewer differ), so something crossing it for a
+   moment is waited out, not measured: NieR's Scan sweep (kit.d/19-nier-parts.js, #o55np-sweep) is a band above the whole
+   window that crosses it for 2.6 s every 12 s, and caught over B-13's tile it read as 1,372 to 2,173 px of "noise" on the
+   batch 11 landing's Mac and Nas1 runs. Returns { png, still, tries } */
+const stillShot = async (loc, { gap = 150, tries = 40 } = {}) => {
+	let prev = await shot(loc);
+	for (let i = 0; i < tries; i++) {
+		await new Promise((r) => setTimeout(r, gap));
+		const next = await shot(loc);
+		if (differ(prev, next) <= 8) return { png: next, still: true, tries: i + 1 };
+		prev = next;
+	}
+	return { png: prev, still: false, tries };
+};
 const differ = (a, b) => { if (a.width !== b.width || a.height !== b.height) return Infinity; let n = 0; for (let i = 0; i < a.data.length; i += 4) if (Math.abs(a.data[i] - b.data[i]) + Math.abs(a.data[i + 1] - b.data[i + 1]) + Math.abs(a.data[i + 2] - b.data[i + 2]) > 24) n++; return n; };
 const pipSheet = async (t, f) => {
 	await go(t, f, 'general', 'app-input');
@@ -194,14 +209,15 @@ for (const surface of ['normal', 'sandbox']) {
 		await pv.waitFor({ state: 'visible', timeout: 8000 });
 		await pv.scrollIntoViewIfNeeded();
 		await t.page.waitForTimeout(800);
-		const a0 = await shot(pv), a1 = await shot(pv), noise = differ(a0, a1);
+		const s0 = await stillShot(pv), s1 = await stillShot(pv), noise = differ(s0.png, s1.png);
+		await t.check('the tile comes to rest (two captures in a row agree)', s0.still && s1.still, `${s0.tries} and ${s1.tries} tries`);
 		for (const [key, name] of [['particles', 'Particles'], ['sweep', 'Sweep line'], ['ground', 'Ground']]) {
 			const chip = f.locator(`.o55nc-chip[data-o55nc-key="${key}"]`).first();
 			if (!(await t.check(`${name}: its chip is in the editor`, (await chip.count()) > 0))) continue;
-			const before = await shot(pv);
+			const before = (await stillShot(pv)).png;
 			await chip.click();
 			await t.page.waitForTimeout(500);
-			const after = await shot(pv);
+			const after = (await stillShot(pv)).png;
 			const n = differ(before, after);
 			await t.check(`${name}: installing or removing it changes the preview`, n >= 40 + noise, `${n} pixels changed (noise ${noise})`);
 			// the tile draws it itself (the app's own World layer can show through a NieR sheet, which is not the preview)
