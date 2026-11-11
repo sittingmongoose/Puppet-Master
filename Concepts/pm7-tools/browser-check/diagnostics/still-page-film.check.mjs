@@ -1,6 +1,6 @@
 // Film of the still page for the owner (PERF-3, Jared's choice B, 2026-11-11): Home in one look, about 32 s. The pointer
 // rests where it hovers nothing; 20 s with no input (the real wait, no test hook), the endless loops hold where they
-// are; a pointer move, they carry on from there. Marks: 'rest' (the last input), 'still' (data-pm-still fully on, read
+// are; a pointer move, they carry on from there. Marks: 'rest' (the last input), 'still' (data-pm-still on, read
 // in the page), 'move' (the waking move), 'running' (every loop running again). Each mark is checked in the page too, so
 // a film whose page never went still, or did not wake, fails instead of showing nothing.
 //   browser-check run Concepts/pm7-tools/browser-check/diagnostics/still-page-film.check.mjs --set page=<build> \
@@ -18,11 +18,12 @@ export default async function (t) {
 	await t.mark('rest');
 	const running = () => document.getAnimations().filter((a) => { try { return a.effect.getTiming().iterations === Infinity && a.playState === 'running'; } catch (e) { return false; } }).length;
 	const r0 = await f.evaluate(running);
-	await f.waitForFunction(() => (document.documentElement.getAttribute('data-pm-still') || '').split(' ').filter(Boolean).length === 4, null, { timeout: 26000, polling: 50 }).catch(() => {});
+	await f.waitForFunction(() => document.documentElement.hasAttribute('data-pm-still'), null, { timeout: 26000, polling: 50 }).catch(() => {});
 	await t.mark('still');
-	const s = await f.evaluate(() => ({ still: !!(window.PM_STILL && PM_STILL.still()), since: window.PM_STILL ? Math.round(PM_STILL.since()) : -1 }));
+	await t.page.waitForTimeout(200);
+	const s = await f.evaluate(() => ({ still: !!(window.PM_STILL && PM_STILL.still()), since: window.PM_STILL ? Math.round(PM_STILL.since()) - 200 : -1, held: window.PM_STILL && PM_STILL.held ? PM_STILL.held() : 0 }));
 	const r1 = await f.evaluate(running);
-	await t.check('the page went still about 20 s after the last input, every loop held', s.still && s.since >= 19500 && s.since <= 22000 && r1 === 0, `still ${s.still} ${s.since} ms after the input; endless running ${r0} -> ${r1}`);
+	await t.check('the page went still about 20 s after the last input, every loop held', s.still && s.since >= 19500 && s.since <= 22000 && r1 === 0, `still ${s.still} ${s.since} ms after the input, ${s.held} elements held; endless running ${r0} -> ${r1}`);
 	await t.page.waitForTimeout(4000);
 	await t.page.mouse.move(Math.round(W * 0.7), Math.round(H * 0.6), { steps: 12 });
 	await t.mark('move');
