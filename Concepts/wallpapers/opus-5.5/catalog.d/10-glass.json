@@ -85,6 +85,26 @@
     "light": "../../liquid-glass/opus-5.5/src/walls/facets-light.webp"
    },
    "default_for": null
+  },
+  {
+   "id": "atrium",
+   "name": "Atrium",
+   "description": "Tall curved glass sheets around a central spire, with ribbons of light sweeping across a mirror floor.",
+   "files": {
+    "dark": "src/walls/atrium-dark.webp",
+    "light": "src/walls/atrium-light.webp"
+   },
+   "default_for": null
+  },
+  {
+   "id": "panes",
+   "name": "Panes",
+   "description": "Frosted rounded panes and small glass beads floating along a curved wall above a glossy floor.",
+   "files": {
+    "dark": "src/walls/panes-dark.webp",
+    "light": "src/walls/panes-light.webp"
+   },
+   "default_for": null
   }
  ]
 }
