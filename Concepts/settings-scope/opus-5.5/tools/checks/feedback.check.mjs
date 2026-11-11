@@ -18,11 +18,20 @@ const fileUrl = (p) => (/^[a-z][a-z0-9+.-]+:/i.test(p) ? p : pathToFileURL(path.
 const HELPERS = () => {
 	window.__psxScrollTo = (el, block) => {
 		if (!el) return false;
-		let sc = el.parentElement;
-		while (sc && sc !== document.body) { const cs = getComputedStyle(sc); if (/(auto|scroll)/.test(cs.overflowY) && sc.scrollHeight > sc.clientHeight + 1) break; sc = sc.parentElement; }
-		if (!sc || sc === document.body) return false;
-		const sr = sc.getBoundingClientRect(), er = el.getBoundingClientRect();
-		sc.scrollTop += block === 'start' ? er.top - sr.top - 8 : er.top - sr.top - (sr.height - er.height) / 2;
+		/* every scrolling ancestor, inner to outer: a row can sit in a scroller inside another (General's rows do), and
+		   only scrolling each one brings it on screen */
+		const chain = [];
+		for (let sc = el.parentElement; sc && sc !== document.body && sc !== document.documentElement; sc = sc.parentElement) { const cs = getComputedStyle(sc); if (/(auto|scroll)/.test(cs.overflowY) && sc.scrollHeight > sc.clientHeight + 1) chain.push(sc); }
+		if (!chain.length) return false;
+		for (const sc of chain) {
+			const sr = sc.getBoundingClientRect(), er = el.getBoundingClientRect();
+			const top = Math.max(sr.top, 0), h = Math.min(sr.bottom, innerHeight) - top;
+			/* review A-r3 R3-3: the Settings scroller has scroll-behavior: smooth, so a scroll set here keeps moving for up
+			   to a second; a toggle measured inside that would read the probe's own scroll as the toggle's. Jump instead */
+			const was = sc.style.scrollBehavior; sc.style.scrollBehavior = 'auto';
+			sc.scrollTop += block === 'start' ? er.top - top - 8 : er.top - top - (h - er.height) / 2;
+			sc.style.scrollBehavior = was;
+		}
 		return true;
 	};
 };
@@ -115,10 +124,14 @@ const ROWS = () => {
    and how many end buttons on screen show the base page's round "?" instead of their word; and what the browser itself
    reports as layout shifts inside Settings. Each sample is read just after a frame is painted (a task queued from
    requestAnimationFrame), so it sees what was on screen, not a state another frame callback fixed before the paint */
-const TOGGLE = async (sel) => {
+const TOGGLE = async (a) => {
+	const [sel, o] = Array.isArray(a) ? a : [a, null];
 	const tg = document.querySelector(sel); if (!tg) return { missing: sel };
-	window.__psxScrollTo(tg, 'center');
-	await new Promise((r) => setTimeout(r, 600));
+	/* Settings sections from the third on are content-visibility: auto (the base page's), so a section out of view keeps
+	   an estimated height until it is drawn and one jump can land anywhere: jump again until the switch is on screen */
+	const frame = () => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+	for (let i = 0; i < 8; i++) { window.__psxScrollTo(tg, 'center'); await frame(); await new Promise((r) => setTimeout(r, 80)); const b = tg.getBoundingClientRect(); if (b.top >= 60 && b.bottom <= innerHeight - 60) break; }
+	await new Promise((r) => setTimeout(r, (o && o.pre) || 600));
 	const row = tg.closest('.setting-row'), lab = row.querySelector('.setting-label');
 	const end = [...row.querySelectorAll('.o55-about')].find((x) => x.closest('.setting-row') === row);
 	const next = row.nextElementSibling || row.closest('section').nextElementSibling;
@@ -136,8 +149,9 @@ const TOGGLE = async (sel) => {
 	requestAnimationFrame(() => ch.port2.postMessage(0));
 	await new Promise((r) => setTimeout(r, 200));
 	const clickAt = Math.round(performance.now() - t0);
+	const tr = tg.getBoundingClientRect(), onScreen = tr.top >= 0 && tr.bottom <= innerHeight && tr.height > 0;
 	tg.click();
-	await new Promise((r) => setTimeout(r, 1600));
+	await new Promise((r) => setTimeout(r, (o && o.post) || 1600));
 	go = false; po.disconnect();
 	// the frames while the row the click landed in is still the page's own: a whole-page redraw replaces it, and what
 	// follows is a new page, judged separately (rerender)
@@ -147,7 +161,45 @@ const TOGGLE = async (sel) => {
 	const rerender = after.findIndex((x) => !x.conn), live = rerender < 0 ? after : after.slice(0, rerender);
 	const moved = (k, i) => live.some((s) => JSON.stringify(s[k] && (i == null ? s[k] : s[k][i])) !== JSON.stringify(live[0][k] && (i == null ? live[0][k] : live[0][k][i])));
 	const chs = live.map((x) => x.ch); const flips = chs.filter((v, i) => i && v !== chs[i - 1]).length;
-	return { id: row.id, clickAt, frames: samples.length, liveFrames: live.length, rerenderAt: rerender < 0 ? null : after[rerender].t, rowYs: live.map((x) => [x.t, x.row && x.row[1]]).filter((x, i, a) => !i || x[1] !== a[i - 1][1]), toggleX: moved('tg', 0), endX: moved('end', 0), endW: moved('end', 2), rowY: moved('row', 1), rowH: moved('row', 3), nextY: moved('next', 1), bar: moved('bar'), changedFlips: flips, maxChanged: Math.max(...chs), bareEnds: Math.max(...live.map((x) => x.q)), shifts };
+	return { onScreen, id: row.id, label: ((lab && lab.firstChild && lab.firstChild.textContent) || (lab || {}).textContent || '').trim().slice(0, 60), clickAt, frames: samples.length, liveFrames: live.length, rerenderAt: rerender < 0 ? null : after[rerender].t, rowYs: live.map((x) => [x.t, x.row && x.row[1]]).filter((x, i, a) => !i || x[1] !== a[i - 1][1]), toggleX: moved('tg', 0), endX: moved('end', 0), endW: moved('end', 2), rowY: moved('row', 1), rowH: moved('row', 3), nextY: moved('next', 1), bar: moved('bar'), changedFlips: flips, maxChanged: Math.max(...chs), bareEnds: Math.max(...live.map((x) => x.q)), shifts };
+};
+
+/* review A-r3: the pages whose switches the shake part turns, and every visible switch on one of them */
+const SHAKE_PAGES = [['Models', 'ai', 'providers', 'models'], ['General', 'general', 'app-input', null], ['Notifications', 'general', 'notifications', null]];
+const SWITCHES = async ([, d, w, tab]) => {
+	const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+	if (window.PM_PAGES && window.PM_PAGES.current !== 'settings') { window.PM_PAGES.go('settings'); await wait(1500); }
+	window.PM12_KIMI.navigate(d, w); await wait(700);
+	if (tab) { window.PM12_KIMI.dispatchAction('pm51-tab', { manager: 'providers', tab }); await wait(900); }
+	return [...document.querySelectorAll('#pm-settings-root .setting-row')].filter((r) => r.id && r.getClientRects().length && r.getBoundingClientRect().width > 100 && r.querySelector('.toggle')).map((r) => r.id);
+};
+/* switches whose job is to change the page: what each may move, and why. Everything else moves nothing but itself.
+   Tokens: switch (its x), end (end words), row (its height), below (rows under it), header. The clicked row's own
+   place on screen is never allowed to move */
+const SHAKE_ALLOW = {
+	'general.visual.reduce-animations': [['below'], 'it shows or hides Animation speed under it; bare PMConcept7 moves the rows below by the same amount'],
+	'general.interaction.activity-bar-labels': [['switch', 'end', 'row', 'below', 'header'], 'names beside the activity-bar icons narrow the whole Settings page, so every row reflows; bare PMConcept7 moves the page too'],
+	'general.interaction.scope-labels': [['switch', 'end', 'row', 'below'], 'it writes where each setting comes from into every row’s end word, so the end column and the rows change'],
+	'general.interaction.eli5-default': [['row', 'below'], 'Explain technical terms rewrites the descriptions on purpose']
+};
+const shakeBad = (r, allow) => {
+	if (r.missing) return ['not found'];
+	if (r.onScreen === false) return ['the switch was not on screen when it was clicked (the probe could not scroll to it)'];
+	const may = (allow && allow[0]) || [];
+	const bad = [];
+	if (r.toggleX && !may.includes('switch')) bad.push('the switch moved');
+	if ((r.endX || r.endW) && !may.includes('end')) bad.push('the end word moved or changed width');
+	if (r.bareEnds && !may.includes('end')) bad.push('a row showed “?” instead of its word');
+	// a switch that reflows the page has its clicked row held in place; scroll positions are whole pixels at this zoom, so
+	// a reflow by half a pixel can leave it half a pixel off. Only for those switches, and never more than that
+	const dev = (r.rowYs || []).reduce((m, x) => Math.max(m, Math.abs(x[1] - r.rowYs[0][1])), 0);
+	if (r.rowY && !(allow && dev <= 0.5)) bad.push(`the row moved on screen (by up to ${dev}px)`);
+	if (r.rowH && !may.includes('row')) bad.push(`the row changed height`);
+	if (r.nextY && !may.includes('below') && !may.includes('row')) bad.push('the next row moved');
+	if (r.bar && !may.includes('header')) bad.push('the header moved');
+	if (r.changedFlips > 1 || r.maxChanged > 1) bad.push('Changed flickered or showed twice');
+	if (r.shifts.length && !may.length) bad.push(`layout shifts: ${r.shifts.slice(0, 4).join(', ')}`);
+	return bad;
 };
 
 /* the header: its box and the page under it, in one view */
@@ -239,7 +291,55 @@ export default async function (t) {
 		}
 		await t.check('no row ever shows Changed twice', () => run(t, () => [...document.querySelectorAll('#pm-settings-root .setting-label')].every((l) => l.querySelectorAll('.o55-changed:not(.o55-needed)').length <= 1)));
 
+		/* review A-r3 R3-2, R3-3 and tool note T2: every switch on Models and on General (App & Input, Notifications &
+		   Sounds), turned on and back off, in Basic Dark, Retro Light and NieR Dark, at 1920, 1024 and 860. Nothing may
+		   move but the switch: not its row's height, not the rows below, not the end word, not the header. A switch whose
+		   job is to change the page is listed in SHAKE_ALLOW with what it may move and why; a row the base page redraws
+		   is judged until the redraw, and the redraw is checked on bare PMConcept7 below */
+		const redrawn = new Set();
+		for (const lk of looks(t)) {
+			await reset(t); await run(t, HELPERS);
+			await look(t, lk);
+			for (const [wname, w] of String(t.args.shakeWidths || '1920,1024,860').split(',').map((x) => [x, +x])) {
+				await t.viewport(w, w >= 1920 ? 1080 : 900); await settle(t, 400);
+				const seen = new Set();
+				for (const pg of SHAKE_PAGES) {
+					const ids = (await run(t, SWITCHES, pg)).filter((id) => !seen.has(id));
+					ids.forEach((id) => seen.add(id));
+					for (const id of ids) {
+						for (const dir of ['on', 'off']) {
+							const r = await run(t, TOGGLE, [`[id="${id}"] .toggle`, { pre: 400, post: 1300 }]);
+							const allow = SHAKE_ALLOW[id.replace(/^setting-/, '')];
+							if (r.rerenderAt != null) redrawn.add(id);
+							const bad = shakeBad(r, allow);
+							await t.check(`${lk} · ${wname} · ${pg[0]} · ${r.label || id} ${dir}: nothing moves but the switch${allow ? ` (${allow[1]})` : ''}${r.rerenderAt != null ? `, until the base page redraws the section at ${r.rerenderAt} ms` : ''}`, !r.missing && !bad.length, (bad.join('; ') || '') + ' ' + JSON.stringify(r).slice(0, 600));
+						}
+					}
+				}
+				await run(t, () => window.PSX.hideNote());
+			}
+		}
 		await t.viewport(1920, 1080);
+		// the rows the base page redraws when switched: the same click redraws them on bare PMConcept7 too (stream F's)
+		if (redrawn.size) {
+			const bareUrl = fileUrl(t.args.bare || new URL('../../../../PMConcept7.html', import.meta.url).pathname);
+			await t.goto(`${bareUrl}${bareUrl.includes('?') ? '&' : '?'}o55=off&cb=${Date.now()}`);
+			await t.until('bare PMConcept7 is ready', () => document.documentElement.getAttribute('data-pmr-ready') === '1' && !!window.PM12_KIMI, null, { timeout: 60000 });
+			await run(t, HELPERS); await settle(t, 1200);
+			for (const pg of SHAKE_PAGES) {
+				const ids = (await run(t, SWITCHES, pg)).filter((id) => redrawn.has(id));
+				for (const id of ids) {
+					const b = await run(t, TOGGLE, `[id="${id}"] .toggle`);
+					await run(t, TOGGLE, `[id="${id}"] .toggle`);
+					await t.check(`${b.label || id}: the section redraw after its switch happens on bare PMConcept7 too (at ${b.rerenderAt} ms): the base page’s own, handed to stream F`, !b.missing && b.rerenderAt != null, JSON.stringify(b).slice(0, 400));
+					redrawn.delete(id);
+				}
+			}
+			await t.check('every row the layer saw redrawn was found on bare PMConcept7', redrawn.size === 0, [...redrawn].join(', '));
+			await t.app.open();
+			await t.until('the layer is booted again', () => !!(window.PSX && window.PSX.booted && window.PSX.lastReport), null, { timeout: 60000, hard: true });
+			await run(t, HELPERS); await settle(t, 800);
+		}
 	});
 
 	/* ------------------------------------------------------------------ #4 on Services: an account's own switch */
@@ -512,93 +612,190 @@ export default async function (t) {
 		await run(t, () => window.PSX.closeSheets());
 	});
 
-	/* ------------------------------------------------------------------ guided flows 8.03-8.04: Always allow */
+	/* ------------------------------------------------------------------ guided flows 8.03-8.04: Always allow
+	   Round A-r3: 11.18 was rebuilt from one rule model (README "Always allow: the rule model"). This part keeps its own
+	   copy of that model's tables and walks every step × every answer it offers × Regular and YOLO × the same run, a new
+	   run and a switch of Run mode, asserting the state of every step each time. The r1-r2 cases that encoded the old
+	   behaviour (one-off session and YOLO probes) are gone; the table walk covers them */
+	const AM = {
+		// A and B: each step's kind, and what each kind offers; whether YOLO still asks
+		steps: [['test', 'command'], ['release', 'command'], ['push', 'remote'], ['publish', 'remote'], ['outside', 'path'], ['test2', 'command'], ['delete', 'remote-delete']],
+		offers: { command: ['once', 'session', 'always', 'no'], path: ['once', 'session', 'always', 'no'], remote: ['once', 'session', 'no'], 'remote-delete': ['once', 'no'] },
+		yoloAsks: { command: false, path: true, remote: false, 'remote-delete': true },
+		// C: the state an answer leaves on its own step
+		own: { once: 'once', session: 'session', always: 'always', no: 'no' },
+		// the same request as another step (For this session covers it later in the run)
+		same: { test: 'test2', test2: 'test' },
+		// D: the rule Always allow makes with the middle suggestion, and every step that rule covers (by kind and match)
+		rule: { test: ['npm test *', ['test', 'test2']], test2: ['npm test *', ['test', 'test2']], release: ['./scripts/release.sh *', ['release']], outside: ['~/Documents/taxes/**', ['outside']] }
+	};
+	const order = AM.steps.map((x) => x[0]), kindOf = Object.fromEntries(AM.steps);
+	/* what every step should read: `answered` is [step, answer] in the run being looked at, or null in a later run */
+	const expect = (mode, answered, rule) => Object.fromEntries(order.map((y, i) => {
+		const k = kindOf[y];
+		if (mode === 'yolo' && !AM.yoloAsks[k]) return [y, 'mode'];
+		if (answered && answered[0] === y) return [y, AM.own[answered[1]]];
+		const after = answered ? i > order.indexOf(answered[0]) : true;
+		if (rule && rule[1].includes(y) && after) return [y, 'rule'];
+		if (answered && answered[1] === 'session' && AM.same[answered[0]] === y && after) return [y, 'session'];
+		return [y, 'asks'];
+	}));
+	/* what a person sees on each row: the step by its name, its status word, or the answers it offers. The page's own
+	   data-state is only a cross-check, so the walk judges any build by what it shows */
+	const STATES = () => {
+		const s = document.querySelector('.psx-back:not([data-leaving]) .psx-sheet'); if (!s) return null;
+		const NAMES = { 'Run npm test': 'test', 'Run the release script': 'release', 'Push to GitHub': 'push', 'Publish the image': 'publish', 'Read a folder outside loom': 'outside', 'Run npm test again, after the fix': 'test2', 'Delete a branch on GitHub': 'delete' };
+		const WORDS = { 'Allowed once': 'once', 'Allowed for this session': 'session', 'Allowed, rule kept': 'always', 'Not allowed': 'no', 'Ran, not asked': 'mode', 'Allowed by your rule': 'rule' };
+		const out = { undef: /undefined/.test(s.innerText), steps: {} };
+		s.querySelectorAll('.psx-ask > li').forEach((li) => {
+			const id = NAMES[((li.querySelector('.psx-li-name') || {}).textContent || '').trim()]; if (!id) return;
+			const offers = [...li.querySelectorAll('[data-ask]')].map((b) => b.dataset.a);
+			const word = ((li.querySelector('.psx-li-end') || {}).innerText || '').trim();
+			const state = offers.length ? 'asks' : WORDS[word] || `“${word}”`;
+			out.steps[id] = { state, hook: li.dataset.state || null, offers, sub: (li.querySelector('.psx-li-sub') || {}).textContent || '' };
+		});
+		return out;
+	};
+	/* compare one look at the sheet with the table: every step's state, the answers an asking step offers, the words
+	   that go with its state, and no "undefined" anywhere */
+	const same = (got, want, mode) => {
+		const bad = [];
+		if (!got) return ['the sheet is gone'];
+		if (got.undef) bad.push('a row reads “undefined”');
+		for (const y of order) {
+			const g = got.steps[y] || {}, w = want[y], k = kindOf[y];
+			if (g.state !== w) { bad.push(`${y}: ${g.state} (table: ${w})`); continue; }
+			if (g.hook && g.hook !== w) bad.push(`${y}: shows ${w} but its data-state says ${g.hook}`);
+			if (w === 'asks' && g.offers.join(',') !== AM.offers[k].join(',')) bad.push(`${y} offers ${g.offers.join(',')} (table: ${AM.offers[k].join(',')})`);
+			if (w !== 'asks' && g.offers.length) bad.push(`${y} still shows answers`);
+			if (w === 'asks' && mode === 'yolo' && !/YOLO still asks:/.test(g.sub)) bad.push(`${y} asks in YOLO without saying YOLO still asks`);
+			if (w === 'rule' && !/Your (command|folder) rule .+ allowed it\./.test(g.sub)) bad.push(`${y}: no line naming the rule`);
+			if (w === 'session' && !/(For the rest of this run in (Regular|YOLO); a new run or another run mode asks again\. No rule is kept\.|allowed for this session earlier in this run, so it didn’t ask again\.)/.test(g.sub)) bad.push(`${y}: no session line`);
+			if (w === 'no' && !/nothing is kept, so the next request asks again/.test(g.sub)) bad.push(`${y}: no refusal line`);
+		}
+		return bad;
+	};
 	if (want(t, 'always')) await t.step('guided flows 8.03-8.04: Always allow chooses the pattern and the place', async () => {
 		await reset(t);
-		await run(t, async () => { await window.PSX.command({ cmd: 'runmode', mode: 'regular' }); await window.PSX.command({ cmd: 'moment', id: '11.18' }); });
-		await settle(t, 800);
 		const sh = '.psx-sheet';
+		const open = async (mode) => { await run(t, async (m) => { window.PSX.closeSheets(); await new Promise((r) => setTimeout(r, 220)); await window.PSX.command({ cmd: 'runmode', mode: m }); await window.PSX.command({ cmd: 'moment', id: '11.18' }); }, mode); await t.root.waitForFunction(() => document.querySelectorAll('.psx-back').length === 1 && !!document.querySelector('.psx-back:not([data-leaving]) .psx-sheet li[data-step]'), null, { timeout: 8000 }).catch(() => {}); await settle(t, 250); };
+		const states = () => run(t, STATES);
 		const ed = async (id) => run(t, (i) => {
-			const e = document.querySelector(`${'.psx-sheet'} [data-always="${i}"]`); if (!e) return null;
-			return { pat: [...e.querySelectorAll('[data-pat]')].map((r) => r.checked), where: [...e.querySelectorAll('[data-where]')].map((r) => r.value + ':' + r.checked), save: e.querySelector('[data-always-save]').getAttribute('aria-disabled'), note: !!e.querySelector('[data-k="noeverywhere"]'), preview: (e.querySelector('[data-k="preview"]') || {}).textContent || '' };
+			const e = document.querySelector(`.psx-sheet [data-always="${i}"]`); if (!e) return null;
+			return { pat: [...e.querySelectorAll('[data-pat]')].map((r) => r.checked), where: [...e.querySelectorAll('[data-where]')].map((r) => r.value + ':' + r.checked), save: e.querySelector('[data-always-save]').getAttribute('aria-disabled'), note: !!e.querySelector('[data-k="noeverywhere"]'), covers: (e.querySelector('[data-k="covers"]') || {}).textContent || '', preview: (e.querySelector('[data-k="preview"]') || {}).textContent || '' };
 		}, id);
+		const makeRule = async (id, pat, where) => {
+			await t.root.locator(`${sh} [data-ask="${id}"][data-a="always"]`).click(); await settle(t, 200);
+			if (typeof pat === 'number') await t.root.locator(`${sh} [data-always="${id}"] [data-pat="${pat}"]`).check();
+			else { await t.root.locator(`${sh} [data-always="${id}"] [data-pat="own"]`).check(); await settle(t, 150); await t.root.locator(`${sh} [data-always="${id}"] [data-pat-own]`).fill(pat); }
+			await settle(t, 200);
+			await t.root.locator(`${sh} [data-always="${id}"] [data-where="${where}"]`).check(); await settle(t, 150);
+			await t.root.locator(`${sh} [data-always-save="${id}"]`).click(); await settle(t, 250);
+		};
+		const again = async () => { await t.root.locator(`${sh} .psx-sheet-foot button`, { hasText: 'Run it again' }).first().click().catch(async () => { await run(t, () => window.PSX.approvals.draw()); }); await settle(t, 250); };
+		const mode = async (m) => { await run(t, async (x) => { await window.PSX.command({ cmd: 'runmode', mode: x }); }, m); await settle(t, 300); };
+
+		/* the editor (8.03, 8.04), as before */
+		await open('regular');
 		await t.root.locator(`${sh} [data-ask="test"][data-a="always"]`).click(); await settle(t, 300);
 		let e = await ed('test');
 		await t.check('8.03: Always allow opens the pattern and the place, nothing chosen', !!e && e.pat.every((x) => !x) && e.where.every((x) => /:false$/.test(x)) && e.save === 'true', JSON.stringify(e));
 		await t.check('8.04: npm test is not about one computer, so Everywhere is offered', e.where.some((x) => /^everywhere/.test(x)) && !e.note, JSON.stringify(e));
+		await t.check('D: the editor says a command rule covers commands only, never a path, a push, a publish or a deletion', /covers only the commands it matches: never a path outside the project, a push, a publish or a deletion on the remote/.test(e.covers), e.covers);
 		await t.root.locator(`${sh} [data-always="test"] [data-pat="1"]`).check(); await settle(t, 250);
 		e = await ed('test');
-		await t.check('8.03: the chosen pattern shows what it matches and what still asks', /Matches:.*npm test -- --watch/.test(e.preview) && /Still asks:.*npm run build/.test(e.preview), e.preview);
+		await t.check('8.03: the chosen pattern shows what it matches and what still asks', /Matches:.*npm test -- --watch/.test(e.preview) && /Still asks:.*npm run build/.test(e.preview) && !/broad/.test(e.preview), e.preview);
 		await t.root.locator(`${sh} [data-always="test"] [data-where="project"]`).check(); await settle(t, 250);
 		await pic(t, 'always-editor', 'Always allow for npm test: the pattern npm test * and In this project chosen by hand, with what it matches', '.psx-sheet');
-		await t.root.locator(`${sh} [data-always-save="test"]`).click(); await settle(t, 300);
-		await t.check('the rule is written with the chosen pattern and place', () => run(t, () => { const st = window.PSX.approvals.st; return st.rules.length === 1 && st.rules[0].pattern === 'npm test *' && st.rules[0].where === 'Always in loom'; }));
-		// a later run: the rule allows every npm test it matches, without asking
-		await run(t, () => window.PSX.approvals.draw()); await settle(t, 300);
-		await t.check('a later run: your Always rule allows both npm test steps without asking', () => run(t, () => { const tx = document.querySelector('.psx-sheet').innerText; return /Run npm test\n[\s\S]*?Allowed by your rule/.test(tx) && /Run npm test again, after the fix[\s\S]*?Allowed by your rule/.test(tx); }));
+		await t.root.locator(`${sh} [data-always-cancel="test"]`).click(); await settle(t, 200);
 		for (const id of ['release', 'outside']) {
 			await t.root.locator(`${sh} [data-ask="${id}"][data-a="always"]`).click(); await settle(t, 300);
+			if (id === 'release') { await t.root.locator(`${sh} [data-always="release"] [data-pat="1"]`).check(); await settle(t, 250); }
 			e = await ed(id);
-			await t.check(`8.04: ${id === 'release' ? 'a script by its path' : 'a folder'} never offers Everywhere, and says why`, !!e && !e.where.some((x) => /^everywhere/.test(x)) && e.note, JSON.stringify(e));
-			if (id === 'release') await pic(t, 'always-host', 'Always allow for ./scripts/release.sh: Everywhere is not offered, with the reason', '.psx-sheet');
+			await t.check(`8.04: ${id === 'release' ? 'a script by its path' : 'a folder rule'} never offers Everywhere, and says why`, !!e && !e.where.some((x) => /^everywhere/.test(x)) && e.note, JSON.stringify(e));
+			if (id === 'release') {
+				await t.check('R3-4: the release step’s own ./scripts/release.sh * is not broad', /Matches:.*release\.sh v1\.5\.0/.test(e.preview) && !/broad/.test(e.preview), e.preview);
+				await pic(t, 'always-host', 'Always allow for ./scripts/release.sh *: not broad, and Everywhere is not offered, with the reason', '.psx-sheet');
+			} else await t.check('D: the editor says a folder rule goes on the outside-folder list and never covers a command', /outside-folder list.*never a command/.test(e.covers), e.covers);
 			await t.root.locator(`${sh} [data-always-cancel="${id}"]`).click(); await settle(t, 200);
 		}
-		// review A-r1 finding 6: your own pattern on the release step keeps Everywhere hidden, and a bare * is broad
 		await t.root.locator(`${sh} [data-ask="release"][data-a="always"]`).click(); await settle(t, 300);
 		await t.root.locator(`${sh} [data-always="release"] [data-pat="own"]`).check(); await settle(t, 250);
 		await t.root.locator(`${sh} [data-always="release"] [data-pat-own]`).fill('*'); await settle(t, 300);
 		e = await ed('release');
-		await t.check('8.04: your own pattern * on the release step still never offers Everywhere, and says why', !!e && !e.where.some((x) => /^everywhere/.test(x)) && e.note, JSON.stringify(e));
-		await t.check('8.03: * is flagged as broad', /This one is broad/.test(e.preview), e.preview);
+		await t.check('8.04: your own pattern * on the release step never offers Everywhere, and says why; * reads broad', !!e && !e.where.some((x) => /^everywhere/.test(x)) && e.note && /This one is broad/.test(e.preview), JSON.stringify(e));
 		await pic(t, 'always-own-star', 'Always allow for the release script with your own pattern *: Everywhere stays hidden and * is flagged broad', '.psx-sheet');
 		await t.root.locator(`${sh} [data-always-cancel="release"]`).click(); await settle(t, 200);
+		// F (broad) and E (host-dependent), on the page's own functions with its own steps
 		const units = await run(t, () => {
-			const A = window.PSX.approvals, test = { cmd: 'npm test', path: false, patterns: [['npm test'], ['npm test *'], ['npm *']] }, rel = { cmd: './scripts/release.sh v1.4.0', path: true };
-			return { progLoc: A.hostDependent('/usr/local/bin/npm test', test), npmNot: !A.hostDependent('npm test *', test), relStar: A.hostDependent('*', rel),
-				star: A.isBroad('*', test), bash: A.isBroad('bash -c *', test), py: A.isBroad('python3 *', test), node: A.isBroad('node *', test), npmStar: A.isBroad('npm *', test), narrow: !A.isBroad('npm test *', test),
-				// review A-r2 N3: any command followed only by *
-				rm: A.isBroad('rm -rf *', test), sudo: A.isBroad('sudo *', test), npx: A.isBroad('npx *', test), git: A.isBroad('git *', test), read: A.isBroad('read *', test), narrow2: !A.isBroad('git push origin *', test),
-				readHost: A.hostDependent('read *', test), rmHost: A.hostDependent('rm -rf *', test), gitNotHost: !A.hostDependent('git *', test) };
+			const A = window.PSX.approvals;
+			if (!A || !A.ASKS) return { broad: ['the page has no rule model (PSX.approvals.ASKS)'], narrow: [], host: [], notHost: [] };
+			const S = Object.fromEntries(A.ASKS.map((x) => [x.id, x])), b = (p, s) => A.isBroad(p, S[s]), h = (p, s) => A.hostDependent(p, S[s]);
+			return {
+				broad: ['*', 'bash -c *', 'python3 *', 'node *', 'npm *', 'npx *', 'git *', 'rm -rf *', 'read *', 'sudo *', 'sudo apt install *'].filter((p) => !b(p, 'test')).concat(['./scripts/*', '*'].filter((p) => !b(p, 'release'))).concat(['~/Documents/**', '~/**', '*'].filter((p) => !b(p, 'outside'))),
+				narrow: ['npm test *', 'git push origin *', 'python3 tools/build.py *', 'npm test'].filter((p) => b(p, 'test')).concat(['./scripts/release.sh *'].filter((p) => b(p, 'release'))).concat(['~/Documents/taxes', '~/Documents/taxes/**'].filter((p) => b(p, 'outside'))),
+				host: [['./scripts/release.sh *', 'release'], ['*', 'release'], ['*', 'test'], ['read *', 'test'], ['rm -rf *', 'test'], ['/usr/local/bin/npm test', 'test'], ['~/Documents/taxes/**', 'outside']].filter(([p, s]) => !h(p, s)).map((x) => x.join(' on ')),
+				notHost: [['npm test *', 'test'], ['git *', 'test'], ['git push origin *', 'test']].filter(([p, s]) => h(p, s)).map((x) => x.join(' on '))
+			};
 		});
-		await t.check('8.04: host-dependence comes from the step’s target and from the pattern (a program’s location yes, npm test * no, * on the release step yes)', units.progLoc && units.npmNot && units.relStar, JSON.stringify(units));
-		await t.check('8.03: broad = a bare *, a shell or an interpreter followed by *, or the broad suggestion; npm test * is not', units.star && units.bash && units.py && units.node && units.npmStar && units.narrow, JSON.stringify(units));
-		await t.check('8.03: any command followed only by * is broad (rm -rf *, sudo *, npx *, git *, read *); git push origin * is not', units.rm && units.sudo && units.npx && units.git && units.read && units.narrow2, JSON.stringify(units));
-		await t.check('8.04: a rule about files (read *, rm -rf *) is host-dependent, so it never offers Everywhere; git * is not', units.readHost && units.rmHost && units.gitNotHost, JSON.stringify(units));
-		/* Permissions_System 6.1 (deny, once, for session, always), PS-113 and §2 Rules 3 (a session answer is keyed to
-		   the run and the run mode), §3.3 (a path outside the project still asks in YOLO). A fresh moment, no rules */
-		await run(t, async () => { window.PSX.closeSheets(); await window.PSX.command({ cmd: 'runmode', mode: 'regular' }); await window.PSX.command({ cmd: 'moment', id: '11.18' }); }); await settle(t, 800);
-		// on the page: your own rm -rf * on the npm test step reads broad and hides Everywhere
-		const trig = t.root.locator(`${sh} [data-ask="test2"][data-a="always"]`);
-		if (await trig.count()) {
-			await trig.click(); await settle(t, 300);
-			await t.root.locator(`${sh} [data-always="test2"] [data-pat="own"]`).check(); await settle(t, 250);
-			await t.root.locator(`${sh} [data-always="test2"] [data-pat-own]`).fill('rm -rf *'); await settle(t, 300);
-			const rr = await ed('test2');
-			await t.check('your own rm -rf * reads broad and offers no Everywhere', !!rr && /This one is broad/.test(rr.preview) && !rr.where.some((x) => /^everywhere/.test(x)) && rr.note, JSON.stringify(rr));
-			await t.root.locator(`${sh} [data-always-cancel="test2"]`).click(); await settle(t, 200);
-		} else await t.check('the npm test repeat offers Always allow', false, 'no Always allow… on test2');
-		await t.root.locator(`${sh} [data-ask="test"][data-a="session"]`).click(); await settle(t, 300);
-		const s1 = await run(t, () => { const tx = document.querySelector('.psx-sheet').innerText, st = window.PSX.approvals.st; return { test: /Run npm test\n[\s\S]*?Allowed for this session/.test(tx), again: /Run npm test again, after the fix[\s\S]*?earlier in this run, so it didn’t ask again\.[\s\S]*?Allowed for this session/.test(tx), words: /For the rest of this run in Regular; a new run or another run mode asks again\. No rule is kept\./.test(tx), doubled: /Allowed\. Allowed/.test(tx), rules: st.rules.length }; });
-		await t.check('For this session covers the same request later in this run, and makes no rule', s1.test && s1.again && s1.words && s1.rules === 0, JSON.stringify(s1));
-		await t.check('the session line doesn’t repeat itself (no “Allowed. Allowed”)', !s1.doubled, JSON.stringify(s1));
-		await t.root.locator(`${sh} [data-ask="outside"][data-a="session"]`).click(); await settle(t, 300);
-		await t.check('the outside folder can be allowed for this session in Regular, with its own report line', () => run(t, () => /Read a folder outside loom[\s\S]*?Read ~\/Documents\/taxes: 3 files\.[\s\S]*?Allowed for this session/.test(document.querySelector('.psx-sheet').innerText)));
-		// a switch of Run mode is a new run: the session answers end, and YOLO still asks for the outside folder
-		await run(t, async () => { await window.PSX.command({ cmd: 'runmode', mode: 'yolo' }); }); await settle(t, 500);
-		const s2 = await run(t, () => { const tx = document.querySelector('.psx-sheet').innerText, st = window.PSX.approvals.st; return { yoloAsks: /Read a folder outside loom[\s\S]*?YOLO still asks: A path outside the project/.test(tx) && !!document.querySelector('.psx-sheet [data-ask="outside"][data-a="once"]'), sessionGone: st.session.length === 0, noCarry: !/Allowed for this session/.test(tx) }; });
-		await t.check('after a switch to YOLO the outside folder asks again (PS-113, §3.3) and no session answer carries over', s2.yoloAsks && s2.sessionGone && s2.noCarry, JSON.stringify(s2));
-		await run(t, async () => { await window.PSX.command({ cmd: 'runmode', mode: 'regular' }); }); await settle(t, 500);
-		const s3 = await run(t, () => ({ outside: !!document.querySelector('.psx-sheet [data-ask="outside"][data-a="once"]'), test: !!document.querySelector('.psx-sheet [data-ask="test"][data-a="once"]'), again: !!document.querySelector('.psx-sheet [data-ask="test2"][data-a="once"]') }));
-		await t.check('back in Regular it is a new run: npm test, its repeat and the outside folder ask again', s3.outside && s3.test && s3.again, JSON.stringify(s3));
-		await t.root.locator(`${sh} [data-ask="test"][data-a="once"]`).click(); await settle(t, 300);
-		await t.check('Allow once covers only that step: the repeat still asks', () => run(t, () => !!document.querySelector('.psx-sheet [data-ask="test2"][data-a="once"]')));
-		await run(t, () => window.PSX.approvals.draw()); await settle(t, 300);
-		await t.check('Run it again is a new run: nothing is allowed from the last one', () => run(t, () => !!document.querySelector('.psx-sheet [data-ask="test"][data-a="once"]') && !!document.querySelector('.psx-sheet [data-ask="outside"][data-a="once"]')));
-		await t.check('a deletion on the remote is answered one at a time (no For this session)', () => run(t, () => !document.querySelector('.psx-sheet [data-ask="delete"][data-a="session"]') && !!document.querySelector('.psx-sheet [data-ask="delete"][data-a="once"]')));
-		// YOLO: ordinary push and publish run without asking, and no Always rule is made
-		await run(t, async () => { await window.PSX.command({ cmd: 'runmode', mode: 'yolo' }); }); await settle(t, 500);
-		const y = await run(t, () => { const s = document.querySelector('.psx-sheet'); const tx = s ? s.innerText : ''; return { push: /Push to GitHub[\s\S]*Ran, not asked/.test(tx), publish: /Publish the image[\s\S]*Ran, not asked/.test(tx), rules: window.PSX.approvals.st.rules.length, none: /None made/.test(tx) }; });
-		await t.check('8.05-8.06: YOLO pushes and publishes without asking and makes no Always rule', y.push && y.publish && y.rules === 0, JSON.stringify(y));
+		await t.check('F: broad = a wildcard program, sudo with *, a shell or interpreter running *, or one program word then *; a folder rule reaching past its folder', !units.broad.length, 'not flagged: ' + units.broad.join(' | '));
+		await t.check('F: a named script or subcommand then * is not broad (./scripts/release.sh *, npm test *, git push origin *), nor a folder rule inside its folder', !units.narrow.length, 'flagged: ' + units.narrow.join(' | '));
+		await t.check('E: host-dependent = a step about a script or path, a pattern naming one, a file command or a wildcard program; never Everywhere', !units.host.length && !units.notHost.length, JSON.stringify(units));
+
+		/* the table walk: every step × every answer it offers × Regular and YOLO × the same run, a new run and a switch */
+		for (const m of ['regular', 'yolo']) {
+			await open(m);
+			const fresh = await states();
+			const bad = same(fresh, expect(m, null, null), m);
+			await t.check(`B: a fresh run in ${m === 'yolo' ? 'YOLO' : 'Regular'}: every step asks or runs as the table says, offering its kind’s answers`, !bad.length, bad.join(' | ') || JSON.stringify(Object.fromEntries(Object.entries(fresh.steps).map(([k, v]) => [k, v.state]))));
+		}
+		let walked = 0;
+		for (const m of ['regular', 'yolo']) {
+			const other = m === 'yolo' ? 'regular' : 'yolo', M = m === 'yolo' ? 'YOLO' : 'Regular';
+			for (const [y, k] of AM.steps) {
+				if (m === 'yolo' && !AM.yoloAsks[k]) continue;
+				for (const x of AM.offers[k]) {
+					await open(m);
+					const rule = x === 'always' ? AM.rule[y] : null;
+					if (x === 'always') await makeRule(y, 1, 'project');
+					else { await t.root.locator(`${sh} [data-ask="${y}"][data-a="${x}"]`).click(); await settle(t, 250); }
+					const s1 = same(await states(), expect(m, [y, x], rule), m);
+					await again();
+					const s2 = same(await states(), expect(m, null, rule), m);
+					await mode(other);
+					const s3 = same(await states(), expect(other, null, rule), other);
+					await t.check(`C/D: ${y} answered ${x} in ${M}: this run, Run it again, and a switch to ${other === 'yolo' ? 'YOLO' : 'Regular'} each match the table`, !s1.length && !s2.length && !s3.length, ['same run: ' + (s1.join('; ') || 'ok'), 'new run: ' + (s2.join('; ') || 'ok'), 'switch: ' + (s3.join('; ') || 'ok')].join(' | '));
+					walked++;
+				}
+			}
+		}
+		await t.check('the walk covered all 30 step × answer × run-mode cases', walked === 30, String(walked));
+
+		/* R3-1: a rule wider than its step never reaches past its kind (D). Own patterns, then a new run and YOLO */
+		const WIDE = [
+			['test', '*', 'project', ['test', 'release', 'test2'], 'a bare * made on npm test covers the commands only: never the push, the publish, the outside folder or the deletion'],
+			['release', 'git push origin *', 'project', [], 'git push origin * (R3-1’s case) covers no step: the push and the deletion aren’t commands, so the deletion still asks in Regular and in YOLO'],
+			['outside', '*', 'computer', ['outside'], 'a folder rule * covers the outside folder only, never a command']
+		];
+		for (const [y, pat, where, cov, why] of WIDE) {
+			await open('regular');
+			await makeRule(y, pat, where);
+			await again();
+			const r1 = same(await states(), expect('regular', null, [pat, cov]), 'regular');
+			await mode('yolo');
+			const r2 = same(await states(), expect('yolo', null, [pat, cov]), 'yolo');
+			if (pat === 'git push origin *') await pic(t, 'always-r3-1-yolo', 'R3-1: after the rule git push origin *, a new run in YOLO: the deletion on the remote still asks', '.psx-sheet');
+			await t.check(`D (R3-1): ${why}`, !r1.length && !r2.length, ['Regular: ' + (r1.join('; ') || 'ok'), 'YOLO: ' + (r2.join('; ') || 'ok')].join(' | '));
+		}
+		// the session picture (Regular): For this session on npm test covers its repeat; the outside folder for this session
+		await open('regular');
+		await t.root.locator(`${sh} [data-ask="test"][data-a="session"]`).click(); await settle(t, 250);
+		await t.root.locator(`${sh} [data-ask="outside"][data-a="session"]`).click(); await settle(t, 250);
+		await pic(t, 'always-session-regular', '11.18 in Regular: For this session on npm test covers its repeat; the outside folder allowed for this session', '.psx-sheet');
+		await mode('yolo');
+		await pic(t, 'always-after-yolo', '11.18 after a switch to YOLO: a new run, so the outside folder asks again and the deletion still asks', '.psx-sheet');
+		const y = await run(t, () => ({ rules: window.PSX.approvals.st.rules.length, none: /None made/.test(document.querySelector('.psx-sheet').innerText) }));
+		await t.check('8.05-8.06: YOLO makes no Always rule of its own', y.rules === 0 && y.none, JSON.stringify(y));
 		await run(t, async () => { await window.PSX.command({ cmd: 'runmode', mode: 'regular' }); window.PSX.closeSheets(); });
 	});
 
@@ -622,6 +819,10 @@ export default async function (t) {
 		await t.until('Moments › 11.18 shows its caption', () => /11\.18 What asks you/.test((document.getElementById('note') || {}).textContent || ''), null, { timeout: 10000 });
 		const sheet = frame ? await frame.waitForFunction(() => { const s = document.querySelector('.psx-sheet'); return !!s && /What asks you/.test(s.textContent); }, null, { timeout: 15000 }).then(() => true).catch(() => false) : false;
 		await t.check('Moments › 11.18 opens its sheet in the frame', sheet);
+		// review A-r3 R3-6: the next moment's caption shows at once and stays; the last one never comes back
+		await t.page.selectOption('#moment', '11.4');
+		const caps = await t.page.evaluate(async () => { const out = []; const t0 = performance.now(); while (performance.now() - t0 < 3000) { out.push(((document.getElementById('note') || {}).textContent || '').slice(0, 40)); await new Promise((r) => setTimeout(r, 100)); } return out; });
+		await t.check('R3-6: after 11.18, Moments › 11.4 shows its own caption at once and for the next 3s (sampled every 100ms)', caps.length > 10 && caps.every((c) => /^11\.4 /.test(c)), [...new Set(caps)].join(' | '));
 		await t.page.click('#compareopts'); await settle(t, 300);
 		await t.check('Compare options opens its row', () => t.page.evaluate(() => !document.getElementById('comparebar').hidden));
 		await t.page.selectOption('#width', '860');

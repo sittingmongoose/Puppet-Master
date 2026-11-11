@@ -42,6 +42,15 @@
       // a look paints on its own schedule (Glass mounts its lenses, NieR plays its switch-on): wait until it shows
       const painted = () => { const t = H.getAttribute('data-theme') || ''; return nier ? (/^nier/.test(t) || nierOn()) && t.endsWith('-' + mode) : t === id && !(W.PM_NIER && W.PM_NIER.on && W.PM_NIER.on()); };
       for (let i = 0; i < 40 && !painted(); i++) await wait(100);
+      // review A-r3 R3-5: a look that hasn't landed by then is asked for once more (under load the first clicks can be
+      // lost); whatever is on screen afterwards is what look-done and the look watcher below report to the strip
+      if (!painted()) {
+        if (!nier && nierOn() && !nierFamily) await flipNier();
+        await pick(`#themeMenu .pm6-tt-family[data-family="${fam}"]`);
+        await pick(`#themeMenu .pm6-tt-mode[data-mode-value="${mode}"]`);
+        if (nier && !nierOn() && !nierFamily) await flipNier();
+        for (let i = 0; i < 40 && !painted(); i++) await wait(100);
+      }
       // close the menu with its own button: a synthetic Escape would also close a sheet that is open in Settings
       await wait(120);
       if (tb.getAttribute('aria-expanded') === 'true') { tb.click(); await wait(140); }
@@ -63,6 +72,11 @@
     PSX.rows && PSX.rows.refreshAll();
   }
   PSX.setLook = setLook;
+  /* the strip's Look always shows the look that is on screen: any change of the painted look (the base page's own
+     repaint, a look that landed late or never) is reported a moment later, and the strip takes it while its Look isn't
+     waiting for a change of its own (review A-r3 R3-5) */
+  let lookSeen = look(), lookTimer = 0;
+  new MutationObserver(() => { clearTimeout(lookTimer); lookTimer = setTimeout(() => { const now = look(); if (now !== lookSeen) { lookSeen = now; report('state'); } }, 300); }).observe(H, { attributes: true, attributeFilter: ['data-theme', 'data-o55-nier'] });
 
   /* ------------------------------------------------------------------ review commands */
   function setOpt(patch) {
