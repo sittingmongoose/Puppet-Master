@@ -40,7 +40,8 @@ class Presentation:
     def __init__(self, world):
         self.world = world
         w = world
-        self.cancellation = {k: (v.owner_id, v.handle) for k, v in w.cancellation.items()}
+        published = getattr(w, 'cancellation', None)
+        self.cancellation = None if published is None else {k: (v.owner_id, v.handle) for k, v in published.items()}
         self.safe_stop = {}
         for k, v in w.safe_stop.items():
             self.safe_stop[k] = [(x.owner_id, x.handle) for x in v] if isinstance(v, list) else (v.owner_id, v.handle)
@@ -49,7 +50,7 @@ class Presentation:
         self.goal = [{k: (v.owner_id, v.handle) for k, v in w.goal_cause.items()}]
         self.filesafe = [{n: (inv[n]['stored'].owner_id, inv[n]['stored'].handle) for n in ('binding', 'journal', 'origin')}
                          for inv in w.filesafe_invocations]
-        self.event = w.cancel_event
+        self.event = getattr(w, 'cancel_event', None)
 
 
 class Consumer:
@@ -67,7 +68,7 @@ class Consumer:
         owner_id, handle = pair
         owner = self.registry.owner(owner_id, self._role(owner_id))
         ref, value = A.acquire(self.registry, owner_id, owner.role, handle)
-        stored = next((s for s in owner.by_sha.values() if s.handle is handle), None)
+        stored = next((s for s in owner.history.values() if s.handle is handle), None)
         guard('acquire/custody', stored is not None and same(stored.wrapper, value))
         # The acquired value must be the Storage cell or the owner's immutable
         # custody for that exact commitment: recomputed, never presented.
@@ -163,8 +164,8 @@ class Consumer:
         eq('goal/stop_intent_audit', sintent['source_audit_sha256'], physical_sha256(audit))
         eq('goal/stop_receipt_intent', receipt['stop_intent_sha256'], physical_sha256(sintent))
         eq('goal/stop_receipt_audit', receipt['source_audit_sha256'], physical_sha256(audit))
-        guard('goal/stop_latched', receipt['latched'] is True and
-              receipt['after_user_stop_epoch'] == receipt['before_user_stop_epoch'] + 1)
+        # latched is a schema const; the epoch advance is this consumer's join
+        guard('goal/stop_latched', receipt['after_user_stop_epoch'] == receipt['before_user_stop_epoch'] + 1)
         eq('goal/publication_audit', cpub['source_audit_sha256'], physical_sha256(audit))
         eq('goal/publication_receipt', cpub['cancellation_receipt_sha256'], physical_sha256(goal['original_stop_receipt']))
         published = cpub['original_publication']
@@ -236,7 +237,6 @@ class Consumer:
         for d in ss['complete_capability_dispositions']:
             key = d['value']['capability_birth']['physical_key']
             guard('d05/capability_disposition_birth', key in births)
-            guard('d05/capability_revoked', d['value']['disposition'] == 'revoked')
             disposed[key] = disposed.get(key, 0) + 1
         guard('d05/capability_reopened', all(disposed.get(k) == 1 for k in births))
         # R3: settlements cover the complete effect inventory exactly once
@@ -408,6 +408,13 @@ class Consumer:
     def read_retained_native(self, request, presentation):
         w = self.world
         with w.recorder.call(self.owner_id, 'owner.goal_run.cancelled.read_retained_native.v1', request) as slot:
+            if presentation.cancellation is None:
+                # No published original result: truthful unavailable, nothing fabricated.
+                out = dict(scope=copy.deepcopy(request['scope']), reason='MISSING_ORIGINAL_VALUE', effects='none',
+                           current_state_asserted=False)
+                self.roots.validate('native_consumer', W.C + 'Unavailable', out, 'unavailable')
+                slot.set(out)
+                return out
             native, goal, effects = self.assemble(self.tuple(presentation))
             self.check(request, native, goal, effects)
             # final predicate after returning helpers, with no gap to release

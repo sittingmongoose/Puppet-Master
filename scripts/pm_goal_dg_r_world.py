@@ -70,6 +70,8 @@ WA = 'https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema
 PS = 'https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/'
 STC = 'https://puppetmaster.local/proposals/goal_run_started_consumer.v1.schema.json#/$defs/'
 SEED_TIME = '2026-11-05T09:00:00Z'
+GC = 'https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/'
+GB = 'https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/'
 SUBMISSION = 'file:///home/sittingmongoose/PM-Experiments/workflow-cancel-disposition-source-20260913/v3/producer-submission.schema.json'
 
 
@@ -403,6 +405,7 @@ class PhysOwner(A.TestOwner):
         super().__init__(world.registry, owner_id='TEST_ONLY:owner:%s:%s' % (role, uuid.uuid4()))
         self.world = world
         self.by_sha = {}
+        self.history = {}
         self.current = {}
 
     def key(self, family, *parts):
@@ -443,6 +446,7 @@ class PhysOwner(A.TestOwner):
             handle = self._issue(root, wrapper, kind=family)
             stored = Stored(family, key, wrapper, tx['tx_id'], self.owner_id, handle, root, realm, w.sid)
             self.by_sha[stored.sha256] = stored
+            self.history[(family, key, stored.sha256)] = stored
             self.current[(family, key)] = (stored, version)
             w.issued[(family, key, stored.sha256)] = stored
             slot.set(dict(family=family, sha256=stored.sha256, tx_id=tx['tx_id']))
@@ -454,8 +458,8 @@ class PhysOwner(A.TestOwner):
 
     def retained(self, family, key, sha):
         """Immutable custody lookup by exact commitment (never by caller value)."""
-        stored = self.by_sha.get(sha)
-        if stored is None or stored.family != family or stored.key != key:
+        stored = self.history.get((family, key, sha))
+        if stored is None:
             return None
         self._ref(stored.handle)
         return stored
@@ -561,6 +565,13 @@ class World:
     def knob(self, name):
         return self.knobs.get(name)
 
+    def kval(self, name, default):
+        """A value knob: a world-aware callable, a literal, or the default."""
+        value = self.knobs.get(name)
+        if value is None:
+            return default
+        return value(self) if callable(value) else value
+
     def close(self):
         shutil.rmtree(self.tmp, ignore_errors=True)
 
@@ -645,13 +656,16 @@ class World:
             value = cell['value']
             inner = value.get('value', value.get('record', {}))
             guard('select/origin_operation', inner.get('operation_id') == ref['operation_id'])
-        elif cell is not None and physical_sha256(cell['value']) == commitment:
-            value = cell['value']
         else:
             stored = self.issued.get((ref['family_id'], ref['physical_key'], commitment))
             guard('select/commitment', stored is not None)
             owner = next(o for o in self.registry._owners.values() if o.owner_id == stored.owner_id)
             guard('select/custody', owner.retained(stored.family, stored.key, commitment) is stored)
+            # The Storage cell must be exactly the owner's latest issuance at
+            # that key; a historical version resolves only through custody.
+            latest = owner.current.get((stored.family, stored.key))
+            guard('select/cell_substituted', cell is not None and latest is not None and
+                  physical_sha256(cell['value']) == latest[0].sha256)
             value = stored.wrapper
         guard('select/schema', value.get('schema_id') == ref['schema_id'] and
               value.get('schema_version') == ref['schema_version'])
@@ -764,13 +778,34 @@ class CancelWorld(World):
                                           mutable=True)
         candidate = w.start.issue_physical('workflow_start_candidate', 'native_consumer', WS + 'StorageCandidate',
                                            w.start.key('workflow_start_candidate', op), [])
-        commit = w.start.issue_physical('workflow_start_commit', 'native_consumer', WS + 'StorageCommit',
-                                        w.start.key('workflow_start_commit', op), [])
-        s_origin = w.start.issue_physical('workflow_start_origin', 'native_consumer', WS + 'StorageOrigin',
-                                          w.start.key('workflow_start_origin', op), [])
         w.body1 = w.native.body(2, 'running', 'active')
         w.control1 = w.native.control(2, w.body1)
-        update = w._d01_update(op, 'original_workflow_start', 'owner_status', (w.body0, w.control0), (w.body1, w.control1),
+        # The original Start publishes goal_run.started v3 through Storage as a
+        # first barrier; the commit records Storage's own first receipt.
+        started = w._started_event(op)
+        events, _, _ = w.append.append_original('TEST_ONLY:append:' + op, dict(op=op, kind='start'), [started],
+                                                durability_class='barrier')
+        start_custody = w.append.first_receipt(events[0])
+        w.started_event = events[0]
+        w.start_custody = start_custody
+        commit = w.start.issue_physical('workflow_start_commit', 'native_consumer', WS + 'StorageCommit',
+                                        w.start.key('workflow_start_commit', op),
+                                        [('/record/operation_id', op), ('/record/candidate', candidate.selector()),
+                                         ('/record/before_body', w.body0.selector()),
+                                         ('/record/before_control', w.control0.selector()),
+                                         ('/record/after_body', w.body1.selector()),
+                                         ('/record/after_control', w.control1.selector()),
+                                         ('/record/event_id', start_custody['event_id']),
+                                         ('/record/event_type', 'goal_run.started'),
+                                         ('/record/event_value_commitment',
+                                          copy.deepcopy(start_custody['original_event_value_commitment'])),
+                                         ('/record/first_append_receipt',
+                                          copy.deepcopy(start_custody['first_append_receipt']))],
+                                        knob=w.knob('start_commit'))
+        s_origin = w.start.issue_physical('workflow_start_origin', 'native_consumer', WS + 'StorageOrigin',
+                                          w.start.key('workflow_start_origin', op), [])
+        after = (w.body0, w.control0) if w.knob('start_after_birth') else (w.body1, w.control1)
+        update = w._d01_update(op, 'original_workflow_start', 'owner_status', (w.body0, w.control0), after,
                                commit, s_origin.selector(), None, 'owner.workflow.start.commit.v2', 1)
         head = w._d01_head(1, update, None, w.body1, origin0)
         d01_origin = w._d01_origin('owner.executor.workflow_source.update_workflow.v3', 'TEST_ONLY:op:d01:' + op[-12:],
@@ -811,7 +846,9 @@ class CancelWorld(World):
             'executor_workflow_mutation_origin', 'native_consumer', WO + 'StorageWorkflowMutationOrigin',
             w.d01.key('executor_workflow_mutation_origin', w.ops['birth']),
             [('/record/method', 'owner.executor.workflow_source.enroll_workflow_birth.v3'),
-             ('/record/operation_id', w.ops['birth']), ('/record/afterimages/workflow_birth', birth.selector()),
+             ('/record/operation_id', w.ops['birth']),
+             ('/record/afterimages/workflow_birth', (w._other_birth(origin0) if w.knob('no_start_birth_origin_other')
+                                                     else birth).selector()),
              ('/record/afterimages/workflow_head', head.selector())],
             choices={'/record/afterimages': 0}, knob=w.knob('no_start_birth_origin'))
         w.body1, w.control1 = w.body0, w.control0
@@ -895,6 +932,34 @@ class CancelWorld(World):
         """Prefer a non-null alternative wherever a member admits null or a value."""
         return _NonNull()
 
+    def _started_event(self, op):
+        """goal_run.started v3 envelope: whole TypedOriginalEvent filler, owner-set identity."""
+        w = self
+        event = w.seeder.seed('native_consumer', WS + 'TypedOriginalEvent')
+        w.bind(event)
+        occurred = w.clock.now()
+        NR.event_time(occurred, 'start/occurred_at_utc')
+        for k in list(event):
+            if k in ('observed_at_utc', 'persisted_at_utc', 'sequence_id'):
+                del event[k]
+        event.update(schema_id='pm.event.v0', schema_version='2.0.0', scope_kind='project', event_id=str(uuid.uuid4()),
+                     event_type='goal_run.started', project_id=w.scope['project_id'], occurred_at_utc=occurred,
+                     idempotency_key='TEST_ONLY:goal_run.started:' + op, payload_ref=None,
+                     redaction_profile='no_secrets', replay_policy='dedupe_by_idempotency_key',
+                     correlation_id='TEST_ONLY:correlation:' + op)
+        payload = event['payload']
+        for k, v in (('goal_run_id', w.scope['goal_run_id']), ('goal_id', w.scope['goal_id']),
+                     ('project_id', w.scope['project_id'])):
+            if k in payload:
+                payload[k] = v
+            if isinstance(payload.get('payload'), dict) and k in payload['payload']:
+                payload['payload'][k] = v
+        if 'idempotency_key' in payload:
+            payload['idempotency_key'] = event['idempotency_key']
+        if 'occurred_at_utc' in payload:
+            payload['occurred_at_utc'] = occurred
+        return event
+
     def _goal_event(self, op):
         w = self
         occurred = w.clock.now()
@@ -942,10 +1007,10 @@ class CancelWorld(World):
         stop = sc.issue_physical('executor_workflow_scheduler_stop', 'native_consumer', WO + 'StorageSchedulerStop',
                                  sc.key('executor_workflow_scheduler_stop', op_stop),
                                  [('/record/operation_id', op_stop), ('/record/inventory_cut', inventory.selector()),
-                                  ('/record/goal_stop', w.knob('scheduler_goal_stop') or goal_stop),
+                                  ('/record/goal_stop', w.kval('scheduler_goal_stop', goal_stop)),
                                   ('/record/native_cancel_result', result.selector()),
                                   ('/record/native_cancel_origin', origin.selector()),
-                                  ('/record/run_control_after', run_control.selector())],
+                                  ('/record/run_control_after', w.kval('scheduler_run_control', run_control.selector()))],
                                  knob=w.knob('scheduler_stop'))
         d01_stop_origin = w.d01.issue_physical('executor_workflow_mutation_origin_v2', 'native_consumer',
                                                WO + 'StorageMutationOrigin',
@@ -1028,7 +1093,7 @@ class CancelWorld(World):
         w = self
         aggregate_op = 'TEST_ONLY:op:d05-aggregate:' + uuid.uuid4().hex[:12]
         flush_op = 'TEST_ONLY:op:d05-flush:' + uuid.uuid4().hex[:12]
-        w.ops.update(d05_aggregate=w.knob('d05_aggregate_op') or aggregate_op, d05_flush=flush_op)
+        w.ops.update(d05_aggregate=w.kval('d05_aggregate_op', aggregate_op), d05_flush=flush_op)
         aggregate_op = w.ops['d05_aggregate']
         sched, cause = w.sched, w.goal_cause
         origins = []
@@ -1068,8 +1133,10 @@ class CancelWorld(World):
                                   [('/value/domain_birth', domain_birth.d05()), ('/value/aggregate_operation_id', aggregate_op),
                                    ('/value/operation_id', flush_op if i == len(statuses) - 1 else flush_op + ':%d' % i),
                                    ('/value/obligation', obligation.d05()), ('/value/status', status),
+                                   ('/value/failure_stage', None if status == 'original_required_flush_durable'
+                                    else 'segment_sync'),
                                    ('/value/origin', origin_ref(flush_origin))],
-                                  choices=_FlushChoice(status), knob=w.knob('final_flush')))
+                                  knob=w.knob('final_flush')))
         cut = w._d05('DomainCutPhysical', 'final-cut', [('/value/domain_birth', domain_birth.d05()),
                                                          ('/value/original_stop', cause['original_stop_receipt'].selector()),
                                                          ('/value/scheduler_stop', sched['scheduler_stop'].selector()),
@@ -1083,7 +1150,7 @@ class CancelWorld(World):
         settlements = w._settlements()
         aggregate = w._d05('AggregateResultPhysical', 'aggregate',
                            [('/value/operation_id', aggregate_op),
-                            ('/value/goal_stop', w.knob('d05_goal_stop') or cause['original_stop_receipt'].selector()),
+                            ('/value/goal_stop', w.kval('d05_goal_stop', cause['original_stop_receipt'].selector())),
                             ('/value/scheduler_stop', sched['scheduler_stop'].selector()),
                             ('/value/inventory_cut', sched['inventory'].selector()),
                             ('/value/domain_birth', domain_birth.d05()), ('/value/final_domain_cut', cut.d05()),
@@ -1116,8 +1183,10 @@ class CancelWorld(World):
             out.append(dict(invocation=inv['invocation'], kind='filesafe_original_resolution',
                             original_result=inv['origin']['selector'], original_origin=inv['origin']['selector']))
         for inv in w.process_invocations:
+            result = w.process_effects['termination_results'][0] if w.knob('settlement_process_termination') \
+                else inv['result']
             out.append(dict(invocation=inv['invocation'], kind='process_original_shutdown',
-                            original_result=inv['result'].d05(), original_origin=inv['origin'].d05()))
+                            original_result=result.d05(), original_origin=inv['origin'].d05()))
         if w.knob('settlements'):
             out = w.knob('settlements')(out)
         return out
@@ -1129,7 +1198,22 @@ class CancelWorld(World):
 
     def rollback_refs(self):
         return sorted(inv['journal']['stored'].family + ':' + inv['journal']['stored'].key
-                      for inv in self.filesafe_invocations if inv['kind'] == 'rollback')
+                      for inv in self.filesafe_invocations if inv['kind'] == 'rollback' or self.knob('extra_rollback'))
+
+    def _other_birth(self, origin0):
+        w = self
+        return w.d01.issue_physical('executor_workflow_workflow_birth', 'native_consumer', WO + 'StorageWorkflowBirth',
+                                    w.d01.key('executor_workflow_workflow_birth', 'other'),
+                                    [('/record/operation_id', 'TEST_ONLY:op:other-birth'),
+                                     ('/record/activation_body', w.body0.selector()),
+                                     ('/record/activation_control', w.control0.selector()),
+                                     ('/record/activation_origin', origin0.selector()),
+                                     ('/record/birth_issuance', body_commitment(w, w.body0, w.control0))])
+
+    def continue_d06_again(self):
+        """A second positive cancellation attempt against the stale before-state."""
+        self.knobs = dict(self.knobs, d06_op=None)
+        self._d06()
 
 
     # -- D06 positive cancellation -----------------------------------------------------
@@ -1150,7 +1234,7 @@ class CancelWorld(World):
         w = self
         occurred = w.clock.now()
         NR.event_time(occurred, 'd06/occurred_at_utc')
-        mutation = w.mutation_census() if w.knob('mutation_flag') is None else w.knob('mutation_flag')
+        mutation = w.kval('mutation_flag', w.mutation_census())
         seeded = w.seeder.seed('native_consumer', SUBMISSION + '#/properties/payload')
         w.bind(seeded)
         payload = dict(event_name='goal_run.cancelled', schema_version='pm.goal_runtime_event.goal_run_cancelled.schema.v3',
@@ -1170,10 +1254,10 @@ class CancelWorld(World):
             inner['rollback_refs'] = w.rollback_refs()
         payload = dict(seeded, **payload)
         payload['payload'] = inner
-        partition = 'project~' + S.k_component(w.scope['project_id'])
-        payload['idempotency_key'] = w.idempotency_key(payload, partition)
         if w.knob('event_payload'):
             w.knob('event_payload')(payload)
+        partition = 'project~' + S.k_component(w.scope['project_id'])
+        payload['idempotency_key'] = w.idempotency_key(payload, partition)
         event = dict(schema_id='pm.event.v0', schema_version='2.0.0', scope_kind='project',
                      event_id=str(uuid.uuid4()), event_type='goal_run.cancelled', project_id=w.scope['project_id'],
                      thread_id=None, run_id=None, node_id=None, attempt_id=None, actor_ref=payload['actor_ref'],
@@ -1183,7 +1267,7 @@ class CancelWorld(World):
                      causation_event_id=None, parent_event_id=None, idempotency_key=payload['idempotency_key'],
                      payload_schema_id='pm.goal_runtime_event.goal_run_cancelled.schema.v3', payload=payload,
                      payload_ref=None, redaction_profile='no_secrets',
-                     replay_policy=w.knob('replay_policy') or 'dedupe_by_idempotency_key',
+                     replay_policy=w.kval('replay_policy', 'dedupe_by_idempotency_key'),
                      migration=dict(migrated_from_schema_id=None, migrated_from_schema_version=None, migration_id=None,
                                     compatibility_event_type=None))
         return event
@@ -1192,7 +1276,7 @@ class CancelWorld(World):
         w, d = self, self.d06
         op = 'TEST_ONLY:op:d06:' + uuid.uuid4().hex[:12]
         tx = 'TEST_ONLY:d06-transaction:' + uuid.uuid4().hex[:12]
-        w.ops['d06'] = w.knob('d06_op') or op
+        w.ops['d06'] = w.kval('d06_op', op)
         op = w.ops['d06']
         owner = [('/record/workflow_owner_ref', w.ids['workflow_owner_ref']), ('/record/workflow_owner_epoch', 1)]
         scoped = [('/record/operation_id', op), ('/record/transaction_id', tx)]
@@ -1208,7 +1292,7 @@ class CancelWorld(World):
                                      knob=w.knob('event_candidate'))
         cause, sched, ss = w.goal_cause, w.sched, w.safe_stop
         common = [('/record/association_selection', cause['original_binding_selection'].selector()),
-                  ('/record/goal_stop', w.knob('intent_goal_stop') or cause['original_stop_receipt'].selector()),
+                  ('/record/goal_stop', w.kval('intent_goal_stop', cause['original_stop_receipt'].selector())),
                   ('/record/scheduler_stop', sched['scheduler_stop'].selector()),
                   ('/record/inventory_cut', sched['inventory'].selector()),
                   ('/record/safe_stop_source', ss['aggregate_result'].selector())]
@@ -1238,21 +1322,39 @@ class CancelWorld(World):
                                                                            event_candidate=candidate.selector()))],
                                           knob=w.knob('prepare_origin'))
         w.d06_prepared = dict(event=event, candidate=candidate, intent=intent, control=prepared, origin=prepare_origin,
-                              after_body=after_body, after_control=after_control, op=op, tx=tx)
+                              after_body=after_body, after_control=after_control, op=op, tx=tx, owner=owner,
+                              scoped=scoped, common=common, control_key=control_key)
+        w.d06_phase = 'prepared'
         if w.cfg.get('stop_after') == 'prepare':
             return
-        # Native CAS: revision +1, status cancelled, activation unchanged.
-        body2, control2 = w.native.commit(after_body, after_control, before_body, before_control)
-        w.body2, w.control2 = body2, control2
-        if w.cfg.get('stop_after') == 'native':
-            return
+        w.continue_d06()
+
+    def continue_d06(self):
+        """Remaining D06 phases from the durable phase reached; re-entry resumes
+        the same Storage reservation and never issues a second Event."""
+        w, d = self, self.d06
+        p = w.d06_prepared
+        event, candidate, intent, prepared = p['event'], p['candidate'], p['intent'], p['control']
+        prepare_origin = p['origin']
+        after_body, after_control, op, tx = p['after_body'], p['after_control'], p['op'], p['tx']
+        owner, scoped, common, control_key = p['owner'], p['scoped'], p['common'], p['control_key']
+        before_body, before_control = w.body1, w.control1
+        if w.d06_phase == 'prepared':
+            # Native CAS: revision +1, status cancelled, activation unchanged.
+            w.body2, w.control2 = w.native.commit(after_body, after_control, before_body, before_control)
+            w.d06_phase = 'native'
+            if w.cfg.get('stop_after') == 'native':
+                return
+        body2, control2 = w.body2, w.control2
         events, reservation, outcome = w.append.append_original('TEST_ONLY:append:' + op,
                                                                dict(op=op, candidate=candidate.sha256), [event],
-                                                               durability_class=w.knob('durability_class') or 'barrier')
+                                                               durability_class=w.kval('durability_class', 'barrier'))
         custody = w.append.first_receipt(events[0])
         w.cancel_event, w.d06_reservation = events[0], reservation
-        if w.cfg.get('stop_after') == 'append':
+        if w.d06_phase == 'native' and w.cfg.get('stop_after') == 'append':
+            w.d06_phase = 'appended'
             return
+        w.d06_phase = 'appended'
         result_key = d.key('workflow_cancel_result', op)
         receipt = copy.deepcopy(custody['first_append_receipt'])
         if w.knob('result_receipt'):
@@ -1274,7 +1376,7 @@ class CancelWorld(World):
         result = d.write_wrapper('workflow_cancel_result', 'native_consumer', D06 + 'StorageResult', result_key,
                                  result_wrapper, reservation=reservation)
         committed = d.issue_physical('workflow_cancel_control', 'native_consumer', D06 + 'StorageControl', control_key,
-                                     [('/record/operation_id', op), ('/record/revision', w.knob('control_revision') or 2),
+                                     [('/record/operation_id', op), ('/record/revision', w.kval('control_revision', 2)),
                                       ('/record/intent', intent.selector()), ('/record/phase', 'committed'),
                                       ('/record/result', result.selector()), ('/record/last_origin_operation_id', op)],
                                      mutable=True, knob=w.knob('committed_control'))
@@ -1285,23 +1387,51 @@ class CancelWorld(World):
                                               ('/record/causation', intent.selector()),
                                               ('/record/afterimages', dict(kind='publish', result=result.selector(),
                                                                            control=committed.selector(),
-                                                                           native_body=body2.selector(),
+                                                                           native_body=(before_body if w.knob(
+                                                                               'publish_native_before') else body2).selector(),
                                                                            native_control=control2.selector()))],
                                           knob=w.knob('publish_origin'))
         prior_head = w.head
         revision = prior_head.wrapper['record']['revision'] + 1
         update = w._d01_update(op, 'd06_cancel_nonterminal', 'owner_status', (before_body, before_control),
-                               (body2, control2), result, publish_origin.selector(), prior_head,
+                               (body2, control2), result, (prepare_origin if w.knob('d01_owner_origin_prepare')
+                                                           else publish_origin).selector(), prior_head,
                                'owner.workflow.executor_cancel.publish_disposition.v3', revision)
         head = w._d01_head(revision, update, prior_head, w.start_cause.get('original_d01_head', prior_head) and
                            w._activation_body(), w.activation_origin)
         d01_origin = w._d01_origin('owner.executor.workflow_source.update_workflow.v3', 'TEST_ONLY:op:d01:' + op[-12:],
-                                   result.selector(), update, head)
+                                   (intent if w.knob('d01_causation_intent') else result).selector(), update, head)
         w.head = head
+        w.d06_phase = 'published'
         w.cancellation = dict(event_candidate=candidate, intent=intent, committed_control=committed, result=result,
                               prepare_origin=prepare_origin, publish_origin=publish_origin, original_d01_update=update,
                               original_d01_head=head, original_d01_origin=d01_origin)
         w.custody = custody
+
+    def replay_d06(self, request_edit=None, event_edit=None, operation=None):
+        """Re-entry or retry of the published D06 append and terminal result.
+
+        Same operation and request: the reservation resumes, Storage reports
+        the group already appended, the first receipt and terminal result are
+        the originals. A new operation with the same Event dedupes. Any altered
+        request or producer field conflicts in Storage.
+        """
+        p = self.d06_prepared
+        op = operation or p['op']
+        request = dict(op=op, candidate=p['candidate'].sha256)
+        if request_edit:
+            request = request_edit(request)
+        event = copy.deepcopy(p['event'])
+        if event_edit:
+            event_edit(event)
+        events, reservation, outcome = self.append.append_original('TEST_ONLY:append:' + op, request, [event],
+                                                                   durability_class='barrier')
+        custody = self.append.first_receipt(events[0])
+        tx = None
+        if operation is None:
+            result = self.cancellation['result']
+            tx = self.storage.publish_terminal(reservation, result.family, result.key, result.wrapper)
+        return dict(outcome=outcome, custody=custody, tx=tx)
 
     def _activation_body(self):
         head = self.start_cause.get('original_d01_head')
@@ -1315,14 +1445,6 @@ class _NonNull(dict):
 
     def get(self, path, default=None):
         return lambda variants: next((i for i, v in enumerate(variants) if v.get('type') != 'null'), 0)
-
-
-class _FlushChoice(_NonNull):
-    """Seeder choice for a final-flush record of the given status."""
-
-    def __init__(self, status):
-        super().__init__()
-        self.status = status
 
 
 def _issued_by_value(self, value):
