@@ -20,6 +20,7 @@ from referencing.jsonschema import DRAFT202012
 from pm_goal_own_c_oracles import ROOT, Validator, FORMAT, Refusal, require, equal, Suite, event_fixture
 from pm_goal_own_c3_w34_oracles import DiagnosticBank, specimen
 from pm_goal_own_c_roots import OriginalBank
+from pm_goal_test_storage import k_component
 
 DIRECTORY = ROOT / 'Plans/goal_run_projection_reference_contracts'
 CURRENT_CASE = None
@@ -132,7 +133,7 @@ class Representation:
 
     def encode(self, record, store_payload=True):
         # Copy every original metadata field. No whole source or semantic claim.
-        key = self.selection['projection']['key'].split(':K(')[0] + ':78:78'
+        key = self.selection['projection']['key'].split(':K(')[0] + ':' + k_component('x') + ':' + k_component('x')
         dataset = self.selection['projection']['table'].replace('<generation_id>', self.selection['generation_prefix']+'0'*64)
         wrapper = dict(schema_id=self.selection['projection']['schema_id'],schema_version='1.0.0',
                        storage_instance_id='12345678-1234-1234-1234-123456789abc',physical_key=key,dataset_name=dataset,
@@ -189,7 +190,7 @@ class Representation:
             require('read/original_record', equal(record, self.original))
             expected_kind=self.encode(self.original,store_payload=False)['content']['kind']
             require('read/representation',candidate['content']['kind']==expected_kind)
-            expected_key = self.selection['projection']['key'].split(':K(')[0] + ':78:78'
+            expected_key = self.selection['projection']['key'].split(':K(')[0] + ':' + k_component('x') + ':' + k_component('x')
             expected_dataset = self.selection['projection']['table'].replace('<generation_id>', self.selection['generation_prefix']+'0'*64)
             require('read/storage', candidate['storage_instance_id'] == '12345678-1234-1234-1234-123456789abc')
             require('read/key', candidate['physical_key'] == expected_key)
@@ -206,7 +207,7 @@ class Representation:
 
     def checkpoint(self, logical):
         wrapper = dict(schema_id=self.selection['checkpoint']['schema_id'],schema_version='1.0.0',
-            storage_instance_id='12345678-1234-1234-1234-123456789abc',physical_key=self.selection['checkpoint']['key'].split(':K(')[0]+':'+':'.join(v.encode('utf-8').hex() for v in ['12345678-1234-1234-1234-123456789abc','x','x','x']),
+            storage_instance_id='12345678-1234-1234-1234-123456789abc',physical_key=self.selection['checkpoint']['key'].split(':K(')[0]+':'+':'.join(k_component(v) for v in ['12345678-1234-1234-1234-123456789abc','x','x','x']),
             content=dict(kind='inline',checkpoint=copy.deepcopy(logical)))
         if not self.fits(wrapper, checkpoint=True):
             wrapper['content'] = dict(kind='payload_reference',reference=self.packs.put(self.codec.pack(logical)))
@@ -220,7 +221,7 @@ class Representation:
                  else self.unpack_payload(self.packs.read(content['reference'])))
         self.validate('LogicalCheckpoint', logical)
         require('checkpoint/storage',wrapper['storage_instance_id']=='12345678-1234-1234-1234-123456789abc')
-        expected=self.selection['checkpoint']['key'].split(':K(')[0]+':'+':'.join(v.encode('utf-8').hex() for v in ['12345678-1234-1234-1234-123456789abc','x','x','x'])
+        expected=self.selection['checkpoint']['key'].split(':K(')[0]+':'+':'.join(k_component(v) for v in ['12345678-1234-1234-1234-123456789abc','x','x','x'])
         require('checkpoint/key',wrapper['physical_key']==expected)
         require('checkpoint/logical_storage',logical['storage_instance_id']=='12345678-1234-1234-1234-123456789abc')
         require('checkpoint/logical_key',logical['physical_key']==expected)
@@ -428,7 +429,7 @@ def main():
                     suite.case(prefix+'/ref_'+field,lambda c=changed:owner.read(c),guard)
             resolved=bank.registry.resolver().lookup(owner.uri+'#/$defs/LogicalCheckpoint')
             checkpoint=specimen([(resolved.contents,resolved.resolver)])
-            checkpoint['physical_key']=owner.selection['checkpoint']['key'].split(':K(')[0]+':'+':'.join(v.encode('utf-8').hex() for v in ['12345678-1234-1234-1234-123456789abc','x','x','x'])
+            checkpoint['physical_key']=owner.selection['checkpoint']['key'].split(':K(')[0]+':'+':'.join(k_component(v) for v in ['12345678-1234-1234-1234-123456789abc','x','x','x'])
             checkpoint['scope']=copy.deepcopy(record['scope'])
             ck=owner.checkpoint(checkpoint)
             suite.case(prefix+'/checkpoint_roundtrip',lambda:owner.read_checkpoint(ck))
