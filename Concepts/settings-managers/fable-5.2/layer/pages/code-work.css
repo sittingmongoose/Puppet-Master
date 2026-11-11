@@ -1,1 +1,33 @@
 /* styles that only the pages in code-work.js need; shared parts are in ../smx.css */
+
+/* One question with a few answers, each saying what it means ("May the assistant test its own work?"). */
+#smx-root .smx-cw-answers { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+#smx-root .smx-cw-answer { display: grid; gap: 3px; align-content: start; min-height: 74px; padding: 10px 12px; border: 1px solid var(--k3-line); border-radius: var(--k3-radius-md); background: var(--k3-surface-1); color: var(--k3-text-1); font: inherit; text-align: left; cursor: pointer; }
+#smx-root .smx-cw-answer:hover { border-color: var(--k3-line-strong); background: var(--k3-accent-soft-2); }
+#smx-root .smx-cw-answer.is-on { border-color: var(--k3-accent); background: var(--k3-accent-soft); }
+#smx-root .smx-cw-answer:focus-visible { outline: 2px solid var(--k3-accent); outline-offset: 1px; }
+#smx-root .smx-cw-answer-name { display: flex; align-items: center; flex-wrap: wrap; gap: 2px 6px; font-size: 13px; font-weight: 600; }
+#smx-root .smx-cw-answer-name .icon, #smx-root .smx-cw-answer-name svg { width: 14px; height: 14px; stroke: currentColor; color: var(--k3-accent-ink, var(--k3-accent)); }
+#smx-root .smx-cw-answer-name small { font-size: 11px; font-weight: 550; color: var(--k3-text-3); }
+#smx-root .smx-cw-answer-text { font-size: 11.5px; line-height: 1.45; color: var(--k3-text-2); }
+#smx-root .smx-cw-answers + .smx-sentence { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--k3-line); }
+
+/* "It may / it asks you first / it never does": three short groups of lines, each line with its real control. */
+#smx-root .smx-cw-may { display: grid; gap: 16px; }
+#smx-root .smx-cw-may-head { display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 10px; margin: 0 0 2px; font-size: 13px; font-weight: 650; color: var(--k3-text-1); }
+#smx-root .smx-cw-may-head small { font-size: 11.5px; font-weight: 400; color: var(--k3-text-3); }
+#smx-root .smx-cw-may-none { margin: 4px 0 0; font-size: 12px; color: var(--k3-text-3); }
+#smx-root .smx-cw-kept { margin: 14px 0 0; padding-top: 12px; border-top: 1px solid var(--k3-line); font-size: 12.5px; line-height: 1.6; color: var(--k3-text-2); }
+
+/* a card that ends with a line of buttons or links under its rows */
+#smx-root .smx-cw-foot { margin-top: 12px; }
+#smx-root .smx-things + .smx-cw-foot { padding-top: 10px; border-top: 1px solid var(--k3-line); }
+
+/* a button that stands for one item of PMConcept7's "More actions" menu: the menu itself is not shown */
+html.smx-cw-item .pm51-popout.pm51-menu { opacity: 0 !important; pointer-events: none !important; }
+
+/* three answers side by side need about 560 px; narrower than that they stack */
+@container smx (max-width: 900px) {
+  #smx-root .smx-cw-answers { grid-template-columns: minmax(0, 1fr); }
+  #smx-root .smx-cw-answer { min-height: 0; }
+}
