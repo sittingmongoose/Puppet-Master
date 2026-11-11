@@ -41,11 +41,12 @@ themselves, get no second rule.
 
 The 2026-11-10 fix pass's parts follow the same rules in v3. In Where work runs, where each piece of work went is a
 value (regular weight; a Computer somebody chose keeps its weight and colour), the rows are one lightly ruled list, and
-"Why this computer", which is on every row, keeps its link colour and takes its underline when pointed at or focused.
-A sync paused on a clash is a status on the Online copy plate, like any other. The dialogs Split opens (Settle the
-clash, Why this computer, From a chat, Move a chat) are the one place v3 reaches outside the page: their lists of
-choices are ruled like the page's and their fact lines read at the page's size. The chat, its History and the History
-row's menu are not v3's and are the same in both.
+"Run this on…" and "Why this computer", which are on every row, keep their link colour and take their underline when
+pointed at or focused (an off "Run this on…" still reads as off). A sync paused on a clash is a status on the Online
+copy plate, like any other. The dialogs Split opens (Settle the clash, Why this computer, Start a run, From a chat,
+Move a chat) are the one place v3 reaches outside the page: their lists of choices are ruled like the page's, their
+fact lines read at the page's size and their fields' labels are in the text face. Menus, the chat, its History and
+the History row's menu are not v3's and are the same in both.
 
 Its checks are `tools/checks/split-v3.check.mjs` in this folder's kit: the switch on the strip and by key, what
 switching keeps, v2 left exactly as it was, how each plate's facts are set, the fix pass's parts in v3 and unchanged in
