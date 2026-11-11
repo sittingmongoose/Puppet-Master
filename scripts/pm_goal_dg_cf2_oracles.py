@@ -405,6 +405,25 @@ def cf06_n26(work):
     return neg(r, 'append', post=post)
 
 
+def _tamper_cause_frame(w, ctx):
+    """Corrupt the earlier (off-run cause) frame at rest: the global prefix is no longer valid."""
+    eid = next(e for e in w.storage.events if e.startswith('TEST_ONLY:goal_test.cause'))
+    info = w.storage.events[eid]
+    path = w.storage._segment_path(info['segment_generation'])
+    raw = bytearray(path.read_bytes())
+    raw[info['offset'] + info['length'] - 5] ^= 0x01
+    path.write_bytes(bytes(raw))
+
+
+@case('CF06-N28', 'CF-06', 'negative', 'f5a/generic_prefix', 'malformed earlier off-run frame in the global prefix before append')
+def cf06_n28(work):
+    r = Run(work).until('arm')
+    _tamper_cause_frame(r.w, r.ctx)
+    return neg(r, 'append', post=only_nonstorage_changes)
+_cf06_neg('CF06-N29', 'f5c/generic_prefix', 'global prefix invalid at custody readback (earlier frame substituted at rest)',
+          hooks={'before_custody': _tamper_cause_frame})
+
+
 # ------------------------------------------------------------------ CF-07
 
 @case('CF07-P01', 'CF-07', 'positive', desc='joint native/D01/compact commit, readback and release; current only after Release')
@@ -978,7 +997,7 @@ def p7_p01(work):
     calls = [x for x in r.w.recorder.calls if x['method'] == 'owner.goal_run.certified.read_current.reference.v1']
     child = [x['method'] for x in r.w.recorder.calls if x['parent'] == calls[-1]['index']]
     require('positive/fresh_coordinator_tuple', 'owner.workflow.certified_event.read_current.v1' in child)
-    require('positive/guard_released', cur['original']['native']['control']['record']['phase'] == 'released')
+    require('positive/guard_released', cur['original']['native']['coordinator']['control']['record']['phase'] == 'released')
     source = GS.GenericSource(r.w.storage).acquire()
     return dict(children=child, prefix_rows=len(source.rows))
 

@@ -276,8 +276,11 @@ class Consumer(A.TestOwner):
                                  whole_value_commitment=custody['original_event_value_commitment'],
                                  full_value_result=fvr, exact_custody=custody)
             self.validate('CertifiedEventCustody', custody_value, stage + '/custody')
-            out = dict(native_retained=retained, original_event=custody_value, current_state_asserted=False,
-                       action_authority='none', frame_sha256=W.sha(raw))
+            original = dict(native=retained['retained'], original_event=custody_value, current_state_asserted=False,
+                            action_authority='none')
+            self.validate('OriginalCertified', original, stage + '/original_certified')
+            out = dict(native_retained=retained, original_event=custody_value, original_certified=original,
+                       current_state_asserted=False, action_authority='none', frame_sha256=W.sha(raw))
             slot.set(dict(event_id=target))
             return out
 
@@ -413,10 +416,9 @@ class Consumer(A.TestOwner):
                 record = self.rep.decode(opened['row'], expected, opened['generation']['dataset_name'])
             except Exception as error:
                 raise Unavailable(stage + '/row/' + str(getattr(error, 'args', [''])[0]), 'CUSTODY_MISMATCH') from None
-            out = dict(original=dict(native=retained['coordinator'], original_event=inspected['original_event'],
-                                     current_state_asserted=False, action_authority='none'),
-                       projection=opened['row'], checkpoint=opened['stored'], current_state_asserted=False,
-                       action_authority='none', record_sha256=W.sha(W.mp(record)))
+            out = dict(original=inspected['original_certified'], projection=opened['row'], checkpoint=opened['stored'],
+                       current_state_asserted=False, action_authority='none')
+            self.validate('HistoricalCertified', out, stage + '/historical_certified', original=False)
             slot.set(dict(row=opened['row']['physical_key']))
             return out
 

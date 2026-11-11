@@ -47,6 +47,7 @@ from pathlib import Path
 import pm_goal_test_numrule as NR
 import pm_goal_test_storage as S
 import pm_goal_test_owner_adapters as A
+import pm_goal_test_source as GS
 import pm_goal_test_demo_cf01 as D
 import pm_goal_dg_cf2_native as N
 
@@ -175,6 +176,10 @@ def body_commitment(storage_instance_id, nk, body, control):
 
 def d01_key(scope, operation_id):
     return native_key(scope) + ':' + hexk(operation_id)
+
+
+def _without_snapshot(source):
+    return {k: v for k, v in source.items() if k != 'snapshot_id'}
 
 
 def native_key(scope):
@@ -760,7 +765,11 @@ class Coordinator(A.TestOwner):
         """complete_preappend_storage_source: the real current source before the new Event."""
         w = self.world
         src = w.storage.acquire_source()
+        generic = GS.GenericSource(w.storage).acquire(src)
         return dict(qualification=QUALIFICATION, storage_instance_id=src['storage_instance_id'],
+                    generic=dict(complete=generic.complete, defect=None if generic.defect is None else list(generic.defect),
+                                 rows=len(generic.rows), coverage_sha256=generic.coverage_sha256,
+                                 through_sequence_id=generic.rows[-1].sequence_id if generic.rows else None),
                     current_bytes_sha256=sha(src['current_raw']), manifest_bytes_sha256=sha(src['manifest_raw']),
                     segments=[dict(generation=s['generation'], name=s['name'], watermark=s['watermark'],
                                    bytes_sha256=sha(s['raw'])) for s in src['segments']],
@@ -811,7 +820,8 @@ class Coordinator(A.TestOwner):
                 and A.same(i['native_before_head'], selector(head['key'], head['value'])))
         # The presented pre-append source must equal Storage's own current source now.
         fresh = self.preappend_source(ctx)
-        require(stage + '/preappend_source', A.same(preappend, fresh))
+        require(stage + '/preappend_source', A.same(_without_snapshot(preappend), _without_snapshot(fresh)))
+        require(stage + '/generic_prefix', fresh['generic']['complete'] is True)
         # No receipt, frame, barrier, custody or EventPhase for this operation exists yet.
         require(stage + '/future_receipt', not preappend['dedupe_tail']['event_id_present'] and
                 not preappend['dedupe_tail']['scoped_present'] and
@@ -892,6 +902,8 @@ class Coordinator(A.TestOwner):
     def f5c_readback(self, ctx, barrier, receipts):
         w = self.world
         stage = 'f5c'
+        generic = GS.GenericSource(w.storage).acquire()
+        require(stage + '/generic_prefix', generic.complete)
         group = barrier['group']
         member_ids = [m['event_id'] for m in group['members']]
         issued = [w.storage.receipt_of(h)['event_id'] for h in receipts]
