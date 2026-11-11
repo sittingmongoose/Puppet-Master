@@ -557,13 +557,28 @@
          so a key that included the box never matched and the clearance ran again. */
       const wireKey = JSON.stringify([this.theme, this.layoutName, this.lastScreen]);
       const kept = pr.restFit && pr.restFit.geometry === geometry ? pr.restFit : null;
-      /* 96c4237762 refits when the slot length changes. Friendly Dark's vault, already on the wire,
-         then jumped its offset about 168px as 388 shortened to 334 and rested there. A shorter slot
-         keeps the offset it had and lets the length spring carry it, which is where 412 rests.
-         The hold lasts while the slot stays that short; a longer slot still refits and eases. */
+      /* A shorter slot keeps the offset it solved and the length spring carries it. The hold
+         lasts while the slot stays that short. The fit below keeps that offset while it clears
+         the speech, and moves it by the least way out when it does not. A longer slot refits. */
       const sameWire = pr.restFit && pr.restFit.wireKey === wireKey;
       const onWire = sameWire && (pr.restFit.len - tg.len > .5 || (pr.restFit.held && tg.len <= pr.restFit.len + .5)) ? pr.restFit : null;
       const fit = this.fit(pr, [tg.ax, this.L.anchorY + tg.len], tg.sc, tm, true, pr.spaceBB, kept, onWire);
+      /* A longer slot whose solved box stays at the same height has folded the extra length
+         into the offset. Retro Light away then holds painted y while the string lengthens
+         (305.4 to 388, the offset from about -105 to -183) and the frame never descends.
+         Keep the offset already solved so painted y descends with the length. A box on the
+         pane floor stays there. A fit that actually moves the prop, such as the corridor
+         lift, is kept and still eases. */
+      if (!onWire && pr.restFit && pr.restFit.box && fit.box && tg.len > pr.restFit.len + .5) {
+        const oldC = (pr.restFit.box[1] + pr.restFit.box[3]) / 2, newC = (fit.box[1] + fit.box[3]) / 2;
+        const v = this.vis, onFloor = v && fit.box[3] >= v.y1 - 9;
+        if (!onFloor && Math.abs(newC - oldC) < 1) {
+          const add = pr.restFit.dy - fit.dy;
+          fit.dy = pr.restFit.dy;
+          fit.box = [fit.box[0], fit.box[1] + add, fit.box[2], fit.box[3] + add];
+          if (pr.restOff) pr.restOff.dy = fit.dy;
+        }
+      }
       const sc = tg.sc * fit.f, spaceBox = fit.box, bb = pr.bb;
       const actual = pr.spaceBB && bb ? [tg.ax + fit.dx + (bb[0] - tm[0]) * sc, this.L.anchorY + tg.len + fit.dy + (bb[1] - tm[1]) * sc,
         tg.ax + fit.dx + (bb[0] + bb[2] - tm[0]) * sc, this.L.anchorY + tg.len + fit.dy + (bb[1] + bb[3] - tm[1]) * sc] : fit.box;
@@ -643,11 +658,12 @@
         return g;
       };
       if (rest) {
-        /* A shortened slot stays on the offset it already solved. Solving the clearance again
-           lifts the prop off its length in one frame (96c4237762, about 168px). The pane clamps
-           still apply; a longer slot is free to refit, and the aim spring eases that. */
+        /* A shorter slot stays on the offset it already solved. The pane clamps still apply.
+           That offset remains the wire while the drawing clears the speech. A shorten that
+           leaves the drawing inside the speech moves it by the least way out, from the offset
+           it already has, and the aim spring eases that. A longer slot is free to refit. */
         if (destination && onWire) {
-          const wf = onWire.f || 1;
+          const wf = onWire.f || 1, fPane = f;
           const uLo = Math.min(...cs.map((c) => c[0])) * wf, uHi = Math.max(...cs.map((c) => c[0])) * wf;
           const uTp = Math.min(...cs.map((c) => c[1])) * wf, uBt = Math.max(...cs.map((c) => c[1])) * wf;
           let wdx = onWire.dx, wdy = onWire.dy;
@@ -655,8 +671,19 @@
           if (hx + uLo + wdx < v.x0 + pad) wdx = v.x0 + pad - (hx + uLo);
           if (hy + uBt + wdy > v.y1 - pad) wdy = v.y1 - pad - (hy + uBt);
           if (hy + uTp + wdy < v.y0 + pad) wdy = v.y0 + pad - (hy + uTp);
-          pr.restOff = { dx: wdx - dxEdge, dy: wdy, g: wf / f };
-          return { dx: wdx, dy: wdy, f: wf, box: [hx + uLo + wdx, hy + uTp + wdy, hx + uHi + wdx, hy + uBt + wdy] };
+          const box = [hx + uLo + wdx, hy + uTp + wdy, hx + uHi + wdx, hy + uBt + wdy];
+          const reach = this.keepOff ? this.speechSway(pr, sc, tm, this.propTarget(pr).len) : [0, 0];
+          const o = this.keepOff;
+          const band = o ? [o[0] - reach[0], o[1] - reach[1], o[2] + reach[0], o[3] + reach[1]] : null;
+          const into = band && box[0] < band[2] - 1e-7 && box[2] > band[0] + 1e-7 && box[1] < band[3] - 1e-7 && box[3] > band[1] + 1e-7;
+          if (!into) {
+            pr.restOff = { dx: wdx - dxEdge, dy: wdy, g: wf / fPane };
+            return { dx: wdx, dy: wdy, f: wf, box };
+          }
+          f = wf; lo = uLo; hi = uHi; tp = uTp; bt = uBt; dx = wdx; dy = wdy;
+          clear([band]);
+          pr.restOff = { dx: dx - dxEdge, dy, g: f / fPane };
+          return { dx, dy, f, box: [hx + lo + dx, hy + tp + dy, hx + hi + dx, hy + bt + dy] };
         }
         if (hy + bt > v.y1 - pad) dy = v.y1 - pad - (hy + bt);
         if (visible > .95 && hy + tp + dy < v.y0 + pad) dy = v.y0 + pad - (hy + tp);
@@ -1573,7 +1600,19 @@
          in was no obstacle at all on the bubble's first frames (QA-4). A leaving prop is no obstacle: holdUnder
          already caps its lift at the bubble's lower edge and fades it there, and counting its rising box made the
          bubble step aside for a prop that was already keeping under it) */
-      this.props.forEach((pr) => { if (pr.state === 'out') return; const pose = this.restPose(pr), rb = pose.speechBox || pose.box || pr.box; if (rb) { const a = this.toScreen([rb[0], rb[1]]), c = this.toScreen([rb[2], rb[3]]); obs.push(projected([a[0] - gap, a[1] - gap, c[0] + gap, c[1] + gap])); } });
+      this.props.forEach((pr) => {
+        if (pr.state === 'out') return;
+        const pose = this.restPose(pr), rb = pose.speechBox || pose.box || pr.box;
+        if (rb) { const a = this.toScreen([rb[0], rb[1]]), c = this.toScreen([rb[2], rb[3]]); obs.push(projected([a[0] - gap, a[1] - gap, c[0] + gap, c[1] + gap])); }
+        /* The destination can already be the place a claim would push a settled prop to.
+           Retro Dark Review then drew the reflowed line across the clipboard that was still
+           painted where it had settled, and the claim shunted the clipboard right. The
+           painted box of a settled prop is an obstacle of its own. */
+        if (pr.settled && pr.op > .5 && pr.box) {
+          const a = this.toScreen([pr.box[0], pr.box[1]]), c = this.toScreen([pr.box[2], pr.box[3]]);
+          obs.push(projected([a[0] - gap, a[1] - gap, c[0] + gap, c[1] + gap]));
+        }
+      });
       /* Future phase blocks occupy the same planned column as the first one. Reserve it before any block
          enters: discovering a later row during a held sentence moved short-layout speech by21px. */
       const stackBox = this.stackFit().box;
@@ -1618,10 +1657,32 @@
       const claimed = talking && claimNear(at), priorBand = this.bubbleKeepOff;
       if (!claimed) this.bubbleKeepOff = null;
       if (!at) {
-        /* nowhere clear: off Pip's face at least, nearest its usual place; the props keep off it next frame */
-        const cand = [[x, y]].concat(candidates([face].concat(bar ? [bar] : []))).filter(([cx, cy]) => fits(cx, cy) && !over(cx, cy, face) && !(bar && over(cx, cy, bar)));
-        at = cand.sort((p, q) => cost(p) - cost(q))[0] || [x, y];
-        this.bubbleClaim = talking ? [at[0] - origin[0], at[1] - origin[1]] : null;
+        /* Nowhere inside the bounds clears every destination. Keeping the previous place
+           is allowed when that place itself clears those destinations, even past the pane
+           edge: the line stays beside the vault instead of sitting on the spot it is
+           approaching. It does not claim a band, so a settled prop is not pushed. */
+        const offProps = (cx, cy) => !obs.some((o) => over(cx, cy, o)) && !over(cx, cy, face) && !(bar && over(cx, cy, bar));
+        if (priorAt && offProps(priorAt[0], priorAt[1])) { at = priorAt; this.bubbleClaim = null; }
+        else {
+          const cand = [[x, y]].concat(candidates([face].concat(bar ? [bar] : []))).filter(([cx, cy]) => fits(cx, cy) && !over(cx, cy, face) && !(bar && over(cx, cy, bar)));
+          const open = cand.filter(([cx, cy]) => offProps(cx, cy));
+          if (open.length) { at = open.sort((p, q) => cost(p) - cost(q))[0]; this.bubbleClaim = null; }
+          else if (priorAt) {
+            let cx = priorAt[0], cy = priorAt[1];
+            const blockers = obs.concat(bar ? [bar] : []);
+            for (let n = 0; n < blockers.length + 2; n++) {
+              const hit = blockers.find((o) => over(cx, cy, o));
+              if (!hit) break;
+              const ways = [[hit[0] - bw - cx, 0], [hit[2] - cx, 0], [0, hit[1] - bh - cy], [0, hit[3] - cy]];
+              ways.sort((p, q) => Math.hypot(p[0], p[1]) - Math.hypot(q[0], q[1]));
+              cx += ways[0][0]; cy += ways[0][1];
+            }
+            at = [cx, cy]; this.bubbleClaim = null;
+          } else {
+            at = cand.sort((p, q) => cost(p) - cost(q))[0] || [x, y];
+            this.bubbleClaim = talking ? [at[0] - origin[0], at[1] - origin[1]] : null;
+          }
+        }
       }
       /* (the place it claimed is kept while it stays there and talks: the props stay off it, instead of coming back under it
          as soon as their moving away has made its usual place clear, and going again the next frame) */
