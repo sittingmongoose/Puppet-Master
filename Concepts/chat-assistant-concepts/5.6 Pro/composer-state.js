@@ -695,12 +695,12 @@
     var q = RT.quota, icon = ctx.icon, esc = ctx.esc;
     return '<button class="menu-item" data-action="cs-quota-demo">' +
       '<span class="menu-icon">' + icon('warning', 13) + '</span>' +
-      '<span class="menu-copy"><strong>Provider quota wait</strong>' +
+      '<span class="menu-copy"><strong class="menu-ttl">Provider quota wait</strong>' +
       '<span class="menu-sub">' + (q.waiting ? 'Strip is showing above the composer' : 'Show the in-flow wait strip') + '</span></span>' +
       '<span class="shortcut">' + (q.waiting ? 'On' : 'Off') + '</span></button>' +
       '<button class="menu-item" data-action="cs-quota-source">' +
       '<span class="menu-icon">' + icon('info', 13) + '</span>' +
-      '<span class="menu-copy"><strong>Reset-time source</strong>' +
+      '<span class="menu-copy"><strong class="menu-ttl">Reset-time source</strong>' +
       '<span class="menu-sub">Cycle provider reported / locally inferred / user supplied / unknown</span></span>' +
       '<span class="shortcut">' + esc(q.resetSource) + '</span></button>';
   });

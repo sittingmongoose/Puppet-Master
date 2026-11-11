@@ -931,7 +931,7 @@
         (o.value != null ? ' data-value="' + esc(o.value) + '"' : '')) +
       ' title="' + esc(dis ? (o.reason || '') : (o.detail || o.label)) + '">' +
       '<span class="menu-icon">' + gi(ctx, o, 13) + '</span>' +
-      '<span class="menu-copy"><strong>' + esc(o.label) + '</strong><span class="menu-sub">' + esc(body) + '</span></span>' +
+      '<span class="menu-copy"><strong class="menu-ttl">' + esc(o.label) + '</strong><span class="menu-sub">' + esc(body) + '</span></span>' +
       /* A "0" chip is noise: the row's own subtitle already says the list is
          empty, and a badge reading zero reads as a badge that failed. */
       (o.count ? '<span class="pm-tops-count">' + esc(String(o.count)) + '</span>' : '') +
@@ -1415,7 +1415,7 @@
           '<button class="menu-item" data-action="jump-search-result" data-thread="' + esc(r.thread.id) + '" data-message="' + esc(r.msg.id) + '"' +
           ' title="' + esc('Open turn ' + r.turn + ' of ' + r.thread.title) + '">' +
           '<span class="menu-icon">' + icon('search', 12) + '</span>' +
-          '<span class="menu-copy"><strong>' + esc(r.thread.title) + ' · turn ' + r.turn + '</strong>' +
+          '<span class="menu-copy"><strong class="menu-ttl">' + esc(r.thread.title) + ' · turn ' + r.turn + '</strong>' +
           '<span class="menu-sub">' + esc(snippet(r.msg, 110)) + '</span></span></button>' +
           '<button class="icon-button pm-tops-result-op" data-action="copy-message-link" data-thread="' + esc(r.thread.id) + '" data-value="' + esc(r.msg.id) + '" data-hover-key="tops-copy:' + esc(r.msg.id) + '" data-hover-tip="Copy a link to this turn" aria-label="Copy a link to this turn">' + svg('link', 12) + '</button>' +
           '<button class="icon-button pm-tops-result-op" data-action="add-passage" data-thread="' + esc(r.thread.id) + '" data-value="' + esc(r.msg.id) + '" data-hover-key="tops-pass:' + esc(r.msg.id) + '" data-hover-tip="Add this passage to the context" aria-label="Add this passage to the context">' + svg('passage', 12) + '</button>' +

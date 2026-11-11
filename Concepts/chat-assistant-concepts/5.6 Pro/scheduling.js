@@ -2422,11 +2422,11 @@
     var badge = autoPause().paused ? 'Paused by you' : S.stopped ? 'Stopped by you' : needs ? 'Needs your OK' : '';
     return '<button class="menu-item" data-action="sched-open-message" data-k="sched-wand-msg">' +
       '<span class="menu-icon">' + SH.pmxKindMark('schedule', 13) + '</span>' +
-      '<span class="menu-copy"><strong>Schedule Message</strong><span class="menu-sub">Send a message later, even if you’re away.</span></span>' +
+      '<span class="menu-copy"><strong class="menu-ttl">Schedule Message</strong><span class="menu-sub">Send a message later, even if you’re away.</span></span>' +
       (count ? '<span class="shortcut">' + esc(count) + '</span>' : '') + '</button>' +
       '<button class="menu-item" data-action="sched-open-manage" data-k="sched-wand-manage">' +
       '<span class="menu-icon">' + SH.pmxKindMark('scheduled', 13) + '</span>' +
-      '<span class="menu-copy"><strong>Scheduled &amp; Automations…</strong><span class="menu-sub">Everything set to happen later, and what already did.</span></span>' +
+      '<span class="menu-copy"><strong class="menu-ttl">Scheduled &amp; Automations…</strong><span class="menu-sub">Everything set to happen later, and what already did.</span></span>' +
       (badge ? '<span class="shortcut">' + esc(badge) + '</span>' : '') + '</button>';
   });
 

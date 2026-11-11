@@ -469,8 +469,8 @@ GUARDED = (':hover', ':focus-visible', ':active', '.pmh-on', '.active', '[aria-s
 _TD = ("a hovered table row lights its own cells; the tag reaches only the cells of a table inside an element whose "
        "hover changes (the old Settings data tables, Home's trace table), never a Usage card, a Files or rail row or the "
        "title bar. A class on every cell means every table template (base pm4-settings-js.js, home 44-artifact.js)")
-_CHAT = ("the chat's NieR cursor on its chosen or focused row (5.6 Pro nier-parts.css, P5): the rows' parts (model, "
-         "effort, thread, menu and mention rows) need a class list proved row by row against :where(*); see J-REPORT")
+_CHAT = ("the chat's NieR cursor on its chosen thread row (5.6 Pro nier-parts.css, P5): the row's status mark varies with "
+         "the variant and the host's glyphs, so its parts need a census before a class list replaces :where(*); see J-REPORT")
 _PICK = ("the Settings picker's marks and sub-line have no class; naming them needs one in "
          "src/settings/kit.d/30-inspector.js (Settings), which lane J was not cleared to change")
 KNOWN: dict[str, str] = {
@@ -484,12 +484,7 @@ KNOWN: dict[str, str] = {
         " raw icon carrying .pm-isvg or a neon glyph carrying .nx)",
     '#panel-settings .o55-pick-item:is(.is-active, [aria-selected="true"]) .o55-pick-copy :is(em)': _PICK,
     '#panel-settings .o55-pick-item:is(.is-active, [aria-selected="true"]) .o55-pick-copy :is(small)': _PICK,
-    'html[data-o55-nier-parts~="cursor"] .pm56-host .menu-item:focus-visible :where(*)': _CHAT,
-    'html[data-o55-nier-parts~="cursor"] .pm56-host .menu-item.active :where(*)': _CHAT,
     'html[data-o55-nier-parts~="cursor"] .pm56-host .thread-row.active :where(*)': _CHAT,
-    'html[data-o55-nier-parts~="cursor"] .pm56-host .model-row.active :where(*)': _CHAT,
-    'html[data-o55-nier-parts~="cursor"] .pm56-host .effort-row.active :where(*)': _CHAT,
-    'html[data-o55-nier-parts~="cursor"] .pm56-host .qs-mention-item[aria-selected="true"] :where(*)': _CHAT,
 }
 
 CONCEPTS = Path(__file__).resolve().parents[3]
