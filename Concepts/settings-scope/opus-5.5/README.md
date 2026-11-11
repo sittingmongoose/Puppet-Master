@@ -214,6 +214,24 @@ items 3, 4, 8 and 11) and the guided-flows check named what this concept must ch
   why; the run now has a release script to show that. Ordinary YOLO git push and publish still run without asking and
   never become an Always rule (NEW CANON: Permissions_System's Always and YOLO rules).
 
+## Fix round A-r2 (2026-11-11)
+
+The blind r2 recheck (`REVIEW-concept-A-r2-opus-high.md`) found these; each is fixed:
+
+- **For this session** belongs to this run and this run mode (Permissions_System PS-113 keys `approval_scope_key` to
+  the run and the mode; §2 Rule 3: drift invalidates it). A second `npm test` in 11.18's run shows what it covers;
+  Run it again or a switch of Run mode starts a new run with no session answers, so YOLO asks for the folder outside
+  the project again (§3.3). Always rules you make apply to every later run they match.
+- **The header's last wording** always fits: the dot form may take two lines in the same box, a name never split.
+- **Broad patterns:** any command followed only by `*` (`rm -rf *`, `sudo *`, `npx *`, `git *`, `read *`); a rule
+  about files is host-dependent, so it never offers Everywhere.
+- **"Auto (default: This computer)"** shows the setting; the arrow only names where work actually ran.
+- **The session line** no longer repeats "Allowed"; the outside step has its own report line.
+- **A pattern's trailing `*`** also matches nothing after it (`npm test *` covers `npm test`, `…/taxes/*` covers the
+  folder), so a later run honours the rule and the preview says so.
+- **The strip's Look** stores the look only once it has really painted, and stores the look asked for: under load a
+  paint can outlast the wait, and storing the base page's state then stored the look it was leaving.
+
 ## Fix round A-r1 (2026-11-10)
 
 A blind review of the branch (`REVIEW-concept-A-r1-opus-high.md` in the share folder) found these; each is fixed:
