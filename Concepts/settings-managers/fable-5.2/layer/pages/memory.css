@@ -1,0 +1,45 @@
+/* styles that only the pages in memory.js need; shared parts are in ../smx.css
+   (planning.js uses the toolbar and the switch line too; both files are loaded together) */
+
+/* ---- a switch with its words, beside a summary ---------------------------------------------------------------------- */
+#smx-root .smx-switch-line { display: inline-flex; align-items: center; gap: 10px; font-size: 12.5px; font-weight: 600; color: var(--k3-text-2); white-space: nowrap; }
+
+/* ---- the line above a list: what comes first, a filter box, the button that adds one --------------------------------- */
+#smx-root .smx-toolbar { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 10px; min-height: 30px; }
+#smx-root .smx-toolbar-gap { flex: 1 1 auto; }
+#smx-root .smx-toolbar .o55-bound-prefix, #smx-root .smx-toolbar-inline .o55-bound-prefix { font-size: 12px; color: var(--k3-text-3); }
+#smx-root .smx-toolbar-inline { display: inline-flex; align-items: center; flex-wrap: wrap; gap: 6px 10px; }
+#smx-root .smx-toolbar .smx-filter { width: 240px; max-width: 100%; }   /* the filter box itself is the shared one in ../smx.css */
+
+/* ---- what a thing says, in a list: two lines at most ------------------------------------------------------------------ */
+#smx-root [data-smx-anchor^="memories-"] .smx-thing-name + .smx-thing-sub,
+#smx-root [data-smx-anchor^="personas-"] .smx-thing-name + .smx-thing-sub { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; color: var(--k3-text-2); }
+
+/* ---- a long list in two columns while there is room (the personas that came with Puppet Master) ----------------------- */
+#smx-root .smx-things.smx-two { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 24px; }
+#smx-root .smx-things.smx-two > .smx-thing:nth-child(2) { border-top: 0; }
+@container smx (max-width: 1080px) {
+  #smx-root .smx-things.smx-two { grid-template-columns: minmax(0, 1fr); }
+  #smx-root .smx-things.smx-two > .smx-thing:nth-child(2) { border-top: 1px solid var(--k3-line); }
+}
+
+/* ---- a link inside a sentence keeps the comma or full stop that follows it on its line ---------------------------------- */
+#smx-root .smx-nb { white-space: nowrap; }
+
+/* ---- narrow Settings areas ------------------------------------------------------------------------------------------- */
+@container smx (max-width: 1040px) {
+  /* a summary with a switch beside it: the switch moves under the sentences, so the sentences keep their width */
+  #smx-root .smx-summary:has(.smx-switch-line) { flex-wrap: wrap; }
+  #smx-root .smx-summary:has(.smx-switch-line) .smx-summary-copy { flex-basis: calc(100% - 60px); }
+  #smx-root .smx-summary:has(.smx-switch-line) .smx-summary-side { flex-basis: 100%; align-items: flex-start; padding-left: 54px; }
+}
+@container smx (max-width: 900px) {
+  #smx-root .smx-toolbar .smx-filter { width: 100%; max-width: none; }
+  /* on these two chapters a row that ends in nothing but its arrow keeps the arrow beside it */
+  #smx-root .smx-page:is([data-smx-route^="memory"], [data-smx-route^="planning"]) .smx-thing-end:has(> .smx-thing-go:only-child) { flex-basis: auto; }
+  #smx-root .smx-page:is([data-smx-route^="memory"], [data-smx-route^="planning"]) .smx-thing:has(> .smx-thing-end > .smx-thing-go:only-child) { flex-wrap: nowrap; }
+}
+@container smx (max-width: 760px) {
+  #smx-root .smx-summary:has(.smx-switch-line) .smx-summary-copy { flex-basis: 100%; }
+  #smx-root .smx-summary:has(.smx-switch-line) .smx-summary-side { padding-left: 0; }
+}
