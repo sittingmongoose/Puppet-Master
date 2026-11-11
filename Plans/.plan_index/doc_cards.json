@@ -1993,7 +1993,7 @@
         "tests/test_pm_evidence_artifact_binding_modes.py",
         "tests/test_pm_working_notebook_contracts.py"
       ],
-      "line_count": 7688,
+      "line_count": 7689,
       "path": "Plans/Automated_Testing_System.md",
       "plan_unit_count": 86,
       "plan_unit_ids": [
@@ -2154,7 +2154,7 @@
         "wonderer_grilling_contract_coverage",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "dcf299e2c18b46aa7c3c11c90ccb49eba2afe60bf9cbc25fa1b32a0d8d083754",
+      "sha256": "a8fcc74a291b3eaf4e4d1024dcdbab161d535245732f9b81b2e1663eee2f1727",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 85,
@@ -2312,6 +2312,7 @@
         "python3 scripts/pm-working-notebook-contracts.py",
         "python3 scripts/pm7-canon-check.py",
         "python3 scripts/pm_coordination_events.py",
+        "python3 scripts/pm_ds15_p2b_cases.py --check",
         "reports/event-authority-20260911/step-08-current-child-scope-validation.md",
         "scratchpad/pm-integration-20260831/audits/onboarding-doctor-128-current-runner/audit_runner.py",
         "scripts/pm-assistant-contract-check.py",
@@ -17560,7 +17561,7 @@
         "workspace_tab_identity_drift",
         "worktree_owner_boundary_drift"
       ],
-      "sha256": "90cd08802528f44afeed97ce6584d109b22711f7797321f009d97c3803132eb4",
+      "sha256": "a79c20dd821702e4fc27a263a82fa91f75e77e973902285caf3074c4aa9d37dc",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 188,
@@ -21754,7 +21755,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-08T05:28:36Z",
+  "generated_at_utc": "2026-11-11T20:16:15Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
