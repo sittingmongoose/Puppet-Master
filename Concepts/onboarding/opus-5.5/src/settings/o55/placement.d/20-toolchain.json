@@ -52,14 +52,14 @@
    "help": "Which container engine Puppet Master uses, and when the Docker tools show.",
    "order": 5,
    "owner": {
-    "text": "Running containers, their logs and images live in the Docker Manager. The computers that run them are listed in Server & Project Location › Servers.",
+    "text": "Running containers, their logs and images live in the Docker Manager. The computers that run them are in Hosts.",
     "buttons": [
      {
       "label": "Open Docker Manager",
       "action": "open-docker-manager"
      },
      {
-      "label": "Open Servers",
+      "label": "Open Hosts",
       "action": "open-hosts-manager"
      }
     ]

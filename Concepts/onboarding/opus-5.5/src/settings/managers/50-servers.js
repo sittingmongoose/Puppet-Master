@@ -1490,15 +1490,6 @@
       closeOverlay(); refresh(); PM51.toast(`${r.name} removed`, 'Set it up again any time.', 'info');
     }, true);
   }
-  /* Containers & Execution › "Open Servers" (its action open-hosts-manager) lands on the Servers tab, where the computers
-     that run work are listed (codework D2: it set the retired page's state.serverTab = 'hosts', which this manager never
-     reads, so it opened on Home & Location, and nothing here is called Hosts). */
-  const pm51ServersOriginalDispatch = dispatchAction;
-  dispatchAction = function (action, el, event) {
-    if (action !== 'open-hosts-manager') return pm51ServersOriginalDispatch.apply(this, arguments);
-    PM51.setTab(ID, 'servers'); PM51.go('system', 'servers');
-    if (document.querySelector(`[data-continuous-workspace-body="${ID}"]`)) PM51.refresh(ID, { swap: false });
-  };
   /* The key list and each server's sign-in are inventory rows drawn here: search and Details land on the Servers tab,
      and Details lists how each server signs in. */
   PM51.owner(ID, id => { if (id === KEYS || id === 'code.execution.server-sign-in') PM51.setTab(ID, 'servers'); });

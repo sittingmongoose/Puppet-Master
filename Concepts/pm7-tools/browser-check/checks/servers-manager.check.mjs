@@ -10,9 +10,6 @@
 //   nothing was open. Now the device's panel comes back when the sub-action closes, with the new name after a rename.
 // - N-1: after Home & Location › Home server was changed, the roster still called the old server "Home server", so two
 //   servers claimed it. Exactly one server is the home server, and it is the one chosen.
-// - codework D2: Containers & Execution › "Open Hosts" opened Server & Project Location on Home & Location (it set the
-//   retired page's state.serverTab = 'hosts', which nothing reads) and nothing there is called Hosts. "Open Servers"
-//   lands on the Servers tab, where the computers are listed.
 // (N-2, the developer text behind "Project details" and "Where the files are", is lane fo-b11-d's: the shared cause in
 // pm7TypedConsumerResult, pm-fo-lead's ruling 1111051211.)
 // Runs on the surface the switch picks (--set sandbox=1 for T3's preview).
@@ -165,20 +162,4 @@ export const tests = {
 		s = await openTitle(f);
 		await t.check('closing the device panel itself closes it (nothing comes back)', !s.length, JSON.stringify(s));
 	},
-	async 'D2: Containers & Execution › Open Servers lands on the Servers tab, where the computers are listed'(t) {
-		await t.viewport(1440, 900);
-		const f = await t.app.open({ settleMs: 1500 });
-		await f.locator('#tab-settings').click();
-		await f.waitForSelector('#pm-settings-root .domain-link[data-domain="system"]', { timeout: 15000 });
-		await f.evaluate(() => PM51.go('code', 'code-reference'));
-		const btn = f.locator('[data-action="open-hosts-manager"]').first();
-		await btn.waitFor({ state: 'attached', timeout: 10000 });
-		await btn.scrollIntoViewIfNeeded(); await sleep(f, 400);
-		const line = await f.evaluate(() => { const b = document.querySelector('[data-action="open-hosts-manager"]'); const w = b && b.closest('.owner-redirects'); return { label: b ? b.textContent.trim() : '', text: w ? w.innerText.replace(/\s+/g, ' ') : '' }; });
-		await t.check('the button and its line name what is there: Servers, not Hosts', line.label === 'Open Servers' && !/\bHosts\b/.test(line.text) && /Servers/.test(line.text), JSON.stringify(line));
-		await btn.click();
-		await f.waitForFunction(() => PM51.tab('servers') === 'servers' && !!document.querySelector('.workspace-block[data-workspace-block="servers"] .pm51-roster'), null, { timeout: 6000 }).catch(() => {});
-		const at = await f.evaluate((B) => ({ tab: PM51.tab('servers'), selected: (document.querySelector(`${B} [role="tab"][aria-selected="true"]`) || {}).textContent || '', roster: [...document.querySelectorAll(`${B} [data-action="pm51-select"]`)].map((e) => e.innerText.replace(/\s+/g, ' ').trim()).slice(0, 4) }), BLOCK);
-		await t.check('it opens Server & Project Location on the Servers tab, with the servers listed', at.tab === 'servers' && /Servers/.test(at.selected) && at.roster.length >= 2, JSON.stringify(at));
-	}
 };
