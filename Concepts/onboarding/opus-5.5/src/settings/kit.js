@@ -768,7 +768,10 @@ PM51.refresh = function (wsId, { swap = true } = {}) {
   if (!body || !ws) { saveState(); renderApp({ soft: !state.home }); return; }
   PM51.commitBody(body, renderContinuousWorkspaceBody(ws, domain));
   body.dataset.workspaceMounted = 'true';
-  body.querySelectorAll('.manager-section').forEach(sec => sec.classList.add('section-block', 'is-revealed'));
+  /* Reduced Motion, the system's or the app's own: a section is simply there (armSectionReveal leaves it so), never
+     entered by a refresh (FO-130, astra-review-l1s); a section the commit kept is not entered in any mode (28-in-place.js) */
+  const still = motionReduced() || document.documentElement.getAttribute('data-motion') === 'reduced';
+  body.querySelectorAll('.manager-section').forEach(sec => { sec.classList.add('section-block', 'is-revealed'); if (still) sec.classList.add('pm51-instant'); });
   body.querySelectorAll('.pm51-settings-inline .settings-section').forEach(sec => sec.classList.add('section-block', 'is-revealed', 'pm51-instant'));
   PM51.applyFilters(body);
   try { syncDetailButtonStates(); } catch (e) { /* inspector chrome is cosmetic here */ }
