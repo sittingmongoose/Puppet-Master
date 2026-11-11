@@ -42,7 +42,7 @@ PM51.bound = {
   /* an ordinary row, drawn inside a manager card (e.g. inside an account or a skill) */
   row(id, { label, help } = {}) {
     const f = findSettingGlobal(id); if (!f) return '';
-    const s = label || help ? Object.assign({}, f.setting, label ? { label } : {}, help ? { description: help } : {}) : f.setting;
+    const s = label || help ? Object.assign({}, f.setting, label ? { label, o55Label: label } : {}, help ? { description: help, o55Help: help } : {}) : f.setting;
     return renderSettingRow(s, f.section, f.workspace);
   },
   rows(ids, opts) { return `<div class="setting-list o55-bound-rows">${(ids || []).map(id => PM51.bound.row(id, opts)).join('')}</div>`; }

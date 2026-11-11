@@ -296,8 +296,11 @@ function o55SentenceCase(label) {
   o55LabelCache.set(label, out);
   return out;
 }
-PM51.rowLabel = setting => (O55R[setting.id] || {}).label || o55SentenceCase(setting.label);
-PM51.rowHelp = setting => { const r = O55R[setting.id] || {}; return r.help != null ? r.help : o55FirstSentence(setting.description); };
+/* A caller's own label for a row (PM51.bound.row(id, {label}), PM51.settingRows(ids, {overrides: {id: {label}}})) is the
+   row's visible label and its control's name alike (R6: it changed only the control's aria-label, the visible label
+   still came from rows.json). */
+PM51.rowLabel = setting => setting.o55Label || (O55R[setting.id] || {}).label || o55SentenceCase(setting.label);
+PM51.rowHelp = setting => { if (setting.o55Help != null) return setting.o55Help; const r = O55R[setting.id] || {}; return r.help != null ? r.help : o55FirstSentence(setting.description); };
 renderSettingRow = function (setting, section, workspace) {
   const current = settingValue(setting);
   const changed = !!state.changed[setting.id];

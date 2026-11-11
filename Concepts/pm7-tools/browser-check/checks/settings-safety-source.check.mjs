@@ -420,6 +420,20 @@ for (const surface of ['normal', 'sandbox']) {
 		await t.check('Bring back returns it to the review', again);
 	};
 
+	tests[`labels: a caller's own row label is the visible label and the control's name (${surface})`] = async (t) => {
+		if (await skip(t)) return;
+		const f = await settings(t, surface);
+		// R6 (API, no PMConcept7 row shows it today: its two callers pass the rows.json label): PM51.bound.row and
+		// PM51.settingRows with a label override drew rows.json's label and named the control with the override
+		const r = await f.evaluate(() => {
+			const read = (html) => { const d = document.createElement('div'); d.innerHTML = html; const lab = d.querySelector('.setting-label'); const ctl = d.querySelector('[aria-label][data-setting], [role="switch"][aria-label]'); return { visible: lab ? [...lab.childNodes].filter((n) => n.nodeType === 3).map((n) => n.textContent).join('').trim() : '', name: ctl ? ctl.getAttribute('aria-label') : '', help: (d.querySelector('.setting-help, .setting-desc, .setting-description') || {}).textContent || '' }; };
+			return { bound: read(PM51.bound.row('ai.accounts.opencode-enable', { label: 'Probe label B', help: 'Probe help B.' })), rows: read(PM51.settingRows(['ai.accounts.opencode-enable'], { overrides: { 'ai.accounts.opencode-enable': { label: 'Probe label S' } } })) };
+		});
+		await t.check('PM51.bound.row: the visible label is the caller\'s', r.bound.visible === 'Probe label B' && r.bound.name === 'Probe label B', JSON.stringify(r.bound));
+		await t.check('PM51.bound.row: the help is the caller\'s', /Probe help B/.test(r.bound.help), JSON.stringify(r.bound));
+		await t.check('PM51.settingRows override: the visible label is the caller\'s', r.rows.visible === 'Probe label S' && r.rows.name === 'Probe label S', JSON.stringify(r.rows));
+	};
+
 	tests[`load: pins and key uses read the same before Source Control draws (${surface})`] = async (t) => {
 		if (await skip(t)) return;
 		const f = await settings(t, surface);

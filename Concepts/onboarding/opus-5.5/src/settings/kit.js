@@ -525,7 +525,7 @@ PM51.settingRows = (ids, { title, help, overrides = {}, cls, id: sectionId } = {
     if (override.control || override.label) pm51RowOverrides[id] = override;
     let setting = f.setting;
     if (override.control) setting = Object.assign({}, setting, { control: override.control });
-    if (override.label) setting = Object.assign({}, setting, { label: override.label });
+    if (override.label) setting = Object.assign({}, setting, { label: override.label, o55Label: override.label });
     const section = f.section && f.section.inline ? f.section : Object.assign({ inline: true }, f.section || { id: 'manual', label: title || '' });
     return renderSettingRow(setting, section, f.workspace);
   }).filter(Boolean).join('');
