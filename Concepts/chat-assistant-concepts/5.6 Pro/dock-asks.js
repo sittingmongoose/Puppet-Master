@@ -37,7 +37,8 @@
     read: { verb: 'read a file', noun: 'read', word: 'Read' },
     webfetch: { verb: 'open a web page', noun: 'page', word: 'Web fetch' },
     websearch: { verb: 'search the web', noun: 'search', word: 'Web search' },
-    host: { verb: 'reconnect an execution host', noun: 'reconnect', word: 'Execution host' }
+    host: { verb: 'reconnect an execution host', noun: 'reconnect', word: 'Execution host' },
+    browser: { verb: 'use browser capture', noun: 'capture', word: 'Browser capture' }
   };
   var PATH_TOOLS = { edit: 1, read: 1, glob: 1, grep: 1 };
   function tool(a) { var t = TOOL[a.tool] || { verb: 'use ' + a.tool, noun: 'call', word: a.tool }; return a.verb ? { verb: a.verb, noun: t.noun, word: t.word } : t; }
@@ -146,6 +147,16 @@
   function sameAsk(a, b) { return a !== b && scopeKey(a) === scopeKey(b) && a.tool === b.tool && a.suggested === b.suggested; }
   function drop(id) { var a = find(id), i = asks.indexOf(a); if (i >= 0) asks.splice(i, 1); }
   function pending(id) { return !!autoIds[id]; }
+  /* An owner that must decide at once (browser capture's policy guard runs inside the action it holds) asks whether a
+     grant already covers a call: if one does, the one-line receipt is written now and the call goes ahead unasked. */
+  function covered(o) {
+    var a = make(o || {}), g = grantFor(a);
+    if (!g) return false;
+    var ctx = EXT.ctx && EXT.ctx(), t = tool(a), title = (g.scope === 'session' ? 'Allowed by this session’s grant: ' : 'Allowed by your rule: ') + t.verb;
+    if (ctx && ctx.addReceipt) ctx.addReceipt('permission-answer', title, (a.target ? a.target + ' · ' : '') + 'matches ' + g.pattern + '. Nothing was asked.');
+    announce(title);
+    return true;
+  }
   function find(id) { for (var i = 0; i < asks.length; i++) if (asks[i].id === id) return asks[i]; return null; }
   function patternOf(a) { var p = a.ui.pattern != null ? a.ui.pattern : a.suggested; return String(p).trim() || a.suggested; }
 
@@ -374,5 +385,5 @@
     if (back) { e.preventDefault(); e.stopPropagation(); back.click(); }
   }, true);
 
-  window.PM56_ASKS = { ask: ask, ensure: ensure, drop: drop, parts: parts, pending: pending, list: function () { return asks.slice(); }, grants: function () { return grants.slice(); }, suggest: suggest };
+  window.PM56_ASKS = { ask: ask, ensure: ensure, drop: drop, parts: parts, pending: pending, covered: covered, list: function () { return asks.slice(); }, grants: function () { return grants.slice(); }, suggest: suggest };
 })();
