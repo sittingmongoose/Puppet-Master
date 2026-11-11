@@ -217,7 +217,11 @@ const DETAIL = async (arg) => {
 	const [manager, tab] = mt.split(':');
 	/* only this manager's own detail panes (another manager's pane on the same page is measured under its own tab), found
 	   again after every redraw: a tab or a pick redraws the manager, and a node kept from before is no longer the page */
-	const rootNow = () => { const te = document.querySelector(`#pm-settings-root [data-action="pm51-tab"][data-manager="${manager}"][data-tab="${tab}"]`); return (te && te.closest('.pm51-mgr')) || document.getElementById('pm-settings-root'); };
+	const vis = (e) => !!e && e.getClientRects().length > 0;
+	const tabEl = () => [...document.querySelectorAll(`#pm-settings-root [data-action="pm51-tab"][data-manager="${manager}"][data-tab="${tab}"]`)].find(vis) || null;
+	const rootNow = () => { const te = tabEl(); return (te && te.closest('.pm51-mgr')) || document.getElementById('pm-settings-root'); };
+	// the tab's own panel, once it has been drawn for this tab (a panel still labelled by the last tab is the last tab's)
+	const panelNow = () => { const te = tabEl(); const pid = te && te.getAttribute('aria-controls'); const p = pid && [...rootNow().querySelectorAll(`[id="${pid}"]`)].find(vis); return p && p.getAttribute('aria-labelledby') === te.id ? p : null; };
 	const frame = () => new Promise((r) => requestAnimationFrame(() => r()));
 	/* review A-r4 (where it stopped, fault a): no fixed wait. After a tab or a pick, wait until the condition holds and the
 	   manager's detail panes have kept the same text and height for three frames in a row (4s at most) */
@@ -231,11 +235,11 @@ const DETAIL = async (arg) => {
 		}
 		return false;
 	};
-	window.PM12_KIMI.dispatchAction('pm51-tab', { manager, tab });
 	const out = { n: 0, items: 0, bad: [], all: [], unsettled: [] };
-	// the tab itself must be the current one first: until it is, the panes and picks are still the last tab's
-	const tabOn = () => { const te = document.querySelector(`#pm-settings-root [data-action="pm51-tab"][data-manager="${manager}"][data-tab="${tab}"]`); return !!te && (te.getAttribute('aria-selected') === 'true' || te.getAttribute('aria-current') === 'true' || te.getAttribute('aria-pressed') === 'true' || te.classList.contains('active') || te.classList.contains('is-active')); };
-	if (!(await settled(tabOn))) out.unsettled.push(`${mt} (the tab never became current)`);
+	// the tab must be current and its own panel drawn first: until then the panes and picks are still the last tab's
+	const tabOn = () => { const te = tabEl(); return !!te && te.getAttribute('aria-selected') === 'true' && !!panelNow(); };
+	const openTab = async () => { window.PM12_KIMI.dispatchAction('pm51-tab', { manager, tab }); return settled(tabOn); };
+	if (!(await openTab())) { out.unsettled.push(`${mt} (the tab never became current)`); return out; }
 	const cv = window.__psxCv || (window.__psxCv = document.createElement('canvas').getContext('2d'));
 	const measure = (label, item) => {
 		rootNow().querySelectorAll('.pm51-detail-content').forEach((dc) => {
@@ -255,12 +259,14 @@ const DETAIL = async (arg) => {
 	};
 	const sel = `button[data-action="pm51-select"][data-manager="${manager}"]`;
 	const name = (e) => (e.innerText || '').trim().split('\n')[0];
-	const picks = [...rootNow().querySelectorAll(sel)].filter((e) => e.getClientRects().length && e.dataset.id && (!only || name(e) === only)).map((e) => ({ id: e.dataset.id, name: name(e) }));
+	const picks = [...(panelNow() || rootNow()).querySelectorAll(sel)].filter((e) => vis(e) && e.dataset.id && (!only || name(e) === only)).map((e) => ({ id: e.dataset.id, name: name(e) }));
 	if (!picks.length && !only) measure(mt, '');
 	for (const p of picks) {
 		const q = `${sel}[data-id="${CSS.escape(p.id)}"]`;
-		const b = rootNow().querySelector(q);
-		if (!b) { out.unsettled.push(`${mt} › ${p.name} (gone)`); continue; }
+		// a pick can change the list (or leave the tab): the tab is opened again whenever this item isn't in its panel
+		let b = (panelNow() || { querySelector: () => null }).querySelector(q);
+		if (!b) { await openTab(); b = (panelNow() || { querySelector: () => null }).querySelector(q); }
+		if (!b) { out.unsettled.push(`${mt} › ${p.name} (gone from the tab)`); continue; }
 		b.click();
 		const ok = await settled(() => { const nb = rootNow().querySelector(q); return !!nb && (nb.getAttribute('aria-current') === 'true' || nb.classList.contains('active')); });
 		if (!ok) { out.unsettled.push(`${mt} › ${p.name}`); continue; }
