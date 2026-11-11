@@ -3,9 +3,10 @@
 //   ("Show Actual Model Used"), and a real hover over a switch on Providers & Accounts › Models shows that label with
 //   what a press does ("Turn this setting on." / "...off."), never "Change this setting.".
 // FO-135: the Settings rail has no "Project: … · concept fixture" line; a chapter page's toolbar project button names the project.
-// FO-131: the base scope pickers that only worded the same choice differently say This project / Every project
-//   (Toolchain's Edit panel, the persona scope row), and a command's panel labels its picker "Available in" as its
-//   set-up does. The list of every base picker, and those left for stream P's rule, is batch10/fo-b10-e/SCOPE-LIST.md.
+// FO-131: the base scope pickers follow stream P's rule (batch10/fo-b10-e/SCOPE-LIST.md): a thing you add is
+//   "Where it’s available: This project / Every project" (Toolchain's Edit panel, the persona scope row, a command's
+//   panel); Git's identity is a computer's: "Where it applies: Every project on <computer> / This project", never
+//   "on this server" or "Only this project".
 // Each test runs on the surfaces asked for (normal and T3's sandbox unless --set sandbox= picks one).
 
 async function settings(t, surface, [w, h] = [1920, 1080]) {
@@ -86,16 +87,17 @@ for (const surface of ['normal', 'sandbox']) {
 		if (!t.app.surfaces().includes(surface)) { await t.check(`${surface} surface not asked for`, true); return; }
 		const f = await settings(t, surface);
 		const persona = await f.evaluate(() => ['project', 'global'].map((v) => PM51.valueLabel('personas.library.custom-scope', v)));
-		await t.check('Personas › Save new personas for: This project / Every project', persona.join(' / ') === 'This project / Every project', persona.join(' / '));
-		// Toolchain › a language server's Edit panel: Use it in
+		await t.check('Personas › the persona scope: This project / Every project', persona.join(' / ') === 'This project / Every project', persona.join(' / '));
+		// Toolchain › a language server's Edit panel
 		await go(t, f, 'code', 'toolchain');
 		const opened = await f.evaluate(() => { const b = document.querySelector('[data-continuous-workspace-body="toolchain"] [data-action="pm51-toolchain-edit-lsp"]'); if (!b) return false; b.click(); return true; });
 		if (await t.check('Toolchain: a language server has Edit', opened)) {
-			const opts = await f.waitForFunction(() => {
+			const got = await f.waitForFunction(() => {
 				const sel = [...document.querySelectorAll('select[data-field="scope"]')].find((s) => s.closest('aside, .drawer, .pm51-panel, [role="dialog"]'));
-				return sel ? [...sel.options].map((o) => o.textContent.trim()) : false;
-			}, null, { timeout: 8000 }).then((h) => h.jsonValue()).catch(() => []);
-			await t.check('Toolchain › Edit › Use it in: This project / Every project', opts.join(' / ') === 'This project / Every project', opts.join(' / ') || 'no picker');
+				const lab = sel && sel.closest('.pm51-field') && sel.closest('.pm51-field').querySelector('.pm51-field-label');
+				return sel ? { opts: [...sel.options].map((o) => o.textContent.trim()), label: lab ? lab.textContent.trim() : '' } : false;
+			}, null, { timeout: 8000 }).then((h) => h.jsonValue()).catch(() => ({ opts: [], label: '' }));
+			await t.check('Toolchain › Edit: “Where it’s available: This project / Every project”', got.label === 'Where it’s available' && got.opts.join(' / ') === 'This project / Every project', `${got.label}: ${got.opts.join(' / ') || 'no picker'}`);
 			await t.page.keyboard.press('Escape');
 			await t.page.waitForTimeout(400);
 		}
@@ -109,7 +111,21 @@ for (const surface of ['normal', 'sandbox']) {
 				const l = secs.length && secs[secs.length - 1].querySelector('.pm51-field-label');
 				return l ? l.textContent.trim() : false;
 			}, null, { timeout: 8000 }).then((h) => h.jsonValue()).catch(() => '');
-			await t.check('Commands › Where it is available: the picker says "Available in"', label === 'Available in', `label "${label}"`);
+			await t.check('Commands › a command’s panel: the picker says “Where it’s available”', label === 'Where it’s available', `label "${label}"`);
+		}
+		// Source Control › Git identity: a computer's setting
+		await t.page.keyboard.press('Escape');
+		await go(t, f, 'source', 'source-manager');
+		await f.evaluate(() => PM51.switchTab('source-manager', 'defaults'));   // Defaults & Safety › You and sign-in › Set up Git
+		const opened2 = await f.waitForFunction(() => { const b = document.querySelector('[data-continuous-workspace-body="source-manager"] [data-action="pm51-source-git-setup"]'); if (!b) return false; b.click(); return true; }, null, { timeout: 8000 }).then(() => true).catch(() => false);
+		if (await t.check('Source Control: the Git identity set-up opens', opened2)) {
+			const git = await f.waitForFunction(() => {
+				const sel = document.querySelector('select.o55-gs-scope');
+				const lab = sel && sel.closest('.pm51-field') && sel.closest('.pm51-field').querySelector('.pm51-field-label');
+				return sel ? { opts: [...sel.options].map((o) => o.textContent.trim()), label: lab ? lab.textContent.trim() : '' } : false;
+			}, null, { timeout: 8000 }).then((h) => h.jsonValue()).catch(() => ({ opts: [], label: '' }));
+			await t.check('Source Control › Git identity: “Where it applies: Every project on <computer> / This project”', git.label === 'Where it applies' && /^Every project on \S/.test(git.opts[0] || '') && git.opts[1] === 'This project', `${git.label}: ${git.opts.join(' / ') || 'no picker'}`);
+			await t.page.keyboard.press('Escape');
 		}
 	};
 }

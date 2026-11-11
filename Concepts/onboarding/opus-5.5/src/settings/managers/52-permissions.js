@@ -174,7 +174,7 @@
     const body = PM51.section({ title: 'In short', body: PM51.rows([
       { label: 'Summary', value: p.description || 'Your own profile' },
       { label: 'Safety level', help: 'Built-in profiles are the preset levels; your own count as Custom.', value: PM51.valueLabel('safety.rules.permission-preset', presetOf(p)) },
-      { label: 'Applies', help: 'This project, only until you close the app, or every project.', value: scopeWord(p.scope) },
+      { label: 'Applies', help: 'This project, only until you close the app, or everywhere.', value: scopeWord(p.scope) },
       { label: 'Asks before', value: cap1(listSentence(sum.asks, 'nothing extra')) },
       { label: 'Never allows', value: cap1(listSentence(sum.never, 'nothing is fully blocked')) }
     ]) });
@@ -208,7 +208,7 @@
       }
     }));
   }
-  const scopeWord = s => s === 'Session' ? 'Until you close the app' : s === 'User' ? 'Every project' : 'This project';
+  const scopeWord = s => s === 'Session' ? 'Until you close the app' : s === 'User' ? 'Everywhere' : 'This project';   /* FO-131, P's rule: a rule keeps the ladder words */
   const cap1 = s => s.charAt(0).toUpperCase() + s.slice(1);
   function duplicate(p) {
     const c = clone(p); c.id = uid('permission', `${p.name}-copy`); c.name = `${p.name} copy`; c.status = 'available'; c.abilities = abilitiesOf(p); c.preset = 'custom';
@@ -366,7 +366,7 @@
     steps.push({ label: 'Rules', icon: 'list', title: 'Which rules come with it?', lead: 'These rules travel with the profile and are checked before this project’s rules. Switch one off to leave it out.', render: rulesStep,
       recap: d => plural(keptRules(d).length, 'rule') });
     steps.push({ label: 'Name', icon: 'edit', title: 'What should it be called?', lead: 'A name you will recognise when you switch profiles.',
-      render: d => `<div class="o55-setup-fields">${PM51.field('Name', `<input class="text-control o55-pw-name" value="${a(d.name)}" placeholder="e.g. Weekend experiments" autocomplete="off"/>`)}${PM51.field('In one line', `<input class="text-control o55-pw-desc" value="${a(d.description)}" placeholder="What it is for" autocomplete="off"/>`)}${PM51.field('Where it applies', PM51.select(d.scope, [['Project', 'This project'], ['Session', 'Only until I close the app'], ['User', 'Every project']], { cls: 'o55-pw-scope', label: 'Where it applies' }))}</div>`,
+      render: d => `<div class="o55-setup-fields">${PM51.field('Name', `<input class="text-control o55-pw-name" value="${a(d.name)}" placeholder="e.g. Weekend experiments" autocomplete="off"/>`)}${PM51.field('In one line', `<input class="text-control o55-pw-desc" value="${a(d.description)}" placeholder="What it is for" autocomplete="off"/>`)}${PM51.field('Where it applies', PM51.select(d.scope, [['Project', 'This project'], ['Session', 'Only until I close the app'], ['User', 'Everywhere']], { cls: 'o55-pw-scope', label: 'Where it applies' }))}</div>`,
       collect: (w, d) => { const n = w.querySelector('.o55-pw-name'), ds_ = w.querySelector('.o55-pw-desc'), sc = w.querySelector('.o55-pw-scope'); if (n) { d.name = String(n.value || '').trim(); d.nameTouched = true; } if (ds_) d.description = String(ds_.value || '').trim(); if (sc) d.scope = sc.value; },
       check: d => !d.name ? 'Give it a name.' : profiles().some(x => x.id !== d.editing && x.name.toLowerCase() === d.name.toLowerCase()) ? `There is already a profile called ${d.name}.` : '',
       recap: d => d.name });
