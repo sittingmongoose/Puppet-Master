@@ -75,7 +75,17 @@ function o55BrandMark(brand, size) {
   if (P && typeof P.providerMark === 'function' && brand) { try { return P.providerMark(brand, size); } catch (e) { /* fall through */ } }
   return `<b class="o55-pick-letter">${h(String(brand || '?').charAt(0))}</b>`;
 }
-function o55PickModel(setting, ch) {
+/* The choices the picker shows, and how it saves. A per-thing setting (a persona's Preferred model, a Goal template's
+   Kind of job) asks its owner (kit.d/45-scoped.js PM51.pickSource): from one thing's own row it shows that row's own
+   choices and saves through that row; opened any other way it is read only ("What it can be"), as the old buttons were.
+   Every other setting keeps its inventory choices and the global save. */
+function o55PickSource(setting, ch) {
+  const src = PM51.pickSource ? PM51.pickSource(setting) : null;
+  if (!src) return { ch, src: null };
+  if (src.static) return { ch: { kind: 'single', items: ch.items.map(it => Object.assign({}, it, { on: false, why: '', off: true, reason: src.reason })) }, src };
+  return { ch: { kind: 'single', items: src.items.map(it => Object.assign({ marks: [] }, it)) }, src };
+}
+function o55PickModel(setting, ch, src) {
   const model = o55IsModelChoice(setting);
   const items = ch.items.map((it, i) => {
     const raw = String(it.raw), slash = model ? raw.indexOf('/') : -1, pid = slash > 0 ? raw.slice(0, slash) : '';
@@ -88,20 +98,21 @@ function o55PickModel(setting, ch) {
      groups its menu; data-index stays the choice's own index */
   const brands = model ? [...new Set(items.map(x => x.brand))] : [];
   const rows = model ? brands.flatMap(b => items.filter(x => x.brand === b)) : items;
-  return { model, items: rows, brands, current: rows.find(x => x.on) || null };
+  return { model, items: rows, brands, current: rows.find(x => x.on) || null, static: !!(src && src.static), reason: src && src.static ? src.reason : '' };
 }
 function o55PickTrigger(setting, pm) {
   const cur = pm.current, label = PM51.rowLabel(setting);
-  const name = cur ? cur.name : PM51.valueText(setting, settingValue(setting));
+  /* read only: it names no current value (each thing has its own, listed above) */
+  const name = pm.static ? `See the ${pm.items.length} choices` : cur ? cur.name : PM51.valueText(setting, settingValue(setting));
   const marks = cur ? cur.marks : [];
-  const sub = cur ? [pm.model ? cur.brand : '', cur.sub].filter(Boolean).join(' · ') : '';
+  const sub = pm.static ? pm.reason : cur ? [pm.model ? cur.brand : '', cur.sub].filter(Boolean).join(' · ') : '';
   return `<button type="button" class="o55-pick-trigger${pm.model ? ' is-model' : pm.current && pm.current.swatch ? ' has-dot' : ''}" role="combobox" aria-haspopup="listbox" aria-expanded="false" aria-label="${a(`${label}: ${name}${marks.length ? ', ' + marks.join(', ') : ''}`)}" data-action="o55-insp-pick" data-setting="${a(setting.id)}">${pm.model ? `<span class="o55-pick-mark" aria-hidden="true">${o55BrandMark(cur ? cur.brand : '', 16)}</span>` : cur && cur.swatch ? `<span class="o55-insp-dot" aria-hidden="true" style="background:${cur.swatch}"></span>` : ''}<span class="o55-pick-copy"><strong>${h(name)}${marks.map(m => `<em>${h(m)}</em>`).join('')}</strong>${sub ? `<small>${h(sub)}</small>` : ''}</span><span class="o55-pick-chev" aria-hidden="true">${icon('down')}</span></button>`;
 }
 function o55PickItems(pm, idBase) {
   let html = '', last = null;
   pm.items.forEach(it => {
     if (pm.model && it.brand !== last) { html += `<div class="pm51-popout-group o55-pick-group" role="presentation" data-brand="${a(it.brand)}">${h(it.brand)}</div>`; last = it.brand; }
-    html += `<div class="pm51-popout-item o55-pick-item${it.why ? ' has-why' : ''}${pm.model ? ' is-model' : it.swatch ? ' has-dot' : ''}" role="option" id="${idBase}-${it.index}" data-index="${it.index}" data-brand="${a(it.brand)}" aria-selected="${it.on}"${it.why ? ` aria-disabled="true" data-disabled-reason="${a(it.why)}"` : ''}>${pm.model ? `<span class="o55-pick-mark" aria-hidden="true">${o55BrandMark(it.brand, 15)}</span>` : it.swatch ? `<span class="o55-insp-dot" aria-hidden="true" style="background:${it.swatch}"></span>` : ''}<span class="o55-pick-copy"><strong>${h(it.name)}${it.marks.map(m => `<em>${h(m)}</em>`).join('')}</strong>${it.sub ? `<small>${h(it.sub)}</small>` : ''}</span><span class="o55-pick-tick" aria-hidden="true">${it.on ? icon('check') : ''}</span></div>`;
+    html += `<div class="pm51-popout-item o55-pick-item${it.why ? ' has-why' : ''}${pm.model ? ' is-model' : it.swatch ? ' has-dot' : ''}" role="option" id="${idBase}-${it.index}" data-index="${it.index}" data-brand="${a(it.brand)}" aria-selected="${it.on}"${it.why || it.off ? ` aria-disabled="true" data-disabled-reason="${a(it.why || it.reason)}"` : ''}>${pm.model ? `<span class="o55-pick-mark" aria-hidden="true">${o55BrandMark(it.brand, 15)}</span>` : it.swatch ? `<span class="o55-insp-dot" aria-hidden="true" style="background:${it.swatch}"></span>` : ''}<span class="o55-pick-copy"><strong>${h(it.name)}${it.marks.map(m => `<em>${h(m)}</em>`).join('')}</strong>${it.sub ? `<small>${h(it.sub)}</small>` : ''}</span><span class="o55-pick-tick" aria-hidden="true">${it.on ? icon('check') : ''}</span></div>`;
   });
   return html + '<div class="pm51-popout-empty" hidden>No matches</div>';
 }
@@ -149,6 +160,16 @@ function o55PickCommit(id, raw) {
   if (o55SameValue(settingValue(found.setting), raw)) return;
   if (!commitSettingValue(id, raw)) return;
   saveState(); o55InspRefresh(id); o55Changed(found.setting, raw);
+  o55PickFocusBack(id);
+}
+/* a per-thing setting saves through its thing's own row (its scoped setter stores it on the thing and says so), then
+   the panel follows: its Now list and the picker read the thing again */
+function o55PickOwnerCommit(id, src, raw) {
+  if (!src.commit(raw)) { showToast('Not saved', 'Change it where it is shown.', 'info', 2600); return; }
+  PM51.syncInspector();
+  o55PickFocusBack(id);
+}
+function o55PickFocusBack(id) {
   /* a pick hands focus back to the picker, as a select does; a model change can re-render the page in place
      (28-in-place.js lets the focused control go), and a Theme pick re-renders it again when its look transition ends
      (NieR's exit most of all), so the new trigger takes focus back whenever it was dropped, until the look is settled */
@@ -162,7 +183,7 @@ function o55PickCommit(id, raw) {
   const watch = () => { back(); if (busy() && Date.now() < until) setTimeout(watch, 100); else requestAnimationFrame(() => requestAnimationFrame(back)); };
   back(); requestAnimationFrame(() => requestAnimationFrame(watch));
 }
-const o55PickOptions = pm => { const o = []; pm.items.forEach(it => { o[it.index] = { value: it.raw, label: it.name, disabled: !!it.why, reason: it.why || '' }; }); return o; };
+const o55PickOptions = pm => { const o = []; pm.items.forEach(it => { o[it.index] = { value: it.raw, label: it.name, disabled: !!(it.why || it.off), reason: it.why || it.reason || '' }; }); return o; };
 const o55PickBrands = (pm, size) => [`<button type="button" class="o55-pick-chip is-on" data-brand="" aria-pressed="true" aria-label="All makers" data-pm-hover-label="All makers">${icon('users')}</button>`]
   .concat(pm.brands.map(b => `<button type="button" class="o55-pick-chip" data-brand="${a(b)}" aria-pressed="false" aria-label="${a(b)}" data-pm-hover-label="${a(b)}">${o55BrandMark(b, size)}</button>`)).join('');
 /* The rows unfold in the panel under the trigger, with the makers as a strip (the panel is too narrow for the chat's
@@ -174,7 +195,7 @@ function o55InlineClose(focusTrigger) {
   e.box.remove();
   if (focusTrigger && e.trigger.isConnected) { try { e.trigger.focus({ preventScroll: true }); } catch (err) { e.trigger.focus(); } }
 }
-function o55InlineOpen(trigger, setting, pm) {
+function o55InlineOpen(trigger, setting, pm, src) {
   if (o55Inline && o55Inline.trigger === trigger) { o55InlineClose(true); return; }
   o55InlineClose(false); PM51.closePopouts();
   const label = PM51.rowLabel(setting), id = POP_ID();
@@ -185,7 +206,7 @@ function o55InlineOpen(trigger, setting, pm) {
   const entry = { el: list, trigger, options: o55PickOptions(pm), active: -1, searchInput: box.querySelector('input'), brand: '' };
   o55Inline = { box, trigger, entry };
   trigger.setAttribute('aria-expanded', 'true'); trigger.setAttribute('aria-controls', id + '-list');
-  const pick = index => { const o = entry.options[index]; if (!o) return; if (o.disabled) { showToast('Not available', o.reason || 'Not available here.', 'info', 2600); return; } o55InlineClose(true); o55PickCommit(setting.id, o.value); };
+  const pick = index => { const o = entry.options[index]; if (!o) return; if (o.disabled) { showToast('Not available', o.reason || 'Not available here.', 'info', 2600); return; } o55InlineClose(true); if (src && src.commit) o55PickOwnerCommit(setting.id, src, o.value); else o55PickCommit(setting.id, o.value); };
   const sel = pm.items.find(x => x.on), first = pm.items.find(x => !x.why);
   setActiveOption(entry, (sel || first || { index: -1 }).index, false);
   const node = list.querySelector(`[data-index="${entry.active}"]`);
@@ -224,9 +245,9 @@ document.addEventListener('keydown', e => {
   e.preventDefault(); e.stopPropagation(); t.click();
 }, true);
 function o55PickerHtml(setting, ch) {
-  const pm = o55PickModel(setting, ch);
+  const ps = o55PickSource(setting, ch), pm = o55PickModel(setting, ps.ch, ps.src);
   const count = pm.model ? `${pm.items.length} models from ${pm.brands.length} makers` : `${pm.items.length} choices`;
-  return `<section class="o55-insp-block o55-pick-block"><h4>Your choices <span class="o55-pick-count">· ${h(count)}</span></h4>${o55PickTrigger(setting, pm)}</section>`;
+  return `<section class="o55-insp-block o55-pick-block${pm.static ? ' is-static' : ''}"><h4>${pm.static ? 'What it can be' : 'Your choices'} <span class="o55-pick-count">· ${h(count)}</span></h4>${o55PickTrigger(setting, pm)}</section>`;
 }
 function o55ChoicesHtml(setting, ch) {
   if (!ch) return '';
@@ -396,7 +417,8 @@ dispatchAction = function (action, el, event) {
   if (action === 'o55-insp-pick') {
     const found = findSettingGlobal(el.dataset.setting); if (!found) return;
     const ch = o55ChoicesFor(found.setting, settingValue(found.setting)); if (!ch) return;
-    o55InlineOpen(el, found.setting, o55PickModel(found.setting, ch)); return;
+    const ps = o55PickSource(found.setting, ch);
+    o55InlineOpen(el, found.setting, o55PickModel(found.setting, ps.ch, ps.src), ps.src); return;
   }
   if (action === 'reset-setting') {
     const id = el.dataset.setting, found = findSettingGlobal(id); if (!found || !restoreSettingDefault(id)) return;
