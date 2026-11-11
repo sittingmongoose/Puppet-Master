@@ -1,0 +1,332 @@
+// FO-159 (Jared, 2026-11-11: "B, use 11 px like Usage"): Settings' smallest text is 11 px, the size Usage's
+// quiet text uses. The item covers the 10.5 px small text — choice labels, small buttons, segmented options,
+// chips, key caps, row and roster meta, the manager tabs, the inspector's small lines — which lives in
+// base/style/pm4-settings-css.css, base/style/pm51-settings-refresh.css, base/script/pm4-settings-js.js,
+// src/settings/** and the managers' own <style> blocks; every one of those declarations now reads 11 px and
+// nothing else about them changed.
+//
+// Two parts, both on the surfaces asked for (normal and T3's sandbox unless --set sandbox= picks one):
+//   size — every visible word Settings paints, on each chapter and each manager tab, in all ten looks, is at
+//          least 11 px. Settings' deliberately smaller micro-labels (9–10.3 px: rail headings, kickers, table
+//          heads, tooltips, form help) are not in the item and stay where they are: they are counted and logged
+//          under NOTE, never silently dropped, so the residue is on the record for whoever owns that call.
+//   fit  — the controls whose text this item grew still hold it at 740x900, 860x900 and 1280x500: no word is
+//          cut by its control's box, and every control that draws its label on one line (white-space: nowrap,
+//          a button, chip, tab, key cap or badge) still draws it on one line (Range rects: exactly one).
+// A control that is built to ellipsize its own text (text-overflow: ellipsis: resource names and meta) is
+// exempt from the cut rule and still held to one line.
+//   browser-check run Concepts/pm7-tools/browser-check/checks/settings-min-text.check.mjs --set page=<build>
+// --set only=size|fit, --set looks=a,b,c, --set surfaces=normal,sandbox, --set widths=740x900,860x900,1280x500,
+// --set list=1 logs every sub-11 px element it finds and makes no assertion (to re-seed LEGACY).
+import { LOOKS } from '../browser-check.config.mjs';
+
+const SIZES = [[740, 900], [860, 900], [1280, 500]];
+const FIT_LOOKS = ['basic-dark', 'retro-light', 'nier-dark'];
+
+/* Settings' micro text this item left alone (9–10.3 px). Matched with Element.matches, so a rule is a selector. */
+const LEGACY = [];
+
+/* Every selector whose declared size went 10.5 px -> 11 px in this item: the controls part fit measures. */
+const AFFECTED = [
+	'#panel-settings .search-result-meta',
+	'#panel-settings .workspace-block .manager-page > .embedded-page-actions .btn',
+	'#panel-settings .workspace-block .manager-page > .embedded-page-actions .icon-btn',
+	'#panel-settings .btn',
+	'#panel-settings .btn.small',
+	'#panel-settings .badge',
+	'#panel-settings .home-panel-meta',
+	'#panel-settings .setup-meta',
+	'#panel-settings .domain-card-desc',
+	'#panel-settings .setting-description',
+	'#panel-settings .segmented button',
+	'#panel-settings .stepper-value',
+	'#panel-settings .chip-select button',
+	'#panel-settings .reorder-item',
+	'#panel-settings .detail-status',
+	'#panel-settings .related-links button',
+	'#panel-settings .manager-tab',
+	'#panel-settings .resource-row-name',
+	'#panel-settings .resource-row-meta',
+	'#panel-settings .resource-sub',
+	'#panel-settings .stat-label',
+	'#panel-settings .stat-note',
+	'#panel-settings .route-card-copy span',
+	'#panel-settings .sound-copy strong',
+	'#panel-settings .sound-copy span',
+	'#panel-settings .event-cell',
+	'#panel-settings .panel-subtitle',
+	'#panel-settings .panel-head-kicker',
+	'#panel-settings .info-key',
+	'#panel-settings .info-value',
+	'#panel-settings .alert-strip',
+	'#panel-settings .data-table td',
+	'#panel-settings .route-desc',
+	'#panel-settings .route-primary-value',
+	'#panel-settings .workflow-number',
+	'#panel-settings .workflow-title',
+	'#panel-settings .filter-chip',
+	'#panel-settings .prompt-box',
+	'#panel-settings .dialog-sub',
+	'#panel-settings .form-label',
+	'#panel-settings .check-row',
+	'#panel-settings .menu-item',
+	'#panel-settings .toast-title',
+	'#panel-settings .toast-message',
+	'#panel-settings .details-btn',
+	'#panel-settings .pm51-kbd',
+	'#panel-settings .pm51-tech-inline',
+	'#panel-settings .pm51-roster .roster-title',
+	'#panel-settings .pm51-roster .resource-row-meta .pm51-status',
+	'#panel-settings .pm51-hero-eyebrow',
+	'#panel-settings .pm51-hero-facts dt',
+	'#panel-settings .pm51-meter-note',
+	'#panel-settings .pm51-commands-ph code',
+	'#panel-settings .o55-changed',
+	'#panel-settings .o55-risk',
+	':is(#panel-settings, .o55nc-host) .o55nc-preset small',
+	':is(#panel-settings, .o55nc-host) .o55nc-pv-dialog p',
+	':is(#panel-settings, .o55nc-host) .o55nc-ghead > span',
+	'.o55nc-host .o55nc .btn',
+	'html[data-o55-nier] .o55nc-pop-eye',
+	'html[data-o55-nier-parts~="headers"] .o55nc-pop-foot .o55nc-pop-done',
+	'#panel-settings .o55-roster-group > span',
+	'.o55-pick-item .o55-pick-copy small',
+	'#panel-settings .o55g-recap-title',
+];
+
+/* Every visible word under Settings: its own text nodes (or a field's value/placeholder), the size it is painted
+   at, and which element it belongs to. Self-contained: serialized into the page alone. */
+const SCAN = ([legacy]) => {
+	const roots = ['#pm-settings-root', '#pm-settings-portals', '#panel-settings']
+		.flatMap((sel) => [...document.querySelectorAll(sel)]);
+	const seen = new Set();
+	const vis = (el) => {
+		// a display:none ancestor has no client rects either, so the rect test already covers it
+		if (!el.getClientRects().length) return false;
+		if (el.closest('[inert], [aria-hidden="true"]')) return false;
+		return getComputedStyle(el).visibility !== 'hidden';
+	};
+	const desc = (el) => {
+		const cls = typeof el.className === 'string' && el.className.trim() ? '.' + el.className.trim().split(/\s+/).slice(0, 3).join('.') : '';
+		const text = (el.matches('input, textarea, select') ? `${el.value || ''} ${el.getAttribute('placeholder') || ''}` : el.textContent).replace(/\s+/g, ' ').trim().slice(0, 40);
+		return `${el.tagName.toLowerCase()}${cls} "${text}"`;
+	};
+	const out = { small: [], legacy: [], fields: 0, seen: 0 };
+	for (const root of roots) {
+		for (const el of root.querySelectorAll('*')) {
+			if (seen.has(el) || el.closest('[inert], [aria-hidden="true"]')) continue;
+			seen.add(el);
+			const own = [...el.childNodes].some((n) => n.nodeType === 3 && n.textContent.trim());
+			const field = el.matches('input:not([type="hidden"]):not([type="checkbox"]):not([type="radio"]), textarea, select');
+			if (!own && !field) continue;
+			if (!vis(el)) continue;
+			const fs = parseFloat(getComputedStyle(el).fontSize);
+			out.seen++;
+			if (fs >= 11) continue;
+			const row = `${desc(el)} ${fs}px`;
+			if (legacy.some((sel) => { try { return el.matches(sel); } catch (e) { return false; } })) out.legacy.push(row);
+			else out.small.push(row);
+		}
+	}
+	// the same for a field's text: its own element is covered above, but a label wrapping a field is not
+	return out;
+};
+
+/* The controls whose text this item grew: does each still hold its words inside its own box, on the lines it
+   drew before. Self-contained: serialized into the page alone. */
+const FIT = ([affected]) => {
+	const vis = (el) => {
+		if (!el.getClientRects().length) return false;
+		if (el.closest('[inert], [aria-hidden="true"]')) return false;
+		return getComputedStyle(el).visibility !== 'hidden';
+	};
+	const oneLine = (el) => el.matches('button, .badge, .manager-tab, .filter-chip, .pm51-kbd, dt, .segmented button, .chip-select button');
+	const textRects = (el) => {
+		const r = document.createRange();
+		r.selectNodeContents(el);
+		return [...r.getClientRects()].filter((b) => b.width > 0.5 && b.height > 0.5);
+	};
+	const out = { cut: [], wrapped: [], sampled: 0, ellipsis: 0 };
+	const seen = new Set();
+	for (const sel of affected) {
+		for (const el of document.querySelectorAll(sel)) {
+			if (seen.has(el) || !el.getClientRects().length) continue;
+			seen.add(el);
+			if (!vis(el)) continue;
+			const text = (el.textContent || '').replace(/\s+/g, ' ').trim();
+			if (!text) continue;
+			out.sampled++;
+			const cs = getComputedStyle(el);
+			const b = el.getBoundingClientRect();
+			const padL = b.left + (parseFloat(cs.borderLeftWidth) || 0), padR = b.right - (parseFloat(cs.borderRightWidth) || 0);
+			const padT = b.top + (parseFloat(cs.borderTopWidth) || 0), padB = b.bottom - (parseFloat(cs.borderBottomWidth) || 0);
+			const label = `${el.tagName.toLowerCase()}${typeof el.className === 'string' && el.className.trim() ? '.' + el.className.trim().split(/\s+/)[0] : ''} "${text.slice(0, 32)}"`;
+			const rects = textRects(el);
+			if (!rects.length) continue;
+			const left = Math.min(...rects.map((r) => r.left)), right = Math.max(...rects.map((r) => r.right));
+			const top = Math.min(...rects.map((r) => r.top)), bottom = Math.max(...rects.map((r) => r.bottom));
+			const ellipsis = cs.textOverflow === 'ellipsis';
+			if (ellipsis) out.ellipsis++;
+			// cut: words painted outside the padding box, or a box that scrolls its own content sideways
+			const outside = right > padR + 0.5 || left < padL - 0.5 || bottom > padB + 0.5 || top < padT - 0.5;
+			const scrolls = cs.overflowX !== 'visible' && el.scrollWidth > el.clientWidth + 1;
+			const tall = cs.overflowY !== 'visible' && el.scrollHeight > el.clientHeight + 1;
+			if (!ellipsis && (outside || scrolls || tall)) out.cut.push(`${label} text ${Math.round(left)}..${Math.round(right)} in ${Math.round(padL)}..${Math.round(padR)}${scrolls ? ` scrollX ${el.scrollWidth}>${el.clientWidth}` : ''}${tall ? ` scrollY ${el.scrollHeight}>${el.clientHeight}` : ''}`);
+			// wrapped: a control that draws its label on one line must still draw one line box
+			if ((cs.whiteSpace === 'nowrap' || oneLine(el)) && rects.length > 1 && !ellipsis) out.wrapped.push(`${label} ${rects.length} line boxes`);
+		}
+	}
+	return out;
+};
+
+const settle = (t, ms = 350) => t.page.waitForTimeout(ms);
+
+/* The look is set the way a person sets it — the Theme and Light or dark rows' own dropdowns — because the
+   Settings engine re-applies the saved pair on every render, so a look painted without saving is reset. */
+async function setLookBySetting(t, f, look) {
+	const [family, mode] = look.split('-');
+	for (const [setting, value] of [
+		['general.visual.theme', family === 'nier' ? 'NieR' : family[0].toUpperCase() + family.slice(1)],
+		['general.visual.theme-mode', mode === 'light' ? 'Light' : 'Dark'],
+	]) {
+		const trigger = f.locator(`select[data-setting="${setting}"]`).locator('..').locator('.pm51-dd-trigger');
+		const labels = await f.locator(`select[data-setting="${setting}"] option`).allTextContents();
+		const name = labels.includes(value) ? value : `${value} ${mode === 'light' ? 'Light' : 'Dark'}`;
+		await trigger.first().scrollIntoViewIfNeeded();
+		await trigger.first().click();
+		await f.getByRole('option', { name, exact: true }).click({ timeout: 8000 });
+		await f.locator('.pm51-dd-list').waitFor({ state: 'hidden', timeout: 8000 }).catch(() => {});
+		await f.waitForFunction(() => !(window.PM_LOOK_COVERED && PM_LOOK_COVERED()) && !(window.PM_THEME_TRANSITION && PM_THEME_TRANSITION.busy && PM_THEME_TRANSITION.busy()), null, { timeout: 15000 }).catch(() => {});
+		await t.page.waitForTimeout(400);
+	}
+	await f.waitForFunction(([fam, m]) => {
+		const theme = document.documentElement.getAttribute('data-theme') || '';
+		const nier = !!(window.PM_NIER && PM_NIER.on()) || theme.startsWith('nier');
+		return fam === 'nier' ? nier && theme.endsWith('-' + m) : !nier && theme === fam + '-' + m;
+	}, [family, mode], { timeout: 20000 }).catch(() => {});
+	await t.page.waitForTimeout(500);
+}
+async function guardLook(t, f, look, where) {
+	const [family, mode] = look.split('-');
+	const got = await f.evaluate(() => ({ theme: document.documentElement.getAttribute('data-theme') || '', nier: !!(window.PM_NIER && PM_NIER.on()) || (document.documentElement.getAttribute('data-theme') || '').startsWith('nier') }));
+	const ok = family === 'nier' ? got.nier && got.theme.endsWith('-' + mode) : !got.nier && got.theme === look;
+	await t.check(`${where}: measured under ${look} (painted ${got.theme}${got.nier ? ', NieR on' : ''})`, ok, 'Settings rendered a different look than the cell names');
+	return ok;
+}
+
+/* Every chapter on the rail, and every manager tab inside one: Settings mounts a chapter's page lazily, so the
+   text only exists once it is opened. Returns the pages visited and measures each after visit(). */
+async function walkSettings(t, f, visit) {
+	const links = f.locator('#pm-settings-root .domain-link');
+	const n = await links.count();
+	const pages = [];
+	const home = f.locator('#pm-settings-root [data-action="home"]').first();
+	if (await home.count()) { await home.click().catch(() => {}); await settle(t, 300); await visit('home'); pages.push('home'); }
+	for (let i = 0; i < n; i++) {
+		const link = links.nth(i);
+		const name = ((await link.innerText().catch(() => '')) || '').replace(/\s+/g, ' ').trim().slice(0, 36);
+		if (!name || !(await link.isVisible().catch(() => false))) continue;
+		await link.click().catch(() => {});
+		await settle(t, 380);
+		pages.push(await visit(name));
+		const tabs = f.locator('#pm-settings-root .manager-tab');
+		const m = await tabs.count();
+		for (let j = 0; j < m; j++) {
+			const tab = tabs.nth(j);
+			if (!(await tab.isVisible().catch(() => false))) continue;
+			const tname = ((await tab.innerText().catch(() => '')) || '').replace(/\s+/g, ' ').trim();
+			await tab.click().catch(() => {});
+			await settle(t, 320);
+			pages.push(await visit(`${name} › ${tname}`));
+		}
+	}
+	return pages;
+}
+
+async function openSettings(t, surface, [w, h] = [1920, 1080]) {
+	await t.viewport(w, h);
+	const f = await t.app.open({ sandbox: surface === 'sandbox' });
+	await t.app.resetLayout();
+	await f.locator('#tab-settings').click();
+	await t.settle();
+	return f;
+}
+
+export const tests = {};
+for (const surface of ['normal', 'sandbox']) {
+	tests[`FO-159 Settings text is 11 px or more (${surface})`] = async (t) => {
+		if (!t.app.surfaces().includes(surface)) { await t.check(`${surface} surface not asked for`, true); return; }
+		const looks = String(t.args.looks || LOOKS.join(',')).split(',').map((s) => s.trim()).filter(Boolean);
+		const want = (part) => !t.args.only || String(t.args.only).split(',').map((s) => s.trim()).includes(part);
+		const list = !!t.args.list;
+		const f = await openSettings(t, surface);
+		await f.locator('#pm-settings-root [data-action="navigate-domain"][data-domain="general"]').first().click();
+		await t.settle();
+		const legAll = new Set();
+		const scan = async (where) => {
+			const r = await f.evaluate(SCAN, [LEGACY]);
+			r.legacy.forEach((x) => legAll.add(x));
+			if (r.seen === 0) return { where, seen: 0 };
+			if (list) { t.log(`${where}: ${r.seen} words, ${r.small.length} under 11 px${r.legacy.length ? `, ${r.legacy.length} in LEGACY` : ''}`); r.small.slice(0, 8).forEach((x) => t.log(`  under 11: ${x}`)); }
+			return { where, seen: r.seen, small: r.small };
+		};
+		if (want('size')) {
+			for (const look of looks) {
+				await t.step(look, async () => {
+					await setLookBySetting(t, f, look);
+					const ok = await guardLook(t, f, look, `${look}`);
+					const pages = await walkSettings(t, f, (where) => scan(`${look} · ${where}`));
+					const bad = [];
+					let words = 0;
+					for (const p of pages) { if (!p || !p.seen) continue; words += p.seen; bad.push(...(p.small || []).map((x) => `${p.where}: ${x}`)); }
+					await t.check(`${look}: Settings text is at least 11 px (${words} words on ${pages.length} pages)`, words > 0 && (list || bad.length === 0), bad.slice(0, 5).join(' | ') || 'nothing measured');
+					if (!ok) return;
+					t.log(`${look}: ${bad.length} words under 11 px`);
+				});
+			}
+			await t.check(`the ${looks.length} looks were measured`, looks.length === 10 || !!t.args.looks, `${looks.length}`);
+			if (legAll.size && !list) t.log(`NOTE: ${legAll.size} of Settings' deliberately smaller micro-labels (9–10.3 px, not FO-159's) still read under 11 px: ${[...legAll].slice(0, 6).join(' | ')}${legAll.size > 6 ? ` (+${legAll.size - 6})` : ''}`);
+		}
+		await f.locator('#pm-settings-root [data-action="navigate-domain"][data-domain="general"]').first().click();
+		await settle(t, 400);
+		if (!list) await t.noConsoleErrors('no console errors');
+	};
+
+	tests[`FO-159 the grown controls still hold their words (${surface})`] = async (t) => {
+		if (!t.app.surfaces().includes(surface)) { await t.check(`${surface} surface not asked for`, true); return; }
+		if (t.args.only && !String(t.args.only).split(',').map((s) => s.trim()).includes('fit')) { await t.check(`${surface} fit not asked for`, true); return; }
+		const looks = String(t.args.fitLooks || FIT_LOOKS.join(',')).split(',');
+		const sizes = String(t.args.widths || '').split(',').filter(Boolean).length
+			? String(t.args.widths).split(',').map((s) => s.split('x').map(Number)).filter(([w, h]) => w && h)
+			: SIZES;
+		const f = await openSettings(t, surface);
+		await f.locator('#pm-settings-root [data-action="navigate-domain"][data-domain="general"]').first().click();
+		await t.settle();
+		let cell = 0;
+		for (const look of looks) {
+			await setLookBySetting(t, f, look);
+			for (const [w, h] of sizes) {
+				cell++;
+				await t.step(`${look} ${w}x${h}`, async () => {
+					await t.viewport(w, h);
+					await settle(t, 400);
+					const ok = await guardLook(t, f, look, `${look} ${w}x${h}`);
+					const cut = [], wrapped = [];
+					let sampled = 0, ellipsis = 0;
+					const pages = await walkSettings(t, f, async (where) => {
+						const r = await f.evaluate(FIT, [AFFECTED]);
+						sampled += r.sampled; ellipsis += r.ellipsis;
+						cut.push(...r.cut.map((x) => `${where}: ${x}`));
+						wrapped.push(...r.wrapped.map((x) => `${where}: ${x}`));
+						return where;
+					});
+					t.log(`${look} ${w}x${h}: ${sampled} controls (${ellipsis} ellipsize by design) on ${pages.length} pages`);
+					await t.check(`${look} ${w}x${h}: the grown controls hold their words (${sampled} measured)`, ok && sampled > 0 && cut.length === 0, cut.slice(0, 5).join(' | ') || 'nothing measured');
+					await t.check(`${look} ${w}x${h}: no label grew a second line`, ok && wrapped.length === 0, wrapped.slice(0, 5).join(' | '));
+				});
+			}
+		}
+		await t.check(`the fit matrix ran ${cell} cells`, cell === looks.length * sizes.length, `${cell}`);
+		await t.noConsoleErrors('no console errors');
+	};
+}
