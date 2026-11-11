@@ -1,1 +1,106 @@
 /* styles that only the pages in notifications.js need; shared parts are in ../smx.css */
+
+/* ---- a switch with its word, beside a summary or the picture of the day ------------------------------------------- */
+#smx-root .smx-nt-switch { display: inline-flex; align-items: center; gap: 10px; font-size: 12.5px; font-weight: 600; color: var(--k3-text-2); white-space: nowrap; }
+#smx-root .smx-nt-say { margin: 0 0 10px; font-size: 13.5px; line-height: 1.55; color: var(--k3-text-1); }
+#smx-root .smx-nt-say strong { font-weight: 650; }
+#smx-root .smx-nt-say + .smx-quiet-line, #smx-root .smx-quiet-line + .smx-quiet-line { margin-top: 6px; }
+#smx-root .smx-nt-say + .pm51-rows { margin-top: 4px; }
+#smx-root .smx-nt-seg { margin: 0 0 12px; }
+/* the kit draws the words of a two- or three-way choice at 10.5px; on these pages they are 11.5px */
+#smx-root .smx-page[data-smx-route^="notifications"] .pm51-seg button { font-size: 11.5px; }
+#smx-root .smx-page .pm51-row-control .o55-num .text-control { width: 84px; }
+#smx-root .smx-nt-seg + .smx-quiet-line { margin-bottom: 10px; }
+#smx-root .smx-page .pm51-section-head > .btn { flex: none; white-space: nowrap; }
+
+/* ---- the one table: what you are told about ------------------------------------------------------------------------
+   Narrow first: each alert is a block (its switch and name, then "Goes to" with a named tick per destination, then its
+   sound). When the Settings area is wide enough the same markup is a grid with one column per destination, whose
+   heading names it. */
+#smx-root .smx-nt-table { display: grid; }
+#smx-root .smx-nt-tr { display: grid; grid-template-columns: 46px minmax(0, 1fr); column-gap: 8px; row-gap: 6px; align-items: start; padding: 10px 4px; }
+#smx-root .smx-nt-tr + .smx-nt-tr { border-top: 1px solid var(--k3-line); }
+#smx-root .smx-nt-th { display: none; }
+#smx-root .smx-nt-c-on { display: grid; justify-items: start; padding-top: 5px; }
+#smx-root .smx-nt-c-name { min-width: 0; }
+#smx-root .smx-nt-open { display: grid; gap: 1px; width: 100%; min-width: 0; margin-left: -6px; padding: 4px 6px; border: 0; border-radius: var(--k3-radius-sm); background: transparent; color: var(--k3-text-1); font: inherit; text-align: left; cursor: pointer; }
+#smx-root .smx-nt-open:hover { background: var(--k3-accent-soft-2); }
+#smx-root .smx-nt-name { font-size: 13px; font-weight: 600; }
+#smx-root .smx-nt-desc { font-size: 11.5px; line-height: 1.4; color: var(--k3-text-3); }
+#smx-root .smx-nt-tr.is-off .smx-nt-name { color: var(--k3-text-2); }
+#smx-root .smx-nt-tr.is-off .smx-nt-c-dest, #smx-root .smx-nt-tr.is-off .smx-nt-c-sound, #smx-root .smx-nt-tr.is-off .smx-nt-dests::before { opacity: .5; }
+#smx-root .smx-nt-dests { grid-column: 2; display: flex; flex-wrap: wrap; align-items: center; gap: 2px 10px; }
+#smx-root .smx-nt-dests::before { content: attr(data-label); font-size: 11.5px; color: var(--k3-text-3); }
+#smx-root .smx-nt-c-dest { display: grid; justify-items: center; }
+#smx-root .smx-nt-check { display: inline-flex; align-items: center; gap: 7px; padding: 4px; border: 0; border-radius: var(--k3-radius-sm); background: transparent; color: var(--k3-text-2); font: inherit; font-size: 12px; cursor: pointer; }
+#smx-root .smx-nt-check > i { flex: none; display: grid; place-items: center; width: 20px; height: 20px; border: 1.5px solid var(--k3-text-3); border-radius: var(--k3-radius-sm); background: transparent; color: transparent; }
+#smx-root .smx-nt-check > i .icon, #smx-root .smx-nt-check > i svg { width: 14px; height: 14px; stroke: currentColor; stroke-width: 2.4; }
+#smx-root .smx-nt-check:hover > i { border-color: var(--k3-accent); }
+#smx-root .smx-nt-check.on { color: var(--k3-text-1); }
+#smx-root .smx-nt-check.on > i { border-color: var(--k3-accent); background: var(--k3-accent-soft); color: var(--k3-accent-ink, var(--k3-accent)); }
+#smx-root :is(.smx-nt-check, .smx-nt-open, .smx-nt-col, .smx-nt-tile-open):focus-visible { outline: 2px solid var(--k3-accent); outline-offset: 1px; }
+#smx-root .smx-nt-c-sound { grid-column: 2; display: grid; justify-items: start; gap: 3px; min-width: 0; }
+#smx-root .smx-nt-c-sound .pm51-sound-pick { display: inline-flex; align-items: center; gap: 6px; max-width: 100%; }
+#smx-root .smx-nt-c-sound .pm51-dd-trigger { min-width: 150px; max-width: 200px; }
+#smx-root .smx-nt-lost { font-size: 11.5px; }
+#smx-root .smx-nt-col { border: 0; padding: 2px 3px; border-radius: var(--k3-radius-sm); background: transparent; color: var(--k3-accent-ink, var(--k3-accent)); font: inherit; font-size: 11.5px; font-weight: 650; line-height: 1.25; text-align: center; cursor: pointer; }
+#smx-root .smx-nt-col:hover { text-decoration: underline; }
+@container smx (min-width: 1240px) {
+  #smx-root .smx-nt-table:not(.is-stacked) .smx-nt-tr { grid-template-columns: 46px minmax(220px, 1fr) repeat(var(--smx-nt-n), minmax(60px, 84px)) minmax(196px, 216px); row-gap: 0; align-items: center; padding: 9px 4px; }
+  #smx-root .smx-nt-table:not(.is-stacked) .smx-nt-th { display: grid; align-items: end; padding: 0 4px 8px; font-size: 11px; font-weight: 650; letter-spacing: .05em; text-transform: uppercase; color: var(--k3-text-3); }
+  #smx-root .smx-nt-table:not(.is-stacked) .smx-nt-th .smx-nt-c-dest { gap: 1px; text-align: center; letter-spacing: 0; text-transform: none; }
+  #smx-root .smx-nt-table:not(.is-stacked) .smx-nt-th small { font-size: 11px; font-weight: 600; color: var(--k3-amber); }
+  #smx-root .smx-nt-table:not(.is-stacked) .smx-nt-th .smx-nt-c-sound { justify-items: start; padding-left: 2px; }
+  #smx-root .smx-nt-table:not(.is-stacked) .smx-nt-c-on { padding-top: 0; }
+  #smx-root .smx-nt-table:not(.is-stacked) .smx-nt-dests { display: contents; }
+  #smx-root .smx-nt-table:not(.is-stacked) .smx-nt-dests::before { content: none; }
+  #smx-root .smx-nt-table:not(.is-stacked) .smx-nt-check > span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  #smx-root .smx-nt-table:not(.is-stacked) .smx-nt-c-sound { grid-column: auto; justify-items: end; }
+}
+
+/* ---- sounds: tiles you can play and open ---------------------------------------------------------------------------- */
+#smx-root .smx-nt-group { margin: 14px 0 6px; font-size: 11px; font-weight: 650; letter-spacing: .06em; text-transform: uppercase; color: var(--k3-text-3); }
+#smx-root .smx-nt-group:first-child { margin-top: 0; }
+#smx-root .smx-nt-tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 8px; }
+#smx-root .smx-nt-tile { display: flex; align-items: center; gap: 8px; min-width: 0; padding: 6px 8px 6px 10px; border: 1px solid var(--k3-line); border-radius: var(--k3-radius-md); background: var(--k3-surface-0, transparent); }
+#smx-root .smx-nt-tile:hover { border-color: var(--k3-line-strong); }
+#smx-root .smx-nt-tile.is-missing { border-style: dashed; }
+#smx-root .smx-nt-tile > .pm51-sound-inline-play { flex: none; }
+#smx-root .smx-nt-tile-open { flex: 1; min-width: 0; display: grid; gap: 1px; padding: 3px 5px; border: 0; border-radius: var(--k3-radius-sm); background: transparent; color: var(--k3-text-1); font: inherit; text-align: left; cursor: pointer; }
+#smx-root .smx-nt-tile-open:hover { background: var(--k3-accent-soft-2); }
+#smx-root .smx-nt-tile-name { font-size: 12.5px; font-weight: 600; }
+#smx-root .smx-nt-tile-name .pm51-status { margin-left: 4px; font-size: 11.5px; font-weight: 500; }
+#smx-root .smx-nt-tile-sub { font-size: 11.5px; line-height: 1.35; color: var(--k3-text-3); }
+#smx-root .smx-fold-body > .smx-nt-seg { margin-bottom: 0; }
+
+/* ---- quiet hours: the day as a bar, the quiet part marked ------------------------------------------------------------ */
+#smx-root .smx-nt-quiet { display: grid; gap: 14px; padding: 16px 18px; border: 1px solid var(--k3-line); border-radius: var(--k3-radius-lg); background: var(--k3-surface-1); }
+#smx-root .smx-nt-quiet-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
+#smx-root .smx-nt-quiet-copy { min-width: 0; }
+#smx-root .smx-nt-quiet-copy strong { font-weight: 650; color: var(--k3-text-1); }
+#smx-root .smx-nt-days { display: grid; gap: 30px; padding-top: 22px; }
+#smx-root .smx-nt-day { display: grid; grid-template-columns: 140px minmax(0, 1fr); align-items: center; column-gap: 12px; }
+#smx-root .smx-nt-day-name { font-size: 12px; font-weight: 600; color: var(--k3-text-2); }
+#smx-root .smx-nt-day-bar { position: relative; display: block; height: 28px; border: 1px solid var(--k3-line-strong); border-radius: var(--k3-radius-sm); background: var(--k3-surface-0, transparent); }
+#smx-root .smx-nt-day-bar > u { position: absolute; top: 0; bottom: 0; width: 1px; background: var(--k3-line); }
+#smx-root .smx-nt-q { position: absolute; top: -1px; bottom: -1px; border: 1px solid var(--k3-accent); background: var(--k3-accent-soft); }
+#smx-root .smx-nt-quiet.is-off .smx-nt-q { border-style: dashed; background: transparent; }
+#smx-root .smx-nt-mark { position: absolute; bottom: 100%; margin-bottom: 4px; font-size: 11.5px; font-weight: 600; color: var(--k3-text-1); white-space: nowrap; }
+#smx-root .smx-nt-mark > span { display: block; transform: translateX(-50%); }
+#smx-root .smx-nt-now { position: absolute; top: -5px; bottom: -5px; width: 2px; margin-left: -1px; background: var(--k3-text-1); }
+#smx-root .smx-nt-now > span { position: absolute; top: 100%; left: 50%; transform: translateX(-50%); margin-top: 1px; font-size: 11px; font-weight: 650; color: var(--k3-text-1); white-space: nowrap; }
+#smx-root .smx-nt-scale { margin-top: -12px; }
+#smx-root .smx-nt-ticks { display: flex; justify-content: space-between; font-size: 11px; color: var(--k3-text-3); }
+#smx-root .smx-nt-legend { display: flex; flex-wrap: wrap; gap: 6px 20px; margin: 0; font-size: 11.5px; color: var(--k3-text-3); }
+#smx-root .smx-nt-legend > span { display: inline-flex; align-items: center; gap: 8px; }
+#smx-root .smx-nt-legend i { position: static; flex: none; width: 16px; height: 11px; border: 1px solid var(--k3-line-strong); border-radius: 2px; background: var(--k3-surface-0, transparent); }
+#smx-root .smx-nt-legend i.smx-nt-q { border-color: var(--k3-accent); background: var(--k3-accent-soft); }
+@container smx (max-width: 900px) {
+  #smx-root .smx-nt-quiet-head { flex-direction: column; }
+  #smx-root .smx-nt-days { gap: 34px; padding-top: 4px; }
+  #smx-root .smx-nt-day { grid-template-columns: minmax(0, 1fr); row-gap: 24px; }
+  #smx-root .smx-nt-scale { margin-top: -46px; }
+}
+
+/* a menu of PMConcept7 that a button here opens only to choose one of its items is not shown for that moment */
+html.smx-nt-picking .pm51-popout.pm51-menu { opacity: 0 !important; pointer-events: none !important; }
