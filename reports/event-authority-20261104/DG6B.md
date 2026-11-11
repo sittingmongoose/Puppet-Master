@@ -181,6 +181,7 @@ Part 2B is done for DG6B except the shared `datetime_validator` boundary and the
 ### Open items and questions
 
 - **Nothing needs Jared** (no DL-045/093/096 choice).
+- **Package versions:** this VM has `rfc8785` 0.1.4, `blake3` 1.0.11, `jsonschema` 4.19.2, `referencing` 0.36.2, `markdown-it-py` 3.0.0 and `msgpack` **1.2.4** (the guide names 1.1.2), on CPython 3.14.4. The number self-test and every DG6B run passed with these; DG6B's physical bytes come from the shared `storage_value_bytes`, not from msgpack's encoder, and msgpack only decodes referenced bodies (`decoded_body`, the shared `decode_storage_value`) and builds one deliberately noncanonical witness body (`scripts/pm_dg6b_full_oracles.py:418`).
 - **For integration:** the date-time inventory refresh and gate; DG6B's one unclassified container; the 60 fork-drift index findings (rebase).
 - **Tool issue candidate (not filed; no false pass):** jsonschema's error messages render the instance, so any lane whose schema verdict can see a 4,400-digit integer at a failing slot may crash the same way DG6B did; the shared corpus's long integers run through `current_integer` only, not through a schema error message.
 
