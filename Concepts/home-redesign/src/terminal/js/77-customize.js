@@ -1024,9 +1024,10 @@
       /* the scrim around the terminal's rectangle (none when it is not on screen) */
       var s = root.querySelectorAll('.pmt-cz-scrim > i'), x0 = hole ? Math.max(0, r.left) : 0, y0 = hole ? Math.max(0, r.top) : 0, x1 = hole ? Math.min(W, r.right) : 0, y1 = hole ? Math.min(H, r.bottom) : 0;
       var rects = hole ? [[0, 0, W, y0], [0, y1, W, H - y1], [0, y0, x0, y1 - y0], [x1, y0, W - x1, y1 - y0]] : [[0, 0, W, H], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]];
-      rects.forEach(function (q, i) { s[i].style.cssText = 'left:' + q[0] + 'px;top:' + q[1] + 'px;width:' + Math.max(0, q[2]) + 'px;height:' + Math.max(0, q[3]) + 'px'; });
+      // only what differs (the unseen redraw after a look change put the four shades where they were)
+      rects.forEach(function (q, i) { var css = 'left:' + q[0] + 'px;top:' + q[1] + 'px;width:' + Math.max(0, q[2]) + 'px;height:' + Math.max(0, q[3]) + 'px'; if (s[i].__czCss !== css) { s[i].style.cssText = css; s[i].__czCss = css; } });
       var fr = root.querySelector('.pmt-cz-frame'); setHidden(fr, !hole);
-      if (hole) fr.style.cssText = 'left:' + x0 + 'px;top:' + y0 + 'px;width:' + (x1 - x0) + 'px;height:' + (y1 - y0) + 'px';
+      if (hole) { var fcss = 'left:' + x0 + 'px;top:' + y0 + 'px;width:' + (x1 - x0) + 'px;height:' + (y1 - y0) + 'px'; if (fr.__czCss !== fcss) { fr.style.cssText = fcss; fr.__czCss = fcss; } }
       root.classList.toggle('pmt-cz-narrow', narrow);
       syncDock();
       fitNow();
