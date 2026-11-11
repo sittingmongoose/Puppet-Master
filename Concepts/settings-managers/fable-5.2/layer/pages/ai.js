@@ -23,7 +23,7 @@
   const routes = (st) => (st.freeRoutes || []).filter((r) => !['free-community', 'free-github-models', 'free-cerebras', 'free-hf'].includes(r.id));
   const ROUTE_NAMES = { 'free-openrouter': 'OpenRouter free models', 'free-groq': 'Groq free plan', 'free-nvidia': 'NVIDIA free models' };
   const routeName = (r) => ROUTE_NAMES[r.id] || r.name;
-  const plain = (p) => (p.status === 'disabled' ? 'Off' : p.status === 'not-installed' ? 'Not installed' : p.status === 'active' ? 'Ready' : p.status === 'attention' ? (p.signedIn ? 'Needs attention' : 'Needs sign-in') : p.status === 'setup' ? 'Not set up' : p.status === 'checking' ? 'Checking' : String(p.status || ''));
+  const plain = (p) => d.providerState(p);   // "Ready" only when it can answer now (see smx-ia.js)
   const toneOf = (p) => ({ Ready: 'ready', Off: 'off', 'Not installed': 'off', 'Not set up': 'off', Checking: 'info' }[plain(p)] || 'attention');
   const inUse = (a) => !!a.active && a.enabled !== false;
   const active = (p) => (p.accounts || []).filter(inUse);
@@ -111,30 +111,39 @@
     legacy: [['ai', 'providers', 'services', 'providers']],
     keywords: ['provider', 'providers', 'service', 'claude', 'chatgpt', 'codex', 'gemini', 'copilot', 'account', 'accounts', 'sign in', 'api key', 'free models'],
     lead: (ctx) => {
-      const st = ctx.st; const mine = all(st).filter(isSetUp); const rest = all(st).filter((p) => !isSetUp(p));
-      const ready = mine.filter((p) => plain(p) === 'Ready').length; const r = ruleWords(st); const nd = needs(st);
+      const st = ctx.st;
+      // the filter box is its own state: what is typed in it narrows both lists
+      const box = SMX.host() && SMX.host().querySelector('[data-smx-input="ai-filter"]');
+      const q = box ? box.value.trim().toLowerCase() : '';
+      const hit = (p) => !q || [p.name, p.vendor, p.product, p.kind, p.connect].some((x) => String(x || '').toLowerCase().includes(q));
+      const everyMine = all(st).filter(isSetUp), everyRest = all(st).filter((p) => !isSetUp(p));
+      const mine = everyMine.filter(hit); const rest = everyRest.filter(hit);
+      const ready = everyMine.filter((p) => plain(p) === 'Ready').length; const r = ruleWords(st); const nd = needs(st);
+      const wait = everyMine.filter((p) => toneOf(p) === 'attention').length, begun = everyMine.filter((p) => toneOf(p) === 'off').length;
       const order = { attention: 0, ready: 1, info: 1, off: 2 };
       const thing = (p) => { const first = usedFirst(p); return { initials: initials(p.name), name: p.name, tag: KIND[p.bill] || '', sub: statusLabel(st, p), meters: first ? meters(p, first, 1) : '', status: { text: plain(p), tone: toneOf(p) }, go: `ai/provider/${p.id}` }; };
       return [
         { key: 'summary', html: ui.summary({ icon: 'brain', tone: nd.some((n) => n.tone !== 'info') ? 'attention' : 'ready', lines: [
-          `${ui.b(count(ready, 'AI provider'))} ${ready === 1 ? 'is' : 'are'} ready. ${ui.word(model(st), { go: 'ai/models' })} answers unless a job needs something else.`,
+          `${ui.b(count(ready, 'AI provider'))} can answer now${wait ? `, ${ui.b(String(wait))} need${wait === 1 ? 's' : ''} you` : ''}${begun ? `, ${begun} ${begun === 1 ? 'is' : 'are'} started but not finished` : ''}; ${everyRest.length} more can be added.`,
+          `${ui.word(model(st), { go: 'ai/models' })} answers unless a job needs something else.`,
           r.on ? `When an account has ${ui.word(r.sw, { go: 'ai/limits' })}, work moves to your next account${r.down ? `; if a whole provider is down it ${ui.word('moves to another provider', { go: 'ai/limits' })}` : ''}.` : `Accounts ${ui.word('never switch by themselves', { go: 'ai/limits' })}: work stops when one runs out.`
         ], side: ui.btn({ label: 'Add an AI provider', icon: 'plus', primary: true, small: false, action: 'pm51-providers-add' }) }) },
         { key: 'needs', html: ui.needs(nd) },
-        { key: 'mine', html: ui.things({ title: 'Your AI providers', help: 'The ones you have signed in to or set up. Open one to see its accounts.', items: mine.slice().sort((a, b) => (order[toneOf(a)] - order[toneOf(b)])).map(thing), empty: { icon: 'brain', title: 'No AI provider yet', text: 'Puppet Master needs at least one to do anything.', fix: { label: 'Add an AI provider', action: 'pm51-providers-add' } } }) },
+        { key: 'filter', html: all(st).length > 8 ? `<label class="smx-filter"><span class="icon" aria-hidden="true">${SMX.icon('search')}</span><input type="search" data-smx-input="ai-filter" data-smx-key="ai-filter" placeholder="Filter the AI providers by name" aria-label="Filter the AI providers by name" autocomplete="off"></label>` : '' },
+        { key: 'mine', html: ui.things({ title: 'Your AI providers', help: 'The ones you have signed in to or started to set up. Open one to see its accounts.', items: mine.slice().sort((a, b) => (order[toneOf(a)] - order[toneOf(b)])).map(thing), empty: q ? { icon: 'search', title: `None of your providers matches “${q}”`, text: rest.length ? 'There is a match among the ones you can add, below.' : 'Try fewer letters.' } : { icon: 'brain', title: 'No AI provider yet', text: 'Puppet Master needs at least one to do anything.', fix: { label: 'Add an AI provider', action: 'pm51-providers-add' } } }) },
         { key: 'tasks', html: ui.tasks([
           { icon: 'sparkle', title: 'Choose which model does what', sub: 'One everyday model, or a different one for some jobs', go: 'ai/models' },
           { icon: 'swap', title: 'Decide what happens when one runs out', sub: 'Switch accounts, switch providers, or stop and ask', go: 'ai/limits' },
           { icon: 'wallet', title: 'Set a spending limit', sub: 'A monthly cap, and a warning before you reach it', go: 'ai/spending' }
         ], { title: 'What do you want to do?', cols: 3 }) },
         { key: 'pages', html: ui.pages('ai', ctx, { title: 'Everything in this chapter' }) },
-        { key: 'rest', html: rest.length ? `<details class="smx-fold smx-fold-more" data-smx-fold="ai:rest"${SMX.local.openMore['ai:rest'] ? ' open' : ''}><summary>${SMX.icon('fold')}<span class="smx-fold-label">${count(rest.length, 'more provider')} you can add</span><span class="smx-fold-help">Not set up yet</span></summary><div class="smx-fold-body">${ui.things({ items: rest.map((p) => ({ initials: initials(p.name), name: p.name, tag: KIND[p.bill] || '', sub: p.connect || p.product || '', side: ui.btn(primaryFor(p)), go: `ai/provider/${p.id}` })) })}</div></details>` : '' },
+        { key: 'rest', html: rest.length ? `<details class="smx-fold smx-fold-more" data-smx-fold="ai:rest"${SMX.local.openMore['ai:rest'] || q ? ' open' : ''}><summary>${SMX.icon('fold')}<span class="smx-fold-label">${count(rest.length, 'more provider')} you can add</span><span class="smx-fold-help">Not set up yet</span></summary><div class="smx-fold-body">${ui.things({ items: rest.map((p) => ({ initials: initials(p.name), name: p.name, tag: KIND[p.bill] || '', sub: p.connect || p.product || '', side: ui.btn(primaryFor(p)), go: `ai/provider/${p.id}` })) })}</div></details>` : '' },
         { key: 'links', html: ui.links([{ label: 'Check every provider', action: 'pm51-providers-diagnostics' }, { label: 'Look for new models', action: 'run-setting-action', data: { setting: 'ai.usage.refresh-models', settingId: 'ai.usage.refresh-models' } }, { label: 'Find installed apps again', action: 'run-setting-action', data: { setting: 'system.advanced.binary-rescan', settingId: 'system.advanced.binary-rescan' } }, { label: 'How AI providers work', action: 'pm51-providers-help' }, { label: 'Put the example providers back', action: 'pm51-providers-reset' }]) }
       ];
     },
     covers: Object.assign({}, D('providers-home', 'On each provider’s page, or on each account’s page.'), { 'ai.accounts.provider-connections': 'The list “Your AI providers” on this page.', 'ai.usage.provider-health': 'The link “Check every provider” on this page.', 'ai.usage.refresh-models': 'The link “Look for new models” on this page.', 'system.advanced.binary-rescan': 'The link “Find installed apps again” on this page.' }),
     changes: [
-      { was: 'The page opens on three counters and a list of all 22 providers, set up or not, beside the full detail of the first one. The counters (12 ready, 1 needs attention, 8 not set up) add up to 21 while the list says 22.', now: 'It opens on two sentences: how many providers work and which model answers; what happens when an account runs out. Then only the providers you have. The others are one click away under “more providers you can add”.' },
+      { was: 'The page opens on three counters and a list of all 22 providers, set up or not, beside the full detail of the first one. The counters (12 ready, 1 needs attention, 8 not set up) add up to 21 while the list says 22, and “Ready 12” counts seven providers that have no model switched on, each marked “Ready” above the words “Getting it ready”.', now: 'It opens on sentences: how many providers can answer now (one that is listed but has no model on is “started but not finished”, not ready), how many need you, and which model answers; then what happens when an account runs out. Then only the providers you have; the others are one click away under “more providers you can add”. The filter box narrows both lists.' },
       { was: 'Every account of the selected provider is opened in place, so the Claude page alone carries four copies of the same 14 controls.', now: 'A provider has its own page and an account has its own page. The list shows each provider’s tightest limit, so you can see who is about to run out without opening anything.' },
       { was: '“Check every service” appears twice on the page; the three footer links repeat under all four tabs.', now: 'Each appears once, here.' },
       { was: 'Three warnings live on Settings Home and in the rail, none with a button.', now: '“Needs you” lists them here and on Home, each with the one button that fixes it.' },

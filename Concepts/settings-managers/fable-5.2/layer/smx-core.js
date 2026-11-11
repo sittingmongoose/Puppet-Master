@@ -425,7 +425,10 @@
   function onClick(e) {
     const t = e.target;
     const go = t.closest('[data-smx-go]');
-    if (go && host.contains(go)) { e.preventDefault(); SMX.go(go.getAttribute('data-smx-go'), { reveal: go.getAttribute('data-smx-reveal') || '', anchor: go.getAttribute('data-smx-anchor-to') || '' }); return; }
+    // a button or control that sits inside a row that opens does its own job only (it used to open the row as well)
+    const inner = t.closest('button, a, input, select, textarea, label, [data-action], [data-smx-do], [role="switch"], [role="button"]');
+    if (go && inner && inner !== go && go.contains(inner)) { /* the inner control's own handlers take it from here */ }
+    else if (go && host.contains(go)) { e.preventDefault(); SMX.go(go.getAttribute('data-smx-go'), { reveal: go.getAttribute('data-smx-reveal') || '', anchor: go.getAttribute('data-smx-anchor-to') || '' }); return; }
     if (t.closest('[data-smx-borrowed]')) return;   // a borrowed click on its way to the Settings engine
     const doer = t.closest('[data-smx-do]');
     if (doer && host.contains(doer)) {
@@ -443,6 +446,10 @@
   function onInput(e) {
     const q = e.target.closest('[data-smx-search]');
     if (q) { SMX.query = q.value; SMX.search && SMX.search.show(q.value, q); }
+    // a field of a page's own (a filter box): <input data-smx-input="name"> runs SMX.act('name') on every keystroke.
+    // Keep the field in a block whose markup does not change as you type, so it is not redrawn under the caret.
+    const own = e.target.closest('[data-smx-input]');
+    if (own && host.contains(own)) { const f = SMX.acts[own.getAttribute('data-smx-input')]; if (f) { try { f(own, e); } catch (err) { W.console.error('SMX input failed', err); } } }
   }
   /* a dropdown of this concept's own (not one of the engine's settings): the wrapper names the handler */
   function onChange(e) {

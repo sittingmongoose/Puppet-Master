@@ -31,7 +31,20 @@
   };
   d.runLabel = (st) => { const S = d.sp(st); const o = d.runOptions(st).find((x) => x[0] === S.executionHost); return o ? o[1] : String(S.executionHost || 'Auto'); };
   d.providers = (st) => st.providers || [];
-  d.providerReady = (p) => /^(active|ready|ok)$/i.test(String(p.status || ''));
+  /* PMConcept7 marks an AI provider "active" as soon as it has an entry, so its own counter says "Ready 12" while seven
+     of those have no model switched on (audit A2 B-1; in the saved state only five have one). Here a provider is ready
+     when it can answer now: it is active and at least one of its models is on. */
+  d.providerModelsOn = (p) => (p.models || []).filter((m) => m && m.enabled === true).length;
+  d.providerState = (p) => {
+    if (p.status === 'disabled') return 'Off';
+    if (p.status === 'not-installed') return 'Not installed';
+    if (p.status === 'attention') return p.signedIn ? 'Needs attention' : 'Needs sign-in';
+    if (p.status === 'setup') return 'Not set up';
+    if (p.status === 'checking') return 'Checking';
+    if (p.status === 'active') return d.providerModelsOn(p) > 0 ? 'Ready' : p.nextAction === 'install' ? 'Not installed' : p.nextAction === 'signin' ? 'Needs sign-in' : 'Not set up';
+    return String(p.status || '');
+  };
+  d.providerReady = (p) => d.providerState(p) === 'Ready';
   d.project = (st) => { try { return W.PM7_SETTINGS_TOME.projectLabel() || 'this project'; } catch (e) { return 'this project'; } };
   d.plural = (n, one, many) => `${n} ${n === 1 ? one : (many || one + 's')}`;
   SMX.projectLine = (st) => `Project: ${d.project(st)}`;
