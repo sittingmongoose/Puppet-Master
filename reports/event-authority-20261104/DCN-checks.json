@@ -761,5 +761,72 @@
       "| `python3 scripts/pm-plan-index.py validate` | 1 | 59 rows at origin/main `f0c0d38d3f`: 21 `plan_unit_removal_ledger_invalid`, 38 `plan_unit_removed_without_ledger_decision`; none names a DCN unit (units added on main after the lane base; no rebase this round) |"
     ],
     "timestamp_review": "interim only (CV-1101 is part 2B)"
+  },
+  "sweep_p2b": {
+    "implementation_head": "1aec6a2f0fafe98d8ab212bf8903151a464dd998",
+    "implementation_commits": [
+      "19e83a77b1",
+      "1aec6a2f0f"
+    ],
+    "numrule_merge": "0bea1cefa2 (already in history; step 1 skipped)",
+    "tool_sha256": "e8038992eabbe067c8bcba8d48824b97fbb6b5b7e69cbfe28a669f939a96c0b8",
+    "guard_collection": {
+      "accepted": 358,
+      "cases": 17048,
+      "judged_errors": 0,
+      "refused": 16690
+    },
+    "guard_rows": {
+      "rows": 569,
+      "tables": 142,
+      "proved": 501,
+      "entailed": 68,
+      "tool_runs": 74,
+      "pass": 74
+    },
+    "exits": {
+      "checker": "0",
+      "family-browser.session.created": "0",
+      "family-browser.session.state_changed": "0",
+      "family-browser.session.closed": "0",
+      "family-browser.session.promoted": "0",
+      "family-browser.session.takeover_state_changed": "0",
+      "family-memory.gist_state_changed": "0",
+      "tables-check": "0",
+      "cases-check": "0",
+      "numbers-selftest": "0",
+      "combined-selftest": "1",
+      "datetime-inventory": "1",
+      "datetime-selftest-noentry": "0",
+      "number-corpus": "0",
+      "fuzz": "0",
+      "shards-check": "0",
+      "index-validate": "1",
+      "guard-tables": "0"
+    },
+    "index_validate_origin_main": "77bae0c63605d0a6f643aa3f1d8c51c2f3bb7947",
+    "timestamps": "shared pm_event_datetime.date_time with per-field profiles (TIMESTAMP_PROFILES); datetime_validator and the inventory gate at batch-2 integration (addendum 2)",
+    "retained_dispatch": "pm_event_numbers.RetainedDispatcher, Card2OriginalOwner, Plans/card2_original_custody.json",
+    "evidence_dir": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/sweep-p2b",
+    "commands": [
+      "| `python3 scripts/pm_card2_events.py` | 0 | PASS: 283 positives, 75 controls, 16,690 witnesses, 569 rows / 142 tables, 501 rows refused first, 68 entailed, 12 installed frozen recipes, date-time probes and SP-1101 trials pass, 0 errors |",
+      "| `python3 scripts/pm_card2_events.py --family browser.session.created` | 0 | PASS: 34 positives, 66 controls, 1,928 witnesses, 193 rows refused first by this family |",
+      "| `python3 scripts/pm_card2_events.py --family browser.session.state_changed` | 0 | PASS: 34 positives, 0 controls, 2,952 witnesses, 277 rows refused first by this family |",
+      "| `python3 scripts/pm_card2_events.py --family browser.session.closed` | 0 | PASS: 34 positives, 0 controls, 2,901 witnesses, 226 rows refused first by this family |",
+      "| `python3 scripts/pm_card2_events.py --family browser.session.promoted` | 0 | PASS: 34 positives, 0 controls, 2,901 witnesses, 227 rows refused first by this family |",
+      "| `python3 scripts/pm_card2_events.py --family browser.session.takeover_state_changed` | 0 | PASS: 34 positives, 0 controls, 2,900 witnesses, 227 rows refused first by this family |",
+      "| `python3 scripts/pm_card2_events.py --family memory.gist_state_changed` | 0 | PASS: 113 positives, 9 controls, 3,108 witnesses, 302 rows refused first by this family |",
+      "| `python3 scripts/pm-card2-table-generate.py --check` | 0 | {'tables': 142, 'rows': 569, 'stale': [], 'extra': []} |",
+      "| `python3 scripts/pm-card2-p2a-cases.py --check` | 0 | 347 witnesses, 75 controls, 237 target rows, failures 0, stale False |",
+      "| `python3 scripts/pm_event_numbers.py --self-test --scope numbers` | 0 | `\"status\": \"pass\"`, 580/580 cases |",
+      "| `python3 scripts/pm_event_numbers.py --self-test (scope all)` | 1 | `\"status\": \"fail\"`, `case_execution: NOT_RUN_ADMISSION_REFUSED`: the inventory gate refuses before any case (265 gate failures); recorded, runs at batch-2 integration (addendum 2) |",
+      "| `python3 scripts/pm_event_datetime_inventory.py` | 1 | `\"status\": \"fail\"`, 265 failures, 233 nodes, 0 unclassified nodes; attribution below; runs at batch-2 integration |",
+      "| `python3 scripts/pm_event_datetime.py --self-test` | 0 | no entry point, prints nothing: **not credited** (addendum 2 correction) |",
+      "| `python3 scripts/pm-card2-number-corpus.py` | 0 | pass: 163 corpus cases, 460 route runs (213 accepted, 247 refused), 0 disagreements, 0 untracked; 4,400-digit routes at their rows |",
+      "| `python3 scripts/pm-card2-entailed-fuzz.py --trials 20000 --seed 20261110` | 0 | pass: 12,849 refused, 7,151 accepted; no entailed row first (0); 44 of 68 entailed rows seen co-refusing |",
+      "| `python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json` | 0 | pass |",
+      "| `python3 scripts/pm-plan-index.py validate` | 1 | fail: 59 rows at origin/main `77bae0c636`: 21 `plan_unit_removal_ledger_invalid`, 38 `plan_unit_removed_without_ledger_decision`; none names a DCN unit (the same 59 rows as part 2A: units added on main after the lane base, no rebase this round) |",
+      "| `python3 scripts/pm-card2-guard-tables.py --out <dir>` | 0 | 17,048 cases, 0 findings, 501 rows proved, 74 tool runs (74 PASS), 68 entailed tables |"
+    ]
   }
 }

@@ -1,6 +1,6 @@
 {
   "schema_id": "pm.assurance.event_authority.step08_current_depth.v1",
-  "assessment_id": "DCN-sweep-p2a-20261110",
+  "assessment_id": "DCN-sweep-p2b-20261111",
   "assessment_kind": "self_grade_prepared_without_admission",
   "assessed_tree": {
     "base_commit": "16acf7594a3fe8559af89491b895f440b314b99e",
@@ -17,6 +17,13 @@
       "numrule_merge": "0bea1cefa2",
       "numrule_commit": "58c2816ff33365384d4039553f5efdb5370930e6",
       "implementation_head": "1d51901d87",
+      "rebased": false
+    },
+    "sweep_p2b": {
+      "branch": "plans/ea-w3-card2-names-20261104",
+      "part2a_head": "9bfb9b46cc7d3ad861020e2c9347104ba13eb1ae",
+      "numrule_merge": "0bea1cefa2 (already in history; no new merge)",
+      "implementation_head": "1aec6a2f0f",
       "rebased": false
     }
   },
@@ -186,31 +193,38 @@
           "change_reason": "Regraded at round-4 implementation; no admission/native claim and no sweep gap is called fixed."
         },
         "replay_idempotency": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "B1 current routes closed: the retry comparison is the shared producer_semantic_digest and the producer route refuses before effects consistently on append, retry and retained reads. Still open: SP-1101 authenticated selection of a retained original's write-time recipe (part 2B, in the same recipe tuple as the CV-1101 date-time profile), so the cell stays PARTIAL.",
+          "finding": "B1 current routes closed in part 2A; SP-1101 closed in part 2B: a retry original is resolved once through the shared RetainedDispatcher (Card2OriginalOwner answers only from Plans/card2_original_custody.json, the installed FROZEN_RECIPES pin card2@1's schema bytes and CV-1101 profiles) before the producer-digest comparison. A Store outside custody refuses at recipe_custody, a sealed unsupported recipe at recipe_installed, a binding mismatch at the join rows with recipe_resolved entailed; each run proves that a replaced resource or weakened profile installs no verifier and a caller override refuses. Witnesses: p2b/sp1101/* on retry; controls p2b/sp1101/other-operation-control/*, p2b/sp1101/large-sequence/retry-original. Residual, stated: in this static model the binding's source commitment is computed from the single copy of the original bytes (the original's value is verified by the orig_* and historical_record rows), and an original with no sealed receipt of its own takes its Store's sealed default card2@1, the only recipe. DCN has one write-time recipe, so there is no older recipe to select. Native custody NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-780",
-              "line_start": 24668,
-              "line_end": 24668,
-              "quote": "Numbers, sweep 2026-11-10 (CV-1100 beside the unchanged CV-317 and CV-366 recipes): browser.session.created"
+              "line_start": 24681,
+              "line_end": 24681,
+              "quote": "SP-1101 RetainedDispatcher from Storage''s sealed write custody (static stand-in"
             },
             {
-              "path": "Plans/Contracts_V0.md",
+              "path": "scripts/pm_card2_events.py",
               "unit": "CV-780",
-              "line_start": 24620,
-              "line_end": 24620,
-              "quote": "2.0.0 and its complete producer_semantic_digest recipe unchanged, plus SP-026/SP-236 SeglogFrameV2 and SP-286/CV-339"
+              "line_start": 1281,
+              "line_end": 1281,
+              "quote": "row('recipe', 'recipe_custody', 'original_unavailable', '/storage/event',"
+            },
+            {
+              "path": "scripts/pm_card2_events.py",
+              "unit": "CV-780",
+              "line_start": 1265,
+              "line_end": 1265,
+              "quote": "def dispatch(c, recipes=None, **resolve):"
             }
           ],
           "prior": {
-            "source": "DCN-self-grade.json @ db8bd12630ec032dcbd6416bc20b97f45df9a7b6 (sweep part 1; round-4 grades carried)",
+            "source": "DCN-self-grade.json @ 9bfb9b46cc7d3ad861020e2c9347104ba13eb1ae (sweep part 2A and part 2B numbers)",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Re-read at the sweep implementation head; the remaining gap is a part 2B item."
+          "change": "upgraded",
+          "change_reason": "Sweep part 2B at 1aec6a2f0f: the cell's remaining part 2B gap is closed with witnesses; see DCN.md \"Sweep part 2B\"."
         },
         "retention": {
           "status": "PASS",
@@ -240,31 +254,31 @@
           "change_reason": "Regraded at round-4 implementation; no admission/native claim and no sweep gap is called fixed."
         },
         "redaction_custody": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "B2 and the Browser numeric ranges closed: Storage sequence_id is storage_uint64 on the event and the Storage original, receipt and reader copies join it exactly (typed, float bits), integral-float spellings refuse at the integer slots, Browser viewport u32 and scroll/zoom exact finite f64 rows refuse on both records. Still open: SP-1101 authenticated original edition/recipe selection for retained custody (part 2B with CV-1101), so the cell stays PARTIAL.",
+          "finding": "B2 and the Browser numeric ranges closed in part 2A; SP-1101 retained custody closed in part 2B: retained reads resolve through the shared RetainedDispatcher from the sealed custody catalogue before any original check, the sealed card2@1 tuple pins the EventRecord and payload schema bytes and field profiles, and a Store outside custody or an unsupported sealed recipe refuses with no fallback, whatever the case's own authentic/verified flags say (p2b/sp1101/unsealed-store/*, p2b/sp1101/unsupported-recipe/*, p2b/sp1101/case-recipe-label-ignored). Large-metadata originals stay readable (p2b/sp1101/large-sequence/*, sequence_id 2^64-1). Residual, stated: in this static model the binding's source commitment is computed from the single copy of the original bytes (the original's value is verified by the orig_* and historical_record rows), and an original with no sealed receipt of its own takes its Store's sealed default card2@1, the only recipe. Native custody NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-760",
-              "line_start": 29789,
-              "line_end": 29789,
-              "quote": "Numbers, sweep 2026-11-10 (SP-1100 beside the unchanged SP-026/SP-236 and SP-278 profiles):"
+              "line_start": 29794,
+              "line_end": 29794,
+              "quote": "when exactly representable). SP-278 binding values stay uint-only. Retained originals, sweep 2026-11-11 (SP-1101"
             },
             {
-              "path": "Plans/storage-plan.md",
-              "unit": "SP-760",
-              "line_start": 29746,
-              "line_end": 29746,
-              "quote": "are backed up/restored coherently through the existing Project memory/browser stores or CV-366 full application"
+              "path": "scripts/pm_card2_events.py",
+              "unit": "CV-780",
+              "line_start": 1284,
+              "line_end": 1284,
+              "quote": "row('recipe', 'recipe_installed', 'recipe_unsupported', '/storage/event',"
             }
           ],
           "prior": {
-            "source": "DCN-self-grade.json @ db8bd12630ec032dcbd6416bc20b97f45df9a7b6 (sweep part 1; round-4 grades carried)",
+            "source": "DCN-self-grade.json @ 9bfb9b46cc7d3ad861020e2c9347104ba13eb1ae (sweep part 2A and part 2B numbers)",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Re-read at the sweep implementation head; the remaining gap is a part 2B item."
+          "change": "upgraded",
+          "change_reason": "Sweep part 2B at 1aec6a2f0f: the cell's remaining part 2B gap is closed with witnesses; see DCN.md \"Sweep part 2B\"."
         },
         "transitions": {
           "status": "PASS",
@@ -321,58 +335,65 @@
           "change_reason": "Regraded at round-4 implementation; no admission/native claim and no sweep gap is called fixed."
         },
         "compatibility_withdrawal": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "SW1 is part 2B: retained timestamps still pass the interim lane grammar without authenticated write-time recipe selection (CV-1101 + SP-1101). This lane's timestamp review is interim only. Withdrawal/retained replay policies stay bound.",
+          "finding": "SW1 closed (sweep part 2B). Every timestamp field uses the shared CV-1101 date_time with its owner profile: event_record for occurred_at_utc and ts (lowercase t/z, offsets, legitimate leap seconds and long fractions are owner-valid and stay readable with their exact spelling on retained history and retry originals), and CV-253 storage_utc_z for Storage observed_at_utc/persisted_at_utc on the current record, the retry original and retained history alike (an offset or lowercase-z Storage timestamp never becomes valid history). Retained reads and retry originals first resolve through the shared SP-1101 RetainedDispatcher from sealed custody, so a forged or unsupported recipe selection refuses without fallback. Withdrawal/retained replay policies stay bound. Witnesses: p2b/cv1101/history/*, p2b/cv1101/retry/*, p2b/cv253/history/*, p2b/cv253/retry-original/*, p2b/cv1101/history/occurred_at_utc/* (owner-invalid history refuses). datetime_validator and the inventory gate run at batch-2 integration (lead addendum 2). Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-780",
-              "line_start": 24649,
-              "line_end": 24649,
-              "quote": "is forward-only with a separately governed successor. Withdrawal sets an explicit writer admission cutoff before"
+              "line_start": 24675,
+              "line_end": 24675,
+              "quote": "key recipes are unchanged. Timestamps and retained originals, sweep 2026-11-11 (CV-1101 beside CV-253 and CV-317;"
             },
             {
-              "path": "Plans/Contracts_V0.md",
+              "path": "scripts/pm_card2_events.py",
               "unit": "CV-780",
-              "line_start": 24657,
-              "line_end": 24657,
-              "quote": "  Before retry returns or recovers an original, authenticate its exact EventRecord from Storage and validate"
+              "line_start": 550,
+              "line_end": 550,
+              "quote": "view_rule('timestamps', 'storage_utc_z_' + key, 'storage_utc_z', '/' + key,"
+            },
+            {
+              "path": "scripts/pm_card2_events.py",
+              "unit": "CV-780",
+              "line_start": 73,
+              "line_end": 73,
+              "quote": "TIMESTAMP_PROFILES = {"
             }
           ],
           "prior": {
-            "source": "DCN-self-grade.json @ db8bd12630ec032dcbd6416bc20b97f45df9a7b6 (sweep part 1; round-4 grades carried)",
+            "source": "DCN-self-grade.json @ 9bfb9b46cc7d3ad861020e2c9347104ba13eb1ae (sweep part 2A and part 2B numbers)",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Re-read at the sweep implementation head; the remaining gap is a part 2B item."
+          "change": "upgraded",
+          "change_reason": "Sweep part 2B at 1aec6a2f0f: the cell's remaining part 2B gap is closed with witnesses; see DCN.md \"Sweep part 2B\"."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Sweep part 2A: every refusal is one of 562 named guard-table rows; the gated tool (004bdedd63) proves 495 rows with single-defect witnesses (16,578 witnesses: 16,343 fixture negatives and 235 part 2A witnesses, plus 283 positives and 7 controls) and 67 rows sit alone in entailed tables with written proofs. PARTIAL because the timestamp review is interim only (CV-1101, part 2B) and SP-1101 retained-recipe witnesses (old-recipe positives, forged-recipe negatives) are part 2B.",
+          "finding": "Every refusal is one of 569 named guard-table rows; the gated tool (004bdedd63) rerun at the part 2B head credits the proved rows exactly as reported in DCN.md \"Sweep part 2B\"; entailed rows sit alone with written proofs. The timestamp review is no longer interim: each field is checked by the shared date_time with its named profile, and each run requires every lane-recorded leak to refuse at every field with the shared Refusal reason as the validator's error cause. SP-1101 has retained positives (owner-valid lowercase, offset, leap-second, long-fraction and 2^64-1 sequence originals) and forgery negatives (unsealed Store, unsupported sealed recipe), plus replaced-resource, weakened-profile and caller-override trials. Witnesses: 112 p2b witnesses and 68 p2b controls in Plans/card2_event_p2a_cases.json.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-380",
-              "line_start": 7248,
-              "line_end": 7248,
-              "quote": "defect; observational copies are updated together. It must fail exactly its intended guard. Since the 2026-11-10"
+              "line_start": 7274,
+              "line_end": 7274,
+              "quote": "Since sweep part 2B (2026-11-11) every timestamp field is checked by the shared CV-1101 date_time predicate with"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-380",
-              "line_start": 7250,
-              "line_end": 7250,
-              "quote": "scripts/pm-card2-table-generate.py), each one predicate over one subject (the candidate or the Storage original, the"
+              "path": "scripts/pm_card2_events.py",
+              "unit": "CV-780",
+              "line_start": 73,
+              "line_end": 73,
+              "quote": "TIMESTAMP_PROFILES = {"
             }
           ],
           "prior": {
-            "source": "DCN-self-grade.json @ db8bd12630ec032dcbd6416bc20b97f45df9a7b6 (sweep part 1; round-4 grades carried)",
+            "source": "DCN-self-grade.json @ 9bfb9b46cc7d3ad861020e2c9347104ba13eb1ae (sweep part 2A and part 2B numbers)",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Re-read at the sweep implementation head; the remaining gap is a part 2B item.",
+          "change": "upgraded",
+          "change_reason": "Sweep part 2B at 1aec6a2f0f: the cell's remaining part 2B gap is closed with witnesses; see DCN.md \"Sweep part 2B\".",
           "run_evidence": {
             "source_commit": "de58b6e10c11ab249ec05f13a2bbbdd6f2f92f4b",
             "guard_proof": {
@@ -392,19 +413,17 @@
           }
         }
       },
-      "pass_count": 7,
+      "pass_count": 11,
       "status_counts": {
-        "PASS": 7,
-        "PARTIAL": 4,
+        "PASS": 11,
+        "PARTIAL": 0,
         "ABSENT": 1,
         "CONFLICT": 0
       },
       "normative_depth_complete": false,
       "remaining_gaps": [
-        "B1 and B2: shared numeric-domain sweep on plans/ea-numrule-20261105 (CV-1100, SP-1100, SP-1101).",
-        "SW1: authenticated write-time timestamp recipe selection; preserve genuine retained originals.",
         "Membership/admission ABSENT; pinned answers/retention integration remains prerequisite. Native NOT_RUN.",
-        "Browser u32 dimensions and f64 zoom ranges await the same sweep."
+        "Batch-2 integration: datetime_validator and the whole-Plans date-time inventory gate (lead addendum 2), including classification of the DCN schema resources and the custody catalogue; native SP-1101 custody remains NOT_RUN."
       ],
       "native_execution": "NOT_RUN"
     },
@@ -475,15 +494,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-781",
-              "line_start": 24746,
-              "line_end": 24746,
+              "line_start": 24756,
+              "line_end": 24756,
               "quote": "admission, order is authenticated owner acceptance/reservation, canonical owner body commit and durable event"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-781",
-              "line_start": 24762,
-              "line_end": 24762,
+              "line_start": 24772,
+              "line_end": 24772,
               "quote": "  Before retry returns or recovers an original, authenticate its exact EventRecord from Storage and validate"
             }
           ],
@@ -502,15 +521,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-781",
-              "line_start": 24773,
-              "line_end": 24773,
+              "line_start": 24783,
+              "line_end": 24783,
               "quote": "Numbers, sweep 2026-11-10 (CV-1100 beside the unchanged CV-317 and CV-366 recipes):"
             },
             {
               "path": "scripts/pm_card2_events.py",
               "unit": "CV-781",
-              "line_start": 504,
-              "line_end": 504,
+              "line_start": 538,
+              "line_end": 538,
               "quote": "view_rule('schema', 'producer_route', 'producer_route', '', 'the CV-317 producer projection qualifies under CV-1100 (producer_semantic_bytes)',"
             }
           ],
@@ -529,15 +548,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-781",
-              "line_start": 24732,
-              "line_end": 24732,
+              "line_start": 24742,
+              "line_end": 24742,
               "quote": "Its per-effect component is exact UTF-8 event_type + '':'' + original operation ID. Application idempotency is"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-781",
-              "line_start": 24762,
-              "line_end": 24762,
+              "line_start": 24772,
+              "line_end": 24772,
               "quote": "  Before retry returns or recovers an original, authenticate its exact EventRecord from Storage and validate"
             }
           ],
@@ -549,31 +568,38 @@
           "change_reason": "Regraded at round-4 implementation; no admission/native claim and no sweep gap is called fixed."
         },
         "replay_idempotency": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "B1 current routes closed: the retry comparison is the shared producer_semantic_digest and the producer route refuses before effects consistently on append, retry and retained reads. Still open: SP-1101 authenticated selection of a retained original's write-time recipe (part 2B, in the same recipe tuple as the CV-1101 date-time profile), so the cell stays PARTIAL.",
+          "finding": "B1 current routes closed in part 2A; SP-1101 closed in part 2B: a retry original is resolved once through the shared RetainedDispatcher (Card2OriginalOwner answers only from Plans/card2_original_custody.json, the installed FROZEN_RECIPES pin card2@1's schema bytes and CV-1101 profiles) before the producer-digest comparison. A Store outside custody refuses at recipe_custody, a sealed unsupported recipe at recipe_installed, a binding mismatch at the join rows with recipe_resolved entailed; each run proves that a replaced resource or weakened profile installs no verifier and a caller override refuses. Witnesses: p2b/sp1101/* on retry; controls p2b/sp1101/other-operation-control/*, p2b/sp1101/large-sequence/retry-original. Residual, stated: in this static model the binding's source commitment is computed from the single copy of the original bytes (the original's value is verified by the orig_* and historical_record rows), and an original with no sealed receipt of its own takes its Store's sealed default card2@1, the only recipe. DCN has one write-time recipe, so there is no older recipe to select. Native custody NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-781",
-              "line_start": 24773,
-              "line_end": 24773,
-              "quote": "Numbers, sweep 2026-11-10 (CV-1100 beside the unchanged CV-317 and CV-366 recipes):"
+              "line_start": 24796,
+              "line_end": 24796,
+              "quote": "retained history read are first resolved once through the shared SP-1101 RetainedDispatcher from Storage''s"
             },
             {
-              "path": "Plans/Contracts_V0.md",
+              "path": "scripts/pm_card2_events.py",
               "unit": "CV-781",
-              "line_start": 24725,
-              "line_end": 24725,
-              "quote": "2.0.0 and its complete producer_semantic_digest recipe unchanged, plus SP-026/SP-236 SeglogFrameV2 and SP-286/CV-339"
+              "line_start": 1281,
+              "line_end": 1281,
+              "quote": "row('recipe', 'recipe_custody', 'original_unavailable', '/storage/event',"
+            },
+            {
+              "path": "scripts/pm_card2_events.py",
+              "unit": "CV-781",
+              "line_start": 1265,
+              "line_end": 1265,
+              "quote": "def dispatch(c, recipes=None, **resolve):"
             }
           ],
           "prior": {
-            "source": "DCN-self-grade.json @ db8bd12630ec032dcbd6416bc20b97f45df9a7b6 (sweep part 1; round-4 grades carried)",
+            "source": "DCN-self-grade.json @ 9bfb9b46cc7d3ad861020e2c9347104ba13eb1ae (sweep part 2A and part 2B numbers)",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Re-read at the sweep implementation head; the remaining gap is a part 2B item."
+          "change": "upgraded",
+          "change_reason": "Sweep part 2B at 1aec6a2f0f: the cell's remaining part 2B gap is closed with witnesses; see DCN.md \"Sweep part 2B\"."
         },
         "retention": {
           "status": "PASS",
@@ -583,15 +609,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-761",
-              "line_start": 29853,
-              "line_end": 29853,
+              "line_start": 29859,
+              "line_end": 29859,
               "quote": "  Exact retention_policy_ref is RP-AUTHORITY-INDEFINITE@1.0.0, by the per-name G03/G10 assignment landed as"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-761",
-              "line_start": 29854,
-              "line_end": 29854,
+              "line_start": 29860,
+              "line_end": 29860,
               "quote": "  Plans/Decision_Log.md#DL-401 in Case L-3, Card 1 retention assignments (G10 for this exact browser.session name);"
             }
           ],
@@ -603,31 +629,31 @@
           "change_reason": "Regraded at round-4 implementation; no admission/native claim and no sweep gap is called fixed."
         },
         "redaction_custody": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "B2 and the Browser numeric ranges closed: Storage sequence_id is storage_uint64 on the event and the Storage original, receipt and reader copies join it exactly (typed, float bits), integral-float spellings refuse at the integer slots, Browser viewport u32 and scroll/zoom exact finite f64 rows refuse on both records. Still open: SP-1101 authenticated original edition/recipe selection for retained custody (part 2B with CV-1101), so the cell stays PARTIAL.",
+          "finding": "B2 and the Browser numeric ranges closed in part 2A; SP-1101 retained custody closed in part 2B: retained reads resolve through the shared RetainedDispatcher from the sealed custody catalogue before any original check, the sealed card2@1 tuple pins the EventRecord and payload schema bytes and field profiles, and a Store outside custody or an unsupported sealed recipe refuses with no fallback, whatever the case's own authentic/verified flags say (p2b/sp1101/unsealed-store/*, p2b/sp1101/unsupported-recipe/*, p2b/sp1101/case-recipe-label-ignored). Large-metadata originals stay readable (p2b/sp1101/large-sequence/*, sequence_id 2^64-1). Residual, stated: in this static model the binding's source commitment is computed from the single copy of the original bytes (the original's value is verified by the orig_* and historical_record rows), and an original with no sealed receipt of its own takes its Store's sealed default card2@1, the only recipe. Native custody NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-761",
-              "line_start": 29905,
-              "line_end": 29905,
-              "quote": "Numbers, sweep 2026-11-10 (SP-1100 beside the unchanged SP-026/SP-236 and SP-278 profiles):"
+              "line_start": 29916,
+              "line_end": 29916,
+              "quote": "when exactly representable). SP-278 binding values stay uint-only. Retained originals, sweep 2026-11-11 (SP-1101"
             },
             {
-              "path": "Plans/storage-plan.md",
-              "unit": "SP-761",
-              "line_start": 29862,
-              "line_end": 29862,
-              "quote": "are backed up/restored coherently through the existing Project memory/browser stores or CV-366 full application"
+              "path": "scripts/pm_card2_events.py",
+              "unit": "CV-781",
+              "line_start": 1284,
+              "line_end": 1284,
+              "quote": "row('recipe', 'recipe_installed', 'recipe_unsupported', '/storage/event',"
             }
           ],
           "prior": {
-            "source": "DCN-self-grade.json @ db8bd12630ec032dcbd6416bc20b97f45df9a7b6 (sweep part 1; round-4 grades carried)",
+            "source": "DCN-self-grade.json @ 9bfb9b46cc7d3ad861020e2c9347104ba13eb1ae (sweep part 2A and part 2B numbers)",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Re-read at the sweep implementation head; the remaining gap is a part 2B item."
+          "change": "upgraded",
+          "change_reason": "Sweep part 2B at 1aec6a2f0f: the cell's remaining part 2B gap is closed with witnesses; see DCN.md \"Sweep part 2B\"."
         },
         "transitions": {
           "status": "PASS",
@@ -664,15 +690,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-761",
-              "line_start": 29884,
-              "line_end": 29884,
+              "line_start": 29890,
+              "line_end": 29890,
               "quote": "not this reader''s. Family checkpoint disposition is none_required: the family creates no projector, durable history"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-761",
-              "line_start": 29895,
-              "line_end": 29895,
+              "line_start": 29901,
+              "line_end": 29901,
               "quote": "  Recompute checkpoint commitments from genuine Storage source bytes and records, never from two matching"
             }
           ],
@@ -684,58 +710,65 @@
           "change_reason": "Regraded at round-4 implementation; no admission/native claim and no sweep gap is called fixed."
         },
         "compatibility_withdrawal": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "SW1 is part 2B: retained timestamps still pass the interim lane grammar without authenticated write-time recipe selection (CV-1101 + SP-1101). This lane's timestamp review is interim only. Withdrawal/retained replay policies stay bound.",
+          "finding": "SW1 closed (sweep part 2B). Every timestamp field uses the shared CV-1101 date_time with its owner profile: event_record for occurred_at_utc and ts (lowercase t/z, offsets, legitimate leap seconds and long fractions are owner-valid and stay readable with their exact spelling on retained history and retry originals), and CV-253 storage_utc_z for Storage observed_at_utc/persisted_at_utc on the current record, the retry original and retained history alike (an offset or lowercase-z Storage timestamp never becomes valid history). Retained reads and retry originals first resolve through the shared SP-1101 RetainedDispatcher from sealed custody, so a forged or unsupported recipe selection refuses without fallback. Withdrawal/retained replay policies stay bound. Witnesses: p2b/cv1101/history/*, p2b/cv1101/retry/*, p2b/cv253/history/*, p2b/cv253/retry-original/*, p2b/cv1101/history/occurred_at_utc/* (owner-invalid history refuses). datetime_validator and the inventory gate run at batch-2 integration (lead addendum 2). Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-781",
-              "line_start": 24754,
-              "line_end": 24754,
-              "quote": "is forward-only with a separately governed successor. Withdrawal sets an explicit writer admission cutoff before"
+              "line_start": 24905,
+              "line_end": 24905,
+              "quote": "key recipes are unchanged. Timestamps and retained originals, sweep 2026-11-11 (CV-1101 beside CV-253 and CV-317;"
             },
             {
-              "path": "Plans/Contracts_V0.md",
+              "path": "scripts/pm_card2_events.py",
               "unit": "CV-781",
-              "line_start": 24762,
-              "line_end": 24762,
-              "quote": "  Before retry returns or recovers an original, authenticate its exact EventRecord from Storage and validate"
+              "line_start": 550,
+              "line_end": 550,
+              "quote": "view_rule('timestamps', 'storage_utc_z_' + key, 'storage_utc_z', '/' + key,"
+            },
+            {
+              "path": "scripts/pm_card2_events.py",
+              "unit": "CV-781",
+              "line_start": 73,
+              "line_end": 73,
+              "quote": "TIMESTAMP_PROFILES = {"
             }
           ],
           "prior": {
-            "source": "DCN-self-grade.json @ db8bd12630ec032dcbd6416bc20b97f45df9a7b6 (sweep part 1; round-4 grades carried)",
+            "source": "DCN-self-grade.json @ 9bfb9b46cc7d3ad861020e2c9347104ba13eb1ae (sweep part 2A and part 2B numbers)",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Re-read at the sweep implementation head; the remaining gap is a part 2B item."
+          "change": "upgraded",
+          "change_reason": "Sweep part 2B at 1aec6a2f0f: the cell's remaining part 2B gap is closed with witnesses; see DCN.md \"Sweep part 2B\"."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Sweep part 2A: every refusal is one of 562 named guard-table rows; the gated tool (004bdedd63) proves 495 rows with single-defect witnesses (16,578 witnesses: 16,343 fixture negatives and 235 part 2A witnesses, plus 283 positives and 7 controls) and 67 rows sit alone in entailed tables with written proofs. PARTIAL because the timestamp review is interim only (CV-1101, part 2B) and SP-1101 retained-recipe witnesses (old-recipe positives, forged-recipe negatives) are part 2B.",
+          "finding": "Every refusal is one of 569 named guard-table rows; the gated tool (004bdedd63) rerun at the part 2B head credits the proved rows exactly as reported in DCN.md \"Sweep part 2B\"; entailed rows sit alone with written proofs. The timestamp review is no longer interim: each field is checked by the shared date_time with its named profile, and each run requires every lane-recorded leak to refuse at every field with the shared Refusal reason as the validator's error cause. SP-1101 has retained positives (owner-valid lowercase, offset, leap-second, long-fraction and 2^64-1 sequence originals) and forgery negatives (unsealed Store, unsupported sealed recipe), plus replaced-resource, weakened-profile and caller-override trials. Witnesses: 112 p2b witnesses and 68 p2b controls in Plans/card2_event_p2a_cases.json.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-380",
-              "line_start": 7248,
-              "line_end": 7248,
-              "quote": "defect; observational copies are updated together. It must fail exactly its intended guard. Since the 2026-11-10"
+              "line_start": 7274,
+              "line_end": 7274,
+              "quote": "Since sweep part 2B (2026-11-11) every timestamp field is checked by the shared CV-1101 date_time predicate with"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-380",
-              "line_start": 7250,
-              "line_end": 7250,
-              "quote": "scripts/pm-card2-table-generate.py), each one predicate over one subject (the candidate or the Storage original, the"
+              "path": "scripts/pm_card2_events.py",
+              "unit": "CV-781",
+              "line_start": 73,
+              "line_end": 73,
+              "quote": "TIMESTAMP_PROFILES = {"
             }
           ],
           "prior": {
-            "source": "DCN-self-grade.json @ db8bd12630ec032dcbd6416bc20b97f45df9a7b6 (sweep part 1; round-4 grades carried)",
+            "source": "DCN-self-grade.json @ 9bfb9b46cc7d3ad861020e2c9347104ba13eb1ae (sweep part 2A and part 2B numbers)",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Re-read at the sweep implementation head; the remaining gap is a part 2B item.",
+          "change": "upgraded",
+          "change_reason": "Sweep part 2B at 1aec6a2f0f: the cell's remaining part 2B gap is closed with witnesses; see DCN.md \"Sweep part 2B\".",
           "run_evidence": {
             "source_commit": "de58b6e10c11ab249ec05f13a2bbbdd6f2f92f4b",
             "guard_proof": {
@@ -755,19 +788,17 @@
           }
         }
       },
-      "pass_count": 6,
+      "pass_count": 11,
       "status_counts": {
-        "PASS": 6,
-        "PARTIAL": 5,
+        "PASS": 11,
+        "PARTIAL": 0,
         "ABSENT": 1,
         "CONFLICT": 0
       },
       "normative_depth_complete": false,
       "remaining_gaps": [
-        "B1 and B2: shared numeric-domain sweep on plans/ea-numrule-20261105 (CV-1100, SP-1100, SP-1101).",
-        "SW1: authenticated write-time timestamp recipe selection; preserve genuine retained originals.",
         "Membership/admission ABSENT; pinned answers/retention integration remains prerequisite. Native NOT_RUN.",
-        "Browser u32 dimensions and f64 zoom ranges await the same sweep."
+        "Batch-2 integration: datetime_validator and the whole-Plans date-time inventory gate (lead addendum 2), including classification of the DCN schema resources and the custody catalogue; native SP-1101 custody remains NOT_RUN."
       ],
       "native_execution": "NOT_RUN"
     },
@@ -838,15 +869,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-782",
-              "line_start": 24851,
-              "line_end": 24851,
+              "line_start": 24871,
+              "line_end": 24871,
               "quote": "admission, order is authenticated owner acceptance/reservation, canonical owner body commit and durable event"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-782",
-              "line_start": 24867,
-              "line_end": 24867,
+              "line_start": 24887,
+              "line_end": 24887,
               "quote": "  Before retry returns or recovers an original, authenticate its exact EventRecord from Storage and validate"
             }
           ],
@@ -865,15 +896,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-782",
-              "line_start": 24878,
-              "line_end": 24878,
+              "line_start": 24898,
+              "line_end": 24898,
               "quote": "Numbers, sweep 2026-11-10 (CV-1100 beside the unchanged CV-317 and CV-366 recipes): browser.session.closed"
             },
             {
               "path": "scripts/pm_card2_events.py",
               "unit": "CV-782",
-              "line_start": 504,
-              "line_end": 504,
+              "line_start": 538,
+              "line_end": 538,
               "quote": "view_rule('schema', 'producer_route', 'producer_route', '', 'the CV-317 producer projection qualifies under CV-1100 (producer_semantic_bytes)',"
             }
           ],
@@ -892,15 +923,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-782",
-              "line_start": 24837,
-              "line_end": 24837,
+              "line_start": 24857,
+              "line_end": 24857,
               "quote": "Its per-effect component is exact UTF-8 event_type + '':'' + original operation ID. Application idempotency is"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-782",
-              "line_start": 24867,
-              "line_end": 24867,
+              "line_start": 24887,
+              "line_end": 24887,
               "quote": "  Before retry returns or recovers an original, authenticate its exact EventRecord from Storage and validate"
             }
           ],
@@ -912,31 +943,38 @@
           "change_reason": "Regraded at round-4 implementation; no admission/native claim and no sweep gap is called fixed."
         },
         "replay_idempotency": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "B1 current routes closed: the retry comparison is the shared producer_semantic_digest and the producer route refuses before effects consistently on append, retry and retained reads. Still open: SP-1101 authenticated selection of a retained original's write-time recipe (part 2B, in the same recipe tuple as the CV-1101 date-time profile), so the cell stays PARTIAL.",
+          "finding": "B1 current routes closed in part 2A; SP-1101 closed in part 2B: a retry original is resolved once through the shared RetainedDispatcher (Card2OriginalOwner answers only from Plans/card2_original_custody.json, the installed FROZEN_RECIPES pin card2@1's schema bytes and CV-1101 profiles) before the producer-digest comparison. A Store outside custody refuses at recipe_custody, a sealed unsupported recipe at recipe_installed, a binding mismatch at the join rows with recipe_resolved entailed; each run proves that a replaced resource or weakened profile installs no verifier and a caller override refuses. Witnesses: p2b/sp1101/* on retry; controls p2b/sp1101/other-operation-control/*, p2b/sp1101/large-sequence/retry-original. Residual, stated: in this static model the binding's source commitment is computed from the single copy of the original bytes (the original's value is verified by the orig_* and historical_record rows), and an original with no sealed receipt of its own takes its Store's sealed default card2@1, the only recipe. DCN has one write-time recipe, so there is no older recipe to select. Native custody NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-782",
-              "line_start": 24878,
-              "line_end": 24878,
-              "quote": "Numbers, sweep 2026-11-10 (CV-1100 beside the unchanged CV-317 and CV-366 recipes): browser.session.closed"
+              "line_start": 24911,
+              "line_end": 24911,
+              "quote": "SP-1101 RetainedDispatcher from Storage''s sealed write custody (static stand-in"
             },
             {
-              "path": "Plans/Contracts_V0.md",
+              "path": "scripts/pm_card2_events.py",
               "unit": "CV-782",
-              "line_start": 24830,
-              "line_end": 24830,
-              "quote": "2.0.0 and its complete producer_semantic_digest recipe unchanged, plus SP-026/SP-236 SeglogFrameV2 and SP-286/CV-339"
+              "line_start": 1281,
+              "line_end": 1281,
+              "quote": "row('recipe', 'recipe_custody', 'original_unavailable', '/storage/event',"
+            },
+            {
+              "path": "scripts/pm_card2_events.py",
+              "unit": "CV-782",
+              "line_start": 1265,
+              "line_end": 1265,
+              "quote": "def dispatch(c, recipes=None, **resolve):"
             }
           ],
           "prior": {
-            "source": "DCN-self-grade.json @ db8bd12630ec032dcbd6416bc20b97f45df9a7b6 (sweep part 1; round-4 grades carried)",
+            "source": "DCN-self-grade.json @ 9bfb9b46cc7d3ad861020e2c9347104ba13eb1ae (sweep part 2A and part 2B numbers)",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Re-read at the sweep implementation head; the remaining gap is a part 2B item."
+          "change": "upgraded",
+          "change_reason": "Sweep part 2B at 1aec6a2f0f: the cell's remaining part 2B gap is closed with witnesses; see DCN.md \"Sweep part 2B\"."
         },
         "retention": {
           "status": "PASS",
@@ -946,15 +984,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-762",
-              "line_start": 29969,
-              "line_end": 29969,
+              "line_start": 29981,
+              "line_end": 29981,
               "quote": "  Exact retention_policy_ref is RP-AUTHORITY-INDEFINITE@1.0.0, by the per-name G03/G10 assignment landed as"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-762",
-              "line_start": 29970,
-              "line_end": 29970,
+              "line_start": 29982,
+              "line_end": 29982,
               "quote": "  Plans/Decision_Log.md#DL-401 in Case L-3, Card 1 retention assignments (G10 for this exact browser.session name);"
             }
           ],
@@ -966,31 +1004,31 @@
           "change_reason": "Regraded at round-4 implementation; no admission/native claim and no sweep gap is called fixed."
         },
         "redaction_custody": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "B2 and the Browser numeric ranges closed: Storage sequence_id is storage_uint64 on the event and the Storage original, receipt and reader copies join it exactly (typed, float bits), integral-float spellings refuse at the integer slots, Browser viewport u32 and scroll/zoom exact finite f64 rows refuse on both records. Still open: SP-1101 authenticated original edition/recipe selection for retained custody (part 2B with CV-1101), so the cell stays PARTIAL.",
+          "finding": "B2 and the Browser numeric ranges closed in part 2A; SP-1101 retained custody closed in part 2B: retained reads resolve through the shared RetainedDispatcher from the sealed custody catalogue before any original check, the sealed card2@1 tuple pins the EventRecord and payload schema bytes and field profiles, and a Store outside custody or an unsupported sealed recipe refuses with no fallback, whatever the case's own authentic/verified flags say (p2b/sp1101/unsealed-store/*, p2b/sp1101/unsupported-recipe/*, p2b/sp1101/case-recipe-label-ignored). Large-metadata originals stay readable (p2b/sp1101/large-sequence/*, sequence_id 2^64-1). Residual, stated: in this static model the binding's source commitment is computed from the single copy of the original bytes (the original's value is verified by the orig_* and historical_record rows), and an original with no sealed receipt of its own takes its Store's sealed default card2@1, the only recipe. Native custody NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-762",
-              "line_start": 30021,
-              "line_end": 30021,
-              "quote": "Numbers, sweep 2026-11-10 (SP-1100 beside the unchanged SP-026/SP-236 and SP-278 profiles):"
+              "line_start": 30038,
+              "line_end": 30038,
+              "quote": "when exactly representable). SP-278 binding values stay uint-only. Retained originals, sweep 2026-11-11 (SP-1101"
             },
             {
-              "path": "Plans/storage-plan.md",
-              "unit": "SP-762",
-              "line_start": 29978,
-              "line_end": 29978,
-              "quote": "are backed up/restored coherently through the existing Project memory/browser stores or CV-366 full application"
+              "path": "scripts/pm_card2_events.py",
+              "unit": "CV-782",
+              "line_start": 1284,
+              "line_end": 1284,
+              "quote": "row('recipe', 'recipe_installed', 'recipe_unsupported', '/storage/event',"
             }
           ],
           "prior": {
-            "source": "DCN-self-grade.json @ db8bd12630ec032dcbd6416bc20b97f45df9a7b6 (sweep part 1; round-4 grades carried)",
+            "source": "DCN-self-grade.json @ 9bfb9b46cc7d3ad861020e2c9347104ba13eb1ae (sweep part 2A and part 2B numbers)",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Re-read at the sweep implementation head; the remaining gap is a part 2B item."
+          "change": "upgraded",
+          "change_reason": "Sweep part 2B at 1aec6a2f0f: the cell's remaining part 2B gap is closed with witnesses; see DCN.md \"Sweep part 2B\"."
         },
         "transitions": {
           "status": "PASS",
@@ -1027,15 +1065,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-762",
-              "line_start": 30000,
-              "line_end": 30000,
+              "line_start": 30012,
+              "line_end": 30012,
               "quote": "not this reader''s. Family checkpoint disposition is none_required: the family creates no projector, durable history"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-762",
-              "line_start": 30011,
-              "line_end": 30011,
+              "line_start": 30023,
+              "line_end": 30023,
               "quote": "  Recompute checkpoint commitments from genuine Storage source bytes and records, never from two matching"
             }
           ],
@@ -1047,58 +1085,65 @@
           "change_reason": "Regraded at round-4 implementation; no admission/native claim and no sweep gap is called fixed."
         },
         "compatibility_withdrawal": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "SW1 is part 2B: retained timestamps still pass the interim lane grammar without authenticated write-time recipe selection (CV-1101 + SP-1101). This lane's timestamp review is interim only. Withdrawal/retained replay policies stay bound.",
+          "finding": "SW1 closed (sweep part 2B). Every timestamp field uses the shared CV-1101 date_time with its owner profile: event_record for occurred_at_utc and ts (lowercase t/z, offsets, legitimate leap seconds and long fractions are owner-valid and stay readable with their exact spelling on retained history and retry originals), and CV-253 storage_utc_z for Storage observed_at_utc/persisted_at_utc on the current record, the retry original and retained history alike (an offset or lowercase-z Storage timestamp never becomes valid history). Retained reads and retry originals first resolve through the shared SP-1101 RetainedDispatcher from sealed custody, so a forged or unsupported recipe selection refuses without fallback. Withdrawal/retained replay policies stay bound. Witnesses: p2b/cv1101/history/*, p2b/cv1101/retry/*, p2b/cv253/history/*, p2b/cv253/retry-original/*, p2b/cv1101/history/occurred_at_utc/* (owner-invalid history refuses). datetime_validator and the inventory gate run at batch-2 integration (lead addendum 2). Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-782",
-              "line_start": 24859,
-              "line_end": 24859,
-              "quote": "is forward-only with a separately governed successor. Withdrawal sets an explicit writer admission cutoff before"
+              "line_start": 24905,
+              "line_end": 24905,
+              "quote": "key recipes are unchanged. Timestamps and retained originals, sweep 2026-11-11 (CV-1101 beside CV-253 and CV-317;"
             },
             {
-              "path": "Plans/Contracts_V0.md",
+              "path": "scripts/pm_card2_events.py",
               "unit": "CV-782",
-              "line_start": 24867,
-              "line_end": 24867,
-              "quote": "  Before retry returns or recovers an original, authenticate its exact EventRecord from Storage and validate"
+              "line_start": 550,
+              "line_end": 550,
+              "quote": "view_rule('timestamps', 'storage_utc_z_' + key, 'storage_utc_z', '/' + key,"
+            },
+            {
+              "path": "scripts/pm_card2_events.py",
+              "unit": "CV-782",
+              "line_start": 73,
+              "line_end": 73,
+              "quote": "TIMESTAMP_PROFILES = {"
             }
           ],
           "prior": {
-            "source": "DCN-self-grade.json @ db8bd12630ec032dcbd6416bc20b97f45df9a7b6 (sweep part 1; round-4 grades carried)",
+            "source": "DCN-self-grade.json @ 9bfb9b46cc7d3ad861020e2c9347104ba13eb1ae (sweep part 2A and part 2B numbers)",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Re-read at the sweep implementation head; the remaining gap is a part 2B item."
+          "change": "upgraded",
+          "change_reason": "Sweep part 2B at 1aec6a2f0f: the cell's remaining part 2B gap is closed with witnesses; see DCN.md \"Sweep part 2B\"."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Sweep part 2A: every refusal is one of 562 named guard-table rows; the gated tool (004bdedd63) proves 495 rows with single-defect witnesses (16,578 witnesses: 16,343 fixture negatives and 235 part 2A witnesses, plus 283 positives and 7 controls) and 67 rows sit alone in entailed tables with written proofs. PARTIAL because the timestamp review is interim only (CV-1101, part 2B) and SP-1101 retained-recipe witnesses (old-recipe positives, forged-recipe negatives) are part 2B.",
+          "finding": "Every refusal is one of 569 named guard-table rows; the gated tool (004bdedd63) rerun at the part 2B head credits the proved rows exactly as reported in DCN.md \"Sweep part 2B\"; entailed rows sit alone with written proofs. The timestamp review is no longer interim: each field is checked by the shared date_time with its named profile, and each run requires every lane-recorded leak to refuse at every field with the shared Refusal reason as the validator's error cause. SP-1101 has retained positives (owner-valid lowercase, offset, leap-second, long-fraction and 2^64-1 sequence originals) and forgery negatives (unsealed Store, unsupported sealed recipe), plus replaced-resource, weakened-profile and caller-override trials. Witnesses: 112 p2b witnesses and 68 p2b controls in Plans/card2_event_p2a_cases.json.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-380",
-              "line_start": 7248,
-              "line_end": 7248,
-              "quote": "defect; observational copies are updated together. It must fail exactly its intended guard. Since the 2026-11-10"
+              "line_start": 7274,
+              "line_end": 7274,
+              "quote": "Since sweep part 2B (2026-11-11) every timestamp field is checked by the shared CV-1101 date_time predicate with"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-380",
-              "line_start": 7250,
-              "line_end": 7250,
-              "quote": "scripts/pm-card2-table-generate.py), each one predicate over one subject (the candidate or the Storage original, the"
+              "path": "scripts/pm_card2_events.py",
+              "unit": "CV-782",
+              "line_start": 73,
+              "line_end": 73,
+              "quote": "TIMESTAMP_PROFILES = {"
             }
           ],
           "prior": {
-            "source": "DCN-self-grade.json @ db8bd12630ec032dcbd6416bc20b97f45df9a7b6 (sweep part 1; round-4 grades carried)",
+            "source": "DCN-self-grade.json @ 9bfb9b46cc7d3ad861020e2c9347104ba13eb1ae (sweep part 2A and part 2B numbers)",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Re-read at the sweep implementation head; the remaining gap is a part 2B item.",
+          "change": "upgraded",
+          "change_reason": "Sweep part 2B at 1aec6a2f0f: the cell's remaining part 2B gap is closed with witnesses; see DCN.md \"Sweep part 2B\".",
           "run_evidence": {
             "source_commit": "de58b6e10c11ab249ec05f13a2bbbdd6f2f92f4b",
             "guard_proof": {
@@ -1118,19 +1163,17 @@
           }
         }
       },
-      "pass_count": 6,
+      "pass_count": 11,
       "status_counts": {
-        "PASS": 6,
-        "PARTIAL": 5,
+        "PASS": 11,
+        "PARTIAL": 0,
         "ABSENT": 1,
         "CONFLICT": 0
       },
       "normative_depth_complete": false,
       "remaining_gaps": [
-        "B1 and B2: shared numeric-domain sweep on plans/ea-numrule-20261105 (CV-1100, SP-1100, SP-1101).",
-        "SW1: authenticated write-time timestamp recipe selection; preserve genuine retained originals.",
         "Membership/admission ABSENT; pinned answers/retention integration remains prerequisite. Native NOT_RUN.",
-        "Browser u32 dimensions and f64 zoom ranges await the same sweep."
+        "Batch-2 integration: datetime_validator and the whole-Plans date-time inventory gate (lead addendum 2), including classification of the DCN schema resources and the custody catalogue; native SP-1101 custody remains NOT_RUN."
       ],
       "native_execution": "NOT_RUN"
     },
@@ -1201,15 +1244,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-783",
-              "line_start": 24956,
-              "line_end": 24956,
+              "line_start": 24986,
+              "line_end": 24986,
               "quote": "admission, order is authenticated owner acceptance/reservation, canonical owner body commit and durable event"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-783",
-              "line_start": 24972,
-              "line_end": 24972,
+              "line_start": 25002,
+              "line_end": 25002,
               "quote": "  Before retry returns or recovers an original, authenticate its exact EventRecord from Storage and validate"
             }
           ],
@@ -1228,15 +1271,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-783",
-              "line_start": 24983,
-              "line_end": 24983,
+              "line_start": 25013,
+              "line_end": 25013,
               "quote": "Numbers, sweep 2026-11-10 (CV-1100 beside the unchanged CV-317 and CV-366 recipes): browser.session.promoted"
             },
             {
               "path": "scripts/pm_card2_events.py",
               "unit": "CV-783",
-              "line_start": 504,
-              "line_end": 504,
+              "line_start": 538,
+              "line_end": 538,
               "quote": "view_rule('schema', 'producer_route', 'producer_route', '', 'the CV-317 producer projection qualifies under CV-1100 (producer_semantic_bytes)',"
             }
           ],
@@ -1255,15 +1298,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-783",
-              "line_start": 24942,
-              "line_end": 24942,
+              "line_start": 24972,
+              "line_end": 24972,
               "quote": "Its per-effect component is exact UTF-8 event_type + '':'' + original operation ID. Application idempotency is"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-783",
-              "line_start": 24972,
-              "line_end": 24972,
+              "line_start": 25002,
+              "line_end": 25002,
               "quote": "  Before retry returns or recovers an original, authenticate its exact EventRecord from Storage and validate"
             }
           ],
@@ -1275,31 +1318,38 @@
           "change_reason": "Regraded at round-4 implementation; no admission/native claim and no sweep gap is called fixed."
         },
         "replay_idempotency": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "B1 current routes closed: the retry comparison is the shared producer_semantic_digest and the producer route refuses before effects consistently on append, retry and retained reads. Still open: SP-1101 authenticated selection of a retained original's write-time recipe (part 2B, in the same recipe tuple as the CV-1101 date-time profile), so the cell stays PARTIAL.",
+          "finding": "B1 current routes closed in part 2A; SP-1101 closed in part 2B: a retry original is resolved once through the shared RetainedDispatcher (Card2OriginalOwner answers only from Plans/card2_original_custody.json, the installed FROZEN_RECIPES pin card2@1's schema bytes and CV-1101 profiles) before the producer-digest comparison. A Store outside custody refuses at recipe_custody, a sealed unsupported recipe at recipe_installed, a binding mismatch at the join rows with recipe_resolved entailed; each run proves that a replaced resource or weakened profile installs no verifier and a caller override refuses. Witnesses: p2b/sp1101/* on retry; controls p2b/sp1101/other-operation-control/*, p2b/sp1101/large-sequence/retry-original. Residual, stated: in this static model the binding's source commitment is computed from the single copy of the original bytes (the original's value is verified by the orig_* and historical_record rows), and an original with no sealed receipt of its own takes its Store's sealed default card2@1, the only recipe. DCN has one write-time recipe, so there is no older recipe to select. Native custody NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-783",
-              "line_start": 24983,
-              "line_end": 24983,
-              "quote": "Numbers, sweep 2026-11-10 (CV-1100 beside the unchanged CV-317 and CV-366 recipes): browser.session.promoted"
+              "line_start": 25026,
+              "line_end": 25026,
+              "quote": "SP-1101 RetainedDispatcher from Storage''s sealed write custody (static stand-in"
             },
             {
-              "path": "Plans/Contracts_V0.md",
+              "path": "scripts/pm_card2_events.py",
               "unit": "CV-783",
-              "line_start": 24935,
-              "line_end": 24935,
-              "quote": "2.0.0 and its complete producer_semantic_digest recipe unchanged, plus SP-026/SP-236 SeglogFrameV2 and SP-286/CV-339"
+              "line_start": 1281,
+              "line_end": 1281,
+              "quote": "row('recipe', 'recipe_custody', 'original_unavailable', '/storage/event',"
+            },
+            {
+              "path": "scripts/pm_card2_events.py",
+              "unit": "CV-783",
+              "line_start": 1265,
+              "line_end": 1265,
+              "quote": "def dispatch(c, recipes=None, **resolve):"
             }
           ],
           "prior": {
-            "source": "DCN-self-grade.json @ db8bd12630ec032dcbd6416bc20b97f45df9a7b6 (sweep part 1; round-4 grades carried)",
+            "source": "DCN-self-grade.json @ 9bfb9b46cc7d3ad861020e2c9347104ba13eb1ae (sweep part 2A and part 2B numbers)",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Re-read at the sweep implementation head; the remaining gap is a part 2B item."
+          "change": "upgraded",
+          "change_reason": "Sweep part 2B at 1aec6a2f0f: the cell's remaining part 2B gap is closed with witnesses; see DCN.md \"Sweep part 2B\"."
         },
         "retention": {
           "status": "PASS",
@@ -1309,15 +1359,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-763",
-              "line_start": 30085,
-              "line_end": 30085,
+              "line_start": 30103,
+              "line_end": 30103,
               "quote": "  Exact retention_policy_ref is RP-AUTHORITY-INDEFINITE@1.0.0, by the per-name G03/G10 assignment landed as"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-763",
-              "line_start": 30086,
-              "line_end": 30086,
+              "line_start": 30104,
+              "line_end": 30104,
               "quote": "  Plans/Decision_Log.md#DL-401 in Case L-3, Card 1 retention assignments (G10 for this exact browser.session name);"
             }
           ],
@@ -1329,31 +1379,31 @@
           "change_reason": "Regraded at round-4 implementation; no admission/native claim and no sweep gap is called fixed."
         },
         "redaction_custody": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "B2 and the Browser numeric ranges closed: Storage sequence_id is storage_uint64 on the event and the Storage original, receipt and reader copies join it exactly (typed, float bits), integral-float spellings refuse at the integer slots, Browser viewport u32 and scroll/zoom exact finite f64 rows refuse on both records. Still open: SP-1101 authenticated original edition/recipe selection for retained custody (part 2B with CV-1101), so the cell stays PARTIAL.",
+          "finding": "B2 and the Browser numeric ranges closed in part 2A; SP-1101 retained custody closed in part 2B: retained reads resolve through the shared RetainedDispatcher from the sealed custody catalogue before any original check, the sealed card2@1 tuple pins the EventRecord and payload schema bytes and field profiles, and a Store outside custody or an unsupported sealed recipe refuses with no fallback, whatever the case's own authentic/verified flags say (p2b/sp1101/unsealed-store/*, p2b/sp1101/unsupported-recipe/*, p2b/sp1101/case-recipe-label-ignored). Large-metadata originals stay readable (p2b/sp1101/large-sequence/*, sequence_id 2^64-1). Residual, stated: in this static model the binding's source commitment is computed from the single copy of the original bytes (the original's value is verified by the orig_* and historical_record rows), and an original with no sealed receipt of its own takes its Store's sealed default card2@1, the only recipe. Native custody NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-763",
-              "line_start": 30137,
-              "line_end": 30137,
-              "quote": "Numbers, sweep 2026-11-10 (SP-1100 beside the unchanged SP-026/SP-236 and SP-278 profiles):"
+              "line_start": 30160,
+              "line_end": 30160,
+              "quote": "when exactly representable). SP-278 binding values stay uint-only. Retained originals, sweep 2026-11-11 (SP-1101"
             },
             {
-              "path": "Plans/storage-plan.md",
-              "unit": "SP-763",
-              "line_start": 30094,
-              "line_end": 30094,
-              "quote": "are backed up/restored coherently through the existing Project memory/browser stores or CV-366 full application"
+              "path": "scripts/pm_card2_events.py",
+              "unit": "CV-783",
+              "line_start": 1284,
+              "line_end": 1284,
+              "quote": "row('recipe', 'recipe_installed', 'recipe_unsupported', '/storage/event',"
             }
           ],
           "prior": {
-            "source": "DCN-self-grade.json @ db8bd12630ec032dcbd6416bc20b97f45df9a7b6 (sweep part 1; round-4 grades carried)",
+            "source": "DCN-self-grade.json @ 9bfb9b46cc7d3ad861020e2c9347104ba13eb1ae (sweep part 2A and part 2B numbers)",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Re-read at the sweep implementation head; the remaining gap is a part 2B item."
+          "change": "upgraded",
+          "change_reason": "Sweep part 2B at 1aec6a2f0f: the cell's remaining part 2B gap is closed with witnesses; see DCN.md \"Sweep part 2B\"."
         },
         "transitions": {
           "status": "PASS",
@@ -1390,15 +1440,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-763",
-              "line_start": 30116,
-              "line_end": 30116,
+              "line_start": 30134,
+              "line_end": 30134,
               "quote": "not this reader''s. Family checkpoint disposition is none_required: the family creates no projector, durable history"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-763",
-              "line_start": 30127,
-              "line_end": 30127,
+              "line_start": 30145,
+              "line_end": 30145,
               "quote": "  Recompute checkpoint commitments from genuine Storage source bytes and records, never from two matching"
             }
           ],
@@ -1410,58 +1460,65 @@
           "change_reason": "Regraded at round-4 implementation; no admission/native claim and no sweep gap is called fixed."
         },
         "compatibility_withdrawal": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "SW1 is part 2B: retained timestamps still pass the interim lane grammar without authenticated write-time recipe selection (CV-1101 + SP-1101). This lane's timestamp review is interim only. Withdrawal/retained replay policies stay bound.",
+          "finding": "SW1 closed (sweep part 2B). Every timestamp field uses the shared CV-1101 date_time with its owner profile: event_record for occurred_at_utc and ts (lowercase t/z, offsets, legitimate leap seconds and long fractions are owner-valid and stay readable with their exact spelling on retained history and retry originals), and CV-253 storage_utc_z for Storage observed_at_utc/persisted_at_utc on the current record, the retry original and retained history alike (an offset or lowercase-z Storage timestamp never becomes valid history). Retained reads and retry originals first resolve through the shared SP-1101 RetainedDispatcher from sealed custody, so a forged or unsupported recipe selection refuses without fallback. Withdrawal/retained replay policies stay bound. Witnesses: p2b/cv1101/history/*, p2b/cv1101/retry/*, p2b/cv253/history/*, p2b/cv253/retry-original/*, p2b/cv1101/history/occurred_at_utc/* (owner-invalid history refuses). datetime_validator and the inventory gate run at batch-2 integration (lead addendum 2). Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-783",
-              "line_start": 24964,
-              "line_end": 24964,
-              "quote": "is forward-only with a separately governed successor. Withdrawal sets an explicit writer admission cutoff before"
+              "line_start": 25020,
+              "line_end": 25020,
+              "quote": "key recipes are unchanged. Timestamps and retained originals, sweep 2026-11-11 (CV-1101 beside CV-253 and CV-317;"
             },
             {
-              "path": "Plans/Contracts_V0.md",
+              "path": "scripts/pm_card2_events.py",
               "unit": "CV-783",
-              "line_start": 24972,
-              "line_end": 24972,
-              "quote": "  Before retry returns or recovers an original, authenticate its exact EventRecord from Storage and validate"
+              "line_start": 550,
+              "line_end": 550,
+              "quote": "view_rule('timestamps', 'storage_utc_z_' + key, 'storage_utc_z', '/' + key,"
+            },
+            {
+              "path": "scripts/pm_card2_events.py",
+              "unit": "CV-783",
+              "line_start": 73,
+              "line_end": 73,
+              "quote": "TIMESTAMP_PROFILES = {"
             }
           ],
           "prior": {
-            "source": "DCN-self-grade.json @ db8bd12630ec032dcbd6416bc20b97f45df9a7b6 (sweep part 1; round-4 grades carried)",
+            "source": "DCN-self-grade.json @ 9bfb9b46cc7d3ad861020e2c9347104ba13eb1ae (sweep part 2A and part 2B numbers)",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Re-read at the sweep implementation head; the remaining gap is a part 2B item."
+          "change": "upgraded",
+          "change_reason": "Sweep part 2B at 1aec6a2f0f: the cell's remaining part 2B gap is closed with witnesses; see DCN.md \"Sweep part 2B\"."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Sweep part 2A: every refusal is one of 562 named guard-table rows; the gated tool (004bdedd63) proves 495 rows with single-defect witnesses (16,578 witnesses: 16,343 fixture negatives and 235 part 2A witnesses, plus 283 positives and 7 controls) and 67 rows sit alone in entailed tables with written proofs. PARTIAL because the timestamp review is interim only (CV-1101, part 2B) and SP-1101 retained-recipe witnesses (old-recipe positives, forged-recipe negatives) are part 2B.",
+          "finding": "Every refusal is one of 569 named guard-table rows; the gated tool (004bdedd63) rerun at the part 2B head credits the proved rows exactly as reported in DCN.md \"Sweep part 2B\"; entailed rows sit alone with written proofs. The timestamp review is no longer interim: each field is checked by the shared date_time with its named profile, and each run requires every lane-recorded leak to refuse at every field with the shared Refusal reason as the validator's error cause. SP-1101 has retained positives (owner-valid lowercase, offset, leap-second, long-fraction and 2^64-1 sequence originals) and forgery negatives (unsealed Store, unsupported sealed recipe), plus replaced-resource, weakened-profile and caller-override trials. Witnesses: 112 p2b witnesses and 68 p2b controls in Plans/card2_event_p2a_cases.json.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-380",
-              "line_start": 7248,
-              "line_end": 7248,
-              "quote": "defect; observational copies are updated together. It must fail exactly its intended guard. Since the 2026-11-10"
+              "line_start": 7274,
+              "line_end": 7274,
+              "quote": "Since sweep part 2B (2026-11-11) every timestamp field is checked by the shared CV-1101 date_time predicate with"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-380",
-              "line_start": 7250,
-              "line_end": 7250,
-              "quote": "scripts/pm-card2-table-generate.py), each one predicate over one subject (the candidate or the Storage original, the"
+              "path": "scripts/pm_card2_events.py",
+              "unit": "CV-783",
+              "line_start": 73,
+              "line_end": 73,
+              "quote": "TIMESTAMP_PROFILES = {"
             }
           ],
           "prior": {
-            "source": "DCN-self-grade.json @ db8bd12630ec032dcbd6416bc20b97f45df9a7b6 (sweep part 1; round-4 grades carried)",
+            "source": "DCN-self-grade.json @ 9bfb9b46cc7d3ad861020e2c9347104ba13eb1ae (sweep part 2A and part 2B numbers)",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Re-read at the sweep implementation head; the remaining gap is a part 2B item.",
+          "change": "upgraded",
+          "change_reason": "Sweep part 2B at 1aec6a2f0f: the cell's remaining part 2B gap is closed with witnesses; see DCN.md \"Sweep part 2B\".",
           "run_evidence": {
             "source_commit": "de58b6e10c11ab249ec05f13a2bbbdd6f2f92f4b",
             "guard_proof": {
@@ -1481,19 +1538,17 @@
           }
         }
       },
-      "pass_count": 6,
+      "pass_count": 11,
       "status_counts": {
-        "PASS": 6,
-        "PARTIAL": 5,
+        "PASS": 11,
+        "PARTIAL": 0,
         "ABSENT": 1,
         "CONFLICT": 0
       },
       "normative_depth_complete": false,
       "remaining_gaps": [
-        "B1 and B2: shared numeric-domain sweep on plans/ea-numrule-20261105 (CV-1100, SP-1100, SP-1101).",
-        "SW1: authenticated write-time timestamp recipe selection; preserve genuine retained originals.",
         "Membership/admission ABSENT; pinned answers/retention integration remains prerequisite. Native NOT_RUN.",
-        "Browser u32 dimensions and f64 zoom ranges await the same sweep."
+        "Batch-2 integration: datetime_validator and the whole-Plans date-time inventory gate (lead addendum 2), including classification of the DCN schema resources and the custody catalogue; native SP-1101 custody remains NOT_RUN."
       ],
       "native_execution": "NOT_RUN"
     },
@@ -1564,15 +1619,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-784",
-              "line_start": 25061,
-              "line_end": 25061,
+              "line_start": 25101,
+              "line_end": 25101,
               "quote": "admission, order is authenticated owner acceptance/reservation, canonical owner body commit and durable event"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-784",
-              "line_start": 25077,
-              "line_end": 25077,
+              "line_start": 25117,
+              "line_end": 25117,
               "quote": "  Before retry returns or recovers an original, authenticate its exact EventRecord from Storage and validate"
             }
           ],
@@ -1591,15 +1646,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-784",
-              "line_start": 25088,
-              "line_end": 25088,
+              "line_start": 25128,
+              "line_end": 25128,
               "quote": "Numbers, sweep 2026-11-10 (CV-1100 beside the unchanged CV-317 and CV-366 recipes):"
             },
             {
               "path": "scripts/pm_card2_events.py",
               "unit": "CV-784",
-              "line_start": 504,
-              "line_end": 504,
+              "line_start": 538,
+              "line_end": 538,
               "quote": "view_rule('schema', 'producer_route', 'producer_route', '', 'the CV-317 producer projection qualifies under CV-1100 (producer_semantic_bytes)',"
             }
           ],
@@ -1618,15 +1673,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-784",
-              "line_start": 25048,
-              "line_end": 25048,
+              "line_start": 25088,
+              "line_end": 25088,
               "quote": "idempotency is exactly application@1:{hex(server_id)}:{hex(component)} under CV-366; Project uses card2@1:{hex(server_id)}:{hex(component)}"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-784",
-              "line_start": 25077,
-              "line_end": 25077,
+              "line_start": 25117,
+              "line_end": 25117,
               "quote": "  Before retry returns or recovers an original, authenticate its exact EventRecord from Storage and validate"
             }
           ],
@@ -1638,31 +1693,38 @@
           "change_reason": "Regraded at round-4 implementation; no admission/native claim and no sweep gap is called fixed."
         },
         "replay_idempotency": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "B1 current routes closed: the retry comparison is the shared producer_semantic_digest and the producer route refuses before effects consistently on append, retry and retained reads. Still open: SP-1101 authenticated selection of a retained original's write-time recipe (part 2B, in the same recipe tuple as the CV-1101 date-time profile), so the cell stays PARTIAL.",
+          "finding": "B1 current routes closed in part 2A; SP-1101 closed in part 2B: a retry original is resolved once through the shared RetainedDispatcher (Card2OriginalOwner answers only from Plans/card2_original_custody.json, the installed FROZEN_RECIPES pin card2@1's schema bytes and CV-1101 profiles) before the producer-digest comparison. A Store outside custody refuses at recipe_custody, a sealed unsupported recipe at recipe_installed, a binding mismatch at the join rows with recipe_resolved entailed; each run proves that a replaced resource or weakened profile installs no verifier and a caller override refuses. Witnesses: p2b/sp1101/* on retry; controls p2b/sp1101/other-operation-control/*, p2b/sp1101/large-sequence/retry-original. Residual, stated: in this static model the binding's source commitment is computed from the single copy of the original bytes (the original's value is verified by the orig_* and historical_record rows), and an original with no sealed receipt of its own takes its Store's sealed default card2@1, the only recipe. DCN has one write-time recipe, so there is no older recipe to select. Native custody NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-784",
-              "line_start": 25088,
-              "line_end": 25088,
-              "quote": "Numbers, sweep 2026-11-10 (CV-1100 beside the unchanged CV-317 and CV-366 recipes):"
+              "line_start": 25141,
+              "line_end": 25141,
+              "quote": "retained history read are first resolved once through the shared SP-1101 RetainedDispatcher from Storage''s"
             },
             {
-              "path": "Plans/Contracts_V0.md",
+              "path": "scripts/pm_card2_events.py",
               "unit": "CV-784",
-              "line_start": 25040,
-              "line_end": 25040,
-              "quote": "2.0.0 and its complete producer_semantic_digest recipe unchanged, plus SP-026/SP-236 SeglogFrameV2 and SP-286/CV-339"
+              "line_start": 1281,
+              "line_end": 1281,
+              "quote": "row('recipe', 'recipe_custody', 'original_unavailable', '/storage/event',"
+            },
+            {
+              "path": "scripts/pm_card2_events.py",
+              "unit": "CV-784",
+              "line_start": 1265,
+              "line_end": 1265,
+              "quote": "def dispatch(c, recipes=None, **resolve):"
             }
           ],
           "prior": {
-            "source": "DCN-self-grade.json @ db8bd12630ec032dcbd6416bc20b97f45df9a7b6 (sweep part 1; round-4 grades carried)",
+            "source": "DCN-self-grade.json @ 9bfb9b46cc7d3ad861020e2c9347104ba13eb1ae (sweep part 2A and part 2B numbers)",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Re-read at the sweep implementation head; the remaining gap is a part 2B item."
+          "change": "upgraded",
+          "change_reason": "Sweep part 2B at 1aec6a2f0f: the cell's remaining part 2B gap is closed with witnesses; see DCN.md \"Sweep part 2B\"."
         },
         "retention": {
           "status": "PASS",
@@ -1672,15 +1734,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-764",
-              "line_start": 30201,
-              "line_end": 30201,
+              "line_start": 30225,
+              "line_end": 30225,
               "quote": "  Exact retention_policy_ref is RP-AUTHORITY-INDEFINITE@1.0.0, by the per-name G03/G10 assignment landed as"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-764",
-              "line_start": 30202,
-              "line_end": 30202,
+              "line_start": 30226,
+              "line_end": 30226,
               "quote": "  Plans/Decision_Log.md#DL-401 in Case L-3, Card 1 retention assignments (G10 for this exact browser.session name);"
             }
           ],
@@ -1692,31 +1754,31 @@
           "change_reason": "Regraded at round-4 implementation; no admission/native claim and no sweep gap is called fixed."
         },
         "redaction_custody": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "B2 and the Browser numeric ranges closed: Storage sequence_id is storage_uint64 on the event and the Storage original, receipt and reader copies join it exactly (typed, float bits), integral-float spellings refuse at the integer slots, Browser viewport u32 and scroll/zoom exact finite f64 rows refuse on both records. Still open: SP-1101 authenticated original edition/recipe selection for retained custody (part 2B with CV-1101), so the cell stays PARTIAL.",
+          "finding": "B2 and the Browser numeric ranges closed in part 2A; SP-1101 retained custody closed in part 2B: retained reads resolve through the shared RetainedDispatcher from the sealed custody catalogue before any original check, the sealed card2@1 tuple pins the EventRecord and payload schema bytes and field profiles, and a Store outside custody or an unsupported sealed recipe refuses with no fallback, whatever the case's own authentic/verified flags say (p2b/sp1101/unsealed-store/*, p2b/sp1101/unsupported-recipe/*, p2b/sp1101/case-recipe-label-ignored). Large-metadata originals stay readable (p2b/sp1101/large-sequence/*, sequence_id 2^64-1). Residual, stated: in this static model the binding's source commitment is computed from the single copy of the original bytes (the original's value is verified by the orig_* and historical_record rows), and an original with no sealed receipt of its own takes its Store's sealed default card2@1, the only recipe. Native custody NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-764",
-              "line_start": 30254,
-              "line_end": 30254,
-              "quote": "Numbers, sweep 2026-11-10 (SP-1100 beside the unchanged SP-026/SP-236 and SP-278 profiles):"
+              "line_start": 30283,
+              "line_end": 30283,
+              "quote": "only when exactly representable). SP-278 binding values stay uint-only. Retained originals, sweep 2026-11-11"
             },
             {
-              "path": "Plans/storage-plan.md",
-              "unit": "SP-764",
-              "line_start": 30210,
-              "line_end": 30210,
-              "quote": "are backed up/restored coherently through the existing Project memory/browser stores or CV-366 full application"
+              "path": "scripts/pm_card2_events.py",
+              "unit": "CV-784",
+              "line_start": 1284,
+              "line_end": 1284,
+              "quote": "row('recipe', 'recipe_installed', 'recipe_unsupported', '/storage/event',"
             }
           ],
           "prior": {
-            "source": "DCN-self-grade.json @ db8bd12630ec032dcbd6416bc20b97f45df9a7b6 (sweep part 1; round-4 grades carried)",
+            "source": "DCN-self-grade.json @ 9bfb9b46cc7d3ad861020e2c9347104ba13eb1ae (sweep part 2A and part 2B numbers)",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Re-read at the sweep implementation head; the remaining gap is a part 2B item."
+          "change": "upgraded",
+          "change_reason": "Sweep part 2B at 1aec6a2f0f: the cell's remaining part 2B gap is closed with witnesses; see DCN.md \"Sweep part 2B\"."
         },
         "transitions": {
           "status": "PASS",
@@ -1753,15 +1815,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-764",
-              "line_start": 30232,
-              "line_end": 30232,
+              "line_start": 30256,
+              "line_end": 30256,
               "quote": "transaction remains SP-278''s, not this reader''s. Family checkpoint disposition is none_required: the family"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-764",
-              "line_start": 30244,
-              "line_end": 30244,
+              "line_start": 30268,
+              "line_end": 30268,
               "quote": "  Recompute checkpoint commitments from genuine Storage source bytes and records, never from two matching"
             }
           ],
@@ -1773,58 +1835,65 @@
           "change_reason": "Regraded at round-4 implementation; no admission/native claim and no sweep gap is called fixed."
         },
         "compatibility_withdrawal": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "SW1 is part 2B: retained timestamps still pass the interim lane grammar without authenticated write-time recipe selection (CV-1101 + SP-1101). This lane's timestamp review is interim only. Withdrawal/retained replay policies stay bound.",
+          "finding": "SW1 closed (sweep part 2B). Every timestamp field uses the shared CV-1101 date_time with its owner profile: event_record for occurred_at_utc and ts (lowercase t/z, offsets, legitimate leap seconds and long fractions are owner-valid and stay readable with their exact spelling on retained history and retry originals), and CV-253 storage_utc_z for Storage observed_at_utc/persisted_at_utc on the current record, the retry original and retained history alike (an offset or lowercase-z Storage timestamp never becomes valid history). Retained reads and retry originals first resolve through the shared SP-1101 RetainedDispatcher from sealed custody, so a forged or unsupported recipe selection refuses without fallback. Withdrawal/retained replay policies stay bound. Witnesses: p2b/cv1101/history/*, p2b/cv1101/retry/*, p2b/cv253/history/*, p2b/cv253/retry-original/*, p2b/cv1101/history/occurred_at_utc/* (owner-invalid history refuses). datetime_validator and the inventory gate run at batch-2 integration (lead addendum 2). Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-784",
-              "line_start": 25069,
-              "line_end": 25069,
-              "quote": "is forward-only with a separately governed successor. Withdrawal sets an explicit writer admission cutoff before"
+              "line_start": 25250,
+              "line_end": 25250,
+              "quote": "key recipes are unchanged. Timestamps and retained originals, sweep 2026-11-11 (CV-1101 beside CV-253 and CV-317;"
             },
             {
-              "path": "Plans/Contracts_V0.md",
+              "path": "scripts/pm_card2_events.py",
               "unit": "CV-784",
-              "line_start": 25077,
-              "line_end": 25077,
-              "quote": "  Before retry returns or recovers an original, authenticate its exact EventRecord from Storage and validate"
+              "line_start": 550,
+              "line_end": 550,
+              "quote": "view_rule('timestamps', 'storage_utc_z_' + key, 'storage_utc_z', '/' + key,"
+            },
+            {
+              "path": "scripts/pm_card2_events.py",
+              "unit": "CV-784",
+              "line_start": 73,
+              "line_end": 73,
+              "quote": "TIMESTAMP_PROFILES = {"
             }
           ],
           "prior": {
-            "source": "DCN-self-grade.json @ db8bd12630ec032dcbd6416bc20b97f45df9a7b6 (sweep part 1; round-4 grades carried)",
+            "source": "DCN-self-grade.json @ 9bfb9b46cc7d3ad861020e2c9347104ba13eb1ae (sweep part 2A and part 2B numbers)",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Re-read at the sweep implementation head; the remaining gap is a part 2B item."
+          "change": "upgraded",
+          "change_reason": "Sweep part 2B at 1aec6a2f0f: the cell's remaining part 2B gap is closed with witnesses; see DCN.md \"Sweep part 2B\"."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Sweep part 2A: every refusal is one of 562 named guard-table rows; the gated tool (004bdedd63) proves 495 rows with single-defect witnesses (16,578 witnesses: 16,343 fixture negatives and 235 part 2A witnesses, plus 283 positives and 7 controls) and 67 rows sit alone in entailed tables with written proofs. PARTIAL because the timestamp review is interim only (CV-1101, part 2B) and SP-1101 retained-recipe witnesses (old-recipe positives, forged-recipe negatives) are part 2B.",
+          "finding": "Every refusal is one of 569 named guard-table rows; the gated tool (004bdedd63) rerun at the part 2B head credits the proved rows exactly as reported in DCN.md \"Sweep part 2B\"; entailed rows sit alone with written proofs. The timestamp review is no longer interim: each field is checked by the shared date_time with its named profile, and each run requires every lane-recorded leak to refuse at every field with the shared Refusal reason as the validator's error cause. SP-1101 has retained positives (owner-valid lowercase, offset, leap-second, long-fraction and 2^64-1 sequence originals) and forgery negatives (unsealed Store, unsupported sealed recipe), plus replaced-resource, weakened-profile and caller-override trials. Witnesses: 112 p2b witnesses and 68 p2b controls in Plans/card2_event_p2a_cases.json.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-380",
-              "line_start": 7248,
-              "line_end": 7248,
-              "quote": "defect; observational copies are updated together. It must fail exactly its intended guard. Since the 2026-11-10"
+              "line_start": 7274,
+              "line_end": 7274,
+              "quote": "Since sweep part 2B (2026-11-11) every timestamp field is checked by the shared CV-1101 date_time predicate with"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-380",
-              "line_start": 7250,
-              "line_end": 7250,
-              "quote": "scripts/pm-card2-table-generate.py), each one predicate over one subject (the candidate or the Storage original, the"
+              "path": "scripts/pm_card2_events.py",
+              "unit": "CV-784",
+              "line_start": 73,
+              "line_end": 73,
+              "quote": "TIMESTAMP_PROFILES = {"
             }
           ],
           "prior": {
-            "source": "DCN-self-grade.json @ db8bd12630ec032dcbd6416bc20b97f45df9a7b6 (sweep part 1; round-4 grades carried)",
+            "source": "DCN-self-grade.json @ 9bfb9b46cc7d3ad861020e2c9347104ba13eb1ae (sweep part 2A and part 2B numbers)",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Re-read at the sweep implementation head; the remaining gap is a part 2B item.",
+          "change": "upgraded",
+          "change_reason": "Sweep part 2B at 1aec6a2f0f: the cell's remaining part 2B gap is closed with witnesses; see DCN.md \"Sweep part 2B\".",
           "run_evidence": {
             "source_commit": "de58b6e10c11ab249ec05f13a2bbbdd6f2f92f4b",
             "guard_proof": {
@@ -1844,19 +1913,17 @@
           }
         }
       },
-      "pass_count": 6,
+      "pass_count": 11,
       "status_counts": {
-        "PASS": 6,
-        "PARTIAL": 5,
+        "PASS": 11,
+        "PARTIAL": 0,
         "ABSENT": 1,
         "CONFLICT": 0
       },
       "normative_depth_complete": false,
       "remaining_gaps": [
-        "B1 and B2: shared numeric-domain sweep on plans/ea-numrule-20261105 (CV-1100, SP-1100, SP-1101).",
-        "SW1: authenticated write-time timestamp recipe selection; preserve genuine retained originals.",
         "Membership/admission ABSENT; pinned answers/retention integration remains prerequisite. Native NOT_RUN.",
-        "Browser u32 dimensions and f64 zoom ranges await the same sweep."
+        "Batch-2 integration: datetime_validator and the whole-Plans date-time inventory gate (lead addendum 2), including classification of the DCN schema resources and the custody catalogue; native SP-1101 custody remains NOT_RUN."
       ],
       "native_execution": "NOT_RUN"
     },
@@ -1927,15 +1994,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-785",
-              "line_start": 25166,
-              "line_end": 25166,
+              "line_start": 25216,
+              "line_end": 25216,
               "quote": "admission, order is authenticated owner acceptance/reservation, canonical owner body commit and durable event"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-785",
-              "line_start": 25182,
-              "line_end": 25182,
+              "line_start": 25232,
+              "line_end": 25232,
               "quote": "  Before retry returns or recovers an original, authenticate its exact EventRecord from Storage and validate"
             },
             {
@@ -1975,15 +2042,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-785",
-              "line_start": 25193,
-              "line_end": 25193,
+              "line_start": 25243,
+              "line_end": 25243,
               "quote": "Numbers, sweep 2026-11-10 (CV-1100 beside the unchanged CV-317 and CV-366 recipes): memory.gist_state_changed"
             },
             {
               "path": "scripts/pm_card2_events.py",
               "unit": "CV-785",
-              "line_start": 504,
-              "line_end": 504,
+              "line_start": 538,
+              "line_end": 538,
               "quote": "view_rule('schema', 'producer_route', 'producer_route', '', 'the CV-317 producer projection qualifies under CV-1100 (producer_semantic_bytes)',"
             }
           ],
@@ -2002,15 +2069,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-785",
-              "line_start": 25152,
-              "line_end": 25152,
+              "line_start": 25202,
+              "line_end": 25202,
               "quote": "Its per-effect component is exact UTF-8 event_type + '':'' + original operation ID. Application idempotency is"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-785",
-              "line_start": 25182,
-              "line_end": 25182,
+              "line_start": 25232,
+              "line_end": 25232,
               "quote": "  Before retry returns or recovers an original, authenticate its exact EventRecord from Storage and validate"
             }
           ],
@@ -2022,31 +2089,38 @@
           "change_reason": "Regraded at round-4 implementation; no admission/native claim and no sweep gap is called fixed."
         },
         "replay_idempotency": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "B1 current routes closed: the retry comparison is the shared producer_semantic_digest and the producer route refuses before effects consistently on append, retry and retained reads. Still open: SP-1101 authenticated selection of a retained original's write-time recipe (part 2B, in the same recipe tuple as the CV-1101 date-time profile), so the cell stays PARTIAL.",
+          "finding": "B1 current routes closed in part 2A; SP-1101 closed in part 2B: a retry original is resolved once through the shared RetainedDispatcher (Card2OriginalOwner answers only from Plans/card2_original_custody.json, the installed FROZEN_RECIPES pin card2@1's schema bytes and CV-1101 profiles) before the producer-digest comparison. A Store outside custody refuses at recipe_custody, a sealed unsupported recipe at recipe_installed, a binding mismatch at the join rows with recipe_resolved entailed; each run proves that a replaced resource or weakened profile installs no verifier and a caller override refuses. Witnesses: p2b/sp1101/* on retry; controls p2b/sp1101/other-operation-control/*, p2b/sp1101/large-sequence/retry-original. Residual, stated: in this static model the binding's source commitment is computed from the single copy of the original bytes (the original's value is verified by the orig_* and historical_record rows), and an original with no sealed receipt of its own takes its Store's sealed default card2@1, the only recipe. DCN has one write-time recipe, so there is no older recipe to select. Native custody NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-785",
-              "line_start": 25193,
-              "line_end": 25193,
-              "quote": "Numbers, sweep 2026-11-10 (CV-1100 beside the unchanged CV-317 and CV-366 recipes): memory.gist_state_changed"
+              "line_start": 25256,
+              "line_end": 25256,
+              "quote": "SP-1101 RetainedDispatcher from Storage''s sealed write custody (static stand-in"
             },
             {
-              "path": "Plans/Contracts_V0.md",
+              "path": "scripts/pm_card2_events.py",
               "unit": "CV-785",
-              "line_start": 25145,
-              "line_end": 25145,
-              "quote": "2.0.0 and its complete producer_semantic_digest recipe unchanged, plus SP-026/SP-236 SeglogFrameV2 and SP-286/CV-339"
+              "line_start": 1281,
+              "line_end": 1281,
+              "quote": "row('recipe', 'recipe_custody', 'original_unavailable', '/storage/event',"
+            },
+            {
+              "path": "scripts/pm_card2_events.py",
+              "unit": "CV-785",
+              "line_start": 1265,
+              "line_end": 1265,
+              "quote": "def dispatch(c, recipes=None, **resolve):"
             }
           ],
           "prior": {
-            "source": "DCN-self-grade.json @ db8bd12630ec032dcbd6416bc20b97f45df9a7b6 (sweep part 1; round-4 grades carried)",
+            "source": "DCN-self-grade.json @ 9bfb9b46cc7d3ad861020e2c9347104ba13eb1ae (sweep part 2A and part 2B numbers)",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Re-read at the sweep implementation head; the remaining gap is a part 2B item."
+          "change": "upgraded",
+          "change_reason": "Sweep part 2B at 1aec6a2f0f: the cell's remaining part 2B gap is closed with witnesses; see DCN.md \"Sweep part 2B\"."
         },
         "retention": {
           "status": "PASS",
@@ -2056,15 +2130,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-765",
-              "line_start": 30325,
-              "line_end": 30325,
+              "line_start": 30355,
+              "line_end": 30355,
               "quote": "  Exact retention_policy_ref is RP-AUTHORITY-INDEFINITE@1.0.0, by the per-name G03/G10 assignment landed as"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-765",
-              "line_start": 30326,
-              "line_end": 30326,
+              "line_start": 30356,
+              "line_end": 30356,
               "quote": "  Plans/Decision_Log.md#DL-401 in Case L-3, Card 1 retention assignments (G03 exactly memory.gist_state_changed);"
             }
           ],
@@ -2076,31 +2150,31 @@
           "change_reason": "Regraded at round-4 implementation; no admission/native claim and no sweep gap is called fixed."
         },
         "redaction_custody": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "B2 and the Browser numeric ranges closed: Storage sequence_id is storage_uint64 on the event and the Storage original, receipt and reader copies join it exactly (typed, float bits), integral-float spellings refuse at the integer slots, Still open: SP-1101 authenticated original edition/recipe selection for retained custody (part 2B with CV-1101), so the cell stays PARTIAL.",
+          "finding": "B2 and the Browser numeric ranges closed in part 2A; SP-1101 retained custody closed in part 2B: retained reads resolve through the shared RetainedDispatcher from the sealed custody catalogue before any original check, the sealed card2@1 tuple pins the EventRecord and payload schema bytes and field profiles, and a Store outside custody or an unsupported sealed recipe refuses with no fallback, whatever the case's own authentic/verified flags say (p2b/sp1101/unsealed-store/*, p2b/sp1101/unsupported-recipe/*, p2b/sp1101/case-recipe-label-ignored). Large-metadata originals stay readable (p2b/sp1101/large-sequence/*, sequence_id 2^64-1). Residual, stated: in this static model the binding's source commitment is computed from the single copy of the original bytes (the original's value is verified by the orig_* and historical_record rows), and an original with no sealed receipt of its own takes its Store's sealed default card2@1, the only recipe. Native custody NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-765",
-              "line_start": 30378,
-              "line_end": 30378,
-              "quote": "Numbers, sweep 2026-11-10 (SP-1100 beside the unchanged SP-026/SP-236 and SP-278 profiles):"
+              "line_start": 30413,
+              "line_end": 30413,
+              "quote": "least 1. SP-278 binding values stay uint-only. Retained originals, sweep 2026-11-11 (SP-1101 beside SP-236,"
             },
             {
-              "path": "Plans/storage-plan.md",
-              "unit": "SP-765",
-              "line_start": 30334,
-              "line_end": 30334,
-              "quote": "are backed up/restored coherently through the existing Project memory/browser stores or CV-366 full application"
+              "path": "scripts/pm_card2_events.py",
+              "unit": "CV-785",
+              "line_start": 1284,
+              "line_end": 1284,
+              "quote": "row('recipe', 'recipe_installed', 'recipe_unsupported', '/storage/event',"
             }
           ],
           "prior": {
-            "source": "DCN-self-grade.json @ db8bd12630ec032dcbd6416bc20b97f45df9a7b6 (sweep part 1; round-4 grades carried)",
+            "source": "DCN-self-grade.json @ 9bfb9b46cc7d3ad861020e2c9347104ba13eb1ae (sweep part 2A and part 2B numbers)",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Re-read at the sweep implementation head; the remaining gap is a part 2B item."
+          "change": "upgraded",
+          "change_reason": "Sweep part 2B at 1aec6a2f0f: the cell's remaining part 2B gap is closed with witnesses; see DCN.md \"Sweep part 2B\"."
         },
         "transitions": {
           "status": "PASS",
@@ -2158,15 +2232,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-765",
-              "line_start": 30356,
-              "line_end": 30356,
+              "line_start": 30386,
+              "line_end": 30386,
               "quote": "transaction remains SP-278''s, not this reader''s. Family checkpoint disposition is none_required: the family"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-765",
-              "line_start": 30368,
-              "line_end": 30368,
+              "line_start": 30398,
+              "line_end": 30398,
               "quote": "  Recompute checkpoint commitments from genuine Storage source bytes and records, never from two matching"
             }
           ],
@@ -2178,58 +2252,65 @@
           "change_reason": "Regraded at round-4 implementation; no admission/native claim and no sweep gap is called fixed."
         },
         "compatibility_withdrawal": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "SW1 is part 2B: retained timestamps still pass the interim lane grammar without authenticated write-time recipe selection (CV-1101 + SP-1101). This lane's timestamp review is interim only. Withdrawal/retained replay policies stay bound.",
+          "finding": "SW1 closed (sweep part 2B). Every timestamp field uses the shared CV-1101 date_time with its owner profile: event_record for occurred_at_utc and ts (lowercase t/z, offsets, legitimate leap seconds and long fractions are owner-valid and stay readable with their exact spelling on retained history and retry originals), and CV-253 storage_utc_z for Storage observed_at_utc/persisted_at_utc on the current record, the retry original and retained history alike (an offset or lowercase-z Storage timestamp never becomes valid history). Retained reads and retry originals first resolve through the shared SP-1101 RetainedDispatcher from sealed custody, so a forged or unsupported recipe selection refuses without fallback. Withdrawal/retained replay policies stay bound. Witnesses: p2b/cv1101/history/*, p2b/cv1101/retry/*, p2b/cv253/history/*, p2b/cv253/retry-original/*, p2b/cv1101/history/occurred_at_utc/* (owner-invalid history refuses). datetime_validator and the inventory gate run at batch-2 integration (lead addendum 2). Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-785",
-              "line_start": 25174,
-              "line_end": 25174,
-              "quote": "is forward-only with a separately governed successor. Withdrawal sets an explicit writer admission cutoff before"
+              "line_start": 25250,
+              "line_end": 25250,
+              "quote": "key recipes are unchanged. Timestamps and retained originals, sweep 2026-11-11 (CV-1101 beside CV-253 and CV-317;"
             },
             {
-              "path": "Plans/Contracts_V0.md",
+              "path": "scripts/pm_card2_events.py",
               "unit": "CV-785",
-              "line_start": 25182,
-              "line_end": 25182,
-              "quote": "  Before retry returns or recovers an original, authenticate its exact EventRecord from Storage and validate"
+              "line_start": 550,
+              "line_end": 550,
+              "quote": "view_rule('timestamps', 'storage_utc_z_' + key, 'storage_utc_z', '/' + key,"
+            },
+            {
+              "path": "scripts/pm_card2_events.py",
+              "unit": "CV-785",
+              "line_start": 73,
+              "line_end": 73,
+              "quote": "TIMESTAMP_PROFILES = {"
             }
           ],
           "prior": {
-            "source": "DCN-self-grade.json @ db8bd12630ec032dcbd6416bc20b97f45df9a7b6 (sweep part 1; round-4 grades carried)",
+            "source": "DCN-self-grade.json @ 9bfb9b46cc7d3ad861020e2c9347104ba13eb1ae (sweep part 2A and part 2B numbers)",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Re-read at the sweep implementation head; the remaining gap is a part 2B item."
+          "change": "upgraded",
+          "change_reason": "Sweep part 2B at 1aec6a2f0f: the cell's remaining part 2B gap is closed with witnesses; see DCN.md \"Sweep part 2B\"."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Sweep part 2A: every refusal is one of 562 named guard-table rows; the gated tool (004bdedd63) proves 495 rows with single-defect witnesses (16,578 witnesses: 16,343 fixture negatives and 235 part 2A witnesses, plus 283 positives and 7 controls) and 67 rows sit alone in entailed tables with written proofs. PARTIAL because the timestamp review is interim only (CV-1101, part 2B) and SP-1101 retained-recipe witnesses (old-recipe positives, forged-recipe negatives) are part 2B.",
+          "finding": "Every refusal is one of 569 named guard-table rows; the gated tool (004bdedd63) rerun at the part 2B head credits the proved rows exactly as reported in DCN.md \"Sweep part 2B\"; entailed rows sit alone with written proofs. The timestamp review is no longer interim: each field is checked by the shared date_time with its named profile, and each run requires every lane-recorded leak to refuse at every field with the shared Refusal reason as the validator's error cause. SP-1101 has retained positives (owner-valid lowercase, offset, leap-second, long-fraction and 2^64-1 sequence originals) and forgery negatives (unsealed Store, unsupported sealed recipe), plus replaced-resource, weakened-profile and caller-override trials. Witnesses: 112 p2b witnesses and 68 p2b controls in Plans/card2_event_p2a_cases.json.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-380",
-              "line_start": 7248,
-              "line_end": 7248,
-              "quote": "defect; observational copies are updated together. It must fail exactly its intended guard. Since the 2026-11-10"
+              "line_start": 7274,
+              "line_end": 7274,
+              "quote": "Since sweep part 2B (2026-11-11) every timestamp field is checked by the shared CV-1101 date_time predicate with"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-380",
-              "line_start": 7250,
-              "line_end": 7250,
-              "quote": "scripts/pm-card2-table-generate.py), each one predicate over one subject (the candidate or the Storage original, the"
+              "path": "scripts/pm_card2_events.py",
+              "unit": "CV-785",
+              "line_start": 73,
+              "line_end": 73,
+              "quote": "TIMESTAMP_PROFILES = {"
             }
           ],
           "prior": {
-            "source": "DCN-self-grade.json @ db8bd12630ec032dcbd6416bc20b97f45df9a7b6 (sweep part 1; round-4 grades carried)",
+            "source": "DCN-self-grade.json @ 9bfb9b46cc7d3ad861020e2c9347104ba13eb1ae (sweep part 2A and part 2B numbers)",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Re-read at the sweep implementation head; the remaining gap is a part 2B item.",
+          "change": "upgraded",
+          "change_reason": "Sweep part 2B at 1aec6a2f0f: the cell's remaining part 2B gap is closed with witnesses; see DCN.md \"Sweep part 2B\".",
           "run_evidence": {
             "source_commit": "de58b6e10c11ab249ec05f13a2bbbdd6f2f92f4b",
             "guard_proof": {
@@ -2249,18 +2330,17 @@
           }
         }
       },
-      "pass_count": 6,
+      "pass_count": 11,
       "status_counts": {
-        "PASS": 6,
-        "PARTIAL": 5,
+        "PASS": 11,
+        "PARTIAL": 0,
         "ABSENT": 1,
         "CONFLICT": 0
       },
       "normative_depth_complete": false,
       "remaining_gaps": [
-        "B1 and B2: shared numeric-domain sweep on plans/ea-numrule-20261105 (CV-1100, SP-1100, SP-1101).",
-        "SW1: authenticated write-time timestamp recipe selection; preserve genuine retained originals.",
-        "Membership/admission ABSENT; pinned answers/retention integration remains prerequisite. Native NOT_RUN."
+        "Membership/admission ABSENT; pinned answers/retention integration remains prerequisite. Native NOT_RUN.",
+        "Batch-2 integration: datetime_validator and the whole-Plans date-time inventory gate (lead addendum 2), including classification of the DCN schema resources and the custody catalogue; native SP-1101 custody remains NOT_RUN."
       ],
       "native_execution": "NOT_RUN"
     }
@@ -2287,8 +2367,8 @@
       "scope": "Round-4 serial whole-lane run and qualifications in DCN.md; sweep gaps are not called fixed."
     },
     "6": {
-      "status": "PARTIAL",
-      "scope": "Round-4 serial whole-lane run and qualifications in DCN.md; sweep gaps are not called fixed."
+      "status": "PASS",
+      "scope": "Sweep part 2B at 1aec6a2f0f: Retry compares only the shared qualified CV-317 producer projection (B1 closed in part 2A); Storage-assigned sequence_id/observed_at_utc/persisted_at_utc stay outside it (storage-observation-changed positives, p2b/cv1101/retry/orig-observed-lower-t)."
     },
     "7": {
       "status": "PASS",
@@ -2303,8 +2383,8 @@
       "scope": "Round-4 serial whole-lane run and qualifications in DCN.md; sweep gaps are not called fixed."
     },
     "10": {
-      "status": "PARTIAL",
-      "scope": "Round-4 serial whole-lane run and qualifications in DCN.md; sweep gaps are not called fixed."
+      "status": "PASS",
+      "scope": "Sweep part 2B at 1aec6a2f0f: Retained originals valid when written stay readable after live changes, including owner-valid lowercase, offset, leap-second, long-fraction and 2^64-1 sequence history (p2b controls); withdrawn, forged, unsealed or unsupported originals refuse (SP-1101 dispatch; p2b/sp1101/*)."
     },
     "11": {
       "status": "PASS",
@@ -21998,6 +22078,29 @@
       "self_test": "python3 scripts/pm_event_numbers.py --self-test --scope numbers: pass, 580/580",
       "corpus": "python3 scripts/pm-card2-number-corpus.py: pass"
     },
-    "timestamps": "This lane's timestamp review is interim only (CV-1101 and SP-1101 dispatch are part 2B)."
+    "timestamps": "Superseded by sweep_p2b: the timestamp review is no longer interim."
+  },
+  "sweep_p2b": {
+    "timestamps": {
+      "predicate": "pm_event_datetime.date_time (CV-1101)",
+      "profiles": {
+        "occurred_at_utc": "event_record",
+        "payload ts": "event_record",
+        "observed_at_utc": "storage_utc_z (CV-253)",
+        "persisted_at_utc": "storage_utc_z (CV-253)",
+        "memory created_at/updated_at/last_access_at, claim created_at": "event_record"
+      },
+      "deferred_to_batch2": "datetime_validator and the inventory gate (lead addendum 2, 2026-11-10 22:37Z)"
+    },
+    "retained_dispatch": {
+      "mechanism": "pm_event_numbers.RetainedDispatcher with Card2OriginalOwner and FROZEN_RECIPES",
+      "custody": "Plans/card2_original_custody.json",
+      "rows": [
+        "recipe_custody",
+        "recipe_installed",
+        "recipe_resolved (entailed)"
+      ]
+    },
+    "result": "see reports/event-authority-20261104/DCN.md, Sweep part 2B"
   }
 }

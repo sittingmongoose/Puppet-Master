@@ -6,7 +6,9 @@ Base `origin/main`: `16acf7594a3fe8559af89491b895f440b314b99e`. Branch: `plans/e
 
 **Sweep part 1 (fixture pass), 2026-11-05:** see the section "Sweep part 1 (fixture pass)" at the end. It corrects two things above: the census ledger now really keeps main's bytes, and the 30-failure Browser baseline is gone at this head.
 
-**Sweep parts 2A and 2B numbers, 2026-11-10:** guard tables on the gated tool `004bdedd63` and the gated number scope; see the sections "Sweep part 2A" and "Sweep part 2B numbers" at the end. They supersede the round-4 guard-removal table and the B1/B2/Browser-range sweep items; SW1 and SP-1101 remain part 2B. This lane's timestamp review is interim only.
+**Sweep parts 2A and 2B numbers, 2026-11-10:** guard tables on the gated tool `004bdedd63` and the gated number scope; see the sections "Sweep part 2A" and "Sweep part 2B numbers" at the end. They supersede the round-4 guard-removal table and the B1/B2/Browser-range sweep items.
+
+**Sweep part 2B, 2026-11-11:** SW1 (the shared CV-1101 `date_time` predicate with per-field profiles, CV-253 `storage_utc_z` rows, lowercase RFC 3339 history) and SP-1101 (retained-original dispatch through the shared `RetainedDispatcher` and a sealed custody catalogue) are done; see the section "Sweep part 2B" at the end. It supersedes every "interim only" timestamp statement above: the timestamp review is no longer interim for any field this lane owns. `datetime_validator` and the date-time inventory gate run at batch-2 integration (lead addendum 2).
 
 **Scope count:** DCN is assigned 17 names: 7 Browser + 8 memory + 2 already-retired names. All 17 are handled. The lane also explicitly lists `chat.response_stop_requested` as **not yours**, assigned to DCH; including that held name gives 18 overall. This branch leaves that name to DCH and does not extend DCN’s scope.
 
@@ -1592,3 +1594,203 @@ Folder: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/s
 | `records/pin-relocation.json` | self-grade citation relocation | `bcbc2996143b4bdad03ddd78c703c5da0b08c1ee09ccf27ab9d89fd438b11e1d` |
 | `records/entailed-table.md` | the entailed-row proof table | `d52c8d376eda5093101c31fdc63abdd22b40af4502ef3afc0191912e405819c0` |
 | `records/index-validate-final.json` | index validate at the delivery tree (origin/main SHA in index-validate-final.main) | `f445ba715ff28c5f48e99bbbab865887deb63424b6c00678f8c9db6f3093b2a5` |
+
+## Sweep part 2B: findings and responses
+
+Task: `lanes/SWEEP-P2B.md` with addendum 1 (merge resolutions) and addendum 2 (the date-time inventory gate in lane trees); worker brief for lane DCN (2026-11-11). Start: the part 2A head `9bfb9b46cc`. **Step 1 (merge) is skipped:** `58c2816ff3` is already in this history through the part 2A merge `0bea1cefa2` (parents `1315df8375` and exactly `58c2816ff33365384d4039553f5efdb5370930e6`; `git merge-base --is-ancestor 58c2816ff3 9bfb9b46cc` holds). So no addendum-1 resolution was needed, and no NUMRULE file was touched (`git diff 58c2816ff3 HEAD -- scripts/pm_event_numbers*.py scripts/pm_event_datetime*.py Plans/event_number_recipe_corpus.json Plans/event_datetime_inventory.json` is empty). No rebase. Implementation commits `19e83a77b1` (checker, witnesses, custody catalogue) and `1aec6a2f0f` (owner text, shards, index); the delivery head is in the external `HEAD.txt`. Membership ABSENT, native execution NOT_RUN.
+
+**Timestamp review status:** this lane's timestamp review is **no longer interim** for every field below. The shared `pm_event_datetime.date_time` predicate now checks each one with its owner's named profile (addendum 2, point 3). `datetime_validator` and the whole-`Plans/` inventory gate are not called in this lane tree; **they run at batch-2 integration** (addendum 2, point 2). Their refusal on this tree is recorded below.
+
+| Item | Disposition and change | Commit, path:line | Verify |
+|---|---|---|---|
+| **SW1: shared CV-1101 date-time check** (fixed) | The interim lane grammar (`timestamp_valid`, a regex plus `datetime.fromisoformat`) and its global `FormatChecker.checkers['date-time']` mutation are removed. Every owned timestamp field now uses the shared `date_time` with the profile `TIMESTAMP_PROFILES` names (table below). The EventRecord and family payload schema verdicts use the shared `format_checker(profile=EVENT_RECORD)`, installed explicitly. The memory record rows call `date_time_ok(value, field)`. | `19e83a77b1`; `scripts/pm_card2_events.py:73` (`TIMESTAMP_PROFILES`), `:87` (`DATETIME_FORMATS`), `:90` (`date_time_ok`) | `grep -n "timestamp_valid\|FormatChecker()" scripts/pm_card2_events.py` finds nothing; complete checker below. |
+| **SW1: lowercase RFC 3339 history** (fixed) | CV-1101 makes lowercase `t`/`z`, `+00:00`/`-00:00` and nonzero offsets, legitimate leap seconds, year 0000 and long fractions owner-valid at `occurred_at_utc` and `ts`. The old lane grammar refused all of them except the plain form. They are now accepted on append, on the retry original and on retained history, with their exact spelling kept: 61 new CV-1101 controls across those paths. This adopts the owner profile; it does not loosen a current writer beyond the owner: CV-1101 says "Lowercase t/z and nonzero offsets remain owner-valid for occurred_at_utc and broad family ts fields". | `19e83a77b1`; `scripts/pm-card2-p2a-cases.py` (`BROAD_VALID`, `STORAGE_VALID`) | Controls `p2b/cv1101/{append,retry,history}/…`, `p2b/cv1101/application-history/…`, `p2b/cv1101/memory/…`, all accepted. |
+| **CV-253 on the Storage fields** (fixed, new rows) | `observed_at_utc` and `persisted_at_utc` pass the envelope verdict under the broad profile, and then a row of their own per field and per view applies `storage_utc_z` (terminal uppercase `Z`): `cand_storage_utc_z_*` (append, retry candidate, retained history) and `orig_storage_utc_z_*` (retry original). This is CV-1101's composition: "combining the original schema and enforced date-time predicate with the terminal-Z restriction". Lowercase `z`, `+00:00`, `-00:00` and `+01:00` are refused there. The entailed `storage_format_*` rows (Storage record on retry and history) now use the same profile, and their proofs name the new rows. | `19e83a77b1`; `scripts/pm_card2_events.py:550` (`storage_utc_z_*`), `:1480` (`storage_format_*`) | Witnesses `p2b/cv253/{append,history,retry-original}/{observed,persisted}_at_utc/*` (24). |
+| **Lane-recorded leaks refuse through the shared check** (shown with tests) | The lanes' interim reviews recorded these leaks: `24:00:00Z`, a trailing LF, an illegitimate second 60, `2026-02-29`, a space separator, a missing zone, offset hour 24 and minute 60. Each is now refused by the shared predicate at every DCN timestamp field. Every checker run asserts this with `datetime_probe_errors`: the validator's error cause must be the shared `Refusal` with the named reason (for example `date_time_hour`, `date_time_syntax`, `date_time_leap_second`), and a pattern or type refusal does not count. The run also asserts that the four broad-only forms pass the envelope verdict and are refused by `storage_utc_z`, and that the four owner-valid forms pass every profile. DCN's own interim review recorded no accepting leak: its grammar was stricter than CV-1101. | `19e83a77b1`; `scripts/pm_card2_events.py:1835` (`refusal_reasons`), `:1848` (`datetime_probe_errors`) | 80 witnesses `p2b/cv1101/{occurred_at_utc,observed_at_utc,persisted_at_utc,ts,history/…,retry-original/…,memory-*}/…`, each refused first at its own row; probe errors 0 in the complete checker. |
+| **Memory record times** (fixed) | AMS §3.1 names `created_at`, `updated_at`, `last_access_at` and claim `created_at` with no stricter owner profile, so the shared predicate checks them with the broad `event_record` (RFC 3339) profile. This is the lane's existing reading of those fields, now made through the shared predicate. CV-785 states it. | `19e83a77b1`; `scripts/pm_card2_events.py:73` (the `memory/*` entries); `1aec6a2f0f` (CV-785) | `p2b/cv1101/memory-{before,after}/…` (32 witnesses), `p2b/cv1101/memory/created_at/*` (2 controls). |
+| **SP-1101: retained-original recipe selection** (fixed) | A retry original and a retained history read now resolve once through the shared `RetainedDispatcher`, before their original is verified. `Card2OriginalOwner` is the static stand-in for Storage's sealed write custody. It answers only from `Plans/card2_original_custody.json` (sealed Stores, their default recipe, and sealed receipts that name another recipe), never from the case. `FROZEN_RECIPES` is the composition-installed map: one frozen verifier per family edition of `card2@1`, keyed by the exact `RecipeTuple`. The reader recomputes that tuple from its own resource bytes (`Plans/event_record.schema.json`, `Plans/card2_event_payloads.schema.json`) and its CV-1101 field profiles, so the frozen resources select the timestamp profile, as SP-1101 requires. The query and the expected binding come from the request; the dispatcher compares the binding computed from Storage's original field by field, makes one recipe lookup with no override, and calls the frozen verifier once. There is no current-then-legacy probing: `card2@1` is DCN's only write-time recipe, so a failed selection is a refusal. The frozen verification of `card2@1` is the complete set of retained-view rows (`orig_*` on retry; `cand_*` and `historical_record` on history), which read `card2@1`'s pinned resources and profiles. The FrozenRecipe itself confirms that custody named exactly its tuple and that the custody bytes are canonical SP-236 EVENT_VALUE values. Current disclosure stays with the `reader_access` rows. | `19e83a77b1`; `scripts/pm_card2_events.py:1143` (`CUSTODY_FILE`), `:1164` (`recipe_tuple`), `:1195` (`install_frozen_recipes`), `:1230` (`Card2OriginalOwner`), `:1256` (`recipe_request`), `:1265` (`dispatch`); `Plans/card2_original_custody.json` | Complete checker; `recipe_composition` in its output. |
+| **SP-1101: new rows** | `recipe_custody` (code `original_unavailable`): the requested Store has sealed custody. `recipe_installed` (code `recipe_unsupported`): the sealed tuple has an installed frozen verifier, with no fallback. Both apply when the request is readable and names its owner's Store; the candidate rows own every other request defect. `recipe_resolved` (code `original_dispatch`, entailed, alone in its table): the dispatcher resolved the original. Its written proof covers every other refusal reason: unreadable request, binding mismatch through the joined fields, unencodable original, verification and query. | `19e83a77b1`; `scripts/pm_card2_events.py:1281`, `:1284`, `:1505` | Witnesses `p2b/sp1101/unsealed-store/*` (4) and `p2b/sp1101/unsupported-recipe/*` (4). |
+| **SP-1101: forgery negatives and composition trials** | **Unsealed Store:** a coherent original at Store `33333333-…`, with every copy, identity and SP-278 reader digest recomputed, while the case says `storage.authentic: true`. It refuses at `recipe_custody`, on retry and history, for a browser and the memory family. **Unsupported recipe:** a coherent original under operation `operation-unregistered`, whose sealed receipt names `card2@0-unregistered` (a recipe with no installed verifier). It refuses at `recipe_installed`. **Controls:** the same change under `operation-other`; a case-supplied `recipe` name and `verified` flag that select nothing; `sequence_id` 2^64−1 originals on history and on the retry original. **Trials in every checker run (`recipe_composition_errors`):** a one-byte change to either schema resource, or a Storage profile weakened to `event_record`, installs no verifier for the sealed tuple, and a retained retry and history read then refuse (`recipe_unknown`). A caller `recipe_override` refuses (`caller_recipe_override`). The installed map holds exactly the 12 `card2@1` family editions, and the unregistered tuple is never installed. | `19e83a77b1`; `scripts/pm_card2_events.py:1880` | Checker output `recipe_composition`: all eight trials refuse as expected. |
+| **Fixture expectations** (12 changed, recorded) | See "Fixture expectations that changed" below. No positive became refused, and no negative became accepted or changed its first refusing row. | `19e83a77b1`; `Plans/card2_event_fixtures.json` | `records/fixture-expectation-changes.json`. |
+| **Owner text** (fixed) | CV-780..785: the sentence "Authenticated selection … is still to be adopted; until then this family's timestamp checks keep their interim grammar" is replaced by the adopted CV-1101 profiles and the SP-1101 dispatch. CV-785 also gives the memory record-time profile. SP-760..765: "Retained-original recipe selection under SP-1101 is still to be adopted …" is replaced by the dispatch and the pinned tuple. ATS-380 gains a part 2B paragraph (probes, rows, custody catalogue, trials, `p2b/…` cases). All 13 edited YAML blocks parse. | `1aec6a2f0f`; `Plans/Contracts_V0.md` (CV-780..785), `Plans/storage-plan.md` (SP-760..765), `Plans/Automated_Testing_System.md` (ATS-380) | Shards and index regenerated: only the outputs of Contracts_V0, storage-plan and Automated_Testing_System changed. Canonical text changed in exactly these 13 units; 7,511 units before and after; in the readiness report only the existing ATS `pnc019_source_hash_stale` expected hash moved. |
+| **Self-grade citations** (re-pinned) | The owner and checker edits moved 80 cited lines. They are relocated by git's own diff map from `9bfb9b46cc`; 64 are unchanged and no quote changed. With the 12 new part 2B citations, all 156 evidence quotes resolve at their lines. | report commit; `reports/event-authority-20261104/DCN-self-grade.json` | `records/pin-relocation.json`. |
+
+**Disputed:** none. **Stopped for Jared:** none. **IDs used:** no new PlanUnit, Decision Log, registry or admission ID. CV-780..785, SP-760..765 and ATS-380 change in place. New witness IDs are `p2b/…` case IDs. The new rows are `cand_/orig_storage_utc_z_{observed,persisted}_at_utc`, `recipe_custody`, `recipe_installed` and `recipe_resolved`. The new lane data file is `Plans/card2_original_custody.json`.
+
+### Timestamp fields and the shared check that now covers each
+
+| Field (where) | Owner | Shared check and profile | Rows |
+|---|---|---|---|
+| `occurred_at_utc` (EventRecord: append, retry candidate, retry original, retained history) | EventRecord / CV-317 / CV-1101 | `date_time`, `event_record` profile, through the envelope verdict's explicitly installed shared format checker | `cand_envelope_schema`, `orig_envelope_schema` |
+| `observed_at_utc`, `persisted_at_utc` (same four places) | Storage / CV-253 | `date_time`, `event_record` in the envelope verdict, **plus** `storage_utc_z` (terminal uppercase `Z`) as its own row | `*_envelope_schema`, then `cand_/orig_storage_utc_z_*`; Storage record on retry/history: entailed `storage_format_*` |
+| receipt copies of `observed_at_utc` / `persisted_at_utc` | Storage / CV-339 | exact typed join to the Storage record, which carries the profile above | `storage_observed_at_utc`, `storage_persisted_at_utc` |
+| payload `ts` (6 families, both scopes) | family payload contracts CV-780..785 (broad family `ts`) | `date_time`, `event_record` profile, through the payload verdict | `cand_payload_schema`, `orig_payload_schema` |
+| memory `created_at`, `updated_at`, `last_access_at` (before/after records; no-event before/after facts) | AMS §3.1 (no stricter profile named) | `date_time`, `event_record` profile | `memory_{before,after}_timestamps`, `command_only_{before,after}_timestamps` |
+| memory claim `created_at` (same four subjects) | AMS §3.2 | `date_time`, `event_record` profile | `memory_{before,after}_claim_created_at`, `command_only_{before,after}_claim_created_at` |
+| read token, checkpoint `*_at_utc` | SP-278 | not read by this lane: the read token has no date-time field, and DCN creates no checkpoint | none |
+
+The retained `card2@1` recipe tuple pins the four EventRecord/payload field profiles (`RECIPE_PROFILE_FIELDS`) inside its resource manifest, so a request or a code change cannot select a weaker one for history: the weakened-profile trial refuses.
+
+### Fixture expectations that changed
+
+| Cases | Count | Before → now | Refusing row and reason |
+|---|---:|---|---|
+| `<family>/<scope>/retry/invalid-authenticated-original-event_id` (all six families, both scopes) | 12 | `guard: event_identity` → `guards: [event_identity, original_dispatch]` | Still refused first at `orig_event_identity`. The SP-1101 dispatcher compares the original's binding with the request, so the entailed `recipe_resolved` also refuses an original whose `event_id` differs, and its proof names `orig_event_identity`. This follows the file's existing convention for an entailed co-refusal (as in `…-observed_at_utc`: `[envelope_schema, storage_format_observed_at_utc]`), with a `duplicate_reason`. |
+| part 2A witnesses `p2a/*-timestamps`, `p2a/*-claim-created-at` (8) | 8 | defect wording only | The row words now name the shared predicate; changes and targets are unchanged. The first 242 cases are otherwise byte-identical. |
+
+No other expectation changed. The first full run at the new rows, before any fixture edit, showed exactly these 12 `codes_differ` results and nothing else (`records/checker-before-fixture-edit.json`): no existing negative relied on the old grammar refusing a form CV-1101 admits.
+
+### Self-tests and the date-time inventory gate (addendum 2)
+
+| Command | Exit | Credited result |
+|---|---:|---|
+| `python3 scripts/pm_event_numbers.py --self-test --scope numbers` | 0 | `"status": "pass"`, 580/580 number-scope cases |
+| `python3 scripts/pm_event_numbers.py --self-test` (scope all) | 1 | `"status": "fail"`, `case_execution: NOT_RUN_ADMISSION_REFUSED`: the inventory gate refuses before any case runs (265 gate failures). Recorded; it runs at batch-2 integration. |
+| `python3 scripts/pm_event_datetime_inventory.py` | 1 | `"status": "fail"`: 265 failures, 233 nodes, **0 unclassified nodes and no `inventory_node_changed` row**. `Plans/event_record.schema.json` is byte-identical to the gated `58c2816ff3`, so every classified node keeps its pin. |
+| `python3 scripts/pm_event_datetime.py --self-test` | 0 | **not credited**: no entry point, prints nothing (addendum 2 correction) |
+
+The 265 gate failures by source (`records/inventory-attribution.json`): every row is a container whose hash or classification is pinned to the gated tree. Nothing passes falsely, because the gate fails closed (TOOL-ISSUES T198).
+
+| Source | Error | Rows |
+|---|---|---:|
+| regenerated `Plans/.plan_index`, `Plans/.plan_migration`, `Plans/_shards` files that differ from `58c2816ff3` (this branch's regeneration and its main base) | `unclassified_mentioning_container` / `unreadable_mentioning_container` / `stale_scan_exclusion` | 141 / 51 / 43 |
+| owner documents that differ from `58c2816ff3` (`Contracts_V0.md`, `storage-plan.md`, `Automated_Testing_System.md`, and `Decision_Log.md`, `usage-feature.md` from the lane's main base) | `unreadable_mentioning_container` / `stale_scan_exclusion` | 18 / 5 |
+| DCN lane data: `card2_event_fixtures.json`, `card2_original_custody.json` (new), `card2_event_p2a_cases.json` | `unclassified_mentioning_container` (2) / `unreadable_mentioning_container` (1, `card2_event_p2a_cases.json`) | 3 |
+| the ignored local copy of `Plans/.audits/event-authority-2026-08-13-currentness/EVENT_OCCURRENCES.jsonl` (needed for index generation, never committed) | `unclassified_mentioning_container` | 4 |
+
+**For batch-2 integration** (addendum 2, point 4): the inventory and exclusions need a refresh for the merged tree. The DCN rows to classify or exclude are the three lane data files above. They are synthetic fixture and custody data mentioning the Storage field names. Two schema resources the lane's checker validates besides EventRecord are not in the gated inventory: `Plans/card2_event_payloads.schema.json` (six `ts` date-time nodes) and `Plans/event_record_index_checkpoint.schema.json` (the lane reads only its `read_token`, which has no date-time field). Neither declares the Storage field names, and the gate reports no row for either. Whether `datetime_validator` admits them unchanged is for the batch-2 refresh to confirm; this lane did not call it. Then the full gate and the combined self-test must pass under that batch's Sol max and Astra max. The SP-1101 custody tuple pins `event_record.schema.json` and `card2_event_payloads.schema.json` by SHA-256. A change to either at integration makes every DCN retained read refuse (`recipe_installed`) until it is re-sealed or given a governed successor recipe. That is SP-1101's rule for a replaced resource, flagged here so the integrator sees it.
+
+### Guard-table result (gated tool `004bdedd63`, rerun at `1aec6a2f0f`, credited exactly as reported)
+
+Adoption changed guarded predicates. The envelope and payload verdicts now use the shared date-time checker, the memory and no-event timestamp rows the shared predicate, and the `storage_format_*` rows the CV-253 profile. Seven rows are new: four `storage_utc_z` rows, two `recipe` rows and the entailed `recipe_resolved`. So the tool was rerun over **every** table, not only the affected ones (`final/guard/summary.json`; tool SHA-256 `e8038992eabbe067c8bcba8d48824b97fbb6b5b7e69cbfe28a669f939a96c0b8`, the gated file).
+
+Collection replays every DCN case once through the complete checker: **17,048 cases** (283 positives, 75 controls, 16,343 fixture negatives, 235 part 2A and 112 part 2B witnesses; 358 accepted, 16,690 refused), **0 judged errors, 0 collection findings**. The tool then ran once per table that has a negative: **74 runs, all `PASS`; 501 of 501 provable rows proved.** Each cut swapped one row to always-pass, ran every control and negative, checked the guard-call trace against the uncut baseline, and ran a fresh restoration. **0 unrelated changes, 0 masked negatives, 0 lane-matrix problems.** The three new tables are proved: `cand_timestamps` (`cand_storage_utc_z_observed_at_utc`, `cand_storage_utc_z_persisted_at_utc`), `orig_timestamps` (both `orig_storage_utc_z_*`) and `recipe` (`recipe_custody`, `recipe_installed`). The 68 entailed tables (67 from part 2A plus `recipe_resolved`) have no negative by construction, so they stay unproved, each alone with its written proof. Every reachable row keeps a single-defect witness. Collection 610 s, total 2,364 s, serial; the MemoryGate (6,144 MiB RSS, pause below 10 GB, resume at 11) paused 35 times while other workers held the VM below 10 GB.
+
+| Table group | Tables (run / PASS) | Rows | Proved | Entailed | Tool negatives / controls | Evaluations | Cut: own flips | Cut: stays | Unrelated | Masked | Lane matrix |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| scenario | 1 (1 / 1) | 3 | 3 | 0 | 3 / 1 | 40 | 3 | 6 | 0 | 0 | 0 |
+| cand_schema | 2 (2 / 2) | 9 | 9 | 0 | 9 / 2 | 233 | 9 | 56 | 0 | 0 | 0 |
+| orig_schema | 1 (1 / 1) | 8 | 8 | 0 | 8 / 1 | 225 | 8 | 56 | 0 | 0 | 0 |
+| cand_timestamps | 1 (1 / 1) | 2 | 2 | 0 | 2 / 1 | 21 | 2 | 2 | 0 | 0 | 0 |
+| orig_timestamps | 1 (1 / 1) | 2 | 2 | 0 | 2 / 1 | 21 | 2 | 2 | 0 | 0 | 0 |
+| cand_scope | 4 (4 / 4) | 31 | 31 | 0 | 31 / 4 | 851 | 31 | 210 | 0 | 0 | 0 |
+| orig_scope | 4 (4 / 4) | 25 | 25 | 0 | 25 / 4 | 683 | 25 | 168 | 0 | 0 | 0 |
+| cand_transition | 3 (3 / 3) | 24 | 24 | 0 | 24 / 3 | 675 | 24 | 168 | 0 | 0 | 0 |
+| orig_transition | 1 (1 / 1) | 7 | 7 | 0 | 7 / 1 | 176 | 7 | 42 | 0 | 0 | 0 |
+| cand_memory | 4 (4 / 4) | 30 | 30 | 0 | 30 / 4 | 808 | 30 | 198 | 0 | 0 | 0 |
+| orig_memory | 2 (2 / 2) | 16 | 16 | 0 | 16 / 2 | 450 | 16 | 112 | 0 | 0 | 0 |
+| cand_browser | 1 (1 / 1) | 7 | 7 | 0 | 7 / 1 | 176 | 7 | 42 | 0 | 0 | 0 |
+| orig_browser | 1 (1 / 1) | 7 | 7 | 0 | 7 / 1 | 176 | 7 | 42 | 0 | 0 | 0 |
+| owner | 1 (1 / 1) | 6 | 6 | 0 | 6 / 1 | 133 | 6 | 30 | 0 | 0 | 0 |
+| records | 4 (4 / 4) | 28 | 28 | 0 | 28 / 4 | 740 | 28 | 180 | 0 | 0 | 0 |
+| browser_before | 8 (8 / 8) | 59 | 59 | 0 | 59 / 8 | 1,615 | 59 | 398 | 0 | 0 | 0 |
+| browser_after | 8 (8 / 8) | 59 | 59 | 0 | 59 / 8 | 1,615 | 59 | 398 | 0 | 0 | 0 |
+| memory_before | 4 (4 / 4) | 28 | 28 | 0 | 28 / 4 | 740 | 28 | 180 | 0 | 0 | 0 |
+| memory_after | 4 (4 / 4) | 28 | 28 | 0 | 28 / 4 | 740 | 28 | 180 | 0 | 0 | 0 |
+| publication | 1 (1 / 1) | 6 | 6 | 0 | 6 / 1 | 133 | 6 | 30 | 0 | 0 | 0 |
+| storage | 2 (2 / 2) | 10 | 10 | 0 | 10 / 2 | 246 | 10 | 58 | 0 | 0 | 0 |
+| recipe | 1 (1 / 1) | 2 | 2 | 0 | 2 / 1 | 21 | 2 | 2 | 0 | 0 | 0 |
+| retry | 1 (1 / 1) | 4 | 4 | 0 | 4 / 1 | 65 | 4 | 12 | 0 | 0 | 0 |
+| token | 2 (2 / 2) | 14 | 14 | 0 | 14 / 2 | 358 | 14 | 86 | 0 | 0 | 0 |
+| reader_source | 2 (2 / 2) | 16 | 16 | 0 | 16 / 2 | 450 | 16 | 112 | 0 | 0 | 0 |
+| reader_access | 1 (1 / 1) | 7 | 7 | 0 | 7 / 1 | 176 | 7 | 42 | 0 | 0 | 0 |
+| no_event | 1 (1 / 1) | 7 | 7 | 0 | 7 / 1 | 176 | 7 | 42 | 0 | 0 | 0 |
+| no_event_before | 4 (4 / 4) | 28 | 28 | 0 | 28 / 4 | 740 | 28 | 180 | 0 | 0 | 0 |
+| no_event_after | 4 (4 / 4) | 28 | 28 | 0 | 28 / 4 | 740 | 28 | 180 | 0 | 0 | 0 |
+| entailed (one row each, no negative by construction) | 68 (0 / 0) | 68 | 0 | 68 | 0 / 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **total** | 142 (74 / 74) | 569 | 501 | 68 | 501 / 74 | 13,223 | 501 | 3214 | 0 | 0 | 0 |
+
+**Randomized entailment check:** `python3 scripts/pm-card2-entailed-fuzz.py --trials 20000 --seed 20261110` passes. Of 20,000 single-leaf mutations, 12,849 were refused and 7,151 accepted; **no entailed row was ever the first refusal.** `recipe_resolved` co-refused 734 times. In 24 of those the first row was `storage_authentic`, which its list does not name. Replaying them (`records/fuzz-replay-storage-authentic.json`) shows the same pattern every time: Storage's whole `/storage` object was replaced by a scalar on a history case, so every storage row refuses, including `historical_record`, which the list names. The other "first not named" co-refusals belong to part 2A rows and match the part 2A explanation: the same mutation also broke the earlier row. This is finite evidence beside the written proofs, not a proof.
+
+### Family grades before and after
+
+Before: the part 2A self-grade at `9bfb9b46cc`. After: re-graded at the implementation head `1aec6a2f0f` against the same rubric. Membership stays ABSENT, native execution NOT_RUN. These are self-grades; Sol max and Astra max review the lane at batch-2 integration.
+
+| Family | Before (PASS / PARTIAL / ABSENT) | After | Cells that moved |
+|---|---|---|---|
+| `browser.session.created` | 7 / 4 / 1 | 11 / 0 / 1 | replay_idempotency, redaction_custody, compatibility_withdrawal, positive_negative_oracles: PARTIAL → PASS |
+| `browser.session.state_changed` | 7 / 4 / 1 | 11 / 0 / 1 | the same four |
+| `browser.session.closed` | 7 / 4 / 1 | 11 / 0 / 1 | the same four |
+| `browser.session.promoted` | 7 / 4 / 1 | 11 / 0 / 1 | the same four |
+| `browser.session.takeover_state_changed` | 7 / 4 / 1 | 11 / 0 / 1 | the same four |
+| `memory.gist_state_changed` | 7 / 4 / 1 | 11 / 0 / 1 | the same four |
+
+Each upgraded cell's only remaining gap at part 2A was a part 2B item, now closed with witnesses:
+- **compatibility_withdrawal (SW1):** the cell was PARTIAL because timestamps passed the interim grammar without recipe selection. Now the shared predicate applies the owner profiles. Owner-valid lowercase/offset/leap/long-fraction history is accepted on retry originals and retained reads, an offset or lowercase-z Storage timestamp refuses (`p2b/cv253/history/*`, `p2b/cv253/retry-original/*`), owner-invalid history refuses (`p2b/cv1101/history/occurred_at_utc/*`), and selection goes through SP-1101.
+- **replay_idempotency, redaction_custody (SP-1101):** retry originals and retained reads are resolved through the shared dispatcher from sealed custody. Forgery negatives: `p2b/sp1101/unsealed-store/*` and `p2b/sp1101/unsupported-recipe/*`. Controls: `…/other-operation-control/*`, `…/case-recipe-label-ignored` and `…/large-sequence/*`. Composition trials: replaced resources, weakened profile, caller override. **Residual, stated in both cells:** in this static model the binding's source commitment is computed from the single copy of the original bytes (the original's value is verified by the `orig_*` and `historical_record` rows), and an original with no sealed receipt of its own takes its Store's sealed default `card2@1`, the only recipe. Native custody is NOT_RUN, as for every family.
+- **positive_negative_oracles:** the timestamp review is no longer interim, the SP-1101 positives and forgery negatives exist, and the guard tables are re-certified on the gated tool at this head (below).
+- **Standing checks 6 and 10:** these stayed PARTIAL from round 4 ("sweep gaps are not called fixed") and are now PASS, with the part 2B evidence named in the self-grade. B1 had already closed check 6's retry-semantics gap in part 2A.
+- The 11 exclusions are unchanged: four independent, and the seven memory exclusions still conditional on the complete surviving contract. No admission or denominator removal is claimed.
+
+Every self-grade quote was re-checked at its line: 156 of 156 resolve.
+
+### Standing checks and "What Astra keeps finding": what part 2B changes
+
+| Class | How this pass rules it out |
+|---|---|
+| 1 Forged inputs | A case's own `storage.authentic`/`verified`/recipe fields select nothing: custody comes from the separate catalogue (`p2b/sp1101/unsealed-store/*` carries `authentic: true` and still refuses). |
+| 2 Storage-assigned metadata | Storage `observed_at_utc`/`persisted_at_utc` take CV-253 `storage_utc_z` on every view, and stay outside producer semantics (`p2b/cv1101/retry/orig-observed-lower-t` is accepted). |
+| 3 History both ways | Owner-valid retained history reads, including forms the old grammar refused and 2^64−1 sequences. Owner-invalid, unsealed, unsupported and offset-Storage history refuses. No current-writer guard reaches the original: `replay_only` stays candidate-only. |
+| 4 One field read two ways | One shared predicate per field and profile. The envelope verdict and the CV-253 row read the same string, and the retained tuple pins the same profiles the rows apply. |
+| 10a History under a stricter rule | `card2@1` is DCN's only write-time recipe. Selection comes from authenticated custody, never from the case, and a weaker-profile or replaced-resource recipe has no verifier. |
+| 12 Formats | `format: date-time` is enforced by the explicitly installed shared checker, never a mutated global table. Each run asserts the shared `Refusal` reason for every leak at every field. |
+
+### Checks at the implementation head
+
+All serial, one at a time, at `1aec6a2f0f` (`final/run.log`). Each stage started at 13.5 GB available or more and waited otherwise. No browser, no subagent, no rebase, no `main` push, no NUMRULE file edit.
+
+| Command | Exit | Result |
+|---|---:|---|
+| `python3 scripts/pm_card2_events.py` | 0 | PASS: 283 positives, 75 controls, 16,690 witnesses, 569 rows / 142 tables, 501 rows refused first, 68 entailed, 12 installed frozen recipes, date-time probes and SP-1101 trials pass, 0 errors |
+| `python3 scripts/pm_card2_events.py --family browser.session.created` | 0 | PASS: 34 positives, 66 controls, 1,928 witnesses, 193 rows refused first by this family |
+| `python3 scripts/pm_card2_events.py --family browser.session.state_changed` | 0 | PASS: 34 positives, 0 controls, 2,952 witnesses, 277 rows refused first by this family |
+| `python3 scripts/pm_card2_events.py --family browser.session.closed` | 0 | PASS: 34 positives, 0 controls, 2,901 witnesses, 226 rows refused first by this family |
+| `python3 scripts/pm_card2_events.py --family browser.session.promoted` | 0 | PASS: 34 positives, 0 controls, 2,901 witnesses, 227 rows refused first by this family |
+| `python3 scripts/pm_card2_events.py --family browser.session.takeover_state_changed` | 0 | PASS: 34 positives, 0 controls, 2,900 witnesses, 227 rows refused first by this family |
+| `python3 scripts/pm_card2_events.py --family memory.gist_state_changed` | 0 | PASS: 113 positives, 9 controls, 3,108 witnesses, 302 rows refused first by this family |
+| `python3 scripts/pm-card2-table-generate.py --check` | 0 | {'tables': 142, 'rows': 569, 'stale': [], 'extra': []} |
+| `python3 scripts/pm-card2-p2a-cases.py --check` | 0 | 347 witnesses, 75 controls, 237 target rows, failures 0, stale False |
+| `python3 scripts/pm_event_numbers.py --self-test --scope numbers` | 0 | `"status": "pass"`, 580/580 cases |
+| `python3 scripts/pm_event_numbers.py --self-test (scope all)` | 1 | `"status": "fail"`, `case_execution: NOT_RUN_ADMISSION_REFUSED`: the inventory gate refuses before any case (265 gate failures); recorded, runs at batch-2 integration (addendum 2) |
+| `python3 scripts/pm_event_datetime_inventory.py` | 1 | `"status": "fail"`, 265 failures, 233 nodes, 0 unclassified nodes; attribution below; runs at batch-2 integration |
+| `python3 scripts/pm_event_datetime.py --self-test` | 0 | no entry point, prints nothing: **not credited** (addendum 2 correction) |
+| `python3 scripts/pm-card2-number-corpus.py` | 0 | pass: 163 corpus cases, 460 route runs (213 accepted, 247 refused), 0 disagreements, 0 untracked; 4,400-digit routes at their rows |
+| `python3 scripts/pm-card2-entailed-fuzz.py --trials 20000 --seed 20261110` | 0 | pass: 12,849 refused, 7,151 accepted; no entailed row first (0); 44 of 68 entailed rows seen co-refusing |
+| `python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json` | 0 | pass |
+| `python3 scripts/pm-plan-index.py validate` | 1 | fail: 59 rows at origin/main `77bae0c636`: 21 `plan_unit_removal_ledger_invalid`, 38 `plan_unit_removed_without_ledger_decision`; none names a DCN unit (the same 59 rows as part 2A: units added on main after the lane base, no rebase this round) |
+| `python3 scripts/pm-card2-guard-tables.py --out <dir>` | 0 | 17,048 cases, 0 findings, 501 rows proved, 74 tool runs (74 PASS), 68 entailed tables |
+
+### Readiness
+
+**Readiness: DCN is ready for batch-2 integration review** (one rebase, then Sol max and Astra max over the integrated branch). Both part 2B items are done with witnesses. The complete checker, the six family runs, the shared number self-test and corpus, the guard tables (501/501 provable rows proved, 68 entailed with proofs) and the randomized entailment check all pass at `1aec6a2f0f`. The timestamp review is no longer interim. **Still open:**
+- **Batch-2 date-time items:** `datetime_validator` and the date-time inventory gate (with the combined self-test) run at batch-2 integration under addendum 2, including classification or exclusion of the three DCN data files above.
+- **Standing conditions:** membership/admission is ABSENT and native execution and native SP-1101 custody are NOT_RUN, as for every prepared lane. The seven memory exclusions stay conditional on the complete surviving contract.
+- **Index validate:** the 59 index rows above are main-side, name no DCN unit, and go away with the batch-2 rebase.
+- **Stopped for Jared:** nothing.
+
+### Evidence
+
+Folder: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCN/sweep-p2b/`. `SHA256SUMS` covers every file, and `HEAD.txt` names the delivery head. The table below lists each cited file; their SHA-256 values are in `SHA256SUMS`.
+
+| File | What it is |
+|---|---|
+| `final/checker.json` | complete checker at 1aec6a2f0f |
+| `final/exits.txt` | exit code of every final stage |
+| `final/guard/summary.json` | guard-tool run at 1aec6a2f0f (per-table reports beside it) |
+| `final/fuzz.out` | randomized entailment check, 20,000 trials |
+| `final/number-corpus.out` | shared number corpus through the complete checker |
+| `final/numbers-selftest.out` | pm_event_numbers --self-test --scope numbers |
+| `final/combined-selftest.out.gz` | pm_event_numbers --self-test (scope all): refused by the inventory gate before any case |
+| `final/datetime-inventory.out.gz` | pm_event_datetime_inventory.py: the 265 gate failure rows |
+| `final/index-validate.out` | pm-plan-index validate (origin/main SHA in index-validate.main) |
+| `records/inventory-attribution.json` | gate failures by source |
+| `records/fixture-expectation-changes.json` | every changed fixture expectation and wording-only case |
+| `records/checker-before-fixture-edit.json` | the first full run at the new rows, before any fixture edit (12 codes_differ) |
+| `records/fuzz-replay-storage-authentic.json` | replay of the 24 storage_authentic-first co-refusals |
+| `records/pin-relocation.json` | self-grade citation relocation |
+| `tools/final-run.sh` | the serial final-stage script |
+| `tools/regrade_p2b.py` | the self-grade re-grade |
+| `tools/owner_text.py` | the owner-text replacement |
+| `tools/fuzz_replay.py` | the fuzz replay |
+| `tools/make_checks_p2b.py` | builds the checks table |
+| `tools/guard_section.py` | builds the guard table |
