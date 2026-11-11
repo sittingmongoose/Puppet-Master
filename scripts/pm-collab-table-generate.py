@@ -119,7 +119,7 @@ phase('reference_body', 'SP-337 reference: size, hash, JSON object and canonical
     ('RF04_hash', '/payload_ref', 'declared BLAKE3 equals the body hash', 'reference_hash', "value['declared_blake3'] != value['body_blake3']"),
     ('RF05_json_object', '/payload_ref', 'the body decodes to a JSON object', 'reference_json', "value['body_is_object'] is not True"),
     ('RF06_canonical', '/payload_ref', 'the body is its own canonical JSON (a body with no lossless canonical form has none)', 'reference_canonical',
-     "value['canonical_sha256'] != value['body_sha256']"),
+     "value['body_is_object'] is True and value['canonical_sha256'] != value['body_sha256']"),
 ])
 
 # ================================================================ retention (DL-092, RP-CHAT-THREAD-LIFETIME)

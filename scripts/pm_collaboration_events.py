@@ -2792,7 +2792,9 @@ def integrity_cases(root=ROOT):
     unused=next(i for i,c in enumerate(fx["payloads"]) if c["case_id"] not in used)
     for check,patch in [
         ("numeric_canonical",lambda f:f["numeric_vectors"][0].__setitem__("canonical","wrong")),
-        ("numeric_identity",lambda f:f["numeric_family_cases"][0]["alternate_payload"].__setitem__("definition_revision",2.0)),
+        # One defect: the alternate spelling's value (its v1 identity) changes; its recorded current-input refusal moves
+        # with it (2.0 at created's const-1 slot refuses at the schema), so IF03 stays satisfied (sweep part 2B).
+        ("numeric_identity",lambda f:(f["numeric_family_cases"][0]["alternate_payload"].__setitem__("definition_revision",2.0),f["numeric_family_cases"][0].__setitem__("current_rejection","schema"))),
         ("positive_payload",lambda f:f["payloads"][unused]["payload"].__setitem__("unexpected",True)),
         ("negative_payload_layer",lambda f:f["invalid_payloads"][0].__setitem__("first_failing_layer","wrong_layer")),
         ("valid_event",lambda f:f["valid_events"][0]["record"].__setitem__("event_type","unknown.event")),

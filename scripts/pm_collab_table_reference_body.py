@@ -27,7 +27,7 @@ def RF05_json_object(value, context):
 
 
 def RF06_canonical(value, context):
-    return 'reference_canonical' if value['canonical_sha256'] != value['body_sha256'] else None
+    return 'reference_canonical' if value['body_is_object'] is True and value['canonical_sha256'] != value['body_sha256'] else None
 
 
 def case(value):
