@@ -20,11 +20,25 @@ from referencing.jsonschema import DRAFT202012
 ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT / 'scripts') not in sys.path:
     sys.path.insert(0, str(ROOT / 'scripts'))
-from pm_event_numbers import (EVENT_VALUE, Refusal, current_integer, exact_boolean,  # noqa: E402
-                              full_value_commitment, loads_current_json, producer_semantic_bytes,
-                              producer_semantic_digest,
-                              storage_uint64, storage_value_bytes)
-FORMAT = jsonschema.FormatChecker()
+from pm_event_numbers import (EVENT_VALUE, FrozenRecipe, OriginalBinding, OriginalCustody,  # noqa: E402
+                              RecipeTuple, Refusal, RetainedDispatcher, current_integer,
+                              decode_storage_value, exact_boolean, full_value_commitment, loads_current_json,
+                              producer_semantic_bytes, producer_semantic_digest, storage_uint64,
+                              storage_value_bytes)
+from pm_event_datetime import EVENT_RECORD, STORAGE_UTC_Z, date_time  # noqa: E402
+from pm_event_datetime import format_checker as datetime_format_checker  # noqa: E402
+
+# Sweep part 2B (S-FMT1, CV-1101). Every `format: date-time` a DS15 validator meets is checked by the
+# shared predicate `pm_event_datetime.date_time`, installed through the shared explicitly registered
+# checker (`pm_event_datetime.format_checker`), with the broad EventRecord profile (RFC 3339 5.6/5.7:
+# EventRecord occurred_at_utc, the AppendReceipt acknowledged_at_utc and the DS15 dev session record v2
+# timestamps, whose owners declare format: date-time and name no stricter profile). CV-253's strict
+# storage_utc_z profile is added on the Storage-assigned observed_at_utc and persisted_at_utc of every
+# EventRecord this lane validates (STORAGE_DATETIME_FIELDS). The stock jsonschema.FormatChecker() of the
+# pinned environment has no date-time checker at all, so before this the format was never enforced.
+# datetime_validator and the inventory gate run at batch-2 integration (SWEEP-P2B addendum 2): the gate
+# fails closed on a lane tree whose Plans content changed, so this lane calls neither.
+STORAGE_DATETIME_FIELDS = ('observed_at_utc', 'persisted_at_utc')
 
 # Sweep part 2B numbers (CV-1100, SP-1100). Current inputs are admitted at every
 # schema integer slot by the shared current_integer, with the slot's own schema
@@ -43,10 +57,21 @@ STORAGE_UINT64_FIELDS = frozenset({
 # (original event and payload, original context, first receipt, custody and
 # issued result) was written under it, so retained verification keeps its exact
 # integer domain and its producer JCS digits; no current number guard runs on a
-# retained original. Selecting this recipe through SP-1101's authenticated
-# dispatcher is a part 2B item: SP-1101 selects the frozen CV-1101 date-time
-# profile in the same authenticated tuple.
+# retained original. Since sweep part 2B (S-N2) the recipe is never implicit: a
+# retained reader takes it from Storage's sealed write custody through SP-1101
+# (select_original_recipe, then resolve_original through the shared
+# RetainedDispatcher); the frozen recipe carries its CV-1101 date-time profiles.
 V1 = 'ds15-v1'
+
+# CV-1101 date-time profiles per DS15 recipe. The current writer and the frozen
+# ds15-v1 recipe select the same owner profiles: CV-1101 binds existing envelope
+# behaviour, and ds15-v1's stock checker merely skipped date-time, which is not an
+# owner-valid legacy grammar ("a skipped format check never authenticates invalid
+# history", SP-1101). Owner-valid lowercase, offset and long-fraction source
+# timestamps stay readable; Storage-assigned fields keep storage_utc_z.
+DATETIME_PROFILES = {CURRENT: {'format': EVENT_RECORD, 'storage': STORAGE_UTC_Z},
+                     V1: {'format': EVENT_RECORD, 'storage': STORAGE_UTC_Z}}
+FORMATS = {recipe: datetime_format_checker(profile=profiles['format']) for recipe, profiles in DATETIME_PROFILES.items()}
 
 
 def v1_numeric_atom_ok(value):
@@ -71,6 +96,19 @@ def v1_producer_digest(event):
         return _codec.event_producer_semantic_digest(event)
     except (KeyError, TypeError, ValueError, UnicodeError):
         return None
+
+
+# The frozen number rules of each installed write recipe (S-N2): a retained original is read with the
+# rules of the recipe its sealed custody selected, never with an implicit default.
+FROZEN_NUMBERS = {V1: (v1_numbers_ok, v1_producer_digest)}
+
+
+def recipe_numbers_ok(recipe, value):
+    return FROZEN_NUMBERS[recipe][0](value)
+
+
+def recipe_producer_digest(recipe, event):
+    return FROZEN_NUMBERS[recipe][1](event)
 
 
 def producer_type_sensitive_paths(event):
@@ -255,22 +293,78 @@ def _memo_default(value):
     return '\x00' + type(value).__name__ + ':' + repr(value)
 
 
+def storage_datetime_errors(instance, fields, profile):
+    """CV-253 on one record's own Storage-assigned timestamp members (sweep part 2B, S-FMT1).
+
+    The shared predicate date_time with the strict storage_utc_z profile (terminal uppercase Z only),
+    on top of the record schema's own format: date-time. Every value the validator treats as a string
+    reaches it, so a str subclass refuses (date_time_type); a non-string is left to the schema type.
+    Each refusal is a format error of the record's schema verdict, with the shared Refusal as cause.
+    """
+    if not fields or not isinstance(instance, dict):
+        return []
+    errors = []
+    for field in fields:
+        if field in instance and isinstance(instance[field], str):
+            try:
+                date_time(instance[field], profile=profile)
+            except Refusal as refusal:
+                errors.append(jsonschema.ValidationError(
+                    'CV-253 %s refuses %r: %s' % (profile, instance[field], refusal.reason), validator='format',
+                    validator_value='date-time', instance=instance[field], path=(field,), cause=refusal))
+    return errors
+
+
+def _inventory_digest(value):
+    # The shared inventory's structural fingerprint of a resource (pm_event_datetime_inventory.digest).
+    return hashlib.sha256(json.dumps(value, sort_keys=True, ensure_ascii=True, separators=(',', ':')).encode()).hexdigest()
+
+
+@lru_cache(maxsize=1)
+def inventory_storage_sites():
+    """{resource fingerprint: Storage fields} of the EventRecord resource roots the shared inventory classifies.
+
+    Read as data (Plans/event_datetime_inventory.json), never as the gate: selection is by the exact
+    resource-content fingerprint and the reviewed root path, not by a schema discriminator or a field-name
+    guess. Only resource roots with classification EventRecord and profile storage_utc_z are taken.
+    """
+    sites = {}
+    for row in read('Plans/event_datetime_inventory.json')['nodes']:
+        if (row['classification'] == 'EventRecord' and row['profile'] == STORAGE_UTC_Z
+                and row['pointer'] == row['resource_pointer']):
+            sites.setdefault(row['resource_sha256'], set()).update(row['fields'])
+    return {k: tuple(f for f in STORAGE_DATETIME_FIELDS if f in v) for k, v in sites.items()}
+
+
+def storage_datetime_fields(schema):
+    """The Storage-assigned timestamp members of a schema that is an inventoried EventRecord resource root."""
+    return inventory_storage_sites().get(_inventory_digest(schema), ())
+
+
 class MemoizedValidation:
     """Cache exact validator errors by JSON value, never by mutable object id.
 
     A current validator adds CV-1100 integer-slot admission after the stock
     schema accepts; a ds15-v1 validator carries the frozen v1 integer domain.
+    Both run the shared CV-1101 date-time predicate through their format checker,
+    and an EventRecord validator adds CV-253's storage_utc_z on its Storage fields.
     """
-    def __init__(self, original, slots):
+    def __init__(self, original, slots, storage_fields=(), storage_profile=STORAGE_UTC_Z):
         self.original = original
         self.slots = slots
+        self.storage_fields = storage_fields
+        self.storage_profile = storage_profile
         self.errors = {}
+
+    def _stock(self, instance):
+        return (*self.original.iter_errors(instance),
+                *storage_datetime_errors(instance, self.storage_fields, self.storage_profile))
 
     def iter_errors(self, instance):
         with exact_integer_text():
             key = json.dumps(instance, sort_keys=True, ensure_ascii=True, default=_memo_default)
             if key not in self.errors:
-                errors = tuple(self.original.iter_errors(instance))
+                errors = self._stock(instance)
                 if not errors and self.slots:
                     errors = tuple(integer_slot_errors(self.original, instance))
                 self.errors[key] = errors
@@ -278,6 +372,8 @@ class MemoizedValidation:
 
     def validate(self, instance):
         self.original.validate(instance)
+        for error in storage_datetime_errors(instance, self.storage_fields, self.storage_profile):
+            raise error
         if self.slots:
             for error in integer_slot_errors(self.original, instance):
                 raise error
@@ -361,7 +457,12 @@ def cached_validator(encoded, recipe=CURRENT):
     if refused('schema_references', unresolved=unresolved is not None):
         raise unresolved
     chosen = V1Validator if recipe == V1 else StrictValidator
-    return MemoizedValidation(chosen(schema, registry=registry, format_checker=FORMAT), slots=recipe == CURRENT)
+    # The recipe's CV-1101 profiles: the shared date-time checker at every format: date-time, and
+    # storage_utc_z on the Storage fields when the schema is an inventoried EventRecord resource root.
+    profiles = DATETIME_PROFILES[recipe]
+    return MemoizedValidation(chosen(schema, registry=registry, format_checker=FORMATS[recipe]), slots=recipe == CURRENT,
+                              storage_fields=storage_datetime_fields(json.loads(encoded)),
+                              storage_profile=profiles['storage'])
 
 @lru_cache(maxsize=1)
 def application_source_validator():
@@ -420,7 +521,7 @@ FOLLOWERS = {'env_scope': 'env_scope_entailed', 'tr_browser_a': 'tr_browser_a_en
              'tr_dev_a': 'tr_dev_a_entailed', 'tr_preview_b': 'tr_preview_b_entailed',
              'tr_preview_origin': 'tr_preview_origin_entailed', 'd2_env_b': 'd2_env_b_entailed',
              'd2_env_storage': 'd2_env_storage_entailed', 'd2_env_c': 'd2_env_c_entailed',
-             'd2_pl_gate': 'd2_pl_gate_entailed'}
+             'd2_pl_gate': 'd2_pl_gate_entailed', 'rd_resolve': 'rd_resolve_entailed'}
 
 
 def refused(phase, **facts):
@@ -525,9 +626,9 @@ def identity(c, payload, source=None, recipe=CURRENT):
     return hashlib.sha256(storage_value_bytes(parts, profile=EVENT_VALUE)).hexdigest()
 
 
-def commitment(event):
-    """CV-339 original_event_value_commitment of a retained original (ds15-v1)."""
-    if refused('cm_domain', v1_domain=v1_numbers_ok(event)):
+def commitment(event, recipe):
+    """CV-339 original_event_value_commitment of a retained original, under its selected frozen recipe."""
+    if refused('cm_domain', v1_domain=recipe_numbers_ok(recipe, event)):
         return None
     if not authority_types_ok(event):
         return None
@@ -542,11 +643,215 @@ def commitment(event):
 RECEIPT_PHASES = {'AppendReceipt': 'sch_receipt', 'custody_v2': 'sch_custody', 'full_value_result': 'sch_result'}
 
 
-def shared_valid(kind_name, value, recipe=V1):
-    """First receipt, custody and issued result: Storage's records of a retained original."""
+def shared_valid(kind_name, value, recipe):
+    """First receipt, custody and issued result: Storage's records of a retained original (its selected recipe)."""
     schema = read('Plans/event_append_receipt_contracts.schema.json')
     v = validator({'$defs': schema['$defs'], '$ref': '#/$defs/' + kind_name}, recipe)
     return not schema_refused(RECEIPT_PHASES[kind_name], v, value)
+
+
+# ---------------------------------------------------------------------------
+# SP-1101 retained-original dispatch (sweep part 2B, S-N2). A retained reader or
+# retry resolver never picks the original's recipe itself:
+#   1. select_original_recipe (table rd_recipe) makes one selection from Storage's
+#      sealed write custody for the original's Storage instance and family, before
+#      any retained read; no custody means the existing unavailable contract, an
+#      uninstalled tuple means unsupported, and neither falls back to the current
+#      or another recipe. The selection fixes the frozen number rules and the
+#      CV-1101 date-time profiles (DATETIME_PROFILES) every later retained check uses.
+#   2. the frozen-recipe checks run in their existing order (schema, identity,
+#      copies, receipt, commitment), parameterized by that selection.
+#   3. resolve_original (table rd_resolve) then resolves the original once through
+#      the shared RetainedDispatcher: the sealed original owner (DS15OriginalOwner)
+#      authenticates the fetched bytes against what was sealed at the original ref,
+#      the binding is compared field by field, the per-original recipe tuple selects
+#      exactly one installed FrozenRecipe, whose verifier recomputes the original.
+#      No override, no current-then-legacy probing. A coherent forgery (every copy
+#      rewritten consistently) passes the copy joins and refuses here.
+# The static stand-in for Storage's sealed custody is Plans/ds15_original_custody.json,
+# installed at composition (load_original_custody); the case under check never adds to
+# it, and no request field selects a recipe (the original-evidence carrier is closed).
+# Native custody, installation and durability are NOT_RUN.
+# ---------------------------------------------------------------------------
+DS15_SERVER = 'ds15-static-oracle'
+INSTALLED_RECIPES = (V1,)
+RECIPE_FULL_VALUE = 'pm.storage.original_event_value_commitment.v1'
+RECIPE_PRODUCER = 'cv317-producer-semantic-jcs-exact-integer-digits'
+RECIPE_LOCAL_SOURCE = ('ds15 project identity: canonical MessagePack [event_type, family_revision, scope, identity fields]; '
+                       'application scope: application@1 from owner.browser.transition.application@1.0.0')
+RECIPE_PAYLOAD = 'ds15 inline EVENT_VALUE payload; SP-337 payload reference over 16384 bytes'
+FROZEN_RESOURCES = ('Plans/event_record.schema.json', 'Plans/event_append_receipt_contracts.schema.json',
+                    'Plans/application_workflow_sources.schema.json', 'Plans/ds15_integer_domain.schema.json')
+
+
+@lru_cache(maxsize=None)
+def recipe_resource_manifest(payload_schema_ref, context_schema_ref):
+    """SHA-256 of the frozen resources a DS15 recipe tuple pins (exact file bytes, in order)."""
+    rows = [[path, hashlib.sha256((ROOT / path).read_bytes()).hexdigest()]
+            for path in (*FROZEN_RESOURCES, payload_schema_ref, context_schema_ref)]
+    return hashlib.sha256(json.dumps(rows, separators=(',', ':')).encode('ascii')).hexdigest()
+
+
+def context_schema_ref(c):
+    deck2 = c['event_type'] in {r['event_type'] for r in read('Plans/ds15_deck2_contracts.json')}
+    return 'Plans/ds15_deck2_context.schema.json' if deck2 else 'Plans/ds15_authority_context.schema.json'
+
+
+def recipe_tuple(c, write_recipe, manifest):
+    """The write-time recipe tuple of a DS15 original of family c."""
+    payload_schema = read(c['payload_schema_ref'])
+    return RecipeTuple(
+        envelope_schema_id='pm.event.v0', envelope_schema_version='2.0.0',
+        payload_schema_id=payload_schema['$id'], payload_schema_version=c['family_revision'],
+        owner_source_id=c['semantic_owner'], owner_edition=c['family_revision'],
+        registry_revision='prepared_without_admission', identity_recipe=write_recipe, producer_recipe=RECIPE_PRODUCER,
+        physical_profile=EVENT_VALUE, full_value_profile=RECIPE_FULL_VALUE, local_source_profile=RECIPE_LOCAL_SOURCE,
+        payload_profile=RECIPE_PAYLOAD, resource_manifest_sha256=manifest)
+
+
+@lru_cache(maxsize=1)
+def original_custody():
+    """Composition: Storage's sealed write custody (static stand-in), loaded once, never from request data."""
+    raw = read('Plans/ds15_original_custody.json')
+    sealed = {}
+    for entry in raw['sealed_originals']:
+        binding = OriginalBinding(**entry['binding'])
+        sealed.setdefault((binding.storage_instance_id, entry['original_ref']), []).append(
+            (binding, entry['event_type'], entry['write_recipe']))
+    return {'stores': raw['stores'], 'manifests': raw['resource_manifests'], 'sealed': sealed}
+
+
+@lru_cache(maxsize=None)
+def contract_of(event_type):
+    for manifest in ('Plans/ds15_event_contracts.json', 'Plans/ds15_deck2_contracts.json'):
+        for c in read(manifest):
+            if c['event_type'] == event_type:
+                return c
+    return None
+
+
+def frozen_verifier(c, write_recipe):
+    """The frozen verifier of one installed DS15 recipe tuple: recompute the original from its sealed bytes
+    under that recipe (editions, family, payload join, commitment, producer digest, identity); no current
+    writer gate and no live state."""
+    def verify(custody):
+        event = decode_storage_value(custody.record_bytes, profile=EVENT_VALUE)
+        result = decode_storage_value(custody.result_bytes, profile=EVENT_VALUE)
+        binding, frozen = custody.binding, custody.recipe
+        if type(event) is not dict or type(result) is not dict or set(result) != {'payload', 'application_source'}:
+            return False
+        if (event.get('schema_id'), event.get('schema_version'), event.get('payload_schema_id'), event.get('event_type')) != (
+                frozen.envelope_schema_id, frozen.envelope_schema_version, frozen.payload_schema_id, c['event_type']):
+            return False
+        if not (same(event.get('payload'), result['payload']) or (event.get('payload_ref') is not None and event.get('payload') == {})):
+            return False
+        if not recipe_numbers_ok(write_recipe, event) or refusal_reason(full_value_commitment, event) is not None:
+            return False
+        if full_value_commitment(event) != binding.source_commitment or recipe_producer_digest(write_recipe, event) is None:
+            return False
+        source = result['application_source']
+        if event.get('scope_kind') == 'application':
+            if type(source) is not dict or type(source.get('server_id')) is not str or type(source.get('original_operation_id')) is not str:
+                return False
+            key = 'application@1:{}:{}'.format(source['server_id'].encode().hex(), source['original_operation_id'].encode().hex())
+        else:
+            payload = result['payload']
+            scope = [payload.get('project_id')] if c['scope_policy'] == 'project_only' else [payload.get('scope')]
+            parts = [c['event_type'], c['family_revision'], *scope] + [payload.get(k) for k in c['identity_fields']]
+            if physical_size(parts) is None:
+                return False
+            key = hashlib.sha256(storage_value_bytes(parts, profile=EVENT_VALUE)).hexdigest()
+        return key == event.get('idempotency_key') == binding.idempotency_key
+    return FrozenRecipe(verify)
+
+
+@lru_cache(maxsize=1)
+def installed_recipes():
+    """Composition: the exact tuple -> FrozenRecipe map, built from this head's resources outside request data."""
+    out = {}
+    for manifest in ('Plans/ds15_event_contracts.json', 'Plans/ds15_deck2_contracts.json'):
+        for c in read(manifest):
+            for write_recipe in INSTALLED_RECIPES:
+                tuple_ = recipe_tuple(c, write_recipe, recipe_resource_manifest(c['payload_schema_ref'], context_schema_ref(c)))
+                out[tuple_] = frozen_verifier(c, write_recipe)
+    return out
+
+
+class DS15OriginalOwner:
+    """The sealed original custody of the Storage instance read (static stand-in). At one original ref it
+    authenticates the bytes the reader fetched against what that instance sealed at write time (the sealed
+    CV-339 commitment) and returns them with the sealed binding and write-time recipe tuple."""
+
+    def __init__(self, storage_instance_id, record_bytes, result_bytes, receipt_bytes, commitment_sha256):
+        self.storage_instance_id = storage_instance_id
+        self.record_bytes, self.result_bytes, self.receipt_bytes = record_bytes, result_bytes, receipt_bytes
+        self.commitment_sha256 = commitment_sha256
+
+    def authenticated_original(self, original_ref):
+        custody = original_custody()
+        sealed = custody['sealed'].get((self.storage_instance_id, original_ref))
+        if not sealed:
+            raise Refusal('original_query')
+        matches = [entry for entry in sealed if entry[0].source_commitment == self.commitment_sha256]
+        if not matches:
+            raise Refusal('original_authority')
+        if len(matches) != 1:
+            raise Refusal('original_ambiguous')
+        binding, event_type, write_recipe = matches[0]
+        c = contract_of(event_type)
+        if c is None:
+            raise Refusal('original_authority')
+        tuple_ = recipe_tuple(c, write_recipe, custody['manifests'][event_type])
+        return OriginalCustody(binding, tuple_, self.record_bytes, self.result_bytes, self.receipt_bytes)
+
+
+def select_original_recipe(c, d):
+    """Table rd_recipe: (frozen recipe, None) or (None, refusing row). One selection, from sealed custody."""
+    custody = original_custody()
+    store = custody['stores'].get(d['storage_instance_id'])
+    sealed = isinstance(store, dict) and c['event_type'] in store['families']
+    tuple_ = (recipe_tuple(c, store['write_recipe'], custody['manifests'][c['event_type']])
+              if sealed and c['event_type'] in custody['manifests'] else None)
+    installed = (tuple_ in installed_recipes()) if sealed else None
+    first = refusal('rd_recipe', {'custody_store': sealed, 'recipe_installed': installed})
+    if first is not None:
+        return None, first[0]
+    return tuple_.identity_recipe, None
+
+
+def original_bytes(d):
+    """The original as the reader fetched it: record, owner result (payload and accepted source) and receipt."""
+    original = d['original']
+    source = original.get('application_source')
+    record = storage_value_bytes(original['event'], profile=EVENT_VALUE)
+    result = storage_value_bytes({'payload': original['payload'], 'application_source': source}, profile=EVENT_VALUE)
+    receipt = storage_value_bytes(d['receipt'], profile=EVENT_VALUE) if d.get('receipt') is not None else b''
+    return record, result, receipt
+
+
+def resolve_refusal(d):
+    """The RetainedDispatcher resolution of the retained original: its refusal reason, or None. Never raises."""
+    try:
+        event = d['original']['event']
+        record, result, receipt = original_bytes(d)
+        sha = full_value_commitment(event)
+        expected = OriginalBinding(
+            storage_instance_id=d['storage_instance_id'], scope_kind=event['scope_kind'], server_id=DS15_SERVER,
+            project_id=event['project_id'], event_type=event['event_type'], event_id=event['event_id'],
+            idempotency_key=event['idempotency_key'], owner_operation_id=event['correlation_id'], source_commitment=sha)
+        RetainedDispatcher(DS15OriginalOwner(d['storage_instance_id'], record, result, receipt, sha),
+                           installed_recipes()).resolve(
+            event['event_id'], expected, disclose=lambda binding: True)
+    except Refusal as exc:
+        return exc.reason
+    except (KeyError, TypeError, AttributeError, ValueError):
+        return 'original_binding'
+    return None
+
+
+def resolve_original(d):
+    """Table rd_resolve (and its entailed follower): True when the retained original resolves."""
+    return not refused('rd_resolve', dispatch_refusal=resolve_refusal(d))
 
 
 def object_input_present(value):
@@ -715,15 +1020,16 @@ def original_output_refused(source):
     return refused('env_app_browser_c', output_present=original_output_present(source['original_output']))
 
 
-def envelope_ok(c, d, retry=True, historical=False, append=False):
+def envelope_ok(c, d, original_recipe, retry=True, historical=False, append=False):
     e, original = d['envelope'], d['original']['event']
     scope = d['context']['scope']
-    # A historical read sees the retained original itself (ds15-v1); the original is always retained.
-    recipe = V1 if historical else CURRENT
+    # A historical read sees the retained original itself; the original is always retained. Both are read
+    # with the frozen recipe the sealed custody selected (select_original_recipe), never an implicit one.
+    recipe = original_recipe if historical else CURRENT
     if schema_refused('sch_envelope_v1' if historical else 'sch_envelope',
                       validator(read('Plans/event_record.schema.json'), recipe), e):
         return False
-    if schema_refused('sch_original_event', validator(read('Plans/event_record.schema.json'), V1), original):
+    if schema_refused('sch_original_event', validator(read('Plans/event_record.schema.json'), original_recipe), original):
         return False
     if refused('env_dispatch', event_type=e['event_type'], family_event_type=c['event_type'],
                historical=historical, envelope_policy=e['replay_policy'], original_policy=original['replay_policy']):
@@ -750,7 +1056,8 @@ def envelope_ok(c, d, retry=True, historical=False, append=False):
     # The retry equality domain excludes only Storage-assigned metadata. Full original
     # value custody below independently commits those original metadata fields too.
     if retry and refused('env_retry', event_id=e['event_id'], original_event_id=original['event_id'],
-                         candidate_digest=v1_producer_digest(e), original_digest=v1_producer_digest(original)):
+                         candidate_digest=recipe_producer_digest(original_recipe, e),
+                         original_digest=recipe_producer_digest(original_recipe, original)):
         return False
     source = d.get('application_source')
     if scope['kind'] == 'app' and c['event_type'].startswith('catalog.install.'):
@@ -797,10 +1104,10 @@ def envelope_ok(c, d, retry=True, historical=False, append=False):
                        expected_key=identity(c, e['payload'], source, recipe))
 
 
-def receipt_ok(d):
+def receipt_ok(d, recipe):
     r, custody, result, event = d['receipt'], d['custody'], d['issued_result'], d['original']['event']
-    if not (shared_valid('AppendReceipt', r) and shared_valid('custody_v2', custody)
-            and shared_valid('full_value_result', result)):
+    if not (shared_valid('AppendReceipt', r, recipe) and shared_valid('custody_v2', custody, recipe)
+            and shared_valid('full_value_result', result, recipe)):
         return False
     if refused('rc_copies', receipt=r, custody_receipt=custody['first_append_receipt'],
                result_receipt=result['first_append_receipt'], receipt_event_id=r['event_id'], event_id=event['event_id'],
@@ -811,7 +1118,7 @@ def receipt_ok(d):
                result_commitment=result['original_event_value_commitment']):
         return False
     if refused('rc_commitment', result_commitment=result['original_event_value_commitment'],
-               expected_commitment=commitment(event)):
+               expected_commitment=commitment(event, recipe)):
         return False
     return not refused('rc_custody', custody_segment_ref=custody['original_segment_ref'],
                        result_segment_ref=result['original_segment_ref'],
@@ -821,7 +1128,7 @@ def receipt_ok(d):
                        custody_event_type=custody['event_type'], event_type=event['event_type'],
                        custody_idempotency_key=custody['idempotency_key'], idempotency_key=event['idempotency_key'],
                        custody_producer_digest=custody['producer_semantic_digest'],
-                       original_producer_digest=v1_producer_digest(event))
+                       original_producer_digest=recipe_producer_digest(recipe, event))
 
 
 def original_evidence_ok(op, d):
@@ -1021,6 +1328,18 @@ def refuse():
     return {'result': 'REFUSE', 'effects': 0}
 
 
+def selected_recipe(c, op, d):
+    """(frozen recipe, None) or (None, result): SP-1101 selection before the original is read (rd_recipe).
+
+    Missing sealed custody is the existing unavailable contract (UNAVAILABLE for a read, as for the reader
+    rows; a refusal elsewhere); an uninstalled recipe tuple refuses. Neither falls back to another recipe.
+    """
+    recipe, row = select_original_recipe(c, d)
+    if recipe is None:
+        return None, (dict(UNAVAILABLE) if op == 'read' and row == 'SX01_custody_store' else refuse())
+    return recipe, None
+
+
 def outcome_refused(d):
     out = d['outcome']
     present = outcome_present(out)
@@ -1044,16 +1363,22 @@ def evaluate(c, op, d):
     if op == 'envelope_boundary':
         if not original_evidence_ok(op, d):
             return refuse()
-        return {'result': 'ACCEPT' if envelope_ok(c, d, retry=False, append=True) else 'REFUSE', 'effects': 0}
+        recipe, result = selected_recipe(c, op, d)
+        if result is not None:
+            return result
+        return {'result': 'ACCEPT' if envelope_ok(c, d, recipe, retry=False, append=True) else 'REFUSE', 'effects': 0}
     if op == 'checkpoint_boundary':
         return {'result': 'ACCEPT' if checkpoint_value_ok(c, d.get('checkpoint')) else 'REFUSE', 'effects': 0}
     if op == 'receipt_boundary':
         if not original_evidence_ok(op, d):
             return refuse()
-        if schema_refused('sch_original_event', validator(read('Plans/event_record.schema.json'), V1),
+        recipe, result = selected_recipe(c, op, d)
+        if result is not None:
+            return result
+        if schema_refused('sch_original_event', validator(read('Plans/event_record.schema.json'), recipe),
                           d['original']['event']):
             return refuse()
-        return {'result': 'ACCEPT' if receipt_ok(d) else 'REFUSE', 'effects': 0}
+        return {'result': 'ACCEPT' if receipt_ok(d, recipe) and resolve_original(d) else 'REFUSE', 'effects': 0}
     if op == 'event_schema':
         valid = not schema_refused('sch_envelope', validator(read('Plans/event_record.schema.json')), d.get('envelope'))
         return {'result': 'ACCEPT' if valid else 'REFUSE', 'effects': 0}
@@ -1065,19 +1390,27 @@ def evaluate(c, op, d):
                    context_policy=x.get('replay_policy'), context_envelope_policy=x.get('envelope_replay_policy')):
             return {'result': 'REFUSE', 'effects': 0, 'error': 'replay_only_not_appendable'}
     if op == 'payload':
-        return {'result': 'ACCEPT' if payload_ok(c, p, x) and envelope_ok(c, d, retry=False, append=True) else 'REFUSE',
-                'effects': 0}
+        if not payload_ok(c, p, x):
+            return refuse()
+        recipe, result = selected_recipe(c, op, d)
+        if result is not None:
+            return result
+        return {'result': 'ACCEPT' if envelope_ok(c, d, recipe, retry=False, append=True) else 'REFUSE', 'effects': 0}
     if op in ('recover', 'publish', 'read', 'checkpoint', 'rebuild'):
         o, r, out = d['original'], d['receipt'], d['outcome']
         if outcome_refused(d):
             return dict(UNAVAILABLE)
-        if refused('ev_outcome_domain', outcome_v1_domain=v1_numbers_ok(out)):
+        # SP-1101: one selection from the sealed write custody before the original is read.
+        recipe, result = selected_recipe(c, op, d)
+        if result is not None:
+            return result
+        if refused('ev_outcome_domain', outcome_v1_domain=recipe_numbers_ok(recipe, out)):
             return refuse()
-        if not payload_ok(c, o['payload'], d['original_context'], V1, V1):
+        if not payload_ok(c, o['payload'], d['original_context'], recipe, recipe):
             return refuse()
         if refused('ev_original_copies', payload=tx(p), original_payload=tx(o['payload']), outcome_payload=tx(out['payload'])):
             return refuse()
-        if not envelope_ok(c, d, historical=op in ('read', 'checkpoint', 'rebuild'), append=op == 'recover' and r is None):
+        if not envelope_ok(c, d, recipe, historical=op in ('read', 'checkpoint', 'rebuild'), append=op == 'recover' and r is None):
             return refuse()
         if (refused('ev_original_ids', outcome_event_id=out['event_id'], original_event_id=o['event_id'],
                     event_event_id=o['event']['event_id'], original_key=o['idempotency_key'],
@@ -1091,7 +1424,7 @@ def evaluate(c, op, d):
         # Original transition/source validity was checked against original_context
         # above. Retained reads and receipt recovery survive later state changes.
         # New append recovery and publication still require the current joins.
-        if (op == 'publish' or (op == 'recover' and r is None)) and not payload_ok(c, o['payload'], x, V1, CURRENT):
+        if (op == 'publish' or (op == 'recover' and r is None)) and not payload_ok(c, o['payload'], x, recipe, CURRENT):
             return refuse()
         if op in ('read', 'checkpoint', 'rebuild') and refused('ev_reader', reader_withdrawn=d['reader_withdrawn'],
                                                                 reader_installed=d['reader_installed'],
@@ -1104,6 +1437,9 @@ def evaluate(c, op, d):
                 or refused('ev_disclosure_owner', owner_command_authorized=x['owner_command_authorized'])):
             return dict(UNAVAILABLE) if op == 'read' else refuse()
         if r is None:
+            # SP-1101: the original resolves through the sealed original owner before any outcome.
+            if not resolve_original(d):
+                return refuse()
             if op == 'recover':
                 if refused('ev_append_recovery', permission_now=d['permission_now'],
                            source_deleted_now=d['source_deleted_now'], share_current=d['share_current']):
@@ -1113,7 +1449,10 @@ def evaluate(c, op, d):
             return {'result': 'PENDING', 'effects': 0, 'event_id': o['event_id']}
         if op != 'recover':
             refused('ev_receipt_pending', receipt_present=True)
-        if not receipt_ok(d):
+        if not receipt_ok(d, recipe):
+            return refuse()
+        # SP-1101: after the frozen-recipe checks, the original resolves once through the sealed owner.
+        if not resolve_original(d):
             return refuse()
         if op == 'publish' and refused('ev_publish', receipt_retained=d['receipt_retained']):
             return {'result': 'PENDING', 'effects': 0, 'event_id': o['event_id']}
@@ -1137,7 +1476,7 @@ def evaluate(c, op, d):
                 or refused('ev_disclosure', permission_now=d['permission_now'], source_deleted_now=d['source_deleted_now'],
                            share_current=d['share_current'])
                 or not token_matches_storage(token, d['storage_instance_id'])
-                or not envelope_ok(c, d, historical=True) or not receipt_ok(d)
+                or not envelope_ok(c, d, recipe, historical=True) or not receipt_ok(d, recipe)
                 or refused('cp_scope', checkpoint_project_id=cp.get('project_id'), payload_project_id=p.get('project_id'),
                            checkpoint_scope=cp.get('scope'), payload_scope=p.get('scope'))):
             return refuse()
@@ -1285,6 +1624,11 @@ def semantic_parent(c, fixture, case):
     return semantic_input(c, fixture, parent)
 
 
+def harness_recipe(c, data):
+    """The frozen recipe a direct boundary call reads the original with: the same SP-1101 selection (rd_recipe)."""
+    return select_original_recipe(c, data)[0]
+
+
 def predicate_ok(c, target, data):
     """Exercise a real validation boundary without a caller's other guards.
 
@@ -1307,7 +1651,8 @@ def predicate_ok(c, target, data):
     if target == 'identity':
         return identity(c, data['payload'], data.get('application_source'))
     if target == 'commitment':
-        return commitment(data['original']['event'])
+        recipe = harness_recipe(c, data)
+        return recipe is not None and commitment(data['original']['event'], recipe)
     if target == 'context_types_ok':
         return context_types_ok(c, data['context'])
     if target == 'authority_types_ok':
@@ -1317,9 +1662,11 @@ def predicate_ok(c, target, data):
     if target == 'payload_ok':
         return payload_ok(c, data['payload'], data['context'])
     if target == 'envelope_ok':
-        return envelope_ok(c, data, retry=False)
+        recipe = harness_recipe(c, data)
+        return recipe is not None and envelope_ok(c, data, recipe, retry=False)
     if target == 'receipt_ok':
-        return receipt_ok(data)
+        recipe = harness_recipe(c, data)
+        return recipe is not None and receipt_ok(data, recipe)
     if target == 'token_matches_storage':
         return token_matches_storage(data['selected_token'], data['storage_instance_id'])
     # Presence boundaries are the model phases that hold them.
@@ -1526,7 +1873,8 @@ def numeric_operation(case, data):
     if target == 'migration':
         return migrate(data['kind'], data['source'], data['evidence'])
     if target == 'commitment':
-        return commitment(data['original']['event'])
+        recipe = harness_recipe(c, data)
+        return recipe is not None and commitment(data['original']['event'], recipe)
     if target == 'digest':
         return current_producer_digest(data['envelope'])
     return evaluate(c, case['operation'], data)
@@ -1584,7 +1932,7 @@ def check_numeric_contracts():
             valid = not list(validator(read('Plans/event_record.schema.json')).iter_errors(data['envelope']))
             assert valid == case['valid'], (case['id'], 'adopted EventRecord schema profile')
         if case.get('path', '').startswith('receipt/'):
-            assert shared_valid('AppendReceipt', data['receipt']) == case['valid'], (case['id'], 'receipt schema profile')
+            assert shared_valid('AppendReceipt', data['receipt'], harness_recipe(c, data)) == case['valid'], (case['id'], 'receipt schema profile')
         if case.get('path', '').startswith('checkpoint/'):
             valid = not list(validator(read(c['checkpoint_schema_ref'])).iter_errors(data['checkpoint']))
             assert valid == case['valid'], (case['id'], 'checkpoint schema profile')
@@ -1611,7 +1959,8 @@ def main():
     for schema_ref in ('Plans/ds15_authority_context.schema.json', 'Plans/ds15_migration_inputs.schema.json', 'Plans/ds15_browser_owner_record.schema.json', 'Plans/ds15_original_evidence.schema.json'):
         validator(read(schema_ref))
     shared = read('Plans/event_append_receipt_full_value_fixtures.json')
-    assert commitment(shared['base_original_event'])['sha256'] == shared['commitment_sha256']
+    # Codec self-check of the shared CV-339 fixture (a ds15-v1-domain value), not a retained read.
+    assert commitment(shared['base_original_event'], V1)['sha256'] == shared['commitment_sha256']
     contracts = read('Plans/ds15_event_contracts.json')
     fixtures = read('Plans/ds15_event_contract_fixtures.json')
     assert len(contracts) == len(fixtures) == len(PREPARED_FAMILIES), 'DS15 preparation manifest cardinality changed'
@@ -1693,6 +2042,13 @@ def main():
     p2a_cases = p2a.fixture_cases()
     problems = p2a.check(sys.modules[__name__], deck2, p2a_cases)
     assert not problems, ('sweep part 2A witnesses', problems)
-    print(json.dumps({'status':'pass','families':len(contracts),'payload_oracles':count,'semantic_oracles':semantic_count,'reference_closure_oracles':schema_count,'predicate_oracles':predicate_count,'value_oracles':value_cases,'guard_proof_oracles':guard_proofs,'numeric_oracles':numeric_cases,'sweep_p2a_witnesses':len(p2a_cases),'native_execution':'NOT_RUN'}))
+    # Sweep part 2B witnesses (Plans/ds15_p2b_cases.json): CV-1101 date-time through the validators, SP-1101
+    # selection and resolution; each negative refused first at its own row, each positive exactly as stated.
+    import pm_ds15_p2b_cases as p2b
+    p2b_cases = p2b.fixture_cases()
+    problems = p2b.check(sys.modules[__name__], deck2, p2b_cases)
+    assert not problems, ('sweep part 2B witnesses', problems)
+    sealed = original_custody()
+    print(json.dumps({'status':'pass','families':len(contracts),'payload_oracles':count,'semantic_oracles':semantic_count,'reference_closure_oracles':schema_count,'predicate_oracles':predicate_count,'value_oracles':value_cases,'guard_proof_oracles':guard_proofs,'numeric_oracles':numeric_cases,'sweep_p2a_witnesses':len(p2a_cases),'sweep_p2b_witnesses':len(p2b_cases),'sealed_originals':sum(len(v) for v in sealed['sealed'].values()),'custody_stores':len(sealed['stores']),'native_execution':'NOT_RUN'}))
 
 if __name__ == '__main__': main()

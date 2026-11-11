@@ -145,18 +145,19 @@ def owner_record(c, d):
     return record if valid('sch_d2_source', schema, record) else None
 
 
-def envelope_ok(c, d, retry=True, historical=False, append=False):
+def envelope_ok(c, d, original_recipe, retry=True, historical=False, append=False):
     e, original, p = d['envelope'], d['original']['event'], d['payload']
-    # A historical read sees the retained original itself (ds15-v1); the original is always retained.
-    recipe = V1 if historical else CURRENT
+    # A historical read sees the retained original itself; the original is always retained. Both are read with
+    # the frozen recipe the sealed custody selected (base.select_original_recipe, SP-1101), never an implicit one.
+    recipe = original_recipe if historical else CURRENT
     if not valid('sch_payload_v1' if historical else 'sch_payload', read(c['payload_schema_ref']), p, recipe):
         return False
-    if not context_ok(c, d.get('original_context'), recipe=V1):
+    if not context_ok(c, d.get('original_context'), recipe=original_recipe):
         return False
     scope = p.get('scope', {'kind': 'project', 'project_id': p.get('project_id')})
     event_schema = read('Plans/event_record.schema.json')
     if (not valid('sch_envelope_v1' if historical else 'sch_envelope', event_schema, e, recipe)
-            or not valid('sch_original_event', event_schema, original, V1)):
+            or not valid('sch_original_event', event_schema, original, original_recipe)):
         return False
     if refused('d2_env_a', event_type=e['event_type'], original_event_type=original['event_type'],
                family_event_type=c['event_type'], payload_schema_id=e['payload_schema_id'],
@@ -175,7 +176,8 @@ def envelope_ok(c, d, retry=True, historical=False, append=False):
     if append and refused('env_producer', producer_refusal=base.producer_refusal(e)):
         return False
     if retry and refused('env_retry', event_id=e['event_id'], original_event_id=original['event_id'],
-                         candidate_digest=base.v1_producer_digest(e), original_digest=base.v1_producer_digest(original)):
+                         candidate_digest=base.recipe_producer_digest(original_recipe, e),
+                         original_digest=base.recipe_producer_digest(original_recipe, original)):
         return False
     record = owner_record(c, d)
     if record is None:
@@ -297,7 +299,7 @@ def main():
             p = data['payload']
             record = json.loads(data['owner_records'][p['outcome_ref']])
             assert p == data['envelope']['payload'] == data['original']['payload'] == data['original']['event']['payload'] == data['outcome']['payload'] == record['payload']
-            assert base.receipt_ok(data), (case['id'], 'incoherent fixture custody')
+            assert base.receipt_ok(data, base.harness_recipe(c, data)), (case['id'], 'incoherent fixture custody')
     assert {'writer-replay-only', 'original-retry', 'history-after-live-change', 'valid-checkpoint',
             'read-denied', 'read-deleted', 'writer-withdrawal', 'reader-withdrawal',
             'rebuild-valid', 'rebuild-missing-prefix', 'receipt-storage-sequence',
@@ -319,7 +321,7 @@ def main():
     print(json.dumps({'status': 'pass', 'event_type': args.family, 'cases': len(seen),
                       'negative_cases': negatives, 'policy_cases': policy_count,
                       'reference_closure_cases': len(f.get('schema_cases', [])), 'native_execution': 'NOT_RUN',
-                      'membership': 'ABSENT', 'part_2b_items': ['S-FMT1', 'S-N2']}))
+                      'membership': 'ABSENT'}))
 
 
 if __name__ == '__main__':

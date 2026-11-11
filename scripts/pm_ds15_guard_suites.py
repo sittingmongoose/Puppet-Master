@@ -8,7 +8,8 @@ Every witness of both DS15 checkers runs once under the checker's observation re
   schema cases and the numeric cases (typed and raw-wire) of pm-ds15-event-contracts.py;
 - the deck-2 cases and their bases, policy cases and schema cases of pm-ds15-deck2-contracts.py;
 - the shared NUMRULE number-corpus routes of pm-ds15-number-corpus.py;
-- the sweep part 2A witnesses of Plans/ds15_p2a_cases.json.
+- the sweep part 2A witnesses of Plans/ds15_p2a_cases.json;
+- the sweep part 2B witnesses of Plans/ds15_p2b_cases.json (CV-1101 date-time, SP-1101 dispatch).
 
 An accepted (or passing) phase evaluation is a control of its table. A refused invocation gives
 the observation of the phase holding its FIRST refusal as a negative, targeted at the refusing
@@ -35,6 +36,7 @@ MODELS = (m16, deck.base)
 TABLE_PREFIX = m16.TABLE_PREFIX
 RETURN_SOURCE = 'return g.Case(table, check, context)'
 P2A_CASES = ROOT / 'Plans/ds15_p2a_cases.json'
+P2B_CASES = ROOT / 'Plans/ds15_p2b_cases.json'
 
 
 # Witnesses kept refused in the full checker but not used as table-row proof: two rows of one
@@ -220,6 +222,9 @@ def witness_calls():
     if P2A_CASES.exists():
         import pm_ds15_p2a_cases as p2a
         out.extend(p2a.witness_calls(m16, deck))
+    if P2B_CASES.exists():
+        import pm_ds15_p2b_cases as p2b
+        out.extend(p2b.witness_calls(m16, deck))
     return out
 
 
