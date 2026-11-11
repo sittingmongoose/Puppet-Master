@@ -1154,6 +1154,8 @@
       pattern: caps.slice().sort().join(' + '), runId: 'bc:' + session().id, who: 'The agent', verb: 'use browser capture: ' + labels,
       rule: labels + ' policy is Ask' };
   }
+  /* FO-128: a single-use grant (B20) is the chat's that answered Once: another chat's run never consumes it */
+  function onceHere(ctx, g) { return !g || !g.thread || g.thread === (ctx.state && ctx.state.selectedThread); }
   function grantCovers(caps, actionLabel) { var A = window.PM56_ASKS; return !!(A && A.covered && A.covered(holdSpec(caps, actionLabel))); }
   function holdExpired(ctx, hold) {
     var caps = hold.capabilities || [hold.capability];
@@ -1162,7 +1164,10 @@
       return ((P().policy || {})[c] || 'on') !== before;
     });
   }
-  /* the ladder's answer for the hold (dock-asks.js resolves the ask, writes the one-line receipt, then calls here) */
+  /* the ladder's answer for the hold (dock-asks.js resolves the ask, then calls here; it writes the one-line receipt
+     unless this returns 'refused'). An expired hold (permissions or policy changed since it was held) is refused for
+     every allowing answer: no single-use grant, and no For session or Always grant either (Permissions_System: drift
+     invalidates the prior approval instead of silently reusing it), so the next run holds afresh. */
   function answerHold(ctx, how) {
     var hold = P().pendingAllow;
     if (!hold) return true;
@@ -1170,11 +1175,15 @@
     if (how === 'deny') return false;
     if (holdExpired(ctx, hold)) {
       ctx.toast('Approval expired', 'Permissions or policy changed while the action was held. Run it again to hold a fresh approval.');
-      return true;
+      return 'refused';
     }
+    /* Once is B20's single-use grant, bound to this chat; For session and Always set none: the grant dock-asks.js now
+       holds covers the re-run itself (with its one-line receipt), in its own scope only */
     var caps = hold.capabilities || [hold.capability];
-    P().allowOnce = P().allowOnce || {};
-    caps.forEach(function (c) { P().allowOnce[c] = { at: nowIso() }; });
+    if (how === 'once') {
+      P().allowOnce = P().allowOnce || {};
+      caps.forEach(function (c) { P().allowOnce[c] = { at: nowIso(), thread: ctx.state.selectedThread }; });
+    }
     ctx.toast(how === 'once' ? 'Allowed once' : how === 'session' ? 'Allowed for this session' : 'Always allowed',
       hold.actionLabel + (how === 'once' ? ' may run one time. Run the action again; the grant is consumed, not blanket.' : ' may run now. Run it again; later holds like it run without asking.'));
     return false;
@@ -1504,7 +1513,7 @@
        change before the allow expires it. B20-R3-F2: grants are a per-capability
        set (null when empty) so sibling approvals never overwrite each other;
        holds carry the full outstanding set with single-cap aliases kept. */
-    if (P().allowOnce && P().allowOnce[capId]) {
+    if (P().allowOnce && P().allowOnce[capId] && onceHere(ctx, P().allowOnce[capId])) {
       delete P().allowOnce[capId];
       if (!Object.keys(P().allowOnce).length) P().allowOnce = null;
       return true;
@@ -1569,7 +1578,7 @@
       var pv = (P().policy || {})[c];
       if (pv == null) pv = 'on';
       if (pv !== 'ask') return false;
-      return !(P().allowOnce && P().allowOnce[c]);
+      return !(P().allowOnce && P().allowOnce[c] && onceHere(ctx, P().allowOnce[c]));
     });
     /* FO-128: a grant or rule that covers the missing set lets the operation run now (one-line receipt) */
     if (missing.length && grantCovers(missing, actionLabel)) missing = [];
@@ -1587,7 +1596,7 @@
       return false;
     }
     if (P().allowOnce) {
-      capIds.forEach(function (c) { delete P().allowOnce[c]; });
+      capIds.forEach(function (c) { if (P().allowOnce[c] && onceHere(ctx, P().allowOnce[c])) delete P().allowOnce[c]; });
       if (!Object.keys(P().allowOnce).length) P().allowOnce = null;
     }
     return true;

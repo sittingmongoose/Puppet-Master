@@ -73,8 +73,15 @@
     a.tool = o.tool || a.tool || 'bash'; a.target = o.target != null ? o.target : (a.target || '');
     a.who = o.who || a.who || 'The agent'; a.whoKind = o.whoKind != null ? o.whoKind : (a.whoKind || '');
     a.verb = o.verb || a.verb || ''; a.cwd = o.cwd != null ? o.cwd : (a.cwd || ''); a.why = o.why != null ? o.why : (a.why || '');
-    a.rule = o.rule != null ? o.rule : (a.rule || ''); a.project = o.project != null ? o.project !== false : a.project !== false;
-    a.projectId = a.project ? (o.projectId || a.projectId || 'current') : null; a.computer = o.computer || a.computer || 'this';
+    a.rule = o.rule != null ? o.rule : (a.rule || '');
+    /* the project is the asking chat's (its thread's projectId: PMConcept7 binds an unscoped thread to the host project,
+       a demo thread keeps its own, the chat's own page leaves an ordinary thread with none); a caller may name it, or
+       say project: false. A chat with no project has project false, so This project is neither offered nor matched. */
+    var tp = threadProject(c, a.thread);
+    if (o.project === false) { a.project = false; a.projectId = null; }
+    else if (o.projectId) { a.project = true; a.projectId = String(o.projectId); }
+    else { a.project = !!tp; a.projectId = tp; }
+    a.computer = o.computer || a.computer || 'this';
     a.runId = o.runId != null ? String(o.runId) : (a.runId || ''); a.laneId = o.laneId != null ? String(o.laneId) : (a.laneId || '');
     a.facts = o.facts || a.facts || null; a.external = !!(o.external != null ? o.external : a.external);
     a.onAnswer = o.onAnswer || a.onAnswer || null; a.at = o.at || a.at || Date.now();
@@ -82,6 +89,10 @@
   }
   /* An ask a grant already covers is never asked: it is allowed on its own, after the render that met it, with its one-line
      receipt (ask() returns null, ensure() null, and pending(id) says it is on its way). */
+  function threadProject(c, tid) {
+    var th = c && c.state && (c.state.threads || []).filter(function (t) { return t.id === tid; })[0];
+    return th ? (th.projectId || th.project_id || null) : null;
+  }
   function ask(o, quiet) {
     var a = make(o || {}), g = grantFor(a);
     if (g) { autoAllow(a, g); return null; }
@@ -268,21 +279,26 @@
     session: function (a) { return ['Allowed for this session: ' + patternOf(a), tool(a).word + ' calls that match run without asking until this chat session ends.']; },
     always: function (a) { return ['Always allowed: ' + patternOf(a), 'A rule for ' + placeWord(a.ui.place) + '. Change it in Settings › Permissions.']; }
   };
+  /* An owner's onAnswer returns true when it writes its own receipt, or 'refused' when it could not honour an allowing
+     answer (browser capture: the hold expired because permissions or policy changed since it was held). A refused answer
+     stores no grant and writes no allowing receipt (Permissions_System: drift invalidates the prior approval instead of
+     silently reusing it); the owner says why. */
   function settle(ctx, a, how, rule) {
     var i = asks.indexOf(a);
-    if (i < 0) return;
+    if (i < 0) return null;
     asks.splice(i, 1);
-    var own = false;
-    try { own = a.onAnswer ? a.onAnswer(ctx, how, rule) === true : false; } catch (e) { console.error('dock-asks: onAnswer threw', e); }
-    var r = RECEIPT[how](a);
-    if (!own && ctx.addReceipt) ctx.addReceipt('permission-answer', r[0], r[1]);
-    return r[0];
+    var res;
+    try { res = a.onAnswer ? a.onAnswer(ctx, how, rule) : undefined; } catch (e) { console.error('dock-asks: onAnswer threw', e); }
+    var refused = res === 'refused', r = RECEIPT[how](a);
+    if (res !== true && !refused && ctx.addReceipt) ctx.addReceipt('permission-answer', r[0], r[1]);
+    return { said: refused ? 'Not allowed: the request changed since it was asked.' : r[0], refused: refused };
   }
   function resolve(ctx, a, how) {
     if (asks.indexOf(a) < 0) return;
     var rule = { pattern: patternOf(a), place: a.ui.place };
-    var said = settle(ctx, a, how, rule);
-    if (how === 'session' || how === 'always') {
+    var out = settle(ctx, a, how, rule), said = out.said;
+    if (out.refused) { /* no grant, no cascade */ }
+    else if (how === 'session' || how === 'always') {
       var g = { scope: how === 'session' ? 'session' : 'rule', tool: a.tool, pattern: rule.pattern, key: scopeKey(a), place: rule.place, projectId: a.projectId, computer: a.computer };
       grants.push(g);
       /* the pending asks it covers are allowed with it */
@@ -352,9 +368,12 @@
   /* An answer removes the line (or the card's decision) that held it. Where the keyboard was there, it goes to the next
      asking line's first answer, else the composer, after the render that removed it (and once more a little later: a
      process's answer re-renders through PM_WORK's own notice). */
-  var wantFocus = null, fromAsk = 0;
-  var ASKING = '.pmx-dock-line[data-ask], .pmx-decision';
+  var wantFocus = null, fromAsk = 0, fromBanner = false;
+  var ASKING = '.pmx-dock-line[data-ask], .pmx-decision, .bc-allow-banner';
+  /* browser capture's banner sits in the modal internal browser: its answer hands the keyboard to the capture toolbar
+     (the held action is there to run again), not to the composer behind the dialog */
   function nextTarget() {
+    if (fromBanner) { var tb = document.querySelector('.bc-toolbar .bc-tool-btn'); if (tb) return tb; }
     return document.querySelector('.composer > .pmx-dock .pmx-dock-line[data-ask] .pmx-dock-ans') || document.querySelector('.composer .composer-input');
   }
   function settleFocus() {
@@ -372,7 +391,7 @@
   document.addEventListener('click', function (e) {
     var b = e.target && e.target.closest && e.target.closest('button');
     if (!b || !b.closest(ASKING)) return;
-    fromAsk = performance.now();
+    fromAsk = performance.now(); fromBanner = !!b.closest('.bc-allow-banner');
     requestAnimationFrame(function () { requestAnimationFrame(settleFocus); });
     setTimeout(settleFocus, 120);
     setTimeout(settleFocus, 400);
