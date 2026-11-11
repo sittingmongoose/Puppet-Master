@@ -34,12 +34,15 @@ NOT_APPLICABLE = {
     'append_policy': 'DMEM current writers admit only dedupe_by_idempotency_key (AP04/AP05), a stricter owner policy',
     'decode': 'DMEM decodes no stored MessagePack bytes',
     'payload': 'DMEM inline payloads have no SP-337 payload references',
-    'history': 'retained-recipe dispatch (SP-1101) is a part 2B item that crosses the date-time scope',
-    'recipe_constructor': 'retained-recipe dispatch (SP-1101) is a part 2B item',
-    'binding_constructor': 'retained-recipe dispatch (SP-1101) is a part 2B item',
+    'history': ('the corpus history cases resolve the corpus\'s own sealed originals and recipe map through RetainedDispatcher; '
+                'DMEM composes the same class with its own owner and frozen recipe map (resolve_retained), proved by its '
+                'custody witnesses R1-R4 at every reading site; no DMEM original is in the corpus'),
+    'recipe_constructor': ('the shared RecipeTuple constructor; DMEM builds tuples only from its own family, edition and '
+                           'constant recipe names (recipe_tuple), so its input refusals are the shared class\'s own'),
+    'binding_constructor': ('the shared OriginalBinding constructor; DMEM builds bindings only from validated operation rows '
+                            '(original_binding), so its input refusals are the shared class\'s own'),
     'json_number': 'DMEM never carries JsonNumber tokens past its parser',
     'parsed_decimal': 'DMEM refuses every ParsedDecimal at its integer gate; it builds none',
-    'full_value_commitment': 'the CV-339 full-value commitment depends on SP-1101 retained dispatch (part 2B)',
     'jcs': 'DMEM has no JCS route: retries compare the producer fields exactly; local recipes are not JCS',
     'jcs_value': 'DMEM has no JCS route',
     'jcs_kind_declaration': 'DMEM has no JCS route',
@@ -137,6 +140,12 @@ def run(m, fixtures, event, writer=None):
                 continue
             else:
                 got = gate(m, parsed[1])
+        elif op == 'full_value_commitment':
+            # DMEM's current-writer route (sweep part 2B): the retained record's CV-339 commitment.
+            original = json.loads((ROOT / 'Plans/event_append_receipt_full_value_fixtures.json').read_text())['base_original_event']
+            original.update(case.get('changes', {}))
+            value = _value(case['container']) if 'container' in case else original
+            got = outcome(lambda: m.retained_canonical(value)['full_value_sha256'])
         elif op == 'current_json':
             if case.get('numeric_kinds'):
                 skip('current_json/numeric_kinds')
