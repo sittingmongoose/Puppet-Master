@@ -75,25 +75,31 @@
   }
   const drawn = (el) => el.getAttribute('data-pml-look') === L.look() && el.firstElementChild && el.firstElementChild.classList.contains(isNier(L.look()) ? 'pml-nier' : 'pml');
 
-  /* the periods and phases one loader needs, from the shared clock and Animation speed */
+  /* the periods and phases one loader needs, from the shared clock and Animation speed.
+     Each value is written only when it differs from the one the loader holds: --pml-k and the periods change with
+     Animation speed, the look or the size, the phases (the delays) at every start. The Pip phase properties are
+     registered as not inherited (pm-loader.css): only the svg and the parts that move take them, so a start restyles
+     about a dozen elements of a loader instead of all of them (a pixel loader is 118 to 240 elements; the Agents list's
+     17 loaders were 2,132 elements in one frame of a Home tab switch, 18.5 to 21 ms, pm7-perf lane I). */
+  const put = (el, name, value) => { if (el.style.getPropertyValue(name) !== value) el.style.setProperty(name, value); };
   function phase(el) {
     const look = L.look(), family = L.family(look), motion = motionOf(el), px = pxOf(el), k = L.clock.speed();
-    el.style.setProperty('--pml-k', String(k));
+    put(el, '--pml-k', String(k));
     const ms = (v) => Math.round(v) + 'ms', c = L.clock;
     if (family === 'nier') {
       // NieR's part keeps its own periods (the diamond's 2.8 s turn, the ring's 0.8 s, the 2.4 s breath), scaled by
       // --pml-k. Diamonds add a stable host offset; the ring and Reduced Motion breath keep their shared phase.
-      el.style.setProperty('--pml-ndelay', ms(c.delay(NIER_MS.diamond * k) - nierOffset(el) * NIER_MS.diamond * k));
-      el.style.setProperty('--pml-sdelay', ms(c.delay(NIER_MS.ring * k)));
-      el.style.setProperty('--pml-nbdelay', ms(c.delay(NIER_MS.breath * k)));
+      put(el, '--pml-ndelay', ms(c.delay(NIER_MS.diamond * k) - nierOffset(el) * NIER_MS.diamond * k));
+      put(el, '--pml-sdelay', ms(c.delay(NIER_MS.ring * k)));
+      put(el, '--pml-nbdelay', ms(c.delay(NIER_MS.breath * k)));
       return;
     }
     const P = L.period({ family, motion, px }) * k, base = (L.MOTION[family] || L.MOTION.basic).dur * 1000 * k;
     const rP = base * 1.3, bP = base * 2.6, kP = P * 2;
-    el.style.setProperty('--pml-dur', ms(P)); el.style.setProperty('--pml-delay', ms(c.delay(P)));
-    el.style.setProperty('--pml-rdur', ms(rP)); el.style.setProperty('--pml-rdelay', ms(c.delay(rP)));
-    el.style.setProperty('--pml-bdur', ms(bP)); el.style.setProperty('--pml-bdelay', ms(c.delay(bP)));
-    el.style.setProperty('--pml-kdelay', ms(c.delay(kP)));
+    put(el, '--pml-dur', ms(P)); put(el, '--pml-delay', ms(c.delay(P)));
+    put(el, '--pml-rdur', ms(rP)); put(el, '--pml-rdelay', ms(c.delay(rP)));
+    put(el, '--pml-bdur', ms(bP)); put(el, '--pml-bdelay', ms(c.delay(bP)));
+    put(el, '--pml-kdelay', ms(c.delay(kP)));
   }
   function busyNow(el) {
     let why = '';
@@ -243,7 +249,7 @@
       host.__pmlBusy = null;
       return true;
     }
-    host.setAttribute('aria-busy', 'true');
+    if (host.getAttribute('aria-busy') !== 'true') host.setAttribute('aria-busy', 'true');
     if (o.status && !host.hasAttribute('role')) { host.setAttribute('role', 'status'); host.setAttribute('data-pml-status', 'on'); }
     if (mine) return true;
     const t = D.createElement('template');
