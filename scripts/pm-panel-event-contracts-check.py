@@ -22,7 +22,8 @@ if str(ROOT / 'scripts') not in sys.path:
     sys.path.insert(0, str(ROOT / 'scripts'))
 import pm_dg6a_table_panel_scope as _panel_scope_table  # noqa: E402
 import pm_dg6a_tables as tables  # noqa: E402
-import pm_dg6a_p2a_witnesses as p2a_witnesses  # noqa: E402
+import pm_dg6a_p2a_witnesses as p2a_witnesses
+import pm_dg6a_p2b_witnesses as p2b_witnesses  # noqa: E402
 
 _PANEL_SCOPE_ROWS = [(name, guard.predicate) for name, guard in _panel_scope_table.case(None).table.guards.items()]
 PANEL_SCOPE_RECORDER = None
@@ -309,6 +310,18 @@ def main():
         count += shared.history_response_cases(checkpoint, cp_schema, event, payload['project_id'], operation)
         # Sweep part 2A one-defect witnesses for rows no earlier case refused alone.
         count += p2a_witnesses.panel_all(sys.modules[__name__], tables, family, fixture, schema, op_schema, cp_schema, context, reader)
+        # Sweep part 2B witnesses (CV-1101 date-time, SP-1101 history and retry custody, v1 legacy recipe).
+        count += p2b_witnesses.datetime_payload(lambda p: payload_errors(p, schema),
+                                                lambda p: list(Draft202012Validator(schema).iter_errors(p)),
+                                                next(c['value'] for c in fixture['payload_cases'] if c['valid']))
+        for dataset, legacy in ((fixture['history'], False), (fixture['historical_history'], True)):
+            base, expected = shared.history_request(dict(history=dataset), dataset['expected']['checkpoint']), copy.deepcopy(dataset['expected'])
+            if 'case_checkpoint_ref' in dataset:
+                for publication in (base['checkpoint'], expected['checkpoint']):
+                    publication['index_read_token']['checkpoint_ref'] = dataset['case_checkpoint_ref']
+            count += p2b_witnesses.history_all(base, expected, reader, shared.HistoryUnavailable, event, legacy=legacy,
+                                               downgrade=not legacy)
+        count += p2b_witnesses.retry_all(protocol_errors, context, operation, 'retry changed', event)
         for field, bad_value in [('scope_partition', 'app'), ('storage_instance_id', 'foreign')]:
             altered = copy.deepcopy(checkpoint)
             altered[field] = bad_value

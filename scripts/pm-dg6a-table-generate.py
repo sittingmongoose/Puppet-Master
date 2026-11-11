@@ -174,8 +174,10 @@ module('protocol_shape', 'Protocol navigation containers, before any indexing (n
 ])
 
 module('producer_route', 'EventRecord producer digest route (CV-317 projection, CV-1100 qualified JCS).', chain([
-    ('PD01_timestamps', 'formats_valid', 'the payload and occurred_at_utc timestamps are valid (unchanged lane grammar; '
-     'date-time adoption is part 2B)', 'invalid semantic timestamp'),
+    ('PD01_timestamps', 'formats_valid', 'the payload timestamps and occurred_at_utc pass the shared CV-1101 date_time '
+     'predicate (EventRecord profile)', 'invalid semantic timestamp'),
+    ('PD04_storage_instants', 'storage_instants_valid', 'the record observed_at_utc and persisted_at_utc pass the shared '
+     'date_time predicate with the CV-253 storage_utc_z profile', 'invalid Storage timestamp'),
     ('PD02_sequence_integer', 'sequence_ok', 'producer_sequence_id is null or a current_integer of at least 0 (EventRecord owner slot)',
      'producer_sequence_id is not a current integer'),
     ('PD03_qualified', 'qualified', 'producer_semantic_digest qualifies the full projection, type-sensitive at every owner '
@@ -197,14 +199,22 @@ for caller, code in (('alert', 'idempotency_conflict'), ('panel', 'retry changed
     ]))
     module(f'retry_retained_{caller}', f'{caller} retry of a committed/settled operation: the retained original recipe (early return).', chain([
         ('RR01_admission', 'admission_evidence', 'the separately supplied original event is an object valid when written', code),
-        ('RR02_edition_known', 'edition_known', 'the original event type selects a prepared alert/panel payload edition', code),
-        ('RR03_stored_object', 'stored_object', 'the stored original payload is an object', code),
-        ('RR04_stored_valid', 'stored_valid', 'the stored original payload validates against its edition', code),
+        ('RQ01_original_located', 'original_located', 'SP-1101: Storage holds sealed custody at the original event_ref', code),
+        ('RQ02_original_authentic', 'original_authentic', 'SP-1101: the fetched original bytes are bytes Storage sealed there', code),
+        ('RQ03_binding_exact', 'binding_exact', 'SP-1101: the sealed binding equals the binding projected from the original', code),
+        ('RQ04_recipe_installed', 'recipe_installed', 'SP-1101: the sealed recipe tuple has an installed frozen verifier '
+         '(it selects the payload edition)', code),
+        ('RQ05_original_verified', 'original_verified', 'SP-1101: the frozen verifier recomputes the commitment, family and '
+         'identity from the original bytes', code),
+        ('RR04_stored_valid', 'stored_valid', 'the stored original payload validates against the custody-selected frozen edition', code),
         ('RR05_payload_stored', 'payload_is_stored', 'the operation payload is exactly the stored original payload', code),
         ('RR06_original_digest', 'original_digest_valid', 'the operation request_digest is the earlier recipe digest of the stored original', code),
         ('RR07_body_unchanged', 'body_unchanged', 'the retry command and payload are exactly the retained original body', code),
     ]))
-    module(f'retry_retained_{caller}_entailed', f'{caller} retained retry digest (entailed by RR06 and RR07).', [
+    module(f'retry_retained_{caller}_entailed', f'{caller} retained retry: stored object (entailed by RQ05 and RR04) and digest (entailed by RR06 and RR07).', [
+        ('RR03_stored_object', '/stored_object', 'the stored original payload is an object; entailed: every installed frozen '
+         'verifier refuses an original whose payload is not an object (RQ05), and every frozen edition schema is an '
+         'object schema (RR04)', code, f"{v('stored_object')} is not True"),
         ('RR08_digest', '/digest_equal', 'the earlier-recipe retry digest equals the original digest; entailed: RR07 makes '
          'the retry body exactly the stored body whose earlier-recipe digest RR06 equated with the original digest', code,
          f"{v('digest_equal')} is not True"),
@@ -244,6 +254,15 @@ module('history_shape', 'Historical read request navigation shape (early return)
     ('HS08_payload_object', 'payload_object', 'event payload is an object', 'history_shape'),
     ('HS09_disclosure_members', 'disclosure_members', 'disclosure carries the five current disclosure flags', 'history_shape'),
 ]))
+module('history_custody', 'Retained read: SP-1101 authenticated original selection through RetainedDispatcher (early return).', chain([
+    ('HC01_original_located', 'original_located', 'Storage holds sealed custody at the original event_ref', 'original_unavailable'),
+    ('HC02_original_authentic', 'original_authentic', 'the fetched original bytes are bytes Storage sealed there', 'original_authority'),
+    ('HC03_binding_exact', 'binding_exact', 'the sealed binding equals the binding projected from the original', 'original_binding'),
+    ('HC04_recipe_installed', 'recipe_installed', 'the sealed recipe tuple has an installed frozen verifier (it selects the '
+     'payload edition)', 'recipe_unsupported'),
+    ('HC05_original_verified', 'original_verified', 'the frozen verifier recomputes the commitment, family and identity from '
+     'the original bytes', 'original_verification'),
+]))
 module('history_checkpoint', 'Retained read: checkpoint publication and original checkpoint (collect-all by guard).',
        flat([('HG01_checkpoint_publication', 'checkpoint_current', 'the checkpoint state is current', 'checkpoint_publication')])
        + chain([
@@ -258,10 +277,10 @@ module('history_event', 'Retained read: the original event members (one guard, e
      ('HG06_event_members', 'members_equal', 'the event has exactly the original event members', 'event_original')]
     + [(f'HG{i:02d}_event_{field}', field, f'event {field} exactly equals the original (when the original has it)', 'event_original')
        for i, field in enumerate(IDENTITY_FIELDS, 7)]))
-module('history_original', 'Retained read: payload edition, receipt, source and admission (collect-all by guard).',
+module('history_original', 'Retained read: payload under the frozen edition, receipt, source and admission (collect-all by guard).',
        chain([
-           ('HG14_edition_known', 'edition_known', 'the original admission evidence selects a retained payload edition', 'historical_payload'),
-           ('HG15_payload_schema', 'payload_schema_valid', 'the payload validates against that edition', 'historical_payload'),
+           ('HG15_payload_schema', 'payload_schema_valid', 'the payload validates against the custody-selected frozen edition '
+            '(HG14 edition selection moved to HC04)', 'historical_payload'),
            ('HG16_payload_exact', 'payload_exact', 'the payload exactly equals the original payload', 'historical_payload'),
        ])
        + chain([

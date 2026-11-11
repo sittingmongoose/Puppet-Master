@@ -12,19 +12,26 @@ from pathlib import Path
 from decimal import Decimal
 
 ROOT = Path(__file__).resolve().parents[1]
+import sys as _sys
+_sys.path.insert(0, str(ROOT / 'scripts'))
+import pm_dg6a_custody as custody  # noqa: E402
 BAD_TYPES = ['false', 'true', '0', None, [], {}, {'nested': False}, True, False, 0, 1, 1.0]
 BAD_DATES = ['false', '0', '', '2026-11-04', '2026-11-04T18:00:00',
              '2026/11/04T18:00:00Z', '2026-11-04 18:00:00Z', '2026-11-04T18-00-00Z',
              '2026-13-04T18:00:00Z', '2026-00-04T18:00:00Z', '2026-11-00T18:00:00Z',
-             '2026-11-31T18:00:00Z', '2025-02-29T18:00:00Z', '0000-01-01T00:00:00Z',
+             '2026-11-31T18:00:00Z', '2025-02-29T18:00:00Z',
              '2026-11-04T24:00:00Z', '2026-11-04T18:60:00Z', '2026-11-04T18:00:60Z',
+             '2016-12-31T23:59:60+01:00', '2026-06-30T23:59:60Z',
              '2026-11-04T18:00:00+24:00', '2026-11-04T18:00:00+00:60',
              '2026-11-04T18:00:00+0000', '2026-11-04T18:00:00.Z',
              '2026-11-04T18:00:00,1Z', '2026-11-04T18:00:00Z\n',
              '2026-11-04T18:00:00Z ', '2026-11-04T18:00:00.1.2Z']
+# CV-1101 (sweep part 2B): year 0000 and real (offset-adjusted) leap seconds are owner-valid; the shared
+# predicate refuses an illegitimate second 60 (BAD_DATES).
 GOOD_DATES = ['2024-02-29T23:59:59Z', '2026-11-04t18:00:00z',
               '2026-11-04T18:00:00.0Z', '2026-11-04T18:00:00.123456789012345678901234567890Z',
-              '2026-11-04T18:00:00+23:59', '2026-11-04T18:00:00-23:59']
+              '2026-11-04T18:00:00+23:59', '2026-11-04T18:00:00-23:59', '0000-01-01T00:00:00Z',
+              '2016-12-31T23:59:60Z', '2017-01-01T01:59:60+02:00', '2016-12-31T23:59:60.999Z']
 
 
 def module(name, path):
@@ -213,7 +220,10 @@ def run(kind, m, family, fixture):
                 for bad in BAD_DATES:
                     candidate=changed(request,('event',)+field,bad)
                     independent=changed(expected,('event',)+field,bad)
-                    try:reader(candidate,independent)
+                    # Part 2B: the malformed original is Storage history (a writer that skipped format
+                    # enforcement), so SP-1101 custody resolves it and the timestamp row itself refuses.
+                    try:
+                        with custody.written([independent['event']]):reader(candidate,independent)
                     except shared.HistoryUnavailable as e:
                         owner='historical_payload' if field[:1]==('payload',) else 'original_receipt' if field[:1]==('receipt',) else 'event_original'
                         record('coherent retained timestamp domain',e.guards==[owner],version=version,field=field)
@@ -259,6 +269,9 @@ def run(kind, m, family, fixture):
         try:reader(bad,expected)
         except shared.HistoryUnavailable as e:record('history modeled unavailable',e.guards==['history_shape'])
         else:record('history modeled unavailable',False)
+    # CV-1101 exact order across a leap second and year 0000 (exact comparison stays with the lane, offsets applied).
+    record('leap second order',domain.instant_le('2016-12-31T23:59:59.999Z','2016-12-31T23:59:60Z') and domain.instant_le('2016-12-31T23:59:60.5Z','2017-01-01T00:00:00Z') and not domain.instant_le('2017-01-01T00:00:00Z','2016-12-31T23:59:60.5Z') and domain.instant_le('2017-01-01T01:59:60+02:00','2016-12-31T23:59:60Z') and domain.instant_le('2016-12-31T23:59:60Z','2017-01-01T01:59:60+02:00'))
+    record('year 0000 order',domain.instant_le('0000-01-01T00:00:00Z','0001-01-01T00:00:00Z') and not domain.instant_le('0000-12-31T23:59:59Z','0000-01-01T00:00:00Z'))
     record('extreme calendar offsets',domain.instant_le('0001-01-01T00:00:00+23:59','0001-01-01T00:00:00Z') and domain.instant_le('9999-12-31T23:59:59Z','9999-12-31T23:59:59-23:59'))
     # Long fractional comparisons keep every digit, including after digit six.
     record('fraction precision', not domain.instant_le('2026-11-04T18:00:00.0000001Z','2026-11-04T18:00:00.0000000Z'))

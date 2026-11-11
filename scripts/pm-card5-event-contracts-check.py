@@ -36,6 +36,7 @@ import pm_dg6a_table_current_header as _current_table  # noqa: E402
 import pm_dg6a_table_current_context as _context_table  # noqa: E402
 import pm_dg6a_tables as tables  # noqa: E402
 import pm_dg6a_p2a_witnesses as p2a_witnesses  # noqa: E402
+import pm_dg6a_p2b_witnesses as p2b_witnesses  # noqa: E402
 
 _DECISION_ROWS = [(name, guard.predicate) for name, guard in _decision_table.case(None).table.guards.items()]
 DECISION_RECORDER = None
@@ -563,6 +564,39 @@ def mapping_errors(mapping, original):
     return tables.every('c5_mapping', **facts)
 
 
+def p2b_card5(fixture, family, schemas):
+    """Sweep part 2B witnesses (CV-1101 date-time through the validator, SP-1101 history custody, legacy recipes)."""
+    payload_schema = schemas['payload_schema']
+    count = p2b_witnesses.datetime_payload(
+        lambda p: tables.first('sch_c5_payload', schema_errors=len(schema_errors(p, payload_schema))),
+        lambda p: schema_errors(p, payload_schema), fixture['bases']['payload'])
+    payload_schemas = {(payload_schema['$id'], family['version']): payload_schema}
+    if family['event_type'].startswith('concern.'):
+        legacy = load('Plans/event_payloads/concern/' + family['slug'] + '.schema.json')
+        payload_schemas[(legacy['$id'], '1.0.0')] = legacy
+    reader = lambda request, expected: history_page(request, expected, family, payload_schemas, schemas['checkpoint_schema'])
+    base = fixture['bases']['history']
+    historical_only = family['disposition'] == 'HISTORICAL_ONLY'
+    if historical_only:
+        # The HISTORICAL_ONLY mapping joins the payload revisions; only the custody and timestamp witnesses apply.
+        count += p2b_witnesses.history_custody(base['request'], base['expected'], reader, shared.HistoryUnavailable,
+                                               family['event_type'])
+    else:
+        count += p2b_witnesses.history_all(base['request'], base['expected'], reader, shared.HistoryUnavailable,
+                                           family['event_type'], downgrade=family['event_type'].startswith('concern.'))
+    if family['event_type'].startswith('concern.'):
+        case = next(c for c in fixture['cases'] if c['name'] == 'legacy_v1_retained_revision_2')
+        value = copy.deepcopy(fixture['bases'][case['base']])
+        for patch in case['patches']:
+            target = value
+            for part in patch['path'][:-1]:
+                target = target[part]
+            target[patch['path'][-1]] = copy.deepcopy(patch['value'])
+        count += p2b_witnesses.history_all(value['request'], value['expected'], reader, shared.HistoryUnavailable,
+                                           family['event_type'], legacy=True)
+    return [dict(name='sweep_p2b_witness_' + str(i), stage='p2b', expected=[], actual=[]) for i in range(count)]
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--family', required=True)
@@ -648,6 +682,7 @@ def main():
                                                 schemas['checkpoint_schema'])
         observations += [dict(name='sweep_p2a_mapping_witness_' + str(i), stage='mapping', expected=['mapping_shape'],
                               actual=['mapping_shape']) for i in range(witnessed)]
+    observations += p2b_card5(fixture, family, schemas)
     checkpoint = fixture['bases']['history']['request']['checkpoint']
     original = fixture['bases']['history']['expected']['event']
     boundary_count = shared.history_response_cases(checkpoint, schemas['checkpoint_schema'], family['event_type'], 'fixture', original)

@@ -9,6 +9,8 @@ call these builders; the guard-table runner records the rows they reach.
 """
 import copy
 
+import pm_dg6a_custody as custody
+
 UUID_OTHER = '00000000-0000-4000-8000-000000000009'
 
 
@@ -184,15 +186,21 @@ def protocol_shape_witnesses(protocol, context, original, kind):
 
 
 def retained_retry_witnesses(owner, protocol, context, operation, retry_code, append_code):
-    """retry_retained rows RR02, RR03, RR05 on a settled original (the append join refuses the same copy)."""
+    """retry_retained rows RQ04, RR04, RR05 on a settled original (the append join refuses the same copy).
+
+    Part 2B: RR03 (stored object) is entailed under SP-1101 (its own table); RR02 became the custody rows."""
     count = 0
     for name, change in (('unknown_edition', lambda e: e.update(event_type=e['event_type'] + '_other')),
-                         ('stored_not_object', lambda e: e.update(payload='stored')),
+                         ('stored_invalid', lambda e: e['payload'].update(correlation_id=7)),
                          ('stored_not_operation_payload', lambda e: e['payload'].update(correlation_id='fixture2'))):
         value = copy.deepcopy(context)
         for key in ('append_original', 'append_resolution'):
             change(value[key])
-        count += expect(protocol(value, operation), [retry_code, append_code], 'retry_' + name)
+        # Sweep part 2B: Storage holds this original (sealed with its own write-time tuple), so SP-1101 custody
+        # resolves it and the named row refuses; unknown_edition now refuses at RQ04 (no installed verifier),
+        # stored_invalid at RR04 (the custody-selected frozen edition refuses the stored payload).
+        with custody.written([value['append_original']]):
+            count += expect(protocol(value, operation), [retry_code, append_code], 'retry_' + name)
     return count
 
 
@@ -237,14 +245,18 @@ def history_witnesses(shared, fixture, checkpoint, reader):
                 parent = parent[key]
             parent[path[-1]] = bad
         count += expect_unavailable(reader, request, expected, ['history_shape'], 'history_' + name, unavailable)
+    # Sweep part 2B: a witness that changes the original declares it as Storage history (custody.written), so
+    # SP-1101 custody resolves it and only the named row refuses.
     request, original = copy.deepcopy(base), copy.deepcopy(expected)
     request['event']['observed_at_utc'] = original['event']['observed_at_utc'] = '2026-11-04T25:00:00Z'
-    count += expect_unavailable(reader, request, original, ['event_original'], 'history_event_instants', unavailable)
+    with custody.written([original['event']]):
+        count += expect_unavailable(reader, request, original, ['event_original'], 'history_event_instants', unavailable)
     for field, values in (('observed_at_utc', ('2026-11-04T18:00:00Z', '2026-11-04T18:00:01Z')),
                           ('persisted_at_utc', ('2026-11-04T18:00:00Z', '2026-11-04T18:00:01Z'))):
         request, original = copy.deepcopy(base), copy.deepcopy(expected)
         original['event'][field], request['event'][field] = values
-        count += expect_unavailable(reader, request, original, ['event_original'], 'history_event_' + field, unavailable)
+        with custody.written([original['event']]):
+            count += expect_unavailable(reader, request, original, ['event_original'], 'history_event_' + field, unavailable)
     request = copy.deepcopy(base)
     request['event']['extra_member'] = 'x'
     count += expect_unavailable(reader, request, expected, ['event_original'], 'history_event_members', unavailable)
@@ -253,14 +265,20 @@ def history_witnesses(shared, fixture, checkpoint, reader):
     count += expect_unavailable(reader, request, expected, ['event_original'], 'history_event_scope_partition', unavailable)
     request, original = copy.deepcopy(base), copy.deepcopy(expected)
     request['event']['payload']['schema_version'] = original['event']['payload']['schema_version'] = '9.0.0'
-    count += expect_unavailable(reader, request, original, ['historical_payload'], 'history_edition_unknown', unavailable)
+    # Part 2B: the edition selection is SP-1101's (HC04): Storage's tuple for this original has no installed verifier.
+    with custody.written([original['event']]):
+        count += expect_unavailable(reader, request, original, ['recipe_unsupported'], 'history_edition_unknown', unavailable)
     request, original = copy.deepcopy(base), copy.deepcopy(expected)
     for receipt in (request['event']['receipt'], original['event']['receipt']):
         receipt['first_append_receipt']['acknowledged_at_utc'] = '2026-11-04T25:00:00Z'
-    count += expect_unavailable(reader, request, original, ['original_receipt'], 'history_receipt_instants', unavailable)
+    with custody.written([original['event']]):
+        count += expect_unavailable(reader, request, original, ['original_receipt'], 'history_receipt_instants', unavailable)
     original = copy.deepcopy(expected)
     original['event']['valid_when_written'] = False
-    count += expect_unavailable(reader, copy.deepcopy(base), original, ['original_admission'], 'history_original_not_admitted', unavailable)
+    request = copy.deepcopy(base)
+    request['event']['valid_when_written'] = True
+    with custody.written([original['event']]):
+        count += expect_unavailable(reader, request, original, ['original_admission'], 'history_original_not_admitted', unavailable)
     return count
 
 

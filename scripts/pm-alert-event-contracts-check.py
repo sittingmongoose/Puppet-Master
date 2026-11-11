@@ -35,6 +35,8 @@ import pm_dg6a_table_cursor as _cursor_table  # noqa: E402
 import pm_dg6a_tables as tables  # noqa: E402
 from pm_event_numbers import Refusal, current_integer, producer_semantic_digest  # noqa: E402
 import pm_dg6a_p2a_witnesses as p2a_witnesses  # noqa: E402
+import pm_dg6a_custody as custody  # noqa: E402
+import pm_dg6a_p2b_witnesses as p2b_witnesses  # noqa: E402
 
 _PROFILE_ROWS = [(name, guard.predicate) for name, guard in _profile_table.case(None).table.guards.items()]
 PROFILE_RECORDER = None
@@ -234,35 +236,34 @@ def isolated_cases(kind, owner, family, fixture):
     return helper.vectors(kind, owner, family, fixture)
 
 
-RETAINED_RETRY_FACTS = ('admission_evidence', 'edition_known', 'stored_object', 'stored_valid', 'payload_is_stored',
-                        'original_digest_valid', 'body_unchanged')
+RETAINED_RETRY_FACTS = ('admission_evidence',) + custody.CUSTODY_FACTS + (
+    'stored_valid', 'payload_is_stored', 'original_digest_valid', 'body_unchanged')
 
 
 def retained_retry_observation(command, payload, operation, original_event):
     """retry_retained_* FIELDS plus the entailed digest fact; derived only.
 
-    The existing exact MessagePack recipe of an independently admitted original:
-    only the six prepared alert/panel editions are handled here, and caller
-    fields never select the edition or the recipe (SP-1101 dispatch is part 2B).
+    SP-1101 (sweep part 2B): the original is resolved through the shared
+    RetainedDispatcher (scripts/pm_dg6a_custody.py) from Storage's sealed
+    custody at its event_ref, and the payload edition and its exact frozen
+    validator come from that custody's recipe tuple; caller fields never select
+    the edition or the recipe, and there is no current-then-legacy probing. The
+    request digest keeps the existing exact MessagePack recipe of the original.
     A fact is computed only when every earlier fact holds (otherwise False, which
     the chained rows ignore), so no read reaches a member an earlier fact refuses.
     Append resolution/source custody is checked separately by append_result_errors.
     """
-    facts = dict.fromkeys(RETAINED_RETRY_FACTS + ('digest_equal',), False)
+    facts = dict.fromkeys(RETAINED_RETRY_FACTS + ('stored_object', 'digest_equal'), False)
     if not (type(original_event) is dict and original_event.get('valid_when_written') is True):
         return facts
     facts['admission_evidence'] = True
-    stored = original_event.get('payload')
-    schema = None
-    for manifest in ('Plans/alert_event_contracts/manifest.json', 'Plans/panel_event_contracts/manifest.json'):
-        for family in load(manifest)['families']:
-            if family['event_type'] == original_event.get('event_type'):
-                schema = load(family['payload_schema'])
-    facts['edition_known'] = schema is not None
-    facts['stored_object'] = facts['edition_known'] and type(stored) is dict
-    if not facts['stored_object']:
+    custody_facts, original = custody.resolve(original_event)
+    facts.update(custody_facts)
+    if original is None:
         return facts
-    facts['stored_valid'] = not list(Draft202012Validator(schema).iter_errors(stored))
+    stored = original_event.get('payload')
+    facts['stored_object'] = type(stored) is dict
+    facts['stored_valid'] = not list(custody.frozen_validator(original).iter_errors(stored))
     facts['payload_is_stored'] = facts['stored_valid'] and exact_value(operation['payload'], stored)
     if not facts['payload_is_stored']:
         return facts
@@ -286,7 +287,8 @@ def retry_refusals(caller, command, payload, original_digest, operation=None, or
         facts = retained_retry_observation(command, payload, operation, original_event)
         code = tables.first('retry_retained_' + caller, **{k: facts[k] for k in RETAINED_RETRY_FACTS})
         if code is None:
-            code = tables.first('retry_retained_' + caller + '_entailed', digest_equal=facts['digest_equal'])
+            code = tables.first('retry_retained_' + caller + '_entailed', stored_object=facts['stored_object'],
+                                digest_equal=facts['digest_equal'])
         return [code] if code else []
     try:
         digest, preimage_ok = request_digest(command, payload), True
@@ -606,12 +608,17 @@ def writer_policy_cases():
 
 def producer_observation(record, integer_paths):
     """producer_route FIELDS and the digest; derived only (each fact after a failed one is False)."""
-    facts, digest = dict(formats_valid=False, sequence_ok=False, qualified=False), None
+    facts, digest = dict(formats_valid=False, storage_instants_valid=False, sequence_ok=False, qualified=False), None
     try:
         domain.semantic_formats(record['payload'])
         domain.semantic_formats({'occurred_at_utc': record['occurred_at_utc']})
         facts['formats_valid'] = True
     except ValueError:
+        return facts, digest
+    # CV-253 / CV-1101: the record's Storage-assigned instants take the strict storage_utc_z profile.
+    facts['storage_instants_valid'] = all(domain.instant(record[field], domain.STORAGE_UTC_Z)
+                                          for field in ('observed_at_utc', 'persisted_at_utc'))
+    if not facts['storage_instants_valid']:
         return facts, digest
     sequence = record['producer_sequence_id']
     try:
@@ -707,6 +714,26 @@ def producer_cases(fixtures, event_type, payload):
         else:
             raise AssertionError(('producer route accepted', name))
         count += 1
+    # Sweep part 2B (CV-1101, CV-253): occurred_at_utc takes the EventRecord profile (PD01); the record's
+    # Storage-assigned observed_at_utc/persisted_at_utc take storage_utc_z (PD04). One field changes per case.
+    for field, values, code in (('occurred_at_utc', [v for v, _ in p2b_witnesses.DATETIME_REFUSALS], 'invalid semantic timestamp'),
+                                ('observed_at_utc', p2b_witnesses.STORAGE_REFUSALS, 'invalid Storage timestamp'),
+                                ('persisted_at_utc', p2b_witnesses.STORAGE_REFUSALS, 'invalid Storage timestamp')):
+        for value in values:
+            candidate = dict(copy.deepcopy(record), **{field: value})
+            try:
+                producer_digest(candidate, integer_paths)
+            except ValueError as error:
+                assert str(error) == code, (field, value, str(error))
+            else:
+                raise AssertionError(('producer route accepted', field, value))
+            count += 1
+    for field, values in (('occurred_at_utc', p2b_witnesses.DATETIME_ACCEPTS),
+                          ('observed_at_utc', p2b_witnesses.STORAGE_ACCEPTS),
+                          ('persisted_at_utc', p2b_witnesses.STORAGE_ACCEPTS)):
+        for value in values:
+            producer_digest(dict(copy.deepcopy(record), **{field: value}), integer_paths)
+            count += 1
     return count
 
 def history_page(events, event_type, project_id, after, frontier, publication_id, index_read_token):
@@ -784,14 +811,17 @@ def stored_instants_valid(value):
 HISTORY_PHASES = ('history_checkpoint', 'history_event', 'history_original', 'history_disclosure')
 
 
-def historical_observation(request, expected, payload_schemas, cp_schema, cp_checker):
-    """Facts of every HISTORY_PHASES table for a shape-accepted retained read.
+def historical_observation(request, expected, payload_schemas, cp_schema, cp_checker, original_custody=None):
+    """Facts of every HISTORY_PHASES table for a shape- and custody-accepted retained read.
 
     Synthetic retained-original evidence, independent of current writer predicates.
     Expected event/receipt/source/publication are separately supplied fixture evidence,
     never reconstructed from the candidate being checked. This is not native auth.
-    The retained edition is selected from original admission evidence, never from
-    the candidate payload; exact original equality still checks both.
+    SP-1101 (sweep part 2B): the payload edition and its exact frozen validator are
+    the custody-selected recipe's (history_custody passed). Only when a custody row
+    is cut (guard-tool runs) is there no custody; the facts are then computed with
+    the pre-SP-1101 selection by the original's declared edition, so every later
+    row still reads a defined fact. Exact original equality still checks both.
     """
     cp, event, disclosure = request['checkpoint'], request['event'], request['disclosure']
     original = expected['event']
@@ -799,8 +829,12 @@ def historical_observation(request, expected, payload_schemas, cp_schema, cp_che
     expected_publication = {k: v for k, v in expected['checkpoint'].items() if k != 'state'}
     identity_fields = set(original) - {'payload', 'receipt', 'source_selection', 'state', 'valid_when_written'}
     payload = event['payload']
-    schema_key = (original['payload'].get('schema_id'), original['payload'].get('schema_version'))
-    schema = payload_schemas.get(schema_key) if all(type(v) is str for v in schema_key) else None
+    if original_custody is not None:
+        payload_validator = custody.frozen_validator(original_custody)
+    else:
+        schema_key = (original['payload'].get('schema_id'), original['payload'].get('schema_version'))
+        schema = payload_schemas.get(schema_key) if all(type(v) is str for v in schema_key) else None
+        payload_validator = Draft202012Validator(schema, format_checker=FormatChecker()) if schema is not None else None
     checkpoint_valid = not cp_checker(cp, cp_schema, original)
     members_equal = set(event) == set(original)
     instants = {k: event[k] for k in ('observed_at_utc', 'persisted_at_utc') if k in event}
@@ -809,15 +843,13 @@ def historical_observation(request, expected, payload_schemas, cp_schema, cp_che
     assert identity_fields <= set(tables.fields('history_event')[2:]), sorted(identity_fields)
     for field in tables.fields('history_event')[2:]:
         event_facts[field] = field not in identity_fields or (members_equal and exact_value(event[field], original[field]))
-    edition_known = schema is not None
-    payload_schema_valid = edition_known and not list(
-        Draft202012Validator(schema, format_checker=FormatChecker()).iter_errors(payload))
+    payload_schema_valid = payload_validator is not None and not list(payload_validator.iter_errors(payload))
     return {
         'history_checkpoint': dict(checkpoint_current=cp['state'] == 'current', checkpoint_valid=checkpoint_valid,
                                    publication_exact=exact_value(publication, expected_publication),
                                    event_current=event['state'] == 'current'),
         'history_event': event_facts,
-        'history_original': dict(edition_known=edition_known, payload_schema_valid=payload_schema_valid,
+        'history_original': dict(payload_schema_valid=payload_schema_valid,
                                  payload_exact=exact_value(payload, original['payload']),
                                  receipt_instants_valid=stored_instants_valid(event['receipt']),
                                  receipt_exact=exact_value(event['receipt'], original['receipt']),
@@ -833,7 +865,7 @@ def historical_observation(request, expected, payload_schemas, cp_schema, cp_che
 
 
 def historical_refusals(request, expected, payload_schemas, cp_schema, cp_checker):
-    """Failed retained-read guard names, only through history_shape and HISTORY_PHASES rows.
+    """Failed retained-read guard names, only through history_shape, history_custody and HISTORY_PHASES rows.
 
     Every name is a row code; each guard of the pre-table dict appears at most
     once (rows of one guard are chained), in the pre-table guard order.
@@ -841,7 +873,12 @@ def historical_refusals(request, expected, payload_schemas, cp_schema, cp_checke
     shape = history_shape_refusal(request, expected)
     if shape:
         return [shape]
-    facts = historical_observation(request, expected, payload_schemas, cp_schema, cp_checker)
+    # SP-1101: every retained read first obtains its original from the authenticated owner.
+    custody_facts, original_custody = custody.resolve(expected['event'])
+    code = tables.first('history_custody', **custody_facts)
+    if code:
+        return [code]
+    facts = historical_observation(request, expected, payload_schemas, cp_schema, cp_checker, original_custody)
     failed = []
     for phase in HISTORY_PHASES:
         failed += tables.every(phase, **facts[phase])
@@ -1035,6 +1072,9 @@ def retained_revision_cases(kind, owner, family, fixture, reader, observations=N
         history['event']['payload'] = copy.deepcopy(operation['payload'])
         history['expected']['event']['payload'] = copy.deepcopy(operation['payload'])
         expected = history['expected']
+        # The retained original was written under the earlier codec: it is Storage history (SP-1101 custody).
+        writer_history = custody.written([expected['event']])
+        writer_history.__enter__()
         request = history_request(dict(history=history), expected['checkpoint'])
         proof = copy.deepcopy(next(c['value'] for c in fixture['isolated_cases'] if c['name'] == 'valid_protocol'))
         proof.update(retry_command=copy.deepcopy(operation['original_command']), retry_payload=copy.deepcopy(operation['payload']),
@@ -1087,15 +1127,40 @@ def retained_revision_cases(kind, owner, family, fixture, reader, observations=N
         original['request_digest'] = hashlib.sha256(packed(dict(original_command=original['original_command'],
                                                                candidate_payload=original['payload']))).hexdigest()
         assert not append_result_errors(original, altered['append_resolution'], altered['append_original'], family['event_type'])
-        assert owner.protocol_errors(altered, original) == [retry_guard]
+        # Storage holds it, sealed with its own write-time tuple, which names an edition no frozen verifier
+        # is installed for: SP-1101 refuses the recipe (RQ04), never a fallback edition.
+        with custody.written([altered['append_original']]):
+            assert owner.protocol_errors(altered, original) == [retry_guard]
         results.append(dict(name='unsupported_original_edition', valid=False, semantic_defects=1,
                             reconciled_copies=4, digest_recomputed=True, guards=[retry_guard]))
+        writer_history.__exit__(None, None, None)
         assert (operation, expected, request, proof) == before, 'retained case mutated original evidence'
         if observations is not None:
             observations.append(dict(family=family['event_type'], prior_revision=prior,
                                      result_revision=prior + 1, results=results, status='pass'))
         count += len(results)
     return count
+
+def p2b_alert(family, fixtures, schema, cp_schema, checkpoint):
+    """Sweep part 2B witnesses for one alert family (CV-1101 date-time, SP-1101 history and retry custody)."""
+    case = fixtures['payload_cases'][0]
+    count = p2b_witnesses.datetime_payload(lambda p: errors(p, schema, case['guard']),
+                                           lambda p: list(Draft202012Validator(schema).iter_errors(p)), case['payload'],
+                                           lambda p: not snooze_expired(p))
+    base, expected = history_request(fixtures, checkpoint), copy.deepcopy(fixtures['history']['expected'])
+    for publication in (base['checkpoint'], expected['checkpoint']):
+        publication['index_read_token']['checkpoint_ref'] = fixtures['history']['case_checkpoint_ref']
+    reader = lambda request, original: historical_alert_page(request, original, family, schema, cp_schema)
+    count += p2b_witnesses.history_all(base, expected, reader, HistoryUnavailable, family['event_type'])
+    protocol = next(c for c in fixtures['isolated_cases'] if c['name'] == 'valid_protocol')
+    retained = copy.deepcopy(fixtures['append_operations']['settled'])
+    event = copy.deepcopy(fixtures['history']['expected']['event'])
+    proof = dict(copy.deepcopy(protocol['value']), retry_command=copy.deepcopy(retained['original_command']),
+                 retry_payload=copy.deepcopy(retained['payload']), append_original=copy.deepcopy(event),
+                 append_resolution=copy.deepcopy(event), receipt_event_id=retained['event_id'])
+    count += p2b_witnesses.retry_all(protocol_errors, proof, retained, 'idempotency_conflict', family['event_type'])
+    return count
+
 
 def trailing_lf_cases(value, schema):
     """Each currently present patterned leaf gets an independent trailing-LF regression."""
@@ -1300,6 +1365,7 @@ def main():
                 # Sweep part 2A one-defect witnesses for rows no earlier case refused alone.
                 op_schema = load(f"Plans/alert_event_contracts/{family['operation']}.schema.json")
                 count += p2a_witnesses.alert_all(sys.modules[__name__], tables, family, fixtures, schema, op_schema, value_schema)
+                count += p2b_alert(family, fixtures, schema, value_schema, baseline)
             group = 'event_log' if key == 'checkpoint' else 'coordination_and_storage'
             row = next(x for x in values['families'] if x['family_id'] == family[key])
             check_schema(row['value_schema'])

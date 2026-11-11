@@ -3,15 +3,22 @@
 Numbers follow the shared NUMRULE number scope (CV-1100, SP-1100; helper
 scripts/pm_event_numbers.py, merged at a16f67c1ef): raw JSON is parsed by
 loads_current_json, every schema integer slot is admitted by current_integer
-with the schema's own bounds, and no lane-local integer cap remains. Timestamp
-grammar below is unchanged (the date-time gate is part 2B; this lane's own
-review of its timestamp fields is interim only).
+with the schema's own bounds, and no lane-local integer cap remains.
+
+Timestamps follow CV-1101 (sweep part 2B, gated NUMRULE head 58c2816ff3): every
+DG6A timestamp goes through the shared predicate pm_event_datetime.date_time
+with the explicit owner profile of its field. Family payload, state and record
+fields, EventRecord occurred_at_utc and the first-receipt acknowledged_at_utc
+(declared format: date-time by their owner schemas) take the broad EventRecord
+profile; Storage-assigned observed_at_utc/persisted_at_utc take CV-253's strict
+storage_utc_z profile. The lane's own grammar is gone. datetime_validator and
+the whole-Plans inventory gate run at batch-2 integration (lead, addendum 2).
 """
+import calendar
 import json
 import re
 import sys
 from contextlib import contextmanager
-from datetime import datetime, timezone
 from decimal import Decimal
 from pathlib import Path
 from jsonschema import Draft202012Validator as BaseValidator, FormatChecker, validators
@@ -19,28 +26,44 @@ from jsonschema import Draft202012Validator as BaseValidator, FormatChecker, val
 if str(Path(__file__).resolve().parent) not in sys.path:
     sys.path.insert(0, str(Path(__file__).resolve().parent))
 from pm_event_numbers import Refusal, current_integer, loads_current_json  # noqa: E402
-# RFC3339 spelling with a required zone; calendar validity checked separately.
-# Fractional seconds have one or more decimal digits. Leap seconds are refused.
-INSTANT_PATTERN = r"[0-9]{4}-[0-9]{2}-[0-9]{2}[Tt](?:[01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](?:\.[0-9]+)?(?:[Zz]|[+-](?:[01][0-9]|2[0-3]):[0-5][0-9])"
+from pm_event_datetime import EVENT_RECORD, STORAGE_UTC_Z, date_time  # noqa: E402
+
 UUID_PATTERN = r"[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+# CV-253: Storage assigns these two fields; every other DG6A timestamp keeps the broad EventRecord profile.
+FIELD_PROFILES = {'observed_at_utc': STORAGE_UTC_Z, 'persisted_at_utc': STORAGE_UTC_Z}
 
 
-def instant(value):
-    if type(value) is not str or re.fullmatch(INSTANT_PATTERN, value) is None:
-        return False
+def profile_of(field):
+    """The explicit CV-1101 owner profile of a named DG6A timestamp field."""
+    return FIELD_PROFILES.get(field, EVENT_RECORD)
+
+
+def instant_refusal(value, profile=EVENT_RECORD):
+    """The shared predicate's refusal reason for value under profile, or None when it accepts."""
     try:
-        # datetime truncates long fractions, but validation compares no fractions.
-        # The grammar checks spelling; datetime checks date, time and offset ranges.
-        if value[17:19] == '60':
-            return False
-        datetime.fromisoformat(value.upper())
-    except ValueError:
-        return False
-    return True
+        date_time(value, profile=profile)
+    except Refusal as refusal:
+        return refusal.reason
+    return None
+
+
+def instant(value, profile=EVENT_RECORD):
+    return instant_refusal(value, profile) is None
 
 
 FORMATS = FormatChecker()
-FORMATS.checks('date-time')(lambda v: type(v) is not str or instant(v))
+
+
+@FORMATS.checks('date-time', raises=Refusal)
+def event_record_date_time(value):
+    """CV-1101: every `format: date-time` the lane validates runs the shared predicate (EventRecord profile).
+
+    As in the shared format_checker, every value the validator treats as a string reaches the predicate (a str
+    subclass refuses, date_time_type); a non-string is left to `type`. The original string is never rewritten.
+    """
+    return True if not isinstance(value, str) else date_time(value, profile=EVENT_RECORD) == value
+
+
 FORMATS.checks('uuid')(lambda v: type(v) is not str or re.fullmatch(UUID_PATTERN, v) is not None)
 def current_integer_slot(checker, value):
     """A schema integer slot admits exactly what the shared current_integer admits.
@@ -130,36 +153,50 @@ def semantic_numbers(value):
             semantic_numbers(child)
 
 
-def instant_key(value):
-    if not instant(value):
-        raise ValueError('invalid timestamp')
-    match = re.fullmatch(r'(.*:[0-9]{2})(\.[0-9]+)?([Zz]|[+-][0-9]{2}:[0-9]{2})', value)
-    base, fraction, zone = match.groups()
-    dt = datetime.fromisoformat((base + zone).upper())
-    # Integer local-day arithmetic also handles valid year-1/year-9999
-    # instants whose UTC day would fall outside datetime's representable years.
-    delta = dt.replace(tzinfo=None) - datetime(1970, 1, 1)
-    offset = dt.utcoffset()
-    offset_seconds = offset.days * 86400 + offset.seconds
-    # Compare fractions as digit strings padded on the right, without truncation
-    # or a Decimal arithmetic context that could round a long input.
-    return delta.days * 86400 + delta.seconds - offset_seconds, (fraction or '.0')[1:].rstrip('0')
+_INSTANT = re.compile(r"([0-9]{4})-([0-9]{2})-([0-9]{2})[Tt]([0-9]{2}):([0-9]{2}):([0-9]{2})(?:\.([0-9]+))?"
+                      r"([Zz]|[+-][0-9]{2}:[0-9]{2})", re.ASCII)
+
+
+def _day_number(year, month, day):
+    # Proleptic Gregorian, including RFC 3339's year 0000 (no host datetime range).
+    previous = year - 1
+    return (365 * previous + previous // 4 - previous // 100 + previous // 400
+            + sum(calendar.monthrange(year, m)[1] for m in range(1, month)) + day)
+
+
+def instant_key(value, profile=EVENT_RECORD):
+    """Exact order key of a timestamp the shared predicate accepts under profile (CV-1101 keeps exact
+    comparison with its owners: offsets applied mathematically, every fractional digit kept).
+
+    A legitimate leap second 23:59:60 sorts after 23:59:59.x and before the next 00:00:00: its key is
+    the :59 second with the leap marker set. Refuses (Refusal, a ValueError) what the predicate refuses.
+    """
+    date_time(value, profile=profile)
+    match = _INSTANT.fullmatch(value)
+    year, month, day, hour, minute, second = map(int, match.group(1, 2, 3, 4, 5, 6))
+    fraction, zone = match.group(7, 8)
+    offset = 0
+    if zone not in ('Z', 'z'):
+        offset = (1 if zone[0] == '+' else -1) * (int(zone[1:3]) * 3600 + int(zone[4:6]) * 60)
+    base = _day_number(year, month, day) * 86400 + hour * 3600 + minute * 60 + min(second, 59) - offset
+    return base, 1 if second == 60 else 0, (fraction or '').rstrip('0')
 
 
 def instant_le(left, right):
-    a, af = instant_key(left)
-    b, bf = instant_key(right)
+    a, al, af = instant_key(left)
+    b, bl, bf = instant_key(right)
     width = max(len(af), len(bf))
-    return (a, af.ljust(width, '0')) <= (b, bf.ljust(width, '0'))
+    return (a, al, af.ljust(width, '0')) <= (b, bl, bf.ljust(width, '0'))
 
 
 def semantic_formats(value):
+    """Named semantic timestamps in a recipe preimage pass the shared CV-1101 predicate with their field profile."""
     if type(value) is dict:
         for key, child in value.items():
             if key in {'ts', 'settled_at_utc', 'created_at', 'updated_at', 'occurred_at_utc',
                        'resolved_at', 'snooze_until', 'mute_expires_at', 'acknowledged_at_utc', 'observed_at_utc', 'persisted_at_utc'}:
                 if child is not None or key in {'ts', 'settled_at_utc', 'created_at', 'updated_at', 'occurred_at_utc', 'acknowledged_at_utc', 'observed_at_utc', 'persisted_at_utc'}:
-                    if not instant(child):
+                    if not instant(child, profile_of(key)):
                         raise ValueError('invalid semantic timestamp')
             semantic_formats(child)
     elif type(value) is list:

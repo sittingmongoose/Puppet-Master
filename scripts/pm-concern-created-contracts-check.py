@@ -23,6 +23,7 @@ if str(ROOT / 'scripts') not in sys.path:
 import pm_dg6a_table_concern_scope as _concern_scope_table  # noqa: E402
 import pm_dg6a_tables as tables  # noqa: E402
 import pm_dg6a_p2a_witnesses as p2a_witnesses  # noqa: E402
+import pm_dg6a_p2b_witnesses as p2b_witnesses  # noqa: E402
 
 _CONCERN_SCOPE_ROWS = [(name, guard.predicate) for name, guard in _concern_scope_table.case(None).table.guards.items()]
 CONCERN_SCOPE_RECORDER = None
@@ -388,6 +389,15 @@ def main():
     # Sweep part 2A one-defect witnesses for rows no earlier case refused alone.
     count += p2a_witnesses.concern_all(sys.modules[__name__], tables, fixture, payload_schema, op_schema, context,
                                        lambda request, expected: historical_concern_page(request, expected, payload_schema, cp_schema))
+    # Sweep part 2B witnesses (CV-1101 date-time through the validator, SP-1101 history custody).
+    count += p2b_witnesses.datetime_payload(lambda p: payload_errors(p, payload_schema),
+                                            lambda p: list(Draft202012Validator(payload_schema).iter_errors(p)),
+                                            next(c['value'] for c in fixture['payload_cases'] if c['valid']))
+    base, expected = shared.history_request(fixture, checkpoint), copy.deepcopy(fixture['history']['expected'])
+    for publication in (base['checkpoint'], expected['checkpoint']):
+        publication['index_read_token']['checkpoint_ref'] = fixture['history']['case_checkpoint_ref']
+    count += p2b_witnesses.history_all(base, expected, lambda request, original: historical_concern_page(
+        request, original, payload_schema, cp_schema), shared.HistoryUnavailable, 'concern.created')
     count += payload_schema_entailment(op_schema, payload_schema)
     value = copy.deepcopy(checkpoint)
     value['index_read_token']['checkpoint_ref'] += 'x' * 16384
