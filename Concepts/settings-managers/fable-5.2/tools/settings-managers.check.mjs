@@ -15,7 +15,8 @@ const fail = (msg) => { throw new Error(msg); };
    that file is given: --set host=<out>/settings-managers.html */
 const openHost = async (t, hash = '') => {
 	await t.viewport(1600, 1000);
-	await t.page.goto('file://' + t.args.host + hash, { waitUntil: 'commit', timeout: 120000 });   // 39 MB with PMConcept7 inside: do not wait for load
+	// --set host= is a file path, or an address when the page is served to a browser on another machine
+	await t.page.goto((/^https?:/.test(t.args.host) ? t.args.host : 'file://' + t.args.host) + hash, { waitUntil: 'commit', timeout: 120000 });   // 39 MB with PMConcept7 inside: do not wait for load
 	const deadline = Date.now() + 120000;
 	for (;;) {
 		const frame = t.page.frames().find((f) => f !== t.page.mainFrame());
@@ -39,9 +40,12 @@ export const tests = {
 		if ((await state()).route !== 'look/text') fail('opened by a link to Look & feel › Text & motion, the review page showed ' + (await state()).route);
 		await top.evaluate(() => { window.__copied = ''; const c = navigator.clipboard; if (c) c.writeText = (text) => { window.__copied = String(text); return Promise.resolve(); }; });
 		await frame.evaluate(() => { window.SMX.go('computers/away'); window.SMX.pageOptions.link(); });
-		for (let i = 0; i < 20 && !(await top.evaluate(() => window.__copied)); i++) await top.waitForTimeout(150);
-		const copied = await top.evaluate(() => window.__copied);
-		if (!/^file:.*settings-managers\.html#smx=/.test(copied) || decodeURIComponent(copied.split('#smx=')[1] || '') !== 'route=computers/away') fail('the review page copied this as the link to Computers › Away from home: ' + (copied || 'nothing'));
+		// the review page copies the link and tells the page how it went; without a clipboard (a page served over plain
+		// http to another machine has none) it says "Copy this link" with the link, which is what is read here then
+		const said = async () => (await top.evaluate(() => window.__copied)) || (await frame.evaluate(() => window.SMX.lastLink || ''));
+		for (let i = 0; i < 20 && !(await said()); i++) await top.waitForTimeout(150);
+		const copied = await said();
+		if (!/^(file|https?):.*settings-managers\.html#smx=/.test(copied) || decodeURIComponent(copied.split('#smx=')[1] || '') !== 'route=computers/away') fail('the review page copied this as the link to Computers › Away from home: ' + (copied || 'nothing'));
 		await frame.evaluate(() => window.SMX.go('computers/away'));
 		await top.waitForTimeout(600);
 		await top.click('#changes');
@@ -504,7 +508,7 @@ export const tests = {
 		await t.page.waitForTimeout(500);
 		const c = await run(`
 			S.go('look'); await wait(700);
-			const btn = about('${ID}'); btn.scrollIntoView({ block: 'center' }); btn.click();
+			const btn = about('${ID}'); S.bring(btn, 'center'); btn.click();   // the page's own scroller: scrollIntoView also slides the whole app up, and the next step then looks off-window
 			if (!await until(seen)) bad.push('at 780 wide the panel does not show inside the window');
 			const q = insp().getBoundingClientRect();
 			if (insp().querySelector('.o55-insp-body') && insp().querySelector('.o55-insp-body').scrollWidth > insp().querySelector('.o55-insp-body').clientWidth + 1) bad.push('at 780 wide the panel scrolls sideways');
@@ -514,6 +518,54 @@ export const tests = {
 		await t.viewport(1600, 1000);
 		if (c.bad.length) fail(c.bad.join(' || '));
 		if (a.rows < 5) fail(`only ${a.rows} rows were on Look & feel`);
+		// 8. found by the second round-2 review (GLM-5.3): a row a page names itself, and a setting each provider has its own value for
+		await t.page.waitForTimeout(400);
+		const d = await run(`
+			const P = 'ai.models.provider-enabled';
+			window.scrollTo(0, 0); document.scrollingElement.scrollTop = 0;
+			const prov = S.d.providers(S.st()).find((p) => p.id !== 'opencode');
+			S.go('ai/provider/' + prov.id); await wait(800);
+			const row = document.querySelector('#smx-root .smx-page .setting-row[data-setting-id="' + P + '"]');
+			if (!row) { bad.push('the page of ' + prov.name + ' has no switch for using it'); return { bad }; }
+			const rowLabel = [...row.querySelector('.setting-label').childNodes].find((n) => n.nodeType === 3 && n.nodeValue.trim()).nodeValue.trim();
+			const btn = row.querySelector('[data-action="setting-details"]');
+			if (btn.getAttribute('aria-label') !== 'About ' + rowLabel) bad.push('the About button of "' + rowLabel + '" is named "' + btn.getAttribute('aria-label') + '"');
+			btn.click();
+			if (!await until(seen)) { const i = insp(), q = i.getBoundingClientRect(), top = document.elementFromPoint(q.left + q.width / 2, q.top + 60); bad.push('About on "' + rowLabel + '" opened nothing that shows: panel ' + i.className + ', ' + getComputedStyle(i).visibility + ', at ' + [Math.round(q.left), Math.round(q.top), Math.round(q.width), Math.round(q.height)].join(' ') + ' in a window ' + innerWidth + ' wide; on top there: ' + (top ? (top.id || top.className || top.tagName) : 'nothing') + '; engine detail ' + E.getState().detailSetting + ', lent place ' + lay().className); return { bad }; }
+			if (text('.o55-insp-title') !== rowLabel) bad.push('the row reads "' + rowLabel + '", its panel is titled "' + text('.o55-insp-title') + '"');
+			if (insp().querySelector('.smx-details-go')) bad.push('on the page that shows the row, the line above the title offers to go elsewhere: "' + text('.o55-insp-crumbs') + '"');
+			const per = text('.o55-insp-now.is-per .o55-insp-now-label'), foot = text('.o55-insp-now.is-per .o55-insp-now-foot > span');
+			if (per !== 'Each AI provider has its own') bad.push('the panel says "' + per + '"');
+			if (/AI & Providers|Providers & Accounts|Services\\b/.test(foot)) bad.push('the panel sends the person to a place of PMConcept7: "' + foot + '"');
+			const show = insp().querySelector('[data-action="o55-reveal"]');
+			if (!show) bad.push('the panel has no "Show me"');
+			else {
+				show.click();
+				if (!await until(() => !seen())) bad.push('"Show me" left the panel open');
+				if (!await until(() => !!document.querySelector('#smx-root .smx-page .setting-row[data-setting-id="' + P + '"].smx-flash'), 2500)) bad.push('"Show me" did not show the row on this page');
+				if (S.route !== 'ai/provider/' + prov.id) bad.push('"Show me" left the page for ' + S.route);
+			}
+			await wait(500);
+			// a reworded row: its About button is named by the label that shows
+			let named = 0;
+			for (const [id, w] of Object.entries(S.words || {})) {
+				if (named >= 6 || !w.label) continue;
+				const at = S.where(id); if (!at || at.route.includes(':')) continue;
+				S.go(at.route, { reveal: id }); await wait(350);
+				const b2 = about(id); if (!b2 || !b2.offsetParent) continue;
+				named++;
+				if (b2.getAttribute('aria-label') !== 'About ' + w.label) bad.push(id + ': the row reads "' + w.label + '", its About button is named "' + b2.getAttribute('aria-label') + '"');
+			}
+			if (named < 3) bad.push('only ' + named + ' reworded rows could be checked for the name of their About button');
+			// an account page of a code service offers "Use this account" once
+			const st = E.getState(); const gh = st.sourceControl.forges.find((x) => x.id === 'github');
+			gh.accountNames = [gh.defaultAccount, 'second-account']; gh.accounts = 2; E.setState(st);
+			S.go('source/service/github/second-account'); await wait(700);
+			const uses = [...document.querySelectorAll('#smx-root .smx-page button')].filter((x) => /^Use this account$/.test(x.textContent.trim())).length;
+			if (uses !== 1) bad.push('the page of a second account offers "Use this account" ' + uses + ' times');
+			return { bad, named };
+		`);
+		if (d.bad.length) fail(d.bad.join(' || '));
 	},
 	/* Found by pressing one button of every kind on every page (2026-11-11): two of PMConcept7's row buttons show nothing
 	   when pressed. "Reset Home layout" does reset, at once and without asking, and says so on the Home page only.

@@ -65,7 +65,7 @@
     SMX.lastLink = url;
     try { W.navigator.clipboard.writeText(url).then(() => said(true, url), () => said(false, url)); } catch (e) { said(false, url); }
   }
-  SMX.linkSaid = (ok, url) => SMX.toast(ok ? 'Link copied' : 'Copy this link', ok ? 'It opens Settings on this page.' : String(url || ''), ok ? 'success' : 'info');
+  SMX.linkSaid = (ok, url) => { SMX.lastLink = String(url || ''); SMX.toast(ok ? 'Link copied' : 'Copy this link', ok ? 'It opens Settings on this page.' : String(url || ''), ok ? 'success' : 'info'); };
 
   SMX.act('page-options', (el) => {
     const items = [];

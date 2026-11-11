@@ -16,6 +16,7 @@
     'code.editing.token-colors': { label: 'Colours for one kind of word', help: 'Your own colour for one kind of word (a keyword, a number, a comment) in one colour scheme. Set them in the editor’s Customize screen, under Colors.' },
     /* ---- AI providers: "service" is an AI provider */
     'ai.models.default-provider': { label: 'AI provider tried first', help: 'Used first when more than one AI provider could do a job.' },
+    'ai.models.provider-enabled': { listLabel: 'Use an AI provider' },   // each provider's page names its own row ("Use Claude"); lists and panels elsewhere say this
     'ai.models.provider-priority': { label: 'The order AI providers are tried in', help: 'Used when several AI providers could do a job.', replace: [[/\bservices\b/g, 'AI providers'], [/\bservice\b/g, 'AI provider']] },
     'ai.models.provider-fallback': { label: 'Move to another AI provider when one is down', help: 'Otherwise the run stops when its AI provider is down.' },
     'ai.accounts.default-account': { help: 'Each AI provider’s accounts are on its own page.', options: { 'The one I pick for each service': 'The one I pick for each AI provider' } },

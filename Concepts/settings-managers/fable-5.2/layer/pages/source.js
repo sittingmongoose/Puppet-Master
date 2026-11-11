@@ -363,7 +363,7 @@
           { label: 'Name on your saved changes', help: 'Separate from the account: it is written into the history itself.', value: m.name ? `${m.name} · ${m.email}` : 'Not set yet', muted: !m.name, control: ui.btn({ label: m.name ? 'Change' : 'Set it', go: 'source/you' }) }
         ]) }) },
         { key: 'copies', html: a.inUse ? ui.things({ cls: 'smx-src-rows', title: 'Online copies under this account', items: mine.map((r) => repoThing(st, r, { tag: '' })), empty: { icon: 'folder', title: 'No online copy yet', text: 'A project you put online appears here.' } }) : '' },
-        { key: 'actions', html: `<div class="smx-btn-row">${a.inUse ? ui.btn({ label: 'Sign in again', icon: 'refresh', do: 'source-reauth', data: { id: f.id } }) : ui.btn({ label: 'Use this account', icon: 'check', do: 'source-account-use', data: { id: f.id, name: a.name } })}${only ? ui.btn({ label: `Sign out of ${f.name}…`, icon: 'close', danger: true, action: 'pm51-source-gh-disconnect', data: { id: f.id } }) : ui.btn({ label: 'Sign out of this account', icon: 'close', danger: true, do: 'source-account-out', data: { id: f.id, name: a.name } })}</div>` }
+        { key: 'actions', html: `<div class="smx-btn-row">${a.inUse ? ui.btn({ label: 'Sign in again', icon: 'refresh', do: 'source-reauth', data: { id: f.id } }) : ''}${only ? ui.btn({ label: `Sign out of ${f.name}…`, icon: 'close', danger: true, action: 'pm51-source-gh-disconnect', data: { id: f.id } }) : ui.btn({ label: 'Sign out of this account', icon: 'close', danger: true, do: 'source-account-out', data: { id: f.id, name: a.name } })}</div>` }
       ];
     },
     changes: [

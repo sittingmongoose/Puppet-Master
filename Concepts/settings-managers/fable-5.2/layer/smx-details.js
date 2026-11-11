@@ -16,9 +16,11 @@
    - When: a panel the person asked for, by pressing "About" on a row here or a neighbour's name inside the panel. A
      panel the engine opens by itself while it is sent somewhere (a link to a setting) stays hidden: these pages answer
      such a link by showing the row itself.
-   - Words: the title and the choices read as the row does where this concept rewords them (SMX.reword), the line
-     above the title names the page of THIS Settings that holds the row, and "Next to it" lists the rows that are next
-     to it here, not the ones that were next to it in PMConcept7. */
+   - Words: the title reads as the row on the page reads (reworded by SMX.reword, or named by the page itself: "Use
+     Claude"), the choices as the row's do, the line above the title names the page of THIS Settings that holds the
+     row, and "Next to it" lists the rows that are next to it here, not the ones that were next to it in PMConcept7.
+     A setting that each provider, account or persona has its own value for says so in this Settings' words, says on
+     which page to change it, and its "Show me" shows the row here or goes to that page. */
 (function (W) {
   'use strict';
   const SMX = W.SMX, D = W.document; if (!SMX) return;
@@ -47,6 +49,30 @@
 
   /* ---------------------------------------------------------------- the words */
   const firstText = (n) => (n ? [...n.childNodes].find((c) => c.nodeType === 3 && c.nodeValue.trim()) : null);
+  /* PMConcept7's "each … has its own" line and its "where to change it" line, in this Settings' words and places.
+     Keyed by PMConcept7's own line; the second table holds the lines once they are reworded, so a redraw is a no-op. */
+  const PER = {
+    'Each account has its own': ['Each account has its own', 'Change it on the account’s own page, under its AI provider.'],
+    'Each AI service has its own': ['Each AI provider has its own', 'Change it on the AI provider’s own page.'],
+    'Each code service has its own': ['Each code service has its own', 'Change it on the code service’s own page, under Source control.'],
+    'Each server has its own': ['Each computer has its own', 'Change it on the computer’s own page, under Computers & remote access.'],
+    'Each persona has its own': ['Each persona has its own', 'Change it on the persona’s own page, under Memory & helpers.'],
+    'Each Goal template has its own': ['Each Goal template has its own', 'Change it in the template itself, under Planning & goals.']
+  };
+  const PER_BY_WORDS = Object.fromEntries(Object.values(PER).map((v) => [v[0], v]));
+  /* "Show me" in such a panel: PMConcept7 sends its engine to its own manager, which these pages hide (review R2 by
+     GLM, F4). Here it shows the row on this page, or goes to the page that lists the things that each have one. */
+  function showMe(id) {
+    const here = onPage(id);
+    close();
+    W.setTimeout(() => {
+      if (here) { SMX.revealSetting(id); return; }
+      const at = SMX.where(id); if (!at) return;
+      if (!at.route.includes(':')) { SMX.go(at.route, { reveal: id }); return; }
+      const pg = SMX.pages.find((x) => x.id === at.route);
+      SMX.go((pg && (pg.parent || pg.chapter)) || 'home');
+    }, 120);
+  }
   /* the rows that sit in the same card as this one, on its page here */
   function neighbours(id) {
     const at = SMX.where(id); if (!at) return [];
@@ -61,10 +87,20 @@
   /* Where a setting's row is in this Settings: {name, go}. A page with a parameter (one provider, one persona) is named
      only while it is the page that shows; from elsewhere there is no telling which provider was meant, so the chapter
      is named and nothing is offered to press. */
+  // the row of a setting on the page that shows: a plain row carries the id, a row that belongs to one provider, account or persona carries data-setting-id
+  const rowOf = (id) => { const host = SMX.host && SMX.host(); const page = host && host.querySelector('.smx-page'); return page ? page.querySelector(`[id="setting-${W.CSS.escape(id)}"], .setting-row[data-setting-id="${W.CSS.escape(id)}"], .o55-field[data-setting-id="${W.CSS.escape(id)}"]`) : null; };
+  const onPage = (id) => { const host = SMX.host && SMX.host(); const page = host && host.querySelector('.smx-page'); return !!(page && page.querySelector(`[id="setting-${W.CSS.escape(id)}"], [data-setting-id="${W.CSS.escape(id)}"], [data-smx-covers~="${W.CSS.escape(id)}"]`)); };
   function placeOf(id) {
     const at = SMX.where(id); if (!at) return null;
     const here = SMX.match(SMX.route);
-    if (here && here.page.id === at.route) return { name: SMX.pageName(SMX.route), go: '' };
+    // drawn on the page that shows (a provider's own switch on that provider's page): it is here, whatever page the plan names as its home
+    if (onPage(id) || (here && here.page.id === at.route)) {
+      // named by the title the page shows: a provider's own page is "Claude", where the plan only says "AI provider"
+      const host = SMX.host && SMX.host(); const t = host && host.querySelector('.smx-page .smx-title'); const title = t ? t.textContent.trim() : '';
+      const ch = here ? SMX.chapters.find((c) => c.id === here.page.chapter) : null;
+      const name = title && ch && title !== ch.title ? `${ch.title} › ${title}` : (title || SMX.pageName(SMX.route));
+      return { name, go: '' };
+    }
     if (!at.route.includes(':')) return { name: SMX.pageName(at.route), go: at.route };
     const pg = SMX.pages.find((x) => x.id === at.route), ch = pg && SMX.chapters.find((c) => c.id === pg.chapter);
     return ch ? { name: ch.title, go: '' } : null;
@@ -74,9 +110,20 @@
   function dressOne(box) {
     const b = box.querySelector('[data-action="o55-copy-id"][data-setting]'); const id = b ? b.getAttribute('data-setting') : ''; if (!id) return;
     const words = (SMX.words || {})[id] || {};
-    // the title reads as the row does
-    const title = box.querySelector('.o55-insp-title'); const label = SMX.labelOf(id);
+    // the title reads as the row does: the label the row on this page shows (a page may set it itself, "Use Claude"), else the setting's own
+    const shownRow = rowOf(id); const shownLabel = shownRow ? ((firstText(shownRow.querySelector('.setting-label, .o55-field-label')) || {}).nodeValue || '').trim() : '';
+    const title = box.querySelector('.o55-insp-title'); const label = shownLabel || SMX.labelOf(id);
     if (title && label && title.textContent !== label) title.textContent = label;
+    // a setting that each provider, account, persona … has its own value for: PMConcept7 says whose, and where to change it, in its own place names
+    const per = box.querySelector('.o55-insp-now.is-per');
+    if (per) {
+      const lab = per.querySelector('.o55-insp-now-label'); const kind = lab ? PER[lab.textContent.trim()] || PER_BY_WORDS[lab.textContent.trim()] : null;
+      if (lab && kind && lab.textContent !== kind[0]) lab.textContent = kind[0];
+      const foot = per.querySelector('.o55-insp-now-foot > span');
+      if (foot && kind && foot.textContent !== kind[1]) foot.textContent = kind[1];
+      const showMe = per.querySelector('[data-action="o55-reveal"] span');
+      if (showMe) { const to = onPage(id) ? 'Show me' : 'Take me there'; if (showMe.textContent !== to) showMe.textContent = to; }
+    }
     // where the row is in this Settings; a press goes there when that is another page
     const crumbs = box.querySelector('.o55-insp-crumbs'); const place = placeOf(id);
     if (crumbs && place) {
@@ -129,6 +176,10 @@
     // asked for by a person: "About" on a row of these pages, or a neighbour's name inside the panel
     host.addEventListener('click', (e) => { const b = e.target.closest && e.target.closest('[data-action="setting-details"]'); if (b && host.contains(b) && SMX.view === 'new') lay.classList.add('is-armed'); }, true);
     // the line above the title, when the row is on another page: go there and show it
+    lay.addEventListener('click', (e) => {
+      const r = e.target.closest && e.target.closest('[data-action="o55-reveal"][data-setting]');
+      if (r) { e.preventDefault(); e.stopPropagation(); showMe(r.getAttribute('data-setting')); }
+    }, true);
     lay.addEventListener('click', (e) => {
       const b = e.target.closest && e.target.closest('[data-smx-details-go]'); if (!b) return;
       e.preventDefault(); e.stopPropagation();

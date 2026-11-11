@@ -154,6 +154,9 @@
       if (!text) return;
       const cs = [...row.querySelectorAll('.setting-control [role="switch"], .setting-control .toggle, .setting-control .pm51-dd-trigger, .setting-control input:not([type="hidden"]):not([type="file"]), .setting-control textarea')];
       if (cs.length === 1 && cs[0].getAttribute('aria-label') !== text) cs[0].setAttribute('aria-label', text);
+      // the row's "About" button too (it said "About Monthly token budget" beside "Monthly limit on tokens"; review R2 by GLM, F2)
+      const ab = row.querySelector('[data-action="setting-details"]');
+      if (ab) { const want = 'About ' + text; if (ab.getAttribute('aria-label') !== want) ab.setAttribute('aria-label', want); if (ab.hasAttribute('data-pm-hover-label') && ab.getAttribute('data-pm-hover-label') !== want) ab.setAttribute('data-pm-hover-label', want); }
     };
     /* words inside a control (a list's own summary, "3 services"): {replace: [[/pattern/g, 'words'], …]} */
     const inside = (row, pairs) => { const c = row.querySelector('.setting-control'); if (!c) return; const w = W.document.createTreeWalker(c, W.NodeFilter.SHOW_TEXT); let n; while ((n = w.nextNode())) { let v = n.nodeValue; for (const [re, to] of pairs) v = v.replace(re, to); if (v !== n.nodeValue) n.nodeValue = v; } };
@@ -165,8 +168,9 @@
     const start = () => { const host = SMX.host && SMX.host(); if (!host) { W.setTimeout(start, 300); return; } new W.MutationObserver((list) => { for (const m of list) { const el = m.target && m.target.nodeType === 1 ? m.target : m.target && m.target.parentElement; const row = el && el.closest ? el.closest(ROW) : null; if (row) fix(row); for (const n of m.addedNodes) scan(n); } }).observe(host, { childList: true, subtree: true, characterData: true }); scan(host); };
     start();
   };
-  /* the words a setting goes by in the redesign: its reworded label, else PMConcept7's row label */
-  SMX.labelOf = (id) => { const w = SMX.words[id]; if (w && w.label) return w.label; try { const s = kit().setting(id); return (s && (kit().rowLabel(s) || s.label)) || id; } catch (e) { return id; } };
+  /* the words a setting goes by in the redesign: its reworded label, else PMConcept7's row label. listLabel names a
+     setting in lists and panels only, for a row that each page labels itself ("Use Claude"): it never rewrites a row */
+  SMX.labelOf = (id) => { const w = SMX.words[id]; if (w && (w.label || w.listLabel)) return w.label || w.listLabel; try { const s = kit().setting(id); return (s && (kit().rowLabel(s) || s.label)) || id; } catch (e) { return id; } };
 
   /* a page that is planned but whose manager-drawn parts are not rebuilt in this cut */
   /* a page that is in the plan but not built yet says so in plain words, whatever it draws (bare: it draws no rows) */
