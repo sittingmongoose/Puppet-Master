@@ -27,7 +27,13 @@ const MEASURE = () => {
     const oy = sr.top + (sr.height - vh * s) / 2 - vb[1] * s;
     let x1 = Infinity, y1 = Infinity, x2 = -Infinity, y2 = -Infinity, n = 0;
     for (const el of svg.querySelectorAll('path,circle,rect,ellipse,line,polyline,polygon')) {
-      const b = el.getBBox(); n++;
+      /* painted parts only: a shape the look hides (a PM glyph's halo, nx-h, is display:none in NieR) reads a
+         0,0,0,0 box at the origin, which pulled the measured glyph 1.25 px up and left (FO-127) */
+      const cs = getComputedStyle(el);
+      if (cs.display === 'none' || cs.visibility === 'hidden') continue;
+      const b = el.getBBox();
+      if (!b.width && !b.height) continue;
+      n++;
       x1 = Math.min(x1, b.x); y1 = Math.min(y1, b.y); x2 = Math.max(x2, b.x + b.width); y2 = Math.max(y2, b.y + b.height);
     }
     if (!n) return { error: 'the tick svg draws nothing' };

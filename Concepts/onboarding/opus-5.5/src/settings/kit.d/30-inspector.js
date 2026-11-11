@@ -201,11 +201,31 @@ function o55ChoicesHtml(setting, ch) {
    draws the PM glyph (PMG, the shell's neon set the rail and the chat use) in a quiet tile, no accent ring or glow
    (30-inspector.css). A chapter glyph PMG lacks takes its PMG neighbour; without PMG the settings glyph stays. */
 const O55_PMG_NAMES = { memory: 'database', system: 'server', archive: 'vault', brackets: 'puzzle', test: 'flask', map: 'route' };
+/* A PM glyph is drawn on a 24-unit grid but not always centred in it (the brain sits 0.8 units high); a head tile
+   centres the glyph it shows (FO-122's rule: within 0.5 px). Its painted parts (every shape but the halo, nx-h) are
+   measured once per glyph in a hidden svg, and the viewBox is shifted so their middle is the svg's middle. */
+const o55GlyphShift = {};
+function o55CentredGlyph(markup, name) {
+  if (!(name in o55GlyphShift)) {
+    o55GlyphShift[name] = null;
+    try {
+      const box = document.createElement('div');
+      box.style.cssText = 'position:absolute;left:-200px;top:0;width:24px;height:24px;visibility:hidden;pointer-events:none';
+      box.innerHTML = markup; document.body.appendChild(box);
+      let x1 = Infinity, y1 = Infinity, x2 = -Infinity, y2 = -Infinity;
+      box.querySelectorAll('svg :is(path, circle, rect, ellipse, line, polyline, polygon):not(.nx-h)').forEach(el => { const b = el.getBBox(); if (!b.width && !b.height) return; x1 = Math.min(x1, b.x); y1 = Math.min(y1, b.y); x2 = Math.max(x2, b.x + b.width); y2 = Math.max(y2, b.y + b.height); });
+      box.remove();
+      if (isFinite(x1)) { const dx = Math.round(((x1 + x2) / 2 - 12) * 100) / 100, dy = Math.round(((y1 + y2) / 2 - 12) * 100) / 100; if (Math.abs(dx) >= 0.05 || Math.abs(dy) >= 0.05) o55GlyphShift[name] = [dx, dy]; }
+    } catch (e) { /* measured nothing: the glyph stays as drawn */ }
+  }
+  const d = o55GlyphShift[name];
+  return d ? markup.replace('viewBox="0 0 24 24"', `viewBox="${d[0]} ${d[1]} 24 24"`) : markup;
+}
 function o55HeadGlyph(name, size) {
   const G = window.PMG;
   if (G && typeof G.icon === 'function' && typeof G.has === 'function') {
     const n = [O55_PMG_NAMES[name], name].find(x => x && G.has(x));
-    if (n) { try { return `<span class="icon o55-head-pmg">${G.icon(n, size || 20)}</span>`; } catch (e) { /* fall back to the settings glyph */ } }
+    if (n) { try { return `<span class="icon o55-head-pmg">${o55CentredGlyph(G.icon(n, size || 20), n)}</span>`; } catch (e) { /* fall back to the settings glyph */ } }
   }
   return icon(name);
 }
