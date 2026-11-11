@@ -856,8 +856,14 @@
       const all = items().filter(o.filter || (() => true));
       const groups = (o.groups ? o.groups(all) : [{ key: 'all', items: sort(all) }]).filter((g) => g.items.length);
       const focused = doc.activeElement && host.contains(doc.activeElement) ? focusKey(doc.activeElement) : null;
-      const html = groups.map((g) => (o.section ? o.section(g, rowsOf(g)) : rowsOf(g))).join('');
-      host.innerHTML = html || '<p class="wk-empty">' + esc(o.empty || '') + '</p>';
+      const html = groups.map((g) => (o.section ? o.section(g, rowsOf(g)) : rowsOf(g))).join('') || '<p class="wk-empty">' + esc(o.empty || '') + '</p>';
+      /* the same rows as the ones drawn, apart from their times, progress and output: patch those in place, as a tick
+         does, instead of drawing the list again. Home's Agents board repaints on every show of its tab (it missed the
+         changes while hidden), and a fresh list is new rows and new loaders to style, lay out and arm: 4 to 8 ms of
+         the 240 to 270 ms a Home tab switch cost, and the 17 Pip loaders' restart (pm7-perf lane I) */
+      const bare = untick(html);
+      if (host.__wkBare === bare && host.firstChild) { patchTicks(host, fmt); if (o.onPaint) o.onPaint(all); return; }
+      host.innerHTML = html; host.__wkBare = bare;
       watchMoving(host);
       if (focused) { const f = host.querySelector(focused); if (f) f.focus({ preventScroll: true }); }
       if (o.onPaint) o.onPaint(all);
@@ -927,6 +933,10 @@
 
   /* --------------------------------------------------------------------------------------- staying current */
   const progText = (it) => T('detail.progressOf', { done: it.progress.done, total: it.progress.total, unit: esc(it.progress.unit) });
+  /* a list's markup without what a tick patches (times, progress, output tails): two lists with the same untick()
+     hold the same rows, and patchTicks brings the one drawn up to date. The patched values are escaped text, so they
+     hold no "<"; a tail ends with its pre. */
+  function untick(h) { return h.replace(/(data-work-(?:time|prog)="[^"]*">)[^<]*/g, '$1').replace(/(data-work-tail="[^"]*">)[\s\S]*?<\/pre><\/div>/g, '$1</div>'); }
   /* what a row is: a tick that changes any of it (work ends, fails, starts waiting, stops) repaints the panel; a tick
      that only moves time, output or progress patches those in place (A6) */
   const shape = () => items().map((x) => x.id + ':' + x.state + ':' + (x.stopping ? 1 : 0) + ':' + (needsYou(x) ? 1 : 0) + ':' + (x.lost ? 1 : 0) + ':' + (x.progress && isLive(x) ? 1 : 0)).join('|');
