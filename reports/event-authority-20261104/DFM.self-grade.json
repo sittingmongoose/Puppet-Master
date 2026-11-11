@@ -1,10 +1,10 @@
 {
   "schema_id": "pm.assurance.event_authority.step08_current_depth.v1",
-  "assessment_kind": "self_grade_sweep_part2a_part2b_numbers_not_ready",
+  "assessment_kind": "self_grade_sweep_part2b_not_ready",
   "assessed_tree": {
     "branch": "plans/ea-w2-filemanager-20261104",
-    "commit": "62615d46d2f4fa1bc34ced6bdeac14a83280a889",
-    "read_method": "Sweep part 2A and part 2B numbers: all twelve complete family suites (7,246 fixture witnesses, 680 part 2A witnesses, 21 integrity witnesses), the differential against the merged pre-change checker, the gated guard tool (004bdedd63) over every Method B table, the shared number corpus through the complete checker and the number-scope self-test; shard and index regeneration. Every evidence quote below was rechecked at this commit and relocated where it moved. Native NOT_RUN."
+    "commit": "3cb373f91fb4a07e8ca8d6b1eabe80e0be142a14",
+    "read_method": "Sweep part 2B: the gated NUMRULE head 58c2816ff3 merged; all twelve complete family suites (fixture, part 2A/2B and integrity witnesses), the differential against the merged pre-change checker, the gated guard tool (004bdedd63) over every Method B table, the shared number corpus through the complete checker and the number-scope self-test; shard and index regeneration. Every evidence quote below was rechecked at this commit and relocated where it moved. Native NOT_RUN."
   },
   "rubric": {
     "rubric_md": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08-depth42-20260924/rubric.md",
@@ -324,7 +324,7 @@
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "F-150 independently binds the exact revision-CAS withdrawal control and bounded physical/SP-337 storage without truncating the frozen drain set; backup and reader fences remain explicit.",
+          "finding": "F-150 independently binds the exact revision-CAS withdrawal control and bounded physical/SP-337 storage without truncating the frozen drain set; backup and reader fences remain explicit. Retained originals resolve through the shared SP-1101 RetainedDispatcher from sealed issuance custody (unavailable and unsupported recipes refuse without fallback); the frozen verifier keeps CV-1101/CV-253 profiles.",
           "evidence": [
             {
               "path": "Plans/FileManager.md",
@@ -353,6 +353,20 @@
               "line_start": 29869,
               "line_end": 29869,
               "quote": "A large family-control drain set uses the same complete-value reference"
+            },
+            {
+              "path": "scripts/pm-filemanager-event-contracts.py",
+              "unit": "F-150",
+              "line_start": 1415,
+              "line_end": 1415,
+              "quote": "def dispatch_retained_original(event_type, payload, trace, model, row, physical_operation, selected_operation):"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "F-150",
+              "line_start": 24671,
+              "line_end": 24671,
+              "quote": "write-time edition and frozen resource manifest come only from Storage's sealed issuance custody, never from"
             }
           ],
           "prior": {
@@ -365,41 +379,41 @@
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Every product refusal is a named Method B table row; the gated tool proves 232 of 234 rows lane-wide (184 by this family's own witnesses), 0 masked, 0 unrelated changes. The CV-1100/SP-1100 number scope is adopted (2^60 producer counterexample now refused). PARTIAL remains: schema keywords are verdict rows not cut one by one, IS02/QJ03 are unprovable by construction, timestamps (CV-1101) and SP-1101 dispatch are part 2B.",
+          "finding": "Every product refusal is a named Method B table row; the gated tool proves 234 of 237 rows lane-wide (186 by this family's own witnesses), 0 masked, 0 unrelated changes. CV-1100/SP-1100 numbers, CV-1101 date-time (shared date_time predicate: event_record profile at every format: date-time, CV-253 storage_utc_z at EventRecord observed_at_utc/persisted_at_utc; the 108 SWEEP-12 malformed timestamps now refuse) and SP-1101 retained dispatch are adopted. PARTIAL remains: schema keywords are verdict rows not cut one by one, IS02/QJ03/OD03 are unprovable by construction, and the shared datetime_validator and inventory gate run only at batch-2 integration.",
           "evidence": [
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "F-150",
-              "line_start": 1090,
-              "line_end": 1090,
+              "line_start": 1196,
+              "line_end": 1196,
               "quote": "def validate_settlement_inputs(payload, row, command_label=\"original command join\"):"
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "F-150",
-              "line_start": 11451,
-              "line_end": 11451,
+              "line_start": 11457,
+              "line_end": 11457,
               "quote": "\"name\": \"round7:settled-time\""
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "F-150",
-              "line_start": 87,
-              "line_end": 87,
+              "line_start": 90,
+              "line_end": 90,
               "quote": "def refuse(phase, facts, message=None, schema=None):"
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "F-150",
-              "line_start": 1487,
-              "line_end": 1487,
+              "line_start": 1710,
+              "line_end": 1710,
               "quote": "failures = _codec.storage_value_registry_data_failures(registry, path_label=\"Plans/storage_value_registry.json\")"
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "F-150",
-              "line_start": 1244,
-              "line_end": 1244,
+              "line_start": 1466,
+              "line_end": 1466,
               "quote": "digest, jcs_refusal = producer_semantic_digest(event), None"
             },
             {
@@ -415,6 +429,41 @@
               "line_start": 24650,
               "line_end": 24650,
               "quote": "Numbers follow CV-1100, SP-1100 and SP-1101 beside the existing CV-317, CV-339, SP-236, SP-286, SP-337 and"
+            },
+            {
+              "path": "scripts/pm-filemanager-event-contracts.py",
+              "unit": "F-150",
+              "line_start": 228,
+              "line_end": 228,
+              "quote": "DATE_TIME_FORMAT = datetime_format_checker(profile=EVENT_RECORD)"
+            },
+            {
+              "path": "scripts/pm-filemanager-event-contracts.py",
+              "unit": "F-150",
+              "line_start": 299,
+              "line_end": 299,
+              "quote": "date_time(record[field], profile=STORAGE_UTC_Z)"
+            },
+            {
+              "path": "scripts/pm-filemanager-event-contracts.py",
+              "unit": "F-150",
+              "line_start": 1427,
+              "line_end": 1427,
+              "quote": "RetainedDispatcher(DfmOriginalOwner(model, selected_operation), installed_recipes(event_type, verify)).resolve("
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "F-150",
+              "line_start": 24662,
+              "line_end": 24662,
+              "quote": "Timestamps follow CV-1101 beside CV-253. Every format: date-time of these routes is checked by the shared"
+            },
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "F-150",
+              "line_start": 7267,
+              "line_end": 7267,
+              "quote": "shared CV-1101 date-time predicate (scripts/pm_event_datetime.py) as its format checker and adds"
             }
           ],
           "prior": {
@@ -422,7 +471,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Sweep part 2A guard tables and part 2B numbers adopted; part 2B timestamp items keep the cell PARTIAL."
+          "change_reason": "Sweep part 2B adopted; timestamps and SP-1101 are no longer reasons, the cell stays PARTIAL for the reasons named."
         }
       },
       "remaining_gaps": [
@@ -735,7 +784,7 @@
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "F-151 independently binds the exact revision-CAS withdrawal control and bounded physical/SP-337 storage without truncating the frozen drain set; backup and reader fences remain explicit.",
+          "finding": "F-151 independently binds the exact revision-CAS withdrawal control and bounded physical/SP-337 storage without truncating the frozen drain set; backup and reader fences remain explicit. Retained originals resolve through the shared SP-1101 RetainedDispatcher from sealed issuance custody (unavailable and unsupported recipes refuse without fallback); the frozen verifier keeps CV-1101/CV-253 profiles.",
           "evidence": [
             {
               "path": "Plans/FileManager.md",
@@ -764,6 +813,20 @@
               "line_start": 29869,
               "line_end": 29869,
               "quote": "A large family-control drain set uses the same complete-value reference"
+            },
+            {
+              "path": "scripts/pm-filemanager-event-contracts.py",
+              "unit": "F-151",
+              "line_start": 1415,
+              "line_end": 1415,
+              "quote": "def dispatch_retained_original(event_type, payload, trace, model, row, physical_operation, selected_operation):"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "F-151",
+              "line_start": 24671,
+              "line_end": 24671,
+              "quote": "write-time edition and frozen resource manifest come only from Storage's sealed issuance custody, never from"
             }
           ],
           "prior": {
@@ -776,41 +839,41 @@
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Every product refusal is a named Method B table row; the gated tool proves 232 of 234 rows lane-wide (185 by this family's own witnesses), 0 masked, 0 unrelated changes. The CV-1100/SP-1100 number scope is adopted (2^60 producer counterexample now refused). PARTIAL remains: schema keywords are verdict rows not cut one by one, IS02/QJ03 are unprovable by construction, timestamps (CV-1101) and SP-1101 dispatch are part 2B.",
+          "finding": "Every product refusal is a named Method B table row; the gated tool proves 234 of 237 rows lane-wide (189 by this family's own witnesses), 0 masked, 0 unrelated changes. CV-1100/SP-1100 numbers, CV-1101 date-time (shared date_time predicate: event_record profile at every format: date-time, CV-253 storage_utc_z at EventRecord observed_at_utc/persisted_at_utc; the 108 SWEEP-12 malformed timestamps now refuse) and SP-1101 retained dispatch are adopted. PARTIAL remains: schema keywords are verdict rows not cut one by one, IS02/QJ03/OD03 are unprovable by construction, and the shared datetime_validator and inventory gate run only at batch-2 integration.",
           "evidence": [
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "F-151",
-              "line_start": 1090,
-              "line_end": 1090,
+              "line_start": 1196,
+              "line_end": 1196,
               "quote": "def validate_settlement_inputs(payload, row, command_label=\"original command join\"):"
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "F-151",
-              "line_start": 134295,
-              "line_end": 134295,
+              "line_start": 134307,
+              "line_end": 134307,
               "quote": "\"name\": \"round7:settled-time\""
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "F-151",
-              "line_start": 87,
-              "line_end": 87,
+              "line_start": 90,
+              "line_end": 90,
               "quote": "def refuse(phase, facts, message=None, schema=None):"
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "F-151",
-              "line_start": 1487,
-              "line_end": 1487,
+              "line_start": 1710,
+              "line_end": 1710,
               "quote": "failures = _codec.storage_value_registry_data_failures(registry, path_label=\"Plans/storage_value_registry.json\")"
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "F-151",
-              "line_start": 1244,
-              "line_end": 1244,
+              "line_start": 1466,
+              "line_end": 1466,
               "quote": "digest, jcs_refusal = producer_semantic_digest(event), None"
             },
             {
@@ -826,6 +889,41 @@
               "line_start": 24650,
               "line_end": 24650,
               "quote": "Numbers follow CV-1100, SP-1100 and SP-1101 beside the existing CV-317, CV-339, SP-236, SP-286, SP-337 and"
+            },
+            {
+              "path": "scripts/pm-filemanager-event-contracts.py",
+              "unit": "F-151",
+              "line_start": 228,
+              "line_end": 228,
+              "quote": "DATE_TIME_FORMAT = datetime_format_checker(profile=EVENT_RECORD)"
+            },
+            {
+              "path": "scripts/pm-filemanager-event-contracts.py",
+              "unit": "F-151",
+              "line_start": 299,
+              "line_end": 299,
+              "quote": "date_time(record[field], profile=STORAGE_UTC_Z)"
+            },
+            {
+              "path": "scripts/pm-filemanager-event-contracts.py",
+              "unit": "F-151",
+              "line_start": 1427,
+              "line_end": 1427,
+              "quote": "RetainedDispatcher(DfmOriginalOwner(model, selected_operation), installed_recipes(event_type, verify)).resolve("
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "F-151",
+              "line_start": 24662,
+              "line_end": 24662,
+              "quote": "Timestamps follow CV-1101 beside CV-253. Every format: date-time of these routes is checked by the shared"
+            },
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "F-151",
+              "line_start": 7267,
+              "line_end": 7267,
+              "quote": "shared CV-1101 date-time predicate (scripts/pm_event_datetime.py) as its format checker and adds"
             }
           ],
           "prior": {
@@ -833,7 +931,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Sweep part 2A guard tables and part 2B numbers adopted; part 2B timestamp items keep the cell PARTIAL."
+          "change_reason": "Sweep part 2B adopted; timestamps and SP-1101 are no longer reasons, the cell stays PARTIAL for the reasons named."
         }
       },
       "remaining_gaps": [
@@ -1146,7 +1244,7 @@
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "F-152 independently binds the exact revision-CAS withdrawal control and bounded physical/SP-337 storage without truncating the frozen drain set; backup and reader fences remain explicit.",
+          "finding": "F-152 independently binds the exact revision-CAS withdrawal control and bounded physical/SP-337 storage without truncating the frozen drain set; backup and reader fences remain explicit. Retained originals resolve through the shared SP-1101 RetainedDispatcher from sealed issuance custody (unavailable and unsupported recipes refuse without fallback); the frozen verifier keeps CV-1101/CV-253 profiles.",
           "evidence": [
             {
               "path": "Plans/FileManager.md",
@@ -1175,6 +1273,20 @@
               "line_start": 29869,
               "line_end": 29869,
               "quote": "A large family-control drain set uses the same complete-value reference"
+            },
+            {
+              "path": "scripts/pm-filemanager-event-contracts.py",
+              "unit": "F-152",
+              "line_start": 1415,
+              "line_end": 1415,
+              "quote": "def dispatch_retained_original(event_type, payload, trace, model, row, physical_operation, selected_operation):"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "F-152",
+              "line_start": 24671,
+              "line_end": 24671,
+              "quote": "write-time edition and frozen resource manifest come only from Storage's sealed issuance custody, never from"
             }
           ],
           "prior": {
@@ -1187,41 +1299,41 @@
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Every product refusal is a named Method B table row; the gated tool proves 232 of 234 rows lane-wide (176 by this family's own witnesses), 0 masked, 0 unrelated changes. The CV-1100/SP-1100 number scope is adopted (2^60 producer counterexample now refused). PARTIAL remains: schema keywords are verdict rows not cut one by one, IS02/QJ03 are unprovable by construction, timestamps (CV-1101) and SP-1101 dispatch are part 2B.",
+          "finding": "Every product refusal is a named Method B table row; the gated tool proves 234 of 237 rows lane-wide (180 by this family's own witnesses), 0 masked, 0 unrelated changes. CV-1100/SP-1100 numbers, CV-1101 date-time (shared date_time predicate: event_record profile at every format: date-time, CV-253 storage_utc_z at EventRecord observed_at_utc/persisted_at_utc; the 108 SWEEP-12 malformed timestamps now refuse) and SP-1101 retained dispatch are adopted. PARTIAL remains: schema keywords are verdict rows not cut one by one, IS02/QJ03/OD03 are unprovable by construction, and the shared datetime_validator and inventory gate run only at batch-2 integration.",
           "evidence": [
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "F-152",
-              "line_start": 1090,
-              "line_end": 1090,
+              "line_start": 1196,
+              "line_end": 1196,
               "quote": "def validate_settlement_inputs(payload, row, command_label=\"original command join\"):"
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "F-152",
-              "line_start": 214836,
-              "line_end": 214836,
+              "line_start": 214854,
+              "line_end": 214854,
               "quote": "\"name\": \"round7:settled-time\""
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "F-152",
-              "line_start": 87,
-              "line_end": 87,
+              "line_start": 90,
+              "line_end": 90,
               "quote": "def refuse(phase, facts, message=None, schema=None):"
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "F-152",
-              "line_start": 1487,
-              "line_end": 1487,
+              "line_start": 1710,
+              "line_end": 1710,
               "quote": "failures = _codec.storage_value_registry_data_failures(registry, path_label=\"Plans/storage_value_registry.json\")"
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "F-152",
-              "line_start": 1244,
-              "line_end": 1244,
+              "line_start": 1466,
+              "line_end": 1466,
               "quote": "digest, jcs_refusal = producer_semantic_digest(event), None"
             },
             {
@@ -1237,6 +1349,41 @@
               "line_start": 24650,
               "line_end": 24650,
               "quote": "Numbers follow CV-1100, SP-1100 and SP-1101 beside the existing CV-317, CV-339, SP-236, SP-286, SP-337 and"
+            },
+            {
+              "path": "scripts/pm-filemanager-event-contracts.py",
+              "unit": "F-152",
+              "line_start": 228,
+              "line_end": 228,
+              "quote": "DATE_TIME_FORMAT = datetime_format_checker(profile=EVENT_RECORD)"
+            },
+            {
+              "path": "scripts/pm-filemanager-event-contracts.py",
+              "unit": "F-152",
+              "line_start": 299,
+              "line_end": 299,
+              "quote": "date_time(record[field], profile=STORAGE_UTC_Z)"
+            },
+            {
+              "path": "scripts/pm-filemanager-event-contracts.py",
+              "unit": "F-152",
+              "line_start": 1427,
+              "line_end": 1427,
+              "quote": "RetainedDispatcher(DfmOriginalOwner(model, selected_operation), installed_recipes(event_type, verify)).resolve("
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "F-152",
+              "line_start": 24662,
+              "line_end": 24662,
+              "quote": "Timestamps follow CV-1101 beside CV-253. Every format: date-time of these routes is checked by the shared"
+            },
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "F-152",
+              "line_start": 7267,
+              "line_end": 7267,
+              "quote": "shared CV-1101 date-time predicate (scripts/pm_event_datetime.py) as its format checker and adds"
             }
           ],
           "prior": {
@@ -1244,7 +1391,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Sweep part 2A guard tables and part 2B numbers adopted; part 2B timestamp items keep the cell PARTIAL."
+          "change_reason": "Sweep part 2B adopted; timestamps and SP-1101 are no longer reasons, the cell stays PARTIAL for the reasons named."
         }
       },
       "remaining_gaps": [
@@ -1557,7 +1704,7 @@
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "F-153 independently binds the exact revision-CAS withdrawal control and bounded physical/SP-337 storage without truncating the frozen drain set; backup and reader fences remain explicit.",
+          "finding": "F-153 independently binds the exact revision-CAS withdrawal control and bounded physical/SP-337 storage without truncating the frozen drain set; backup and reader fences remain explicit. Retained originals resolve through the shared SP-1101 RetainedDispatcher from sealed issuance custody (unavailable and unsupported recipes refuse without fallback); the frozen verifier keeps CV-1101/CV-253 profiles.",
           "evidence": [
             {
               "path": "Plans/FileManager.md",
@@ -1586,6 +1733,20 @@
               "line_start": 29869,
               "line_end": 29869,
               "quote": "A large family-control drain set uses the same complete-value reference"
+            },
+            {
+              "path": "scripts/pm-filemanager-event-contracts.py",
+              "unit": "F-153",
+              "line_start": 1415,
+              "line_end": 1415,
+              "quote": "def dispatch_retained_original(event_type, payload, trace, model, row, physical_operation, selected_operation):"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "F-153",
+              "line_start": 24671,
+              "line_end": 24671,
+              "quote": "write-time edition and frozen resource manifest come only from Storage's sealed issuance custody, never from"
             }
           ],
           "prior": {
@@ -1598,41 +1759,41 @@
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Every product refusal is a named Method B table row; the gated tool proves 232 of 234 rows lane-wide (177 by this family's own witnesses), 0 masked, 0 unrelated changes. The CV-1100/SP-1100 number scope is adopted (2^60 producer counterexample now refused). PARTIAL remains: schema keywords are verdict rows not cut one by one, IS02/QJ03 are unprovable by construction, timestamps (CV-1101) and SP-1101 dispatch are part 2B.",
+          "finding": "Every product refusal is a named Method B table row; the gated tool proves 234 of 237 rows lane-wide (181 by this family's own witnesses), 0 masked, 0 unrelated changes. CV-1100/SP-1100 numbers, CV-1101 date-time (shared date_time predicate: event_record profile at every format: date-time, CV-253 storage_utc_z at EventRecord observed_at_utc/persisted_at_utc; the 108 SWEEP-12 malformed timestamps now refuse) and SP-1101 retained dispatch are adopted. PARTIAL remains: schema keywords are verdict rows not cut one by one, IS02/QJ03/OD03 are unprovable by construction, and the shared datetime_validator and inventory gate run only at batch-2 integration.",
           "evidence": [
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "F-153",
-              "line_start": 1090,
-              "line_end": 1090,
+              "line_start": 1196,
+              "line_end": 1196,
               "quote": "def validate_settlement_inputs(payload, row, command_label=\"original command join\"):"
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "F-153",
-              "line_start": 293220,
-              "line_end": 293220,
+              "line_start": 293244,
+              "line_end": 293244,
               "quote": "\"name\": \"round7:settled-time\""
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "F-153",
-              "line_start": 87,
-              "line_end": 87,
+              "line_start": 90,
+              "line_end": 90,
               "quote": "def refuse(phase, facts, message=None, schema=None):"
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "F-153",
-              "line_start": 1487,
-              "line_end": 1487,
+              "line_start": 1710,
+              "line_end": 1710,
               "quote": "failures = _codec.storage_value_registry_data_failures(registry, path_label=\"Plans/storage_value_registry.json\")"
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "F-153",
-              "line_start": 1244,
-              "line_end": 1244,
+              "line_start": 1466,
+              "line_end": 1466,
               "quote": "digest, jcs_refusal = producer_semantic_digest(event), None"
             },
             {
@@ -1648,6 +1809,41 @@
               "line_start": 24650,
               "line_end": 24650,
               "quote": "Numbers follow CV-1100, SP-1100 and SP-1101 beside the existing CV-317, CV-339, SP-236, SP-286, SP-337 and"
+            },
+            {
+              "path": "scripts/pm-filemanager-event-contracts.py",
+              "unit": "F-153",
+              "line_start": 228,
+              "line_end": 228,
+              "quote": "DATE_TIME_FORMAT = datetime_format_checker(profile=EVENT_RECORD)"
+            },
+            {
+              "path": "scripts/pm-filemanager-event-contracts.py",
+              "unit": "F-153",
+              "line_start": 299,
+              "line_end": 299,
+              "quote": "date_time(record[field], profile=STORAGE_UTC_Z)"
+            },
+            {
+              "path": "scripts/pm-filemanager-event-contracts.py",
+              "unit": "F-153",
+              "line_start": 1427,
+              "line_end": 1427,
+              "quote": "RetainedDispatcher(DfmOriginalOwner(model, selected_operation), installed_recipes(event_type, verify)).resolve("
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "F-153",
+              "line_start": 24662,
+              "line_end": 24662,
+              "quote": "Timestamps follow CV-1101 beside CV-253. Every format: date-time of these routes is checked by the shared"
+            },
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "F-153",
+              "line_start": 7267,
+              "line_end": 7267,
+              "quote": "shared CV-1101 date-time predicate (scripts/pm_event_datetime.py) as its format checker and adds"
             }
           ],
           "prior": {
@@ -1655,7 +1851,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Sweep part 2A guard tables and part 2B numbers adopted; part 2B timestamp items keep the cell PARTIAL."
+          "change_reason": "Sweep part 2B adopted; timestamps and SP-1101 are no longer reasons, the cell stays PARTIAL for the reasons named."
         }
       },
       "remaining_gaps": [
@@ -1968,7 +2164,7 @@
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "F-154 independently binds the exact revision-CAS withdrawal control and bounded physical/SP-337 storage without truncating the frozen drain set; backup and reader fences remain explicit.",
+          "finding": "F-154 independently binds the exact revision-CAS withdrawal control and bounded physical/SP-337 storage without truncating the frozen drain set; backup and reader fences remain explicit. Retained originals resolve through the shared SP-1101 RetainedDispatcher from sealed issuance custody (unavailable and unsupported recipes refuse without fallback); the frozen verifier keeps CV-1101/CV-253 profiles.",
           "evidence": [
             {
               "path": "Plans/FileManager.md",
@@ -1997,6 +2193,20 @@
               "line_start": 29869,
               "line_end": 29869,
               "quote": "A large family-control drain set uses the same complete-value reference"
+            },
+            {
+              "path": "scripts/pm-filemanager-event-contracts.py",
+              "unit": "F-154",
+              "line_start": 1415,
+              "line_end": 1415,
+              "quote": "def dispatch_retained_original(event_type, payload, trace, model, row, physical_operation, selected_operation):"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "F-154",
+              "line_start": 24671,
+              "line_end": 24671,
+              "quote": "write-time edition and frozen resource manifest come only from Storage's sealed issuance custody, never from"
             }
           ],
           "prior": {
@@ -2009,41 +2219,41 @@
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Every product refusal is a named Method B table row; the gated tool proves 232 of 234 rows lane-wide (177 by this family's own witnesses), 0 masked, 0 unrelated changes. The CV-1100/SP-1100 number scope is adopted (2^60 producer counterexample now refused). PARTIAL remains: schema keywords are verdict rows not cut one by one, IS02/QJ03 are unprovable by construction, timestamps (CV-1101) and SP-1101 dispatch are part 2B.",
+          "finding": "Every product refusal is a named Method B table row; the gated tool proves 234 of 237 rows lane-wide (181 by this family's own witnesses), 0 masked, 0 unrelated changes. CV-1100/SP-1100 numbers, CV-1101 date-time (shared date_time predicate: event_record profile at every format: date-time, CV-253 storage_utc_z at EventRecord observed_at_utc/persisted_at_utc; the 108 SWEEP-12 malformed timestamps now refuse) and SP-1101 retained dispatch are adopted. PARTIAL remains: schema keywords are verdict rows not cut one by one, IS02/QJ03/OD03 are unprovable by construction, and the shared datetime_validator and inventory gate run only at batch-2 integration.",
           "evidence": [
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "F-154",
-              "line_start": 1090,
-              "line_end": 1090,
+              "line_start": 1196,
+              "line_end": 1196,
               "quote": "def validate_settlement_inputs(payload, row, command_label=\"original command join\"):"
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "F-154",
-              "line_start": 379154,
-              "line_end": 379154,
+              "line_start": 379184,
+              "line_end": 379184,
               "quote": "\"name\": \"round7:settled-time\""
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "F-154",
-              "line_start": 87,
-              "line_end": 87,
+              "line_start": 90,
+              "line_end": 90,
               "quote": "def refuse(phase, facts, message=None, schema=None):"
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "F-154",
-              "line_start": 1487,
-              "line_end": 1487,
+              "line_start": 1710,
+              "line_end": 1710,
               "quote": "failures = _codec.storage_value_registry_data_failures(registry, path_label=\"Plans/storage_value_registry.json\")"
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "F-154",
-              "line_start": 1244,
-              "line_end": 1244,
+              "line_start": 1466,
+              "line_end": 1466,
               "quote": "digest, jcs_refusal = producer_semantic_digest(event), None"
             },
             {
@@ -2059,6 +2269,41 @@
               "line_start": 24650,
               "line_end": 24650,
               "quote": "Numbers follow CV-1100, SP-1100 and SP-1101 beside the existing CV-317, CV-339, SP-236, SP-286, SP-337 and"
+            },
+            {
+              "path": "scripts/pm-filemanager-event-contracts.py",
+              "unit": "F-154",
+              "line_start": 228,
+              "line_end": 228,
+              "quote": "DATE_TIME_FORMAT = datetime_format_checker(profile=EVENT_RECORD)"
+            },
+            {
+              "path": "scripts/pm-filemanager-event-contracts.py",
+              "unit": "F-154",
+              "line_start": 299,
+              "line_end": 299,
+              "quote": "date_time(record[field], profile=STORAGE_UTC_Z)"
+            },
+            {
+              "path": "scripts/pm-filemanager-event-contracts.py",
+              "unit": "F-154",
+              "line_start": 1427,
+              "line_end": 1427,
+              "quote": "RetainedDispatcher(DfmOriginalOwner(model, selected_operation), installed_recipes(event_type, verify)).resolve("
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "F-154",
+              "line_start": 24662,
+              "line_end": 24662,
+              "quote": "Timestamps follow CV-1101 beside CV-253. Every format: date-time of these routes is checked by the shared"
+            },
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "F-154",
+              "line_start": 7267,
+              "line_end": 7267,
+              "quote": "shared CV-1101 date-time predicate (scripts/pm_event_datetime.py) as its format checker and adds"
             }
           ],
           "prior": {
@@ -2066,7 +2311,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Sweep part 2A guard tables and part 2B numbers adopted; part 2B timestamp items keep the cell PARTIAL."
+          "change_reason": "Sweep part 2B adopted; timestamps and SP-1101 are no longer reasons, the cell stays PARTIAL for the reasons named."
         }
       },
       "remaining_gaps": [
@@ -2379,7 +2624,7 @@
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "F-155 independently binds the exact revision-CAS withdrawal control and bounded physical/SP-337 storage without truncating the frozen drain set; backup and reader fences remain explicit.",
+          "finding": "F-155 independently binds the exact revision-CAS withdrawal control and bounded physical/SP-337 storage without truncating the frozen drain set; backup and reader fences remain explicit. Retained originals resolve through the shared SP-1101 RetainedDispatcher from sealed issuance custody (unavailable and unsupported recipes refuse without fallback); the frozen verifier keeps CV-1101/CV-253 profiles.",
           "evidence": [
             {
               "path": "Plans/FileManager.md",
@@ -2408,6 +2653,20 @@
               "line_start": 29869,
               "line_end": 29869,
               "quote": "A large family-control drain set uses the same complete-value reference"
+            },
+            {
+              "path": "scripts/pm-filemanager-event-contracts.py",
+              "unit": "F-155",
+              "line_start": 1415,
+              "line_end": 1415,
+              "quote": "def dispatch_retained_original(event_type, payload, trace, model, row, physical_operation, selected_operation):"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "F-155",
+              "line_start": 24671,
+              "line_end": 24671,
+              "quote": "write-time edition and frozen resource manifest come only from Storage's sealed issuance custody, never from"
             }
           ],
           "prior": {
@@ -2420,41 +2679,41 @@
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Every product refusal is a named Method B table row; the gated tool proves 232 of 234 rows lane-wide (179 by this family's own witnesses), 0 masked, 0 unrelated changes. The CV-1100/SP-1100 number scope is adopted (2^60 producer counterexample now refused). PARTIAL remains: schema keywords are verdict rows not cut one by one, IS02/QJ03 are unprovable by construction, timestamps (CV-1101) and SP-1101 dispatch are part 2B.",
+          "finding": "Every product refusal is a named Method B table row; the gated tool proves 234 of 237 rows lane-wide (183 by this family's own witnesses), 0 masked, 0 unrelated changes. CV-1100/SP-1100 numbers, CV-1101 date-time (shared date_time predicate: event_record profile at every format: date-time, CV-253 storage_utc_z at EventRecord observed_at_utc/persisted_at_utc; the 108 SWEEP-12 malformed timestamps now refuse) and SP-1101 retained dispatch are adopted. PARTIAL remains: schema keywords are verdict rows not cut one by one, IS02/QJ03/OD03 are unprovable by construction, and the shared datetime_validator and inventory gate run only at batch-2 integration.",
           "evidence": [
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "F-155",
-              "line_start": 1090,
-              "line_end": 1090,
+              "line_start": 1196,
+              "line_end": 1196,
               "quote": "def validate_settlement_inputs(payload, row, command_label=\"original command join\"):"
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "F-155",
-              "line_start": 467992,
-              "line_end": 467992,
+              "line_start": 468028,
+              "line_end": 468028,
               "quote": "\"name\": \"round7:settled-time\""
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "F-155",
-              "line_start": 87,
-              "line_end": 87,
+              "line_start": 90,
+              "line_end": 90,
               "quote": "def refuse(phase, facts, message=None, schema=None):"
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "F-155",
-              "line_start": 1487,
-              "line_end": 1487,
+              "line_start": 1710,
+              "line_end": 1710,
               "quote": "failures = _codec.storage_value_registry_data_failures(registry, path_label=\"Plans/storage_value_registry.json\")"
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "F-155",
-              "line_start": 1244,
-              "line_end": 1244,
+              "line_start": 1466,
+              "line_end": 1466,
               "quote": "digest, jcs_refusal = producer_semantic_digest(event), None"
             },
             {
@@ -2470,6 +2729,41 @@
               "line_start": 24650,
               "line_end": 24650,
               "quote": "Numbers follow CV-1100, SP-1100 and SP-1101 beside the existing CV-317, CV-339, SP-236, SP-286, SP-337 and"
+            },
+            {
+              "path": "scripts/pm-filemanager-event-contracts.py",
+              "unit": "F-155",
+              "line_start": 228,
+              "line_end": 228,
+              "quote": "DATE_TIME_FORMAT = datetime_format_checker(profile=EVENT_RECORD)"
+            },
+            {
+              "path": "scripts/pm-filemanager-event-contracts.py",
+              "unit": "F-155",
+              "line_start": 299,
+              "line_end": 299,
+              "quote": "date_time(record[field], profile=STORAGE_UTC_Z)"
+            },
+            {
+              "path": "scripts/pm-filemanager-event-contracts.py",
+              "unit": "F-155",
+              "line_start": 1427,
+              "line_end": 1427,
+              "quote": "RetainedDispatcher(DfmOriginalOwner(model, selected_operation), installed_recipes(event_type, verify)).resolve("
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "F-155",
+              "line_start": 24662,
+              "line_end": 24662,
+              "quote": "Timestamps follow CV-1101 beside CV-253. Every format: date-time of these routes is checked by the shared"
+            },
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "F-155",
+              "line_start": 7267,
+              "line_end": 7267,
+              "quote": "shared CV-1101 date-time predicate (scripts/pm_event_datetime.py) as its format checker and adds"
             }
           ],
           "prior": {
@@ -2477,7 +2771,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Sweep part 2A guard tables and part 2B numbers adopted; part 2B timestamp items keep the cell PARTIAL."
+          "change_reason": "Sweep part 2B adopted; timestamps and SP-1101 are no longer reasons, the cell stays PARTIAL for the reasons named."
         }
       },
       "remaining_gaps": [
@@ -2790,7 +3084,7 @@
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "F-156 independently binds the exact revision-CAS withdrawal control and bounded physical/SP-337 storage without truncating the frozen drain set; backup and reader fences remain explicit.",
+          "finding": "F-156 independently binds the exact revision-CAS withdrawal control and bounded physical/SP-337 storage without truncating the frozen drain set; backup and reader fences remain explicit. Retained originals resolve through the shared SP-1101 RetainedDispatcher from sealed issuance custody (unavailable and unsupported recipes refuse without fallback); the frozen verifier keeps CV-1101/CV-253 profiles.",
           "evidence": [
             {
               "path": "Plans/FileManager.md",
@@ -2819,6 +3113,20 @@
               "line_start": 29869,
               "line_end": 29869,
               "quote": "A large family-control drain set uses the same complete-value reference"
+            },
+            {
+              "path": "scripts/pm-filemanager-event-contracts.py",
+              "unit": "F-156",
+              "line_start": 1415,
+              "line_end": 1415,
+              "quote": "def dispatch_retained_original(event_type, payload, trace, model, row, physical_operation, selected_operation):"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "F-156",
+              "line_start": 24671,
+              "line_end": 24671,
+              "quote": "write-time edition and frozen resource manifest come only from Storage's sealed issuance custody, never from"
             }
           ],
           "prior": {
@@ -2831,41 +3139,41 @@
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Every product refusal is a named Method B table row; the gated tool proves 232 of 234 rows lane-wide (178 by this family's own witnesses), 0 masked, 0 unrelated changes. The CV-1100/SP-1100 number scope is adopted (2^60 producer counterexample now refused). PARTIAL remains: schema keywords are verdict rows not cut one by one, IS02/QJ03 are unprovable by construction, timestamps (CV-1101) and SP-1101 dispatch are part 2B.",
+          "finding": "Every product refusal is a named Method B table row; the gated tool proves 234 of 237 rows lane-wide (182 by this family's own witnesses), 0 masked, 0 unrelated changes. CV-1100/SP-1100 numbers, CV-1101 date-time (shared date_time predicate: event_record profile at every format: date-time, CV-253 storage_utc_z at EventRecord observed_at_utc/persisted_at_utc; the 108 SWEEP-12 malformed timestamps now refuse) and SP-1101 retained dispatch are adopted. PARTIAL remains: schema keywords are verdict rows not cut one by one, IS02/QJ03/OD03 are unprovable by construction, and the shared datetime_validator and inventory gate run only at batch-2 integration.",
           "evidence": [
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "F-156",
-              "line_start": 1090,
-              "line_end": 1090,
+              "line_start": 1196,
+              "line_end": 1196,
               "quote": "def validate_settlement_inputs(payload, row, command_label=\"original command join\"):"
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "F-156",
-              "line_start": 553747,
-              "line_end": 553747,
+              "line_start": 553789,
+              "line_end": 553789,
               "quote": "\"name\": \"round7:settled-time\""
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "F-156",
-              "line_start": 87,
-              "line_end": 87,
+              "line_start": 90,
+              "line_end": 90,
               "quote": "def refuse(phase, facts, message=None, schema=None):"
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "F-156",
-              "line_start": 1487,
-              "line_end": 1487,
+              "line_start": 1710,
+              "line_end": 1710,
               "quote": "failures = _codec.storage_value_registry_data_failures(registry, path_label=\"Plans/storage_value_registry.json\")"
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "F-156",
-              "line_start": 1244,
-              "line_end": 1244,
+              "line_start": 1466,
+              "line_end": 1466,
               "quote": "digest, jcs_refusal = producer_semantic_digest(event), None"
             },
             {
@@ -2881,6 +3189,41 @@
               "line_start": 24650,
               "line_end": 24650,
               "quote": "Numbers follow CV-1100, SP-1100 and SP-1101 beside the existing CV-317, CV-339, SP-236, SP-286, SP-337 and"
+            },
+            {
+              "path": "scripts/pm-filemanager-event-contracts.py",
+              "unit": "F-156",
+              "line_start": 228,
+              "line_end": 228,
+              "quote": "DATE_TIME_FORMAT = datetime_format_checker(profile=EVENT_RECORD)"
+            },
+            {
+              "path": "scripts/pm-filemanager-event-contracts.py",
+              "unit": "F-156",
+              "line_start": 299,
+              "line_end": 299,
+              "quote": "date_time(record[field], profile=STORAGE_UTC_Z)"
+            },
+            {
+              "path": "scripts/pm-filemanager-event-contracts.py",
+              "unit": "F-156",
+              "line_start": 1427,
+              "line_end": 1427,
+              "quote": "RetainedDispatcher(DfmOriginalOwner(model, selected_operation), installed_recipes(event_type, verify)).resolve("
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "F-156",
+              "line_start": 24662,
+              "line_end": 24662,
+              "quote": "Timestamps follow CV-1101 beside CV-253. Every format: date-time of these routes is checked by the shared"
+            },
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "F-156",
+              "line_start": 7267,
+              "line_end": 7267,
+              "quote": "shared CV-1101 date-time predicate (scripts/pm_event_datetime.py) as its format checker and adds"
             }
           ],
           "prior": {
@@ -2888,7 +3231,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Sweep part 2A guard tables and part 2B numbers adopted; part 2B timestamp items keep the cell PARTIAL."
+          "change_reason": "Sweep part 2B adopted; timestamps and SP-1101 are no longer reasons, the cell stays PARTIAL for the reasons named."
         }
       },
       "remaining_gaps": [
@@ -3201,7 +3544,7 @@
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "F-157 independently binds the exact revision-CAS withdrawal control and bounded physical/SP-337 storage without truncating the frozen drain set; backup and reader fences remain explicit.",
+          "finding": "F-157 independently binds the exact revision-CAS withdrawal control and bounded physical/SP-337 storage without truncating the frozen drain set; backup and reader fences remain explicit. Retained originals resolve through the shared SP-1101 RetainedDispatcher from sealed issuance custody (unavailable and unsupported recipes refuse without fallback); the frozen verifier keeps CV-1101/CV-253 profiles.",
           "evidence": [
             {
               "path": "Plans/FileManager.md",
@@ -3230,6 +3573,20 @@
               "line_start": 29869,
               "line_end": 29869,
               "quote": "A large family-control drain set uses the same complete-value reference"
+            },
+            {
+              "path": "scripts/pm-filemanager-event-contracts.py",
+              "unit": "F-157",
+              "line_start": 1415,
+              "line_end": 1415,
+              "quote": "def dispatch_retained_original(event_type, payload, trace, model, row, physical_operation, selected_operation):"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "F-157",
+              "line_start": 24671,
+              "line_end": 24671,
+              "quote": "write-time edition and frozen resource manifest come only from Storage's sealed issuance custody, never from"
             }
           ],
           "prior": {
@@ -3242,41 +3599,41 @@
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Every product refusal is a named Method B table row; the gated tool proves 232 of 234 rows lane-wide (185 by this family's own witnesses), 0 masked, 0 unrelated changes. The CV-1100/SP-1100 number scope is adopted (2^60 producer counterexample now refused). PARTIAL remains: schema keywords are verdict rows not cut one by one, IS02/QJ03 are unprovable by construction, timestamps (CV-1101) and SP-1101 dispatch are part 2B.",
+          "finding": "Every product refusal is a named Method B table row; the gated tool proves 234 of 237 rows lane-wide (189 by this family's own witnesses), 0 masked, 0 unrelated changes. CV-1100/SP-1100 numbers, CV-1101 date-time (shared date_time predicate: event_record profile at every format: date-time, CV-253 storage_utc_z at EventRecord observed_at_utc/persisted_at_utc; the 108 SWEEP-12 malformed timestamps now refuse) and SP-1101 retained dispatch are adopted. PARTIAL remains: schema keywords are verdict rows not cut one by one, IS02/QJ03/OD03 are unprovable by construction, and the shared datetime_validator and inventory gate run only at batch-2 integration.",
           "evidence": [
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "F-157",
-              "line_start": 1090,
-              "line_end": 1090,
+              "line_start": 1196,
+              "line_end": 1196,
               "quote": "def validate_settlement_inputs(payload, row, command_label=\"original command join\"):"
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "F-157",
-              "line_start": 640273,
-              "line_end": 640273,
+              "line_start": 640321,
+              "line_end": 640321,
               "quote": "\"name\": \"round7:settled-time\""
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "F-157",
-              "line_start": 87,
-              "line_end": 87,
+              "line_start": 90,
+              "line_end": 90,
               "quote": "def refuse(phase, facts, message=None, schema=None):"
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "F-157",
-              "line_start": 1487,
-              "line_end": 1487,
+              "line_start": 1710,
+              "line_end": 1710,
               "quote": "failures = _codec.storage_value_registry_data_failures(registry, path_label=\"Plans/storage_value_registry.json\")"
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "F-157",
-              "line_start": 1244,
-              "line_end": 1244,
+              "line_start": 1466,
+              "line_end": 1466,
               "quote": "digest, jcs_refusal = producer_semantic_digest(event), None"
             },
             {
@@ -3292,6 +3649,41 @@
               "line_start": 24650,
               "line_end": 24650,
               "quote": "Numbers follow CV-1100, SP-1100 and SP-1101 beside the existing CV-317, CV-339, SP-236, SP-286, SP-337 and"
+            },
+            {
+              "path": "scripts/pm-filemanager-event-contracts.py",
+              "unit": "F-157",
+              "line_start": 228,
+              "line_end": 228,
+              "quote": "DATE_TIME_FORMAT = datetime_format_checker(profile=EVENT_RECORD)"
+            },
+            {
+              "path": "scripts/pm-filemanager-event-contracts.py",
+              "unit": "F-157",
+              "line_start": 299,
+              "line_end": 299,
+              "quote": "date_time(record[field], profile=STORAGE_UTC_Z)"
+            },
+            {
+              "path": "scripts/pm-filemanager-event-contracts.py",
+              "unit": "F-157",
+              "line_start": 1427,
+              "line_end": 1427,
+              "quote": "RetainedDispatcher(DfmOriginalOwner(model, selected_operation), installed_recipes(event_type, verify)).resolve("
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "F-157",
+              "line_start": 24662,
+              "line_end": 24662,
+              "quote": "Timestamps follow CV-1101 beside CV-253. Every format: date-time of these routes is checked by the shared"
+            },
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "F-157",
+              "line_start": 7267,
+              "line_end": 7267,
+              "quote": "shared CV-1101 date-time predicate (scripts/pm_event_datetime.py) as its format checker and adds"
             }
           ],
           "prior": {
@@ -3299,7 +3691,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Sweep part 2A guard tables and part 2B numbers adopted; part 2B timestamp items keep the cell PARTIAL."
+          "change_reason": "Sweep part 2B adopted; timestamps and SP-1101 are no longer reasons, the cell stays PARTIAL for the reasons named."
         }
       },
       "remaining_gaps": [
@@ -3612,7 +4004,7 @@
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "F-158 independently binds the exact revision-CAS withdrawal control and bounded physical/SP-337 storage without truncating the frozen drain set; backup and reader fences remain explicit.",
+          "finding": "F-158 independently binds the exact revision-CAS withdrawal control and bounded physical/SP-337 storage without truncating the frozen drain set; backup and reader fences remain explicit. Retained originals resolve through the shared SP-1101 RetainedDispatcher from sealed issuance custody (unavailable and unsupported recipes refuse without fallback); the frozen verifier keeps CV-1101/CV-253 profiles.",
           "evidence": [
             {
               "path": "Plans/FileManager.md",
@@ -3641,6 +4033,20 @@
               "line_start": 29869,
               "line_end": 29869,
               "quote": "A large family-control drain set uses the same complete-value reference"
+            },
+            {
+              "path": "scripts/pm-filemanager-event-contracts.py",
+              "unit": "F-158",
+              "line_start": 1415,
+              "line_end": 1415,
+              "quote": "def dispatch_retained_original(event_type, payload, trace, model, row, physical_operation, selected_operation):"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "F-158",
+              "line_start": 24671,
+              "line_end": 24671,
+              "quote": "write-time edition and frozen resource manifest come only from Storage's sealed issuance custody, never from"
             }
           ],
           "prior": {
@@ -3653,41 +4059,41 @@
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Every product refusal is a named Method B table row; the gated tool proves 232 of 234 rows lane-wide (177 by this family's own witnesses), 0 masked, 0 unrelated changes. The CV-1100/SP-1100 number scope is adopted (2^60 producer counterexample now refused). PARTIAL remains: schema keywords are verdict rows not cut one by one, IS02/QJ03 are unprovable by construction, timestamps (CV-1101) and SP-1101 dispatch are part 2B.",
+          "finding": "Every product refusal is a named Method B table row; the gated tool proves 234 of 237 rows lane-wide (181 by this family's own witnesses), 0 masked, 0 unrelated changes. CV-1100/SP-1100 numbers, CV-1101 date-time (shared date_time predicate: event_record profile at every format: date-time, CV-253 storage_utc_z at EventRecord observed_at_utc/persisted_at_utc; the 108 SWEEP-12 malformed timestamps now refuse) and SP-1101 retained dispatch are adopted. PARTIAL remains: schema keywords are verdict rows not cut one by one, IS02/QJ03/OD03 are unprovable by construction, and the shared datetime_validator and inventory gate run only at batch-2 integration.",
           "evidence": [
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "F-158",
-              "line_start": 1090,
-              "line_end": 1090,
+              "line_start": 1196,
+              "line_end": 1196,
               "quote": "def validate_settlement_inputs(payload, row, command_label=\"original command join\"):"
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "F-158",
-              "line_start": 720976,
-              "line_end": 720976,
+              "line_start": 721030,
+              "line_end": 721030,
               "quote": "\"name\": \"round7:settled-time\""
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "F-158",
-              "line_start": 87,
-              "line_end": 87,
+              "line_start": 90,
+              "line_end": 90,
               "quote": "def refuse(phase, facts, message=None, schema=None):"
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "F-158",
-              "line_start": 1487,
-              "line_end": 1487,
+              "line_start": 1710,
+              "line_end": 1710,
               "quote": "failures = _codec.storage_value_registry_data_failures(registry, path_label=\"Plans/storage_value_registry.json\")"
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "F-158",
-              "line_start": 1244,
-              "line_end": 1244,
+              "line_start": 1466,
+              "line_end": 1466,
               "quote": "digest, jcs_refusal = producer_semantic_digest(event), None"
             },
             {
@@ -3703,6 +4109,41 @@
               "line_start": 24650,
               "line_end": 24650,
               "quote": "Numbers follow CV-1100, SP-1100 and SP-1101 beside the existing CV-317, CV-339, SP-236, SP-286, SP-337 and"
+            },
+            {
+              "path": "scripts/pm-filemanager-event-contracts.py",
+              "unit": "F-158",
+              "line_start": 228,
+              "line_end": 228,
+              "quote": "DATE_TIME_FORMAT = datetime_format_checker(profile=EVENT_RECORD)"
+            },
+            {
+              "path": "scripts/pm-filemanager-event-contracts.py",
+              "unit": "F-158",
+              "line_start": 299,
+              "line_end": 299,
+              "quote": "date_time(record[field], profile=STORAGE_UTC_Z)"
+            },
+            {
+              "path": "scripts/pm-filemanager-event-contracts.py",
+              "unit": "F-158",
+              "line_start": 1427,
+              "line_end": 1427,
+              "quote": "RetainedDispatcher(DfmOriginalOwner(model, selected_operation), installed_recipes(event_type, verify)).resolve("
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "F-158",
+              "line_start": 24662,
+              "line_end": 24662,
+              "quote": "Timestamps follow CV-1101 beside CV-253. Every format: date-time of these routes is checked by the shared"
+            },
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "F-158",
+              "line_start": 7267,
+              "line_end": 7267,
+              "quote": "shared CV-1101 date-time predicate (scripts/pm_event_datetime.py) as its format checker and adds"
             }
           ],
           "prior": {
@@ -3710,7 +4151,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Sweep part 2A guard tables and part 2B numbers adopted; part 2B timestamp items keep the cell PARTIAL."
+          "change_reason": "Sweep part 2B adopted; timestamps and SP-1101 are no longer reasons, the cell stays PARTIAL for the reasons named."
         }
       },
       "remaining_gaps": [
@@ -4023,7 +4464,7 @@
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "F-159 independently binds the exact revision-CAS withdrawal control and bounded physical/SP-337 storage without truncating the frozen drain set; backup and reader fences remain explicit.",
+          "finding": "F-159 independently binds the exact revision-CAS withdrawal control and bounded physical/SP-337 storage without truncating the frozen drain set; backup and reader fences remain explicit. Retained originals resolve through the shared SP-1101 RetainedDispatcher from sealed issuance custody (unavailable and unsupported recipes refuse without fallback); the frozen verifier keeps CV-1101/CV-253 profiles.",
           "evidence": [
             {
               "path": "Plans/FileManager.md",
@@ -4052,6 +4493,20 @@
               "line_start": 29869,
               "line_end": 29869,
               "quote": "A large family-control drain set uses the same complete-value reference"
+            },
+            {
+              "path": "scripts/pm-filemanager-event-contracts.py",
+              "unit": "F-159",
+              "line_start": 1415,
+              "line_end": 1415,
+              "quote": "def dispatch_retained_original(event_type, payload, trace, model, row, physical_operation, selected_operation):"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "F-159",
+              "line_start": 24671,
+              "line_end": 24671,
+              "quote": "write-time edition and frozen resource manifest come only from Storage's sealed issuance custody, never from"
             }
           ],
           "prior": {
@@ -4064,41 +4519,41 @@
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Every product refusal is a named Method B table row; the gated tool proves 232 of 234 rows lane-wide (178 by this family's own witnesses), 0 masked, 0 unrelated changes. The CV-1100/SP-1100 number scope is adopted (2^60 producer counterexample now refused). PARTIAL remains: schema keywords are verdict rows not cut one by one, IS02/QJ03 are unprovable by construction, timestamps (CV-1101) and SP-1101 dispatch are part 2B.",
+          "finding": "Every product refusal is a named Method B table row; the gated tool proves 234 of 237 rows lane-wide (182 by this family's own witnesses), 0 masked, 0 unrelated changes. CV-1100/SP-1100 numbers, CV-1101 date-time (shared date_time predicate: event_record profile at every format: date-time, CV-253 storage_utc_z at EventRecord observed_at_utc/persisted_at_utc; the 108 SWEEP-12 malformed timestamps now refuse) and SP-1101 retained dispatch are adopted. PARTIAL remains: schema keywords are verdict rows not cut one by one, IS02/QJ03/OD03 are unprovable by construction, and the shared datetime_validator and inventory gate run only at batch-2 integration.",
           "evidence": [
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "F-159",
-              "line_start": 1090,
-              "line_end": 1090,
+              "line_start": 1196,
+              "line_end": 1196,
               "quote": "def validate_settlement_inputs(payload, row, command_label=\"original command join\"):"
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "F-159",
-              "line_start": 801023,
-              "line_end": 801023,
+              "line_start": 801083,
+              "line_end": 801083,
               "quote": "\"name\": \"round7:settled-time\""
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "F-159",
-              "line_start": 87,
-              "line_end": 87,
+              "line_start": 90,
+              "line_end": 90,
               "quote": "def refuse(phase, facts, message=None, schema=None):"
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "F-159",
-              "line_start": 1487,
-              "line_end": 1487,
+              "line_start": 1710,
+              "line_end": 1710,
               "quote": "failures = _codec.storage_value_registry_data_failures(registry, path_label=\"Plans/storage_value_registry.json\")"
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "F-159",
-              "line_start": 1244,
-              "line_end": 1244,
+              "line_start": 1466,
+              "line_end": 1466,
               "quote": "digest, jcs_refusal = producer_semantic_digest(event), None"
             },
             {
@@ -4114,6 +4569,41 @@
               "line_start": 24650,
               "line_end": 24650,
               "quote": "Numbers follow CV-1100, SP-1100 and SP-1101 beside the existing CV-317, CV-339, SP-236, SP-286, SP-337 and"
+            },
+            {
+              "path": "scripts/pm-filemanager-event-contracts.py",
+              "unit": "F-159",
+              "line_start": 228,
+              "line_end": 228,
+              "quote": "DATE_TIME_FORMAT = datetime_format_checker(profile=EVENT_RECORD)"
+            },
+            {
+              "path": "scripts/pm-filemanager-event-contracts.py",
+              "unit": "F-159",
+              "line_start": 299,
+              "line_end": 299,
+              "quote": "date_time(record[field], profile=STORAGE_UTC_Z)"
+            },
+            {
+              "path": "scripts/pm-filemanager-event-contracts.py",
+              "unit": "F-159",
+              "line_start": 1427,
+              "line_end": 1427,
+              "quote": "RetainedDispatcher(DfmOriginalOwner(model, selected_operation), installed_recipes(event_type, verify)).resolve("
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "F-159",
+              "line_start": 24662,
+              "line_end": 24662,
+              "quote": "Timestamps follow CV-1101 beside CV-253. Every format: date-time of these routes is checked by the shared"
+            },
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "F-159",
+              "line_start": 7267,
+              "line_end": 7267,
+              "quote": "shared CV-1101 date-time predicate (scripts/pm_event_datetime.py) as its format checker and adds"
             }
           ],
           "prior": {
@@ -4121,7 +4611,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Sweep part 2A guard tables and part 2B numbers adopted; part 2B timestamp items keep the cell PARTIAL."
+          "change_reason": "Sweep part 2B adopted; timestamps and SP-1101 are no longer reasons, the cell stays PARTIAL for the reasons named."
         }
       },
       "remaining_gaps": [
@@ -4434,7 +4924,7 @@
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "F-160 independently binds the exact revision-CAS withdrawal control and bounded physical/SP-337 storage without truncating the frozen drain set; backup and reader fences remain explicit.",
+          "finding": "F-160 independently binds the exact revision-CAS withdrawal control and bounded physical/SP-337 storage without truncating the frozen drain set; backup and reader fences remain explicit. Retained originals resolve through the shared SP-1101 RetainedDispatcher from sealed issuance custody (unavailable and unsupported recipes refuse without fallback); the frozen verifier keeps CV-1101/CV-253 profiles.",
           "evidence": [
             {
               "path": "Plans/FileManager.md",
@@ -4463,6 +4953,20 @@
               "line_start": 29869,
               "line_end": 29869,
               "quote": "A large family-control drain set uses the same complete-value reference"
+            },
+            {
+              "path": "scripts/pm-filemanager-event-contracts.py",
+              "unit": "F-160",
+              "line_start": 1415,
+              "line_end": 1415,
+              "quote": "def dispatch_retained_original(event_type, payload, trace, model, row, physical_operation, selected_operation):"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "F-160",
+              "line_start": 24671,
+              "line_end": 24671,
+              "quote": "write-time edition and frozen resource manifest come only from Storage's sealed issuance custody, never from"
             }
           ],
           "prior": {
@@ -4475,41 +4979,41 @@
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Every product refusal is a named Method B table row; the gated tool proves 232 of 234 rows lane-wide (177 by this family's own witnesses), 0 masked, 0 unrelated changes. The CV-1100/SP-1100 number scope is adopted (2^60 producer counterexample now refused). PARTIAL remains: schema keywords are verdict rows not cut one by one, IS02/QJ03 are unprovable by construction, timestamps (CV-1101) and SP-1101 dispatch are part 2B.",
+          "finding": "Every product refusal is a named Method B table row; the gated tool proves 234 of 237 rows lane-wide (181 by this family's own witnesses), 0 masked, 0 unrelated changes. CV-1100/SP-1100 numbers, CV-1101 date-time (shared date_time predicate: event_record profile at every format: date-time, CV-253 storage_utc_z at EventRecord observed_at_utc/persisted_at_utc; the 108 SWEEP-12 malformed timestamps now refuse) and SP-1101 retained dispatch are adopted. PARTIAL remains: schema keywords are verdict rows not cut one by one, IS02/QJ03/OD03 are unprovable by construction, and the shared datetime_validator and inventory gate run only at batch-2 integration.",
           "evidence": [
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "F-160",
-              "line_start": 1090,
-              "line_end": 1090,
+              "line_start": 1196,
+              "line_end": 1196,
               "quote": "def validate_settlement_inputs(payload, row, command_label=\"original command join\"):"
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "F-160",
-              "line_start": 888565,
-              "line_end": 888565,
+              "line_start": 888631,
+              "line_end": 888631,
               "quote": "\"name\": \"round7:settled-time\""
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "F-160",
-              "line_start": 87,
-              "line_end": 87,
+              "line_start": 90,
+              "line_end": 90,
               "quote": "def refuse(phase, facts, message=None, schema=None):"
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "F-160",
-              "line_start": 1487,
-              "line_end": 1487,
+              "line_start": 1710,
+              "line_end": 1710,
               "quote": "failures = _codec.storage_value_registry_data_failures(registry, path_label=\"Plans/storage_value_registry.json\")"
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "F-160",
-              "line_start": 1244,
-              "line_end": 1244,
+              "line_start": 1466,
+              "line_end": 1466,
               "quote": "digest, jcs_refusal = producer_semantic_digest(event), None"
             },
             {
@@ -4525,6 +5029,41 @@
               "line_start": 24650,
               "line_end": 24650,
               "quote": "Numbers follow CV-1100, SP-1100 and SP-1101 beside the existing CV-317, CV-339, SP-236, SP-286, SP-337 and"
+            },
+            {
+              "path": "scripts/pm-filemanager-event-contracts.py",
+              "unit": "F-160",
+              "line_start": 228,
+              "line_end": 228,
+              "quote": "DATE_TIME_FORMAT = datetime_format_checker(profile=EVENT_RECORD)"
+            },
+            {
+              "path": "scripts/pm-filemanager-event-contracts.py",
+              "unit": "F-160",
+              "line_start": 299,
+              "line_end": 299,
+              "quote": "date_time(record[field], profile=STORAGE_UTC_Z)"
+            },
+            {
+              "path": "scripts/pm-filemanager-event-contracts.py",
+              "unit": "F-160",
+              "line_start": 1427,
+              "line_end": 1427,
+              "quote": "RetainedDispatcher(DfmOriginalOwner(model, selected_operation), installed_recipes(event_type, verify)).resolve("
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "F-160",
+              "line_start": 24662,
+              "line_end": 24662,
+              "quote": "Timestamps follow CV-1101 beside CV-253. Every format: date-time of these routes is checked by the shared"
+            },
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "F-160",
+              "line_start": 7267,
+              "line_end": 7267,
+              "quote": "shared CV-1101 date-time predicate (scripts/pm_event_datetime.py) as its format checker and adds"
             }
           ],
           "prior": {
@@ -4532,7 +5071,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Sweep part 2A guard tables and part 2B numbers adopted; part 2B timestamp items keep the cell PARTIAL."
+          "change_reason": "Sweep part 2B adopted; timestamps and SP-1101 are no longer reasons, the cell stays PARTIAL for the reasons named."
         }
       },
       "remaining_gaps": [
@@ -4845,7 +5384,7 @@
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "F-161 independently binds the exact revision-CAS withdrawal control and bounded physical/SP-337 storage without truncating the frozen drain set; backup and reader fences remain explicit.",
+          "finding": "F-161 independently binds the exact revision-CAS withdrawal control and bounded physical/SP-337 storage without truncating the frozen drain set; backup and reader fences remain explicit. Retained originals resolve through the shared SP-1101 RetainedDispatcher from sealed issuance custody (unavailable and unsupported recipes refuse without fallback); the frozen verifier keeps CV-1101/CV-253 profiles.",
           "evidence": [
             {
               "path": "Plans/FileManager.md",
@@ -4874,6 +5413,20 @@
               "line_start": 29869,
               "line_end": 29869,
               "quote": "A large family-control drain set uses the same complete-value reference"
+            },
+            {
+              "path": "scripts/pm-filemanager-event-contracts.py",
+              "unit": "F-161",
+              "line_start": 1415,
+              "line_end": 1415,
+              "quote": "def dispatch_retained_original(event_type, payload, trace, model, row, physical_operation, selected_operation):"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "F-161",
+              "line_start": 24671,
+              "line_end": 24671,
+              "quote": "write-time edition and frozen resource manifest come only from Storage's sealed issuance custody, never from"
             }
           ],
           "prior": {
@@ -4886,41 +5439,41 @@
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Every product refusal is a named Method B table row; the gated tool proves 232 of 234 rows lane-wide (180 by this family's own witnesses), 0 masked, 0 unrelated changes. The CV-1100/SP-1100 number scope is adopted (2^60 producer counterexample now refused). PARTIAL remains: schema keywords are verdict rows not cut one by one, IS02/QJ03 are unprovable by construction, timestamps (CV-1101) and SP-1101 dispatch are part 2B.",
+          "finding": "Every product refusal is a named Method B table row; the gated tool proves 234 of 237 rows lane-wide (184 by this family's own witnesses), 0 masked, 0 unrelated changes. CV-1100/SP-1100 numbers, CV-1101 date-time (shared date_time predicate: event_record profile at every format: date-time, CV-253 storage_utc_z at EventRecord observed_at_utc/persisted_at_utc; the 108 SWEEP-12 malformed timestamps now refuse) and SP-1101 retained dispatch are adopted. PARTIAL remains: schema keywords are verdict rows not cut one by one, IS02/QJ03/OD03 are unprovable by construction, and the shared datetime_validator and inventory gate run only at batch-2 integration.",
           "evidence": [
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "F-161",
-              "line_start": 1090,
-              "line_end": 1090,
+              "line_start": 1196,
+              "line_end": 1196,
               "quote": "def validate_settlement_inputs(payload, row, command_label=\"original command join\"):"
             },
             {
               "path": "Plans/filemanager_event_contract_fixtures.json",
               "unit": "F-161",
-              "line_start": 977901,
-              "line_end": 977901,
+              "line_start": 977973,
+              "line_end": 977973,
               "quote": "\"name\": \"round7:settled-time\""
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "F-161",
-              "line_start": 87,
-              "line_end": 87,
+              "line_start": 90,
+              "line_end": 90,
               "quote": "def refuse(phase, facts, message=None, schema=None):"
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "F-161",
-              "line_start": 1487,
-              "line_end": 1487,
+              "line_start": 1710,
+              "line_end": 1710,
               "quote": "failures = _codec.storage_value_registry_data_failures(registry, path_label=\"Plans/storage_value_registry.json\")"
             },
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "F-161",
-              "line_start": 1244,
-              "line_end": 1244,
+              "line_start": 1466,
+              "line_end": 1466,
               "quote": "digest, jcs_refusal = producer_semantic_digest(event), None"
             },
             {
@@ -4936,6 +5489,41 @@
               "line_start": 24650,
               "line_end": 24650,
               "quote": "Numbers follow CV-1100, SP-1100 and SP-1101 beside the existing CV-317, CV-339, SP-236, SP-286, SP-337 and"
+            },
+            {
+              "path": "scripts/pm-filemanager-event-contracts.py",
+              "unit": "F-161",
+              "line_start": 228,
+              "line_end": 228,
+              "quote": "DATE_TIME_FORMAT = datetime_format_checker(profile=EVENT_RECORD)"
+            },
+            {
+              "path": "scripts/pm-filemanager-event-contracts.py",
+              "unit": "F-161",
+              "line_start": 299,
+              "line_end": 299,
+              "quote": "date_time(record[field], profile=STORAGE_UTC_Z)"
+            },
+            {
+              "path": "scripts/pm-filemanager-event-contracts.py",
+              "unit": "F-161",
+              "line_start": 1427,
+              "line_end": 1427,
+              "quote": "RetainedDispatcher(DfmOriginalOwner(model, selected_operation), installed_recipes(event_type, verify)).resolve("
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "F-161",
+              "line_start": 24662,
+              "line_end": 24662,
+              "quote": "Timestamps follow CV-1101 beside CV-253. Every format: date-time of these routes is checked by the shared"
+            },
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "F-161",
+              "line_start": 7267,
+              "line_end": 7267,
+              "quote": "shared CV-1101 date-time predicate (scripts/pm_event_datetime.py) as its format checker and adds"
             }
           ],
           "prior": {
@@ -4943,7 +5531,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Sweep part 2A guard tables and part 2B numbers adopted; part 2B timestamp items keep the cell PARTIAL."
+          "change_reason": "Sweep part 2B adopted; timestamps and SP-1101 are no longer reasons, the cell stays PARTIAL for the reasons named."
         }
       },
       "remaining_gaps": [
@@ -4963,21 +5551,21 @@
       "notes": "Sweep part 1: B4 fixed; complete family suite passes. Q remains PARTIAL for shared number/date-time and guard-tool work, including restored redundant assertion accounting. Native NOT_RUN."
     }
   ],
-  "review_round": "sweep-p2a+p2b-numbers",
+  "review_round": "sweep-p2b",
   "review_before_counts": {
     "PASS": 108,
     "PARTIAL": 24,
     "ABSENT": 12
   },
   "prepared_families": 0,
-  "review_cap_note": "Part 2A (guard tables on the gated tool) and the part 2B number scope are adopted; the part 2B timestamp items (CV-1101, SWEEP-12) and SP-1101 retained dispatch remain, then Sol and Astra review. No lane is READY.",
+  "review_cap_note": "Sweep parts 2A and 2B are adopted (guard tables, CV-1100/SP-1100 numbers, CV-1101 date-time through the shared date_time predicate, SP-1101 retained dispatch). The shared datetime_validator and the whole-Plans date-time inventory gate run at batch-2 integration; Sol and Astra review batch 2. No lane is READY.",
   "guard_table_ref": "reports/event-authority-20261104/DFM.guard-tables.json",
   "limitations": [
     "Membership ABSENT; event-history retention PENDING_RETENTION_DECISION; native execution and native filesystem alias authentication NOT_RUN.",
-    "Guard tables: the gated tool proves 232 of 234 rows; IS02_integer_range and QJ03_jcs_other are unprovable by construction (named reasons) and earn no credit.",
+    "Guard tables: the gated tool proves 234 of 237 rows; IS02_integer_range, QJ03_jcs_other and OD03_dispatch_other are unprovable by construction (named reasons and lane evidence) and earn no credit.",
     "Each JSON Schema occurrence is one verdict row; schema keywords are not cut one by one in the shared tool.",
-    "Timestamp fields (part 2B, CV-1101 / SWEEP-12): the format checker in use does not enforce date-time; the review here is interim only.",
-    "SP-1101 authenticated retained-recipe dispatch is part 2B (its frozen resources carry the date-time profiles).",
+    "Timestamps: every format: date-time runs the shared CV-1101 date_time predicate (event_record profile) and EventRecord observed_at_utc/persisted_at_utc add CV-253 storage_utc_z; the shared datetime_validator and the date-time inventory gate refuse in this lane tree on hash drift from Plans edits and run at batch-2 integration.",
+    "SP-1101: the custody model is the finite fixture's sealed lookup; owner and reader read the same original, so the binding equality is structural; native custody authentication NOT_RUN.",
     "Plan-index validation compares against live origin/main; node readiness remains blocked_runtime_certification_incomplete. No landing, governance, Event admission or reseal is claimed."
   ]
 }

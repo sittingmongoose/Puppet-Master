@@ -1,4 +1,236 @@
-# DFM — sweep part 2A (guard tables on the gated tool) and part 2B numbers
+# DFM — sweep part 2B (CV-1101 date-time, SP-1101 retained dispatch)
+
+Branch `plans/ea-w2-filemanager-20261104`; start: part 2A head `32f302f600`. Gated NUMRULE merge `dfd845d641`: exactly `58c2816ff3`, `--no-ff`, clean with no conflict. It adds only the seven date-time files (`scripts/pm_event_datetime*.py`, `scripts/pm_event_datetime_mutations.json`, `scripts/pm_event_datetime_node_controls.json`, `reports/event-authority-20261104/NUMRULE.md`). The number-scope files at `58c2816ff3` are byte-identical to the `a16f67c1ef` merged in part 2A, and each merged file equals `git show 58c2816ff3:<path>`. No NUMRULE file is edited, so neither addendum-1 resolution was needed. No rebase. Implementation commits: `47c4e3464f` (checker, tables, builder, fixtures, witnesses), `3cb373f91f` (CV-560, ATS-280, shards, index), `9c5c93a17e` (registry-regression harness). The report commit is in the external `HEAD.txt`.
+
+**All twelve families keep their grades: 108 PASS / 24 PARTIAL / 12 ABSENT.** Every DFM timestamp field now goes through the shared CV-1101 predicate `pm_event_datetime.date_time`, with its profile named per field in the table below. My timestamp review is **no longer interim** for those fields. SWEEP-12 is closed: the 108 malformed timestamps the cycle-7 diagnostic found accepted (9 forms × 12 families) now refuse, together with 4 more malformed forms (48 witnesses). SP-1101 retained dispatch goes through the shared `RetainedDispatcher`.
+
+`positive_negative_oracles` stays PARTIAL in every family, but timestamps and SP-1101 are no longer among its reasons. It stays PARTIAL because:
+- schema keywords are verdict rows, not cut one by one;
+- IS02, QJ03 and OD03 are unprovable by construction;
+- the shared `datetime_validator` and the whole-`Plans/` inventory gate fail closed in this lane tree on content drift from the lane's Plans edits, so they run at batch-2 integration (addendum 2).
+
+Membership stays ABSENT, retention PARTIAL, native execution NOT_RUN. **Readiness: NOT_READY** (prepared for the batch-2 Sol max and Astra max review; READY stays false).
+
+## Sweep part 2B: findings and responses
+
+| Item | Disposition and change | Where | Verify |
+|---|---|---|---|
+| **Merge the gated NUMRULE head** | Merged `58c2816ff3` exactly with `--no-ff` as `dfd845d641`, from the part 2A head `32f302f600`. No conflict. Seven files: the date-time code, its mutation set, its node controls and `NUMRULE.md`. No derived file was touched, so no regeneration was owed for the merge. Neither addendum-1 resolution was needed. | merge `dfd845d641` | `git diff --stat dfd845d641^1 dfd845d641` lists 7 files; each equals `git show 58c2816ff3:<path>` (blob compare, all 7 same); `git merge-base 32f302f600 58c2816ff3` = `a16f67c1ef`. |
+| **SWEEP-12 / CV-1101 at every DFM timestamp** (fixed, `47c4e3464f`) | Every schema verdict now passes the shared `pm_event_datetime.format_checker(profile=EVENT_RECORD)`, so `date_time` runs at every `format: date-time` (18 schema sites). Before, a bare `jsonschema.FormatChecker()` registered no date-time checker in this environment. The Storage registry verdict passed no format checker at all; it now passes the same one, so `generated_at_utc` is enforced. No lane-local grammar or regex was added. | `scripts/pm-filemanager-event-contracts.py:228` (`DATE_TIME_FORMAT`), `:306` (`validate_shape`), `:1687` (`validate_registry_contracts`); `scripts/pm-filemanager-number-corpus.py` (`schema_accepts`, the corpus's outside oracle) | Witnesses `<family>:p2b:ts-<form>` cover the 13 malformed forms with every copy moved: 156 negatives refuse at their family's PYnn row. The SWEEP-12 nine (non-date, missing zone, space separator, month 13, November 31, hour 24, trailing LF, empty fraction, double fraction) are 108 of them; the cycle-7 diagnostic found all 108 accepted. The other four: minute 60, a false leap second, offset hour 24, and February 29 in a common year. |
+| **DFM's recorded leak: "no date-time format support in its environment"** (fixed, same commit) | The shared predicate is installed explicitly, so the environment's missing `rfc3339-validator` no longer matters. Negatives go through the validator, as CV-1101 requires ("Negatives must demonstrate that the installed predicate runs through the validator"). | as above | `"garbage"`-class witnesses `…:p2b:ts-non-date` refuse at PYnn; registry witnesses `integrity/registry-generated-at-no-zone` and `-lf` refuse at RG01; `integrity/control/registry-generated-at-offset` is accepted. |
+| **CV-253 `storage_utc_z` at EventRecord Storage fields** (fixed, same commit) | `observed_at_utc` and `persisted_at_utc` of every EventRecord a verdict applies take `date_time(..., profile=STORAGE_UTC_Z)` inside that verdict row. Sites are found by resource identity: the instance paths where the validated schema reaches the installed `event_record.schema.json` root or its frozen 1.0.0 reader, following `$ref`, `allOf`/`anyOf`/`oneOf`/`then`/`else`, properties and items. That gives `operation_custody.complete_event` (OC01), `full_value_request.event` (FQ01), the retry event itself (ER01), and the physical `operation_custody_value` and document-root unions. A `$ref` that declares `$schema` drops a jsonschema keyword override (`evolve` re-selects the stock class), so the overlay was built this way instead. The format checker survives that re-selection. | `:235` (`event_record_nodes`), `:241` (`event_record_sites`), `:281` (`storage_timestamp_error`), `:306` | Witnesses `…:p2b:event-{observed,persisted}-{plus-zero,minus-zero,lowercase-z,offset}` (OC01), `…:p2b:retry-observed-plus-zero` and `retry-persisted-lowercase-z` (ER01), `…:p2b:rule-request-observed-plus-zero` (FQ01), `…:p2b:rule-event-persisted-offset` (ER01). Controls: uppercase-`Z` long fraction and a real leap second accepted, current and retained. |
+| **Companion, receipt, settlement and noncompletion timestamps** (same commit) | Each is covered by the shared check through its own verdict: OC01 on the route, plus isolated one-edit witnesses at CV01, FR01 and RO01. | — | `…:p2b:accepted-at-*` (OC01), `…:p2b:receipt-acknowledged-missing-zone` (OC01), `…:p2b:rule-custody-acknowledged-space` (CV01), `…:p2b:rule-result-acknowledged-month-13` (FR01), `…:p2b:rule-settlement-settled-trailing-lf` and `rule-noncompletion-settled-hour-24` (RO01); offset and leap-second controls accepted. |
+| **SP-1101 retained dispatch** (DFM's SP-1101 item; fixed, same commit) | `validate_original_models` with `historical=True` now calls `dispatch_retained_original`. It makes one shared `RetainedDispatcher.resolve` call, with `DfmOriginalOwner` over the custody model's sealed `original_custody` record and the exact installed `RecipeTuple → FrozenRecipe` map.<br>**The record:** the finite fixture's independent sealed lookup per SP-1101, keyed by the original's append custody key. It holds the write-time edition and the SHA-256 manifest of the five frozen resource files the original was written against.<br>**The tuple:** the original's own immutable discriminators (envelope `pm.event.v0`/`2.0.0`, payload schema id/version) plus the sealed edition and manifest. The map is built from this head's resource bytes at composition.<br>**No request input:** no override, no request field, and no current-then-legacy probing.<br>**Frozen verifier:** `validate_historical_operation` with the same CV-1101/CV-253 profiles. It never runs `validate_writer` or a live-state guard.<br>**Refusals:** a missing or malformed record refuses OD01 `original_unavailable`; an unknown edition or replaced resource refuses OD02 `recipe_unsupported`; any other dispatcher refusal is OD03, alone in its own table.<br>**Fixture data:** each family's custody model records its original's custody (no restamp; the one-off writer refuses an existing record). `synchronize_fixture` and `fixture_event` move the record with the append custody key.<br>**Limits:** owner and reader read the same original in this static model, so the binding equality is structural; native custody is NOT_RUN. The twelve families were never admitted, so there is one edition, `DFM-prepared-v1`. | `:1320` (call site), `:1338`–`:1433` (`DFM_EDITIONS`, `resource_manifest`, `recipe_tuple`, `installed_recipes`, `append_custody_key`, `original_binding`, `DfmOriginalOwner`, `dispatch_retained_original`), `:496` (`move_original_custody`); rows `scripts/pm-filemanager-table-generate.py:393`, `:407`; `Plans/filemanager_event_contract_fixtures.json` (`custody_model.original_custody`, 12 rows) | Witnesses `…:p2b:dispatch-custody-missing`, `-custody-other-original` and `-custody-malformed-manifest` (OD01); `…:p2b:dispatch-edition-unknown` and `-resource-replaced` (OD02); controls `…:p2b:dispatch-request-recipe-ignored-control` (trace recipe fields ignored, retained route accepted) and `…:p2b:dispatch-current-route-no-custody-read-control`. Every existing retained witness (original-location, historical-policy, live-state) keeps its outcome (differential). |
+| **Retained timestamps under the frozen profile** (same commit) | Valid lowercase, offset, leap-second, long-fraction and year-0000 originals stay readable on the retained route, with exact strings. Malformed and Storage-offset originals refuse there, so a skipped past format check never admits an invalid original (CV-1101, SP-1101). | — | `…:p2b:ts-*-history-control` (9 forms × 12 accepted); `…:p2b:ts-{missing-zone,trailing-lf,false-leap-second}-history` (PYnn); `…:p2b:event-observed-plus-zero-history` and `-persisted-lowercase-z-history` (OC01); `…:p2b:event-*-history-control` accepted. |
+| **Owner and test text** (`3cb373f91f`) | CV-560 gains a "Timestamps follow CV-1101 beside CV-253" paragraph: the profiles per field, the exact-string joins, and SP-1101 dispatch from sealed custody, where unavailable or unsupported refuse without trying the current recipe. ATS-280 names the date-time overlay, the dispatch, the part 2B witnesses and the shared date-time suite. | `Plans/Contracts_V0.md:24662`, `Plans/Automated_Testing_System.md:7266` | Shards and index regenerated: only `contracts_v0` (66) and `automated_testing_system` (51) shard files and those two documents' index rows change; acceptance units CV-560 and ATS-280. |
+| **Number scope (DFM did it in part 2A)** | Unchanged and re-run: the corpus still has 0 disagreements and the number self-test passes. | — | `python3 scripts/pm-filemanager-number-corpus.py`: exit 0, 6,888 route runs, 0 disagreements, same per-route counts as part 2A. `--self-test --scope numbers`: exit 0, `pass`, 580/580. |
+
+**Disputed:** none. **Stopped for Jared:** none. **IDs used:** none new. No PlanUnit, Decision Log entry, admission or family ID was minted; CV-560 and ATS-280 change in place. New witness IDs are the `…:p2b:…` case names in `Plans/filemanager_event_p2a_cases.json`, plus three integrity witness names. New guard rows OD01–OD03 are lane-local table rows, not PlanUnit IDs.
+
+**Lane harness fixed (`9c5c93a17e`).**
+- **Where:** `scripts/pm-filemanager-registry-regression.py:55`.
+- **Why it broke:** part 2A (`3d26ae2982`) made the registry refusal a `TableRefusal` (row RF01), but the part-1 B4 harness still caught only `AssertionError`, so it has exited 1 since part 2A.
+- **Fix:** catch the table refusal and require RF01 plus the same 28 pinned failures. It passes now.
+
+**"What Astra keeps finding", probed for this pass.**
+1. Forged inputs: identities, keys, commitments and the producer digest are still recomputed by derivation. The SP-1101 tuple is built from the original's own discriminators and the sealed record, never from request data. A request-side recipe field is ignored (control).
+2. Storage-assigned metadata: `observed_at_utc` and `persisted_at_utc` take CV-253's profile wherever an EventRecord is validated, the retry event included. Retry equality still excludes them (CV-339).
+3. Historical readers: valid broad-profile retained originals are accepted. Malformed ones, Storage-offset ones and unknown or replaced recipes refuse. The writer rows never run on the retained route (`dispatch_retained_original` replaces the shared call only when `historical=True` and no candidate is passed).
+4. One field read two ways: timestamps are never parsed, normalized or ordered. Validation returns the string unchanged, and the joins compare exact strings.
+5. Unresolved references: SR01 is unchanged. The site walker follows only references that `validate_schema_graph` has already resolved.
+6. Size limits: no change.
+7. Custody: every retained route resolves through the dispatcher before the complete frozen verification.
+8. Masked negatives: tool result above. Every part 2B negative is built from its family's valid row with one source change and every copy moved; the builder keeps it only when the complete checker refuses it at exactly its row.
+9. Grades: unchanged. The oracle cell stays PARTIAL.
+10/10a. The number scope is unchanged. The stricter date-time check reads retained originals through the one recorded edition, and that edition's profile is the owner profile (CV-1101: "Accidental past acceptance by a validator that skipped format is not an owner-valid legacy grammar"). No genuine older format edition exists to preserve: the families were never admitted.
+11. Types: a non-string timestamp is left to the schema `type` keyword. The 13 existing `ts: null` and `generated_at_utc: null` schema-rule cases keep their exact `type` diagnostic (differential: 0 changes).
+12. Formats: closed for date-time by this pass. No DFM schema declares another format.
+
+## Timestamp fields and the shared check that covers each
+
+Every field is checked by `pm_event_datetime.date_time`, installed explicitly as the format checker. The first row of each verdict that reaches the field refuses. No timestamp string is rewritten; CE06 (`occurred_at_utc` = payload `ts`) and SI05 (`settled_at_utc` = `ts`) stay exact-string joins. The frozen SP-1101 verifier of the one write-time edition `DFM-prepared-v1` applies the same profiles to retained originals.
+
+| Field | Schema site | Owner of the profile | Shared check and profile | Verdict rows that run it |
+|---|---|---|---|---|
+| payload `ts` | `Plans/event_payloads/file_manager/*.schema.json` `properties.ts` (12) | F-150..F-161 payload schemas, CV-1101 ("broad family ts fields") | `date_time`, `event_record` profile | PY01..PY12 (current and retained), OC01 (settled payload copy) |
+| `accepted_command.accepted_at_utc` | `Plans/filemanager_operation_contracts.schema.json` `$defs/accepted_command` | CV-560/SP-560 companion (`format: date-time`) | `date_time`, `event_record` profile | OC01, RO01 (rule) |
+| `settlement.settled_at_utc` | same file, `$defs/settlement` | CV-560/SP-560 companion; equals `ts` (SI05) | `date_time`, `event_record` profile | OC01, RO01 (rule) |
+| `noncompletion.settled_at_utc` | same file, `$defs/noncompletion` | CV-560/SP-560 companion | `date_time`, `event_record` profile | OC01 (no_event_settled rows), RO01 (rule) |
+| EventRecord `occurred_at_utc` | `Plans/event_record.schema.json` `$defs/date_time_string` | CV-317/CV-1101; equals `ts` (CE06) | `date_time`, `event_record` profile | OC01 (`complete_event`), FQ01 (`request.event`), ER01 (retry event), RE01 (rule) |
+| EventRecord `observed_at_utc`, `persisted_at_utc` | same, root and frozen 1.0.0 compatibility reader | CV-253 (Storage-assigned) | `date_time`, `event_record` profile **and** `date_time(..., profile=STORAGE_UTC_Z)` at every EventRecord the verdict applies, found through the owner schemas' `$ref` graph | OC01, FQ01, ER01, RE01 |
+| AppendReceipt `acknowledged_at_utc` | `Plans/event_append_receipt_contracts.schema.json` `$defs/AppendReceipt` | receipt schema `format: date-time` (CV-339/SP-286 receipt); CV-253 does not name it | `date_time`, `event_record` profile | OC01 (`first_append_receipt`), CV01 (`custody_v2`), FR01 (`full_value_result`), RR01 (rule) |
+| registry `generated_at_utc` | `Plans/storage_value_registry.schema.json` `properties.generated_at_utc` | Storage registry schema `format: date-time` | `date_time`, `event_record` profile (RFC 3339 5.6/5.7) | RG01 (newly enforced: the registry verdict passed no format checker before) |
+
+The `event_record` profile is RFC 3339 5.6/5.7 as CV-1101 states it: `T`/`t`, `Z`/`z` or a signed offset, any fraction length, real leap seconds only, year 0000. `STORAGE_UTC_Z` adds "terminal uppercase `Z` only". Per CV-253, `observed_at_utc` and `persisted_at_utc` are the only DFM fields with a stricter owner profile. No DFM field uses `coordination_utc_z` or `legacy_normalization_output`.
+
+## Guard-table result (rerun on the gated tool `004bdedd63`)
+
+The adoption changed guarded predicates in two ways:
+- every schema verdict now derives its fact through the shared date-time predicate;
+- the SP-1101 rows are new.
+
+So the gated tool was rerun over **every** table, not only the affected suites. Credit is the tool's own `rows[].proved`.
+
+**Result: 117 tables, 237 rows, 234 proved, 0 findings, 0 lane-matrix problems, 0 masked, 0 unrelated changes.** Part 2A had 115 tables, 234 rows and 232 proved. The run covered 283 distinct single-row negatives (7,626 further witnesses with an identical observation ride as aliases) and 3,972 tool evaluations. The tool exits 1 only for the three tables of rows that are unprovable by construction: they have no negative and get no tool run. Collection took 558 s; the whole run took 895 s, with pauses at the tool's own MemoryGate (pause below 10 GiB, resume at 11 GiB).
+
+| Checker area | Tables | Rows | Proved | Unproved (reason) | Cut: own flips / own | Cut: stays | Unrelated changes | Masked |
+|---|---:|---:|---:|---|---:|---:|---:|---:|
+| Schema verdicts (one row per occurrence) and schema document admission | 28 | 28 | 28/28 | none | 28/28 | 0 | 0 | 0 |
+| Numbers: CV-1100 qualified JCS, current integer slots, SP-1100 EVENT_VALUE | 5 | 7 | 5/7 | IS02_integer_range, QJ03_jcs_other (by construction) | 5/5 | 4 | 0 | 0 |
+| SP-337/SP-339/SP-340 transport, encoding and profiles | 11 | 18 | 18/18 | none | 22/22 | 38 | 0 | 0 |
+| Current writer replay policy | 1 | 2 | 2/2 | none | 2/2 | 2 | 0 | 0 |
+| Path custody: coverage, joins, accepted locations | 3 | 10 | 10/10 | none | 10/10 | 28 | 0 | 0 |
+| Represented subjects (create/copy/move/export/rename/delete) | 7 | 19 | 19/19 | none | 19/19 | 62 | 0 | 0 |
+| Complete original EventRecord joins | 3 | 9 | 9/9 | none | 14/14 | 42 | 0 | 0 |
+| Operation custody transitions (validate_operation_transition) | 10 | 24 | 24/24 | none | 24/24 | 52 | 0 | 0 |
+| Family control transitions (validate_control_transition) | 8 | 22 | 22/22 | none | 30/30 | 64 | 0 | 0 |
+| Original operation custody (validate_original_models) | 6 | 11 | 11/11 | none | 16/16 | 14 | 0 | 0 |
+| **SP-1101 retained dispatch (dispatch_retained_original), new** | 2 | 3 | 2/3 | OD03_dispatch_other (by construction) | 2/2 | 2 | 0 | 0 |
+| Retained original custody (validate_historical_operation) | 15 | 39 | 39/39 | none | 39/39 | 110 | 0 | 0 |
+| Family identity recipe (identity) | 2 | 7 | 7/7 | none | 27/27 | 102 | 0 | 0 |
+| Current boundary trace (validate_case) | 9 | 24 | 24/24 | none | 31/31 | 86 | 0 | 0 |
+| Checker integrity (main) | 7 | 14 | 14/14 | none | 14/14 | 24 | 0 | 0 |
+| **All** | **117** | **237** | **234/237** | 3 | **283/283** | **630** | **0** | **0** |
+
+**Rows proved by each family's own witnesses.** file.copied 186, file.created 189, file.deleted 180, file.exported 181, file.moved 181, file.renamed 183, folder.copied 182, folder.created 189, folder.deleted 181, folder.exported 182, folder.moved 181, folder.renamed 184, shared 17. Each family gains 2 over part 2A (OD01, OD02); file.created and folder.created gain 4.
+
+**The new date-time negatives.** Every part 2B date-time negative refuses at an existing schema verdict row, so each lands as an alias of that row's single-defect observation (`schema_valid` false). Totals: PY01..PY12 79 aliases each, OC01 345, ER01 72, FQ01 27, CV01, FR01, RO01, RG01 2. The lane matrix finds no negative refused by a second row of its table.
+
+**Lane evidence beyond the tool.** Each refused witness was re-run through the complete checker with only its refusing row cut: 6,836 are then accepted and 1,073 are refused later. The new later-refusal groups are three:
+- **The same timestamp invariant at its copies:** a cut PYnn reaches OC01 through the settled payload, `occurred_at_utc` or `settled_at_utc` (16 per family). A cut OC01 reaches FQ01 or FR01 through the request or result copy.
+- **The HM01 type cut:** a truthy non-boolean `historical` mode now reaches the dispatcher. It refuses OD01 there, because the API case's embedded trace has no sealed custody record.
+- **Unchanged groups:** part 2A's groups are unchanged.
+
+**Unprovable rows, each with its proof.**
+- **IS02_integer_range** (`scripts/pm-filemanager-table-generate.py:647`, table `integer_slot_range`). Every slot's bounds are read from the owner schema whose verdict row runs first on every current write. Proved site by site on 17 coherent witnesses (`unprovable-evidence.json`):
+  - cutting the payload schema row alone leaves IS02 refusing;
+  - cutting IS02 alone leaves the schema row refusing;
+  - cutting both leaves OC01 refusing;
+  - cutting all three accepts, and restoration repeats the baseline.
+- **QJ03_jcs_other** (`scripts/pm-filemanager-table-generate.py:489`, table `producer_jcs_other`). 48 preemption probes per run (lone surrogates, NaN, infinity): 0 reach QJ03, and every one is refused first by RV01 (`scripts/pm-filemanager-event-contracts.py:355`, `redb_bytes`).
+- **OD03_dispatch_other** (`scripts/pm-filemanager-table-generate.py:407`). The other dispatcher refusals cannot be reached alone:
+  - `caller_recipe_override` and `original_query`: the reader passes no override and the schema-valid append custody key (`scripts/pm-filemanager-event-contracts.py:1427`–`:1428`).
+  - `original_authority`: the owner always returns an `OriginalCustody` (`:1409`–`:1412`).
+  - `original_binding` and `original_scope`: the binding is projected on both sides from the same original, from fields the OC01 verdict guarantees (`:1382`).
+  - `recipe_selection`, and a `RecipeTuple` field refusal from an empty or mistyped discriminator: refused first by OC01's `const` and type rules (`Plans/event_record.schema.json:39`, `:43`, the `schema_id`/`schema_version` consts).
+  - `original_bytes_type`: the record bytes are EVENT_VALUE of an event RV01 already proved encodable, and the settlement and receipt bytes are SP-339 bytes of the already-encoded operation row (`:1410`–`:1412`).
+  - `original_verification`: the frozen verifier returns True or raises its own table refusal (`:1417`–`:1424`).
+  - `current_disclosure`: disclosure is the existing trace and control rows (`:1428`).
+  - Lane evidence (`od03-evidence.json`): 204 probes (17 per family, one aimed at each reason) reach OD03 0 times; each is refused first by OC01 or RV01. With OC01 and RV01 both cut, the binding and tuple probes reach OD03, which shows it is a live later site of the same invariants. With RV01 cut, the bytes probes reach derivations that need the cut row, as in part 2A. The trace-side recipe fields are ignored (accepted).
+
+By-construction rows each stay alone in their own table, so the reachable rows keep their credit.
+
+## Fixture expectations
+
+**No fixture expectation changed.**
+- **Differential:** the merged pre-change checker at `dfd845d641` against the implementation head, over all 7,246 fixture witnesses: 0 result changes, 0 message changes, 0 schema-attribute changes.
+- **Pre-change baseline:** byte-identical to part 2A's archived final witnesses.
+- **Part 2A witnesses:** all 680 are byte-identical in the witness file (only `fixture_sha256` moved).
+- **Why nothing moved:** every existing fixture timestamp is an uppercase-`Z` RFC 3339 value. That covers `ts`, `occurred_at_utc`, `observed_at_utc`, `persisted_at_utc`, `accepted_at_utc`, `settled_at_utc`, `acknowledged_at_utc` and `generated_at_utc`. The 13 schema-rule cases that set `ts` or `generated_at_utc` to `null` keep their exact `type` diagnostic.
+- **What the fixture file gains:** only `custody_model.original_custody` (12 records, +72 lines). They were written once by `add-original-custody.py`, which refuses to overwrite an existing record.
+
+**Integration note (not a stop).** Each recorded manifest pins five resource files per family:
+- `filemanager_operation_contracts.schema.json`
+- `event_record.schema.json`
+- `event_append_receipt_contracts.schema.json`
+- `storage_value_registry.schema.json`
+- the family's own payload schema
+
+None of them changed on `main` since the lane base `d5ec2f70c0` (checked against origin/main `77bae0c636`). If one changes at batch-2 integration, the retained route refuses OD02 (`recipe_unsupported`, fail closed) until an edition with those frozen resources is installed. Per SP-1101 the record is never restamped.
+
+## Date-time inventory gate and the combined self-test in this lane tree
+
+Addendum 2 applies. In this tree the date-time inventory gate fails closed and `datetime_validator` would raise. Neither is called by the DFM checker, and the inventory and exclusions files are not edited (they are NUMRULE files).
+
+Recorded results, with only the locally copied, git-ignored currentness edition held outside the tree:
+- **`python3 scripts/pm_event_datetime_inventory.py`: exit 1.** Status `fail`, 221 failures:
+  - 130 `unclassified_mentioning_container`;
+  - 48 `stale_scan_exclusion`;
+  - 43 `unreadable_mentioning_container`.
+
+  Node counts: 233 nodes, 133 Storage, 89 other-owner, 3 `wildcard_non_timestamp`, 8 role, 0 unclassified. There is no `inventory_node_changed` row.
+- **Attribution:** every failure row names a file that differs from `58c2816ff3`. None names a file unchanged from it.
+- **This pass's delta:** the same gate script run on the merge commit `dfd845d641` (part 2A plus the gated files, before any part 2B edit) reports 220 rows. The head changes four of them:
+  - **1 new row:** `unclassified_mentioning_container` on `Plans/filemanager_event_p2a_cases.json`. The part 2B witnesses name `observed_at_utc` and `persisted_at_utc`.
+  - **3 rows at the same place with a new content hash:**
+    - `Plans/.plan_index/plan_units.jsonl` lines 1349 and 1557 (the CV-1101 and CV-318 rows; every Contracts_V0 unit row carries the regenerated document hash);
+    - `Plans/filemanager_event_contract_fixtures.json` (it gains the custody records).
+  - **217 rows unchanged.** They predate this pass and come from the lane's Plans edits since the NUMRULE base: `.plan_migration` snapshots, regenerated index lines, `Decision_Log` and its shards, and Contracts_V0's CV-318 fence, which earlier lane edits moved from line 20988 to 21002.
+- **`python3 scripts/pm_event_numbers.py --self-test` (the combined self-test, scope all): exit 1.** `case_execution: NOT_RUN_ADMISSION_REFUSED`, 0 of 13,626 cases run, the same 221 inventory failures. It refuses before any case, as addendum 2 says.
+- **`python3 scripts/pm_event_numbers.py --self-test --scope numbers`: exit 0,** `"status": "pass"`, 580 of 580.
+- **`python3 scripts/pm_event_datetime.py --self-test`: exit 0 with no output.** It has no entry point, so it is not counted (addendum 2 correction).
+- **At batch-2 integration:** the integration worker reviews the four rows above (the three DFM data and index files) under CV-1101 with the others, then runs `datetime_validator`, the full gate and the combined self-test on the merged tree.
+
+**A run I discarded.** The first gate run in my verification chain wrongly held all of `Plans/.audits` outside the tree, tracked files included. Its rows were wrong (missing-file citations), so I discarded them and ran the gate again as above. After the restore I checked the tree: `git status` was clean and all 2,384 tracked `Plans/.audits` files were present.
+
+## Family grades before and after
+
+P=PASS, Q=PARTIAL, A=ABSENT. "Before" is the part 2A self-grade at `62615d46d2`; "after" is `DFM.self-grade.json` at the implementation head.
+
+| Family | Own unit | Before → after |
+|---|---|---|
+| `file.copied` | F-150 | 9P / 2Q / 1A → 9P / 2Q / 1A |
+| `file.created` | F-151 | 9P / 2Q / 1A → 9P / 2Q / 1A |
+| `file.deleted` | F-152 | 9P / 2Q / 1A → 9P / 2Q / 1A |
+| `file.exported` | F-153 | 9P / 2Q / 1A → 9P / 2Q / 1A |
+| `file.moved` | F-154 | 9P / 2Q / 1A → 9P / 2Q / 1A |
+| `file.renamed` | F-155 | 9P / 2Q / 1A → 9P / 2Q / 1A |
+| `folder.copied` | F-156 | 9P / 2Q / 1A → 9P / 2Q / 1A |
+| `folder.created` | F-157 | 9P / 2Q / 1A → 9P / 2Q / 1A |
+| `folder.deleted` | F-158 | 9P / 2Q / 1A → 9P / 2Q / 1A |
+| `folder.exported` | F-159 | 9P / 2Q / 1A → 9P / 2Q / 1A |
+| `folder.moved` | F-160 | 9P / 2Q / 1A → 9P / 2Q / 1A |
+| `folder.renamed` | F-161 | 9P / 2Q / 1A → 9P / 2Q / 1A |
+
+**108 PASS / 24 PARTIAL / 12 ABSENT, unchanged.**
+
+**`positive_negative_oracles` (PARTIAL in each family).** Timestamps were one reason for PARTIAL. They no longer are: every timestamp field now runs the shared predicate with its owner profile, the 108 SWEEP-12 inputs refuse, and the profile controls accept on the current and retained routes. SP-1101 dispatch is no longer a reason either. The cell stays PARTIAL for three reasons:
+- schema keywords are verdict rows, not cut one by one;
+- IS02, QJ03 and OD03 are unprovable by construction;
+- `datetime_validator` and the inventory gate have not run on this tree.
+
+**`compatibility_withdrawal` (stays PASS).** Its finding now cites the SP-1101 composition.
+
+**`retention` (stays PARTIAL)** as PENDING_RETENTION_DECISION. **`membership_version` (stays ABSENT).**
+
+## Commands and evidence
+
+Heavy runs went one at a time, each started only at 13.5 GiB available or more (`memgate.sh` inside long-jobs); the guard tool kept its own MemoryGate. Other VM work held the VM at 8–13 GiB for long stretches, so starts waited, and one differential I started at 12 GiB was stopped and restarted behind the gate. No browser was used, no subagent was started, and no NUMRULE file was edited.
+
+**Commits:**
+- `dfd845d641`: the merge.
+- `47c4e3464f`: checker, tables, builder, runner, corpus oracle, fixtures and witnesses.
+- `3cb373f91f`: CV-560, ATS-280, shards and index. This is the implementation head the checks ran on.
+- `9c5c93a17e`: the registry-regression harness fix.
+- Then the report commit.
+
+**Evidence:** `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DFM/sweep-p2b/`. Every file's SHA-256 is in `SHA256SUMS`; large files are gzipped.
+
+| Command | Exit | Outcome |
+|---|---:|---|
+| `git merge --no-ff 58c2816ff3` | 0 | clean; 7 files, each equal to `git show 58c2816ff3:<path>` |
+| `python3 scripts/pm-filemanager-p2a-cases.py` / `--check` | 0 / 0 | 1,556 witnesses (680 part 2A, 876 part 2B), 1,112 negatives, 444 controls, 0 dropped, file current |
+| `python3 scripts/pm-filemanager-table-generate.py --check` | 0 | 117 tables, 237 rows |
+| differential: pre-change checker at `dfd845d641` vs head | 0 | 7,246 witnesses: 0 result, message or schema-attribute changes; pre-change baseline byte-identical to part 2A's |
+| `python3 scripts/pm-filemanager-event-contracts.py --family F` (12 families, serial) | 0 ×12 | `pass` each; 7,246 oracle cases, 1,556 part 2A/2B witnesses, 24 integrity witnesses per run |
+| `python3 scripts/pm-filemanager-guard-tables.py --out … --save-collection …` | 1 | 114 suites PASS; 234/237 rows proved; exit 1 only for the 3 tables of unprovable rows; 0 findings, 0 lane-matrix problems, 0 masked |
+| `python3 scripts/pm_event_numbers.py --self-test --scope numbers` | 0 | `pass`, 580/580 |
+| `python3 scripts/pm_event_numbers.py --self-test` (scope all) | 1 | refuses before any case: inventory stale in this tree (addendum 2) |
+| `python3 scripts/pm_event_datetime_inventory.py` | 1 | 221 rows: 220 at the merge commit, plus 1 new from this pass and 3 rows with new content (section above) |
+| `python3 scripts/pm_event_datetime.py --self-test` | 0 | no entry point; not counted |
+| `python3 scripts/pm-filemanager-number-corpus.py --json …` | 0 | 6,888 route runs, 0 disagreements (same per-route counts as part 2A) |
+| unprovable-row evidence (`unprovable-evidence.py`, `od03-evidence.py`) | 0 / 0 | IS02 proved site by site on 17 witnesses; QJ03 0 of 48 probes; OD03 0 of 204 probes |
+| `python3 scripts/pm-filemanager-registry-regression.py` | 0 | after `9c5c93a17e`: control 1,134 cases; 28 pinned reference failures refused at RF01; restoration 0 failures. Before the fix it exited 1, stale since part 2A (it caught only `AssertionError`) |
+| `python3 scripts/pm-shard-plans.py --generate --config Plans/sharding_config.json` | 0 | `pass`; only `Plans/_shards/contracts_v0/` (66) and `Plans/_shards/automated_testing_system/` (51) changed |
+| `python3 scripts/pm-plan-index.py generate` (15 currentness files hash-verified first, same edition as part 2A) | 0 | `pass`; only Contracts_V0 and Automated_Testing_System unit rows changed; acceptance units CV-560 and ATS-280 |
+| `python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json` | 0 | `pass` |
+| `python3 scripts/pm-plan-index.py validate` (origin/main `77bae0c636`) | 1 | top-level `fail`, 60 rows: 21 `plan_unit_removal_ledger_invalid` in existing ledgers and 39 `plan_unit_removed_without_ledger_decision` for units added on main after the lane base `d5ec2f70c0`. None names a DFM unit; the integration rebase owns them |
+| `git diff --check be2c930bcc HEAD -- scripts Plans/*.md Plans/filemanager_event_p2a_cases.json` | 0 | clean |
+| self-grade quote recheck (`relocate.py`) | 0 | 456 quotes: 312 at their line, 60 relocated, 84 new; 0 missing |
+
+---
+
+# DFM — sweep part 2A (guard tables on the gated tool) and part 2B numbers (earlier report; its "Timestamp fields — interim only" and "Part 2B items" are superseded by part 2B above)
 
 Branch `plans/ea-w2-filemanager-20261104`; start `be2c930bcc`; gated tool merge `a8d9fa6853` (tool `004bdedd63`, eleven files, none edited); gated NUMRULE number-scope merge `0e9f24b5bc` (exact commit `a16f67c1ef`, never the branch head); implementation head `62615d46d2`. The delivery head is in the external `HEAD.txt`. No rebase onto main this round. Both merges brought no main commit into the lane (the NUMRULE merge base `fb441b27fd` is already in the lane).
 
