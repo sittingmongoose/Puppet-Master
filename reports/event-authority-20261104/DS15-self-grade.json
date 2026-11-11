@@ -19,7 +19,7 @@
       "positive_negative_oracles"
     ]
   },
-  "assessed_tree": "46741210e9",
+  "assessed_tree": "da9535b646",
   "native_execution": "NOT_RUN",
   "prepared_family_count": 23,
   "prepared_complete_family_count": 0,
@@ -277,7 +277,7 @@
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "browser.context_captured has its own current compatibility withdrawal contract; F1/F2/F3 and exact-type controls execute against this head.",
+          "finding": "browser.context_captured has its own current compatibility withdrawal contract; F1/F2/F3 and exact-type controls execute against this head. Sweep part 2B: retained readers select the frozen recipe only through SP-1101 (sealed write custody, then the shared RetainedDispatcher), and the frozen recipe carries the CV-1101 profiles; owner-valid history stays readable and forged, unsealed, unsupported or wrong-family selections refuse.",
           "evidence": [
             {
               "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
@@ -304,7 +304,7 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Cycle-8 independent review accepted the residual constructions. Sweep part 2A: every refusal is a guard-table row and the gated tool proves every provable row; S-N1 adopted. S-FMT1 and S-N2 remain explicit part 2B exceptions; JSON Schema keyword cuts are not ported.",
+          "finding": "Cycle-8 independent review accepted the residual constructions. Sweep part 2A: every refusal is a guard-table row and the gated tool proves every provable row; S-N1 adopted. Sweep part 2B: S-FMT1 (CV-1101 through the shared predicate, EventRecord and storage_utc_z profiles) and S-N2 (SP-1101 selection and RetainedDispatcher resolution) adopted with their witnesses; JSON Schema keyword cuts are not ported.",
           "evidence": [
             {
               "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
@@ -326,13 +326,13 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Sweep parts 2A and 2B numbers close the shared-tool and S-N1 items without changing a family result."
+          "change_reason": "Sweep part 2B closes S-FMT1 and S-N2 without changing a family result."
         }
       },
       "remaining_gaps": [
         "Event Authority admission remains absent.",
         "RT must resolve event and checkpoint retention.",
-        "Part 2B: S-FMT1 (CV-1101 date-time) and S-N2 (SP-1101 dispatch) remain."
+        "Batch-2 integration runs the shared datetime_validator and the date-time inventory gate (SWEEP-P2B addendum 2); native SP-1101 custody is NOT_RUN."
       ],
       "grade_counts": {
         "ABSENT": 1,
@@ -558,7 +558,7 @@
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "SMPFS-321 independently defines compatibility_withdrawal for browser.context_share_revoked@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
+          "finding": "SMPFS-321 independently defines compatibility_withdrawal for browser.context_share_revoked@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit. Sweep part 2B: retained readers select the frozen recipe only through SP-1101 (sealed write custody, then the shared RetainedDispatcher), and the frozen recipe carries the CV-1101 profiles; owner-valid history stays readable and forged, unsealed, unsupported or wrong-family selections refuse.",
           "evidence": [
             {
               "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
@@ -578,7 +578,7 @@
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Own saved positive/negative and reference-closure cases pass. Sweep part 2A: every refusal is a guard-table row and the gated tool proves every provable row of these families; S-N1 adopted. S-FMT1 and S-N2 remain open (part 2B) and the cell has not been independently reviewed, so it stays PARTIAL.",
+          "finding": "Own saved positive/negative and reference-closure cases pass. Sweep part 2A: every refusal is a guard-table row and the gated tool proves every provable row of these families; S-N1 adopted. Sweep part 2B closes S-FMT1 and S-N2 for these families too, but the cell has not been independently reviewed, so it stays PARTIAL.",
           "evidence": [
             {
               "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
@@ -593,7 +593,7 @@
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "The shared-tool reason is closed; the inherited part 2B items and the missing independent review keep PARTIAL."
+          "change_reason": "Part 2B closes the inherited S-FMT1 and S-N2 items; the missing independent review keeps PARTIAL."
         }
       },
       "outcome": "prepared_without_admission",
@@ -602,7 +602,7 @@
       "normative_depth_complete": false,
       "remaining_gaps": [
         "No registry admission.",
-        "Part 2B: S-FMT1 (CV-1101 date-time) and S-N2 (SP-1101 dispatch) remain.",
+        "Batch-2 integration runs the shared datetime_validator and the date-time inventory gate (SWEEP-P2B addendum 2); native SP-1101 custody is NOT_RUN.",
         "PRODUCT RETENTION: scope-wide checkpoint lifetime; for all-chat revoke also governing chat deletion/hold lifetime. Exact questions are in SMPFS-321."
       ],
       "grade_counts": {
@@ -834,7 +834,7 @@
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "SMPFS-320 independently defines compatibility_withdrawal for browser.context_shared@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
+          "finding": "SMPFS-320 independently defines compatibility_withdrawal for browser.context_shared@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit. Sweep part 2B: retained readers select the frozen recipe only through SP-1101 (sealed write custody, then the shared RetainedDispatcher), and the frozen recipe carries the CV-1101 profiles; owner-valid history stays readable and forged, unsealed, unsupported or wrong-family selections refuse.",
           "evidence": [
             {
               "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
@@ -854,7 +854,7 @@
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Own saved positive/negative and reference-closure cases pass. Sweep part 2A: every refusal is a guard-table row and the gated tool proves every provable row of these families; S-N1 adopted. S-FMT1 and S-N2 remain open (part 2B) and the cell has not been independently reviewed, so it stays PARTIAL.",
+          "finding": "Own saved positive/negative and reference-closure cases pass. Sweep part 2A: every refusal is a guard-table row and the gated tool proves every provable row of these families; S-N1 adopted. Sweep part 2B closes S-FMT1 and S-N2 for these families too, but the cell has not been independently reviewed, so it stays PARTIAL.",
           "evidence": [
             {
               "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
@@ -869,7 +869,7 @@
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "The shared-tool reason is closed; the inherited part 2B items and the missing independent review keep PARTIAL."
+          "change_reason": "Part 2B closes the inherited S-FMT1 and S-N2 items; the missing independent review keeps PARTIAL."
         }
       },
       "outcome": "prepared_without_admission",
@@ -878,7 +878,7 @@
       "normative_depth_complete": false,
       "remaining_gaps": [
         "No registry admission.",
-        "Part 2B: S-FMT1 (CV-1101 date-time) and S-N2 (SP-1101 dispatch) remain.",
+        "Batch-2 integration runs the shared datetime_validator and the date-time inventory gate (SWEEP-P2B addendum 2); native SP-1101 custody is NOT_RUN.",
         "PRODUCT RETENTION: scope-wide checkpoint lifetime; for all-chat revoke also governing chat deletion/hold lifetime. Exact questions are in SMPFS-320."
       ],
       "grade_counts": {
@@ -1145,7 +1145,7 @@
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "catalog.install.completed has its own current compatibility withdrawal contract; F1/F2/F3 and exact-type controls execute against this head.",
+          "finding": "catalog.install.completed has its own current compatibility withdrawal contract; F1/F2/F3 and exact-type controls execute against this head. Sweep part 2B: retained readers select the frozen recipe only through SP-1101 (sealed write custody, then the shared RetainedDispatcher), and the frozen recipe carries the CV-1101 profiles; owner-valid history stays readable and forged, unsealed, unsupported or wrong-family selections refuse.",
           "evidence": [
             {
               "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
@@ -1172,7 +1172,7 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Cycle-8 independent review accepted the residual constructions. Sweep part 2A: every refusal is a guard-table row and the gated tool proves every provable row; S-N1 adopted. S-FMT1 and S-N2 remain explicit part 2B exceptions; JSON Schema keyword cuts are not ported.",
+          "finding": "Cycle-8 independent review accepted the residual constructions. Sweep part 2A: every refusal is a guard-table row and the gated tool proves every provable row; S-N1 adopted. Sweep part 2B: S-FMT1 (CV-1101 through the shared predicate, EventRecord and storage_utc_z profiles) and S-N2 (SP-1101 selection and RetainedDispatcher resolution) adopted with their witnesses; JSON Schema keyword cuts are not ported.",
           "evidence": [
             {
               "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
@@ -1215,13 +1215,13 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Sweep parts 2A and 2B numbers close the shared-tool and S-N1 items without changing a family result."
+          "change_reason": "Sweep part 2B closes S-FMT1 and S-N2 without changing a family result."
         }
       },
       "remaining_gaps": [
         "Event Authority admission remains absent.",
         "RT must resolve event and checkpoint retention.",
-        "Part 2B: S-FMT1 (CV-1101 date-time) and S-N2 (SP-1101 dispatch) remain."
+        "Batch-2 integration runs the shared datetime_validator and the date-time inventory gate (SWEEP-P2B addendum 2); native SP-1101 custody is NOT_RUN."
       ],
       "grade_counts": {
         "ABSENT": 1,
@@ -1482,7 +1482,7 @@
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "catalog.install.started has its own current compatibility withdrawal contract; F1/F2/F3 and exact-type controls execute against this head.",
+          "finding": "catalog.install.started has its own current compatibility withdrawal contract; F1/F2/F3 and exact-type controls execute against this head. Sweep part 2B: retained readers select the frozen recipe only through SP-1101 (sealed write custody, then the shared RetainedDispatcher), and the frozen recipe carries the CV-1101 profiles; owner-valid history stays readable and forged, unsealed, unsupported or wrong-family selections refuse.",
           "evidence": [
             {
               "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
@@ -1509,7 +1509,7 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Cycle-8 independent review accepted the residual constructions. Sweep part 2A: every refusal is a guard-table row and the gated tool proves every provable row; S-N1 adopted. S-FMT1 and S-N2 remain explicit part 2B exceptions; JSON Schema keyword cuts are not ported.",
+          "finding": "Cycle-8 independent review accepted the residual constructions. Sweep part 2A: every refusal is a guard-table row and the gated tool proves every provable row; S-N1 adopted. Sweep part 2B: S-FMT1 (CV-1101 through the shared predicate, EventRecord and storage_utc_z profiles) and S-N2 (SP-1101 selection and RetainedDispatcher resolution) adopted with their witnesses; JSON Schema keyword cuts are not ported.",
           "evidence": [
             {
               "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
@@ -1552,13 +1552,13 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Sweep parts 2A and 2B numbers close the shared-tool and S-N1 items without changing a family result."
+          "change_reason": "Sweep part 2B closes S-FMT1 and S-N2 without changing a family result."
         }
       },
       "remaining_gaps": [
         "Event Authority admission remains absent.",
         "RT must resolve event and checkpoint retention.",
-        "Part 2B: S-FMT1 (CV-1101 date-time) and S-N2 (SP-1101 dispatch) remain."
+        "Batch-2 integration runs the shared datetime_validator and the date-time inventory gate (SWEEP-P2B addendum 2); native SP-1101 custody is NOT_RUN."
       ],
       "grade_counts": {
         "ABSENT": 1,
@@ -1784,7 +1784,7 @@
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "SMPFS-325 independently defines compatibility_withdrawal for catalog.remove.completed@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
+          "finding": "SMPFS-325 independently defines compatibility_withdrawal for catalog.remove.completed@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit. Sweep part 2B: retained readers select the frozen recipe only through SP-1101 (sealed write custody, then the shared RetainedDispatcher), and the frozen recipe carries the CV-1101 profiles; owner-valid history stays readable and forged, unsealed, unsupported or wrong-family selections refuse.",
           "evidence": [
             {
               "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
@@ -1804,7 +1804,7 @@
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Own saved positive/negative and reference-closure cases pass. Sweep part 2A: every refusal is a guard-table row and the gated tool proves every provable row of these families; S-N1 adopted. S-FMT1 and S-N2 remain open (part 2B) and the cell has not been independently reviewed, so it stays PARTIAL.",
+          "finding": "Own saved positive/negative and reference-closure cases pass. Sweep part 2A: every refusal is a guard-table row and the gated tool proves every provable row of these families; S-N1 adopted. Sweep part 2B closes S-FMT1 and S-N2 for these families too, but the cell has not been independently reviewed, so it stays PARTIAL.",
           "evidence": [
             {
               "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
@@ -1819,7 +1819,7 @@
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "The shared-tool reason is closed; the inherited part 2B items and the missing independent review keep PARTIAL."
+          "change_reason": "Part 2B closes the inherited S-FMT1 and S-N2 items; the missing independent review keeps PARTIAL."
         }
       },
       "outcome": "prepared_without_admission",
@@ -1828,7 +1828,7 @@
       "normative_depth_complete": false,
       "remaining_gaps": [
         "No registry admission.",
-        "Part 2B: S-FMT1 (CV-1101 date-time) and S-N2 (SP-1101 dispatch) remain."
+        "Batch-2 integration runs the shared datetime_validator and the date-time inventory gate (SWEEP-P2B addendum 2); native SP-1101 custody is NOT_RUN."
       ],
       "grade_counts": {
         "ABSENT": 1,
@@ -2059,7 +2059,7 @@
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "SMPFS-324 independently defines compatibility_withdrawal for catalog.remove.started@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
+          "finding": "SMPFS-324 independently defines compatibility_withdrawal for catalog.remove.started@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit. Sweep part 2B: retained readers select the frozen recipe only through SP-1101 (sealed write custody, then the shared RetainedDispatcher), and the frozen recipe carries the CV-1101 profiles; owner-valid history stays readable and forged, unsealed, unsupported or wrong-family selections refuse.",
           "evidence": [
             {
               "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
@@ -2079,7 +2079,7 @@
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Own saved positive/negative and reference-closure cases pass. Sweep part 2A: every refusal is a guard-table row and the gated tool proves every provable row of these families; S-N1 adopted. S-FMT1 and S-N2 remain open (part 2B) and the cell has not been independently reviewed, so it stays PARTIAL.",
+          "finding": "Own saved positive/negative and reference-closure cases pass. Sweep part 2A: every refusal is a guard-table row and the gated tool proves every provable row of these families; S-N1 adopted. Sweep part 2B closes S-FMT1 and S-N2 for these families too, but the cell has not been independently reviewed, so it stays PARTIAL.",
           "evidence": [
             {
               "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
@@ -2094,7 +2094,7 @@
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "The shared-tool reason is closed; the inherited part 2B items and the missing independent review keep PARTIAL."
+          "change_reason": "Part 2B closes the inherited S-FMT1 and S-N2 items; the missing independent review keeps PARTIAL."
         }
       },
       "outcome": "prepared_without_admission",
@@ -2103,7 +2103,7 @@
       "normative_depth_complete": false,
       "remaining_gaps": [
         "No registry admission.",
-        "Part 2B: S-FMT1 (CV-1101 date-time) and S-N2 (SP-1101 dispatch) remain."
+        "Batch-2 integration runs the shared datetime_validator and the date-time inventory gate (SWEEP-P2B addendum 2); native SP-1101 custody is NOT_RUN."
       ],
       "grade_counts": {
         "ABSENT": 1,
@@ -2334,7 +2334,7 @@
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "SMPFS-323 independently defines compatibility_withdrawal for catalog.update.completed@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
+          "finding": "SMPFS-323 independently defines compatibility_withdrawal for catalog.update.completed@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit. Sweep part 2B: retained readers select the frozen recipe only through SP-1101 (sealed write custody, then the shared RetainedDispatcher), and the frozen recipe carries the CV-1101 profiles; owner-valid history stays readable and forged, unsealed, unsupported or wrong-family selections refuse.",
           "evidence": [
             {
               "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
@@ -2354,7 +2354,7 @@
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Own saved positive/negative and reference-closure cases pass. Sweep part 2A: every refusal is a guard-table row and the gated tool proves every provable row of these families; S-N1 adopted. S-FMT1 and S-N2 remain open (part 2B) and the cell has not been independently reviewed, so it stays PARTIAL.",
+          "finding": "Own saved positive/negative and reference-closure cases pass. Sweep part 2A: every refusal is a guard-table row and the gated tool proves every provable row of these families; S-N1 adopted. Sweep part 2B closes S-FMT1 and S-N2 for these families too, but the cell has not been independently reviewed, so it stays PARTIAL.",
           "evidence": [
             {
               "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
@@ -2369,7 +2369,7 @@
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "The shared-tool reason is closed; the inherited part 2B items and the missing independent review keep PARTIAL."
+          "change_reason": "Part 2B closes the inherited S-FMT1 and S-N2 items; the missing independent review keeps PARTIAL."
         }
       },
       "outcome": "prepared_without_admission",
@@ -2378,7 +2378,7 @@
       "normative_depth_complete": false,
       "remaining_gaps": [
         "No registry admission.",
-        "Part 2B: S-FMT1 (CV-1101 date-time) and S-N2 (SP-1101 dispatch) remain."
+        "Batch-2 integration runs the shared datetime_validator and the date-time inventory gate (SWEEP-P2B addendum 2); native SP-1101 custody is NOT_RUN."
       ],
       "grade_counts": {
         "ABSENT": 1,
@@ -2609,7 +2609,7 @@
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "SMPFS-322 independently defines compatibility_withdrawal for catalog.update.started@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
+          "finding": "SMPFS-322 independently defines compatibility_withdrawal for catalog.update.started@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit. Sweep part 2B: retained readers select the frozen recipe only through SP-1101 (sealed write custody, then the shared RetainedDispatcher), and the frozen recipe carries the CV-1101 profiles; owner-valid history stays readable and forged, unsealed, unsupported or wrong-family selections refuse.",
           "evidence": [
             {
               "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
@@ -2629,7 +2629,7 @@
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Own saved positive/negative and reference-closure cases pass. Sweep part 2A: every refusal is a guard-table row and the gated tool proves every provable row of these families; S-N1 adopted. S-FMT1 and S-N2 remain open (part 2B) and the cell has not been independently reviewed, so it stays PARTIAL.",
+          "finding": "Own saved positive/negative and reference-closure cases pass. Sweep part 2A: every refusal is a guard-table row and the gated tool proves every provable row of these families; S-N1 adopted. Sweep part 2B closes S-FMT1 and S-N2 for these families too, but the cell has not been independently reviewed, so it stays PARTIAL.",
           "evidence": [
             {
               "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
@@ -2644,7 +2644,7 @@
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "The shared-tool reason is closed; the inherited part 2B items and the missing independent review keep PARTIAL."
+          "change_reason": "Part 2B closes the inherited S-FMT1 and S-N2 items; the missing independent review keeps PARTIAL."
         }
       },
       "outcome": "prepared_without_admission",
@@ -2653,7 +2653,7 @@
       "normative_depth_complete": false,
       "remaining_gaps": [
         "No registry admission.",
-        "Part 2B: S-FMT1 (CV-1101 date-time) and S-N2 (SP-1101 dispatch) remain."
+        "Batch-2 integration runs the shared datetime_validator and the date-time inventory gate (SWEEP-P2B addendum 2); native SP-1101 custody is NOT_RUN."
       ],
       "grade_counts": {
         "ABSENT": 1,
@@ -2919,7 +2919,7 @@
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "dev.session.restarting has its own current compatibility withdrawal contract; F1/F2/F3 and exact-type controls execute against this head.",
+          "finding": "dev.session.restarting has its own current compatibility withdrawal contract; F1/F2/F3 and exact-type controls execute against this head. Sweep part 2B: retained readers select the frozen recipe only through SP-1101 (sealed write custody, then the shared RetainedDispatcher), and the frozen recipe carries the CV-1101 profiles; owner-valid history stays readable and forged, unsealed, unsupported or wrong-family selections refuse.",
           "evidence": [
             {
               "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
@@ -2946,7 +2946,7 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Cycle-8 independent review accepted the residual constructions. Sweep part 2A: every refusal is a guard-table row and the gated tool proves every provable row; S-N1 adopted. S-FMT1 and S-N2 remain explicit part 2B exceptions; JSON Schema keyword cuts are not ported.",
+          "finding": "Cycle-8 independent review accepted the residual constructions. Sweep part 2A: every refusal is a guard-table row and the gated tool proves every provable row; S-N1 adopted. Sweep part 2B: S-FMT1 (CV-1101 through the shared predicate, EventRecord and storage_utc_z profiles) and S-N2 (SP-1101 selection and RetainedDispatcher resolution) adopted with their witnesses; JSON Schema keyword cuts are not ported.",
           "evidence": [
             {
               "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
@@ -2968,13 +2968,13 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Sweep parts 2A and 2B numbers close the shared-tool and S-N1 items without changing a family result."
+          "change_reason": "Sweep part 2B closes S-FMT1 and S-N2 without changing a family result."
         }
       },
       "remaining_gaps": [
         "Event Authority admission remains absent.",
         "RT must resolve event and checkpoint retention.",
-        "Part 2B: S-FMT1 (CV-1101 date-time) and S-N2 (SP-1101 dispatch) remain."
+        "Batch-2 integration runs the shared datetime_validator and the date-time inventory gate (SWEEP-P2B addendum 2); native SP-1101 custody is NOT_RUN."
       ],
       "grade_counts": {
         "ABSENT": 1,
@@ -3235,7 +3235,7 @@
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "dev.session.started has its own current compatibility withdrawal contract; F1/F2/F3 and exact-type controls execute against this head.",
+          "finding": "dev.session.started has its own current compatibility withdrawal contract; F1/F2/F3 and exact-type controls execute against this head. Sweep part 2B: retained readers select the frozen recipe only through SP-1101 (sealed write custody, then the shared RetainedDispatcher), and the frozen recipe carries the CV-1101 profiles; owner-valid history stays readable and forged, unsealed, unsupported or wrong-family selections refuse.",
           "evidence": [
             {
               "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
@@ -3262,7 +3262,7 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Cycle-8 independent review accepted the residual constructions. Sweep part 2A: every refusal is a guard-table row and the gated tool proves every provable row; S-N1 adopted. S-FMT1 and S-N2 remain explicit part 2B exceptions; JSON Schema keyword cuts are not ported.",
+          "finding": "Cycle-8 independent review accepted the residual constructions. Sweep part 2A: every refusal is a guard-table row and the gated tool proves every provable row; S-N1 adopted. Sweep part 2B: S-FMT1 (CV-1101 through the shared predicate, EventRecord and storage_utc_z profiles) and S-N2 (SP-1101 selection and RetainedDispatcher resolution) adopted with their witnesses; JSON Schema keyword cuts are not ported.",
           "evidence": [
             {
               "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
@@ -3284,13 +3284,13 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Sweep parts 2A and 2B numbers close the shared-tool and S-N1 items without changing a family result."
+          "change_reason": "Sweep part 2B closes S-FMT1 and S-N2 without changing a family result."
         }
       },
       "remaining_gaps": [
         "Event Authority admission remains absent.",
         "RT must resolve event and checkpoint retention.",
-        "Part 2B: S-FMT1 (CV-1101 date-time) and S-N2 (SP-1101 dispatch) remain."
+        "Batch-2 integration runs the shared datetime_validator and the date-time inventory gate (SWEEP-P2B addendum 2); native SP-1101 custody is NOT_RUN."
       ],
       "grade_counts": {
         "ABSENT": 1,
@@ -3551,7 +3551,7 @@
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "dev.session.stopped has its own current compatibility withdrawal contract; F1/F2/F3 and exact-type controls execute against this head.",
+          "finding": "dev.session.stopped has its own current compatibility withdrawal contract; F1/F2/F3 and exact-type controls execute against this head. Sweep part 2B: retained readers select the frozen recipe only through SP-1101 (sealed write custody, then the shared RetainedDispatcher), and the frozen recipe carries the CV-1101 profiles; owner-valid history stays readable and forged, unsealed, unsupported or wrong-family selections refuse.",
           "evidence": [
             {
               "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
@@ -3578,7 +3578,7 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Cycle-8 independent review accepted the residual constructions. Sweep part 2A: every refusal is a guard-table row and the gated tool proves every provable row; S-N1 adopted. S-FMT1 and S-N2 remain explicit part 2B exceptions; JSON Schema keyword cuts are not ported.",
+          "finding": "Cycle-8 independent review accepted the residual constructions. Sweep part 2A: every refusal is a guard-table row and the gated tool proves every provable row; S-N1 adopted. Sweep part 2B: S-FMT1 (CV-1101 through the shared predicate, EventRecord and storage_utc_z profiles) and S-N2 (SP-1101 selection and RetainedDispatcher resolution) adopted with their witnesses; JSON Schema keyword cuts are not ported.",
           "evidence": [
             {
               "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
@@ -3600,13 +3600,13 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Sweep parts 2A and 2B numbers close the shared-tool and S-N1 items without changing a family result."
+          "change_reason": "Sweep part 2B closes S-FMT1 and S-N2 without changing a family result."
         }
       },
       "remaining_gaps": [
         "Event Authority admission remains absent.",
         "RT must resolve event and checkpoint retention.",
-        "Part 2B: S-FMT1 (CV-1101 date-time) and S-N2 (SP-1101 dispatch) remain."
+        "Batch-2 integration runs the shared datetime_validator and the date-time inventory gate (SWEEP-P2B addendum 2); native SP-1101 custody is NOT_RUN."
       ],
       "grade_counts": {
         "ABSENT": 1,
@@ -3867,7 +3867,7 @@
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "dev.session.stopping has its own current compatibility withdrawal contract; F1/F2/F3 and exact-type controls execute against this head.",
+          "finding": "dev.session.stopping has its own current compatibility withdrawal contract; F1/F2/F3 and exact-type controls execute against this head. Sweep part 2B: retained readers select the frozen recipe only through SP-1101 (sealed write custody, then the shared RetainedDispatcher), and the frozen recipe carries the CV-1101 profiles; owner-valid history stays readable and forged, unsealed, unsupported or wrong-family selections refuse.",
           "evidence": [
             {
               "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
@@ -3894,7 +3894,7 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Cycle-8 independent review accepted the residual constructions. Sweep part 2A: every refusal is a guard-table row and the gated tool proves every provable row; S-N1 adopted. S-FMT1 and S-N2 remain explicit part 2B exceptions; JSON Schema keyword cuts are not ported.",
+          "finding": "Cycle-8 independent review accepted the residual constructions. Sweep part 2A: every refusal is a guard-table row and the gated tool proves every provable row; S-N1 adopted. Sweep part 2B: S-FMT1 (CV-1101 through the shared predicate, EventRecord and storage_utc_z profiles) and S-N2 (SP-1101 selection and RetainedDispatcher resolution) adopted with their witnesses; JSON Schema keyword cuts are not ported.",
           "evidence": [
             {
               "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
@@ -3916,13 +3916,13 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Sweep parts 2A and 2B numbers close the shared-tool and S-N1 items without changing a family result."
+          "change_reason": "Sweep part 2B closes S-FMT1 and S-N2 without changing a family result."
         }
       },
       "remaining_gaps": [
         "Event Authority admission remains absent.",
         "RT must resolve event and checkpoint retention.",
-        "Part 2B: S-FMT1 (CV-1101 date-time) and S-N2 (SP-1101 dispatch) remain."
+        "Batch-2 integration runs the shared datetime_validator and the date-time inventory gate (SWEEP-P2B addendum 2); native SP-1101 custody is NOT_RUN."
       ],
       "grade_counts": {
         "ABSENT": 1,
@@ -4183,7 +4183,7 @@
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "doctor.custom_headless.checked has its own current compatibility withdrawal contract; F1/F2/F3 and exact-type controls execute against this head.",
+          "finding": "doctor.custom_headless.checked has its own current compatibility withdrawal contract; F1/F2/F3 and exact-type controls execute against this head. Sweep part 2B: retained readers select the frozen recipe only through SP-1101 (sealed write custody, then the shared RetainedDispatcher), and the frozen recipe carries the CV-1101 profiles; owner-valid history stays readable and forged, unsealed, unsupported or wrong-family selections refuse.",
           "evidence": [
             {
               "path": "Plans/newtools.md",
@@ -4210,7 +4210,7 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Cycle-8 independent review accepted the residual constructions. Sweep part 2A: every refusal is a guard-table row and the gated tool proves every provable row; S-N1 adopted. S-FMT1 and S-N2 remain explicit part 2B exceptions; JSON Schema keyword cuts are not ported.",
+          "finding": "Cycle-8 independent review accepted the residual constructions. Sweep part 2A: every refusal is a guard-table row and the gated tool proves every provable row; S-N1 adopted. Sweep part 2B: S-FMT1 (CV-1101 through the shared predicate, EventRecord and storage_utc_z profiles) and S-N2 (SP-1101 selection and RetainedDispatcher resolution) adopted with their witnesses; JSON Schema keyword cuts are not ported.",
           "evidence": [
             {
               "path": "Plans/newtools.md",
@@ -4232,13 +4232,13 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Sweep parts 2A and 2B numbers close the shared-tool and S-N1 items without changing a family result."
+          "change_reason": "Sweep part 2B closes S-FMT1 and S-N2 without changing a family result."
         }
       },
       "remaining_gaps": [
         "Event Authority admission remains absent.",
         "RT must resolve event and checkpoint retention.",
-        "Part 2B: S-FMT1 (CV-1101 date-time) and S-N2 (SP-1101 dispatch) remain."
+        "Batch-2 integration runs the shared datetime_validator and the date-time inventory gate (SWEEP-P2B addendum 2); native SP-1101 custody is NOT_RUN."
       ],
       "grade_counts": {
         "ABSENT": 1,
@@ -4499,7 +4499,7 @@
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "live.artifact.created has its own current compatibility withdrawal contract; F1/F2/F3 and exact-type controls execute against this head.",
+          "finding": "live.artifact.created has its own current compatibility withdrawal contract; F1/F2/F3 and exact-type controls execute against this head. Sweep part 2B: retained readers select the frozen recipe only through SP-1101 (sealed write custody, then the shared RetainedDispatcher), and the frozen recipe carries the CV-1101 profiles; owner-valid history stays readable and forged, unsealed, unsupported or wrong-family selections refuse.",
           "evidence": [
             {
               "path": "Plans/newtools.md",
@@ -4526,7 +4526,7 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Cycle-8 independent review accepted the residual constructions. Sweep part 2A: every refusal is a guard-table row and the gated tool proves every provable row; S-N1 adopted. S-FMT1 and S-N2 remain explicit part 2B exceptions; JSON Schema keyword cuts are not ported.",
+          "finding": "Cycle-8 independent review accepted the residual constructions. Sweep part 2A: every refusal is a guard-table row and the gated tool proves every provable row; S-N1 adopted. Sweep part 2B: S-FMT1 (CV-1101 through the shared predicate, EventRecord and storage_utc_z profiles) and S-N2 (SP-1101 selection and RetainedDispatcher resolution) adopted with their witnesses; JSON Schema keyword cuts are not ported.",
           "evidence": [
             {
               "path": "Plans/newtools.md",
@@ -4548,13 +4548,13 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Sweep parts 2A and 2B numbers close the shared-tool and S-N1 items without changing a family result."
+          "change_reason": "Sweep part 2B closes S-FMT1 and S-N2 without changing a family result."
         }
       },
       "remaining_gaps": [
         "Event Authority admission remains absent.",
         "RT must resolve event and checkpoint retention.",
-        "Part 2B: S-FMT1 (CV-1101 date-time) and S-N2 (SP-1101 dispatch) remain."
+        "Batch-2 integration runs the shared datetime_validator and the date-time inventory gate (SWEEP-P2B addendum 2); native SP-1101 custody is NOT_RUN."
       ],
       "grade_counts": {
         "ABSENT": 1,
@@ -4815,7 +4815,7 @@
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "live.session.completed has its own current compatibility withdrawal contract; F1/F2/F3 and exact-type controls execute against this head.",
+          "finding": "live.session.completed has its own current compatibility withdrawal contract; F1/F2/F3 and exact-type controls execute against this head. Sweep part 2B: retained readers select the frozen recipe only through SP-1101 (sealed write custody, then the shared RetainedDispatcher), and the frozen recipe carries the CV-1101 profiles; owner-valid history stays readable and forged, unsealed, unsupported or wrong-family selections refuse.",
           "evidence": [
             {
               "path": "Plans/newtools.md",
@@ -4842,7 +4842,7 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Cycle-8 independent review accepted the residual constructions. Sweep part 2A: every refusal is a guard-table row and the gated tool proves every provable row; S-N1 adopted. S-FMT1 and S-N2 remain explicit part 2B exceptions; JSON Schema keyword cuts are not ported.",
+          "finding": "Cycle-8 independent review accepted the residual constructions. Sweep part 2A: every refusal is a guard-table row and the gated tool proves every provable row; S-N1 adopted. Sweep part 2B: S-FMT1 (CV-1101 through the shared predicate, EventRecord and storage_utc_z profiles) and S-N2 (SP-1101 selection and RetainedDispatcher resolution) adopted with their witnesses; JSON Schema keyword cuts are not ported.",
           "evidence": [
             {
               "path": "Plans/newtools.md",
@@ -4864,13 +4864,13 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Sweep parts 2A and 2B numbers close the shared-tool and S-N1 items without changing a family result."
+          "change_reason": "Sweep part 2B closes S-FMT1 and S-N2 without changing a family result."
         }
       },
       "remaining_gaps": [
         "Event Authority admission remains absent.",
         "RT must resolve event and checkpoint retention.",
-        "Part 2B: S-FMT1 (CV-1101 date-time) and S-N2 (SP-1101 dispatch) remain."
+        "Batch-2 integration runs the shared datetime_validator and the date-time inventory gate (SWEEP-P2B addendum 2); native SP-1101 custody is NOT_RUN."
       ],
       "grade_counts": {
         "ABSENT": 1,
@@ -5131,7 +5131,7 @@
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "live.session.degraded has its own current compatibility withdrawal contract; F1/F2/F3 and exact-type controls execute against this head.",
+          "finding": "live.session.degraded has its own current compatibility withdrawal contract; F1/F2/F3 and exact-type controls execute against this head. Sweep part 2B: retained readers select the frozen recipe only through SP-1101 (sealed write custody, then the shared RetainedDispatcher), and the frozen recipe carries the CV-1101 profiles; owner-valid history stays readable and forged, unsealed, unsupported or wrong-family selections refuse.",
           "evidence": [
             {
               "path": "Plans/newtools.md",
@@ -5158,7 +5158,7 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Cycle-8 independent review accepted the residual constructions. Sweep part 2A: every refusal is a guard-table row and the gated tool proves every provable row; S-N1 adopted. S-FMT1 and S-N2 remain explicit part 2B exceptions; JSON Schema keyword cuts are not ported.",
+          "finding": "Cycle-8 independent review accepted the residual constructions. Sweep part 2A: every refusal is a guard-table row and the gated tool proves every provable row; S-N1 adopted. Sweep part 2B: S-FMT1 (CV-1101 through the shared predicate, EventRecord and storage_utc_z profiles) and S-N2 (SP-1101 selection and RetainedDispatcher resolution) adopted with their witnesses; JSON Schema keyword cuts are not ported.",
           "evidence": [
             {
               "path": "Plans/newtools.md",
@@ -5180,13 +5180,13 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Sweep parts 2A and 2B numbers close the shared-tool and S-N1 items without changing a family result."
+          "change_reason": "Sweep part 2B closes S-FMT1 and S-N2 without changing a family result."
         }
       },
       "remaining_gaps": [
         "Event Authority admission remains absent.",
         "RT must resolve event and checkpoint retention.",
-        "Part 2B: S-FMT1 (CV-1101 date-time) and S-N2 (SP-1101 dispatch) remain."
+        "Batch-2 integration runs the shared datetime_validator and the date-time inventory gate (SWEEP-P2B addendum 2); native SP-1101 custody is NOT_RUN."
       ],
       "grade_counts": {
         "ABSENT": 1,
@@ -5447,7 +5447,7 @@
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "live.session.started has its own current compatibility withdrawal contract; F1/F2/F3 and exact-type controls execute against this head.",
+          "finding": "live.session.started has its own current compatibility withdrawal contract; F1/F2/F3 and exact-type controls execute against this head. Sweep part 2B: retained readers select the frozen recipe only through SP-1101 (sealed write custody, then the shared RetainedDispatcher), and the frozen recipe carries the CV-1101 profiles; owner-valid history stays readable and forged, unsealed, unsupported or wrong-family selections refuse.",
           "evidence": [
             {
               "path": "Plans/newtools.md",
@@ -5474,7 +5474,7 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Cycle-8 independent review accepted the residual constructions. Sweep part 2A: every refusal is a guard-table row and the gated tool proves every provable row; S-N1 adopted. S-FMT1 and S-N2 remain explicit part 2B exceptions; JSON Schema keyword cuts are not ported.",
+          "finding": "Cycle-8 independent review accepted the residual constructions. Sweep part 2A: every refusal is a guard-table row and the gated tool proves every provable row; S-N1 adopted. Sweep part 2B: S-FMT1 (CV-1101 through the shared predicate, EventRecord and storage_utc_z profiles) and S-N2 (SP-1101 selection and RetainedDispatcher resolution) adopted with their witnesses; JSON Schema keyword cuts are not ported.",
           "evidence": [
             {
               "path": "Plans/newtools.md",
@@ -5496,13 +5496,13 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Sweep parts 2A and 2B numbers close the shared-tool and S-N1 items without changing a family result."
+          "change_reason": "Sweep part 2B closes S-FMT1 and S-N2 without changing a family result."
         }
       },
       "remaining_gaps": [
         "Event Authority admission remains absent.",
         "RT must resolve event and checkpoint retention.",
-        "Part 2B: S-FMT1 (CV-1101 date-time) and S-N2 (SP-1101 dispatch) remain."
+        "Batch-2 integration runs the shared datetime_validator and the date-time inventory gate (SWEEP-P2B addendum 2); native SP-1101 custody is NOT_RUN."
       ],
       "grade_counts": {
         "ABSENT": 1,
@@ -5763,7 +5763,7 @@
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "live.step.updated has its own current compatibility withdrawal contract; F1/F2/F3 and exact-type controls execute against this head.",
+          "finding": "live.step.updated has its own current compatibility withdrawal contract; F1/F2/F3 and exact-type controls execute against this head. Sweep part 2B: retained readers select the frozen recipe only through SP-1101 (sealed write custody, then the shared RetainedDispatcher), and the frozen recipe carries the CV-1101 profiles; owner-valid history stays readable and forged, unsealed, unsupported or wrong-family selections refuse.",
           "evidence": [
             {
               "path": "Plans/newtools.md",
@@ -5790,7 +5790,7 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Cycle-8 independent review accepted the residual constructions. Sweep part 2A: every refusal is a guard-table row and the gated tool proves every provable row; S-N1 adopted. S-FMT1 and S-N2 remain explicit part 2B exceptions; JSON Schema keyword cuts are not ported.",
+          "finding": "Cycle-8 independent review accepted the residual constructions. Sweep part 2A: every refusal is a guard-table row and the gated tool proves every provable row; S-N1 adopted. Sweep part 2B: S-FMT1 (CV-1101 through the shared predicate, EventRecord and storage_utc_z profiles) and S-N2 (SP-1101 selection and RetainedDispatcher resolution) adopted with their witnesses; JSON Schema keyword cuts are not ported.",
           "evidence": [
             {
               "path": "Plans/newtools.md",
@@ -5812,13 +5812,13 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Sweep parts 2A and 2B numbers close the shared-tool and S-N1 items without changing a family result."
+          "change_reason": "Sweep part 2B closes S-FMT1 and S-N2 without changing a family result."
         }
       },
       "remaining_gaps": [
         "Event Authority admission remains absent.",
         "RT must resolve event and checkpoint retention.",
-        "Part 2B: S-FMT1 (CV-1101 date-time) and S-N2 (SP-1101 dispatch) remain."
+        "Batch-2 integration runs the shared datetime_validator and the date-time inventory gate (SWEEP-P2B addendum 2); native SP-1101 custody is NOT_RUN."
       ],
       "grade_counts": {
         "ABSENT": 1,
@@ -6079,7 +6079,7 @@
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "preview.session.refreshed has its own current compatibility withdrawal contract; F1/F2/F3 and exact-type controls execute against this head.",
+          "finding": "preview.session.refreshed has its own current compatibility withdrawal contract; F1/F2/F3 and exact-type controls execute against this head. Sweep part 2B: retained readers select the frozen recipe only through SP-1101 (sealed write custody, then the shared RetainedDispatcher), and the frozen recipe carries the CV-1101 profiles; owner-valid history stays readable and forged, unsealed, unsupported or wrong-family selections refuse.",
           "evidence": [
             {
               "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
@@ -6106,7 +6106,7 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Cycle-8 independent review accepted the residual constructions. Sweep part 2A: every refusal is a guard-table row and the gated tool proves every provable row; S-N1 adopted. S-FMT1 and S-N2 remain explicit part 2B exceptions; JSON Schema keyword cuts are not ported.",
+          "finding": "Cycle-8 independent review accepted the residual constructions. Sweep part 2A: every refusal is a guard-table row and the gated tool proves every provable row; S-N1 adopted. Sweep part 2B: S-FMT1 (CV-1101 through the shared predicate, EventRecord and storage_utc_z profiles) and S-N2 (SP-1101 selection and RetainedDispatcher resolution) adopted with their witnesses; JSON Schema keyword cuts are not ported.",
           "evidence": [
             {
               "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
@@ -6128,13 +6128,13 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Sweep parts 2A and 2B numbers close the shared-tool and S-N1 items without changing a family result."
+          "change_reason": "Sweep part 2B closes S-FMT1 and S-N2 without changing a family result."
         }
       },
       "remaining_gaps": [
         "Event Authority admission remains absent.",
         "RT must resolve event and checkpoint retention.",
-        "Part 2B: S-FMT1 (CV-1101 date-time) and S-N2 (SP-1101 dispatch) remain."
+        "Batch-2 integration runs the shared datetime_validator and the date-time inventory gate (SWEEP-P2B addendum 2); native SP-1101 custody is NOT_RUN."
       ],
       "grade_counts": {
         "ABSENT": 1,
@@ -6395,7 +6395,7 @@
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "preview.session.started has its own current compatibility withdrawal contract; F1/F2/F3 and exact-type controls execute against this head.",
+          "finding": "preview.session.started has its own current compatibility withdrawal contract; F1/F2/F3 and exact-type controls execute against this head. Sweep part 2B: retained readers select the frozen recipe only through SP-1101 (sealed write custody, then the shared RetainedDispatcher), and the frozen recipe carries the CV-1101 profiles; owner-valid history stays readable and forged, unsealed, unsupported or wrong-family selections refuse.",
           "evidence": [
             {
               "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
@@ -6422,7 +6422,7 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Cycle-8 independent review accepted the residual constructions. Sweep part 2A: every refusal is a guard-table row and the gated tool proves every provable row; S-N1 adopted. S-FMT1 and S-N2 remain explicit part 2B exceptions; JSON Schema keyword cuts are not ported.",
+          "finding": "Cycle-8 independent review accepted the residual constructions. Sweep part 2A: every refusal is a guard-table row and the gated tool proves every provable row; S-N1 adopted. Sweep part 2B: S-FMT1 (CV-1101 through the shared predicate, EventRecord and storage_utc_z profiles) and S-N2 (SP-1101 selection and RetainedDispatcher resolution) adopted with their witnesses; JSON Schema keyword cuts are not ported.",
           "evidence": [
             {
               "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
@@ -6444,13 +6444,13 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Sweep parts 2A and 2B numbers close the shared-tool and S-N1 items without changing a family result."
+          "change_reason": "Sweep part 2B closes S-FMT1 and S-N2 without changing a family result."
         }
       },
       "remaining_gaps": [
         "Event Authority admission remains absent.",
         "RT must resolve event and checkpoint retention.",
-        "Part 2B: S-FMT1 (CV-1101 date-time) and S-N2 (SP-1101 dispatch) remain."
+        "Batch-2 integration runs the shared datetime_validator and the date-time inventory gate (SWEEP-P2B addendum 2); native SP-1101 custody is NOT_RUN."
       ],
       "grade_counts": {
         "ABSENT": 1,
@@ -6711,7 +6711,7 @@
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "preview.session.stopped has its own current compatibility withdrawal contract; F1/F2/F3 and exact-type controls execute against this head.",
+          "finding": "preview.session.stopped has its own current compatibility withdrawal contract; F1/F2/F3 and exact-type controls execute against this head. Sweep part 2B: retained readers select the frozen recipe only through SP-1101 (sealed write custody, then the shared RetainedDispatcher), and the frozen recipe carries the CV-1101 profiles; owner-valid history stays readable and forged, unsealed, unsupported or wrong-family selections refuse.",
           "evidence": [
             {
               "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
@@ -6738,7 +6738,7 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Cycle-8 independent review accepted the residual constructions. Sweep part 2A: every refusal is a guard-table row and the gated tool proves every provable row; S-N1 adopted. S-FMT1 and S-N2 remain explicit part 2B exceptions; JSON Schema keyword cuts are not ported.",
+          "finding": "Cycle-8 independent review accepted the residual constructions. Sweep part 2A: every refusal is a guard-table row and the gated tool proves every provable row; S-N1 adopted. Sweep part 2B: S-FMT1 (CV-1101 through the shared predicate, EventRecord and storage_utc_z profiles) and S-N2 (SP-1101 selection and RetainedDispatcher resolution) adopted with their witnesses; JSON Schema keyword cuts are not ported.",
           "evidence": [
             {
               "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
@@ -6760,13 +6760,13 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Sweep parts 2A and 2B numbers close the shared-tool and S-N1 items without changing a family result."
+          "change_reason": "Sweep part 2B closes S-FMT1 and S-N2 without changing a family result."
         }
       },
       "remaining_gaps": [
         "Event Authority admission remains absent.",
         "RT must resolve event and checkpoint retention.",
-        "Part 2B: S-FMT1 (CV-1101 date-time) and S-N2 (SP-1101 dispatch) remain."
+        "Batch-2 integration runs the shared datetime_validator and the date-time inventory gate (SWEEP-P2B addendum 2); native SP-1101 custody is NOT_RUN."
       ],
       "grade_counts": {
         "ABSENT": 1,
@@ -6992,7 +6992,7 @@
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "SMPFS-326 independently defines compatibility_withdrawal for tool.custom_headless.skipped@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
+          "finding": "SMPFS-326 independently defines compatibility_withdrawal for tool.custom_headless.skipped@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit. Sweep part 2B: retained readers select the frozen recipe only through SP-1101 (sealed write custody, then the shared RetainedDispatcher), and the frozen recipe carries the CV-1101 profiles; owner-valid history stays readable and forged, unsealed, unsupported or wrong-family selections refuse.",
           "evidence": [
             {
               "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
@@ -7012,7 +7012,7 @@
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Own saved positive/negative and reference-closure cases pass. Sweep part 2A: every refusal is a guard-table row and the gated tool proves every provable row of these families; S-N1 adopted. S-FMT1 and S-N2 remain open (part 2B) and the cell has not been independently reviewed, so it stays PARTIAL.",
+          "finding": "Own saved positive/negative and reference-closure cases pass. Sweep part 2A: every refusal is a guard-table row and the gated tool proves every provable row of these families; S-N1 adopted. Sweep part 2B closes S-FMT1 and S-N2 for these families too, but the cell has not been independently reviewed, so it stays PARTIAL.",
           "evidence": [
             {
               "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
@@ -7027,7 +7027,7 @@
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "The shared-tool reason is closed; the inherited part 2B items and the missing independent review keep PARTIAL."
+          "change_reason": "Part 2B closes the inherited S-FMT1 and S-N2 items; the missing independent review keeps PARTIAL."
         }
       },
       "outcome": "prepared_without_admission",
@@ -7040,7 +7040,7 @@
       ],
       "remaining_gaps": [
         "No registry admission.",
-        "Part 2B: S-FMT1 (CV-1101 date-time) and S-N2 (SP-1101 dispatch) remain."
+        "Batch-2 integration runs the shared datetime_validator and the date-time inventory gate (SWEEP-P2B addendum 2); native SP-1101 custody is NOT_RUN."
       ],
       "grade_counts": {
         "ABSENT": 1,
@@ -7067,13 +7067,13 @@
   "sweep_items": [
     {
       "id": "S-FMT1",
-      "status": "PART_2B",
+      "status": "FIXED_SWEEP_P2B",
       "location": [
-        "scripts/pm-ds15-event-contracts.py:17,169",
-        "Plans/event_record.schema.json:212",
-        "Plans/event_append_receipt_contracts.schema.json:67"
+        "scripts/pm-ds15-event-contracts.py (FORMATS, DATETIME_PROFILES, storage_datetime_errors, inventory_storage_sites, MemoizedValidation, cached_validator)",
+        "Plans/ds15_p2b_cases.json"
       ],
-      "response": "Timestamp item (CV-1101); interim review only. Unchanged."
+      "response": "CV-1101 adopted through the shared predicate: pm_event_datetime.date_time, installed by the shared format_checker with the EventRecord profile at every format: date-time a DS15 validator meets (EventRecord occurred_at_utc, AppendReceipt acknowledged_at_utc, dev session record v2 timestamps), and date_time(..., profile=storage_utc_z) on EventRecord observed_at_utc and persisted_at_utc (CV-253), current and retained. datetime_validator and the inventory gate run at batch-2 integration (SWEEP-P2B addendum 2). Witnesses T01-T21 (each refused at its schema-verdict row with the shared Refusal as the cause) and TP01-TP08 (owner-valid positives) in Plans/ds15_p2b_cases.json.",
+      "commit": "32fb9694b9 (hardened 4eb9c30045, witness da9535b646)"
     },
     {
       "id": "S-N1",
@@ -7087,12 +7087,15 @@
     },
     {
       "id": "S-N2",
-      "status": "PART_2B",
+      "status": "FIXED_SWEEP_P2B",
       "location": [
-        "scripts/pm-ds15-event-contracts.py:integer_boundary decorators and parse_numeric_json",
-        "Plans/Section15_MVP_Promoted_Features_Spec.md:SMPFS-318/319 history clauses"
+        "scripts/pm-ds15-event-contracts.py (select_original_recipe, selected_recipe, DS15OriginalOwner, frozen_verifier, installed_recipes, resolve_refusal, resolve_original)",
+        "scripts/pm-ds15-deck2-contracts.py (envelope_ok)",
+        "Plans/ds15_original_custody.json",
+        "Plans/ds15_p2b_cases.json"
       ],
-      "response": "SP-1101 authenticated retained dispatch is part 2B: SP-1101 selects the frozen CV-1101 date-time profile in the same recipe tuple, and the date-time gate has not passed. Retained originals keep the frozen ds15-v1 recipe they were written under (implicit single-edition selection, stated as a modelling assumption)."
+      "response": "SP-1101 adopted: every retained read, retry and receipt path takes one selection from the sealed write custody (rd_recipe: no custody is unavailable, an uninstalled tuple is unsupported, no fallback) before the original is read, runs the frozen-recipe checks with it, then resolves the original once through the shared RetainedDispatcher (rd_resolve) whose sealed owner authenticates the fetched bytes by their CV-339 commitment and whose frozen verifier recomputes the original. Witnesses SX01-SX06, SXR1-SXR2 and the retained positives SXP1, SXP2, TP07, TP08 in Plans/ds15_p2b_cases.json; 93 sealed originals in Plans/ds15_original_custody.json.",
+      "commit": "32fb9694b9 (hardened 4eb9c30045, witness da9535b646)"
     },
     {
       "id": "shared_guard_tool_adoption",
@@ -7265,6 +7268,73 @@
     },
     "numeric_fixture_changes": 62,
     "grades": "unchanged for all 23 families",
-    "timestamp_review": "interim only (pm7-build, 2026-11-05 16:50Z)"
+    "timestamp_review": "interim only at part 2A (pm7-build, 2026-11-05 16:50Z); superseded by sweep_p2b: no longer interim"
+  },
+  "sweep_p2b": {
+    "numrule_merge": "a6c8442d46",
+    "numrule_commit": "58c2816ff33365384d4039553f5efdb5370930e6",
+    "implementation_commits": [
+      "32fb9694b9",
+      "cec9fbb96c",
+      "4eb9c30045",
+      "da9535b646"
+    ],
+    "implementation_head": "da9535b646",
+    "items": {
+      "S-FMT1": "FIXED_SWEEP_P2B",
+      "S-N2": "FIXED_SWEEP_P2B"
+    },
+    "timestamp_review": "no longer interim: every DS15 timestamp field is checked by the shared CV-1101 predicate pm_event_datetime.date_time with an explicit owner profile (event_record; storage_utc_z on EventRecord observed_at_utc and persisted_at_utc)",
+    "datetime_validator_and_inventory_gate": "not called in the lane tree (SWEEP-P2B addendum 2); they run at batch-2 integration",
+    "part_2b_witnesses": 47,
+    "part_2b_negatives": 37,
+    "part_2b_positives": 10,
+    "sealed_originals": 93,
+    "custody_stores": 4,
+    "tables": 168,
+    "rows": 391,
+    "rows_proved": 358,
+    "rows_unproved": 33,
+    "tool_rerun": {
+      "tables": 24,
+      "rows": 37,
+      "rows_proved": 37,
+      "negatives": 70,
+      "controls": 53,
+      "own_flips": 70,
+      "stays": 131,
+      "unrelated": 0,
+      "masked": 0,
+      "evaluations": 1137,
+      "status": "all PASS"
+    },
+    "collection": {
+      "witness_calls": 39542,
+      "refused": 23689,
+      "distinct_negatives": 1441,
+      "lane_matrix_problems": 0,
+      "untracked_or_absorbed_refusals": 0,
+      "exceptions": 0,
+      "excluded_by_construction": 129
+    },
+    "number_self_test": {
+      "command": "python3 scripts/pm_event_numbers.py --self-test --scope numbers",
+      "exit": 0,
+      "status": "pass",
+      "case_passes": 580
+    },
+    "combined_self_test": {
+      "command": "python3 scripts/pm_event_numbers.py --self-test",
+      "exit": 1,
+      "case_execution": "NOT_RUN_ADMISSION_REFUSED",
+      "reason": "datetime inventory gate fails closed on the lane tree (311 failures)"
+    },
+    "datetime_module_self_test": "not credited: no entry point (addendum 2)",
+    "number_corpus": {
+      "route_runs": 7371,
+      "disagreements": 0
+    },
+    "fixture_expectation_changes": 0,
+    "grades": "unchanged for all 23 families"
   }
 }
