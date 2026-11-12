@@ -9,7 +9,10 @@
 // appears exactly once, in the place the tone owns, fully readable (its own box not clipped, inside the dialog), and that
 // a body holding no content is absent, display:none or no taller than its own hairline — round 1 left a 34 px
 // blank band of body padding in every plain confirm. It needs at least one of each tone, must reach the item's
-// own example, "Delete all memories?", and must leave no confirm it set out to visit (skipped === 0). Nothing here
+// own example, "Delete all memories?", and must leave no confirm it set out to visit (skipped === 0). A press that
+// opens an inline editor instead of a confirm closes it by the product's own controls (its footer close/cancel,
+// then its Close X, then the Escape the panel owns) and asserts it is gone before the walk moves on — an editor
+// left open covers the rail and ends the walk at the next chapter click (F12A-NORMAL-CONFIRM-CLOSE-20261112). Nothing here
 // reads aria or a screen-reader tree: PMConcept7 has no such assertions, so the check judges what is visible —
 // text shown once, the danger tone's red alert, and the box geometry. Fails on main, where both places carry the
 // message, and on round 1 (ad79d847d6), where every plain confirm keeps the blank body band. Both surfaces
@@ -39,6 +42,55 @@ async function dismiss(f) {
 		if (cancel) cancel.click();
 	}, DIALOG);
 	await f.waitForFunction((sel) => !document.querySelector(sel), DIALOG, { timeout: 1500 }).catch(() => {});
+}
+
+/* A press can open an inline editor — a drawer panel, "Allowed computers" is one — instead of a confirm. That is
+   not a confirm to judge, but it cannot be left open either: its modal covers the rail, and the next chapter click
+   times out behind it (F12A-NORMAL-CONFIRM-CLOSE-20261112). Close it with the product's own controls — the panel's
+   own footer close/cancel button, then its Close X, then the Escape the panel itself owns while it is open — and
+   assert it is gone before the walk moves on. A drawer that will not close is a setup failure named here, never a
+   silent catch. */
+async function closeOpened(t, f, where) {
+	const opened = await f.evaluate(() => {
+		const wraps = [...document.querySelectorAll('.drawer-wrap')].filter((w) => w.isConnected && w.dataset.closing !== '1');
+		const wrap = wraps[wraps.length - 1];
+		if (!wrap) return null;
+		const panel = wrap.querySelector('.drawer');
+		const title = (((panel && panel.getAttribute('aria-label')) || (wrap.querySelector('.pm51-panel-title') || {}).textContent) || '').replace(/\s+/g, ' ').trim();
+		return {
+			title,
+			footer: !!panel && !!panel.querySelector('.pm51-panel-foot [data-action="close-overlay"], .drawer-footer [data-action="close-overlay"]'),
+			x: !!panel && !!panel.querySelector('.pm51-panel-close[data-action="close-overlay"], .dialog-head .icon-btn[data-action="close-overlay"]'),
+		};
+	});
+	if (!opened) return;
+	const gone = () => f.waitForFunction(() => !document.querySelector('.drawer-wrap'), null, { timeout: 2000 }).then(() => true).catch(() => false);
+	for (const how of ['footer', 'x', 'escape']) {
+		if ((how === 'footer' && !opened.footer) || (how === 'x' && !opened.x)) continue;
+		await f.evaluate((how) => {
+			const wraps = [...document.querySelectorAll('.drawer-wrap')].filter((w) => w.isConnected && w.dataset.closing !== '1');
+			const wrap = wraps[wraps.length - 1];
+			if (!wrap) return;
+			const panel = wrap.querySelector('.drawer');
+			if (how === 'escape') {
+				/* the panel owns Escape while it is open; the key must come from inside Settings for it to count */
+				const owns = window.PM7_SETTINGS_TOME && window.PM7_SETTINGS_TOME.ownsEvent;
+				const at = owns && document.activeElement && owns(document.activeElement) ? document.activeElement : (panel || wrap);
+				at.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+				return;
+			}
+			const el = how === 'footer'
+				? panel && panel.querySelector('.pm51-panel-foot [data-action="close-overlay"], .drawer-footer [data-action="close-overlay"]')
+				: panel && panel.querySelector('.pm51-panel-close[data-action="close-overlay"], .dialog-head .icon-btn[data-action="close-overlay"]');
+			if (el) el.click();
+		}, how).catch(() => {});
+		if (await gone()) {
+			await t.check(`closed the inline editor it opened: ${where} / ${opened.title}`, true, '');
+			return;
+		}
+	}
+	await t.check(`closed the inline editor it opened: ${where} / ${opened.title}`, false,
+		'setup: the press opened this inline editor and its own footer close, Close X and Escape left it open — the walk cannot pass it; name this editor to the kit owner');
 }
 
 async function readDialog(f) {
@@ -226,7 +278,7 @@ async function scan(t, f, ws, tab, place, bag, seen, limits) {
 		seen.add(picked.key);
 		if (!(await press(f, 'data-fo154btn'))) { bag.skipped += 1; t.log(`unvisited confirm: ${place} / ${picked.name.slice(0, 60)}`); break; }
 		if (await dialogShown(f)) await judge(t, f, bag, `${place} / ${picked.name.slice(0, 50)}`);
-		else await dismiss(f);
+		else { await dismiss(f); await closeOpened(t, f, `${place} / ${picked.name.slice(0, 50)}`); }
 	}
 	for (let m = 0; m < limits.menus; m++) {
 		const more = await pick(f, ws, tab, 'more', [...seen], 'data-fo154more');
@@ -234,7 +286,7 @@ async function scan(t, f, ws, tab, place, bag, seen, limits) {
 		seen.add(more.key);
 		if (!(await press(f, 'data-fo154more'))) { bag.skipped += 1; t.log(`unvisited menu: ${place} / ${more.name.slice(0, 60)}`); break; }
 		const menu = await menuOpen(f);
-		if (!menu) { await dismiss(f); continue; }
+		if (!menu) { await dismiss(f); await closeOpened(t, f, `${place} / ${more.name.slice(0, 50)}`); continue; }
 		const items = await f.evaluate(({ pattern, sel }) => {
 			const rx = new RegExp(pattern, 'i');
 			const pops = [...document.querySelectorAll(sel)].filter((p) => p.getClientRects().length);
@@ -247,9 +299,10 @@ async function scan(t, f, ws, tab, place, bag, seen, limits) {
 			const row = await rowPress(f, 'data-fo154more', item.label);
 			if (!row.ok) { bag.skipped += 1; t.log(`unvisited menu row: ${place} / ${more.name.slice(0, 40)} / ${item.label.slice(0, 40)} (${row.why})`); continue; }
 			if (await dialogShown(f)) await judge(t, f, bag, `${place} / ${more.name.slice(0, 40)} / ${item.label.slice(0, 40)}`);
-			else await dismiss(f);
+			else { await dismiss(f); await closeOpened(t, f, `${place} / ${more.name.slice(0, 40)} / ${item.label.slice(0, 40)}`); }
 		}
 		await dismiss(f);
+		await closeOpened(t, f, place);
 	}
 }
 
