@@ -910,13 +910,6 @@
     "citation": "Plans/Prompt_Pipeline.md#fence:6097"
   },
   {
-    "path": "Plans/Runtime_Artifacts_Panel.md",
-    "origin": "fence:4169",
-    "sha256": "d635aad53c61ce1782090a7fdc573dcd1464020c8fa97880c9af68fc9f3b3ba8",
-    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
-    "citation": "Plans/Runtime_Artifacts_Panel.md#fence:4169"
-  },
-  {
     "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
     "origin": "fence:15201",
     "sha256": "8843d47be435946f164bf0ffe993c69a09d40a7fcecc697543a47fe537fa9a12",
@@ -2366,139 +2359,6 @@
     "citation": "Plans/usage-feature.md#fence:5651"
   },
   {
-    "path": "Plans/.plan_migration/pds-20261112-002-current-planunit-snapshot/span_map.jsonl",
-    "origin": "jsonl:1005",
-    "sha256": "2258e29008d51e4598482b28c43ee56c5908a6915e0db46ace591fcbfc4e2e41",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_migration/pds-20261112-002-current-planunit-snapshot/span_map.jsonl#jsonl:1005"
-  },
-  {
-    "path": "Plans/.plan_migration/pds-20261112-002-current-planunit-snapshot/span_map.jsonl",
-    "origin": "jsonl:2205",
-    "sha256": "1ef56624995caab99bd421b69895e382c0a0d584fe16634ddb03a74ff936be60",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_migration/pds-20261112-002-current-planunit-snapshot/span_map.jsonl#jsonl:2205"
-  },
-  {
-    "path": "Plans/.plan_migration/pds-20261112-002-current-planunit-snapshot/span_map.jsonl",
-    "origin": "jsonl:2677",
-    "sha256": "08b7488ad02d09c5cf255a238ba14183e484b2b37d124e0bfc5d61af87324a68",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_migration/pds-20261112-002-current-planunit-snapshot/span_map.jsonl#jsonl:2677"
-  },
-  {
-    "path": "Plans/.plan_migration/pds-20261112-002-current-planunit-snapshot/span_map.jsonl",
-    "origin": "jsonl:2678",
-    "sha256": "d7b807803175d4428364b4217119ddfd94e60deeccb785596ec29cc816c11fe9",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_migration/pds-20261112-002-current-planunit-snapshot/span_map.jsonl#jsonl:2678"
-  },
-  {
-    "path": "Plans/.plan_migration/pds-20261112-002-current-planunit-snapshot/span_map.jsonl",
-    "origin": "jsonl:3345",
-    "sha256": "348a3992c32869832caac29fa165cb31b597d7fd30eed0821cb7ce6d9ae5a727",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_migration/pds-20261112-002-current-planunit-snapshot/span_map.jsonl#jsonl:3345"
-  },
-  {
-    "path": "Plans/.plan_migration/pds-20261112-002-current-planunit-snapshot/span_map.jsonl",
-    "origin": "jsonl:6312",
-    "sha256": "5a9401a84b92b7ac385ae5004964917ac83321eb2a60e251f9da8aa48f7dd249",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_migration/pds-20261112-002-current-planunit-snapshot/span_map.jsonl#jsonl:6312"
-  },
-  {
-    "path": "Plans/.plan_migration/pds-20261112-002-current-planunit-snapshot/span_map.jsonl",
-    "origin": "jsonl:7491",
-    "sha256": "218eea8da75e1ed1bbb020409acc096c593b4876947bed9b808e2c59a26f9cb4",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_migration/pds-20261112-002-current-planunit-snapshot/span_map.jsonl#jsonl:7491"
-  },
-  {
-    "path": "Plans/.plan_migration/pds-20261112-002-current-planunit-snapshot/span_map.jsonl",
-    "origin": "jsonl:11760",
-    "sha256": "dfcceab9016c2174fdf33da93ccffbc4fc1be42b0cbc851d2836f621d3782b96",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_migration/pds-20261112-002-current-planunit-snapshot/span_map.jsonl#jsonl:11760"
-  },
-  {
-    "path": "Plans/.plan_migration/pds-20261112-002-current-planunit-snapshot/span_map.jsonl",
-    "origin": "jsonl:12188",
-    "sha256": "58f4d2c3dd4556925edbe875a885dbcc6f6321c935cba25975f6982ec317dabf",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_migration/pds-20261112-002-current-planunit-snapshot/span_map.jsonl#jsonl:12188"
-  },
-  {
-    "path": "Plans/.plan_migration/pds-20261112-002-current-planunit-snapshot/span_map.jsonl",
-    "origin": "jsonl:12260",
-    "sha256": "aa3e4936a9d3c2ae16be47c9de438ad08e7c699381cff1608b0253b36a6936ba",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_migration/pds-20261112-002-current-planunit-snapshot/span_map.jsonl#jsonl:12260"
-  },
-  {
-    "path": "Plans/.plan_migration/pds-20261112-002-current-planunit-snapshot/span_map.jsonl",
-    "origin": "jsonl:12292",
-    "sha256": "6295375d2ae0b1bafc278627ea01c11f3c2726a4636803d11860ade9af845a8a",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_migration/pds-20261112-002-current-planunit-snapshot/span_map.jsonl#jsonl:12292"
-  },
-  {
-    "path": "Plans/.plan_migration/pds-20261112-002-current-planunit-snapshot/span_map.jsonl",
-    "origin": "jsonl:12296",
-    "sha256": "7a004ae18ab8326dd326da4dee51ee04d2dd347dbd121301435127b82338f5d7",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_migration/pds-20261112-002-current-planunit-snapshot/span_map.jsonl#jsonl:12296"
-  },
-  {
-    "path": "Plans/.plan_migration/pds-20261112-002-current-planunit-snapshot/span_map.jsonl",
-    "origin": "jsonl:12299",
-    "sha256": "330198fbc29b81697af5b807a421f2a69517e8fcde5a1af97628da19e1116f49",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_migration/pds-20261112-002-current-planunit-snapshot/span_map.jsonl#jsonl:12299"
-  },
-  {
-    "path": "Plans/.plan_migration/pds-20261112-002-current-planunit-snapshot/span_map.jsonl",
-    "origin": "jsonl:12317",
-    "sha256": "42f2049eacb0a99233b854ab0759f2258672f48d59840921d978f072d6f5f31a",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_migration/pds-20261112-002-current-planunit-snapshot/span_map.jsonl#jsonl:12317"
-  },
-  {
-    "path": "Plans/.plan_migration/pds-20261112-002-current-planunit-snapshot/span_map.jsonl",
-    "origin": "jsonl:12365",
-    "sha256": "881b2a88145b3793cb29d7f4ba441ed53d28ce80ee45ee299e31823fab43dd96",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_migration/pds-20261112-002-current-planunit-snapshot/span_map.jsonl#jsonl:12365"
-  },
-  {
-    "path": "Plans/.plan_migration/pds-20261112-002-current-planunit-snapshot/span_map.jsonl",
-    "origin": "jsonl:12370",
-    "sha256": "ca5bb20e6ed8f13f6705cc636cd64d9462687e6432086c3edde37991b9e0018d",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_migration/pds-20261112-002-current-planunit-snapshot/span_map.jsonl#jsonl:12370"
-  },
-  {
-    "path": "Plans/.plan_migration/pds-20261112-002-current-planunit-snapshot/span_map.jsonl",
-    "origin": "jsonl:12388",
-    "sha256": "14144c9cccb36bf22b83661ad19e0c77a5b3d03e1d1b6f8833621b5e28bf2e4e",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_migration/pds-20261112-002-current-planunit-snapshot/span_map.jsonl#jsonl:12388"
-  },
-  {
-    "path": "Plans/.plan_migration/pds-20261112-002-current-planunit-snapshot/span_map.jsonl",
-    "origin": "jsonl:12389",
-    "sha256": "4e1d1ec78e77b8099d93955ba3fb2e4dfd83cd46cab3b7cf3ce7c41ab01e8354",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_migration/pds-20261112-002-current-planunit-snapshot/span_map.jsonl#jsonl:12389"
-  },
-  {
-    "path": "Plans/.plan_migration/pds-20261112-002-current-planunit-snapshot/span_map.jsonl",
-    "origin": "jsonl:13685",
-    "sha256": "9ca0e8620db09427a25a8faaf5a50df7008a20998170679054030d40c697dae6",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_migration/pds-20261112-002-current-planunit-snapshot/span_map.jsonl#jsonl:13685"
-  },
-  {
     "path": "Plans/Contracts_V0.md",
     "origin": "fence:35785",
     "sha256": "2c472625fbd84b15791aa4bb33c85a4ac725548b714624d1cdbd0241b0af6135",
@@ -2604,207 +2464,11 @@
     "citation": "Plans/.plan_index/acceptance_units.jsonl#jsonl:7975"
   },
   {
-    "path": "Plans/.plan_index/acceptance_units.jsonl",
-    "origin": "jsonl:25167",
-    "sha256": "2835d4ef3a122d8ddbf6b79e0e19eb92c827d7de932b90344462167a667787ed",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/acceptance_units.jsonl#jsonl:25167"
-  },
-  {
     "path": "Plans/.plan_index/plan_units.jsonl",
     "origin": "jsonl:1301",
     "sha256": "5cfe0d8336781ff9cab530ce157ad4d6b7695c11c3f6fdb034f9b184c68bacea",
     "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
     "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:1301"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:2132",
-    "sha256": "700c4bcd96ffb872d205925434c18ddf17d713bf50875c5b20d2720b3c197b02",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:2132"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:2155",
-    "sha256": "102dc59763211e2cf164e1bc027988e4041205ff5537fd2153214d03587c8c5d",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:2155"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:3845",
-    "sha256": "42cceabb2e9956a8c483463f4ae16b11a169ebee5f3e2534f125fbbbe95e9c29",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:3845"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:4260",
-    "sha256": "ca52e626a795c7443b525dcb0c7c92eb01bc6389dd84c41708acb4b0bd03ed31",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:4260"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:4709",
-    "sha256": "a94efa998d478761a1c2d1db3ccbd9fbbeead6a1a687e9629db74ae93e3db655",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:4709"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:4886",
-    "sha256": "3d45a07f59dae0850a60ba50a730ce26c3c18a419a06f11155e9aa1da066078a",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:4886"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:4887",
-    "sha256": "6cb9804bab205263e69a985b03cf99d5cf4e241a158949e7bbb9a6023b193850",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:4887"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:4888",
-    "sha256": "c9fbaa2fa44177dc3bed2dad53bd9ea0c854695b59ed61766ecb9a583d90bb26",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:4888"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:4889",
-    "sha256": "4f95ee2b53eb1e01f961e2e6ccd9692909e2d2e7de28a9bc0bd40b8027a9918b",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:4889"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:4890",
-    "sha256": "4a835838a9f32372754c6d9534baa9a95adb0f11a79a0e3e0c59daa75cb68b24",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:4890"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:4891",
-    "sha256": "a47aa01d333dc1056c88857df9c6c5d6a101bc5b3078c1fd2f1ba13480f4eb24",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:4891"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:5666",
-    "sha256": "e11ec19a0b6b234780128bd3f15e738c8e1fca311e2bcfe8a117cb1bc8503d8b",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:5666"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:5667",
-    "sha256": "2a3390060c61540896a1bc452107ad9a121622846473f07a88f1b8f686ab8e73",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:5667"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:5994",
-    "sha256": "74af6a10a69a410e806a5a8172c355fb428bd6393b7775fbf34ca3bebc665248",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:5994"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:5995",
-    "sha256": "69aeb56305de03eadf1f4f49d105eacd452a99d5e481f22229c5d5da7a633dd6",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:5995"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:6470",
-    "sha256": "27c3473feec3cdb96c06279069a8f3d65e185bf9ca259bd972afd3bf124a9020",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:6470"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:6479",
-    "sha256": "123434f5fb794c3d410a6906e43eae5315ebc1a9fe0ac6f340ec347ff4cc25dc",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:6479"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:6715",
-    "sha256": "72911247dc5a2f869bd36353ac750d828c07c13a7a0860a06bfa28feba1e816d",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:6715"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:6716",
-    "sha256": "1d41ea8f482813dbf1c57bfed9f6c5dee6deecfbe01f90fcc517c8fa3739aab7",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:6716"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:6717",
-    "sha256": "4984a4eb3554cb88bcb0581e182faa3e256573bdb5a6ff95213d6e0f02fcf8fe",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:6717"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:6718",
-    "sha256": "6d240341db658d3b82358bd3609535834e604f707c81f02d4fc0f9c970f8fad6",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:6718"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:6719",
-    "sha256": "b88b481744f40b8a3fa03d0f138512a9c01cc49b7ea250dc330b55cd8076b2f8",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:6719"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:6720",
-    "sha256": "cbde325dfa06a1cec91c935951448abb073666632d38f6de18b7e676fc734671",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:6720"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:6721",
-    "sha256": "4f0d96ece1be50e833416918e1b9b17cebf86a8f71afc1e4778a7de59ece9694",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:6721"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:6722",
-    "sha256": "c3d96b38e37e36275ae6fbcfa4d7c34d9181526346e422a58b483266310e99c4",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:6722"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7874",
-    "sha256": "9113b439f743b54001e49d604b6d2061f641221f649217cfa36b02b686d0611a",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7874"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7876",
-    "sha256": "9be16856498cc6db97480f5631ba9dcd1cc1db662f9fbf6d5eeb54b38e6a999e",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7876"
   },
   {
     "path": "Plans/_shards/contracts_v0/083-runtime-artifact-event-contracts-prepared-without-admission-2026.md",
@@ -3458,272 +3122,6 @@
     "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:1879"
   },
   {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:3518",
-    "sha256": "2b3a9fd509b957b7132a100ec879b36325d44828999b346ab54aa3e07d5d0d8b",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:3518"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:6286",
-    "sha256": "6fff2179901972e054e2fe5fcdb81967ba3b98903eac55dfb314983f96814813",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:6286"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:6287",
-    "sha256": "816de6bd87d5bd8877f3844479bee85a798ff236c66cc16e8a5a3fab53c0792f",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:6287"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:6288",
-    "sha256": "cd8cda08ef5c72a762b710ef62972f11022d4060273c7e16a771321ff5a6eec0",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:6288"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:6289",
-    "sha256": "7f5ff479223f8674819d49555d620b0ce336731b14e942c300fb96f5d8462752",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:6289"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:6290",
-    "sha256": "0a3be6875695cfa27c32a379b1497ae0eef652d3b6f98e750370b80fa331b22a",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:6290"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:6291",
-    "sha256": "cb618f5716abb1aa3444fdcb59f7222dc690b2c0e77e4616c36249aedf90cc3c",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:6291"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:6292",
-    "sha256": "d58995890b8c13f847f61248901d3dab0f52bfc894d214069e89512b4de263f6",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:6292"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:6293",
-    "sha256": "08c64078e774bd0178fdbb8c149d861fdb4031a5d637fea86d8549a36fdd9b1a",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:6293"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:6294",
-    "sha256": "d7285074caaccab3d77094c64987d89f82462b032742377a5d3a5fbbb14987ca",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:6294"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:6295",
-    "sha256": "013999339aff6836e2035fca4934f33fc1d558c50f0f26330b9eff5bb1a1152c",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:6295"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:6296",
-    "sha256": "2b984b8e94a6e1560940bf95003d14ce2babd432fbe92cab258a83d1c5b22977",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:6296"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:6297",
-    "sha256": "4b9bce3acc05efb6fcb37972788b12637d7134b2b8a03c17f926f3b9df43503a",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:6297"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:6298",
-    "sha256": "f67b380ffd67d140c38a2f2f07624e3bd6c574a96f3591c62c7cbcdd412605fb",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:6298"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:6299",
-    "sha256": "c20d9775577561fe07f3120392e015bf78adff1075e179aa4f6545c3506f0ac4",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:6299"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:6300",
-    "sha256": "f63013fb567f4c6de5f607a0fb175e0c1fad31da63f84a7f3a0a71e08d78f121",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:6300"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:6301",
-    "sha256": "d3940a20a6fe8ac3a94b02f9070093864dc1cb987a0259e6e485a1cc246d082f",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:6301"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:6302",
-    "sha256": "1da0155b63f62f1881f5a8cd71ae7177a0856fda42b3cbb427d229b0edd705af",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:6302"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:6303",
-    "sha256": "caf06725a6dbd9518e0488ee09e603e3bb828a1435366c40c734c92aa6f0f846",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:6303"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:6304",
-    "sha256": "392014f04b434e7cb530e8a992b4e6ba0af2a852d1f695e5620addf592c9bbc9",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:6304"
-  },
-  {
-    "path": "Plans/Runtime_Artifacts_Panel.md",
-    "origin": "fence:3642",
-    "sha256": "68b5ba18921dd4413128175b714b39c6a76afda0bfd0dc3d2c5fd760b4b35c64",
-    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
-    "citation": "Plans/Runtime_Artifacts_Panel.md#fence:3642"
-  },
-  {
-    "path": "Plans/Runtime_Artifacts_Panel.md",
-    "origin": "fence:3682",
-    "sha256": "39cd8af1c040403f68a72ca22683e7879154a5ed7e6022d7bdec48febcd8cc6f",
-    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
-    "citation": "Plans/Runtime_Artifacts_Panel.md#fence:3682"
-  },
-  {
-    "path": "Plans/Runtime_Artifacts_Panel.md",
-    "origin": "fence:3722",
-    "sha256": "f446a1646edb26d93cc8b4a842b0c6ba2262c4447ccb1af9b1e8976866c1d7df",
-    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
-    "citation": "Plans/Runtime_Artifacts_Panel.md#fence:3722"
-  },
-  {
-    "path": "Plans/Runtime_Artifacts_Panel.md",
-    "origin": "fence:3762",
-    "sha256": "fd86ff975d8979c9915ac10e56a88d2d8e8ec05b0dd0dcde86c45e92184b04f4",
-    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
-    "citation": "Plans/Runtime_Artifacts_Panel.md#fence:3762"
-  },
-  {
-    "path": "Plans/Runtime_Artifacts_Panel.md",
-    "origin": "fence:3804",
-    "sha256": "ff97f46dcb3267a7752a23bb89bb581923497852633e33802eff77ad551760d4",
-    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
-    "citation": "Plans/Runtime_Artifacts_Panel.md#fence:3804"
-  },
-  {
-    "path": "Plans/Runtime_Artifacts_Panel.md",
-    "origin": "fence:3844",
-    "sha256": "934b345dc2c24db2d4a0d283d583ca6f46aae1e41295b077c6b1bf063c7b4bf8",
-    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
-    "citation": "Plans/Runtime_Artifacts_Panel.md#fence:3844"
-  },
-  {
-    "path": "Plans/Runtime_Artifacts_Panel.md",
-    "origin": "fence:3884",
-    "sha256": "2786ff18451e6d5550f6cb0c3b21ef1886ffbd7b1d50de18c9b4c46442bf295e",
-    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
-    "citation": "Plans/Runtime_Artifacts_Panel.md#fence:3884"
-  },
-  {
-    "path": "Plans/Runtime_Artifacts_Panel.md",
-    "origin": "fence:3927",
-    "sha256": "557911b7b854b69be87af7b87b71e387a48fd77d2154aeae2b06e2d95b9f8348",
-    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
-    "citation": "Plans/Runtime_Artifacts_Panel.md#fence:3927"
-  },
-  {
-    "path": "Plans/Runtime_Artifacts_Panel.md",
-    "origin": "fence:3967",
-    "sha256": "68c65ee890ecd3c76b5cf5cdd309f7cf45f02c6f132738d10c4c60ff9ecb5ab0",
-    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
-    "citation": "Plans/Runtime_Artifacts_Panel.md#fence:3967"
-  },
-  {
-    "path": "Plans/Runtime_Artifacts_Panel.md",
-    "origin": "fence:4007",
-    "sha256": "fe59477a7bab0d77bbf7c9aff0d3ab68a8226a8534a6536807569458ee04347f",
-    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
-    "citation": "Plans/Runtime_Artifacts_Panel.md#fence:4007"
-  },
-  {
-    "path": "Plans/Runtime_Artifacts_Panel.md",
-    "origin": "fence:4047",
-    "sha256": "946796ddac78c105e9e4db63d3a7cd45c3bd0c970890c66da6761d8ad57f8d9b",
-    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
-    "citation": "Plans/Runtime_Artifacts_Panel.md#fence:4047"
-  },
-  {
-    "path": "Plans/Runtime_Artifacts_Panel.md",
-    "origin": "fence:4088",
-    "sha256": "fef0b72f0134dcfbe9a7fd49b88ecf0b578c2fc578dc27350c1fee82b7b969ad",
-    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
-    "citation": "Plans/Runtime_Artifacts_Panel.md#fence:4088"
-  },
-  {
-    "path": "Plans/Runtime_Artifacts_Panel.md",
-    "origin": "fence:4128",
-    "sha256": "1ef75dcd7d002622a8d1183a3f89136af87865c32c8fbbfbe2457ce58f94d607",
-    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
-    "citation": "Plans/Runtime_Artifacts_Panel.md#fence:4128"
-  },
-  {
-    "path": "Plans/Runtime_Artifacts_Panel.md",
-    "origin": "fence:4212",
-    "sha256": "f072695e30d65c6dbabef096006a23160b1f2fb63a38d0b923a4f4f732e34855",
-    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
-    "citation": "Plans/Runtime_Artifacts_Panel.md#fence:4212"
-  },
-  {
-    "path": "Plans/Runtime_Artifacts_Panel.md",
-    "origin": "fence:4252",
-    "sha256": "7da4664069c46f893b37c6185eca666f9480a67aceb257e357a445c97b33a525",
-    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
-    "citation": "Plans/Runtime_Artifacts_Panel.md#fence:4252"
-  },
-  {
-    "path": "Plans/Runtime_Artifacts_Panel.md",
-    "origin": "fence:4292",
-    "sha256": "ef247ef8bae363f4192b51d04b2e232058cb017d41a88457ef15986a01c1b9e8",
-    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
-    "citation": "Plans/Runtime_Artifacts_Panel.md#fence:4292"
-  },
-  {
-    "path": "Plans/Runtime_Artifacts_Panel.md",
-    "origin": "fence:4332",
-    "sha256": "eb4e244eaab87ab3e864804591074f812247d62c689a1b09f7b0756f04707e88",
-    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
-    "citation": "Plans/Runtime_Artifacts_Panel.md#fence:4332"
-  },
-  {
-    "path": "Plans/Runtime_Artifacts_Panel.md",
-    "origin": "fence:4374",
-    "sha256": "d2371f874f0a85c8b1440d090a828feb85f8a840c4950efc747c1a6df53ebd6c",
-    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
-    "citation": "Plans/Runtime_Artifacts_Panel.md#fence:4374"
-  },
-  {
     "path": "Plans/_shards/runtime_artifacts_panel/044-runtime-artifact-event-contracts-prepared-without-admission-2026.md",
     "origin": "fence:15",
     "sha256": "68b5ba18921dd4413128175b714b39c6a76afda0bfd0dc3d2c5fd760b4b35c64",
@@ -3848,300 +3246,6 @@
     "sha256": "d2371f874f0a85c8b1440d090a828feb85f8a840c4950efc747c1a6df53ebd6c",
     "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
     "citation": "Plans/_shards/runtime_artifacts_panel/044-runtime-artifact-event-contracts-prepared-without-admission-2026.md#fence:747"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7168",
-    "sha256": "7e372874dc9eb560a5c9a04203ac71119491d67b08cd310f447dca97619198f0",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7168"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7171",
-    "sha256": "9c442cff896e46ae08a011f5fbb4146e89ebcd0d4b2ca3b9bf119cac05e050f8",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7171"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7172",
-    "sha256": "5110ea53ee863fba533e7610926aabc0fd0af2c592e9b5991622985ca5e0dc81",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7172"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7173",
-    "sha256": "aa90982aa8604c8afc3a22569c4afefd93c8d8576f5fec08cdf23f003615715b",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7173"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7174",
-    "sha256": "17b03a19649099620e3bcef61010dcd374276be51d3ca5029392921cbe8fbb87",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7174"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7175",
-    "sha256": "5c83aa2f7d2ef48679b0fc5e746baa1a7d908e9d0a6a9709f9c083721a62eed6",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7175"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7176",
-    "sha256": "75e8880774dc8d87447b1c8956b7bbc2d4af6bb433a90300ba02f48d983828c6",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7176"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7177",
-    "sha256": "24c5635336379e63322a7949a0a1274bb9237c53f5559d967a6e81f341653036",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7177"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7178",
-    "sha256": "5ecece748c991d20df3221bfad3ecc1c99d4c1308694eff43a9ed02ee212dfa1",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7178"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7179",
-    "sha256": "8083f732aae1b3e02abecb499e1e2a3aea8e305dcecf7d470d77b7a14750de9f",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7179"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7180",
-    "sha256": "0441bca21ffd7c3b951b7a60d75934799c2beab3681cf5885491a9baaf75907a",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7180"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7181",
-    "sha256": "e09dacf65585404160ebd816ad923b76bfaa6b54360b60b2444ae03e49d8923f",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7181"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7182",
-    "sha256": "e87e3615cf5698a21655dafdc38f5bb59a68944886a50844d21c83c298ef2f70",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7182"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7183",
-    "sha256": "75bd128a3860256d34b4da0d111fb95f5196c8465c1fb1ac522f637b9cfbf94f",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7183"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7184",
-    "sha256": "14756e89a523dbdfd4db3f6354e75826ee1d9c3e0b9d9a46e3bbb19dc5621d33",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7184"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7185",
-    "sha256": "76b6659362454532f426f75ade36374fdc61a76f090bcd741e96e463d8f83f12",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7185"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7186",
-    "sha256": "76ac1fb907728cd953e35d9ed8f017e92f814a971a501e68e6156d39a72440fd",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7186"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7187",
-    "sha256": "0362f133e0f6015e13651c216aea6af0cfc1f6472f25917f4c485f3c42d11280",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7187"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7188",
-    "sha256": "ffe8d26364ed0d5d30eb8bf36a45c4a3886525dfa9ffcb1a9d197867da52b345",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7188"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7189",
-    "sha256": "c01965bc0e62ce9a94764559a6430782d7806a01bf45297a5aa53bffdaf34969",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7189"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7190",
-    "sha256": "5b400a2f507777eac54613e0faf155ac87f583525416e0b90493e4e8ae5fc66d",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7190"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7191",
-    "sha256": "6c76d10b5c8875d3a9e149eb05d61f1fc9c8584efe7a64d865a28300518540b1",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7191"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7192",
-    "sha256": "e309a3485f9c4e54f42f685b0fcae2b82155995c33cb59883cf317fbf79ad556",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7192"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7193",
-    "sha256": "607d07efe88117c5120bc32dd365ab3941e18bad3242ab720383f021f9926e6a",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7193"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7194",
-    "sha256": "ea41ce5cd8a4f65cdf913203876a3e4836990b04418ede6cd30e309a0c32f190",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7194"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7195",
-    "sha256": "39e7e4adaf970e0a588d5491eb17a8622e8b9596e7c87b08da1dc404b6aba62b",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7195"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7198",
-    "sha256": "c6681de2614cdaa8ec738b3f4887cbede6807da54f84a683ff0d9a4550e367d3",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7198"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7199",
-    "sha256": "4be665e0c47c79e8f821b74ec4d4748916a2c0944bcf9e6b79bc14ca73393025",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7199"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7200",
-    "sha256": "241ec5a1aefa148de8d6e031d3f44d9aac76789baacde18eebb56571f029c271",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7200"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7201",
-    "sha256": "a3637625c8082fbe52c31fed6228f184eb96a34fbb51ddcae2da501683bc1b96",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7201"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7202",
-    "sha256": "1e7be01000f1b50a86261ee4294c399434b6d90b9c4c175e041203fbe53f8d69",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7202"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7203",
-    "sha256": "c2367e39460455238efc2756fbbf3e7e60e9bf9c7f6ce408416703ca607c5c0d",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7203"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7204",
-    "sha256": "093efa2bce551bb4085054ffa2bea8ba07cb3e58d2a97ee430aca7e20ef36907",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7204"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7205",
-    "sha256": "3bc1ee9f7cf2da7692311573cd589d98820d91e3981c462f151fad4a9225fa30",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7205"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7206",
-    "sha256": "64632d92dd39a943d7b3fc7f55f542ef821d2bba92a4cbb4e63ca41eb514fa65",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7206"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7207",
-    "sha256": "10a6ddb663bd5e41150e26d7e379bb7b86d1135f23e62844fe67660f0ce2fc02",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7207"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7240",
-    "sha256": "7b356107866aa0d6694629ce90a62005c501e077b96fc5d1c1dc4fdf391a1a05",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7240"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7241",
-    "sha256": "9631a240ca22f45a68015287afb737fd4b3e82a3843408775962af894ea9d817",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7241"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7242",
-    "sha256": "6948cf9acf8de568b5a2bce3b22569c2a347b33d3fc227cfc9e9a2234d78074f",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7242"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7243",
-    "sha256": "42495cd01b2a99f49728d76a516c562ae03d7a6926e00bf52460550f0b1df7b3",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7243"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7244",
-    "sha256": "d82985a7d8e76f4594a12f4fb071468da2384c64b4e4b424836496d2088f8fb5",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7244"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7245",
-    "sha256": "f2607586c07558519318fcbb6d6497c65d20ccafab30802c33ddca1e2467813e",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7245"
   },
   {
     "path": "Plans/_shards/storage-plan/090-collaborative-workflow-event-persistence-binding-dl-090-2026-11-.md",
@@ -4611,5 +3715,901 @@
     "sha256": "d065bfde02a7a5289e01f9a250e3300dd816ed26a6f1b3389157c9b75f42a7ae",
     "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
     "citation": "Plans/storage-plan.md#fence:42500"
+  },
+  {
+    "path": "Plans/.plan_index/acceptance_units.jsonl",
+    "origin": "jsonl:25187",
+    "sha256": "2835d4ef3a122d8ddbf6b79e0e19eb92c827d7de932b90344462167a667787ed",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/acceptance_units.jsonl#jsonl:25187"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:2132",
+    "sha256": "3b657c70b7bd3c3f6e041e70688e2034a68d2a83376ba065e2beb58678625730",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:2132"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:2155",
+    "sha256": "f4a9bdeaef1a052dcf362366cd3618deedf31d4ed47acba12b214dab755ddd48",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:2155"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:3528",
+    "sha256": "2b3a9fd509b957b7132a100ec879b36325d44828999b346ab54aa3e07d5d0d8b",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:3528"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:3855",
+    "sha256": "42cceabb2e9956a8c483463f4ae16b11a169ebee5f3e2534f125fbbbe95e9c29",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:3855"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:4270",
+    "sha256": "ca52e626a795c7443b525dcb0c7c92eb01bc6389dd84c41708acb4b0bd03ed31",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:4270"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:4719",
+    "sha256": "a94efa998d478761a1c2d1db3ccbd9fbbeead6a1a687e9629db74ae93e3db655",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:4719"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:4896",
+    "sha256": "3d45a07f59dae0850a60ba50a730ce26c3c18a419a06f11155e9aa1da066078a",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:4896"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:4897",
+    "sha256": "6cb9804bab205263e69a985b03cf99d5cf4e241a158949e7bbb9a6023b193850",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:4897"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:4898",
+    "sha256": "c9fbaa2fa44177dc3bed2dad53bd9ea0c854695b59ed61766ecb9a583d90bb26",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:4898"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:4899",
+    "sha256": "4f95ee2b53eb1e01f961e2e6ccd9692909e2d2e7de28a9bc0bd40b8027a9918b",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:4899"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:4900",
+    "sha256": "4a835838a9f32372754c6d9534baa9a95adb0f11a79a0e3e0c59daa75cb68b24",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:4900"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:4901",
+    "sha256": "a47aa01d333dc1056c88857df9c6c5d6a101bc5b3078c1fd2f1ba13480f4eb24",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:4901"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:5676",
+    "sha256": "e11ec19a0b6b234780128bd3f15e738c8e1fca311e2bcfe8a117cb1bc8503d8b",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:5676"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:5677",
+    "sha256": "2a3390060c61540896a1bc452107ad9a121622846473f07a88f1b8f686ab8e73",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:5677"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:6004",
+    "sha256": "74af6a10a69a410e806a5a8172c355fb428bd6393b7775fbf34ca3bebc665248",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:6004"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:6005",
+    "sha256": "69aeb56305de03eadf1f4f49d105eacd452a99d5e481f22229c5d5da7a633dd6",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:6005"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:6296",
+    "sha256": "1b0c42a0fe5b0c536a15c574fafeb5bd866331ae2a76d370ff12278aed97f636",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:6296"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:6297",
+    "sha256": "ceffe4161034cd9c431ad9f312590d205b9b5cb049cc069c6c50738d543dcb94",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:6297"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:6298",
+    "sha256": "881267a2ebc7b67414aba56297ecb47ba9901024ebc5c74f960c415ee2dab0eb",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:6298"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:6299",
+    "sha256": "021673d7a1b7ee79c2916f8cfd463587b094c4c73d10977f27f0ab4a9d42f45f",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:6299"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:6300",
+    "sha256": "813df56f5f397ae72ebc07ec22bc32468fc8dc00785010bc9f97e4e31fd7a175",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:6300"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:6301",
+    "sha256": "3894a93be9d8b523ab27b0e31a7e9aff64271c40ab9b0b459e3572bc93b4aafd",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:6301"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:6302",
+    "sha256": "f994498482c590fbfb0e77c05e330db19f4e0553151474c039dd92468eade754",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:6302"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:6303",
+    "sha256": "45619a2a3f647593c24445831aff0a7746acd52966ce43cff3957a56c17d9774",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:6303"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:6304",
+    "sha256": "364efa7ea7b5bb54f6be7d40de9031b81653c660537d521782c63134490f8417",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:6304"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:6305",
+    "sha256": "4836cfcd7f76cc47772a3f75b6d3e7284ab3d23a2e49f0f42013bbdf7cb3d4d0",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:6305"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:6306",
+    "sha256": "e126338b3957cc5dba42fbaef7adb86258fb32657f19a344cf404d4c56f16f6c",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:6306"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:6307",
+    "sha256": "a0bb84f625ba909f8e6f14b0479746cc567eea441a7f7d1bcebab9ac1c480996",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:6307"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:6308",
+    "sha256": "fda43c43ce6f06f7917f64a6e1b7299d5b7a1c2714f870f1140cd6041fefb193",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:6308"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:6309",
+    "sha256": "dd76eb8f4682371099b22351fd20a501c2184c927593581a4d2f2c26dcbec562",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:6309"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:6310",
+    "sha256": "8044b946869acded5372efbc8a406aa8d238774cdd33533ca740c8195b41ca0a",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:6310"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:6311",
+    "sha256": "c6bd96b11621545f74cd6cea6911004903c459e6be40d36860c3ed32fec67557",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:6311"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:6312",
+    "sha256": "8c933c6c9f90068f0df1c728b6e7a9b925adc01cd87190e1f897644344a2942c",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:6312"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:6313",
+    "sha256": "4abdcfa36e047ab939e3f3c9d71e5141daba9f46154b9a6563be6df7575612b1",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:6313"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:6314",
+    "sha256": "f8ac90c0ba883c4989a6407eb3a57f970aaadfb19a17d5537e8f6207365e4086",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:6314"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:6480",
+    "sha256": "27c3473feec3cdb96c06279069a8f3d65e185bf9ca259bd972afd3bf124a9020",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:6480"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:6489",
+    "sha256": "123434f5fb794c3d410a6906e43eae5315ebc1a9fe0ac6f340ec347ff4cc25dc",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:6489"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:6725",
+    "sha256": "72911247dc5a2f869bd36353ac750d828c07c13a7a0860a06bfa28feba1e816d",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:6725"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:6726",
+    "sha256": "1d41ea8f482813dbf1c57bfed9f6c5dee6deecfbe01f90fcc517c8fa3739aab7",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:6726"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:6727",
+    "sha256": "4984a4eb3554cb88bcb0581e182faa3e256573bdb5a6ff95213d6e0f02fcf8fe",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:6727"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:6728",
+    "sha256": "6d240341db658d3b82358bd3609535834e604f707c81f02d4fc0f9c970f8fad6",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:6728"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:6729",
+    "sha256": "b88b481744f40b8a3fa03d0f138512a9c01cc49b7ea250dc330b55cd8076b2f8",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:6729"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:6730",
+    "sha256": "cbde325dfa06a1cec91c935951448abb073666632d38f6de18b7e676fc734671",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:6730"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:6731",
+    "sha256": "4f0d96ece1be50e833416918e1b9b17cebf86a8f71afc1e4778a7de59ece9694",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:6731"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:6732",
+    "sha256": "c3d96b38e37e36275ae6fbcfa4d7c34d9181526346e422a58b483266310e99c4",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:6732"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7178",
+    "sha256": "7e372874dc9eb560a5c9a04203ac71119491d67b08cd310f447dca97619198f0",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7178"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7181",
+    "sha256": "9c442cff896e46ae08a011f5fbb4146e89ebcd0d4b2ca3b9bf119cac05e050f8",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7181"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7182",
+    "sha256": "5110ea53ee863fba533e7610926aabc0fd0af2c592e9b5991622985ca5e0dc81",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7182"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7183",
+    "sha256": "aa90982aa8604c8afc3a22569c4afefd93c8d8576f5fec08cdf23f003615715b",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7183"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7184",
+    "sha256": "17b03a19649099620e3bcef61010dcd374276be51d3ca5029392921cbe8fbb87",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7184"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7185",
+    "sha256": "5c83aa2f7d2ef48679b0fc5e746baa1a7d908e9d0a6a9709f9c083721a62eed6",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7185"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7186",
+    "sha256": "75e8880774dc8d87447b1c8956b7bbc2d4af6bb433a90300ba02f48d983828c6",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7186"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7187",
+    "sha256": "24c5635336379e63322a7949a0a1274bb9237c53f5559d967a6e81f341653036",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7187"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7188",
+    "sha256": "5ecece748c991d20df3221bfad3ecc1c99d4c1308694eff43a9ed02ee212dfa1",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7188"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7189",
+    "sha256": "8083f732aae1b3e02abecb499e1e2a3aea8e305dcecf7d470d77b7a14750de9f",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7189"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7190",
+    "sha256": "0441bca21ffd7c3b951b7a60d75934799c2beab3681cf5885491a9baaf75907a",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7190"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7191",
+    "sha256": "e09dacf65585404160ebd816ad923b76bfaa6b54360b60b2444ae03e49d8923f",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7191"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7192",
+    "sha256": "e87e3615cf5698a21655dafdc38f5bb59a68944886a50844d21c83c298ef2f70",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7192"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7193",
+    "sha256": "75bd128a3860256d34b4da0d111fb95f5196c8465c1fb1ac522f637b9cfbf94f",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7193"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7194",
+    "sha256": "14756e89a523dbdfd4db3f6354e75826ee1d9c3e0b9d9a46e3bbb19dc5621d33",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7194"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7195",
+    "sha256": "76b6659362454532f426f75ade36374fdc61a76f090bcd741e96e463d8f83f12",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7195"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7196",
+    "sha256": "76ac1fb907728cd953e35d9ed8f017e92f814a971a501e68e6156d39a72440fd",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7196"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7197",
+    "sha256": "0362f133e0f6015e13651c216aea6af0cfc1f6472f25917f4c485f3c42d11280",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7197"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7198",
+    "sha256": "ffe8d26364ed0d5d30eb8bf36a45c4a3886525dfa9ffcb1a9d197867da52b345",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7198"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7199",
+    "sha256": "c01965bc0e62ce9a94764559a6430782d7806a01bf45297a5aa53bffdaf34969",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7199"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7200",
+    "sha256": "5b400a2f507777eac54613e0faf155ac87f583525416e0b90493e4e8ae5fc66d",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7200"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7201",
+    "sha256": "6c76d10b5c8875d3a9e149eb05d61f1fc9c8584efe7a64d865a28300518540b1",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7201"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7202",
+    "sha256": "e309a3485f9c4e54f42f685b0fcae2b82155995c33cb59883cf317fbf79ad556",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7202"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7203",
+    "sha256": "607d07efe88117c5120bc32dd365ab3941e18bad3242ab720383f021f9926e6a",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7203"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7204",
+    "sha256": "ea41ce5cd8a4f65cdf913203876a3e4836990b04418ede6cd30e309a0c32f190",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7204"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7205",
+    "sha256": "39e7e4adaf970e0a588d5491eb17a8622e8b9596e7c87b08da1dc404b6aba62b",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7205"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7208",
+    "sha256": "c6681de2614cdaa8ec738b3f4887cbede6807da54f84a683ff0d9a4550e367d3",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7208"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7209",
+    "sha256": "4be665e0c47c79e8f821b74ec4d4748916a2c0944bcf9e6b79bc14ca73393025",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7209"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7210",
+    "sha256": "241ec5a1aefa148de8d6e031d3f44d9aac76789baacde18eebb56571f029c271",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7210"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7211",
+    "sha256": "a3637625c8082fbe52c31fed6228f184eb96a34fbb51ddcae2da501683bc1b96",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7211"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7212",
+    "sha256": "1e7be01000f1b50a86261ee4294c399434b6d90b9c4c175e041203fbe53f8d69",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7212"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7213",
+    "sha256": "c2367e39460455238efc2756fbbf3e7e60e9bf9c7f6ce408416703ca607c5c0d",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7213"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7214",
+    "sha256": "093efa2bce551bb4085054ffa2bea8ba07cb3e58d2a97ee430aca7e20ef36907",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7214"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7215",
+    "sha256": "3bc1ee9f7cf2da7692311573cd589d98820d91e3981c462f151fad4a9225fa30",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7215"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7216",
+    "sha256": "64632d92dd39a943d7b3fc7f55f542ef821d2bba92a4cbb4e63ca41eb514fa65",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7216"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7217",
+    "sha256": "10a6ddb663bd5e41150e26d7e379bb7b86d1135f23e62844fe67660f0ce2fc02",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7217"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7250",
+    "sha256": "7b356107866aa0d6694629ce90a62005c501e077b96fc5d1c1dc4fdf391a1a05",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7250"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7251",
+    "sha256": "9631a240ca22f45a68015287afb737fd4b3e82a3843408775962af894ea9d817",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7251"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7252",
+    "sha256": "6948cf9acf8de568b5a2bce3b22569c2a347b33d3fc227cfc9e9a2234d78074f",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7252"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7253",
+    "sha256": "42495cd01b2a99f49728d76a516c562ae03d7a6926e00bf52460550f0b1df7b3",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7253"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7254",
+    "sha256": "d82985a7d8e76f4594a12f4fb071468da2384c64b4e4b424836496d2088f8fb5",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7254"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7255",
+    "sha256": "f2607586c07558519318fcbb6d6497c65d20ccafab30802c33ddca1e2467813e",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7255"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7884",
+    "sha256": "fcd16d476d939b4eec5ab9db9b5f9608dc56d5aef508fd8be2d06316c6be4340",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7884"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7886",
+    "sha256": "884a79f2d24a8513b4ce105bbefa29068e56e406dda4b4d5d4cf6e55e12aed0c",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7886"
+  },
+  {
+    "path": "Plans/.plan_migration/pds-20261112-004-current-planunit-snapshot/span_map.jsonl",
+    "origin": "jsonl:1005",
+    "sha256": "e19d61d8754718fc599d65b14310be2f5c85f8f78d291091a24a51f651a1c356",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_migration/pds-20261112-004-current-planunit-snapshot/span_map.jsonl#jsonl:1005"
+  },
+  {
+    "path": "Plans/.plan_migration/pds-20261112-004-current-planunit-snapshot/span_map.jsonl",
+    "origin": "jsonl:2205",
+    "sha256": "c046c0c2239b0890b69e85f49da10e7919b17e9a193c18ba4ae123cd60901236",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_migration/pds-20261112-004-current-planunit-snapshot/span_map.jsonl#jsonl:2205"
+  },
+  {
+    "path": "Plans/.plan_migration/pds-20261112-004-current-planunit-snapshot/span_map.jsonl",
+    "origin": "jsonl:2677",
+    "sha256": "77d28eeeeb926684fcabd17895d5ec661abd956780b6cbefdaf4fffb47c2fe48",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_migration/pds-20261112-004-current-planunit-snapshot/span_map.jsonl#jsonl:2677"
+  },
+  {
+    "path": "Plans/.plan_migration/pds-20261112-004-current-planunit-snapshot/span_map.jsonl",
+    "origin": "jsonl:2678",
+    "sha256": "125be2cb23c2a29394e9fcdfaaed5f6113503ed914ab3c2283a82d7b2839ceee",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_migration/pds-20261112-004-current-planunit-snapshot/span_map.jsonl#jsonl:2678"
+  },
+  {
+    "path": "Plans/.plan_migration/pds-20261112-004-current-planunit-snapshot/span_map.jsonl",
+    "origin": "jsonl:3345",
+    "sha256": "b08034ba0da39e18c94f98c0d4a3efa97ab9bce274a7dd5983392039365e35e7",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_migration/pds-20261112-004-current-planunit-snapshot/span_map.jsonl#jsonl:3345"
+  },
+  {
+    "path": "Plans/.plan_migration/pds-20261112-004-current-planunit-snapshot/span_map.jsonl",
+    "origin": "jsonl:6312",
+    "sha256": "a3c37ba3c4fce88cf5d0530d8429ee909500c111ae0f3223a69798b57f324eb8",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_migration/pds-20261112-004-current-planunit-snapshot/span_map.jsonl#jsonl:6312"
+  },
+  {
+    "path": "Plans/.plan_migration/pds-20261112-004-current-planunit-snapshot/span_map.jsonl",
+    "origin": "jsonl:7491",
+    "sha256": "d4aa212c61ae79629f960799b963ddbe5e25fdc48a3d61d915f7d33baac8cdfc",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_migration/pds-20261112-004-current-planunit-snapshot/span_map.jsonl#jsonl:7491"
+  },
+  {
+    "path": "Plans/.plan_migration/pds-20261112-004-current-planunit-snapshot/span_map.jsonl",
+    "origin": "jsonl:11760",
+    "sha256": "72c3897158a662c5bdef2f58452e78c9277bcb1b8190e506e064390572d32721",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_migration/pds-20261112-004-current-planunit-snapshot/span_map.jsonl#jsonl:11760"
+  },
+  {
+    "path": "Plans/.plan_migration/pds-20261112-004-current-planunit-snapshot/span_map.jsonl",
+    "origin": "jsonl:12188",
+    "sha256": "fad1de19fa4044d224dd3e62fc49fd3bfc96d2d0ea2cb42579c1865c6f17fdca",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_migration/pds-20261112-004-current-planunit-snapshot/span_map.jsonl#jsonl:12188"
+  },
+  {
+    "path": "Plans/.plan_migration/pds-20261112-004-current-planunit-snapshot/span_map.jsonl",
+    "origin": "jsonl:12260",
+    "sha256": "aa5d64462d3dcf17dec085ef38db2080451825a9206aaa0f3b109041305a909c",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_migration/pds-20261112-004-current-planunit-snapshot/span_map.jsonl#jsonl:12260"
+  },
+  {
+    "path": "Plans/.plan_migration/pds-20261112-004-current-planunit-snapshot/span_map.jsonl",
+    "origin": "jsonl:12292",
+    "sha256": "0566c1da2b51a12ff40ea832d12af946c73258a75739da88a82fd4565cde3b47",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_migration/pds-20261112-004-current-planunit-snapshot/span_map.jsonl#jsonl:12292"
+  },
+  {
+    "path": "Plans/.plan_migration/pds-20261112-004-current-planunit-snapshot/span_map.jsonl",
+    "origin": "jsonl:12296",
+    "sha256": "9a894021ae2b34d919fd50abd4618c983fc90d09ce7ac72b03b9f960ab4f64d5",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_migration/pds-20261112-004-current-planunit-snapshot/span_map.jsonl#jsonl:12296"
+  },
+  {
+    "path": "Plans/.plan_migration/pds-20261112-004-current-planunit-snapshot/span_map.jsonl",
+    "origin": "jsonl:12299",
+    "sha256": "5161f0de98a84e3ca2feec5df125a5f20ca36925f8ccdb0866948e028e47d283",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_migration/pds-20261112-004-current-planunit-snapshot/span_map.jsonl#jsonl:12299"
+  },
+  {
+    "path": "Plans/.plan_migration/pds-20261112-004-current-planunit-snapshot/span_map.jsonl",
+    "origin": "jsonl:12317",
+    "sha256": "952dd918d2feca897ad973e89e9b46efa9e5031e934efac6ec2d6cbc15d99a32",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_migration/pds-20261112-004-current-planunit-snapshot/span_map.jsonl#jsonl:12317"
+  },
+  {
+    "path": "Plans/.plan_migration/pds-20261112-004-current-planunit-snapshot/span_map.jsonl",
+    "origin": "jsonl:12365",
+    "sha256": "93f1e8787125fd6e7d619935f29206650a214e0b252d8ea65ce079c38da939cc",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_migration/pds-20261112-004-current-planunit-snapshot/span_map.jsonl#jsonl:12365"
+  },
+  {
+    "path": "Plans/.plan_migration/pds-20261112-004-current-planunit-snapshot/span_map.jsonl",
+    "origin": "jsonl:12370",
+    "sha256": "df1c326e32927dc2a9d453b293d3d9506fb5eef415a38434733ca538010110d2",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_migration/pds-20261112-004-current-planunit-snapshot/span_map.jsonl#jsonl:12370"
+  },
+  {
+    "path": "Plans/.plan_migration/pds-20261112-004-current-planunit-snapshot/span_map.jsonl",
+    "origin": "jsonl:12388",
+    "sha256": "fd20256728a3b12096033cd75381c6915e31ae0bd95aa033a3e30d5ce3fcff2f",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_migration/pds-20261112-004-current-planunit-snapshot/span_map.jsonl#jsonl:12388"
+  },
+  {
+    "path": "Plans/.plan_migration/pds-20261112-004-current-planunit-snapshot/span_map.jsonl",
+    "origin": "jsonl:12389",
+    "sha256": "b987a3057d374aa3138950bbb2690011a174fb6c7e6137bdb1e42e5b705f28f2",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_migration/pds-20261112-004-current-planunit-snapshot/span_map.jsonl#jsonl:12389"
+  },
+  {
+    "path": "Plans/.plan_migration/pds-20261112-004-current-planunit-snapshot/span_map.jsonl",
+    "origin": "jsonl:13685",
+    "sha256": "b65c41453fbd82b406449a3ed39cbd6589e2bc7e45374400a3a4d9fde42b4cc5",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_migration/pds-20261112-004-current-planunit-snapshot/span_map.jsonl#jsonl:13685"
+  },
+  {
+    "path": "Plans/Runtime_Artifacts_Panel.md",
+    "origin": "fence:3643",
+    "sha256": "68b5ba18921dd4413128175b714b39c6a76afda0bfd0dc3d2c5fd760b4b35c64",
+    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
+    "citation": "Plans/Runtime_Artifacts_Panel.md#fence:3643"
+  },
+  {
+    "path": "Plans/Runtime_Artifacts_Panel.md",
+    "origin": "fence:3683",
+    "sha256": "39cd8af1c040403f68a72ca22683e7879154a5ed7e6022d7bdec48febcd8cc6f",
+    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
+    "citation": "Plans/Runtime_Artifacts_Panel.md#fence:3683"
+  },
+  {
+    "path": "Plans/Runtime_Artifacts_Panel.md",
+    "origin": "fence:3723",
+    "sha256": "f446a1646edb26d93cc8b4a842b0c6ba2262c4447ccb1af9b1e8976866c1d7df",
+    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
+    "citation": "Plans/Runtime_Artifacts_Panel.md#fence:3723"
+  },
+  {
+    "path": "Plans/Runtime_Artifacts_Panel.md",
+    "origin": "fence:3763",
+    "sha256": "fd86ff975d8979c9915ac10e56a88d2d8e8ec05b0dd0dcde86c45e92184b04f4",
+    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
+    "citation": "Plans/Runtime_Artifacts_Panel.md#fence:3763"
+  },
+  {
+    "path": "Plans/Runtime_Artifacts_Panel.md",
+    "origin": "fence:3805",
+    "sha256": "ff97f46dcb3267a7752a23bb89bb581923497852633e33802eff77ad551760d4",
+    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
+    "citation": "Plans/Runtime_Artifacts_Panel.md#fence:3805"
+  },
+  {
+    "path": "Plans/Runtime_Artifacts_Panel.md",
+    "origin": "fence:3845",
+    "sha256": "934b345dc2c24db2d4a0d283d583ca6f46aae1e41295b077c6b1bf063c7b4bf8",
+    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
+    "citation": "Plans/Runtime_Artifacts_Panel.md#fence:3845"
+  },
+  {
+    "path": "Plans/Runtime_Artifacts_Panel.md",
+    "origin": "fence:3885",
+    "sha256": "2786ff18451e6d5550f6cb0c3b21ef1886ffbd7b1d50de18c9b4c46442bf295e",
+    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
+    "citation": "Plans/Runtime_Artifacts_Panel.md#fence:3885"
+  },
+  {
+    "path": "Plans/Runtime_Artifacts_Panel.md",
+    "origin": "fence:3928",
+    "sha256": "557911b7b854b69be87af7b87b71e387a48fd77d2154aeae2b06e2d95b9f8348",
+    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
+    "citation": "Plans/Runtime_Artifacts_Panel.md#fence:3928"
+  },
+  {
+    "path": "Plans/Runtime_Artifacts_Panel.md",
+    "origin": "fence:3968",
+    "sha256": "68c65ee890ecd3c76b5cf5cdd309f7cf45f02c6f132738d10c4c60ff9ecb5ab0",
+    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
+    "citation": "Plans/Runtime_Artifacts_Panel.md#fence:3968"
+  },
+  {
+    "path": "Plans/Runtime_Artifacts_Panel.md",
+    "origin": "fence:4008",
+    "sha256": "fe59477a7bab0d77bbf7c9aff0d3ab68a8226a8534a6536807569458ee04347f",
+    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
+    "citation": "Plans/Runtime_Artifacts_Panel.md#fence:4008"
+  },
+  {
+    "path": "Plans/Runtime_Artifacts_Panel.md",
+    "origin": "fence:4048",
+    "sha256": "946796ddac78c105e9e4db63d3a7cd45c3bd0c970890c66da6761d8ad57f8d9b",
+    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
+    "citation": "Plans/Runtime_Artifacts_Panel.md#fence:4048"
+  },
+  {
+    "path": "Plans/Runtime_Artifacts_Panel.md",
+    "origin": "fence:4089",
+    "sha256": "fef0b72f0134dcfbe9a7fd49b88ecf0b578c2fc578dc27350c1fee82b7b969ad",
+    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
+    "citation": "Plans/Runtime_Artifacts_Panel.md#fence:4089"
+  },
+  {
+    "path": "Plans/Runtime_Artifacts_Panel.md",
+    "origin": "fence:4129",
+    "sha256": "1ef75dcd7d002622a8d1183a3f89136af87865c32c8fbbfbe2457ce58f94d607",
+    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
+    "citation": "Plans/Runtime_Artifacts_Panel.md#fence:4129"
+  },
+  {
+    "path": "Plans/Runtime_Artifacts_Panel.md",
+    "origin": "fence:4170",
+    "sha256": "d635aad53c61ce1782090a7fdc573dcd1464020c8fa97880c9af68fc9f3b3ba8",
+    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
+    "citation": "Plans/Runtime_Artifacts_Panel.md#fence:4170"
+  },
+  {
+    "path": "Plans/Runtime_Artifacts_Panel.md",
+    "origin": "fence:4213",
+    "sha256": "f072695e30d65c6dbabef096006a23160b1f2fb63a38d0b923a4f4f732e34855",
+    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
+    "citation": "Plans/Runtime_Artifacts_Panel.md#fence:4213"
+  },
+  {
+    "path": "Plans/Runtime_Artifacts_Panel.md",
+    "origin": "fence:4253",
+    "sha256": "7da4664069c46f893b37c6185eca666f9480a67aceb257e357a445c97b33a525",
+    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
+    "citation": "Plans/Runtime_Artifacts_Panel.md#fence:4253"
+  },
+  {
+    "path": "Plans/Runtime_Artifacts_Panel.md",
+    "origin": "fence:4293",
+    "sha256": "ef247ef8bae363f4192b51d04b2e232058cb017d41a88457ef15986a01c1b9e8",
+    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
+    "citation": "Plans/Runtime_Artifacts_Panel.md#fence:4293"
+  },
+  {
+    "path": "Plans/Runtime_Artifacts_Panel.md",
+    "origin": "fence:4333",
+    "sha256": "eb4e244eaab87ab3e864804591074f812247d62c689a1b09f7b0756f04707e88",
+    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
+    "citation": "Plans/Runtime_Artifacts_Panel.md#fence:4333"
+  },
+  {
+    "path": "Plans/Runtime_Artifacts_Panel.md",
+    "origin": "fence:4375",
+    "sha256": "d2371f874f0a85c8b1440d090a828feb85f8a840c4950efc747c1a6df53ebd6c",
+    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
+    "citation": "Plans/Runtime_Artifacts_Panel.md#fence:4375"
   }
 ]
