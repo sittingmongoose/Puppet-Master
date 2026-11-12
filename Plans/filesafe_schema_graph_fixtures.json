@@ -1,0 +1,285 @@
+{
+  "schema_id": "pm.filesafe.schema_graph_negative_cases.v1",
+  "authority": "Synthetic schema closure regressions only; no native execution or admission.",
+  "families": [
+    {
+      "event_type": "filesafe.command_denied",
+      "negative": [
+        {
+          "id": "filesafe_command_denied.fix4.source_unexercised_dangling_ref",
+          "resource_path": "Plans/filesafe_event_sources/filesafe_command_denied.schema.json",
+          "unresolved_ref": "#/$defs/DF_MISSING_DEFINITION"
+        },
+        {
+          "id": "filesafe_command_denied.fix4.payload_unexercised_dangling_ref",
+          "resource_path": "Plans/event_payloads/filesafe_command_denied_v2.schema.json",
+          "unresolved_ref": "#/$defs/DF_MISSING_DEFINITION"
+        },
+        {
+          "id": "filesafe_command_denied.fix4.dependency_unexercised_dangling_ref",
+          "resource_path": "Plans/shared_integration_runtime_expansion_contracts.schema.json",
+          "unresolved_ref": "#/$defs/DF_MISSING_DEFINITION"
+        },
+        {
+          "id": "filesafe_command_denied.fix4.unselected_dependency",
+          "resource_path": "Plans/shared_integration_runtime_expansion_contracts.schema.json",
+          "remove_resource": true
+        },
+        {
+          "id": "filesafe_command_denied.fix4.nested_id_dangling_ref",
+          "resource_path": "Plans/filesafe_event_sources/filesafe_command_denied.schema.json",
+          "nested_id": "https://puppetmaster.local/df-fix4/nested/",
+          "unresolved_ref": "missing.schema.json#/$defs/absent"
+        }
+      ]
+    },
+    {
+      "event_type": "filesafe.destructive_override_denied",
+      "negative": [
+        {
+          "id": "filesafe_destructive_override_denied.fix4.source_unexercised_dangling_ref",
+          "resource_path": "Plans/filesafe_event_sources/filesafe_destructive_override_denied.schema.json",
+          "unresolved_ref": "#/$defs/DF_MISSING_DEFINITION"
+        },
+        {
+          "id": "filesafe_destructive_override_denied.fix4.payload_unexercised_dangling_ref",
+          "resource_path": "Plans/event_payloads/filesafe_destructive_override_denied_v2.schema.json",
+          "unresolved_ref": "#/$defs/DF_MISSING_DEFINITION"
+        },
+        {
+          "id": "filesafe_destructive_override_denied.fix4.dependency_unexercised_dangling_ref",
+          "resource_path": "Plans/shared_integration_runtime_expansion_contracts.schema.json",
+          "unresolved_ref": "#/$defs/DF_MISSING_DEFINITION"
+        },
+        {
+          "id": "filesafe_destructive_override_denied.fix4.unselected_dependency",
+          "resource_path": "Plans/shared_integration_runtime_expansion_contracts.schema.json",
+          "remove_resource": true
+        },
+        {
+          "id": "filesafe_destructive_override_denied.fix4.nested_id_dangling_ref",
+          "resource_path": "Plans/filesafe_event_sources/filesafe_destructive_override_denied.schema.json",
+          "nested_id": "https://puppetmaster.local/df-fix4/nested/",
+          "unresolved_ref": "missing.schema.json#/$defs/absent"
+        }
+      ]
+    },
+    {
+      "event_type": "filesafe.destructive_override_granted",
+      "negative": [
+        {
+          "id": "filesafe_destructive_override_granted.fix4.source_unexercised_dangling_ref",
+          "resource_path": "Plans/filesafe_event_sources/filesafe_destructive_override_granted.schema.json",
+          "unresolved_ref": "#/$defs/DF_MISSING_DEFINITION"
+        },
+        {
+          "id": "filesafe_destructive_override_granted.fix4.payload_unexercised_dangling_ref",
+          "resource_path": "Plans/event_payloads/filesafe_destructive_override_granted_v2.schema.json",
+          "unresolved_ref": "#/$defs/DF_MISSING_DEFINITION"
+        },
+        {
+          "id": "filesafe_destructive_override_granted.fix4.dependency_unexercised_dangling_ref",
+          "resource_path": "Plans/shared_integration_runtime_expansion_contracts.schema.json",
+          "unresolved_ref": "#/$defs/DF_MISSING_DEFINITION"
+        },
+        {
+          "id": "filesafe_destructive_override_granted.fix4.unselected_dependency",
+          "resource_path": "Plans/shared_integration_runtime_expansion_contracts.schema.json",
+          "remove_resource": true
+        },
+        {
+          "id": "filesafe_destructive_override_granted.fix4.nested_id_dangling_ref",
+          "resource_path": "Plans/filesafe_event_sources/filesafe_destructive_override_granted.schema.json",
+          "nested_id": "https://puppetmaster.local/df-fix4/nested/",
+          "unresolved_ref": "missing.schema.json#/$defs/absent"
+        }
+      ]
+    },
+    {
+      "event_type": "filesafe.destructive_override_requested",
+      "negative": [
+        {
+          "id": "filesafe_destructive_override_requested.fix4.source_unexercised_dangling_ref",
+          "resource_path": "Plans/filesafe_event_sources/filesafe_destructive_override_requested.schema.json",
+          "unresolved_ref": "#/$defs/DF_MISSING_DEFINITION"
+        },
+        {
+          "id": "filesafe_destructive_override_requested.fix4.payload_unexercised_dangling_ref",
+          "resource_path": "Plans/event_payloads/filesafe_destructive_override_requested_v2.schema.json",
+          "unresolved_ref": "#/$defs/DF_MISSING_DEFINITION"
+        },
+        {
+          "id": "filesafe_destructive_override_requested.fix4.dependency_unexercised_dangling_ref",
+          "resource_path": "Plans/shared_integration_runtime_expansion_contracts.schema.json",
+          "unresolved_ref": "#/$defs/DF_MISSING_DEFINITION"
+        },
+        {
+          "id": "filesafe_destructive_override_requested.fix4.unselected_dependency",
+          "resource_path": "Plans/shared_integration_runtime_expansion_contracts.schema.json",
+          "remove_resource": true
+        },
+        {
+          "id": "filesafe_destructive_override_requested.fix4.nested_id_dangling_ref",
+          "resource_path": "Plans/filesafe_event_sources/filesafe_destructive_override_requested.schema.json",
+          "nested_id": "https://puppetmaster.local/df-fix4/nested/",
+          "unresolved_ref": "missing.schema.json#/$defs/absent"
+        }
+      ]
+    },
+    {
+      "event_type": "filesafe.guard_init_failed",
+      "negative": [
+        {
+          "id": "filesafe_guard_init_failed.fix4.source_unexercised_dangling_ref",
+          "resource_path": "Plans/filesafe_event_sources/filesafe_guard_init_failed.schema.json",
+          "unresolved_ref": "#/$defs/DF_MISSING_DEFINITION"
+        },
+        {
+          "id": "filesafe_guard_init_failed.fix4.payload_unexercised_dangling_ref",
+          "resource_path": "Plans/event_payloads/filesafe_guard_init_failed_v2.schema.json",
+          "unresolved_ref": "#/$defs/DF_MISSING_DEFINITION"
+        },
+        {
+          "id": "filesafe_guard_init_failed.fix4.dependency_unexercised_dangling_ref",
+          "resource_path": "Plans/shared_integration_runtime_expansion_contracts.schema.json",
+          "unresolved_ref": "#/$defs/DF_MISSING_DEFINITION"
+        },
+        {
+          "id": "filesafe_guard_init_failed.fix4.unselected_dependency",
+          "resource_path": "Plans/shared_integration_runtime_expansion_contracts.schema.json",
+          "remove_resource": true
+        },
+        {
+          "id": "filesafe_guard_init_failed.fix4.nested_id_dangling_ref",
+          "resource_path": "Plans/filesafe_event_sources/filesafe_guard_init_failed.schema.json",
+          "nested_id": "https://puppetmaster.local/df-fix4/nested/",
+          "unresolved_ref": "missing.schema.json#/$defs/absent"
+        }
+      ]
+    },
+    {
+      "event_type": "filesafe.path_denied",
+      "negative": [
+        {
+          "id": "filesafe_path_denied.fix4.source_unexercised_dangling_ref",
+          "resource_path": "Plans/filesafe_event_sources/filesafe_path_denied.schema.json",
+          "unresolved_ref": "#/$defs/DF_MISSING_DEFINITION"
+        },
+        {
+          "id": "filesafe_path_denied.fix4.payload_unexercised_dangling_ref",
+          "resource_path": "Plans/event_payloads/filesafe_path_denied_v2.schema.json",
+          "unresolved_ref": "#/$defs/DF_MISSING_DEFINITION"
+        },
+        {
+          "id": "filesafe_path_denied.fix4.dependency_unexercised_dangling_ref",
+          "resource_path": "Plans/shared_integration_runtime_expansion_contracts.schema.json",
+          "unresolved_ref": "#/$defs/DF_MISSING_DEFINITION"
+        },
+        {
+          "id": "filesafe_path_denied.fix4.unselected_dependency",
+          "resource_path": "Plans/shared_integration_runtime_expansion_contracts.schema.json",
+          "remove_resource": true
+        },
+        {
+          "id": "filesafe_path_denied.fix4.nested_id_dangling_ref",
+          "resource_path": "Plans/filesafe_event_sources/filesafe_path_denied.schema.json",
+          "nested_id": "https://puppetmaster.local/df-fix4/nested/",
+          "unresolved_ref": "missing.schema.json#/$defs/absent"
+        }
+      ]
+    },
+    {
+      "event_type": "filesafe.policy_degraded",
+      "negative": [
+        {
+          "id": "filesafe_policy_degraded.fix4.source_unexercised_dangling_ref",
+          "resource_path": "Plans/filesafe_event_sources/filesafe_policy_degraded.schema.json",
+          "unresolved_ref": "#/$defs/DF_MISSING_DEFINITION"
+        },
+        {
+          "id": "filesafe_policy_degraded.fix4.payload_unexercised_dangling_ref",
+          "resource_path": "Plans/event_payloads/filesafe_policy_degraded_v2.schema.json",
+          "unresolved_ref": "#/$defs/DF_MISSING_DEFINITION"
+        },
+        {
+          "id": "filesafe_policy_degraded.fix4.dependency_unexercised_dangling_ref",
+          "resource_path": "Plans/shared_integration_runtime_expansion_contracts.schema.json",
+          "unresolved_ref": "#/$defs/DF_MISSING_DEFINITION"
+        },
+        {
+          "id": "filesafe_policy_degraded.fix4.unselected_dependency",
+          "resource_path": "Plans/shared_integration_runtime_expansion_contracts.schema.json",
+          "remove_resource": true
+        },
+        {
+          "id": "filesafe_policy_degraded.fix4.nested_id_dangling_ref",
+          "resource_path": "Plans/filesafe_event_sources/filesafe_policy_degraded.schema.json",
+          "nested_id": "https://puppetmaster.local/df-fix4/nested/",
+          "unresolved_ref": "missing.schema.json#/$defs/absent"
+        }
+      ]
+    },
+    {
+      "event_type": "safe_point.created",
+      "negative": [
+        {
+          "id": "safe_point_created.fix4.source_unexercised_dangling_ref",
+          "resource_path": "Plans/filesafe_event_sources/safe_point_created.schema.json",
+          "unresolved_ref": "#/$defs/DF_MISSING_DEFINITION"
+        },
+        {
+          "id": "safe_point_created.fix4.payload_unexercised_dangling_ref",
+          "resource_path": "Plans/event_payloads/safe_point_created_v2.schema.json",
+          "unresolved_ref": "#/$defs/DF_MISSING_DEFINITION"
+        },
+        {
+          "id": "safe_point_created.fix4.dependency_unexercised_dangling_ref",
+          "resource_path": "Plans/shared_integration_runtime_expansion_contracts.schema.json",
+          "unresolved_ref": "#/$defs/DF_MISSING_DEFINITION"
+        },
+        {
+          "id": "safe_point_created.fix4.unselected_dependency",
+          "resource_path": "Plans/shared_integration_runtime_expansion_contracts.schema.json",
+          "remove_resource": true
+        },
+        {
+          "id": "safe_point_created.fix4.nested_id_dangling_ref",
+          "resource_path": "Plans/filesafe_event_sources/safe_point_created.schema.json",
+          "nested_id": "https://puppetmaster.local/df-fix4/nested/",
+          "unresolved_ref": "missing.schema.json#/$defs/absent"
+        }
+      ]
+    },
+    {
+      "event_type": "safe_point.restored",
+      "negative": [
+        {
+          "id": "safe_point_restored.fix4.source_unexercised_dangling_ref",
+          "resource_path": "Plans/filesafe_event_sources/safe_point_restored.schema.json",
+          "unresolved_ref": "#/$defs/DF_MISSING_DEFINITION"
+        },
+        {
+          "id": "safe_point_restored.fix4.payload_unexercised_dangling_ref",
+          "resource_path": "Plans/event_payloads/safe_point_restored_v2.schema.json",
+          "unresolved_ref": "#/$defs/DF_MISSING_DEFINITION"
+        },
+        {
+          "id": "safe_point_restored.fix4.dependency_unexercised_dangling_ref",
+          "resource_path": "Plans/shared_integration_runtime_expansion_contracts.schema.json",
+          "unresolved_ref": "#/$defs/DF_MISSING_DEFINITION"
+        },
+        {
+          "id": "safe_point_restored.fix4.unselected_dependency",
+          "resource_path": "Plans/shared_integration_runtime_expansion_contracts.schema.json",
+          "remove_resource": true
+        },
+        {
+          "id": "safe_point_restored.fix4.nested_id_dangling_ref",
+          "resource_path": "Plans/filesafe_event_sources/safe_point_restored.schema.json",
+          "nested_id": "https://puppetmaster.local/df-fix4/nested/",
+          "unresolved_ref": "missing.schema.json#/$defs/absent"
+        }
+      ]
+    }
+  ]
+}
