@@ -4536,15 +4536,26 @@ suggested path                    migration 0043, reversible</div></div></sectio
   /* pm7-perf lane C2: while PMConcept7's onboarding window is open over the app (PM56_HOST.onRest, 00-host.js) the
      work clock stands still: no tick, so no card or status-bar patch, and no follow glide (kickFollow). The clock
      advances by ticks, so when the window has gone it carries on from where it stopped, and a run that would have
-     ended meanwhile ends then. A chain's next run falling due meanwhile waits for what was left of its delay
-     (onRecComplete). Under the window the run went on: its tick twice a second, glide and room frames 96-145 a second. */
+     ended meanwhile ends then. A chain's next run waits too: its delay counts only the time the window is not open
+     (seqArm). Under the window the run went on: its tick twice a second, glide and room frames 96-145 a second. */
   function workResting(){ return !!(HOSTED&&HOST.resting&&HOST.resting()); }
-  var restAt=performance.now(), seqPark=null;   /* (a window open from the page's load rested from about then) */
+  /* A chain's next run (onRecComplete) is armed here. seqDue is when it falls due; at the opening it is put aside in
+     seqPark with what is left of its delay, and armed again with that at the close; armed while the window is open, it
+     is put aside whole. seqTimer keeps its id meanwhile, so the chain still counts as pending (maybeFlushQueue) and a
+     reset or a thread switch (seqTimer=null) still ends it. Lane C3 (R1 review of lane C2): the delay used to be put
+     aside only when it fell due under the window, so a visit that ended before then was not counted at all (1200 ms
+     armed, the window open from +200 to +800 ms: the next run started at +1200 instead of +1800). */
+  var seqDue=null, seqPark=null;
+  function seqArm(fn,ms){ seqTimer=setTimeout(fn,ms); seqDue={fn,id:seqTimer,at:performance.now()+ms}; if(workResting()) seqRest(); }
+  function seqRest(){
+    const d=seqDue; seqDue=null;
+    if(d&&seqTimer===d.id){ clearTimeout(seqTimer); seqPark={fn:d.fn,id:seqTimer,left:Math.max(0,d.at-performance.now())}; }
+  }
   if(HOSTED&&HOST.onRest) HOST.onRest(on=>{
-    if(on){ restAt=performance.now(); clearInterval(workTimer); workTimer=null; cancelGlide(); return; }
+    if(on){ clearInterval(workTimer); workTimer=null; cancelGlide(); seqRest(); return; }
     if(runningRecs().length) armWorkTimer();
     const p=seqPark; seqPark=null;
-    if(p&&seqTimer===p.id) seqTimer=setTimeout(p.fn,p.left);
+    if(p&&seqTimer===p.id) seqArm(p.fn,p.left);
     followMoved=true; kickFollow();
   });
   function workTick(){
@@ -4636,9 +4647,8 @@ suggested path                    migration 0043, reversible</div></div></sectio
        (turn-stream.js). */
     if(def.next&&D.workRuns[def.next.run]){
       const nid=def.next.run, pid=rec.id||rec.runId, delay=def.next.delayMs||1200;
-      /* (falling due under PMConcept7's onboarding window, it waits there, still counted as pending in seqTimer, for the
-         part of its delay the window took: armWorkTimer's rest hook arms it again) */
-      const go=()=>{ clearTimeout(seqTimer); seqTimer=setTimeout(function due(){ if(workResting()){ seqPark={fn:due,id:seqTimer,left:Math.min(delay,Math.max(0,performance.now()-restAt))}; return; } seqTimer=null; startWorkingRec(nid,pid); },delay); };
+      /* (its delay counts only the time PMConcept7's onboarding window is not open: seqArm, by armWorkTimer's rest hook) */
+      const go=()=>{ clearTimeout(seqTimer); seqArm(()=>{ seqTimer=null; startWorkingRec(nid,pid); },delay); };
       if(hold) heldNextRuns[pid]=go; else go();
     }
   }
