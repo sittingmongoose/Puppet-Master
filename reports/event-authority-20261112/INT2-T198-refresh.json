@@ -6397,7 +6397,7 @@
   "before": "5cd2d30c18560c8f5b846ffbaeabbe91fb000ff6c8065f91fe8b99f9bf6e1d7b",
   "after": "ca9f94ca8cda0fb422ba66a803392690a66b1c8e51a5e2d0d90c4235c049abd2"
  },
- "open": "scripts/pm_event_datetime_roles.json record for section15_browser_program_contracts.schema.json result_schema_resources: value_schema_sha256 576e670d... is stale (54ee3e3c... now) after DS a97ef6c20e; NUMRULE file outside the sanctioned pair, decision asked of pm-ea-lead (mail 1112041650-1185).",
+ "open": null,
  "counts": {
   "existing_rows_refreshed": 16,
   "hash_only": 13,
@@ -6646,5 +6646,32 @@
   ],
   "exclusions_after": 650,
   "tree": "8a5f4517d4"
+ },
+ "pass_3_role_pin": {
+  "decision": "pm-ea-lead 1112041953-33c5: A",
+  "file": "scripts/pm_event_datetime_roles.json",
+  "record": [
+   "Plans/section15_browser_program_contracts.schema.json",
+   "json",
+   "/$defs/browser_program_result_validation/properties/result_schema_resources"
+  ],
+  "change": "value_schema_sha256 576e670da07b7e67716bedb1fe93ba80cc5106f56bca2cb30f635be57ae05746 -> 54ee3e3c961e3ca96880c2fa46c00d8de296718e7bb0a7cbecd1359e7dd00ee8; one line, every other byte identical",
+  "kind": "NUMRULE data-file pin refresh with unchanged re-derived evidence: 653/653 battery timestamps accepted per field, same citation (additionalProperties {type string, minLength 1}), classification other_owner_observation, profile owner_schema, no non-timestamp credit",
+  "cause": "DS a97ef6c20e hardened non_secret_ref and sha256 patterns ($ -> (?![\\s\\S])) in Plans/section15_browser_program_contracts.schema.json, inside the map's value graph",
+  "then": "source_inventory_projection() restored that row's value_evidence.reviewed_role; the inventory self-pin was re-derived",
+  "self_pin_after": "d98f02db239847e7e49784e240f98a8a5b00dd6e8f747fd9b11a24f7c0d560a2"
+ },
+ "final_gate": {
+  "command": "python3 scripts/pm_event_datetime_inventory.py",
+  "exit": 0,
+  "status": "pass",
+  "nodes": 254,
+  "storage_nodes": 141,
+  "other_owner_nodes": 102,
+  "wildcard_non_timestamp_nodes": 3,
+  "wildcard_non_timestamp_role_nodes": 8,
+  "unclassified_nodes": 0,
+  "failures": 0,
+  "tree": "clean detached worktree at 7979551854 plus this commit's files"
  }
 }
