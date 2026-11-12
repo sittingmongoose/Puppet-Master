@@ -34105,3 +34105,101 @@ negative_constraints:
 - Preparation is not admission, native execution, checkpoint authority, readiness, or a governance seal.
 - No registry entry, Decision Log entry, retention policy or competing-owner decision is created.
 ```
+
+### CV-560 - FileManager exact payload routes
+
+- file.copied@1.0.0: Plans/event_payloads/file_manager/file_copied.schema.json; semantic owner F-150.
+- file.created@1.0.0: Plans/event_payloads/file_manager/file_created.schema.json; semantic owner F-151.
+- file.deleted@1.0.0: Plans/event_payloads/file_manager/file_deleted.schema.json; semantic owner F-152.
+- file.exported@1.0.0: Plans/event_payloads/file_manager/file_exported.schema.json; semantic owner F-153.
+- file.moved@1.0.0: Plans/event_payloads/file_manager/file_moved.schema.json; semantic owner F-154.
+- file.renamed@1.0.0: Plans/event_payloads/file_manager/file_renamed.schema.json; semantic owner F-155.
+- folder.copied@1.0.0: Plans/event_payloads/file_manager/folder_copied.schema.json; semantic owner F-156.
+- folder.created@1.0.0: Plans/event_payloads/file_manager/folder_created.schema.json; semantic owner F-157.
+- folder.deleted@1.0.0: Plans/event_payloads/file_manager/folder_deleted.schema.json; semantic owner F-158.
+- folder.exported@1.0.0: Plans/event_payloads/file_manager/folder_exported.schema.json; semantic owner F-159.
+- folder.moved@1.0.0: Plans/event_payloads/file_manager/folder_moved.schema.json; semantic owner F-160.
+- folder.renamed@1.0.0: Plans/event_payloads/file_manager/folder_renamed.schema.json; semantic owner F-161.
+Each closed root is adopted independently under its own schema_id and schema_version. Opaque references resolve original owner receipt entries, never raw filesystem paths. No family is admitted.
+
+The newly authored closed Plans/filemanager_operation_contracts.schema.json types operation_custody,
+accepted_command, settlement, path_snapshot_entry and family_control are adopted by each own F unit
+through SP-560. Accepted descriptor/store/epoch and settled payload/path originals are immutable;
+only accepted -> effect_settled -> history_settled or accepted -> no_event_settled revision CAS
+transitions are permitted; the latter has a closed noncompletion receipt and no completed event. Exact
+receipt_ref/key, family/payload discriminator, command/envelope/scope, path coverage and source/
+result/container joins are semantic requirements in addition to closed shape validation. Copy result
+identity differs from source; create result differs from destination container, including native aliases.
+Unknown schemas, unequal retries, unavailable originals, bad joins or late changes fence. The separate
+SP-286/CV-339 full_value_request/full_value_result and strict v2 witness remain their original shapes;
+resolve.v2 is semantic replay only and cannot establish full-value equality. SP-560 supplies literal
+physical keys, resolvers, transaction fences, activation and coherent backup/restore; the generic
+receipt_record_baseline supplies none of this authority. No admission is granted.
+
+SP-560 also owns the closed physical operation_custody_value/family_control_value union and its
+SP-337 whole-value reference branches; operation_custody/family_control remain resolved logical
+contracts. Both physical profiles use canonical redb, coordination_and_storage and max_value_bytes=16384.
+The BLAKE3/size/media reference spelling and canonical MessagePack boundary are explicit in SP-560.
+A large event uses payload={} and payload_ref, resolving the complete closed family payload before
+settlement joins while strict full-value proof keeps the original stored representation. Missing or
+changed original pack bytes refuse reading, CAS and terminal publication. Terminal history_settled
+binds the exact immutable settlement, original complete EventRecord, original receipt and strict
+resolve_full_value.v1 request/result/v2 witness, not merely individually valid shapes. Current writer
+and retry reject projector_replay_only with replay_only_not_appendable. CV-339 semantic retry equality
+excludes Storage-assigned sequence_id/observed_at_utc/persisted_at_utc; original-value recovery does not.
+
+Numbers follow CV-1100, SP-1100 and SP-1101 beside the existing CV-317, CV-339, SP-236, SP-286, SP-337 and
+SP-339 owners. Each family's identity T stays the RFC 8785 string array of its F unit, qualified by CV-1100:
+non-ASCII strings encode exactly and a lone surrogate refuses. The custody_v2 producer_semantic_digest is the
+CV-317 producer projection under CV-1100 qualified JCS, so an integer whose binary64 value or emitted JCS
+decimal differs from it (for example 2^53+1 or 2^60) refuses before any effect. Every declared integer slot of
+a current write is an exact integer within its schema range, and bool, float or decimal values refuse there:
+the payload path_snapshot_revision and descendant_count, operation recovery_epoch, revision and every
+path_snapshot_revision, and control control_revision, last_admitted_sequence and writer_cutoff_sequence.
+EventRecord bodies are measured and referenced with SP-1100 EVENT_VALUE (SP-236) bytes; operation and control
+redb values keep SP-339 canonical MessagePack. A retained original is read with the recipe recorded when it
+was written (SP-1101); current integer admission never narrows it.
+
+Timestamps follow CV-1101 beside CV-253. Every format: date-time of these routes is checked by the shared
+CV-1101 predicate, and a missing zone, a space separator, a trailing LF, an impossible date or clock field
+and a false leap second refuse everywhere. The family payload ts, the companion accepted_at_utc and
+settled_at_utc, the EventRecord occurred_at_utc and the AppendReceipt acknowledged_at_utc use its
+event_record profile: lowercase t or z, offsets, real leap seconds and fractions of any length are accepted
+and never rewritten. The Storage-assigned observed_at_utc and persisted_at_utc of every EventRecord these
+routes read also take CV-253's storage_utc_z profile, so an offset, a signed zero offset or a lowercase z
+refuses there. occurred_at_utc and
+settled_at_utc still equal payload ts as exact strings. A retained original is resolved through SP-1101: its
+write-time edition and frozen resource manifest come only from Storage's sealed issuance custody, never from
+the request; an original without that record is unavailable, and an edition or resource set with no installed
+verifier is unsupported, each refused without trying the current recipe. The twelve families have one
+write-time edition. Its frozen verifier applies the same CV-1101 and CV-253 profiles, so a format check that
+was skipped in the past never admits an invalid original.
+
+```yaml
+plan_unit_id: CV-560
+unit_type: contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  FileManager exact payload routes: the preceding per-family routes and obligations are prepared without admission.
+  Each family retains its own semantic contract; retention is PENDING_RETENTION_DECISION.
+gui_related: false
+gui_classification_reason: Internal event contract routing and static assurance.
+split_recommended: false
+depends_on: [DL-045]
+unblocks: []
+acceptance_criteria:
+  - No registry append, policy selection or native readiness claim.
+validation_surfaces:
+  - python3 scripts/pm-filemanager-event-contracts.py
+risk_class: file_event_contract_routing
+reasoning_tier: high
+context_scope: filemanager_event_authority
+implementation_surfaces: [Plans/Contracts_V0.md, Plans/filemanager_operation_contracts.schema.json]
+node_compile_hint: {mode: prepared_without_admission, create_worknodes: false}
+source_lineage: [Plans/FileManager.md, Plans/Decision_Log.md#DL-045]
+preserved_exact_tokens: ["PENDING_RETENTION_DECISION"]
+negative_constraints:
+  - Do not treat prepared contracts as event admission.
+owner_hints: [Plans/Contracts_V0.md]
+```
