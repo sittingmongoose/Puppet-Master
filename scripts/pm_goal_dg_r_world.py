@@ -1744,6 +1744,9 @@ class Prefer(_NonNull):
         super().__init__()
         self.by_path = by_path
 
+    def __bool__(self):  # an empty dict subclass must still count as a choice map
+        return True
+
     def get(self, path, default=None):
         return self.by_path.get(path) or super().get(path, default)
 
@@ -1808,7 +1811,7 @@ def _repair_deep(self, realm, root, value, owned):
                     error.instance[sample(pattern)] = {}
                     changed = True
                 elif schema.get('additionalProperties') is not False:
-                    error.instance['TEST_ONLY_filler_%d' % len(error.instance)] = {}
+                    error.instance['test_only.filler_%d' % len(error.instance)] = {}
                     changed = True
             elif kind == 'required' and isinstance(error.instance, dict):
                 missing = error.message.split("'")[1]
@@ -1849,3 +1852,131 @@ def _repair_deep(self, realm, root, value, owned):
 
 
 World.repair_deep = _repair_deep
+
+
+CP = 'https://puppetmaster.local/proposals/workflow_cancel_positive_arguments.v1.schema.json#/$defs/'
+CGS = 'https://puppetmaster.local/proposals/executor_safestop_current_goal_arguments.v1.schema.json#/$defs/'
+
+
+def _current_wrappers(self):
+    """Unique-schema current wrappers the owners hold right now (fresh cells)."""
+    out = {}
+    def add(stored):
+        cell = self.storage.cell(stored.family, stored.key)
+        if cell is not None:
+            out.setdefault(cell['value']['schema_id'], []).append(copy.deepcopy(cell['value']))
+    for stored in (self.body2, self.control2, self.start_cause['control'], self.cancellation['original_d01_head']):
+        add(stored)
+    return {k: v[0] for k, v in out.items() if len(v) == 1}
+
+
+def _overlay_current(self, value, owned, path=''):
+    """Replace every filler wrapper whose schema id names a unique current owner wrapper."""
+    current = self._current_cache
+    if isinstance(value, dict):
+        sid = value.get('schema_id')
+        if path and sid in current and set(value) == set(current[sid]):
+            owned.add(path)
+            return copy.deepcopy(current[sid])
+        for k in list(value):
+            value[k] = self._overlay_current(value[k], owned, path + '/' + k)
+    elif isinstance(value, list):
+        for i in range(len(value)):
+            value[i] = self._overlay_current(value[i], owned, path + '/%d' % i)
+    return value
+
+
+def _current_start(self):
+    sc = self.start_cause
+    cell = lambda s: copy.deepcopy(self.storage.cell(s.family, s.key)['value'])  # noqa: E731
+    return dict(kind='original_started', value=dict(control=cell(sc['control']), initial_control_origin=cell(
+        sc['initial_control_origin']), commit=cell(sc['commit']), origin=cell(sc['origin'])))
+
+
+def _build_current(self, realm, root, prefer, overlays, knob_name):
+    """Owner-side current source at one held boundary: genuine members, filler for the rest."""
+    self._current_cache = self.current_wrappers()
+    value = self.seeder.seed(realm, root, prefer)
+    self.bind(value)
+    owned = set()
+    for path, member in overlays:
+        put(value, path, copy.deepcopy(member))
+        owned.add(path)
+    self._overlay_current(value, owned)
+    self.repair_deep(realm, root, value, owned)
+    if self.knob(knob_name):
+        self.knob(knob_name)(value)  # a one-defect owner-side substitution, after filler repair
+    self.roots.validate(realm, root, value, 'current/' + root.split('/')[-1])
+    return value
+
+
+def _current_readback(self, start=None):
+    c, ss = self.cancellation, self.safe_stop
+    rec = lambda s: copy.deepcopy(self.storage.cell(s.family, s.key)['value']['record'])  # noqa: E731
+    wrap = lambda s: copy.deepcopy(self.storage.cell(s.family, s.key)['value'])  # noqa: E731
+    receipt = c['result'].wrapper['record']['append_receipt']
+    prefer = Prefer({'/current_start': kind_choice(self.roots, 'native_consumer', 'original_started'),
+                     '/d06_readback': kind_choice(self.roots, 'native_consumer', 'cancelled_from_nonterminal')})
+    overlays = [('/d06_readback/kind', 'cancelled_from_nonterminal'), ('/d06_readback/result', rec(c['result'])),
+                ('/d06_readback/origin', rec(c['publish_origin'])), ('/d06_readback/intent', rec(c['intent'])),
+                ('/d06_readback/control', rec(c['committed_control'])),
+                ('/d06_readback/native_after/body', wrap(self.body2)),
+                ('/d06_readback/native_after/body_selection', self.body2.selector()),
+                ('/d06_readback/native_after/control', wrap(self.control2)),
+                ('/d06_readback/native_after/control_selection', self.control2.selector()),
+                ('/d06_readback/native_after/lineage_head', rec(c['original_d01_head'])),
+                ('/d06_readback/native_after/lineage_update', rec(c['original_d01_update'])),
+                ('/d06_readback/native_after/lineage_origin', rec(c['original_d01_origin'])),
+                ('/d06_readback/original_event/event', self.storage.read_event(receipt['event_id'])),
+                ('/d06_readback/original_event/append', self.storage.full_value_result(receipt['event_id'])),
+                ('/d06_readback/original_event/original_candidate', wrap(c['event_candidate'])),
+                ('/d06_readback/safe_stop/scope', {k: self.scope[k] for k in ('storage_instance_id', 'project_id',
+                                                                              'goal_id', 'goal_run_id')}),
+                ('/d06_readback/safe_stop/operation_id', ss['aggregate_result'].wrapper['value']['operation_id']),
+                ('/d06_readback/safe_stop/goal_stop', self.goal_cause['original_stop_receipt'].selector()),
+                ('/d06_readback/safe_stop/scheduler_stop', ss['original_scheduler_stop'].selector()),
+                ('/d06_readback/safe_stop/inventory_cut', ss['original_inventory_cut'].selector()),
+                ('/d06_readback/original_d01_lineage/update', wrap(c['original_d01_update'])),
+                ('/d06_readback/original_d01_lineage/head', wrap(c['original_d01_head'])),
+                ('/d06_readback/original_d01_lineage/origin', wrap(c['original_d01_origin'])),
+                ('/current_start', start if start is not None else self.current_start_full())]
+    return self.build_current('native_consumer', CP + 'CurrentSuccessfulReadback', prefer, overlays, 'readback_edit')
+
+
+def _current_read(self, start=None):
+    prefer = Prefer({'/current_start': kind_choice(self.roots, 'native_consumer', 'original_started')})
+    overlays = [('/current_start', start if start is not None else self.current_start_full())]
+    return self.build_current('native_consumer', CP + 'CurrentRead', prefer, overlays, 'current_read_edit')
+
+
+def _current_start_full(self):
+    """The whole current Start argument, built once per held boundary."""
+    root = 'https://puppetmaster.local/proposals/executor_safestop_start_arguments.v1.schema.json#/$defs/CurrentStartArgument'
+    prefer = Prefer({'': kind_choice(self.roots, 'native_consumer', 'original_started')})
+    overlays = [('/kind', 'original_started')] + [('/value/' + k, v) for k, v in self.current_start()['value'].items()]
+    return self.build_current('native_consumer', root, prefer, overlays, 'current_start_edit')
+
+
+def _current_boundary(self):
+    start = self.current_start_full()
+    return self.current_readback(start), self.current_read(start), self.current_goal()
+
+
+def _current_goal(self):
+    g = self.goal_cause
+    wrap = lambda s: copy.deepcopy(self.storage.cell(s.family, s.key)['value'])  # noqa: E731
+    overlays = [('/current_stop/original_stop_intent', wrap(g['original_stop_intent'])),
+                ('/current_stop/original_stop_receipt', wrap(g['original_stop_receipt'])),
+                ('/current_stop/original_source_audit', wrap(g['original_source_audit']))]
+    return self.build_current('goal_consumer', GA + 'CurrentCancelledGoal', Prefer({}), overlays, 'current_goal_edit')
+
+
+World.current_wrappers = _current_wrappers
+World._overlay_current = _overlay_current
+World.current_start = _current_start
+World.build_current = _build_current
+World.current_readback = _current_readback
+World.current_read = _current_read
+World.current_goal = _current_goal
+World.current_start_full = _current_start_full
+World.current_boundary = _current_boundary

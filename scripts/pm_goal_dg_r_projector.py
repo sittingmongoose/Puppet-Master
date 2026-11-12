@@ -633,74 +633,80 @@ class Projector:
                                                            stop.wrapper['record']['operation_id'] for s in latest))
         return out
 
+    def combined_private(self):
+        """Fresh whole CombinedProjectPrivate for a reader (same sources as the projector)."""
+        w = self.world
+        source, snapshot, starts, cancellations, goal, effects = self.acquire()
+        cell, logical = self.current_checkpoint()
+        existing = None
+        if logical is not None and logical['current_generation_id'] is not None:
+            row = w.storage.cell(dataset(logical['current_generation_id']), row_key(self.request()['scope']))
+            existing = None if row is None else row['value']
+        private = dict(generic=self.generic_snapshot(snapshot, logical), actual_generic_sources=self.actual_sources(snapshot),
+                       native_starts=starts, native_cancellations=cancellations,
+                       checkpoint=None if cell is None else copy.deepcopy(cell['value']), existing_row=existing)
+        w.repair_filler('native_consumer', W.PR + 'CombinedProjectPrivate', private,
+                        {'/native_starts', '/native_cancellations', '/checkpoint', '/existing_row', '/generic/frames'})
+        self.roots.validate('native_consumer', W.PR + 'CombinedProjectPrivate', private, 'current/private_sources')
+        return private
+
     def read_current_cancelled(self):
+        """Current cancelled view: fresh native/D06/D01/Goal/Start sources at one held boundary."""
         w = self.world
         with w.recorder.call(self.owner_id, 'owner.goal_run.started_cancelled.read_current_cancelled.reference.v1',
                              self.request()) as slot:
             guard('reader/withdrawn', not self.reader_withdrawn)
+            guard('permission/read', w.permissions['read'] is True)
             current = self.current_sources()
+            readback, current_read, goal = w.current_boundary()
             self.hook('after_current')
             historical = self.read_historical()
             self.hook('after_historical')
-            record = self.decode(historical['projection'], self.request()['scope'],
-                                 self.stored_projection()[2]['generation_id'])
-            eq('current/body_matches_original', current['body']['record']['revision'],
-               record['native_after_commitment']['body_revision'])
-            eq('current/status', current['body']['record']['status'], 'cancelled')
-            readback = self.successful_readback(current)
+            native = historical['original']['native_cancellation']
+            rec = lambda v: v.get('record', v.get('value'))  # noqa: E731
+            d = readback['d06_readback']
+            eq('current/readback_d06', [d['result'], d['intent'], d['control'], d['origin']],
+               [rec(native['result']), rec(native['intent']), rec(native['committed_control']), rec(native['publish_origin'])])
+            eq('current/readback_native', [d['native_after']['body'], d['native_after']['control'],
+                                           d['native_after']['body_selection'], d['native_after']['control_selection']],
+               [current['body'], current['control'], rec(native['result'])['after_body'], rec(native['result'])['after_control']])
+            eq('current/readback_event', d['original_event']['event'], historical['original']['original_value']['event'])
+            head_cell = w.storage.cell(w.cancellation['original_d01_head'].family, w.cancellation['original_d01_head'].key)
+            eq('current/readback_lineage', [d['original_d01_lineage']['update'], d['original_d01_lineage']['origin'],
+                                            d['original_d01_lineage']['head']],
+               [native['original_d01_update'], native['original_d01_origin'], head_cell['value']])
+            ss = native['original_safe_stop']
+            eq('current/readback_safe_stop', [d['safe_stop']['goal_stop'], d['safe_stop']['scheduler_stop'],
+                                              d['safe_stop']['inventory_cut'], d['safe_stop']['operation_id']],
+               [rec(native['intent'])['goal_stop'], rec(native['intent'])['scheduler_stop'],
+                rec(native['intent'])['inventory_cut'], ss['aggregate_result']['value']['operation_id']])
+            start = native['original_start']['value']
+            ctl = w.start_cause['control']
+            eq('current/start', [readback['current_start']['value'][k] for k in ('commit', 'origin', 'initial_control_origin',
+                                                                              'control')],
+               [start['commit'], start['origin'], start['initial_control_origin'],
+                w.storage.cell(ctl.family, ctl.key)['value']])
+            eq('current/one_boundary', current_read['current_start'], readback['current_start'])
+            goals = historical['original']['native_cancellation']
+            gc = R.Presentation(w).goal[0]
+            acquired = {k: self.consumer.acquire(v)[1] for k, v in gc.items()}
+            eq('current/goal_stop_argument', [goal['current_stop'][k] for k in ('original_stop_receipt', 'original_stop_intent',
+                                                                               'original_source_audit')],
+               [acquired['original_stop_receipt'], acquired['original_stop_intent'], acquired['original_source_audit']])
+            private = dict(projection_sources=self.combined_private(), actual_current_read=current_read,
+                           current_disposition=readback)
+            self.roots.validate('native_consumer', W.PR + 'CurrentCancelledPrivate', private, 'current/private')
+            self.roots.validate('goal_consumer', W.GA + 'CurrentCancelledGoal', goal, 'current/goal')
             out = dict(kind='native_verified_cancelled_as_of_same_snapshot', original=historical['original'],
                        projection=historical['projection'], checkpoint=historical['checkpoint'],
                        current_native=readback, action_authority='none')
             # final boundary: fresh current sources again, no gap to release
             guard('reader/withdrawn', not self.reader_withdrawn)
+            guard('permission/read', w.permissions['read'] is True)
             eq('final/current', self.current_sources(), current)
             self.roots.validate('native_consumer', W.PR + 'CombinedCurrentRead', out, 'current/success')
             slot.set(dict(sha256=physical_sha256(out)))
             return out
-
-    def successful_readback(self, current):
-        """CurrentSuccessfulReadback from the fresh current cells and originals.
-
-        Members a predicate reads are the actual current native body/control,
-        the D06 result/intent/control/publish origin records, the stored Event
-        with its full-value and custody rows, the D01 lineage and the D05 join
-        selectors; deeper current-start filler is schema seed only.
-        """
-        w = self.world
-        CP = 'https://puppetmaster.local/proposals/workflow_cancel_positive_arguments.v1.schema.json#/$defs/'
-        rb = w.seeder.seed('native_consumer', CP + 'CurrentSuccessfulReadback', _Prefer(
-            {'/current_start': lambda v: _kind_index(self.roots, v, 'original_started'),
-             '/d06_readback': lambda v: 0}))
-        w.bind(rb)
-        c = w.cancellation
-        rec = lambda stored: copy.deepcopy(stored.wrapper['record'])  # noqa: E731
-        d = rb['d06_readback']
-        receipt = c['result'].wrapper['record']['append_receipt']
-        event = w.storage.read_event(receipt['event_id'])
-        d.update(kind='cancelled_from_nonterminal', result=rec(c['result']), origin=rec(c['publish_origin']),
-                 intent=rec(c['intent']), control=rec(c['committed_control']))
-        d['native_after'].update(body=copy.deepcopy(current['body']), body_selection=w.body2.selector(),
-                                 control=copy.deepcopy(current['control']), control_selection=w.control2.selector(),
-                                 lineage_head=rec(c['original_d01_head']), lineage_update=rec(c['original_d01_update']),
-                                 lineage_origin=rec(c['original_d01_origin']))
-        d['original_event'].update(event=event, append=w.storage.full_value_result(receipt['event_id']),
-                                   original_candidate=copy.deepcopy(c['event_candidate'].wrapper))
-        ss = w.safe_stop
-        d['safe_stop'].update(scope=copy.deepcopy(self.request()['scope']),
-                              operation_id=ss['aggregate_result'].wrapper['value']['operation_id'],
-                              goal_stop=w.goal_cause['original_stop_receipt'].selector(),
-                              scheduler_stop=ss['original_scheduler_stop'].selector(),
-                              inventory_cut=ss['original_inventory_cut'].selector())
-        d['original_d01_lineage'].update(update=copy.deepcopy(c['original_d01_update'].wrapper),
-                                         head=copy.deepcopy(c['original_d01_head'].wrapper),
-                                         origin=copy.deepcopy(c['original_d01_origin'].wrapper))
-        w.repair_filler('native_consumer', CP + 'CurrentSuccessfulReadback', rb,
-                        {'/d06_readback/result', '/d06_readback/origin', '/d06_readback/intent', '/d06_readback/control',
-                         '/d06_readback/native_after', '/d06_readback/original_d01_lineage/update',
-                         '/d06_readback/original_d01_lineage/head', '/d06_readback/original_d01_lineage/origin'},
-                        allow_const=True)
-        self.roots.validate('native_consumer', CP + 'CurrentSuccessfulReadback', rb, 'current/readback')
-        return rb
 
     def read_current_started(self):
         """After cancellation a current running view must refuse."""

@@ -1212,7 +1212,65 @@ def r3_effect_cases():
     return out
 
 
-GROUPS = dict(R1=r1_cases, R2=lambda: r2_cases() + r2_join_cases() + r2_preserve_cases() + r2_guard_cases(), R3=lambda: r3_cases() + r3_effect_cases(), R4=r4_cases,
+def r4_current_cases():
+    """R4 current-cancelled reader at one held boundary (session 2)."""
+    S0 = {'start': 'started'}
+    knob = lambda base, **k: dict(base, knobs=k)  # noqa: E731
+    out = []
+
+    def current(w, p):
+        before = w.recorder.snapshot()
+        r = p.read_current_cancelled()
+        after = w.recorder.snapshot()
+        W.guard('passive/no_effect', [k for k in after if after[k]['sha256'] != before[k]['sha256']] == [])
+        return dict(kind=r['kind'], bytes=len(json.dumps(r)))
+    run_case(out, 'R4/positive/current_cancelled_whole_read', 'R4', 'positive', projector_case(S0, [publish, cutover, current]))
+    run_case(out, 'R4/positive/current_cancelled_event_reference_row', 'R4', 'positive', projector_case(
+        dict(S0, knobs=dict(event_payload=LONG_ACTOR(5000))), [publish, cutover, current]))
+    cur = lambda w, p: p.read_current_cancelled()  # noqa: E731
+    C = W.World
+    rows = [
+        ('readback_control_prepared_version', knob(S0, readback_edit=lambda v: v['d06_readback'].update(
+            control=copy.deepcopy(C.CURRENT.d06_prepared['control'].wrapper['record']))), 'current/readback_d06'),
+        ('readback_native_prior_body', knob(S0, readback_edit=lambda v: v['d06_readback']['native_after'].update(
+            body=copy.deepcopy(C.CURRENT.body1.wrapper), body_selection=C.CURRENT.body1.selector())), 'current/readback_native'),
+        ('readback_event_substituted', knob(S0, readback_edit=lambda v: v['d06_readback']['original_event']['event'].update(
+            correlation_id='TEST_ONLY:substituted')), 'current/readback_event'),
+        ('readback_lineage_prior_head', knob(S0, readback_edit=lambda v: v['d06_readback']['original_d01_lineage'].update(
+            head=copy.deepcopy(C.CURRENT.start_cause['original_d01_head'].wrapper))), 'current/readback_lineage'),
+        ('readback_safe_stop_other_genuine', knob(S0, readback_edit=lambda v: v['d06_readback']['safe_stop'].update(
+            inventory_cut=C.CURRENT.sched['coverage'].selector())), 'current/readback_safe_stop'),
+        ('current_start_commit_substituted', knob(S0, current_start_edit=lambda v: v['value']['commit']['record'].update(
+            transaction_id='TEST_ONLY:substituted')), 'current/start'),
+        ('current_read_second_boundary', knob(S0, current_read_edit=lambda v: v['current_start']['value']['commit']['record'].update(
+            transaction_id='TEST_ONLY:other-boundary')), 'current/one_boundary'),
+        ('current_goal_stop_receipt_substituted', knob(S0, current_goal_edit=lambda v: v['current_stop']['original_stop_receipt'][
+            'record'].update(original_host_transaction_ref='TEST_ONLY:substituted')), 'current/goal_stop_argument'),
+    ]
+    for name, cfg, expected in rows:
+        run_case(out, 'R4/' + name, 'R4', 'negative', projector_case(cfg, [publish, cutover, cur]), expected)
+
+    def drift_after_current(w, p):
+        p.hooks['after_current'] = lambda w_, p_: __import__('pm_goal_dg_r_oracles').other_stop_receipt(w_)
+        return p.read_current_cancelled()
+    def withdraw_after_historical(w, p):
+        p.hooks['after_historical'] = lambda w_, p_: setattr(p_, 'reader_withdrawn', True)
+        return p.read_current_cancelled()
+    def native_advance_after_historical(w, p):
+        def adv(w_, p_):
+            body = w_.native.prepare_body(w_.body2, 'cancelled')
+            control = w_.native.prepare_control(w_.control2, body)
+            w_.native.commit(body, control, w_.body2, w_.control2)
+        p.hooks['after_historical'] = adv
+        return p.read_current_cancelled()
+    for name, step, expected in [('goal_stop_after_current_helper', drift_after_current, 'current/goal_stop'),
+                                 ('reader_withdrawn_before_current_release', withdraw_after_historical, 'reader/withdrawn'),
+                                 ('native_advance_before_current_release', native_advance_after_historical, 'current/native_body')]:
+        run_case(out, 'R4/' + name, 'R4', 'negative', projector_case(S0, [publish, cutover, step]), expected)
+    return out
+
+
+GROUPS = dict(R1=r1_cases, R2=lambda: r2_cases() + r2_join_cases() + r2_preserve_cases() + r2_guard_cases(), R3=lambda: r3_cases() + r3_effect_cases(), R4=lambda: r4_cases() + r4_current_cases(),
               R5=r5_cases, R6=lambda: r6_cases() + r56_lower_cases())
 
 
