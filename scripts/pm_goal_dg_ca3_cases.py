@@ -631,6 +631,64 @@ def specific_negatives(suite):
     neg(G, 'held_reader_after_withdrawal', held_reader_after_withdrawal, 'C1/held_reader/withdrawn', boundary='held_reader')
 
 
+def guard_negatives(suite):
+    """Reachable route guards with a dedicated one-defect negative each."""
+    neg = suite.negative
+    for method in ('prepare', 'latch_and_reserve', 'commit_receipt', 'settle_owner', 'reserve_assignment', 'append_original', 'publish_control'):
+        def fn(method=method):
+            w, r = until(suite, method)
+            w.binding.withdraw()
+            return w, getattr(r, method)
+        neg(G, 'writer_withdrawn_before_%s' % method, fn, 'C3/%s/writer_cutoff' % method, boundary=method)
+
+    def latch_permission():
+        w, r = until(suite, 'latch_and_reserve')
+        w.permissions.revoke(r.cancel_decision)
+        return w, r.latch_and_reserve
+    neg(G, 'latch_permission_revoked', latch_permission, 'C3/latch_and_reserve/permission', boundary='latch_and_reserve')
+
+    def receipt_stop_resumed():
+        w, r = until(suite, 'commit_receipt')
+        w.host_stop.manual(r.scope, 'resume')
+        return w, r.commit_receipt
+    neg(G, 'receipt_stop_resumed', receipt_stop_resumed, 'C3/commit_receipt/stop_latched', boundary='commit_receipt')
+
+    def replay_before_terminal():
+        w, r = until(suite, 'terminal_succeeded')
+        return w, lambda: r.replay(copy.deepcopy(r.request))
+    neg(G, 'replay_before_terminal', replay_before_terminal, 'C3/replay/terminal_issued', boundary='replay')
+
+    def unsettled_bad_kind():
+        w, r = until(suite, 'native')
+        return w, lambda: r.terminal_unsettled('succeeded')
+    neg(G, 'unsettled_wrong_kind', unsettled_bad_kind, 'C3/terminal_unsettled/kind', boundary='terminal_unsettled')
+
+    def retained(edit_fn, code, name, reader='read_retained_success', unsettled=False):
+        def fn():
+            if unsettled:
+                w, r = until(suite, 'native', effects=dict(drain={'flush_failed': True}))
+                r.run_native()
+                r.terminal_unsettled('unknown')
+            else:
+                w, r = wf(suite)
+                r.run()
+            edit_fn(w, r)
+            return w, getattr(r, reader)
+        neg(G, name, fn, code, boundary=reader)
+    retained(lambda w, r: substitute(w, 'goal_cancel_progress', r.wf_progress_key() if hasattr(r, 'wf_progress_key') else
+                                     r.progress_key(r.terminal_value['terminal_progress_selector']['progress_epoch']),
+                                     lambda v: v['record'].update(resolution_owner_ref='TEST_ONLY:other-owner')),
+             'C3/read_retained_success/selected_progress', 'retained_selected_progress_substituted')
+    retained(lambda w, r: substitute(w, 'goal_cancel_source_audit', r.key('goal_cancel_source_audit'),
+                                     lambda v: v['record'].update(captured_at='2026-01-01T00:00:00Z')),
+             'C3/read_retained_success/source', 'retained_source_audit_substituted')
+    retained(lambda w, r: substitute(w, R.LATE_AUDIT, r.late_audit_key, lambda v: v['record'].update(original_event_id=uid('TEST_ONLY:other-event'))),
+             'C3/read_retained_success/assignment_event', 'retained_late_audit_substituted')
+    retained(lambda w, r: substitute(w, 'goal_cancel_source_audit', r.key('goal_cancel_source_audit'),
+                                     lambda v: v['record'].update(captured_at='2026-01-01T00:00:00Z')),
+             'C3/read_retained_unsettled/source', 'retained_unsettled_source_substituted', reader='read_retained_unsettled', unsettled=True)
+
+
 def cases(suite):
     suite.positive(G, 'positive_active_nonterminal_run', lambda: positive(suite, 'active'))
     suite.positive(G, 'positive_paused', lambda: positive(suite, 'paused'))
@@ -647,4 +705,5 @@ def cases(suite):
     suite.positive(G, 'positive_held_reader', lambda: positive_held_reader(suite))
     suite.positive(G, 'positive_equal_event_retry', lambda: positive_equal_event_retry(suite))
     specific_negatives(suite)
+    guard_negatives(suite)
     boundary_negatives(suite)

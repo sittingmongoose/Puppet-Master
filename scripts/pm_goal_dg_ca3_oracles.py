@@ -57,10 +57,12 @@ def guard_inventory(cases):
     for site in guard_sites():
         code = site['code']
         if re.fullmatch(r'[A-Za-z0-9_/.\-]+', code):
-            hits = observed.get(code, [])
+            # exact code, or the same code carried inside a typed wrapper (e.g. 'C4I/<method>/source:<code>')
+            hits = sorted({c for got, ids in observed.items() for c in ids if got == code or got.endswith(':' + code)})
         else:
-            literal = ''.join(re.findall(r"'([^']*)'", code)).split('%')[0]
-            hits = sorted({c for got, ids in observed.items() for c in ids if literal and got.startswith(literal)})
+            literals = [l.split('%')[0] for l in re.findall(r"'([^']*)'", code)]
+            literals = [l for l in literals if len(l) > 2]
+            hits = sorted({c for got, ids in observed.items() for c in ids if any(l in got for l in literals)})
         rows.append(dict(site, negatives=hits[:50], negative_count=len(hits)))
     return dict(qualification='TEST_ONLY', native=O.NATIVE_LINE, lane='DG-CA3', sites=rows, observed_codes=dict(sorted(observed.items())),
                 without_negative=[r for r in rows if r['negative_count'] == 0])
