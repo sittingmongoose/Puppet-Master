@@ -46,6 +46,7 @@ import pm_goal_test_numrule as NR
 import pm_goal_test_storage as S
 import pm_goal_test_owner_adapters as A
 import pm_goal_test_source as GSRC
+import pm_goal_test_reopen as RO
 import pm_goal_dg_u_owners as O
 
 HERE = Path(__file__).resolve().parent
