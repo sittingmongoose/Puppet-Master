@@ -2,8 +2,10 @@
 // box drawn in the body ("Delete all memories?" was the reported case). confirmDialog now puts the message in one
 // place: a warning-tone confirm (danger) keeps it in the alert box and leaves the subtitle empty; every other
 // confirm keeps it in the subtitle and has no body at all. This check opens Settings confirms by real clicks
-// (a press Playwright cannot land falls back to the page's own click, so a covered control is still visited;
-// each chapter, each workspace, and each of the workspace's manager tabs: its danger and confirm-labelled
+// (a press Playwright cannot land falls back to the page's own click, so a covered control is still visited; a
+// "More …" menu row is pressed by that click on the row itself, because a pointer press has to scroll to reach a
+// row and a scroll closes the menu it is in, FO-147; each chapter, each workspace, and each of the workspace's
+// manager tabs: its danger and confirm-labelled
 // buttons, and the danger/confirm rows of its "More …" menus), and asserts the dialog's message text appears
 // exactly once, in the place the tone owns, fully readable (its own box not clipped, inside the dialog), and that
 // a body holding no content is absent, display:none or no taller than its own hairline — round 1 left a 34 px
@@ -132,9 +134,38 @@ async function press(f, attr) {
 	return f.evaluate((a) => { const el = document.querySelector(`[${a}]`); if (!el) return false; el.click(); return true; }, attr).catch(() => false);
 }
 
-async function pressItem(f, i) {
-	try { await f.locator('.pm51-popout[role="menu"] .pm51-menu-item').nth(i).click({ timeout: 4000 }); return true; } catch (e) { /* fall back below */ }
-	return f.evaluate((n) => { const pop = document.querySelector('.pm51-popout[role="menu"]'); const el = pop && pop.querySelectorAll('.pm51-menu-item')[n]; if (!el) return false; el.click(); return true; }, i).catch(() => false);
+const MENU = '.pm51-popout[role="menu"]';
+
+/* A row is pressed where the open menu draws it, by the page's own click on that row. A pointer press has to
+   bring the row into view first, and a menu closes when the box holding its anchor scrolls that anchor away
+   (FO-147) — the memory row menu shuts between a second item's press and its pointer press for exactly that
+   reason. The page's click opens the same confirm the pointer would, and that dialog is what this check judges. */
+async function rowPress(f, moreAttr, label) {
+	let why = 'menu never opened';
+	for (let attempt = 0; attempt < 2; attempt++) {
+		if (!(await f.locator(`${MENU}:visible`).count())) {
+			if (!(await press(f, moreAttr))) return { ok: false, why: 'the More button could not be pressed' };
+			await menuOpen(f, 1500);
+		}
+		why = await f.evaluate(({ sel, lbl }) => {
+			const pops = [...document.querySelectorAll(sel)].filter((p) => p.getClientRects().length);
+			const pop = pops[pops.length - 1];
+			if (!pop) return 'no menu open';
+			const el = [...pop.querySelectorAll('.pm51-menu-item')].find((x) => (x.textContent || '').replace(/\s+/g, ' ').trim() === lbl);
+			if (!el) return `menu open, no row reading ${lbl}`;
+			el.click();
+			return 'pressed';
+		}, { sel: MENU, lbl: label }).catch((e) => `evaluate threw ${String(e).slice(0, 80)}`);
+		if (why === 'pressed') return { ok: true };
+	}
+	return { ok: false, why };
+}
+
+async function menuOpen(f, ms = 2000) {
+	return f.waitForFunction((sel) => {
+		const pops = [...document.querySelectorAll(sel)].filter((p) => p.getClientRects().length);
+		return pops.length > 0;
+	}, MENU, { timeout: ms }).then(() => true).catch(() => false);
 }
 
 async function pick(f, ws, tab, kind, seen, attr) {
@@ -173,7 +204,7 @@ async function scan(t, f, ws, tab, place, bag, seen, limits) {
 		const picked = await pick(f, ws, tab, 'button', [...seen], 'data-fo154btn');
 		if (!picked) break;
 		seen.add(picked.key);
-		if (!(await press(f, 'data-fo154btn'))) { bag.skipped += 1; break; }
+		if (!(await press(f, 'data-fo154btn'))) { bag.skipped += 1; t.log(`unvisited confirm: ${place} / ${picked.name.slice(0, 60)}`); break; }
 		if (await dialogShown(f)) await judge(t, f, bag, `${place} / ${picked.name.slice(0, 50)}`);
 		else await dismiss(f);
 	}
@@ -181,25 +212,20 @@ async function scan(t, f, ws, tab, place, bag, seen, limits) {
 		const more = await pick(f, ws, tab, 'more', [...seen], 'data-fo154more');
 		if (!more) break;
 		seen.add(more.key);
-		if (!(await press(f, 'data-fo154more'))) { bag.skipped += 1; break; }
-		const menu = await f.waitForFunction(() => {
-			const el = document.querySelector('.pm51-popout[role="menu"]');
-			return !!(el && el.getClientRects().length);
-		}, null, { timeout: 2000 }).then(() => true).catch(() => false);
+		if (!(await press(f, 'data-fo154more'))) { bag.skipped += 1; t.log(`unvisited menu: ${place} / ${more.name.slice(0, 60)}`); break; }
+		const menu = await menuOpen(f);
 		if (!menu) { await dismiss(f); continue; }
-		const items = await f.evaluate((pattern) => {
+		const items = await f.evaluate(({ pattern, sel }) => {
 			const rx = new RegExp(pattern, 'i');
-			const pop = document.querySelector('.pm51-popout[role="menu"]');
+			const pops = [...document.querySelectorAll(sel)].filter((p) => p.getClientRects().length);
+			const pop = pops[pops.length - 1];
 			if (!pop) return [];
 			return [...pop.querySelectorAll('.pm51-menu-item')].map((el, i) => ({ i, label: (el.textContent || '').replace(/\s+/g, ' ').trim(), danger: el.classList.contains('is-danger'), off: el.getAttribute('aria-disabled') === 'true' }))
 				.filter((it) => !it.off && (it.danger || rx.test(it.label)));
-		}, CONFIRM_IN_PAGE.source);
+		}, { pattern: CONFIRM_IN_PAGE.source, sel: MENU });
 		for (const item of items.slice(0, limits.items)) {
-			if (!(await f.locator('.pm51-popout[role="menu"]:visible').count())) {
-				if (!(await press(f, 'data-fo154more'))) break;
-				await f.waitForFunction(() => !!document.querySelector('.pm51-popout[role="menu"]'), null, { timeout: 1500 }).catch(() => {});
-			}
-			if (!(await pressItem(f, item.i))) { bag.skipped += 1; continue; }
+			const row = await rowPress(f, 'data-fo154more', item.label);
+			if (!row.ok) { bag.skipped += 1; t.log(`unvisited menu row: ${place} / ${more.name.slice(0, 40)} / ${item.label.slice(0, 40)} (${row.why})`); continue; }
 			if (await dialogShown(f)) await judge(t, f, bag, `${place} / ${more.name.slice(0, 40)} / ${item.label.slice(0, 40)}`);
 			else await dismiss(f);
 		}
