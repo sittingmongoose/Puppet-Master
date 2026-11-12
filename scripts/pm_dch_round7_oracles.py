@@ -121,7 +121,7 @@ def cases(m, Case=Case):
                     w={**f['historical_source'],'source_value_sha256':hashlib.sha256(m.body_bytes(r)).hexdigest()}
                     # Some exact old source bytes have protected earlier receipts;
                     # they are retained positives below, not current negatives.
-                    if m.record_number_rule(w) != m.CURRENT_RULE: continue
+                    if not m.uses_current_numbers(m.record_number_rule(w)): continue
                     add(prefix+'current_history_format/'+field+'/'+str(n), 'history', r, row, w, schema)
         registered = next(s['value_schema'] for s in json.loads((ROOT/'Plans/storage_value_registry.json').read_text())['families'] if s['value_schema_id']==checkpoint_schema['$id'])
         bad=copy.deepcopy(c['with_history']);bad['history'][0]['retired_at_utc']='2026-11-04T00:60:00Z'

@@ -2,7 +2,7 @@
   {
     "path": "Plans/event_datetime_inventory.json",
     "origin": "json",
-    "sha256": "3a3b6d33291f64893eb259779f9fba8c45b2de80a08c95485dc2f182d94c8a11",
+    "sha256": "bbf0a3b4c6142bc15b417b869a54721941ef849a84a4b3ec661b647b05b1d3ee",
     "reason": "Classification evidence contains required arrays as quoted role evidence; this is inventory data, not a validator resource.",
     "citation": "scripts/pm_event_datetime_inventory.schema.json; reports/event-authority-20261104/NUMRULE.md#review-round-8-findings-and-responses"
   },
@@ -1617,125 +1617,6 @@
     "citation": "Plans/_shards/storage-plan/090-collaborative-workflow-event-persistence-binding-dl-090-2026-11-.md#fence:2422"
   },
   {
-    "path": "Plans/_shards/storage-plan/090-collaborative-workflow-event-persistence-binding-dl-090-2026-11-.md",
-    "origin": "fence:2568",
-    "sha256": "c0fb521675399b8958ba9c97e66c8c5c1b6d4f45c1dac3de8b88465aa8541cef",
-    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
-    "citation": "Plans/_shards/storage-plan/090-collaborative-workflow-event-persistence-binding-dl-090-2026-11-.md#fence:2568"
-  },
-  {
-    "path": "Plans/_shards/storage-plan/090-collaborative-workflow-event-persistence-binding-dl-090-2026-11-.md",
-    "origin": "fence:2789",
-    "sha256": "1e30fe20a65ed170f20881572b7d157a900ca0e223d639513cad49bc13fe678d",
-    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
-    "citation": "Plans/_shards/storage-plan/090-collaborative-workflow-event-persistence-binding-dl-090-2026-11-.md#fence:2789"
-  },
-  {
-    "path": "Plans/_shards/storage-plan/090-collaborative-workflow-event-persistence-binding-dl-090-2026-11-.md",
-    "origin": "fence:3010",
-    "sha256": "707f78913c982a9f29e4454518416cc6539267b5af15099c45068755b895459f",
-    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
-    "citation": "Plans/_shards/storage-plan/090-collaborative-workflow-event-persistence-binding-dl-090-2026-11-.md#fence:3010"
-  },
-  {
-    "path": "Plans/_shards/storage-plan/090-collaborative-workflow-event-persistence-binding-dl-090-2026-11-.md",
-    "origin": "fence:3235",
-    "sha256": "aad39a74c97cf92be710c838ab7b68edddf5763edc2ef31a46ae2e300e3fc55c",
-    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
-    "citation": "Plans/_shards/storage-plan/090-collaborative-workflow-event-persistence-binding-dl-090-2026-11-.md#fence:3235"
-  },
-  {
-    "path": "Plans/_shards/storage-plan/090-collaborative-workflow-event-persistence-binding-dl-090-2026-11-.md",
-    "origin": "fence:3456",
-    "sha256": "b353a9ecb58b6bfb1a4379f19934506e7b31a2b410c68950a693dad560c9b191",
-    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
-    "citation": "Plans/_shards/storage-plan/090-collaborative-workflow-event-persistence-binding-dl-090-2026-11-.md#fence:3456"
-  },
-  {
-    "path": "Plans/_shards/storage-plan/090-collaborative-workflow-event-persistence-binding-dl-090-2026-11-.md",
-    "origin": "fence:3678",
-    "sha256": "9853d12a023b78909e2ef5c581b8ee2194505b0477114619c5f1a586d223d62b",
-    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
-    "citation": "Plans/_shards/storage-plan/090-collaborative-workflow-event-persistence-binding-dl-090-2026-11-.md#fence:3678"
-  },
-  {
-    "path": "Plans/_shards/storage-plan/090-collaborative-workflow-event-persistence-binding-dl-090-2026-11-.md",
-    "origin": "fence:3899",
-    "sha256": "5b871d5593949be21dc815f9df02c5a8634d1c2318ed5cbb8bc5691dbd17cf78",
-    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
-    "citation": "Plans/_shards/storage-plan/090-collaborative-workflow-event-persistence-binding-dl-090-2026-11-.md#fence:3899"
-  },
-  {
-    "path": "Plans/_shards/storage-plan/090-collaborative-workflow-event-persistence-binding-dl-090-2026-11-.md",
-    "origin": "fence:4120",
-    "sha256": "38479991fe7c8a5b31d4cc027ad0898aecc72b53467050817008bd8bbe5463ca",
-    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
-    "citation": "Plans/_shards/storage-plan/090-collaborative-workflow-event-persistence-binding-dl-090-2026-11-.md#fence:4120"
-  },
-  {
-    "path": "Plans/_shards/storage-plan/090-collaborative-workflow-event-persistence-binding-dl-090-2026-11-.md",
-    "origin": "fence:4341",
-    "sha256": "f5b43633313a8ed80ea3f3c6e0097c73c85d80387981cee8a37b0b637a52e9a4",
-    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
-    "citation": "Plans/_shards/storage-plan/090-collaborative-workflow-event-persistence-binding-dl-090-2026-11-.md#fence:4341"
-  },
-  {
-    "path": "Plans/_shards/storage-plan/090-collaborative-workflow-event-persistence-binding-dl-090-2026-11-.md",
-    "origin": "fence:4562",
-    "sha256": "2a71f93bbaf79dd90fde629b6ef42e95b2d02a02ae54c5ed82079d3cac2ce7e3",
-    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
-    "citation": "Plans/_shards/storage-plan/090-collaborative-workflow-event-persistence-binding-dl-090-2026-11-.md#fence:4562"
-  },
-  {
-    "path": "Plans/_shards/storage-plan/090-collaborative-workflow-event-persistence-binding-dl-090-2026-11-.md",
-    "origin": "fence:4783",
-    "sha256": "5c21db4229cfa4fb5cf3a6edd34da0ab55b8a65af274fca272d88b926b2f4942",
-    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
-    "citation": "Plans/_shards/storage-plan/090-collaborative-workflow-event-persistence-binding-dl-090-2026-11-.md#fence:4783"
-  },
-  {
-    "path": "Plans/_shards/storage-plan/090-collaborative-workflow-event-persistence-binding-dl-090-2026-11-.md",
-    "origin": "fence:5004",
-    "sha256": "9cba44a37855d6fba5b457d87a803d633be092ff4a3db503a9ecea169e6c4a54",
-    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
-    "citation": "Plans/_shards/storage-plan/090-collaborative-workflow-event-persistence-binding-dl-090-2026-11-.md#fence:5004"
-  },
-  {
-    "path": "Plans/_shards/storage-plan/090-collaborative-workflow-event-persistence-binding-dl-090-2026-11-.md",
-    "origin": "fence:5226",
-    "sha256": "c20746db2b7404ccd834c4f567a578dc76b7567f00ef3d92da01daa4f1842eae",
-    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
-    "citation": "Plans/_shards/storage-plan/090-collaborative-workflow-event-persistence-binding-dl-090-2026-11-.md#fence:5226"
-  },
-  {
-    "path": "Plans/_shards/storage-plan/090-collaborative-workflow-event-persistence-binding-dl-090-2026-11-.md",
-    "origin": "fence:5450",
-    "sha256": "c0fe8767c2607acfa2b95d4333acd391708da3a9dc921c497a99be65101ba9e8",
-    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
-    "citation": "Plans/_shards/storage-plan/090-collaborative-workflow-event-persistence-binding-dl-090-2026-11-.md#fence:5450"
-  },
-  {
-    "path": "Plans/_shards/storage-plan/090-collaborative-workflow-event-persistence-binding-dl-090-2026-11-.md",
-    "origin": "fence:5675",
-    "sha256": "72941f1c68884c1becb592387b3cf7684a8bccd12967854564f82dac7b4d674c",
-    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
-    "citation": "Plans/_shards/storage-plan/090-collaborative-workflow-event-persistence-binding-dl-090-2026-11-.md#fence:5675"
-  },
-  {
-    "path": "Plans/_shards/storage-plan/090-collaborative-workflow-event-persistence-binding-dl-090-2026-11-.md",
-    "origin": "fence:5896",
-    "sha256": "510d5970563bccf156691b95024eeb5d2c7a286f5eb6a1a9429017539e247190",
-    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
-    "citation": "Plans/_shards/storage-plan/090-collaborative-workflow-event-persistence-binding-dl-090-2026-11-.md#fence:5896"
-  },
-  {
-    "path": "Plans/_shards/storage-plan/090-collaborative-workflow-event-persistence-binding-dl-090-2026-11-.md",
-    "origin": "fence:6117",
-    "sha256": "b49c02fc50d296ad66627cab904d4d41c17ad939038f3cc4e855535f2b80fdfc",
-    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
-    "citation": "Plans/_shards/storage-plan/090-collaborative-workflow-event-persistence-binding-dl-090-2026-11-.md#fence:6117"
-  },
-  {
     "path": "Plans/_shards/storage-plan/106-sp-515-scheduler.pass-prepared-event-authority-contract.md",
     "origin": "fence:75",
     "sha256": "76e1b2512eea08113ce16a85b63a0ea66d71e33da79f50ac17124f90edbb18a1",
@@ -2240,13 +2121,6 @@
     "citation": "Plans/concern_created_contracts/concern_created.fixtures.json#json"
   },
   {
-    "path": "Plans/dch_checkpoint_fixtures.json",
-    "origin": "json",
-    "sha256": "720db9fa969e7bc509cb2c7bf5716d6d826f8a6de8c289d942ad6ff31361ae7f",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/dch_checkpoint_fixtures.json#json"
-  },
-  {
     "path": "Plans/dch_event_contract_fixtures.json",
     "origin": "json",
     "sha256": "9e76ab6451557acf78cb2b67ab524dbb1bddc04a3e59cbe61c53737e3f34650f",
@@ -2702,293 +2576,6 @@
     "citation": "Plans/storage-plan.md#fence:33367"
   },
   {
-    "path": "Plans/storage-plan.md",
-    "origin": "fence:33513",
-    "sha256": "c0fb521675399b8958ba9c97e66c8c5c1b6d4f45c1dac3de8b88465aa8541cef",
-    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
-    "citation": "Plans/storage-plan.md#fence:33513"
-  },
-  {
-    "path": "Plans/storage-plan.md",
-    "origin": "fence:33734",
-    "sha256": "1e30fe20a65ed170f20881572b7d157a900ca0e223d639513cad49bc13fe678d",
-    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
-    "citation": "Plans/storage-plan.md#fence:33734"
-  },
-  {
-    "path": "Plans/storage-plan.md",
-    "origin": "fence:33955",
-    "sha256": "707f78913c982a9f29e4454518416cc6539267b5af15099c45068755b895459f",
-    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
-    "citation": "Plans/storage-plan.md#fence:33955"
-  },
-  {
-    "path": "Plans/storage-plan.md",
-    "origin": "fence:34180",
-    "sha256": "aad39a74c97cf92be710c838ab7b68edddf5763edc2ef31a46ae2e300e3fc55c",
-    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
-    "citation": "Plans/storage-plan.md#fence:34180"
-  },
-  {
-    "path": "Plans/storage-plan.md",
-    "origin": "fence:34401",
-    "sha256": "b353a9ecb58b6bfb1a4379f19934506e7b31a2b410c68950a693dad560c9b191",
-    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
-    "citation": "Plans/storage-plan.md#fence:34401"
-  },
-  {
-    "path": "Plans/storage-plan.md",
-    "origin": "fence:34623",
-    "sha256": "9853d12a023b78909e2ef5c581b8ee2194505b0477114619c5f1a586d223d62b",
-    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
-    "citation": "Plans/storage-plan.md#fence:34623"
-  },
-  {
-    "path": "Plans/storage-plan.md",
-    "origin": "fence:34844",
-    "sha256": "5b871d5593949be21dc815f9df02c5a8634d1c2318ed5cbb8bc5691dbd17cf78",
-    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
-    "citation": "Plans/storage-plan.md#fence:34844"
-  },
-  {
-    "path": "Plans/storage-plan.md",
-    "origin": "fence:35065",
-    "sha256": "38479991fe7c8a5b31d4cc027ad0898aecc72b53467050817008bd8bbe5463ca",
-    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
-    "citation": "Plans/storage-plan.md#fence:35065"
-  },
-  {
-    "path": "Plans/storage-plan.md",
-    "origin": "fence:35286",
-    "sha256": "f5b43633313a8ed80ea3f3c6e0097c73c85d80387981cee8a37b0b637a52e9a4",
-    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
-    "citation": "Plans/storage-plan.md#fence:35286"
-  },
-  {
-    "path": "Plans/storage-plan.md",
-    "origin": "fence:35507",
-    "sha256": "2a71f93bbaf79dd90fde629b6ef42e95b2d02a02ae54c5ed82079d3cac2ce7e3",
-    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
-    "citation": "Plans/storage-plan.md#fence:35507"
-  },
-  {
-    "path": "Plans/storage-plan.md",
-    "origin": "fence:35728",
-    "sha256": "5c21db4229cfa4fb5cf3a6edd34da0ab55b8a65af274fca272d88b926b2f4942",
-    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
-    "citation": "Plans/storage-plan.md#fence:35728"
-  },
-  {
-    "path": "Plans/storage-plan.md",
-    "origin": "fence:35949",
-    "sha256": "9cba44a37855d6fba5b457d87a803d633be092ff4a3db503a9ecea169e6c4a54",
-    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
-    "citation": "Plans/storage-plan.md#fence:35949"
-  },
-  {
-    "path": "Plans/storage-plan.md",
-    "origin": "fence:36171",
-    "sha256": "c20746db2b7404ccd834c4f567a578dc76b7567f00ef3d92da01daa4f1842eae",
-    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
-    "citation": "Plans/storage-plan.md#fence:36171"
-  },
-  {
-    "path": "Plans/storage-plan.md",
-    "origin": "fence:36395",
-    "sha256": "c0fe8767c2607acfa2b95d4333acd391708da3a9dc921c497a99be65101ba9e8",
-    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
-    "citation": "Plans/storage-plan.md#fence:36395"
-  },
-  {
-    "path": "Plans/storage-plan.md",
-    "origin": "fence:36620",
-    "sha256": "72941f1c68884c1becb592387b3cf7684a8bccd12967854564f82dac7b4d674c",
-    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
-    "citation": "Plans/storage-plan.md#fence:36620"
-  },
-  {
-    "path": "Plans/storage-plan.md",
-    "origin": "fence:36841",
-    "sha256": "510d5970563bccf156691b95024eeb5d2c7a286f5eb6a1a9429017539e247190",
-    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
-    "citation": "Plans/storage-plan.md#fence:36841"
-  },
-  {
-    "path": "Plans/storage-plan.md",
-    "origin": "fence:37062",
-    "sha256": "b49c02fc50d296ad66627cab904d4d41c17ad939038f3cc4e855535f2b80fdfc",
-    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
-    "citation": "Plans/storage-plan.md#fence:37062"
-  },
-  {
-    "path": "Plans/storage-plan.md",
-    "origin": "fence:38405",
-    "sha256": "76e1b2512eea08113ce16a85b63a0ea66d71e33da79f50ac17124f90edbb18a1",
-    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
-    "citation": "Plans/storage-plan.md#fence:38405"
-  },
-  {
-    "path": "Plans/storage-plan.md",
-    "origin": "fence:38464",
-    "sha256": "8796a4d53a9ecbaa6a816cdff362c91ad8dfdf2b8cdc3dd771f61e7b07465e3a",
-    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
-    "citation": "Plans/storage-plan.md#fence:38464"
-  },
-  {
-    "path": "Plans/storage-plan.md",
-    "origin": "fence:38523",
-    "sha256": "b01f82181c7dd009dc5df19d05fb2c2dc0c359f4cda8a5bb563a78b4306c62f8",
-    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
-    "citation": "Plans/storage-plan.md#fence:38523"
-  },
-  {
-    "path": "Plans/storage-plan.md",
-    "origin": "fence:38588",
-    "sha256": "bca8c785747c9737d6fcfb365657838b4d0a8f5e759d940dd386e0e3726311e7",
-    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
-    "citation": "Plans/storage-plan.md#fence:38588"
-  },
-  {
-    "path": "Plans/storage-plan.md",
-    "origin": "fence:38653",
-    "sha256": "7921c2e30e84273b1f26bd58cfddb73ea3abfe4bf0b473ab25476a486139a5cb",
-    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
-    "citation": "Plans/storage-plan.md#fence:38653"
-  },
-  {
-    "path": "Plans/storage-plan.md",
-    "origin": "fence:38718",
-    "sha256": "3ef31e653db64aa98bb8e404a5d9a07d42da63b69995a15ebd199604dbba989d",
-    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
-    "citation": "Plans/storage-plan.md#fence:38718"
-  },
-  {
-    "path": "Plans/storage-plan.md",
-    "origin": "fence:38783",
-    "sha256": "618afe44b149c24d280a15d8e9935f64ee7286f813ad83a774013e0b6b901970",
-    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
-    "citation": "Plans/storage-plan.md#fence:38783"
-  },
-  {
-    "path": "Plans/storage-plan.md",
-    "origin": "fence:38840",
-    "sha256": "7f42709be9aaba040513177ceaabd2d726c9582df3836b18d8b9e295de748e06",
-    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
-    "citation": "Plans/storage-plan.md#fence:38840"
-  },
-  {
-    "path": "Plans/storage-plan.md",
-    "origin": "fence:38897",
-    "sha256": "74c7108172c3db49eb9a2c93f446c98863e5c987299ca074d6c6131eac8b8346",
-    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
-    "citation": "Plans/storage-plan.md#fence:38897"
-  },
-  {
-    "path": "Plans/storage-plan.md",
-    "origin": "fence:39043",
-    "sha256": "62f77a1268340654980f77cc2563976e911eec3789a459072b18011f4d5d4de8",
-    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
-    "citation": "Plans/storage-plan.md#fence:39043"
-  },
-  {
-    "path": "Plans/storage-plan.md",
-    "origin": "fence:41087",
-    "sha256": "c8ec28f8c4bc8e72b2a2cbb7680a9ee5ac4288e9e8e80edd5c1c33a1579e2d8b",
-    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
-    "citation": "Plans/storage-plan.md#fence:41087"
-  },
-  {
-    "path": "Plans/storage-plan.md",
-    "origin": "fence:41209",
-    "sha256": "6833b7e742e5020e028ffe0c64c9adc335b28bffbb8db7c55bd08d47592c7540",
-    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
-    "citation": "Plans/storage-plan.md#fence:41209"
-  },
-  {
-    "path": "Plans/storage-plan.md",
-    "origin": "fence:41331",
-    "sha256": "b2c276dc3cda200acfbfda1dff712aa204c731102482e48459ae34f37f6c3cad",
-    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
-    "citation": "Plans/storage-plan.md#fence:41331"
-  },
-  {
-    "path": "Plans/storage-plan.md",
-    "origin": "fence:41453",
-    "sha256": "65b60886c4e15d91424d95326bb8f81850b3cb5460eb3d7c30b824fd536a4c38",
-    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
-    "citation": "Plans/storage-plan.md#fence:41453"
-  },
-  {
-    "path": "Plans/storage-plan.md",
-    "origin": "fence:41575",
-    "sha256": "8caa9c221f3493c4f3caa2e329186df477e21e13ef0c47a66bd369888054dd83",
-    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
-    "citation": "Plans/storage-plan.md#fence:41575"
-  },
-  {
-    "path": "Plans/storage-plan.md",
-    "origin": "fence:41698",
-    "sha256": "00aa2c4b1b3bdaf09d18c815d00f9f27996489a5d4ffefd199102b0826c4dd7a",
-    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
-    "citation": "Plans/storage-plan.md#fence:41698"
-  },
-  {
-    "path": "Plans/storage-plan.md",
-    "origin": "fence:42064",
-    "sha256": "6159d47da58841f82b9d83941351f393b144934280546a21da2bf4367cfeac43",
-    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
-    "citation": "Plans/storage-plan.md#fence:42064"
-  },
-  {
-    "path": "Plans/storage-plan.md",
-    "origin": "fence:42119",
-    "sha256": "8f5cdd86207bad8880d6712ee6fd6d0edad9efe003fc19365035959fdc237cb6",
-    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
-    "citation": "Plans/storage-plan.md#fence:42119"
-  },
-  {
-    "path": "Plans/storage-plan.md",
-    "origin": "fence:42174",
-    "sha256": "3f1fe55529f431b1e1fa88b3b9b9e3db98e5e5c4434d6843491f2f573093b4c4",
-    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
-    "citation": "Plans/storage-plan.md#fence:42174"
-  },
-  {
-    "path": "Plans/storage-plan.md",
-    "origin": "fence:42229",
-    "sha256": "f687647011e9a8781e8cd20dd323a6b80007dafabffefb413b363661276f648a",
-    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
-    "citation": "Plans/storage-plan.md#fence:42229"
-  },
-  {
-    "path": "Plans/storage-plan.md",
-    "origin": "fence:42284",
-    "sha256": "8499f54a9483b1ddbc546f8154a8d0f154b9841efb36949626dcda39d9f19dea",
-    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
-    "citation": "Plans/storage-plan.md#fence:42284"
-  },
-  {
-    "path": "Plans/storage-plan.md",
-    "origin": "fence:42339",
-    "sha256": "b41b63d2a7ea8cb429c0d997ae34f3f04f7ac7417b6cd98d279c8c879cc89b38",
-    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
-    "citation": "Plans/storage-plan.md#fence:42339"
-  },
-  {
-    "path": "Plans/storage-plan.md",
-    "origin": "fence:42394",
-    "sha256": "6b25292f542bd2374ad281d33ea12ab3dd1f56b1e93383326026568673b22d7b",
-    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
-    "citation": "Plans/storage-plan.md#fence:42394"
-  },
-  {
-    "path": "Plans/storage-plan.md",
-    "origin": "fence:42449",
-    "sha256": "d065bfde02a7a5289e01f9a250e3300dd816ed26a6f1b3389157c9b75f42a7ae",
-    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
-    "citation": "Plans/storage-plan.md#fence:42449"
-  },
-  {
     "path": "Plans/.plan_index/acceptance_units.jsonl",
     "origin": "jsonl:4954",
     "sha256": "358dbb61446abb5232ff3eb8f986b83224a91504bd0ca9889a956a01d2d92a2f",
@@ -3239,62 +2826,6 @@
     "sha256": "3649c566247abd387309d44270df10e724d55118a1e3fb8b4837e93588606744",
     "reason": "Generated source-lineage shard fragment of Plans/event_record.schema.json; incomplete JSON text, never a complete runtime schema resource. The canonical source remains scanned and classified.",
     "citation": "Plans/_shards/event_record.schema/002-lines-201-373.md#code:11; Plans/event_record.schema.json"
-  },
-  {
-    "path": "Plans/_shards/storage_value_registry/1001-lines-199818-200017.md",
-    "origin": "code:11",
-    "sha256": "631565d1358ae128410dffcfcfa15d4b26ee4dfd64079da2faf1e0fda4096f4c",
-    "reason": "Generated source-lineage shard fragment of Plans/storage_value_registry.json; incomplete JSON text, never a complete runtime schema resource. The canonical registry remains scanned and classified.",
-    "citation": "Plans/_shards/storage_value_registry/1001-lines-199818-200017.md#code:11; Plans/storage_value_registry.json"
-  },
-  {
-    "path": "Plans/_shards/storage_value_registry/1002-lines-200018-200217.md",
-    "origin": "code:11",
-    "sha256": "b6964612e1ea384f79844993db3833d18515b26289d07f462c2def6aed7f343e",
-    "reason": "Generated source-lineage shard fragment of Plans/storage_value_registry.json; incomplete JSON text, never a complete runtime schema resource. The canonical registry remains scanned and classified.",
-    "citation": "Plans/_shards/storage_value_registry/1002-lines-200018-200217.md#code:11; Plans/storage_value_registry.json"
-  },
-  {
-    "path": "Plans/_shards/storage_value_registry/926-lines-184818-185017.md",
-    "origin": "code:11",
-    "sha256": "12eae54ce04ea1dae95c0fb6268e137b135202896a6d55a4f30974e7751da492",
-    "reason": "Generated source-lineage shard fragment of Plans/storage_value_registry.json; incomplete JSON text, never a complete runtime schema resource. The canonical registry remains scanned and classified.",
-    "citation": "Plans/_shards/storage_value_registry/926-lines-184818-185017.md#code:11; Plans/storage_value_registry.json"
-  },
-  {
-    "path": "Plans/_shards/storage_value_registry/928-lines-185218-185417.md",
-    "origin": "code:11",
-    "sha256": "f4287261c20174dd44872602ae274761b8a1ad652d5ee497425a82aa8624f764",
-    "reason": "Generated source-lineage shard fragment of Plans/storage_value_registry.json; incomplete JSON text, never a complete runtime schema resource. The canonical registry remains scanned and classified.",
-    "citation": "Plans/_shards/storage_value_registry/928-lines-185218-185417.md#code:11; Plans/storage_value_registry.json"
-  },
-  {
-    "path": "Plans/_shards/storage_value_registry/932-lines-186018-186217.md",
-    "origin": "code:11",
-    "sha256": "2c50ac255ea44f655cb939db9cf78b3d1f23f2ddfb811438c4ca85764e4a1590",
-    "reason": "Generated source-lineage shard fragment of Plans/storage_value_registry.json; incomplete JSON text, never a complete runtime schema resource. The canonical registry remains scanned and classified.",
-    "citation": "Plans/_shards/storage_value_registry/932-lines-186018-186217.md#code:11; Plans/storage_value_registry.json"
-  },
-  {
-    "path": "Plans/_shards/storage_value_registry/933-lines-186218-186417.md",
-    "origin": "code:11",
-    "sha256": "50dd7a76835303c7b19a9064303b89cc51254479e0cbef91b00bdb43d4fd3015",
-    "reason": "Generated source-lineage shard fragment of Plans/storage_value_registry.json; incomplete JSON text, never a complete runtime schema resource. The canonical registry remains scanned and classified.",
-    "citation": "Plans/_shards/storage_value_registry/933-lines-186218-186417.md#code:11; Plans/storage_value_registry.json"
-  },
-  {
-    "path": "Plans/_shards/storage_value_registry/995-lines-198618-198817.md",
-    "origin": "code:11",
-    "sha256": "0475e8e5f5a70c9e9f819f4784d37982739c45623be13249b0af22f58c37549b",
-    "reason": "Generated source-lineage shard fragment of Plans/storage_value_registry.json; incomplete JSON text, never a complete runtime schema resource. The canonical registry remains scanned and classified.",
-    "citation": "Plans/_shards/storage_value_registry/995-lines-198618-198817.md#code:11; Plans/storage_value_registry.json"
-  },
-  {
-    "path": "Plans/_shards/storage_value_registry/996-lines-198818-199017.md",
-    "origin": "code:11",
-    "sha256": "609036ecc9335574c07794630b73a007e65978f081ff593eef91a323948e7a19",
-    "reason": "Generated source-lineage shard fragment of Plans/storage_value_registry.json; incomplete JSON text, never a complete runtime schema resource. The canonical registry remains scanned and classified.",
-    "citation": "Plans/_shards/storage_value_registry/996-lines-198818-199017.md#code:11; Plans/storage_value_registry.json"
   },
   {
     "path": "Plans/.plan_migration/pds-20261112-003-current-planunit-snapshot/span_map.jsonl",
@@ -4067,300 +3598,6 @@
     "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:6304"
   },
   {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7168",
-    "sha256": "ae806462797a3f4442f94a79e8187b94f907bb3ee4309398ab8785ae340a108d",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7168"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7171",
-    "sha256": "bd18f216ab732eb31eeb965c3971fdf2308c1fb4ab556fe9a8f3812756b654de",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7171"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7172",
-    "sha256": "566c5c3628c6a6076942c921b109ac0b35932406f6edca8f1814c64dfe47aac7",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7172"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7173",
-    "sha256": "06feb21c2cf1a2c71cea6da29abc9053fcaf13db77098a27c192cee2ed1db443",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7173"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7174",
-    "sha256": "3ea9e87bcef6c2758c2a4f6dff250105cf738a109c0acf89513021f7d1b4db83",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7174"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7175",
-    "sha256": "252bc77c3dd37edbf9ae2682c747c6acbf6aeede556ef3ff07bf113baee4f53c",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7175"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7176",
-    "sha256": "ec2760b2c16fa44af8f40df52351e8b81f428900ac065b3e4b5acbd2a7c575b7",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7176"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7177",
-    "sha256": "5491d2b93bb2c80c131ffd1789c2444b8e8a56ff2b68434bc9fad5bb9c11238a",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7177"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7178",
-    "sha256": "2cc4fa4caa7c93ed784d463ea013a5a1633ce6dad1c031a19d58acc3e7a4b767",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7178"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7179",
-    "sha256": "9229bfb8f8fbaf42ec730fc5ac8285a7001b073dd0e851a9aaaec6639108ecba",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7179"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7180",
-    "sha256": "80f493fdcc22c71b8ce621b2f89c16f1b77f7658ab34513015f93dbc2e92a6c9",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7180"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7181",
-    "sha256": "194dbb97f23050e1e0133e762064ac603ccd7c1ec7dbb0b075d3b070b534807d",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7181"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7182",
-    "sha256": "9ce6b3904f76dcf93daf2eaa1bf240b2699191cac4a769588d9b95d13fc61dca",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7182"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7183",
-    "sha256": "aa173143a9eaf44707afe6cf9083426d8136eed6edd749aea914da1118450592",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7183"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7184",
-    "sha256": "9c18e4078c5253380d57a4995a80f0bc97676c41e67b8070afb750cb6f4031e1",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7184"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7185",
-    "sha256": "43b03b8fcf7ee2d722a52cdf577e267dbd5820a8bdd7bb057142fc1574083489",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7185"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7186",
-    "sha256": "0463c64dcedc7d0d386576ddc4e59199c023ec5b6b3c6441c5bd63148180c07b",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7186"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7187",
-    "sha256": "470695838298f1469c5203c787a929c027b09a72e3c9b30ed9cacf5a38e95bef",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7187"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7188",
-    "sha256": "473bb246f35d4d94639e7b380aa6f9b202e1e89f192d0bb0975d30d1a1cb92a9",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7188"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7189",
-    "sha256": "6dee43aa116a573a6e5395985d5458a8e86be7d733b2302253af2c6dd6ceec6f",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7189"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7190",
-    "sha256": "d03af933f3ede6317bf0e6b00742a363a4bc61323ee2ec4da1f2f0890f2f8953",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7190"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7191",
-    "sha256": "003ebdbc012914a265674c1d51a71816762650d5a85a59432a9efa78d29232df",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7191"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7192",
-    "sha256": "4d8f7075d2e63a4e5ddb2cc52fa3108a975358ec2a226c83ba98266f670bc221",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7192"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7193",
-    "sha256": "100de6bc84ecda9992666562bf549df321de4f4de4bca8cbc3054dfe84dfda80",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7193"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7194",
-    "sha256": "dc7fa31740ca1dbd6071f362f85c29d6f0abe0c9baefdaa904689a536bd9790a",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7194"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7195",
-    "sha256": "4025a7b9e8e6db5b42719893456e322722648dbb63b5b6331066c3c950b940c5",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7195"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7198",
-    "sha256": "60b43a93b85f2fea294fa5835a3e149095dff956de4efd3504538707e2d6c91a",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7198"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7199",
-    "sha256": "7bfbe973ace44de2c1103ee991d4d9642d6f79c72b2f95115c112b0f309e59fc",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7199"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7200",
-    "sha256": "df321af46026f3c56c8cfd30fa67cce9b93805a86cd36671fbf4066c96b285b1",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7200"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7201",
-    "sha256": "aa59f7fa6ad831b0e4fdb25d5ace5d33ff084abb82c8ae48e366fe472b0e0d72",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7201"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7202",
-    "sha256": "8e601b1dacfbd88d3830c2788e9786841376933270e54ee57ef9bc54467719c9",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7202"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7203",
-    "sha256": "565cd8fa60c03e129f816eb80b9811aa1491bd8df4edf638132a3c944a15a7d6",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7203"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7204",
-    "sha256": "c686b0c4eeb55406a3b93b6c5f5f3110f36189c338243fd3f43d9a325d1912c6",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7204"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7205",
-    "sha256": "ac7816974bcb8ffb2d3e0115203bfeac2c52c8aa0fc2ad93b068fc52c8e46427",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7205"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7206",
-    "sha256": "45deb4ae3fed852ecea4ca2c244d9c7b39c28760ba94b3cd929cad38d6afac38",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7206"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7207",
-    "sha256": "9b667cf2ee3faf0ddc86c39ac566716c77936128496e666b166f0b4c6d1ce28c",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7207"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7240",
-    "sha256": "d3039aaf670c35c797911ac1a3058191b4c16362e1dca54512f1ad7eb518af5b",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7240"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7241",
-    "sha256": "c20e3ae60392342fa7fb4dc4a773b7940780387eebdce7e308f9fd5588fb72bc",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7241"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7242",
-    "sha256": "4a568bfb4e91215c05efff89ffd04cbaa2c7d6f2a582b2ee21d1edd5ee97f648",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7242"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7243",
-    "sha256": "1c028f8cd936d9a36cf52c1a0c171528611d545977840697198e9a0d9dfe84ff",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7243"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7244",
-    "sha256": "dbe1686c3ba00ba4de4b17d5f63f2fe55d341cc528c0e45d0ca1061325756fa4",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7244"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:7245",
-    "sha256": "18c8a673f29de61748398a731abaf43c5589ade2165f9e0d6b3b5d1c53bf80e1",
-    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7245"
-  },
-  {
     "path": "Plans/Runtime_Artifacts_Panel.md",
     "origin": "fence:3642",
     "sha256": "68b5ba18921dd4413128175b714b39c6a76afda0bfd0dc3d2c5fd760b4b35c64",
@@ -4611,5 +3848,768 @@
     "sha256": "d2371f874f0a85c8b1440d090a828feb85f8a840c4950efc747c1a6df53ebd6c",
     "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
     "citation": "Plans/_shards/runtime_artifacts_panel/044-runtime-artifact-event-contracts-prepared-without-admission-2026.md#fence:747"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7168",
+    "sha256": "7e372874dc9eb560a5c9a04203ac71119491d67b08cd310f447dca97619198f0",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7168"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7171",
+    "sha256": "9c442cff896e46ae08a011f5fbb4146e89ebcd0d4b2ca3b9bf119cac05e050f8",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7171"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7172",
+    "sha256": "5110ea53ee863fba533e7610926aabc0fd0af2c592e9b5991622985ca5e0dc81",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7172"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7173",
+    "sha256": "aa90982aa8604c8afc3a22569c4afefd93c8d8576f5fec08cdf23f003615715b",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7173"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7174",
+    "sha256": "17b03a19649099620e3bcef61010dcd374276be51d3ca5029392921cbe8fbb87",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7174"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7175",
+    "sha256": "5c83aa2f7d2ef48679b0fc5e746baa1a7d908e9d0a6a9709f9c083721a62eed6",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7175"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7176",
+    "sha256": "75e8880774dc8d87447b1c8956b7bbc2d4af6bb433a90300ba02f48d983828c6",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7176"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7177",
+    "sha256": "24c5635336379e63322a7949a0a1274bb9237c53f5559d967a6e81f341653036",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7177"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7178",
+    "sha256": "5ecece748c991d20df3221bfad3ecc1c99d4c1308694eff43a9ed02ee212dfa1",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7178"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7179",
+    "sha256": "8083f732aae1b3e02abecb499e1e2a3aea8e305dcecf7d470d77b7a14750de9f",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7179"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7180",
+    "sha256": "0441bca21ffd7c3b951b7a60d75934799c2beab3681cf5885491a9baaf75907a",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7180"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7181",
+    "sha256": "e09dacf65585404160ebd816ad923b76bfaa6b54360b60b2444ae03e49d8923f",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7181"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7182",
+    "sha256": "e87e3615cf5698a21655dafdc38f5bb59a68944886a50844d21c83c298ef2f70",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7182"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7183",
+    "sha256": "75bd128a3860256d34b4da0d111fb95f5196c8465c1fb1ac522f637b9cfbf94f",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7183"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7184",
+    "sha256": "14756e89a523dbdfd4db3f6354e75826ee1d9c3e0b9d9a46e3bbb19dc5621d33",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7184"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7185",
+    "sha256": "76b6659362454532f426f75ade36374fdc61a76f090bcd741e96e463d8f83f12",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7185"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7186",
+    "sha256": "76ac1fb907728cd953e35d9ed8f017e92f814a971a501e68e6156d39a72440fd",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7186"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7187",
+    "sha256": "0362f133e0f6015e13651c216aea6af0cfc1f6472f25917f4c485f3c42d11280",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7187"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7188",
+    "sha256": "ffe8d26364ed0d5d30eb8bf36a45c4a3886525dfa9ffcb1a9d197867da52b345",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7188"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7189",
+    "sha256": "c01965bc0e62ce9a94764559a6430782d7806a01bf45297a5aa53bffdaf34969",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7189"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7190",
+    "sha256": "5b400a2f507777eac54613e0faf155ac87f583525416e0b90493e4e8ae5fc66d",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7190"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7191",
+    "sha256": "6c76d10b5c8875d3a9e149eb05d61f1fc9c8584efe7a64d865a28300518540b1",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7191"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7192",
+    "sha256": "e309a3485f9c4e54f42f685b0fcae2b82155995c33cb59883cf317fbf79ad556",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7192"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7193",
+    "sha256": "607d07efe88117c5120bc32dd365ab3941e18bad3242ab720383f021f9926e6a",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7193"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7194",
+    "sha256": "ea41ce5cd8a4f65cdf913203876a3e4836990b04418ede6cd30e309a0c32f190",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7194"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7195",
+    "sha256": "39e7e4adaf970e0a588d5491eb17a8622e8b9596e7c87b08da1dc404b6aba62b",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7195"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7198",
+    "sha256": "c6681de2614cdaa8ec738b3f4887cbede6807da54f84a683ff0d9a4550e367d3",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7198"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7199",
+    "sha256": "4be665e0c47c79e8f821b74ec4d4748916a2c0944bcf9e6b79bc14ca73393025",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7199"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7200",
+    "sha256": "241ec5a1aefa148de8d6e031d3f44d9aac76789baacde18eebb56571f029c271",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7200"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7201",
+    "sha256": "a3637625c8082fbe52c31fed6228f184eb96a34fbb51ddcae2da501683bc1b96",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7201"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7202",
+    "sha256": "1e7be01000f1b50a86261ee4294c399434b6d90b9c4c175e041203fbe53f8d69",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7202"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7203",
+    "sha256": "c2367e39460455238efc2756fbbf3e7e60e9bf9c7f6ce408416703ca607c5c0d",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7203"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7204",
+    "sha256": "093efa2bce551bb4085054ffa2bea8ba07cb3e58d2a97ee430aca7e20ef36907",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7204"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7205",
+    "sha256": "3bc1ee9f7cf2da7692311573cd589d98820d91e3981c462f151fad4a9225fa30",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7205"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7206",
+    "sha256": "64632d92dd39a943d7b3fc7f55f542ef821d2bba92a4cbb4e63ca41eb514fa65",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7206"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7207",
+    "sha256": "10a6ddb663bd5e41150e26d7e379bb7b86d1135f23e62844fe67660f0ce2fc02",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7207"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7240",
+    "sha256": "7b356107866aa0d6694629ce90a62005c501e077b96fc5d1c1dc4fdf391a1a05",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7240"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7241",
+    "sha256": "9631a240ca22f45a68015287afb737fd4b3e82a3843408775962af894ea9d817",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7241"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7242",
+    "sha256": "6948cf9acf8de568b5a2bce3b22569c2a347b33d3fc227cfc9e9a2234d78074f",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7242"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7243",
+    "sha256": "42495cd01b2a99f49728d76a516c562ae03d7a6926e00bf52460550f0b1df7b3",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7243"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7244",
+    "sha256": "d82985a7d8e76f4594a12f4fb071468da2384c64b4e4b424836496d2088f8fb5",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7244"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:7245",
+    "sha256": "f2607586c07558519318fcbb6d6497c65d20ccafab30802c33ddca1e2467813e",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:7245"
+  },
+  {
+    "path": "Plans/_shards/storage-plan/090-collaborative-workflow-event-persistence-binding-dl-090-2026-11-.md",
+    "origin": "fence:2568",
+    "sha256": "8e6973142c67351faa09936a6074be4906e16022a0084e62c7280c51e8e96cf7",
+    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
+    "citation": "Plans/_shards/storage-plan/090-collaborative-workflow-event-persistence-binding-dl-090-2026-11-.md#fence:2568"
+  },
+  {
+    "path": "Plans/_shards/storage-plan/090-collaborative-workflow-event-persistence-binding-dl-090-2026-11-.md",
+    "origin": "fence:2792",
+    "sha256": "d829a79fee21ca6eea93581a9fca5851db856b707bab37ac578bf8c2376944ae",
+    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
+    "citation": "Plans/_shards/storage-plan/090-collaborative-workflow-event-persistence-binding-dl-090-2026-11-.md#fence:2792"
+  },
+  {
+    "path": "Plans/_shards/storage-plan/090-collaborative-workflow-event-persistence-binding-dl-090-2026-11-.md",
+    "origin": "fence:3016",
+    "sha256": "dfb41671441ebadd066fe7b06b1489a0ca497b0785b0d68af51282f39a79f512",
+    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
+    "citation": "Plans/_shards/storage-plan/090-collaborative-workflow-event-persistence-binding-dl-090-2026-11-.md#fence:3016"
+  },
+  {
+    "path": "Plans/_shards/storage-plan/090-collaborative-workflow-event-persistence-binding-dl-090-2026-11-.md",
+    "origin": "fence:3244",
+    "sha256": "34cb7db3eae65bbd9fecb5e6fe20a0038ac7e39c10200744fccc9b7140bd298e",
+    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
+    "citation": "Plans/_shards/storage-plan/090-collaborative-workflow-event-persistence-binding-dl-090-2026-11-.md#fence:3244"
+  },
+  {
+    "path": "Plans/_shards/storage-plan/090-collaborative-workflow-event-persistence-binding-dl-090-2026-11-.md",
+    "origin": "fence:3468",
+    "sha256": "bc221c9f13cbe9e6ccd2e9a15a44ec02caff67ade5943f52a35394a1988c852c",
+    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
+    "citation": "Plans/_shards/storage-plan/090-collaborative-workflow-event-persistence-binding-dl-090-2026-11-.md#fence:3468"
+  },
+  {
+    "path": "Plans/_shards/storage-plan/090-collaborative-workflow-event-persistence-binding-dl-090-2026-11-.md",
+    "origin": "fence:3693",
+    "sha256": "f290e6a304e513a5328c14589934e342fdc6dc8b80312336a08a1bda1f9d42c1",
+    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
+    "citation": "Plans/_shards/storage-plan/090-collaborative-workflow-event-persistence-binding-dl-090-2026-11-.md#fence:3693"
+  },
+  {
+    "path": "Plans/_shards/storage-plan/090-collaborative-workflow-event-persistence-binding-dl-090-2026-11-.md",
+    "origin": "fence:3917",
+    "sha256": "5a487288e409717a8c3ab7b6b022a7d9c2c128de72224605ba3a79287ff3b6c4",
+    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
+    "citation": "Plans/_shards/storage-plan/090-collaborative-workflow-event-persistence-binding-dl-090-2026-11-.md#fence:3917"
+  },
+  {
+    "path": "Plans/_shards/storage-plan/090-collaborative-workflow-event-persistence-binding-dl-090-2026-11-.md",
+    "origin": "fence:4141",
+    "sha256": "87937e12c9abb8e520cdc5f277e764265d410c7ecda69ca60ce42508adb90eb8",
+    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
+    "citation": "Plans/_shards/storage-plan/090-collaborative-workflow-event-persistence-binding-dl-090-2026-11-.md#fence:4141"
+  },
+  {
+    "path": "Plans/_shards/storage-plan/090-collaborative-workflow-event-persistence-binding-dl-090-2026-11-.md",
+    "origin": "fence:4365",
+    "sha256": "6ff2d04652374ce5db55b0d00bac7d29f221a091d704bfbe0155600f24621304",
+    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
+    "citation": "Plans/_shards/storage-plan/090-collaborative-workflow-event-persistence-binding-dl-090-2026-11-.md#fence:4365"
+  },
+  {
+    "path": "Plans/_shards/storage-plan/090-collaborative-workflow-event-persistence-binding-dl-090-2026-11-.md",
+    "origin": "fence:4589",
+    "sha256": "0d870e873c8eef80931f7eca25073e490fd4f6cce893c2ffddf59196775f1a1f",
+    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
+    "citation": "Plans/_shards/storage-plan/090-collaborative-workflow-event-persistence-binding-dl-090-2026-11-.md#fence:4589"
+  },
+  {
+    "path": "Plans/_shards/storage-plan/090-collaborative-workflow-event-persistence-binding-dl-090-2026-11-.md",
+    "origin": "fence:4813",
+    "sha256": "ecbc7cfe2d1554789c7970757a3f8d3f0a85b8a6c4ae92e13382ad8723ce803c",
+    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
+    "citation": "Plans/_shards/storage-plan/090-collaborative-workflow-event-persistence-binding-dl-090-2026-11-.md#fence:4813"
+  },
+  {
+    "path": "Plans/_shards/storage-plan/090-collaborative-workflow-event-persistence-binding-dl-090-2026-11-.md",
+    "origin": "fence:5037",
+    "sha256": "50670a7b7d998b0b46cd98ec45432f5223deb3897ab0c86b748a9adf802c59d6",
+    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
+    "citation": "Plans/_shards/storage-plan/090-collaborative-workflow-event-persistence-binding-dl-090-2026-11-.md#fence:5037"
+  },
+  {
+    "path": "Plans/_shards/storage-plan/090-collaborative-workflow-event-persistence-binding-dl-090-2026-11-.md",
+    "origin": "fence:5262",
+    "sha256": "4729ba2d216ae92fca66f1a590f8c5ef8cc647212900bcd95888cf2904b6c8af",
+    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
+    "citation": "Plans/_shards/storage-plan/090-collaborative-workflow-event-persistence-binding-dl-090-2026-11-.md#fence:5262"
+  },
+  {
+    "path": "Plans/_shards/storage-plan/090-collaborative-workflow-event-persistence-binding-dl-090-2026-11-.md",
+    "origin": "fence:5489",
+    "sha256": "c6a23568f7ea7f70319f7445bfb6d45bd84024b350d680f059f072d34565ae34",
+    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
+    "citation": "Plans/_shards/storage-plan/090-collaborative-workflow-event-persistence-binding-dl-090-2026-11-.md#fence:5489"
+  },
+  {
+    "path": "Plans/_shards/storage-plan/090-collaborative-workflow-event-persistence-binding-dl-090-2026-11-.md",
+    "origin": "fence:5717",
+    "sha256": "d4160b3e0c8200c169deda3ad02fdc9d8ac112cfc99df376962cec599f9b7051",
+    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
+    "citation": "Plans/_shards/storage-plan/090-collaborative-workflow-event-persistence-binding-dl-090-2026-11-.md#fence:5717"
+  },
+  {
+    "path": "Plans/_shards/storage-plan/090-collaborative-workflow-event-persistence-binding-dl-090-2026-11-.md",
+    "origin": "fence:5941",
+    "sha256": "ab08616f6888a50f5bb8e938d6e97d0f6775984627a4d051bf5711873cc8ee35",
+    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
+    "citation": "Plans/_shards/storage-plan/090-collaborative-workflow-event-persistence-binding-dl-090-2026-11-.md#fence:5941"
+  },
+  {
+    "path": "Plans/_shards/storage-plan/090-collaborative-workflow-event-persistence-binding-dl-090-2026-11-.md",
+    "origin": "fence:6165",
+    "sha256": "c56b467db56467b8e8329ccaa47a14d6a20e9437c8e123cec285cb41de91fb71",
+    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
+    "citation": "Plans/_shards/storage-plan/090-collaborative-workflow-event-persistence-binding-dl-090-2026-11-.md#fence:6165"
+  },
+  {
+    "path": "Plans/_shards/storage_value_registry/1000-lines-199618-199817.md",
+    "origin": "code:11",
+    "sha256": "7e4f1611d3aca675db73acd35500ba73d1cf280ff8c251c1808f3fe4a5d1134d",
+    "reason": "Generated source-lineage shard fragment of Plans/storage_value_registry.json; incomplete JSON text, never a complete runtime schema resource. The canonical registry remains scanned and classified.",
+    "citation": "Plans/_shards/storage_value_registry/1000-lines-199618-199817.md#code:11; Plans/storage_value_registry.json"
+  },
+  {
+    "path": "Plans/_shards/storage_value_registry/925-lines-184618-184817.md",
+    "origin": "code:11",
+    "sha256": "6c398868fc6f661b6e14b32be2395d8d55357976478e395b6900039c7696cc3d",
+    "reason": "Generated source-lineage shard fragment of Plans/storage_value_registry.json; incomplete JSON text, never a complete runtime schema resource. The canonical registry remains scanned and classified.",
+    "citation": "Plans/_shards/storage_value_registry/925-lines-184618-184817.md#code:11; Plans/storage_value_registry.json"
+  },
+  {
+    "path": "Plans/_shards/storage_value_registry/926-lines-184818-185017.md",
+    "origin": "code:11",
+    "sha256": "26709eff9e0abdb0d28b5f37af81de555247177bdfcd860ddee8ff5b09c36033",
+    "reason": "Generated source-lineage shard fragment of Plans/storage_value_registry.json; incomplete JSON text, never a complete runtime schema resource. The canonical registry remains scanned and classified.",
+    "citation": "Plans/_shards/storage_value_registry/926-lines-184818-185017.md#code:11; Plans/storage_value_registry.json"
+  },
+  {
+    "path": "Plans/_shards/storage_value_registry/931-lines-185818-186017.md",
+    "origin": "code:11",
+    "sha256": "409e7972e66b25c6e643211d0895691f7cf59177eeb9ab66580d5e441705a307",
+    "reason": "Generated source-lineage shard fragment of Plans/storage_value_registry.json; incomplete JSON text, never a complete runtime schema resource. The canonical registry remains scanned and classified.",
+    "citation": "Plans/_shards/storage_value_registry/931-lines-185818-186017.md#code:11; Plans/storage_value_registry.json"
+  },
+  {
+    "path": "Plans/_shards/storage_value_registry/993-lines-198218-198417.md",
+    "origin": "code:11",
+    "sha256": "31868cec5b909b7b0f1ed4ec24d19b5f81fee8933bd1f133a8a7e5055caef43b",
+    "reason": "Generated source-lineage shard fragment of Plans/storage_value_registry.json; incomplete JSON text, never a complete runtime schema resource. The canonical registry remains scanned and classified.",
+    "citation": "Plans/_shards/storage_value_registry/993-lines-198218-198417.md#code:11; Plans/storage_value_registry.json"
+  },
+  {
+    "path": "Plans/_shards/storage_value_registry/994-lines-198418-198617.md",
+    "origin": "code:11",
+    "sha256": "e66c0c17e2ec6c4a611b9c5a40fdfec3fa272eb0b26194d4912eb71d30a7264f",
+    "reason": "Generated source-lineage shard fragment of Plans/storage_value_registry.json; incomplete JSON text, never a complete runtime schema resource. The canonical registry remains scanned and classified.",
+    "citation": "Plans/_shards/storage_value_registry/994-lines-198418-198617.md#code:11; Plans/storage_value_registry.json"
+  },
+  {
+    "path": "Plans/_shards/storage_value_registry/995-lines-198618-198817.md",
+    "origin": "code:11",
+    "sha256": "596a44527e08b8596a0c214406a536b8b3465c7910312d30f2e37f978cc8b9c2",
+    "reason": "Generated source-lineage shard fragment of Plans/storage_value_registry.json; incomplete JSON text, never a complete runtime schema resource. The canonical registry remains scanned and classified.",
+    "citation": "Plans/_shards/storage_value_registry/995-lines-198618-198817.md#code:11; Plans/storage_value_registry.json"
+  },
+  {
+    "path": "Plans/dch_checkpoint_fixtures.json",
+    "origin": "json",
+    "sha256": "eac2abc6660d7630c5a20b6b0c39e31d3cba47e3b996afb8e3c555115c520bf7",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/dch_checkpoint_fixtures.json#json"
+  },
+  {
+    "path": "Plans/dch_prior_v4_checkpoint_fixtures.json",
+    "origin": "json",
+    "sha256": "bc9740d9f05244d2f7ba48583e8cedd774dcebea1b64cf52db672c09dce9d02d",
+    "reason": "Existing instance, report, lineage or governance data; no schema declaration was found in this exact content.",
+    "citation": "Plans/dch_prior_v4_checkpoint_fixtures.json#json"
+  },
+  {
+    "path": "Plans/storage-plan.md",
+    "origin": "fence:33513",
+    "sha256": "8e6973142c67351faa09936a6074be4906e16022a0084e62c7280c51e8e96cf7",
+    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
+    "citation": "Plans/storage-plan.md#fence:33513"
+  },
+  {
+    "path": "Plans/storage-plan.md",
+    "origin": "fence:33737",
+    "sha256": "d829a79fee21ca6eea93581a9fca5851db856b707bab37ac578bf8c2376944ae",
+    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
+    "citation": "Plans/storage-plan.md#fence:33737"
+  },
+  {
+    "path": "Plans/storage-plan.md",
+    "origin": "fence:33961",
+    "sha256": "dfb41671441ebadd066fe7b06b1489a0ca497b0785b0d68af51282f39a79f512",
+    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
+    "citation": "Plans/storage-plan.md#fence:33961"
+  },
+  {
+    "path": "Plans/storage-plan.md",
+    "origin": "fence:34189",
+    "sha256": "34cb7db3eae65bbd9fecb5e6fe20a0038ac7e39c10200744fccc9b7140bd298e",
+    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
+    "citation": "Plans/storage-plan.md#fence:34189"
+  },
+  {
+    "path": "Plans/storage-plan.md",
+    "origin": "fence:34413",
+    "sha256": "bc221c9f13cbe9e6ccd2e9a15a44ec02caff67ade5943f52a35394a1988c852c",
+    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
+    "citation": "Plans/storage-plan.md#fence:34413"
+  },
+  {
+    "path": "Plans/storage-plan.md",
+    "origin": "fence:34638",
+    "sha256": "f290e6a304e513a5328c14589934e342fdc6dc8b80312336a08a1bda1f9d42c1",
+    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
+    "citation": "Plans/storage-plan.md#fence:34638"
+  },
+  {
+    "path": "Plans/storage-plan.md",
+    "origin": "fence:34862",
+    "sha256": "5a487288e409717a8c3ab7b6b022a7d9c2c128de72224605ba3a79287ff3b6c4",
+    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
+    "citation": "Plans/storage-plan.md#fence:34862"
+  },
+  {
+    "path": "Plans/storage-plan.md",
+    "origin": "fence:35086",
+    "sha256": "87937e12c9abb8e520cdc5f277e764265d410c7ecda69ca60ce42508adb90eb8",
+    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
+    "citation": "Plans/storage-plan.md#fence:35086"
+  },
+  {
+    "path": "Plans/storage-plan.md",
+    "origin": "fence:35310",
+    "sha256": "6ff2d04652374ce5db55b0d00bac7d29f221a091d704bfbe0155600f24621304",
+    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
+    "citation": "Plans/storage-plan.md#fence:35310"
+  },
+  {
+    "path": "Plans/storage-plan.md",
+    "origin": "fence:35534",
+    "sha256": "0d870e873c8eef80931f7eca25073e490fd4f6cce893c2ffddf59196775f1a1f",
+    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
+    "citation": "Plans/storage-plan.md#fence:35534"
+  },
+  {
+    "path": "Plans/storage-plan.md",
+    "origin": "fence:35758",
+    "sha256": "ecbc7cfe2d1554789c7970757a3f8d3f0a85b8a6c4ae92e13382ad8723ce803c",
+    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
+    "citation": "Plans/storage-plan.md#fence:35758"
+  },
+  {
+    "path": "Plans/storage-plan.md",
+    "origin": "fence:35982",
+    "sha256": "50670a7b7d998b0b46cd98ec45432f5223deb3897ab0c86b748a9adf802c59d6",
+    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
+    "citation": "Plans/storage-plan.md#fence:35982"
+  },
+  {
+    "path": "Plans/storage-plan.md",
+    "origin": "fence:36207",
+    "sha256": "4729ba2d216ae92fca66f1a590f8c5ef8cc647212900bcd95888cf2904b6c8af",
+    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
+    "citation": "Plans/storage-plan.md#fence:36207"
+  },
+  {
+    "path": "Plans/storage-plan.md",
+    "origin": "fence:36434",
+    "sha256": "c6a23568f7ea7f70319f7445bfb6d45bd84024b350d680f059f072d34565ae34",
+    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
+    "citation": "Plans/storage-plan.md#fence:36434"
+  },
+  {
+    "path": "Plans/storage-plan.md",
+    "origin": "fence:36662",
+    "sha256": "d4160b3e0c8200c169deda3ad02fdc9d8ac112cfc99df376962cec599f9b7051",
+    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
+    "citation": "Plans/storage-plan.md#fence:36662"
+  },
+  {
+    "path": "Plans/storage-plan.md",
+    "origin": "fence:36886",
+    "sha256": "ab08616f6888a50f5bb8e938d6e97d0f6775984627a4d051bf5711873cc8ee35",
+    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
+    "citation": "Plans/storage-plan.md#fence:36886"
+  },
+  {
+    "path": "Plans/storage-plan.md",
+    "origin": "fence:37110",
+    "sha256": "c56b467db56467b8e8329ccaa47a14d6a20e9437c8e123cec285cb41de91fb71",
+    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
+    "citation": "Plans/storage-plan.md#fence:37110"
+  },
+  {
+    "path": "Plans/storage-plan.md",
+    "origin": "fence:38456",
+    "sha256": "76e1b2512eea08113ce16a85b63a0ea66d71e33da79f50ac17124f90edbb18a1",
+    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
+    "citation": "Plans/storage-plan.md#fence:38456"
+  },
+  {
+    "path": "Plans/storage-plan.md",
+    "origin": "fence:38515",
+    "sha256": "8796a4d53a9ecbaa6a816cdff362c91ad8dfdf2b8cdc3dd771f61e7b07465e3a",
+    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
+    "citation": "Plans/storage-plan.md#fence:38515"
+  },
+  {
+    "path": "Plans/storage-plan.md",
+    "origin": "fence:38574",
+    "sha256": "b01f82181c7dd009dc5df19d05fb2c2dc0c359f4cda8a5bb563a78b4306c62f8",
+    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
+    "citation": "Plans/storage-plan.md#fence:38574"
+  },
+  {
+    "path": "Plans/storage-plan.md",
+    "origin": "fence:38639",
+    "sha256": "bca8c785747c9737d6fcfb365657838b4d0a8f5e759d940dd386e0e3726311e7",
+    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
+    "citation": "Plans/storage-plan.md#fence:38639"
+  },
+  {
+    "path": "Plans/storage-plan.md",
+    "origin": "fence:38704",
+    "sha256": "7921c2e30e84273b1f26bd58cfddb73ea3abfe4bf0b473ab25476a486139a5cb",
+    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
+    "citation": "Plans/storage-plan.md#fence:38704"
+  },
+  {
+    "path": "Plans/storage-plan.md",
+    "origin": "fence:38769",
+    "sha256": "3ef31e653db64aa98bb8e404a5d9a07d42da63b69995a15ebd199604dbba989d",
+    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
+    "citation": "Plans/storage-plan.md#fence:38769"
+  },
+  {
+    "path": "Plans/storage-plan.md",
+    "origin": "fence:38834",
+    "sha256": "618afe44b149c24d280a15d8e9935f64ee7286f813ad83a774013e0b6b901970",
+    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
+    "citation": "Plans/storage-plan.md#fence:38834"
+  },
+  {
+    "path": "Plans/storage-plan.md",
+    "origin": "fence:38891",
+    "sha256": "7f42709be9aaba040513177ceaabd2d726c9582df3836b18d8b9e295de748e06",
+    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
+    "citation": "Plans/storage-plan.md#fence:38891"
+  },
+  {
+    "path": "Plans/storage-plan.md",
+    "origin": "fence:38948",
+    "sha256": "74c7108172c3db49eb9a2c93f446c98863e5c987299ca074d6c6131eac8b8346",
+    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
+    "citation": "Plans/storage-plan.md#fence:38948"
+  },
+  {
+    "path": "Plans/storage-plan.md",
+    "origin": "fence:39094",
+    "sha256": "62f77a1268340654980f77cc2563976e911eec3789a459072b18011f4d5d4de8",
+    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
+    "citation": "Plans/storage-plan.md#fence:39094"
+  },
+  {
+    "path": "Plans/storage-plan.md",
+    "origin": "fence:41138",
+    "sha256": "c8ec28f8c4bc8e72b2a2cbb7680a9ee5ac4288e9e8e80edd5c1c33a1579e2d8b",
+    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
+    "citation": "Plans/storage-plan.md#fence:41138"
+  },
+  {
+    "path": "Plans/storage-plan.md",
+    "origin": "fence:41260",
+    "sha256": "6833b7e742e5020e028ffe0c64c9adc335b28bffbb8db7c55bd08d47592c7540",
+    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
+    "citation": "Plans/storage-plan.md#fence:41260"
+  },
+  {
+    "path": "Plans/storage-plan.md",
+    "origin": "fence:41382",
+    "sha256": "b2c276dc3cda200acfbfda1dff712aa204c731102482e48459ae34f37f6c3cad",
+    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
+    "citation": "Plans/storage-plan.md#fence:41382"
+  },
+  {
+    "path": "Plans/storage-plan.md",
+    "origin": "fence:41504",
+    "sha256": "65b60886c4e15d91424d95326bb8f81850b3cb5460eb3d7c30b824fd536a4c38",
+    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
+    "citation": "Plans/storage-plan.md#fence:41504"
+  },
+  {
+    "path": "Plans/storage-plan.md",
+    "origin": "fence:41626",
+    "sha256": "8caa9c221f3493c4f3caa2e329186df477e21e13ef0c47a66bd369888054dd83",
+    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
+    "citation": "Plans/storage-plan.md#fence:41626"
+  },
+  {
+    "path": "Plans/storage-plan.md",
+    "origin": "fence:41749",
+    "sha256": "00aa2c4b1b3bdaf09d18c815d00f9f27996489a5d4ffefd199102b0826c4dd7a",
+    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
+    "citation": "Plans/storage-plan.md#fence:41749"
+  },
+  {
+    "path": "Plans/storage-plan.md",
+    "origin": "fence:42115",
+    "sha256": "6159d47da58841f82b9d83941351f393b144934280546a21da2bf4367cfeac43",
+    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
+    "citation": "Plans/storage-plan.md#fence:42115"
+  },
+  {
+    "path": "Plans/storage-plan.md",
+    "origin": "fence:42170",
+    "sha256": "8f5cdd86207bad8880d6712ee6fd6d0edad9efe003fc19365035959fdc237cb6",
+    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
+    "citation": "Plans/storage-plan.md#fence:42170"
+  },
+  {
+    "path": "Plans/storage-plan.md",
+    "origin": "fence:42225",
+    "sha256": "3f1fe55529f431b1e1fa88b3b9b9e3db98e5e5c4434d6843491f2f573093b4c4",
+    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
+    "citation": "Plans/storage-plan.md#fence:42225"
+  },
+  {
+    "path": "Plans/storage-plan.md",
+    "origin": "fence:42280",
+    "sha256": "f687647011e9a8781e8cd20dd323a6b80007dafabffefb413b363661276f648a",
+    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
+    "citation": "Plans/storage-plan.md#fence:42280"
+  },
+  {
+    "path": "Plans/storage-plan.md",
+    "origin": "fence:42335",
+    "sha256": "8499f54a9483b1ddbc546f8154a8d0f154b9841efb36949626dcda39d9f19dea",
+    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
+    "citation": "Plans/storage-plan.md#fence:42335"
+  },
+  {
+    "path": "Plans/storage-plan.md",
+    "origin": "fence:42390",
+    "sha256": "b41b63d2a7ea8cb429c0d997ae34f3f04f7ac7417b6cd98d279c8c879cc89b38",
+    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
+    "citation": "Plans/storage-plan.md#fence:42390"
+  },
+  {
+    "path": "Plans/storage-plan.md",
+    "origin": "fence:42445",
+    "sha256": "6b25292f542bd2374ad281d33ea12ab3dd1f56b1e93383326026568673b22d7b",
+    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
+    "citation": "Plans/storage-plan.md#fence:42445"
+  },
+  {
+    "path": "Plans/storage-plan.md",
+    "origin": "fence:42500",
+    "sha256": "d065bfde02a7a5289e01f9a250e3300dd816ed26a6f1b3389157c9b75f42a7ae",
+    "reason": "Existing non-JSON code/example container; field mentions are not a loadable schema. Changed content requires renewed review.",
+    "citation": "Plans/storage-plan.md#fence:42500"
   }
 ]

@@ -36,10 +36,10 @@ def CP17_current_selection(value, context):
 def case(value):
     context = None
     table = g.GuardTable([
-        g.Guard('CP13_anchor', g.Invariant('/value/source_token/generation_anchor_sha256', 'equals the node anchor'), 'checkpoint_refused', CP13_anchor),
-        g.Guard('CP14_frontier_revision', g.Invariant('/value/source_token/frontier_revision', 'equals the node frontier revision'), 'checkpoint_refused', CP14_frontier_revision),
-        g.Guard('CP15_frontier_sha256', g.Invariant('/value/source_token/frontier_sha256', 'equals the node frontier digest'), 'checkpoint_refused', CP15_frontier_sha256),
-        g.Guard('CP16_token_selection', g.Invariant('/value/source_token/source_selection', 'equals the node source selection'), 'checkpoint_refused', CP16_token_selection),
+        g.Guard('CP13_anchor', g.Invariant('/value/source_read_token/generation_anchor_sha256', 'equals the node anchor'), 'checkpoint_refused', CP13_anchor),
+        g.Guard('CP14_frontier_revision', g.Invariant('/value/source_read_token/frontier_revision', 'equals the node frontier revision'), 'checkpoint_refused', CP14_frontier_revision),
+        g.Guard('CP15_frontier_sha256', g.Invariant('/value/source_read_token/frontier_sha256', 'equals the node frontier digest'), 'checkpoint_refused', CP15_frontier_sha256),
+        g.Guard('CP16_token_selection', g.Invariant('/value/source_read_token/source_selection', 'equals the node source selection'), 'checkpoint_refused', CP16_token_selection),
         g.Guard('CP17_current_selection', g.Invariant('/source/current_source_selection', 'equals the node source selection'), 'checkpoint_refused', CP17_current_selection),
     ])
 

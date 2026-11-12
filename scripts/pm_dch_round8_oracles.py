@@ -43,14 +43,14 @@ def coherent_checkpoint(m, c, f, row, path, number):
     elif path == ('last_sequence_id',):
         source['event_record']['sequence_id'] = source['index_row']['sequence_id'] = number
         source['index_row']['source_value_sha256'] = hashlib.sha256(m.body_bytes(source['event_record'])).hexdigest()
-    elif path[:1] == ('source_token',):
-        source['publication']['source_token'] = copy.deepcopy(value['source_token'])
-        node = source['checkpoint']['generations'][value['source_token']['generation_id']]
-        if path == ('source_token', 'frontier_revision'):
+    elif path[:1] == ('source_read_token',):
+        source['publication']['source_read_token'] = copy.deepcopy(value['source_read_token'])
+        node = source['checkpoint']['generations'][value['source_read_token']['generation_id']]
+        if path == ('source_read_token', 'frontier_revision'):
             node['frontier_revision'] = number
         else:
-            node['source_selection'] = copy.deepcopy(value['source_token']['source_selection'])
-            source['current_source_selection'] = copy.deepcopy(value['source_token']['source_selection'])
+            node['source_selection'] = copy.deepcopy(value['source_read_token']['source_selection'])
+            source['current_source_selection'] = copy.deepcopy(value['source_read_token']['source_selection'])
     return value, source, key
 
 

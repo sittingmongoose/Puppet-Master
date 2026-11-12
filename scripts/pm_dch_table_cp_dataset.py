@@ -32,7 +32,7 @@ def CP21_index_ref(value, context):
 def case(value):
     context = None
     table = g.GuardTable([
-        g.Guard('CP18_token_dataset', g.Invariant('/value/source_token/index_dataset_name', 'is event_record_index.v2@<generation>'), 'checkpoint_refused', CP18_token_dataset),
+        g.Guard('CP18_token_dataset', g.Invariant('/value/source_read_token/index_dataset_name', 'is event_record_index.v2@<generation>'), 'checkpoint_refused', CP18_token_dataset),
         g.Guard('CP19_node_dataset', g.Invariant('/source/checkpoint/generations/<g>/index_dataset_name', 'is event_record_index.v2@<generation>'), 'checkpoint_refused', CP19_node_dataset),
         g.Guard('CP20_source_dataset', g.Invariant('/source/dataset_name', 'is event_record_index.v2@<generation>'), 'checkpoint_refused', CP20_source_dataset),
         g.Guard('CP21_index_ref', g.Invariant('/source/index_row/checkpoint_ref', 'equals the generic key plus the generation pointer'), 'checkpoint_refused', CP21_index_ref),
