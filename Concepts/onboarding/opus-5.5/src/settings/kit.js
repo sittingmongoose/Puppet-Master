@@ -186,8 +186,24 @@ PM51.note = (text, tone) => `<p class="pm51-note${tone ? ' tone-' + a(tone) : ''
 /* FO-134: a field's accessible name is the label it shows. A <label> can hold the control, but an aria-label on
    that control wins over it and names the field something the screen does not say (the Notifications replacement
    field read "New address" beside a visible "Webhook address"). So the labelable parts inside a field keep no
-   aria-label of their own; groups, buttons and other parts a <label> cannot name keep theirs. */
-PM51.field = (label, control, help) => `<label class="pm51-field"><span class="pm51-field-label">${h(label)}</span>${String(control == null ? '' : control).replace(/<(input|select|textarea)\b[^>]*>/gi, tag => tag.replace(/\saria-label="[^"]*"/i, ''))}${help ? `<span class="pm51-field-help">${h(help)}</span>` : ''}</label>`;
+   aria-label of their own; groups, buttons and other parts a <label> cannot name keep theirs.
+   Round 4: the same rule holds for the control an upgrade puts in their place. A dropdown is a hidden native
+   select beside a generated `.pm51-dd-trigger` combobox, and a <label> cannot name that button, so the trigger
+   takes the field's label. The parts are found in the field's own markup, so this holds whether the control was
+   upgraded before the field was drawn (the trigger is already there, carrying the caller's own name) or after
+   (the select keeps no aria-label, so the upgrade reads the field label from the <label> it lands in). */
+function fieldValueControls(html, label) {
+  const src = html == null ? '' : String(html);
+  if (src.indexOf('<') < 0) return src;
+  const upgraded = src.indexOf('pm51-dd-trigger') >= 0;
+  if (!upgraded && !/<(input|select|textarea)\b[^>]*\saria-label=/i.test(src)) return src;
+  const tpl = document.createElement('template'); tpl.innerHTML = src;
+  tpl.content.querySelectorAll('input, select, textarea').forEach(el => el.removeAttribute('aria-label'));
+  const named = String(label == null ? '' : label).replace(/\s+/g, ' ').trim();
+  tpl.content.querySelectorAll('.pm51-dd-trigger').forEach(el => { if (named) el.setAttribute('aria-label', named); else el.removeAttribute('aria-label'); });
+  return tpl.innerHTML;
+}
+PM51.field = (label, control, help) => `<label class="pm51-field"><span class="pm51-field-label">${h(label)}</span>${fieldValueControls(control, label)}${help ? `<span class="pm51-field-help">${h(help)}</span>` : ''}</label>`;
 PM51.initials = name => String(name || '?').split(/\s+/).map(w => w[0]).join('').slice(0, 2).toUpperCase();
 /* Usage meter: 4 px rounded track, label + "value" line; tone from the percentage unless given. */
 PM51.meter = ({ label, pct, reset, tone, note, value }) => {
