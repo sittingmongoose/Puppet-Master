@@ -127,6 +127,7 @@ class World(C.CancelWorld):
         self.goal_bridge=G.Bridge(sw)
         self.goal_bridge.cancel_world=self
         sw.build_owners()
+        sw._owner('d01',V.PassiveD01)
         sw._owner('goal',G.Goal);sw.owners['goal'].bridge=self.goal_bridge
         native=sw._owner('native',Native);native.bridge=self.goal_bridge
         sw.integrated=types.SimpleNamespace(launch_source_authorities={})

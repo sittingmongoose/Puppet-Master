@@ -572,7 +572,29 @@ class StartWorld(ST.StartWorld):
             e.d01 + '#/$defs/CurrentSource', cs, kind='d01_current'))
 
 
-class D01(ST.D01Owner):
+class PassiveD01(ST.D01Owner):
+    """Read the enrolled owner source and fresh cells without issuing a handle."""
+    def current_source(self,native):
+        e,ctx=self.edition,self.ctx
+        refs=self.inventory('d01_current')
+        require('d01/original_withdrawn',len(refs)==1)
+        value=A.CODECS[self.custody_codec][1](self._originals[refs[0]]['raw'])
+        families=ST.d01_families(e)
+        pointer=ctx.storage.cell(families['pointer'],self.pointer_key())
+        head=SW.resolve_selector(ctx.storage,pointer['value']['record']['workflow_head'],'d01/current_head')
+        workflow=value['workflow']
+        workflow['current_body']=copy.deepcopy(native['body']['record'])
+        workflow['current_control']=copy.deepcopy(native['control']['record'])
+        record=copy.deepcopy(head['record'])
+        for key in list(workflow['head']):
+            if key in record:workflow['head'][key]=record[key]
+        workflow['heads']=[copy.deepcopy(workflow['head'])]
+        value['pointer']=copy.deepcopy(pointer['value']['record'])
+        e.bank.validate(e.d01+'#/$defs/CurrentSource',value,'d01/current_source')
+        return value
+
+
+class D01(PassiveD01):
     """Current D01 graph from actual immutable lineage cells of this run."""
     def current_source(self,native):
         value=super().current_source(native)
