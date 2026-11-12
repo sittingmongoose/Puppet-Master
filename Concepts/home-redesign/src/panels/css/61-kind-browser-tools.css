@@ -485,7 +485,7 @@ html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-tool-sdot { border-radi
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-tool-stab[aria-selected="true"] :is(.pmw-tool-sword, .pmw-tool-sdot) { color: var(--surface); opacity: 1; }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(.pmw-br-prow, .pmw-br-cap:not(.is-refused), .pmw-br-tpick, .pmw-tool-file, .pmw-tool-prow, .pmw-tool-btn):is(:hover, :focus-visible) {
   background: var(--accent-lime); color: var(--surface); outline: none; }
-html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(.pmw-br-prow, .pmw-br-cap, .pmw-br-tpick, .pmw-tool-file, .pmw-tool-prow, .pmw-tool-btn):is(:hover, :focus-visible) :is(span, b, .pmw-ico, .pmw-tool-mark, .pmw-br-ttag, .pmw-br-tattr, .pmw-br-ttext) {
+html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(.pmw-br-prow, .pmw-br-cap, .pmw-br-tpick, .pmw-tool-file, .pmw-tool-prow, .pmw-tool-btn):is(:hover, :focus-visible) :is(.pmw-br-plabel, .pmw-br-pstate, .pmw-br-thumb, .pmw-br-capcopy, .pmw-br-capname, .pmw-br-capsub, .pmw-br-captime, .pmw-br-tnode, .pmw-tool-tw, .pmw-tool-fname, .pmw-tool-fdir, .pmw-tool-fcount, .pmw-tool-pmsg, .pmw-tool-psrc, .pmw-tool-ppos, .pmw-tool-btnl, .pmw-ico, .pmw-tool-mark, .pmw-br-ttag, .pmw-br-tattr, .pmw-br-ttext) {
   color: var(--surface); }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-tool-tr:not(.is-head):hover { background: transparent; }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-br-titem.is-on .pmw-br-tpick { background: var(--accent-lime); color: var(--surface); }
@@ -523,7 +523,7 @@ html[data-o55-nier="on"] :is(.pmw-br-dbody, .pmw-tool-log, .pmw-tool-list) ::sel
 html[data-o55-nier="on"] .pmw-br-titem.is-on .pmw-br-tpick { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); }
 html[data-o55-nier="on"] .pmw-br-titem.is-on .pmw-br-tpick span { color: var(--o55-nier-on-ink); }
 html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] :is(.pmw-br-prow, .pmw-br-cap:not(.is-refused), .pmw-tool-file, .pmw-tool-prow):is(:hover, :focus-visible) { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); outline: none; }
-html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] :is(.pmw-br-prow, .pmw-br-cap, .pmw-tool-file, .pmw-tool-prow):is(:hover, :focus-visible) :is(span, b, .pmw-ico, .pmw-tool-mark) { color: var(--o55-nier-on-ink); }
+html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] :is(.pmw-br-prow, .pmw-br-cap, .pmw-tool-file, .pmw-tool-prow):is(:hover, :focus-visible) :is(.pmw-br-plabel, .pmw-br-pstate, .pmw-br-thumb, .pmw-br-capcopy, .pmw-br-capname, .pmw-br-capsub, .pmw-br-captime, .pmw-br-tnode, .pmw-tool-tw, .pmw-tool-fname, .pmw-tool-fdir, .pmw-tool-fcount, .pmw-tool-pmsg, .pmw-tool-psrc, .pmw-tool-ppos, .pmw-tool-btnl, .pmw-ico, .pmw-tool-mark) { color: var(--o55-nier-on-ink); }
 html[data-o55-nier="on"][data-o55-nier-parts~="headers"] :is(.pmw-br-dseg, .pmw-br-tseg) .pmw-seg-opt,
 html[data-o55-nier="on"][data-o55-nier-parts~="headers"] :is(.pmw-br-nrow.is-head, .pmw-tool-tr.is-head, .pmw-br-kv dt) { text-transform: uppercase; letter-spacing: .08em; font-size: 11px; }
 html[data-o55-nier="on"] .pmw-br-flash { background: var(--o55-nier-paper); }

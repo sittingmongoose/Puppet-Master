@@ -3209,7 +3209,7 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":892,"inventory_sha256":"be85c
   function renderDomainRail(activeDomain) {
     const domains = D.domains.map(domain => `
       <button type="button" class="domain-link ${!state.home && activeDomain.id === domain.id ? 'active' : ''}" data-action="navigate-domain" data-domain="${domain.id}">
-        ${icon(domain.icon)}<span class="domain-copy"><strong>${escapeHtml(domain.label)}</strong><small>${escapeHtml(domain.summary)}</small></span>
+        ${icon(domain.icon)}<span class="domain-copy"><strong class="domain-name">${escapeHtml(domain.label)}</strong><small class="domain-sub">${escapeHtml(domain.summary)}</small></span>
       </button>`).join('');
     return `<aside class="domain-rail" aria-label="Settings domains">
       <div class="rail-head">
@@ -3225,9 +3225,9 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":892,"inventory_sha256":"be85c
         <nav class="domain-list">${domains}</nav>
         <div class="rail-heading">Essential setup</div>
         <div class="side-card">
-          <button type="button" class="side-link" data-action="navigate" data-domain="ai" data-workspace="providers">${icon('brain')}<span class="domain-copy"><strong>AI Providers</strong><small>${window.O55ProviderSummary ? window.O55ProviderSummary() : ''}</small></span>${icon('chevron')}</button>
-          <button type="button" class="side-link" data-action="navigate" data-domain="source" data-workspace="source-manager">${icon('branch')}<span class="domain-copy"><strong>Source Control</strong><small>GitHub connected · Git and Jujutsu ready</small></span>${icon('chevron')}</button>
-          <button type="button" class="side-link" data-action="navigate" data-domain="system" data-workspace="backup">${icon('archive')}<span class="domain-copy"><strong>Backups</strong><small>Last verified today</small></span>${icon('chevron')}</button>
+          <button type="button" class="side-link" data-action="navigate" data-domain="ai" data-workspace="providers">${icon('brain')}<span class="domain-copy"><strong class="domain-name">AI Providers</strong><small class="domain-sub">${window.O55ProviderSummary ? window.O55ProviderSummary() : ''}</small></span>${icon('chevron')}</button>
+          <button type="button" class="side-link" data-action="navigate" data-domain="source" data-workspace="source-manager">${icon('branch')}<span class="domain-copy"><strong class="domain-name">Source Control</strong><small class="domain-sub">GitHub connected · Git and Jujutsu ready</small></span>${icon('chevron')}</button>
+          <button type="button" class="side-link" data-action="navigate" data-domain="system" data-workspace="backup">${icon('archive')}<span class="domain-copy"><strong class="domain-name">Backups</strong><small class="domain-sub">Last verified today</small></span>${icon('chevron')}</button>
         </div>
         <div class="rail-heading">Settings health</div>
         <div class="side-card">

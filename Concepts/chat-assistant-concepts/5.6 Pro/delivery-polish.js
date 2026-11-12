@@ -36,7 +36,7 @@
     /* W4 (PM7 build 2026-10-29): Pip holds the wand at the head (the same head renderWandMenu draws) */
     var S=window.PM56_SHELL,pip=S&&S.pmxPip?S.pmxPip({mood:'watch',size:22,cls:'menu-head-pip',part:'wand-menu'}):'',wandIcon=ctx.icon('wand',13);
     return '<div class="menu-head"><strong>Assistant capabilities</strong><span class="spacer"></span>'+pip+wandIcon+'</div>'+
-      groups.map(function(g){var on=g[0]===open;return '<div class="polish-wand-group" data-k="wand-group:'+g[0]+'"><button class="menu-item polish-group-toggle" type="button" data-action="polish-wand-group" data-group="'+g[0]+'" aria-expanded="'+on+'"><span class="menu-icon">'+ctx.icon(g[2],13)+'</span><span class="menu-copy"><strong>'+g[1]+'</strong></span>'+ctx.icon(on?'down':'chevron',11)+'</button>'+(on?'<div class="polish-group-body">'+buckets[g[0]].join('')+'</div>':'')+'</div>';}).join('');
+      groups.map(function(g){var on=g[0]===open;return '<div class="polish-wand-group" data-k="wand-group:'+g[0]+'"><button class="menu-item polish-group-toggle" type="button" data-action="polish-wand-group" data-group="'+g[0]+'" aria-expanded="'+on+'"><span class="menu-icon">'+ctx.icon(g[2],13)+'</span><span class="menu-copy"><strong class="menu-ttl">'+g[1]+'</strong></span>'+ctx.icon(on?'down':'chevron',11)+'</button>'+(on?'<div class="polish-group-body">'+buckets[g[0]].join('')+'</div>':'')+'</div>';}).join('');
   }
   var galleryRows=[
     ['Quota wait strip','cs-quota-demo'],['Quota reset-time source','cs-quota-source'],

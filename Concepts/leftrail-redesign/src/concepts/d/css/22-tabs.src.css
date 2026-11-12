@@ -71,11 +71,13 @@
 §{nier} .pm-segtab > .pm-segtab-item.o55np-cur-over:not(.active) {
   background: var(--o55-nier-ink) !important; color: var(--o55-nier-on-ink) !important; border-radius: var(--d-r) !important;
 }
-§{nier} .pm-segtab > .pm-segtab-item.o55np-cur-over:not(.active) :is(svg, .pm-ico, span, .eq-full) { color: inherit !important; }
+/* the parts by class (raw icons .pm-isvg, glyphs .nx, labels .pm-segtab-lbl / .eq-*; same specificity, the :is() already
+   held a class): a bare svg or span here put the tags into Chrome's page-wide .active set (lane J, 2026-11-11) */
+§{nier} .pm-segtab > .pm-segtab-item.o55np-cur-over:not(.active) :is(.pm-isvg, .nx, .pm-ico, .pm-segtab-lbl, .eq-full, .eq-abbr) { color: inherit !important; }
 § .pm-segtab-item.active { color: var(--d-tab-fg, var(--d-text)) !important; }
 § .pm-segtab-item svg, § .pm-segtab-item .pm-ico { width: 15px !important; height: 15px !important; flex: none; transform: none !important; transition-property: none !important; }
 /* the chosen tab's icon: the switcher's mark in a look that adopts it (Q16), its chip's ink when the chip is opaque */
-§ .pm-segtab-item.active svg { color: var(--d-tab-fg, var(--pm-switch-mark-on, var(--pm-switch-mark, var(--accent-primary)))); }
+§ .pm-segtab-item.active :where(.pm-isvg):is(svg), § .pm-segtab-item.active :where(.nx):is(svg) { color: var(--d-tab-fg, var(--pm-switch-mark-on, var(--pm-switch-mark, var(--accent-primary)))); }
 /* labels: shown for every tab when they all fit, for the chosen tab only when only that fits, never abbreviated; a
    change shows or hides them in one step. The label clips its width (it hides by max-width), and its line box is the
    item's 1.0 line height, so it keeps 3 px above and below inside the clip (taken back by the margins) for the
@@ -85,8 +87,8 @@
   max-width: 120px; padding: 3px 0 !important; margin-top: -3px; margin-bottom: -3px; margin-left: 5px; opacity: 1; transition-property: none !important;
 }
 § .pm-segtab-item > .eq-abbr { display: none !important; }
-§ .pm-segtab[data-d-tabs="active"] .pm-segtab-item:not(.active) > :is(span, .eq-full),
-§ .pm-segtab[data-d-tabs="icons"] .pm-segtab-item > :is(span, .eq-full) { max-width: 0; margin-left: 0; opacity: 0; }
+§ .pm-segtab[data-d-tabs="active"] .pm-segtab-item:not(.active) > :is(.pm-segtab-lbl, .eq-full, .eq-abbr),
+§ .pm-segtab[data-d-tabs="icons"] .pm-segtab-item > :is(.pm-segtab-lbl, .eq-full, .eq-abbr) { max-width: 0; margin-left: 0; opacity: 0; }
 § .pm-segtab[data-d-tabs="active"] .pm-segtab-item.active { flex: 0 0 auto !important; padding: 0 8px !important; }
 
 /* a view that comes in after a tab change deals or prints in by script (30-motion.js); the shell's own pane rise
