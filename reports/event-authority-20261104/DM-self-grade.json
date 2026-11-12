@@ -1,14 +1,14 @@
 {
  "schema_id": "pm.assurance.event_authority.step08_current_depth.v1",
- "assessment_id": "EA-DM-SWEEP-P2-SELF-20261108",
+ "assessment_id": "EA-DM-SWEEP-P2B-SELF-20261111",
  "assessment_kind": "branch_local_self_grade",
  "assessed_tree": {
   "branch": "plans/ea-w2-small-owners-20261104",
   "base": "e42ce235b4711325ced818c777f070c3ee0d7952",
   "input_head": "7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
   "reviewed_head": "7ef0eb9aad39c177750e10dcff5dc2b5d63353b8",
-  "canonical_head": "01347e4328bd126e56a1132b51ffb069250bb015",
-  "method": "Sweep part 2A: checker refusals restructured into 17 Method B guard tables (171 rows) proved on the gated guard tool; sweep part 2B numbers: shared CV-1100/SP-1100 calls adopted, frozen dm-retained-producer-v1 beside SP-1101, 4400-digit crash fixed. No grade cell changes: oracle cells already PASS from part 1; retention PARTIAL and membership ABSENT unchanged. Timestamp review is interim only; CV-1101 adoption pending. Static only; native NOT_RUN."
+  "canonical_head": "94a53ffbacdc5ec65aacba746f082264815eaeb1",
+  "method": "Sweep part 2A: 17 Method B guard tables proved on the gated guard tool; sweep part 2B numbers: shared CV-1100/SP-1100 calls, frozen dm-retained-producer-v1 beside SP-1101, 4400-digit crash fixed. Sweep part 2B date-time: merge of gated NUMRULE head 58c2816ff3; pm_event_datetime.date_time with event_record for occurred_at_utc and family clocks, storage_utc_z for Storage observed_at_utc/persisted_at_utc and the SP-347 acknowledged_at_utc, bound to dm-retained-producer-v1 for retained originals; 174 guard rows (WR26, RS22, RS23 added). datetime_validator and the inventory gate run at batch-2 integration. No grade cell changes. Static only; native NOT_RUN."
  },
  "rubric": {
   "criteria": [
@@ -287,10 +287,10 @@
       {
        "path": "scripts/pm-small-owner-events.py",
        "unit": "checkpoint_matches_original",
-       "line_start": 705,
-       "line_end": 705,
+       "line_start": 772,
+       "line_end": 772,
        "quote": "def checkpoint_matches_original(state):",
-       "file_sha256": "5ead58c0b8d66368c1beb34ecc367fe92ac3d89133a8e867cb7240b7b0a72bb4"
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
       }
      ],
      "prior": {
@@ -324,7 +324,7 @@
     "positive_negative_oracles": {
      "status": "PASS",
      "representation": "exact_normative_owner",
-     "finding": "Own-family complete suite covers closed current retry keys, dispatch, original custody, typed facts, schema references, formats, storage, read/rebuild and compatibility refusals. Three one-defect extra-field cases now refuse with unchanged producer digest/authentic original. S1/S2 remain part-2 qualifications; no complete guard-isolation or native proof is claimed.",
+     "finding": "Own-family complete suite covers closed current retry keys, dispatch, original custody, typed facts, schema references, formats, storage, read/rebuild and compatibility refusals. Three one-defect extra-field cases now refuse with unchanged producer digest/authentic original. S1 numbers and S2 guard tables are adopted (sweep parts 2A and 2B) and S3 timestamps use the shared CV-1101 date_time predicate: event_record for occurred_at_utc and the family clock, storage_utc_z for observed_at_utc, persisted_at_utc and the SP-347 acknowledgement, selected for retained originals only by the frozen dm-retained-producer-v1 recipe. No schema-keyword isolation or native proof is claimed.",
      "evidence": [
       {
        "path": "Plans/Formatters_System.md",
@@ -337,10 +337,10 @@
       {
        "path": "scripts/pm-small-owner-events.py",
        "unit": "run_exact_family",
-       "line_start": 932,
-       "line_end": 932,
+       "line_start": 999,
+       "line_end": 999,
        "quote": "def run_exact_family(row):",
-       "file_sha256": "5ead58c0b8d66368c1beb34ecc367fe92ac3d89133a8e867cb7240b7b0a72bb4"
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
       },
       {
        "path": "Plans/Formatters_System.md",
@@ -361,58 +361,74 @@
       {
        "path": "scripts/pm-small-owner-guard-audit.py",
        "unit": "normal_checks",
-       "line_start": 776,
-       "line_end": 776,
+       "line_start": 782,
+       "line_end": 782,
        "quote": "def normal_checks(namespace, fixtures, guard_first=None):",
-       "file_sha256": "c3c1bab7220f6e85fea3d995396c3cd861537ad3be1153efb5d4e2471202fe7c"
+       "file_sha256": "04101ee8ba48dc99de70d19b6f1946ac6ec15b7a254eaa56f059943f199784e6"
       },
       {
        "path": "scripts/pm-small-owner-events.py",
        "unit": "integer_type",
-       "line_start": 108,
-       "line_end": 108,
+       "line_start": 170,
+       "line_end": 170,
        "quote": "def integer_type(checker, instance):",
-       "file_sha256": "5ead58c0b8d66368c1beb34ecc367fe92ac3d89133a8e867cb7240b7b0a72bb4"
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
       },
       {
        "path": "scripts/pm-small-owner-events.py",
        "unit": "canonical_json_numbers",
-       "line_start": 165,
-       "line_end": 165,
+       "line_start": 227,
+       "line_end": 227,
        "quote": "def canonical_json_numbers(value, *, retained=False):",
-       "file_sha256": "5ead58c0b8d66368c1beb34ecc367fe92ac3d89133a8e867cb7240b7b0a72bb4"
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
       },
       {
        "path": "scripts/pm-small-owner-events.py",
        "unit": "retained_producer_digest",
-       "line_start": 418,
-       "line_end": 418,
+       "line_start": 480,
+       "line_end": 480,
        "quote": "def retained_producer_digest(event):",
-       "file_sha256": "5ead58c0b8d66368c1beb34ecc367fe92ac3d89133a8e867cb7240b7b0a72bb4"
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
       },
       {
        "path": "scripts/pm-small-owner-guard-audit.py",
        "unit": "numeric_catalogue",
-       "line_start": 620,
-       "line_end": 620,
+       "line_start": 626,
+       "line_end": 626,
        "quote": "def numeric_catalogue(m, fixtures, add, change):",
-       "file_sha256": "c3c1bab7220f6e85fea3d995396c3cd861537ad3be1153efb5d4e2471202fe7c"
+       "file_sha256": "04101ee8ba48dc99de70d19b6f1946ac6ec15b7a254eaa56f059943f199784e6"
       },
       {
        "path": "scripts/pm-small-owner-events.py",
-       "unit": "utc_datetime",
-       "quote": "def utc_datetime(value):",
-       "line_start": 30,
-       "line_end": 30,
-       "file_sha256": "5ead58c0b8d66368c1beb34ecc367fe92ac3d89133a8e867cb7240b7b0a72bb4"
+       "unit": "clock_ok",
+       "quote": "return date_time(value, profile=profile) == value",
+       "line_start": 68,
+       "line_end": 68,
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
+      },
+      {
+       "path": "scripts/pm-small-owner-events.py",
+       "unit": "storage_clocks_ok",
+       "quote": "def storage_clocks_ok(event, profile):",
+       "line_start": 83,
+       "line_end": 83,
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
+      },
+      {
+       "path": "scripts/pm-small-owner-events.py",
+       "unit": "bound_profile",
+       "quote": "if kind in ('storage', 'ack'):",
+       "line_start": 58,
+       "line_end": 58,
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
       },
       {
        "path": "scripts/pm-small-owner-events.py",
        "unit": "exact_value",
        "quote": "def exact_value(value, expected):",
-       "line_start": 130,
-       "line_end": 130,
-       "file_sha256": "5ead58c0b8d66368c1beb34ecc367fe92ac3d89133a8e867cb7240b7b0a72bb4"
+       "line_start": 192,
+       "line_end": 192,
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
       },
       {
        "path": "scripts/pm-small-owner-guard-audit.py",
@@ -420,23 +436,23 @@
        "quote": "def type_timestamp_catalogue(m, fixtures, add, change, no_if, mutants):",
        "line_start": 462,
        "line_end": 462,
-       "file_sha256": "c3c1bab7220f6e85fea3d995396c3cd861537ad3be1153efb5d4e2471202fe7c"
+       "file_sha256": "04101ee8ba48dc99de70d19b6f1946ac6ec15b7a254eaa56f059943f199784e6"
       },
       {
        "path": "scripts/pm-small-owner-events.py",
        "unit": "current_retry",
-       "line_start": 653,
-       "line_end": 653,
+       "line_start": 720,
+       "line_end": 720,
        "quote": "'closure_keys': _fact(lambda: not (incoming.keys() - envelope['properties'].keys())),",
-       "file_sha256": "5ead58c0b8d66368c1beb34ecc367fe92ac3d89133a8e867cb7240b7b0a72bb4"
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
       },
       {
        "path": "scripts/pm-small-owner-events.py",
        "unit": "main",
-       "line_start": 1170,
-       "line_end": 1170,
+       "line_start": 1237,
+       "line_end": 1237,
        "quote": "for case in row['retry_extra_field_cases']:",
-       "file_sha256": "5ead58c0b8d66368c1beb34ecc367fe92ac3d89133a8e867cb7240b7b0a72bb4"
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
       }
      ],
      "prior": {
@@ -444,14 +460,13 @@
       "status": "PARTIAL"
      },
      "change": "improved",
-     "change_reason": "Astra-4 B1 repaired: all three independent extra-field cases per family now refuse before original resolution, while digest/original/metadata/history controls are preserved."
+     "change_reason": "Astra-4 B1 repaired: all three independent extra-field cases per family now refuse before original resolution, while digest/original/metadata/history controls are preserved. Sweep part 2B: shared CV-1101 date_time adopted; status unchanged (already PASS)."
     }
    },
    "remaining_gaps": [
     "Exact membership intentionally ABSENT pending later independent review and admission.",
     "PENDING_RETENTION_DECISION: RT owns this remaining product cell; no retention chosen here.",
-    "Part 2 NUMRULE adoption remains open.",
-    "Part 2 shared guard-table/isolation adoption remains open."
+    "datetime_validator and the inventory gate run at batch-2 integration (addendum 2); Sol max and Astra max review pending."
    ],
    "static_checks_seen": [
     "PM_DM_FAMILY=format.applied python3 -B scripts/pm-small-owner-events.py",
@@ -459,9 +474,9 @@
     "python3 -B scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
     "python3 -B scripts/pm-plan-index.py validate"
    ],
-   "notes": "Astra-4 B1 closure fixed in part 1. Lane-local cells regraded; S1 numbers/history and S2 full guard-table/isolation adoption remain part 2. No admission, activation or native proof.",
+   "notes": "Astra-4 B1 closure fixed in part 1. Lane-local cells regraded; S1 numbers/history, S2 guard tables and S3 CV-1101 timestamps are adopted; Sol/Astra review and batch-2 integration remain. No admission, activation or native proof.",
    "newly_authored_operating_reader": "reader.evidence.format_applied@1.0.0",
-   "readiness": "NOT_READY_PENDING_PART_2"
+   "readiness": "NOT_READY_REVIEW_PENDING"
   },
   {
    "event_type": "git.clone.completed",
@@ -721,10 +736,10 @@
       {
        "path": "scripts/pm-small-owner-events.py",
        "unit": "checkpoint_matches_original",
-       "line_start": 705,
-       "line_end": 705,
+       "line_start": 772,
+       "line_end": 772,
        "quote": "def checkpoint_matches_original(state):",
-       "file_sha256": "5ead58c0b8d66368c1beb34ecc367fe92ac3d89133a8e867cb7240b7b0a72bb4"
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
       }
      ],
      "prior": {
@@ -758,7 +773,7 @@
     "positive_negative_oracles": {
      "status": "PASS",
      "representation": "exact_normative_owner",
-     "finding": "Own-family complete suite covers closed current retry keys, dispatch, original custody, typed facts, schema references, formats, storage, read/rebuild and compatibility refusals. Three one-defect extra-field cases now refuse with unchanged producer digest/authentic original. S1/S2 remain part-2 qualifications; no complete guard-isolation or native proof is claimed.",
+     "finding": "Own-family complete suite covers closed current retry keys, dispatch, original custody, typed facts, schema references, formats, storage, read/rebuild and compatibility refusals. Three one-defect extra-field cases now refuse with unchanged producer digest/authentic original. S1 numbers and S2 guard tables are adopted (sweep parts 2A and 2B) and S3 timestamps use the shared CV-1101 date_time predicate: event_record for occurred_at_utc and the family clock, storage_utc_z for observed_at_utc, persisted_at_utc and the SP-347 acknowledgement, selected for retained originals only by the frozen dm-retained-producer-v1 recipe. No schema-keyword isolation or native proof is claimed.",
      "evidence": [
       {
        "path": "Plans/Source_Control_System.md",
@@ -771,10 +786,10 @@
       {
        "path": "scripts/pm-small-owner-events.py",
        "unit": "run_exact_family",
-       "line_start": 932,
-       "line_end": 932,
+       "line_start": 999,
+       "line_end": 999,
        "quote": "def run_exact_family(row):",
-       "file_sha256": "5ead58c0b8d66368c1beb34ecc367fe92ac3d89133a8e867cb7240b7b0a72bb4"
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
       },
       {
        "path": "Plans/Source_Control_System.md",
@@ -795,58 +810,74 @@
       {
        "path": "scripts/pm-small-owner-guard-audit.py",
        "unit": "normal_checks",
-       "line_start": 776,
-       "line_end": 776,
+       "line_start": 782,
+       "line_end": 782,
        "quote": "def normal_checks(namespace, fixtures, guard_first=None):",
-       "file_sha256": "c3c1bab7220f6e85fea3d995396c3cd861537ad3be1153efb5d4e2471202fe7c"
+       "file_sha256": "04101ee8ba48dc99de70d19b6f1946ac6ec15b7a254eaa56f059943f199784e6"
       },
       {
        "path": "scripts/pm-small-owner-events.py",
        "unit": "integer_type",
-       "line_start": 108,
-       "line_end": 108,
+       "line_start": 170,
+       "line_end": 170,
        "quote": "def integer_type(checker, instance):",
-       "file_sha256": "5ead58c0b8d66368c1beb34ecc367fe92ac3d89133a8e867cb7240b7b0a72bb4"
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
       },
       {
        "path": "scripts/pm-small-owner-events.py",
        "unit": "canonical_json_numbers",
-       "line_start": 165,
-       "line_end": 165,
+       "line_start": 227,
+       "line_end": 227,
        "quote": "def canonical_json_numbers(value, *, retained=False):",
-       "file_sha256": "5ead58c0b8d66368c1beb34ecc367fe92ac3d89133a8e867cb7240b7b0a72bb4"
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
       },
       {
        "path": "scripts/pm-small-owner-events.py",
        "unit": "retained_producer_digest",
-       "line_start": 418,
-       "line_end": 418,
+       "line_start": 480,
+       "line_end": 480,
        "quote": "def retained_producer_digest(event):",
-       "file_sha256": "5ead58c0b8d66368c1beb34ecc367fe92ac3d89133a8e867cb7240b7b0a72bb4"
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
       },
       {
        "path": "scripts/pm-small-owner-guard-audit.py",
        "unit": "numeric_catalogue",
-       "line_start": 620,
-       "line_end": 620,
+       "line_start": 626,
+       "line_end": 626,
        "quote": "def numeric_catalogue(m, fixtures, add, change):",
-       "file_sha256": "c3c1bab7220f6e85fea3d995396c3cd861537ad3be1153efb5d4e2471202fe7c"
+       "file_sha256": "04101ee8ba48dc99de70d19b6f1946ac6ec15b7a254eaa56f059943f199784e6"
       },
       {
        "path": "scripts/pm-small-owner-events.py",
-       "unit": "utc_datetime",
-       "quote": "def utc_datetime(value):",
-       "line_start": 30,
-       "line_end": 30,
-       "file_sha256": "5ead58c0b8d66368c1beb34ecc367fe92ac3d89133a8e867cb7240b7b0a72bb4"
+       "unit": "clock_ok",
+       "quote": "return date_time(value, profile=profile) == value",
+       "line_start": 68,
+       "line_end": 68,
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
+      },
+      {
+       "path": "scripts/pm-small-owner-events.py",
+       "unit": "storage_clocks_ok",
+       "quote": "def storage_clocks_ok(event, profile):",
+       "line_start": 83,
+       "line_end": 83,
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
+      },
+      {
+       "path": "scripts/pm-small-owner-events.py",
+       "unit": "bound_profile",
+       "quote": "if kind in ('storage', 'ack'):",
+       "line_start": 58,
+       "line_end": 58,
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
       },
       {
        "path": "scripts/pm-small-owner-events.py",
        "unit": "exact_value",
        "quote": "def exact_value(value, expected):",
-       "line_start": 130,
-       "line_end": 130,
-       "file_sha256": "5ead58c0b8d66368c1beb34ecc367fe92ac3d89133a8e867cb7240b7b0a72bb4"
+       "line_start": 192,
+       "line_end": 192,
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
       },
       {
        "path": "scripts/pm-small-owner-guard-audit.py",
@@ -854,23 +885,23 @@
        "quote": "def type_timestamp_catalogue(m, fixtures, add, change, no_if, mutants):",
        "line_start": 462,
        "line_end": 462,
-       "file_sha256": "c3c1bab7220f6e85fea3d995396c3cd861537ad3be1153efb5d4e2471202fe7c"
+       "file_sha256": "04101ee8ba48dc99de70d19b6f1946ac6ec15b7a254eaa56f059943f199784e6"
       },
       {
        "path": "scripts/pm-small-owner-events.py",
        "unit": "current_retry",
-       "line_start": 653,
-       "line_end": 653,
+       "line_start": 720,
+       "line_end": 720,
        "quote": "'closure_keys': _fact(lambda: not (incoming.keys() - envelope['properties'].keys())),",
-       "file_sha256": "5ead58c0b8d66368c1beb34ecc367fe92ac3d89133a8e867cb7240b7b0a72bb4"
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
       },
       {
        "path": "scripts/pm-small-owner-events.py",
        "unit": "main",
-       "line_start": 1170,
-       "line_end": 1170,
+       "line_start": 1237,
+       "line_end": 1237,
        "quote": "for case in row['retry_extra_field_cases']:",
-       "file_sha256": "5ead58c0b8d66368c1beb34ecc367fe92ac3d89133a8e867cb7240b7b0a72bb4"
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
       }
      ],
      "prior": {
@@ -878,14 +909,13 @@
       "status": "PARTIAL"
      },
      "change": "improved",
-     "change_reason": "Astra-4 B1 repaired: all three independent extra-field cases per family now refuse before original resolution, while digest/original/metadata/history controls are preserved."
+     "change_reason": "Astra-4 B1 repaired: all three independent extra-field cases per family now refuse before original resolution, while digest/original/metadata/history controls are preserved. Sweep part 2B: shared CV-1101 date_time adopted; status unchanged (already PASS)."
     }
    },
    "remaining_gaps": [
     "Exact membership intentionally ABSENT pending later independent review and admission.",
     "PENDING_RETENTION_DECISION: RT owns this remaining product cell; no retention chosen here.",
-    "Part 2 NUMRULE adoption remains open.",
-    "Part 2 shared guard-table/isolation adoption remains open."
+    "datetime_validator and the inventory gate run at batch-2 integration (addendum 2); Sol max and Astra max review pending."
    ],
    "static_checks_seen": [
     "PM_DM_FAMILY=git.clone.completed python3 -B scripts/pm-small-owner-events.py",
@@ -893,9 +923,9 @@
     "python3 -B scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
     "python3 -B scripts/pm-plan-index.py validate"
    ],
-   "notes": "Astra-4 B1 closure fixed in part 1. Lane-local cells regraded; S1 numbers/history and S2 full guard-table/isolation adoption remain part 2. No admission, activation or native proof.",
+   "notes": "Astra-4 B1 closure fixed in part 1. Lane-local cells regraded; S1 numbers/history, S2 guard tables and S3 CV-1101 timestamps are adopted; Sol/Astra review and batch-2 integration remain. No admission, activation or native proof.",
    "newly_authored_operating_reader": "reader.scm.git_clone_completed@1.0.0",
-   "readiness": "NOT_READY_PENDING_PART_2"
+   "readiness": "NOT_READY_REVIEW_PENDING"
   },
   {
    "event_type": "lsp.server.lifecycle_changed",
@@ -1155,10 +1185,10 @@
       {
        "path": "scripts/pm-small-owner-events.py",
        "unit": "checkpoint_matches_original",
-       "line_start": 705,
-       "line_end": 705,
+       "line_start": 772,
+       "line_end": 772,
        "quote": "def checkpoint_matches_original(state):",
-       "file_sha256": "5ead58c0b8d66368c1beb34ecc367fe92ac3d89133a8e867cb7240b7b0a72bb4"
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
       }
      ],
      "prior": {
@@ -1192,7 +1222,7 @@
     "positive_negative_oracles": {
      "status": "PASS",
      "representation": "exact_normative_owner",
-     "finding": "Own-family complete suite covers closed current retry keys, dispatch, original custody, typed facts, schema references, formats, storage, read/rebuild and compatibility refusals. Three one-defect extra-field cases now refuse with unchanged producer digest/authentic original. S1/S2 remain part-2 qualifications; no complete guard-isolation or native proof is claimed.",
+     "finding": "Own-family complete suite covers closed current retry keys, dispatch, original custody, typed facts, schema references, formats, storage, read/rebuild and compatibility refusals. Three one-defect extra-field cases now refuse with unchanged producer digest/authentic original. S1 numbers and S2 guard tables are adopted (sweep parts 2A and 2B) and S3 timestamps use the shared CV-1101 date_time predicate: event_record for occurred_at_utc and the family clock, storage_utc_z for observed_at_utc, persisted_at_utc and the SP-347 acknowledgement, selected for retained originals only by the frozen dm-retained-producer-v1 recipe. No schema-keyword isolation or native proof is claimed.",
      "evidence": [
       {
        "path": "Plans/LSPSupport.md",
@@ -1205,10 +1235,10 @@
       {
        "path": "scripts/pm-small-owner-events.py",
        "unit": "run_exact_family",
-       "line_start": 932,
-       "line_end": 932,
+       "line_start": 999,
+       "line_end": 999,
        "quote": "def run_exact_family(row):",
-       "file_sha256": "5ead58c0b8d66368c1beb34ecc367fe92ac3d89133a8e867cb7240b7b0a72bb4"
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
       },
       {
        "path": "Plans/LSPSupport.md",
@@ -1229,58 +1259,74 @@
       {
        "path": "scripts/pm-small-owner-guard-audit.py",
        "unit": "normal_checks",
-       "line_start": 776,
-       "line_end": 776,
+       "line_start": 782,
+       "line_end": 782,
        "quote": "def normal_checks(namespace, fixtures, guard_first=None):",
-       "file_sha256": "c3c1bab7220f6e85fea3d995396c3cd861537ad3be1153efb5d4e2471202fe7c"
+       "file_sha256": "04101ee8ba48dc99de70d19b6f1946ac6ec15b7a254eaa56f059943f199784e6"
       },
       {
        "path": "scripts/pm-small-owner-events.py",
        "unit": "integer_type",
-       "line_start": 108,
-       "line_end": 108,
+       "line_start": 170,
+       "line_end": 170,
        "quote": "def integer_type(checker, instance):",
-       "file_sha256": "5ead58c0b8d66368c1beb34ecc367fe92ac3d89133a8e867cb7240b7b0a72bb4"
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
       },
       {
        "path": "scripts/pm-small-owner-events.py",
        "unit": "canonical_json_numbers",
-       "line_start": 165,
-       "line_end": 165,
+       "line_start": 227,
+       "line_end": 227,
        "quote": "def canonical_json_numbers(value, *, retained=False):",
-       "file_sha256": "5ead58c0b8d66368c1beb34ecc367fe92ac3d89133a8e867cb7240b7b0a72bb4"
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
       },
       {
        "path": "scripts/pm-small-owner-events.py",
        "unit": "retained_producer_digest",
-       "line_start": 418,
-       "line_end": 418,
+       "line_start": 480,
+       "line_end": 480,
        "quote": "def retained_producer_digest(event):",
-       "file_sha256": "5ead58c0b8d66368c1beb34ecc367fe92ac3d89133a8e867cb7240b7b0a72bb4"
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
       },
       {
        "path": "scripts/pm-small-owner-guard-audit.py",
        "unit": "numeric_catalogue",
-       "line_start": 620,
-       "line_end": 620,
+       "line_start": 626,
+       "line_end": 626,
        "quote": "def numeric_catalogue(m, fixtures, add, change):",
-       "file_sha256": "c3c1bab7220f6e85fea3d995396c3cd861537ad3be1153efb5d4e2471202fe7c"
+       "file_sha256": "04101ee8ba48dc99de70d19b6f1946ac6ec15b7a254eaa56f059943f199784e6"
       },
       {
        "path": "scripts/pm-small-owner-events.py",
-       "unit": "utc_datetime",
-       "quote": "def utc_datetime(value):",
-       "line_start": 30,
-       "line_end": 30,
-       "file_sha256": "5ead58c0b8d66368c1beb34ecc367fe92ac3d89133a8e867cb7240b7b0a72bb4"
+       "unit": "clock_ok",
+       "quote": "return date_time(value, profile=profile) == value",
+       "line_start": 68,
+       "line_end": 68,
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
+      },
+      {
+       "path": "scripts/pm-small-owner-events.py",
+       "unit": "storage_clocks_ok",
+       "quote": "def storage_clocks_ok(event, profile):",
+       "line_start": 83,
+       "line_end": 83,
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
+      },
+      {
+       "path": "scripts/pm-small-owner-events.py",
+       "unit": "bound_profile",
+       "quote": "if kind in ('storage', 'ack'):",
+       "line_start": 58,
+       "line_end": 58,
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
       },
       {
        "path": "scripts/pm-small-owner-events.py",
        "unit": "exact_value",
        "quote": "def exact_value(value, expected):",
-       "line_start": 130,
-       "line_end": 130,
-       "file_sha256": "5ead58c0b8d66368c1beb34ecc367fe92ac3d89133a8e867cb7240b7b0a72bb4"
+       "line_start": 192,
+       "line_end": 192,
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
       },
       {
        "path": "scripts/pm-small-owner-guard-audit.py",
@@ -1288,23 +1334,23 @@
        "quote": "def type_timestamp_catalogue(m, fixtures, add, change, no_if, mutants):",
        "line_start": 462,
        "line_end": 462,
-       "file_sha256": "c3c1bab7220f6e85fea3d995396c3cd861537ad3be1153efb5d4e2471202fe7c"
+       "file_sha256": "04101ee8ba48dc99de70d19b6f1946ac6ec15b7a254eaa56f059943f199784e6"
       },
       {
        "path": "scripts/pm-small-owner-events.py",
        "unit": "current_retry",
-       "line_start": 653,
-       "line_end": 653,
+       "line_start": 720,
+       "line_end": 720,
        "quote": "'closure_keys': _fact(lambda: not (incoming.keys() - envelope['properties'].keys())),",
-       "file_sha256": "5ead58c0b8d66368c1beb34ecc367fe92ac3d89133a8e867cb7240b7b0a72bb4"
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
       },
       {
        "path": "scripts/pm-small-owner-events.py",
        "unit": "main",
-       "line_start": 1170,
-       "line_end": 1170,
+       "line_start": 1237,
+       "line_end": 1237,
        "quote": "for case in row['retry_extra_field_cases']:",
-       "file_sha256": "5ead58c0b8d66368c1beb34ecc367fe92ac3d89133a8e867cb7240b7b0a72bb4"
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
       }
      ],
      "prior": {
@@ -1312,14 +1358,13 @@
       "status": "PARTIAL"
      },
      "change": "improved",
-     "change_reason": "Astra-4 B1 repaired: all three independent extra-field cases per family now refuse before original resolution, while digest/original/metadata/history controls are preserved."
+     "change_reason": "Astra-4 B1 repaired: all three independent extra-field cases per family now refuse before original resolution, while digest/original/metadata/history controls are preserved. Sweep part 2B: shared CV-1101 date_time adopted; status unchanged (already PASS)."
     }
    },
    "remaining_gaps": [
     "Exact membership intentionally ABSENT pending later independent review and admission.",
     "PENDING_RETENTION_DECISION: RT owns this remaining product cell; no retention chosen here.",
-    "Part 2 NUMRULE adoption remains open.",
-    "Part 2 shared guard-table/isolation adoption remains open."
+    "datetime_validator and the inventory gate run at batch-2 integration (addendum 2); Sol max and Astra max review pending."
    ],
    "static_checks_seen": [
     "PM_DM_FAMILY=lsp.server.lifecycle_changed python3 -B scripts/pm-small-owner-events.py",
@@ -1327,9 +1372,9 @@
     "python3 -B scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
     "python3 -B scripts/pm-plan-index.py validate"
    ],
-   "notes": "Astra-4 B1 closure fixed in part 1. Lane-local cells regraded; S1 numbers/history and S2 full guard-table/isolation adoption remain part 2. No admission, activation or native proof.",
+   "notes": "Astra-4 B1 closure fixed in part 1. Lane-local cells regraded; S1 numbers/history, S2 guard tables and S3 CV-1101 timestamps are adopted; Sol/Astra review and batch-2 integration remain. No admission, activation or native proof.",
    "newly_authored_operating_reader": "reader.lsp.lifecycle@1.0.0",
-   "readiness": "NOT_READY_PENDING_PART_2"
+   "readiness": "NOT_READY_REVIEW_PENDING"
   },
   {
    "event_type": "model.catalog_refreshed",
@@ -1597,10 +1642,10 @@
       {
        "path": "scripts/pm-small-owner-events.py",
        "unit": "checkpoint_matches_original",
-       "line_start": 705,
-       "line_end": 705,
+       "line_start": 772,
+       "line_end": 772,
        "quote": "def checkpoint_matches_original(state):",
-       "file_sha256": "5ead58c0b8d66368c1beb34ecc367fe92ac3d89133a8e867cb7240b7b0a72bb4"
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
       }
      ],
      "prior": {
@@ -1634,7 +1679,7 @@
     "positive_negative_oracles": {
      "status": "PASS",
      "representation": "exact_normative_owner",
-     "finding": "Own-family complete suite covers closed current retry keys, dispatch, original custody, typed facts, schema references, formats, storage, read/rebuild and compatibility refusals. Three one-defect extra-field cases now refuse with unchanged producer digest/authentic original. S1/S2 remain part-2 qualifications; no complete guard-isolation or native proof is claimed.",
+     "finding": "Own-family complete suite covers closed current retry keys, dispatch, original custody, typed facts, schema references, formats, storage, read/rebuild and compatibility refusals. Three one-defect extra-field cases now refuse with unchanged producer digest/authentic original. S1 numbers and S2 guard tables are adopted (sweep parts 2A and 2B) and S3 timestamps use the shared CV-1101 date_time predicate: event_record for occurred_at_utc and the family clock, storage_utc_z for observed_at_utc, persisted_at_utc and the SP-347 acknowledgement, selected for retained originals only by the frozen dm-retained-producer-v1 recipe. No schema-keyword isolation or native proof is claimed.",
      "evidence": [
       {
        "path": "Plans/Models_System.md",
@@ -1647,10 +1692,10 @@
       {
        "path": "scripts/pm-small-owner-events.py",
        "unit": "run_exact_family",
-       "line_start": 932,
-       "line_end": 932,
+       "line_start": 999,
+       "line_end": 999,
        "quote": "def run_exact_family(row):",
-       "file_sha256": "5ead58c0b8d66368c1beb34ecc367fe92ac3d89133a8e867cb7240b7b0a72bb4"
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
       },
       {
        "path": "Plans/Models_System.md",
@@ -1679,58 +1724,74 @@
       {
        "path": "scripts/pm-small-owner-guard-audit.py",
        "unit": "normal_checks",
-       "line_start": 776,
-       "line_end": 776,
+       "line_start": 782,
+       "line_end": 782,
        "quote": "def normal_checks(namespace, fixtures, guard_first=None):",
-       "file_sha256": "c3c1bab7220f6e85fea3d995396c3cd861537ad3be1153efb5d4e2471202fe7c"
+       "file_sha256": "04101ee8ba48dc99de70d19b6f1946ac6ec15b7a254eaa56f059943f199784e6"
       },
       {
        "path": "scripts/pm-small-owner-events.py",
        "unit": "integer_type",
-       "line_start": 108,
-       "line_end": 108,
+       "line_start": 170,
+       "line_end": 170,
        "quote": "def integer_type(checker, instance):",
-       "file_sha256": "5ead58c0b8d66368c1beb34ecc367fe92ac3d89133a8e867cb7240b7b0a72bb4"
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
       },
       {
        "path": "scripts/pm-small-owner-events.py",
        "unit": "canonical_json_numbers",
-       "line_start": 165,
-       "line_end": 165,
+       "line_start": 227,
+       "line_end": 227,
        "quote": "def canonical_json_numbers(value, *, retained=False):",
-       "file_sha256": "5ead58c0b8d66368c1beb34ecc367fe92ac3d89133a8e867cb7240b7b0a72bb4"
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
       },
       {
        "path": "scripts/pm-small-owner-events.py",
        "unit": "retained_producer_digest",
-       "line_start": 418,
-       "line_end": 418,
+       "line_start": 480,
+       "line_end": 480,
        "quote": "def retained_producer_digest(event):",
-       "file_sha256": "5ead58c0b8d66368c1beb34ecc367fe92ac3d89133a8e867cb7240b7b0a72bb4"
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
       },
       {
        "path": "scripts/pm-small-owner-guard-audit.py",
        "unit": "numeric_catalogue",
-       "line_start": 620,
-       "line_end": 620,
+       "line_start": 626,
+       "line_end": 626,
        "quote": "def numeric_catalogue(m, fixtures, add, change):",
-       "file_sha256": "c3c1bab7220f6e85fea3d995396c3cd861537ad3be1153efb5d4e2471202fe7c"
+       "file_sha256": "04101ee8ba48dc99de70d19b6f1946ac6ec15b7a254eaa56f059943f199784e6"
       },
       {
        "path": "scripts/pm-small-owner-events.py",
-       "unit": "utc_datetime",
-       "quote": "def utc_datetime(value):",
-       "line_start": 30,
-       "line_end": 30,
-       "file_sha256": "5ead58c0b8d66368c1beb34ecc367fe92ac3d89133a8e867cb7240b7b0a72bb4"
+       "unit": "clock_ok",
+       "quote": "return date_time(value, profile=profile) == value",
+       "line_start": 68,
+       "line_end": 68,
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
+      },
+      {
+       "path": "scripts/pm-small-owner-events.py",
+       "unit": "storage_clocks_ok",
+       "quote": "def storage_clocks_ok(event, profile):",
+       "line_start": 83,
+       "line_end": 83,
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
+      },
+      {
+       "path": "scripts/pm-small-owner-events.py",
+       "unit": "bound_profile",
+       "quote": "if kind in ('storage', 'ack'):",
+       "line_start": 58,
+       "line_end": 58,
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
       },
       {
        "path": "scripts/pm-small-owner-events.py",
        "unit": "exact_value",
        "quote": "def exact_value(value, expected):",
-       "line_start": 130,
-       "line_end": 130,
-       "file_sha256": "5ead58c0b8d66368c1beb34ecc367fe92ac3d89133a8e867cb7240b7b0a72bb4"
+       "line_start": 192,
+       "line_end": 192,
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
       },
       {
        "path": "scripts/pm-small-owner-guard-audit.py",
@@ -1738,23 +1799,23 @@
        "quote": "def type_timestamp_catalogue(m, fixtures, add, change, no_if, mutants):",
        "line_start": 462,
        "line_end": 462,
-       "file_sha256": "c3c1bab7220f6e85fea3d995396c3cd861537ad3be1153efb5d4e2471202fe7c"
+       "file_sha256": "04101ee8ba48dc99de70d19b6f1946ac6ec15b7a254eaa56f059943f199784e6"
       },
       {
        "path": "scripts/pm-small-owner-events.py",
        "unit": "current_retry",
-       "line_start": 653,
-       "line_end": 653,
+       "line_start": 720,
+       "line_end": 720,
        "quote": "'closure_keys': _fact(lambda: not (incoming.keys() - envelope['properties'].keys())),",
-       "file_sha256": "5ead58c0b8d66368c1beb34ecc367fe92ac3d89133a8e867cb7240b7b0a72bb4"
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
       },
       {
        "path": "scripts/pm-small-owner-events.py",
        "unit": "main",
-       "line_start": 1170,
-       "line_end": 1170,
+       "line_start": 1237,
+       "line_end": 1237,
        "quote": "for case in row['retry_extra_field_cases']:",
-       "file_sha256": "5ead58c0b8d66368c1beb34ecc367fe92ac3d89133a8e867cb7240b7b0a72bb4"
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
       }
      ],
      "prior": {
@@ -1762,14 +1823,13 @@
       "status": "PARTIAL"
      },
      "change": "improved",
-     "change_reason": "Astra-4 B1 repaired: all three independent extra-field cases per family now refuse before original resolution, while digest/original/metadata/history controls are preserved."
+     "change_reason": "Astra-4 B1 repaired: all three independent extra-field cases per family now refuse before original resolution, while digest/original/metadata/history controls are preserved. Sweep part 2B: shared CV-1101 date_time adopted; status unchanged (already PASS)."
     }
    },
    "remaining_gaps": [
     "Exact membership intentionally ABSENT pending later independent review and admission.",
     "PENDING_RETENTION_DECISION: RT owns this remaining product cell; no retention chosen here.",
-    "Part 2 NUMRULE adoption remains open.",
-    "Part 2 shared guard-table/isolation adoption remains open."
+    "datetime_validator and the inventory gate run at batch-2 integration (addendum 2); Sol max and Astra max review pending."
    ],
    "static_checks_seen": [
     "PM_DM_FAMILY=model.catalog_refreshed python3 -B scripts/pm-small-owner-events.py",
@@ -1777,9 +1837,9 @@
     "python3 -B scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
     "python3 -B scripts/pm-plan-index.py validate"
    ],
-   "notes": "Astra-4 B1 closure fixed in part 1. Lane-local cells regraded; S1 numbers/history and S2 full guard-table/isolation adoption remain part 2. No admission, activation or native proof.",
+   "notes": "Astra-4 B1 closure fixed in part 1. Lane-local cells regraded; S1 numbers/history, S2 guard tables and S3 CV-1101 timestamps are adopted; Sol/Astra review and batch-2 integration remain. No admission, activation or native proof.",
    "newly_authored_operating_reader": "reader.models.catalog_refresh@1.0.0",
-   "readiness": "NOT_READY_PENDING_PART_2"
+   "readiness": "NOT_READY_REVIEW_PENDING"
   },
   {
    "event_type": "project.added",
@@ -2039,10 +2099,10 @@
       {
        "path": "scripts/pm-small-owner-events.py",
        "unit": "checkpoint_matches_original",
-       "line_start": 705,
-       "line_end": 705,
+       "line_start": 772,
+       "line_end": 772,
        "quote": "def checkpoint_matches_original(state):",
-       "file_sha256": "5ead58c0b8d66368c1beb34ecc367fe92ac3d89133a8e867cb7240b7b0a72bb4"
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
       }
      ],
      "prior": {
@@ -2076,7 +2136,7 @@
     "positive_negative_oracles": {
      "status": "PASS",
      "representation": "exact_normative_owner",
-     "finding": "Own-family complete suite covers closed current retry keys, dispatch, original custody, typed facts, schema references, formats, storage, read/rebuild and compatibility refusals. Three one-defect extra-field cases now refuse with unchanged producer digest/authentic original. S1/S2 remain part-2 qualifications; no complete guard-isolation or native proof is claimed.",
+     "finding": "Own-family complete suite covers closed current retry keys, dispatch, original custody, typed facts, schema references, formats, storage, read/rebuild and compatibility refusals. Three one-defect extra-field cases now refuse with unchanged producer digest/authentic original. S1 numbers and S2 guard tables are adopted (sweep parts 2A and 2B) and S3 timestamps use the shared CV-1101 date_time predicate: event_record for occurred_at_utc and the family clock, storage_utc_z for observed_at_utc, persisted_at_utc and the SP-347 acknowledgement, selected for retained originals only by the frozen dm-retained-producer-v1 recipe. No schema-keyword isolation or native proof is claimed.",
      "evidence": [
       {
        "path": "Plans/Project_System.md",
@@ -2089,10 +2149,10 @@
       {
        "path": "scripts/pm-small-owner-events.py",
        "unit": "run_exact_family",
-       "line_start": 932,
-       "line_end": 932,
+       "line_start": 999,
+       "line_end": 999,
        "quote": "def run_exact_family(row):",
-       "file_sha256": "5ead58c0b8d66368c1beb34ecc367fe92ac3d89133a8e867cb7240b7b0a72bb4"
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
       },
       {
        "path": "Plans/Project_System.md",
@@ -2113,58 +2173,74 @@
       {
        "path": "scripts/pm-small-owner-guard-audit.py",
        "unit": "normal_checks",
-       "line_start": 776,
-       "line_end": 776,
+       "line_start": 782,
+       "line_end": 782,
        "quote": "def normal_checks(namespace, fixtures, guard_first=None):",
-       "file_sha256": "c3c1bab7220f6e85fea3d995396c3cd861537ad3be1153efb5d4e2471202fe7c"
+       "file_sha256": "04101ee8ba48dc99de70d19b6f1946ac6ec15b7a254eaa56f059943f199784e6"
       },
       {
        "path": "scripts/pm-small-owner-events.py",
        "unit": "integer_type",
-       "line_start": 108,
-       "line_end": 108,
+       "line_start": 170,
+       "line_end": 170,
        "quote": "def integer_type(checker, instance):",
-       "file_sha256": "5ead58c0b8d66368c1beb34ecc367fe92ac3d89133a8e867cb7240b7b0a72bb4"
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
       },
       {
        "path": "scripts/pm-small-owner-events.py",
        "unit": "canonical_json_numbers",
-       "line_start": 165,
-       "line_end": 165,
+       "line_start": 227,
+       "line_end": 227,
        "quote": "def canonical_json_numbers(value, *, retained=False):",
-       "file_sha256": "5ead58c0b8d66368c1beb34ecc367fe92ac3d89133a8e867cb7240b7b0a72bb4"
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
       },
       {
        "path": "scripts/pm-small-owner-events.py",
        "unit": "retained_producer_digest",
-       "line_start": 418,
-       "line_end": 418,
+       "line_start": 480,
+       "line_end": 480,
        "quote": "def retained_producer_digest(event):",
-       "file_sha256": "5ead58c0b8d66368c1beb34ecc367fe92ac3d89133a8e867cb7240b7b0a72bb4"
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
       },
       {
        "path": "scripts/pm-small-owner-guard-audit.py",
        "unit": "numeric_catalogue",
-       "line_start": 620,
-       "line_end": 620,
+       "line_start": 626,
+       "line_end": 626,
        "quote": "def numeric_catalogue(m, fixtures, add, change):",
-       "file_sha256": "c3c1bab7220f6e85fea3d995396c3cd861537ad3be1153efb5d4e2471202fe7c"
+       "file_sha256": "04101ee8ba48dc99de70d19b6f1946ac6ec15b7a254eaa56f059943f199784e6"
       },
       {
        "path": "scripts/pm-small-owner-events.py",
-       "unit": "utc_datetime",
-       "quote": "def utc_datetime(value):",
-       "line_start": 30,
-       "line_end": 30,
-       "file_sha256": "5ead58c0b8d66368c1beb34ecc367fe92ac3d89133a8e867cb7240b7b0a72bb4"
+       "unit": "clock_ok",
+       "quote": "return date_time(value, profile=profile) == value",
+       "line_start": 68,
+       "line_end": 68,
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
+      },
+      {
+       "path": "scripts/pm-small-owner-events.py",
+       "unit": "storage_clocks_ok",
+       "quote": "def storage_clocks_ok(event, profile):",
+       "line_start": 83,
+       "line_end": 83,
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
+      },
+      {
+       "path": "scripts/pm-small-owner-events.py",
+       "unit": "bound_profile",
+       "quote": "if kind in ('storage', 'ack'):",
+       "line_start": 58,
+       "line_end": 58,
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
       },
       {
        "path": "scripts/pm-small-owner-events.py",
        "unit": "exact_value",
        "quote": "def exact_value(value, expected):",
-       "line_start": 130,
-       "line_end": 130,
-       "file_sha256": "5ead58c0b8d66368c1beb34ecc367fe92ac3d89133a8e867cb7240b7b0a72bb4"
+       "line_start": 192,
+       "line_end": 192,
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
       },
       {
        "path": "scripts/pm-small-owner-guard-audit.py",
@@ -2172,23 +2248,23 @@
        "quote": "def type_timestamp_catalogue(m, fixtures, add, change, no_if, mutants):",
        "line_start": 462,
        "line_end": 462,
-       "file_sha256": "c3c1bab7220f6e85fea3d995396c3cd861537ad3be1153efb5d4e2471202fe7c"
+       "file_sha256": "04101ee8ba48dc99de70d19b6f1946ac6ec15b7a254eaa56f059943f199784e6"
       },
       {
        "path": "scripts/pm-small-owner-events.py",
        "unit": "current_retry",
-       "line_start": 653,
-       "line_end": 653,
+       "line_start": 720,
+       "line_end": 720,
        "quote": "'closure_keys': _fact(lambda: not (incoming.keys() - envelope['properties'].keys())),",
-       "file_sha256": "5ead58c0b8d66368c1beb34ecc367fe92ac3d89133a8e867cb7240b7b0a72bb4"
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
       },
       {
        "path": "scripts/pm-small-owner-events.py",
        "unit": "main",
-       "line_start": 1170,
-       "line_end": 1170,
+       "line_start": 1237,
+       "line_end": 1237,
        "quote": "for case in row['retry_extra_field_cases']:",
-       "file_sha256": "5ead58c0b8d66368c1beb34ecc367fe92ac3d89133a8e867cb7240b7b0a72bb4"
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
       }
      ],
      "prior": {
@@ -2196,14 +2272,13 @@
       "status": "PARTIAL"
      },
      "change": "improved",
-     "change_reason": "Astra-4 B1 repaired: all three independent extra-field cases per family now refuse before original resolution, while digest/original/metadata/history controls are preserved."
+     "change_reason": "Astra-4 B1 repaired: all three independent extra-field cases per family now refuse before original resolution, while digest/original/metadata/history controls are preserved. Sweep part 2B: shared CV-1101 date_time adopted; status unchanged (already PASS)."
     }
    },
    "remaining_gaps": [
     "Exact membership intentionally ABSENT pending later independent review and admission.",
     "PENDING_RETENTION_DECISION: RT owns this remaining product cell; no retention chosen here.",
-    "Part 2 NUMRULE adoption remains open.",
-    "Part 2 shared guard-table/isolation adoption remains open."
+    "datetime_validator and the inventory gate run at batch-2 integration (addendum 2); Sol max and Astra max review pending."
    ],
    "static_checks_seen": [
     "PM_DM_FAMILY=project.added python3 -B scripts/pm-small-owner-events.py",
@@ -2211,9 +2286,9 @@
     "python3 -B scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
     "python3 -B scripts/pm-plan-index.py validate"
    ],
-   "notes": "Astra-4 B1 closure fixed in part 1. Lane-local cells regraded; S1 numbers/history and S2 full guard-table/isolation adoption remain part 2. No admission, activation or native proof.",
+   "notes": "Astra-4 B1 closure fixed in part 1. Lane-local cells regraded; S1 numbers/history, S2 guard tables and S3 CV-1101 timestamps are adopted; Sol/Astra review and batch-2 integration remain. No admission, activation or native proof.",
    "newly_authored_operating_reader": "reader.project.added@1.0.0",
-   "readiness": "NOT_READY_PENDING_PART_2"
+   "readiness": "NOT_READY_REVIEW_PENDING"
   },
   {
    "event_type": "project.created",
@@ -2473,10 +2548,10 @@
       {
        "path": "scripts/pm-small-owner-events.py",
        "unit": "checkpoint_matches_original",
-       "line_start": 705,
-       "line_end": 705,
+       "line_start": 772,
+       "line_end": 772,
        "quote": "def checkpoint_matches_original(state):",
-       "file_sha256": "5ead58c0b8d66368c1beb34ecc367fe92ac3d89133a8e867cb7240b7b0a72bb4"
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
       }
      ],
      "prior": {
@@ -2510,7 +2585,7 @@
     "positive_negative_oracles": {
      "status": "PASS",
      "representation": "exact_normative_owner",
-     "finding": "Own-family complete suite covers closed current retry keys, dispatch, original custody, typed facts, schema references, formats, storage, read/rebuild and compatibility refusals. Three one-defect extra-field cases now refuse with unchanged producer digest/authentic original. S1/S2 remain part-2 qualifications; no complete guard-isolation or native proof is claimed.",
+     "finding": "Own-family complete suite covers closed current retry keys, dispatch, original custody, typed facts, schema references, formats, storage, read/rebuild and compatibility refusals. Three one-defect extra-field cases now refuse with unchanged producer digest/authentic original. S1 numbers and S2 guard tables are adopted (sweep parts 2A and 2B) and S3 timestamps use the shared CV-1101 date_time predicate: event_record for occurred_at_utc and the family clock, storage_utc_z for observed_at_utc, persisted_at_utc and the SP-347 acknowledgement, selected for retained originals only by the frozen dm-retained-producer-v1 recipe. No schema-keyword isolation or native proof is claimed.",
      "evidence": [
       {
        "path": "Plans/Project_System.md",
@@ -2523,10 +2598,10 @@
       {
        "path": "scripts/pm-small-owner-events.py",
        "unit": "run_exact_family",
-       "line_start": 932,
-       "line_end": 932,
+       "line_start": 999,
+       "line_end": 999,
        "quote": "def run_exact_family(row):",
-       "file_sha256": "5ead58c0b8d66368c1beb34ecc367fe92ac3d89133a8e867cb7240b7b0a72bb4"
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
       },
       {
        "path": "Plans/Project_System.md",
@@ -2547,58 +2622,74 @@
       {
        "path": "scripts/pm-small-owner-guard-audit.py",
        "unit": "normal_checks",
-       "line_start": 776,
-       "line_end": 776,
+       "line_start": 782,
+       "line_end": 782,
        "quote": "def normal_checks(namespace, fixtures, guard_first=None):",
-       "file_sha256": "c3c1bab7220f6e85fea3d995396c3cd861537ad3be1153efb5d4e2471202fe7c"
+       "file_sha256": "04101ee8ba48dc99de70d19b6f1946ac6ec15b7a254eaa56f059943f199784e6"
       },
       {
        "path": "scripts/pm-small-owner-events.py",
        "unit": "integer_type",
-       "line_start": 108,
-       "line_end": 108,
+       "line_start": 170,
+       "line_end": 170,
        "quote": "def integer_type(checker, instance):",
-       "file_sha256": "5ead58c0b8d66368c1beb34ecc367fe92ac3d89133a8e867cb7240b7b0a72bb4"
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
       },
       {
        "path": "scripts/pm-small-owner-events.py",
        "unit": "canonical_json_numbers",
-       "line_start": 165,
-       "line_end": 165,
+       "line_start": 227,
+       "line_end": 227,
        "quote": "def canonical_json_numbers(value, *, retained=False):",
-       "file_sha256": "5ead58c0b8d66368c1beb34ecc367fe92ac3d89133a8e867cb7240b7b0a72bb4"
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
       },
       {
        "path": "scripts/pm-small-owner-events.py",
        "unit": "retained_producer_digest",
-       "line_start": 418,
-       "line_end": 418,
+       "line_start": 480,
+       "line_end": 480,
        "quote": "def retained_producer_digest(event):",
-       "file_sha256": "5ead58c0b8d66368c1beb34ecc367fe92ac3d89133a8e867cb7240b7b0a72bb4"
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
       },
       {
        "path": "scripts/pm-small-owner-guard-audit.py",
        "unit": "numeric_catalogue",
-       "line_start": 620,
-       "line_end": 620,
+       "line_start": 626,
+       "line_end": 626,
        "quote": "def numeric_catalogue(m, fixtures, add, change):",
-       "file_sha256": "c3c1bab7220f6e85fea3d995396c3cd861537ad3be1153efb5d4e2471202fe7c"
+       "file_sha256": "04101ee8ba48dc99de70d19b6f1946ac6ec15b7a254eaa56f059943f199784e6"
       },
       {
        "path": "scripts/pm-small-owner-events.py",
-       "unit": "utc_datetime",
-       "quote": "def utc_datetime(value):",
-       "line_start": 30,
-       "line_end": 30,
-       "file_sha256": "5ead58c0b8d66368c1beb34ecc367fe92ac3d89133a8e867cb7240b7b0a72bb4"
+       "unit": "clock_ok",
+       "quote": "return date_time(value, profile=profile) == value",
+       "line_start": 68,
+       "line_end": 68,
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
+      },
+      {
+       "path": "scripts/pm-small-owner-events.py",
+       "unit": "storage_clocks_ok",
+       "quote": "def storage_clocks_ok(event, profile):",
+       "line_start": 83,
+       "line_end": 83,
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
+      },
+      {
+       "path": "scripts/pm-small-owner-events.py",
+       "unit": "bound_profile",
+       "quote": "if kind in ('storage', 'ack'):",
+       "line_start": 58,
+       "line_end": 58,
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
       },
       {
        "path": "scripts/pm-small-owner-events.py",
        "unit": "exact_value",
        "quote": "def exact_value(value, expected):",
-       "line_start": 130,
-       "line_end": 130,
-       "file_sha256": "5ead58c0b8d66368c1beb34ecc367fe92ac3d89133a8e867cb7240b7b0a72bb4"
+       "line_start": 192,
+       "line_end": 192,
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
       },
       {
        "path": "scripts/pm-small-owner-guard-audit.py",
@@ -2606,23 +2697,23 @@
        "quote": "def type_timestamp_catalogue(m, fixtures, add, change, no_if, mutants):",
        "line_start": 462,
        "line_end": 462,
-       "file_sha256": "c3c1bab7220f6e85fea3d995396c3cd861537ad3be1153efb5d4e2471202fe7c"
+       "file_sha256": "04101ee8ba48dc99de70d19b6f1946ac6ec15b7a254eaa56f059943f199784e6"
       },
       {
        "path": "scripts/pm-small-owner-events.py",
        "unit": "current_retry",
-       "line_start": 653,
-       "line_end": 653,
+       "line_start": 720,
+       "line_end": 720,
        "quote": "'closure_keys': _fact(lambda: not (incoming.keys() - envelope['properties'].keys())),",
-       "file_sha256": "5ead58c0b8d66368c1beb34ecc367fe92ac3d89133a8e867cb7240b7b0a72bb4"
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
       },
       {
        "path": "scripts/pm-small-owner-events.py",
        "unit": "main",
-       "line_start": 1170,
-       "line_end": 1170,
+       "line_start": 1237,
+       "line_end": 1237,
        "quote": "for case in row['retry_extra_field_cases']:",
-       "file_sha256": "5ead58c0b8d66368c1beb34ecc367fe92ac3d89133a8e867cb7240b7b0a72bb4"
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
       }
      ],
      "prior": {
@@ -2630,14 +2721,13 @@
       "status": "PARTIAL"
      },
      "change": "improved",
-     "change_reason": "Astra-4 B1 repaired: all three independent extra-field cases per family now refuse before original resolution, while digest/original/metadata/history controls are preserved."
+     "change_reason": "Astra-4 B1 repaired: all three independent extra-field cases per family now refuse before original resolution, while digest/original/metadata/history controls are preserved. Sweep part 2B: shared CV-1101 date_time adopted; status unchanged (already PASS)."
     }
    },
    "remaining_gaps": [
     "Exact membership intentionally ABSENT pending later independent review and admission.",
     "PENDING_RETENTION_DECISION: RT owns this remaining product cell; no retention chosen here.",
-    "Part 2 NUMRULE adoption remains open.",
-    "Part 2 shared guard-table/isolation adoption remains open."
+    "datetime_validator and the inventory gate run at batch-2 integration (addendum 2); Sol max and Astra max review pending."
    ],
    "static_checks_seen": [
     "PM_DM_FAMILY=project.created python3 -B scripts/pm-small-owner-events.py",
@@ -2645,9 +2735,9 @@
     "python3 -B scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
     "python3 -B scripts/pm-plan-index.py validate"
    ],
-   "notes": "Astra-4 B1 closure fixed in part 1. Lane-local cells regraded; S1 numbers/history and S2 full guard-table/isolation adoption remain part 2. No admission, activation or native proof.",
+   "notes": "Astra-4 B1 closure fixed in part 1. Lane-local cells regraded; S1 numbers/history, S2 guard tables and S3 CV-1101 timestamps are adopted; Sol/Astra review and batch-2 integration remain. No admission, activation or native proof.",
    "newly_authored_operating_reader": "reader.project.created@1.0.0",
-   "readiness": "NOT_READY_PENDING_PART_2"
+   "readiness": "NOT_READY_REVIEW_PENDING"
   },
   {
    "event_type": "settings.theme.updated",
@@ -2687,7 +2777,7 @@
        "line_start": 29179,
        "line_end": 29179,
        "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a second scope envelope. DL-408 retires settings.updated and settings.theme.u",
-       "file_sha256": "604d09eceb4d4f026d5f5aa745ba198e83550d004be8601bad78acfaf7b04188"
+       "file_sha256": "55f503c3266c0ccceeda9fe7fef71b32da60d2b27618f5d46318bd29b5cdd7e8"
       }
      ],
      "prior": {
@@ -2728,7 +2818,7 @@
        "line_start": 29179,
        "line_end": 29179,
        "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a second scope envelope. DL-408 retires settings.updated and settings.theme.u",
-       "file_sha256": "604d09eceb4d4f026d5f5aa745ba198e83550d004be8601bad78acfaf7b04188"
+       "file_sha256": "55f503c3266c0ccceeda9fe7fef71b32da60d2b27618f5d46318bd29b5cdd7e8"
       }
      ],
      "prior": {
@@ -2769,7 +2859,7 @@
        "line_start": 29179,
        "line_end": 29179,
        "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a second scope envelope. DL-408 retires settings.updated and settings.theme.u",
-       "file_sha256": "604d09eceb4d4f026d5f5aa745ba198e83550d004be8601bad78acfaf7b04188"
+       "file_sha256": "55f503c3266c0ccceeda9fe7fef71b32da60d2b27618f5d46318bd29b5cdd7e8"
       }
      ],
      "prior": {
@@ -2810,7 +2900,7 @@
        "line_start": 29179,
        "line_end": 29179,
        "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a second scope envelope. DL-408 retires settings.updated and settings.theme.u",
-       "file_sha256": "604d09eceb4d4f026d5f5aa745ba198e83550d004be8601bad78acfaf7b04188"
+       "file_sha256": "55f503c3266c0ccceeda9fe7fef71b32da60d2b27618f5d46318bd29b5cdd7e8"
       }
      ],
      "prior": {
@@ -2851,7 +2941,7 @@
        "line_start": 29179,
        "line_end": 29179,
        "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a second scope envelope. DL-408 retires settings.updated and settings.theme.u",
-       "file_sha256": "604d09eceb4d4f026d5f5aa745ba198e83550d004be8601bad78acfaf7b04188"
+       "file_sha256": "55f503c3266c0ccceeda9fe7fef71b32da60d2b27618f5d46318bd29b5cdd7e8"
       }
      ],
      "prior": {
@@ -2892,7 +2982,7 @@
        "line_start": 29179,
        "line_end": 29179,
        "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a second scope envelope. DL-408 retires settings.updated and settings.theme.u",
-       "file_sha256": "604d09eceb4d4f026d5f5aa745ba198e83550d004be8601bad78acfaf7b04188"
+       "file_sha256": "55f503c3266c0ccceeda9fe7fef71b32da60d2b27618f5d46318bd29b5cdd7e8"
       }
      ],
      "prior": {
@@ -2933,7 +3023,7 @@
        "line_start": 29179,
        "line_end": 29179,
        "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a second scope envelope. DL-408 retires settings.updated and settings.theme.u",
-       "file_sha256": "604d09eceb4d4f026d5f5aa745ba198e83550d004be8601bad78acfaf7b04188"
+       "file_sha256": "55f503c3266c0ccceeda9fe7fef71b32da60d2b27618f5d46318bd29b5cdd7e8"
       }
      ],
      "prior": {
@@ -2974,7 +3064,7 @@
        "line_start": 29179,
        "line_end": 29179,
        "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a second scope envelope. DL-408 retires settings.updated and settings.theme.u",
-       "file_sha256": "604d09eceb4d4f026d5f5aa745ba198e83550d004be8601bad78acfaf7b04188"
+       "file_sha256": "55f503c3266c0ccceeda9fe7fef71b32da60d2b27618f5d46318bd29b5cdd7e8"
       }
      ],
      "prior": {
@@ -3015,7 +3105,7 @@
        "line_start": 29179,
        "line_end": 29179,
        "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a second scope envelope. DL-408 retires settings.updated and settings.theme.u",
-       "file_sha256": "604d09eceb4d4f026d5f5aa745ba198e83550d004be8601bad78acfaf7b04188"
+       "file_sha256": "55f503c3266c0ccceeda9fe7fef71b32da60d2b27618f5d46318bd29b5cdd7e8"
       }
      ],
      "prior": {
@@ -3056,7 +3146,7 @@
        "line_start": 29179,
        "line_end": 29179,
        "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a second scope envelope. DL-408 retires settings.updated and settings.theme.u",
-       "file_sha256": "604d09eceb4d4f026d5f5aa745ba198e83550d004be8601bad78acfaf7b04188"
+       "file_sha256": "55f503c3266c0ccceeda9fe7fef71b32da60d2b27618f5d46318bd29b5cdd7e8"
       }
      ],
      "prior": {
@@ -3097,7 +3187,7 @@
        "line_start": 29179,
        "line_end": 29179,
        "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a second scope envelope. DL-408 retires settings.updated and settings.theme.u",
-       "file_sha256": "604d09eceb4d4f026d5f5aa745ba198e83550d004be8601bad78acfaf7b04188"
+       "file_sha256": "55f503c3266c0ccceeda9fe7fef71b32da60d2b27618f5d46318bd29b5cdd7e8"
       },
       {
        "path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_settings.theme.updated.json",
@@ -3146,7 +3236,7 @@
        "line_start": 29179,
        "line_end": 29179,
        "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a second scope envelope. DL-408 retires settings.updated and settings.theme.u",
-       "file_sha256": "604d09eceb4d4f026d5f5aa745ba198e83550d004be8601bad78acfaf7b04188"
+       "file_sha256": "55f503c3266c0ccceeda9fe7fef71b32da60d2b27618f5d46318bd29b5cdd7e8"
       }
      ],
      "prior": {
@@ -3210,7 +3300,7 @@
        "line_start": 29179,
        "line_end": 29179,
        "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a second scope envelope. DL-408 retires settings.updated and settings.theme.u",
-       "file_sha256": "604d09eceb4d4f026d5f5aa745ba198e83550d004be8601bad78acfaf7b04188"
+       "file_sha256": "55f503c3266c0ccceeda9fe7fef71b32da60d2b27618f5d46318bd29b5cdd7e8"
       }
      ],
      "prior": {
@@ -3251,7 +3341,7 @@
        "line_start": 29179,
        "line_end": 29179,
        "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a second scope envelope. DL-408 retires settings.updated and settings.theme.u",
-       "file_sha256": "604d09eceb4d4f026d5f5aa745ba198e83550d004be8601bad78acfaf7b04188"
+       "file_sha256": "55f503c3266c0ccceeda9fe7fef71b32da60d2b27618f5d46318bd29b5cdd7e8"
       }
      ],
      "prior": {
@@ -3292,7 +3382,7 @@
        "line_start": 29179,
        "line_end": 29179,
        "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a second scope envelope. DL-408 retires settings.updated and settings.theme.u",
-       "file_sha256": "604d09eceb4d4f026d5f5aa745ba198e83550d004be8601bad78acfaf7b04188"
+       "file_sha256": "55f503c3266c0ccceeda9fe7fef71b32da60d2b27618f5d46318bd29b5cdd7e8"
       }
      ],
      "prior": {
@@ -3333,7 +3423,7 @@
        "line_start": 29179,
        "line_end": 29179,
        "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a second scope envelope. DL-408 retires settings.updated and settings.theme.u",
-       "file_sha256": "604d09eceb4d4f026d5f5aa745ba198e83550d004be8601bad78acfaf7b04188"
+       "file_sha256": "55f503c3266c0ccceeda9fe7fef71b32da60d2b27618f5d46318bd29b5cdd7e8"
       }
      ],
      "prior": {
@@ -3374,7 +3464,7 @@
        "line_start": 29179,
        "line_end": 29179,
        "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a second scope envelope. DL-408 retires settings.updated and settings.theme.u",
-       "file_sha256": "604d09eceb4d4f026d5f5aa745ba198e83550d004be8601bad78acfaf7b04188"
+       "file_sha256": "55f503c3266c0ccceeda9fe7fef71b32da60d2b27618f5d46318bd29b5cdd7e8"
       }
      ],
      "prior": {
@@ -3415,7 +3505,7 @@
        "line_start": 29179,
        "line_end": 29179,
        "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a second scope envelope. DL-408 retires settings.updated and settings.theme.u",
-       "file_sha256": "604d09eceb4d4f026d5f5aa745ba198e83550d004be8601bad78acfaf7b04188"
+       "file_sha256": "55f503c3266c0ccceeda9fe7fef71b32da60d2b27618f5d46318bd29b5cdd7e8"
       }
      ],
      "prior": {
@@ -3456,7 +3546,7 @@
        "line_start": 29179,
        "line_end": 29179,
        "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a second scope envelope. DL-408 retires settings.updated and settings.theme.u",
-       "file_sha256": "604d09eceb4d4f026d5f5aa745ba198e83550d004be8601bad78acfaf7b04188"
+       "file_sha256": "55f503c3266c0ccceeda9fe7fef71b32da60d2b27618f5d46318bd29b5cdd7e8"
       }
      ],
      "prior": {
@@ -3497,7 +3587,7 @@
        "line_start": 29179,
        "line_end": 29179,
        "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a second scope envelope. DL-408 retires settings.updated and settings.theme.u",
-       "file_sha256": "604d09eceb4d4f026d5f5aa745ba198e83550d004be8601bad78acfaf7b04188"
+       "file_sha256": "55f503c3266c0ccceeda9fe7fef71b32da60d2b27618f5d46318bd29b5cdd7e8"
       }
      ],
      "prior": {
@@ -3538,7 +3628,7 @@
        "line_start": 29179,
        "line_end": 29179,
        "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a second scope envelope. DL-408 retires settings.updated and settings.theme.u",
-       "file_sha256": "604d09eceb4d4f026d5f5aa745ba198e83550d004be8601bad78acfaf7b04188"
+       "file_sha256": "55f503c3266c0ccceeda9fe7fef71b32da60d2b27618f5d46318bd29b5cdd7e8"
       }
      ],
      "prior": {
@@ -3579,7 +3669,7 @@
        "line_start": 29179,
        "line_end": 29179,
        "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a second scope envelope. DL-408 retires settings.updated and settings.theme.u",
-       "file_sha256": "604d09eceb4d4f026d5f5aa745ba198e83550d004be8601bad78acfaf7b04188"
+       "file_sha256": "55f503c3266c0ccceeda9fe7fef71b32da60d2b27618f5d46318bd29b5cdd7e8"
       }
      ],
      "prior": {
@@ -3620,7 +3710,7 @@
        "line_start": 29179,
        "line_end": 29179,
        "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a second scope envelope. DL-408 retires settings.updated and settings.theme.u",
-       "file_sha256": "604d09eceb4d4f026d5f5aa745ba198e83550d004be8601bad78acfaf7b04188"
+       "file_sha256": "55f503c3266c0ccceeda9fe7fef71b32da60d2b27618f5d46318bd29b5cdd7e8"
       },
       {
        "path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_settings.updated.json",
@@ -3669,7 +3759,7 @@
        "line_start": 29179,
        "line_end": 29179,
        "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a second scope envelope. DL-408 retires settings.updated and settings.theme.u",
-       "file_sha256": "604d09eceb4d4f026d5f5aa745ba198e83550d004be8601bad78acfaf7b04188"
+       "file_sha256": "55f503c3266c0ccceeda9fe7fef71b32da60d2b27618f5d46318bd29b5cdd7e8"
       }
      ],
      "prior": {
@@ -3961,10 +4051,10 @@
       {
        "path": "scripts/pm-small-owner-events.py",
        "unit": "checkpoint_matches_original",
-       "line_start": 705,
-       "line_end": 705,
+       "line_start": 772,
+       "line_end": 772,
        "quote": "def checkpoint_matches_original(state):",
-       "file_sha256": "5ead58c0b8d66368c1beb34ecc367fe92ac3d89133a8e867cb7240b7b0a72bb4"
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
       }
      ],
      "prior": {
@@ -3998,7 +4088,7 @@
     "positive_negative_oracles": {
      "status": "PASS",
      "representation": "exact_normative_owner",
-     "finding": "Own-family complete suite covers closed current retry keys, dispatch, original custody, typed facts, schema references, formats, storage, read/rebuild and compatibility refusals. Three one-defect extra-field cases now refuse with unchanged producer digest/authentic original. S1/S2 remain part-2 qualifications; no complete guard-isolation or native proof is claimed.",
+     "finding": "Own-family complete suite covers closed current retry keys, dispatch, original custody, typed facts, schema references, formats, storage, read/rebuild and compatibility refusals. Three one-defect extra-field cases now refuse with unchanged producer digest/authentic original. S1 numbers and S2 guard tables are adopted (sweep parts 2A and 2B) and S3 timestamps use the shared CV-1101 date_time predicate: event_record for occurred_at_utc and the family clock, storage_utc_z for observed_at_utc, persisted_at_utc and the SP-347 acknowledgement, selected for retained originals only by the frozen dm-retained-producer-v1 recipe. No schema-keyword isolation or native proof is claimed.",
      "evidence": [
       {
        "path": "Plans/Prompt_Pipeline.md",
@@ -4011,10 +4101,10 @@
       {
        "path": "scripts/pm-small-owner-events.py",
        "unit": "run_exact_family",
-       "line_start": 932,
-       "line_end": 932,
+       "line_start": 999,
+       "line_end": 999,
        "quote": "def run_exact_family(row):",
-       "file_sha256": "5ead58c0b8d66368c1beb34ecc367fe92ac3d89133a8e867cb7240b7b0a72bb4"
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
       },
       {
        "path": "Plans/Prompt_Pipeline.md",
@@ -4043,74 +4133,90 @@
       {
        "path": "scripts/pm-small-owner-guard-audit.py",
        "unit": "normal_checks",
-       "line_start": 776,
-       "line_end": 776,
+       "line_start": 782,
+       "line_end": 782,
        "quote": "def normal_checks(namespace, fixtures, guard_first=None):",
-       "file_sha256": "c3c1bab7220f6e85fea3d995396c3cd861537ad3be1153efb5d4e2471202fe7c"
+       "file_sha256": "04101ee8ba48dc99de70d19b6f1946ac6ec15b7a254eaa56f059943f199784e6"
       },
       {
        "path": "scripts/pm-small-owner-events.py",
        "unit": "current_retry",
-       "line_start": 658,
-       "line_end": 658,
+       "line_start": 725,
+       "line_end": 725,
        "quote": "'family': _fact(lambda: incoming.get('event_type') == row['event_type']),",
-       "file_sha256": "5ead58c0b8d66368c1beb34ecc367fe92ac3d89133a8e867cb7240b7b0a72bb4"
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
       },
       {
        "path": "scripts/pm-small-owner-events.py",
        "unit": "current_retry",
-       "line_start": 659,
-       "line_end": 659,
+       "line_start": 726,
+       "line_end": 726,
        "quote": "'payload_schema': _fact(lambda: incoming.get('payload_schema_id') == expected_schema),",
-       "file_sha256": "5ead58c0b8d66368c1beb34ecc367fe92ac3d89133a8e867cb7240b7b0a72bb4"
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
       },
       {
        "path": "scripts/pm-small-owner-events.py",
        "unit": "integer_type",
-       "line_start": 108,
-       "line_end": 108,
+       "line_start": 170,
+       "line_end": 170,
        "quote": "def integer_type(checker, instance):",
-       "file_sha256": "5ead58c0b8d66368c1beb34ecc367fe92ac3d89133a8e867cb7240b7b0a72bb4"
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
       },
       {
        "path": "scripts/pm-small-owner-events.py",
        "unit": "canonical_json_numbers",
-       "line_start": 165,
-       "line_end": 165,
+       "line_start": 227,
+       "line_end": 227,
        "quote": "def canonical_json_numbers(value, *, retained=False):",
-       "file_sha256": "5ead58c0b8d66368c1beb34ecc367fe92ac3d89133a8e867cb7240b7b0a72bb4"
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
       },
       {
        "path": "scripts/pm-small-owner-events.py",
        "unit": "retained_producer_digest",
-       "line_start": 418,
-       "line_end": 418,
+       "line_start": 480,
+       "line_end": 480,
        "quote": "def retained_producer_digest(event):",
-       "file_sha256": "5ead58c0b8d66368c1beb34ecc367fe92ac3d89133a8e867cb7240b7b0a72bb4"
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
       },
       {
        "path": "scripts/pm-small-owner-guard-audit.py",
        "unit": "numeric_catalogue",
-       "line_start": 620,
-       "line_end": 620,
+       "line_start": 626,
+       "line_end": 626,
        "quote": "def numeric_catalogue(m, fixtures, add, change):",
-       "file_sha256": "c3c1bab7220f6e85fea3d995396c3cd861537ad3be1153efb5d4e2471202fe7c"
+       "file_sha256": "04101ee8ba48dc99de70d19b6f1946ac6ec15b7a254eaa56f059943f199784e6"
       },
       {
        "path": "scripts/pm-small-owner-events.py",
-       "unit": "utc_datetime",
-       "quote": "def utc_datetime(value):",
-       "line_start": 30,
-       "line_end": 30,
-       "file_sha256": "5ead58c0b8d66368c1beb34ecc367fe92ac3d89133a8e867cb7240b7b0a72bb4"
+       "unit": "clock_ok",
+       "quote": "return date_time(value, profile=profile) == value",
+       "line_start": 68,
+       "line_end": 68,
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
+      },
+      {
+       "path": "scripts/pm-small-owner-events.py",
+       "unit": "storage_clocks_ok",
+       "quote": "def storage_clocks_ok(event, profile):",
+       "line_start": 83,
+       "line_end": 83,
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
+      },
+      {
+       "path": "scripts/pm-small-owner-events.py",
+       "unit": "bound_profile",
+       "quote": "if kind in ('storage', 'ack'):",
+       "line_start": 58,
+       "line_end": 58,
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
       },
       {
        "path": "scripts/pm-small-owner-events.py",
        "unit": "exact_value",
        "quote": "def exact_value(value, expected):",
-       "line_start": 130,
-       "line_end": 130,
-       "file_sha256": "5ead58c0b8d66368c1beb34ecc367fe92ac3d89133a8e867cb7240b7b0a72bb4"
+       "line_start": 192,
+       "line_end": 192,
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
       },
       {
        "path": "scripts/pm-small-owner-guard-audit.py",
@@ -4118,23 +4224,23 @@
        "quote": "def type_timestamp_catalogue(m, fixtures, add, change, no_if, mutants):",
        "line_start": 462,
        "line_end": 462,
-       "file_sha256": "c3c1bab7220f6e85fea3d995396c3cd861537ad3be1153efb5d4e2471202fe7c"
+       "file_sha256": "04101ee8ba48dc99de70d19b6f1946ac6ec15b7a254eaa56f059943f199784e6"
       },
       {
        "path": "scripts/pm-small-owner-events.py",
        "unit": "current_retry",
-       "line_start": 653,
-       "line_end": 653,
+       "line_start": 720,
+       "line_end": 720,
        "quote": "'closure_keys': _fact(lambda: not (incoming.keys() - envelope['properties'].keys())),",
-       "file_sha256": "5ead58c0b8d66368c1beb34ecc367fe92ac3d89133a8e867cb7240b7b0a72bb4"
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
       },
       {
        "path": "scripts/pm-small-owner-events.py",
        "unit": "main",
-       "line_start": 1170,
-       "line_end": 1170,
+       "line_start": 1237,
+       "line_end": 1237,
        "quote": "for case in row['retry_extra_field_cases']:",
-       "file_sha256": "5ead58c0b8d66368c1beb34ecc367fe92ac3d89133a8e867cb7240b7b0a72bb4"
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
       }
      ],
      "prior": {
@@ -4142,13 +4248,12 @@
       "status": "PARTIAL"
      },
      "change": "improved",
-     "change_reason": "Astra-4 B1 repaired: all three independent extra-field cases per family now refuse before original resolution, while digest/original/metadata/history controls are preserved."
+     "change_reason": "Astra-4 B1 repaired: all three independent extra-field cases per family now refuse before original resolution, while digest/original/metadata/history controls are preserved. Sweep part 2B: shared CV-1101 date_time adopted; status unchanged (already PASS)."
     }
    },
    "remaining_gaps": [
     "Exact membership intentionally ABSENT pending later independent review and admission.",
-    "Part 2 NUMRULE adoption remains open.",
-    "Part 2 shared guard-table/isolation adoption remains open."
+    "datetime_validator and the inventory gate run at batch-2 integration (addendum 2); Sol max and Astra max review pending."
    ],
    "static_checks_seen": [
     "PM_DM_FAMILY=subagent.context_rehydrated python3 -B scripts/pm-small-owner-events.py",
@@ -4156,9 +4261,9 @@
     "python3 -B scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
     "python3 -B scripts/pm-plan-index.py validate"
    ],
-   "notes": "Astra-4 B1 closure fixed in part 1. Lane-local cells regraded; S1 numbers/history and S2 full guard-table/isolation adoption remain part 2. No admission, activation or native proof.",
+   "notes": "Astra-4 B1 closure fixed in part 1. Lane-local cells regraded; S1 numbers/history, S2 guard tables and S3 CV-1101 timestamps are adopted; Sol/Astra review and batch-2 integration remain. No admission, activation or native proof.",
    "newly_authored_operating_reader": "reader.context.rehydrated@1.0.0",
-   "readiness": "NOT_READY_PENDING_PART_2"
+   "readiness": "NOT_READY_REVIEW_PENDING"
   },
   {
    "event_type": "subagent.context_shrunk",
@@ -4426,10 +4531,10 @@
       {
        "path": "scripts/pm-small-owner-events.py",
        "unit": "checkpoint_matches_original",
-       "line_start": 705,
-       "line_end": 705,
+       "line_start": 772,
+       "line_end": 772,
        "quote": "def checkpoint_matches_original(state):",
-       "file_sha256": "5ead58c0b8d66368c1beb34ecc367fe92ac3d89133a8e867cb7240b7b0a72bb4"
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
       }
      ],
      "prior": {
@@ -4463,7 +4568,7 @@
     "positive_negative_oracles": {
      "status": "PASS",
      "representation": "exact_normative_owner",
-     "finding": "Own-family complete suite covers closed current retry keys, dispatch, original custody, typed facts, schema references, formats, storage, read/rebuild and compatibility refusals. Three one-defect extra-field cases now refuse with unchanged producer digest/authentic original. S1/S2 remain part-2 qualifications; no complete guard-isolation or native proof is claimed.",
+     "finding": "Own-family complete suite covers closed current retry keys, dispatch, original custody, typed facts, schema references, formats, storage, read/rebuild and compatibility refusals. Three one-defect extra-field cases now refuse with unchanged producer digest/authentic original. S1 numbers and S2 guard tables are adopted (sweep parts 2A and 2B) and S3 timestamps use the shared CV-1101 date_time predicate: event_record for occurred_at_utc and the family clock, storage_utc_z for observed_at_utc, persisted_at_utc and the SP-347 acknowledgement, selected for retained originals only by the frozen dm-retained-producer-v1 recipe. No schema-keyword isolation or native proof is claimed.",
      "evidence": [
       {
        "path": "Plans/Prompt_Pipeline.md",
@@ -4476,10 +4581,10 @@
       {
        "path": "scripts/pm-small-owner-events.py",
        "unit": "run_exact_family",
-       "line_start": 932,
-       "line_end": 932,
+       "line_start": 999,
+       "line_end": 999,
        "quote": "def run_exact_family(row):",
-       "file_sha256": "5ead58c0b8d66368c1beb34ecc367fe92ac3d89133a8e867cb7240b7b0a72bb4"
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
       },
       {
        "path": "Plans/Prompt_Pipeline.md",
@@ -4508,74 +4613,90 @@
       {
        "path": "scripts/pm-small-owner-guard-audit.py",
        "unit": "normal_checks",
-       "line_start": 776,
-       "line_end": 776,
+       "line_start": 782,
+       "line_end": 782,
        "quote": "def normal_checks(namespace, fixtures, guard_first=None):",
-       "file_sha256": "c3c1bab7220f6e85fea3d995396c3cd861537ad3be1153efb5d4e2471202fe7c"
+       "file_sha256": "04101ee8ba48dc99de70d19b6f1946ac6ec15b7a254eaa56f059943f199784e6"
       },
       {
        "path": "scripts/pm-small-owner-events.py",
        "unit": "current_retry",
-       "line_start": 658,
-       "line_end": 658,
+       "line_start": 725,
+       "line_end": 725,
        "quote": "'family': _fact(lambda: incoming.get('event_type') == row['event_type']),",
-       "file_sha256": "5ead58c0b8d66368c1beb34ecc367fe92ac3d89133a8e867cb7240b7b0a72bb4"
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
       },
       {
        "path": "scripts/pm-small-owner-events.py",
        "unit": "current_retry",
-       "line_start": 659,
-       "line_end": 659,
+       "line_start": 726,
+       "line_end": 726,
        "quote": "'payload_schema': _fact(lambda: incoming.get('payload_schema_id') == expected_schema),",
-       "file_sha256": "5ead58c0b8d66368c1beb34ecc367fe92ac3d89133a8e867cb7240b7b0a72bb4"
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
       },
       {
        "path": "scripts/pm-small-owner-events.py",
        "unit": "integer_type",
-       "line_start": 108,
-       "line_end": 108,
+       "line_start": 170,
+       "line_end": 170,
        "quote": "def integer_type(checker, instance):",
-       "file_sha256": "5ead58c0b8d66368c1beb34ecc367fe92ac3d89133a8e867cb7240b7b0a72bb4"
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
       },
       {
        "path": "scripts/pm-small-owner-events.py",
        "unit": "canonical_json_numbers",
-       "line_start": 165,
-       "line_end": 165,
+       "line_start": 227,
+       "line_end": 227,
        "quote": "def canonical_json_numbers(value, *, retained=False):",
-       "file_sha256": "5ead58c0b8d66368c1beb34ecc367fe92ac3d89133a8e867cb7240b7b0a72bb4"
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
       },
       {
        "path": "scripts/pm-small-owner-events.py",
        "unit": "retained_producer_digest",
-       "line_start": 418,
-       "line_end": 418,
+       "line_start": 480,
+       "line_end": 480,
        "quote": "def retained_producer_digest(event):",
-       "file_sha256": "5ead58c0b8d66368c1beb34ecc367fe92ac3d89133a8e867cb7240b7b0a72bb4"
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
       },
       {
        "path": "scripts/pm-small-owner-guard-audit.py",
        "unit": "numeric_catalogue",
-       "line_start": 620,
-       "line_end": 620,
+       "line_start": 626,
+       "line_end": 626,
        "quote": "def numeric_catalogue(m, fixtures, add, change):",
-       "file_sha256": "c3c1bab7220f6e85fea3d995396c3cd861537ad3be1153efb5d4e2471202fe7c"
+       "file_sha256": "04101ee8ba48dc99de70d19b6f1946ac6ec15b7a254eaa56f059943f199784e6"
       },
       {
        "path": "scripts/pm-small-owner-events.py",
-       "unit": "utc_datetime",
-       "quote": "def utc_datetime(value):",
-       "line_start": 30,
-       "line_end": 30,
-       "file_sha256": "5ead58c0b8d66368c1beb34ecc367fe92ac3d89133a8e867cb7240b7b0a72bb4"
+       "unit": "clock_ok",
+       "quote": "return date_time(value, profile=profile) == value",
+       "line_start": 68,
+       "line_end": 68,
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
+      },
+      {
+       "path": "scripts/pm-small-owner-events.py",
+       "unit": "storage_clocks_ok",
+       "quote": "def storage_clocks_ok(event, profile):",
+       "line_start": 83,
+       "line_end": 83,
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
+      },
+      {
+       "path": "scripts/pm-small-owner-events.py",
+       "unit": "bound_profile",
+       "quote": "if kind in ('storage', 'ack'):",
+       "line_start": 58,
+       "line_end": 58,
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
       },
       {
        "path": "scripts/pm-small-owner-events.py",
        "unit": "exact_value",
        "quote": "def exact_value(value, expected):",
-       "line_start": 130,
-       "line_end": 130,
-       "file_sha256": "5ead58c0b8d66368c1beb34ecc367fe92ac3d89133a8e867cb7240b7b0a72bb4"
+       "line_start": 192,
+       "line_end": 192,
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
       },
       {
        "path": "scripts/pm-small-owner-guard-audit.py",
@@ -4583,23 +4704,23 @@
        "quote": "def type_timestamp_catalogue(m, fixtures, add, change, no_if, mutants):",
        "line_start": 462,
        "line_end": 462,
-       "file_sha256": "c3c1bab7220f6e85fea3d995396c3cd861537ad3be1153efb5d4e2471202fe7c"
+       "file_sha256": "04101ee8ba48dc99de70d19b6f1946ac6ec15b7a254eaa56f059943f199784e6"
       },
       {
        "path": "scripts/pm-small-owner-events.py",
        "unit": "current_retry",
-       "line_start": 653,
-       "line_end": 653,
+       "line_start": 720,
+       "line_end": 720,
        "quote": "'closure_keys': _fact(lambda: not (incoming.keys() - envelope['properties'].keys())),",
-       "file_sha256": "5ead58c0b8d66368c1beb34ecc367fe92ac3d89133a8e867cb7240b7b0a72bb4"
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
       },
       {
        "path": "scripts/pm-small-owner-events.py",
        "unit": "main",
-       "line_start": 1170,
-       "line_end": 1170,
+       "line_start": 1237,
+       "line_end": 1237,
        "quote": "for case in row['retry_extra_field_cases']:",
-       "file_sha256": "5ead58c0b8d66368c1beb34ecc367fe92ac3d89133a8e867cb7240b7b0a72bb4"
+       "file_sha256": "d57f063a97207d15812cac7a3372ce3c781b2d447ab6feeb3e209a8ae3cfb5b8"
       }
      ],
      "prior": {
@@ -4607,13 +4728,12 @@
       "status": "PARTIAL"
      },
      "change": "improved",
-     "change_reason": "Astra-4 B1 repaired: all three independent extra-field cases per family now refuse before original resolution, while digest/original/metadata/history controls are preserved."
+     "change_reason": "Astra-4 B1 repaired: all three independent extra-field cases per family now refuse before original resolution, while digest/original/metadata/history controls are preserved. Sweep part 2B: shared CV-1101 date_time adopted; status unchanged (already PASS)."
     }
    },
    "remaining_gaps": [
     "Exact membership intentionally ABSENT pending later independent review and admission.",
-    "Part 2 NUMRULE adoption remains open.",
-    "Part 2 shared guard-table/isolation adoption remains open."
+    "datetime_validator and the inventory gate run at batch-2 integration (addendum 2); Sol max and Astra max review pending."
    ],
    "static_checks_seen": [
     "PM_DM_FAMILY=subagent.context_shrunk python3 -B scripts/pm-small-owner-events.py",
@@ -4621,9 +4741,9 @@
     "python3 -B scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
     "python3 -B scripts/pm-plan-index.py validate"
    ],
-   "notes": "Astra-4 B1 closure fixed in part 1. Lane-local cells regraded; S1 numbers/history and S2 full guard-table/isolation adoption remain part 2. No admission, activation or native proof.",
+   "notes": "Astra-4 B1 closure fixed in part 1. Lane-local cells regraded; S1 numbers/history, S2 guard tables and S3 CV-1101 timestamps are adopted; Sol/Astra review and batch-2 integration remain. No admission, activation or native proof.",
    "newly_authored_operating_reader": "reader.context.shrunk@1.0.0",
-   "readiness": "NOT_READY_PENDING_PART_2"
+   "readiness": "NOT_READY_REVIEW_PENDING"
   }
  ],
  "native_execution": "NOT_RUN",
@@ -4633,10 +4753,10 @@
   "PARTIAL": 6,
   "NOT_APPLICABLE": 18
  },
- "review_round": "sweep-p2a-p2b-numbers",
+ "review_round": "sweep-p2b",
  "prior_review": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/REVIEW-astra-4.md",
  "settings_decision": "DL-408 / 2d A applied; both names retired as superseded by settings.layer.changed, J248 RECLASSIFY_TO_EXCLUDED, no denominator removal; DRY guard disabled.",
- "fix_worker": "DM-sweep-p2a",
+ "fix_worker": "DM-sweep-p2b (Cursor Grok 4.7 worker, finished and corrected by the stream E lead)",
  "decision_integration_dependency": {
   "unit": "DL-408",
   "status": "LANDED_ON_REBASE_BASE",
@@ -4670,19 +4790,10 @@
    "aliases": [
     "SW-DATETIME-DM"
    ],
-   "status": "PART_2B_OPEN",
-   "location": "timestamp fields in scripts/pm-small-owner-events.py (utc_datetime format checker) and family timestamp units",
-   "fix": "Adopt CV-1101 (pm_event_datetime.datetime_validator/date_time with owner profiles) once the date-time gate passes. Interim only: the existing explicit UTC grammar review stands until then."
-  },
-  {
-   "id": "S3",
-   "aliases": [
-    "SW-DATETIME-DM"
-   ],
-   "status": "PART_2B_OPEN",
-   "location": "timestamp fields in scripts/pm-small-owner-events.py (utc_datetime format checker) and family timestamp units",
-   "fix": "Adopt CV-1101 (pm_event_datetime.datetime_validator/date_time with owner profiles) once the date-time gate passes. Interim only: the existing explicit UTC grammar review stands until then."
+   "status": "FIXED_SWEEP_P2B_DATETIME",
+   "location": "scripts/pm-small-owner-events.py (FORMATS, clock_ok, storage_clocks_ok, ack_clock_ok, bound_profile, valid_event, resolve_original, main); CV-620..627; SP-600..607",
+   "fix": "CV-1101 adopted with pm_event_datetime.date_time: format_checker(event_record) for occurred_at_utc and family clocks; storage_utc_z for observed_at_utc/persisted_at_utc (writer WR26, resolve RS22) and SP-347 acknowledged_at_utc (RS23); retained profiles bound to dm-retained-producer-v1 only. datetime_validator and the inventory gate run at batch-2 integration (addendum 2)."
   }
  ],
- "readiness": "NOT_READY_PART_2B_TIMESTAMPS_AND_REVIEW_PENDING"
+ "readiness": "NOT_READY_REVIEW_PENDING"
 }
