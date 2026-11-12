@@ -11036,7 +11036,7 @@
       "storage_kind": "redb_projection",
       "status": "deferred_not_build_blocking",
       "tier": "later_gui_or_feature_projection",
-      "key_shape": "gha_panel_state.v1:{project_id} | bundle_registry.v1:{project_id}:{bundle_id} | note_record.v1:{bundle_id}:{note_id} | revision_run.v1:{bundle_id}:{revision_id} | composer_prep_state.v1:{thread_id} | browser_session_state.v1:{project_id}:{browser_session_id} | browser_profile_state.v1:{project_id}:{profile_scope}",
+      "key_shape": "gha_panel_state.v1:{project_id} | bundle_registry.v1:{project_id}:{bundle_id} | note_record.v1:{bundle_id}:{note_id} | composer_prep_state.v1:{thread_id} | browser_session_state.v1:{project_id}:{browser_session_id} | browser_profile_state.v1:{project_id}:{profile_scope}",
       "value_schema_id": "pm.storage_value.github_bundle_note_preview_browser_families.v1",
       "value_schema_ref": "deferred:Plans/storage_value_registry.json#/families/github_bundle_note_preview_browser_families",
       "owner_doc": "Plans/GitHub_Integration.md",
@@ -11061,7 +11061,7 @@
       ],
       "nullable_fields": [],
       "replay_behavior": "Deferred GUI projections restore panel/browser/preview state without launch authority.",
-      "migration": "Family-specific schemas required before mutating actions rely on these projections.",
+      "migration": "Family-specific schemas required before mutating actions rely on these projections. revision_run.v1 is independently materialized by SP-579 and the revision_run family; this inventory no longer owns it.",
       "retention_compaction": "State rows compact under per-surface history/retention policy; evidence refs follow source policy.",
       "redaction_no_secret_rule": "Remote URLs, private repo names, account handles, screenshots, and endpoints are sensitive metadata and must be masked unless export policy permits.",
       "legacy_canonical_crosswalk_status": "deferred_group_inventory",
@@ -124887,6 +124887,2870 @@
       }
     },
     {
+      "family_id": "revision_run",
+      "storage_kind": "redb",
+      "status": "materialized",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "revision_run.v1:{bundle_id}:{revision_id}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.revision_run.v1",
+      "value_schema_ref": "Plans/dcw/revision_run.schema.json",
+      "owner_doc": "Plans/storage-plan.md#SP-579",
+      "producer": [
+        "document review request handler",
+        "targeted revision runner"
+      ],
+      "consumers": [
+        "targeted revision recovery",
+        "bundle revision emitters"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "recovery_epoch",
+        "value_revision"
+      ],
+      "optional_fields": [
+        "project_id",
+        "thread_id",
+        "bundle_id",
+        "revision_id",
+        "trigger",
+        "note_reply_index",
+        "status",
+        "requested_revision_capability",
+        "effective_revision_capability",
+        "permission_snapshot_id",
+        "annotation_ids",
+        "changes",
+        "created_at",
+        "interrupted_at",
+        "resumed_from_revision_id",
+        "phases",
+        "intent",
+        "source_key",
+        "source_payload_ref"
+      ],
+      "nullable_fields": [
+        "interrupted_at",
+        "resumed_from_revision_id"
+      ],
+      "replay_behavior": "Original non-rebuildable evidence; never reconstruct from history. Exact original full event/result/receipt only.",
+      "migration": "Incomplete legacy evidence is compatibility-read only; no inferred original or receipt backfill.",
+      "migration_disposition": {
+        "mode": "current_schema",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": true,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-579"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "mandatory_backup",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/storage-plan.md#SP-579",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-579",
+          "Plans/storage-plan.md#SP-286"
+        ]
+      },
+      "retention_compaction": "PENDING_RETENTION_DECISION; Case L-3 receipt/audit/source-lineage versus Chat content. No deletion policy is chosen.",
+      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "redaction_no_secret_rule": "Identifiers and authorized refs only; no body text, raw secret, credentials or local paths. Resolve original access and deletion on every read.",
+      "legacy_canonical_crosswalk_status": "materialized_current_source_legacy_read_only",
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-579",
+          "Plans/storage-plan.md#SP-286",
+          "Plans/storage-plan.md#SP-337",
+          "Plans/storage-plan.md#SP-340"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "value_schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://puppetmaster.local/schemas/dcw/revision_run.schema.json",
+        "type": "object",
+        "required": [
+          "schema_id",
+          "schema_version",
+          "storage_instance_id",
+          "recovery_epoch",
+          "value_revision"
+        ],
+        "oneOf": [
+          {
+            "$ref": "#/$defs/inline"
+          },
+          {
+            "$ref": "#/$defs/payload_reference"
+          }
+        ],
+        "$defs": {
+          "inline": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema_id",
+              "schema_version",
+              "storage_instance_id",
+              "project_id",
+              "thread_id",
+              "bundle_id",
+              "revision_id",
+              "trigger",
+              "note_reply_index",
+              "status",
+              "requested_revision_capability",
+              "effective_revision_capability",
+              "permission_snapshot_id",
+              "annotation_ids",
+              "changes",
+              "created_at",
+              "interrupted_at",
+              "resumed_from_revision_id",
+              "recovery_epoch",
+              "value_revision",
+              "phases",
+              "intent"
+            ],
+            "properties": {
+              "schema_id": {
+                "const": "pm.storage_value.revision_run.v1"
+              },
+              "schema_version": {
+                "const": "1.0.0"
+              },
+              "storage_instance_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 512
+              },
+              "project_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 512
+              },
+              "thread_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 512
+              },
+              "bundle_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 512
+              },
+              "revision_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 512
+              },
+              "trigger": {
+                "enum": [
+                  "note_reply",
+                  "resubmit",
+                  "auto_fix"
+                ]
+              },
+              "note_reply_index": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 512
+                },
+                "minItems": 0,
+                "uniqueItems": true
+              },
+              "status": {
+                "enum": [
+                  "pending",
+                  "running",
+                  "completed",
+                  "failed"
+                ]
+              },
+              "requested_revision_capability": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 512
+              },
+              "effective_revision_capability": {
+                "enum": [
+                  "schema_enforced_structured_revision",
+                  "validated_structured_revision",
+                  "chat_handoff_only"
+                ]
+              },
+              "permission_snapshot_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 512
+              },
+              "annotation_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 512
+                },
+                "minItems": 1,
+                "uniqueItems": true
+              },
+              "changes": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 512
+                },
+                "minItems": 0,
+                "uniqueItems": true
+              },
+              "created_at": {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "Z$"
+              },
+              "interrupted_at": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "format": "date-time",
+                    "pattern": "Z$"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "resumed_from_revision_id": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "minLength": 1,
+                "maxLength": 1024
+              },
+              "recovery_epoch": {
+                "type": "integer",
+                "minimum": 0,
+                "format": "pm-uint"
+              },
+              "value_revision": {
+                "type": "integer",
+                "minimum": 0,
+                "format": "pm-uint"
+              },
+              "phases": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "phase_sequence",
+                    "event_type",
+                    "source_ref",
+                    "predecessor_event_id",
+                    "intent_ref",
+                    "result",
+                    "prepared_event",
+                    "first_append_receipt",
+                    "original_event_value_commitment",
+                    "original_segment_ref",
+                    "publication"
+                  ],
+                  "properties": {
+                    "phase_sequence": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "format": "pm-uint"
+                    },
+                    "event_type": {
+                      "enum": [
+                        "bundle.revision_requested",
+                        "bundle.revision_started",
+                        "bundle.revision_completed",
+                        "bundle.revision_interrupted"
+                      ]
+                    },
+                    "source_ref": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 512
+                    },
+                    "predecessor_event_id": {
+                      "type": [
+                        "string",
+                        "null"
+                      ],
+                      "minLength": 1,
+                      "maxLength": 1024
+                    },
+                    "intent_ref": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 512
+                    },
+                    "result": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "result_ref",
+                        "intent_ref",
+                        "kind",
+                        "source_document_ref",
+                        "source_document_version",
+                        "source_document_sha256",
+                        "output_document_refs",
+                        "annotation_outcome_refs",
+                        "safe_point_id",
+                        "occurred_at_utc"
+                      ],
+                      "properties": {
+                        "result_ref": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 512
+                        },
+                        "intent_ref": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 512
+                        },
+                        "kind": {
+                          "enum": [
+                            "accepted_request",
+                            "start_authorized",
+                            "completed",
+                            "interrupted"
+                          ]
+                        },
+                        "source_document_ref": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 512
+                        },
+                        "source_document_version": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 512
+                        },
+                        "source_document_sha256": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{64}$",
+                          "minLength": 64,
+                          "maxLength": 64
+                        },
+                        "output_document_refs": {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 512
+                          },
+                          "minItems": 0,
+                          "uniqueItems": true
+                        },
+                        "annotation_outcome_refs": {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 512
+                          },
+                          "minItems": 0,
+                          "uniqueItems": true
+                        },
+                        "safe_point_id": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "minLength": 1,
+                          "maxLength": 1024
+                        },
+                        "occurred_at_utc": {
+                          "type": "string",
+                          "format": "date-time",
+                          "pattern": "Z$"
+                        }
+                      }
+                    },
+                    "prepared_event": {
+                      "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json"
+                    },
+                    "first_append_receipt": {
+                      "anyOf": [
+                        {
+                          "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "original_event_value_commitment": {
+                      "anyOf": [
+                        {
+                          "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/original_event_value_commitment"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "original_segment_ref": {
+                      "type": [
+                        "string",
+                        "null"
+                      ],
+                      "minLength": 1,
+                      "maxLength": 1024
+                    },
+                    "publication": {
+                      "enum": [
+                        "prepared",
+                        "receipted"
+                      ]
+                    }
+                  },
+                  "allOf": [
+                    {
+                      "if": {
+                        "properties": {
+                          "publication": {
+                            "const": "receipted"
+                          }
+                        }
+                      },
+                      "then": {
+                        "properties": {
+                          "first_append_receipt": {
+                            "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt"
+                          },
+                          "original_event_value_commitment": {
+                            "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/original_event_value_commitment"
+                          },
+                          "original_segment_ref": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 512
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "if": {
+                        "properties": {
+                          "publication": {
+                            "const": "prepared"
+                          }
+                        }
+                      },
+                      "then": {
+                        "properties": {
+                          "first_append_receipt": {
+                            "type": "null"
+                          },
+                          "original_event_value_commitment": {
+                            "type": "null"
+                          },
+                          "original_segment_ref": {
+                            "type": "null"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "intent": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "project_id",
+                  "thread_id",
+                  "bundle_id",
+                  "revision_id",
+                  "trigger",
+                  "requested_revision_capability",
+                  "effective_revision_capability",
+                  "permission_snapshot_id",
+                  "annotation_ids",
+                  "intent_ref",
+                  "actor_ref",
+                  "source_document_ref",
+                  "source_document_version",
+                  "source_document_sha256",
+                  "accepted_at"
+                ],
+                "properties": {
+                  "project_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512
+                  },
+                  "thread_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512
+                  },
+                  "bundle_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512
+                  },
+                  "revision_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512
+                  },
+                  "trigger": {
+                    "enum": [
+                      "note_reply",
+                      "resubmit",
+                      "auto_fix"
+                    ]
+                  },
+                  "requested_revision_capability": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512
+                  },
+                  "effective_revision_capability": {
+                    "enum": [
+                      "schema_enforced_structured_revision",
+                      "validated_structured_revision",
+                      "chat_handoff_only"
+                    ]
+                  },
+                  "permission_snapshot_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512
+                  },
+                  "annotation_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 512
+                    },
+                    "minItems": 1,
+                    "uniqueItems": true
+                  },
+                  "intent_ref": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512
+                  },
+                  "actor_ref": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512
+                  },
+                  "source_document_ref": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512
+                  },
+                  "source_document_version": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512
+                  },
+                  "source_document_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$",
+                    "minLength": 64,
+                    "maxLength": 64
+                  },
+                  "accepted_at": {
+                    "type": "string",
+                    "format": "date-time",
+                    "pattern": "Z$"
+                  }
+                }
+              }
+            }
+          },
+          "payload_reference": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema_id",
+              "schema_version",
+              "storage_instance_id",
+              "recovery_epoch",
+              "value_revision",
+              "source_key",
+              "source_payload_ref"
+            ],
+            "properties": {
+              "schema_id": {
+                "const": "pm.storage_value.revision_run.v1"
+              },
+              "schema_version": {
+                "const": "1.0.0"
+              },
+              "storage_instance_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 512
+              },
+              "recovery_epoch": {
+                "type": "integer",
+                "minimum": 0,
+                "format": "pm-uint"
+              },
+              "value_revision": {
+                "type": "integer",
+                "minimum": 0,
+                "format": "pm-uint"
+              },
+              "source_key": {
+                "type": "array",
+                "minItems": 3,
+                "maxItems": 3,
+                "prefixItems": [
+                  {
+                    "const": "revision_run.v1"
+                  },
+                  {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512
+                  },
+                  {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512
+                  }
+                ],
+                "items": false
+              },
+              "source_payload_ref": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "blake3",
+                  "byte_size",
+                  "media_type"
+                ],
+                "properties": {
+                  "blake3": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$",
+                    "minLength": 64,
+                    "maxLength": 64
+                  },
+                  "byte_size": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "format": "pm-uint"
+                  },
+                  "media_type": {
+                    "const": "application/vnd.puppetmaster.revision-run+msgpack"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "$comment": "DCW integer-only profile: pm-uint format validation is mandatory; integer domains refuse decimal/exponent floats and wrong types. JSON -0 is normalized to 0 before hashing; leading zeros are invalid JSON. Authenticate original values by exact types and canonical bytes."
+      }
+    },
+    {
+      "family_id": "wizard_open_evidence",
+      "storage_kind": "redb",
+      "status": "materialized",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "wizard_open_evidence.v1:{project_id}:{planning_run_id}:{request_id}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.wizard_open_evidence.v1",
+      "value_schema_ref": "Plans/dcw/wizard_open_evidence.schema.json",
+      "owner_doc": "Plans/storage-plan.md#wizard-opened-original-custody",
+      "producer": [
+        "emitter.wizard_opened@1.0.0"
+      ],
+      "consumers": [
+        "Planning Wizard intake recovery",
+        "reader.wizard_opened_history@1.0.0"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "recovery_epoch",
+        "value_revision"
+      ],
+      "optional_fields": [
+        "source_ref",
+        "request",
+        "child",
+        "seed",
+        "result",
+        "prepared_event",
+        "first_append_receipt",
+        "original_event_value_commitment",
+        "original_segment_ref",
+        "publication",
+        "source_key",
+        "source_payload_ref"
+      ],
+      "nullable_fields": [
+        "first_append_receipt",
+        "original_event_value_commitment",
+        "original_segment_ref"
+      ],
+      "replay_behavior": "Original non-rebuildable evidence; never reconstruct from history. Exact original full event/result/receipt only.",
+      "migration": "Incomplete legacy evidence is compatibility-read only; no inferred original or receipt backfill.",
+      "migration_disposition": {
+        "mode": "current_schema",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": true,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#wizard-opened-original-custody"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "mandatory_backup",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/storage-plan.md#wizard-opened-original-custody",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#wizard-opened-original-custody",
+          "Plans/storage-plan.md#SP-286"
+        ]
+      },
+      "retention_compaction": "PENDING_RETENTION_DECISION; Case L-3 receipt/audit/source-lineage versus Chat content. No deletion policy is chosen.",
+      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "redaction_no_secret_rule": "Identifiers and authorized refs only; no body text, raw secret, credentials or local paths. Resolve original access and deletion on every read.",
+      "legacy_canonical_crosswalk_status": "materialized_current_source_legacy_read_only",
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#wizard-opened-original-custody",
+          "Plans/storage-plan.md#SP-286",
+          "Plans/storage-plan.md#SP-337",
+          "Plans/storage-plan.md#SP-340"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "value_schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://puppetmaster.local/schemas/dcw/wizard_open_evidence.schema.json",
+        "type": "object",
+        "required": [
+          "schema_id",
+          "schema_version",
+          "storage_instance_id",
+          "recovery_epoch",
+          "value_revision"
+        ],
+        "oneOf": [
+          {
+            "$ref": "#/$defs/inline"
+          },
+          {
+            "$ref": "#/$defs/payload_reference"
+          }
+        ],
+        "$defs": {
+          "inline": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema_id",
+              "schema_version",
+              "storage_instance_id",
+              "recovery_epoch",
+              "value_revision",
+              "source_ref",
+              "request",
+              "child",
+              "seed",
+              "result",
+              "prepared_event",
+              "first_append_receipt",
+              "original_event_value_commitment",
+              "original_segment_ref",
+              "publication"
+            ],
+            "properties": {
+              "schema_id": {
+                "const": "pm.storage_value.wizard_open_evidence.v1"
+              },
+              "schema_version": {
+                "const": "1.0.0"
+              },
+              "storage_instance_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 512
+              },
+              "recovery_epoch": {
+                "type": "integer",
+                "minimum": 0,
+                "format": "pm-uint"
+              },
+              "value_revision": {
+                "type": "integer",
+                "minimum": 0,
+                "format": "pm-uint"
+              },
+              "source_ref": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 512
+              },
+              "request": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "request_id",
+                  "request_ref",
+                  "actor_ref",
+                  "permission_snapshot_id",
+                  "project_id",
+                  "planning_run_id",
+                  "named_plan_id",
+                  "thread_group_id",
+                  "thread_id",
+                  "expected_child_revision",
+                  "expected_child_sha256",
+                  "command_id"
+                ],
+                "properties": {
+                  "request_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512
+                  },
+                  "request_ref": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512
+                  },
+                  "actor_ref": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512
+                  },
+                  "permission_snapshot_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512
+                  },
+                  "project_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512
+                  },
+                  "planning_run_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512
+                  },
+                  "named_plan_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512
+                  },
+                  "thread_group_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512
+                  },
+                  "thread_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512
+                  },
+                  "expected_child_revision": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "format": "pm-uint"
+                  },
+                  "expected_child_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$",
+                    "minLength": 64,
+                    "maxLength": 64
+                  },
+                  "command_id": {
+                    "const": "cmd.project.chain_wizard_open_deferred"
+                  }
+                }
+              },
+              "child": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "project_id",
+                  "planning_run_id",
+                  "named_plan_id",
+                  "thread_group_id",
+                  "thread_id",
+                  "thread_type",
+                  "thread_role",
+                  "revision",
+                  "sha256"
+                ],
+                "properties": {
+                  "project_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512
+                  },
+                  "planning_run_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512
+                  },
+                  "named_plan_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512
+                  },
+                  "thread_group_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512
+                  },
+                  "thread_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512
+                  },
+                  "thread_type": {
+                    "const": "planning_wizard"
+                  },
+                  "thread_role": {
+                    "const": "intake"
+                  },
+                  "revision": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "format": "pm-uint"
+                  },
+                  "sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$",
+                    "minLength": 64,
+                    "maxLength": 64
+                  }
+                }
+              },
+              "seed": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "seed_ref",
+                  "seed_kind",
+                  "seed_id",
+                  "version",
+                  "sha256",
+                  "named_plan_id",
+                  "project_context_snapshot_ref",
+                  "project_context_snapshot_hash",
+                  "warning_refs",
+                  "lineage_refs",
+                  "work_intent_axes",
+                  "amendment_refs"
+                ],
+                "properties": {
+                  "seed_ref": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512
+                  },
+                  "seed_kind": {
+                    "enum": [
+                      "ApprovedPRDPack",
+                      "normalized_requirements_pack",
+                      "assistant_chat_handoff_seed"
+                    ]
+                  },
+                  "seed_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512
+                  },
+                  "version": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512
+                  },
+                  "sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$",
+                    "minLength": 64,
+                    "maxLength": 64
+                  },
+                  "named_plan_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512
+                  },
+                  "project_context_snapshot_ref": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512
+                  },
+                  "project_context_snapshot_hash": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$",
+                    "minLength": 64,
+                    "maxLength": 64
+                  },
+                  "warning_refs": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 512
+                    },
+                    "minItems": 0,
+                    "uniqueItems": true
+                  },
+                  "lineage_refs": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 512
+                    },
+                    "minItems": 0,
+                    "uniqueItems": true
+                  },
+                  "work_intent_axes": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 512
+                    },
+                    "minItems": 1,
+                    "uniqueItems": true
+                  },
+                  "amendment_refs": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 512
+                    },
+                    "minItems": 0,
+                    "uniqueItems": true
+                  }
+                }
+              },
+              "result": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "result_ref",
+                  "request_ref",
+                  "status",
+                  "child_ref",
+                  "child_revision",
+                  "child_sha256",
+                  "seed_ref",
+                  "seed_sha256",
+                  "project_context_snapshot_ref",
+                  "project_context_snapshot_hash",
+                  "occurred_at_utc"
+                ],
+                "properties": {
+                  "result_ref": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512
+                  },
+                  "request_ref": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512
+                  },
+                  "status": {
+                    "const": "opened"
+                  },
+                  "child_ref": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512
+                  },
+                  "child_revision": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "format": "pm-uint"
+                  },
+                  "child_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$",
+                    "minLength": 64,
+                    "maxLength": 64
+                  },
+                  "seed_ref": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512
+                  },
+                  "seed_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$",
+                    "minLength": 64,
+                    "maxLength": 64
+                  },
+                  "project_context_snapshot_ref": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512
+                  },
+                  "project_context_snapshot_hash": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$",
+                    "minLength": 64,
+                    "maxLength": 64
+                  },
+                  "occurred_at_utc": {
+                    "type": "string",
+                    "format": "date-time",
+                    "pattern": "Z$"
+                  }
+                }
+              },
+              "prepared_event": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json"
+              },
+              "first_append_receipt": {
+                "anyOf": [
+                  {
+                    "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "original_event_value_commitment": {
+                "anyOf": [
+                  {
+                    "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/original_event_value_commitment"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "original_segment_ref": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "minLength": 1,
+                "maxLength": 1024
+              },
+              "publication": {
+                "enum": [
+                  "prepared",
+                  "receipted"
+                ]
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "publication": {
+                      "const": "receipted"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "first_append_receipt": {
+                      "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt"
+                    },
+                    "original_event_value_commitment": {
+                      "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/original_event_value_commitment"
+                    },
+                    "original_segment_ref": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 512
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "publication": {
+                      "const": "prepared"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "first_append_receipt": {
+                      "type": "null"
+                    },
+                    "original_event_value_commitment": {
+                      "type": "null"
+                    },
+                    "original_segment_ref": {
+                      "type": "null"
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "payload_reference": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema_id",
+              "schema_version",
+              "storage_instance_id",
+              "recovery_epoch",
+              "value_revision",
+              "source_key",
+              "source_payload_ref"
+            ],
+            "properties": {
+              "schema_id": {
+                "const": "pm.storage_value.wizard_open_evidence.v1"
+              },
+              "schema_version": {
+                "const": "1.0.0"
+              },
+              "storage_instance_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 512
+              },
+              "recovery_epoch": {
+                "type": "integer",
+                "minimum": 0,
+                "format": "pm-uint"
+              },
+              "value_revision": {
+                "type": "integer",
+                "minimum": 0,
+                "format": "pm-uint"
+              },
+              "source_key": {
+                "type": "array",
+                "minItems": 4,
+                "maxItems": 4,
+                "prefixItems": [
+                  {
+                    "const": "wizard_open_evidence.v1"
+                  },
+                  {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512
+                  },
+                  {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512
+                  },
+                  {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512
+                  }
+                ],
+                "items": false
+              },
+              "source_payload_ref": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "blake3",
+                  "byte_size",
+                  "media_type"
+                ],
+                "properties": {
+                  "blake3": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$",
+                    "minLength": 64,
+                    "maxLength": 64
+                  },
+                  "byte_size": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "format": "pm-uint"
+                  },
+                  "media_type": {
+                    "const": "application/vnd.puppetmaster.wizard-open-evidence+msgpack"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "$comment": "DCW integer-only profile: pm-uint format validation is mandatory; integer domains refuse decimal/exponent floats and wrong types. JSON -0 is normalized to 0 before hashing; leading zeros are invalid JSON. Authenticate original values by exact types and canonical bytes."
+      }
+    },
+    {
+      "family_id": "wizard_seed_load_evidence",
+      "storage_kind": "redb",
+      "status": "materialized",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "wizard_seed_load_evidence.v1:{project_id}:{planning_run_id}:{request_id}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.wizard_seed_load_evidence.v1",
+      "value_schema_ref": "Plans/dcw/wizard_seed_load_evidence.schema.json",
+      "owner_doc": "Plans/storage-plan.md#wizard-deferred-payload-loaded-original-custody",
+      "producer": [
+        "emitter.wizard_deferred_payload_loaded@1.0.0"
+      ],
+      "consumers": [
+        "Planning Wizard intake recovery",
+        "reader.wizard_deferred_payload_loaded_history@1.0.0"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "recovery_epoch",
+        "value_revision"
+      ],
+      "optional_fields": [
+        "source_ref",
+        "request",
+        "child",
+        "seed",
+        "result",
+        "prepared_event",
+        "first_append_receipt",
+        "original_event_value_commitment",
+        "original_segment_ref",
+        "publication",
+        "source_key",
+        "source_payload_ref"
+      ],
+      "nullable_fields": [
+        "first_append_receipt",
+        "original_event_value_commitment",
+        "original_segment_ref"
+      ],
+      "replay_behavior": "Original non-rebuildable evidence; never reconstruct from history. Exact original full event/result/receipt only.",
+      "migration": "Incomplete legacy evidence is compatibility-read only; no inferred original or receipt backfill.",
+      "migration_disposition": {
+        "mode": "current_schema",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": true,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#wizard-deferred-payload-loaded-original-custody"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "mandatory_backup",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/storage-plan.md#wizard-deferred-payload-loaded-original-custody",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#wizard-deferred-payload-loaded-original-custody",
+          "Plans/storage-plan.md#SP-286"
+        ]
+      },
+      "retention_compaction": "PENDING_RETENTION_DECISION; Case L-3 receipt/audit/source-lineage versus Chat content. No deletion policy is chosen.",
+      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "redaction_no_secret_rule": "Identifiers and authorized refs only; no body text, raw secret, credentials or local paths. Resolve original access and deletion on every read.",
+      "legacy_canonical_crosswalk_status": "materialized_current_source_legacy_read_only",
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#wizard-deferred-payload-loaded-original-custody",
+          "Plans/storage-plan.md#SP-286",
+          "Plans/storage-plan.md#SP-337",
+          "Plans/storage-plan.md#SP-340"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "value_schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://puppetmaster.local/schemas/dcw/wizard_seed_load_evidence.schema.json",
+        "type": "object",
+        "required": [
+          "schema_id",
+          "schema_version",
+          "storage_instance_id",
+          "recovery_epoch",
+          "value_revision"
+        ],
+        "oneOf": [
+          {
+            "$ref": "#/$defs/inline"
+          },
+          {
+            "$ref": "#/$defs/payload_reference"
+          }
+        ],
+        "$defs": {
+          "inline": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema_id",
+              "schema_version",
+              "storage_instance_id",
+              "recovery_epoch",
+              "value_revision",
+              "source_ref",
+              "request",
+              "child",
+              "seed",
+              "result",
+              "prepared_event",
+              "first_append_receipt",
+              "original_event_value_commitment",
+              "original_segment_ref",
+              "publication"
+            ],
+            "properties": {
+              "schema_id": {
+                "const": "pm.storage_value.wizard_seed_load_evidence.v1"
+              },
+              "schema_version": {
+                "const": "1.0.0"
+              },
+              "storage_instance_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 512
+              },
+              "recovery_epoch": {
+                "type": "integer",
+                "minimum": 0,
+                "format": "pm-uint"
+              },
+              "value_revision": {
+                "type": "integer",
+                "minimum": 0,
+                "format": "pm-uint"
+              },
+              "source_ref": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 512
+              },
+              "request": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "request_id",
+                  "request_ref",
+                  "actor_ref",
+                  "permission_snapshot_id",
+                  "project_id",
+                  "planning_run_id",
+                  "named_plan_id",
+                  "thread_group_id",
+                  "thread_id",
+                  "expected_child_revision",
+                  "expected_child_sha256",
+                  "command_id"
+                ],
+                "properties": {
+                  "request_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512
+                  },
+                  "request_ref": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512
+                  },
+                  "actor_ref": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512
+                  },
+                  "permission_snapshot_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512
+                  },
+                  "project_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512
+                  },
+                  "planning_run_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512
+                  },
+                  "named_plan_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512
+                  },
+                  "thread_group_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512
+                  },
+                  "thread_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512
+                  },
+                  "expected_child_revision": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "format": "pm-uint"
+                  },
+                  "expected_child_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$",
+                    "minLength": 64,
+                    "maxLength": 64
+                  },
+                  "command_id": {
+                    "const": "cmd.project.chain_wizard_open_deferred"
+                  }
+                }
+              },
+              "child": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "project_id",
+                  "planning_run_id",
+                  "named_plan_id",
+                  "thread_group_id",
+                  "thread_id",
+                  "thread_type",
+                  "thread_role",
+                  "revision",
+                  "sha256"
+                ],
+                "properties": {
+                  "project_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512
+                  },
+                  "planning_run_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512
+                  },
+                  "named_plan_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512
+                  },
+                  "thread_group_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512
+                  },
+                  "thread_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512
+                  },
+                  "thread_type": {
+                    "const": "planning_wizard"
+                  },
+                  "thread_role": {
+                    "const": "intake"
+                  },
+                  "revision": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "format": "pm-uint"
+                  },
+                  "sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$",
+                    "minLength": 64,
+                    "maxLength": 64
+                  }
+                }
+              },
+              "seed": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "seed_ref",
+                  "seed_kind",
+                  "seed_id",
+                  "version",
+                  "sha256",
+                  "named_plan_id",
+                  "project_context_snapshot_ref",
+                  "project_context_snapshot_hash",
+                  "warning_refs",
+                  "lineage_refs",
+                  "work_intent_axes",
+                  "amendment_refs"
+                ],
+                "properties": {
+                  "seed_ref": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512
+                  },
+                  "seed_kind": {
+                    "enum": [
+                      "ApprovedPRDPack",
+                      "normalized_requirements_pack",
+                      "assistant_chat_handoff_seed"
+                    ]
+                  },
+                  "seed_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512
+                  },
+                  "version": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512
+                  },
+                  "sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$",
+                    "minLength": 64,
+                    "maxLength": 64
+                  },
+                  "named_plan_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512
+                  },
+                  "project_context_snapshot_ref": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512
+                  },
+                  "project_context_snapshot_hash": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$",
+                    "minLength": 64,
+                    "maxLength": 64
+                  },
+                  "warning_refs": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 512
+                    },
+                    "minItems": 0,
+                    "uniqueItems": true
+                  },
+                  "lineage_refs": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 512
+                    },
+                    "minItems": 0,
+                    "uniqueItems": true
+                  },
+                  "work_intent_axes": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 512
+                    },
+                    "minItems": 1,
+                    "uniqueItems": true
+                  },
+                  "amendment_refs": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 512
+                    },
+                    "minItems": 0,
+                    "uniqueItems": true
+                  }
+                }
+              },
+              "result": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "result_ref",
+                  "request_ref",
+                  "status",
+                  "child_ref",
+                  "child_revision",
+                  "child_sha256",
+                  "seed_ref",
+                  "seed_sha256",
+                  "project_context_snapshot_ref",
+                  "project_context_snapshot_hash",
+                  "occurred_at_utc"
+                ],
+                "properties": {
+                  "result_ref": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512
+                  },
+                  "request_ref": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512
+                  },
+                  "status": {
+                    "const": "seed_loaded"
+                  },
+                  "child_ref": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512
+                  },
+                  "child_revision": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "format": "pm-uint"
+                  },
+                  "child_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$",
+                    "minLength": 64,
+                    "maxLength": 64
+                  },
+                  "seed_ref": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512
+                  },
+                  "seed_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$",
+                    "minLength": 64,
+                    "maxLength": 64
+                  },
+                  "project_context_snapshot_ref": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512
+                  },
+                  "project_context_snapshot_hash": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$",
+                    "minLength": 64,
+                    "maxLength": 64
+                  },
+                  "occurred_at_utc": {
+                    "type": "string",
+                    "format": "date-time",
+                    "pattern": "Z$"
+                  }
+                }
+              },
+              "prepared_event": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json"
+              },
+              "first_append_receipt": {
+                "anyOf": [
+                  {
+                    "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "original_event_value_commitment": {
+                "anyOf": [
+                  {
+                    "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/original_event_value_commitment"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "original_segment_ref": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "minLength": 1,
+                "maxLength": 1024
+              },
+              "publication": {
+                "enum": [
+                  "prepared",
+                  "receipted"
+                ]
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "publication": {
+                      "const": "receipted"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "first_append_receipt": {
+                      "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt"
+                    },
+                    "original_event_value_commitment": {
+                      "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/original_event_value_commitment"
+                    },
+                    "original_segment_ref": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 512
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "publication": {
+                      "const": "prepared"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "first_append_receipt": {
+                      "type": "null"
+                    },
+                    "original_event_value_commitment": {
+                      "type": "null"
+                    },
+                    "original_segment_ref": {
+                      "type": "null"
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "payload_reference": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema_id",
+              "schema_version",
+              "storage_instance_id",
+              "recovery_epoch",
+              "value_revision",
+              "source_key",
+              "source_payload_ref"
+            ],
+            "properties": {
+              "schema_id": {
+                "const": "pm.storage_value.wizard_seed_load_evidence.v1"
+              },
+              "schema_version": {
+                "const": "1.0.0"
+              },
+              "storage_instance_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 512
+              },
+              "recovery_epoch": {
+                "type": "integer",
+                "minimum": 0,
+                "format": "pm-uint"
+              },
+              "value_revision": {
+                "type": "integer",
+                "minimum": 0,
+                "format": "pm-uint"
+              },
+              "source_key": {
+                "type": "array",
+                "minItems": 4,
+                "maxItems": 4,
+                "prefixItems": [
+                  {
+                    "const": "wizard_seed_load_evidence.v1"
+                  },
+                  {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512
+                  },
+                  {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512
+                  },
+                  {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512
+                  }
+                ],
+                "items": false
+              },
+              "source_payload_ref": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "blake3",
+                  "byte_size",
+                  "media_type"
+                ],
+                "properties": {
+                  "blake3": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$",
+                    "minLength": 64,
+                    "maxLength": 64
+                  },
+                  "byte_size": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "format": "pm-uint"
+                  },
+                  "media_type": {
+                    "const": "application/vnd.puppetmaster.wizard-seed-load-evidence+msgpack"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "$comment": "DCW integer-only profile: pm-uint format validation is mandatory; integer domains refuse decimal/exponent floats and wrong types. JSON -0 is normalized to 0 before hashing; leading zeros are invalid JSON. Authenticate original values by exact types and canonical bytes."
+      }
+    },
+    {
+      "family_id": "wizard_blocked_evidence",
+      "storage_kind": "redb",
+      "status": "materialized",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "wizard_blocked_evidence.v1:{project_id}:{planning_run_id}:{blockage_id}:{observation_id}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.wizard_blocked_evidence.v1",
+      "value_schema_ref": "Plans/dcw/wizard_blocked_evidence.schema.json",
+      "owner_doc": "Plans/Contracts_V0.md#CV-596",
+      "producer": [
+        "emitter.wizard_blocked@1.0.0"
+      ],
+      "consumers": [
+        "reader.wizard_blocked_history@1.0.0"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "recovery_epoch",
+        "value_revision"
+      ],
+      "optional_fields": [
+        "source_ref",
+        "prepared_event",
+        "first_append_receipt",
+        "original_event_value_commitment",
+        "original_segment_ref",
+        "publication",
+        "observation",
+        "source_key",
+        "source_payload_ref"
+      ],
+      "nullable_fields": [
+        "first_append_receipt",
+        "original_event_value_commitment",
+        "original_segment_ref"
+      ],
+      "replay_behavior": "Original non-rebuildable planning observation; never reconstruct from history. Exact original observation, full event and first receipt only.",
+      "migration": "Incomplete legacy evidence is compatibility-read only; no inferred original or receipt backfill.",
+      "migration_disposition": {
+        "mode": "current_schema",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": true,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/Contracts_V0.md#CV-596"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "mandatory_backup",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/Contracts_V0.md#CV-596",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/Contracts_V0.md#CV-596",
+          "Plans/storage-plan.md#SP-286"
+        ]
+      },
+      "retention_compaction": "Explicit NEW technical assignment to existing Case L-3 approval/receipt/audit authority/source-lineage class, RP-AUTHORITY-INDEFINITE: this source is non-rebuildable original planning observation/operation custody, refs and commitments only; indefinite, no count eviction, storage pressure fails closed. Independent event-history retention remains PENDING_RETENTION_DECISION. Report/action content keeps its own owner lifetime.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "redaction_no_secret_rule": "Identifiers and authorized refs only; no body text, raw secret, credentials or local paths. Resolve original access and deletion on every read.",
+      "legacy_canonical_crosswalk_status": "materialized_current_source_legacy_read_only",
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/Contracts_V0.md#CV-596",
+          "Plans/storage-plan.md#SP-286",
+          "Plans/storage-plan.md#SP-337",
+          "Plans/storage-plan.md#SP-340"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "value_schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://puppetmaster.local/schemas/dcw/wizard_blocked_evidence.schema.json",
+        "type": "object",
+        "required": [
+          "schema_id",
+          "schema_version",
+          "storage_instance_id",
+          "recovery_epoch",
+          "value_revision"
+        ],
+        "oneOf": [
+          {
+            "$ref": "#/$defs/inline"
+          },
+          {
+            "$ref": "#/$defs/payload_reference"
+          }
+        ],
+        "$defs": {
+          "inline": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema_id",
+              "schema_version",
+              "storage_instance_id",
+              "recovery_epoch",
+              "value_revision",
+              "source_ref",
+              "prepared_event",
+              "first_append_receipt",
+              "original_event_value_commitment",
+              "original_segment_ref",
+              "publication",
+              "observation"
+            ],
+            "properties": {
+              "schema_id": {
+                "const": "pm.storage_value.wizard_blocked_evidence.v1"
+              },
+              "schema_version": {
+                "const": "1.0.0"
+              },
+              "storage_instance_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 512
+              },
+              "recovery_epoch": {
+                "type": "integer",
+                "minimum": 0,
+                "format": "pm-uint"
+              },
+              "value_revision": {
+                "type": "integer",
+                "minimum": 0,
+                "format": "pm-uint"
+              },
+              "source_ref": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 512
+              },
+              "prepared_event": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json"
+              },
+              "first_append_receipt": {
+                "anyOf": [
+                  {
+                    "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "original_event_value_commitment": {
+                "anyOf": [
+                  {
+                    "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/original_event_value_commitment"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "original_segment_ref": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "minLength": 1,
+                "maxLength": 1024
+              },
+              "publication": {
+                "enum": [
+                  "prepared",
+                  "receipted"
+                ]
+              },
+              "observation": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "project_id",
+                  "planning_run_id",
+                  "blockage_id",
+                  "observation_id",
+                  "actor_ref",
+                  "permission_snapshot_id",
+                  "component",
+                  "subject_kind",
+                  "kind",
+                  "required_conditions",
+                  "cleared_conditions",
+                  "completed_repair_attempt_refs",
+                  "next_steps",
+                  "ts",
+                  "report_ref",
+                  "resume_url",
+                  "route_target_ref"
+                ],
+                "properties": {
+                  "project_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "planning_run_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "blockage_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "observation_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "actor_ref": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "permission_snapshot_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "component": {
+                    "const": "planning_wizard"
+                  },
+                  "subject_kind": {
+                    "const": "planning_run"
+                  },
+                  "kind": {
+                    "enum": [
+                      "blockage_recorded",
+                      "repair_attempt_completed"
+                    ]
+                  },
+                  "required_conditions": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "uniqueItems": true
+                  },
+                  "cleared_conditions": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "uniqueItems": true
+                  },
+                  "completed_repair_attempt_refs": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "uniqueItems": true
+                  },
+                  "next_steps": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "step_ref",
+                        "prevented_by"
+                      ],
+                      "properties": {
+                        "step_ref": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "prevented_by": {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "uniqueItems": true
+                        }
+                      }
+                    }
+                  },
+                  "ts": {
+                    "type": "string",
+                    "format": "date-time",
+                    "pattern": "Z$"
+                  },
+                  "report_ref": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "resume_url": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "route_target_ref": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "publication": {
+                      "const": "receipted"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "first_append_receipt": {
+                      "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt"
+                    },
+                    "original_event_value_commitment": {
+                      "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/original_event_value_commitment"
+                    },
+                    "original_segment_ref": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 512
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "publication": {
+                      "const": "prepared"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "first_append_receipt": {
+                      "type": "null"
+                    },
+                    "original_event_value_commitment": {
+                      "type": "null"
+                    },
+                    "original_segment_ref": {
+                      "type": "null"
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "payload_reference": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema_id",
+              "schema_version",
+              "storage_instance_id",
+              "recovery_epoch",
+              "value_revision",
+              "source_key",
+              "source_payload_ref"
+            ],
+            "properties": {
+              "schema_id": {
+                "const": "pm.storage_value.wizard_blocked_evidence.v1"
+              },
+              "schema_version": {
+                "const": "1.0.0"
+              },
+              "storage_instance_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 512
+              },
+              "recovery_epoch": {
+                "type": "integer",
+                "minimum": 0,
+                "format": "pm-uint"
+              },
+              "value_revision": {
+                "type": "integer",
+                "minimum": 0,
+                "format": "pm-uint"
+              },
+              "source_key": {
+                "type": "array",
+                "minItems": 5,
+                "maxItems": 5,
+                "prefixItems": [
+                  {
+                    "const": "wizard_blocked_evidence.v1"
+                  },
+                  {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                ],
+                "items": false
+              },
+              "source_payload_ref": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "blake3",
+                  "byte_size",
+                  "media_type"
+                ],
+                "properties": {
+                  "blake3": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$",
+                    "minLength": 64,
+                    "maxLength": 64
+                  },
+                  "byte_size": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "format": "pm-uint"
+                  },
+                  "media_type": {
+                    "const": "application/vnd.puppetmaster.wizard-blocked-evidence+msgpack"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "family_id": "wizard_unblocked_evidence",
+      "storage_kind": "redb",
+      "status": "materialized",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "wizard_unblocked_evidence.v1:{project_id}:{planning_run_id}:{blockage_id}:{observation_id}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.wizard_unblocked_evidence.v1",
+      "value_schema_ref": "Plans/dcw/wizard_unblocked_evidence.schema.json",
+      "owner_doc": "Plans/Contracts_V0.md#CV-597",
+      "producer": [
+        "emitter.wizard_unblocked@1.0.0"
+      ],
+      "consumers": [
+        "reader.wizard_unblocked_history@1.0.0"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "recovery_epoch",
+        "value_revision"
+      ],
+      "optional_fields": [
+        "source_ref",
+        "prepared_event",
+        "first_append_receipt",
+        "original_event_value_commitment",
+        "original_segment_ref",
+        "publication",
+        "observation",
+        "source_key",
+        "source_payload_ref"
+      ],
+      "nullable_fields": [
+        "first_append_receipt",
+        "original_event_value_commitment",
+        "original_segment_ref"
+      ],
+      "replay_behavior": "Original non-rebuildable planning observation; never reconstruct from history. Exact original observation, full event and first receipt only.",
+      "migration": "Incomplete legacy evidence is compatibility-read only; no inferred original or receipt backfill.",
+      "migration_disposition": {
+        "mode": "current_schema",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": true,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/Contracts_V0.md#CV-597"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "mandatory_backup",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/Contracts_V0.md#CV-597",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/Contracts_V0.md#CV-597",
+          "Plans/storage-plan.md#SP-286"
+        ]
+      },
+      "retention_compaction": "Explicit NEW technical assignment to existing Case L-3 approval/receipt/audit authority/source-lineage class, RP-AUTHORITY-INDEFINITE: this source is non-rebuildable original planning observation/operation custody, refs and commitments only; indefinite, no count eviction, storage pressure fails closed. Independent event-history retention remains PENDING_RETENTION_DECISION. Report/action content keeps its own owner lifetime.",
+      "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
+      "redaction_no_secret_rule": "Identifiers and authorized refs only; no body text, raw secret, credentials or local paths. Resolve original access and deletion on every read.",
+      "legacy_canonical_crosswalk_status": "materialized_current_source_legacy_read_only",
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/Contracts_V0.md#CV-597",
+          "Plans/storage-plan.md#SP-286",
+          "Plans/storage-plan.md#SP-337",
+          "Plans/storage-plan.md#SP-340"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "value_schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://puppetmaster.local/schemas/dcw/wizard_unblocked_evidence.schema.json",
+        "type": "object",
+        "required": [
+          "schema_id",
+          "schema_version",
+          "storage_instance_id",
+          "recovery_epoch",
+          "value_revision"
+        ],
+        "oneOf": [
+          {
+            "$ref": "#/$defs/inline"
+          },
+          {
+            "$ref": "#/$defs/payload_reference"
+          }
+        ],
+        "$defs": {
+          "inline": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema_id",
+              "schema_version",
+              "storage_instance_id",
+              "recovery_epoch",
+              "value_revision",
+              "source_ref",
+              "prepared_event",
+              "first_append_receipt",
+              "original_event_value_commitment",
+              "original_segment_ref",
+              "publication",
+              "observation"
+            ],
+            "properties": {
+              "schema_id": {
+                "const": "pm.storage_value.wizard_unblocked_evidence.v1"
+              },
+              "schema_version": {
+                "const": "1.0.0"
+              },
+              "storage_instance_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 512
+              },
+              "recovery_epoch": {
+                "type": "integer",
+                "minimum": 0,
+                "format": "pm-uint"
+              },
+              "value_revision": {
+                "type": "integer",
+                "minimum": 0,
+                "format": "pm-uint"
+              },
+              "source_ref": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 512
+              },
+              "prepared_event": {
+                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json"
+              },
+              "first_append_receipt": {
+                "anyOf": [
+                  {
+                    "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "original_event_value_commitment": {
+                "anyOf": [
+                  {
+                    "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/original_event_value_commitment"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "original_segment_ref": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "minLength": 1,
+                "maxLength": 1024
+              },
+              "publication": {
+                "enum": [
+                  "prepared",
+                  "receipted"
+                ]
+              },
+              "observation": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "project_id",
+                  "planning_run_id",
+                  "blockage_id",
+                  "observation_id",
+                  "actor_ref",
+                  "permission_snapshot_id",
+                  "component",
+                  "subject_kind",
+                  "kind",
+                  "required_conditions",
+                  "cleared_conditions",
+                  "completed_repair_attempt_refs",
+                  "next_steps",
+                  "ts",
+                  "resolution_source"
+                ],
+                "properties": {
+                  "project_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "planning_run_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "blockage_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "observation_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "actor_ref": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "permission_snapshot_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "component": {
+                    "const": "planning_wizard"
+                  },
+                  "subject_kind": {
+                    "const": "planning_run"
+                  },
+                  "kind": {
+                    "const": "conditions_cleared"
+                  },
+                  "required_conditions": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "uniqueItems": true
+                  },
+                  "cleared_conditions": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "uniqueItems": true
+                  },
+                  "completed_repair_attempt_refs": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "uniqueItems": true
+                  },
+                  "next_steps": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "step_ref",
+                        "prevented_by"
+                      ],
+                      "properties": {
+                        "step_ref": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "prevented_by": {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "uniqueItems": true
+                        }
+                      }
+                    }
+                  },
+                  "ts": {
+                    "type": "string",
+                    "format": "date-time",
+                    "pattern": "Z$"
+                  },
+                  "resolution_source": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "publication": {
+                      "const": "receipted"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "first_append_receipt": {
+                      "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt"
+                    },
+                    "original_event_value_commitment": {
+                      "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/original_event_value_commitment"
+                    },
+                    "original_segment_ref": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 512
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "publication": {
+                      "const": "prepared"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "first_append_receipt": {
+                      "type": "null"
+                    },
+                    "original_event_value_commitment": {
+                      "type": "null"
+                    },
+                    "original_segment_ref": {
+                      "type": "null"
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "payload_reference": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema_id",
+              "schema_version",
+              "storage_instance_id",
+              "recovery_epoch",
+              "value_revision",
+              "source_key",
+              "source_payload_ref"
+            ],
+            "properties": {
+              "schema_id": {
+                "const": "pm.storage_value.wizard_unblocked_evidence.v1"
+              },
+              "schema_version": {
+                "const": "1.0.0"
+              },
+              "storage_instance_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 512
+              },
+              "recovery_epoch": {
+                "type": "integer",
+                "minimum": 0,
+                "format": "pm-uint"
+              },
+              "value_revision": {
+                "type": "integer",
+                "minimum": 0,
+                "format": "pm-uint"
+              },
+              "source_key": {
+                "type": "array",
+                "minItems": 5,
+                "maxItems": 5,
+                "prefixItems": [
+                  {
+                    "const": "wizard_unblocked_evidence.v1"
+                  },
+                  {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                ],
+                "items": false
+              },
+              "source_payload_ref": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "blake3",
+                  "byte_size",
+                  "media_type"
+                ],
+                "properties": {
+                  "blake3": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$",
+                    "minLength": 64,
+                    "maxLength": 64
+                  },
+                  "byte_size": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "format": "pm-uint"
+                  },
+                  "media_type": {
+                    "const": "application/vnd.puppetmaster.wizard-unblocked-evidence+msgpack"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
       "family_id": "filemanager_operation_custody",
       "storage_kind": "redb",
       "status": "materialized",
@@ -224980,6 +227844,41 @@
         "storage_group": "coordination_and_storage",
         "encoding_target": "messagepack_canonical",
         "encoding_note": "SP-560: inline through 16384 bytes; larger complete logical values use verified SP-337 BLAKE3/size/media references. Mandatory coherent backup includes referents. Existing 2147483648-byte group canonical budget is advisory.",
+        "max_value_bytes": 16384
+      },
+      "revision_run": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "SP-340: non-rebuildable original source, canonical runs_and_goals group (4 GiB advisory canonical budget). Complete logical source uses Plans/dcw/revision_run.schema.json#/$defs/inline. At most 16384 canonical MessagePack bytes inline; larger source uses the same schema #/$defs/payload_reference under the same typed key and value_revision CAS. SP-337 packs hold exact complete original canonical MessagePack source bytes, addressed by BLAKE3 plus byte_size/media_type; durable payload bytes and index precede reference commit/append/publication. Backup/restore covers physical row, payload pack/index and complete original event/receipt evidence at the same verified boundary. No truncation, inferred source, retention change or canonical-budget write refusal.",
+        "max_value_bytes": 16384
+      },
+      "wizard_open_evidence": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "SP-340: non-rebuildable original source, canonical runs_and_goals group (4 GiB advisory canonical budget). Complete logical source uses Plans/dcw/wizard_open_evidence.schema.json#/$defs/inline. At most 16384 canonical MessagePack bytes inline; larger source uses the same schema #/$defs/payload_reference under the same typed key and value_revision CAS. SP-337 packs hold exact complete original canonical MessagePack source bytes, addressed by BLAKE3 plus byte_size/media_type; durable payload bytes and index precede reference commit/append/publication. Backup/restore covers physical row, payload pack/index and complete original event/receipt evidence at the same verified boundary. No truncation, inferred source, retention change or canonical-budget write refusal.",
+        "max_value_bytes": 16384
+      },
+      "wizard_seed_load_evidence": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "SP-340: non-rebuildable original source, canonical runs_and_goals group (4 GiB advisory canonical budget). Complete logical source uses Plans/dcw/wizard_seed_load_evidence.schema.json#/$defs/inline. At most 16384 canonical MessagePack bytes inline; larger source uses the same schema #/$defs/payload_reference under the same typed key and value_revision CAS. SP-337 packs hold exact complete original canonical MessagePack source bytes, addressed by BLAKE3 plus byte_size/media_type; durable payload bytes and index precede reference commit/append/publication. Backup/restore covers physical row, payload pack/index and complete original event/receipt evidence at the same verified boundary. No truncation, inferred source, retention change or canonical-budget write refusal.",
+        "max_value_bytes": 16384
+      },
+      "wizard_blocked_evidence": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "CV-596: canonical non-rebuildable original observation; existing SP-340 runs_and_goals budget and 16384-byte physical limit. Complete source uses Plans/dcw/wizard_blocked_evidence.schema.json#/$defs/inline; overflow uses #/$defs/payload_reference with exact SP-337 bytes, durable pack/index before reference commit; mandatory coherent original event/receipt/source backup. No new quota or retention decision.",
+        "max_value_bytes": 16384
+      },
+      "wizard_unblocked_evidence": {
+        "redb_file": "canonical",
+        "storage_group": "runs_and_goals",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "CV-597: canonical non-rebuildable original observation; existing SP-340 runs_and_goals budget and 16384-byte physical limit. Complete source uses Plans/dcw/wizard_unblocked_evidence.schema.json#/$defs/inline; overflow uses #/$defs/payload_reference with exact SP-337 bytes, durable pack/index before reference commit; mandatory coherent original event/receipt/source backup. No new quota or retention decision.",
         "max_value_bytes": 16384
       }
     },
