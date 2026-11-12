@@ -140,7 +140,7 @@ def cases(m, Case=Case):
                 add(p+'AR08_before_state', 'archive_direct', combined['payload'], combined['source'])
         # Checkpoint joins, from the accepted checkpoint fixture.
         value, source, key = c['valid'], c['source'], c['key']
-        generation = value['source_token']['generation_id']
+        generation = value['source_read_token']['generation_id']
         node_path = ('source', 'checkpoint', 'generations', generation)
         base = {'value': value, 'source': source}
         prefix = event + '/checkpoint/table-witness/'
@@ -151,16 +151,16 @@ def cases(m, Case=Case):
                 combined = changed(combined, path, replacement)
             add(prefix+name, 'checkpoint_direct', combined['value'], combined['source'], row, key)
         checkpoint('CP01_checkpoint_schema', (('value', 'consumer_id'), 'sibling'))
-        checkpoint('CP02_generation_node', (('value', 'source_token', 'generation_id'), OTHER_GENERATION),
-                   (('source', 'publication', 'source_token', 'generation_id'), OTHER_GENERATION))
+        checkpoint('CP02_generation_node', (('value', 'source_read_token', 'generation_id'), OTHER_GENERATION),
+                   (('source', 'publication', 'source_read_token', 'generation_id'), OTHER_GENERATION))
         checkpoint('CP03_sequence_type', (('source', 'index_row', 'sequence_id'),
                                           float(source['event_record']['sequence_id'])))
         checkpoint('CP07_root_store', (('source', 'checkpoint', 'storage_instance_id'), FOREIGN_STORE))
         checkpoint('CP11_source_key', (('source', 'checkpoint_key'), 'other'))
-        checkpoint('CP16_token_selection', (('value', 'source_token', 'source_selection', 'current_bytes_sha256'), 'c' * 64),
-                   (('source', 'publication', 'source_token', 'source_selection', 'current_bytes_sha256'), 'c' * 64))
-        checkpoint('CP18_token_dataset', (('value', 'source_token', 'index_dataset_name'), OTHER_DATASET),
-                   (('source', 'publication', 'source_token', 'index_dataset_name'), OTHER_DATASET))
+        checkpoint('CP16_token_selection', (('value', 'source_read_token', 'source_selection', 'current_bytes_sha256'), 'c' * 64),
+                   (('source', 'publication', 'source_read_token', 'source_selection', 'current_bytes_sha256'), 'c' * 64))
+        checkpoint('CP18_token_dataset', (('value', 'source_read_token', 'index_dataset_name'), OTHER_DATASET),
+                   (('source', 'publication', 'source_read_token', 'index_dataset_name'), OTHER_DATASET))
         checkpoint('CP19_node_dataset', (node_path + ('index_dataset_name',), OTHER_DATASET))
         checkpoint('CP24_index_sequence', (('source', 'index_row', 'sequence_id'), source['event_record']['sequence_id'] + 1))
         checkpoint('CP26_index_partition', (('source', 'index_row', 'scope_partition'), 'other'))

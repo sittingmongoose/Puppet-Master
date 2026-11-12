@@ -1165,6 +1165,7 @@ def p2b_alert(family, fixtures, schema, cp_schema, checkpoint):
 
 def trailing_lf_cases(value, schema):
     """Each currently present patterned leaf gets an independent trailing-LF regression."""
+    schema = domain.checkpoint_source_constraints(schema)
     count = 0
     def resolve(contract):
         while '$ref' in contract:
@@ -1196,7 +1197,8 @@ def trailing_lf_cases(value, schema):
     return count
 
 def pattern_leaf_cases(schema):
-    """Exercise every pattern, including identifiers absent from the positive sample."""
+    """Exercise every effective owner pattern, including the preserved source-selector profile."""
+    schema = domain.checkpoint_source_constraints(schema)
     count = 0
     def visit(node):
         nonlocal count
