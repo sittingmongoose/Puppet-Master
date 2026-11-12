@@ -1999,7 +1999,7 @@
         "tests/test_pm_evidence_artifact_binding_modes.py",
         "tests/test_pm_working_notebook_contracts.py"
       ],
-      "line_count": 7657,
+      "line_count": 7658,
       "path": "Plans/Automated_Testing_System.md",
       "plan_unit_count": 84,
       "plan_unit_ids": [
@@ -2162,7 +2162,7 @@
         "wonderer_grilling_contract_coverage",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "78c06d0f96e4c1cc6c040709e8175ab5f3488d355cab8e4fc948602cef47ec81",
+      "sha256": "ebef11b125ccf78b3f5e31e2e769b767d1d462f8fad99e592ffdd903ef1b2035",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 83,
@@ -2334,6 +2334,7 @@
         "python3 scripts/pm7-canon-check.py",
         "python3 scripts/pm_coordination_events.py",
         "python3 scripts/pm_goal_current_writer_oracles.py",
+        "python3 scripts/pm_goal_dg_ca3_oracles.py",
         "python3 scripts/pm_goal_dg_ca_oracles.py",
         "python3 scripts/pm_goal_history_reader_fixtures.py",
         "python3 scripts/pm_goal_lifecycle_successor_oracles.py",
@@ -9667,7 +9668,7 @@
         "future verifier/adjudicator policy layer",
         "future worktree manager"
       ],
-      "line_count": 9196,
+      "line_count": 9197,
       "path": "Plans/Goal_Runtime_System.md",
       "plan_unit_count": 98,
       "plan_unit_ids": [
@@ -9857,7 +9858,7 @@
         "workflow_activation_original_source_or_lifetime_drift",
         "workflow_state_absorbed_into_goal"
       ],
-      "sha256": "5f8e12118aadf8cdec8d3a51dd3b6603bd20565617ab916fba307356bb6ace88",
+      "sha256": "7572cfb1fce4416cdff8c763b64773bfbf49ce1924e026d5613559e0e0179556",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 89,
@@ -10058,6 +10059,7 @@
         "python3 scripts/pm-shard-plans.py --check",
         "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
         "python3 scripts/pm_goal_current_writer_oracles.py",
+        "python3 scripts/pm_goal_dg_ca3_oracles.py",
         "python3 scripts/pm_goal_dg_ca_oracles.py",
         "python3 scripts/pm_goal_history_reader_fixtures.py",
         "python3 scripts/pm_goal_lifecycle_successor_oracles.py",
@@ -21731,7 +21733,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-12T01:04:12Z",
+  "generated_at_utc": "2026-11-12T03:01:46Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

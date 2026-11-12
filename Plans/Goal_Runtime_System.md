@@ -9006,6 +9006,7 @@ validation_surfaces:
 - scripts/pm_goal_own_c_oracles.py
 - Plans/goal_own_c_contracts/protocol.md
 - python3 scripts/pm_goal_dg_ca_oracles.py
+- python3 scripts/pm_goal_dg_ca3_oracles.py
 risk_class: forged_original_authority_or_lost_pending_effect
 reasoning_tier: high
 context_scope: dg_own_c_20261105

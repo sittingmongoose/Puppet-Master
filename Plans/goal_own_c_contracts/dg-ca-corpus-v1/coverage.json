@@ -7,8 +7,8 @@
   "groups": {
     "C1": "COMPLETE",
     "C2": "COMPLETE",
-    "C3": "ASSIGNED_TO_DG_CA3",
-    "C4": "NOT_COMPLETE"
+    "C3": "COMPLETE",
+    "C4": "COMPLETE"
   },
   "source_selection": "Plans/goal_own_c_contracts/w12-successor-v2/cancel-methods.v2.json",
   "source_selection_sha256": "0d721fcd3d9cdb54ef77b260b3122e7808fe51ea8d58fbf9570b58590719e029",
@@ -101,9 +101,9 @@
       "index": 10,
       "method": "inspect_current",
       "closed_types": "EventInspectRequest / EventInspectResult",
-      "dg_ca_status": "REMAINING_C4_AFTER_C3",
-      "note": "needs the SP-278 Event Record Index checkpoint/generation/frontier/read token; built with the C4 inspection after C3",
-      "oracle": null
+      "dg_ca_status": "C4_EXECUTED",
+      "note": "DG-CA3: inspect_current for the C1/C2 editions over the lane-local SP-278 index read source (EventObservation; member_pending before append; permission_denied; stale token/key/sequence refused); passive",
+      "oracle": "python3 scripts/pm_goal_dg_ca3_oracles.py --group C4I"
     },
     {
       "index": 11,
@@ -165,9 +165,9 @@
       "index": 18,
       "method": "reserve_binding",
       "closed_types": "BindingPending",
-      "dg_ca_status": "REMAINING_C2_C3",
-      "note": "BindingPending for bound Plan and Workflow associations",
-      "oracle": null
+      "dg_ca_status": "C3_EXECUTED_WORKFLOW_EDITION",
+      "note": "DG-CA3: the Workflow attach BindingPending is written under binding-control CAS and resolved by commit_workflow_binding; the bound-Plan edition (C2 commit_plan_binding writes no pending) stays open for C2",
+      "oracle": "python3 scripts/pm_goal_dg_ca3_oracles.py --group C3"
     },
     {
       "index": 19,
@@ -181,9 +181,9 @@
       "index": 20,
       "method": "commit_workflow_binding",
       "closed_types": "WorkflowAssociation / BindingRevision",
-      "dg_ca_status": "REMAINING_C3",
-      "note": "commit_workflow_binding",
-      "oracle": null
+      "dg_ca_status": "C3_EXECUTED",
+      "note": "DG-CA3: commit_workflow_binding issues the original WorkflowAssociation (run source, execution owner/epoch) and binding revision1/origin1/control in one transaction",
+      "oracle": "python3 scripts/pm_goal_dg_ca3_oracles.py --group C3"
     },
     {
       "index": 21,
@@ -413,139 +413,155 @@
       "index": 49,
       "method": "owner.goal.workflow_cancel.capture_source.v1",
       "closed_types": null,
-      "dg_ca_status": "REMAINING_C3",
-      "note": "Workflow Stop/D05/D06 coordinator method",
-      "oracle": null
+      "dg_ca_status": "C3_EXECUTED",
+      "note": "DG-CA3: Workflow route method executed with its whole goal/native private arguments in their own realms (scripts/pm_goal_dg_ca3_route.py)",
+      "oracle": "python3 scripts/pm_goal_dg_ca3_oracles.py --group C3"
     },
     {
       "index": 50,
       "method": "owner.goal.workflow_cancel.prepare.v1",
       "closed_types": null,
-      "dg_ca_status": "REMAINING_C3",
-      "note": "Workflow Stop/D05/D06 coordinator method",
-      "oracle": null
+      "dg_ca_status": "C3_EXECUTED",
+      "note": "DG-CA3: Workflow route method executed with its whole goal/native private arguments in their own realms (scripts/pm_goal_dg_ca3_route.py)",
+      "oracle": "python3 scripts/pm_goal_dg_ca3_oracles.py --group C3"
     },
     {
       "index": 51,
       "method": "owner.goal.workflow_cancel.latch_and_reserve.v1",
       "closed_types": null,
-      "dg_ca_status": "REMAINING_C3",
-      "note": "Workflow Stop/D05/D06 coordinator method",
-      "oracle": null
+      "dg_ca_status": "C3_EXECUTED",
+      "note": "DG-CA3: Workflow route method executed with its whole goal/native private arguments in their own realms (scripts/pm_goal_dg_ca3_route.py)",
+      "oracle": "python3 scripts/pm_goal_dg_ca3_oracles.py --group C3"
     },
     {
       "index": 52,
       "method": "owner.goal.workflow_cancel.commit_receipt.v1",
       "closed_types": null,
-      "dg_ca_status": "REMAINING_C3",
-      "note": "Workflow Stop/D05/D06 coordinator method",
-      "oracle": null
+      "dg_ca_status": "C3_EXECUTED",
+      "note": "DG-CA3: Workflow route method executed with its whole goal/native private arguments in their own realms (scripts/pm_goal_dg_ca3_route.py)",
+      "oracle": "python3 scripts/pm_goal_dg_ca3_oracles.py --group C3"
     },
     {
       "index": 53,
       "method": "owner.goal.workflow_cancel.settle_owner.v1",
       "closed_types": null,
-      "dg_ca_status": "REMAINING_C3",
-      "note": "Workflow Stop/D05/D06 coordinator method",
-      "oracle": null
+      "dg_ca_status": "C3_EXECUTED",
+      "note": "DG-CA3: Workflow route method executed with its whole goal/native private arguments in their own realms (scripts/pm_goal_dg_ca3_route.py)",
+      "oracle": "python3 scripts/pm_goal_dg_ca3_oracles.py --group C3"
     },
     {
       "index": 54,
       "method": "owner.goal.workflow_cancel.freeze_event.v1",
       "closed_types": null,
-      "dg_ca_status": "REMAINING_C3",
-      "note": "Workflow Stop/D05/D06 coordinator method",
-      "oracle": null
+      "dg_ca_status": "C3_EXECUTED",
+      "note": "DG-CA3: Workflow route method executed with its whole goal/native private arguments in their own realms (scripts/pm_goal_dg_ca3_route.py)",
+      "oracle": "python3 scripts/pm_goal_dg_ca3_oracles.py --group C3"
     },
     {
       "index": 55,
       "method": "owner.storage.goal_workflow_cancel.reserve_assignment.v1",
       "closed_types": null,
-      "dg_ca_status": "REMAINING_C4_AFTER_C3",
-      "note": "needs the Workflow route outputs (WorkflowSourceAudit, StorageWorkflowScopeProof, WorkflowOwnerSettlement, Workflow late assignment) from C3 (lane DG-CA3) and the SP-278 Event Record Index read source",
-      "oracle": null
+      "dg_ca_status": "C3_C4_EXECUTED",
+      "note": "DG-CA3: late assignment on the same LeasedStorage lineage: one exclusive fence and reserved sequence after event_ready, Storage-assigned EventRecord (sequence and times from Storage custody), compact audit, reserved append; OriginalGoalAppendReadback with the lane-local SP-278 index rows/token",
+      "oracle": "python3 scripts/pm_goal_dg_ca3_oracles.py --group C3"
     },
     {
       "index": 56,
       "method": "owner.storage.goal_workflow_cancel.issue_assignment_audit.v1",
       "closed_types": null,
-      "dg_ca_status": "REMAINING_C4_AFTER_C3",
-      "note": "needs the Workflow route outputs (WorkflowSourceAudit, StorageWorkflowScopeProof, WorkflowOwnerSettlement, Workflow late assignment) from C3 (lane DG-CA3) and the SP-278 Event Record Index read source",
-      "oracle": null
+      "dg_ca_status": "C3_C4_EXECUTED",
+      "note": "DG-CA3: late assignment on the same LeasedStorage lineage: one exclusive fence and reserved sequence after event_ready, Storage-assigned EventRecord (sequence and times from Storage custody), compact audit, reserved append; OriginalGoalAppendReadback with the lane-local SP-278 index rows/token",
+      "oracle": "python3 scripts/pm_goal_dg_ca3_oracles.py --group C3"
     },
     {
       "index": 57,
       "method": "owner.goal.workflow_cancel.append_original.v1",
       "closed_types": null,
-      "dg_ca_status": "REMAINING_C4_AFTER_C3",
-      "note": "needs the Workflow route outputs (WorkflowSourceAudit, StorageWorkflowScopeProof, WorkflowOwnerSettlement, Workflow late assignment) from C3 (lane DG-CA3) and the SP-278 Event Record Index read source",
-      "oracle": null
+      "dg_ca_status": "C3_C4_EXECUTED",
+      "note": "DG-CA3: late assignment on the same LeasedStorage lineage: one exclusive fence and reserved sequence after event_ready, Storage-assigned EventRecord (sequence and times from Storage custody), compact audit, reserved append; OriginalGoalAppendReadback with the lane-local SP-278 index rows/token",
+      "oracle": "python3 scripts/pm_goal_dg_ca3_oracles.py --group C3"
     },
     {
       "index": 58,
       "method": "owner.goal.workflow_cancel.publish_control.v1",
       "closed_types": null,
-      "dg_ca_status": "REMAINING_C3",
-      "note": "Workflow Stop/D05/D06 coordinator method",
-      "oracle": null
+      "dg_ca_status": "C3_EXECUTED",
+      "note": "DG-CA3: Workflow route method executed with its whole goal/native private arguments in their own realms (scripts/pm_goal_dg_ca3_route.py)",
+      "oracle": "python3 scripts/pm_goal_dg_ca3_oracles.py --group C3"
     },
     {
       "index": 59,
       "method": "owner.goal.workflow_cancel.terminal_succeeded.v1",
       "closed_types": null,
-      "dg_ca_status": "REMAINING_C3",
-      "note": "Workflow Stop/D05/D06 coordinator method",
-      "oracle": null
+      "dg_ca_status": "C3_EXECUTED",
+      "note": "DG-CA3: Workflow route method executed with its whole goal/native private arguments in their own realms (scripts/pm_goal_dg_ca3_route.py)",
+      "oracle": "python3 scripts/pm_goal_dg_ca3_oracles.py --group C3"
     },
     {
       "index": 60,
       "method": "owner.goal.workflow_cancel.terminal_unsettled.v1",
       "closed_types": null,
-      "dg_ca_status": "REMAINING_C3",
-      "note": "Workflow Stop/D05/D06 coordinator method",
-      "oracle": null
+      "dg_ca_status": "C3_EXECUTED",
+      "note": "DG-CA3: Workflow route method executed with its whole goal/native private arguments in their own realms (scripts/pm_goal_dg_ca3_route.py)",
+      "oracle": "python3 scripts/pm_goal_dg_ca3_oracles.py --group C3"
     },
     {
       "index": 61,
       "method": "owner.goal.workflow_cancel.read_retained_success.v1",
       "closed_types": null,
-      "dg_ca_status": "REMAINING_C3",
-      "note": "Workflow Stop/D05/D06 coordinator method",
-      "oracle": null
+      "dg_ca_status": "C3_EXECUTED",
+      "note": "DG-CA3: Workflow route method executed with its whole goal/native private arguments in their own realms (scripts/pm_goal_dg_ca3_route.py)",
+      "oracle": "python3 scripts/pm_goal_dg_ca3_oracles.py --group C3"
     },
     {
       "index": 62,
       "method": "owner.goal.workflow_cancel.read_retained_unsettled.v1",
       "closed_types": null,
-      "dg_ca_status": "REMAINING_C3",
-      "note": "Workflow Stop/D05/D06 coordinator method",
-      "oracle": null
+      "dg_ca_status": "C3_EXECUTED",
+      "note": "DG-CA3: Workflow route method executed with its whole goal/native private arguments in their own realms (scripts/pm_goal_dg_ca3_route.py)",
+      "oracle": "python3 scripts/pm_goal_dg_ca3_oracles.py --group C3"
     },
     {
       "index": 63,
       "method": "owner.goal.workflow_cancel.inspect_current_event.v1",
       "closed_types": null,
-      "dg_ca_status": "REMAINING_C4_AFTER_C3",
-      "note": "needs the Workflow route outputs (WorkflowSourceAudit, StorageWorkflowScopeProof, WorkflowOwnerSettlement, Workflow late assignment) from C3 (lane DG-CA3) and the SP-278 Event Record Index read source",
-      "oracle": null
+      "dg_ca_status": "C4_EXECUTED",
+      "note": "DG-CA3: the frozen v1 Workflow inspector lineage is not installed for the V3 profile; a typed UnavailableRead installation_unavailable, passive (GRS-078)",
+      "oracle": "python3 scripts/pm_goal_dg_ca3_oracles.py --group C4I"
     },
     {
       "index": 64,
       "method": "owner.goal.workflow_cancel.read_original_inspection_custody.v1",
       "closed_types": null,
-      "dg_ca_status": "REMAINING_C4_AFTER_C3",
-      "note": "needs the Workflow route outputs (WorkflowSourceAudit, StorageWorkflowScopeProof, WorkflowOwnerSettlement, Workflow late assignment) from C3 (lane DG-CA3) and the SP-278 Event Record Index read source",
-      "oracle": null
+      "dg_ca_status": "C4_EXECUTED",
+      "note": "DG-CA3: read_original_inspection_custody.v1 with every lower source route independently callable; one-source substitution at each boundary",
+      "oracle": "python3 scripts/pm_goal_dg_ca3_oracles.py --group C4I"
     },
     {
       "index": 65,
       "method": "owner.goal.workflow_cancel.inspect_current_event.v2",
       "closed_types": null,
-      "dg_ca_status": "REMAINING_C4_AFTER_C3",
-      "note": "needs the Workflow route outputs (WorkflowSourceAudit, StorageWorkflowScopeProof, WorkflowOwnerSettlement, Workflow late assignment) from C3 (lane DG-CA3) and the SP-278 Event Record Index read source",
-      "oracle": null
+      "dg_ca_status": "C4_EXECUTED",
+      "note": "DG-CA3: inspect_current_event.v2 (InspectCurrentEventEntryV2, outer final disclosure); pending/unavailable/current refusal; retained audit survives lawful drift and withdrawal",
+      "oracle": "python3 scripts/pm_goal_dg_ca3_oracles.py --group C4I"
     }
   ],
   "c4_assignment": "COMPLETE: scripts/pm_goal_dg_ca_assignment.py, corpus group C4 (C4A cases)",
-  "assignment_successor": "Plans/goal_own_c_contracts/dg-ca-assignment-successor-v1/selection.v1.json"
+  "assignment_successor": "Plans/goal_own_c_contracts/dg-ca-assignment-successor-v1/selection.v1.json",
+  "dg_ca3": {
+    "lane": "DG-CA3",
+    "oracle": "python3 scripts/pm_goal_dg_ca3_oracles.py",
+    "native": "native evidence stays NOT_RUN and is a separate claim; a planning PASS must never read as native proof",
+    "qualification": "TEST_ONLY",
+    "files": [
+      "scripts/pm_goal_dg_ca3_native.py",
+      "scripts/pm_goal_dg_ca3_route.py",
+      "scripts/pm_goal_dg_ca3_index.py",
+      "scripts/pm_goal_dg_ca3_inspection.py",
+      "scripts/pm_goal_dg_ca3_cases.py",
+      "scripts/pm_goal_dg_ca3_inspection_cases.py",
+      "scripts/pm_goal_dg_ca3_oracles.py"
+    ],
+    "filler": "members no Goal-route or native-reader predicate reads come from the family specimen factory; every selector among them resolves to a stored TEST_ONLY ancillary provenance original with no semantic authority"
+  }
 }
