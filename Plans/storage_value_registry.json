@@ -30770,10 +30770,12 @@
             "$ref": "#/$defs/non_empty_string"
           },
           "root_goal_id": {
-            "$ref": "#/$defs/non_empty_string"
+            "$ref": "#/$defs/non_empty_string",
+            "description": "GRS-052 / DL-478: root_goal_id must equal goal_id. This cross-property equality requires owner validation; Draft 2020-12 cannot express it."
           },
           "parent_goal_id": {
-            "$ref": "#/$defs/nullable_non_empty_string"
+            "type": "null",
+            "description": "GRS-052 / DL-478: Goals have no parent Goal."
           },
           "plan_id": {
             "$ref": "#/$defs/nullable_non_empty_string"
