@@ -303,6 +303,9 @@ export default async function (t) {
 			window.__stillVisibility.at(-1).after = document.documentElement.hasAttribute('data-pm-still');
 		});
 	});
+	// Focus emulation is per CDP session: disable the harness's own keeper, too.
+	const focusCdp = await t.run.cdpFor(t.top);
+	await focusCdp.send('Emulation.setFocusEmulationEnabled', { enabled: false });
 	await cdp.send('Emulation.setFocusEmulationEnabled', { enabled: false });
 	try {
 		// A second headless target need not hide the first. Chromium's frozen transition calls WasHidden();
@@ -311,13 +314,13 @@ export default async function (t) {
 		await cdp.send('Page.setWebLifecycleState', { state: 'active' });
 		await f.waitForFunction(() => document.visibilityState === 'hidden', null, { timeout: 5000, polling: 100 });
 		await t.check('becoming hidden leaves the page still', await f.evaluate(() => document.documentElement.hasAttribute('data-pm-still')));
-		await cdp.send('Emulation.setFocusEmulationEnabled', { enabled: true });
+		await focusCdp.send('Emulation.setFocusEmulationEnabled', { enabled: true });
 		await f.waitForFunction(() => document.visibilityState === 'visible', null, { timeout: 5000, polling: 100 });
 		const changes = await f.evaluate(() => window.__stillVisibility);
 		await t.check('becoming visible itself wakes the still page', changes.some((x) => x.trusted && x.visible && x.before && x.after === false), JSON.stringify(changes));
 	} finally {
 		await cdp.send('Page.setWebLifecycleState', { state: 'active' });
-		await cdp.send('Emulation.setFocusEmulationEnabled', { enabled: true });
+		await focusCdp.send('Emulation.setFocusEmulationEnabled', { enabled: true });
 	}
 
 	// ---- (e) the onboarding window and the tour: never still while either is open ----
