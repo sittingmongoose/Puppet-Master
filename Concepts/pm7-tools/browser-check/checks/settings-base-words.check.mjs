@@ -7,6 +7,11 @@ import fs from 'node:fs';
 // FO-134 round 3 (sol-recheck-fo134r2 K1): each roster entry is selected and each manager's inner editor panel
 //   (Replace, Edit, Add and the engine's own dialogs) is opened and read too: its fields are named by their visible
 //   label and nothing in a panel is left unnamed. The panels are in the same fixture, so one that stops opening fails.
+// FO-134 round 4 (sol-recheck-fo134r3 K1/K2): names are Chrome's, read through CDP's Accessibility domain, never
+//   worked out from attributes; the walk opens every opener by census (settings-panel-openers.json: each action a
+//   Settings button carries is an editor opener, pressed and read, or listed with what it does instead; anything
+//   unlisted fails by name); and a themed scope picker is judged on its visible combobox's name with its native
+//   select required to stay out of the tree, not on a literal aria-label on the hidden select.
 // FO-135: the Settings rail has no "Project: … · concept fixture" line; a chapter page's toolbar project button names the project.
 // FO-131: the base scope pickers follow stream P's rule (batch10/fo-b10-e/SCOPE-LIST.md): a thing you add is
 //   "Where it’s available: This project / Every project" (Toolchain's Edit panel, the persona scope row, a command's
@@ -29,6 +34,19 @@ async function go(t, f, domain, ws) {
 	await t.settle();
 }
 
+/* FO-134 round 4 (sol-recheck-fo134r3 K1): a name read here is Chrome's own, from the Accessibility domain. Round 3
+   worked the name out from aria-labelledby, aria-label, labels, text and title in the page, and passed a control
+   Chrome names "Add a backup model" while the screen says "Service and model": the generated combobox trigger had
+   no aria-label of its own, and the row attribute the checker read sat on the field. The tree read here is the same
+   one a screen reader gets. `selector` must match exactly one element in the app's frame. */
+async function axRead(cdp, selector) {
+	const obj = await cdp.send('Runtime.evaluate', { expression: `document.querySelector(${JSON.stringify(selector)})`, objectGroup: 'fo134' });
+	if (!obj.result || !obj.result.objectId) return null;
+	const nodes = (await cdp.send('Accessibility.getPartialAXTree', { objectId: obj.result.objectId, fetchRelatives: false })).nodes;
+	const node = nodes && nodes[0];
+	return node ? { name: String((node.name && node.name.value) || ''), role: String((node.role && node.role.value) || ''), ignored: !!node.ignored } : null;
+}
+
 export const tests = {};
 for (const surface of ['normal', 'sandbox']) {
 	tests[`FO-134 controls are named by their row (${surface})`] = async (t) => {
@@ -38,21 +56,31 @@ for (const surface of ['normal', 'sandbox']) {
 		await f.locator('[data-continuous-workspace-body="providers"] .manager-tab', { hasText: /^\s*Models\s*$/ }).first().click();
 		await t.settle();
 		await t.page.waitForTimeout(600);
-		// every value control the row renderer draws on the page: its accessible name is the row's visible label
-		const names = await f.evaluate(() => {
+		// every value control the row renderer draws on the page: Chrome's accessible name is the row's visible label
+		const rows = await f.evaluate(() => {
+			document.querySelectorAll('[data-fo134-row]').forEach((e) => e.removeAttribute('data-fo134-row'));
 			const body = document.querySelector('[data-continuous-workspace-body="providers"]');
 			const out = [];
+			let n = 0;
 			for (const row of body.querySelectorAll('.setting-row[data-setting-id], .setting-row[id^="setting-"]')) {
 				if (!row.getClientRects().length) continue;
 				const ctl = row.querySelector(':scope > .setting-control [aria-label][data-setting], :scope > .setting-control [aria-label] [data-setting]');
 				const lab = row.querySelector(':scope > .setting-copy .setting-label');
 				if (!ctl || !lab) continue;
-				const own = [...lab.childNodes].filter((n) => n.nodeType === 3).map((n) => n.textContent).join('').trim();
-				const named = ctl.closest('[aria-label]').getAttribute('aria-label') || '';
-				out.push({ id: row.dataset.settingId || row.id, own, named });
+				const own = [...lab.childNodes].filter((x) => x.nodeType === 3).map((x) => x.textContent).join('').trim();
+				/* the control a person works is the themed trigger of an upgraded select; the native select it hides
+				   behind is out of the tree */
+				const vis = ctl.matches('.pm51-dd-native') ? ctl.closest('.pm51-dd').querySelector('.pm51-dd-trigger') : ctl.closest('[aria-label]');
+				if (!vis) continue;
+				vis.setAttribute('data-fo134-row', String(++n));
+				out.push({ mark: n, id: row.dataset.settingId || row.id, own });
 			}
 			return out;
 		});
+		const rowCdp = await t.page.context().newCDPSession(f);
+		const names = [];
+		for (const x of rows) { const ax = await axRead(rowCdp, `[data-fo134-row="${x.mark}"]`).catch(() => null); names.push({ id: x.id, own: x.own, named: ax ? ax.name : '' }); }
+		await rowCdp.detach().catch(() => {});
 		// a list's button says its count after the name ("Name: 3 items. Edit")
 		const off = names.filter((x) => x.own && !x.named.toLowerCase().includes(x.own.toLowerCase()));
 		await t.check(`Models: ${names.length} drawn controls are named by their row's label`, names.length >= 5 && off.length === 0, off.slice(0, 6).map((x) => `${x.id}: "${x.named}" vs "${x.own}"`).join('; ') || `${names.length} controls`);
@@ -77,40 +105,46 @@ for (const surface of ['normal', 'sandbox']) {
 	/* FO-134 / sol-review-l1s L1S-N1: every placed value control on every Settings page, not just Models: each
 	   chapter, each page in it (mounted), each manager tab. A row that places a setting (data-setting-id) names its value
 	   controls (a text or number box, a text area, a slider, a select or its dropdown, a switch, a choice group) by its
-	   own visible label: the accessible name contains it ("Name: 3 items. Edit" counts). The name is computed as a
-	   screen reader does for these elements: aria-labelledby, aria-label, a <label for>, then the text of an enclosing
-	   <label> (a slider's "80"), button text, then title. Controls are not pre-selected by having a name. --set chapters=ai,code */
+	   own visible label: the accessible name contains it ("Name: 3 items. Edit" counts). The name is Chrome's own,
+	   read through CDP's Accessibility domain (round 4), and never one this file works out from attributes.
+	   Controls are not pre-selected by having a name. --set chapters=ai,code */
 	tests[`FO-134 every placed value control is named by its row (${surface})`] = async (t) => {
 		if (!t.app.surfaces().includes(surface)) { await t.check(`${surface} surface not asked for`, true); return; }
 		const f = await settings(t, surface);
 		const domains = t.args.chapters ? String(t.args.chapters).split(',') : await f.evaluate(() => [...new Set([...document.querySelectorAll('#pm-settings-root [data-action="navigate-domain"]')].map((b) => b.dataset.domain))]);
 		const all = [], seen = new Set();
 		let panelsOpened = 0;
-		/* One name computation for the rows and for a manager's inner editor panels (round 3 / sol-recheck-fo134r2 K1),
-		   installed once in the page so the two readings can never drift apart. */
+		/* The page says which elements are the row's value controls and what the row's label says; Chrome says what
+		   each control is called. Round 3 worked the name out in the page and passed a control Chrome names "Add a
+		   backup model" while the screen says "Service and model" (sol-recheck-fo134r3 K1). */
+		const cdp = await t.page.context().newCDPSession(f);
+		const namedByChrome = async (cands) => {
+			for (const x of cands) {
+				if (x.kind === 'coverage') continue;
+				const ax = await axRead(cdp, `[data-fo134-el="${x.mark}"]`).catch(() => null);
+				x.name = ax ? ax.name : '';
+				x.role = ax ? ax.role : '';
+				x.ignored = ax ? ax.ignored : true;
+				/* A node Chrome ignores is not exposed at all, so it has no name to get wrong; a value control that is
+				   ignored has been taken out of the tree a screen reader reads, which is its own failure. */
+				x.ok = x.ignored ? !x.widget : (!!x.name && (x.expected === 'any' || x.name.toLowerCase().includes(x.label.toLowerCase())));
+			}
+			return cands;
+		};
 		await f.evaluate(() => {
 			window.__fo134 = {
 				VALUE: 'a[href], button, [role="button"], [role="radio"], [role="checkbox"], input:not([type="hidden"]), textarea, select, [role="switch"], [role="slider"], [role="combobox"], .pm51-dd-trigger, [role="radiogroup"], [role="group"], [role="spinbutton"], [role="textbox"], [tabindex]:not([tabindex="-1"]), [contenteditable="true"]',
 			};
 		});
+		/* The page pass: what a row or field holds, marked for the Accessibility read. Nothing here decides a name. */
 		const READ = () => {
 			const VALUE = window.__fo134.VALUE;
 			const own = (lab) => lab ? [...lab.childNodes].filter((n) => n.nodeType === 3).map((n) => n.textContent).join('').replace(/\s+/g, ' ').trim() : '';
-			const txt = (e) => (e.textContent || '').replace(/\s+/g, ' ').trim();
-			const nameOf = (e) => {
-				const by = e.getAttribute('aria-labelledby');
-				if (by) return by.split(/\s+/).map((id) => { const n = document.getElementById(id); return n ? txt(n) : ''; }).join(' ').trim();
-				const al = e.getAttribute('aria-label'); if (al && al.trim()) return al.trim();
-				// The native association includes label[for] and enclosing labels, including buttons and multiple labels.
-				if (e.labels && e.labels.length) return [...e.labels].map(txt).join(' ');
-				if (e.matches('input[type="button"], input[type="submit"], input[type="reset"]')) return e.value;
-				if (e.matches('input[type="image"]') && e.alt) return e.alt;
-				if (e.matches('a[href], button, [role="button"], [role="radio"], [role="checkbox"], [role="switch"]') && txt(e)) return txt(e);
-				if (e.getAttribute('title')) return e.getAttribute('title').trim();
-				return '';
-			};
 			const kind = (e) => (e.getAttribute('role') || e.tagName.toLowerCase()) + (e.type && e.tagName === 'INPUT' ? ':' + e.type : '');
-			window.__fo134 = { VALUE, own, txt, nameOf, kind };
+			/* a widget is a control the browser must expose: a native control, a link, or an ARIA widget role */
+			const widget = (e) => e.matches('input, select, textarea, button, a[href]') || /^(button|switch|slider|combobox|spinbutton|textbox|checkbox|radio|radiogroup|group|listbox)$/.test(e.getAttribute('role') || '');
+			document.querySelectorAll('[data-fo134-el]').forEach((e) => e.removeAttribute('data-fo134-el'));
+			let mark = 0;
 			const out = [];
 			const ROWS = ['.setting-row', '.o55-field'].map((x) => '#panel-settings [data-continuous-workspace-body] ' + x).join(', ');
 			for (const row of document.querySelectorAll(ROWS)) {
@@ -130,13 +164,20 @@ for (const surface of ['normal', 'sandbox']) {
 					if (e.closest('.setting-row, .o55-field') !== row) continue;   /* a row nested inside this one names its own */
 					if (e.matches('[role="option"], [role="menuitem"]')) continue;
 					if (e.matches('.details-btn, [data-action="setting-details"]')) continue;
-					const name = nameOf(e);
-					out.push({ id, label, kind: kind(e), index: [...box.querySelectorAll(VALUE)].indexOf(e), name, ok: name.toLowerCase().includes(label.toLowerCase()) });
+					e.setAttribute('data-fo134-el', String(++mark));
+					out.push({ mark, id, label, kind: kind(e), widget: widget(e), index: [...box.querySelectorAll(VALUE)].indexOf(e), expected: 'label' });
 				}
 			}
+			window.__fo134 = { VALUE, own, kind, widget };
 			return out;
 		};
-		const take = async (where) => { for (const x of await f.evaluate(READ)) { const k = x.id + '|' + x.kind + '|' + x.index + '|' + x.name; if (seen.has(k)) continue; seen.add(k); all.push(Object.assign({ where }, x)); } };
+		const take = async (where) => {
+			for (const x of await namedByChrome(await f.evaluate(READ))) {
+				const k = x.id + '|' + x.kind + '|' + x.index + '|' + x.name;
+				if (seen.has(k)) continue;
+				seen.add(k); all.push(Object.assign({ where }, x));
+			}
+		};
 		/* FO-134 round 3 (sol-recheck-fo134r2 K1): a manager's inner editor panels (Replace, Edit, Add and the like)
 		   hold fields the page never shows. The Discord replacement field read "New address" beside a visible
 		   "Webhook address" while this walk passed, because it never opened one. Every open panel is read here: a
@@ -146,6 +187,8 @@ for (const surface of ['normal', 'sandbox']) {
 		const PANEL_READ = (open) => {
 			const S = window.__fo134;
 			const roots = [...document.querySelectorAll('.pm51-drawer-wrap.is-open .pm51-panel, .o55g-win, .overlay .dialog[role="dialog"]')].filter((e) => e.getClientRects().length);
+			document.querySelectorAll('[data-fo134-el]').forEach((e) => e.removeAttribute('data-fo134-el'));
+			let mark = 0;
 			const out = [];
 			for (const root of roots) {
 				const where = open + (root.matches('.o55g-win') ? ' (set-up)' : '');
@@ -156,10 +199,10 @@ for (const surface of ['normal', 'sandbox']) {
 						if (e.closest('.pm51-field, .o55-field, .form-field') !== field) continue;
 						if (e.closest('[aria-hidden="true"]') || (e.tagName === 'INPUT' && /^hidden$/.test(e.type))) continue;
 						if (e.matches('[role="option"], [role="menuitem"], .details-btn, [data-action="setting-details"]')) continue;
-						const name = S.nameOf(e);
 						/* a field's value controls are named by it; a button in the field (Play, Browse…) names its own action */
 						const value = e.matches('input, textarea, select, .pm51-dd-trigger, [role="combobox"], [role="slider"], [role="spinbutton"], [role="radiogroup"], [role="group"], [role="switch"]');
-						out.push({ id: `panel:${where}:${label}`, label, kind: S.kind(e), name, ok: value ? name.toLowerCase().includes(label.toLowerCase()) : !!name });
+						e.setAttribute('data-fo134-el', String(++mark));
+						out.push({ mark, id: `panel:${where}:${label}`, label, kind: S.kind(e), widget: S.widget(e), expected: value ? 'label' : 'any' });
 					}
 				}
 				for (const e of root.querySelectorAll(S.VALUE)) {
@@ -167,8 +210,8 @@ for (const surface of ['normal', 'sandbox']) {
 					if (e.matches('[role="option"], [role="menuitem"], .details-btn, [data-action="setting-details"], [data-action="close-overlay"], .pm51-panel-close')) continue;
 					/* a container of named controls (a picker row, a step rail) is not a field: its own controls carry names */
 					if (e.matches('[role="group"], [role="radiogroup"], [role="listbox"], [role="list"]')) continue;
-					const name = S.nameOf(e);
-					out.push({ id: `panel:${where}:`, label: '', kind: S.kind(e), name, ok: !!name });
+					e.setAttribute('data-fo134-el', String(++mark));
+					out.push({ mark, id: `panel:${where}:`, label: '', kind: S.kind(e), widget: S.widget(e), expected: 'any' });
 				}
 			}
 			return out;
@@ -197,28 +240,71 @@ for (const surface of ['normal', 'sandbox']) {
 				await t.settle().catch(() => {});
 			}
 		};
-		const panelTake = async (action) => { for (const x of await f.evaluate(PANEL_READ, action)) { const k = x.id + '|' + x.kind + '|' + x.name; if (seen.has(k)) continue; seen.add(k); all.push(Object.assign({ where: 'panel' }, x)); } };
-		/* The actions that open an editor sheet, button by button: a dropdown's own trigger (pm51-dd-open) is not one. */
-		const OPENER = /^(?!pm51-dd-open$)(?:pm51-[a-z0-9-]+-(?:add|new|edit|setup|connect|import|pair|address|details|add-shortcut)|pm51-[a-z0-9-]+-open|pm51-web-key|pm51-servers-attach-key|pm51-servers-key-add|pm51-source-open-publish|pm51-notifications-event|open-(?:hosts|docker)-manager|open-(?:resource|structured)-setting|manage-credential-reference)$/;
+		const panelTake = async (action) => {
+			for (const x of await namedByChrome(await f.evaluate(PANEL_READ, action))) {
+				const k = x.id + '|' + x.kind + '|' + x.name;
+				if (seen.has(k)) continue;
+				seen.add(k); all.push(Object.assign({ where: 'panel' }, x));
+			}
+		};
+		/* FO-134 round 4 (sol-recheck-fo134r3 K1): the opener list is a positive census, not a pattern. Round 3's
+		   regex left out pm51-web-fallbacks, so AI › Web Search › If the model fails › Edit was never opened and the
+		   checker passed a control Chrome names "Add a backup model". settings-panel-openers.json names, for every
+		   action a Settings page draws on a button, whether pressing it opens an editor (and the panel is read) or what
+		   it does instead. A control in neither list fails the walk by name, so a new opener cannot be skipped in
+		   silence; it has to be classified here before the run passes. --set openersOut=<file> writes the census
+		   observed on this build (a diagnostic: it does not press anything unclassified). */
+		const OPENER_DOC = JSON.parse(fs.readFileSync(new URL('./settings-panel-openers.json', import.meta.url), 'utf8'));
+		const OPENS = new Set(OPENER_DOC.opens || []);
+		const OTHER = new Set(Object.keys(OPENER_DOC.other || {}));
+		const unclassified = new Set();
+		const pressedOpeners = new Set();
+		const observedActions = {};
+		/* --set openersProbe=1: the evidence run that classifies the census. Every action a button carries is pressed
+		   once (bar the ones that destroy a fixture row or sign something out) and whether an editor opened is
+		   recorded, so the fixture's two lists come from what the build does, not from what its names look like.
+		   A diagnostic: it presses controls the committed census does not, so its verdict is not a result. */
+		const PROBE = /^(1|true|yes|on)$/i.test(String(t.args.openersProbe || ''));
+		const PROBE_SKIP = /(delete|remove|sign-?out|disconnect|clear|reset|rotate|reencrypt|uninstall)/;
+		const probeResult = {};
 		const openPanels = async (d, ws, tab) => {
 			if (/^(0|false|no|off)$/i.test(String(t.args.panels || ''))) return;
 			const body = (s) => `[data-continuous-workspace-body="${ws}"]${s ? ' ' + s : ''}`;
 			const rows = await f.evaluate((sel) => [...document.querySelectorAll(sel)].filter((e) => e.getClientRects().length).map((e) => e.dataset.id), body('.resource-row[data-id]'));
-			for (const rowId of rows.slice(0, 8)) {
+			for (const rowId of rows) {
 				await f.evaluate(([sel, id]) => { const r = [...document.querySelectorAll(sel)].find((e) => e.dataset.id === id && e.getClientRects().length); if (r) r.click(); }, [body('.resource-row[data-id]'), rowId]);
 				/* a roster click selects and the detail cross-fades: read the next panel only after the row says it is current */
 				await f.waitForFunction(([sel, id]) => { const r = [...document.querySelectorAll(sel)].find((e) => e.dataset.id === id); return !!(r && r.getAttribute('aria-current') === 'true'); }, [body('.resource-row[data-id]'), rowId], { timeout: 4000 }).catch(() => {});
 				await t.settle().catch(() => {});
 				await t.page.waitForTimeout(180);
-				const actions = await f.evaluate(([sel, re]) => {
-					const rx = new RegExp(re);
-					return [...new Set([...document.querySelectorAll(sel)].filter((e) => e.getClientRects().length && rx.test(e.dataset.action || '')).map((e) => e.dataset.action))];
-				}, [body('[data-action]'), OPENER.source]);
-				for (const action of actions.slice(0, 14)) {
+				/* Every action a button on this page carries: dropdown parts and native selects excluded (they open a
+				   list, not an editor), and every roster row read, not the first few. */
+				const actions = await f.evaluate((sel) => {
+					const out = new Set();
+					for (const e of document.querySelectorAll(sel)) {
+						if (!e.getClientRects().length) continue;
+						const a = e.dataset.action;
+						if (!a || a === 'pm51-disabled' || a === 'pm51-noop') continue;
+						if (e.matches('select, option, .pm51-dd-trigger, .pm51-dd-native')) continue;
+						if (!e.matches('button, [role="button"], a[href], .pm51-link, .pm51-item, summary')) continue;
+						out.add(a);
+					}
+					return [...out];
+				}, body('[data-action]'));
+				const where0 = `${d}/${ws}${tab ? '/' + tab : ''}`;
+				for (const a of actions) {
+					observedActions[where0] = observedActions[where0] || [];
+					observedActions[where0].push(a);
+					if (!OPENS.has(a) && !OTHER.has(a)) unclassified.add(`${where0}: ${a}`);
+				}
+				const press = PROBE ? actions.filter((a) => !PROBE_SKIP.test(a)) : actions.filter((a) => OPENS.has(a));
+				for (const action of press) {
 					const pressed = await f.evaluate(([sel, a]) => { const e = [...document.querySelectorAll(sel)].find((x) => x.dataset.action === a && x.getClientRects().length); if (!e) return false; e.click(); return true; }, [body('[data-action]'), action]).catch(() => false);
 					if (!pressed) continue;
+					pressedOpeners.add(action);
 					const showed = await f.waitForFunction(() => [...document.querySelectorAll('.pm51-drawer-wrap.is-open .pm51-panel, .o55g-win, .overlay .dialog[role="dialog"]')].some((e) => e.getClientRects().length), null, { timeout: 2500 }).then(() => true).catch(() => false);
 					if (showed) panelsOpened++;
+					if (PROBE) probeResult[action] = { opened: (probeResult[action] && probeResult[action].opened) || showed, where: where0 };
 					await t.settle().catch(() => {});
 					await panelTake(action);
 					for (let k = 0; k < 3; k++) {
@@ -282,6 +368,8 @@ for (const surface of ['normal', 'sandbox']) {
 		const kinds = {}; for (const x of all) kinds[x.kind] = (kinds[x.kind] || 0) + 1;
 		const census = {}; for (const x of all) { const key = x.id + '|' + x.kind; census[key] = (census[key] || 0) + 1; }
 		if (t.args.namesCensus) fs.writeFileSync(String(t.args.namesCensus), JSON.stringify(census, null, 2) + '\n');
+		if (t.args.openersOut) fs.writeFileSync(String(t.args.openersOut), JSON.stringify(observedActions, null, 2) + '\n');
+		if (t.args.probeOut) fs.writeFileSync(String(t.args.probeOut), JSON.stringify(probeResult, null, 2) + '\n');
 		const fixture = new URL('./settings-value-controls.json', import.meta.url);
 		if (!t.args.chapters && !t.args.namesCensus) await t.check('the expected-control census fixture exists', fs.existsSync(fixture));
 		const panelsOff = /^(0|false|no|off)$/i.test(String(t.args.panels || ''));
@@ -296,6 +384,12 @@ for (const surface of ['normal', 'sandbox']) {
 		t.log(`opened ${panelsOpened} inner editor panels: ${inPanels.length} controls in them`);
 		if (!panelsOff)
 			await t.check(`every manager's inner editor panels open and their fields are read (${panelsOpened} panels, ${inPanels.length} controls)`, !t.args.chapters ? panelsOpened >= 20 && inPanels.length >= 40 : panelsOpened >= 1, `${panelsOpened} panels, ${inPanels.length} controls`);
+		const ignored = all.filter((x) => x.ignored);
+		t.log(`Chrome ignored ${ignored.length} of ${all.length} (none of them a value control: ${ignored.filter((x) => x.widget).length} were)`);
+		/* The positive opener census (round 4). A page action in neither list is a control this walk did not open,
+		   so it fails here by name instead of being passed over. */
+		if (!panelsOff && !PROBE) await t.check(`every Settings page action is a known opener or a known non-opener (${OPENS.size} openers)`,
+			unclassified.size === 0, unclassified.size ? `${unclassified.size} unclassified: ${[...unclassified].slice(0, 12).join('; ')}` : `${pressedOpeners.size} openers pressed of ${OPENS.size} known`);
 		if (bad.length) t.log('unnamed or misnamed: ' + JSON.stringify(bad.map((x) => `${x.where} ${x.id} ${x.kind} "${x.name}" vs "${x.label}"`)));
 		await t.check(`every placed value control on every Settings page is named by its row (${all.length} controls)`, (t.args.chapters ? all.length > 0 : all.length >= 778) && bad.length === 0, `${bad.length} not: ` + bad.slice(0, 8).map((x) => `${x.id} ${x.kind} "${x.name}" vs "${x.label}"`).join('; '));
 	};
@@ -341,6 +435,8 @@ for (const surface of ['normal', 'sandbox']) {
 			const re = new RegExp(banned, 'i'), vis = (e) => e.getClientRects().length;
 			let roots = [...document.querySelectorAll('#pm-settings-portals, .drawer-wrap, aside.drawer, [role="dialog"], .o55g-win, .o55g-layer')].filter(vis);
 			if (only) { const hit = [...document.querySelectorAll('aside.drawer, [role="dialog"], .drawer-wrap')].filter((r) => vis(r) && r.textContent.includes(only)); roots = hit.length ? [hit[hit.length - 1]] : []; }
+			document.querySelectorAll('[data-fo131-sel], [data-fo131-trig]').forEach((e) => { e.removeAttribute('data-fo131-sel'); e.removeAttribute('data-fo131-trig'); });
+			window.__fo131 = window.__fo131 || { n: 0 };
 			const hits = [], pickers = [];
 			for (const r of roots) {
 				for (const e of r.querySelectorAll('.pm51-field-label, .pm51-ps-title, .pm51-pc-head, .pm51-kv-row > span:first-child, dt, th, .o55g-lead, p, .pm51-fact-label, [class*="fact"] span, h2, h3, h4')) if (vis(e) && re.test(e.textContent)) hits.push(e.textContent.trim().slice(0, 80));
@@ -348,15 +444,37 @@ for (const surface of ['normal', 'sandbox']) {
 				for (const sel of r.querySelectorAll('select')) {
 					const opts = [...sel.options].map((o) => o.textContent.trim());
 					if (!opts.includes('This project') || !opts.includes('Every project')) continue;
+					/* FO-134 round 4 (sol-recheck-fo134r3 K2): note where the picker is; its name is read from Chrome's
+					   accessibility tree once this scan returns, never from an attribute. The native select is a
+					   dropdown's hidden twin (aria-hidden, tabindex -1) and has no name to check. */
 					const trig = sel.parentElement && sel.parentElement.querySelector('.pm51-dd-trigger');
-					pickers.push({ name: sel.getAttribute('aria-label') || '', trigger: trig ? trig.getAttribute('aria-label') || '' : '' });
+					const mid = String(++window.__fo131.n);
+					sel.setAttribute('data-fo131-sel', mid);
+					if (trig) trig.setAttribute('data-fo131-trig', mid);
+					pickers.push({ mid, trigger: !!trig });
 				}
 			}
 			return { where, roots: roots.length, hits: [...new Set(hits)], pickers };
 		}, [where, 'Available in|Where it is available|Where it\'s available|Use it in|Use it for|Where it is saved|This project only|All my projects|All your projects', only]);
+		/* FO-134 round 4 (sol-recheck-fo134r3 K2): a scope picker is a themed combobox trigger, and the native select
+		   under it is hidden from the tree a screen reader reads. What the picker is called is Chrome's answer for the
+		   visible trigger; round 3 demanded a literal aria-label on the hidden select and failed the product for not
+		   having one. */
 		const judge = async (r, wantPicker) => {
 			await t.check(`Commands › ${r.where}: no retired or mixed scope words`, r.roots > 0 && r.hits.length === 0, r.roots ? r.hits.join(' | ') : 'nothing open');
-			if (wantPicker) await t.check(`Commands › ${r.where}: the scope picker is named “Where it’s available”`, r.pickers.length > 0 && r.pickers.every((x) => x.name === 'Where it’s available' && (!x.trigger || x.trigger === 'Where it’s available')), JSON.stringify(r.pickers));
+			if (!wantPicker) return;
+			const cdp131 = await t.page.context().newCDPSession(f);
+			const got = [];
+			for (const p of r.pickers) {
+				if (!p.mid) { got.push({ diag: p.diag }); continue; }
+				const trig = await axRead(cdp131, `[data-fo131-trig="${p.mid}"]`).catch(() => null);
+				const sel = await axRead(cdp131, `[data-fo131-sel="${p.mid}"]`).catch(() => null);
+				got.push({ mid: p.mid, trigger: trig, select: sel });
+			}
+			await cdp131.detach().catch(() => {});
+			const ok = got.length > 0 && got.every((x) => x.trigger && !x.trigger.ignored && x.trigger.name === 'Where it’s available' && (!x.select || x.select.ignored));
+			await t.check(`Commands › ${r.where}: the scope picker's combobox is named “Where it’s available” and its native select is hidden from the tree`, ok,
+				JSON.stringify(got.map((x) => x.diag ? x : { trigger: x.trigger && x.trigger.name, triggerRole: x.trigger && x.trigger.role, triggerIgnored: !!x.trigger?.ignored, selectIgnored: x.select ? !!x.select.ignored : 'not in tree' })));
 		};
 		await go(t, f, 'code', 'commands');
 		await f.evaluate(() => PM51.switchTab('commands', 'commands'));

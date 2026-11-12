@@ -1,0 +1,5 @@
+{
+  "_": "FO-134 round 4 positive opener census. `opens` are Settings actions whose press opens an editor: the walk presses each and reads the panel. `other` maps every other action a Settings button carries to what it does instead. An action in neither list fails the walk by name, so a new opener cannot be skipped silently. Regenerated from --set openersProbe=1 --set probeOut=<file> (a press-and-observe run on the built page), never from what a name looks like. PENDING MEASUREMENT on this branch: the lists are filled from that run.",
+  "opens": [],
+  "other": {}
+}
