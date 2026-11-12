@@ -162,7 +162,8 @@
     this.spec = { style: bz.style || 'off', width: bz.width || 0, gap: bz.gap || 0, material: mat, reflect: level, gloss: gloss,
       strength: STRENGTH[side][li] * (mat === 'glass' ? GLASS[side][li] : 1) * (light || gloss ? 1 : dimScreen(th.bg)),
       light: light, bg: th.bg, fg: th.fg, accent: th.palette ? th.palette[4] : th.fg, glow: !!(ap.effects && ap.effects.glow && ap.effects.glow.on), look: look };
-    this.el.hidden = !this.on();
+    var hidden = !this.on();
+    if (this.el.hidden !== hidden) this.el.hidden = hidden;
     this.view.root.setAttribute('data-pmt-bezel', this.spec.style);
     this.geoKey = '';
     if (!this.on()) this._release();
