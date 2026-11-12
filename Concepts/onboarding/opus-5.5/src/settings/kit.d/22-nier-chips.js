@@ -9,7 +9,8 @@
      - presets Full install (all 29), Quiet (no Menu sounds, Pod voice, Pod companion, Pod 042 in Chat), Still (no Motion
        part, no Pod companion, no Boot sequence) and Colors only (none)
      - a still preview tile at the top, drawn from the chips: a menu with the cursor, a header rule, a dialog band, a
-       diamond, a block bar and the Pod, in the current look's colours
+       diamond, a block bar and the Pod, in the current look's colours, over the World's layers (the faint grid, the
+       drifting ink squares, the sweep line) when those parts are installed (B-13: it drew no particles or sweep)
      - the NieR background (general.visual.nier-background) as thumbnails of PM_NIER_SCENES, and Play reboot moment
        (PM_NIER.replay)
      - a note on the Motion group while Reduce motion is on; a note and a NieR theme pick while NieR is not the theme (the list can
@@ -86,6 +87,8 @@
     + '<path d="M15 18H25V21H15Z" fill="currentColor" stroke="none"/><path d="M14 47.5H26" opacity=".35"/></svg>';
   function preview() {
     return '<div class="o55nc-pv" aria-hidden="true">'
+      /* the World behind the panels, as the app draws it: a few ink squares (Particles) and a faint band (Sweep line) */
+      + '<i class="o55nc-pv-particles"></i><i class="o55nc-pv-sweep"></i>'
       + '<div class="o55nc-pv-head"><span>Unit status</span><i class="o55nc-pv-glyphs"></i></div>'
       + '<div class="o55nc-pv-body"><div class="o55nc-pv-menu"><span>Plans</span><span>Builds</span><span class="is-on">Plug-in Chips<i class="o55nc-pv-cur"></i>'
       + '<b class="o55nc-pv-br"></b><b class="o55nc-pv-br"></b><b class="o55nc-pv-br"></b><b class="o55nc-pv-br"></b></span></div>'

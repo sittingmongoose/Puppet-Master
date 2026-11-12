@@ -18,6 +18,10 @@
   const SHORT = { 'image-generation': 'Make pictures', 'image-understanding': 'Look at pictures', transcription: 'Turn speech into text', 'text-to-speech': 'Read text aloud', 'audio-generation': 'Make sounds and music', 'video-generation': 'Make short videos', 'artifact-output': 'Make documents and files' };
   const WHAT = { 'image-generation': 'Makes pictures from a description.', 'image-understanding': 'Looks at pictures and screenshots and describes what is in them.', transcription: 'Turns recordings and speech into text.', 'text-to-speech': 'Reads text aloud in a chosen voice.', 'audio-generation': 'Makes sound effects and music from a description.', 'video-generation': 'Makes short video clips from a description.', 'artifact-output': 'Makes documents, spreadsheets, and slide decks.' };
   const CAP = { 'image-generation': 'image-generation', 'image-understanding': 'vision' };
+  /* Abilities a chat or coding model cannot do: a service does them with its own model for the job ("the service's
+     default model"), so only a model that can (its caps) is offered beside that default, never a coding or picture
+     model (lane-aimore 14: Text to Speech offered Codex coding model and GPT Image). */
+  const ONLY_FIT = { 'text-to-speech': 'speech', transcription: 'transcription', 'audio-generation': 'audio', 'video-generation': 'video' };
   const LAST_CHECK = { 'image-generation': '1 h ago', 'image-understanding': '2 h ago', 'text-to-speech': 'yesterday', 'artifact-output': '3 h ago' };
   const MAKES = ['image-generation', 'text-to-speech', 'audio-generation', 'video-generation'];
   const HANDS_BACK = [...MAKES, 'artifact-output'];
@@ -118,7 +122,9 @@
     if (MAKES.includes(r.id) && !on(S.master)) return { id: S.master, text: 'Making media is off for the whole project.' };
     return null;
   }
-  const plain = r => blockedBy(r) || !abilityOn(r) ? 'Off' : !unset(r) && r.status !== 'setup' ? 'Ready' : 'Not set up';
+  /* Ready once a service is chosen, whatever word the example data stored (lane-aimore 4: Speech & Transcription read
+     "Not set up" while it named ChatGPT / Codex and its check passed) */
+  const plain = r => blockedBy(r) || !abilityOn(r) ? 'Off' : unset(r) ? 'Not set up' : 'Ready';
   const tone = r => PM51.tone(plain(r));
   const modelText = e => e.model || 'default model';
   const endpointText = e => !e || e.provider === 'Not configured' ? 'Nothing yet' : e.provider === 'Built-in' ? `Built-in ${e.model}` : e.picture ? `${e.provider} · ${modelText(e)}` : `${svcLabel(e.provider)} · ${modelText(e)}`;
@@ -141,7 +147,8 @@
 
   /* ---------- services ------------------------------------------------------------------------------------------ */
   function serviceOptions(r) {
-    const list = (state.providers || []).filter(p => p.installed && p.signedIn && p.status !== 'disabled' && (p.models || []).some(m => m.enabled)).map(p => ({ id: p.id, label: p.name, models: p.models.filter(m => m.enabled).map(m => ({ id: m.id, name: m.name, fit: !CAP[r.id] || (m.caps || []).includes(CAP[r.id]) })), accounts: (p.accounts || []).filter(x => x.active).map(x => ({ id: x.id, name: x.nickname })) }));
+    const only = ONLY_FIT[r.id];
+    const list = (state.providers || []).filter(p => p.installed && p.signedIn && p.status !== 'disabled' && (p.models || []).some(m => m.enabled)).map(p => ({ id: p.id, label: p.name, models: p.models.filter(m => m.enabled && (!only || (m.caps || []).includes(only))).map(m => ({ id: m.id, name: m.name, fit: !CAP[r.id] || (m.caps || []).includes(CAP[r.id]) })), accounts: (p.accounts || []).filter(x => x.active).map(x => ({ id: x.id, name: x.nickname })) }));
     if (r.id === 'artifact-output') list.push({ id: 'tool', label: 'Built-in renderer', models: [{ id: 'tool', name: 'Artifact renderer', fit: true }], accounts: [] });
     return list;
   }
@@ -157,7 +164,7 @@
   }
   const DEFAULT_MODEL = '';
   const modelChoices = (svc, fit) => [{ value: DEFAULT_MODEL, label: 'The service\'s default model', meta: 'Recommended' }, ...svc.models.map(m => ({ value: m.name, label: m.name, meta: fit && !m.fit ? 'May not support this' : '' }))];
-  const modelField = (svc, want, fit = true) => PM51.field('Model', PM51.select(want || DEFAULT_MODEL, modelChoices(svc, fit), { label: 'Model', cls: 'pm51-media-model' }), svc.id === 'tool' ? 'Built in. Nothing is sent to an AI service.' : 'Only models you have turned on appear here.');
+  const modelField = (svc, want, fit = true, only = '') => PM51.field('Model', PM51.select(want || DEFAULT_MODEL, modelChoices(svc, fit), { label: 'Model', cls: 'pm51-media-model' }), svc.id === 'tool' ? 'Built in. Nothing is sent to an AI service.' : only ? 'The service\'s default model is its own model for this job. Other models appear only when they can do it.' : 'Only models you have turned on appear here.');
   const accountField = (svc, want) => svc.accounts.length > 1 ? PM51.field('Account', PM51.select(want, svc.accounts.map(x => [x.name, x.name]), { label: 'Account', cls: 'pm51-media-account' }), 'The account whose usage this ability spends.') : svc.accounts.length ? PM51.note(`Uses ${svc.accounts[0].name}.`) : PM51.note('No account needed.');
   /* "The service's default model" everywhere is the inventory's Service default; picking a model anywhere is the override. */
   function syncModelMode() {
@@ -168,8 +175,10 @@
   function picturePanel(r) {
     const cur = PM51.value(S.provider);
     const first = Object.keys(PICTURE).find(k => !pictureBlock(PICTURE[k]));
-    const want = PICTURE[cur] ? cur : first || 'None';
-    const opts = [{ value: 'None', label: 'No service', meta: 'Pictures are not made' }, ...Object.entries(PICTURE).map(([v, pc]) => { const why = pictureBlock(pc); return { value: v, label: pc.label, meta: why ? (/API key/.test(why) ? 'Needs an API key' : 'Needs sign-in') : pc.short, disabled: !!why, reason: why }; })];
+    /* the panel opens on what is chosen now, "No service" when nothing is (lane-aimore 3: it opened on ChatGPT / Codex
+       plan while the ability said "Nothing yet"); the first service that can be used is only marked as such */
+    const want = PICTURE[cur] ? cur : 'None';
+    const opts = [{ value: 'None', label: 'No service', meta: 'Pictures are not made' }, ...Object.entries(PICTURE).map(([v, pc]) => { const why = pictureBlock(pc); return { value: v, label: pc.label, meta: why ? (/API key/.test(why) ? 'Needs an API key' : 'Needs sign-in') : v === first && !PICTURE[cur] ? `${pc.short} · can be used now` : pc.short, disabled: !!why, reason: why }; })];
     const models = k => { const pc = PICTURE[k]; if (!pc) return ''; return PM51.field('Model', PM51.select(r.primary && r.primary.picture === k ? r.primary.model : DEFAULT_MODEL, [{ value: DEFAULT_MODEL, label: 'The service\'s default model', meta: 'Recommended' }, { value: pc.model, label: pc.model }], { label: 'Model', cls: 'pm51-media-model' })); };
     PM51.panel({
       title: PICTURE[cur] ? 'Change the picture service' : 'Choose the picture service', subtitle: 'Image Generation · make pictures', icon: 'image',
@@ -201,7 +210,7 @@
     const cur = services.find(s => s.label === curName) || services.find(s => s.models.some(m => m.fit)) || services[0];
     const svcOpts = services.map(s => ({ value: s.id, label: s.label, meta: CAP[r.id] && !s.models.some(m => m.fit) ? 'No model here can do this' : '' }));
     const body = PM51.panelSection('Service', PM51.field('Service', PM51.select(cur.id, svcOpts, { action: 'pm51-media-svc', data: { route: r.id }, label: 'Service', cls: 'pm51-media-svc' }), 'Only services you are signed in to appear here. Set more up under AI Services.'))
-      + PM51.panelSection('Model', `<div class="pm51-media-model-slot">${modelField(cur, cur.label === curName ? r.primary?.model : '', !!CAP[r.id])}</div>`)
+      + PM51.panelSection('Model', `<div class="pm51-media-model-slot">${modelField(cur, cur.label === curName ? r.primary?.model : '', !!CAP[r.id], ONLY_FIT[r.id])}</div>`)
       + PM51.panelSection('Account', `<div class="pm51-media-account-slot">${accountField(cur, r.primary?.account)}</div>`);
     PM51.panel({
       title: unset(r) ? 'Choose service' : 'Change service', subtitle: `${r.name} · ${SHORT[r.id] || ''}`, body,
@@ -223,7 +232,7 @@
   PM51.onChange('media-svc', el => {
     const r = byId(ds(el, 'route')); const body = el.closest('.pm51-panel-body'); if (!body) return;
     const svc = serviceOptions(r).find(s => s.id === el.value); if (!svc) return;
-    const m = body.querySelector('.pm51-media-model-slot'); if (m) m.innerHTML = modelField(svc, '', !!CAP[r.id]);
+    const m = body.querySelector('.pm51-media-model-slot'); if (m) m.innerHTML = modelField(svc, '', !!CAP[r.id], ONLY_FIT[r.id]);
     const x = body.querySelector('.pm51-media-account-slot'); if (x) x.innerHTML = accountField(svc, svc.accounts[0]?.name);
   });
 
@@ -237,7 +246,7 @@
       label: endpointText(f), help: accountText(f),
       control: PM51.iconBtn({ icon: 'up', label: 'Move up', action: 'pm51-media-fb-move', data: { route: r.id, index: i, dir: -1 }, disabled: i === 0, reason: 'Already first.' }) + PM51.iconBtn({ icon: 'down', label: 'Move down', action: 'pm51-media-fb-move', data: { route: r.id, index: i, dir: 1 }, disabled: i === fb.length - 1, reason: 'Already last.' }) + PM51.iconBtn({ icon: 'trash', label: 'Remove', action: 'pm51-media-fb-remove', data: { route: r.id, index: i } }) + PM51.toggle(f.enabled !== false, { action: 'pm51-media-fb-toggle', data: { route: r.id, index: i }, label: `Use ${endpointText(f)}` })
     }));
-    const options = [{ value: '', label: 'Choose a service…' }, ...serviceOptions(r).flatMap(s => s.models.map(m => ({ value: `${s.id}::${m.name}`, label: `${s.label} · ${m.name}`, meta: CAP[r.id] && !m.fit ? 'May not support this' : '', group: s.label })))];
+    const options = [{ value: '', label: 'Choose a service…' }, ...serviceOptions(r).flatMap(s => (ONLY_FIT[r.id] && s.id !== 'tool' ? [{ value: `${s.id}::`, label: `${s.label} · default model`, meta: '', group: s.label }] : []).concat(s.models.map(m => ({ value: `${s.id}::${m.name}`, label: `${s.label} · ${m.name}`, meta: CAP[r.id] && !m.fit ? 'May not support this' : '', group: s.label }))))];
     return mode + PM51.panelSection('Tried in this order', rows.length ? PM51.rows(rows, { cls: 'pm51-media-order' }) : PM51.note('No backups yet. If the main service fails, this ability stops and tells you.'), 'Each one is only used when the one above it fails.')
       + PM51.panelSection('Add another', PM51.field('Service and model', PM51.select('', options, { action: 'pm51-media-fb-add', data: { route: r.id }, label: 'Add a backup' })));
   }
@@ -318,7 +327,9 @@
       menu: anchor => PM51.menu(anchor, [
         { label: 'Reset to the example', icon: 'restore', onClick: () => PM51.confirm(`Reset ${r.name}?`, 'Its service, backups and file choices go back to the example. Shared defaults such as picture size or voice are kept.', 'Reset', () => { resetRoute(r); PM51.toast(`${r.name} reset`, 'The example is back.'); }) }
       ], r.name),
-      body: (block ? `<div class="o55-media-block">${PM51.note(block.text, 'info')}</div>` : '')
+      /* the page switch that keeps it off is named, and an own switch that is on is explained (lane-aimore 15: "Make
+         pictures" on while the status read Off) */
+      body: (block ? `<div class="o55-media-block">${PM51.note(abilityOn(r) ? `${block.text} ${r.name} stays off until then, although its own switch below is on.` : block.text, 'info')}</div>` : '')
         + PM51.section({ title: 'Who does it', help: WHAT[r.id] || '', body: switchRow(r) + PM51.scoped.rows([uses, backup, check]) })
         + (results ? PM51.section({ title: r.id === 'image-understanding' ? 'How it looks' : r.id === 'transcription' ? 'Results' : 'Defaults', body: results }) : '')
         + more
@@ -365,7 +376,7 @@
     migrate();
     const tab = PM51.tab(ID, 'abilities');
     const body = tab === 'abilities' ? abilitiesTab() : '<p class="o55-quiet-line">What the assistant may take in, where results are saved and how long they are kept.</p>';
-    return PM51.page({ id: ID, key: KEY, tabs: TABS, active: tab, body, quiet: [{ label: 'How media abilities work', action: 'pm51-media-help' }, { label: 'Check every ability', action: 'pm51-media-diagnostics' }, { label: 'Reset abilities to the example', action: 'pm51-media-reset' }] });
+    return PM51.page({ id: ID, key: KEY, tabs: TABS, active: tab, owns: ['media-abilities'], body, quiet: [{ label: 'How media abilities work', action: 'pm51-media-help' }, { label: 'Check every media ability', action: 'pm51-media-diagnostics' }, { label: 'Reset abilities to the example', action: 'pm51-media-reset' }] });
   }
   PM51.manager('mediaRoutes', { render });
   PM51.owner(ID, id => {

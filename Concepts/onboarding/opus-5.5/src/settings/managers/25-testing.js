@@ -27,7 +27,7 @@
   const RETRY_LABELS = [[0, 'Do not retry'], [1, 'Once'], [2, 'Twice'], [3, '3 times']];
   const THEN = ['Ask me', 'Stop', 'Continue'];
   const ADAPTERS = ['Detected native debugger', 'Browser devtools', 'Language-aware', 'Attach to a running process', 'CodeLLDB', 'GDB', 'Delve', 'debugpy', 'Node.js inspector', 'Firefox devtools'];
-  const WORKFLOWS = [['Settings navigation', 'Every domain, workspace, and short page section'], ['Manager controls', 'Add, edit, check, reorder, turn off, remove'], ['Menus, dialogs, and motion', 'Open and close continuity, focus, no flashes'], ['Responsive layouts', 'Desktop, compact, and mobile navigation']];
+  const WORKFLOWS = [['Settings navigation', 'Every chapter, page and section'], ['Manager controls', 'Add, edit, check, reorder, turn off, remove'], ['Menus, dialogs, and motion', 'Open and close continuity, focus, no flashes'], ['Responsive layouts', 'Desktop, compact, and mobile navigation']];
   const profiles = () => (state.testProfiles = state.testProfiles || []);
   const debugs = () => (state.debugProfiles = state.debugProfiles || []);
   const t = () => { const s = PM51.s(); if (!s.testing) s.testing = clone(DATA.testing); const x = s.testing; if (!x.runs) x.runs = []; if (!x.triggers) x.triggers = { afterEdits: 'Fast feedback', beforeCompletion: 'Thorough verification', manual: 'Release candidate', retry: 1, then: 'Ask me' }; if (!x.browser) x.browser = clone(BROWSER_DEFAULTS); if (!x.native) x.native = clone(NATIVE_DEFAULTS); return x; };
@@ -67,6 +67,14 @@
   const WHERE = [['local', 'On this computer', 'Quickest. Uses what is installed here.'], ['container', 'In a clean container', 'Starts fresh each time, from your Dockerfile.'], ['server', 'On your server', 'The computer chosen under Containers & Execution.']];
   const MOMENTS = [{ value: 'none', label: 'Only when I ask', meta: 'Start it with Run now' }, { value: 'afterEdits', label: 'After meaningful edits', meta: 'Quick checks while you work' }, { value: 'beforeCompletion', label: 'Before a job counts as done', meta: 'The assistant must pass it first' }, { value: 'manual', label: 'Full runs and release Goals', meta: 'When you ask for a full run' }];
   const MOMENT_TRIGGER = { none: 'Only when I ask', afterEdits: 'After meaningful edits', beforeCompletion: 'Before completion', manual: 'Manual or release Goal' };
+  /* When a profile runs has one answer: the moments "When tests run" gives it. A profile's own "When it runs", its list
+     line, its Edit panel's Moment and the gate details all read that answer, and Edit's Moment writes it; p.trigger only
+     mirrors it for the engine (B11 D1: Edit set "After meaningful edits" while "When to test" still ran it before
+     completion). */
+  const MOMENT_KEYS = ['afterEdits', 'beforeCompletion', 'manual'];
+  const momentsOf = p => MOMENT_KEYS.filter(k => t().triggers[k] === p.name);
+  const whenText = p => { const ks = momentsOf(p); return ks.length ? ks.map(k => MOMENT_TRIGGER[k]).join(' and ') : MOMENT_TRIGGER.none; };
+  const syncTriggers = () => profiles().forEach(p => { p.trigger = whenText(p); });
   const labelOf = (list, id) => (list.find(x => x[0] === id) || [])[1] || '';
   const namesOf = (list, ids) => (ids || []).map(id => labelOf(list, id)).filter(Boolean).join(', ');
   const resultsLabel = v => (RESULTS.find(r => r.value === v) || RESULTS[0]).label;
@@ -105,11 +113,11 @@
       p.kind === 'web' ? { label: 'Browsers', help: namesOf(SIZES, p.sizes), value: namesOf(BROWSERS, p.browsers) || 'Chromium' }
         : p.kind === 'desktop' ? { label: 'Opens on', value: namesOf(DEVICES, p.devices) || 'This computer' }
         : { label: 'Runs', value: labelOf(WHERE, p.where) || 'On this computer' },
-      { label: 'When it runs', value: p.trigger || 'Only when I ask' },
+      { label: 'When it runs', value: whenText(p) },
       { label: 'Results go to', value: resultsLabel(p.results) }
     ] : [
       { label: 'What it checks', value: p.description || 'Not set' },
-      { label: 'When it runs', value: p.trigger || 'Manual only' },
+      { label: 'When it runs', value: whenText(p) },
       { label: 'Browser checks', value: p.browser || 'None' },
       { label: 'Native checks', value: p.native || 'None' }
     ];
@@ -128,10 +136,10 @@
       id: ID, rosterId: 'testing-profiles', rosterTitle: 'Test profiles', count: list.length,
       add: { action: 'pm51-testing-add-profile', label: 'New test profile' },
       filter: { placeholder: 'Filter profiles' },
-      items: list.map(x => ({ id: x.id, title: x.name, meta: isDefault(x) ? 'Default · ' + (x.trigger || 'Manual') : (x.trigger || 'Manual'), tone: 'ready', selected: x.id === p.id, data: { kind: 'profiles' } })),
+      items: list.map(x => ({ id: x.id, title: x.name, meta: isDefault(x) ? 'Default · ' + whenText(x) : whenText(x), tone: 'ready', selected: x.id === p.id, data: { kind: 'profiles' } })),
       selectAction: 'pm51-testing-pick',
       detail: {
-        title: p.name, subtitle: `${(p.stages || []).length} ${(p.stages || []).length === 1 ? 'stage' : 'stages'} · ${p.trigger || 'Manual only'}`, pill: profilePill(p),
+        title: p.name, subtitle: `${(p.stages || []).length} ${(p.stages || []).length === 1 ? 'stage' : 'stages'} · ${whenText(p)}`, pill: profilePill(p),
         primary: { label: 'Run now', icon: 'play', action: 'pm51-testing-run', data: { id: p.id } },
         menu: anchor => PM51.menu(anchor, [
           { label: 'Edit', icon: 'edit', onClick: () => editProfile(p.id) },
@@ -322,10 +330,11 @@
       + (p.kind === 'web' ? PM51.panelSection('Browsers', chipRow(BROWSERS, p.browsers, 'browsers', 'Browsers') + `<p class="pm51-ps-help">Screen sizes</p>` + chipRow(SIZES, p.sizes, 'sizes', 'Screen sizes'), '', { icon: 'browser' })
         : p.kind === 'desktop' ? PM51.panelSection('Opens on', chipRow(DEVICES, p.devices, 'devices', 'Opens on'), '', { icon: 'system' })
         : PM51.panelSection('Where the tests run', PM51.field('Runs', PM51.select(p.where || 'local', WHERE.map(([v, l]) => [v, l]), { data: { field: 'where' }, label: 'Where the tests run' })), '', { icon: 'server' }));
+    const nowMoment = MOMENT_TRIGGER[momentsOf(p)[0] || 'none'];
     PM51.panel({
       title: `Edit ${p.name}`, subtitle: 'Changes apply to the next run.', icon: 'test',
       body: PM51.panelSection('Name and purpose', PM51.field('Name', PM51.input(p.name, { data: { field: 'name' } })) + PM51.field('What it checks', PM51.input(p.description || '', { data: { field: 'description' } })))
-        + PM51.panelSection('When it runs', PM51.field('Moment', PM51.select(p.trigger, withChoice(TRIGGERS, p.trigger), { data: { field: 'trigger' }, label: 'Moment' })))
+        + PM51.panelSection('When it runs', PM51.field('Moment', PM51.select(nowMoment, TRIGGERS, { data: { field: 'trigger' }, label: 'Moment' }), momentsOf(p).length > 1 ? `It runs at ${momentsOf(p).length} moments now. Picking one here keeps it at that moment only.` : 'The same choice as under When to test.'))
         + guided
         + PM51.panelSection('Stages', PM51.field('Stages, one per line', `<textarea class="text-control" data-field="stages" rows="5">${h((p.stages || []).join('\n'))}</textarea>`, k ? 'They run in this order. Left as they are, they follow your answers above.' : 'They run in this order.'))
         + (k ? '' : PM51.panelSection('Checks', PM51.field('Browser checks', PM51.input(p.browser || '', { data: { field: 'browser' }, placeholder: 'e.g. Smoke only when GUI-related' })) + PM51.field('Native checks', PM51.input(p.native || '', { data: { field: 'native' }, placeholder: 'e.g. Build check' })))),
@@ -343,13 +352,20 @@
           if (why) { PM51.toast('One more thing', why, 'info'); return false; }
         }
         const name = readField(wrap, 'name'); if (name) next.name = name;
-        next.description = readField(wrap, 'description'); next.trigger = readField(wrap, 'trigger') || p.trigger;
+        next.description = readField(wrap, 'description');
+        const moment = readField(wrap, 'trigger');
         const stages = readField(wrap, 'stages').split('\n').map(x => x.trim()).filter(Boolean);
         next.stages = k && stages.join('\n') === stagesFor(p).join('\n') ? stagesFor(next) : stages;
         if (k) { next.browser = p.kind === 'web' ? `${namesOf(BROWSERS, next.browsers)} · ${namesOf(SIZES, next.sizes)}` : 'None'; next.native = p.kind === 'desktop' ? namesOf(DEVICES, next.devices) : 'None'; next.evidence = resultsLabel(next.results); }
         else { next.browser = readField(wrap, 'browser'); next.native = readField(wrap, 'native'); }
-        if (next.name !== p.name) { const tr = t().triggers; ['afterEdits', 'beforeCompletion', 'manual'].forEach(key => { if (tr[key] === p.name) tr[key] = next.name; }); }
-        Object.assign(p, next);
+        const tr = t().triggers;
+        if (next.name !== p.name) MOMENT_KEYS.forEach(key => { if (tr[key] === p.name) tr[key] = next.name; });
+        if (moment && moment !== nowMoment) {
+          const key = Object.keys(MOMENT_TRIGGER).find(k => MOMENT_TRIGGER[k] === moment);
+          MOMENT_KEYS.forEach(k => { if (tr[k] === next.name) tr[k] = 'None'; });
+          if (key && key !== 'none') tr[key] = next.name;
+        }
+        Object.assign(p, next); syncTriggers();
         saveState(); PM51.refresh(ID, { swap: false }); PM51.toast('Saved', `${p.name} was updated.`);
       }
     });
@@ -363,7 +379,7 @@
     const p = profileById(id); if (!p || isDefault(p)) return;
     PM51.confirm(`Delete ${p.name}?`, 'Moments that used this profile switch to None.', 'Delete', () => {
       state.testProfiles = profiles().filter(x => x.id !== id);
-      const tr = t().triggers; ['afterEdits', 'beforeCompletion', 'manual'].forEach(k => { if (tr[k] === p.name) tr[k] = 'None'; });
+      const tr = t().triggers; MOMENT_KEYS.forEach(k => { if (tr[k] === p.name) tr[k] = 'None'; }); syncTriggers();
       PM51.setSel(ID + '-profiles', ''); saveState(); PM51.refresh(ID, { swap: false }); PM51.toast(`${p.name} deleted`, 'It is no longer on your list.');
     }, true);
   }
@@ -450,6 +466,7 @@
         Object.assign(p, { description: describe(p), stages: stagesFor(p), browser: p.kind === 'web' ? `${namesOf(BROWSERS, p.browsers)} · ${namesOf(SIZES, p.sizes)}` : 'None', native: p.kind === 'desktop' ? namesOf(DEVICES, p.devices) : 'None', evidence: resultsLabel(p.results) });
         profiles().push(p);
         if (d.moment !== 'none') tr[d.moment] = p.name;
+        syncTriggers();
         PM51.setSel(ID + '-profiles', p.id); PM51.setTab(ID, 'profiles'); saveState(); PM51.refresh(ID, { swap: false });
         PM51.toast('Profile created', d.moment !== 'none' ? `${p.name} now runs ${MOMENTS.find(m => m.value === d.moment).label.toLowerCase()}.` : `${p.name} is on your list. Start it with Run now.`);
       }
@@ -488,7 +505,7 @@
   PM51.onChange('testing-profile-field', el => { const p = profileById(ds(el, 'id')); const field = ds(el, 'field'); if (!p || !['timeout', 'retries'].includes(field)) return; p[field] = field === 'retries' ? Number(el.value) : el.value; saveState(); });
 
   /* ---------- when / browser / native --------------------------------------- */
-  PM51.onChange('testing-trigger', el => { const key = ds(el, 'key'); const tr = t().triggers; if (!(key in tr)) return; tr[key] = key === 'retry' ? Number(el.value) : el.value; saveState(); if (key !== 'retry' && key !== 'then') PM51.refresh(ID, { swap: false }); });
+  PM51.onChange('testing-trigger', el => { const key = ds(el, 'key'); const tr = t().triggers; if (!(key in tr)) return; tr[key] = key === 'retry' ? Number(el.value) : el.value; syncTriggers(); saveState(); if (key !== 'retry' && key !== 'then') PM51.refresh(ID, { swap: false }); });
   PM51.on('testing-browser', el => { const key = ds(el, 'key'); const b = t().browser; if (!(key in BROWSER_DEFAULTS)) return; b[key] = !b[key]; saveState(); PM51.refresh(ID, { swap: false }); });
   PM51.onChange('testing-browser-select', el => { const key = ds(el, 'key'); if (key !== 'screenshots') return; t().browser.screenshots = el.value; saveState(); });
   PM51.on('testing-native', el => { const key = ds(el, 'key'); const n = t().native; if (!(key in NATIVE_DEFAULTS)) return; n[key] = !n[key]; saveState(); PM51.refresh(ID, { swap: false }); });
@@ -505,7 +522,7 @@
       title: `Edit ${d.name}`, subtitle: 'Changes apply the next time you start debugging.', icon: 'play',
       body: PM51.panelSection('Name', PM51.field('Name', PM51.input(d.name, { data: { field: 'name' } })))
         + PM51.panelSection('What to run', PM51.field('Debugger', PM51.select(d.adapter, withChoice(ADAPTERS, d.adapter), { data: { field: 'adapter' }, label: 'Debugger' })) + PM51.field('Program', PM51.input(d.program || '', { data: { field: 'program' } }), 'What gets started.') + PM51.field('Arguments', PM51.input(d.args || '', { data: { field: 'args' }, placeholder: 'Optional' })))
-        + PM51.panelSection('Where', PM51.field('Environment', PM51.select(d.env || 'Project environment', withChoice(ENVS, d.env), { data: { field: 'env' }, label: 'Environment' })) + PM51.field('Working folder', PM51.input(folderText(d.cwd), { data: { field: 'cwd' } }), 'Project folder means the top folder of this workspace.')
+        + PM51.panelSection('Where', PM51.field('Environment', PM51.select(d.env || 'Project environment', withChoice(ENVS, d.env), { data: { field: 'env' }, label: 'Environment' })) + PM51.field('Working folder', PM51.input(folderText(d.cwd), { data: { field: 'cwd' } }), 'Project folder means the top folder of this project.')
           + PM51.field('Extra values', `<textarea class="form-textarea o55-setup-mono" data-field="envVars" rows="3" spellcheck="false" placeholder="NAME=value">${h((d.envVars || []).join('\n'))}</textarea>`, 'One NAME=value per line. Keep passwords out: these are saved as plain text.')),
       primaryLabel: 'Save',
       onPrimary: wrap => {
@@ -654,6 +671,7 @@
     title: 'How testing works',
     body: PM51.panelSection('In short', '<p class="pm51-ps-text">A test profile is a list of stages that run in order. Puppet Master picks a profile for each moment: quick checks while you work, a thorough run before a job counts as done, and a full run for releases.</p>')
       + PM51.panelSection('The tabs', PM51.kv([['Profiles', 'What each profile checks, and a Run now button.'], ['When to test', 'Whether automated tests may run, which profile runs at which moment, and what happens on failure.'], ['What it can test', 'Screen checks in the built-in browser, and app checks for desktop apps.'], ['Debug', 'One-click debugging for your program or a test.'], ['History', 'Past runs and the evidence kept from them.']]))
-      + PM51.panelSection('Good to know', '<p class="pm51-ps-text">Secrets are hidden before any log or screenshot is saved.</p>')
+      /* what happens to secrets follows "Hide secrets and personal data in proof", the way History's Policy says it (B11 D5) */
+      + PM51.panelSection('Good to know', `<p class="pm51-ps-text">${V('planning.verification.evidence-redaction') ? 'Secrets and personal data are hidden before any log or screenshot is saved.' : 'Secrets and personal data are kept in logs and screenshots as they are, because hiding them is off. Turn on "Hide secrets and personal data in proof" to hide them before anything is saved.'}</p>`)
   }));
 })();

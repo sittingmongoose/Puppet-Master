@@ -198,6 +198,11 @@
     return parts.join(' · ');
   };
   const notAvailable = name => `${name} (not available)`;
+  /* a persona a command asks for that you do not have (/x-quick-audit's "Repository Auditor"): the list and the
+     command's page say so and offer the fix, instead of only the dropdown's "(not available)" and the dry run
+     (lane-code 2026-11-11, A7 B-1) */
+  const missingPersona = c => { const p = c.overrides && c.overrides.persona; return p && !personas().some(x => x.name === p) ? String(p) : ''; };
+  const missingLine = p => `Its persona, ${p}, is not available, so it runs as the chat’s persona.`;
   const personaOptions = current => {
     const opts = [{ value: '', label: 'Inherit', meta: 'Chat persona' }];
     ['Core', 'Bundled', 'Custom'].forEach(g => personas().filter(p => personaGroup(p) === g).forEach(p => opts.push({ value: p.name, label: p.name, group: g })));
@@ -377,6 +382,7 @@ html[data-motion="reduced"] #panel-settings .pm51-dialog-group > summary .icon s
     const p = prefs();
     const items = custom().map(c => ({
       title: c.name, meta: overrideSummary(c), note: c.description || 'No description yet.', avatar: icon('terminal'),
+      pill: missingPersona(c) ? PM51.pill('Needs you', 'attention') : '', sub: missingPersona(c) ? missingLine(missingPersona(c)) : '',
       end: keyStatic(keysFor(c)) + PM51.toggle(!!c.enabled, { action: 'pm51-commands-toggle', data: { id: c.id }, label: `${c.name} enabled` }) + icon('chevron'),
       action: 'pm51-commands-open', data: { id: c.id }
     }));
@@ -692,7 +698,8 @@ html[data-motion="reduced"] #panel-settings .pm51-dialog-group > summary .icon s
     if (dd[0]) dd[0].textContent = scopeLabel(c.scope);
     if (dd[1]) dd[1].textContent = keysFor(c) || 'None';
     if (dd[2]) dd[2].textContent = overrideCount(c) ? `${overrideCount(c)} set` : 'None';
-    const st = w.querySelector('.pm51-hero-status'); if (st) st.innerHTML = PM51.status(c.enabled ? 'On' : 'Off', c.enabled ? 'ready' : 'off');
+    const st = w.querySelector('.pm51-hero-status'); if (st) st.innerHTML = missingPersona(c) ? PM51.status('Needs you', 'attention') : PM51.status(c.enabled ? 'On' : 'Off', c.enabled ? 'ready' : 'off');
+    if (!missingPersona(c)) { const miss = w.querySelector('[data-persona-missing]'); if (miss) miss.remove(); }
     const sub = w.querySelector('.pm51-panel-sub'); if (sub) sub.textContent = c.description || 'No description yet.';
     const path = w.querySelector('[data-scope-path]'); if (path) path.textContent = `Stored as ${pathFor(c)}.`;
     const ph = w.querySelector('[data-placeholders]'); if (ph) ph.innerHTML = placeholderLine(c.template);
@@ -703,9 +710,11 @@ html[data-motion="reduced"] #panel-settings .pm51-dialog-group > summary .icon s
     const summary = `Type ${c.name} in chat or pick it from the command palette.${keys ? ` Press ${keys} to run it anywhere.` : ''}`;
     sheet = PM51.panel({
       title: c.name, subtitle: c.description || 'No description yet.', icon: 'terminal', eyebrow: 'Your command', size: 'wide', summary,
-      status: { label: c.enabled ? 'On' : 'Off', tone: c.enabled ? 'ready' : 'off' },
+      status: missingPersona(c) ? { label: 'Needs you', tone: 'attention' } : { label: c.enabled ? 'On' : 'Off', tone: c.enabled ? 'ready' : 'off' },
       facts: [{ label: 'Where it’s available', value: scopeLabel(c.scope) }, { label: 'Shortcut', value: keys || 'None' }, { label: 'Overrides', value: n ? `${n} set` : 'None' }],
-      body: PM51.panelSection('What it sends',
+      body: (missingPersona(c) ? `<div data-persona-missing>${PM51.panelSection('Needs you', PM51.note(missingLine(missingPersona(c)), 'attention')
+          + actionRow(PM51.btn({ label: 'Use the chat’s persona', small: true, icon: 'user', action: 'pm51-commands-persona-inherit', data: { id: c.id } })), 'Or pick another persona under Overrides.', { icon: 'user' })}</div>` : '')
+        + PM51.panelSection('What it sends',
         `<label class="pm51-field"><span class="pm51-field-label">Text</span><textarea class="form-textarea pm51-commands-template" data-action="pm51-commands-template" data-id="${a(c.id)}" rows="7" spellcheck="false" placeholder="${a(TEMPLATE_PLACEHOLDER)}">${h(c.template || '')}</textarea><span class="pm51-field-help pm51-commands-ph" data-placeholders>${placeholderLine(c.template)}</span></label>`
         + PM51.field('Arguments hint', PM51.input(c.argumentsHint || '', { action: 'pm51-commands-args', data: { id: c.id }, placeholder: 'For example: <branch name>' }), 'Shown while you type the command, so you remember what to pass.'),
         '$ARGUMENTS is everything typed after the name. $1 $2 are single words. @path pastes a file. !`command` pastes what a command prints.', { icon: 'code' })
@@ -776,6 +785,14 @@ html[data-motion="reduced"] #panel-settings .pm51-dialog-group > summary .icon s
   PM51.onChange('commands-field', el => {
     const c = commandById(ds(el, 'id')); const field = ds(el, 'field'); if (!c || field !== 'scope') return;
     c.scope = el.value === 'Global' ? 'Global' : 'Project'; saveState(); PM51.refresh(ID, { swap: false }); syncSheet(c);
+  });
+  PM51.on('commands-persona-inherit', el => {
+    const c = commandById(ds(el, 'id')); if (!c || !c.overrides) return;
+    c.overrides.persona = null; saveState(); PM51.refresh(ID, { swap: false });
+    const w = sheetFor(c.id), dd = w && w.querySelector('.pm51-commands-overrides [data-key="persona"] select, .pm51-commands-overrides select[data-key="persona"]');
+    if (dd) { dd.value = ''; const wrap = dd.closest('.pm51-dd'), v = wrap && wrap.querySelector('.pm51-dd-value'); if (v) v.textContent = 'Inherit'; }
+    syncSheet(c);
+    PM51.toast(`${c.name} uses the chat’s persona`, 'It no longer asks for a persona you do not have.', 'success');
   });
   PM51.onChange('commands-override', el => {
     const c = commandById(ds(el, 'id')); const key = ds(el, 'key'); if (!c || !OVERRIDE_KEYS.includes(key)) return;

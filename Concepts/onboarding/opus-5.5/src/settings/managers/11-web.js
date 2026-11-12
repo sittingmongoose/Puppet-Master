@@ -55,7 +55,9 @@
     #panel-settings .o55-chain-step i { width: 7px; height: 7px; border-radius: 50%; background: var(--k3-text-3); }
     #panel-settings .o55-chain-step.tone-ready i { background: var(--k3-green); }
     #panel-settings .o55-chain-step.tone-attention i { background: var(--k3-amber); }
-    #panel-settings .o55-chain-step.tone-off { color: var(--k3-text-3); text-decoration: line-through; }
+    #panel-settings .o55-chain-step.tone-off { color: var(--k3-text-3); }
+    #panel-settings .o55-chain-step.tone-off .o55-chain-name { text-decoration: line-through; }
+    #panel-settings .o55-chain-skip { font-weight: 500; color: var(--k3-text-3); text-decoration: none; }
     #panel-settings .o55-chain > svg, #panel-settings .o55-chain > .icon { width: 12px; height: 12px; color: var(--k3-text-3); }
   `);
 
@@ -68,7 +70,14 @@
   const lastCheck = r => r.lastCheck || (r.status === 'ready' ? `Passed ${LAST_CHECK[r.id] || '2 h ago'}` : 'Not checked');
   const seconds = s => s >= 60 ? `${Math.round(s / 60)} min` : `${s} s`;
   const keys = () => (PM51.s().o55WebKeys = PM51.s().o55WebKeys || {});
-  const hasKey = s => s.keySetting ? !!(PM51.s().o55Keys || {})[s.keySetting] || (PM51.value('web.providers.provider-status') || {})[s.name] === 'connected' : !!keys()[s.name] || (s.keyed && (PM51.value('web.providers.provider-status') || {})[s.name] === 'connected');
+  /* A key is saved when one was added here, or the example's stored status says the service is connected; a key removed
+     here stays removed whatever that status says (lane-aimore 9: "Remove the Exa key?" › Remove changed nothing, since
+     the connected status still counted as a saved key). */
+  const hasKey = s => {
+    if (s.keySetting) return !!(PM51.s().o55Keys || {})[s.keySetting] || (PM51.value('web.providers.provider-status') || {})[s.name] === 'connected';
+    if (keys()[s.name] === false) return false;
+    return !!keys()[s.name] || (!!s.keyed && (PM51.value('web.providers.provider-status') || {})[s.name] === 'connected');
+  };
   function svcState(s) {
     if (s.enable && PM51.value(s.enable) === false) return ['Off', 'off'];
     if (s.builtIn) return ['Built in', 'ready'];
@@ -86,7 +95,10 @@
     const m = Object.assign({}, PM51.value(MATRIX) || {}); m[ability] = list.join(' → ');
     if (commitSettingValue(MATRIX, m)) { saveState(); o55Notify(MATRIX, m); }
   }
-  const chainHtml = names => names.length ? `<span class="o55-chain">${names.map((n, i) => { const [label, t] = svcState(svc(n)); return `${i ? icon('arrowRight') : ''}<span class="o55-chain-step tone-${a(t)}" title="${a(label)}">${PM51.mark(PM51.statusKey(label, t), t)}${h(svcLabel(n))}</span>`; }).join('')}</span>` : '<span class="pm51-row-value is-muted">None yet</span>';
+  /* a service in an order that cannot run says so in words, and that it is skipped (lane-aimore 5: Brave Search in
+     Search's order and Firecrawl first in Crawl's were only struck through) */
+  const skipWhy = n => { const [label, t] = svcState(svc(n)); return t === 'ready' ? '' : `${label.toLowerCase()}, skipped`; };
+  const chainHtml = names => names.length ? `<span class="o55-chain">${names.map((n, i) => { const [label, t] = svcState(svc(n)); const why = skipWhy(n); return `${i ? icon('arrowRight') : ''}<span class="o55-chain-step tone-${a(t)}" title="${a(label)}">${PM51.mark(PM51.statusKey(label, t), t)}<span class="o55-chain-name">${h(svcLabel(n))}</span>${why ? `<span class="o55-chain-skip">(${h(why)})</span>` : ''}</span>`; }).join('')}</span>` : '<span class="pm51-row-value is-muted">None yet</span>';
   function fallbackText(r) {
     const on = (r.fallbacks || []).filter(f => f.enabled !== false);
     if (!on.length) return 'Nothing. The ability stops and tells you.';
@@ -163,7 +175,7 @@
     const draw = wrap => {
       const body = wrap.querySelector('.o55-chain-edit'); if (!body) return;
       const left = SERVICES.filter(s => !list.includes(s.name) && (!s.chainOnly || ability === 'research'));
-      body.innerHTML = (list.length ? PM51.rows(list.map((n, i) => ({ label: svcLabel(n), help: svcState(svc(n))[0], control: PM51.iconBtn({ icon: 'up', label: 'Move up', callback: () => { if (i) { list.splice(i - 1, 0, list.splice(i, 1)[0]); draw(wrap); } } }) + PM51.iconBtn({ icon: 'down', label: 'Move down', callback: () => { if (i < list.length - 1) { list.splice(i + 1, 0, list.splice(i, 1)[0]); draw(wrap); } } }) + PM51.iconBtn({ icon: 'trash', label: 'Remove', callback: () => { list.splice(i, 1); draw(wrap); } }) })), { cls: 'pm51-web-order' }) : PM51.note('No services. The ability uses only its AI model.'))
+      body.innerHTML = (list.length ? PM51.rows(list.map((n, i) => ({ label: svcLabel(n), help: skipWhy(n) ? `${svcState(svc(n))[0]}. Skipped until it can run.` : svcState(svc(n))[0], control: PM51.iconBtn({ icon: 'up', label: 'Move up', callback: () => { if (i) { list.splice(i - 1, 0, list.splice(i, 1)[0]); draw(wrap); } } }) + PM51.iconBtn({ icon: 'down', label: 'Move down', callback: () => { if (i < list.length - 1) { list.splice(i + 1, 0, list.splice(i, 1)[0]); draw(wrap); } } }) + PM51.iconBtn({ icon: 'trash', label: 'Remove', callback: () => { list.splice(i, 1); draw(wrap); } }) })), { cls: 'pm51-web-order' }) : PM51.note('No services. The ability uses only its AI model.'))
         + (left.length ? `<div class="o55-inline-actions">${left.map(s => PM51.btn({ label: svcLabel(s.name), icon: 'plus', small: true, callback: () => { list.push(s.name); draw(wrap); } })).join('')}</div>` : '');
     };
     const wrap = PM51.panel({
@@ -221,9 +233,10 @@
     const who = [
       chain ? orow({ label: 'Web services', help: 'Find and read the pages. Tried in this order.', control: chainControl(chain, r.id, `${r.name}: web services`), wide: true, home: MATRIX }) : '',
       r.id === 'search' ? orow({ label: 'For deep research', help: 'When a question needs several sources.', control: chainControl(chainOf('research'), 'research', 'Deep research: web services'), wide: true }) : '',
-      orow({ label: 'AI model', help: `Decides what to look for and writes the answer. ${accountText(r.primary)}.`, control: valueWith(off ? 'Off' : endpointText(r.primary), { label: 'Change', icon: 'edit', action: 'pm51-web-change', data }) }),
+      /* an ability that is off still names the model it uses (lane-aimore 2: it read "Off", which the pill already says) */
+      orow({ label: 'AI model', help: `Decides what to look for and writes the answer. ${accountText(r.primary)}.`, control: valueWith(endpointText(r.primary), { label: 'Change', icon: 'edit', action: 'pm51-web-change', data }) }),
       orow({ label: 'If the model fails', help: fallbackText(r), control: PM51.btn({ label: 'Edit', icon: 'edit', small: true, action: 'pm51-web-fallbacks', data }) }),
-      orow({ label: 'Last check', help: off ? 'Turn the ability on to check it.' : 'One small request, start to finish.', control: valueWith(lastCheck(r), { label: 'Check', icon: 'test', action: 'pm51-web-check', data, disabled: off || r.status !== 'ready', reason: off ? 'Turn the ability on first.' : 'Choose a model first.' }) })
+      orow({ label: 'Last check', help: off ? (r.lastCheck || r.status === 'ready' ? 'From before it was turned off. Turn the ability on to check it again.' : 'Turn the ability on to check it.') : 'One small request, start to finish.', control: valueWith(lastCheck(r), { label: 'Check', icon: 'test', action: 'pm51-web-check', data, disabled: off || r.status !== 'ready', reason: off ? 'Turn the ability on first.' : 'Choose a model first.' }) })
     ];
     const limits = LIMITS[r.id] || [];
     const browserProfile = r.id === 'browser' ? PM51.scoped.rows([orow({ label: 'Browser profile', help: `${PM51.valueLabel('web.fetch.browser-session-profile', PM51.value('web.fetch.browser-session-profile'))}. Set with the other browser choices.`, control: PM51.btn({ label: 'Open Browser & SCM', icon: 'arrowRight', small: true, action: 'pm51-web-browser-settings' }) })]) : '';
@@ -293,7 +306,7 @@
   PM51.on('web-key', el => keyPanel(ds(el, 'service')));
   PM51.on('web-keys', () => PM51.panel({
     title: 'Service keys', subtitle: 'Add, replace or remove the keys web services use.', icon: 'key',
-    body: PM51.panelSection('Services', PM51.rows(SERVICES.filter(s => s.keyed || s.keySetting).map(s => ({ label: svcLabel(s.name), help: hasKey(s) ? 'Saved securely' : 'No key yet', control: PM51.btn({ label: hasKey(s) ? 'Replace' : 'Add key', icon: 'key', small: true, callback: () => { closeOverlay(false); window.setTimeout(() => keyPanel(s.name), 220); } }) + (hasKey(s) && !s.keySetting ? PM51.btn({ label: 'Remove', icon: 'trash', small: true, danger: true, callback: () => PM51.confirm(`Remove the ${svcLabel(s.name)} key?`, 'The service stops working until you add a key again.', 'Remove', () => { delete keys()[s.name]; closeOverlay(false); save(); }, true) }) : '') }))))
+    body: PM51.panelSection('Services', PM51.rows(SERVICES.filter(s => s.keyed || s.keySetting).map(s => ({ label: svcLabel(s.name), help: hasKey(s) ? 'Saved securely' : 'No key yet', control: PM51.btn({ label: hasKey(s) ? 'Replace' : 'Add key', icon: 'key', small: true, callback: () => { closeOverlay(false); window.setTimeout(() => keyPanel(s.name), 220); } }) + (hasKey(s) && !s.keySetting ? PM51.btn({ label: 'Remove', icon: 'trash', small: true, danger: true, callback: () => PM51.confirm(`Remove the ${svcLabel(s.name)} key?`, 'The service stops working until you add a key again.', 'Remove', () => { keys()[s.name] = false; closeOverlay(false); save(); PM51.toast(`${svcLabel(s.name)} key removed`, 'It stops working until you add a key again. Example only: nothing was deleted outside this preview.', 'info'); }, true) }) : '') }))))
       + PM51.note('Remove a key straight away if it may have leaked.')
   }));
   PM51.on('web-browser-settings', () => PM51.revealSetting('web.fetch.browser-session-profile'));
@@ -312,7 +325,7 @@
   function render() {
     const tab = PM51.tab(ID, 'abilities');
     const body = tab === 'abilities' ? abilitiesTab() : tab === 'services' ? servicesTab() : `<p class="o55-quiet-line">${h(LEADS[tab] || '')}</p>`;
-    return PM51.page({ id: ID, key: KEY, tabs: TABS, active: tab, body, quiet: [{ label: 'How web abilities work', action: 'pm51-web-help' }, { label: 'Check every ability', action: 'pm51-web-diagnostics' }, { label: 'Reset abilities to the example', action: 'pm51-web-reset' }] });
+    return PM51.page({ id: ID, key: KEY, tabs: TABS, active: tab, owns: ['web-abilities'], body, quiet: [{ label: 'How web abilities work', action: 'pm51-web-help' }, { label: 'Check every web ability', action: 'pm51-web-diagnostics' }, { label: 'Reset abilities to the example', action: 'pm51-web-reset' }] });
   }
   PM51.manager('webRoutes', { render });
   PM51.owner(ID, id => {
@@ -331,10 +344,18 @@
     { title: 'AI model available', desc: `${endpointText(r.primary)} · ${accountText(r.primary)}`, status: r.primary?.type === 'tool' ? 'Checked' : 'Example', tone: r.primary?.type === 'tool' ? 'ready' : 'info' },
     { title: 'One small request', desc: r.id === 'search' ? 'Search for one phrase and read the first result' : r.id === 'browser' ? 'Open one page in the built-in browser' : 'Read one small page', status: 'Example', tone: 'info' }
   ].filter(Boolean) }); });
-  PM51.on('web-diagnostics', () => PM51.check({ title: 'Check every ability', steps: [
+  /* every search service card is in one count: ready, off (and which of those have no key yet), needing a key, failing
+     (lane-aimore 1: "5 ready, 0 need a key" beside three cards reading Off and Add key) */
+  function servicesLine() {
+    const list = SERVICES.filter(s => !s.chainOnly), st = s => svcState(s)[0];
+    const ready = list.filter(s => svcState(s)[1] === 'ready').length, off = list.filter(s => st(s) === 'Off');
+    const noKey = off.filter(s => (s.keyed || s.keySetting) && !hasKey(s)).length, need = list.filter(s => st(s) === 'Needs a key').length, failed = list.filter(s => st(s) === 'Failed recently').length;
+    return [`${ready} ready`, off.length ? `${off.length} off${noKey ? ` (${noKey === off.length ? (noKey === 1 ? 'no key yet' : 'none has a key yet') : `${noKey} with no key yet`})` : ''}` : '', `${need} need${need === 1 ? 's' : ''} a key`, failed ? `${failed} failed recently` : ''].filter(Boolean).join(', ');
+  }
+  PM51.on('web-diagnostics', () => PM51.check({ title: 'Check every web ability', steps: [
     { title: 'Abilities listed', desc: `${all().length} abilities` },
     { title: 'Ready abilities', desc: `${all().filter(x => plain(x) === 'Ready').length} with a working model` },
-    { title: 'Search services', desc: `${SERVICES.filter(s => !s.chainOnly && svcState(s)[1] === 'ready').length} ready, ${SERVICES.filter(s => svcState(s)[0] === 'Needs a key').length} need a key` },
+    { title: 'Search services', desc: servicesLine() },
     { title: 'Services reachable', desc: 'One small request each', status: 'Example', tone: 'info' }
   ] }));
   PM51.on('web-reset', () => PM51.confirm('Reset web abilities to the example?', 'Every ability goes back to its example AI model, backups and choices. Web services, keys and limits are kept.', 'Reset', () => { state.webRoutes = clone(D.webRoutes); migrate(); save(); PM51.toast('Web abilities reset', 'Defaults are back.'); }, true));

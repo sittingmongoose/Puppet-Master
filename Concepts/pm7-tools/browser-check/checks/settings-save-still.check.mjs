@@ -10,6 +10,7 @@
 // layout shift inside Settings. A second test runs four cases in each of the ten looks at 1280x900.
 // --set size=860x900 --set cases=providers,web --set looks=nier-dark (or none) limit the matrix; --set probe=1 logs reads.
 import { LOOKS } from '../browser-check.config.mjs';
+import { setLookBySetting, guardPaintedLook, captureBaseline, setMotionMedia, setMotionApp } from '../helpers/settings-look.mjs';
 
 const SIZES = [[860, 900], [1920, 1080]];
 const ENTR = '^(pageIn|sectionReveal|pmSettingsTabSwap[AB]|pm51IndexOpen)$';
@@ -52,8 +53,8 @@ const ARM = ({ ws, sw, entr }) => {
 	if (!window.__fo130armed) {
 		window.__fo130armed = true;
 		// a section's first reveal (one scrolled into view because the page got shorter) is not a replay: sectionReveal
-		// counts only on a section that had already been revealed before the press (the same element, or one drawn again
-		// with its id)
+		// counts only on a section that had been revealed or was on screen before the press (the same element, or one
+		// drawn again with its id)
 		document.addEventListener('animationstart', (e) => {
 			const s = window.__fo130; if (!s || !s.on || !re.test(e.animationName) || !e.target.closest || !e.target.closest('#panel-settings')) return;
 			if (e.animationName === 'sectionReveal' && !(s.revealed && s.revealed.has(e.target.id))) return;
@@ -68,7 +69,10 @@ const ARM = ({ ws, sw, entr }) => {
 // start sampling: one read per frame, in a task queued from rAF (after that frame's paint)
 const SAMPLE = (ms) => new Promise((resolve) => {
 	const S = window.__fo130; S.on = true; S.ent = []; S.shifts = 0; S.frames = [];
-	S.revealed = new Set([...document.querySelectorAll('#panel-settings .is-revealed[id]')].map((x) => x.id));
+	// a section counts when it had played its entrance or was on screen before the press (Reduced Motion leaves a section in
+	// view unmarked, and its first entrance on a save is a replay to the reader: astra-review-l1s)
+	const onScreen = (x) => { const r = x.getBoundingClientRect(); return r.bottom > 0 && r.top < innerHeight && r.width > 0; };
+	S.revealed = new Set([...document.querySelectorAll('#panel-settings [id^="section-"]')].filter((x) => x.classList.contains('is-revealed') || onScreen(x)).map((x) => x.id));
 	const el = document.querySelector('[data-fo130="switch"]');
 	S.node = el; S.was = el.getAttribute('aria-checked');
 	const op = (n) => { let o = 1; for (let x = n; x && x.nodeType === 1; x = x.parentElement) o *= parseFloat(getComputedStyle(x).opacity) || 0; return o; };
@@ -101,15 +105,6 @@ const RESULT = () => {
 	};
 };
 
-/* A look's cover (NieR's reboot plate, the theme cross-cover) holds every real press until its reveal, by design
-   (19-nier-parts.js holdPresses), and t.app.look returns before it lifts on a slower host: the Settings tab click was
-   held and the page stayed on Home (opus-recheck-b10e2, NieR Light). Press only once the page has settled. Local to
-   this check until the shared helper takes the same wait (TOOL-ISSUES). */
-async function lookSettled(t, f, look) {
-	const ok = await f.waitForFunction(() => !(window.PM_LOOK_COVERED && PM_LOOK_COVERED()) && !(window.PM_THEME_TRANSITION && PM_THEME_TRANSITION.busy && PM_THEME_TRANSITION.busy()), null, { timeout: 20000 }).then(() => true).catch(() => false);
-	return t.check(`${look}: its cover is gone before the next press`, ok, ok ? '' : 'the look cover was still up after 20 s');
-}
-
 async function openCase(t, f, c) {
 	await f.evaluate(([d, w]) => PM51.go(d, w), [c.domain, c.ws]);
 	await f.waitForSelector(`[data-continuous-workspace-body="${c.ws}"][data-workspace-mounted="true"]`, { timeout: 15000 });
@@ -122,7 +117,7 @@ async function openCase(t, f, c) {
 	await t.page.waitForTimeout(900);   // the arrival's own entrances finish first
 }
 
-async function runCase(t, f, w, h, name, tagPre) {
+async function runCase(t, f, w, h, name, tagPre, look = 'basic-dark') {
 	const c = CASES[name];
 	await openCase(t, f, c);
 	const armed = await f.evaluate(ARM, { ws: c.ws, sw: c.sw, entr: ENTR });
@@ -136,6 +131,8 @@ async function runCase(t, f, w, h, name, tagPre) {
 		// a replaced page (the unchanged build) drew a new switch: find it again, so every case still reports
 		await f.evaluate((sel) => { let el = document.querySelector('[data-fo130="switch"]'); if (!el) { el = document.querySelector(sel); if (el) el.setAttribute('data-fo130', 'switch'); } if (el) el.scrollIntoView({ block: 'center', behavior: 'instant' }); }, `[data-continuous-workspace-body="${c.ws}"] ${c.sw}`);
 		await t.page.waitForTimeout(250);
+		// the look the cell names is what is painted right now (astra-review-l1s: the old matrix measured Basic Dark)
+		if (!(await guardPaintedLook(t, f, look, `${tagPre} ${name} ${step}`))) continue;
 		const sampling = f.evaluate(SAMPLE, 1100);
 		await f.locator('[data-fo130="switch"]').click();
 		await sampling;
@@ -167,26 +164,36 @@ for (const surface of ['normal', 'sandbox']) {
 			await t.app.resetLayout();
 			await f.locator('#tab-settings').click();
 			await t.settle();
+			await captureBaseline(t, f);
 			for (const name of names) await runCase(t, f, w, h, name, `${w}x${h}`);
 		}
 	};
 	// Settings is shared by every look (NieR, Retro and Glass draw their own entrances and switches): the Services, Web,
-	// Memory and Backups cases once in each of the ten looks at 1280x900. --set looks=basic-dark,nier-light limits it;
-	// --set looks=none skips it.
+	// Memory and Backups cases in each of the ten looks at 860x900 and 1920x1080 (--set lookSizes=), in each motion mode:
+	// none, the system's Reduced Motion (media query) and the app's own Reduce animations (data-motion), --set motion=. Each look is picked through Settings' Theme and
+	// Light-or-dark rows (saved, so Settings keeps it), and the painted look is checked right before every press
+	// (helpers/settings-look.mjs); the saved look is cleared before the next fresh page. --set looks=basic-dark,nier-light
+	// limits it; --set looks=none skips it; --set lookBite=1 paints Basic Dark back right before each guard (it must fail).
 	tests[`FO-130 in every look (${surface})`] = async (t) => {
 		if (!t.app.surfaces().includes(surface)) { await t.check(`${surface} surface not asked for`, true); return; }
 		if (String(t.args.looks) === 'none') { await t.check('looks skipped (--set looks=none)', true); return; }
 		const looks = t.args.looks ? String(t.args.looks).split(',') : LOOKS;
 		const names = t.args.cases ? String(t.args.cases).split(',') : ['providers', 'web', 'memory', 'backup'];
-		await t.viewport(1280, 900);
-		for (const look of looks) {
-			const f = await t.app.open({ sandbox: surface === 'sandbox' });
-			await t.app.resetLayout();
-			await t.app.look(look);
-			await lookSettled(t, f, look);
-			await f.locator('#tab-settings').click();
-			await t.settle();
-			for (const name of names) await runCase(t, f, 1280, 900, name, `${look} 1280x900`);
+		const lookSizes = (t.args.lookSizes ? String(t.args.lookSizes).split(',') : ['860x900', '1920x1080']).map((x) => x.split('x').map(Number));
+		const motions = t.args.motion ? String(t.args.motion).split(',') : ['no-preference', 'reduce', 'app'];
+		const MOTION_TAG = { 'no-preference': '', reduce: ' Reduced Motion (system)', app: ' Reduce animations (app)' };
+		for (const motion of motions) for (const look of looks) {
+			for (const [w, h] of lookSizes) {
+				await setMotionMedia(t, motion);
+				await t.viewport(w, h);
+				const f = await t.app.open({ sandbox: surface === 'sandbox' });
+				await f.locator('#tab-settings').click();
+				await t.settle();
+				await setLookBySetting(t, f, look);
+				await setMotionApp(t, f, motion);
+				for (const name of names) await runCase(t, f, w, h, name, `${look} ${w}x${h}${MOTION_TAG[motion]}`, look);
+				await t.app.resetLayout();   // the picked look is saved: the next fresh page (and the next check) starts in Basic Dark
+			}
 		}
 	};
 }

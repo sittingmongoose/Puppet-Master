@@ -73,10 +73,17 @@
     "512px": "Small (512 px)",
     "1024px": "Medium (1024 px)",
     "2048px": "Large (2048 px)",
-    "2K": "2K (same as large)",
+    "2K": "Large (2048 px)",
     "4K": "4K",
     "8K": "8K"
-   }
+   },
+   "choices": [
+    "512px",
+    "1024px",
+    "2048px",
+    "4K",
+    "8K"
+   ]
   },
   "media.capabilities.image-quality": {
    "label": "Picture quality",
@@ -150,12 +157,18 @@
     "1080p": "1080p (Full HD)",
     "1440p": "1440p",
     "2160p": "4K (2160p)",
-    "4k": "4K (same as 2160p)"
-   }
+    "4k": "4K (2160p)"
+   },
+   "choices": [
+    "720p",
+    "1080p",
+    "1440p",
+    "2160p"
+   ]
   },
   "media.capabilities.tts": {
    "label": "Read text aloud",
-   "help": "Your workspace may lock this off on some plans."
+   "help": "On some plans your organization can turn this off."
   },
   "media.capabilities.tts-voice": {
    "label": "Voice",

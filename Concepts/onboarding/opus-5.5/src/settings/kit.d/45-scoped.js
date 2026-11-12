@@ -168,12 +168,16 @@ dispatchAction = function (action, el) {
 
 /* ---------- grouped lists ------------------------------------------------------------------------------------- */
 /* A list/detail roster whose items carry `group` gets a small heading before each group, and the roster filter hides
-   a heading whose items are all filtered out. */
+   a heading whose items are all filtered out. Each group is drawn once: its items are gathered in the order the groups
+   are named, keeping their own order inside a group, so a list whose items arrive interleaved (Cursor, a plan, after
+   the pay-as-you-go services) never shows a group's heading twice (A2 B-5). */
 const o55ListDetailKit = PM51.listDetail;
 PM51.listDetail = opts => {
-  const html = o55ListDetailKit(opts);
   const groups = (opts.groups || []);
-  if (!groups.length || !(opts.items || []).some(it => it.group)) return html;
+  if (!groups.length || !(opts.items || []).some(it => it.group)) return o55ListDetailKit(opts);
+  const rank = it => { const i = groups.findIndex(g => g.id === it.group); return i < 0 ? groups.length : i; };
+  opts = Object.assign({}, opts, { items: opts.items.map((it, i) => [it, i]).sort((x, y) => rank(x[0]) - rank(y[0]) || x[1] - y[1]).map(x => x[0]) });
+  const html = o55ListDetailKit(opts);
   const tpl = document.createElement('template'); tpl.innerHTML = html;
   const list = tpl.content.querySelector('.roster-list'); if (!list) return html;
   list.classList.add('o55-grouped');
