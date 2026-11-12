@@ -1232,6 +1232,11 @@ class StartOwner(W.DGOwner):
                   workflow_owner_epoch=ctx.workflow_owner['owner_epoch'])
         if 'pending_operation_id' in hr:
             hr['pending_operation_id'] = None
+        # Activation selectors: the post-Start body that records the active activation, and the
+        # owner.workflow.activation.begin.v1 origin issued at birth (both actual Storage cells).
+        hr['activation_body'] = copy.deepcopy(after_c['body'])
+        hr['activation_origin'] = self._selector_of(src['native_birth']['initial_control_origin'],
+                                                    'workflow_start_control_origin')
         head_sel = dict(storage_instance_id=ctx.sid, family_id=d01_families(self.edition)['workflow_head'], physical_key=head_key,
                         schema_id=head['schema_id'], schema_version=head['schema_version'],
                         physical_value_sha256=cdigest(head))
