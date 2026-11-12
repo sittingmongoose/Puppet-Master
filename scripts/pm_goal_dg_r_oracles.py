@@ -32,6 +32,7 @@ import pm_goal_dg_r_readers as R
 
 QUALIFICATION = 'TEST_ONLY'
 BASE = Path(os.environ.get('DGR_SCRATCH', '/tmp'))
+CASE_FILTER = None
 ROUTING = 'Plans/goal_run_cancelled_w4_contracts/routing.v1.json'
 
 
@@ -104,6 +105,7 @@ def r1_cases():
 # ------------------------------------------------------------------ harness
 
 def run_case(out, case_id, group, kind, fn, expected=None, detail=None):
+    if CASE_FILTER and CASE_FILTER not in case_id:return
     started = time.time()
     try:
         value = fn()
@@ -843,9 +845,18 @@ def r5_cases():
              'unavailable/INCOMPLETE_GLOBAL_COVERAGE/source/frame/payload_crc')
 
     def start_commit_receipt(w, p):
-        return must_publish(w, p)
-    run_case(out, 'R5/start_commit_receipt_substituted', 'R5', 'negative', projector_case(knob(S0, start_commit=lambda wr: W.put(
-        wr, '/record/first_append_receipt/byte_offset', wr['record']['first_append_receipt']['byte_offset'] + 1)),
+        # The genuine S1 publisher cannot issue a mismatched receipt. Exercise
+        # the reducer's independent argument boundary using its actual acquired
+        # Start and Storage custody, with one substituted transport member.
+        _,_,starts,_,_,_=p.acquire()
+        W.guard('receipt/one_start',len(starts)==1)
+        start=copy.deepcopy(starts[0]);receipt=start['commit']['record']['first_append_receipt']
+        receipt['byte_offset']+=1
+        event=w.storage.read_event(start['commit']['record']['event_id'])
+        before=w.storage.observe()
+        try:return p.check_start_event(start,event,w.storage.first_custody(event['event_id']))
+        finally:W.guard('receipt/passive',w.storage.observe()==before)
+    run_case(out, 'R5/start_commit_receipt_substituted', 'R5', 'negative', projector_case(S0,
         [start_commit_receipt]), 'reducer/start_receipt')
     return out
 
@@ -1406,15 +1417,19 @@ GROUPS = dict(R1=r1_cases, R2=lambda: r2_cases() + r2_join_cases() + r2_preserve
 
 
 def main():
+    global CASE_FILTER
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--groups', default=','.join(GROUPS))
     parser.add_argument('--output')
+    parser.add_argument('--filter')
     args = parser.parse_args()
+    CASE_FILTER=args.filter
     BASE.mkdir(parents=True, exist_ok=True)
     out = []
     for group in args.groups.split(','):
         out.extend(GROUPS[group]())
     failures = [c for c in out if c['status'] != 'pass']
+    if not out:raise ValueError('No matching oracle cases')
     summary = {}
     for c in out:
         row = summary.setdefault(c['group'], dict(positives=0, negatives=0, failures=0))
