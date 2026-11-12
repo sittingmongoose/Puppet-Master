@@ -79,7 +79,7 @@
         "Plans/usage-feature.md",
         "scripts/pm-audit-closure.py"
       ],
-      "line_count": 6342,
+      "line_count": 6341,
       "path": "Plans/00-plans-index.md",
       "plan_unit_count": 69,
       "plan_unit_ids": [
@@ -221,7 +221,7 @@
         "visible_source_control_surface_routing",
         "web_firecrawl_owner_set"
       ],
-      "sha256": "6242f27768e60a862aca56c25365e091a298c518d38a9d7b2cb14be832786c13",
+      "sha256": "b22a2230436ad8fa328935cee1eae10e8bcecf1ee73322c6e81a849f311911a5",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 69
@@ -637,7 +637,7 @@
         "future composer",
         "future run status UI"
       ],
-      "line_count": 31774,
+      "line_count": 31755,
       "path": "Plans/assistant-chat-design.md",
       "plan_unit_count": 499,
       "plan_unit_ids": [
@@ -1498,7 +1498,7 @@
         "worktree_storage",
         "wrong_chat_owner_or_unproved_dispatch"
       ],
-      "sha256": "fc512dd03b54966a93d3a047e22b33ceddadccacaf68d35e8ff9987129f5fe7c",
+      "sha256": "f71b9bae57782640cf649c34fb61e502e75cd74ff35d4980f44324fa6875cfe2",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 496,
@@ -3882,7 +3882,7 @@
         "future command palette",
         "future command parser"
       ],
-      "line_count": 11278,
+      "line_count": 11246,
       "path": "Plans/Commands_System.md",
       "plan_unit_count": 107,
       "plan_unit_ids": [
@@ -4095,7 +4095,7 @@
         "view_state_command_inflation",
         "web_slash_family_drift"
       ],
-      "sha256": "add64e16d3dbc5c38068af546ca40ee341061551789d35c005dd8246a19f34a9",
+      "sha256": "2801c335977e1444a2e1f4be50a35c6fe641f34ebcae846994a505d22992b201",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 107
@@ -5690,7 +5690,7 @@
         "usage_attention_acknowledged_semantics_drift",
         "wrapper_command_navigation_drift"
       ],
-      "sha256": "a2f410e0730caa718b4834830bbfada7b565b067a5207e049348df4d07d5bf9e",
+      "sha256": "2ab27e2c80bf1dccd3906a987fa207e103af8679f2ed73bbf5e7ffe49fc0007b",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 53
@@ -8112,7 +8112,7 @@
         "tests/fixtures/pm7_shared",
         "tests/fixtures/usage_gui"
       ],
-      "line_count": 52243,
+      "line_count": 52166,
       "path": "Plans/FinalGUISpec.md",
       "plan_unit_count": 665,
       "plan_unit_ids": [
@@ -8927,7 +8927,7 @@
         "wand_sheet_presentation_drift",
         "web_client_stack_or_parity_drift"
       ],
-      "sha256": "9453290c6ee17a69389ce0ceb8dcb244e3187f0b15b7f0b909cf24c55dc36f3d",
+      "sha256": "e8bfa9b3b9c1f4576ed4fd818645673b3c689559de50ece1ce187906c6359b77",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 656,
@@ -11563,7 +11563,7 @@
         "webresearch_tiering_automation_session_boundary",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "4685696c058fe6c44090aafea6432e1e13f104e1b7b6dc0b0552cddae1b1a110",
+      "sha256": "eb9a2bf3826aab67fe1fc232497cc0ffad9874e0d885322cc7e9b8c8102e96ee",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 139
@@ -17867,7 +17867,7 @@
         "False": 2,
         "True": 60
       },
-      "heading_count": 119,
+      "heading_count": 120,
       "implementation_surfaces": [
         "Plans/00-plans-index.md",
         "Plans/Automated_Testing_System.md",
@@ -17917,7 +17917,7 @@
         "future shared Rust interface model and sole owner services; no implementation claimed",
         "future typed Settings owner projections"
       ],
-      "line_count": 5868,
+      "line_count": 5867,
       "path": "Plans/Settings_System.md",
       "plan_unit_count": 62,
       "plan_unit_ids": [
@@ -18042,7 +18042,7 @@
         "theme_or_layout_cross_project_leak",
         "unowned_preference_or_scope_drift"
       ],
-      "sha256": "1566bfdf8c0b7ff007ed27a07b4dcf1bf0bca7cac86e917b8c04c86359bdc935",
+      "sha256": "b8c5ac072d59cf55460a16217a6d79786125d7d3cfeabccb2863ae85690a66e8",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 62
@@ -21781,7 +21781,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-12T09:41:47Z",
+  "generated_at_utc": "2026-11-12T11:12:10Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

@@ -5261,73 +5261,8 @@ plan_unit_id: SSYS-055
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Settings_System.md
-canonical_text: >-
-  The hosted 5.6 Pro chat uses the existing Settings inventory and transaction (DL-232, SSYS-028,
-  SSYS-040, SSYS-042, SSYS-050). general.interaction.working-activity-style offers only Orbit and Step
-  Rail Simple as the product preference, default Orbit. general.interaction.sound-effects is the one
-  master switch, on by default (DL-107); the chat speaker and Notifications & Sounds write that same
-  value, and setup, Guided Tour and NieR sounds keep following it. This port adds no chat-only mute or
-  volume row. general.interaction.eli5-default resolves Default, Everywhere, Computer, optional Project,
-  then This chat; general.interaction.chat-eli5 remains a run-scoped chat override, and inherit deletes
-  it. ELI5 changes affect only future replies; the current stream and earlier replies are unchanged. In
-  the product, All chats and Project default in the chat sheet use Settings transactions targeting
-  Everywhere and that exact Project respectively; the chat's own Standard, Simple and Follow controls use
-  cmd.chat.eli5.set (UCC-175). New chat defaults uses the same application ELI5 value, not another row.
-  ai.models.thread-title-model is the naming policy, with Default, None or an available model id from its
-  live catalog; the sheet and Settings use the same value, preserving manual-name locks and first-
-  message-only naming. general.interaction.assistant-mode changes only how future chats start, never the
-  mode of an existing chat. The sending rows general.interaction.submit-key, queue-behavior, queue-size
-  and composer-persist-unsent remain their existing owners; a bridge binds only behavior its renderer
-  supports and never claims an unimplemented preference works. general.interaction.chat-history-list
-  remains an admitted row and is shown as History in new workspaces, with Flyout or Pinned and default
-  Flyout. It seeds History only when a workspace has no saved choice; editing it never pins or unpins the
-  current History, resizes the column or writes the Home layout record. The current History pin uses
-  ui.chat_column.pin_history; Keep the chat open in narrow windows uses ui.chat_column.keep_open, and
-  chat width uses cmd.workspace_layout.resize_surface. None is a Settings row. Jared G1 B (2026-10-30):
-  Activity Detail starts unpinned; its view-local Pin keeps it open across thread switches with the new
-  thread’s data, while unpinned detail closes on a switch (ACD-453/506). No Activity pin Settings default
-  is added. The host's look, fonts, Reduced Motion and NieR settings reach the chat directly. A last-used
-  chat model, effort or capability selection never becomes a global Settings default merely because the
-  standalone concept saved it. Amended 2026-10-23 (DL-233): the scripted stand-in chat is removed; it was
-  never a hosted conversation choice or an inventory row. Native Settings scope, validation,
-  preview/apply, read-only refusal and storage requirements remain in force; the HTML bridge is a concept
-  projection only. Added by the lead's ruling of 2026-10-22 under Jared's port brief (DL-232), ratified
-  by Jared on 2026-10-23 (DL-234): general.interaction.thought-stream is global and display-only, Auto
-  (While it thinks) or Expanded (Always open), default Auto; Settings, New chat defaults and the composer
-  capability menu's Thought Stream choice edit the same row through the Settings transaction. It controls
-  disclosure of reasoning supplied by the model and never changes a reply or invents reasoning. Added the
-  same day by Jared's answer (DL-234: "Default 8, adjustable in settings."): general.interaction.thought-
-  stream-lines is global and display-only, shown as Lines shown while thinking right under Show thinking,
-  with the choices 4, 6, 8, 12 and 16 lines and the default 8. It sets how many of the latest lines Auto
-  keeps in view while the model thinks and has no effect under Always open. Settings, New chat defaults'
-  second Thought Stream dropdown and the lines list in the composer's Thought Stream menu edit the same
-  row through the Settings transaction, and Settings refuses any other value; as with Thought Stream, its
-  global scope is the product contract, not proof that the project-only adapter supplies global storage.
-  The current-chat ELI5 control is shown only in the chat sheet, not on the Settings page or its search;
-  its general.interaction.chat-eli5 inventory identity, run scope and override contract remain. The
-  concept's existing project-only Settings adapter cannot prove separate application and project
-  persistence: the renderer keeps these layers separate and discloses any session-only layer instead of
-  creating a shadow store or claiming native scope support. At integrated concept 59ca2d4382, Settings
-  persists the host project's ELI5 default, unscoped chats bind to that project, and switching threads
-  re-projects the appropriate project without copying an unrelated override. All chats ELI5 is a separate
-  session-only value; application-scope persistence remains unimplemented in this concept. The Thought
-  Stream row, New chat defaults and composer choice share the stored preference, and replies show the
-  live thinking block it drives (ACD-221, DL-234). Its global inventory scope is the product contract
-  admitted by the lead, not proof that this project-only adapter supplies global storage. History's
-  initial-layout seed is built and preserves a saved false or true. The Settings master sound, working
-  style, naming policy and future-chat mode bindings remain as reviewed; no additional layout, Activity
-  pin, stand-in or family-take setting is admitted by final reconciliation. Amended 2026-10-29 (S1–S9,
-  G1; PM7): Admit SSYS-056’s pip-parts only for chat/onboarding extras with no second sound or brand
-  setting. Jared G1 B (2026-10-30) restores session view-local Pin/unpin without a small view or
-  Settings/layout write: pinned detail follows thread switches and unpinned detail closes on a switch
-  (ACD-506); History pin remains unchanged. Amended DL-260, Jared 2026-10-31: only real product behavior
-  remains an implementation requirement. The described session-only/project-bound HTML adapter and
-  automatic binding of unscoped chats are historical concept limitations, superseded for product behavior
-  by SSYS-002/059 and the app chat owner. No project stays genuinely null, uses real Everywhere/Computer
-  and This chat values, and never adopts a visible Project to satisfy storage. Naming Default resolves
-  the smallest allowed runnable model on every new attempt, while None renders Off. After resolution, an
-  unavailable frozen title request remains route_unavailable without silent substitution. Its row is in
-  Default models with Everywhere/This project scope and the shared model/depth picker.
+canonical_text: |-
+  The hosted 5.6 Pro chat uses the existing Settings inventory and transaction (DL-232, SSYS-028, SSYS-040, SSYS-042, SSYS-050). general.interaction.working-activity-style offers only Orbit and Step Rail Simple as the product preference, default Orbit. general.interaction.sound-effects is the one master switch, on by default (DL-107); the chat speaker and Notifications & Sounds write that same value, and setup, Guided Tour and NieR sounds keep following it. This port adds no chat-only mute or volume row. general.interaction.eli5-default resolves Default, Everywhere, Computer, optional Project, then This chat; general.interaction.chat-eli5 remains a run-scoped chat override, and inherit deletes it. ELI5 changes affect only future replies; the current stream and earlier replies are unchanged. In the product, All chats and Project default in the chat sheet use Settings transactions targeting Everywhere and that exact Project respectively; the chat's own Standard, Simple and Follow controls use cmd.chat.eli5.set (UCC-175). New chat defaults uses the same application ELI5 value, not another row. ai.models.thread-title-model is the naming policy, with Default, None or an available model id from its live catalog; the sheet and Settings use the same value, preserving manual-name locks and first- message-only naming. general.interaction.assistant-mode changes only how future chats start, never the mode of an existing chat. The sending rows general.interaction.submit-key, queue-behavior, queue-size and composer-persist-unsent remain their existing owners; a bridge binds only behavior its renderer supports and never claims an unimplemented preference works. general.interaction.chat-history-list remains an admitted row and is shown as History in new workspaces, with Flyout or Pinned and default Flyout. It seeds History only when a workspace has no saved choice; editing it never pins or unpins the current History, resizes the column or writes the Home layout record. The current History pin uses ui.chat_column.pin_history; Keep the chat open in narrow windows uses ui.chat_column.keep_open, and chat width uses cmd.workspace_layout.resize_surface. None is a Settings row. Jared G1 B (2026-10-30): Activity Detail starts unpinned; its view-local Pin keeps it open across thread switches with the new thread’s data, while unpinned detail closes on a switch (ACD-453/506). No Activity pin Settings default is added. The host's look, fonts, Reduced Motion and NieR settings reach the chat directly. A last-used chat model, effort or capability selection never becomes a global Settings default merely because the standalone concept saved it. Amended 2026-10-23 (DL-233): the scripted stand-in chat is removed; it was never a hosted conversation choice or an inventory row. Native Settings scope, validation, preview/apply, read-only refusal and storage requirements remain in force; the HTML bridge is a concept projection only. Added by the lead's ruling of 2026-10-22 under Jared's port brief (DL-232), ratified by Jared on 2026-10-23 (DL-234): general.interaction.thought-stream is global and display-only, Auto (While it thinks) or Expanded (Always open), default Auto; Settings, New chat defaults and the composer capability menu's Thought Stream choice edit the same row through the Settings transaction. It controls disclosure of reasoning supplied by the model and never changes a reply or invents reasoning. Added the same day by Jared's answer (DL-234: "Default 8, adjustable in settings."): general.interaction.thought-stream-lines is global and display-only, shown as Lines shown while thinking right under Show thinking, with the choices 4, 6, 8, 12 and 16 lines and the default 8. It sets how many of the latest lines Auto keeps in view while the model thinks and has no effect under Always open. Settings, New chat defaults' second Thought Stream dropdown and the lines list in the composer's Thought Stream menu edit the same row through the Settings transaction, and Settings refuses any other value; as with Thought Stream, its global scope is the product contract, not proof that the project-only adapter supplies global storage. The current-chat ELI5 control is shown only in the chat sheet, not on the Settings page or its search; its general.interaction.chat-eli5 inventory identity, run scope and override contract remain. The concept's existing project-only Settings adapter cannot prove separate application and project persistence: the renderer keeps these layers separate and discloses any session-only layer instead of creating a shadow store or claiming native scope support. At integrated concept 59ca2d4382, Settings persists the host project's ELI5 default, unscoped chats bind to that project, and switching threads re-projects the appropriate project without copying an unrelated override. All chats ELI5 is a separate session-only value; application-scope persistence remains unimplemented in this concept. The Thought Stream row, New chat defaults and composer choice share the stored preference, and replies show the live thinking block it drives (ACD-221, DL-234). Its global inventory scope is the product contract admitted by the lead, not proof that this project-only adapter supplies global storage. History's initial-layout seed is built and preserves a saved false or true. The Settings master sound, working style, naming policy and future-chat mode bindings remain as reviewed; no additional layout, Activity pin, stand-in or family-take setting is admitted by final reconciliation. Amended 2026-10-29 (S1–S9, G1; PM7): Admit SSYS-056’s pip-parts only for chat/onboarding extras with no second sound or brand setting. Jared G1 B (2026-10-30) restores session view-local Pin/unpin without a small view or Settings/layout write: pinned detail follows thread switches and unpinned detail closes on a switch (ACD-506); History pin remains unchanged. Amended DL-260, Jared 2026-10-31: only real product behavior remains an implementation requirement. The described session-only/project-bound HTML adapter and automatic binding of unscoped chats are historical concept limitations, superseded for product behavior by SSYS-002/059 and the app chat owner. No project stays genuinely null, uses real Everywhere/Computer and This chat values, and never adopts a visible Project to satisfy storage. Naming Default resolves the smallest allowed runnable model on every new attempt, while None renders Off. After resolution, an unavailable frozen title request remains route_unavailable without silent substitution. Its row is in Default models with Everywhere/This project scope and the shared model/depth picker.
 gui_related: true
 gui_classification_reason: Places and binds visible hosted chat preferences while keeping layout and chat-scoped controls separate.
 split_recommended: false
@@ -5802,6 +5737,70 @@ command_payload_definitions:
           choice: [not_configured, stale_projection]
           gap_note: "No registration table states disabled reasons for this row; chosen from the closed set over the registration preconditions settings_registry_loaded && route_target_current (UI_Command_Catalog.md:11086): an unloaded settings registry maps to not_configured and a route target that is not current to stale_projection. SSYS-018 keeps handler_unavailable as the evidence boundary until the sole handler is observed; that is an error code, not a disabled code."
 ```
+
+### Memory compatibility reads — DL-475
+
+This table is part of SSYS-040. The 43 retired IDs are compatibility input only: no live Settings request, search result, All Settings row, reset control or export/transfer entry accepts them. Preserve original saved values as migration history; never erase notes, legacy pin protections, evidence or retention holds while retiring controls. The current census is the unique IDs of `Plans/settings_inventory.json` settings.
+
+| Old input | Disposition | Compatibility read |
+|---|---|---|
+| `memory.assembly.app-rules` | Keep | Retain existing owner value, default and offered levels; route to Instructions. |
+| `memory.assembly.project-rules` | Keep | Retain existing owner value, default and offered levels; route to Instructions. |
+| `memory.assembly.instruction-visibility` | Remove | Ignore old presentation selection; never restore receipts, pack/source views, prompt or capsule previews. Retain internal provenance and saved data. |
+| `memory.assembly.rule-pack-display` | Remove | Ignore old presentation selection; never restore receipts, pack/source views, prompt or capsule previews. Retain internal provenance and saved data. |
+| `memory.assembly.dry-method-guard` | Hide | Built-in safe behavior remains on; old off values cannot disable the invariant. Preserve all source privacy restrictions. |
+| `memory.assembly.instruction-budget-mode` | Hide | Use safe built-in owner behavior, initially "bounded"; old tuning value is migration history, not a user knob. Existing policy/source restrictions and smaller limits still apply. |
+| `memory.assembly.memory-capsule-budget` | Hide | Use the owner's existing internal default 350; no user editor. Preserve stored per-note protections and existing held upkeep rules. Preserve an explicitly saved smaller safety ceiling until safe owner migration; never silently expand capacity from it. |
+| `memory.assembly.max-injected-memories` | Hide | Use the owner's existing internal default 5; no user editor. Preserve stored per-note protections and existing held upkeep rules. Preserve an explicitly saved smaller safety ceiling until safe owner migration; never silently expand capacity from it. |
+| `memory.assembly.injected-context-breakdown` | Remove | Ignore old presentation selection; never restore receipts, pack/source views, prompt or capsule previews. Retain internal provenance and saved data. |
+| `memory.assembly.compiled-prompt-preview` | Remove | Ignore old presentation selection; never restore receipts, pack/source views, prompt or capsule previews. Retain internal provenance and saved data. |
+| `memory.assembly.integrity-tracking` | Hide | Built-in safe behavior remains on; old off values cannot disable the invariant. Preserve all source privacy restrictions. |
+| `memory.assembly.import-cycle-detection` | Hide | Built-in safe behavior remains on; old off values cannot disable the invariant. Preserve all source privacy restrictions. |
+| `memory.assembly.history-admission-gate` | Hide | Built-in safe behavior remains on; old off values cannot disable the invariant. Preserve all source privacy restrictions. |
+| `memory.assembly.volatile-quarantine` | Hide | Built-in safe behavior remains on; old off values cannot disable the invariant. Preserve all source privacy restrictions. |
+| `memory.assembly.cache-lineage` | Hide | Built-in safe behavior remains on; old off values cannot disable the invariant. Preserve all source privacy restrictions. |
+| `memory.assembly.context-dedup` | Hide | Built-in safe behavior remains on; old off values cannot disable the invariant. Preserve all source privacy restrictions. |
+| `memory.assembly.epoch-baseline` | Hide | Built-in safe behavior remains on; old off values cannot disable the invariant. Preserve all source privacy restrictions. |
+| `memory.retention.enabled` | Keep | Retain existing owner value, default and offered levels; route to Memory (the only switch). |
+| `memory.retention.history-retention` | Keep | Retain existing owner value, default and offered levels; route to History/privacy. |
+| `memory.retention.retrieval-strategy` | Hide | Use safe built-in owner behavior, initially "hybrid"; old tuning value is migration history, not a user knob. Existing policy/source restrictions and smaller limits still apply. |
+| `memory.retention.retrieval-mode` | Hide | Use safe built-in owner behavior, initially "automatic"; old tuning value is migration history, not a user knob. Existing policy/source restrictions and smaller limits still apply. |
+| `memory.retention.rehydration` | Hide | Use safe built-in owner behavior, initially "lazy"; old tuning value is migration history, not a user knob. Existing policy/source restrictions and smaller limits still apply. |
+| `memory.retention.retrieval-balance` | Hide | Use safe built-in owner behavior, initially 0.5; old tuning value is migration history, not a user knob. Existing policy/source restrictions and smaller limits still apply. |
+| `memory.retention.half-life-by-kind` | Hide | Use the complete AMS-031 kind-default table (not just the old partial map); keep existing note values/protections internally, with no user editor. |
+| `memory.retention.done-decay-multiplier` | Hide | Use the owner's existing internal default 0.5; no user editor. Preserve stored per-note protections and existing held upkeep rules. |
+| `memory.retention.auto-save-unverified` | Hide | Use safe built-in owner behavior, initially "on"; old tuning value is migration history, not a user knob. Existing policy/source restrictions and smaller limits still apply. |
+| `memory.retention.verify-without-evidence` | Remove | Read historical values only for migration; force the bypass false even when old value was true. Explicit user statements use AMS-014 support, never a proof bypass. |
+| `memory.retention.pinned-unverified-injection` | Remove | Read historical values only for migration; force the bypass false even when old value was true. Explicit user statements use AMS-014 support, never a proof bypass. |
+| `memory.retention.gist-review-filter` | Remove | Ignore old presentation selection; never restore receipts, pack/source views, prompt or capsule previews. Retain internal provenance and saved data. |
+| `memory.retention.subagent-access` | Remove | Absent legacy default off is not an explicit refusal. An explicit saved privacy refusal becomes a Permissions read restriction; unresolved provenance stays denied. Built-in authorized reads follow AMS-026; no grant is minted by migration. |
+| `memory.retention.maintenance` | Hide | Ignore old action selection; use existing internal/support operations and preserve DL-403/444–447 holds. No job starts during migration. |
+| `memory.limits.run-token-budget` | Keep | Retain existing owner value, default and offered levels; route to Permissions > Run limits. |
+| `memory.limits.goal-token-budget` | Keep | Retain existing owner value, default and offered levels; route to Permissions > Run limits. |
+| `memory.limits.max-context-ktokens` | Keep | Retain existing owner value, default and offered levels; route to chat/model limits. |
+| `memory.limits.memory-context-window` | Hide | Use safe built-in owner behavior, initially "standard"; old tuning value is migration history, not a user knob. Existing policy/source restrictions and smaller limits still apply. |
+| `memory.limits.auto-compress` | Hide | Use safe built-in owner behavior, initially "on"; old tuning value is migration history, not a user knob. Existing policy/source restrictions and smaller limits still apply. |
+| `memory.limits.compaction-mode` | Hide | Use safe built-in owner behavior, initially "automatic"; old tuning value is migration history, not a user knob. Existing policy/source restrictions and smaller limits still apply. |
+| `memory.limits.manual-compact` | Keep | Retain existing owner value, default and offered levels; route to the individual chat menu (action only). |
+| `memory.limits.compaction-loop-limit` | Hide | Use safe built-in owner behavior, initially 1; old tuning value is migration history, not a user knob. Existing policy/source restrictions and smaller limits still apply. |
+| `memory.limits.pressure-start-threshold` | Hide | Use safe built-in owner behavior, initially 70; old tuning value is migration history, not a user knob. Existing policy/source restrictions and smaller limits still apply. |
+| `memory.limits.pressure-aggressive-threshold` | Hide | Use safe built-in owner behavior, initially 85; old tuning value is migration history, not a user knob. Existing policy/source restrictions and smaller limits still apply. |
+| `memory.limits.low-context-warning` | Hide | Use safe built-in owner behavior, initially 15; old tuning value is migration history, not a user knob. Existing policy/source restrictions and smaller limits still apply. |
+| `memory.limits.large-block-threshold` | Hide | Use safe built-in owner behavior, initially 1200; old tuning value is migration history, not a user knob. Existing policy/source restrictions and smaller limits still apply. |
+| `memory.limits.compaction-immune-pct` | Hide | Use safe built-in owner behavior, initially 30; old tuning value is migration history, not a user knob. Existing policy/source restrictions and smaller limits still apply. |
+| `memory.limits.budget-buckets` | Hide | Use safe built-in owner behavior, initially {"immune": 30, "history": 30, "current_turn": 15, "tool_results": 20, "contingency": 5}; old tuning value is migration history, not a user knob. Existing policy/source restrictions and smaller limits still apply. |
+| `memory.limits.tool-result-policy` | Hide | Use safe built-in owner behavior, initially "full"; old tuning value is migration history, not a user knob. Existing policy/source restrictions and smaller limits still apply. |
+| `memory.limits.local-llm-caps` | Hide | Built-in safe behavior remains on; old off values cannot disable the invariant. Preserve all source privacy restrictions. |
+| `memory.notebook.auto-capture` | Hide | Use built-in default true; retain old value as migration history only. Keep task notes/checkpoints and sharing restrictions. |
+| `memory.notebook.resume-capsule` | Hide | Use built-in default true; retain old value as migration history only. Keep task notes/checkpoints and sharing restrictions. |
+| `memory.notebook.capsule-budget-tokens` | Hide | Use built-in default 512; retain old value as migration history only. Keep task notes/checkpoints and sharing restrictions. Preserve an explicitly saved smaller safety ceiling until safe owner migration; never silently expand capacity from it. |
+| `memory.notebook.injection-budget-tokens` | Hide | Use built-in default 1024; retain old value as migration history only. Keep task notes/checkpoints and sharing restrictions. Preserve an explicitly saved smaller safety ceiling until safe owner migration; never silently expand capacity from it. |
+
+Old non-inventory `memory.retrieval.preferPinned` and disagreement choices no longer select a policy; current instructions/facts and automatic relevance apply. Existing saved pins/protected-rule choices retain their protection internally. `memory.privacy.shareWithCrews=false`, explicit `memory.retention.subagent-access=off` and source-off values in `memory.sources` for Project files, Plans, Tool output, Manager records or Chat history become equivalent read-time Permissions/Context Lens restrictions on that source family and its derivatives, at the original scope/actor. A false source or privacy value never becomes true because the control vanished. A missing, ambiguous or unrepresentable restriction blocks affected reads until owner resolution; never silently restore access. Chat-history retention keeps its own owner value; deleting a conversation is not deleting or reviving a saved memory.
+
+Protected memories and old forgotten/recoverable records remain under approved retention; there is no new 30-day recovery promise, competing Forget/Restore workflow or expiry-driven deletion. General data export retains the existing exporter and truthful available scope, outside Memory.
+
+ContractRef: ContractName:Plans/Settings_System.md#SSYS-040, ContractName:Plans/assistant-memory-subsystem.md#AMS-033, ContractName:Plans/Permissions_System.md#PS-140
 
 ### SSYS-077 - One Model Defaults List And Retired Input Handling
 

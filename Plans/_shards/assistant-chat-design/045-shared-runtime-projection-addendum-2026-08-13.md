@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L3751-L23074
+Source lines: L3751-L23071
 
-Source SHA256: `fc512dd03b54966a93d3a047e22b33ceddadccacaf68d35e8ff9987129f5fe7c`
+Source SHA256: `f71b9bae57782640cf649c34fb61e502e75cd74ff35d4980f44324fa6875cfe2`
 
 ---
 
@@ -12129,9 +12129,8 @@ plan_unit_id: ACD-255
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Auditor Validation reads its model/depth and named fallback source from Checking finished work.
-  Default editing opens that common row, using ACD-438 including the effort step; explicit run choices use
-  the same picker. No separate Provider/Model dropdown pair or thinking-depth Settings row survives.
+canonical_text: |-
+  Auditor Validation reads its model/depth and named fallback source from Checking finished work. Default editing opens that common row, using the one open ACD-438 model/depth picker; explicit run choices use the same picker. No separate Provider/Model dropdown pair or thinking-depth Settings row survives.
 gui_related: true
 gui_classification_reason: Defines the shared Checking finished work source/redirect and frozen Auditor runtime
   selection; retired independent selectors are not current UI.
@@ -12141,7 +12140,7 @@ unblocks:
 - ACD-256
 - ACD-262
 acceptance_criteria:
-- The loop uses the common Checking finished work row and shared ACD-438 model then supported-effort interaction.
+- The loop uses the common Checking finished work row and shared ACD-438 model/depth picker, with supported levels beside the still-open model list on desktop and inside the picker on phone.
 - Provider/model choices come from the account-bound Provider -> models registry and route capability resolver.
 - Models §2 owns inheritance and missing-model recovery; no first-provider fallback is added.
 - Legacy platform_specs::fallback_model_ids(platform) is not an active fallback source.
@@ -12191,9 +12190,8 @@ plan_unit_id: ACD-256
 unit_type: constraint
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: The Auditor uses ACD-438 model then supported-effort steps within its common model/depth picker;
-  it has no separate reasoning-effort Settings row. The old auditor-validation-provider-model-selector wrapper
-  token is inert source lineage and does not require a second selector.
+canonical_text: |-
+  The Auditor uses ACD-438 one open model/depth picker, with supported depth levels beside the model list on desktop and inside the same picker on phone; it has no separate reasoning-effort Settings row. The old auditor-validation-provider-model-selector wrapper token is inert source lineage and does not require a second selector.
 gui_related: true
 gui_classification_reason: Defines the shared Checking finished work source/redirect and frozen Auditor runtime
   selection; retired independent selectors are not current UI.
@@ -12559,9 +12557,8 @@ plan_unit_id: ACD-263
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Auditor default editing and explicit run overrides reuse the chat composer picker as ACD-438
-  defines it, including the sequential supported-effort step. The old separate provider/model dropdown wrapper
-  and DRY tag are inert historical references, not new UI requirements.
+canonical_text: |-
+  Auditor default editing and explicit run overrides reuse the chat composer picker as ACD-438 defines it, with supported depth levels beside the still-open model list on desktop and inside the same picker on phone. The old separate provider/model dropdown wrapper and DRY tag are inert historical references, not new UI requirements.
 gui_related: true
 gui_classification_reason: Defines the shared Checking finished work source/redirect and frozen Auditor runtime
   selection; retired independent selectors are not current UI.

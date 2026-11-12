@@ -4,7 +4,7 @@ Source: `Plans/Crosswalk.md`
 
 Source lines: L3537-L3642
 
-Source SHA256: `a2f410e0730caa718b4834830bbfada7b565b067a5207e049348df4d07d5bf9e`
+Source SHA256: `2ab27e2c80bf1dccd3906a987fa207e103af8679f2ed73bbf5e7ffe49fc0007b`
 
 ---
 
@@ -42,7 +42,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Crosswalk.md
 canonical_text: |-
-  Current ownership routes are: SSYS-002/059–065 and DR-084/085 for Settings classification/resolution, writers, detached copy and presentation; SRV-016/017 for same-owner settings follow and app work Computer custody, RAS for existing routes; MA-074/MACS-006 for destination readiness/protected app auth; Models MS-005/099/100 for its accepted scoped-owner tier edition with explicit no-Persona/no-stage Conservative rule. q-035 is resolved in live canon and source-memory ledgers remain unchanged.
+  Current ownership routes are: SSYS-002/059–065 and DR-084/085 for Settings classification/resolution, writers, detached copy and presentation; SRV-016/017 for same-owner settings follow and app work Computer custody, RAS for existing routes; MA-074/MACS-006 for destination readiness/protected app auth; Models §2 and MS-005/099/100 for the current fixed order: explicit run choice, scoped build-owner policy, surface/stage built-in default, eligible manually selected account default, This project, then Everywhere/factory. Conservative is retained only in versioned historical decoding; no Persona or command owns a model. q-035 is resolved in live canon and source-memory ledgers remain unchanged.
 
   ACD-508–511 owns No project/place/folder, explicit reads/requests and conversion; T-185/186/187 and PS-145 own access, roots and computer use. GRS-086/087, CWR-045 and OSI-439/440 own app Goal/Crew/continuity/coordination and immutable conversion. APR-073/074, PLS-024, PDS-023 and SQR-019/020 own app Plan/Deep Plan, exact scheduled targets and independent operational pause; ordinary Assistant scoped bundles do not create product Plans or WorkNodes. Only Planning Wizard, PRD Builder and Orchestrator retain no-project workflow gates; real Project-target/capability checks remain distinct.
 

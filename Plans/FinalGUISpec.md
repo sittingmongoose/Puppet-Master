@@ -27690,32 +27690,8 @@ plan_unit_id: F3-396
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: 'Settings exposes seven plans-to-code controls in one Default models list: Default Model, Overseer
-  Model, Worker Model, Low-Effort Worker Model, GUI / Frontend Worker Model, High-Effort Worker Model, and
-  Auditor Model. The GUI must not expose an Executor Model setting. Explanatory labels route Planning Wizard
-  ledger-to-Plans conversion, PRD Builder conversion, Plan Compile supervision, seam/split/merge decisions,
-  execution supervision, and blocked-state reasoning to Overseer Model; the Auditor audit-to- repair loop,
-  verification, certification, quality gates, and evidence review route to Auditor Model; normal WorkNode implementation
-  routes to Worker Model; GUI/frontend/UX/layout/visual WorkNodes route to GUI / Frontend Worker Model; difficult,
-  broad, repo-wide, high-risk, or high-reasoning WorkNodes route to High-Effort Worker Model. Settings copy
-  must describe the Auditor loop as repeating audit, bounded repair, and re-audit until completion is certified
-  or a critical block or authority boundary stops the loop; legacy source may refer to the same loop as audit/repair/audit.
-  Old Pass 1 / Pass 2 / Pass 3 labels may appear only as compatibility aliases in imported legacy source or
-  search, not as visible model controls. Settings copy must describe repo-wide reasoning for High-Effort Worker
-  Model and state that Executor deterministic runtime behavior does not create an Executor Model control. Low-Effort
-  Worker Model is labelled Easy, routine jobs and inherits Everyday building when blank; it is restricted to
-  small, low-risk, non-design implementation, never checking. The list has Everywhere and This project tabs,
-  then naming, explaining, BSD and enabled media rows. Every Settings model picker reuses the chat composer
-  picker exactly as ACD-438 defines it, effort step included: choosing a model closes its mini-popout, then
-  opens the separate effort popout above the model button when the concrete route has proven levels. Only one
-  popout is open; no supported levels means no effort choices or empty popout. Settings stores the resulting
-  model/depth pair atomically in that row, with no separate effort Settings row and no page reflow. Blank rows
-  name their fallback source and current model/depth. Exact unlisted names require one small successful call
-  before saving; a refused or unreachable name is never saved, and acceptance proves no capability. Helpers
-  have no model or depth Settings row, and Persona/command model fields are removed. Presets and nicknames
-  remain below the list, with What actually ran a visible run-history link. The PRD Builder, Planning Wizard,
-  building and Scout use the common defaults and allow overrides; no redesign of those screens is specified
-  here.'
+canonical_text: |-
+  Settings exposes seven plans-to-code controls in one Default models list: Default Model, Overseer Model, Worker Model, Low-Effort Worker Model, GUI / Frontend Worker Model, High-Effort Worker Model, and Auditor Model. The GUI must not expose an Executor Model setting. Explanatory labels route Planning Wizard ledger-to-Plans conversion, PRD Builder conversion, Plan Compile supervision, seam/split/merge decisions, execution supervision, and blocked-state reasoning to Overseer Model; the Auditor audit-to- repair loop, verification, certification, quality gates, and evidence review route to Auditor Model; normal WorkNode implementation routes to Worker Model; GUI/frontend/UX/layout/visual WorkNodes route to GUI / Frontend Worker Model; difficult, broad, repo-wide, high-risk, or high-reasoning WorkNodes route to High-Effort Worker Model. Settings copy must describe the Auditor loop as repeating audit, bounded repair, and re-audit until completion is certified or a critical block or authority boundary stops the loop; legacy source may refer to the same loop as audit/repair/audit. Old Pass 1 / Pass 2 / Pass 3 labels may appear only as compatibility aliases in imported legacy source or search, not as visible model controls. Settings copy must describe repo-wide reasoning for High-Effort Worker Model and state that Executor deterministic runtime behavior does not create an Executor Model control. Low-Effort Worker Model is labelled Easy, routine jobs and inherits Everyday building when blank; it is restricted to small, low-risk, non-design implementation, never checking. The list has Everywhere and This project tabs, then naming, explaining, BSD and enabled media rows. Every Settings model picker reuses the chat composer picker as ACD-438 defines it: one open picker keeps the model list visible while showing the selected route’s supported depth levels beside the list on desktop and inside the same picker on phone. Model and depth are chosen and committed as one atomic value; the same picker stays open throughout model and depth choice. A model without supported levels shows none, and unknown capability stays unknown. Settings saves the pair atomically in the row’s declared scope, with no separate effort Settings row and no page reflow. Blank rows name their fallback source and current model/depth. Exact unlisted names require one small successful call before saving; a refused or unreachable name is never saved, and acceptance proves no capability. Helpers have no model or depth Settings row, and Persona/command model fields are removed. Presets and nicknames remain below the list, with What actually ran a visible run-history link. The PRD Builder, Planning Wizard, building and Scout use the common defaults and allow overrides; no redesign of those screens is specified here.
 gui_related: true
 gui_classification_reason: This unit defines visible Settings labels and help text for model routing.
 depends_on:
@@ -27727,10 +27703,8 @@ acceptance_criteria:
 - 'Settings displays exactly seven named controls for this flow: Everyday model and the six jobs.'
 - No Executor Model control is shown.
 - GUI/frontend and high-effort roles have clear Settings labels without exposing internal subrole sprawl.
-- Auditor settings copy describes an audit-to-repair loop until certified or critical block; legacy Pass 1
-  / Pass 2 / Pass 3 labels are compatibility/search aliases only, not model selectors.
-- Every Settings model picker reuses ACD-438 sequential model then effort popouts, with route-supported effort
-  choices only and no separate effort Settings row.
+- Auditor settings copy describes an audit-to-repair loop until certified or critical block; legacy Pass 1 / Pass 2 / Pass 3 labels are compatibility/search aliases only, not model selectors.
+- 'Every Settings model picker reuses the chat composer picker as ACD-438 defines it: one open picker keeps the model list visible while showing the selected route’s supported depth levels beside the list on desktop and inside the same picker on phone. Model and depth are chosen and committed as one atomic value; the same picker stays open throughout model and depth choice. A model without supported levels shows none, and unknown capability stays unknown.'
 - A route without proven effort levels shows no effort choices; unknown capability stays unknown.
 validation_surfaces:
 - python3 scripts/pm-plans-verify.py run-gates
@@ -30275,22 +30249,18 @@ plan_unit_id: F3-424
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Chat mode, model, and effort popouts render as body-portaled overlays above stream overflow
-  clipping so they are never clipped by the scrollport; the persona dropdown remains inline
-  with an overflow flip when it would exit the viewport. Footer FAB items reveal with a
-  spring-stagger motion treatment. Under reduced motion all popout and FAB reveals render as
-  instant show and hide with no animation.
+canonical_text: |-
+  Chat mode popouts and the one combined model/depth picker render as body-portaled overlays above stream overflow clipping so they are never clipped by the scrollport; the persona dropdown remains inline with an overflow flip when it would exit the viewport. Footer FAB items reveal with a spring-stagger motion treatment. Under reduced motion all popout and FAB reveals render as instant show and hide with no animation.
 gui_related: true
 gui_classification_reason: This unit defines visible chat overlay layering and motion behavior.
 split_recommended: false
 depends_on: [F3-422, ACD-438]
 unblocks: []
 acceptance_criteria:
-- "Mode, model, and effort popouts render above stream overflow clipping in both chat mounts and are never clipped by the scrollport."
-- "The persona dropdown remains inline and flips its opening direction when it would overflow the viewport."
-- "FAB items reveal with a spring stagger; reduced motion renders instant show and hide."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- Mode popouts and the combined model/depth picker render above stream overflow clipping in both chat mounts and are never clipped by the scrollport.
+- The persona dropdown remains inline and flips its opening direction when it would overflow the viewport.
+- FAB items reveal with a spring stagger; reduced motion renders instant show and hide.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -32044,55 +32014,8 @@ plan_unit_id: F3-441
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  `Plans/settings_inventory.json` is the canonical inventory registry of the live settings across 12
-  categories; 1010 is the pre-pass starting census. Its shape is owned by
-  `Plans/settings_inventory.schema.json` with schema_id `pm.settings_inventory.v1`; layering metadata is
-  owner-validated before use. Registry rows carry id, label, desc, type, options, default, scope, tier,
-  recommended, curated, search, badges, and related_features, where related_features is the sparse
-  mapping vocabulary consumed by the curation service usage-signal layer (F3-437). The demo runtime
-  fields value, status, and src are dropped and excluded by the schema: setting values live in real
-  settings storage, status is derived live per F3-435, and src was concept scaffolding. Registry
-  provenance pins the concept sidecar extraction `Concepts/pm6-build/sidecar/pm_settings_data.json` at
-  sha256 9b24e5bcf7f3dae8f0251215eb113c357d1a0ee22f185ac035e8969fd76b5c8d as source-lineage-only.
-  Settings surfaces, including search, category chips, bloom modals, shelves, row renderers, and the
-  Project Settings Modal, bind to this registry rather than hardcoding inventory rows. Amended 2026-10-17
-  (DL-228): each row's label, desc and option words in this inventory are the one wording the product
-  renders for it, on every surface that draws the row: Settings, hosted controls (SSYS-044) and the
-  Customize screens (DR-068). A concept's own row wording, such as the onboarding Settings kit's plain-
-  language rows.d labels and help, is a proposal until adopted here. Amended 2026-10-17 (DL-230, Jared):
-  the concept's plain-language labels and help are adopted for the rows it rewrote (for example Theme
-  Mode as "Light or dark", UI Scale as "Size of everything", Reduce Animations as "Reduce motion") in one
-  wording pass: a row's label and desc are its rows.d label and help, its old label stays one of its
-  search aliases, and its option words are option_labels, display words for stored option values that
-  never change what is stored (a value without an entry shows as stored). The Customize words (Fill and
-  Fit for Picture Fit, Still for Background Motion's Off, the materials' "plastic", "Less colour",
-  "Grain", "Text drawing") are adopted the same way (DR-068). Retired rows keep their words. The rows
-  carry option_labels beside options; the schema admits it. Amended 2026-10-29 (S1–S9, D5; PM7): Admit
-  general.visual.pip-parts and general.interaction.status-bar-words, historically taking the inventory
-  from 1009 to 1011; Q22 retires one row, yielding 1010. SSYS-056/057 own their defaults/placement; Parts
-  is one multiselect, not a Pip master or sound row. Amended Q22, Jared 2026-10-30 (DL-257): the current
-  family/variant and inventory census supersede earlier counts. Historical census token 1011 is retained
-  solely as pre-Q22 lineage. Every live row carries reviewed layering metadata; legacy scope remains
-  lineage and does not determine the offered level menu. The seven canonical inventory additions preserve
-  the twelve category prefixes and the unchanged 38 manager keys; recompute the actual census after
-  collision checks, never display an invented fixed count. F3-670 consumes canonical
-  code.execution.projects-folder, code.execution.no-project-chats-folder, general.interaction.no-project-
-  default-computer, safety.rules.cross-project-read-policy, safety.rules.allow-project-reading,
-  safety.rules.incoming-chat-messages and safety.rules.computer-use. The earlier assistant.* proposal
-  spellings are source-lineage only and accept no write alias. The registry carries the exact seven Case
-  L Storage & Retention rows that section 15.6 owns: system.advanced.chat-history-retention,
-  system.advanced.runtime-history-days, system.advanced.diagnostic-history-days,
-  system.advanced.released-safe-point-days, system.advanced.preserved-terminal-runs,
-  system.advanced.request-storage-compaction and system.advanced.inspect-holds-quarantine; their row
-  contracts are section 15.6's, and deletion and hold rules remain storage-owned. Settings batch 3
-  (models), Jared 2026-11-12, removes the 18 model-related rows registered in settings_inventory.json
-  compatibility_reads and admits Easy, routine jobs, one per-account model/depth default, and
-  video/speech/music model rows. The live census is derived from unique active inventory IDs, never a
-  dated fixed number. Retired values have read-only compatibility inspection/omission notices, no active
-  search/All Settings/reset controls or new transfer writes. The image provider row folds into the single
-  Making pictures route; independent effort folds into the everyday model choice. Model picker metadata
-  and model/depth value shape are owned by settings_inventory.schema.json.
+canonical_text: |-
+  `Plans/settings_inventory.json` is the canonical inventory registry of the live settings across 12 categories; 1010 is the pre-pass starting census. Its shape is owned by `Plans/settings_inventory.schema.json` with schema_id `pm.settings_inventory.v1`; layering metadata is owner-validated before use. Registry rows carry id, label, desc, type, options, default, scope, tier, recommended, curated, search, badges, and related_features, where related_features is the sparse mapping vocabulary consumed by the curation service usage-signal layer (F3-437). The demo runtime fields value, status, and src are dropped and excluded by the schema: setting values live in real settings storage, status is derived live per F3-435, and src was concept scaffolding. Registry provenance pins the concept sidecar extraction `Concepts/pm6-build/sidecar/pm_settings_data.json` at sha256 9b24e5bcf7f3dae8f0251215eb113c357d1a0ee22f185ac035e8969fd76b5c8d as source-lineage-only. Settings surfaces, including search, category chips, bloom modals, shelves, row renderers, and the Project Settings Modal, bind to this registry rather than hardcoding inventory rows. Amended 2026-10-17 (DL-228): each row's label, desc and option words in this inventory are the one wording the product renders for it, on every surface that draws the row: Settings, hosted controls (SSYS-044) and the Customize screens (DR-068). A concept's own row wording, such as the onboarding Settings kit's plain- language rows.d labels and help, is a proposal until adopted here. Amended 2026-10-17 (DL-230, Jared): the concept's plain-language labels and help are adopted for the rows it rewrote (for example Theme Mode as "Light or dark", UI Scale as "Size of everything", Reduce Animations as "Reduce motion") in one wording pass: a row's label and desc are its rows.d label and help, its old label stays one of its search aliases, and its option words are option_labels, display words for stored option values that never change what is stored (a value without an entry shows as stored). The Customize words (Fill and Fit for Picture Fit, Still for Background Motion's Off, the materials' "plastic", "Less colour", "Grain", "Text drawing") are adopted the same way (DR-068). Retired rows keep their words. The rows carry option_labels beside options; the schema admits it. Amended 2026-10-29 (S1–S9, D5; PM7): Admit general.visual.pip-parts and general.interaction.status-bar-words, historically taking the inventory from 1009 to 1011; Q22 retires one row, yielding 1010. SSYS-056/057 own their defaults/placement; Parts is one multiselect, not a Pip master or sound row. Amended Q22, Jared 2026-10-30 (DL-257): the current family/variant and inventory census supersede earlier counts. Historical census token 1011 is retained solely as pre-Q22 lineage. Every live row carries reviewed layering metadata; legacy scope remains lineage and does not determine the offered level menu. The seven canonical inventory additions preserve the twelve category prefixes and the unchanged 38 manager keys; recompute the actual census after collision checks, never display an invented fixed count. F3-670 consumes canonical code.execution.projects-folder, code.execution.no-project-chats-folder, general.interaction.no-project-default-computer, safety.rules.cross-project-read-policy, safety.rules.allow-project-reading, safety.rules.incoming-chat-messages and safety.rules.computer-use. The earlier assistant.* proposal spellings are source-lineage only and accept no write alias. The registry carries the exact seven Case L Storage & Retention rows that section 15.6 owns: system.advanced.chat-history-retention, system.advanced.runtime-history-days, system.advanced.diagnostic-history-days, system.advanced.released-safe-point-days, system.advanced.preserved-terminal-runs, system.advanced.request-storage-compaction and system.advanced.inspect-holds-quarantine; their row contracts are section 15.6's, and deletion and hold rules remain storage-owned. Settings batch 3 (models), Jared 2026-11-12, removes the 18 model-related rows registered in settings_inventory.json compatibility_reads and admits Easy, routine jobs, one per-account model/depth default, and video/speech/music model rows. The live census is derived from unique active inventory IDs, never a dated fixed number. Retired values have read-only compatibility inspection/omission notices, no active search/All Settings/reset controls or new transfer writes. The image provider row folds into the single Making pictures route; independent effort folds into the everyday model choice. Model picker metadata and model/depth value shape are owned by settings_inventory.schema.json.
 gui_related: true
 gui_classification_reason: This unit binds the visible settings surfaces to their canonical inventory registry.
 split_recommended: false

@@ -193,7 +193,7 @@ Required controls (placement: the chat header selector row, in the order Persona
 | Control | Requirement |
 |---|---|
 | **Persona** | Selector-row entrypoint to the Personas system (persona control canon later in this document). Selection applies to the current thread and the next turn. |
-| **Model** | Dropdown listing models for the currently selected provider entry. Models are dynamically discovered where supported, cached, and user-manageable via Settings or a manage-models entrypoint. Fallback model lists come from the shared provider/model registry and capability resolver, never `platform_specs::fallback_model_ids(platform)`. Selecting a model follows ACD-438: close the model popout and open the separate effort step only for route-proven levels. |
+| **Model** | Dropdown listing models for the currently selected provider entry. Models are dynamically discovered where supported, cached, and user-manageable via Settings or a manage-models entrypoint. Fallback model lists come from the shared provider/model registry and capability resolver, never `platform_specs::fallback_model_ids(platform)`. Selecting a model follows ACD-438: keep one picker open with supported depth levels beside the model list on desktop and inside the same picker on phone, then commit the model/depth pair atomically. A model without supported levels shows none. |
 | **Mode** | Selector-row slot for the chat mode (Ask, Agent, Debug, Plan, Deep Plan). Mode selection is part of the selector row, not a separate button strip. |
 | **Reasoning / effort** | Reached through model-selection chaining rather than a standing header dropdown. Shown only when the active platform supports it. Applies to the next turn rather than interrupting an in-flight response. |
 | **Worktree** | Icon button (rightmost in header strip, appended after the selector row). Dropdown for per-thread worktree binding: create, unbind, merge, PR, remove. Visual states: unbound (dimmed glyph), bound-clean (lit glyph), bound-dirty (lit glyph + dot indicator), bound-conflict (lit glyph + warning triangle). Hidden when the active project has no git repository. Full specification in the "Worktrees in Assistant" section below. |
@@ -15869,9 +15869,8 @@ plan_unit_id: ACD-255
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Auditor Validation reads its model/depth and named fallback source from Checking finished work.
-  Default editing opens that common row, using ACD-438 including the effort step; explicit run choices use
-  the same picker. No separate Provider/Model dropdown pair or thinking-depth Settings row survives.
+canonical_text: |-
+  Auditor Validation reads its model/depth and named fallback source from Checking finished work. Default editing opens that common row, using the one open ACD-438 model/depth picker; explicit run choices use the same picker. No separate Provider/Model dropdown pair or thinking-depth Settings row survives.
 gui_related: true
 gui_classification_reason: Defines the shared Checking finished work source/redirect and frozen Auditor runtime
   selection; retired independent selectors are not current UI.
@@ -15881,7 +15880,7 @@ unblocks:
 - ACD-256
 - ACD-262
 acceptance_criteria:
-- The loop uses the common Checking finished work row and shared ACD-438 model then supported-effort interaction.
+- The loop uses the common Checking finished work row and shared ACD-438 model/depth picker, with supported levels beside the still-open model list on desktop and inside the picker on phone.
 - Provider/model choices come from the account-bound Provider -> models registry and route capability resolver.
 - Models §2 owns inheritance and missing-model recovery; no first-provider fallback is added.
 - Legacy platform_specs::fallback_model_ids(platform) is not an active fallback source.
@@ -15931,9 +15930,8 @@ plan_unit_id: ACD-256
 unit_type: constraint
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: The Auditor uses ACD-438 model then supported-effort steps within its common model/depth picker;
-  it has no separate reasoning-effort Settings row. The old auditor-validation-provider-model-selector wrapper
-  token is inert source lineage and does not require a second selector.
+canonical_text: |-
+  The Auditor uses ACD-438 one open model/depth picker, with supported depth levels beside the model list on desktop and inside the same picker on phone; it has no separate reasoning-effort Settings row. The old auditor-validation-provider-model-selector wrapper token is inert source lineage and does not require a second selector.
 gui_related: true
 gui_classification_reason: Defines the shared Checking finished work source/redirect and frozen Auditor runtime
   selection; retired independent selectors are not current UI.
@@ -16299,9 +16297,8 @@ plan_unit_id: ACD-263
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Auditor default editing and explicit run overrides reuse the chat composer picker as ACD-438
-  defines it, including the sequential supported-effort step. The old separate provider/model dropdown wrapper
-  and DRY tag are inert historical references, not new UI requirements.
+canonical_text: |-
+  Auditor default editing and explicit run overrides reuse the chat composer picker as ACD-438 defines it, with supported depth levels beside the still-open model list on desktop and inside the same picker on phone. The old separate provider/model dropdown wrapper and DRY tag are inert historical references, not new UI requirements.
 gui_related: true
 gui_classification_reason: Defines the shared Checking finished work source/redirect and frozen Auditor runtime
   selection; retired independent selectors are not current UI.
@@ -24968,23 +24965,17 @@ owner_hints:
   - Plans/assistant-chat-design.md
 ```
 
-### ACD-438 - Model To Effort Popout Chaining And Single-Overlay Invariant
+### ACD-438 - One Model And Depth Picker And Single-Overlay Invariant
 
 ```yaml
 plan_unit_id: ACD-438
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Selecting a model closes the model mini-popout and, when the concrete selected route has proven
-  effort levels, automatically opens the separate reasoning-effort popout above the model button; selecting
-  an effort closes it and applies on the next turn. The options come from Models §7.3/§10.4.1, ACD-424 and
-  F3-400 capability truth. High, Medium and Low appear only when supported by that route; no proven levels
-  means no effort choices or empty popout, and Unknown support is not inferred as Unsupported. At most one
-  of thoroughness, mode, model, effort popouts or the footer fan-out stack is open. Plan Thoroughness keeps
-  its separate Light, Balanced and Comprehensive control. Every Settings model picker reuses this same sequential
-  interaction, effort step included, while saving the pair in its own declared scope.
+canonical_text: |-
+  The chat composer uses one open model/depth picker. Selecting a model keeps its list open and shows that concrete route’s supported depth levels beside the list on desktop and inside the same picker on phone. Model and depth are committed together as one atomic value and apply on the next turn; a model without supported levels commits with no depth. The options come from Models §7.3/§10.4.1, ACD-424 and F3-400 capability truth. High, Medium and Low appear only when supported by that route; no proven levels means no depth choices or empty depth panel, and Unknown support is not inferred as Unsupported. At most one of the combined model/depth picker, mode, thoroughness or persona popouts, or the footer fan-out stack is open. Plan Thoroughness keeps its separate Light, Balanced and Comprehensive control. Every Settings model picker reuses this same interaction, with depth inside the one open picker, while saving the whole pair in its own declared scope.
 gui_related: true
-gui_classification_reason: Defines visible model and effort popout chaining behavior.
+gui_classification_reason: Defines the visible shared model/depth picker and single-overlay behavior.
 depends_on:
 - ACD-424
 - ACD-035
@@ -24993,13 +24984,10 @@ depends_on:
 - MS-115
 unblocks: []
 acceptance_criteria:
-- Model selection closes its popout and opens the separate effort popout above the model button only when the
-  concrete route proves supported levels.
-- The effort step uses only route-proven choices; High/Medium/Low are not a universal enum. A model without
-  proven levels shows no effort choices.
-- Choosing an effort closes its popout and applies on the next turn; Settings saves the same pair in the selected
-  row’s declared scope.
-- At most one of thoroughness, mode, model, effort popouts or the footer fan-out is open at a time.
+- The model list stays open while supported depth levels appear beside it on desktop and inside the same picker on phone; depth stays in this same open picker.
+- Only route-proven depth choices are offered; High/Medium/Low are not a universal enum. A model without proven levels shows no depth choices, and Unknown remains Unknown.
+- Model and depth commit atomically and apply on the next turn; Settings saves the whole pair in the selected row’s declared scope.
+- At most one combined model/depth picker, mode, thoroughness or persona popout, or footer fan-out is open at a time.
 - Effort and Plan Thoroughness Light/Balanced/Comprehensive remain distinct controls with distinct labels.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
@@ -25011,7 +24999,7 @@ context_scope: assistant_chat_header
 implementation_surfaces:
 - Plans/assistant-chat-design.md
 node_compile_hint:
-  mode: chat_model_to_effort_popout_chaining
+  mode: chat_model_depth_picker
   create_worknodes: false
 source_lineage:
 - Plans/assistant-chat-design.md:2806
@@ -25026,10 +25014,8 @@ preserved_exact_tokens:
 negative_constraints:
 - Effort High/Medium/Low labels must not be merged with Plan Thoroughness Light/Balanced/Comprehensive.
 compatibility_only_notes:
-- 'Slint portability: chained popouts map to sequential native popup surfaces anchored to the model button;
-  no arbitrary-content backdrop blur, no SVG filters, precomputed color math.'
-- The old fixed High/Medium/Low wording is narrowed by the already-canonical Models7.3 and F3-400 route-supported
-  capability rule. No side-by-side model list/effort redesign is authorized.
+- 'Slint portability: one native popup anchored to the model button contains both the model list and its supported depth choices; no arbitrary-content backdrop blur, no SVG filters, precomputed color math.'
+- The old fixed High/Medium/Low wording is limited by Models §7.3 and F3-400 route-supported capability truth. Jared’s approved v2 screenshots and the lead’s r2 correction define the current combined model/depth interaction.
 stale_retired_dispositions: []
 owner_boundary_notes: []
 owner_hints:
@@ -25068,18 +25054,18 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: |-
-  Chat transient popouts - the model, mode, persona, effort, and thoroughness selector popouts, the header chrome menus, and the context status module - share one corner-origin sprout motion contract: each popout sprouts from and collapses into the corner or edge nearest its trigger, opening in roughly 300ms with overshoot easing from a non-uniform closed scale and closing in roughly 220ms with opacity held until late followed by a short fade. Search-driven size changes in the model and persona popouts spring the height with overshoot and a brief size-bounce. The modes popout opens directly on its Ask, Agent, Debug, Plan, and Deep Plan options with no search field, while model and persona popouts keep search. Under reduced motion, open and close render as instant show/hide. The single-overlay invariant of ACD-438 is preserved. L8 B, Jared 2026-10-30: DR-079 is the single menu sprout lifecycle for chat, Usage, Home and every other menu consumer. Chat retains this unit's visible motion, search, focus and single-overlay contracts and delegates origin/fade, timely painted entrance completion, close completion with cancellation/reopen guards and bounded fallback, instant/Reduced Motion settle, in-flight drag/hidden gates, resize/morph and teardown to DR-079. No chat-specific lifecycle, script registration, selector, class or JavaScript signature is required. Shared presentation creates no new product command or saved key.
+  Chat transient popouts - the combined model/depth picker and the mode, persona, and thoroughness selector popouts, the header chrome menus, and the context status module - share one corner-origin sprout motion contract: each popout sprouts from and collapses into the corner or edge nearest its trigger, opening in roughly 300ms with overshoot easing from a non-uniform closed scale and closing in roughly 220ms with opacity held until late followed by a short fade. Search-driven size changes in the model and persona popouts spring the height with overshoot and a brief size-bounce. The modes popout opens directly on its Ask, Agent, Debug, Plan, and Deep Plan options with no search field, while model and persona popouts keep search. Under reduced motion, open and close render as instant show/hide. The single-overlay invariant of ACD-438 is preserved. L8 B, Jared 2026-10-30: DR-079 is the single menu sprout lifecycle for chat, Usage, Home and every other menu consumer. Chat retains this unit's visible motion, search, focus and single-overlay contracts and delegates origin/fade, timely painted entrance completion, close completion with cancellation/reopen guards and bounded fallback, instant/Reduced Motion settle, in-flight drag/hidden gates, resize/morph and teardown to DR-079. No chat-specific lifecycle, script registration, selector, class or JavaScript signature is required. Shared presentation creates no new product command or saved key.
 gui_related: true
 gui_classification_reason: Defines visible open/close motion and search behavior for chat popouts.
 split_recommended: false
 depends_on: [ACD-438]
 unblocks: [ACD-440, ACD-441, ACD-442]
 acceptance_criteria:
-  - "Model, mode, persona, effort, and thoroughness popouts sprout from and collapse into the corner or edge nearest their trigger, with an overshoot open and a late-fade close."
-  - "Search-driven size changes in the model and persona popouts spring the height with overshoot and a brief size-bounce."
-  - "The modes popout opens directly on Ask, Agent, Debug, Plan, and Deep Plan options with no search field, while model and persona popouts keep search."
-  - "At most one popout, flyout, or fan-out is open at a time per ACD-438, and reduced motion renders open and close as instant show/hide."
-  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- The combined model/depth picker and the mode, persona, and thoroughness popouts sprout from and collapse into the corner or edge nearest their trigger, with an overshoot open and a late-fade close.
+- Search-driven size changes in the model and persona popouts spring the height with overshoot and a brief size-bounce.
+- The modes popout opens directly on Ask, Agent, Debug, Plan, and Deep Plan options with no search field, while model and persona popouts keep search.
+- At most one popout, flyout, or fan-out is open at a time per ACD-438, and reduced motion renders open and close as instant show/hide.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
 - "scripts/pm-plan-migration.py"
 - "scripts/pm-plan-index.py"
@@ -25118,23 +25104,18 @@ plan_unit_id: ACD-440
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: >-
-  The effort/thoroughness side flyout resizes in place: when the flyout is already open and
-  the hovered row changes to one whose available option count differs, the open flyout
-  spring-resizes its height with overshoot and a brief size-bounce instead of re-running the
-  sprout open. First open uses the corner-origin sprout of ACD-439, and hovering the same row
-  again only repositions and refreshes content. This applies to the model-effort flyout and
-  to the mode Plan/Deep Plan thoroughness flyout, which share the same flyout portal.
+canonical_text: |-
+  The supported-depth region of the one open model/depth picker resizes in place when the selected or hovered model changes the available option count: beside the still-visible model list on desktop, inside the same picker on phone. It spring-resizes its height with overshoot and a brief size-bounce rather than closing the model list or re-running the sprout open. First open uses ACD-439; hovering the same row again only repositions and refreshes content. The mode Plan/Deep Plan thoroughness flyout keeps this same in-place resize treatment in its own single-overlay interaction, separate from model depth.
 gui_related: true
-gui_classification_reason: Defines visible side-flyout resize behavior when option counts change.
+gui_classification_reason: Defines in-place resize of supported depth inside the model picker and of the separate Plan Thoroughness flyout.
 split_recommended: false
 depends_on: [ACD-438, ACD-439]
 unblocks: []
 acceptance_criteria:
-  - "With the flyout open, hovering a row with a different available option count spring-resizes the flyout height in place with overshoot and a brief size-bounce, without re-running the sprout open."
-  - "First open uses the corner-origin sprout; same-row hover repositions and refreshes content only."
-  - "The behavior applies to model-effort and to mode Plan/Deep Plan thoroughness through the same flyout portal."
-  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- While the model/depth picker stays open, changing the model’s supported depth count spring-resizes the depth region beside the list on desktop or inside the same picker on phone, with overshoot and a brief size-bounce; the model list remains visible.
+- First open uses the corner-origin sprout; same-row hover repositions and refreshes content only.
+- The mode Plan/Deep Plan thoroughness flyout shares the in-place resize treatment, while model depth stays inside its combined picker.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
   - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
   - "python3 scripts/pm-plan-index.py validate"
@@ -25156,7 +25137,7 @@ preserved_exact_tokens:
 negative_constraints:
   - "An option-count change while the flyout is open must not re-sprout the flyout from its origin."
 compatibility_only_notes:
-  - "Slint portability: the side flyout renders as an opaque precomputed popup surface whose height change animates via Slint property animations with overshoot easing; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
+- 'Slint portability: the depth region resizes inside the one native model/depth popup; the separate mode thoroughness popup shares the same height-animation treatment. Use opaque precomputed surfaces and Slint property animations with overshoot easing; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed.'
 stale_retired_dispositions: []
 owner_boundary_notes:
   - "Effort/thoroughness option semantics and label distinctness stay owned by ACD-438; this unit owns the resize-in-place presentation behavior."
