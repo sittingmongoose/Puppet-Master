@@ -39,12 +39,17 @@ async function checkLook(t,look){
    for(const [section,name] of [['Destinations','add-dest'],['Events','event'],['Events','group'],['Events','add-event']]){
     await tab(section);await press(t,action(name));await box(t,f,`${look} ${w} ${name} fields`,w,h);
    }
-   for(const [section,name] of [['Quiet hours','diagnostics'],['Quiet hours','reset'],['Events','export-events'],['Events','import-events'],['Events','add-agent'],['History','history'],['Sounds','export-pack']]){
+   for(const [section,name] of [['Quiet hours','diagnostics'],['Quiet hours','reset'],['Events','export-events'],['Events','import-events'],['Events','add-agent'],['History','history'],['History','export'],['Sounds','export-pack']]){
     await tab(section);await press(t,action(name));await box(t,f,`${look} ${w} ${name}`,w,h);
    }
    // The Add alert sheet hands off to the custom-alert setup dialog without committing an alert.
    await tab('Events');await press(t,action('add-event'));await box(t,f,`${look} ${w} add-alert parent`,w,h,false);
    await press(t,f.locator('#pm-settings-portals [data-action="pm51-notifications-add-custom"]').first());await box(t,f,`${look} ${w} custom alert setup`,w,h);
+   await press(t,action('add-event'));await box(t,f,`${look} ${w} preset parent`,w,h,false);
+   const preset=f.locator('#pm-settings-portals [data-action="pm51-notifications-add-catalog"]').first();
+   await t.check(`${look} ${w}: an unused preset is reachable`,await preset.count()>0);await press(t,preset);await box(t,f,`${look} ${w} preset alert setup`,w,h);
+   await press(t,action('event'));await box(t,f,`${look} ${w} event parent`,w,h,false);
+   await press(t,f.locator('#pm-settings-portals [data-action="pm51-notifications-event-remove"]').first());await box(t,f,`${look} ${w} remove event confirmation`,w,h);await t.page.keyboard.press('Escape');await t.settle();
    // A seeded agent exposes its removal confirmation; cancel it through the header.
    await press(t,action('group'));await box(t,f,`${look} ${w} agent parent`,w,h,false);
    await press(t,f.locator('#pm-settings-portals [data-action="pm51-notifications-group-remove"]').first());await box(t,f,`${look} ${w} remove agent confirmation`,w,h);await t.page.keyboard.press('Escape');await t.settle();
