@@ -100,7 +100,7 @@ for (const sample of samples) {
  for (const rule of rules.filter((r) => only === undefined || String(r.rule) === only)) for (const variant of rule.variants || [rule]) {
   const prefix = variant.original.replace(/\s+(?:\*|:where\(\*\))$/, '').replace(/\s*>$/, '');
   if (!rule.omit) assert.equal(variant.replacement.replace(/\s+:where\([^()]*\)$/, '').replace(/\s*>$/, ''), prefix, `rule ${rule.rule}: descendant rewrite must preserve its carrier`);
-  if (sample.decorate && ![0,1,6,7,8,13,14].includes(rule.rule)) continue;
+  if (sample.decorate && ![0,1,3,6,7,8,10,12,13,14].includes(rule.rule)) continue;
   const [left, compound] = last(prefix);
   let carriers = classesOf(compound.replace(/:not\([^()]*\)/g, '')).filter((c) => !state.has(c));
   if (sample.decorate && rule.rule === 0) carriers = ['fm-row','pm6-dash-catalog-item','pm6-tb-menu-item','pm6-chat-more-item'];
@@ -109,7 +109,7 @@ for (const sample of samples) {
   const directParent = left.endsWith('>') ? classesOf(last(left.slice(0, -1).trim())[1]).filter((c) => !state.has(c)) : null;
   const allowed = new Set(classesOf(variant.replacement?.match(/:where\(([^()]*)\)$/)?.[1] || ''));
   for (const node of nodes.filter((n) => n.classes.some((c) => carriers.includes(c)) && (!directParent || n.parent.classes.some((c) => directParent.includes(c))))) {
-   for (const child of descendants(node).filter((n) => !n.svg || (sample.svgRoots && n.tag === 'svg'))) {
+   for (const child of (variant.original.endsWith('> *') ? node.children : descendants(node)).filter((n) => !n.svg || (sample.svgRoots && n.tag === 'svg'))) {
     coverage[rule.rule] = (coverage[rule.rule] || 0) + 1;
     if (rule.omit || !child.classes.some((c) => allowed.has(c))) failures.add(`rule ${rule.rule}: ${child.tag}${child.classes.length ? '.' + child.classes.join('.') : ' [no marker]'} from ${sample.name} is no longer matched`);
    }

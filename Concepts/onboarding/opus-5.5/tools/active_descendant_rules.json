@@ -91,7 +91,7 @@
    "owner": "pm7-motion-shell",
    "source": "Concepts/onboarding/opus-5.5/base/style/pm6-css-cozy-shelves.css",
    "original": ".side-panel-slot.pill-fit-measure .side-panel-view:not(.active) > *",
-   "replacement": ".side-panel-slot.pill-fit-measure .side-panel-view:not(.active) > :where(.d-jj,.fm-docktabs,.fm-filter,.fm-selbar,.fm-toolbar-wrap,.pm-segtab,.pm7-automation-context,.pm7-automation-provider-view,.pm7-scm-context,.pm7-scm-git-footer,.sh-banner,.sh-foot,.sh-idxpanel,.sh-idxstate,.sh-scroll)",
+   "replacement": ".side-panel-slot.pill-fit-measure .side-panel-view:not(.active) > :where(.d-jj,.fm-docktabs,.fm-filter,.fm-selbar,.fm-toolbar-wrap,.pm-segtab,.pm7-automation-context,.pm7-automation-provider-view,.pm7-scm-context,.pm7-scm-git-footer,.pm7-scm-jj-view,.sh-banner,.sh-foot,.sh-idxpanel,.sh-idxstate,.sh-scroll)",
    "omit": false,
    "note": "Live source: base/style/pm6-css-cozy-shelves.css. Edit it directly; this final-page rewrite still guards its original selector exactly once. The pm6-build part is historical only."
   },
