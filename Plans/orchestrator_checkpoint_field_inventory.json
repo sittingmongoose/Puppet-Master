@@ -1,0 +1,3269 @@
+{
+  "schema_id": "pm.orchestrator.checkpoint_field_inventory.v1",
+  "title": "DO lane: every field of every checkpoint value the lane writes",
+  "owner": "stream E lane DO (DO-P1F06); read by scripts/pm_orchestrator_event_oracles.py checkpoint_inventory_checks",
+  "model": "One-event model: each read covers one retained event in one segment, which the last frame names, under one current generation node. Paths: \"*\" is a generation node, \"{key}\" its map key, \"[]\" an array item.",
+  "values": {
+    "read.checkpoint": "Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint",
+    "read.read_token": "Plans/event_record_index_checkpoint.schema.json#/$defs/read_token",
+    "read.current_source_selection": "Plans/event_record_index_checkpoint.schema.json#/$defs/source_selection",
+    "read.row": "Plans/storage_value_registry.json families[event_record_index].value_schema",
+    "read.<other keys>": "leaf fields, taken from the positives"
+  },
+  "rules": {
+    "fields": "The checker regenerates the field list from those schemas: every property at every depth whose schema is not a closed object (leaves, nullable objects, arrays and maps with their items and keys), and every other key of every positive's read. It requires every value object to be closed and every conditional branch to name only declared properties.",
+    "derived": "Its value follows from the event, the segment state or another field (source). Each guard names the function and refusal code that compare it with its source by exact type, and a registered single-defect negative refused with exactly that code. builder: recapture_history writes it from its source, and restores it from every repairable negative.",
+    "free": "Legitimately chosen data. bound is the schema's constraint; reason is what a reviewer checks; refused_forms are values the bound refuses with refused_code. guards, when present, are runtime bounds beyond the schema.",
+    "freshness": "The checker fails on a field with no row, a row with no field, a stale bound or an incomplete row."
+  },
+  "totals": {
+    "fields": 167,
+    "derived": 108,
+    "free": 59
+  },
+  "rows": [
+    {
+      "path": "read.checkpoint.current_generation_id",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "string",
+          "pattern": "^eig_[0-9a-f]{64}$"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "source": "the id SP-278's recipe gives the current node (storage-plan.md:21269): it must name the one current node, and the key it selects is the recipe's",
+      "guards": [
+        {
+          "function": "checkpoint_errors",
+          "code": "checkpoint_not_current",
+          "negative": "P1F06:current_generation_missing"
+        },
+        {
+          "function": "generation_copy_errors",
+          "code": "index_generation_id_recipe",
+          "negative": "P1F06:generation_id_recipe"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "before DO-P1F06 + DO-P1F06"
+    },
+    {
+      "path": "read.checkpoint.generations",
+      "class": "free",
+      "bound": [
+        {
+          "type": "object",
+          "minProperties": 1,
+          "maxProperties": 3,
+          "patternProperties": [
+            "^eig_[0-9a-f]{64}$"
+          ]
+        }
+      ],
+      "reason": "Generation nodes retained under RP-PROJECTION-3GEN (storage-plan.md:21299): one to three, current, staged or retired. The lane reads the one current node; exactly one current is checkpoint_not_current's, and every node's identity copies are generation_copy_errors'.",
+      "guards": [
+        {
+          "function": "checkpoint_errors",
+          "code": "checkpoint_not_current",
+          "negative": "P1F06:second_current_node"
+        }
+      ],
+      "refused_forms": [
+        {}
+      ],
+      "refused_code": "checkpoint_schema"
+    },
+    {
+      "path": "read.checkpoint.generations.*.activated_at_utc",
+      "class": "free",
+      "bound": [
+        {
+          "type": "string",
+          "format": "date-time"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "reason": "An observation time (the projector clock); it orders nothing and enters no identity. Its grammar is the strict UTC check; ordering against the event is the shared date-time gate (part 2). A current node requires one (the schema's state conditionals).",
+      "refused_forms": [
+        null,
+        "2026-11-04 00:00:00Z"
+      ],
+      "refused_code": "checkpoint_schema"
+    },
+    {
+      "path": "read.checkpoint.generations.*.anchor.first_retained_sequence_id",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "source": "the event's Storage-assigned sequence_id (a count of one)",
+      "guards": [
+        {
+          "function": "sequence_copy_errors",
+          "code": "index_anchor_first_retained_sequence_id",
+          "negative": "P1F05:anchor_first_retained_sequence_id"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "DO-P1F05"
+    },
+    {
+      "path": "read.checkpoint.generations.*.anchor.generation_seed_sha256",
+      "class": "free",
+      "bound": [
+        {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      ],
+      "reason": "Fresh 256-bit entropy allocated once per generation (storage-plan.md:21269); the generation id is derived from it.",
+      "refused_forms": [
+        "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+        "0000000000000000000000000000000000000000000000000000000000000000\n"
+      ],
+      "refused_code": "checkpoint_schema"
+    },
+    {
+      "path": "read.checkpoint.generations.*.anchor.retained_event_count",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        }
+      ],
+      "source": "the event's Storage-assigned sequence_id (a count of one)",
+      "guards": [
+        {
+          "function": "sequence_copy_errors",
+          "code": "index_anchor_retained_event_count",
+          "negative": "P1F05:anchor_retained_event_count"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "DO-P1F05"
+    },
+    {
+      "path": "read.checkpoint.generations.*.anchor.retained_event_prefix_sha256",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      ],
+      "source": "the retained-prefix binding digest recomputed from the event's own bytes",
+      "guards": [
+        {
+          "function": "checkpoint_errors",
+          "code": "index_source_prefix",
+          "negative": "P1F06:anchor_retained_event_prefix_sha256"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "before DO-P1F06"
+    },
+    {
+      "path": "read.checkpoint.generations.*.anchor.sequence_gaps_sha256",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      ],
+      "source": "the binding digest of the empty array: the anchored range is the retained event's own sequence, which holds no gap (storage-plan.md:21279)",
+      "guards": [
+        {
+          "function": "selection_copy_errors",
+          "code": "index_anchor_sequence_gaps_sha256",
+          "negative": "P1F06:anchor_sequence_gaps_sha256"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "DO-P1F06"
+    },
+    {
+      "path": "read.checkpoint.generations.*.anchor.source_selection.current_bytes_sha256",
+      "class": "free",
+      "bound": [
+        {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      ],
+      "reason": "The digest of Storage control data the value does not carry (CURRENT or manifest bytes, or a manifest array); SP-278 says a matching hash is insufficient and the native owner codec establishes it (storage-plan.md:21277). The birth binding is the source; the frontier's copy is joined to it.",
+      "refused_forms": [
+        "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+        "0000000000000000000000000000000000000000000000000000000000000000\n"
+      ],
+      "refused_code": "checkpoint_schema"
+    },
+    {
+      "path": "read.checkpoint.generations.*.anchor.source_selection.current_ref",
+      "class": "free",
+      "bound": [
+        {
+          "const": "storage/seglog/CURRENT"
+        }
+      ],
+      "reason": "The schema admits exactly one value, so nothing is chosen and no copy can go stale.",
+      "refused_forms": [
+        "storage/seglog/CURRENT-other"
+      ],
+      "refused_code": "checkpoint_schema"
+    },
+    {
+      "path": "read.checkpoint.generations.*.anchor.source_selection.durable_watermarks_sha256",
+      "class": "free",
+      "bound": [
+        {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      ],
+      "reason": "The digest of Storage control data the value does not carry (CURRENT or manifest bytes, or a manifest array); SP-278 says a matching hash is insufficient and the native owner codec establishes it (storage-plan.md:21277). ",
+      "refused_forms": [
+        "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+        "0000000000000000000000000000000000000000000000000000000000000000\n"
+      ],
+      "refused_code": "checkpoint_schema"
+    },
+    {
+      "path": "read.checkpoint.generations.*.anchor.source_selection.excluded_ranges_sha256",
+      "class": "free",
+      "bound": [
+        {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      ],
+      "reason": "The digest of Storage control data the value does not carry (CURRENT or manifest bytes, or a manifest array); SP-278 says a matching hash is insufficient and the native owner codec establishes it (storage-plan.md:21277). The birth binding is the source; the frontier's copy is joined to it.",
+      "refused_forms": [
+        "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+        "0000000000000000000000000000000000000000000000000000000000000000\n"
+      ],
+      "refused_code": "checkpoint_schema"
+    },
+    {
+      "path": "read.checkpoint.generations.*.anchor.source_selection.manifest_bytes_sha256",
+      "class": "free",
+      "bound": [
+        {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      ],
+      "reason": "The digest of Storage control data the value does not carry (CURRENT or manifest bytes, or a manifest array); SP-278 says a matching hash is insufficient and the native owner codec establishes it (storage-plan.md:21277). ",
+      "refused_forms": [
+        "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+        "0000000000000000000000000000000000000000000000000000000000000000\n"
+      ],
+      "refused_code": "checkpoint_schema"
+    },
+    {
+      "path": "read.checkpoint.generations.*.anchor.source_selection.manifest_generation",
+      "class": "free",
+      "bound": [
+        {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        }
+      ],
+      "reason": "The birth manifest generation, from the manifest the value does not carry; the row's copy is joined to it.",
+      "refused_forms": [
+        -1,
+        18446744073709551616
+      ],
+      "refused_code": "checkpoint_schema"
+    },
+    {
+      "path": "read.checkpoint.generations.*.anchor.source_selection.manifest_ref",
+      "class": "free",
+      "bound": [
+        {
+          "const": "storage/seglog/manifest.v1.msgpack"
+        }
+      ],
+      "reason": "The schema admits exactly one value, so nothing is chosen and no copy can go stale.",
+      "refused_forms": [
+        "storage/seglog/manifest.v1.msgpack-other"
+      ],
+      "refused_code": "checkpoint_schema"
+    },
+    {
+      "path": "read.checkpoint.generations.*.anchor.source_selection.manifest_survivor_prefix_sha256",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      ],
+      "source": "the retained-prefix binding digest recomputed from the event's own bytes",
+      "guards": [
+        {
+          "function": "checkpoint_errors",
+          "code": "index_source_prefix",
+          "negative": "P1F06:anchor_survivor_prefix_sha256"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "before DO-P1F06"
+    },
+    {
+      "path": "read.checkpoint.generations.*.anchor.source_selection.recovery_epoch",
+      "class": "free",
+      "bound": [
+        {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        }
+      ],
+      "reason": "The birth recovery epoch from the manifest the value does not carry; the frontier's and the row's copies are joined to it.",
+      "refused_forms": [
+        -1,
+        18446744073709551616
+      ],
+      "refused_code": "checkpoint_schema"
+    },
+    {
+      "path": "read.checkpoint.generations.*.anchor.source_selection.retained_inventory_sha256",
+      "class": "free",
+      "bound": [
+        {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      ],
+      "reason": "The digest of Storage control data the value does not carry (CURRENT or manifest bytes, or a manifest array); SP-278 says a matching hash is insufficient and the native owner codec establishes it (storage-plan.md:21277). ",
+      "refused_forms": [
+        "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+        "0000000000000000000000000000000000000000000000000000000000000000\n"
+      ],
+      "refused_code": "checkpoint_schema"
+    },
+    {
+      "path": "read.checkpoint.generations.*.anchor.source_selection.retired_inputs_sha256",
+      "class": "free",
+      "bound": [
+        {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      ],
+      "reason": "The digest of Storage control data the value does not carry (CURRENT or manifest bytes, or a manifest array); SP-278 says a matching hash is insufficient and the native owner codec establishes it (storage-plan.md:21277). The birth binding is the source; the frontier's copy is joined to it.",
+      "refused_forms": [
+        "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+        "0000000000000000000000000000000000000000000000000000000000000000\n"
+      ],
+      "refused_code": "checkpoint_schema"
+    },
+    {
+      "path": "read.checkpoint.generations.*.anchor.source_selection.selected_segment_generation",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        }
+      ],
+      "source": "the last frame's segment_generation: every frame matches the selected segment generation (storage-plan.md:17330, :17293)",
+      "guards": [
+        {
+          "function": "selection_copy_errors",
+          "code": "index_anchor_selected_segment_generation",
+          "negative": "P1F06:anchor_selected_segment_generation"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "DO-P1F06"
+    },
+    {
+      "path": "read.checkpoint.generations.*.anchor.source_selection.storage_instance_id",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "string",
+          "format": "uuid"
+        }
+      ],
+      "source": "the payload's storage_instance_id",
+      "guards": [
+        {
+          "function": "checkpoint_errors",
+          "code": "checkpoint_source_storage_identity",
+          "negative": "P1F06:anchor_source_storage_instance_id"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "before DO-P1F06"
+    },
+    {
+      "path": "read.checkpoint.generations.*.anchor.through_sequence_id",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "source": "the event's Storage-assigned sequence_id (a count of one)",
+      "guards": [
+        {
+          "function": "sequence_copy_errors",
+          "code": "index_anchor_through_sequence_id",
+          "negative": "P1F05:anchor_through_sequence_id"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "DO-P1F05"
+    },
+    {
+      "path": "read.checkpoint.generations.*.first_prepared_at_utc",
+      "class": "free",
+      "bound": [
+        {
+          "type": "string",
+          "format": "date-time"
+        }
+      ],
+      "reason": "An observation time (the projector clock); it orders nothing and enters no identity. Its grammar is the strict UTC check; ordering against the event is the shared date-time gate (part 2).",
+      "refused_forms": [
+        "2026-11-04 00:00:00Z"
+      ],
+      "refused_code": "checkpoint_schema"
+    },
+    {
+      "path": "read.checkpoint.generations.*.frontier.coverage.complete_to_captured_boundary",
+      "class": "free",
+      "bound": [
+        {
+          "const": true
+        }
+      ],
+      "reason": "The schema admits only true; the runtime clause index_complete_source_coverage duplicates that const (DO-P1F05's pair proof).",
+      "refused_forms": [
+        false
+      ],
+      "refused_code": "checkpoint_schema"
+    },
+    {
+      "path": "read.checkpoint.generations.*.frontier.coverage.empty_retained_source",
+      "class": "derived",
+      "bound": [
+        {
+          "const": false
+        },
+        {
+          "const": true
+        },
+        {
+          "type": "boolean"
+        }
+      ],
+      "source": "false: the frontier covers the event",
+      "guards": [
+        {
+          "function": "checkpoint_schema",
+          "code": "checkpoint_schema",
+          "negative": "P1F06:empty_flag_alone"
+        },
+        {
+          "function": "checkpoint_errors",
+          "code": "index_coverage_last_frame_null",
+          "negative": "P1F05:empty_source_null_frame"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "DO-P1F05"
+    },
+    {
+      "path": "read.checkpoint.generations.*.frontier.coverage.first_retained_sequence_id",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "source": "the event's Storage-assigned sequence_id (a count of one)",
+      "guards": [
+        {
+          "function": "sequence_copy_errors",
+          "code": "index_coverage_first_retained_sequence_id",
+          "negative": "P1F05:coverage_first_retained_sequence_id"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "DO-P1F05"
+    },
+    {
+      "path": "read.checkpoint.generations.*.frontier.coverage.health",
+      "class": "free",
+      "bound": [
+        {
+          "enum": [
+            "healthy",
+            "degraded"
+          ]
+        }
+      ],
+      "reason": "Storage's integrity observation; a complete index can be fresh while degraded (storage-plan.md:21289); not a function of the one event.",
+      "refused_forms": [
+        "unknown"
+      ],
+      "refused_code": "checkpoint_schema"
+    },
+    {
+      "path": "read.checkpoint.generations.*.frontier.coverage.last_frame",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "object"
+        }
+      ],
+      "source": "present: the frontier covers the event, whose frame is the last",
+      "guards": [
+        {
+          "function": "checkpoint_errors",
+          "code": "index_coverage_last_frame_null",
+          "negative": "P1F05:empty_source_null_frame"
+        },
+        {
+          "function": "checkpoint_schema",
+          "code": "checkpoint_schema",
+          "negative": "P1F05:bare_null_frame"
+        }
+      ],
+      "builder": null,
+      "builder_reason": "The builders require the frame and write its members; a null frame has no members to write.",
+      "guarded_since": "DO-P1F05"
+    },
+    {
+      "path": "read.checkpoint.generations.*.frontier.coverage.last_frame.byte_offset",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        }
+      ],
+      "source": "the segment's scan start: the event's frame is the segment's first",
+      "guards": [
+        {
+          "function": "coverage_copy_errors",
+          "code": "index_coverage_frame_byte_offset",
+          "negative": "P1F04:frame_byte_offset"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "DO-P1F04"
+    },
+    {
+      "path": "read.checkpoint.generations.*.frontier.coverage.last_frame.frame_end_offset",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        }
+      ],
+      "source": "the length of the event's canonical MessagePack bytes",
+      "guards": [
+        {
+          "function": "coverage_copy_errors",
+          "code": "index_coverage_frame_end_offset",
+          "negative": "P1F04:frame_end_offset"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "DO-P1F04"
+    },
+    {
+      "path": "read.checkpoint.generations.*.frontier.coverage.last_frame.last_event_id",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "string",
+          "minLength": 1
+        }
+      ],
+      "source": "the event's event_id",
+      "guards": [
+        {
+          "function": "checkpoint_errors",
+          "code": "index_coverage_frame_last_event_id",
+          "negative": "P1F05:last_event_id"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "DO-P1F05"
+    },
+    {
+      "path": "read.checkpoint.generations.*.frontier.coverage.last_frame.last_sequence_id",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        }
+      ],
+      "source": "the event's sequence_id",
+      "guards": [
+        {
+          "function": "sequence_copy_errors",
+          "code": "index_coverage_frame_last_sequence_id",
+          "negative": "P1F05:coverage_frame_last_sequence_id"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "DO-P1F05"
+    },
+    {
+      "path": "read.checkpoint.generations.*.frontier.coverage.last_frame.segment_generation",
+      "class": "free",
+      "bound": [
+        {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        }
+      ],
+      "reason": "The segment generation Storage assigned the segment holding the frame; not on the event. Every other copy of it (the segment's, the name's field, both selections', the row's) is joined to it.",
+      "refused_forms": [
+        -1,
+        18446744073709551616
+      ],
+      "refused_code": "checkpoint_schema"
+    },
+    {
+      "path": "read.checkpoint.generations.*.frontier.coverage.last_frame.segment_name",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "string",
+          "pattern": "^seg-[0-9]{6,}-[0-9]{20}(-[0-9]{20}\\.seglog|\\.active)$"
+        }
+      ],
+      "source": "seg-{segment_generation:06}-{sequence:020} with the form the segment's state gives (storage-plan.md:460-461, :24306)",
+      "guards": [
+        {
+          "function": "sequence_copy_errors",
+          "code": "index_coverage_segment_name_first_sequence",
+          "negative": "P1F05:coverage_segment_name_first_sequence"
+        },
+        {
+          "function": "sequence_copy_errors",
+          "code": "index_coverage_segment_name_last_sequence",
+          "negative": "P1F05:coverage_segment_name_last_sequence"
+        },
+        {
+          "function": "segment_identity_errors",
+          "code": "index_coverage_segment_name_generation",
+          "negative": "P1F06:segment_name_generation"
+        },
+        {
+          "function": "segment_identity_errors",
+          "code": "index_coverage_segment_name_state",
+          "negative": "P1F06:segment_name_state"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "DO-P1F05 + DO-P1F06"
+    },
+    {
+      "path": "read.checkpoint.generations.*.frontier.coverage.retained_event_count",
+      "class": "derived",
+      "bound": [
+        {
+          "const": 0
+        },
+        {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        {
+          "type": "integer",
+          "minimum": 1
+        }
+      ],
+      "source": "the event's Storage-assigned sequence_id (a count of one)",
+      "guards": [
+        {
+          "function": "sequence_copy_errors",
+          "code": "index_coverage_retained_event_count",
+          "negative": "P1F05:coverage_retained_event_count"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "DO-P1F05"
+    },
+    {
+      "path": "read.checkpoint.generations.*.frontier.coverage.retained_event_prefix_sha256",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      ],
+      "source": "the retained-prefix binding digest recomputed from the event's own bytes",
+      "guards": [
+        {
+          "function": "checkpoint_errors",
+          "code": "index_source_prefix",
+          "negative": "P1F06:coverage_retained_event_prefix_sha256"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "before DO-P1F06"
+    },
+    {
+      "path": "read.checkpoint.generations.*.frontier.coverage.scope",
+      "class": "free",
+      "bound": [
+        {
+          "const": "all_application_and_project_partitions"
+        }
+      ],
+      "reason": "The schema admits exactly one value, so nothing is chosen and no copy can go stale.",
+      "refused_forms": [
+        "all_application_and_project_partitions-other"
+      ],
+      "refused_code": "checkpoint_schema"
+    },
+    {
+      "path": "read.checkpoint.generations.*.frontier.coverage.segments",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "array",
+          "minItems": 1
+        }
+      ],
+      "source": "one segment, the one the last frame names (one-event model)",
+      "guards": [
+        {
+          "function": "coverage_copy_errors",
+          "code": "index_coverage_segment_count",
+          "negative": "P1F04:segment_count"
+        }
+      ],
+      "builder": null,
+      "builder_reason": "The builders keep the one segment and assert the one-event model rather than add or drop segments.",
+      "guarded_since": "DO-P1F04"
+    },
+    {
+      "path": "read.checkpoint.generations.*.frontier.coverage.segments[].first_sequence_id",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "source": "the event's sequence_id (a count of one)",
+      "guards": [
+        {
+          "function": "sequence_copy_errors",
+          "code": "index_coverage_segment_first_sequence_id",
+          "negative": "P1F05:coverage_segment_first_sequence_id"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "DO-P1F05"
+    },
+    {
+      "path": "read.checkpoint.generations.*.frontier.coverage.segments[].last_sequence_id",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "source": "the event's sequence_id (a count of one)",
+      "guards": [
+        {
+          "function": "sequence_copy_errors",
+          "code": "index_coverage_segment_last_sequence_id",
+          "negative": "P1F05:coverage_segment_last_sequence_id"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "DO-P1F05"
+    },
+    {
+      "path": "read.checkpoint.generations.*.frontier.coverage.segments[].retained_event_count",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        }
+      ],
+      "source": "the event's sequence_id (a count of one)",
+      "guards": [
+        {
+          "function": "sequence_copy_errors",
+          "code": "index_coverage_segment_retained_event_count",
+          "negative": "P1F05:coverage_segment_retained_event_count"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "DO-P1F05"
+    },
+    {
+      "path": "read.checkpoint.generations.*.frontier.coverage.segments[].scan_start_offset",
+      "class": "free",
+      "bound": [
+        {
+          "const": 0
+        }
+      ],
+      "reason": "The schema admits exactly one value, so nothing is chosen and no copy can go stale.",
+      "refused_forms": [
+        1
+      ],
+      "refused_code": "checkpoint_schema"
+    },
+    {
+      "path": "read.checkpoint.generations.*.frontier.coverage.segments[].scanned_through_offset",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        }
+      ],
+      "source": "the length of the event's canonical MessagePack bytes",
+      "guards": [
+        {
+          "function": "coverage_copy_errors",
+          "code": "index_coverage_scanned_through_offset",
+          "negative": "P1F04:scanned_through_offset"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "DO-P1F04"
+    },
+    {
+      "path": "read.checkpoint.generations.*.frontier.coverage.segments[].segment_generation",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        }
+      ],
+      "source": "the last frame's segment_generation",
+      "guards": [
+        {
+          "function": "coverage_copy_errors",
+          "code": "index_coverage_segment_generation",
+          "negative": "P1F04:segment_generation"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "DO-P1F04"
+    },
+    {
+      "path": "read.checkpoint.generations.*.frontier.coverage.segments[].segment_name",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "string",
+          "pattern": "^seg-[0-9]{6,}-[0-9]{20}(-[0-9]{20}\\.seglog|\\.active)$"
+        }
+      ],
+      "source": "the last frame's segment_name",
+      "guards": [
+        {
+          "function": "coverage_copy_errors",
+          "code": "index_coverage_segment_name",
+          "negative": "P1F04:segment_name"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "DO-P1F04"
+    },
+    {
+      "path": "read.checkpoint.generations.*.frontier.coverage.segments[].source_durable_bytes_sha256",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      ],
+      "source": "the SHA-256 of the event's canonical MessagePack bytes",
+      "guards": [
+        {
+          "function": "coverage_copy_errors",
+          "code": "index_coverage_source_durable_bytes_sha256",
+          "negative": "P1F04:source_durable_bytes_sha256"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "DO-P1F04"
+    },
+    {
+      "path": "read.checkpoint.generations.*.frontier.coverage.segments[].source_durable_end_offset",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        }
+      ],
+      "source": "the length of the event's canonical MessagePack bytes",
+      "guards": [
+        {
+          "function": "coverage_copy_errors",
+          "code": "index_coverage_source_durable_end_offset",
+          "negative": "P1F04:source_durable_end_offset"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "DO-P1F04"
+    },
+    {
+      "path": "read.checkpoint.generations.*.frontier.coverage.segments[].state",
+      "class": "free",
+      "bound": [
+        {
+          "enum": [
+            "active",
+            "closed",
+            "sealed_degraded"
+          ]
+        }
+      ],
+      "reason": "The segment's lifecycle state (active, closed or sealed_degraded); the name's form is joined to it.",
+      "refused_forms": [
+        "opening"
+      ],
+      "refused_code": "checkpoint_schema"
+    },
+    {
+      "path": "read.checkpoint.generations.*.frontier.coverage.sequence_gaps",
+      "class": "free",
+      "bound": [
+        {
+          "type": "array"
+        }
+      ],
+      "reason": "Legal sequence gaps need actual manifest evidence the value does not carry (storage-plan.md:21289); the fixtures hold none. Bounded beyond the schema: no gap holds the covered event's own sequence, and no gap's first id is after its last.",
+      "guards": [
+        {
+          "function": "sequence_gap_errors",
+          "code": "index_coverage_sequence_gap_retained",
+          "negative": "P1F06:sequence_gap_retained"
+        },
+        {
+          "function": "sequence_gap_errors",
+          "code": "index_coverage_sequence_gap_order",
+          "negative": "P1F06:sequence_gap_order"
+        }
+      ],
+      "refused_forms": [
+        [
+          5
+        ]
+      ],
+      "refused_code": "checkpoint_schema"
+    },
+    {
+      "path": "read.checkpoint.generations.*.frontier.coverage.sequence_gaps[].first_sequence_id",
+      "class": "free",
+      "bound": [
+        {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        }
+      ],
+      "reason": "Legal sequence gaps need actual manifest evidence the value does not carry (storage-plan.md:21289); the fixtures hold none. ",
+      "guards": [
+        {
+          "function": "sequence_gap_errors",
+          "code": "index_coverage_sequence_gap_retained",
+          "negative": "P1F06:sequence_gap_retained"
+        },
+        {
+          "function": "sequence_gap_errors",
+          "code": "index_coverage_sequence_gap_order",
+          "negative": "P1F06:sequence_gap_order"
+        }
+      ],
+      "refused_forms": [
+        -1,
+        18446744073709551616
+      ],
+      "refused_code": "checkpoint_schema"
+    },
+    {
+      "path": "read.checkpoint.generations.*.frontier.coverage.sequence_gaps[].last_sequence_id",
+      "class": "free",
+      "bound": [
+        {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        }
+      ],
+      "reason": "Legal sequence gaps need actual manifest evidence the value does not carry (storage-plan.md:21289); the fixtures hold none. ",
+      "guards": [
+        {
+          "function": "sequence_gap_errors",
+          "code": "index_coverage_sequence_gap_retained",
+          "negative": "P1F06:sequence_gap_retained"
+        },
+        {
+          "function": "sequence_gap_errors",
+          "code": "index_coverage_sequence_gap_order",
+          "negative": "P1F06:sequence_gap_order"
+        }
+      ],
+      "refused_forms": [
+        -1,
+        18446744073709551616
+      ],
+      "refused_code": "checkpoint_schema"
+    },
+    {
+      "path": "read.checkpoint.generations.*.frontier.coverage.sequence_gaps[].manifest_evidence_ref",
+      "class": "free",
+      "bound": [
+        {
+          "type": "string",
+          "minLength": 1
+        }
+      ],
+      "reason": "Legal sequence gaps need actual manifest evidence the value does not carry (storage-plan.md:21289); the fixtures hold none. ",
+      "refused_forms": [
+        ""
+      ],
+      "refused_code": "checkpoint_schema"
+    },
+    {
+      "path": "read.checkpoint.generations.*.frontier.coverage.sequence_gaps[].manifest_evidence_sha256",
+      "class": "free",
+      "bound": [
+        {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      ],
+      "reason": "Legal sequence gaps need actual manifest evidence the value does not carry (storage-plan.md:21289); the fixtures hold none. ",
+      "refused_forms": [
+        "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+        "0000000000000000000000000000000000000000000000000000000000000000\n"
+      ],
+      "refused_code": "checkpoint_schema"
+    },
+    {
+      "path": "read.checkpoint.generations.*.frontier.coverage.sequence_gaps[].reason",
+      "class": "free",
+      "bound": [
+        {
+          "enum": [
+            "allocator_lease_abandoned",
+            "corruption_loss",
+            "retention_compaction"
+          ]
+        }
+      ],
+      "reason": "Legal sequence gaps need actual manifest evidence the value does not carry (storage-plan.md:21289); the fixtures hold none. The reason is one of the three legal ones.",
+      "refused_forms": [
+        "bogus_reason"
+      ],
+      "refused_code": "checkpoint_schema"
+    },
+    {
+      "path": "read.checkpoint.generations.*.frontier.coverage.through_sequence_id",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "source": "the event's Storage-assigned sequence_id (a count of one)",
+      "guards": [
+        {
+          "function": "sequence_copy_errors",
+          "code": "index_coverage_through_sequence_id",
+          "negative": "P1F05:coverage_through_sequence_id"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "DO-P1F05"
+    },
+    {
+      "path": "read.checkpoint.generations.*.frontier.index_row_count",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        }
+      ],
+      "source": "one: the one-event model indexes the one row",
+      "guards": [
+        {
+          "function": "checkpoint_errors",
+          "code": "index_complete_row_set",
+          "negative": "P1F06:index_row_count"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "before DO-P1F06"
+    },
+    {
+      "path": "read.checkpoint.generations.*.frontier.index_row_set_sha256",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      ],
+      "source": "the row-set binding digest of the read's key and row",
+      "guards": [
+        {
+          "function": "checkpoint_errors",
+          "code": "index_complete_row_set",
+          "negative": "P1F06:index_row_set_sha256"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "before DO-P1F06"
+    },
+    {
+      "path": "read.checkpoint.generations.*.frontier.indexed_at_utc",
+      "class": "free",
+      "bound": [
+        {
+          "type": "string",
+          "format": "date-time"
+        }
+      ],
+      "reason": "An observation time (the projector clock); it orders nothing and enters no identity. Its grammar is the strict UTC check; ordering against the event is the shared date-time gate (part 2).",
+      "refused_forms": [
+        "2026-11-04 00:00:00Z"
+      ],
+      "refused_code": "checkpoint_schema"
+    },
+    {
+      "path": "read.checkpoint.generations.*.frontier.predecessor_frontier_sha256",
+      "class": "free",
+      "bound": [
+        {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "reason": "The digest of the previous frontier, which the value does not carry (predecessor CAS, storage-plan.md:21291).",
+      "refused_forms": [
+        "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF"
+      ],
+      "refused_code": "checkpoint_schema"
+    },
+    {
+      "path": "read.checkpoint.generations.*.frontier.publication_revision",
+      "class": "free",
+      "bound": [
+        {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        }
+      ],
+      "reason": "The frontier's monotonic publication revision, advanced under predecessor CAS by the native writer (storage-plan.md:21281, :21291); the token's copy is joined to it.",
+      "refused_forms": [
+        -1,
+        18446744073709551616
+      ],
+      "refused_code": "checkpoint_schema"
+    },
+    {
+      "path": "read.checkpoint.generations.*.frontier.redb_transaction_id",
+      "class": "free",
+      "bound": [
+        {
+          "type": "string",
+          "minLength": 1
+        }
+      ],
+      "reason": "The redb write transaction that published the frontier; native, enters no identity.",
+      "refused_forms": [
+        ""
+      ],
+      "refused_code": "checkpoint_schema"
+    },
+    {
+      "path": "read.checkpoint.generations.*.frontier.source_selection.current_bytes_sha256",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      ],
+      "source": "the birth selection's: storage-plan.md:21293 rebuilds a fresh generation on rotation, recovery, exclusions, compaction or a changed CURRENT digest or recovery epoch",
+      "guards": [
+        {
+          "function": "selection_copy_errors",
+          "code": "index_frontier_current_bytes_sha256",
+          "negative": "P1F06:frontier_current_bytes_sha256"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "DO-P1F06"
+    },
+    {
+      "path": "read.checkpoint.generations.*.frontier.source_selection.current_ref",
+      "class": "free",
+      "bound": [
+        {
+          "const": "storage/seglog/CURRENT"
+        }
+      ],
+      "reason": "The schema admits exactly one value, so nothing is chosen and no copy can go stale.",
+      "refused_forms": [
+        "storage/seglog/CURRENT-other"
+      ],
+      "refused_code": "checkpoint_schema"
+    },
+    {
+      "path": "read.checkpoint.generations.*.frontier.source_selection.durable_watermarks_sha256",
+      "class": "free",
+      "bound": [
+        {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      ],
+      "reason": "The digest of Storage control data the value does not carry (CURRENT or manifest bytes, or a manifest array); SP-278 says a matching hash is insufficient and the native owner codec establishes it (storage-plan.md:21277). An ordinary append may change it without a new generation (storage-plan.md:21291).",
+      "refused_forms": [
+        "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+        "0000000000000000000000000000000000000000000000000000000000000000\n"
+      ],
+      "refused_code": "checkpoint_schema"
+    },
+    {
+      "path": "read.checkpoint.generations.*.frontier.source_selection.excluded_ranges_sha256",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      ],
+      "source": "the birth selection's: storage-plan.md:21293 rebuilds a fresh generation on rotation, recovery, exclusions, compaction or a changed CURRENT digest or recovery epoch",
+      "guards": [
+        {
+          "function": "selection_copy_errors",
+          "code": "index_frontier_excluded_ranges_sha256",
+          "negative": "P1F06:frontier_excluded_ranges_sha256"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "DO-P1F06"
+    },
+    {
+      "path": "read.checkpoint.generations.*.frontier.source_selection.manifest_bytes_sha256",
+      "class": "free",
+      "bound": [
+        {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      ],
+      "reason": "The digest of Storage control data the value does not carry (CURRENT or manifest bytes, or a manifest array); SP-278 says a matching hash is insufficient and the native owner codec establishes it (storage-plan.md:21277). An ordinary append may change it without a new generation (storage-plan.md:21291).",
+      "refused_forms": [
+        "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+        "0000000000000000000000000000000000000000000000000000000000000000\n"
+      ],
+      "refused_code": "checkpoint_schema"
+    },
+    {
+      "path": "read.checkpoint.generations.*.frontier.source_selection.manifest_generation",
+      "class": "free",
+      "bound": [
+        {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        }
+      ],
+      "reason": "The current manifest generation; an ordinary append may move it without a new generation (storage-plan.md:21291).",
+      "refused_forms": [
+        -1,
+        18446744073709551616
+      ],
+      "refused_code": "checkpoint_schema"
+    },
+    {
+      "path": "read.checkpoint.generations.*.frontier.source_selection.manifest_ref",
+      "class": "free",
+      "bound": [
+        {
+          "const": "storage/seglog/manifest.v1.msgpack"
+        }
+      ],
+      "reason": "The schema admits exactly one value, so nothing is chosen and no copy can go stale.",
+      "refused_forms": [
+        "storage/seglog/manifest.v1.msgpack-other"
+      ],
+      "refused_code": "checkpoint_schema"
+    },
+    {
+      "path": "read.checkpoint.generations.*.frontier.source_selection.manifest_survivor_prefix_sha256",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      ],
+      "source": "the retained-prefix binding digest recomputed from the event's own bytes",
+      "guards": [
+        {
+          "function": "checkpoint_errors",
+          "code": "index_source_prefix",
+          "negative": "P1F06:frontier_survivor_prefix_sha256"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "before DO-P1F06"
+    },
+    {
+      "path": "read.checkpoint.generations.*.frontier.source_selection.recovery_epoch",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        }
+      ],
+      "source": "the birth selection's: storage-plan.md:21293 rebuilds a fresh generation on rotation, recovery, exclusions, compaction or a changed CURRENT digest or recovery epoch",
+      "guards": [
+        {
+          "function": "selection_copy_errors",
+          "code": "index_frontier_recovery_epoch",
+          "negative": "P1F06:frontier_recovery_epoch"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "DO-P1F06"
+    },
+    {
+      "path": "read.checkpoint.generations.*.frontier.source_selection.retained_inventory_sha256",
+      "class": "free",
+      "bound": [
+        {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      ],
+      "reason": "The digest of Storage control data the value does not carry (CURRENT or manifest bytes, or a manifest array); SP-278 says a matching hash is insufficient and the native owner codec establishes it (storage-plan.md:21277). An ordinary append may change it without a new generation (storage-plan.md:21291).",
+      "refused_forms": [
+        "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+        "0000000000000000000000000000000000000000000000000000000000000000\n"
+      ],
+      "refused_code": "checkpoint_schema"
+    },
+    {
+      "path": "read.checkpoint.generations.*.frontier.source_selection.retired_inputs_sha256",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      ],
+      "source": "the birth selection's: storage-plan.md:21293 rebuilds a fresh generation on rotation, recovery, exclusions, compaction or a changed CURRENT digest or recovery epoch",
+      "guards": [
+        {
+          "function": "selection_copy_errors",
+          "code": "index_frontier_retired_inputs_sha256",
+          "negative": "P1F06:frontier_retired_inputs_sha256"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "DO-P1F06"
+    },
+    {
+      "path": "read.checkpoint.generations.*.frontier.source_selection.selected_segment_generation",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        }
+      ],
+      "source": "the last frame's segment_generation: every frame matches the selected segment generation (storage-plan.md:17330, :17293)",
+      "guards": [
+        {
+          "function": "selection_copy_errors",
+          "code": "index_frontier_selected_segment_generation",
+          "negative": "P1F06:frontier_selected_segment_generation"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "DO-P1F06"
+    },
+    {
+      "path": "read.checkpoint.generations.*.frontier.source_selection.storage_instance_id",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "string",
+          "format": "uuid"
+        }
+      ],
+      "source": "the payload's storage_instance_id",
+      "guards": [
+        {
+          "function": "checkpoint_errors",
+          "code": "checkpoint_source_storage_identity",
+          "negative": "P1F06:frontier_source_storage_instance_id"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "before DO-P1F06"
+    },
+    {
+      "path": "read.checkpoint.generations.*.generation_id",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "string",
+          "pattern": "^eig_[0-9a-f]{64}$"
+        }
+      ],
+      "source": "the map key of its node",
+      "guards": [
+        {
+          "function": "generation_copy_errors",
+          "code": "index_generation_id",
+          "negative": "P1F06:generation_id"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "DO-P1F06"
+    },
+    {
+      "path": "read.checkpoint.generations.*.hold_refs",
+      "class": "free",
+      "bound": [
+        {
+          "type": "array",
+          "uniqueItems": true
+        }
+      ],
+      "reason": "Retention holds on the node (storage-plan.md:21299, hold eligible); the lane reads none, and they enter no identity or digest.",
+      "refused_forms": [
+        [
+          "hold:x",
+          "hold:x"
+        ],
+        [
+          5
+        ]
+      ],
+      "refused_code": "checkpoint_schema"
+    },
+    {
+      "path": "read.checkpoint.generations.*.hold_refs[]",
+      "class": "free",
+      "bound": [
+        {
+          "type": "string",
+          "minLength": 1
+        }
+      ],
+      "reason": "Retention holds on the node (storage-plan.md:21299, hold eligible); the lane reads none, and they enter no identity or digest.",
+      "refused_forms": [
+        ""
+      ],
+      "refused_code": "checkpoint_schema"
+    },
+    {
+      "path": "read.checkpoint.generations.*.index_dataset_name",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "string",
+          "pattern": "^event_record_index\\.v2@eig_[0-9a-f]{64}$"
+        }
+      ],
+      "source": "'event_record_index.v2@' + the map key (storage-plan.md:21269)",
+      "guards": [
+        {
+          "function": "generation_copy_errors",
+          "code": "index_generation_dataset_name",
+          "negative": "P1F06:generation_dataset_name"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "DO-P1F06"
+    },
+    {
+      "path": "read.checkpoint.generations.*.index_value_schema_id",
+      "class": "free",
+      "bound": [
+        {
+          "const": "pm.storage_value.event_record_index.v2"
+        }
+      ],
+      "reason": "The schema admits exactly one value, so nothing is chosen and no copy can go stale.",
+      "refused_forms": [
+        "pm.storage_value.event_record_index.v2-other"
+      ],
+      "refused_code": "checkpoint_schema"
+    },
+    {
+      "path": "read.checkpoint.generations.*.index_value_schema_version",
+      "class": "free",
+      "bound": [
+        {
+          "const": "2.0.0"
+        }
+      ],
+      "reason": "The schema admits exactly one value, so nothing is chosen and no copy can go stale.",
+      "refused_forms": [
+        "2.0.0-other"
+      ],
+      "refused_code": "checkpoint_schema"
+    },
+    {
+      "path": "read.checkpoint.generations.*.origin",
+      "class": "free",
+      "bound": [
+        {
+          "enum": [
+            "initial_rebuild",
+            "same_source_rebuild",
+            "recovery_rebuild",
+            "compaction_shadow"
+          ]
+        }
+      ],
+      "reason": "How the generation was built (initial, same-source or recovery rebuild, or compaction shadow): a fact of its build, read only by the translation guard.",
+      "guards": [
+        {
+          "function": "generation_copy_errors",
+          "code": "index_generation_translation_origin",
+          "negative": "P1F06:generation_translation_origin"
+        }
+      ],
+      "refused_forms": [
+        "bogus_origin"
+      ],
+      "refused_code": "checkpoint_schema"
+    },
+    {
+      "path": "read.checkpoint.generations.*.projector_id",
+      "class": "free",
+      "bound": [
+        {
+          "const": "projector.storage.event_record_index"
+        }
+      ],
+      "reason": "The schema admits exactly one value, so nothing is chosen and no copy can go stale.",
+      "refused_forms": [
+        "projector.storage.event_record_index-other"
+      ],
+      "refused_code": "checkpoint_schema"
+    },
+    {
+      "path": "read.checkpoint.generations.*.projector_version",
+      "class": "free",
+      "bound": [
+        {
+          "const": "1.0.0"
+        }
+      ],
+      "reason": "The schema admits exactly one value, so nothing is chosen and no copy can go stale.",
+      "refused_forms": [
+        "1.0.0-other"
+      ],
+      "refused_code": "checkpoint_schema"
+    },
+    {
+      "path": "read.checkpoint.generations.*.retired_at_utc",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "string",
+          "format": "date-time"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "source": "null while the node is current (the schema's state conditionals)",
+      "guards": [
+        {
+          "function": "checkpoint_schema",
+          "code": "checkpoint_schema",
+          "negative": "P1F06:retired_at_on_current"
+        }
+      ],
+      "builder": null,
+      "builder_reason": "The builders build only current nodes; the schema fixes the value for that state.",
+      "guarded_since": "before DO-P1F06"
+    },
+    {
+      "path": "read.checkpoint.generations.*.state",
+      "class": "derived",
+      "bound": [
+        {
+          "const": "current"
+        },
+        {
+          "const": "retired"
+        },
+        {
+          "const": "staged"
+        },
+        {
+          "enum": [
+            "staged",
+            "current",
+            "retired"
+          ]
+        }
+      ],
+      "source": "current for the node current_generation_id selects, and no other node current",
+      "guards": [
+        {
+          "function": "checkpoint_errors",
+          "code": "checkpoint_not_current",
+          "negative": "P1F06:staged_current_node"
+        },
+        {
+          "function": "checkpoint_errors",
+          "code": "checkpoint_not_current",
+          "negative": "P1F06:second_current_node"
+        }
+      ],
+      "builder": null,
+      "builder_reason": "The builders build only current nodes; activation (the state and its timestamps) is the native writer's, and the schema ties the timestamps to the state.",
+      "guarded_since": "before DO-P1F06"
+    },
+    {
+      "path": "read.checkpoint.generations.*.successor_generation_id",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "string",
+          "pattern": "^eig_[0-9a-f]{64}$"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "source": "null while the node is current (the schema's state conditionals)",
+      "guards": [
+        {
+          "function": "checkpoint_schema",
+          "code": "checkpoint_schema",
+          "negative": "P1F06:successor_on_current"
+        }
+      ],
+      "builder": null,
+      "builder_reason": "The builders build only current nodes; the schema fixes the value for that state.",
+      "guarded_since": "before DO-P1F06"
+    },
+    {
+      "path": "read.checkpoint.generations.*.translation",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "object"
+        }
+      ],
+      "source": "null unless origin is compaction_shadow: a translation is a compaction translation (SP-278)",
+      "guards": [
+        {
+          "function": "generation_copy_errors",
+          "code": "index_generation_translation_origin",
+          "negative": "P1F06:generation_translation_origin"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "DO-P1F06"
+    },
+    {
+      "path": "read.checkpoint.generations.*.translation.manifest_ref",
+      "class": "free",
+      "bound": [
+        {
+          "type": "string",
+          "minLength": 1
+        }
+      ],
+      "reason": "Compaction translation evidence the value does not carry (the manifest, the source generation, its selection, the counts and outcomes join actual owner evidence, storage-plan.md:21297); SP-278's assumed adapter witness, verified by the native reader (NOT_RUN). Present only on a compaction shadow.",
+      "refused_forms": [
+        ""
+      ],
+      "refused_code": "checkpoint_schema"
+    },
+    {
+      "path": "read.checkpoint.generations.*.translation.manifest_sha256",
+      "class": "free",
+      "bound": [
+        {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      ],
+      "reason": "Compaction translation evidence the value does not carry (the manifest, the source generation, its selection, the counts and outcomes join actual owner evidence, storage-plan.md:21297); SP-278's assumed adapter witness, verified by the native reader (NOT_RUN). Present only on a compaction shadow.",
+      "refused_forms": [
+        "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+        "0000000000000000000000000000000000000000000000000000000000000000\n"
+      ],
+      "refused_code": "checkpoint_schema"
+    },
+    {
+      "path": "read.checkpoint.generations.*.translation.preserved_event_count",
+      "class": "free",
+      "bound": [
+        {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        }
+      ],
+      "reason": "Compaction translation evidence the value does not carry (the manifest, the source generation, its selection, the counts and outcomes join actual owner evidence, storage-plan.md:21297); SP-278's assumed adapter witness, verified by the native reader (NOT_RUN). Present only on a compaction shadow.",
+      "refused_forms": [
+        -1,
+        18446744073709551616
+      ],
+      "refused_code": "checkpoint_schema"
+    },
+    {
+      "path": "read.checkpoint.generations.*.translation.removed_event_count",
+      "class": "free",
+      "bound": [
+        {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        }
+      ],
+      "reason": "Compaction translation evidence the value does not carry (the manifest, the source generation, its selection, the counts and outcomes join actual owner evidence, storage-plan.md:21297); SP-278's assumed adapter witness, verified by the native reader (NOT_RUN). Present only on a compaction shadow.",
+      "refused_forms": [
+        -1,
+        18446744073709551616
+      ],
+      "refused_code": "checkpoint_schema"
+    },
+    {
+      "path": "read.checkpoint.generations.*.translation.semantic_outcomes_sha256",
+      "class": "free",
+      "bound": [
+        {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      ],
+      "reason": "Compaction translation evidence the value does not carry (the manifest, the source generation, its selection, the counts and outcomes join actual owner evidence, storage-plan.md:21297); SP-278's assumed adapter witness, verified by the native reader (NOT_RUN). Present only on a compaction shadow.",
+      "refused_forms": [
+        "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+        "0000000000000000000000000000000000000000000000000000000000000000\n"
+      ],
+      "refused_code": "checkpoint_schema"
+    },
+    {
+      "path": "read.checkpoint.generations.*.translation.source_index_generation_id",
+      "class": "free",
+      "bound": [
+        {
+          "type": "string",
+          "pattern": "^eig_[0-9a-f]{64}$"
+        }
+      ],
+      "reason": "Compaction translation evidence the value does not carry (the manifest, the source generation, its selection, the counts and outcomes join actual owner evidence, storage-plan.md:21297); SP-278's assumed adapter witness, verified by the native reader (NOT_RUN). Present only on a compaction shadow.",
+      "refused_forms": [
+        "eig_FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF"
+      ],
+      "refused_code": "checkpoint_schema"
+    },
+    {
+      "path": "read.checkpoint.generations.*.translation.source_selection_sha256",
+      "class": "free",
+      "bound": [
+        {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      ],
+      "reason": "Compaction translation evidence the value does not carry (the manifest, the source generation, its selection, the counts and outcomes join actual owner evidence, storage-plan.md:21297); SP-278's assumed adapter witness, verified by the native reader (NOT_RUN). Present only on a compaction shadow.",
+      "refused_forms": [
+        "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+        "0000000000000000000000000000000000000000000000000000000000000000\n"
+      ],
+      "refused_code": "checkpoint_schema"
+    },
+    {
+      "path": "read.checkpoint.generations.*.translation.target_selection_sha256",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      ],
+      "source": "the binding digest of the generation's own birth selection (storage-plan.md:21297, :21275)",
+      "guards": [
+        {
+          "function": "generation_copy_errors",
+          "code": "index_translation_target_selection",
+          "negative": "P1F06:translation_target_selection"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "DO-P1F06"
+    },
+    {
+      "path": "read.checkpoint.generations{key}",
+      "class": "derived",
+      "bound": [
+        {
+          "pattern": "^eig_[0-9a-f]{64}$"
+        }
+      ],
+      "source": "the recipe's generation id of the node it keys (storage-plan.md:21269)",
+      "guards": [
+        {
+          "function": "generation_copy_errors",
+          "code": "index_generation_id_recipe",
+          "negative": "P1F06:generation_id_recipe"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "DO-P1F06"
+    },
+    {
+      "path": "read.checkpoint.redaction_profile",
+      "class": "free",
+      "bound": [
+        {
+          "const": "no_secrets"
+        }
+      ],
+      "reason": "The schema admits exactly one value, so nothing is chosen and no copy can go stale.",
+      "refused_forms": [
+        "no_secrets-other"
+      ],
+      "refused_code": "checkpoint_schema"
+    },
+    {
+      "path": "read.checkpoint.schema_id",
+      "class": "free",
+      "bound": [
+        {
+          "const": "pm.storage_value.event_record_index_checkpoint.v1"
+        }
+      ],
+      "reason": "The schema admits exactly one value, so nothing is chosen and no copy can go stale.",
+      "refused_forms": [
+        "pm.storage_value.event_record_index_checkpoint.v1-other"
+      ],
+      "refused_code": "checkpoint_schema"
+    },
+    {
+      "path": "read.checkpoint.schema_version",
+      "class": "free",
+      "bound": [
+        {
+          "const": "1.0.0"
+        }
+      ],
+      "reason": "The schema admits exactly one value, so nothing is chosen and no copy can go stale.",
+      "refused_forms": [
+        "1.0.0-other"
+      ],
+      "refused_code": "checkpoint_schema"
+    },
+    {
+      "path": "read.checkpoint.storage_instance_id",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "string",
+          "format": "uuid"
+        }
+      ],
+      "source": "the payload's storage_instance_id (standing check 7)",
+      "guards": [
+        {
+          "function": "checkpoint_errors",
+          "code": "checkpoint_storage_identity",
+          "negative": "P1F06:checkpoint_storage_instance_id"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "before DO-P1F06"
+    },
+    {
+      "path": "read.claim",
+      "class": "free",
+      "bound": [],
+      "reason": "The fixtures' claim-boundary label (synthetic adapter, native NOT_RUN). No guard or reader reads it and it carries no checkpoint fact.",
+      "refused_forms": [],
+      "refused_code": null
+    },
+    {
+      "path": "read.current_source_selection.current_bytes_sha256",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      ],
+      "source": "the frontier selection's (no schema validates this copy; it is compared whole, by exact type)",
+      "guards": [
+        {
+          "function": "checkpoint_errors",
+          "code": "checkpoint_read_token_join",
+          "negative": "P1F06:current_source_selection.current_bytes_sha256"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "before DO-P1F06"
+    },
+    {
+      "path": "read.current_source_selection.current_ref",
+      "class": "derived",
+      "bound": [
+        {
+          "const": "storage/seglog/CURRENT"
+        }
+      ],
+      "source": "the frontier selection's (no schema validates this copy; it is compared whole, by exact type)",
+      "guards": [
+        {
+          "function": "checkpoint_errors",
+          "code": "checkpoint_read_token_join",
+          "negative": "P1F06:current_source_selection.current_ref"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "before DO-P1F06"
+    },
+    {
+      "path": "read.current_source_selection.durable_watermarks_sha256",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      ],
+      "source": "the frontier selection's (no schema validates this copy; it is compared whole, by exact type)",
+      "guards": [
+        {
+          "function": "checkpoint_errors",
+          "code": "checkpoint_read_token_join",
+          "negative": "P1F06:current_source_selection.durable_watermarks_sha256"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "before DO-P1F06"
+    },
+    {
+      "path": "read.current_source_selection.excluded_ranges_sha256",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      ],
+      "source": "the frontier selection's (no schema validates this copy; it is compared whole, by exact type)",
+      "guards": [
+        {
+          "function": "checkpoint_errors",
+          "code": "checkpoint_read_token_join",
+          "negative": "P1F06:current_source_selection.excluded_ranges_sha256"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "before DO-P1F06"
+    },
+    {
+      "path": "read.current_source_selection.manifest_bytes_sha256",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      ],
+      "source": "the frontier selection's (no schema validates this copy; it is compared whole, by exact type)",
+      "guards": [
+        {
+          "function": "checkpoint_errors",
+          "code": "checkpoint_read_token_join",
+          "negative": "P1F06:current_source_selection.manifest_bytes_sha256"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "before DO-P1F06"
+    },
+    {
+      "path": "read.current_source_selection.manifest_generation",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        }
+      ],
+      "source": "the frontier selection's (no schema validates this copy; it is compared whole, by exact type)",
+      "guards": [
+        {
+          "function": "checkpoint_errors",
+          "code": "checkpoint_read_token_join",
+          "negative": "P1F06:current_source_selection.manifest_generation"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "before DO-P1F06"
+    },
+    {
+      "path": "read.current_source_selection.manifest_ref",
+      "class": "derived",
+      "bound": [
+        {
+          "const": "storage/seglog/manifest.v1.msgpack"
+        }
+      ],
+      "source": "the frontier selection's (no schema validates this copy; it is compared whole, by exact type)",
+      "guards": [
+        {
+          "function": "checkpoint_errors",
+          "code": "checkpoint_read_token_join",
+          "negative": "P1F06:current_source_selection.manifest_ref"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "before DO-P1F06"
+    },
+    {
+      "path": "read.current_source_selection.manifest_survivor_prefix_sha256",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      ],
+      "source": "the frontier selection's (no schema validates this copy; it is compared whole, by exact type)",
+      "guards": [
+        {
+          "function": "checkpoint_errors",
+          "code": "checkpoint_read_token_join",
+          "negative": "P1F06:current_source_selection.manifest_survivor_prefix_sha256"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "before DO-P1F06"
+    },
+    {
+      "path": "read.current_source_selection.recovery_epoch",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        }
+      ],
+      "source": "the frontier selection's (no schema validates this copy; it is compared whole, by exact type)",
+      "guards": [
+        {
+          "function": "checkpoint_errors",
+          "code": "checkpoint_read_token_join",
+          "negative": "P1F06:current_source_selection.recovery_epoch"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "before DO-P1F06"
+    },
+    {
+      "path": "read.current_source_selection.retained_inventory_sha256",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      ],
+      "source": "the frontier selection's (no schema validates this copy; it is compared whole, by exact type)",
+      "guards": [
+        {
+          "function": "checkpoint_errors",
+          "code": "checkpoint_read_token_join",
+          "negative": "P1F06:current_source_selection.retained_inventory_sha256"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "before DO-P1F06"
+    },
+    {
+      "path": "read.current_source_selection.retired_inputs_sha256",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      ],
+      "source": "the frontier selection's (no schema validates this copy; it is compared whole, by exact type)",
+      "guards": [
+        {
+          "function": "checkpoint_errors",
+          "code": "checkpoint_read_token_join",
+          "negative": "P1F06:current_source_selection.retired_inputs_sha256"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "before DO-P1F06"
+    },
+    {
+      "path": "read.current_source_selection.selected_segment_generation",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        }
+      ],
+      "source": "the frontier selection's (no schema validates this copy; it is compared whole, by exact type)",
+      "guards": [
+        {
+          "function": "checkpoint_errors",
+          "code": "checkpoint_read_token_join",
+          "negative": "P1F06:current_source_selection.selected_segment_generation"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "before DO-P1F06"
+    },
+    {
+      "path": "read.current_source_selection.storage_instance_id",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "string",
+          "format": "uuid"
+        }
+      ],
+      "source": "the frontier selection's (no schema validates this copy; it is compared whole, by exact type)",
+      "guards": [
+        {
+          "function": "checkpoint_errors",
+          "code": "checkpoint_read_token_join",
+          "negative": "P1F06:current_source_selection.storage_instance_id"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "before DO-P1F06"
+    },
+    {
+      "path": "read.read_token.checkpoint_key",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "string",
+          "minLength": 1
+        }
+      ],
+      "source": "'event_record_index_checkpoint.v1:' + the storage instance",
+      "guards": [
+        {
+          "function": "checkpoint_errors",
+          "code": "checkpoint_read_token_join",
+          "negative": "P1F06:token_checkpoint_key"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "before DO-P1F06"
+    },
+    {
+      "path": "read.read_token.checkpoint_ref",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "string",
+          "minLength": 1
+        }
+      ],
+      "source": "the checkpoint key + '#/generations/' + current_generation_id",
+      "guards": [
+        {
+          "function": "checkpoint_errors",
+          "code": "checkpoint_read_token_join",
+          "negative": "P1F06:token_checkpoint_ref"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "before DO-P1F06"
+    },
+    {
+      "path": "read.read_token.frontier_revision",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        }
+      ],
+      "source": "the frontier's publication_revision",
+      "guards": [
+        {
+          "function": "checkpoint_errors",
+          "code": "checkpoint_read_token_join",
+          "negative": "P1F06:token_frontier_revision"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "before DO-P1F06"
+    },
+    {
+      "path": "read.read_token.frontier_sha256",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      ],
+      "source": "the binding digest of the current node's frontier",
+      "guards": [
+        {
+          "function": "checkpoint_errors",
+          "code": "checkpoint_read_token_join",
+          "negative": "P1F06:token_frontier_sha256"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "before DO-P1F06"
+    },
+    {
+      "path": "read.read_token.generation_anchor_sha256",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      ],
+      "source": "the binding digest of the current node's anchor",
+      "guards": [
+        {
+          "function": "checkpoint_errors",
+          "code": "checkpoint_read_token_join",
+          "negative": "P1F06:token_generation_anchor_sha256"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "before DO-P1F06"
+    },
+    {
+      "path": "read.read_token.generation_id",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "string",
+          "pattern": "^eig_[0-9a-f]{64}$"
+        }
+      ],
+      "source": "current_generation_id",
+      "guards": [
+        {
+          "function": "checkpoint_errors",
+          "code": "checkpoint_read_token_join",
+          "negative": "P1F06:token_generation_id"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "before DO-P1F06"
+    },
+    {
+      "path": "read.read_token.index_dataset_name",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "string",
+          "minLength": 1
+        }
+      ],
+      "source": "'event_record_index.v2@' + current_generation_id",
+      "guards": [
+        {
+          "function": "checkpoint_errors",
+          "code": "checkpoint_read_token_join",
+          "negative": "P1F06:token_index_dataset_name"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "before DO-P1F06"
+    },
+    {
+      "path": "read.read_token.redb_snapshot_id",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "string",
+          "minLength": 1
+        }
+      ],
+      "source": "the read's snapshot_id",
+      "guards": [
+        {
+          "function": "checkpoint_errors",
+          "code": "checkpoint_read_token_join",
+          "negative": "P1F06:token_redb_snapshot_id"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "before DO-P1F06"
+    },
+    {
+      "path": "read.read_token.source_selection.current_bytes_sha256",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      ],
+      "source": "the frontier selection's (the token's copy is compared whole, by exact type)",
+      "guards": [
+        {
+          "function": "checkpoint_errors",
+          "code": "checkpoint_read_token_join",
+          "negative": "P1F06:token_source_selection.current_bytes_sha256"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "before DO-P1F06"
+    },
+    {
+      "path": "read.read_token.source_selection.current_ref",
+      "class": "free",
+      "bound": [
+        {
+          "const": "storage/seglog/CURRENT"
+        }
+      ],
+      "reason": "The schema admits exactly one value, so nothing is chosen and no copy can go stale.",
+      "refused_forms": [
+        "storage/seglog/CURRENT-other"
+      ],
+      "refused_code": "checkpoint_schema"
+    },
+    {
+      "path": "read.read_token.source_selection.durable_watermarks_sha256",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      ],
+      "source": "the frontier selection's (the token's copy is compared whole, by exact type)",
+      "guards": [
+        {
+          "function": "checkpoint_errors",
+          "code": "checkpoint_read_token_join",
+          "negative": "P1F06:token_source_selection.durable_watermarks_sha256"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "before DO-P1F06"
+    },
+    {
+      "path": "read.read_token.source_selection.excluded_ranges_sha256",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      ],
+      "source": "the frontier selection's (the token's copy is compared whole, by exact type)",
+      "guards": [
+        {
+          "function": "checkpoint_errors",
+          "code": "checkpoint_read_token_join",
+          "negative": "P1F06:token_source_selection.excluded_ranges_sha256"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "before DO-P1F06"
+    },
+    {
+      "path": "read.read_token.source_selection.manifest_bytes_sha256",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      ],
+      "source": "the frontier selection's (the token's copy is compared whole, by exact type)",
+      "guards": [
+        {
+          "function": "checkpoint_errors",
+          "code": "checkpoint_read_token_join",
+          "negative": "P1F06:token_source_selection.manifest_bytes_sha256"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "before DO-P1F06"
+    },
+    {
+      "path": "read.read_token.source_selection.manifest_generation",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        }
+      ],
+      "source": "the frontier selection's (the token's copy is compared whole, by exact type)",
+      "guards": [
+        {
+          "function": "checkpoint_errors",
+          "code": "checkpoint_read_token_join",
+          "negative": "P1F06:token_source_selection.manifest_generation"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "before DO-P1F06"
+    },
+    {
+      "path": "read.read_token.source_selection.manifest_ref",
+      "class": "free",
+      "bound": [
+        {
+          "const": "storage/seglog/manifest.v1.msgpack"
+        }
+      ],
+      "reason": "The schema admits exactly one value, so nothing is chosen and no copy can go stale.",
+      "refused_forms": [
+        "storage/seglog/manifest.v1.msgpack-other"
+      ],
+      "refused_code": "checkpoint_schema"
+    },
+    {
+      "path": "read.read_token.source_selection.manifest_survivor_prefix_sha256",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      ],
+      "source": "the frontier selection's (the token's copy is compared whole, by exact type)",
+      "guards": [
+        {
+          "function": "checkpoint_errors",
+          "code": "checkpoint_read_token_join",
+          "negative": "P1F06:token_source_selection.manifest_survivor_prefix_sha256"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "before DO-P1F06"
+    },
+    {
+      "path": "read.read_token.source_selection.recovery_epoch",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        }
+      ],
+      "source": "the frontier selection's (the token's copy is compared whole, by exact type)",
+      "guards": [
+        {
+          "function": "checkpoint_errors",
+          "code": "checkpoint_read_token_join",
+          "negative": "P1F06:token_source_selection.recovery_epoch"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "before DO-P1F06"
+    },
+    {
+      "path": "read.read_token.source_selection.retained_inventory_sha256",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      ],
+      "source": "the frontier selection's (the token's copy is compared whole, by exact type)",
+      "guards": [
+        {
+          "function": "checkpoint_errors",
+          "code": "checkpoint_read_token_join",
+          "negative": "P1F06:token_source_selection.retained_inventory_sha256"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "before DO-P1F06"
+    },
+    {
+      "path": "read.read_token.source_selection.retired_inputs_sha256",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      ],
+      "source": "the frontier selection's (the token's copy is compared whole, by exact type)",
+      "guards": [
+        {
+          "function": "checkpoint_errors",
+          "code": "checkpoint_read_token_join",
+          "negative": "P1F06:token_source_selection.retired_inputs_sha256"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "before DO-P1F06"
+    },
+    {
+      "path": "read.read_token.source_selection.selected_segment_generation",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        }
+      ],
+      "source": "the frontier selection's (the token's copy is compared whole, by exact type)",
+      "guards": [
+        {
+          "function": "checkpoint_errors",
+          "code": "checkpoint_read_token_join",
+          "negative": "P1F06:token_source_selection.selected_segment_generation"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "before DO-P1F06"
+    },
+    {
+      "path": "read.read_token.source_selection.storage_instance_id",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "string",
+          "format": "uuid"
+        }
+      ],
+      "source": "the frontier selection's (the token's copy is compared whole, by exact type)",
+      "guards": [
+        {
+          "function": "checkpoint_errors",
+          "code": "checkpoint_read_token_join",
+          "negative": "P1F06:token_source_selection.storage_instance_id"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "before DO-P1F06"
+    },
+    {
+      "path": "read.read_token.storage_instance_id",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "string",
+          "format": "uuid"
+        }
+      ],
+      "source": "the payload's storage_instance_id; one invariant at one site (sweep part 2A: the read-token join no longer repeats it)",
+      "guards": [
+        {
+          "function": "checkpoint_errors",
+          "code": "checkpoint_storage_identity",
+          "negative": "P1F06:token_storage_instance_id"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "before DO-P1F06; one site since sweep part 2A"
+    },
+    {
+      "path": "read.row.causation_event_id",
+      "class": "derived",
+      "bound": [
+        {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      ],
+      "source": "the event's causation_event_id",
+      "guards": [
+        {
+          "function": "row_event_copy_errors",
+          "code": "index_row_causation_event_id",
+          "negative": "P1F06:row_causation_event_id"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "DO-P1F06"
+    },
+    {
+      "path": "read.row.correlation_id",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "string",
+          "minLength": 1
+        }
+      ],
+      "source": "the event's correlation_id",
+      "guards": [
+        {
+          "function": "row_event_copy_errors",
+          "code": "index_row_correlation_id",
+          "negative": "P1F06:row_correlation_id"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "DO-P1F06"
+    },
+    {
+      "path": "read.row.event_id",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "string",
+          "minLength": 1
+        }
+      ],
+      "source": "the event's event_id",
+      "guards": [
+        {
+          "function": "row_event_copy_errors",
+          "code": "index_row_event_id",
+          "negative": "P1F06:row_event_id"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "before DO-P1F06"
+    },
+    {
+      "path": "read.row.event_type",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "string",
+          "minLength": 1
+        }
+      ],
+      "source": "the event's event_type",
+      "guards": [
+        {
+          "function": "row_event_copy_errors",
+          "code": "index_row_event_type",
+          "negative": "P1F06:row_event_type"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "before DO-P1F06"
+    },
+    {
+      "path": "read.row.idempotency_key",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "string",
+          "minLength": 1
+        }
+      ],
+      "source": "the event's idempotency_key",
+      "guards": [
+        {
+          "function": "row_event_copy_errors",
+          "code": "index_row_idempotency_key",
+          "negative": "P1F06:row_idempotency_key"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "before DO-P1F06"
+    },
+    {
+      "path": "read.row.payload_sha256",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      ],
+      "source": "SHA-256 of the RFC 8785 bytes of the event's payload (every original row before DO-P1F-03; the readiness projector's recipe)",
+      "guards": [
+        {
+          "function": "row_event_copy_errors",
+          "code": "index_row_payload_sha256",
+          "negative": "P1F06:row_payload_sha256"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "DO-P1F06"
+    },
+    {
+      "path": "read.row.persisted_at_utc",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "string",
+          "format": "date-time"
+        }
+      ],
+      "source": "the event's persisted_at_utc",
+      "guards": [
+        {
+          "function": "row_event_copy_errors",
+          "code": "index_row_persisted_at_utc",
+          "negative": "P1F06:row_persisted_at_utc"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "DO-P1F06"
+    },
+    {
+      "path": "read.row.producer_semantic_digest",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      ],
+      "source": "the event's producer semantic digest",
+      "guards": [
+        {
+          "function": "row_event_copy_errors",
+          "code": "index_row_producer_semantic_digest",
+          "negative": "P1F06:row_producer_semantic_digest"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "before DO-P1F06"
+    },
+    {
+      "path": "read.row.project_id",
+      "class": "derived",
+      "bound": [
+        {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      ],
+      "source": "the event's project_id",
+      "guards": [
+        {
+          "function": "row_event_copy_errors",
+          "code": "index_row_project_id",
+          "negative": "P1F06:row_project_id"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "before DO-P1F06"
+    },
+    {
+      "path": "read.row.projector_replay_only",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "boolean"
+        }
+      ],
+      "source": "whether the event's replay_policy is projector_replay_only",
+      "guards": [
+        {
+          "function": "row_event_copy_errors",
+          "code": "index_row_projector_replay_only",
+          "negative": "P1F06:row_projector_replay_only"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "DO-P1F06"
+    },
+    {
+      "path": "read.row.publication_locator.checkpoint_ref",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "string",
+          "minLength": 1
+        }
+      ],
+      "source": "the checkpoint key + '#/generations/' + current_generation_id",
+      "guards": [
+        {
+          "function": "checkpoint_errors",
+          "code": "index_row_locator_join",
+          "negative": "P1F06:row_checkpoint_ref"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "before DO-P1F06"
+    },
+    {
+      "path": "read.row.publication_locator.compaction_translation_manifest_ref",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "string",
+          "minLength": 1
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "source": "null, or the generation's translation manifest when the generation carries a translation (SP-278: translated rows keep their ref, suffix rows use none)",
+      "guards": [
+        {
+          "function": "row_locator_copy_errors",
+          "code": "index_row_translation_ref",
+          "negative": "P1F06:row_translation_ref"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "DO-P1F06"
+    },
+    {
+      "path": "read.row.publication_locator.manifest_generation",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "integer",
+          "minimum": 0
+        }
+      ],
+      "source": "the birth selection's manifest_generation",
+      "guards": [
+        {
+          "function": "checkpoint_errors",
+          "code": "index_birth_anchor_join",
+          "negative": "P1F06:row_manifest_generation"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "before DO-P1F06"
+    },
+    {
+      "path": "read.row.publication_locator.recovery_epoch",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "integer",
+          "minimum": 0
+        }
+      ],
+      "source": "the birth selection's recovery_epoch",
+      "guards": [
+        {
+          "function": "checkpoint_errors",
+          "code": "index_birth_anchor_join",
+          "negative": "P1F06:row_recovery_epoch"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "before DO-P1F06"
+    },
+    {
+      "path": "read.row.publication_locator.survivor_prefix_sha256",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      ],
+      "source": "the retained-prefix binding digest recomputed from the event's own bytes",
+      "guards": [
+        {
+          "function": "checkpoint_errors",
+          "code": "index_birth_anchor_join",
+          "negative": "P1F06:row_survivor_prefix_sha256"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "before DO-P1F06"
+    },
+    {
+      "path": "read.row.redaction_profile",
+      "class": "derived",
+      "bound": [
+        {
+          "enum": [
+            "no_secrets",
+            "redacted",
+            "secret_refs_only"
+          ]
+        }
+      ],
+      "source": "the event's redaction_profile",
+      "guards": [
+        {
+          "function": "row_event_copy_errors",
+          "code": "index_row_redaction_profile",
+          "negative": "P1F06:row_redaction_profile"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "DO-P1F06"
+    },
+    {
+      "path": "read.row.schema_id",
+      "class": "free",
+      "bound": [
+        {
+          "const": "pm.storage_value.event_record_index.v2"
+        }
+      ],
+      "reason": "The schema admits exactly one value, so nothing is chosen and no copy can go stale.",
+      "refused_forms": [
+        "pm.storage_value.event_record_index.v2-other"
+      ],
+      "refused_code": "index_row_schema"
+    },
+    {
+      "path": "read.row.schema_version",
+      "class": "free",
+      "bound": [
+        {
+          "const": "2.0.0"
+        }
+      ],
+      "reason": "The schema admits exactly one value, so nothing is chosen and no copy can go stale.",
+      "refused_forms": [
+        "2.0.0-other"
+      ],
+      "refused_code": "index_row_schema"
+    },
+    {
+      "path": "read.row.scope_kind",
+      "class": "derived",
+      "bound": [
+        {
+          "enum": [
+            "application",
+            "project"
+          ]
+        }
+      ],
+      "source": "the event's scope_kind",
+      "guards": [
+        {
+          "function": "row_event_copy_errors",
+          "code": "index_row_scope_kind",
+          "negative": "P1F06:row_scope_kind"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "before DO-P1F06"
+    },
+    {
+      "path": "read.row.scope_partition",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "string",
+          "minLength": 1
+        }
+      ],
+      "source": "the case's scope partition",
+      "guards": [
+        {
+          "function": "row_event_copy_errors",
+          "code": "index_row_scope_partition",
+          "negative": "P1F06:row_scope_partition"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "before DO-P1F06"
+    },
+    {
+      "path": "read.row.sequence_id",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "integer",
+          "minimum": 0
+        }
+      ],
+      "source": "the event's sequence_id",
+      "guards": [
+        {
+          "function": "row_event_copy_errors",
+          "code": "index_row_sequence_id",
+          "negative": "P1F06:row_sequence_id"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "before DO-P1F06"
+    },
+    {
+      "path": "read.row.source_locator.byte_offset",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "integer",
+          "minimum": 0
+        }
+      ],
+      "source": "the segment's scan start (the event's frame) (storage-plan.md:20886, :24710)",
+      "guards": [
+        {
+          "function": "row_locator_copy_errors",
+          "code": "index_row_source_byte_offset",
+          "negative": "P1F06:row_source_byte_offset"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "DO-P1F06"
+    },
+    {
+      "path": "read.row.source_locator.segment_generation",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "integer",
+          "minimum": 0
+        }
+      ],
+      "source": "the last frame's segment_generation (storage-plan.md:20886, :24710)",
+      "guards": [
+        {
+          "function": "row_locator_copy_errors",
+          "code": "index_row_source_segment_generation",
+          "negative": "P1F06:row_source_segment_generation"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "DO-P1F06"
+    },
+    {
+      "path": "read.row.source_locator.segment_name",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "string",
+          "minLength": 1
+        }
+      ],
+      "source": "the last frame's segment_name (storage-plan.md:20886, :24710)",
+      "guards": [
+        {
+          "function": "row_locator_copy_errors",
+          "code": "index_row_source_segment_name",
+          "negative": "P1F06:row_source_segment_name"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "DO-P1F06"
+    },
+    {
+      "path": "read.row.source_locator.sequence_id",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "integer",
+          "minimum": 0
+        }
+      ],
+      "source": "the event's sequence_id (storage-plan.md:20886, :24710)",
+      "guards": [
+        {
+          "function": "row_locator_copy_errors",
+          "code": "index_row_source_sequence_id",
+          "negative": "P1F06:row_source_sequence_id"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "DO-P1F06"
+    },
+    {
+      "path": "read.row.source_schema_id",
+      "class": "derived",
+      "bound": [
+        {
+          "type": "string",
+          "minLength": 1
+        }
+      ],
+      "source": "the event's schema_id, or the migrated-from schema id (Case L-5)",
+      "guards": [
+        {
+          "function": "row_event_copy_errors",
+          "code": "index_row_source_schema_id",
+          "negative": "P1F06:row_source_schema_id"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "DO-P1F06"
+    },
+    {
+      "path": "read.row.source_schema_version",
+      "class": "derived",
+      "bound": [
+        {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      ],
+      "source": "the event's schema_version, or the migrated-from version (Case L-5)",
+      "guards": [
+        {
+          "function": "row_event_copy_errors",
+          "code": "index_row_source_schema_version",
+          "negative": "P1F06:row_source_schema_version"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "DO-P1F06"
+    },
+    {
+      "path": "read.row_key",
+      "class": "derived",
+      "bound": [],
+      "source": "event_record_index.v2:{scope_partition}:{sequence_id:020}:{event_id}, from the case and the event",
+      "guards": [
+        {
+          "function": "checkpoint_errors",
+          "code": "index_row_locator_join",
+          "negative": "P1F06:row_key"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "before DO-P1F06"
+    },
+    {
+      "path": "read.snapshot_id",
+      "class": "free",
+      "bound": [],
+      "reason": "The redb read snapshot the read pinned (native, NOT_RUN); no schema validates the read itself. Its copy in the token is joined to it, so changing it alone is refused.",
+      "refused_forms": [
+        "synthetic-snapshot:foreign"
+      ],
+      "refused_code": "checkpoint_read_token_join"
+    },
+    {
+      "path": "read.source_event",
+      "class": "derived",
+      "bound": [],
+      "source": "the event itself",
+      "guards": [
+        {
+          "function": "checkpoint_errors",
+          "code": "index_original_source_join",
+          "negative": "P1F06:source_event"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "before DO-P1F06"
+    },
+    {
+      "path": "read.source_value_sha256",
+      "class": "derived",
+      "bound": [],
+      "source": "the SHA-256 of the event's canonical MessagePack bytes",
+      "guards": [
+        {
+          "function": "checkpoint_errors",
+          "code": "index_original_source_join",
+          "negative": "P1F06:source_value_sha256"
+        }
+      ],
+      "builder": "recapture_history",
+      "guarded_since": "before DO-P1F06"
+    }
+  ]
+}

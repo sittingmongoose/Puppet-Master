@@ -23,12 +23,19 @@ import hashlib
 import importlib.util
 import json
 import re
+import sys
 from functools import lru_cache
 from pathlib import Path
 from typing import Any
 
 from jsonschema import Draft202012Validator, FormatChecker
 from referencing import Registry, Resource
+
+# DO-C8-N5 (sweep part 2B): `canonical`, `idempotency_key` and `event_id_preimage` are DCO's part 2B edition,
+# byte for byte (plans/ea-w2-coordination-20261104 at 2ec9d21d70), with its `pm_coordination_numbers` helper.
+if str(Path(__file__).resolve().parent) not in sys.path:  # loaded by file path (tests): find the sibling helper
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+from pm_coordination_numbers import decimal_integer  # noqa: E402
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -81,6 +88,9 @@ FAMILIES = (
 )
 SEVEN = tuple(event_type for event_type, _definition, _entry in FAMILIES)
 MIRROR = "coordination.debug_mirror_exported"
+BOARD_FAMILIES = ("crew.board_message_posted", "crew.board_message_read", "crew.board_messages_archived")
+BOARD_MEMBERS = tuple(event_type.replace(".", "_") for event_type in BOARD_FAMILIES)
+BOARD_PAYLOAD_PATH = "Plans/orchestrator_event_payloads.schema.json"
 TERMINAL = ("coordination.agent_unregistered", "coordination.agent_crashed", "coordination.agent_aborted")
 DEF_BY_TYPE = {event_type: definition for event_type, definition, _entry in FAMILIES}
 DEF_BY_TYPE[MIRROR] = "debug_mirror_exported"
@@ -158,8 +168,17 @@ def load(path: str, root: Path = ROOT) -> Any:
 
 
 def canonical(value: Any) -> str:
-    """The DL-077 canonical JSON: keys sorted, ',' and ':' separators, ensure_ascii=False."""
-    return json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
+    """The DL-077 canonical JSON: keys sorted, ',' and ':' separators, ensure_ascii=False.
+
+    This is the local payload hash text, not CV-317 producer JCS. Integer rendering allows
+    the full token, including values past the process default of 4300 digits.
+    """
+    previous = sys.get_int_max_str_digits()
+    sys.set_int_max_str_digits(0)
+    try:
+        return json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
+    finally:
+        sys.set_int_max_str_digits(previous)
 
 
 def row_sha256(value: Any) -> str:
@@ -196,7 +215,10 @@ def idempotency_key(event_type: str, project_id: str, agent_id: str, recovery_ep
 
     The recovery epoch is the one the prepared event keeps for every retry, the same one its event ID uses
     (review repair CP-02)."""
-    return f"coordination:{event_type}:{project_id}:{agent_id}:{recovery_epoch}:{agent_revision}"
+    from pm_coordination_numbers import exact_decimal
+    epoch = exact_decimal(recovery_epoch) if type(recovery_epoch) is int else str(recovery_epoch)
+    revision = exact_decimal(agent_revision) if type(agent_revision) is int else str(agent_revision)
+    return f"coordination:{event_type}:{project_id}:{agent_id}:{epoch}:{revision}"
 
 
 def key_recovery_epoch(key: str) -> int | None:
@@ -209,8 +231,14 @@ def key_recovery_epoch(key: str) -> int | None:
 
 def event_id_preimage(storage_instance_id: str, recovery_epoch: int, project_id: str, event_type: str,
                       agent_id: str, agent_revision: int) -> str:
-    """RFC 8785 form of a JSON array of strings (equal to this json.dumps form for strings)."""
-    return json.dumps([storage_instance_id, str(recovery_epoch), project_id, event_type, agent_id, str(agent_revision)],
+    """SP-320 string-array preimage. Epoch and revision are exact integers, then decimal strings.
+
+    The array contains only strings, so this json.dumps form is the RFC 8785 form. It is not rewritten
+    as generic producer JCS and it is not given a lane-local digit cap.
+    """
+    epoch = decimal_integer(recovery_epoch, minimum=0)
+    revision = decimal_integer(agent_revision, minimum=0)
+    return json.dumps([storage_instance_id, epoch, project_id, event_type, agent_id, revision],
                       separators=(",", ":"), ensure_ascii=False)
 
 
@@ -362,7 +390,7 @@ def payload_schema_failures(*, root: Path = ROOT) -> list[dict[str, Any]]:
         failures.append({"error": "payload_schema_uri"})
     defs = payloads.get("$defs", {})
     members = [DEF_BY_TYPE[event_type] for event_type in SEVEN] + ["debug_mirror_exported"]
-    if set(defs) != {"lineage_envelope", "non_secret_ref", *members}:
+    if set(defs) != {"lineage_envelope", "non_secret_ref", *members, *BOARD_MEMBERS}:
         failures.append({"error": "payload_schema_definition_census", "detail": sorted(defs)})
         return failures
     if payloads.get("oneOf") != [{"$ref": f"{PAYLOAD_SCHEMA_URI}#/$defs/{name}"} for name in members]:
@@ -411,6 +439,25 @@ def payload_schema_failures(*, root: Path = ROOT) -> list[dict[str, Any]]:
     if nulls:
         failures.append({"error": "payload_schema_admits_null", "detail": nulls[:5]})
     return failures
+
+
+def board_member_definition_failures(owner_defs: dict[str, Any], orchestrator_defs: dict[str, Any]) -> list[dict[str, Any]]:
+    """SP-320 and SP-720..722: each board member lives in the owner file value_schema_ref names, carries no stored schema_id, and equals the Orchestrator's closed definition.
+
+    DO sweep part 2A: the clauses are the rows of the DO guard table `BOARD_MEMBER_ROWS`, run per member; a missing member stops there.
+    """
+    import pm_orchestrator_event_guards as guards
+    import pm_orchestrator_event_oracles as oracles
+    failures: list[dict[str, Any]] = []
+    for name in BOARD_MEMBERS:
+        view = oracles.board_member_view(name, owner_defs, orchestrator_defs)
+        missing = oracles.run_rows(guards.BOARD_MEMBER_ROWS[:1], view)
+        codes = missing or oracles.run_rows(guards.BOARD_MEMBER_ROWS[1:], view)
+        failures += [{"error": code, "definition": name} for code in codes]
+    return failures
+
+def board_member_failures(*, root: Path = ROOT) -> list[dict[str, Any]]:
+    return board_member_definition_failures(load(PAYLOAD_PATH, root)["$defs"], load(BOARD_PAYLOAD_PATH, root)["$defs"])
 
 
 # --- Projection values, checkpoint and the binding record (SP-320) ------------------------------------------------
@@ -776,7 +823,9 @@ def event_records_bundle(root: Path = ROOT) -> dict[str, Any]:
     payloads = load(PAYLOAD_PATH, root)
     defs = payloads["$defs"]
     mapping = {f"{PAYLOAD_SCHEMA_URI}#/$defs/{name}": f"#/$defs/{name}" for name in defs}
-    members = [DEF_BY_TYPE[event_type] for event_type in SEVEN] + ["debug_mirror_exported"]
+    # SP-720..722 append three exact board members. Never relax or replace an
+    # existing agent definition, its codec, or its own closed member selection.
+    members = [DEF_BY_TYPE[event_type] for event_type in SEVEN] + ["debug_mirror_exported"] + list(BOARD_MEMBERS)
     bundle_defs = {}
     for name in ["lineage_envelope", "non_secret_ref"] + members:
         definition = copy.deepcopy(defs[name])
@@ -790,7 +839,9 @@ def event_records_bundle(root: Path = ROOT) -> dict[str, Any]:
             "2.3.1): one closed member per key shape, in key-shape order, copied from "
             "Plans/coordination_event_payloads.schema.json with its $schema and $id removed and its references "
             "made local. A stored value is the EventRecord payload; the envelope's payload_schema_id names its "
-            "member, so members carry no stored schema_id."
+            "member, so no member carries a stored schema_id. SP-720..722 append the three closed board members "
+            "with their scope editions; each equals its definition in "
+            "Plans/orchestrator_event_payloads.schema.json. The composition identity is never stored."
         ),
         "oneOf": [{"$ref": f"#/$defs/{name}"} for name in members],
         "$defs": bundle_defs,
@@ -839,19 +890,19 @@ def expected_svr_rows(root: Path = ROOT) -> dict[str, dict[str, Any]]:
         "storage_kind": "seglog",
         "status": "materialized",
         "tier": "later_gui_or_feature_projection",
-        "key_shape": " | ".join(list(SEVEN) + [MIRROR]),
+        "key_shape": " | ".join(list(SEVEN) + [MIRROR] + list(BOARD_FAMILIES)),
         "value_schema_id": "pm.storage_value.coordination_event_records.v1",
         "value_schema_ref": PAYLOAD_PATH,
         "owner_doc": SP320,
-        "producer": [APPEND],
-        "consumers": [PROJECTOR + "@" + VERSION],
+        "producer": [APPEND, "storage.coordination_append.application@1.0.0"],
+        "consumers": [PROJECTOR + "@" + VERSION, "projector.storage.event_record_index@1.0.0"],
         "schema_version": VERSION,
         "encoding": "seglog_messagepack",
         "required_fields": records_required,
         "optional_fields": records_optional,
         "nullable_fields": [],
         "replay_behavior": (
-            "Coordination EventRecords replay in canonical seglog order through "
+            "Original agent coordination EventRecords replay in canonical seglog order through "
             "storage.coordination_projector.v1@1.0.0 only (SP-320). The dedupe identity is (scope_partition, "
             "event_type, idempotency_key), with idempotency_key "
             "coordination:{event_type}:{project_id}:{agent_id}:{recovery_epoch}:{agent_revision}, whose "
@@ -859,14 +910,20 @@ def expected_svr_rows(root: Path = ROOT) -> dict[str, dict[str, Any]]:
             "original event and its first AppendReceipt through storage.first_append_receipt.resolve.v2, and "
             "the same identity with a different digest is idempotency_conflict. A stale revision returns "
             "coordination_conflict. Replay rebuilds projection rows only and never re-runs scheduling, "
-            "prompts, notifications, mirror writes, commands or appends."
+            "prompts, notifications, mirror writes, commands or appends. SP-720..722 board members use their "
+            "own OSI-681..683 identities: Project do1 and CV-366 application@1 keys, the unchanged Storage "
+            "lifetime tuple and SP-286 full-value first receipts. Board history uses the generic event index "
+            "only, never the agent lifecycle reducer, and never posts, acknowledges or archives on replay."
         ),
         "migration": (
             "Legacy active-agents.json and .puppet-master/state/*.json coordination paths are compatibility or "
             "debug mirror inputs only, never migration authority; new writers append EventRecord values through "
             "storage.coordination_append.v1@1.0.0. StorageMigrationCoordinator installs the family through the "
             "actual migration graph and ceilings, and no store-version integer is invented. A later payload "
-            "version needs a new CV-353 definition and version; readers reject an unsupported one."
+            "version needs a new CV-353 definition and version; readers reject an unsupported one. "
+            "SP-720..722 prepare only the three explicit board members, whose definitions equal the "
+            "Orchestrator schema's; their Project/app source editions are adopted independently without "
+            "event admission."
         ),
         "retention_compaction": (
             "Exact RP-COORDINATION-180D@1.0.0, the structured retention_policy_ref, which governs this text "
@@ -877,22 +934,32 @@ def expected_svr_rows(root: Path = ROOT) -> dict[str, dict[str, Any]]:
             "appended at registration, on an actual change and at termination, and heartbeats are runtime "
             "liveness, not records (OSI-438). coordination.debug_mirror_exported is not admitted, and its anchor "
             "is settled in its own landing. Projections, checkpoints and mirrors are rebuildable from seglog "
-            "and keep their own policies."
+            "and keep their own policies. Each SP-720..722 board member joins its actual same-scope "
+            "Server/thread/crew/run to the first durable terminal canonical Run record; an unresolved "
+            "completion is ineligible for expiry. Board archive is visibility only. The DL-085 assignment "
+            "is landed in this registry (Storage retention landing `4d52bd2758526cd0e8a56358baaa73049c1d4bdd`); "
+            "its Q1/Q3 are integration follow-ups."
         ),
         "redaction_no_secret_rule": (
-            "Only IDs, refs, hashes, enums, integers, timestamps and CV-353's bounded status and operation "
+            "Original agent members: only IDs, refs, hashes, enums, integers, timestamps and CV-353's bounded status and operation "
             "text. No prompt, model output, file content, diff, tool argument, command line, environment value, "
             "credential, provider token, OAuth value, account identifier or local absolute path; path_ref is "
             "the normalized project-relative path and path_hash its SHA-256 (SP-320). The planned registry rows "
             "reject unhandled secrets, and current Project and thread permission and deletion tombstones gate "
-            "every read."
+            "every read. Board members instead adopt OSI-299/OSI-681..683 and SP-720..722: posted events "
+            "carry sanitized subject and at most 16 KiB UTF-8 content or a verified SP-337 BLAKE3/byte-size/"
+            "media-type reference; reads carry acknowledgement identities; archives carry bounded sanitized "
+            "archive_reason. This explicit board exception never relaxes an agent member. Redact before "
+            "commit; inline and referenced text require current same-source access/deletion/hold fences."
         ),
         "legacy_canonical_crosswalk_status": (
             "Materialized in place by SP-320 (DL-045) from the CV-353 payload definitions, as a nonstored keyed "
             "value composition with one member per key shape (Plans/storage-plan.md section 2.3.1). "
             "Materializing admits no event: every coordination family stays quarantined before append or "
             "projection, and absent from the event family registry, until its own Storage admission landing. "
-            "coordination.debug_mirror_exported is prepared, not admitted, and has no producer here."
+            "coordination.debug_mirror_exported is prepared, not admitted, and has no producer here. "
+            "SP-720..722 append each exact board key/member, with original AgentCoordinator source, "
+            "application counterpart and run anchor. Board members remain prepared without admission."
         ),
         "compatibility_key_shapes": [],
         "recovery_disposition": {
@@ -1432,6 +1499,7 @@ def validate(*, root: Path = ROOT) -> dict[str, Any]:
     failures: list[dict[str, Any]] = []
     sections = (
         ("payload_schema", payload_schema_failures),
+        ("board_members", board_member_failures),
         ("projection_schema", projection_schema_failures),
         ("ledger", ledger_failures),
         ("registry_membership", registry_membership_failures),
