@@ -10990,3 +10990,212 @@ negative_constraints:
   - Do not treat prepared contracts as event admission.
 owner_hints: [Plans/Automated_Testing_System.md]
 ```
+
+
+### ATS-300 - Event Authority format.applied positive and negative oracles
+
+```yaml
+plan_unit_id: ATS-300
+unit_type: event_contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: |-
+  format.applied positive and negative oracles
+  format.applied independent oracle matrix: validate the complete current EventRecord and its closed payload against Plans/event_record.schema.json and its exact payload schema, and compare actor_ref, non-empty original correlation_id, payload.operation_id, scope/project, all original lineage/account/causal joins and occurred_at_utc=payload.timestamp against the independently retained original HTE write/edit operation. Require redaction_profile=secret_refs_only; reject redacted_refs_only, valid-but-wrong profiles, null/empty required joins, ambient identities, foreign payload refs and retry timestamps. Plans/small_owner_event_fixtures.json includes this family's own original result, eleven-field receipt, four-field append result and complete-value commitment. scripts/pm-small-owner-events.py runs every envelope required-field negative, original-source mismatch, producer boundary, membership/retention/schema/admission-epoch/permission/dedupe/source/intent/result/body/lease/restore-control cut, and the pre-group/pre-sync/pre-receipt/pre-terminal crash cuts. Durable issuance with lost acknowledgement or lagging custody rows returns exactly the original full result/receipt; conflicting semantics and missing original authority never reissue. Original-intent withdrawal covers pre-effect/pending/prepared/issued stages, stale-epoch retries and fresh re-enable after governed admission plus verified rebuild; passive-reader withdrawal, current token/source/permission/deletion/hold/version refusal and atomic checkpoint CAS/rebuild failure preserve existing publication. These are fixture-only contracts, no membership or retention assignment. Native disk sync, owner authority, action spies, CAS races and backup/restore execution of the same cases are NOT_RUN. format.applied additionally tests projector_replay_only append/current retry refusal as replay_only_not_appendable before resolution; immutable historical receipt reads stay separate. Mutate and remove every delivered receipt field before terminal publication: refuse success while preserving the durable original. Verify encoded project~ partitions, full-match/trailing-LF pattern negatives and Storage's 16 KiB inline limit. format.applied checkpoint identity vectors validate every durable-token field against its independently selected live token, exact original Storage/source/key and generation/dataset joins, frontier revision and nine-field closed schema. Single-field and coherent foreign identities, missing fields, persisted redb_snapshot_id and trailing-LF identifiers preserve the prior complete publication without effects. Equally foreign live/selected reader tokens remain unavailable. Failure-oracle process runs must exit nonzero for deliberately corrupted positives; a success exit code fails the oracle.
+
+gui_related: false
+gui_classification_reason: Backend EventRecord contract, not a visual specification.
+depends_on:
+- FS-075
+- CV-620
+- SP-600
+unblocks: []
+acceptance_criteria:
+- Exact family semantics, schema, identity, replay and withdrawal checks pass; no admission or native proof follows.
+validation_surfaces:
+- python3 scripts/pm-small-owner-events.py
+risk_class: event_authority_binding_drift
+reasoning_tier: high
+context_scope: event_authority_DM_20261104
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- reports/event-authority-20261104/DM-search.json
+preserved_exact_tokens: []
+negative_constraints:
+- No Event Authority admission, native readiness, retention choice or new user-visible behavior.
+```
+
+
+### ATS-301 - Event Authority lsp.server.lifecycle_changed positive and negative oracles
+
+```yaml
+plan_unit_id: ATS-301
+unit_type: event_contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: |-
+  lsp.server.lifecycle_changed positive and negative oracles
+  lsp.server.lifecycle_changed independent oracle matrix: validate the complete current EventRecord and its closed payload against Plans/event_record.schema.json and its exact payload schema, and compare actor_ref, non-empty original correlation_id, payload.operation_id, scope/project, all original lineage/account/causal joins and occurred_at_utc=payload.ts against the independently retained original LspSupervisor Host/server/root/session observation. Require redaction_profile=no_secrets; reject redacted_refs_only, valid-but-wrong profiles, null/empty required joins, ambient identities, foreign payload refs and retry timestamps. Plans/small_owner_event_fixtures.json includes this family's own original result, eleven-field receipt, four-field append result and complete-value commitment. scripts/pm-small-owner-events.py runs every envelope required-field negative, original-source mismatch, producer boundary, membership/retention/schema/admission-epoch/permission/dedupe/source/intent/result/body/lease/restore-control cut, and the pre-group/pre-sync/pre-receipt/pre-terminal crash cuts. Durable issuance with lost acknowledgement or lagging custody rows returns exactly the original full result/receipt; conflicting semantics and missing original authority never reissue. Original-intent withdrawal covers pre-effect/pending/prepared/issued stages, stale-epoch retries and fresh re-enable after governed admission plus verified rebuild; passive-reader withdrawal, current token/source/permission/deletion/hold/version refusal and atomic checkpoint CAS/rebuild failure preserve existing publication. These are fixture-only contracts, no membership or retention assignment. Native disk sync, owner authority, action spies, CAS races and backup/restore execution of the same cases are NOT_RUN. lsp.server.lifecycle_changed additionally tests projector_replay_only append/current retry refusal as replay_only_not_appendable before resolution; immutable historical receipt reads stay separate. Mutate and remove every delivered receipt field before terminal publication: refuse success while preserving the durable original. Verify encoded project~ partitions, full-match/trailing-LF pattern negatives and Storage's 16 KiB inline limit. lsp.server.lifecycle_changed checkpoint identity vectors validate every durable-token field against its independently selected live token, exact original Storage/source/key and generation/dataset joins, frontier revision and nine-field closed schema. Single-field and coherent foreign identities, missing fields, persisted redb_snapshot_id and trailing-LF identifiers preserve the prior complete publication without effects. Equally foreign live/selected reader tokens remain unavailable. Failure-oracle process runs must exit nonzero for deliberately corrupted positives; a success exit code fails the oracle.
+
+gui_related: false
+gui_classification_reason: Backend EventRecord contract, not a visual specification.
+depends_on:
+- LSPS-173
+- CV-621
+- SP-601
+unblocks: []
+acceptance_criteria:
+- Exact family semantics, schema, identity, replay and withdrawal checks pass; no admission or native proof follows.
+validation_surfaces:
+- python3 scripts/pm-small-owner-events.py
+risk_class: event_authority_binding_drift
+reasoning_tier: high
+context_scope: event_authority_DM_20261104
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- reports/event-authority-20261104/DM-search.json
+preserved_exact_tokens: []
+negative_constraints:
+- No Event Authority admission, native readiness, retention choice or new user-visible behavior.
+```
+
+
+### ATS-302 - Event Authority model.catalog_refreshed positive and negative oracles
+
+```yaml
+plan_unit_id: ATS-302
+unit_type: event_contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: |-
+  model.catalog_refreshed positive and negative oracles
+  model.catalog_refreshed independent oracle matrix: validate the complete current EventRecord and its closed payload against Plans/event_record.schema.json and its exact payload schema, and compare actor_ref, non-empty original correlation_id, payload.operation_id, scope/project, all original lineage/account/causal joins and occurred_at_utc=payload.completed_at_utc against the independently retained original Models manual or automatic catalog refresh. Require redaction_profile=secret_refs_only; reject redacted_refs_only, valid-but-wrong profiles, null/empty required joins, ambient identities, foreign payload refs and retry timestamps. Plans/small_owner_event_fixtures.json includes this family's own original result, eleven-field receipt, four-field append result and complete-value commitment. scripts/pm-small-owner-events.py runs every envelope required-field negative, original-source mismatch, producer boundary, membership/retention/schema/admission-epoch/permission/dedupe/source/intent/result/body/lease/restore-control cut, and the pre-group/pre-sync/pre-receipt/pre-terminal crash cuts. Durable issuance with lost acknowledgement or lagging custody rows returns exactly the original full result/receipt; conflicting semantics and missing original authority never reissue. Original-intent withdrawal covers pre-effect/pending/prepared/issued stages, stale-epoch retries and fresh re-enable after governed admission plus verified rebuild; passive-reader withdrawal, current token/source/permission/deletion/hold/version refusal and atomic checkpoint CAS/rebuild failure preserve existing publication. These are fixture-only contracts, no membership or retention assignment. Native disk sync, owner authority, action spies, CAS races and backup/restore execution of the same cases are NOT_RUN. model.catalog_refreshed additionally tests projector_replay_only append/current retry refusal as replay_only_not_appendable before resolution; immutable historical receipt reads stay separate. Mutate and remove every delivered receipt field before terminal publication: refuse success while preserving the durable original. Verify encoded project~ partitions, full-match/trailing-LF pattern negatives and Storage's 16 KiB inline limit. Its own CV-366 actual-Server UTF-8-hex application key vectors reject the former hash key, foreign/missing Server and normalization; exact 16383/16384/16385-byte and 128-ref fixtures cover SP-337 BLAKE3/size/media-type references, missing/unsynced bytes/index, mismatched descriptors, duplicated bodies and immutable external-result recovery. model.catalog_refreshed checkpoint identity vectors validate every durable-token field against its independently selected live token, exact original Storage/source/key and generation/dataset joins, frontier revision and nine-field closed schema. Single-field and coherent foreign identities, missing fields, persisted redb_snapshot_id and trailing-LF identifiers preserve the prior complete publication without effects. Equally foreign live/selected reader tokens remain unavailable. Failure-oracle process runs must exit nonzero for deliberately corrupted positives; a success exit code fails the oracle.
+
+gui_related: false
+gui_classification_reason: Backend EventRecord contract, not a visual specification.
+depends_on:
+- MS-199
+- CV-622
+- SP-602
+unblocks: []
+acceptance_criteria:
+- Exact family semantics, schema, identity, replay and withdrawal checks pass; no admission or native proof follows.
+validation_surfaces:
+- python3 scripts/pm-small-owner-events.py
+risk_class: event_authority_binding_drift
+reasoning_tier: high
+context_scope: event_authority_DM_20261104
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- reports/event-authority-20261104/DM-search.json
+preserved_exact_tokens: []
+negative_constraints:
+- No Event Authority admission, native readiness, retention choice or new user-visible behavior.
+```
+
+
+### ATS-303 - Event Authority subagent.context_rehydrated positive and negative oracles
+
+```yaml
+plan_unit_id: ATS-303
+unit_type: event_contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: |-
+  subagent.context_rehydrated positive and negative oracles
+  subagent.context_rehydrated independent oracle matrix: validate the complete current EventRecord and its closed payload against Plans/event_record.schema.json and its exact payload schema, and compare actor_ref, non-empty original correlation_id, payload.operation_id, scope/project, all original lineage/account/causal joins and occurred_at_utc=payload.occurred_at_utc against the independently retained original accepted child-context rehydration operation. Require redaction_profile=secret_refs_only; reject redacted_refs_only, valid-but-wrong profiles, null/empty required joins, ambient identities, foreign payload refs and retry timestamps. Plans/small_owner_event_fixtures.json includes this family's own original result, eleven-field receipt, four-field append result and complete-value commitment. scripts/pm-small-owner-events.py runs every envelope required-field negative, original-source mismatch, producer boundary, membership/retention/schema/admission-epoch/permission/dedupe/source/intent/result/body/lease/restore-control cut, and the pre-group/pre-sync/pre-receipt/pre-terminal crash cuts. Durable issuance with lost acknowledgement or lagging custody rows returns exactly the original full result/receipt; conflicting semantics and missing original authority never reissue. Original-intent withdrawal covers pre-effect/pending/prepared/issued stages, stale-epoch retries and fresh re-enable after governed admission plus verified rebuild; passive-reader withdrawal, current token/source/permission/deletion/hold/version refusal and atomic checkpoint CAS/rebuild failure preserve existing publication. These are fixture-only contracts, no membership or retention assignment. Native disk sync, owner authority, action spies, CAS races and backup/restore execution of the same cases are NOT_RUN. subagent.context_rehydrated additionally tests projector_replay_only append/current retry refusal as replay_only_not_appendable before resolution; immutable historical receipt reads stay separate. Mutate and remove every delivered receipt field before terminal publication: refuse success while preserving the durable original. Verify encoded project~ partitions, full-match/trailing-LF pattern negatives and Storage's 16 KiB inline limit. Its own CV-366 actual-Server UTF-8-hex application key vectors reject the former hash key, foreign/missing Server and normalization; exact 16383/16384/16385-byte and 128-ref fixtures cover SP-337 BLAKE3/size/media-type references, missing/unsynced bytes/index, mismatched descriptors, duplicated bodies and immutable external-result recovery. subagent.context_rehydrated checkpoint identity vectors validate every durable-token field against its independently selected live token, exact original Storage/source/key and generation/dataset joins, frontier revision and nine-field closed schema. Single-field and coherent foreign identities, missing fields, persisted redb_snapshot_id and trailing-LF identifiers preserve the prior complete publication without effects. Equally foreign live/selected reader tokens remain unavailable. Failure-oracle process runs must exit nonzero for deliberately corrupted positives; a success exit code fails the oracle.
+
+gui_related: false
+gui_classification_reason: Backend EventRecord contract, not a visual specification.
+depends_on:
+- PP-151
+- CV-623
+- SP-603
+unblocks: []
+acceptance_criteria:
+- Exact family semantics, schema, identity, replay and withdrawal checks pass; no admission or native proof follows.
+validation_surfaces:
+- python3 scripts/pm-small-owner-events.py
+risk_class: event_authority_binding_drift
+reasoning_tier: high
+context_scope: event_authority_DM_20261104
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- reports/event-authority-20261104/DM-search.json
+preserved_exact_tokens: []
+negative_constraints:
+- No Event Authority admission, native readiness, retention choice or new user-visible behavior.
+```
+
+
+### ATS-304 - Event Authority subagent.context_shrunk positive and negative oracles
+
+```yaml
+plan_unit_id: ATS-304
+unit_type: event_contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: |-
+  subagent.context_shrunk positive and negative oracles
+  subagent.context_shrunk independent oracle matrix: validate the complete current EventRecord and its closed payload against Plans/event_record.schema.json and its exact payload schema, and compare actor_ref, non-empty original correlation_id, payload.operation_id, scope/project, all original lineage/account/causal joins and occurred_at_utc=payload.occurred_at_utc against the independently retained original accepted child-context shrink operation. Require redaction_profile=secret_refs_only; reject redacted_refs_only, valid-but-wrong profiles, null/empty required joins, ambient identities, foreign payload refs and retry timestamps. Plans/small_owner_event_fixtures.json includes this family's own original result, eleven-field receipt, four-field append result and complete-value commitment. scripts/pm-small-owner-events.py runs every envelope required-field negative, original-source mismatch, producer boundary, membership/retention/schema/admission-epoch/permission/dedupe/source/intent/result/body/lease/restore-control cut, and the pre-group/pre-sync/pre-receipt/pre-terminal crash cuts. Durable issuance with lost acknowledgement or lagging custody rows returns exactly the original full result/receipt; conflicting semantics and missing original authority never reissue. Original-intent withdrawal covers pre-effect/pending/prepared/issued stages, stale-epoch retries and fresh re-enable after governed admission plus verified rebuild; passive-reader withdrawal, current token/source/permission/deletion/hold/version refusal and atomic checkpoint CAS/rebuild failure preserve existing publication. These are fixture-only contracts, no membership or retention assignment. Native disk sync, owner authority, action spies, CAS races and backup/restore execution of the same cases are NOT_RUN. subagent.context_shrunk additionally tests projector_replay_only append/current retry refusal as replay_only_not_appendable before resolution; immutable historical receipt reads stay separate. Mutate and remove every delivered receipt field before terminal publication: refuse success while preserving the durable original. Verify encoded project~ partitions, full-match/trailing-LF pattern negatives and Storage's 16 KiB inline limit. Its own CV-366 actual-Server UTF-8-hex application key vectors reject the former hash key, foreign/missing Server and normalization; exact 16383/16384/16385-byte and 128-ref fixtures cover SP-337 BLAKE3/size/media-type references, missing/unsynced bytes/index, mismatched descriptors, duplicated bodies and immutable external-result recovery. subagent.context_shrunk checkpoint identity vectors validate every durable-token field against its independently selected live token, exact original Storage/source/key and generation/dataset joins, frontier revision and nine-field closed schema. Single-field and coherent foreign identities, missing fields, persisted redb_snapshot_id and trailing-LF identifiers preserve the prior complete publication without effects. Equally foreign live/selected reader tokens remain unavailable. Failure-oracle process runs must exit nonzero for deliberately corrupted positives; a success exit code fails the oracle.
+
+gui_related: false
+gui_classification_reason: Backend EventRecord contract, not a visual specification.
+depends_on:
+- PP-152
+- CV-624
+- SP-604
+unblocks: []
+acceptance_criteria:
+- Exact family semantics, schema, identity, replay and withdrawal checks pass; no admission or native proof follows.
+validation_surfaces:
+- python3 scripts/pm-small-owner-events.py
+risk_class: event_authority_binding_drift
+reasoning_tier: high
+context_scope: event_authority_DM_20261104
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- reports/event-authority-20261104/DM-search.json
+preserved_exact_tokens: []
+negative_constraints:
+- No Event Authority admission, native readiness, retention choice or new user-visible behavior.
+```
+
+
+project.added — ATS-304 independent oracle supplement. project.added independent oracle matrix: validate the complete current EventRecord and its closed payload against Plans/event_record.schema.json and its exact payload schema, and compare actor_ref, non-empty original correlation_id, payload.operation_id, scope/project, all original lineage/account/causal joins and occurred_at_utc=payload.completed_at_utc against the independently retained original completed Project existing-content registration. Require redaction_profile=secret_refs_only; reject redacted_refs_only, valid-but-wrong profiles, null/empty required joins, ambient identities, foreign payload refs and retry timestamps. Plans/small_owner_event_fixtures.json includes this family's own original result, eleven-field receipt, four-field append result and complete-value commitment. scripts/pm-small-owner-events.py runs every envelope required-field negative, original-source mismatch, producer boundary, membership/retention/schema/admission-epoch/permission/dedupe/source/intent/result/body/lease/restore-control cut, and the pre-group/pre-sync/pre-receipt/pre-terminal crash cuts. Durable issuance with lost acknowledgement or lagging custody rows returns exactly the original full result/receipt; conflicting semantics and missing original authority never reissue. Original-intent withdrawal covers pre-effect/pending/prepared/issued stages, stale-epoch retries and fresh re-enable after governed admission plus verified rebuild; passive-reader withdrawal, current token/source/permission/deletion/hold/version refusal and atomic checkpoint CAS/rebuild failure preserve existing publication. These are fixture-only contracts, no membership or retention assignment. Native disk sync, owner authority, action spies, CAS races and backup/restore execution of the same cases are NOT_RUN. project.added additionally tests projector_replay_only append/current retry refusal as replay_only_not_appendable before resolution; immutable historical receipt reads stay separate. Mutate and remove every delivered receipt field before terminal publication: refuse success while preserving the durable original. Verify encoded project~ partitions, full-match/trailing-LF pattern negatives and Storage's 16 KiB inline limit. project.added checkpoint identity vectors validate every durable-token field against its independently selected live token, exact original Storage/source/key and generation/dataset joins, frontier revision and nine-field closed schema. Single-field and coherent foreign identities, missing fields, persisted redb_snapshot_id and trailing-LF identifiers preserve the prior complete publication without effects. Equally foreign live/selected reader tokens remain unavailable. Failure-oracle process runs must exit nonzero for deliberately corrupted positives; a success exit code fails the oracle.
+
+
+project.created — ATS-304 independent oracle supplement. project.created independent oracle matrix: validate the complete current EventRecord and its closed payload against Plans/event_record.schema.json and its exact payload schema, and compare actor_ref, non-empty original correlation_id, payload.operation_id, scope/project, all original lineage/account/causal joins and occurred_at_utc=payload.completed_at_utc against the independently retained original root Project creation composition. Require redaction_profile=secret_refs_only; reject redacted_refs_only, valid-but-wrong profiles, null/empty required joins, ambient identities, foreign payload refs and retry timestamps. Plans/small_owner_event_fixtures.json includes this family's own original result, eleven-field receipt, four-field append result and complete-value commitment. scripts/pm-small-owner-events.py runs every envelope required-field negative, original-source mismatch, producer boundary, membership/retention/schema/admission-epoch/permission/dedupe/source/intent/result/body/lease/restore-control cut, and the pre-group/pre-sync/pre-receipt/pre-terminal crash cuts. Durable issuance with lost acknowledgement or lagging custody rows returns exactly the original full result/receipt; conflicting semantics and missing original authority never reissue. Original-intent withdrawal covers pre-effect/pending/prepared/issued stages, stale-epoch retries and fresh re-enable after governed admission plus verified rebuild; passive-reader withdrawal, current token/source/permission/deletion/hold/version refusal and atomic checkpoint CAS/rebuild failure preserve existing publication. These are fixture-only contracts, no membership or retention assignment. Native disk sync, owner authority, action spies, CAS races and backup/restore execution of the same cases are NOT_RUN. project.created additionally tests projector_replay_only append/current retry refusal as replay_only_not_appendable before resolution; immutable historical receipt reads stay separate. Mutate and remove every delivered receipt field before terminal publication: refuse success while preserving the durable original. Verify encoded project~ partitions, full-match/trailing-LF pattern negatives and Storage's 16 KiB inline limit. project.created checkpoint identity vectors validate every durable-token field against its independently selected live token, exact original Storage/source/key and generation/dataset joins, frontier revision and nine-field closed schema. Single-field and coherent foreign identities, missing fields, persisted redb_snapshot_id and trailing-LF identifiers preserve the prior complete publication without effects. Equally foreign live/selected reader tokens remain unavailable. Failure-oracle process runs must exit nonzero for deliberately corrupted positives; a success exit code fails the oracle.
+
+
+git.clone.completed — ATS-304 independent oracle supplement. git.clone.completed independent oracle matrix: validate the complete current EventRecord and its closed payload against Plans/event_record.schema.json and its exact payload schema, and compare actor_ref, non-empty original correlation_id, payload.operation_id, scope/project, all original lineage/account/causal joins and occurred_at_utc=payload.completed_at_utc against the independently retained original ordinary Git clone command operation. Require redaction_profile=secret_refs_only; reject redacted_refs_only, valid-but-wrong profiles, null/empty required joins, ambient identities, foreign payload refs and retry timestamps. Plans/small_owner_event_fixtures.json includes this family's own original result, eleven-field receipt, four-field append result and complete-value commitment. scripts/pm-small-owner-events.py runs every envelope required-field negative, original-source mismatch, producer boundary, membership/retention/schema/admission-epoch/permission/dedupe/source/intent/result/body/lease/restore-control cut, and the pre-group/pre-sync/pre-receipt/pre-terminal crash cuts. Durable issuance with lost acknowledgement or lagging custody rows returns exactly the original full result/receipt; conflicting semantics and missing original authority never reissue. Original-intent withdrawal covers pre-effect/pending/prepared/issued stages, stale-epoch retries and fresh re-enable after governed admission plus verified rebuild; passive-reader withdrawal, current token/source/permission/deletion/hold/version refusal and atomic checkpoint CAS/rebuild failure preserve existing publication. These are fixture-only contracts, no membership or retention assignment. Native disk sync, owner authority, action spies, CAS races and backup/restore execution of the same cases are NOT_RUN. git.clone.completed additionally tests projector_replay_only append/current retry refusal as replay_only_not_appendable before resolution; immutable historical receipt reads stay separate. Mutate and remove every delivered receipt field before terminal publication: refuse success while preserving the durable original. Verify encoded project~ partitions, full-match/trailing-LF pattern negatives and Storage's 16 KiB inline limit. git.clone.completed checkpoint identity vectors validate every durable-token field against its independently selected live token, exact original Storage/source/key and generation/dataset joins, frontier revision and nine-field closed schema. Single-field and coherent foreign identities, missing fields, persisted redb_snapshot_id and trailing-LF identifiers preserve the prior complete publication without effects. Equally foreign live/selected reader tokens remain unavailable. Failure-oracle process runs must exit nonzero for deliberately corrupted positives; a success exit code fails the oracle.
