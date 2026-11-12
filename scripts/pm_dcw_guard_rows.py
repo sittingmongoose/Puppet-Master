@@ -1,0 +1,591 @@
+"""Dispatch every DCW product refusal to an authentic Method B phase table.
+
+RECORDER and DISABLED are supplementary lane diagnostics. The gated tool itself
+only swaps table entries, and neither reads nor uses these diagnostic seams.
+"""
+import copy
+import pm_dcw_table_167
+import pm_dcw_table_166
+import pm_dcw_table_165
+import pm_dcw_table_164
+import pm_dcw_table_163
+import pm_dcw_table_162
+import pm_dcw_table_000
+import pm_dcw_table_001
+import pm_dcw_table_002
+import pm_dcw_table_003
+import pm_dcw_table_004
+import pm_dcw_table_005
+import pm_dcw_table_006
+import pm_dcw_table_007
+import pm_dcw_table_008
+import pm_dcw_table_009
+import pm_dcw_table_010
+import pm_dcw_table_011
+import pm_dcw_table_012
+import pm_dcw_table_013
+import pm_dcw_table_014
+import pm_dcw_table_015
+import pm_dcw_table_016
+import pm_dcw_table_017
+import pm_dcw_table_018
+import pm_dcw_table_019
+import pm_dcw_table_020
+import pm_dcw_table_021
+import pm_dcw_table_022
+import pm_dcw_table_023
+import pm_dcw_table_024
+import pm_dcw_table_025
+import pm_dcw_table_026
+import pm_dcw_table_027
+import pm_dcw_table_028
+import pm_dcw_table_029
+import pm_dcw_table_030
+import pm_dcw_table_031
+import pm_dcw_table_032
+import pm_dcw_table_033
+import pm_dcw_table_034
+import pm_dcw_table_035
+import pm_dcw_table_036
+import pm_dcw_table_037
+import pm_dcw_table_038
+import pm_dcw_table_039
+import pm_dcw_table_040
+import pm_dcw_table_041
+import pm_dcw_table_042
+import pm_dcw_table_043
+import pm_dcw_table_044
+import pm_dcw_table_045
+import pm_dcw_table_046
+import pm_dcw_table_047
+import pm_dcw_table_048
+import pm_dcw_table_049
+import pm_dcw_table_050
+import pm_dcw_table_051
+import pm_dcw_table_052
+import pm_dcw_table_053
+import pm_dcw_table_054
+import pm_dcw_table_055
+import pm_dcw_table_056
+import pm_dcw_table_057
+import pm_dcw_table_058
+import pm_dcw_table_059
+import pm_dcw_table_060
+import pm_dcw_table_061
+import pm_dcw_table_062
+import pm_dcw_table_063
+import pm_dcw_table_064
+import pm_dcw_table_065
+import pm_dcw_table_066
+import pm_dcw_table_067
+import pm_dcw_table_068
+import pm_dcw_table_069
+import pm_dcw_table_070
+import pm_dcw_table_071
+import pm_dcw_table_072
+import pm_dcw_table_073
+import pm_dcw_table_074
+import pm_dcw_table_075
+import pm_dcw_table_076
+import pm_dcw_table_077
+import pm_dcw_table_078
+import pm_dcw_table_079
+import pm_dcw_table_080
+import pm_dcw_table_081
+import pm_dcw_table_082
+import pm_dcw_table_083
+import pm_dcw_table_084
+import pm_dcw_table_085
+import pm_dcw_table_086
+import pm_dcw_table_087
+import pm_dcw_table_088
+import pm_dcw_table_089
+import pm_dcw_table_090
+import pm_dcw_table_091
+import pm_dcw_table_092
+import pm_dcw_table_093
+import pm_dcw_table_094
+import pm_dcw_table_095
+import pm_dcw_table_096
+import pm_dcw_table_097
+import pm_dcw_table_098
+import pm_dcw_table_099
+import pm_dcw_table_100
+import pm_dcw_table_101
+import pm_dcw_table_102
+import pm_dcw_table_104
+import pm_dcw_table_105
+import pm_dcw_table_106
+import pm_dcw_table_107
+import pm_dcw_table_108
+import pm_dcw_table_109
+import pm_dcw_table_110
+import pm_dcw_table_111
+import pm_dcw_table_112
+import pm_dcw_table_113
+import pm_dcw_table_114
+import pm_dcw_table_115
+import pm_dcw_table_116
+import pm_dcw_table_117
+import pm_dcw_table_118
+import pm_dcw_table_119
+import pm_dcw_table_120
+import pm_dcw_table_121
+import pm_dcw_table_122
+import pm_dcw_table_123
+import pm_dcw_table_124
+import pm_dcw_table_125
+import pm_dcw_table_126
+import pm_dcw_table_127
+import pm_dcw_table_128
+import pm_dcw_table_129
+import pm_dcw_table_130
+import pm_dcw_table_131
+import pm_dcw_table_132
+import pm_dcw_table_133
+import pm_dcw_table_134
+import pm_dcw_table_135
+import pm_dcw_table_136
+import pm_dcw_table_137
+import pm_dcw_table_138
+import pm_dcw_table_139
+import pm_dcw_table_140
+import pm_dcw_table_141
+import pm_dcw_table_142
+import pm_dcw_table_143
+import pm_dcw_table_144
+import pm_dcw_table_145
+import pm_dcw_table_146
+import pm_dcw_table_147
+import pm_dcw_table_148
+import pm_dcw_table_149
+import pm_dcw_table_150
+import pm_dcw_table_151
+import pm_dcw_table_152
+import pm_dcw_table_153
+import pm_dcw_table_154
+import pm_dcw_table_155
+import pm_dcw_table_156
+import pm_dcw_table_157
+import pm_dcw_table_158
+import pm_dcw_table_159
+import pm_dcw_table_160
+import pm_dcw_table_161
+import pm_guard_isolation as g
+
+FACTORIES = {
+    'O001': pm_dcw_table_000.case,
+    'O002': pm_dcw_table_000.case,
+    'O003': pm_dcw_table_000.case,
+    'O004': pm_dcw_table_000.case,
+    'O005': pm_dcw_table_000.case,
+    'O006': pm_dcw_table_000.case,
+    'O007': pm_dcw_table_001.case,
+    'O008': pm_dcw_table_001.case,
+    'O009': pm_dcw_table_001.case,
+    'O010': pm_dcw_table_001.case,
+    'O011': pm_dcw_table_001.case,
+    'O012': pm_dcw_table_001.case,
+    'O013': pm_dcw_table_046.case,
+    'O014': pm_dcw_table_047.case,
+    'O015': pm_dcw_table_002.case,
+    'O016': pm_dcw_table_002.case,
+    'O017': pm_dcw_table_048.case,
+    'O018': pm_dcw_table_002.case,
+    'O019': pm_dcw_table_002.case,
+    'O020': pm_dcw_table_002.case,
+    'O021': pm_dcw_table_049.case,
+    'O022': pm_dcw_table_002.case,
+    'O023': pm_dcw_table_003.case,
+    'O024': pm_dcw_table_003.case,
+    'O025': pm_dcw_table_003.case,
+    'O026': pm_dcw_table_003.case,
+    'O027': pm_dcw_table_003.case,
+    'O028': pm_dcw_table_003.case,
+    'O029': pm_dcw_table_004.case,
+    'O030': pm_dcw_table_004.case,
+    'O031': pm_dcw_table_004.case,
+    'O032': pm_dcw_table_050.case,
+    'O033': pm_dcw_table_004.case,
+    'O034': pm_dcw_table_051.case,
+    'O035': pm_dcw_table_004.case,
+    'O036': pm_dcw_table_004.case,
+    'O037': pm_dcw_table_005.case,
+    'O038': pm_dcw_table_005.case,
+    'O039': pm_dcw_table_052.case,
+    'O040': pm_dcw_table_005.case,
+    'O041': pm_dcw_table_053.case,
+    'O042': pm_dcw_table_005.case,
+    'O043': pm_dcw_table_005.case,
+    'O044': pm_dcw_table_005.case,
+    'O045': pm_dcw_table_054.case,
+    'O046': pm_dcw_table_006.case,
+    'O047': pm_dcw_table_006.case,
+    'O048': pm_dcw_table_055.case,
+    'O049': pm_dcw_table_056.case,
+    'O050': pm_dcw_table_006.case,
+    'O051': pm_dcw_table_006.case,
+    'O052': pm_dcw_table_006.case,
+    'O053': pm_dcw_table_006.case,
+    'O054': pm_dcw_table_007.case,
+    'O055': pm_dcw_table_007.case,
+    'O056': pm_dcw_table_007.case,
+    'O057': pm_dcw_table_007.case,
+    'O058': pm_dcw_table_057.case,
+    'O059': pm_dcw_table_007.case,
+    'O060': pm_dcw_table_058.case,
+    'O061': pm_dcw_table_059.case,
+    'O062': pm_dcw_table_060.case,
+    'O063': pm_dcw_table_007.case,
+    'O064': pm_dcw_table_008.case,
+    'O065': pm_dcw_table_061.case,
+    'O066': pm_dcw_table_008.case,
+    'O067': pm_dcw_table_008.case,
+    'O068': pm_dcw_table_008.case,
+    'O069': pm_dcw_table_008.case,
+    'O070': pm_dcw_table_062.case,
+    'O071': pm_dcw_table_008.case,
+    'O072': pm_dcw_table_009.case,
+    'O073': pm_dcw_table_009.case,
+    'O074': pm_dcw_table_063.case,
+    'O075': pm_dcw_table_009.case,
+    'O076': pm_dcw_table_064.case,
+    'O077': pm_dcw_table_065.case,
+    'O078': pm_dcw_table_009.case,
+    'O079': pm_dcw_table_009.case,
+    'O080': pm_dcw_table_009.case,
+    'O081': pm_dcw_table_010.case,
+    'O082': pm_dcw_table_010.case,
+    'O083': pm_dcw_table_010.case,
+    'O084': pm_dcw_table_010.case,
+    'O085': pm_dcw_table_010.case,
+    'O086': pm_dcw_table_010.case,
+    'O087': pm_dcw_table_011.case,
+    'O088': pm_dcw_table_011.case,
+    'O089': pm_dcw_table_011.case,
+    'O090': pm_dcw_table_011.case,
+    'O091': pm_dcw_table_066.case,
+    'O092': pm_dcw_table_011.case,
+    'O093': pm_dcw_table_067.case,
+    'O094': pm_dcw_table_068.case,
+    'O095': pm_dcw_table_011.case,
+    'O096': pm_dcw_table_069.case,
+    'O097': pm_dcw_table_012.case,
+    'O098': pm_dcw_table_070.case,
+    'O099': pm_dcw_table_071.case,
+    'O100': pm_dcw_table_012.case,
+    'O101': pm_dcw_table_012.case,
+    'O102': pm_dcw_table_072.case,
+    'O103': pm_dcw_table_012.case,
+    'O104': pm_dcw_table_073.case,
+    'O105': pm_dcw_table_074.case,
+    'O106': pm_dcw_table_012.case,
+    'O107': pm_dcw_table_012.case,
+    'O108': pm_dcw_table_075.case,
+    'O109': pm_dcw_table_076.case,
+    'O110': pm_dcw_table_077.case,
+    'O111': pm_dcw_table_013.case,
+    'O112': pm_dcw_table_078.case,
+    'O113': pm_dcw_table_013.case,
+    'O114': pm_dcw_table_013.case,
+    'O115': pm_dcw_table_079.case,
+    'O116': pm_dcw_table_013.case,
+    'O117': pm_dcw_table_080.case,
+    'O118': pm_dcw_table_013.case,
+    'O119': pm_dcw_table_081.case,
+    'O120': pm_dcw_table_013.case,
+    'O121': pm_dcw_table_014.case,
+    'O122': pm_dcw_table_014.case,
+    'O123': pm_dcw_table_014.case,
+    'O124': pm_dcw_table_082.case,
+    'O125': pm_dcw_table_083.case,
+    'O126': pm_dcw_table_014.case,
+    'O127': pm_dcw_table_084.case,
+    'O128': pm_dcw_table_085.case,
+    'O129': pm_dcw_table_086.case,
+    'O130': pm_dcw_table_087.case,
+    'O131': pm_dcw_table_088.case,
+    'O132': pm_dcw_table_014.case,
+    'O133': pm_dcw_table_089.case,
+    'O134': pm_dcw_table_090.case,
+    'O135': pm_dcw_table_014.case,
+    'O136': pm_dcw_table_015.case,
+    'O137': pm_dcw_table_091.case,
+    'O138': pm_dcw_table_092.case,
+    'O139': pm_dcw_table_093.case,
+    'O140': pm_dcw_table_015.case,
+    'O141': pm_dcw_table_015.case,
+    'O142': pm_dcw_table_015.case,
+    'O143': pm_dcw_table_015.case,
+    'O144': pm_dcw_table_015.case,
+    'O145': pm_dcw_table_016.case,
+    'O146': pm_dcw_table_016.case,
+    'O147': pm_dcw_table_016.case,
+    'O148': pm_dcw_table_016.case,
+    'O149': pm_dcw_table_016.case,
+    'O150': pm_dcw_table_016.case,
+    'O151': pm_dcw_table_017.case,
+    'O152': pm_dcw_table_017.case,
+    'O153': pm_dcw_table_094.case,
+    'O154': pm_dcw_table_017.case,
+    'O155': pm_dcw_table_095.case,
+    'O156': pm_dcw_table_017.case,
+    'O157': pm_dcw_table_096.case,
+    'O158': pm_dcw_table_017.case,
+    'O159': pm_dcw_table_097.case,
+    'O160': pm_dcw_table_098.case,
+    'O161': pm_dcw_table_017.case,
+    'O162': pm_dcw_table_018.case,
+    'O163': pm_dcw_table_018.case,
+    'O164': pm_dcw_table_018.case,
+    'O165': pm_dcw_table_018.case,
+    'O166': pm_dcw_table_099.case,
+    'O167': pm_dcw_table_018.case,
+    'O168': pm_dcw_table_018.case,
+    'O169': pm_dcw_table_019.case,
+    'O170': pm_dcw_table_019.case,
+    'O171': pm_dcw_table_019.case,
+    'O172': pm_dcw_table_019.case,
+    'O173': pm_dcw_table_019.case,
+    'O174': pm_dcw_table_019.case,
+    'O175': pm_dcw_table_020.case,
+    'O176': pm_dcw_table_020.case,
+    'O177': pm_dcw_table_020.case,
+    'O178': pm_dcw_table_020.case,
+    'O179': pm_dcw_table_020.case,
+    'O180': pm_dcw_table_020.case,
+    'O181': pm_dcw_table_021.case,
+    'O182': pm_dcw_table_021.case,
+    'O183': pm_dcw_table_021.case,
+    'O184': pm_dcw_table_021.case,
+    'O185': pm_dcw_table_021.case,
+    'O186': pm_dcw_table_021.case,
+    'O187': pm_dcw_table_022.case,
+    'O188': pm_dcw_table_022.case,
+    'O189': pm_dcw_table_022.case,
+    'O190': pm_dcw_table_022.case,
+    'O191': pm_dcw_table_022.case,
+    'O192': pm_dcw_table_022.case,
+    'O193': pm_dcw_table_023.case,
+    'O194': pm_dcw_table_023.case,
+    'O195': pm_dcw_table_023.case,
+    'O196': pm_dcw_table_100.case,
+    'O197': pm_dcw_table_023.case,
+    'O198': pm_dcw_table_023.case,
+    'O199': pm_dcw_table_101.case,
+    'O200': pm_dcw_table_102.case,
+    'O202': pm_dcw_table_104.case,
+    'O203': pm_dcw_table_023.case,
+    'O204': pm_dcw_table_105.case,
+    'O205': pm_dcw_table_106.case,
+    'O206': pm_dcw_table_107.case,
+    'O207': pm_dcw_table_108.case,
+    'O208': pm_dcw_table_109.case,
+    'O209': pm_dcw_table_024.case,
+    'O210': pm_dcw_table_110.case,
+    'O211': pm_dcw_table_111.case,
+    'O212': pm_dcw_table_112.case,
+    'O213': pm_dcw_table_024.case,
+    'O214': pm_dcw_table_113.case,
+    'O215': pm_dcw_table_024.case,
+    'O216': pm_dcw_table_114.case,
+    'O217': pm_dcw_table_115.case,
+    'O218': pm_dcw_table_116.case,
+    'O219': pm_dcw_table_117.case,
+    'O220': pm_dcw_table_118.case,
+    'O221': pm_dcw_table_119.case,
+    'O222': pm_dcw_table_024.case,
+    'O223': pm_dcw_table_120.case,
+    'O224': pm_dcw_table_121.case,
+    'O225': pm_dcw_table_122.case,
+    'O226': pm_dcw_table_123.case,
+    'O227': pm_dcw_table_024.case,
+    'O228': pm_dcw_table_024.case,
+    'O229': pm_dcw_table_025.case,
+    'O230': pm_dcw_table_025.case,
+    'O231': pm_dcw_table_025.case,
+    'O232': pm_dcw_table_025.case,
+    'O233': pm_dcw_table_124.case,
+    'B001': pm_dcw_table_125.case,
+    'B002': pm_dcw_table_025.case,
+    'B003': pm_dcw_table_025.case,
+    'B004': pm_dcw_table_126.case,
+    'B005': pm_dcw_table_026.case,
+    'B006': pm_dcw_table_026.case,
+    'B007': pm_dcw_table_026.case,
+    'B008': pm_dcw_table_026.case,
+    'B009': pm_dcw_table_026.case,
+    'B010': pm_dcw_table_026.case,
+    'B011': pm_dcw_table_027.case,
+    'B012': pm_dcw_table_027.case,
+    'B013': pm_dcw_table_027.case,
+    'B014': pm_dcw_table_027.case,
+    'B015': pm_dcw_table_027.case,
+    'B016': pm_dcw_table_127.case,
+    'B017': pm_dcw_table_027.case,
+    'B018': pm_dcw_table_028.case,
+    'B019': pm_dcw_table_128.case,
+    'B020': pm_dcw_table_028.case,
+    'B021': pm_dcw_table_028.case,
+    'B022': pm_dcw_table_028.case,
+    'B023': pm_dcw_table_129.case,
+    'B024': pm_dcw_table_028.case,
+    'B025': pm_dcw_table_028.case,
+    'B026': pm_dcw_table_029.case,
+    'B027': pm_dcw_table_029.case,
+    'B028': pm_dcw_table_029.case,
+    'B029': pm_dcw_table_029.case,
+    'B030': pm_dcw_table_029.case,
+    'B031': pm_dcw_table_130.case,
+    'B032': pm_dcw_table_029.case,
+    'B033': pm_dcw_table_030.case,
+    'B034': pm_dcw_table_030.case,
+    'B035': pm_dcw_table_030.case,
+    'B036': pm_dcw_table_030.case,
+    'B037': pm_dcw_table_030.case,
+    'B038': pm_dcw_table_030.case,
+    'B039': pm_dcw_table_031.case,
+    'B040': pm_dcw_table_031.case,
+    'B041': pm_dcw_table_031.case,
+    'B042': pm_dcw_table_031.case,
+    'B043': pm_dcw_table_031.case,
+    'B044': pm_dcw_table_031.case,
+    'B045': pm_dcw_table_032.case,
+    'B046': pm_dcw_table_032.case,
+    'B047': pm_dcw_table_032.case,
+    'B048': pm_dcw_table_032.case,
+    'B049': pm_dcw_table_032.case,
+    'B050': pm_dcw_table_032.case,
+    'B051': pm_dcw_table_033.case,
+    'B052': pm_dcw_table_033.case,
+    'B053': pm_dcw_table_033.case,
+    'B054': pm_dcw_table_131.case,
+    'B055': pm_dcw_table_033.case,
+    'B056': pm_dcw_table_033.case,
+    'B057': pm_dcw_table_033.case,
+    'B058': pm_dcw_table_034.case,
+    'B059': pm_dcw_table_034.case,
+    'B060': pm_dcw_table_034.case,
+    'B061': pm_dcw_table_034.case,
+    'B062': pm_dcw_table_034.case,
+    'B063': pm_dcw_table_132.case,
+    'B064': pm_dcw_table_034.case,
+    'B065': pm_dcw_table_035.case,
+    'B066': pm_dcw_table_035.case,
+    'B067': pm_dcw_table_035.case,
+    'B068': pm_dcw_table_035.case,
+    'B069': pm_dcw_table_133.case,
+    'B070': pm_dcw_table_035.case,
+    'B071': pm_dcw_table_035.case,
+    'B072': pm_dcw_table_036.case,
+    'B073': pm_dcw_table_036.case,
+    'B074': pm_dcw_table_036.case,
+    'B075': pm_dcw_table_036.case,
+    'B076': pm_dcw_table_036.case,
+    'B077': pm_dcw_table_036.case,
+    'B078': pm_dcw_table_037.case,
+    'B079': pm_dcw_table_037.case,
+    'B080': pm_dcw_table_037.case,
+    'B081': pm_dcw_table_037.case,
+    'B082': pm_dcw_table_037.case,
+    'B083': pm_dcw_table_037.case,
+    'B084': pm_dcw_table_038.case,
+    'B085': pm_dcw_table_134.case,
+    'B086': pm_dcw_table_038.case,
+    'B087': pm_dcw_table_038.case,
+    'B088': pm_dcw_table_038.case,
+    'B089': pm_dcw_table_038.case,
+    'B090': pm_dcw_table_038.case,
+    'B091': pm_dcw_table_039.case,
+    'B092': pm_dcw_table_039.case,
+    'B093': pm_dcw_table_135.case,
+    'B094': pm_dcw_table_039.case,
+    'B095': pm_dcw_table_136.case,
+    'B096': pm_dcw_table_137.case,
+    'B097': pm_dcw_table_039.case,
+    'B098': pm_dcw_table_039.case,
+    'B099': pm_dcw_table_039.case,
+    'B100': pm_dcw_table_040.case,
+    'B101': pm_dcw_table_040.case,
+    'B102': pm_dcw_table_040.case,
+    'B103': pm_dcw_table_040.case,
+    'B104': pm_dcw_table_040.case,
+    'B105': pm_dcw_table_138.case,
+    'B106': pm_dcw_table_139.case,
+    'B107': pm_dcw_table_140.case,
+    'B108': pm_dcw_table_141.case,
+    'L001': pm_dcw_table_142.case,
+    'L002': pm_dcw_table_040.case,
+    'L003': pm_dcw_table_041.case,
+    'L004': pm_dcw_table_041.case,
+    'L005': pm_dcw_table_041.case,
+    'L006': pm_dcw_table_041.case,
+    'L007': pm_dcw_table_041.case,
+    'L008': pm_dcw_table_041.case,
+    'L009': pm_dcw_table_042.case,
+    'L010': pm_dcw_table_042.case,
+    'L011': pm_dcw_table_042.case,
+    'L012': pm_dcw_table_042.case,
+    'L013': pm_dcw_table_143.case,
+    'L014': pm_dcw_table_144.case,
+    'L015': pm_dcw_table_042.case,
+    'L016': pm_dcw_table_042.case,
+    'L017': pm_dcw_table_043.case,
+    'L018': pm_dcw_table_043.case,
+    'L019': pm_dcw_table_043.case,
+    'L020': pm_dcw_table_043.case,
+    'R001': pm_dcw_table_145.case,
+    'R002': pm_dcw_table_146.case,
+    'R003': pm_dcw_table_147.case,
+    'R004': pm_dcw_table_043.case,
+    'R005': pm_dcw_table_148.case,
+    'R006': pm_dcw_table_043.case,
+    'R007': pm_dcw_table_149.case,
+    'R008': pm_dcw_table_150.case,
+    'OE001': pm_dcw_table_044.case,
+    'OE002': pm_dcw_table_044.case,
+    'OE003': pm_dcw_table_151.case,
+    'OE004': pm_dcw_table_152.case,
+    'OE005': pm_dcw_table_153.case,
+    'OE006': pm_dcw_table_154.case,
+    'OE007': pm_dcw_table_155.case,
+    'RE001': pm_dcw_table_156.case,
+    'RE002': pm_dcw_table_157.case,
+    'RE003': pm_dcw_table_158.case,
+    'RE004': pm_dcw_table_044.case,
+    'RE005': pm_dcw_table_159.case,
+    'LE001': pm_dcw_table_160.case,
+    'N001': pm_dcw_table_044.case,
+    'N002': pm_dcw_table_044.case,
+    'H001': pm_dcw_table_044.case,
+    'H002': pm_dcw_table_045.case,
+    'N003': pm_dcw_table_045.case,
+    'N004': pm_dcw_table_161.case,
+    'F001': pm_dcw_table_162.case,
+    'F002': pm_dcw_table_163.case,
+    'F003': pm_dcw_table_164.case,
+    'F004': pm_dcw_table_165.case,
+    'F005': pm_dcw_table_166.case,
+    'F006': pm_dcw_table_167.case,
+}
+
+RECORDER = None
+DISABLED = frozenset()
+
+
+def enforce(name, observation):
+    legacy_code = observation['code']
+    value = dict(observation, code='refused')
+    factory = FACTORIES[name]
+    if RECORDER is not None:
+        RECORDER.append((name, copy.deepcopy(value), legacy_code))
+    if name in DISABLED:
+        return
+    case = factory(value)
+    for row_name, guard in case.table.guards.items():
+        result = guard.predicate(value, case.context)
+        if result is not None:
+            from pm_dcw_event_oracles import Refusal
+            error = Refusal(legacy_code)
+            error.guard = row_name
+            raise error

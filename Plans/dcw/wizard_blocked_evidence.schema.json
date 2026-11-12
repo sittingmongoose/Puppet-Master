@@ -1,0 +1,368 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/dcw/wizard_blocked_evidence.schema.json",
+  "type": "object",
+  "required": [
+    "schema_id",
+    "schema_version",
+    "storage_instance_id",
+    "recovery_epoch",
+    "value_revision"
+  ],
+  "oneOf": [
+    {
+      "$ref": "#/$defs/inline"
+    },
+    {
+      "$ref": "#/$defs/payload_reference"
+    }
+  ],
+  "$defs": {
+    "inline": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "recovery_epoch",
+        "value_revision",
+        "source_ref",
+        "prepared_event",
+        "first_append_receipt",
+        "original_event_value_commitment",
+        "original_segment_ref",
+        "publication",
+        "observation"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.wizard_blocked_evidence.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "recovery_epoch": {
+          "type": "integer",
+          "minimum": 0,
+          "format": "pm-uint"
+        },
+        "value_revision": {
+          "type": "integer",
+          "minimum": 0,
+          "format": "pm-uint"
+        },
+        "source_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "prepared_event": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json"
+        },
+        "first_append_receipt": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "original_event_value_commitment": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/original_event_value_commitment"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "original_segment_ref": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1,
+          "maxLength": 1024
+        },
+        "publication": {
+          "enum": [
+            "prepared",
+            "receipted"
+          ]
+        },
+        "observation": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "project_id",
+            "planning_run_id",
+            "blockage_id",
+            "observation_id",
+            "actor_ref",
+            "permission_snapshot_id",
+            "component",
+            "subject_kind",
+            "kind",
+            "required_conditions",
+            "cleared_conditions",
+            "completed_repair_attempt_refs",
+            "next_steps",
+            "ts",
+            "report_ref",
+            "resume_url",
+            "route_target_ref"
+          ],
+          "properties": {
+            "project_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "planning_run_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "blockage_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "observation_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "actor_ref": {
+              "type": "string",
+              "minLength": 1
+            },
+            "permission_snapshot_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "component": {
+              "const": "planning_wizard"
+            },
+            "subject_kind": {
+              "const": "planning_run"
+            },
+            "kind": {
+              "enum": [
+                "blockage_recorded",
+                "repair_attempt_completed"
+              ]
+            },
+            "required_conditions": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "uniqueItems": true
+            },
+            "cleared_conditions": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "uniqueItems": true
+            },
+            "completed_repair_attempt_refs": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "uniqueItems": true
+            },
+            "next_steps": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "step_ref",
+                  "prevented_by"
+                ],
+                "properties": {
+                  "step_ref": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "prevented_by": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "uniqueItems": true
+                  }
+                }
+              }
+            },
+            "ts": {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "Z$"
+            },
+            "report_ref": {
+              "type": "string",
+              "minLength": 1
+            },
+            "resume_url": {
+              "type": "string",
+              "minLength": 1
+            },
+            "route_target_ref": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "publication": {
+                "const": "receipted"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "first_append_receipt": {
+                "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/AppendReceipt"
+              },
+              "original_event_value_commitment": {
+                "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/original_event_value_commitment"
+              },
+              "original_segment_ref": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 512
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "publication": {
+                "const": "prepared"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "first_append_receipt": {
+                "type": "null"
+              },
+              "original_event_value_commitment": {
+                "type": "null"
+              },
+              "original_segment_ref": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "payload_reference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "recovery_epoch",
+        "value_revision",
+        "source_key",
+        "source_payload_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.wizard_blocked_evidence.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "recovery_epoch": {
+          "type": "integer",
+          "minimum": 0,
+          "format": "pm-uint"
+        },
+        "value_revision": {
+          "type": "integer",
+          "minimum": 0,
+          "format": "pm-uint"
+        },
+        "source_key": {
+          "type": "array",
+          "minItems": 5,
+          "maxItems": 5,
+          "prefixItems": [
+            {
+              "const": "wizard_blocked_evidence.v1"
+            },
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "string",
+              "minLength": 1
+            }
+          ],
+          "items": false
+        },
+        "source_payload_ref": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "blake3",
+            "byte_size",
+            "media_type"
+          ],
+          "properties": {
+            "blake3": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$",
+              "minLength": 64,
+              "maxLength": 64
+            },
+            "byte_size": {
+              "type": "integer",
+              "minimum": 1,
+              "format": "pm-uint"
+            },
+            "media_type": {
+              "const": "application/vnd.puppetmaster.wizard-blocked-evidence+msgpack"
+            }
+          }
+        }
+      }
+    }
+  }
+}
