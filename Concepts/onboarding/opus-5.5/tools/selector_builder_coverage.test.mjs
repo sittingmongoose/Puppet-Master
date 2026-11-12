@@ -74,6 +74,23 @@ for (const mode of ['floating','docked']) samples.push({name:'headerActionsHtml 
 const lensCtx=vm.createContext({});
 vm.runInContext(chat.match(/  var SVG = {[^]*?\n  };/)[0]+'\n'+chat.match(/  function lensHtml\([^]*?\n  }/)[0],lensCtx);
 samples.push({name:'lensHtml',html:vm.runInContext('lensHtml()',lensCtx),svgRoots:true});
+// The continuous Settings index and resource roster are later builders than base renderDomainRail.
+// Execute them with shipped placement/provider data; derive descendants from their own templates.
+const kit = read('../src/settings/kit.js'), indexKit = read('../src/settings/kit.d/22-index.js');
+const placement = JSON.parse(read('../src/settings/placement.json'));
+const providerData = JSON.parse(read('../src/settings/data.d/10-providers.json')).providers;
+const managerCtx = vm.createContext({ PM51: {}, h: String, a: String, escapeHtml: String, escAttr: String,
+ dataAttrs: () => '', STATUS_KEY_BY_TONE: {}, icon: () => '',
+ pm51TabOrder: Object.fromEntries(Object.entries(placement.managers).map(([id,m])=>[id,Object.keys(m.tabs||{})])),
+ pm51IndexEntries: () => [], pm51HasTabs: w => Object.keys(placement.managers[w.id].tabs||{}).length>1,
+ pm51IndexCurTab: id => placement.managers[id].defaultTab,
+ pm51TabLabel: (id,tab) => placement.managers[id].tabs[tab], pm51IndexLink: () => '' });
+for(const name of ['initials','dot']) vm.runInContext(kit.match(new RegExp('PM51\\.'+name+' = [^\\n]+'))[0],managerCtx);
+vm.runInContext(kit.slice(kit.indexOf('PM51.listDetail = '),kit.indexOf('/* ---------- popout engine:')),managerCtx);
+managerCtx.roster = {id:'providers',rosterTitle:'AI services',items:providerData.map((p,i)=>({id:p.id,title:p.name,meta:p.statusLabel,tone:p.status==='active'?'ready':'attention',selected:i===0})),detail:{title:providerData[0].name,body:''}};
+samples.push({name:'PM51.listDetail shipped providers',html:vm.runInContext('PM51.listDetail(roster)',managerCtx),svgRoots:false});
+vm.runInContext(indexKit.match(/function pm51IndexGroupInner\([^]*?\n}/)[0],managerCtx);
+for(const[id,m]of Object.entries(placement.managers)) if(Object.keys(m.tabs||{}).length>1){managerCtx.workspace={id,label:id,type:m.type};samples.push({name:'pm51IndexGroupInner '+id,html:vm.runInContext('pm51IndexGroupInner(workspace,workspace.id,workspace.id+":main")',managerCtx),svgRoots:false});}
 const shell = { name: 'base/shell.html', html: read('../base/shell.html'), svgRoots: false, decorate: true };
 samples.push(shell);
 const railSources = ['10-skin.js','51-search.js','52-run.js'].map(p => read('../../../leftrail-redesign/src/concepts/d/'+p)).join('\n');
@@ -97,8 +114,9 @@ const rowMatch = (node, sel) => {
  let parent=node.parent; while(parent) { if(simple(parent,last(left)[1])) return true; parent=parent.parent; } return false;
 };
 const only = process.argv.find((x) => x.startsWith('--rule='))?.split('=')[1];
+const onlySample = process.argv.find(x => x.startsWith('--sample='))?.slice(9);
 const failures = new Set(), coverage = {};
-for (const sample of samples) {
+for (const sample of samples.filter(s => !onlySample || s.name.includes(onlySample))) {
  const nodes = parse(sample.html);
  if (sample.decorate) for (const n of nodes) if (rowSelectors.some(sel => rowMatch(n,sel))) n.classes.push('pmr-cur');
  for (const rule of rules.filter((r) => only === undefined || String(r.rule) === only)) for (const variant of rule.variants || [rule]) {
