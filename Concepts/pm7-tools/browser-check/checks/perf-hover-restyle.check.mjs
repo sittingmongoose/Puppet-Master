@@ -12,16 +12,19 @@
 // onboarding window open, a press on one of its buttons (:active is set on the whole ancestor chain of what is pressed).
 // Each change is marked from inside its own input task (a capture listener on pointermove / pointerdown / click; the
 // notification marks just before it is posted) and traced; the elements it restyled are the largest UpdateLayoutTree
-// elementCount within 60 ms of the mark (the frame that applies the new state; the page's always-running animations
-// restyle a few dozen elements in the frames around it). The median over the triggers must stay under the scenario's bound,
+// elementCount within 60 ms of the mark. DevTools holds the animation clock at playback rate 0 during each trace,
+// then restores 1: existing loader/icon animation work cannot answer a question about this input. The input's selector
+// changes and a transition's first restyle still happen at the held time (perf-hover-hold proves both). This never
+// calls WAAPI pause/play, which would override the still page's CSS play state on Chrome 157. The median must stay under the bound,
 // which sits between what main does and what the change does (counts, not milliseconds). A cell that could not be
 // judged fails: ALL n intended changes must have finite, nonnegative element counts. Missing marks/counts are logged;
 // the same complete-coverage rule applies to presses.
 // Attribution only: --set traceDir=<folder> retains gzip traces; --set track=1 adds invalidation tracking + state.
 // Both surfaces.   --set looks=<a,b>  --set scen=<a,b>  --set n=<triggers>  --set report=1 (no bounds: numbers only)
 import { muteSound } from '../helpers/quiet-page.mjs';
+import { withAnimationHold } from '../helpers/animation-hold.mjs';
 import { LOOKS } from '../browser-check.config.mjs';
-import { writeFileSync, mkdirSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { gzipSync } from 'node:zlib';
 import { join, dirname } from 'node:path';
 
@@ -37,7 +40,7 @@ const BOUND = { usage: 190, files: 160, rail: 180, titlebar: 180, tab: 400, noti
 
 const CATS = ['devtools.timeline', 'disabled-by-default-devtools.timeline', 'blink.user_timing'].join(',');
 
-async function trace(cdp, during, opts = {}) {
+export async function trace(cdp, during, opts = {}) {
 	await cdp.send('Tracing.start', { categories: CATS + (opts.track ? ',disabled-by-default-devtools.timeline.invalidationTracking,disabled-by-default-devtools.timeline.stack' : ''), transferMode: 'ReturnAsStream' });
 	try { await during(); } finally { /* always end the trace */ }
 	const done = new Promise((r) => cdp.once('Tracing.tracingComplete', r));
@@ -81,9 +84,8 @@ function restyled(events, prefix) {
 			else if (e.ph === 'B') open.push(e);
 			else if (e.ph === 'E') { const b = open.pop(); if (b) ult.push({ ts: b.ts, end: e.ts, n: e.args?.elementCount ?? e.args?.endData?.elementCount ?? b.args?.elementCount ?? b.args?.endData?.elementCount ?? null }); }
 		}
-		// the change's own recalc: the largest one within 60 ms of the mark (the frame that applies the new state; the
-		// always-running animations restyle a few dozen elements in every other frame, a forced read in the input task
-		// restyles little, and the hover light's spring frames after it only touch the lit element)
+		// The animation clock is held before tracing. Keep the largest input recalc in the existing 60ms window,
+		// including the first recalc of a transition the input starts; never subtract elements by a heuristic.
 		const win = ult.filter((u) => u.ts >= m.ts && u.ts <= m.ts + 60000 && validCount(u.n));
 		out.push(win.length ? Math.max(...win.map((u) => u.n)) : null);
 	}
@@ -151,7 +153,7 @@ async function frameOffset(t, f) {
 	const el = await f.frameElement(); const b = await el.boundingBox(); return { x: b ? b.x : 0, y: b ? b.y : 0 };
 }
 
-async function runScenario(t, f, cdp, name, n, S) {
+async function runScenario(t, f, cdp, animationCdp, name, n, S) {
 	const sc = SCEN[name];
 	await f.evaluate((v) => window.PM_PAGES && PM_PAGES.go(v), sc.view);
 	await t.page.mouse.move(1914, 1060);
@@ -166,7 +168,7 @@ async function runScenario(t, f, cdp, name, n, S) {
 	const tag = name + '-' + Date.now();
 	const traceOpts = traceOptions(t, tag);
 	await f.evaluate(([tg, ty]) => { window.__jArm.tag = tg; window.__jArm.type = ty; window.__jArm.i = 0; }, [tag, sc.type]);
-	const ev = await trace(cdp, async () => {
+	const ev = await withAnimationHold(animationCdp, f, () => trace(cdp, async () => {
 		for (let i = 0; i < n; i++) {
 			if (name === 'notify') {
 				await f.evaluate(([tg, k]) => { performance.mark('jr:' + tg + ':' + k); window.toast('Run finished ' + k, 'lane J check', 'success'); }, [tag, i]);
@@ -177,7 +179,7 @@ async function runScenario(t, f, cdp, name, n, S) {
 				const p = P[i % 2]; await t.page.mouse.move(p.x, p.y); await t.page.waitForTimeout(450);
 			}
 		}
-	}, traceOpts);
+	}, traceOpts));
 	await f.evaluate(() => { window.__jArm.tag = null; });
 	if (sc.teardown) await f.evaluate(sc.teardown).catch(() => {});
 	const counts = restyled(ev, 'jr:' + tag + ':');
@@ -190,6 +192,7 @@ export default async function (t) {
 	const scen = String(t.args.scen || 'usage,files,rail,titlebar,tab,notify,press').split(',');
 	const n = Number(t.args.n || 4);
 	const report = String(t.args.report || '0') === '1';
+	const css = t.args.css ? readFileSync(String(t.args.css), 'utf8') : null;
 	await muteSound(t.page);
 	await t.viewport(1920, 1080);
 	const rows = [];
@@ -198,27 +201,39 @@ export default async function (t) {
 		const app = scen.filter((s) => s !== 'press');
 		if (app.length) {
 			const f = await t.app.open({ query: 'pm-warm=0', sandbox: surface === 'sandbox' });
+			if (css) await f.addStyleTag({ content: css });
 			const cdp = await t.page.context().newCDPSession(t.page);
+			// An opaque sandbox can be an OOPIF: its animation clock belongs to its own DevTools target.
+			const animationCdp = await t.page.context().newCDPSession(f);
 			for (const look of looks) {
 				await t.app.look(look); await ready(f); await t.page.waitForTimeout(1500);
+				const lookState = await f.evaluate(DEBUG_STATE);
+				const pmlFlip4 = lookState.loops.filter(([key]) => key.startsWith('pml-flip4 on ')).reduce((sum, [, count]) => sum + count, 0);
+				t.log(`${S}${look}: before holds, ${pmlFlip4} running pml-flip4 loops; clock held through CDP only during input traces`);
 				for (const name of app) {
-					const r = await runScenario(t, f, cdp, name, n, S).catch((e) => ({ name, judged: false, why: String(e.message).slice(0, 120) }));
-					rows.push({ surface, look, ...r });
+					const r = await runScenario(t, f, cdp, animationCdp, name, n, S).catch((e) => ({ name, judged: false, why: String(e.message).slice(0, 120) }));
+					rows.push({ surface, look, pmlFlip4, lookState, ...r });
 					const b = BOUND[name];
 					if (report) { t.log(`${S}${look} ${name}: median ${r.med} (${r.why})`); continue; }
 					await t.check(`${S}${look} ${name}: restyled by the change under ${b}`, r.judged && r.med < b, r.judged ? `median ${r.med}; ${r.why}` : `could not judge: ${r.why || 'no marks'}`);
 				}
 			}
 			await cdp.detach().catch(() => {});
+			await animationCdp.detach().catch(() => {});
 		}
 		if (scen.includes('press')) {
 			const f = await t.app.open({ onboarding: true, query: 'o55=screen=welcome&pm-warm=0', sandbox: surface === 'sandbox' });
+			if (css) await f.addStyleTag({ content: css });
 			await f.waitForFunction(() => !!document.querySelector('#pm-o55-onboarding .o55-win') && window.O55?.ui?.applyLook, null, { timeout: 60000 }).catch(() => {});
 			const cdp = await t.page.context().newCDPSession(t.page);
+			const animationCdp = await t.page.context().newCDPSession(f);
 			for (const look of looks) {
 				const [fam, mode] = look.split('-');
 				await f.evaluate(([a, b]) => window.O55.ui.applyLook(a, b), [fam, mode]).catch(() => {});
 				await t.page.waitForTimeout(2200);
+				const lookState = await f.evaluate(DEBUG_STATE);
+				const pmlFlip4 = lookState.loops.filter(([key]) => key.startsWith('pml-flip4 on ')).reduce((sum, [, count]) => sum + count, 0);
+				t.log(`${S}${look} press: before holds, ${pmlFlip4} running pml-flip4 loops`);
 				// a look change can leave the window mid-transition: wait up to 5 s for a button that is on top
 				const btn = await f.waitForFunction(() => {
 					const b = [...document.querySelectorAll('#pm-o55-onboarding .o55-layer:not(.o55-out) .o55-btn')].find((e) => { const r = e.getBoundingClientRect(); return r.width > 30 && r.height > 20 && !e.hasAttribute('aria-disabled') && document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2)?.closest('.o55-btn') === e; });
@@ -233,26 +248,30 @@ export default async function (t) {
 					const tag = 'press-' + Date.now();
 					const traceOpts = traceOptions(t, tag);
 					await f.evaluate((tg) => { window.__jArm.tag = tg; window.__jArm.type = 'pointerdown'; window.__jArm.i = 0; }, tag);
-					const ev = await trace(cdp, async () => {
+					const ev = await withAnimationHold(animationCdp, f, () => trace(cdp, async () => {
 						for (let i = 0; i < n; i++) {
 							await t.page.mouse.move(p.x, p.y); await t.page.waitForTimeout(250);
 							await t.page.mouse.down(); await t.page.waitForTimeout(260);
 							// released off the button: a press with no click (no screen change)
 							await t.page.mouse.move(p.x, p.y + 240); await t.page.mouse.up(); await t.page.waitForTimeout(350);
 						}
-					}, traceOpts);
+					}, traceOpts));
 					await f.evaluate(() => { window.__jArm.tag = null; });
 					const counts = restyled(ev, 'jr:' + tag + ':');
 					const med = median(counts, n);
 					r = { name: 'press', judged: med != null, counts, med, why: measurementDetail(counts, n), traceFile: traceOpts.keep || undefined, debugState: traceOpts.track ? await f.evaluate(DEBUG_STATE) : undefined };
 				}
-				rows.push({ surface, look, ...r });
+				rows.push({ surface, look, pmlFlip4, lookState, ...r });
 				if (report) { t.log(`${S}${look} press: median ${r.med} (${r.why})`); continue; }
 				await t.check(`${S}${look} press: restyled by the press under ${BOUND.press}`, r.judged && r.med < BOUND.press, r.judged ? `median ${r.med}; ${r.why}` : `could not judge: ${r.why}`);
 			}
 			await cdp.detach().catch(() => {});
+			await animationCdp.detach().catch(() => {});
 		}
 	}
 	if (t.args.out) (await import('node:fs')).writeFileSync(String(t.args.out), JSON.stringify(rows, null, 1));
 	if (report) await t.check('report written', rows.length > 0, `${rows.length} cells`);
 }
+
+// The isolation witness reuses the exact tracing/counting path of this check.
+export { restyled };
