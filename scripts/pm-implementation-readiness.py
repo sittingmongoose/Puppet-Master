@@ -793,20 +793,27 @@ STORAGE_VALUE_REGISTRY_SCHEMA_URI = (
 # Re-pinned on plans/ea-w2-orchestrator-20261104 (SP-723, CV-740): crew_board_message_application_v2 adds one
 # materialized tier_0_launch_critical family to main's 344, so 345 families, 321 materialized and 62 tier-0. No
 # event admission follows. The lane's three SP-720..722 board members are members of an existing family and add none.
-STORAGE_VALUE_REGISTRY_EXPECTED_FAMILY_COUNT = 345
+# Re-pinned once at batch-2 integration (plans/ea-batch2-int-20261112, Plans/storage-plan.md:533), from the merged
+# registry rather than any lane's own pin: main's 344 families plus the 147 the batch's lanes add (DO 1, DG6B 19, DC 9, DT 41, DCH 17, DMEM 8, DS15 17, DG6A 33, DFM 2; DDBG, DX,
+# DCN, DM, DS and DR add none), each row byte-identical to its lane and none added twice: 491 families. DMEM's eight are
+# deferred_not_build_blocking, the rest materialized; DO's one and DCH's 17 are tier-0, the rest later GUI or
+# feature projection. DG6A also moves the existing concern_record from deferred to materialized. 459 + 1 = 460
+# materialized, 23 + 8 - 1 = 30 deferred, 1 alias; 61 + 18 = 79 tier-0, 273 + 129 = 402 later, 10 migration-only.
+# No event admission follows from any of these rows.
+STORAGE_VALUE_REGISTRY_EXPECTED_FAMILY_COUNT = 491
 # Re-pinned 2026-11-05 (DL-401, DL-415..DL-421): telemetry plus six independent no-project
 # policies are materialized; existing policies and every family/status/tier count remain unchanged.
 # Re-pinned 2026-11-05 (DL-454, DL-455, DL-457, DL-460, DL-463, DL-464): six further independent
 # application policies are materialized; existing policies and every family/status/tier count remain unchanged.
 STORAGE_VALUE_REGISTRY_EXPECTED_RETENTION_POLICY_COUNT = 41
 STORAGE_VALUE_REGISTRY_EXPECTED_STATUS_COUNTS = {
-    "materialized": 321,
-    "deferred_not_build_blocking": 23,
+    "materialized": 460,
+    "deferred_not_build_blocking": 30,
     "compatibility_alias": 1,
 }
 STORAGE_VALUE_REGISTRY_EXPECTED_TIER_COUNTS = {
-    "tier_0_launch_critical": 62,
-    "later_gui_or_feature_projection": 273,
+    "tier_0_launch_critical": 79,
+    "later_gui_or_feature_projection": 402,
     "migration_only": 10,
 }
 STORAGE_VALUE_REQUIRED_LAUNCH_FAMILIES = [
