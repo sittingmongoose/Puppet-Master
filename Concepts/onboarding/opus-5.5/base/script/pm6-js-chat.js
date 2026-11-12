@@ -719,17 +719,17 @@
       return '<div class="panel-actions pm6-chat-more-wrap" data-od-id="chat-more-wrap-float">' +
         '<button type="button" class="pm6-chat-iconbtn pm6-chat-more-btn" title="More options" aria-label="More options" aria-haspopup="menu" aria-expanded="false" data-od-id="chat-more-btn-float">' + SVG.more + '</button>' +
         '<div class="pm6-chat-more-menu" role="menu" data-od-id="chat-more-menu-float">' +
-        '<button type="button" class="pm6-chat-more-item pm6-chat-layout-cycle" role="menuitem" title="Cycle layout: overlay / detached / docked">' + SVG.layout + '<span>Cycle layout</span></button>' +
-        '<button type="button" class="pm6-chat-more-item closeChatBtn destructive" role="menuitem" title="Close chat">' + SVG.close + '<span>Close chat</span></button>' +
+        '<button type="button" class="pm6-chat-more-item pm6-chat-layout-cycle" role="menuitem" title="Cycle layout: overlay / detached / docked">' + SVG.layout + '<span class="pm6-chat-more-label">Cycle layout</span></button>' +
+        '<button type="button" class="pm6-chat-more-item closeChatBtn destructive" role="menuitem" title="Close chat">' + SVG.close + '<span class="pm6-chat-more-label">Close chat</span></button>' +
         '</div></div>';
     }
     return '<div class="panel-actions pm6-chat-more-wrap" data-od-id="chat-more-wrap-dock">' +
       '<button type="button" class="pm6-chat-iconbtn pm6-chat-more-btn" title="More options" aria-label="More options" aria-haspopup="menu" aria-expanded="false" data-od-id="chat-more-btn-dock">' + SVG.more + '</button>' +
       '<div class="pm6-chat-more-menu" role="menu" data-od-id="chat-more-menu-dock">' +
-      '<button type="button" class="pm6-chat-more-item" role="menuitem" data-demo-action="demo.toast" data-demo-arg="Thread duplicated — the copy starts suspended so it never double-runs work.">' + SVG.duplicate + '<span>Duplicate thread</span></button>' +
-      '<button type="button" class="pm6-chat-more-item" role="menuitem" data-demo-action="demo.toast" data-demo-arg="Thread archived — restore it any time from History.">' + SVG.archive + '<span>Archive thread</span></button>' +
-      '<button type="button" class="pm6-chat-more-item popOutBtn" role="menuitem" title="Pop out to floating window">' + SVG.popout + '<span>Pop out window</span></button>' +
-      '<button type="button" class="pm6-chat-more-item closeChatBtn destructive" role="menuitem" title="Close chat panel">' + SVG.close + '<span>Close chat</span></button>' +
+      '<button type="button" class="pm6-chat-more-item" role="menuitem" data-demo-action="demo.toast" data-demo-arg="Thread duplicated — the copy starts suspended so it never double-runs work.">' + SVG.duplicate + '<span class="pm6-chat-more-label">Duplicate thread</span></button>' +
+      '<button type="button" class="pm6-chat-more-item" role="menuitem" data-demo-action="demo.toast" data-demo-arg="Thread archived — restore it any time from History.">' + SVG.archive + '<span class="pm6-chat-more-label">Archive thread</span></button>' +
+      '<button type="button" class="pm6-chat-more-item popOutBtn" role="menuitem" title="Pop out to floating window">' + SVG.popout + '<span class="pm6-chat-more-label">Pop out window</span></button>' +
+      '<button type="button" class="pm6-chat-more-item closeChatBtn destructive" role="menuitem" title="Close chat panel">' + SVG.close + '<span class="pm6-chat-more-label">Close chat</span></button>' +
       '</div></div>';
   }
   function headerHtml(m) {
