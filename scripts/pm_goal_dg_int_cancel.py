@@ -517,6 +517,43 @@ class CancelWorld(IW.S1CancelWorld):
         except (A.AdapterRefusal,RW.Refusal):
             return self.storage.historical_value(ref['family_id'],ref['physical_key'],commitment)
 
+    def resolve(self,ref,family=None):
+        try:return super().resolve(ref,family)
+        except RW.Refusal as error:
+            if error.code!='select/cell_substituted':raise
+            host=self.goal_bridge.world.host_stop;scope=self.goal_bridge.route.scope
+            if ref.get('family_id')!=host.FAMILY or ref.get('physical_key')!=host.key(scope):raise
+            digest=ref.get('physical_value_sha256',ref.get('physical_sha256'))
+            stored=self.issued.get((ref['family_id'],ref['physical_key'],digest))
+            if stored is None:raise
+            try:
+                current=host.current(scope)['value'];record=current['record']
+                receipt_ref=record['last_original_stop_receipt_ref'];receipt=host.receipt(receipt_ref)
+                host.authenticate(receipt_ref,receipt)
+                candidates=[]
+                for original_ref in host.inventory('stop_receipt'):
+                    original=host.receipt(original_ref);host.authenticate(original_ref,original)
+                    if original['scope']==scope:
+                        candidates.append((original['user_stop_epoch'],original['continuation_epoch'],original_ref))
+                newest=max(candidates) if candidates else None
+                expected=copy.deepcopy(stored.wrapper['record'])
+                expected.update(user_stop_epoch=receipt['user_stop_epoch'],continuation_epoch=receipt['continuation_epoch'],
+                    latched=receipt['action']=='stop',last_original_stop_receipt_ref=receipt_ref,
+                    last_original_stop_receipt_sha256=G.O.row_sha(receipt))
+                # Authenticate the actual owner's latest manual transition,
+                # including its complete after-image. Arbitrary committed or
+                # at-rest substitutions never refresh an adopted custody view.
+                valid=(receipt['scope']==scope and receipt['action'] in ('stop','resume') and
+                    newest==(receipt['user_stop_epoch'],receipt['continuation_epoch'],receipt_ref) and
+                    A.same(host.wrapper(expected),current) and
+                    self.storage.committed_version(host.FAMILY,host.key(scope),digest) and
+                    self.storage.committed_version(host.FAMILY,host.key(scope),physical_sha256(current)) and
+                    stored.wrapper['schema_id']==ref['schema_id'] and stored.wrapper['schema_version']==ref['schema_version'])
+                if valid:return copy.deepcopy(stored.wrapper)
+            except (A.AdapterRefusal,RW.Refusal,S.StorageRefusal,NR.NumruleRefusal,SW.DGRefusal,KeyError,TypeError):
+                pass
+            raise error
+
     def _goal_cancel(self):
         route,w=self.goal_bridge.route,self.goal_bridge.world
         route.dispatch(route.user_request())
