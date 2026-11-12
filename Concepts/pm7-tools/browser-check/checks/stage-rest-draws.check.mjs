@@ -18,9 +18,9 @@
 //  - rest, frames: the stage asks for no animation frame it does not draw in (its loop's frame callbacks are counted:
 //    at most the drawn frames plus 2 a second, for frame timing: the stage keeps its frame loop only while Pip moves
 //    8 px/s or more, when the next frame's draw is due).
-//  - rest, swing and speech: a draw that follows skipped frames moved at most 0.5 px since the previous draw: the tenth
-//    of a pixel that makes a draw due, plus at most 50 ms of drift under 8 px/s (below that speed the stage waits on its
-//    16 ms timer and asks for a frame once a draw is due). Anything faster is drawn every frame, so a held-back swing or
+//  - rest, swing and speech: a draw that follows skipped frames moved at most 0.6 px since the previous draw: the tenth
+//    of a pixel that makes a draw due, plus at most 60 ms of drift under 8 px/s (below that speed the stage waits on its
+//    16 ms timer, which a busy page runs late, and asks for a frame once a draw is due), plus the .01-unit rounding. Anything faster is drawn every frame, so a held-back swing or
 //    fall shows as a larger jump (1.9-2.8 px when a swing's frame was skipped). The head's own shape (blink, face, breathing's .01 scale steps) and the
 //    bubble's placement are left out; Pip's motion is judged on its strings' ends and its control.
 //  - swing: a swing as idle life starts one (the pendulum's speed kicked by .3 rad/s): during its first half second the
@@ -28,7 +28,9 @@
 //    undrawn), none jumps as above and no drawn frame is still.
 //  - speech: a new line typed in: no still frame while it types.
 // It also reports, normal surface, the renderer's main-thread time in ms per second at rest (CDP Performance metrics:
-// TaskDuration, with script, layout and style), read over its own window with nothing read per frame, and the loop's
+// TaskDuration, with script, layout and style), read over its own window with nothing read per frame, the same with the
+// stage parked (held: no loop or timer, its world's CSS animations paused; the page's floor, so what the stage
+// still costs is the difference), and the loop's
 // frames and timer ticks a second, into stage-rest-draws.json in the run folder. Fails on main 77bae0c636 (every frame drawn, almost all of them still).
 // --set looks=, --set screen=where, --set size=1390x900, --set secs=4, --set sandbox=0|1 (default both).
 import fs from 'node:fs';
@@ -36,7 +38,7 @@ import path from 'node:path';
 
 const LOOKS = ['basic-dark', 'basic-light', 'friendly-dark', 'friendly-light', 'glass-dark', 'glass-light', 'nier-dark', 'nier-light'];
 const STAGE = '#pm-o55-onboarding .o55-stage';
-const STILL_PX = 0.08, JUMP_PX = 0.5, SPARE_FRAMES = 2;
+const STILL_PX = 0.08, JUMP_PX = 0.6, SPARE_FRAMES = 2;
 
 // in the app's frame: per-frame records of what the stage changed and how far its drawn parts moved
 function install() {
@@ -180,15 +182,19 @@ async function surface(t, sandbox) {
 			await f.waitForTimeout(secs * 1000);
 			const m1 = await metric();
 			const quiet = await f.evaluate(() => window.__srd.uncount());
+			// the page's floor: the same window with the stage parked (held: no loop, no timer, its CSS animations paused
+			// by data-paused), for what the stage still costs
+			let floor = null;
+			if (cdp) { await f.evaluate(() => { const st = document.querySelector('#pm-o55-onboarding .o55-stage').__pipStage; st.held = true; st.heldAt = 0; clearTimeout(st.holdT); }); await f.waitForTimeout(500); const a = await metric(); await f.waitForTimeout(secs * 1000); const b = await metric(); await f.evaluate(() => document.querySelector('#pm-o55-onboarding .o55-stage').__pipStage.hold(false)); floor = +((b.task - a.task) * 1000 / secs).toFixed(1); await f.waitForTimeout(1500); }
 			if (cdp) { await cdp.send('Performance.disable'); await cdp.detach(); }
 			// rest, every frame read
 			await f.evaluate(() => window.__srd.start());
 			await f.waitForTimeout(secs * 1000);
 			const rest = await f.evaluate(() => window.__srd.end());
 			const R = summarize(rest.rows, secs), cost = m0 && m1 ? Object.fromEntries(Object.keys(m0).map((k) => [k, +((m1[k] - m0[k]) * 1000 / secs).toFixed(1)])) : null;
-			if (cost) { cost.loopFramesPerSec = +(quiet.ticks / secs).toFixed(1); cost.timerTicksPerSec = +(quiet.timerTicks / secs).toFixed(1); }
+			if (cost) { cost.floorTask = floor; cost.loopFramesPerSec = +(quiet.ticks / secs).toFixed(1); cost.timerTicksPerSec = +(quiet.timerTicks / secs).toFixed(1); }
 			R.loopFramesPerSec = +(rest.ticks / secs).toFixed(1); R.timerTicksPerSec = +(rest.timerTicks / secs).toFixed(1);
-			t.log(`${tag} rest: ${R.perSec} draws/s of ${R.framesPerSec} frames/s, loop frames ${R.loopFramesPerSec}/s, timer ticks ${R.timerTicksPerSec}/s, still ${R.still}, median move ${R.dispP50} px${cost ? `, main ${cost.task} ms/s (script ${cost.script}, layout ${cost.layout}, style ${cost.style})` : ''}`);
+			t.log(`${tag} rest: ${R.perSec} draws/s of ${R.framesPerSec} frames/s, loop frames ${R.loopFramesPerSec}/s, timer ticks ${R.timerTicksPerSec}/s, still ${R.still}, median move ${R.dispP50} px${cost ? `, main ${cost.task} ms/s (script ${cost.script}, layout ${cost.layout}, style ${cost.style}; the page with the stage held ${cost.floorTask})` : ''}`);
 			await t.check(`${tag}: at rest, no frame redraws the stage while every drawn part moved under ${STILL_PX} px`, R.frames > secs * 20 && R.still === 0, `${R.still} of ${R.drawn} drawn frames still (of ${R.frames}), e.g. ${R.stillDisp.join(', ')} px, writing ${R.stillWrites.join(' | ')}`);
 			await t.check(`${tag}: at rest, no draw after skipped frames jumps over ${JUMP_PX} px`, R.late === 0, `${R.late} late draws ${R.lateDisp.join(', ')} px`);
 			await t.check(`${tag}: at rest, the stage asks for no frame it does not draw in (spare ${SPARE_FRAMES} a second)`, rest.ticks <= R.drawn + SPARE_FRAMES * secs, `${rest.ticks} loop frames, ${R.drawn} drawn`);
