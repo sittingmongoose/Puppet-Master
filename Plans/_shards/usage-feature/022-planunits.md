@@ -2,9 +2,9 @@
 
 Source: `Plans/usage-feature.md`
 
-Source lines: L927-L5053
+Source lines: L927-L5063
 
-Source SHA256: `389a72a0bc5714f2724e44823875a486b23e61d851475b3ae34137e471d5e37a`
+Source SHA256: `3f1df103feb5a8f801edf9d6f18d457a3d6a2bd748903470cee6e037d3be5dbd`
 
 ---
 
@@ -594,7 +594,13 @@ plan_unit_id: UF-012
 unit_type: requirement
 status: accepted
 owner_doc: Plans/usage-feature.md
-canonical_text: The Context Detail Pane provides curated overview cards, grouped usage breakdowns, per-message inspection, raw payload toggles, provider/model/mode/persona drill-downs, and side-by-side Expert/ELI5 help copy for thread-scoped usage.
+canonical_text: >-
+  The Context Detail Pane provides basic on-demand thread capacity, effective context window/tokens,
+  cost and provider/model/mode/persona information, ordinary readable per-message usage facts and
+  useful compaction/transition status. Existing Expert/ELI5 help explains those facts. Source-family
+  accounting, assembled-source details, raw payloads and inclusion records stay internal for
+  enforcement and debugging; the thread pane exposes no source-composition view, raw payload toggle
+  or per-run inclusion receipt.
 gui_related: true
 gui_classification_reason: The unit defines visible Context Detail Pane inspection behavior.
 split_recommended: false
@@ -605,9 +611,10 @@ depends_on:
 - PNC-001
 unblocks: []
 acceptance_criteria:
-- UF-012 remains addressable as a fine-grained Usage Feature PlanUnit with source-span coverage.
-- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
-- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+  - "The thread-scoped pane retains basic capacity, effective model/window, token and cost facts plus useful compaction/transition state, result and history; unknown and estimated values are labelled truthfully."
+  - "Message information and Expert/ELI5 help retain readable identity/usage facts without exposing assembled-source payloads or source-family accounting."
+  - "Source records remain available internally under existing permission/redaction restrictions; no user-facing source composition, full-thread/per-message raw toggle or per-run inclusion receipt is required."
+  - "UF-012 remains addressable with preserved source lineage and ContractRefs; no WorkNodes, NodeSeeds, executable queues, implementation files or production build tasks are created."
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -621,6 +628,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0023
+- "DL-475; settings batch 2 review R1, quiet context display reconciliation, 2026-11-12"
 preserved_exact_tokens:
 - Context Detail Pane
 - curated overview
@@ -633,13 +641,15 @@ preserved_exact_tokens:
 - persona
 - Expert
 - ELI5
-negative_constraints: []
+negative_constraints:
+  - "Do not expose assembled-source composition, raw source payloads or per-run inclusion receipts in the chat context ring, menu or Context Detail Pane."
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FinalGUISpec.md'
 - 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Prompt_Pipeline.md'
 - 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/usage-feature.md'
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+  - "DL-475 retires the former grouped source breakdown and raw payload toggles; preserved inspection vocabulary is historical lineage, not a requirement to restore that GUI."
 owner_hints:
 - Plans/usage-feature.md
 ```

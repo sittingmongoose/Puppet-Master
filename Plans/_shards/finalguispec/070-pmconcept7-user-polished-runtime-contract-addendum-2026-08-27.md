@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L35780-L36259
+Source lines: L35780-L36267
 
-Source SHA256: `685574c4fd2382d159aa4346879f61b32bbcb6f2f85bb8644644bddb4e80d834`
+Source SHA256: `5368dfb2e801d2b0f7b323ccddc23d97370abdaeb017f6b785a7f0780fade9dd`
 
 ---
 
@@ -272,19 +272,23 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  PMConcept7 uses one shared Assistant node, controller, transcript/thread store, draft/attachment state,
-  context state, and Context Detail Pane. Home seats that identity in its saved dock; other pages re-seat the
-  same identity in the right-side global host without remounting or losing state, and failed re-seating restores
-  the prior seat. The context ring exposes current-window use, effective window and loaded tokens, cache hit,
-  and source composition. Its compact menu offers Compact Now and More Details. Compact Now dispatches
-  cmd.chat.compact_context and projects the existing result, receipt, and compaction history. Successful committed
-  compaction emits exactly one context.compaction.completed under ACD-461 / SP-259; started, failed, soft-defer,
-  no-op, and every other noncommitted outcome remain event-silent. No context.compaction.started or
-  context.compaction.failed family is introduced.
-  The full-width status bar participates in layout, never covers content, and contains no notification or bell item.
-  Amended 2026-10-09 (DL-180): Home seats the Assistant in the chat column fixed on the right, as every page does
-  (F3-637); there is no saved Home dock, and the only move is Pop out, which keeps the same Assistant identity and Dock
-  back returns to the column.
+  PMConcept7 uses one shared Assistant node, controller, transcript/thread store, draft/attachment
+  state, context state, and Context Detail Pane. Home seats that identity in its saved dock; other
+  pages re-seat the same identity in the right-side global host without remounting or losing state,
+  and failed re-seating restores the prior seat. The context ring exposes current-window use,
+  effective window and loaded tokens, cache hit, estimated cost and effective model information. The
+  existing Context Detail Pane keeps basic capacity/cost/model and cache/limit facts plus useful
+  compaction/transition state and history. Source records and raw source payloads remain internal
+  for enforcement/debugging; no source-composition chart or per-run inclusion receipt is shown. Its
+  compact menu offers Compact Now and More Details. Compact Now dispatches cmd.chat.compact_context
+  and projects the existing result, receipt, and compaction history. Successful committed compaction
+  emits exactly one context.compaction.completed under ACD-461 / SP-259; started, failed,
+  soft-defer, no-op, and every other noncommitted outcome remain event-silent. No
+  context.compaction.started or context.compaction.failed family is introduced. The full-width
+  status bar participates in layout, never covers content, and contains no notification or bell
+  item. Amended 2026-10-09 (DL-180): Home seats the Assistant in the chat column fixed on the right,
+  as every page does (F3-637); there is no saved Home dock, and the only move is Pop out, which
+  keeps the same Assistant identity and Dock back returns to the column.
 gui_related: true
 gui_classification_reason: This unit governs the visible shared Assistant, Context ring/detail surfaces, and status bar continuity.
 split_recommended: false
@@ -293,7 +297,8 @@ unblocks: [F3-517, F3-518, ATS-037, ATS-038, ATS-040]
 acceptance_criteria:
   - "Exactly one Assistant node/controller/store identity exists and is re-seated across pages without transcript, draft, attachment, thread, or context loss."
   - "A failed or stale re-seat restores the Assistant in its column rather than creating a second Assistant or a blank seat (amended 2026-10-09, DL-180; the saved Home dock is retired)."
-  - "The context ring and detail pane expose current-window percentage, effective context window, loaded tokens, cache hit, source composition, Curated/Raw details, routing/fallback, limits, and compaction history."
+  - "The context ring and detail pane expose current-window percentage, effective context window, loaded tokens, cache hit, estimated cost, effective model/limit facts and useful compaction/transition state and history."
+  - "Source composition, Curated/Raw source inspection, serialized source payloads and per-run inclusion receipts are absent from the chat context surface; permissioned source records remain internal for enforcement/debugging."
   - "Compact Now uses cmd.chat.compact_context result and receipt projection, with exactly one context.compaction.completed only after successful committed compaction under ACD-461 / SP-259 and no event for any noncommitted outcome; More Details reuses the existing Context Detail Pane commands."
   - "The status bar spans the application layout, does not cover content, and has no notifications or bell affordance."
 validation_surfaces:
@@ -318,13 +323,16 @@ source_lineage:
   - Concepts/pm7-tools/build_pm7.py (retired PM7 builder; source-lineage-only)
   - Concepts/PMConcept7.html (generated artifact; terminal bytes and hash are audit-owned)
   - Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json (current repo-local follow-up audit status; verdict remains report-owned)
+  - "DL-475; settings batch 2 review R1, quiet context display reconciliation, 2026-11-12"
 preserved_exact_tokens: [Compact Now, More Details, Curated, Raw, cmd.chat.compact_context, context.compaction.started, context.compaction.completed, context.compaction.failed]
 negative_constraints:
   - "Do not create a second authoritative Assistant, transcript store, context store, or Context Detail Pane. The per-thread render-page store (SP-338, ACD-242) is a derived, rebuildable projection of the one transcript store, not a second authority, and is allowed."
   - "Do not register context compaction lifecycle events merely to mirror a local working animation."
   - "Do not put notifications or a bell in the status bar."
+  - "Do not expose assembled-source composition, raw source payloads or per-run inclusion receipts in the chat context ring, menu or Context Detail Pane."
 stale_retired_dispositions:
   - "Amended 2026-10-09 (DL-180): \"Home seats that identity in its saved dock\" is retired; the chat column is fixed on the right on Home as on every page (F3-637)."
+  - "DL-475 retires source composition and Curated/Raw source inspection from chat context; the preserved Curated/Raw tokens retain historical lineage only."
 owner_hints: [Plans/FinalGUISpec.md, Plans/assistant-chat-design.md]
 ```
 
