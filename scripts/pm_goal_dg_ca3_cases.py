@@ -461,7 +461,8 @@ def specific_negatives(suite):
 
     def settle_ancillary_substituted():
         w, r = until(suite, 'settle_owner')
-        key = sorted(w.storage.cells[N.ANCILLARY])[0]
+        readback = w.native.d06.readback(r.wf_run, r.scope)
+        key = sorted(sel['physical_key'] for _, sel in N.walk_selectors(readback) if sel['family_id'] == N.ANCILLARY)[0]
         substitute(w, N.ANCILLARY, key, lambda v: v.update(schema_path='TEST_ONLY:substituted'))
         return w, r.settle_owner
     neg(G, 'settle_ancillary_original_substituted', settle_ancillary_substituted, 'C3/settle_owner/native_custody/selector_hash', boundary='settle_owner')

@@ -98,11 +98,18 @@ class WorkflowLeasedStorage(AS.LeasedStorage):
         history = self.__dict__.setdefault('version_history', {})
         for write in writes:
             if not write.get('delete'):
-                history.setdefault((write['table'], write['key']), set()).add(row_sha(write['value']))
+                history.setdefault((write['table'], write['key']), []).append(row_sha(write['value']))
         return out
 
     def committed_version(self, table, key, digest):
-        return digest in self.__dict__.get('version_history', {}).get((table, key), ())
+        """True when ``digest`` is a committed version of the key AND the current cell is its latest commit.
+
+        A superseded version stays resolvable; a cell whose current bytes are not its own latest commit
+        (an at-rest substitution) resolves nothing.
+        """
+        versions = self.__dict__.get('version_history', {}).get((table, key), [])
+        cell = self.cell(table, key)
+        return bool(versions) and cell is not None and row_sha(cell['value']) == versions[-1] and digest in versions
 
     def assign_late_times(self, operation_id):
         cell = self.cell(AS.RESERVATION_TABLE, operation_id)
@@ -290,8 +297,10 @@ class WorkflowCancel(AS.AssignedCancel):
     def before_stop_native(self, method):
         """BeforeStopNativeEntry: registrations checked against the exhaustive inventory and the domain birth."""
         w, n = self.world, self.world.native
-        src = self.native_sources()
         inventory = n.writers.inventory()
+        for kind in ('goal_stop', 'executor_cancel'):
+            require('C3/%s/native_writer_inventory' % method, kind in inventory)
+        src = self.native_sources()
         birth = src['original_domain_birth']
         for name, kind in (('registered_goal_terminal_writer', 'goal_stop'), ('registered_workflow_terminal_writer', 'executor_cancel')):
             reg = src[name]
