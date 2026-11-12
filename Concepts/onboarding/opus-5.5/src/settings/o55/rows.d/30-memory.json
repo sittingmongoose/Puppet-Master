@@ -1,9 +1,9 @@
 {
- "_about": "Context & Memory rows (settings audit, 2026-09-27). Settings has no open chat (user review, 2026-09-27): rows name what every chat does, and Squeeze now reads as a thing each chat's own menu does.",
+ "_about": "Memory rows (settings audit, 2026-09-27; FO-167 2026-11-12). Remember things between chats is the one switch of the quiet Memory page and says what memory does in a sentence; the rule documents, the space meter, Squeeze one chat now, Chat history and Largest working space keep their words in their new homes (placement.d/30-memory.json); the rows waiting for retirement keep theirs while they are drawn in Advanced Settings.",
  "rows": {
   "memory.retention.enabled": {
    "label": "Remember things between chats",
-   "help": "Off gives the assistant a clean slate every time."
+   "help": "Puppet Master keeps short notes so you don’t have to repeat yourself. Notes it hasn’t used in a while move to Archived on their own. Only you delete them."
   },
   "memory.retention.gist-review-filter": {
    "label": "Show",

@@ -822,7 +822,8 @@ PM51.onInput('filter', el => { PM51.s().filters = PM51.s().filters || {}; PM51.s
   const proj = find('projects');
   if (proj) { proj.workspaces = proj.workspaces.filter(w => w.id !== 'project-sync'); proj.summary = 'All project settings, history, and artifacts.'; }
   const mem = find('memory');
-  if (mem) { mem.workspaces = mem.workspaces.filter(w => w.id !== 'owners'); mem.summary = 'Context, memories, Goals, personas, and crews.'; }
+  /* FO-167 (2026-11-12): the quiet Memory page is called Memory (PACKET: the Context & Memory launcher, kept as Memory) */
+  if (mem) { mem.workspaces = mem.workspaces.filter(w => w.id !== 'owners'); const cm = mem.workspaces.find(w => w.id === 'context-memory'); if (cm) cm.label = 'Memory'; mem.summary = 'Memory, Goals, personas, and crews.'; }
   const src = find('source');
   if (src) { const sm = src.workspaces.find(w => w.id === 'source-manager'); if (sm) sm.label = 'Source Control'; src.summary = 'Version history, code services, repositories, and safety.'; }
   const ai = find('ai'); if (ai) ai.summary = 'AI services, web and media abilities, and the Back Seat Driver.';
@@ -840,7 +841,7 @@ const INTROS = {
   mcp: 'Connect outside tools and services the assistant can call.',
   commands: 'Type / commands and press keys to do things faster.',
   testing: 'Decide how your work gets checked and how you debug it.',
-  'context-memory': 'What the assistant remembers about you and this workspace.',
+  'context-memory': 'What Puppet Master remembers between chats.',
   goals: 'Templates and rules for jobs the assistant runs on its own.',
   personas: 'The characters the assistant can play, alone or as a team.',
   'source-manager': 'Keep version history and connect the code services you use.',

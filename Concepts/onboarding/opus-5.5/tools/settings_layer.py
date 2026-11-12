@@ -108,9 +108,55 @@ def placement() -> dict:
             have += [i for i in ids if i not in have]
         retired = base.setdefault('retire_ids', [])
         retired += [i for i in patch.get('retire_ids', []) if i not in retired]
+        waiting = base.setdefault('retire_with_canon', [])
+        waiting += [i for i in patch.get('retire_with_canon', []) if i not in waiting]
         extra_rules += [dict(r, _patch=p.name) for r in patch.get('overrides', [])]
     base['overrides'] = extra_rules + base.get('overrides', [])
-    return base
+    return apply_retire_with_canon(base, _inventory_doc())
+
+
+INVENTORY = PKG.parents[2] / 'Plans' / 'settings_inventory.json'
+
+
+def _inventory_doc() -> dict:
+    return json.loads(INVENTORY.read_text(encoding='utf-8')) if INVENTORY.exists() else {}
+
+
+def canon_retired(ids, inventory_doc: dict) -> list[str]:
+    """The ids of `retire_with_canon` that the canonical inventory no longer holds as active rows: gone from its
+    `settings` rows, or listed at its root as `retired_input_ids`. An inventory that cannot be read retires nothing."""
+    if not inventory_doc:
+        return []
+    active = {r['id'] for r in inventory_doc.get('settings', []) if isinstance(r, dict) and 'id' in r}
+    inputs = set(inventory_doc.get('retired_input_ids') or [])
+    return [i for i in ids if i not in active or i in inputs]
+
+
+def apply_retire_with_canon(merged: dict, inventory_doc: dict) -> dict:
+    """`retire_with_canon` (a placement.d list) names rows a Plans change is to retire: they stay drawn where their
+    rules put them until Plans/settings_inventory.json stops listing them as active rows, and from that build on they
+    are retired like `retire_ids` (drawn nowhere, found by no search), with nothing else to edit. FO-167 parks the 43
+    memory rows the quiet Memory design hides or removes this way until stream P's Settings batch lands (2026-11-12).
+    A rule left naming none of its ids is dropped, and so is a section marked `until_canon` that no rule fills."""
+    gone = canon_retired(merged.get('retire_with_canon', []), inventory_doc)
+    merged['retire_with_canon_now'] = gone
+    if not gone:
+        return merged
+    drop = set(gone)
+    merged['retire_ids'] = merged.get('retire_ids', []) + [i for i in gone if i not in merged.get('retire_ids', [])]
+    rules = []
+    for r in merged.get('overrides', []):
+        if not r.get('ids') or not drop.intersection(r['ids']):
+            rules.append(r)
+            continue
+        left = [i for i in r['ids'] if i not in drop]
+        if left:
+            rules.append(dict(r, ids=left))
+    merged['overrides'] = rules
+    filled = {r['section'] for r in rules}
+    for sid in [s for s, sec in merged['sections'].items() if sec.get('until_canon') and s not in filled]:
+        merged['sections'].pop(sid)
+    return merged
 
 
 def module_source() -> str:
