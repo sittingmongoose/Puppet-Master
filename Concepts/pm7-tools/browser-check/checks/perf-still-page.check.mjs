@@ -25,7 +25,11 @@
 //       move, its currentTime ahead of where it was held by the time since the wake less that start (not reset, no
 //       jump);
 //   the toggle's own cost: the frame that holds the loops and the first frame after the waking move each restyle at
-//   most 150 elements (--set toggle=; rules keyed by the loops' own selectors restyled 650-730 in a frame on the 3090);
+//   most min(2H + 19, (150/50) * max(1,H)) elements, H the unique elements actually marked for this toggle.
+//   The 2H+19 envelope comes from 18 measured toggles with H=21/24/36/38; 150/50 retains the original nominal
+//   population's ratio cap (--set toggle= changes that legacy anchor, not an absolute allowance). Every toggle logs
+//   its exact marked population and animation names. The old selector generator's 650–730 still fails;
+//   controlled 17-product-loader validation adds 68 marked groups (H=92, R=187–192), versus H=24/R=51–58.
 //   the frame's length and the next frames' recalcs are logged.
 // Key, window resize and a real hidden/visible tab round trip each wake from a separately asserted still state.
 // Then (d) with Reduced Motion on the page never goes still, marks nothing and its running loops stay as they were;
@@ -39,20 +43,24 @@
 import { TRACE_CATEGORIES, summarise } from '../helpers/frame-trace.mjs';
 import { muteSound } from '../helpers/quiet-page.mjs';
 import { pageSource, blocksOf, blockAt } from '../helpers/built-source.mjs';
+import { writeFileSync } from 'node:fs';
+import { toggleCost } from '../helpers/still-toggle-cost.mjs';
 
 const ALL = ['basic-light', 'basic-dark', 'friendly-light', 'friendly-dark', 'glass-light', 'glass-dark', 'retro-light', 'retro-dark', 'nier-light', 'nier-dark'];
 
 // In the page: every animation, endless or not, with what it is; the endless ones that run are kept for (c)
 const CENSUS = () => {
 	const desc = (el) => { if (!el) return 'none'; const c = typeof el.className === 'string' ? el.className : (el.className && el.className.baseVal) || ''; return el.tagName.toLowerCase() + (el.id ? '#' + el.id : '') + (c.trim() ? '.' + c.trim().split(/\s+/).slice(0, 3).join('.') : ''); };
-	const out = { still: document.documentElement.hasAttribute('data-pm-still'), hasScript: !!window.PM_STILL, marks: document.querySelectorAll('[data-pm-held]').length, run: [], held: 0, exempt: [], finPaused: [], finRun: 0, finList: [], stray: [] };
+	const out = { still: document.documentElement.hasAttribute('data-pm-still'), hasScript: !!window.PM_STILL, marks: document.querySelectorAll('[data-pm-held]').length, marked: [], run: [], held: 0, exempt: [], finPaused: [], finRun: 0, finList: [], stray: [] };
 	const keep = [];
+	const catalog = new Map();
 	for (const a of document.getAnimations()) {
 		let it = 1; try { it = a.effect.getTiming().iterations; } catch (e) { /* none */ }
 		const el = a.effect && a.effect.target;
 		const name = (a.animationName || (a.constructor && a.constructor.name) || '?') + (a.effect && a.effect.pseudoElement ? ' ' + a.effect.pseudoElement : '');
 		const what = `${name} on ${desc(el)}`;
 		if (it === Infinity) {
+			if (el) { if (!catalog.has(el)) catalog.set(el, []); catalog.get(el).push({ part: a.effect.pseudoElement ? a.effect.pseudoElement.replace(/^::?/, '') : 'self', name: a.animationName || '?', iterations: 'infinite' }); }
 			const caret = !!(el && el.getRootNode && el.getRootNode() !== document && el.classList && el.classList.contains('pmw-ed-caret'));
 			// held by the still state: paused on an element marked for the part it runs on (the page holds some loops of
 			// its own, NieR's motes on Usage for one: those stay held after the wake)
@@ -63,12 +71,16 @@ const CENSUS = () => {
 		else if (a.playState === 'running') { out.finRun++; if (out.finList.length < 6) { let d = 0; try { d = Math.round(a.effect.getComputedTiming().activeDuration); } catch (e) { /* none */ } out.finList.push(`${what} (${d} ms)`); } }
 	}
 	window.__stillKeep = keep;
+	window.__stillCatalog = catalog;
 	// every mark holds an endless loop on the part it names (a stray mark could hold something finite)
 	for (const el of document.querySelectorAll('[data-pm-held]')) {
+		const item = { element: desc(el), parts: [] };
 		for (const p of (el.getAttribute('data-pm-held') || '').split(' ').filter(Boolean)) {
 			const anims = el.getAnimations({ subtree: true }).filter((x) => x.effect && x.effect.target === el && (x.effect.pseudoElement ? x.effect.pseudoElement.replace(/^::?/, '') : 'self') === p);
+			item.parts.push({ part: p, animations: anims.map((x) => ({ name: x.animationName || x.constructor?.name || '?', state: x.playState, iterations: x.effect.getTiming().iterations === Infinity ? 'infinite' : x.effect.getTiming().iterations })) });
 			if (!anims.some((x) => { try { return x.effect.getTiming().iterations === Infinity; } catch (e) { return false; } })) out.stray.push(`${p} on ${desc(el)}`);
 		}
+		out.marked.push(item);
 	}
 	return out;
 };
@@ -118,7 +130,23 @@ async function trace(cdp, { ms, during, url }) {
 // Marks the state's changes in the trace (a check-side observer: the product writes no marks)
 const MARKER = () => {
 	if (window.__stillMarker) return true;
-	window.__stillMarker = new MutationObserver(() => { try { performance.mark(document.documentElement.hasAttribute('data-pm-still') ? 'pm-still:on' : 'pm-still:off'); } catch (e) { /* none */ } });
+	window.__stillMarker = new MutationObserver(() => {
+		try {
+			const on = document.documentElement.hasAttribute('data-pm-still');
+			performance.mark(on ? 'pm-still:on' : 'pm-still:off');
+			if (on) {
+				window.__stillTogglePopulation = null;
+				// DOM attributes and the pre-toggle animation catalog only: no style/geometry read in the measured task.
+				const marked = [...document.querySelectorAll('[data-pm-held]')].map((el) => {
+					const cls = typeof el.className === 'string' ? el.className : el.className?.baseVal || '';
+					const animations = window.__stillCatalog?.get(el) || [];
+					return { element: `${el.tagName.toLowerCase()}${el.id ? '#' + el.id : ''}.${cls.trim().split(/\s+/).join('.')}`,
+						parts: el.getAttribute('data-pm-held').split(' ').filter(Boolean).map((part) => ({ part, animations: animations.filter((a) => a.part === part) })) };
+				});
+				window.__stillTogglePopulation = { marks: marked.length, marked, held: marked.reduce((n, e) => n + e.parts.reduce((m, p) => m + p.animations.length, 0), 0) };
+			}
+		} catch (e) { /* a missing population makes the cost unjudgeable */ }
+	});
 	window.__stillMarker.observe(document.documentElement, { attributes: true, attributeFilter: ['data-pm-still'] });
 	return true;
 };
@@ -139,6 +167,16 @@ export default async function (t) {
 	const after = Number(t.args.after || 3000), ms = Number(t.args.ms || 2000);
 	const drawnMax = Number(t.args.drawn || 15), mainMax = Number(t.args.main || 10), toggleMax = Number(t.args.toggle || 150);
 	const W = 1920, H = 1080;
+	const toggleRows = [];
+	const recordToggle = (look, view, phase, recalc, state) => {
+		const animations = {};
+		for (const item of state.marked) for (const p of item.parts) for (const a of p.animations) animations[a.name] = (animations[a.name] || 0) + 1;
+		const row = { look, view, phase, restyled: recalc?.found ? recalc.first : null, markedElements: state.marks, heldAnimations: state.held, animations, marked: state.marked };
+		row.cost = toggleCost(row.restyled, row.markedElements, toggleMax);
+		toggleRows.push(row);
+		t.log(`${look} ${view} TOGGLE ${phase}: ${JSON.stringify({ restyled: row.restyled, markedElements: row.markedElements, heldAnimations: row.heldAnimations, animations, cost: row.cost })}`);
+		return row.cost;
+	};
 	let px = 0; // the waking moves go to a new point each time, so each is a real move
 	const move = async () => { px = (px + 1) % 6; await t.page.mouse.move(W - 6, Math.round(H / 2) + px * 24 - 60); };
 	await t.viewport(W, H);
@@ -183,6 +221,15 @@ export default async function (t) {
 	let blocks = []; try { blocks = blocksOf(await pageSource(t)); } catch (e) { t.log('NOTE the page source could not be read: drawing scripts are named by line only'); }
 	const named = (x) => (x.scripts || []).slice(0, 3).map((r) => { const m = /@(\d+):/.exec(r[0]); const blk = m && blockAt(blocks, Number(m[1])); return `${r[0]} ${blk ? '[' + blk.kind + '#' + (blk.id || '?') + '] ' : ''}${r[1]} ms/s`; }).join(', ');
 	await t.page.waitForTimeout(Number(t.args.settle ?? 40000));
+	const loaderProbe = String(t.args.loaderProbe || '0') === '1';
+	if (loaderProbe) await f.evaluate(() => {
+		// Controlled population: 17 real 16px think loaders supply the same 68 pml-flip4 frame groups as the review.
+		// This is a check fixture, not a loader implementation or a change to normal-page state.
+		const el = document.createElement('div'); el.id = '__still_loader_probe';
+		el.style.cssText = 'position:fixed;left:100px;top:110px;display:flex;gap:8px;font-size:16px;z-index:2147483000';
+		el.innerHTML = Array.from({ length: 17 }, () => PM_PIP_LOADER.html({ px: 16, motion: 'think' })).join('');
+		document.body.append(el); PM_PIP_LOADER.mount(el);
+	});
 
 	for (const look of looks) {
 		await t.app.look(look);
@@ -192,6 +239,11 @@ export default async function (t) {
 		for (const view of views) {
 			const at = `${look} ${view === 'dashboard' ? 'home' : view}`;
 			await f.evaluate((id) => PM_PAGES.go(id), view);
+			// Calibration can explicitly include the Agents population left active by the hover check's tab scenario.
+			if (view === 'dashboard' && t.args.homeTab === 'agents') {
+				await f.locator('.pmw-tab').filter({ hasText: 'Agents' }).first().click();
+				await t.page.waitForTimeout(800);
+			}
 			await move();
 			await f.evaluate(() => { window.__stillInputs = []; });
 			const t0 = Date.now();
@@ -211,6 +263,8 @@ export default async function (t) {
 			// (a) STILL_AFTER + 3 s
 			await t.page.waitForTimeout(Math.max(0, after + 3000 - (Date.now() - t0)));
 			const a = await f.evaluate(CENSUS);
+			const onPopulation = await f.evaluate(() => window.__stillTogglePopulation);
+			const onCost = recordToggle(look, view, 'on', on, onPopulation || { marks: null, marked: [], held: 0 });
 			const newlyPaused = a.finPaused.filter((x) => !b.finPaused.includes(x));
 			await t.check(`${at}: ${after + 3000} ms after the last input the page is still`, a.still, `data-pm-still ${a.still ? 'on' : 'off'}${a.hasScript ? '' : ' (no still-page script in this page)'}`);
 			await t.check(`${at}: no endless animation runs while still`, a.run.length === 0, a.run.length ? `${a.run.length} running: ${a.run.slice(0, 6).join('; ')}` : `${a.held} held, ${a.marks} elements marked${a.exempt.length ? `, exempt: ${a.exempt.join('; ')}` : ''}`);
@@ -235,13 +289,14 @@ export default async function (t) {
 				if (view === 'dashboard') t.log(`${at}: NOTE Home is live (its widgets tick): main frames ${x.mainFrames.perSec}/s logged, not judged${named(x) ? '; by ' + named(x) : ''}`);
 				else await t.check(`${at}: still, the main thread renders at most ${mainMax} frames a second`, x.mainFrames.perSec <= mainMax, `${x.mainFrames.perSec}/s, ${Math.round(x.cost.main)} ms/s in the quietest try${named(x) ? '; by ' + named(x) : ''}`);
 			}
-			if (a.still) await t.check(`${at}: going still restyles at most ${toggleMax} elements`, !!(on && on.found) && on.first <= toggleMax, on && on.found ? `${on.first} elements in the frame that holds the loops (${on.firstFrameMs} ms frame); largest recalc in the next frames ${on.max} (${on.maxMs} ms), ${on.total} in ${on.steps}` : 'no style recalc after the state went on (or no mark): could not judge');
+			if (a.still) await t.check(`${at}: going still cost stays within its marked population`, onCost.pass, `${JSON.stringify(onCost)}; ${on?.found ? `${on.firstFrameMs} ms frame; largest following recalc ${on.max}, ${on.total} in ${on.steps}` : 'no recalc or mark: unjudgeable'}`);
 
 			const stable = await f.evaluate(() => ({ still: document.documentElement.hasAttribute('data-pm-still'), inputs: window.__stillInputs }));
 			await t.check(`${at}: the view stays still throughout its rest traces`, a.still && stable.still,
 				`still ${a.still} -> ${stable.still}; new wake events ${JSON.stringify(stable.inputs)}`);
 
 			// (c) one real move wakes it, and each held loop goes on from where it was
+			const wakePopulation = await f.evaluate(CENSUS);
 			const held = await f.evaluate(() => { const out = []; window.__stillKeep.forEach((an, i) => { if (an.playState === 'paused') out.push([i, an.currentTime]); }); window.__stillHeld = out; window.__stillWake = 0; window.addEventListener('pointermove', (e) => { if (!window.__stillWake) window.__stillWake = e.timeStamp; }, { capture: true, once: true }); return out.length; });
 			const wk = await trace(cdp, { ms: 900, url, during: async () => { await t.page.waitForTimeout(150); await move(); } });
 			const woke = await f.evaluate(() => new Promise((resolve) => {
@@ -264,16 +319,18 @@ export default async function (t) {
 				}, t1);
 			}));
 			const off = wk.after('pm-still:off', 'pm-still:off');
+			const offCost = recordToggle(look, view, 'off', off, wakePopulation);
 			if (a.still) t.log(`${at}: WAKE ${off && off.found ? `${off.first} elements, ${off.firstFrameMs} ms first frame` : 'no recalc seen'}; loops on again at most ${woke.worst} ms after the move; wake trace longest main frame ${wk.sum.mainFrames.max} ms, by ${named(wk.sum) || 'no script'}`);
 			if (a.still) {
 				await t.check(`${at}: one pointer move wakes the page and every held loop runs again within 100 ms`, woke.woke && !woke.still && woke.bad.length === 0, `${woke.n} held; ${woke.bad.length ? 'not running: ' + woke.bad.slice(0, 5).join('; ') : 'all running'}${woke.still ? '; still after the move' : ''}`);
 				await t.check(`${at}: each loop goes on from where it was held (no restart, no jump)`, woke.late.length === 0, woke.late.length ? woke.late.slice(0, 5).join('; ') : `each started again at most ${woke.worst} ms after the waking move`);
-				await t.check(`${at}: waking restyles at most ${toggleMax} elements`, !!(off && off.found) && off.first <= toggleMax, off && off.found ? `${off.first} elements in the first frame after the move (${off.firstFrameMs} ms frame); largest recalc in the next frames ${off.max} (${off.maxMs} ms), ${off.total} in ${off.steps}` : 'no style recalc after the wake (or no mark): could not judge');
+				await t.check(`${at}: waking cost stays within its marked population`, offCost.pass, `${JSON.stringify(offCost)}; ${off?.found ? `${off.firstFrameMs} ms frame; largest following recalc ${off.max}, ${off.total} in ${off.steps}` : 'no recalc or mark: unjudgeable'}`);
 			}
 		}
 	}
 
 	// Every additional wake starts from still. No synthetic events or focus-based proxy for visibility.
+	if (loaderProbe) await f.evaluate(() => document.getElementById('__still_loader_probe')?.remove());
 	await t.app.look('basic-dark');
 	await f.evaluate(() => PM_PAGES.go('settings'));
 	await move();
@@ -373,4 +430,5 @@ export default async function (t) {
 			`still ${r1.still}, endless running ${r0.run.length} -> ${r1.run.length}, ${r1.marks} marked`);
 	}
 	await t.emulate({ reducedMotion: 'no-preference' });
+	if (t.args.toggleOut) writeFileSync(String(t.args.toggleOut), JSON.stringify(toggleRows, null, 1));
 }
