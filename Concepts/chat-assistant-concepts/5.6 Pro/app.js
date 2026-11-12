@@ -4641,7 +4641,10 @@ suggested path                    migration 0043, reversible</div></div></sectio
     const def=rec.runId&&D.workRuns&&D.workRuns[rec.runId];
     if(!def) return;                 // a PRIMARY record completing must not scroll the reader
     followIfSticky();
-    clearTimeout(seqTimer);
+    /* (the pending successor delay is cleared here, as ever; what the rest hook holds of it goes too, or a visit to the
+       onboarding window would arm the cleared delay again: seqRest and the close know it only by seqTimer's id, which
+       stays) */
+    clearTimeout(seqTimer); seqDue=null; seqPark=null;
     /* A finished card compacts when its successor enters the thread (startWorkingRec
        sets supersededBy at spawn time) or when the turn's answer starts streaming
        (turn-stream.js). */

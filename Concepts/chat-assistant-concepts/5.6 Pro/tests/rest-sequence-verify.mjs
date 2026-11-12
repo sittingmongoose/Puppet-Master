@@ -47,6 +47,8 @@ function chat() {
 	return {
 		at, setRest, started,
 		arm(delay) { D.workRuns.first.next.delayMs = delay; app.onRecComplete({ runId: 'first', id: 'first' }); },
+		// another run of the chat completes: onRecComplete clears the pending successor delay, as it always has
+		cancel() { app.onRecComplete({ runId: 'second', id: 'other' }); },
 		run(until) {
 			for (;;) {
 				let next = null;
@@ -60,7 +62,8 @@ function chat() {
 	};
 }
 
-// [name, delay, visits [[open, close], ...], window open already when the delay is armed]
+// [name, delay, visits [[open, close], ...] (an opening before 0: the window is open already when the delay is armed),
+//  when another run's completion clears the pending delay (then no successor may start at all, window or not)]
 const CASES = [
 	['no window', 1200, []],
 	['a visit shorter than the delay (the review\'s trigger)', 1200, [[200, 800]]],
@@ -69,16 +72,26 @@ const CASES = [
 	['a visit that ends exactly when the delay was due', 1200, [[200, 1200]]],
 	['a short visit then a long one', 1400, [[100, 300], [500, 5000]]],
 	['armed under the window, which closes before the delay was due', 1200, [[-100, 500]]],
-	['armed under the window, which closes after the delay was due', 1200, [[-100, 2000]]]
+	['armed under the window, which closes after the delay was due', 1200, [[-100, 2000]]],
+	['cleared by another run\'s completion, no window', 1200, [], 300],
+	['cleared by another run\'s completion, then a visit to the window', 1200, [[500, 900]], 300],
+	['cleared by another run\'s completion while the window is open', 1200, [[200, 900]], 500]
 ];
 let failed = 0;
-for (const [name, delay, visits] of CASES) {
+for (const [name, delay, visits, cancelAt] of CASES) {
 	const c = chat();
 	const pre = visits.filter(([o]) => o < 0);
 	if (pre.length) c.setRest(true);
 	for (const [o, x] of visits) { if (o >= 0) c.at(o, () => c.setRest(true)); c.at(x, () => c.setRest(false)); }
 	c.arm(delay);
+	if (cancelAt != null) c.at(cancelAt, () => c.cancel());
 	c.run(20000);
+	if (cancelAt != null) {
+		const pass = c.started.length === 0;
+		if (!pass) failed++;
+		console.log(`${pass ? 'PASS' : 'FAIL'} ${name}: delay ${delay} ms, cleared at +${cancelAt} ms, window ${JSON.stringify(visits)}: ${c.started.length ? `successor at +${c.started.map((x) => x.at).join(', +')} ms` : 'no successor'}, expected none`);
+		continue;
+	}
 	// when `delay` ms outside the window have gone by, counted from 0
 	let out = 0, t = 0, want = null;
 	const spans = visits.map(([o, x]) => [Math.max(0, o), x]).sort((a, b) => a[0] - b[0]);
