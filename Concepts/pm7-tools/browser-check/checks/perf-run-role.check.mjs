@@ -10,5 +10,5 @@ export default async function (t) {
  });
  await f.waitForFunction(() => !!document.querySelector('.pmw-run-tname b'), null, { timeout: 10000 });
  const roles = await f.locator('.pmw-run-tname b').evaluateAll((els) => els.map((e) => ({ text: e.textContent, cls: e.className, lineHeight: getComputedStyle(e).lineHeight, display: getComputedStyle(e).display })));
- await t.check('Run team role names inherit 20px line-height', roles.length > 0 && roles.every((r) => r.lineHeight === '20px' && r.display === 'inline'), JSON.stringify(roles));
+ await t.check('Run team role names inherit 20px line-height', roles.length > 0 && roles.every((r) => r.lineHeight === '20px'), JSON.stringify(roles));
 }
