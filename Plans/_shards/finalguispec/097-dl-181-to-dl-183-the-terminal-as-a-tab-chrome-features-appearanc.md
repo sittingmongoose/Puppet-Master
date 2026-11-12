@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L47132-L50383
+Source lines: L47223-L50482
 
-Source SHA256: `c5957077f2c168bc1f73c05b9ae87b863ea363be0a7b1c647e73ba278fbb7aea`
+Source SHA256: `faba71dc4ce3fe68b94ea0639e20e448c3f9f3c74a8343e647aa275704933a7a`
 
 ---
 
@@ -2056,70 +2056,78 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  X1, X3, A1–A5, S8/S9; DL-235/DL-239. Pip is the Puppet Master brand: crossed control held by the user,
-  brace-shaped head, eyes joined by strings to underside screw eyes 5 units in from the sticks’ lower tips.
-  One solver joins both ends in every still and sampled moving pose; rods are opaque, rear rod
-  solid-shaded; NieR nodes square; Retro strings redraw pixelwise. The 24 px static title-bar mark takes no
-  click or state and yields to mark-only density without moving the bell. The favicon and release tile are
-  static; one Basic Dark app tile, ICO/ICNS/PNG/SVG assets with manifest. Logical micro ≤18, small 19–40
-  and full >40 tiers remain consistent across DPR. Each look reads its tokens: Friendly vinyl, Glass clear
-  blue lens/rim/base without brow band, Basic flat single accent without cheeks, Retro pixel grids, NieR
-  ink/visor/diamond. NieR Pip shows eyes through the band on live and static marks, including title bar, app
-  icon and tray, at every size (X3 B, Jared 2026-10-30). Every animated asset has a
-  complete still base. The always-on tray (A2 B, Jared 2026-10-30) uses A3’s aggregate status faces across
-  Projects; waiting always wins
-  and complete lasts about 10 s. Its accessible name carries the typed status, no colored badge. OS
+  X1, X3, A1–A5, S8/S9; DL-235/DL-239. Pip is the Puppet Master brand: crossed control held by the
+  user, brace-shaped head, eyes joined by strings to underside screw eyes 5 units in from the
+  sticks’ lower tips. One solver joins both ends in every still and sampled moving pose; rods are
+  opaque, rear rod solid-shaded; NieR nodes square; Retro strings redraw pixelwise. The 24 px static
+  title-bar mark takes no click or state and yields to mark-only density without moving the bell.
+  The favicon and release tile are static; one Basic Dark app tile, ICO/ICNS/PNG/SVG assets with
+  manifest. Logical micro ≤18, small 19–40 and full >40 tiers remain consistent across DPR. Each
+  look reads its tokens: Friendly vinyl, Glass clear blue lens/rim/base without brow band, Basic
+  flat single accent without cheeks, Retro pixel grids, NieR ink/visor/diamond. NieR Pip shows eyes
+  through the band on live and static marks, including title bar, app icon and tray, at every size
+  (X3 B, Jared 2026-10-30). Every animated asset has a complete still base. The always-on tray (A2
+  B, Jared 2026-10-30) uses A3’s aggregate status faces across Projects; waiting always wins and
+  complete lasts about 10 s. Its accessible name carries the typed status, no colored badge. OS
   notifications and Friendly’s app tile use Pip while in-app cards keep their kind marks and the
-  notification stack remains the only in-app notification entry. Individual agents consume F3-594’s Pip
-  primitive; small category marks consume robot. Mood mappings in glyph_catalog.json add no keys;
-  onboarding expressions remain illustration unless paired to an owner state. Brand, tray, icon,
-  notification faces and loader are independent of Pip parts. No per-instance stylesheet, random render
-  IDs, second kit or per-surface palette. A1/A3/X2 app/tray detail (2026-10-29): the fixed Basic Dark app
-  tile becomes a plain mark at 24 px and below. macOS tray is a template mark, Windows a colour mark.
-  Working may use the approved four-frame flip, below needs-you’s priority; effective Reduced Motion holds
-  its recognizable working rest frame, and every static NieR brand/app/tray mark remains static.
-  State/accessibility and aggregate precedence never depend on the motion. A5 full mood→default key table:
-  idle→idle; think/working→working; happy/done→complete; alert/wonder/needs-you→waiting; error/oops→failed;
-  sleep/paused→paused; watch→idle (decorative choice preview); wink→complete (once-only decorative Ready
-  sign-off); blocked→blocked; stopping→pending; stopped→skipped; lost→warning; scheduled→pending;
-  unsaved→change-modified. All 22 existing keys remain. Typed owner state overrides the default expression
-  association: queued sleep remains pending, Memory Unverified thinks with pending, reviewing/recovering
-  think with their own keys, mixed alert remains mixed, blocked oops stays blocked, empty sleeping
-  illustration creates no paused record, and illustrative oops never fabricates failure/attention. The
-  existing tour word pip-done is unrelated to Pip. A3 aggregate tray precedence across Projects, highest
-  first: waiting/needs-you > failed > blocked > working > paused > complete > idle. Blocked retains the
-  existing blocked key and its worried face, distinct from a question. Complete is a celebration eligible
-  for about 10 s only when no higher-priority work/attention remains; active work or a new ask immediately
-  supersedes it. Do not turn queued/dependency/illustrative states into questions or failures; preserve
-  lower-priority facts and freshness in the accessible summary. Never replace a stale projection with a
-  healthy zero. W1: Retro draws hand-placed 16, 24 and 32 px sprite grids, with consistent logical tier
-  selection across DPR. The PM monogram and gallery Direction switch are retired lineage, never a product
-  brand variant. X3 B changes visibility of the eyes, never the static/non-interactive nature of title, app
-  and tray rest marks. A1/A3/X3, PM7 Step4, 2026-10-30: release asset names are app/puppet-master.ico
-  (16,20,24,32,48,64,128,256), app/puppet-master.icns, app/png/<size>.png (16 through 1024),
-  app/macos-1024.png and app/tile.svg. Tray exports use tray/macos/<key>-black.svg and -white.svg plus 16/32
-  PNGs, tray/windows/<key>.svg plus 16/20/24/32 PNGs, and working-flip SVGs from the shared micro Think
-  drawing. The fixed app-level tray set follows A1’s app-icon logic rather than a Project’s changing look:
-  macOS template ink, Windows Basic Dark colour; seven status faces and A3 precedence remain. The exported
-  manifest under the title lane icons directory is source/export evidence, not certification of a signed
-  native bundle. The shared brand owner supplies static and live marks and density variants; the title mark remains non-interactive.
-  A1/W1-40, PM7 Step4 audit: lock the Basic Dark release-asset EXPORT palette used when no live page is
-  painted: bg #121212, ctl #E8E8E8, pin #9E9E9E, str #7A8290, head #64B5F6, tile #2D2D2D, edge
+  notification stack remains the only in-app notification entry. Individual agents consume F3-594’s
+  Pip primitive; small category marks consume robot. Mood mappings in glyph_catalog.json add no
+  keys; onboarding expressions remain illustration unless paired to an owner state. Brand, tray,
+  icon, notification faces and loader are independent of Pip parts. No per-instance stylesheet,
+  random render IDs, second kit or per-surface palette. A1/A3/X2 app/tray detail (2026-10-29): the
+  fixed Basic Dark app tile becomes a plain mark at 24 px and below. macOS tray is a template mark,
+  Windows a colour mark. Working may use the approved four-frame flip, below needs-you’s priority;
+  effective Reduced Motion holds its recognizable working rest frame, and every static NieR
+  brand/app/tray mark remains static. State/accessibility and aggregate precedence never depend on
+  the motion. A5 full mood→default key table: idle→idle; think/working→working; happy/done→complete;
+  alert/wonder/needs-you→waiting; error/oops→failed; sleep/paused→paused; watch→idle (decorative
+  choice preview); wink→complete (once-only decorative Ready sign-off); blocked→blocked;
+  stopping→pending; stopped→skipped; lost→warning; scheduled→pending; unsaved→change-modified. All
+  22 existing keys remain. Typed owner state overrides the default expression association: queued
+  sleep remains pending, retained Memory verification state is internal and produces no row face,
+  reviewing/recovering think with their own keys, mixed alert remains mixed, blocked oops stays
+  blocked, empty sleeping illustration creates no paused record, and illustrative oops never
+  fabricates failure/attention. The existing tour word pip-done is unrelated to Pip. A3 aggregate
+  tray precedence across Projects, highest first: waiting/needs-you > failed > blocked > working >
+  paused > complete > idle. Blocked retains the existing blocked key and its worried face, distinct
+  from a question. Complete is a celebration eligible for about 10 s only when no higher-priority
+  work/attention remains; active work or a new ask immediately supersedes it. Do not turn
+  queued/dependency/illustrative states into questions or failures; preserve lower-priority facts
+  and freshness in the accessible summary. Never replace a stale projection with a healthy zero. W1:
+  Retro draws hand-placed 16, 24 and 32 px sprite grids, with consistent logical tier selection
+  across DPR. The PM monogram and gallery Direction switch are retired lineage, never a product
+  brand variant. X3 B changes visibility of the eyes, never the static/non-interactive nature of
+  title, app and tray rest marks. A1/A3/X3, PM7 Step4, 2026-10-30: release asset names are
+  app/puppet-master.ico (16,20,24,32,48,64,128,256), app/puppet-master.icns, app/png/<size>.png (16
+  through 1024), app/macos-1024.png and app/tile.svg. Tray exports use tray/macos/<key>-black.svg
+  and -white.svg plus 16/32 PNGs, tray/windows/<key>.svg plus 16/20/24/32 PNGs, and working-flip
+  SVGs from the shared micro Think drawing. The fixed app-level tray set follows A1’s app-icon logic
+  rather than a Project’s changing look: macOS template ink, Windows Basic Dark colour; seven status
+  faces and A3 precedence remain. The exported manifest under the title lane icons directory is
+  source/export evidence, not certification of a signed native bundle. The shared brand owner
+  supplies static and live marks and density variants; the title mark remains non-interactive.
+  A1/W1-40, PM7 Step4 audit: lock the Basic Dark release-asset EXPORT palette used when no live page
+  is painted: bg #121212, ctl #E8E8E8, pin #9E9E9E, str #7A8290, head #64B5F6, tile #2D2D2D, edge
   rgba(255,255,255,.08). These fixed file-export values are distinct from live token-role mixing;
-  app/tray/favicon exports use this one palette rather than resampling per surface.
-  A4 A, PM7 Step4 review fix: F3-460 owns Friendly's decorative 24 px notification Pip tile and its existing
-  status-key mood mapping, with the kind glyph beside the title. It consumes the shared brand renderer and status/mood projection, never a second renderer or a new binding. OS notification branding remains a native integration requirement;
-  the concept tile does not certify OS delivery or a native notification bundle.
-  A5/PC2, PM7 companion review fix1, 2026-10-30 (Astra A6/Muse1): surface_status_faces.agents describes chat
-  agent rows. Working uses the public working mood, rendered as the distinct three-dot dots face by the
-  shared kit; think remains the intentional chat reviewing/recovering face. Platform rows consume the shared status-face mapping: working/reviewing/recovering use working/dots, mixed uses oops and skipped idle. These
-  are decorative surface differences over unchanged typed status keys. X3 B remains mandatory: the plain-band drawing without eyes is legacy/gallery-only and no product caller may use it.
-  A1/A3/L4, PM7 companion review fix1, 2026-10-30 (Astra A1, title re-export): manifest.json in the title
-  lane icons bundle is SHA-256 2261d7719089a80b40c144dc6733d55850eb9b88c1418362102c43a0fd9f9500, re-hashed
-  for all 141 files. Its two animated Working SVGs are byte-equal to the final kit at ff9476a5c8: micro
-  Think 1.95 s, separate rest/control/lid reduced-motion drawing. Static file bytes are unchanged; per-file
-  manifest provenance distinguishes them from the two new exports. This supersedes the earlier
-  export-manifest citation, not A1’s fixed palette or native-certification boundary.
+  app/tray/favicon exports use this one palette rather than resampling per surface. A4 A, PM7 Step4
+  review fix: F3-460 owns Friendly's decorative 24 px notification Pip tile and its existing
+  status-key mood mapping, with the kind glyph beside the title. It consumes the shared brand
+  renderer and status/mood projection, never a second renderer or a new binding. OS notification
+  branding remains a native integration requirement; the concept tile does not certify OS delivery
+  or a native notification bundle. A5/PC2, PM7 companion review fix1, 2026-10-30 (Astra A6/Muse1):
+  surface_status_faces.agents describes chat agent rows. Working uses the public working mood,
+  rendered as the distinct three-dot dots face by the shared kit; think remains the intentional chat
+  reviewing/recovering face. Platform rows consume the shared status-face mapping:
+  working/reviewing/recovering use working/dots, mixed uses oops and skipped idle. These are
+  decorative surface differences over unchanged typed status keys. X3 B remains mandatory: the
+  plain-band drawing without eyes is legacy/gallery-only and no product caller may use it. A1/A3/L4,
+  PM7 companion review fix1, 2026-10-30 (Astra A1, title re-export): manifest.json in the title lane
+  icons bundle is SHA-256 2261d7719089a80b40c144dc6733d55850eb9b88c1418362102c43a0fd9f9500,
+  re-hashed for all 141 files. Its two animated Working SVGs are byte-equal to the final kit at
+  ff9476a5c8: micro Think 1.95 s, separate rest/control/lid reduced-motion drawing. Static file
+  bytes are unchanged; per-file manifest provenance distinguishes them from the two new exports.
+  This supersedes the earlier export-manifest citation, not A1’s fixed palette or
+  native-certification boundary.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -2130,13 +2138,12 @@ depends_on:
 - SSYS-010
 unblocks: []
 acceptance_criteria:
-- Title mark is static and non-interactive at every density and DPR; no bell displacement.
-- All assets and live consumers share geometry/tokens and connected strings; static base remains visible without
-  CSS.
-- Always-on tray visibility and A3 priority agree with the shared work projection; minimize-to-tray affects Close only.
-- The ≤24 px app mark and macOS-template/Windows-colour tray exports match the kit; four-frame Working becomes
-  still under Reduced Motion/NieR.
-- Full A5 defaults and surface-specific overrides preserve all 22 typed keys and complete A3 tray precedence.
+  - "Title mark is static and non-interactive at every density and DPR; no bell displacement."
+  - "All assets and live consumers share geometry/tokens and connected strings; static base remains visible without CSS."
+  - "Always-on tray visibility and A3 priority agree with the shared work projection; minimize-to-tray affects Close only."
+  - "The ≤24 px app mark and macOS-template/Windows-colour tray exports match the kit; four-frame Working becomes still under Reduced Motion/NieR."
+  - "Full A5 defaults and surface-specific overrides preserve all 22 typed keys and complete A3 tray precedence."
+  - "Memory saved-note rows expose no delivery/verification state faces; retained verification-state accounting stays internal."
 validation_surfaces:
 - "scripts/pm-shard-plans.py"
 - "scripts/pm-plan-index.py"
@@ -2157,6 +2164,7 @@ source_lineage:
 - Concepts/chat-assistant-concepts/opus-5.5-pip/README.md
 - "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)"
 - "DL-260 source lineage only (no product API or implementation obligation): PMLogo.mark/svg/dataUrl/favicon/tierFor/period/kit/TRAY/trayFace/moodFor/onLook/STATUS_FACE, eyes:false, pm7-brand-mark, pm-brand-mark/pm-brand-word and app-name data-mode full|mark were concept API/markup spellings. The accepted Pip geometry, palette, status mappings and native export provenance remain product requirements."
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 preserved_exact_tokens:
 - '#121212'
 - '#E8E8E8'

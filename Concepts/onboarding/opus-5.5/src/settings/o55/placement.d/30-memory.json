@@ -1,95 +1,166 @@
 {
- "_about": "Memory (FO-167, 2026-11-12): the quiet Memory design Jared approved on 2026-11-11 (share/puppet-master/2026-11-11-memory-review, PACKET section 3 and the mock). Memory & Automation > Memory is one page: the switch Remember things between chats, the saved notes (search, a level filter, Add, Edit, Delete, Archived) and one line saying who else reads them. The rows PACKET keeps move to their own homes: the two rule documents to Personas & Crews > Defaults (Standing instructions), Chat history to Project History > Cleanup > Chats, the space meter and Squeeze one chat now to App & Input > What the chat shows, Largest working space to AI & Providers > Limits; the per-run and per-Goal token caps stay in Permissions > Run limits. The 43 rows PACKET hides or removes are retire_with_canon: until Plans/settings_inventory.json stops listing them as active rows (stream P's Settings batch), they stay drawn, off the Memory page, in one More options group of Advanced Settings (memory-pending, until_canon); from the build where the inventory drops them they are retired with nothing else to edit.",
+ "_about": "DL-475 quiet Memory inventory retirement. Retired tuning keys have no live row, search, All Settings or transfer entry; owner UI redesign is specified in Plans. FO-167 preserves these retirements and the surviving row metadata; its quiet renderer uses one page, and the six surviving non-Memory rows move to their approved owner homes.",
  "sections": {
   "memory-home": {
    "to": "context-memory",
-   "title": "Saved notes",
-   "help": "What Puppet Master remembers between chats.",
+   "title": "Your memories",
+   "help": "Turn memory on, then browse, pin, edit or forget what it keeps.",
    "order": 1,
+   "tab": "memories",
    "composed": true
   },
-  "memory-context-meter": null,
-  "memory-limits": null,
-  "memory-notebook": null,
-  "memory-limits-more": null,
-  "memory-assembly": null,
-  "memory-assembly-view": null,
-  "memory-assembly-safety": null,
-  "memory-retrieval": null,
-  "memory-matching": null,
-  "memory-fade": null,
-  "memory-retention": null,
-  "memory-sharing": null,
-  "memory-retention-tools": null,
-  "memory-sources": null,
-  "memory-rulepacks": null,
-  "memory-per-chat": null,
+  "memory-context-meter": {
+   "to": "context-memory",
+   "title": "In chats",
+   "help": "Whether each chat shows how full its working space is.",
+   "order": 102,
+   "tab": "context",
+   "composed": true
+  },
+  "memory-limits": {
+   "to": "context-memory",
+   "title": "When space runs low",
+   "help": "How old context is squeezed so long chats keep going.",
+   "order": 103,
+   "tab": "context"
+  },
+  "memory-notebook": {
+   "to": "context-memory",
+   "title": "Working notebook",
+   "help": "Notes the assistant keeps for itself during long tasks.",
+   "order": 104,
+   "tab": "context"
+  },
+  "memory-limits-more": {
+   "to": "context-memory",
+   "title": "Fine-tune context space",
+   "help": "How the space is split and what is trimmed first.",
+   "order": 105,
+   "tab": "context",
+   "advanced": true
+  },
+  "memory-assembly": {
+   "to": "context-memory",
+   "title": "Standing instructions",
+   "help": "Rules every run reads, in every project and in this one.",
+   "order": 206,
+   "tab": "instructions",
+   "composed": true
+  },
+  "memory-assembly-view": {
+   "to": "context-memory",
+   "title": "What you can see",
+   "help": "Show what the assistant was given for each run.",
+   "order": 207,
+   "tab": "instructions"
+  },
+  "memory-assembly-safety": {
+   "to": "context-memory",
+   "title": "Prompt safety checks",
+   "help": "Keep these on unless you are tracking down a problem.",
+   "order": 208,
+   "tab": "instructions",
+   "advanced": true
+  },
+  "memory-retrieval": {
+   "to": "context-memory",
+   "title": "When memories are used",
+   "help": "When memories are pulled in and how much fits in a reply.",
+   "order": 309,
+   "tab": "retrieval"
+  },
+  "memory-matching": {
+   "to": "context-memory",
+   "title": "How memories are matched",
+   "help": "By meaning, by recency, or by exact words.",
+   "order": 310,
+   "tab": "retrieval"
+  },
+  "memory-fade": {
+   "to": "context-memory",
+   "title": "How long memories last",
+   "help": "Days before an unused note of each kind fades.",
+   "order": 411,
+   "tab": "retention"
+  },
+  "memory-retention": {
+   "to": "context-memory",
+   "title": "Unconfirmed notes",
+   "help": "Notes the assistant proposed that nobody has checked yet.",
+   "order": 412,
+   "tab": "retention"
+  },
+  "memory-sharing": {
+   "to": "context-memory",
+   "title": "Who else can read memories",
+   "help": "Helpers and crews see nothing unless you allow it.",
+   "order": 413,
+   "tab": "retention",
+   "composed": true
+  },
+  "memory-retention-tools": {
+   "to": "context-memory",
+   "title": "Tidy up",
+   "help": "Rebuild the search index, merge duplicates, prune old notes.",
+   "order": 414,
+   "tab": "retention",
+   "advanced": true
+  },
+  "memory-sources": {
+   "to": "context-memory",
+   "title": "What can feed context",
+   "help": "Turn off anything the assistant should not read on its own.",
+   "order": 515,
+   "tab": "sources",
+   "composed": true
+  },
+  "memory-rulepacks": {
+   "to": "context-memory",
+   "tab": "instructions",
+   "title": "Rule packs",
+   "help": "Every set of standing rules, where it comes from, and whether it loaded.",
+   "order": 207.5,
+   "composed": true
+  },
+  "memory-per-chat": {
+   "to": "context-memory",
+   "title": "In one chat",
+   "help": "A chat's own menu does these for that chat only; here you only see where.",
+   "order": 106,
+   "tab": "context",
+   "advanced": true
+  },
   "personas-instructions": {
    "to": "personas",
    "title": "Standing instructions",
    "help": "Rules every run reads, in every project and in this one.",
    "order": 421,
    "tab": "defaults"
-  },
-  "memory-pending": {
-   "to": "advanced",
-   "title": "Memory and chat context",
-   "help": "How notes are found and fade, and how a chat's working space is kept. Puppet Master handles these on its own.",
-   "order": 30,
-   "advanced": true,
-   "until_canon": true
   }
  },
- "retire_with_canon": [
-  "memory.assembly.instruction-visibility",
-  "memory.assembly.rule-pack-display",
-  "memory.assembly.dry-method-guard",
-  "memory.assembly.instruction-budget-mode",
-  "memory.assembly.memory-capsule-budget",
-  "memory.assembly.max-injected-memories",
-  "memory.assembly.injected-context-breakdown",
-  "memory.assembly.compiled-prompt-preview",
-  "memory.assembly.integrity-tracking",
-  "memory.assembly.import-cycle-detection",
-  "memory.assembly.history-admission-gate",
-  "memory.assembly.volatile-quarantine",
-  "memory.assembly.cache-lineage",
-  "memory.assembly.context-dedup",
-  "memory.assembly.epoch-baseline",
-  "memory.retention.retrieval-strategy",
-  "memory.retention.retrieval-mode",
-  "memory.retention.rehydration",
-  "memory.retention.retrieval-balance",
-  "memory.retention.half-life-by-kind",
-  "memory.retention.done-decay-multiplier",
-  "memory.retention.auto-save-unverified",
-  "memory.retention.verify-without-evidence",
-  "memory.retention.pinned-unverified-injection",
-  "memory.retention.gist-review-filter",
-  "memory.retention.subagent-access",
-  "memory.retention.maintenance",
-  "memory.limits.memory-context-window",
-  "memory.limits.auto-compress",
-  "memory.limits.compaction-mode",
-  "memory.limits.compaction-loop-limit",
-  "memory.limits.pressure-start-threshold",
-  "memory.limits.pressure-aggressive-threshold",
-  "memory.limits.low-context-warning",
-  "memory.limits.large-block-threshold",
-  "memory.limits.compaction-immune-pct",
-  "memory.limits.budget-buckets",
-  "memory.limits.tool-result-policy",
-  "memory.limits.local-llm-caps",
-  "memory.notebook.auto-capture",
-  "memory.notebook.resume-capsule",
-  "memory.notebook.capsule-budget-tokens",
-  "memory.notebook.injection-budget-tokens"
- ],
  "overrides": [
   {
    "section": "memory-home",
    "ids": [
     "memory.retention.enabled"
+   ]
+  },
+  {
+   "section": "app-chat-view",
+   "ids": [
+    "general.interaction.context-usage"
+   ]
+  },
+  {
+   "section": "app-chat-view",
+   "ids": [
+    "memory.limits.manual-compact"
+   ]
+  },
+  {
+   "section": "providers-limits-more",
+   "ids": [
+    "memory.limits.max-context-ktokens"
    ]
   },
   {
@@ -104,67 +175,6 @@
    "ids": [
     "memory.retention.history-retention"
    ]
-  },
-  {
-   "section": "app-chat-view",
-   "ids": [
-    "general.interaction.context-usage",
-    "memory.limits.manual-compact"
-   ]
-  },
-  {
-   "section": "providers-limits-more",
-   "ids": [
-    "memory.limits.max-context-ktokens"
-   ]
-  },
-  {
-   "section": "memory-pending",
-   "ids": [
-    "memory.retention.retrieval-mode",
-    "memory.retention.rehydration",
-    "memory.assembly.max-injected-memories",
-    "memory.assembly.memory-capsule-budget",
-    "memory.retention.retrieval-strategy",
-    "memory.retention.retrieval-balance",
-    "memory.limits.memory-context-window",
-    "memory.retention.half-life-by-kind",
-    "memory.retention.done-decay-multiplier",
-    "memory.retention.auto-save-unverified",
-    "memory.retention.verify-without-evidence",
-    "memory.retention.pinned-unverified-injection",
-    "memory.retention.gist-review-filter",
-    "memory.retention.subagent-access",
-    "memory.retention.maintenance",
-    "memory.assembly.instruction-budget-mode",
-    "memory.assembly.dry-method-guard",
-    "memory.assembly.instruction-visibility",
-    "memory.assembly.rule-pack-display",
-    "memory.assembly.injected-context-breakdown",
-    "memory.assembly.compiled-prompt-preview",
-    "memory.assembly.integrity-tracking",
-    "memory.assembly.import-cycle-detection",
-    "memory.assembly.history-admission-gate",
-    "memory.assembly.volatile-quarantine",
-    "memory.assembly.context-dedup",
-    "memory.assembly.epoch-baseline",
-    "memory.assembly.cache-lineage",
-    "memory.limits.auto-compress",
-    "memory.limits.compaction-mode",
-    "memory.limits.pressure-start-threshold",
-    "memory.limits.pressure-aggressive-threshold",
-    "memory.limits.low-context-warning",
-    "memory.limits.tool-result-policy",
-    "memory.limits.budget-buckets",
-    "memory.limits.compaction-immune-pct",
-    "memory.limits.large-block-threshold",
-    "memory.limits.compaction-loop-limit",
-    "memory.limits.local-llm-caps",
-    "memory.notebook.auto-capture",
-    "memory.notebook.resume-capsule",
-    "memory.notebook.capsule-budget-tokens",
-    "memory.notebook.injection-budget-tokens"
-   ]
   }
  ],
  "managers": {
@@ -172,5 +182,50 @@
    "tabs": {},
    "defaultTab": null
   }
- }
+ },
+ "retire_ids": [
+  "memory.assembly.cache-lineage",
+  "memory.assembly.compiled-prompt-preview",
+  "memory.assembly.context-dedup",
+  "memory.assembly.dry-method-guard",
+  "memory.assembly.epoch-baseline",
+  "memory.assembly.history-admission-gate",
+  "memory.assembly.import-cycle-detection",
+  "memory.assembly.injected-context-breakdown",
+  "memory.assembly.instruction-budget-mode",
+  "memory.assembly.instruction-visibility",
+  "memory.assembly.integrity-tracking",
+  "memory.assembly.max-injected-memories",
+  "memory.assembly.memory-capsule-budget",
+  "memory.assembly.rule-pack-display",
+  "memory.assembly.volatile-quarantine",
+  "memory.limits.auto-compress",
+  "memory.limits.budget-buckets",
+  "memory.limits.compaction-immune-pct",
+  "memory.limits.compaction-loop-limit",
+  "memory.limits.compaction-mode",
+  "memory.limits.large-block-threshold",
+  "memory.limits.local-llm-caps",
+  "memory.limits.low-context-warning",
+  "memory.limits.memory-context-window",
+  "memory.limits.pressure-aggressive-threshold",
+  "memory.limits.pressure-start-threshold",
+  "memory.limits.tool-result-policy",
+  "memory.notebook.auto-capture",
+  "memory.notebook.capsule-budget-tokens",
+  "memory.notebook.injection-budget-tokens",
+  "memory.notebook.resume-capsule",
+  "memory.retention.auto-save-unverified",
+  "memory.retention.done-decay-multiplier",
+  "memory.retention.gist-review-filter",
+  "memory.retention.half-life-by-kind",
+  "memory.retention.maintenance",
+  "memory.retention.pinned-unverified-injection",
+  "memory.retention.rehydration",
+  "memory.retention.retrieval-balance",
+  "memory.retention.retrieval-mode",
+  "memory.retention.retrieval-strategy",
+  "memory.retention.subagent-access",
+  "memory.retention.verify-without-evidence"
+ ]
 }

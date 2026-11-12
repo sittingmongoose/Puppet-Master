@@ -50,7 +50,7 @@ Rules:
 ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/interview-subagent-integration.md
 ### 1.3 Persona (canonical term)
 
-A **Persona** is the assigned role definition that shapes an Agent's or Subagent's behavior. It is a static, declarative artifact — a YAML-frontmatter Markdown file — that acts as a **behavior-and-runtime contract**. In addition to identity, instructions, default permissions, and skill references, a Persona MAY declare provider/model/variant preferences, optional runtime control preferences, tool-usage guidance, aliases, and UI-facing metadata. When the Orchestrator or Interview phase manager selects a Persona for a run, the Persona's content and runtime metadata feed both the Agent's compiled context and the effective runtime resolution flow.
+A **Persona** is the assigned role definition that shapes an Agent's or Subagent's behavior. It is a static, declarative artifact — a YAML-frontmatter Markdown file — that acts as a **behavior-and-runtime contract**. In addition to identity, instructions, default permissions, and skill references, a Persona MAY declare optional answer-control preferences, tool-usage guidance, aliases, and UI-facing metadata. When the Orchestrator or Interview phase manager selects a Persona for a run, the Persona's content and runtime metadata feed both the Agent's compiled context and the effective runtime resolution flow.
 
 Expanded scope note: §10.2 is normative and extends this definition without replacing it.
 
@@ -138,13 +138,9 @@ id: "rust-engineer"
 name: "Rust Engineer"
 description: "Expert Rust developer specializing in systems programming, memory safety, and zero-cost abstractions."
 default_mode: "regular"
-default_platform: null
 default_permissions_profile: null
-default_model: null
-default_variant: null
 temperature: null
 top_p: null
-reasoning_effort: null
 talkativeness: "model_default"
 default_skill_refs: []
 disabled_plugins: []
@@ -164,13 +160,9 @@ aliases: []
 | `name` | **Required** | `string` | Human-readable display name. Max 100 characters. |
 | `description` | **Required** | `string` | One-paragraph description of the Persona's expertise. Max 500 characters. |
 | `default_mode` | Recommended | `string` enum | Default run mode (`ask`, `plan`, `regular`, `yolo`) per `Plans/Run_Modes.md`. If omitted, inherits from run config. |
-| `default_platform` | Optional | `string` or `null` | Preferred provider/platform for this Persona. Runtime resolution and fallback semantics are defined in `Plans/Models_System.md`. |
 | `default_permissions_profile` | Recommended | `string` or `null` | Named permissions profile to apply when this Persona is active. References a profile defined in the Permissions system (`Plans/Permissions_System.md`). `null` means inherit from run config. |
-| `default_model` | Optional | `string` or `null` | Default model identifier (`provider_id/model_id`) for this Persona. Selection priority and validation per `Plans/Models_System.md`. `null` means inherit. |
-| `default_variant` | Optional | `string` or `null` | Default variant name for this Persona (e.g., `"fast"`, `"powerful"`). Variant semantics per `Plans/Models_System.md`. `null` means inherit. |
 | `temperature` | Optional | `number` or `null` | Preferred sampling temperature when the active provider transport supports it. Unsupported values are recorded as skipped, not silently applied. |
 | `top_p` | Optional | `number` or `null` | Preferred nucleus sampling value when supported by the active provider transport. |
-| `reasoning_effort` | Optional | `string` or `null` | Preferred provider-specific effort/reasoning level when supported. |
 | `talkativeness` | Optional | `string` enum | Persona-level verbosity/collaboration preference. Allowed values: `talk_a_lot_more`, `talk_more`, `talk_a_little_more`, `model_default`, `talk_a_little_less`, `talk_less`. This is a behavior/instruction control, not a provider sampling knob. |
 | `default_skill_refs` | Recommended | `string[]` | List of skill IDs to auto-load when this Persona is active. References skills per `Plans/Skills_System.md`. Empty array means no auto-loaded skills. |
 | `disabled_plugins` | Optional | `string[]` | List of plugin IDs to silence during hook dispatch when this Persona is active. Plugins listed here are not unloaded, only skipped during hook invocation. Semantics per `Plans/Plugins_System.md` §7.3. Empty array means no plugins disabled. |
@@ -179,6 +171,8 @@ aliases: []
 | `tool_usage_guidance` | Optional | `string` | Freeform tool-planning guidance for this Persona. |
 | `tags` | Recommended | `string[]` | Free tags for filtering and search. Suggested kinds: `phase`, `task`, `subtask`, `iteration`, `cross-phase`, `language`, `domain`, `framework`; arbitrary freeform tags are valid. Settings row `personas.library.persona-tags` exposes this tag input (DL-474). |
 | `aliases` | Optional | `string[]` | Natural-language invocation aliases and display synonyms used during Persona resolution. |
+
+MD2 NEITHER (Jared, 2026-11-12): Personas carry no model, provider preference, preset or thinking depth. Old `default_platform`, `default_model`, `default_variant` and `reasoning_effort` are compatibility-read only. Preserve source bytes for inspection/export, display the retirement and omit the fields from new/imported owner writes; they never affect resolution or silently migrate into shared defaults. Set a lasting model/depth in Settings > Models or choose it for a run. Cost caps and supported answer controls retain their existing meaning.
 
 ### 3.3 Validation rules
 
@@ -189,7 +183,7 @@ Persona validation MUST enforce:
 - imported provider-native files that collide with protected IDs are imported only as non-authoritative seed material or saved under a non-reserved ID chosen by the user/import flow.
 - `name` and `description` are required and must stay within the limits in §3.2.
 - enum fields must use the canonical values from their owner systems.
-- provider/model/runtime-control preferences are validated against `Plans/Models_System.md` at resolution time; unsupported controls are recorded as skipped or clamped, not silently applied.
+- remaining answer-control preferences are validated against `Plans/Models_System.md` at resolution time; unsupported controls are recorded as skipped or clamped, not silently applied.
 - `default_skill_refs`, plugin IDs, and tool IDs must reference known registries when those registries are available; unresolved refs are displayed as readiness warnings rather than hidden.
 - protected core built-ins are read-only to user edit flows, cannot be deleted or disabled, and cannot be project-overridden.
 
@@ -224,7 +218,7 @@ Agent Config > Personas MUST provide:
 
 1. **Library view:** Table of all resolved Personas grouped by protected core, bundled specialty, project-local, global, imported seed, disabled, and advanced/internal where applicable. Columns: Name, ID, Scope, Chat selectable, Child/subagent eligible, Tags, Description (truncated), Readiness, and Source. Sorted alphabetically by display name inside each group; project-local entries sort before global when IDs match.
 
-2. **Create:** "New Persona" opens an editor form with fields for `id`, `name`, `description`, `default_mode` (dropdown), `default_platform`, `default_permissions_profile` (dropdown or null), `default_model`, `default_variant`, `temperature`, `top_p`, `reasoning_effort`, `talkativeness`, `default_skill_refs` (multi-select from skill registry), `preferred_tools`, `discouraged_tools`, `tool_usage_guidance`, `aliases`, `tags` (tag input), and a Markdown body editor. Home selector: Project or Your library; No project offers Your library only. Computer installation/mirror status is separate, as P-060 specifies. `talkativeness` uses the fixed GUI labels `Talk a lot more`, `Talk more`, `Talk a little more`, `Model default`, `Talk a little less`, and `Talk less`, persisted as the enum values from §3.2. Provider support-state gating for runtime controls is defined in `Plans/Models_System.md#PERSONA-CAPABILITY-MATRIX`; `talkativeness` is Persona-instruction-level behavior and therefore follows normal Persona prompt injection rather than provider runtime-control gating.
+2. **Create:** "New Persona" opens an editor form with fields for `id`, `name`, `description`, `default_mode` (dropdown), `default_permissions_profile` (dropdown or null), `temperature`, `top_p`, `talkativeness`, `default_skill_refs` (multi-select from skill registry), `preferred_tools`, `discouraged_tools`, `tool_usage_guidance`, `aliases`, `tags` (tag input), and a Markdown body editor. Home selector: Project or Your library; No project offers Your library only. Computer installation/mirror status is separate, as P-060 specifies. `talkativeness` uses the fixed GUI labels `Talk a lot more`, `Talk more`, `Talk a little more`, `Model default`, `Talk a little less`, and `Talk less`, persisted as the enum values from §3.2. Provider support-state gating for runtime controls is defined in `Plans/Models_System.md#PERSONA-CAPABILITY-MATRIX`; `talkativeness` is Persona-instruction-level behavior and therefore follows normal Persona prompt injection rather than provider runtime-control gating.
 
 3. **Prompt visibility:** Selecting a row shows a prompt preview pane and an effective runtime/control summary. The editor must expose the stored Markdown body and a requested/effective compiled prompt preview when enough runtime context is available. Unsupported or skipped controls are shown as skipped, disabled, or clamped rather than silently accepted.
 
@@ -298,7 +292,7 @@ Child Persona context rules:
 - inject the effective child Persona content resolved from PM Persona storage.
 - include current task, working context, required constraints, and requested/effective runtime state.
 - include the current effective context-shaping state without making a lossy child copy the only truth.
-- do not forward Assistant memory to child runs.
+- do not copy private parent/app-thread memory into a child handoff; this is not a ban on authorized read-only access to current Project and same-user personal notes. Such reads use AMS-026/054 permissions/source restrictions and create no child-owned memory.
 - child runs inherit only the effective compatible subset of parent-allowed tools, skills, plugins, and MCP capabilities.
 
 ContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/Plugins_System.md, ContractName:Plans/Permissions_System.md
@@ -321,7 +315,7 @@ The following integrations are specified by their subsystem SSOTs and MUST NOT b
 - **Permissions:** Persona `default_permissions_profile` → `Plans/Permissions_System.md`.
 - **Skills:** Persona `default_skill_refs` → `Plans/Skills_System.md`.
 - **Plugins:** Plugin hooks that transform Persona context → `Plans/Plugins_System.md`.
-- **Models/runtime controls:** Per-Persona platform/model/variant/runtime preferences (`default_platform`, `default_model`, `default_variant`, `temperature`, `top_p`, `reasoning_effort`) → `Plans/Models_System.md`.
+- **Models/runtime controls:** Per-Persona answer controls (`temperature`, `top_p`); model/provider/preset/depth fields are compatibility-read only → `Plans/Models_System.md`.
 - **Behavior controls:** Per-Persona `talkativeness` instruction behavior and effective-state emission → `Plans/Prompt_Pipeline.md`.
 - **Prompt/runtime observability:** Effective Persona/runtime resolution record and provider capability filtering → `Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD` and `Plans/Prompt_Pipeline.md#PROVIDER-CAPABILITY-FILTERING`.
 - **Tool guidance:** Persona tool-preference fields remain guidance; hard enforcement stays in `Plans/Permissions_System.md`.
@@ -480,7 +474,7 @@ Core Personas are protected PM-owned behavior contracts. They define the highest
 
 ### 11.1 Shared core rules
 
-- Core Personas default model/provider/runtime controls to `Auto` in the UI, stored as inherited/null fields unless a PM-owned definition explicitly sets a value. `Auto` means inherit from the parent run, surface and the Settings/Models resolver with Everywhere, Computer and optional Project defaults, or the frozen resolver record according to `Plans/Models_System.md`.
+- Core Personas carry no model/provider/preset/effort defaults. Runs resolve the shared Settings > Models defaults and explicit run choices through Models_System; old Auto/null preferences are compatibility-read only, never selectable Persona fields.
 - Core Persona definitions are user-immutable and not deletable. PM may update their shipped definitions across product versions.
 - `explorer` and `bash` are subagent-only and are not available in the chat manual Persona picker.
 - `assistant` and `teacher` are direct user-facing Personas and are not hidden worker/subagent Personas.
@@ -501,7 +495,7 @@ Boundaries:
 
 ### 11.3 `general-purpose`
 
-`general-purpose` displays as **General**. It is the broad core execution Persona for complex multi-step work that requires reading, reasoning, editing, command execution, verification, and follow-through. It inherits the main conversation model by default, has broad tool access subject to permissions, and is the fallback broad worker when no narrower core or specialty Persona is clearly better.
+`general-purpose` displays as **General**. It is the broad core execution Persona for complex multi-step work that requires reading, reasoning, editing, command execution, verification, and follow-through. It uses the normal model defaults or an explicit parent/run model choice, has broad tool access subject to permissions, and is the fallback broad worker when no narrower core or specialty Persona is clearly better.
 
 Boundaries:
 - it may act and edit; `explorer` stays read-only.
@@ -633,7 +627,7 @@ Specialty Personas are the configurable layer. They may be first-party bundled P
 - provider-native files under `.claude/agents`, `.cursor/agents`, `.github`, or other provider-native directories are seed/import material only.
 - PM adaptation must translate provider-native `tools` lists into PM permission/tool-preference metadata rather than copying them as authority.
 - provider-native `WebFetch`, `WebSearch`, communication-protocol JSON examples, mandatory `context-manager` steps, KPI/SLA guarantees, and polished completion claims are migration inputs, not literal PM built-in guarantees.
-- default model behavior for specialties is `Auto`/inherit unless a PM-owned definition explicitly sets a provider/model preference. External benchmark model recommendations are ignored.
+- specialties carry no model/provider/preset/effort preferences; shared defaults and explicit run choices decide. External benchmark model recommendations are ignored.
 
 ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Models_System.md, ContractName:Plans/CLI_Bridged_Providers.md
 
@@ -887,7 +881,10 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Personas.md
 canonical_text: >-
-  A Persona is a persistent YAML-frontmatter Markdown behavior-and-runtime contract that shapes Agent or Subagent behavior and feeds compiled context plus effective runtime resolution.
+  A Persona is a persistent YAML-frontmatter Markdown behavior-and-runtime contract that shapes Agent or
+  Subagent behavior and feeds compiled context plus effective runtime resolution. Personas carry no
+  model/provider/preset/effort default under MD2 NEITHER; their remaining answer controls still pass
+  capability filtering.
 gui_related: true
 gui_classification_reason: This unit defines GUI-visible Persona management behavior or UI-facing metadata.
 split_recommended: true
@@ -897,7 +894,7 @@ depends_on: []
 unblocks: []
 acceptance_criteria:
   - Persona remains persistent and user-editable until deletion.
-  - Persona metadata may include identity, instructions, permissions, skills, provider/model preferences, runtime control preferences, aliases, and UI-facing metadata.
+  - Persona metadata may include identity, instructions, permissions, skills, supported answer controls, aliases, and UI-facing metadata; it carries no model/provider/preset/effort preference.
   - The Agent/Subagent/Persona distinction table remains preserved.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -1081,7 +1078,16 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Personas.md
 canonical_text: >-
-  PERSONA.md consists of YAML frontmatter followed by Markdown body; its frontmatter fields are id, name, description, default_mode, default_platform, default_permissions_profile, default_model, default_variant, temperature, top_p, reasoning_effort, talkativeness, default_skill_refs, disabled_plugins, preferred_tools, discouraged_tools, tool_usage_guidance, tags and aliases, and the field definitions own each one's required, recommended or optional status and its enum and value meanings. The tags field is a free string list: phase, task, subtask, iteration, cross-phase, language, domain and framework are suggested kinds, not a closed enum. DL-474 confirms that Settings row personas.library.persona-tags uses the same free tag input and existing Persona-owned storage.
+  PERSONA.md consists of YAML frontmatter followed by Markdown body; its frontmatter fields are id, name,
+  description, default_mode, default_permissions_profile, temperature, top_p, talkativeness,
+  default_skill_refs, disabled_plugins, preferred_tools, discouraged_tools, tool_usage_guidance, tags and
+  aliases, and the field definitions own each one's required, recommended or optional status and its enum
+  and value meanings. The tags field is a free string list: phase, task, subtask, iteration, cross-phase,
+  language, domain and framework are suggested kinds, not a closed enum. DL-474 confirms that Settings
+  row personas.library.persona-tags uses the same free tag input and existing Persona-owned storage.
+  Retired default_platform, default_model, default_variant and reasoning_effort fields are accepted only
+  by compatibility readers, disclosed and excluded from new writes; no selected Persona can change a
+  model or effort.
 gui_related: false
 gui_classification_reason: This unit defines Persona runtime, storage, schema, governance, or owner-boundary behavior rather than visual presentation.
 split_recommended: false
@@ -1140,7 +1146,7 @@ depends_on: []
 unblocks: []
 acceptance_criteria:
   - Validation rejects invalid IDs, protected-ID shadowing, invalid enums, and unavailable references as specified.
-  - Provider/model/runtime controls are validated at resolution time.
+  - Remaining answer controls are capability-validated at resolution time; retired model/provider/preset/effort fields are inert compatibility reads.
   - requested_persona and effective_persona are the canonical runtime identity field names.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -1224,10 +1230,11 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Personas.md
 canonical_text: >-
-  Agent Config > Personas is the one primary Persona library, prompt browser and editor, realized
-  inside Settings as Settings › Personas & Crews by section 4. Other Settings pages route to that same
+  Agent Config > Personas is the one primary Persona library, prompt browser and editor, realized inside
+  Settings as Settings › Personas & Crews by section 4. Other Settings pages route to that same
   management surface. P-060 supplies its home, reach, whole-Project-version and Save feedback without
-  creating another editor.
+  creating another editor. Persona create/edit contains no model/provider/preset/depth fields; old values
+  are inspection-only with a link to the shared Defaults list. Cost and answer controls remain.
 gui_related: true
 gui_classification_reason: This unit defines GUI-visible Persona management behavior or UI-facing metadata.
 split_recommended: false
@@ -1502,16 +1509,21 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Personas.md
 canonical_text: >-
-  Child Persona injection uses a reconstructed handoff bundle, and Persona default_mode applies below explicit run-envelope mode and above the system default.
+  Child Persona injection uses a reconstructed handoff bundle, and Persona default_mode applies
+  below explicit run-envelope mode and above the system default. Child handoff never copies private
+  parent/app-thread memory. Independently authorized helpers may read current Project and same-user
+  personal notes read-only under AMS-026/054 source restrictions, with no other-Project access,
+  mutation or helper-owned store.
 gui_related: false
 gui_classification_reason: This unit defines Persona runtime, storage, schema, governance, or owner-boundary behavior rather than visual presentation.
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-  - Child runs inject effective child Persona content resolved from PM storage.
-  - Child handoff includes current task, working context, required constraints, requested/effective runtime state, and effective context-shaping state.
-  - Run-envelope mode overrides Persona default_mode.
+  - "Child runs inject effective child Persona content resolved from PM storage."
+  - "Child handoff includes current task, working context, required constraints, requested/effective runtime state, and effective context-shaping state."
+  - "Run-envelope mode overrides Persona default_mode."
+  - "Authorized Project/personal-note read succeeds under the existing scope/source gates; private app-thread forwarding and helper writes remain refused."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -1526,6 +1538,7 @@ node_compile_hint:
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Personas-S0028
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Personas-S0029
+  - "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 preserved_exact_tokens:
   - "reconstructed handoff bundle"
   - "do not forward Assistant memory"
@@ -1533,7 +1546,7 @@ preserved_exact_tokens:
   - "Explicit run-envelope `mode`"
   - "System default (`regular`)"
 negative_constraints:
-  - "Do not forward Assistant memory to child runs."
+  - "Do not copy private parent/app-thread memory into child handoffs or use a handoff to bypass source restrictions; authorized read-only Project/personal-note access remains permitted."
   - "Do not make a lossy child copy the only truth."
 preserved_contractrefs:
   - "ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/assistant-memory-subsystem.md, ContractName:Plans/storage-plan.md"
@@ -2135,7 +2148,11 @@ unit_type: constraint
 status: accepted
 owner_doc: Plans/Personas.md
 canonical_text: >-
-  Core Persona default model/provider/runtime controls appear as Auto in the UI and are stored as inherited/null fields unless a PM-owned definition sets a value; core definitions are user-immutable, explorer and bash are subagent-only, assistant and teacher are direct user-facing Personas, and other protected core Personas are chat-selectable unless a narrower owner rule forbids the surface.
+  Core Personas carry no model/provider/preset/effort defaults; use shared Models defaults and explicit
+  run choices. Old Auto/null selection fields are compatibility-read only and omitted from new writes.
+  Core definitions remain user-immutable and not deletable; explorer and bash remain subagent-only,
+  assistant and teacher direct user-facing, and other protected core Personas chat-selectable unless a
+  narrower owner forbids it.
 gui_related: true
 gui_classification_reason: This unit defines user-visible Persona picker and UI default-control behavior.
 split_recommended: false
@@ -2144,9 +2161,9 @@ depends_on:
   - P-031
 unblocks: []
 acceptance_criteria:
-  - Auto defaults inherit according to Models_System.
-  - Core definitions are user-immutable and not deletable.
-  - Manual Persona picker eligibility preserves subagent-only and user-facing distinctions.
+- No core Persona model/provider/preset/effort setting is editable or used in resolution.
+- Core definitions remain user-immutable and not deletable.
+- Manual Persona picker eligibility preserves subagent-only and user-facing distinctions.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -2275,7 +2292,11 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Personas.md
 canonical_text: >-
-  general-purpose displays as General and is the broad core execution Persona for complex multi-step work requiring reading, reasoning, editing, command execution, verification, and follow-through, with boundaries against replacing read-only explorer, terminal-first bash, research Personas, or narrower specialty fits.
+  general-purpose displays as General and is the broad core execution Persona for complex multi-step work
+  requiring reading, reasoning, editing, command execution, verification, and follow-through, with
+  boundaries against replacing read-only explorer, terminal-first bash, research Personas, or narrower
+  specialty fits. The General Persona supplies no model/depth preference; ordinary defaults or an
+  explicit parent/run choice determine the model under Models §2.
 gui_related: false
 gui_classification_reason: This unit defines Persona behavior contract and routing fit rather than visual presentation.
 split_recommended: false
@@ -2796,7 +2817,7 @@ unblocks: []
 acceptance_criteria:
   - Provider-native files under .claude/agents, .cursor/agents, .github, or other provider-native directories are seed/import material only.
   - PM adaptation translates provider-native tools lists into PM permission/tool-preference metadata.
-  - Specialty model behavior defaults to Auto/inherit unless a PM-owned definition explicitly sets a provider/model preference.
+  - Specialties carry no model/provider/preset/effort preferences; normal model defaults and explicit run choices decide.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -3395,6 +3416,7 @@ source_lineage:
 - chat:work-through-teach-gaps
 - Plans/Personas.md#11.8-teacher
 - Plans/Personas.md#P-040-teacher-core-persona
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 source_atom_ids:
 - atom-0090
 - atom-0121
@@ -3448,18 +3470,17 @@ preserved_exact_tokens:
 - avoid guessing
 - handoff
 negative_constraints:
-- Do not introduce `requested_persona_id` or `effective_persona_id` as canonical fields; those are stale aliases
-  in Personas.md.
-- Do not make Teacher a hidden subagent for this feature; existing Plans say `teacher` is user-facing and not subagent-only.
-- Do not present Teacher as a separate feature detached from Teach.
-- Do not let Teacher claim authority without visible source/context disclosure.
-- Do not allow Teacher to perform unsafe mutations as teaching gestures.
-- Do not let Teacher quietly become a builder or auditor.
-- Do not silently switch Persona/model/tool path without disclosure.
-- Do not discard Teacher context during handoff.
-- Do not certify Teacher on a small happy-path chat only.
-- Do not let Teacher answer capability or settings questions without live/source-backed state.
-- Do not treat missing coverage as a passing answer unless it is visibly disclosed and routed.
+  - "Do not introduce `requested_persona_id` or `effective_persona_id` as canonical fields; those are stale aliases in Personas.md."
+  - "Do not make Teacher a hidden subagent for this feature; existing Plans say `teacher` is user-facing and not subagent-only."
+  - "Do not present Teacher as a separate feature detached from Teach."
+  - "Teacher must not invent PM authority or task evidence. Ordinary non-memory task citations and missing-coverage disclosure remain; saved-note sources and per-run context inclusion stay internal without a source inspector or memory-use receipt."
+  - "Do not allow Teacher to perform unsafe mutations as teaching gestures."
+  - "Do not let Teacher quietly become a builder or auditor."
+  - "Do not silently switch Persona/model/tool path without disclosure."
+  - "Do not discard Teacher context during handoff."
+  - "Do not certify Teacher on a small happy-path chat only."
+  - "Do not let Teacher answer capability or settings questions without live/source-backed state."
+  - "Do not treat missing coverage as a passing answer unless it is visibly disclosed and routed."
 owner_hints:
 - Plans/assistant-chat-design.md
 - Plans/Personas.md
@@ -3728,7 +3749,7 @@ canonical_text: Personas owns each Persona as a whole record with stable persona
   a new field-by-field Persona layer. Every project reach includes No project; Only these projects excludes
   application-scope selection. Project switches declare project_switch_ids=[personas.library.disabled-bundled],
   limited to mutable bundled specialties by stable ID; core built-ins cannot be disabled or shadowed.
-  Definition fields such as model, body, tool lists and skills remain whole Persona fields. A version
+  Definition fields such as body, tool lists and skills remain whole Persona fields; retired model/provider/preset/effort fields are inert compatibility reads. A version
   for a Project is an entire same-id definition through the existing save-as-override owner action. Save
   writes the current home with expected revision and narrow Undo/re-target feedback. Selection defaults
   use the Settings resolver through Everywhere, Computer, optional Project and thread, then the Models

@@ -2,9 +2,9 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L6251-L6336
+Source lines: L6247-L6332
 
-Source SHA256: `c306c44aa0e561c7768e4661d95b1a9fafe19159026bf6d1e69cdec9a9e336bb`
+Source SHA256: `03c22068ebf3fdef184df1d11c199f25d74fdf67302c12f9915a98ed4acd73fc`
 
 ---
 
@@ -22,7 +22,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/00-plans-index.md
 canonical_text: |-
-  Current ownership routes are: SSYS-002/059–065 and DR-084/085 for Settings classification/resolution, writers, detached copy and presentation; SRV-016/017 for same-owner settings follow and app work Computer custody, RAS for existing routes; MA-074/MACS-006 for destination readiness/protected app auth; Models MS-005/099/100 for its accepted scoped-owner tier edition with explicit no-Persona/no-stage Conservative rule. q-035 is resolved in live canon and source-memory ledgers remain unchanged.
+  Current ownership routes are: SSYS-002/059–065 and DR-084/085 for Settings classification/resolution, writers, detached copy and presentation; SRV-016/017 for same-owner settings follow and app work Computer custody, RAS for existing routes; MA-074/MACS-006 for destination readiness/protected app auth; Models §2 and MS-005/099/100 for the current fixed order: explicit run choice, scoped build-owner policy, surface/stage built-in default, eligible manually selected account default, This project, then Everywhere/factory. Conservative is retained only in versioned historical decoding; no Persona or command owns a model. q-035 is resolved in live canon and source-memory ledgers remain unchanged.
 
   ACD-508–511 owns No project/place/folder, explicit reads/requests and conversion; T-185/186/187 and PS-145 own access, roots and computer use. GRS-086/087, CWR-045 and OSI-439/440 own app Goal/Crew/continuity/coordination and immutable conversion. APR-073/074, PLS-024, PDS-023 and SQR-019/020 own app Plan/Deep Plan, exact scheduled targets and independent operational pause; ordinary Assistant scoped bundles do not create product Plans or WorkNodes. Only Planning Wizard, PRD Builder and Orchestrator retain no-project workflow gates; real Project-target/capability checks remain distinct.
 

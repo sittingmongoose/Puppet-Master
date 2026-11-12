@@ -6019,7 +6019,7 @@ This addendum states the production wiring of the redesigned Assistant wand modu
 
 ### WM-062 - Wand Module Producer Surfaces
 
-The wand-module redesign changes producer surfaces, not handlers. For every row UCC-169 names, the production wiring entry's "the surfaces that may raise it are exactly: …" list gains the surfaces UCC-169 adds to that row, and no others. The `assistant.redesign.cmd.chat_teach_open_memory` entry gains `wand` and `memory_proposal_line`; `cmd.runtime.approve`, `cmd.runtime.decline` and `cmd.permissions.review_request` gain `workflow_card`, and never `run_dock`; `cmd.chat.revert` gains `revert_confirm` as its only GUI dispatcher, with `message_files_row` recorded as an entry to that sheet and not as a dispatcher. BrainStorm "Answer now" binds `cmd.questionnaire.resume` from `run_dock` and `brainstorm_card` under the questionnaire family's existing exact exclusion: the control reads availability and renders disabled with `command_not_registered` until the family's command and handler admission removes that exclusion. A control that CDRY-021 lists as view state or draft state gets no production wiring entry. The wiring entries themselves are written in `Plans/Wiring_Matrix.production.json` by the companion task, not by this unit.
+The wand-module redesign changes producer surfaces, not handlers. For every row UCC-169 names, the production wiring entry's "the surfaces that may raise it are exactly: …" list gains the surfaces UCC-169 adds to that row, and no others. The `assistant.redesign.cmd.chat_teach_open_memory` entry uses `wand`, `chat_header` and `memory_save_receipt`, with the saved note selected for View; `memory_proposal_line` is retired; `cmd.runtime.approve`, `cmd.runtime.decline` and `cmd.permissions.review_request` gain `workflow_card`, and never `run_dock`; `cmd.chat.revert` gains `revert_confirm` as its only GUI dispatcher, with `message_files_row` recorded as an entry to that sheet and not as a dispatcher. BrainStorm "Answer now" binds `cmd.questionnaire.resume` from `run_dock` and `brainstorm_card` under the questionnaire family's existing exact exclusion: the control reads availability and renders disabled with `command_not_registered` until the family's command and handler admission removes that exclusion. A control that CDRY-021 lists as view state or draft state gets no production wiring entry. The wiring entries themselves are written in `Plans/Wiring_Matrix.production.json` by the companion task, not by this unit.
 
 ```yaml
 plan_unit_id: WM-062
@@ -6028,15 +6028,16 @@ status: accepted
 owner_doc: Plans/Wiring_Matrix.md
 canonical_text: >-
   Production wiring follows UCC-169's producer surfaces exactly. Each named row's exact surface list
-  gains only the surfaces UCC-169 adds to it: assistant.redesign.cmd.chat_teach_open_memory gains wand and
-  memory_proposal_line; cmd.runtime.approve, cmd.runtime.decline and cmd.permissions.review_request
-  gain workflow_card and never run_dock; cmd.chat.revert is dispatched only from revert_confirm, with
-  message_files_row an entry to that sheet. cmd.questionnaire.resume is bound from run_dock and
-  brainstorm_card under the questionnaire family's existing exclusion and renders disabled with
-  command_not_registered until admission. CDRY-021 view-state and draft-state controls get no
-  production wiring entry. The entries are written by the companion task.
-  DL-138 adds plan_card to the existing cmd.execution_window.cancel production entry alongside
-  schedule_manager, matching UCC-169 and the already accepted request source; no new entry or handler is added.
+  gains only the surfaces UCC-169 adds to it: assistant.redesign.cmd.chat_teach_open_memory uses
+  wand, chat_header and memory_save_receipt, never the retired memory_proposal_line;
+  cmd.runtime.approve, cmd.runtime.decline and cmd.permissions.review_request gain workflow_card and
+  never run_dock; cmd.chat.revert is dispatched only from revert_confirm, with message_files_row an
+  entry to that sheet. cmd.questionnaire.resume is bound from run_dock and brainstorm_card under the
+  questionnaire family's existing exclusion and renders disabled with command_not_registered until
+  admission. CDRY-021 view-state and draft-state controls get no production wiring entry. The
+  entries are written by the companion task. DL-138 adds plan_card to the existing
+  cmd.execution_window.cancel production entry alongside schedule_manager, matching UCC-169 and the
+  already accepted request source; no new entry or handler is added.
 gui_related: true
 gui_classification_reason: "Binds visible dock, card, sheet and header producers to existing command routes and their disabled states."
 split_recommended: false
@@ -6047,6 +6048,7 @@ acceptance_criteria:
   - "run_dock is absent from the approve, decline and permission-review producer lists."
   - "No production wiring entry exists for a CDRY-021 view-state or draft-state control."
   - "cmd.questionnaire.resume stays disabled with command_not_registered from run_dock and brainstorm_card until its exclusion is removed by admission."
+  - "Memory-open uses only the admitted shared-page producers; memory_proposal_line and teach_receipt are absent."
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py validate-wiring-matrix
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
@@ -6064,6 +6066,7 @@ source_lineage:
   - "Plans/Decision_Log.md#DL-138 (owner answers, 2026-09-29)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md sha256:dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de sections 7.4, 8.10, 8.12, 8.15"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md sha256:71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493 lines B-CMD-03, B-CMD-04, B-ACD-12"
+  - "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 preserved_exact_tokens:
   - "DL-138"
   - "cmd.execution_window.cancel"
@@ -6094,8 +6097,8 @@ ContractRef: ContractName:Plans/UI_Command_Catalog.md#UCC-169, ContractName:Plan
 **Surfaces.** Where a row UCC-172 names already has a production wiring entry, that entry's list of the surfaces that may raise it gains exactly the surfaces UCC-172 adds, and nothing more:
 - `assistant.redesign.cmd.chat_crew_auto_open_config` gains `workflow_modal` and `crew_auto_receipt`, the Change control of the Crew Auto note in the chat (DL-135).
 - The Teach capture entry gains `teach_document`. Its `wand` surface comes from UCC-169 under WM-062.
-- `assistant.redesign.cmd.chat_teach_open_memory` gains `teach_receipt`.
-- The capsule-preview entry gains `teach_document`.
+- `teach_receipt` returns to the existing Standing instructions destination, never the saved-note Memory route.
+- Legacy preview/pin/verify/discard/auto-save and upkeep commands have no ordinary GUI producer; support contracts and held execution remain internal.
 
 **Held.** `crew_auto_receipt` was held here while card p11 was open. DL-135 has since answered that card, so the surface joins the open-config entry above, and it has no candidate exclusion. `cmd.runtime.automation_stop.set` is never wired and has no candidate exclusion. It is excluded only as deliberately not registered, because the catalog names it as the audit's draft name for the pause. `eli5_sheet` was held here too. It has since been settled by DL-126, and WM-064 wires it.
 
@@ -6106,35 +6109,45 @@ plan_unit_id: WM-063
 unit_type: integration_contract
 status: accepted
 owner_doc: Plans/Wiring_Matrix.md
-canonical_text: 'The seven UCC-171 rows are exact candidate exclusions in Plans/Wiring_Matrix.production.exclusions.json
-  under the DL-035 convention until admission, rendering disabled with command_not_registered, and admission
-  removes each exclusion atomically with its registration and production wiring entry. Existing production
-  wiring entries gain exactly the UCC-172 surfaces: assistant.redesign.cmd.chat_crew_auto_open_config gains
-  workflow_modal and crew_auto_receipt (DL-135), the Teach capture entry gains teach_document, assistant.redesign.cmd.chat_teach_open_memory
-  gains teach_receipt, and the capsule-preview entry gains teach_document. crew_auto_receipt raises only the
-  open-config entry and has no candidate exclusion; cmd.runtime.automation_stop.set is never wired and is excluded
-  only as deliberately not registered. eli5_sheet, settled by DL-126, is wired by WM-064. The companion task
-  writes the entries. DL-138 requires the CS-085 request/result pairs and TeachConfirmRequest.locked to be
-  defined in their existing Collaboration, Back Seat Driver and Memory contract pairs before admission. Schema
-  completion does not admit a handler or remove an exclusion. The existing assistant.redesign.cmd.chat_crew_auto_open_config
-  entry includes crew_auto_receipt; assistant.redesign.w_024.chat_crew_auto_set states project | thread, with
-  the chat check writing only its thread override and never opening the sheet. The existing cmd.review.send_findings_to_agent
-  entry also admits message_chrome for Ask for a fix with taught_rule_check; both source variants retain ComposerBufferResult,
-  composer_not_empty and the source-thread empty-composer/no-send rule (UCC-172). These are revisions of existing
-  entries, not new production rows.
-
-
-  Current projects-refresh contract: No project is genuine application scope, with a named fixed Computer after
-  first message, lazy visible chat folder and no invented Project/Vault. Admit ordinary files/browser/editor/terminal/tools/notebook/history/recovery
-  under exact app roots and owner versions, retaining private notebook/memory isolation and counterpart limits.
-  Six projects.* read tools return explicit requested/looked_in/not_looked_in/partial coverage; source read
-  grants do not authorize writes. Existing cmd.thread.request/spawn Send uses current local previews and receiver
-  authority; maximum three automatic round trips. Two equal conversion choices share one manifest/copy-check/cutover/report/Undo
-  engine; stop/fence Goal/Crew/Plan/timers and use linked destination records by default. No new work plus
-  seven days bounds chat Undo, not independent canonical custody. Screen use is off until exact chat/app/controller/disclosure
-  admission, with one targeted Stop. The exact consumer contract is UCC-216/WM-102 and Plans/projects_refresh_command_bindings.json.
-  Historical schema/hash/replay resources and all unrelated PM7 service/FO-22/motion/auth/identity clauses
-  remain as specified; unavailable handlers remain handler_unavailable.'
+canonical_text: >-
+  The seven UCC-171 rows are exact candidate exclusions in
+  Plans/Wiring_Matrix.production.exclusions.json under the DL-035 convention until admission, and
+  admission removes each exclusion atomically with its registration and production wiring entry.
+  Until admission, the controls of the other six rows render disabled with command_not_registered.
+  cmd.chat.teach.set_lock is internal compatibility only (DL-475, CS-085, UCC-171): it keeps its
+  exclusion, codecs, protection and admission holds, and never renders an ordinary control or a
+  disabled placeholder. Existing production wiring entries gain exactly
+  the UCC-172 surfaces: assistant.redesign.cmd.chat_crew_auto_open_config gains workflow_modal and
+  crew_auto_receipt (DL-135), the Teach capture entry gains teach_document, teach_receipt returns to
+  Standing instructions and never Memory; no ordinary capsule-preview producer remains.
+  crew_auto_receipt raises only the open-config entry and has no candidate exclusion;
+  cmd.runtime.automation_stop.set is never wired and is excluded only as deliberately not
+  registered. eli5_sheet, settled by DL-126, is wired by WM-064. The companion task writes the
+  entries. DL-138 requires the CS-085 request/result pairs and TeachConfirmRequest.locked to be
+  defined in their existing Collaboration, Back Seat Driver and Memory contract pairs before
+  admission. Schema completion does not admit a handler or remove an exclusion. The existing
+  assistant.redesign.cmd.chat_crew_auto_open_config entry includes crew_auto_receipt;
+  assistant.redesign.w_024.chat_crew_auto_set states project | thread, with the chat check writing
+  only its thread override and never opening the sheet. The existing
+  cmd.review.send_findings_to_agent entry keeps only review_card/review_panel ordinary producers;
+  taught_rule_check is internal compatibility without message_chrome. Internal source variants
+  retain ComposerBufferResult, composer_not_empty and the source-thread empty-composer/no-send rule
+  (UCC-172). These are revisions of existing entries, not new production rows.  Current
+  projects-refresh contract: No project is genuine application scope, with a named fixed Computer
+  after first message, lazy visible chat folder and no invented Project/Vault. Admit ordinary
+  files/browser/editor/terminal/tools/notebook/history/recovery under exact app roots and owner
+  versions, retaining private notebook/memory isolation and counterpart limits. Six projects.* read
+  tools return explicit requested/looked_in/not_looked_in/partial coverage; source read grants do
+  not authorize writes. Existing cmd.thread.request/spawn Send uses current local previews and
+  receiver authority; maximum three automatic round trips. Two equal conversion choices share one
+  manifest/copy-check/cutover/report/Undo engine; stop/fence Goal/Crew/Plan/timers and use linked
+  destination records by default. No new work plus seven days bounds chat Undo, not independent
+  canonical custody. Screen use is off until exact chat/app/controller/disclosure admission, with
+  one targeted Stop. The exact consumer contract is UCC-216/WM-102 and
+  Plans/projects_refresh_command_bindings.json. Historical schema/hash/replay resources and all
+  unrelated PM7 service/FO-22/motion/auth/identity clauses remain as specified; unavailable handlers
+  remain handler_unavailable. Retired Memory/Teach-lock commands are explicitly
+  internal_support_only with no GUI consumers/triggers; maintenance holds remain.
 gui_related: true
 gui_classification_reason: Binds the visible Teach, Crew Auto and new-command controls to wiring entries or
   exclusions and their disabled states.
@@ -6148,15 +6161,12 @@ depends_on:
 unblocks:
 - WM-064
 acceptance_criteria:
-- Each of the seven new rows has exactly one candidate exclusion until it is admitted, and none has a production
-  wiring entry before then.
-- Only the surfaces UCC-172 names are added to existing entries.
-- crew_auto_receipt appears only on assistant.redesign.cmd.chat_crew_auto_open_config and has no candidate
-  exclusion. No wiring entry or candidate exclusion exists for cmd.runtime.automation_stop.set; it is excluded
-  only as deliberately not registered. eli5_sheet is wired only as WM-064 states.
-- Validate application versus actual Project-target cases, original exact Project replay, stale scope/preview/permission/Stop/return
-  refusal and the exact command/local/tool binding from UCC-216; no native/event/governance proof follows from
-  static closure.
+  - "Each of the seven new rows has exactly one candidate exclusion until it is admitted, and none has a production wiring entry before then."
+  - "Only the surfaces UCC-172 names are added to existing entries."
+  - "crew_auto_receipt appears only on assistant.redesign.cmd.chat_crew_auto_open_config and has no candidate exclusion. No wiring entry or candidate exclusion exists for cmd.runtime.automation_stop.set; it is excluded only as deliberately not registered. eli5_sheet is wired only as WM-064 states."
+  - "Validate application versus actual Project-target cases, original exact Project replay, stale scope/preview/permission/Stop/return refusal and the exact command/local/tool binding from UCC-216; no native/event/governance proof follows from static closure."
+  - "No Memory proposal/preview/verification/pin/cleanup producer, no Teach receipt that opens Memory and no ordinary rule-check fix-link producer remains; the deliberate Teach receipt (teach_receipt) opens Standing instructions, and current Memory CRUD and written instructions retain separate owners."
+  - "cmd.chat.teach.set_lock keeps its candidate exclusion but renders no ordinary control and no disabled placeholder (DL-475, CS-085, UCC-171)."
 validation_surfaces:
 - python3 scripts/pm-plans-verify.py validate-wiring-matrix
 - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
@@ -6179,6 +6189,7 @@ source_lineage:
   line B-CMP-02
 - 'Plans/Decision_Log.md#DL-130, #DL-135'
 - source_ref:chat:2026-11-03-projects-pass2-approved
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 preserved_exact_tokens:
 - composer_not_empty
 - ComposerBufferResult

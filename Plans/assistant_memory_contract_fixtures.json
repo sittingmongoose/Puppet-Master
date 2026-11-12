@@ -394,6 +394,107 @@
         "artifact_ref": "artifact:export-01",
         "error_reason": null
       }
+    },
+    {
+      "name": "quiet_memory_add",
+      "definition": "MemoryNoteAddRequestV1",
+      "value": {
+        "schema_id": "pm.assistant_memory.note_add_request.v1",
+        "request_id": "note-add-1",
+        "command_id": "cmd.chat.memory.add",
+        "memory_scope": {
+          "scope_kind": "project",
+          "project_id": "project-1"
+        },
+        "text": "Use pnpm for this project."
+      }
+    },
+    {
+      "name": "quiet_memory_edit",
+      "definition": "MemoryNoteEditRequestV1",
+      "value": {
+        "schema_id": "pm.assistant_memory.note_edit_request.v1",
+        "request_id": "note-edit-1",
+        "command_id": "cmd.chat.memory.edit",
+        "memory_scope": {
+          "scope_kind": "project",
+          "project_id": "project-1"
+        },
+        "gist_id": "gist-1",
+        "expected_revision": 2,
+        "text": "Use pnpm for this project."
+      }
+    },
+    {
+      "name": "quiet_memory_delete",
+      "definition": "MemoryNoteDeleteRequestV1",
+      "value": {
+        "schema_id": "pm.assistant_memory.note_delete_request.v1",
+        "request_id": "note-delete-1",
+        "command_id": "cmd.chat.memory.delete",
+        "memory_scope": {
+          "scope_kind": "project",
+          "project_id": "project-1"
+        },
+        "gist_id": "gist-1",
+        "expected_revision": 2
+      }
+    },
+    {
+      "name": "quiet_memory_scope_user",
+      "definition": "MemoryNoteScopeV1",
+      "value": {
+        "scope_kind": "user",
+        "user_id": "user-1"
+      }
+    },
+    {
+      "name": "quiet_memory_scope_app_thread",
+      "definition": "MemoryNoteScopeV1",
+      "value": {
+        "scope_kind": "app_thread",
+        "user_id": "user-1",
+        "thread_id": "thread-1",
+        "execution_host_id": "computer-1"
+      }
+    },
+    {
+      "name": "quiet_memory_delete_committed",
+      "definition": "MemoryNoteMutationResultV1",
+      "value": {
+        "schema_id": "pm.assistant_memory.note_mutation_result.v1",
+        "request_id": "delete-1",
+        "command_id": "cmd.chat.memory.delete",
+        "committed": true,
+        "memory_scope": {
+          "scope_kind": "project",
+          "project_id": "project-1"
+        },
+        "gist_id": "gist-1",
+        "revision": 3,
+        "receipt_ref": "receipt:delete-1",
+        "error_reason": null
+      }
+    },
+    {
+      "name": "quiet_memory_edit_explicit_availability",
+      "definition": "MemoryNoteEditRequestV1",
+      "value": {
+        "schema_id": "pm.assistant_memory.note_edit_request.v1",
+        "request_id": "note-edit-availability-1",
+        "command_id": "cmd.chat.memory.edit",
+        "memory_scope": {
+          "scope_kind": "project",
+          "project_id": "project-1"
+        },
+        "gist_id": "gist-1",
+        "expected_revision": 2,
+        "text": "Use pnpm for this project.",
+        "destination_scope": {
+          "scope_kind": "user",
+          "user_id": "user-1"
+        }
+      }
     }
   ],
   "invalid": [
@@ -722,6 +823,179 @@
             "outcome": "passed"
           }
         ]
+      }
+    },
+    {
+      "name": "quiet_memory_add_rejects_tuning",
+      "definition": "MemoryNoteAddRequestV1",
+      "value": {
+        "schema_id": "pm.assistant_memory.note_add_request.v1",
+        "request_id": "note-add-1",
+        "command_id": "cmd.chat.memory.add",
+        "memory_scope": {
+          "scope_kind": "project",
+          "project_id": "project-1"
+        },
+        "text": "Use pnpm for this project.",
+        "half_life_days": 1
+      }
+    },
+    {
+      "name": "quiet_memory_add_rejects_mixed_scope",
+      "definition": "MemoryNoteAddRequestV1",
+      "value": {
+        "schema_id": "pm.assistant_memory.note_add_request.v1",
+        "request_id": "note-add-1",
+        "command_id": "cmd.chat.memory.add",
+        "memory_scope": {
+          "scope_kind": "user",
+          "user_id": "user-1",
+          "project_id": "project-1"
+        },
+        "text": "Use pnpm for this project."
+      }
+    },
+    {
+      "name": "quiet_memory_add_rejects_blank_text",
+      "definition": "MemoryNoteAddRequestV1",
+      "value": {
+        "schema_id": "pm.assistant_memory.note_add_request.v1",
+        "request_id": "note-add-1",
+        "command_id": "cmd.chat.memory.add",
+        "memory_scope": {
+          "scope_kind": "project",
+          "project_id": "project-1"
+        },
+        "text": "  "
+      }
+    },
+    {
+      "name": "quiet_memory_edit_rejects_tuning",
+      "definition": "MemoryNoteEditRequestV1",
+      "value": {
+        "schema_id": "pm.assistant_memory.note_edit_request.v1",
+        "request_id": "note-edit-1",
+        "command_id": "cmd.chat.memory.edit",
+        "memory_scope": {
+          "scope_kind": "project",
+          "project_id": "project-1"
+        },
+        "gist_id": "gist-1",
+        "expected_revision": 2,
+        "text": "Use pnpm for this project.",
+        "half_life_days": 1
+      }
+    },
+    {
+      "name": "quiet_memory_edit_rejects_mixed_scope",
+      "definition": "MemoryNoteEditRequestV1",
+      "value": {
+        "schema_id": "pm.assistant_memory.note_edit_request.v1",
+        "request_id": "note-edit-1",
+        "command_id": "cmd.chat.memory.edit",
+        "memory_scope": {
+          "scope_kind": "user",
+          "user_id": "user-1",
+          "project_id": "project-1"
+        },
+        "gist_id": "gist-1",
+        "expected_revision": 2,
+        "text": "Use pnpm for this project."
+      }
+    },
+    {
+      "name": "quiet_memory_edit_requires_revision",
+      "definition": "MemoryNoteEditRequestV1",
+      "value": {
+        "schema_id": "pm.assistant_memory.note_edit_request.v1",
+        "request_id": "note-edit-1",
+        "command_id": "cmd.chat.memory.edit",
+        "memory_scope": {
+          "scope_kind": "project",
+          "project_id": "project-1"
+        },
+        "gist_id": "gist-1",
+        "text": "Use pnpm for this project."
+      }
+    },
+    {
+      "name": "quiet_memory_edit_rejects_blank_text",
+      "definition": "MemoryNoteEditRequestV1",
+      "value": {
+        "schema_id": "pm.assistant_memory.note_edit_request.v1",
+        "request_id": "note-edit-1",
+        "command_id": "cmd.chat.memory.edit",
+        "memory_scope": {
+          "scope_kind": "project",
+          "project_id": "project-1"
+        },
+        "gist_id": "gist-1",
+        "expected_revision": 2,
+        "text": "  "
+      }
+    },
+    {
+      "name": "quiet_memory_delete_rejects_tuning",
+      "definition": "MemoryNoteDeleteRequestV1",
+      "value": {
+        "schema_id": "pm.assistant_memory.note_delete_request.v1",
+        "request_id": "note-delete-1",
+        "command_id": "cmd.chat.memory.delete",
+        "memory_scope": {
+          "scope_kind": "project",
+          "project_id": "project-1"
+        },
+        "gist_id": "gist-1",
+        "expected_revision": 2,
+        "half_life_days": 1
+      }
+    },
+    {
+      "name": "quiet_memory_delete_rejects_mixed_scope",
+      "definition": "MemoryNoteDeleteRequestV1",
+      "value": {
+        "schema_id": "pm.assistant_memory.note_delete_request.v1",
+        "request_id": "note-delete-1",
+        "command_id": "cmd.chat.memory.delete",
+        "memory_scope": {
+          "scope_kind": "user",
+          "user_id": "user-1",
+          "project_id": "project-1"
+        },
+        "gist_id": "gist-1",
+        "expected_revision": 2
+      }
+    },
+    {
+      "name": "quiet_memory_delete_requires_revision",
+      "definition": "MemoryNoteDeleteRequestV1",
+      "value": {
+        "schema_id": "pm.assistant_memory.note_delete_request.v1",
+        "request_id": "note-delete-1",
+        "command_id": "cmd.chat.memory.delete",
+        "memory_scope": {
+          "scope_kind": "project",
+          "project_id": "project-1"
+        },
+        "gist_id": "gist-1"
+      }
+    },
+    {
+      "name": "quiet_memory_save_needs_receipt",
+      "definition": "MemoryNoteMutationResultV1",
+      "value": {
+        "schema_id": "pm.assistant_memory.note_mutation_result.v1",
+        "request_id": "delete-1",
+        "command_id": "cmd.chat.memory.delete",
+        "committed": true,
+        "memory_scope": {
+          "scope_kind": "project",
+          "project_id": "project-1"
+        },
+        "gist_id": "gist-1",
+        "revision": 3,
+        "receipt_ref": null,
+        "error_reason": null
       }
     }
   ],
@@ -2304,6 +2578,598 @@
       "expected_schema_valid": false,
       "semantic_checks": [],
       "native_runtime_executed": false
+    }
+  ],
+  "quiet_memory_cases": [
+    {
+      "case_id": "read_project_crew",
+      "rule": "read",
+      "record": {
+        "enabled": true,
+        "source_allowed": true,
+        "scope": "project",
+        "note_project": "p1",
+        "run_project": "p1",
+        "actor": "crew"
+      },
+      "expected": true
+    },
+    {
+      "case_id": "read_personal_crew",
+      "rule": "read",
+      "record": {
+        "enabled": true,
+        "source_allowed": true,
+        "scope": "user",
+        "note_project": "p1",
+        "run_project": "p1",
+        "actor": "crew",
+        "note_user": "u1",
+        "run_user": "u1"
+      },
+      "expected": true
+    },
+    {
+      "case_id": "deny_private_thread_crew",
+      "rule": "read",
+      "record": {
+        "enabled": true,
+        "source_allowed": true,
+        "scope": "app_thread",
+        "note_project": "p1",
+        "run_project": "p1",
+        "actor": "crew",
+        "note_thread": "t1",
+        "run_thread": "t1"
+      },
+      "expected": false
+    },
+    {
+      "case_id": "read_project_reviewer",
+      "rule": "read",
+      "record": {
+        "enabled": true,
+        "source_allowed": true,
+        "scope": "project",
+        "note_project": "p1",
+        "run_project": "p1",
+        "actor": "reviewer"
+      },
+      "expected": true
+    },
+    {
+      "case_id": "read_personal_reviewer",
+      "rule": "read",
+      "record": {
+        "enabled": true,
+        "source_allowed": true,
+        "scope": "user",
+        "note_project": "p1",
+        "run_project": "p1",
+        "actor": "reviewer",
+        "note_user": "u1",
+        "run_user": "u1"
+      },
+      "expected": true
+    },
+    {
+      "case_id": "deny_private_thread_reviewer",
+      "rule": "read",
+      "record": {
+        "enabled": true,
+        "source_allowed": true,
+        "scope": "app_thread",
+        "note_project": "p1",
+        "run_project": "p1",
+        "actor": "reviewer",
+        "note_thread": "t1",
+        "run_thread": "t1"
+      },
+      "expected": false
+    },
+    {
+      "case_id": "read_project_helper",
+      "rule": "read",
+      "record": {
+        "enabled": true,
+        "source_allowed": true,
+        "scope": "project",
+        "note_project": "p1",
+        "run_project": "p1",
+        "actor": "helper"
+      },
+      "expected": true
+    },
+    {
+      "case_id": "read_personal_helper",
+      "rule": "read",
+      "record": {
+        "enabled": true,
+        "source_allowed": true,
+        "scope": "user",
+        "note_project": "p1",
+        "run_project": "p1",
+        "actor": "helper",
+        "note_user": "u1",
+        "run_user": "u1"
+      },
+      "expected": true
+    },
+    {
+      "case_id": "deny_private_thread_helper",
+      "rule": "read",
+      "record": {
+        "enabled": true,
+        "source_allowed": true,
+        "scope": "app_thread",
+        "note_project": "p1",
+        "run_project": "p1",
+        "actor": "helper",
+        "note_thread": "t1",
+        "run_thread": "t1"
+      },
+      "expected": false
+    },
+    {
+      "case_id": "deny_other_project",
+      "rule": "read",
+      "record": {
+        "enabled": true,
+        "source_allowed": true,
+        "scope": "project",
+        "note_project": "p2",
+        "run_project": "p1",
+        "actor": "helper"
+      },
+      "expected": false
+    },
+    {
+      "case_id": "deny_source_off",
+      "rule": "read",
+      "record": {
+        "enabled": true,
+        "source_allowed": false,
+        "scope": "project",
+        "note_project": "p1",
+        "run_project": "p1",
+        "actor": "helper"
+      },
+      "expected": false
+    },
+    {
+      "case_id": "deny_memory_off",
+      "rule": "read",
+      "record": {
+        "enabled": false,
+        "source_allowed": true,
+        "scope": "project",
+        "note_project": "p1",
+        "run_project": "p1",
+        "actor": "helper"
+      },
+      "expected": false
+    },
+    {
+      "case_id": "deny_other_user",
+      "rule": "read",
+      "record": {
+        "enabled": true,
+        "source_allowed": true,
+        "scope": "user",
+        "note_project": "p1",
+        "run_project": "p1",
+        "actor": "helper",
+        "note_user": "u2",
+        "run_user": "u1"
+      },
+      "expected": false
+    },
+    {
+      "case_id": "private_same_thread",
+      "rule": "read",
+      "record": {
+        "enabled": true,
+        "source_allowed": true,
+        "scope": "app_thread",
+        "note_project": "p1",
+        "run_project": "p1",
+        "actor": "assistant",
+        "note_thread": "t1",
+        "run_thread": "t1"
+      },
+      "expected": true
+    },
+    {
+      "case_id": "private_other_thread",
+      "rule": "read",
+      "record": {
+        "enabled": true,
+        "source_allowed": true,
+        "scope": "app_thread",
+        "note_project": "p1",
+        "run_project": "p1",
+        "actor": "assistant",
+        "note_thread": "t1",
+        "run_thread": "t2"
+      },
+      "expected": false
+    },
+    {
+      "case_id": "mutate_crew",
+      "rule": "mutate",
+      "record": {
+        "actor": "crew",
+        "authorized": true,
+        "current_revision": true
+      },
+      "expected": false
+    },
+    {
+      "case_id": "mutate_reviewer",
+      "rule": "mutate",
+      "record": {
+        "actor": "reviewer",
+        "authorized": true,
+        "current_revision": true
+      },
+      "expected": false
+    },
+    {
+      "case_id": "mutate_helper",
+      "rule": "mutate",
+      "record": {
+        "actor": "helper",
+        "authorized": true,
+        "current_revision": true
+      },
+      "expected": false
+    },
+    {
+      "case_id": "mutate_assistant",
+      "rule": "mutate",
+      "record": {
+        "actor": "assistant",
+        "authorized": true,
+        "current_revision": true
+      },
+      "expected": true
+    },
+    {
+      "case_id": "mutate_user",
+      "rule": "mutate",
+      "record": {
+        "actor": "user",
+        "authorized": true,
+        "current_revision": true
+      },
+      "expected": true
+    },
+    {
+      "case_id": "mutate_stale",
+      "rule": "mutate",
+      "record": {
+        "actor": "user",
+        "authorized": true,
+        "current_revision": false
+      },
+      "expected": false
+    },
+    {
+      "case_id": "mutate_denied",
+      "rule": "mutate",
+      "record": {
+        "actor": "assistant",
+        "authorized": false,
+        "current_revision": true
+      },
+      "expected": false
+    },
+    {
+      "case_id": "useful_capture",
+      "rule": "capture",
+      "record": {
+        "enabled": true,
+        "useful_reusable_content": true,
+        "source_allowed": true,
+        "contains_secret": false,
+        "deleted_origin": false,
+        "new_explicit_user_save": false
+      },
+      "expected": true
+    },
+    {
+      "case_id": "no_capture_empty_finished_reply",
+      "rule": "capture",
+      "record": {
+        "enabled": true,
+        "useful_reusable_content": false,
+        "source_allowed": true,
+        "contains_secret": false,
+        "deleted_origin": false,
+        "new_explicit_user_save": false
+      },
+      "expected": false
+    },
+    {
+      "case_id": "no_capture_memory_off",
+      "rule": "capture",
+      "record": {
+        "enabled": false,
+        "useful_reusable_content": true,
+        "source_allowed": true,
+        "contains_secret": false,
+        "deleted_origin": false,
+        "new_explicit_user_save": false
+      },
+      "expected": false
+    },
+    {
+      "case_id": "no_capture_source_off",
+      "rule": "capture",
+      "record": {
+        "enabled": true,
+        "useful_reusable_content": true,
+        "source_allowed": false,
+        "contains_secret": false,
+        "deleted_origin": false,
+        "new_explicit_user_save": false
+      },
+      "expected": false
+    },
+    {
+      "case_id": "no_capture_secret",
+      "rule": "capture",
+      "record": {
+        "enabled": true,
+        "useful_reusable_content": true,
+        "source_allowed": true,
+        "contains_secret": true,
+        "deleted_origin": false,
+        "new_explicit_user_save": false
+      },
+      "expected": false
+    },
+    {
+      "case_id": "no_capture_deleted_from_old_chat",
+      "rule": "capture",
+      "record": {
+        "enabled": true,
+        "useful_reusable_content": true,
+        "source_allowed": true,
+        "contains_secret": false,
+        "deleted_origin": true,
+        "new_explicit_user_save": false
+      },
+      "expected": false
+    },
+    {
+      "case_id": "new_user_save_after_delete",
+      "rule": "capture",
+      "record": {
+        "enabled": true,
+        "useful_reusable_content": true,
+        "source_allowed": true,
+        "contains_secret": false,
+        "deleted_origin": true,
+        "new_explicit_user_save": true
+      },
+      "expected": true
+    },
+    {
+      "case_id": "user_preference_support",
+      "rule": "support",
+      "record": {
+        "claim_kind": "user_statement",
+        "actual_user_input": true,
+        "current_scoped_evidence": false
+      },
+      "expected": "user_statement_only"
+    },
+    {
+      "case_id": "unsupported_world_fact",
+      "rule": "support",
+      "record": {
+        "claim_kind": "world_fact",
+        "actual_user_input": true,
+        "current_scoped_evidence": false
+      },
+      "expected": "ineligible"
+    },
+    {
+      "case_id": "current_scoped_world_fact",
+      "rule": "support",
+      "record": {
+        "claim_kind": "world_fact",
+        "actual_user_input": false,
+        "current_scoped_evidence": true
+      },
+      "expected": "world_fact"
+    },
+    {
+      "case_id": "save_ack_True_False",
+      "rule": "acknowledgment",
+      "record": {
+        "durable_save": true,
+        "no_op": false
+      },
+      "expected": "Saved to memory · View"
+    },
+    {
+      "case_id": "save_ack_False_False",
+      "rule": "acknowledgment",
+      "record": {
+        "durable_save": false,
+        "no_op": false
+      },
+      "expected": null
+    },
+    {
+      "case_id": "save_ack_True_True",
+      "rule": "acknowledgment",
+      "record": {
+        "durable_save": true,
+        "no_op": true
+      },
+      "expected": null
+    },
+    {
+      "case_id": "edit_invalidated",
+      "rule": "edit_invalidation",
+      "record": {
+        "changed": true,
+        "old_derived_eligible": {
+          "summary": false,
+          "index": false
+        }
+      },
+      "expected": true
+    },
+    {
+      "case_id": "edit_stale_summary_rejected",
+      "rule": "edit_invalidation",
+      "record": {
+        "changed": true,
+        "old_derived_eligible": {
+          "summary": true,
+          "index": false
+        }
+      },
+      "expected": false
+    },
+    {
+      "case_id": "fade_done_False",
+      "rule": "decay",
+      "record": {
+        "age_days": 14,
+        "half_life_days": 14,
+        "done": false
+      },
+      "expected": 0.5
+    },
+    {
+      "case_id": "fade_done_True",
+      "rule": "decay",
+      "record": {
+        "age_days": 14,
+        "half_life_days": 14,
+        "done": true
+      },
+      "expected": 0.25
+    },
+    {
+      "case_id": "upkeep_True_False",
+      "rule": "upkeep",
+      "record": {
+        "hold_pending": true,
+        "pinned": false
+      },
+      "expected": "unavailable"
+    },
+    {
+      "case_id": "upkeep_False_True",
+      "rule": "upkeep",
+      "record": {
+        "hold_pending": false,
+        "pinned": true
+      },
+      "expected": "preserve"
+    },
+    {
+      "case_id": "upkeep_False_False",
+      "rule": "upkeep",
+      "record": {
+        "hold_pending": false,
+        "pinned": false
+      },
+      "expected": "archive_preserving_original"
+    },
+    {
+      "case_id": "quiet_reply",
+      "rule": "reply",
+      "record": {
+        "decorations": []
+      },
+      "expected": true
+    },
+    {
+      "case_id": "reply_reject_used_memory_chip",
+      "rule": "reply",
+      "record": {
+        "decorations": [
+          "used_memory_chip"
+        ]
+      },
+      "expected": false
+    },
+    {
+      "case_id": "reply_reject_used_memory_count",
+      "rule": "reply",
+      "record": {
+        "decorations": [
+          "used_memory_count"
+        ]
+      },
+      "expected": false
+    },
+    {
+      "case_id": "reply_reject_next_message_preview",
+      "rule": "reply",
+      "record": {
+        "decorations": [
+          "next_message_preview"
+        ]
+      },
+      "expected": false
+    },
+    {
+      "case_id": "reply_reject_ranking",
+      "rule": "reply",
+      "record": {
+        "decorations": [
+          "ranking"
+        ]
+      },
+      "expected": false
+    },
+    {
+      "case_id": "reply_reject_pin",
+      "rule": "reply",
+      "record": {
+        "decorations": [
+          "pin"
+        ]
+      },
+      "expected": false
+    },
+    {
+      "case_id": "reply_reject_source",
+      "rule": "reply",
+      "record": {
+        "decorations": [
+          "source"
+        ]
+      },
+      "expected": false
+    },
+    {
+      "case_id": "reply_reject_verified_badge",
+      "rule": "reply",
+      "record": {
+        "decorations": [
+          "verified_badge"
+        ]
+      },
+      "expected": false
+    },
+    {
+      "case_id": "reply_reject_rule_receipt",
+      "rule": "reply",
+      "record": {
+        "decorations": [
+          "rule_receipt"
+        ]
+      },
+      "expected": false
     }
   ]
 }

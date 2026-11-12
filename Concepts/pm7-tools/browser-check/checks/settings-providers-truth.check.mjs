@@ -11,8 +11,8 @@
 // console (A2 B-7): Usage & budgets › "Open the console" opens a panel that holds the quota and budget controls with
 //   their values, and its Change reaches the control's own row.
 // try order (A2 B-8): "Service try order" and "Service tried first" offer only the services in the list, each once.
-// lanes (A2 B-9): "Service for each lane" offers every service in the list (ready ones can be picked, the others say
-//   why not), and picking ChatGPT / Codex stores it.
+// lanes (A2 B-9): retired with its row. Settings batch 3 (DL-476, Jared's one model design) removed "Service for
+//   each lane", so this check no longer looks for it.
 // Each test runs on the surfaces asked for (normal and T3's sandbox unless --set sandbox= picks one).
 
 async function settings(t, surface, [w, h] = [1920, 1080]) {
@@ -180,7 +180,6 @@ for (const surface of ['normal', 'sandbox']) {
 		await go(t, f, 'ai', 'providers');
 		const r = await roster(f);
 		const names = r.rows.map((x) => x.name);
-		const readyNames = r.rows.filter((x) => /^Ready\b/.test(x.meta)).map((x) => x.name);
 		// "Service tried first": its choices are services, each once
 		await tab(t, f, 'Models');
 		const opts = (id) => f.evaluate((id) => {
@@ -192,30 +191,6 @@ for (const surface of ['normal', 'sandbox']) {
 			const strange = first.filter((o) => !names.includes(o.label));
 			const twice = first.map((o) => o.label).filter((x, i, l) => l.indexOf(x) !== i);
 			await t.check(`"Service tried first" offers only services, each once (${first.length})`, strange.length === 0 && twice.length === 0, [...strange.map((o) => `not a service: ${o.label}`), ...twice.map((x) => `twice: ${x}`)].join('; '));
-		}
-		// "Service for each lane": every service, the ready ones can be picked
-		const lane = await opts('ai.models.per-lane-platform');
-		if (await t.check('Models has "Service for each lane"', !!lane)) {
-			const offered = lane.map((o) => o.label);
-			const missing = names.filter((n) => !offered.includes(n));
-			await t.check(`"Service for each lane" offers every service (${lane.length} choices for ${names.length} services)`, missing.length === 0, `missing: ${missing.join(', ')}`);
-			const blocked = lane.filter((o) => readyNames.includes(o.label) && o.disabled).map((o) => o.label);
-			await t.check('every ready service can be picked for a lane', blocked.length === 0, blocked.join(', '));
-			// pick ChatGPT / Codex through the visible dropdown
-			await f.evaluate(() => { const sel = document.querySelector('[data-continuous-workspace-body="providers"] select[data-setting="ai.models.per-lane-platform"]'); let d = sel.closest('details'); while (d) { if (!d.open) d.querySelector(':scope > summary').click(); d = d.parentElement.closest('details'); } });
-			await t.page.waitForTimeout(500);
-			await f.evaluate(() => { const sel = document.querySelector('[data-continuous-workspace-body="providers"] select[data-setting="ai.models.per-lane-platform"]'); const tr = sel.closest('.pm51-dd').querySelector('.pm51-dd-trigger'); tr.scrollIntoView({ block: 'center' }); });
-			await t.page.waitForTimeout(400);
-			await f.locator('[data-continuous-workspace-body="providers"] .setting-row:has(select[data-setting="ai.models.per-lane-platform"]) .pm51-dd-trigger').first().click({ timeout: 5000 });
-			const opt = f.locator('.pm51-popout [role="option"]').filter({ has: f.locator('.pm51-popout-label', { hasText: /^ChatGPT \/ Codex$/ }) }).first();
-			await opt.waitFor({ state: 'visible', timeout: 4000 }).catch(() => {});
-			const can = await opt.count();
-			if (await t.check('the lane dropdown lists ChatGPT / Codex', can > 0)) {
-				await opt.click();
-				await t.page.waitForTimeout(500);
-				const v = await f.evaluate(() => [PM51.value('ai.models.per-lane-platform'), PM51.valueLabel('ai.models.per-lane-platform', PM51.value('ai.models.per-lane-platform'))]);
-				await t.check(`picking ChatGPT / Codex stores it (${v.join(' → ')})`, v[1] === 'ChatGPT / Codex', v.join(' / '));
-			} else await t.page.keyboard.press('Escape');
 		}
 		// "Service try order": its editor lists services and offers the rest, each once
 		await tab(t, f, 'Limits & switching');

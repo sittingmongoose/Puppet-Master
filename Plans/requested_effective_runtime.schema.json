@@ -696,7 +696,7 @@
   "type": "object",
   "$defs": {
     "ModelPrecedenceAuditV2": {
-      "type": "object",
+      "type": "object", "description": "Historical read-only scoped_owner_ladder_v2 audit codec. Numeric tiers and Standard/Conservative/Aggressive retain original bytes; this definition authorizes no current model defaults or emission. Current model selection follows Models_System section 2 and MS-105, never a reinterpretation of these old tiers.",
       "additionalProperties": false,
       "required": [
         "tier_version",
