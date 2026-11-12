@@ -27,6 +27,7 @@
 //   the toggle's own cost: the frame that holds the loops and the first frame after the waking move each restyle at
 //   most 150 elements (--set toggle=; rules keyed by the loops' own selectors restyled 650-730 in a frame on the 3090);
 //   the frame's length and the next frames' recalcs are logged.
+// Key, window resize and a real hidden/visible tab round trip each wake from a separately asserted still state.
 // Then (d) with Reduced Motion on the page never goes still, marks nothing and its running loops stay as they were;
 // and (e) with the onboarding window open, and during the Guided Tour, the page never goes still: an open while still
 // lets the loops go at once (the app beneath is held by the window's own rule, and the stage keeps its own loop; the
@@ -160,6 +161,22 @@ export default async function (t) {
 	const f = await t.app.open({ query: `pm-warm=0&pm-still=${after}` });
 	await f.evaluate(() => document.fonts.ready.then(() => true));
 	await f.evaluate(MARKER);
+	// Diagnostic only: if a view cannot stay still, report its spontaneous inputs and the caller of .focus().
+	await f.evaluate(() => {
+		window.__stillInputs = [];
+		const focus = HTMLElement.prototype.focus;
+		HTMLElement.prototype.focus = function (...args) {
+			window.__stillFocusCaller = new Error('focus caller').stack;
+			try { return focus.apply(this, args); } finally { window.__stillFocusCaller = null; }
+		};
+		for (const type of ['focus', 'focusin', 'resize', 'input', 'compositionstart', 'compositionupdate', 'visibilitychange']) {
+			window.addEventListener(type, (e) => {
+				if (!e.isTrusted) return;
+				window.__stillInputs.push({ type, t: Math.round(performance.now()), target: e.target?.id || e.target?.tagName || 'window', visibility: document.visibilityState, caller: window.__stillFocusCaller });
+				if (window.__stillInputs.length > 30) window.__stillInputs.shift();
+			}, true);
+		}
+	});
 	const cdp = await t.page.context().newCDPSession(t.page);
 	const url = f.url();
 	// the script blocks that draw while still, by the id the build gives each block
@@ -176,6 +193,7 @@ export default async function (t) {
 			const at = `${look} ${view === 'dashboard' ? 'home' : view}`;
 			await f.evaluate((id) => PM_PAGES.go(id), view);
 			await move();
+			await f.evaluate(() => { window.__stillInputs = []; });
 			const t0 = Date.now();
 			await t.page.waitForTimeout(Math.min(1500, after / 2));
 
@@ -219,6 +237,10 @@ export default async function (t) {
 			}
 			if (a.still) await t.check(`${at}: going still restyles at most ${toggleMax} elements`, !!(on && on.found) && on.first <= toggleMax, on && on.found ? `${on.first} elements in the frame that holds the loops (${on.firstFrameMs} ms frame); largest recalc in the next frames ${on.max} (${on.maxMs} ms), ${on.total} in ${on.steps}` : 'no style recalc after the state went on (or no mark): could not judge');
 
+			const stable = await f.evaluate(() => ({ still: document.documentElement.hasAttribute('data-pm-still'), inputs: window.__stillInputs }));
+			await t.check(`${at}: the view stays still throughout its rest traces`, a.still && stable.still,
+				`still ${a.still} -> ${stable.still}; new wake events ${JSON.stringify(stable.inputs)}`);
+
 			// (c) one real move wakes it, and each held loop goes on from where it was
 			const held = await f.evaluate(() => { const out = []; window.__stillKeep.forEach((an, i) => { if (an.playState === 'paused') out.push([i, an.currentTime]); }); window.__stillHeld = out; window.__stillWake = 0; window.addEventListener('pointermove', (e) => { if (!window.__stillWake) window.__stillWake = e.timeStamp; }, { capture: true, once: true }); return out.length; });
 			const wk = await trace(cdp, { ms: 900, url, during: async () => { await t.page.waitForTimeout(150); await move(); } });
@@ -249,6 +271,49 @@ export default async function (t) {
 				await t.check(`${at}: waking restyles at most ${toggleMax} elements`, !!(off && off.found) && off.first <= toggleMax, off && off.found ? `${off.first} elements in the first frame after the move (${off.firstFrameMs} ms frame); largest recalc in the next frames ${off.max} (${off.maxMs} ms), ${off.total} in ${off.steps}` : 'no style recalc after the wake (or no mark): could not judge');
 			}
 		}
+	}
+
+	// Every additional wake starts from still. No synthetic events or focus-based proxy for visibility.
+	await t.app.look('basic-dark');
+	await f.evaluate(() => PM_PAGES.go('settings'));
+	await move();
+	const stillBefore = async (name) => {
+		await t.page.waitForTimeout(after + 1800);
+		const state = await f.evaluate(() => ({ still: document.documentElement.hasAttribute('data-pm-still'), inputs: window.__stillInputs }));
+		await t.check(`${name}: page is still before the wake`, state.still, JSON.stringify(state));
+		return state.still;
+	};
+	await stillBefore('key');
+	await t.page.keyboard.press('Shift');
+	await t.check('one key wakes the still page', !(await f.evaluate(() => document.documentElement.hasAttribute('data-pm-still'))));
+	await stillBefore('resize');
+	await t.viewport(1900, 1060);
+	await t.page.waitForTimeout(150);
+	await t.check('one window resize wakes the still page', !(await f.evaluate(() => document.documentElement.hasAttribute('data-pm-still'))));
+	await t.viewport(1920, 1080);
+	await stillBefore('visibilitychange');
+	await f.evaluate(() => {
+		window.__stillVisibility = [];
+		window.addEventListener('visibilitychange', () => {
+			const row = { visible: document.visibilityState === 'visible', before: document.documentElement.hasAttribute('data-pm-still') };
+			window.__stillVisibility.push(row);
+			queueMicrotask(() => { row.after = document.documentElement.hasAttribute('data-pm-still'); });
+		}, true);
+	});
+	await cdp.send('Emulation.setFocusEmulationEnabled', { enabled: false });
+	let other;
+	try {
+		other = await t.page.context().newPage();
+		await other.bringToFront();
+		await f.waitForFunction(() => document.visibilityState === 'hidden', null, { timeout: 5000 });
+		await t.check('becoming hidden leaves the page still', await f.evaluate(() => document.documentElement.hasAttribute('data-pm-still')));
+		await t.page.bringToFront();
+		await f.waitForFunction(() => document.visibilityState === 'visible', null, { timeout: 5000 });
+		const changes = await f.evaluate(() => window.__stillVisibility);
+		await t.check('becoming visible itself wakes the still page', changes.some((x) => x.visible && x.before && x.after === false), JSON.stringify(changes));
+	} finally {
+		if (other) await other.close();
+		await cdp.send('Emulation.setFocusEmulationEnabled', { enabled: true });
 	}
 
 	// ---- (e) the onboarding window and the tour: never still while either is open ----

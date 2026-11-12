@@ -2,7 +2,7 @@
    endless decorative loops (breathing marks, spinning rings, loaders, working pulses) kept the compositor drawing a
    frame on every refresh with nobody at the page, about 119 a second at 120 Hz in every look: Glass Dark Home cost 450
    ms a second of GPU-thread time against 62 with them paused (pm7-perf lane E's P1). After STILL_AFTER with no pointer
-   move, press, wheel, key or touch the page goes still (data-pm-still on <html>) and every one of them holds where it
+   move, press, wheel, key, touch, focus, input, composition, resize or return to a visible tab the page goes still (data-pm-still on <html>) and every one of them holds where it
    is; the next input lets them go on from there in that same event, so nothing restarts or jumps.
    How: going still, the script asks the page for its animations once and marks the element of each CSS animation that
    runs endlessly (data-pm-held="self", or "before"/"after"/"marker" for a pseudo-element's), and four rules
@@ -140,7 +140,11 @@
     wake();
     if (!timer) arm(after);
   };
-  ['pointermove', 'pointerdown', 'wheel', 'keydown', 'touchstart'].forEach((t) => window.addEventListener(t, input, { capture: true, passive: true }));
+  ['pointermove', 'pointerdown', 'wheel', 'keydown', 'touchstart', 'resize', 'focusin', 'input', 'compositionstart', 'compositionupdate'].forEach((t) => window.addEventListener(t, input, { capture: true, passive: true }));
+  window.addEventListener('focus', (e) => { if (e.target === window) input(e); }, true);
+  document.addEventListener('visibilitychange', (e) => { if (document.visibilityState === 'visible') input(e); });
+  /* scroll is deliberately absent: the chat's own follow glide is not input. A script's .focus() produces trusted
+     focusin too; the browser check verifies that every visited view settles and stays still with this wake enabled. */
   /* Reduced Motion, the onboarding window or the tour beginning while still: let the loops go */
   try {
     new MutationObserver(() => { if (still && heldBack()) { wake(); arm(after); } })

@@ -22,7 +22,7 @@ function makePage({ search = '', reduced = false } = {}) {
 	const htmlAttrs = new Map();
 	const notify = (name, target = html) => { for (const o of observers) if (o.on !== false && (!o.filter || o.filter.includes(name))) o.cb([{ attributeName: name, target }]); };
 	const html = attrsOf(htmlAttrs, notify);
-	const document = { documentElement: html };
+	const document = { documentElement: html, visibilityState: 'visible', addEventListener: (t, fn) => { (listeners[t] ||= []).push(fn); } };
 	const elements = [];
 	const el = (name, { inWindow = false, shadow = false } = {}) => {
 		const e = { nodeType: 1, name, ...attrsOf(new Map()), getRootNode: () => (shadow ? {} : document), closest: () => (inWindow ? {} : null),
@@ -56,7 +56,7 @@ function makePage({ search = '', reduced = false } = {}) {
 	vm.createContext(ctx);
 	vm.runInContext(SRC, ctx);
 	return {
-		window, html, el, anim, animations,
+		window, document, html, el, anim, animations,
 		advance(ms) {
 			const end = now + ms;
 			for (;;) {
@@ -66,7 +66,7 @@ function makePage({ search = '', reduced = false } = {}) {
 			}
 			now = end;
 		},
-		input(type = 'pointermove', trusted = true) { for (const fn of listeners[type] || []) fn({ isTrusted: trusted, type }); },
+		input(type = 'pointermove', trusted = true) { for (const fn of listeners[type] || []) fn({ isTrusted: trusted, type, target: type === 'visibilitychange' ? document : window }); },
 		fire(type, target, animationName, pseudoElement = '') { for (const fn of listeners[type] || []) fn({ type, target, animationName, pseudoElement }); },
 		held: (e) => e.getAttribute('data-pm-held'),
 		// another renderer patches an element in place and drops the attributes it did not write
@@ -214,6 +214,30 @@ const tests = {
 		q.advance(120000);
 		assert.equal(q.window.PM_STILL.still(), false);
 	}
+};
+
+for (const type of ['focus', 'resize', 'focusin', 'input', 'compositionstart', 'compositionupdate']) {
+ tests[`trusted ${type} wakes in the event and restarts the quiet wait; synthetic ${type} does not`] = () => {
+  const p = makePage(); const e = p.el('loop'); p.anim(e); p.advance(21000);
+  p.input(type, false); assert.equal(p.window.PM_STILL.still(), true, 'synthetic event stays still');
+  p.input(type); assert.equal(p.window.PM_STILL.still(), false, 'trusted event wakes'); assert.equal(p.held(e), null);
+  p.advance(19000); p.input(type); p.advance(19000);
+  assert.equal(p.window.PM_STILL.still(), false, 'later event restarts the wait');
+  p.advance(1100); assert.equal(p.window.PM_STILL.still(), true, 'goes still again');
+ };
+}
+tests['hidden does not wake, visible does and restarts the wait'] = () => {
+ const p = makePage(); p.anim(p.el('loop')); p.advance(21000);
+ p.document.visibilityState = 'hidden'; p.input('visibilitychange');
+ assert.equal(p.window.PM_STILL.still(), true, 'hidden is not input');
+ p.document.visibilityState = 'visible'; p.input('visibilitychange');
+ assert.equal(p.window.PM_STILL.still(), false, 'return to visible wakes');
+ p.advance(19900); assert.equal(p.window.PM_STILL.still(), false);
+ p.advance(200); assert.equal(p.window.PM_STILL.still(), true);
+};
+tests['trusted scrolling alone never wakes (the chat follows itself)'] = () => {
+ const p = makePage(); p.advance(21000); p.input('scroll');
+ assert.equal(p.window.PM_STILL.still(), true);
 };
 
 let failed = 0;
