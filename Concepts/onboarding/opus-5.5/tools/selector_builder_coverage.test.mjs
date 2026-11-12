@@ -43,11 +43,23 @@ const last = (s) => {
 const state = new Set(['active', 'selected', 'is-active', 'is-current', 'is-selected', 'o55np-cur-over', 'pmh-on']);
 const classesOf = (s) => [...s.matchAll(/\.([\w-]+)/g)].map((m) => m[1]);
 const descendants = (node) => node.children.flatMap((child) => [child, ...descendants(child)]);
+// Exercise the real Jujutsu strip and fallback icon builders too. The DOM shim serialises the builder's own
+// tag/class arguments; it supplies no marker names. Operation Log takes the real JJ_SVG fallback.
+const jj = read('../../../leftrail-redesign/src/concepts/d/15-jj.js');
+const decl = (name) => { const m = jj.match(new RegExp('const ' + name + ' = [^]*?;')); assert.ok(m, name); return m[0]; };
+const jjFn = (name) => { const m = jj.match(new RegExp('function ' + name + '\\([^]*?\\n}')); assert.ok(m, name); return m[0]; };
+const h = (tag, attrs, ...kids) => ({
+ tag, attrs, kids, innerHTML: '', addEventListener() {},
+ toString() { const cls = [attrs.class || []].flat().filter(Boolean).join(' '); return `<${tag} class="${cls}">${this.innerHTML}${kids.flat(Infinity).filter(Boolean).join('')}</${tag}>`; }
+});
+const jjCtx = vm.createContext({ window: {}, PMR: { h, hover() {}, neonMap: {} } });
+vm.runInContext(decl('JJ_SIZE') + '\n' + decl('JJ_TABS') + '\n' + decl('JJ_SVG') + '\nconst jh = (spec, attrs, ...kids) => PMR.h(spec, attrs, ...kids);\n' + jjFn('jjIco') + '\n' + jjFn('jjBuildStrip'), jjCtx);
+const samples = [false, true].map((home) => { ctx.state.home = home; return { name: 'renderDomainRail', html: vm.runInContext('renderDomainRail(D.domains[0])', ctx), svgRoots: false }; });
+samples.push({ name: 'jjBuildStrip/jjIco', html: String(vm.runInContext('jjBuildStrip()', jjCtx)), svgRoots: true });
 const only = process.argv.find((x) => x.startsWith('--rule='))?.split('=')[1];
 const failures = new Set(), coverage = {};
-for (const home of [false, true]) {
- ctx.state.home = home;
- const nodes = parse(vm.runInContext('renderDomainRail(D.domains[0])', ctx));
+for (const sample of samples) {
+ const nodes = parse(sample.html);
  for (const rule of rules.filter((r) => only === undefined || String(r.rule) === only)) for (const variant of rule.variants || [rule]) {
   const prefix = variant.original.replace(/\s+(?:\*|:where\(\*\))$/, '').replace(/\s*>$/, '');
   if (!rule.omit) assert.equal(variant.replacement.replace(/\s+:where\([^()]*\)$/, '').replace(/\s*>$/, ''), prefix, `rule ${rule.rule}: descendant rewrite must preserve its carrier`);
@@ -56,9 +68,9 @@ for (const home of [false, true]) {
   const directParent = left.endsWith('>') ? classesOf(last(left.slice(0, -1).trim())[1]).filter((c) => !state.has(c)) : null;
   const allowed = new Set(classesOf(variant.replacement?.match(/:where\(([^()]*)\)$/)?.[1] || ''));
   for (const node of nodes.filter((n) => n.classes.some((c) => carriers.includes(c)) && (!directParent || n.parent.classes.some((c) => directParent.includes(c))))) {
-   for (const child of descendants(node).filter((n) => !n.svg)) {
+   for (const child of descendants(node).filter((n) => !n.svg || (sample.svgRoots && n.tag === 'svg'))) {
     coverage[rule.rule] = (coverage[rule.rule] || 0) + 1;
-    if (rule.omit || !child.classes.some((c) => allowed.has(c))) failures.add(`rule ${rule.rule}: ${child.tag}${child.classes.length ? '.' + child.classes.join('.') : ' [no marker]'} from renderDomainRail is no longer matched`);
+    if (rule.omit || !child.classes.some((c) => allowed.has(c))) failures.add(`rule ${rule.rule}: ${child.tag}${child.classes.length ? '.' + child.classes.join('.') : ' [no marker]'} from ${sample.name} is no longer matched`);
    }
   }
  }
@@ -67,4 +79,4 @@ assert.ok(coverage[only ?? 0] > 0, 'the requested rule must exercise real builde
 console.log('Real builder coverage: ' + JSON.stringify(coverage));
 for (const message of failures) console.log('FAIL ' + message);
 assert.equal(failures.size, 0, `${failures.size} dropped rule/element pairs from the real builder`);
-console.log('PASS JSON allow-lists cover the real Settings rail text builders');
+console.log('PASS JSON allow-lists cover the real Settings rail and Jujutsu strip builders');
