@@ -177,7 +177,9 @@ def other_stop_receipt(w):
 
 def advance_current_goal_stop(w):
     if hasattr(w,'goal_bridge'):
-        return w.goal_bridge.world.host_stop.manual(w.goal_bridge.route.scope,'stop')
+        host,scope=w.goal_bridge.world.host_stop,w.goal_bridge.route.scope
+        if host.record(scope)['latched']:host.manual(scope,'resume')
+        return host.manual(scope,'stop')
     return other_stop_receipt(w)
 
 

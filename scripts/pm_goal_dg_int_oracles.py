@@ -312,7 +312,9 @@ def p7_cases(run):
              neg(cancelled, 'cancelled', d06_control_substituted), 'unavailable:MISSING_ORIGINAL_VALUE:select/cell_substituted')
 
     def newer_goal_stop(w):
-        w.goal_bridge.world.host_stop.manual(w.goal_bridge.route.scope,'stop')
+        host,scope=w.goal_bridge.world.host_stop,w.goal_bridge.route.scope
+        if host.record(scope)['latched']:host.manual(scope,'resume')
+        host.manual(scope,'stop')
     run.case(g, 'P7L/cancelled_newer_goal_stop_before_read', 'negative',
              neg(cancelled, 'cancelled', lambda w, c: newer_goal_stop(w)),
              'unavailable:SOURCE_CHANGED:legacy_current_cancelled/goal_stop')
