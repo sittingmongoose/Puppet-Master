@@ -32,6 +32,14 @@
 //   elements at about fifty loops still exceeds its limit169 widely, and Usage118/H21 still exceeds82.
 //   Controlled 17-product-loader validation adds68 marked groups (H=92,R=187–192), versus H=24/R=51–58.
 //   the frame's length and the next frames' recalcs are logged.
+//   Before each look's measured cells, visit Usage and let its real first-drag prewarm finish once. That six-frame
+//   cloned-card rehearsal has its own 1200ms timer -> PM_BUSY.idle admission, not PM_WARM's queue (pm-warm=0 does not
+//   disable it). PREWARMED is cached per board/look/Reduced-Motion state, never per idle interval or Usage revisit.
+//   Consuming it keeps that independent job out of the toggle frame without disabling, canceling or altering it.
+//   A counter assertion exposes any repeat. One forced real step-three collision is retained as a logged control;
+//   its restyle count is not judged as the toggle's cost. perf-still-prewarm forces five and measures 30 after completion.
+//   Attribution: five forced R=135,114,116,114,116 (H=24, median116 near the recorded118); 30 after completion R=51–54,
+//   H=24, all within91, with one rehearsal across those toggles, 12 more resting seconds and a same-look Usage revisit.
 // Key, window resize and a real hidden/visible tab round trip each wake from a separately asserted still state.
 // Then (d) with Reduced Motion on the page never goes still, marks nothing and its running loops stay as they were;
 // and (e) with the onboarding window open, and during the Guided Tour, the page never goes still: an open while still
@@ -50,11 +58,13 @@ import { join, dirname } from 'node:path';
 import { toggleCost } from '../helpers/still-toggle-cost.mjs';
 import { installUsageLiveWatch, usageWritesBeforeRecalc } from '../helpers/still-usage-live.mjs';
 import { installToggleFiniteWatch } from '../helpers/still-finite.mjs';
+import { installPrewarmProbe, prewarmSnapshot, consumeUsagePrewarm } from '../helpers/still-prewarm.mjs';
+import { forcedPrewarm } from '../helpers/still-prewarm-control.mjs';
 
 const ALL = ['basic-light', 'basic-dark', 'friendly-light', 'friendly-dark', 'glass-light', 'glass-dark', 'retro-light', 'retro-dark', 'nier-light', 'nier-dark'];
 
 // In the page: every animation, endless or not, with what it is; the endless ones that run are kept for (c)
-const CENSUS = () => {
+export const CENSUS = () => {
 	const desc = (el) => { if (!el) return 'none'; const c = typeof el.className === 'string' ? el.className : (el.className && el.className.baseVal) || ''; return el.tagName.toLowerCase() + (el.id ? '#' + el.id : '') + (c.trim() ? '.' + c.trim().split(/\s+/).slice(0, 3).join('.') : ''); };
 	const out = { still: document.documentElement.hasAttribute('data-pm-still'), hasScript: !!window.PM_STILL, marks: document.querySelectorAll('[data-pm-held]').length, marked: [], run: [], held: 0, exempt: [], finPaused: [], finRun: 0, finList: [], stray: [] };
 	const keep = [];
@@ -91,7 +101,7 @@ const CENSUS = () => {
 };
 
 // One trace of `ms`, with what `during` does, summarised, plus the marks and the style recalcs of the page's renderer
-async function trace(cdp, { ms, during, url, keep, track = false }) {
+export async function trace(cdp, { ms, during, url, keep, track = false }) {
 	await cdp.send('Tracing.start', { categories: TRACE_CATEGORIES + (track ? ',disabled-by-default-devtools.timeline.invalidationTracking,disabled-by-default-devtools.timeline.stack' : ''), transferMode: 'ReturnAsStream', bufferUsageReportingInterval: 0 });
 	const until = Date.now() + ms;
 	try { if (during) await during(); } finally { const left = until - Date.now(); if (left > 0) await new Promise((r) => setTimeout(r, left)); }
@@ -135,7 +145,7 @@ async function trace(cdp, { ms, during, url, keep, track = false }) {
 }
 
 // Marks the state's changes in the trace (a check-side observer: the product writes no marks)
-const MARKER = () => {
+export const MARKER = () => {
 	if (window.__stillMarker) return true;
 	window.__stillMarker = new MutationObserver(() => {
 		try {
@@ -193,6 +203,10 @@ export default async function (t) {
 	await t.viewport(W, H);
 	await muteSound(t.page);
 
+	// A separate fresh document keeps the actual-callback control from affecting the measured matrix's cache.
+	await forcedPrewarm(t, { after, settle: Number(t.args.settle ?? 40000), CENSUS, MARKER, trace,
+		traceDir: t.args.toggleTraceDir ? join(String(t.args.toggleTraceDir), 'prewarm-control') : null });
+
 	// ---- the real wait: one cell without the hook ----
 	if (String(t.args.real ?? '1') !== '0') {
 		const f0 = await t.app.open({ query: 'pm-warm=0' });
@@ -212,6 +226,7 @@ export default async function (t) {
 	const watchFinite = String(t.args.toggleWatchFinite || '0') === '1';
 	if (watchFinite) await f.evaluate(installToggleFiniteWatch);
 	await f.evaluate(MARKER);
+	await f.evaluate(installPrewarmProbe, { park: false });
 	const watchUsage = String(t.args.toggleWatchLive || '0') === '1';
 	if (watchUsage) await f.evaluate(installUsageLiveWatch);
 	// Diagnostic only: if a view cannot stay still, report its spontaneous inputs and the caller of .focus().
@@ -264,10 +279,12 @@ export default async function (t) {
 	});
 
 	for (const look of looks) {
+		await f.evaluate((label) => { window.__stillPrewarm.label = label; }, look);
 		await t.app.look(look);
 		await f.waitForFunction(() => !(window.PM_THEME_TRANSITION?.busy?.() || window.PM_LOOK_COVERED?.()), null, { timeout: 20000 }).catch(() => {});
 		await move();
 		await t.page.waitForTimeout(Number(t.args.lookSettle ?? 4000));
+		await consumeUsagePrewarm(t, f, look);
 		for (const view of views) {
 			const at = `${look} ${view === 'dashboard' ? 'home' : view}`;
 			await f.evaluate((id) => PM_PAGES.go(id), view);
@@ -359,7 +376,12 @@ export default async function (t) {
 				await t.check(`${at}: waking cost stays within its marked population`, offCost.pass, `${JSON.stringify(offCost)}; ${off?.found ? `${off.firstFrameMs} ms frame; largest following recalc ${off.max}, ${off.total} in ${off.steps}` : 'no recalc or mark: unjudgeable'}`);
 			}
 		}
+		const prewarm = await f.evaluate(prewarmSnapshot);
+		const sameLook = prewarm.runs.filter((r) => r.usage && r.look === look);
+		await t.check(`${look}: no repeat Usage prewarm during the measured cells`, sameLook.length === 1 && prewarm.errors.length === 0,
+			JSON.stringify(sameLook));
 	}
+	await f.evaluate(() => window.__stillPrewarm.dispose());
 
 	// Every additional wake starts from still. No synthetic events or focus-based proxy for visibility.
 	if (loaderProbe) await f.evaluate(() => document.getElementById('__still_loader_probe')?.remove());
