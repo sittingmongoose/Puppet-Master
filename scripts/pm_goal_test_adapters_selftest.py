@@ -28,6 +28,7 @@ import pm_goal_test_storage as S
 import pm_goal_test_reopen as R
 import pm_goal_test_owner_adapters as A
 import pm_goal_test_source as G
+import pm_goal_test_selftest_b2 as B2
 
 ROOT = NR.ROOT
 QUALIFICATION = 'TEST_ONLY'
@@ -514,13 +515,26 @@ def test_owners(s, work):
 # --------------------------------------------------------------- source
 
 def test_source(s, work):
+    payload_ids = {
+        'goal_run.started': 'pm.goal_runtime_event.goal_run_started.schema.v3',
+        'goal_run.cancelled': 'pm.goal_runtime_event.goal_run_cancelled.schema.v3',
+        'goal_run.certified': 'pm.goal_runtime_event.goal_run_certified.schema.v3',
+        'goal_run.replanned': 'pm.goal_runtime_event.goal_run_replanned.schema.v2',
+        'run.started': 'https://puppetmaster.local/schemas/event_payloads/run_started/2.0.0',
+        'platform.capability_evaluated': 'https://puppetmaster.local/schemas/event_payloads/platform_capability_evaluated/2.0.0',
+    }
+
+    def registered_candidate(tag, **edits):
+        edits.setdefault('event_type', 'run.started')
+        return candidate(tag, payload_schema_id=payload_ids[edits['event_type']], **edits)
+
     st = S.TestOwnerStorage.create(work / 'source', segment_target_bytes=7000)
     run = 'TEST_ONLY:run:1'
-    seq = [('a', 'goal_test.started', run), ('b', 'goal_test.adapter_probe', None),
-           ('c', 'goal_test.started', 'TEST_ONLY:run:2'), ('d', 'goal_test.cancelled', run)]
+    seq = [('a', 'goal_run.started', run), ('b', 'run.started', None),
+           ('c', 'goal_run.started', 'TEST_ONLY:run:2'), ('d', 'goal_run.cancelled', run)]
     for tag, kind, r in seq:
-        append_one(st, tag, candidate(tag, event_type=kind, run=r))
-    other_project = candidate('e', project='TEST_ONLY-project-β', event_type='goal_test.probe_other')
+        append_one(st, tag, registered_candidate(tag, event_type=kind, run=r))
+    other_project = registered_candidate('e', project='TEST_ONLY-project-β', event_type='platform.capability_evaluated')
     append_one(st, 'e', other_project)
     src = G.GenericSource(st)
     select = lambda e: e['run_id'] == run  # noqa: E731
@@ -533,7 +547,7 @@ def test_source(s, work):
         return result
     s.positive('source', 'whole_prefix_projection', positive)
     s.positive('source', 'off_run_rows_counted_in_coverage', lambda: src.acquire().rows[1].event_type ==
-               'goal_test.adapter_probe' and len(src.acquire().rows) == 5 or 1/0)
+               'run.started' and len(src.acquire().rows) == 5 or 1/0)
 
     def project_halt(mutate):
         snap = src.acquire(mutate(st.acquire_source()))
@@ -544,7 +558,7 @@ def test_source(s, work):
 
     def substituted_segment_bytes(raw_src):
         seg = raw_src['segments'][0]
-        info = st.events['TEST_ONLY:goal_test.adapter_probe:b']
+        info = st.events['TEST_ONLY:run.started:b']
         raw = bytearray(seg['raw'])
         raw[info['offset'] + info['length'] - 1] ^= 1
         seg['raw'] = bytes(raw)
@@ -555,8 +569,8 @@ def test_source(s, work):
     # so Storage's own snapshot and token carry them; validation must halt before it.
     rest = S.TestOwnerStorage.create(work / 'source-at-rest')
     for tag, kind, r in seq:
-        append_one(rest, tag, candidate(tag, event_type=kind, run=r))
-    info = rest.events['TEST_ONLY:goal_test.adapter_probe:b']
+        append_one(rest, tag, registered_candidate(tag, event_type=kind, run=r))
+    info = rest.events['TEST_ONLY:run.started:b']
     path = rest._segment_path(info['segment_generation'])
     raw = bytearray(path.read_bytes())
     raw[info['offset'] + info['length'] - 1] ^= 1
@@ -578,14 +592,14 @@ def test_source(s, work):
                'source/segment_inventory')
 
     def substituted_custody(raw_src):
-        key = 'TEST_ONLY:goal_test.started:a'
+        key = 'TEST_ONLY:goal_run.started:a'
         raw_src['custody'][key]['first_append_receipt']['byte_offset'] += 1
         return raw_src
     s.negative('source', 'substituted_first_custody', lambda: project_halt(substituted_custody),
                'source/custody_receipt')
 
     def substituted_commitment(raw_src):
-        key = 'TEST_ONLY:goal_test.cancelled:d'
+        key = 'TEST_ONLY:goal_run.cancelled:d'
         raw_src['custody'][key]['original_event_value_commitment']['sha256'] = '0' * 64
         return raw_src
     s.negative('source', 'substituted_value_commitment', lambda: project_halt(substituted_commitment),
@@ -607,11 +621,10 @@ def test_source(s, work):
         if mutate_current:
             mutate_current(current)
         raw_src['current_raw'] = S.canonical(current)
-        sel = raw_src['token']['source_selection']
-        sel['current_bytes_sha256'] = S.sha256(raw_src['current_raw'])
-        sel['manifest_bytes_sha256'] = S.sha256(raw_src['manifest_raw'])
-        sel['retired_inputs_sha256'] = S.sha256(S.binding(
-            [[g['segment_generation'], g['first_sequence'], g['last_sequence'], g['proof_sha256']] for g in state['gaps']]))
+        # Rebuild the canonical images and the token selection coherently from the mutated state.
+        cur_raw, man_raw, sel = G.canonical_from_source(raw_src, state)
+        raw_src['canonical'] = dict(raw_src['canonical'], current_raw=cur_raw, manifest_raw=man_raw)
+        raw_src['token']['source_selection'] = sel
         raw_src['gaps'] = state['gaps']
         if mutate_token:
             mutate_token(raw_src['token'])
@@ -631,7 +644,6 @@ def test_source(s, work):
         state = S.decode_canonical(raw_src['manifest_raw'])
         state['clock_last_ms'] += 1
         raw_src['manifest_raw'] = S.canonical(state)
-        raw_src['token']['source_selection']['manifest_bytes_sha256'] = S.sha256(raw_src['manifest_raw'])
         src.acquire(raw_src)
     s.negative('source', 'manifest_without_current_join', stale_join, 'source/current_manifest_join')
     s.negative('source', 'manifest_instance_substituted', lambda: coherent(mutate_state=lambda x: x.update(
@@ -641,19 +653,19 @@ def test_source(s, work):
     s.negative('source', 'project_foreign_snapshot', lambda: G.GenericSource(S.TestOwnerStorage.create(
         work / 'source-foreign')).project(src.acquire(), G.LifecycleReducer(run), select=select), 'project/storage')
     st2 = S.TestOwnerStorage.create(work / 'source-unsupported')
-    for tag, kind in (('a', 'goal_test.started'), ('x', 'goal_test.replanned'), ('d', 'goal_test.cancelled')):
-        append_one(st2, tag, candidate(tag, event_type=kind, run=run))
+    for tag, kind in (('a', 'goal_run.started'), ('x', 'goal_run.replanned'), ('d', 'goal_run.cancelled')):
+        append_one(st2, tag, registered_candidate(tag, event_type=kind, run=run))
     s.negative('source', 'unsupported_same_run_halts', lambda: _halt(G.GenericSource(st2), select, run),
-               'reducer/unsupported_same_run:goal_test.replanned')
+               'reducer/unsupported_same_run:goal_run.replanned')
     st3 = S.TestOwnerStorage.create(work / 'source-dup')
-    for tag, kind in (('a', 'goal_test.started'), ('d', 'goal_test.cancelled'), ('e', 'goal_test.certified')):
-        append_one(st3, tag, candidate(tag, event_type=kind, run=run))
+    for tag, kind in (('a', 'goal_run.started'), ('d', 'goal_run.cancelled'), ('e', 'goal_run.certified')):
+        append_one(st3, tag, registered_candidate(tag, event_type=kind, run=run))
     s.negative('source', 'second_terminal_halts', lambda: _halt(G.GenericSource(st3), select, run),
                'reducer/terminal_without_start')
     st4 = S.TestOwnerStorage.create(work / 'source-pending')
-    append_one(st4, 'a', candidate('a', event_type='goal_test.started', run=run))
+    append_one(st4, 'a', registered_candidate('a', event_type='goal_run.started', run=run))
     h = st4.reserve('TEST_ONLY:op:pending', dict(tag='pending'))
-    st4.append(h, [candidate('p', event_type='goal_test.cancelled', run=run)])
+    st4.append(h, [registered_candidate('p', event_type='goal_run.cancelled', run=run)])
     s.negative('source', 'pending_first_custody_halts', lambda: _halt(G.GenericSource(st4), select, run),
                'project/pending_custody')
     # retention gap proved by the retention owner
@@ -682,9 +694,9 @@ def test_source(s, work):
         return raw_src
     s.negative('source', 'unproven_gap', lambda: src.acquire(dropped_gap(st.acquire_source())), 'source/gap_inventory')
     # reordered sequence inside a segment (hand-built bytes)
-    e1 = dict(candidate('r1'), observed_at_utc='2026-11-11T00:00:00.000Z', persisted_at_utc='2026-11-11T00:00:00.000Z',
+    e1 = dict(registered_candidate('r1'), observed_at_utc='2026-11-11T00:00:00.000Z', persisted_at_utc='2026-11-11T00:00:00.000Z',
               sequence_id=5)
-    e2 = dict(candidate('r2'), observed_at_utc='2026-11-11T00:00:00.000Z', persisted_at_utc='2026-11-11T00:00:00.000Z',
+    e2 = dict(registered_candidate('r2'), observed_at_utc='2026-11-11T00:00:00.000Z', persisted_at_utc='2026-11-11T00:00:00.000Z',
               sequence_id=4)
     raw = S.encode_event_frame(e1, 1) + S.encode_event_frame(e2, 1)
 
@@ -711,15 +723,18 @@ def main():
     p = argparse.ArgumentParser()
     p.add_argument('--output')
     p.add_argument('--skip-matrix', action='store_true')
+    p.add_argument('--only-b2', action='store_true', help='run only the batch-2 cases (development)')
     a = p.parse_args()
     s = Suite()
     work = Path(tempfile.mkdtemp(prefix='pm-goal-test-selftest-'))
     try:
-        test_numrule(s)
-        test_codec(s)
-        test_storage(s, work)
-        test_owners(s, work)
-        test_source(s, work)
+        if not a.only_b2:
+            test_numrule(s)
+            test_codec(s)
+            test_storage(s, work)
+            test_owners(s, work)
+            test_source(s, work)
+        B2.run(s, work)
         matrix = None
         if not a.skip_matrix:
             matrix = R.run_matrix(work / 'matrix')

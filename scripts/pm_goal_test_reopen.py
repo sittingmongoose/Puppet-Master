@@ -134,7 +134,8 @@ def read_back(storage, spec):
                 reservation=None if r is None else r['state'], classification=classify(storage, op),
                 events=events, custody={e: storage.first_custody(e) for e in ids if storage.first_custody(e)},
                 terminal=storage.cell(t['table'], t['key']), observe=storage.observe(),
-                manifest_generation=storage.manifest_generation, token=storage.read_token())
+                manifest_generation=storage.manifest_generation, commit_generation=storage.commit_generation,
+                token=storage.read_token())
 
 
 def child(argv):
@@ -212,7 +213,8 @@ def run_row(row, workdir, tag=None):
     if before['terminal'] is not None:
         _check(after['terminal'] == before['terminal'], tag + ': terminal republished')
     code, again, err = _spawn(['reenter', '--root', str(root), '--spec', str(spec_path)])
-    _check(code == 0 and again['manifest_generation'] == after['manifest_generation'],
+    _check(code == 0 and again['manifest_generation'] == after['manifest_generation'] and
+           again['commit_generation'] == after['commit_generation'],
            tag + ': second re-entry changed durable state')
     _check(again['custody'] == after['custody'] and again['terminal'] == after['terminal'],
            tag + ': second re-entry changed custody or terminal')

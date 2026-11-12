@@ -389,7 +389,7 @@ class Qualifier(A.TestOwner):
 
 
 def build(route_edit=None, selection_edit=None, method_edit=None, substitute=None, declaration_edit=None,
-          predecessor_pin=None):
+          predecessor_pin=None, target_declaration_edit=None):
     registry = A.OwnerRegistry()
     owners = {}
     realm_handles = []
@@ -402,7 +402,11 @@ def build(route_edit=None, selection_edit=None, method_edit=None, substitute=Non
         realm_handles.append((owner.owner_id, owner.load(PREDECESSOR, realm, declarations)))
         owners[realm] = owner
     target_owner = RealmOwner(registry)
-    target_handle = (target_owner.owner_id, target_owner.load(TARGET_MANIFEST, TARGET_REALM))
+    target_declarations = None
+    if target_declaration_edit:
+        target = pinned(TARGET_MANIFEST)
+        target_declarations = target_declaration_edit(copy.deepcopy((target.get('realms') or target)[TARGET_REALM]))
+    target_handle = (target_owner.owner_id, target_owner.load(TARGET_MANIFEST, TARGET_REALM, target_declarations))
     source_handle = next(h for h in realm_handles if owners[SOURCE_REALM].owner_id == h[0])
     route_owner = RouteOwner(registry)
     route_handle = (route_owner.owner_id, route_owner.derive(registry, source_handle, target_handle, route_edit))
@@ -461,6 +465,25 @@ def negative(build_kwargs, *, method_name=None, method_override=None):
     for m in methods:
         handle = per_method[m['method']] if method_override is None else method_override(per_method, m['method'])
         qualifier.dispatch(method_name or m['method'], handle, selection, route, result)
+
+
+def unrouted_site(route):
+    """Add a route site whose literal is real but never crosses to the target (batch 2)."""
+    document = json.loads(content_index()[route['source_whole_sha256']].read_bytes())
+    found = []
+
+    def walk(node, path):
+        if isinstance(node, dict):
+            ref = node.get('$ref')
+            if isinstance(ref, str) and 'plans_to_code_handoff' not in ref and not found:
+                found.append((path + '/$ref', ref))
+        for sub, child in children(node):
+            walk(child, path + sub)
+    walk(document, '')
+    location, literal = found[0]
+    route['sites'].append(dict(schema_location=location, literal_reference=literal))
+    route['sites'].sort(key=lambda x: x['schema_location'])
+    return route
 
 
 def site_edit(index, **change):
@@ -523,6 +546,14 @@ def cases():
          'pin/Plans/goal_run_cancelled_consumer_schema_resources.json'),
         ('method_implicit_selection', dict(), 'method/selection_handle'),
         ('method_cross_cast', dict(), 'method/name'),
+        # batch 2: reachable sites the batch-1 inventory listed without a negative (FIX-ROUND check 11)
+        ('method_other_selection', dict(method_edit=lambda m: dict(m, selection_ref='TEST_ONLY:original:other')),
+         'method/selection'),
+        ('method_unqualified_bank', dict(), 'method/qualified'),
+        ('realm_merge_declared', dict(declaration_edit=lambda d: dict(d, merge_with_other_realms=True)), 'realm/no_merge'),
+        ('route_site_never_crosses', dict(route_edit=unrouted_site), 'qualify/route_site_unused'),
+        ('target_absent_from_target_realm', dict(target_declaration_edit=lambda d: dict(d, resources=[
+            r for r in d['resources'] if r['retrieval_uri'] != TARGET_URI])), 'route/target_unique'),
     ], other
 
 
@@ -541,6 +572,12 @@ def run(output=None):
                 negative(kwargs, method_override=lambda per, m: dict(method=m, profile=PROFILE))
             elif name == 'method_cross_cast':
                 negative(kwargs, method_override=lambda per, m: per['owner.goal_run.cancelled.read_retained_native.v1'])
+            elif name == 'method_unqualified_bank':
+                # Dispatch against the predecessor qualification (22 unresolved sites) instead of the successor's.
+                registry, realms, route, selection, per_method, methods = build(**kwargs)
+                q = Qualifier(registry)
+                predecessor = q.qualify(realms[:-1])
+                q.dispatch(methods[0]['method'], per_method[methods[0]['method']], selection, route, predecessor)
             else:
                 negative(kwargs)
             out.append(dict(id=name, kind='negative', expected=expected, got='ACCEPTED', status='fail'))
