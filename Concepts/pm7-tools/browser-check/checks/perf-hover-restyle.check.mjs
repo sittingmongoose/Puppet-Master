@@ -161,7 +161,13 @@ const SCEN = {
 	} },
 	tab: { view: 'dashboard', type: 'click', find: () => {
 		const lists = [...document.querySelectorAll('#panel-dashboard [role="tablist"], .page.active [role="tablist"]')].map((l) => [...l.querySelectorAll('[role="tab"]')].filter((e) => { const r = e.getBoundingClientRect(); return r.width > 20 && r.height > 10 && r.top > 40 && document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2)?.closest('[role="tab"]') === e; })).filter((x) => x.length >= 2);
-		return lists[0] ? lists[0].slice(0, 2).map((e) => { const r = e.getBoundingClientRect(); return { x: Math.round(r.left + r.width / 2), y: Math.round(r.top + r.height / 2) }; }) : null;
+		for (const list of lists) {
+			const selected = list.filter((e) => e.getAttribute('aria-selected') === 'true');
+			const unselected = list.find((e) => e.getAttribute('aria-selected') === 'false');
+			// P[0] is clicked first. Starting on the selected tab would measure a no-op, possibly with no recalc.
+			if (selected.length === 1 && unselected) return [unselected, selected[0]].map((e) => { const r = e.getBoundingClientRect(); return { x: Math.round(r.left + r.width / 2), y: Math.round(r.top + r.height / 2) }; });
+		}
+		return null;
 	} },
 	notify: { view: 'dashboard', type: 'none', find: () => (typeof window.toast === 'function' ? [] : null) }
 };
