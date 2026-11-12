@@ -4184,6 +4184,8 @@ Amended 2026-10-09 (DL-180, DL-184): a dashboard is now a tab kind and several b
 
 Amended 2026-10-10 (DL-186): dashboard tabs run the Usage board engine, one board each (F3-638). The old Home widgets, C.2's run progress, lanes and results among them, have left Home until Orchestrator widgets join after that page's redesign, so C.2's default layout is no board's default and C.1's line that the existing Dashboard card types remain as default widgets no longer holds; each board's contents are kept per project (WS-030), so the key C.5's migration writes is no board's key: `widget_layout:v1:dashboard` stays only a read-only record and rollback backup that nothing writes now (`Plans/Widget_System.md#WS-009`), and C.5's write into it is lineage.
 
+Amended 2026-11-12 (DL-477; Jared: "I believe those would be widgets on the dashboards that the user can put on there. Maybe those ones default to on there and the user can remove them."): the June Dashboard summary of active goals, stuck goals and blocked goals, verification/repair status, certification state, and cost/budget warnings is five widgets of the existing board model, owned by `Plans/Widget_System.md#WS-032`. Active goals (`goals:active`) and Stuck or blocked goals (`goals:stuck`) come from a Goals source, Verification and repair status (`workflows:review-status`) and Certification state (`workflows:certification-state`) from a Workflows source, and Cost and budget warnings is Usage's own `widget.alert_thresholds` (`Plans/usage-feature.md#UF-058`). All five are in the one Add widget catalogue (C.3, WS-030) and in the Home board's (`dashboard:home`) default set, so a Home board with no saved copy in a project shows them; the user removes any of them like any other widget, and Reset widgets brings them back. Verification and repair status and Certification state show the status of workflow-owned reviews and certifications (`Plans/Goal_Runtime_System.md#GRS-049`, `#GRS-065`), never a Goal's; Active goals and Stuck or blocked goals read Goal state (`#GRS-048`, `#GRS-050`, `#GRS-051`). No widget model, board, engine, layout key or command is added. C.2 and C.4 below are amended in place.
+
 ### C.1 Dashboard Upgrade: Card Grid to Widget Grid
 
 
@@ -4210,6 +4212,8 @@ The default dashboard layout includes:
 - **widget-active-lanes** (ID: `lanes-view-v1`): Lists active lanes and worktree allocation state.
 - **widget-recent-results** (ID: `results-v1`): Shows recent execution results and artifact links.
 
+Amended 2026-11-12 (DL-477): the three entries above stay on no board (DL-186). The Home board's own default set holds, first and in this order, Active goals, Stuck or blocked goals, Verification and repair status, Certification state, and Cost and budget warnings (`Plans/Widget_System.md#WS-032`), followed by the Usage widgets that `Plans/usage-feature.md` names for Home. A Home board already saved in a project keeps exactly its widgets and is never rewritten to add them.
+
 ### C.3 Add-Widget Flow on Dashboard
 
 Users add widgets via:
@@ -4229,6 +4233,8 @@ The current **named widget catalog** includes:
 **Core widgets** are Puppet Master-owned and part of the default installation. **Custom widgets** are user-generated and optional.
 
 Widget_System consumes this named catalog directly; it does not invent new widget IDs or synthesize missing entries.
+
+Amended 2026-11-12 (DL-477): the four entries above stay off every dashboard (WS-030). Add widget also offers the Goals source's `goals:active` and `goals:stuck` and the Workflows source's `workflows:review-status` and `workflows:certification-state`, each section under its label after the Usage sections, and Usage's `widget.alert_thresholds` in its Usage place; `Plans/Widget_System.md#WS-032` promotes them under DL-477.
 
 ### C.4.1 Larger Widget Library Compatibility Note
 
@@ -27520,17 +27526,16 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The GUI must place Orchestrator Goal Runtime information across the Goal header, WorkGraph, Subagents tab, Verification tab, Evidence, Audit, History, Ledger, Dashboard, Agents page, Plan/PlanUnit, Source Control, Worktrees, Usage/cost, Settings, and Runtime Artifacts surfaces without moving runtime authority into the GUI. The gui_impact_matrix surface matrix shows goal_id, GoalRun state, WorkGraph status, active waves, bounded task, model/capability lane, input boundaries, output status, failure/retry state, SubagentWave state, VerificationCycle repair progress, receipts, blockers, evidence refs, worktree leases, isolated writes, parent merge/certification, write-surface ownership, blocked write reasons, low-end executor spend, subagent wave cost, high-end governance/verifier/adjudicator cost, budget guard outcomes, and lane/model binding blockers by consuming owner records from Goal_Runtime_System, Orchestrator_Page, Run_Graph_View, Runtime_Artifacts_Panel, WorktreeGitImprovement, Contracts_V0, storage-plan, Models_System, Permissions_System, and usage-feature.
+  The GUI must place Goal and Orchestrator execution information across the WorkGraph, Subagents tab, Evidence, Audit, History, Ledger, Dashboard, Agents page, Plan/PlanUnit, Source Control, Worktrees, Usage/cost, Settings, and Runtime Artifacts surfaces without moving runtime authority into the GUI. The GoalRun, SubagentWave and VerificationCycle surfaces and Goal certification are retired by DL-478 (Jared, 2026-11-12, "Sweep and retire all"): no Goal header, Verification tab, wave state or wave cost, verification repair progress, Goal certification status or verifier/adjudicator cost remains. A Goal shows only its own record and lifecycle (GRS-048), in its chat's Goal Activity domain (GRS-055) and in the Dashboard's Goal widgets below, and a review or certification that a workflow runs is that workflow's own (GRS-049). The gui_impact_matrix surface matrix shows goal_id and Goal state, WorkGraph status, bounded task, model/capability lane, input boundaries, output status, failure/retry state, receipts, blockers, evidence refs, worktree leases, isolated writes, parent merge, write-surface ownership, blocked write reasons, cost per WorkNode, budget guard outcomes, and lane/model binding blockers by consuming owner records from Goal_Runtime_System, Orchestrator_Page, Run_Graph_View, Runtime_Artifacts_Panel, WorktreeGitImprovement, Contracts_V0, storage-plan, Models_System, Permissions_System, orchestrator-subagent-integration, and usage-feature. Restored 2026-11-12 (DL-477, Jared: "Restore it"): the Agents page, which is the Agents panel of F3-452 and F3-477, shows reliability metrics for each agent beside its per-agent economics: how many of its recorded operations completed, how many failed, crashed or were aborted, how many were retried, and the share that completed, read from the coordination records that OSI-432 owns. An agent with nothing recorded shows n/a, never 0 or a rate, and the metrics are display only: they never route, rank, admit, block or choose a model for an agent. Dashboard: the Home board's default set holds five summary widgets the user can remove, Active goals, Stuck or blocked goals, Verification and repair status, Certification state, and Cost and budget warnings (Plans/Widget_System.md#WS-032, Appendix C, DL-477); the first two read Goal state, and the next two read the status of workflow-owned reviews and certifications, never a Goal's.
 gui_related: true
-gui_classification_reason: This unit maps user-visible GoalRun, WorkGraph, verification, evidence, and source-control displays across GUI surfaces.
+gui_classification_reason: This unit maps user-visible Goal, WorkGraph, evidence, Agents reliability, Dashboard summary, and source-control displays across GUI surfaces.
 depends_on:
-  - GRS-026
-  - GRS-027
-  - OP-022
-  - RGV-012
+  - GRS-048
+  - GRS-049
+  - GRS-053
+  - GRS-055
   - RAP-027
   - CV-288
-  - SP-215
   - MS-109
   - PS-115
   - W-071
@@ -27538,16 +27543,22 @@ depends_on:
   - PNC-009
   - UF-064
   - UF-069
+  - F3-477
+  - OSI-432
+  - WS-032
 unblocks: []
 acceptance_criteria:
-  - Orchestrator Goal surfaces show GoalRun, WorkGraph, SubagentWave, VerificationCycle, evidence, receipts, blockers, and lane/model configuration status.
+  - Goal and Orchestrator surfaces show goal_id and Goal state, WorkGraph, evidence, receipts, blockers, and lane/model configuration status.
   - GUI surfaces consume owner records rather than becoming scheduler, storage, contract, or model-policy authorities.
-  - The matrix names where Goal header, WorkGraph, Subagents, Verification, Evidence, Audit, History, Ledger, Dashboard, Agents, Plan/PlanUnit, Source Control, Worktrees, Usage/cost, Settings, and Runtime Artifacts information appears.
-  - Subagents tab surfaces show active waves, bounded task, model/capability lane, input boundaries, output status, and failure/retry state.
+  - The matrix names where WorkGraph, Subagents, Evidence, Audit, History, Ledger, Dashboard, Agents, Plan/PlanUnit, Source Control, Worktrees, Usage/cost, Settings, and Runtime Artifacts information appears.
+  - Subagents tab surfaces show bounded task, model/capability lane, input boundaries, output status, and failure/retry state.
   - Blocked write reasons and unconfigured-lane states are visible where the user can recover them.
-  - Evidence/Audit surfaces show WorkNode receipts, GoalCompletionReceipt, validator evidence, adjudication records, skipped validator reasons, unresolved risks, and certification status.
-  - Source Control and Worktree surfaces expose worktree leases, isolated writes, parent merge/certification, write-surface ownership, and blocked write reasons.
-  - Usage/cost surfaces show low-end executor spend, subagent wave cost, high-end governance/verifier/adjudicator cost, cost per GoalRun/WorkNode, and budget guard outcomes.
+  - Evidence/Audit surfaces show WorkNode receipts, validator evidence, skipped validator reasons, and unresolved risks.
+  - Source Control and Worktree surfaces expose worktree leases, isolated writes, parent merge, write-surface ownership, and blocked write reasons.
+  - Usage/cost surfaces show cost per WorkNode and budget guard outcomes.
+  - The Agents page shows each agent's reliability metrics (completed, failed, crashed or aborted, and retried counts and the share that completed) from OSI-432 coordination records beside its F3-477 economics, shows n/a when nothing is recorded, and never uses them to route, rank, admit, block or choose a model.
+  - The Dashboard's Goal, review, certification, and cost summaries are the five default-on, removable Home board widgets of WS-032.
+  - No GoalRun, SubagentWave, VerificationCycle, Goal header, Verification tab, or Goal certification surface remains.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - future Orchestrator GUI placement review
@@ -27567,10 +27578,14 @@ implementation_surfaces:
   - Plans/Permissions_System.md
   - Plans/usage-feature.md
   - Plans/Plan_Document_System.md
+  - Plans/orchestrator-subagent-integration.md
+  - Plans/Widget_System.md
 node_compile_hint:
   mode: orchestrator_goal_surface_matrix
   create_worknodes: false
 source_lineage:
+  - "Plans/Decision_Log.md#DL-477 (Jared 2026-11-12: Agents reliability metric restored; Dashboard summary widgets default on and removable)"
+  - "DL-478 (Jared 2026-11-12, Sweep and retire all: GoalRun, SubagentWave, VerificationCycle and Goal certification surfaces retired)"
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0057
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0058
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0059
@@ -27586,12 +27601,10 @@ source_lineage:
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0098
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0102
 preserved_exact_tokens:
-  - "Goal header"
   - "gui_impact_matrix"
   - "goal_id"
   - "WorkGraph"
   - "Subagents tab"
-  - "Verification tab"
   - "Evidence"
   - "History"
   - "Ledger"
@@ -27603,30 +27616,29 @@ preserved_exact_tokens:
   - "Usage"
   - "cost"
   - "Usage/cost"
-  - "active waves"
   - "bounded task"
   - "model/capability lane"
   - "input boundaries"
   - "output status"
   - "failure/retry state"
   - "WorkNode receipts"
-  - "GoalCompletionReceipt"
   - "validator evidence"
-  - "adjudication records"
   - "unresolved risks"
   - "worktree leases"
   - "isolated writes"
   - "parent merge"
   - "write-surface"
   - "blocked write reasons"
-  - "low-end executor"
-  - "subagent wave cost"
-  - "high-end governance"
   - "budget guard"
   - "unconfigured-lane"
+  - "reliability metrics"
+  - "Restore it"
 negative_constraints:
   - Do not let GUI projection freshness authorize sensitive mutations.
   - Do not hide blocked write reasons or unconfigured-lane recovery actions.
+  - Do not restore GoalRun, SubagentWave, VerificationCycle, verifier/adjudicator cost, or Goal certification surfaces (DL-478).
+  - Do not show verification, repair, or certification state as a Goal's; reviews and certifications belong to the workflow that runs them (GRS-049).
+  - Do not let reliability metrics route, rank, admit, block, or choose a model for an agent.
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/Goal_Runtime_System.md
@@ -27639,6 +27651,8 @@ owner_hints:
   - Plans/Models_System.md
   - Plans/Permissions_System.md
   - Plans/usage-feature.md
+  - Plans/orchestrator-subagent-integration.md
+  - Plans/Widget_System.md
 ```
 
 ## Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff
