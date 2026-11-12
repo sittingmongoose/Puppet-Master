@@ -44,6 +44,7 @@ from __future__ import annotations
 
 import copy
 import tempfile
+import weakref
 import uuid
 from pathlib import Path
 
@@ -55,12 +56,17 @@ import pm_goal_dg_s_start as ST
 import pm_goal_dg_s_readers as SR
 import pm_goal_dg_r_world as RW
 import pm_goal_dg_cf2_world as C2W
+import pm_goal_dg_cf3_world as C3W
 
 QUALIFICATION = 'TEST_ONLY'
 NATIVE_LINE = NR.NATIVE_LINE
 START_OP = 'TEST_ONLY:start-op:dg-int:1'
 Refusal = RW.Refusal
 guard = RW.guard
+
+
+class IntStorage(C2W.CF2Storage, C3W.LaneStorage):
+    """The adapter Storage with DG-CF2's stamped transactions and DG-CF3's transaction handles."""
 
 
 def start_request(sw, op=START_OP):
@@ -252,19 +258,24 @@ class S1CancelWorld(RW.CancelWorld):
         RW.World.CURRENT = self
         self.tmp = Path(tempfile.mkdtemp(prefix='dgint-world-', dir=base))
         ids = {k: self.cfg[k] for k in ('project', 'goal', 'run') if k in self.cfg}
-        sw = ST.StartWorld(self.tmp / 's1', SW.v3_edition(),
+        self.edition = self.cfg.get('edition', 'original_profile')
+        guard('dg_int/edition', self.edition in ('original_profile', 'native_v7'))
+        sw = ST.StartWorld(self.tmp / 's1', SW.v7_edition() if self.edition == 'native_v7' else SW.v3_edition(),
                            segment_target_bytes=int(self.cfg.get('segment_target_bytes', 65536)), **ids)
         # Owner-chosen workflow owner epoch, fixed before any issuance; the R2 owners use 1.
         sw.ctx.workflow_owner['owner_epoch'] = 1
-        # The same TestOwnerStorage instance, given DG-CF2's Storage-stamped transaction methods
-        # (method-only subclass), so DG-CF2's projection publisher can write into this Storage.
-        sw.storage.__class__ = C2W.CF2Storage
+        # The same TestOwnerStorage instance, given DG-CF2's Storage-stamped transactions and DG-CF3's
+        # Storage-issued transaction handles (method subclasses), so both lanes' projection publishers
+        # write into this one Storage.
+        sw.storage.__class__ = IntStorage
+        sw.storage._tx_handles = weakref.WeakKeyDictionary()
+        sw.storage.lane_cut_point = None
         sw.build_owners()
         self.start_world = sw
         self.storage = sw.storage
         self.registry = sw.registry
         self.recorder = sw.recorder
-        self.roots = RW.Roots.get()
+        self.roots = RW.RootsV7.get() if self.edition == 'native_v7' else RW.Roots.get()
         self.seeder = RW.Seeder(self.roots)
         self.clock = RW.Clock(self.storage)
         self.sid = self.storage.storage_instance_id

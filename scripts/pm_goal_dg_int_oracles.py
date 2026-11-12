@@ -42,13 +42,15 @@ import pm_goal_dg_r_projector as RP
 import pm_goal_dg_cf2_consumer as C2
 import pm_goal_dg_int_world as IW
 import pm_goal_dg_int_p7 as P7
+import pm_goal_dg_int_reducer as IR
+import pm_goal_dg_cf3_world as W3
 
 QUALIFICATION = 'TEST_ONLY'
 NATIVE_LINE = NR.NATIVE_LINE
 BASE = Path(os.environ.get('PM_DG_INT_SCRATCH', '/home/sittingmongoose/pm-scratch/dg-int/tmp'))
 from pm_goal_own_c3_w5_projection_oracles import Refused as W5Refused  # noqa: E402
 
-REFUSALS = (RW.Refusal, A.AdapterRefusal, S.StorageRefusal, NR.NumruleRefusal, SW.DGRefusal, W5Refused)
+REFUSALS = (RW.Refusal, A.AdapterRefusal, S.StorageRefusal, NR.NumruleRefusal, SW.DGRefusal, W5Refused, W3.LaneRefusal)
 
 
 def code_of(error):
@@ -56,6 +58,8 @@ def code_of(error):
         return 'unavailable:%s:%s' % (error.reason, error.code)
     if isinstance(error, W5Refused):
         return 'w5:' + str(error.args[0] if error.args else error)
+    if isinstance(error, W3.LaneRefusal):
+        return error.code
     return getattr(error, 'code', None) or RW.code_of(error)
 
 
@@ -344,6 +348,126 @@ def p7_cases(run):
              'w5:join/complete_original_record')
 
 
+# ------------------------------------------------------------------ CF10P4
+
+def p4_cases(run):
+    g = 'P4'
+    old = lambda: P7.started_world({}, base=BASE)  # noqa: E731
+    v7 = lambda: P7.started_world({'edition': 'native_v7'}, base=BASE)  # noqa: E731
+
+    def admitted(w):
+        c = IR.IntConsumer(w)
+        scope = IR.run_scope(w)
+        gid = c.rebuild(scope)
+        out = passive(w, lambda: c.reader.read(scope))
+        RW.guard('p4/started_record', out['record']['status_at_original_event'] == 'running' and
+                 out['record']['original_event']['event_id'] == w.started_event['event_id'])
+        cp = c.checkpoint(scope)
+        return dict(generation=gid[:20], rows=cp['generations'][gid]['processed']['verified_row_count'],
+                    profile=IR.run_profile(w.storage.snapshot()['cells'], scope, w.sid))
+    run.case(g, 'P4/old_profile_start_admitted_from_whole_original', 'positive', with_world(old, admitted))
+    run.case(g, 'P4/native_v7_start_admitted_from_whole_original', 'positive', with_world(v7, admitted))
+
+    def off_run_noop(w):
+        A.AppendOwner(w.registry, w.storage).append_original('TEST_ONLY:append:note', dict(kind='note'),
+                                                             [note_event(w)], durability_class='barrier')
+        return admitted(w)
+    run.case(g, 'P4/off_run_registered_row_validated_then_noop', 'positive', with_world(old, off_run_noop))
+
+    def v7_r2(w):
+        IW_ = IW
+        c = RR.Consumer(w)
+        pres, req = RR.Presentation(w), request_of(w)
+        passive(w, lambda: c.inspect_original(req, pres))
+        p = RP.ProjectorV7(w)
+        p.project()
+        p.cutover()
+        passive(w, p.read_historical)
+        passive(w, p.read_current_cancelled)
+        return dict(edition=w.edition, adopted=len(w.issued))
+    run.case(g, 'P4/native_v7_s2_start_r2_cancel_one_storage_r2_v7_consumer', 'positive',
+             with_world(lambda: P7.cancelled_world({'edition': 'native_v7'}, base=BASE), v7_r2))
+
+    def edited(build, edit):
+        def body(w):
+            w.legacy_edits = edit
+            c = IR.IntConsumer(w)
+            return c.rebuild(IR.run_scope(w))
+        return with_world(build, body)
+
+    def retag(profile):
+        def edit(v):
+            v['originals'][0]['profile'] = profile
+            if profile == IR.V7:
+                v['native_v7_starts'] = [copy.deepcopy(s['native_start']) for s in v['originals'][0]['started']]
+            else:
+                v['native_v7_starts'] = []
+            return v
+        return edit
+    run.case(g, 'P4/old_birth_presented_to_v7_branch', 'negative', edited(old, retag(IR.V7)),
+             'w5:schema/LegacyProjectionEvidence')
+    run.case(g, 'P4/v7_birth_presented_to_old_branch', 'negative', edited(v7, retag(IR.OLD)),
+             'w5:schema/LegacyProjectionEvidence')
+
+    def header_cast(v):
+        commit = v['originals'][0]['started'][0]['native_start']['commit']
+        commit['schema_id'] = commit['schema_id'].replace('.v1', '.v6')
+        return v
+    run.case(g, 'P4/started_commit_header_cast', 'negative', edited(old, header_cast), 'w5:schema/LegacyProjectionEvidence')
+
+    def no_companion(v):
+        v['native_v7_starts'] = []
+        return v
+    run.case(g, 'P4/native_v7_start_missing_companion', 'negative', edited(v7, no_companion),
+             'advance/halt/legacy/v7_companion_missing')
+
+    def no_start(v):
+        v['originals'][0]['started'] = []
+        return v
+    run.case(g, 'P4/started_row_without_whole_original', 'negative', edited(old, no_start),
+             'advance/halt/legacy/start_without_original')
+
+    def twice(v):
+        v['originals'][0]['started'] = v['originals'][0]['started'] * 2
+        return v
+    run.case(g, 'P4/duplicate_whole_original_for_one_row', 'negative', edited(old, twice),
+             'advance/halt/legacy/start_without_original')
+
+    def unstored(v):
+        v['originals'][0]['started'][0]['native_start']['origin']['record']['issued_at_utc'] = '2026-11-12T00:00:00.000Z'
+        return v
+    run.case(g, 'P4/started_origin_not_the_stored_original', 'negative', edited(old, unstored),
+             'advance/halt/legacy/start_unstored/origin')
+
+    def event_changed(v):
+        ev = v['originals'][0]['started'][0]['original_append']['event']
+        ev['occurred_at_utc'] = '2026-11-12T00:00:00Z'
+        return v
+    run.case(g, 'P4/started_original_event_differs_from_frame', 'negative', edited(old, event_changed),
+             'advance/halt/legacy/start_event')
+
+    def v7_unstored(v):
+        v['originals'][0]['started'][0]['native_start']['candidate']['record']['transaction_id'] += 'x'
+        v['native_v7_starts'][0]['candidate']['record']['transaction_id'] += 'x'
+        return v
+    run.case(g, 'P4/native_v7_candidate_not_the_stored_original', 'negative', edited(v7, v7_unstored),
+             'advance/halt/legacy/start_unstored/candidate')
+
+    def unregistered_goal_event(w):
+        c = IR.IntConsumer(w)
+        return c.rebuild(IR.run_scope(w))
+    run.case(g, 'P4/r2_goal_cancelled_v1_event_is_unregistered', 'negative',
+             with_world(lambda: P7.cancelled_world({}, base=BASE), unregistered_goal_event),
+             'advance/halt/reducer/unregistered_record')
+
+
+def note_event(w):
+    ev = unrelated_event(w)
+    ev.update(event_id='TEST_ONLY:note:' + w.sid[:8], event_type='goal_test.note', payload_schema_id='TEST_ONLY:goal_test.note.v1',
+              idempotency_key='TEST_ONLY:note:' + w.sid[:8], project_id=w.scope['project_id'])
+    return ev
+
+
 def unrelated_event(w):
     return dict(schema_id='pm.event.v0', schema_version='2.0.0', scope_kind='project',
                 event_id='TEST_ONLY:unrelated:' + w.sid[:8], event_type='goal_test.unrelated',
@@ -357,7 +481,7 @@ def unrelated_event(w):
                                compatibility_event_type=None))
 
 
-GROUPS = dict(INT=int_cases, P7L=p7_cases)
+GROUPS = dict(INT=int_cases, P7L=p7_cases, P4=p4_cases)
 
 
 def main():
