@@ -1256,14 +1256,318 @@ def s6(suite):
     suite.negative('S6', 'source_pack_withdrawn_before_final_release', withdrawn_reader, 'pack/unavailable')
 
 
+
+# ------------------------------------------------------------------ boundary coverage (one negative per reachable guard)
+
+def rehash(world, union):
+    """Recompute every downstream hash after a one-member union edit."""
+    sel = world.start._selector_of
+    union['commit']['record']['candidate'] = sel(union['candidate'], 'workflow_start_candidate')
+    union['control']['record']['committed_start'] = sel(union['commit'], 'workflow_start_commit')
+    union['origin']['record']['candidate'] = sel(union['candidate'], 'workflow_start_candidate')
+    union['origin']['record']['commit'] = sel(union['commit'], 'workflow_start_commit')
+    union['origin']['record']['start_control'] = sel(union['control'], 'workflow_start_control')
+    union['d01_origin']['record']['causation'] = sel(union['origin'], 'workflow_start_origin')
+    return union
+
+
+def coverage(suite):
+    def neg(group, case_id, expected, **kw):
+        def run():
+            world, handles = new_world(suite, 'v3', kw.get('edits'))
+            if kw.get('pre'):
+                kw['pre'](world, handles)
+            refuse_without_effect(world, lambda: world.start.commit_start(request(world), handles,
+                                                                         edits=kw.get('start_edits')))
+        suite.negative(group, case_id, run, expected)
+
+    def at(path, value):
+        def run(v):
+            target = v
+            for k in path[:-1]:
+                target = target[k]
+            target[path[-1]] = value(target[path[-1]]) if callable(value) else value
+            return v
+        return run
+    Z = '0' * 64
+    neg('S1', 'descriptor_issuer_method', 'start/descriptor_methods',
+        edits=dict(descriptor=at(['issuer_method'], 'owner.workflow.activation.other.v1')))
+    neg('S1', 'descriptor_goal_pin', 'start/descriptor_goal_pin',
+        edits=dict(descriptor=at(['schema_resources', -1, 'whole_sha256'], Z)))
+
+    def reinstall(w, h):
+        key = 'workflow_start_installed_descriptor:%s:%s' % (W.K(w.ctx.sid), W.K(w.edition.profile))
+        cell = w.storage.cell('workflow_start_installed_descriptor', key)
+        w.storage.transact([dict(table='workflow_start_installed_descriptor', key=key, expected=cell['version'],
+                                 value=dict(cell['value'], installed_at_utc=w.ctx.now()))])
+    neg('S1', 'descriptor_reinstalled_after_issue', 'start/descriptor_installed', pre=reinstall)
+    neg('S1', 'native_activation_state', 'start/native_activation',
+        edits=dict(native_body=at(['record', 'activation_state', 'state'], 'active')))
+    neg('S1', 'native_identity', 'start/native_identity',
+        edits=dict(native_body=at(['record', 'identity', 'workgraph_ref'], 'TEST_ONLY:workgraph-ref:other')))
+    neg('S1', 'd01_scope', 'start/d01_scope', edits=dict(d01_current=at(['scope', 'goal_run_id'], 'TEST_ONLY:run:x')))
+    neg('S1', 'd01_current_control', 'start/d01_current_control',
+        edits=dict(d01_current=at(['workflow', 'current_control', 'revision'], lambda r: r - 1)))
+    neg('S1', 'd01_pointer_copy', 'start/d01_pointer', edits=dict(d01_current=at(['pointer', 'revision'], lambda r: r + 1)))
+
+    def concurrent_control(w, h):
+        cell = w.owners['native'].start_control()
+        value = copy.deepcopy(cell['value'])
+        value['record']['owner']['owner_epoch'] += 1
+        w.storage.transact([dict(table='workflow_start_control', key=value['physical_key'], expected=cell['version'],
+                                 value=value)])
+    neg('S1', 'start_control_concurrent_writer', 'start/start_control_birth', pre=concurrent_control)
+    neg('S1', 'initial_origin_method', 'start/initial_origin_method',
+        edits=dict(native_origin=at(['record', 'issuer_method'], 'owner.workflow.compile.issue_native.v1')))
+    neg('S1', 'initial_origin_key', 'start/initial_origin_key',
+        edits=dict(native_origin=at(['record', 'issued_value_key'], 'TEST_ONLY:other-key')))
+    neg('S1', 'initial_origin_record', 'start/initial_origin_record',
+        edits=dict(native_origin=at(['record', 'issued_record_sha256'], Z)))
+    neg('S1', 'initial_origin_owner_epoch', 'start/initial_origin_owner',
+        edits=dict(native_origin=at(['record', 'owner_epoch'], lambda x: x + 1)))
+    neg('S1', 'graph_identity', 'start/graph_identity',
+        edits=dict(installed_graph=at(['record', 'identity', 'workgraph_ref'], 'TEST_ONLY:workgraph-ref:other')))
+    neg('S1', 'required_set_graph_selector', 'start/required_set_graph',
+        edits=dict(required_set=at(['record', 'installed_workgraph', 'source', 'physical_value_sha256'], Z)))
+    neg('S1', 'receipt_membership', 'start/receipt_membership', edits=dict(materialization_receipts=lambda r: r[:-1]))
+
+    def substituted_node(w, h):
+        node = w.owners['materialization:worknodes'].resolve(h['born_worknodes'][1])[1][0]
+        cell = W.read_value(w.storage, 'workflow_born_worknode', node['physical_key'])
+        value = copy.deepcopy(cell['value'])
+        value['record']['objective'] = 'TEST_ONLY:substituted objective'
+        w.storage.transact([dict(table='workflow_born_worknode', key=node['physical_key'], expected=cell['version'],
+                                 value=W.cell_value(w.storage, value))])
+    neg('S1', 'born_worknode_substituted_at_rest', 'start/born_worknode_custody', pre=substituted_node)
+    neg('S1', 'receipt_born_key', 'start/receipt_born_key',
+        edits=dict(materialization_receipts=lambda rs: (rs[-1]['record'].update(born_worknode_key='TEST_ONLY:k'), rs)[1]))
+    neg('S1', 'staging_required_set_selector', 'start/staging_required_set',
+        edits=dict(staging=at(['record', 'required_set', 'source', 'physical_value_sha256'], Z)))
+    for field, code in (('required_set', 'activation_receipt_required_set'), ('installed_workgraph',
+                        'activation_receipt_graph'), ('entrypoints_staged', 'activation_receipt_staging')):
+        neg('S1', code, 'start/' + code,
+            edits=dict(activation_receipt=at(['record', field, 'source', 'physical_value_sha256'], Z)))
+    neg('S1', 'goal_scope', 'start/goal_scope', edits=dict(goal=at(['body', 'record', 'goal_id'], 'TEST_ONLY:goal:x')))
+    neg('S1', 'goal_binding_transaction', 'start/goal_binding_transaction',
+        edits=dict(goal=at(['binding_revision', 'record', 'associations', 0, 'original_binding_transaction_id'], 'tx:x')))
+    neg('S1', 'goal_not_active', 'start/goal_active', edits=dict(goal=at(['body', 'record', 'state'], 'paused')))
+    neg('S1', 'runtime_actor_empty', 'start/runtime_actor', edits=dict(runtime=at(['actor_ref'], '')))
+    neg('S1', 'producer_project_scope', 'producer/scope',
+        start_edits=sub_edit(lambda s: (s.update(project_id='TEST_ONLY-project-other'),
+                                        s['payload'].update(project_id='TEST_ONLY-project-other'))))
+    neg('S1', 'producer_run_envelope', 'producer/run', start_edits=sub_edit(lambda s: s.update(run_id='TEST_ONLY:run:x')))
+    neg('S1', 'producer_goal', 'producer/goal', start_edits=sub_edit(lambda s: s['payload'].update(goal_id='TEST_ONLY:g:x')))
+    neg('S1', 'producer_expected_revision', 'producer/expected_revision',
+        start_edits=sub_edit(lambda s: s['payload'].update(expected_goal_run_revision=ST.BEFORE_REVISION + 1,
+                                                           goal_run_revision=ST.BEFORE_REVISION + 2)))
+    neg('S1', 'producer_correlation_envelope', 'producer/correlation',
+        start_edits=sub_edit(lambda s: s.update(correlation_id='TEST_ONLY:correlation:other')))
+
+    def lower(case_id, expected, tamper):
+        def run():
+            world, handles = new_world(suite)
+            try:
+                world.start.commit_start(request(world), handles, edits=dict(union=lambda u: tamper(world, u)))
+            except W.REFUSALS as error:
+                r = world.start.recover_start(OP)
+                W.require('lower/prefix', r['classification'] == 'receipted_unpublished' and
+                          world.owners['native'].current()['body']['record']['revision'] == ST.BEFORE_REVISION)
+                raise error
+        suite.negative('S1', case_id, run, expected)
+
+    def native_candidates(w, u):
+        body = copy.deepcopy(u['commit_argument']['native_candidates']['body'])
+        body['record']['status'] = 'blocked'
+        u['commit_argument']['native_candidates'] = dict(u['commit_argument']['native_candidates'], body=body)
+        return u
+
+    def held_start(w, u):
+        held = copy.deepcopy(u['commit_argument'])
+        held['native_candidates']['body']['record']['status'] = 'blocked'
+        u['d01_argument'] = dict(u['d01_argument'], held_original_start=held)
+        return u
+
+    def after_body(w, u):
+        u['after_body'] = copy.deepcopy(u['after_body'])
+        u['after_body']['record']['status'] = 'blocked'
+        u['commit_argument']['native_candidates']['body'] = u['after_body']
+        return u
+
+    def candidate_body(w, u):
+        u['candidate']['record']['candidate_body']['physical_value_sha256'] = Z
+        return rehash(w, u)
+
+    def control_commit(w, u):
+        u['control']['record']['committed_start'] = dict(u['control']['record']['committed_start'], physical_value_sha256=Z)
+        return u
+
+    def origin_commit(w, u):
+        u['origin']['record']['commit'] = dict(u['origin']['record']['commit'], physical_value_sha256=Z)
+        return u
+
+    def origin_control(w, u):
+        u['origin']['record']['start_control'] = dict(u['origin']['record']['start_control'], physical_value_sha256=Z)
+        return u
+
+    def event_commitment(w, u):
+        u['commit']['record']['event_value_commitment']['sha256'] = Z
+        return rehash(w, u)
+
+    def d01_cause(w, u):
+        u['d01_origin']['record']['causation'] = dict(u['d01_origin']['record']['causation'], physical_value_sha256=Z)
+        return u
+    for case_id, expected, fn in (('lower_native_candidates', 'lower/native_candidates', native_candidates),
+                                  ('lower_d01_held_start', 'lower/d01_held_start', held_start),
+                                  ('lower_after_body_rederived', 'lower/after_body', after_body),
+                                  ('lower_candidate_body', 'lower/candidate_body', candidate_body),
+                                  ('lower_control_commit', 'lower/control_commit', control_commit),
+                                  ('lower_origin_commit', 'lower/origin_commit', origin_commit),
+                                  ('lower_origin_control', 'lower/origin_control', origin_control),
+                                  ('lower_event_commitment', 'lower/event_commitment', event_commitment),
+                                  ('lower_d01_cause', 'lower/d01_cause', d01_cause)):
+        lower(case_id, expected, fn)
+
+    # readers, projector and checkpoint boundaries
+    def unstarted_retained():
+        world, handles = new_world(suite)
+        R.StartedReaders(world.registry, world=world).read_retained_native(sreq(world))
+    suite.negative('S4', 'retained_before_any_start', unstarted_retained, 'read_retained_native/retained/no_committed_start')
+
+    def make():
+        world, handles, _ = started(suite)
+        projector, readers, gid = projected(world)
+        return world, projector, readers, gid
+
+    def no_projector():
+        world, projector, readers, gid = make()
+        R.StartedReaders(world.registry, world=world).read_current(sreq(world))
+    suite.negative('S4', 'current_without_projector', no_projector, 'read_current/no_projector')
+
+    def row_deleted():
+        world, projector, readers, gid = make()
+        cell, logical, gen, row = projector.current_row()
+        world.storage.transact([dict(table=gen['dataset_name'], key=projector.rep.projection_key(),
+                                     expected=row['version'], delete=True)])
+        readers.read_historical(sreq(world))
+    suite.negative('S4', 'historical_row_deleted', row_deleted, 'read_historical/row_missing')
+
+    def row_unjoined():
+        world, projector, readers, gid = make()
+        cell, logical, gen, row = projector.current_row()
+        value = copy.deepcopy(row['value'])
+        value['content']['record']['captured_goal_context']['goal_revision'] += 1
+        world.storage.transact([dict(table=gen['dataset_name'], key=projector.rep.projection_key(),
+                                     expected=row['version'], value=value)])
+        readers.read_historical(sreq(world))
+    suite.negative('S4', 'row_without_checkpoint_join', row_unjoined, 'read_historical/row_checkpoint_join')
+
+    def control_changed():
+        world, projector, readers, gid = make()
+
+        def substitute(w):
+            cell = w.owners['native'].start_control()
+            value = copy.deepcopy(cell['value'])
+            value['record']['original_operation_id'] = 'TEST_ONLY:start-op:substituted'
+            w.storage.transact([dict(table='workflow_start_control', key=value['physical_key'],
+                                     expected=cell['version'], value=value)])
+        readers.read_current(sreq(world), hooks=dict(after_projection=substitute))
+    suite.negative('S4', 'current_start_control_changed', control_changed, 'read_current/start_control_current')
+
+    def d01_moved():
+        world, projector, readers, gid = make()
+        d01 = world.owners['d01']
+        fam = ST.d01_families(world.edition)
+        cell = world.storage.cell(fam['pointer'], d01.pointer_key())
+        value = copy.deepcopy(cell['value'])
+        value['record']['last_origin_operation_id'] = 'TEST_ONLY:later-operation'
+        value['record']['workflow_head'] = dict(value['record']['workflow_head'], physical_value_sha256=Z)
+        world.storage.transact([dict(table=fam['pointer'], key=d01.pointer_key(), expected=cell['version'], value=value)])
+        readers.read_current(sreq(world))
+    suite.negative('S4', 'current_d01_pointer_moved', d01_moved, 'read_current/d01_pointer_current')
+
+    def cutover_unknown():
+        world, projector, readers, gid = make()
+        projector.cutover('grsg_' + Z)
+    suite.negative('S5', 'cutover_unknown_generation', cutover_unknown, 'cutover/unknown_generation')
+
+    def replay_unstaged():
+        world, handles, _ = started(suite)
+        projector = R.StartedProjector(world.registry, world=world)
+        projector.install()
+        projector.replay('grsg_' + Z)
+    suite.negative('S5', 'replay_without_checkpoint', replay_unstaged, 'projector/no_checkpoint')
+
+    def replay_retired():
+        world, projector, readers, g1 = make()
+        g2 = projector.stage(); projector.replay(g2); projector.cutover(g2)
+        projector.replay(g1)
+    suite.negative('S5', 'replay_into_retired_generation', replay_retired, 'projector/generation_state')
+
+    def replay_unsupported():
+        world, handles, _ = started(suite)
+        extra_event(world, 'pu', run=world.ctx.goal_run_id, event_type='goal_run.blocked')
+        projector = R.StartedProjector(world.registry, world=world)
+        projector.install()
+        projector.replay(projector.stage())
+    suite.negative('S5', 'replay_halts_on_unsupported_row', replay_unsupported,
+                   'projector/reducer/unsupported_same_run:goal_run.blocked')
+
+    def checkpoint_rewrite(mutate, force=None):
+        def run():
+            world, projector, readers, gid = make()
+            cell, logical = projector.checkpoint()
+            logical = copy.deepcopy(logical)
+            mutate(world, logical)
+            wrapper = projector.rep.encode_checkpoint(logical, force=force)
+            world.storage.transact([dict(table='checkpoints', key=projector.rep.checkpoint_key(),
+                                         expected=cell['version'], value=wrapper)])
+            readers.read_historical(sreq(world))
+        return run
+    suite.negative('S5', 'checkpoint_scope_substituted', checkpoint_rewrite(
+        lambda w, l: l['scope'].update(goal_id='TEST_ONLY:goal:other')), 'checkpoint/scope')
+    suite.negative('S5', 'checkpoint_key_substituted', checkpoint_rewrite(
+        lambda w, l: l.update(physical_key='TEST_ONLY:other-key')), 'checkpoint/key')
+    suite.negative('S6', 'checkpoint_reference_when_inline_fits', checkpoint_rewrite(
+        lambda w, l: None, force='payload_reference'), 'checkpoint/deterministic_kind')
+
+    def row_rewrite(mutate, expected, case_id):
+        def run():
+            world, projector, readers, gid = make()
+            cell, logical, gen, row = projector.current_row()
+            value = copy.deepcopy(row['value'])
+            mutate(world, projector, value)
+            gens = copy.deepcopy(logical['generations'])
+            gens[gid]['processed']['row_sha256'] = W.cdigest(value)
+            ck = projector.rep.encode_checkpoint(projector._logical(gens, logical['current_generation_id']))
+            world.storage.transact([dict(table=gen['dataset_name'], key=projector.rep.projection_key(),
+                                         expected=row['version'], value=value),
+                                    dict(table='checkpoints', key=projector.rep.checkpoint_key(),
+                                         expected=cell['version'], value=ck)])
+            readers.read_historical(sreq(world))
+        suite.negative('S6', case_id, run, expected)
+    row_rewrite(lambda w, p, v: v['content']['record']['captured_goal_context'].update(
+        goal_revision=v['content']['record']['captured_goal_context']['goal_revision'] + 1),
+        'representation/record_equal', 'inline_record_substituted')
+    row_rewrite(lambda w, p, v: v.update(physical_key='TEST_ONLY:other-key'), 'representation/key', 'row_key_substituted')
+    row_rewrite(lambda w, p, v: v.update(storage_instance_id='00000000-0000-4000-8000-000000000000'),
+                'representation/storage', 'row_storage_substituted')
+
+    def metadata_with_event(w, p, v):
+        record = R.projection_record(w, R.original_started(w))
+        v['content'] = dict(kind='record_reference',
+                            metadata_ref=w.storage.put_pack(S.canonical(record), 'application/msgpack'),
+                            event_ref=w.storage.put_pack(S.canonical(record['original_event']), 'application/msgpack'))
+    row_rewrite(metadata_with_event, 'representation/metadata_has_no_event', 'metadata_pack_embeds_event')
+
+
 # ------------------------------------------------------------------ driver
 
 def run(output=None, groups=None, work=None):
     work = Path(work or tempfile.mkdtemp(prefix='dg-s-oracles-'))
     suite = Suite(work)
     started_at = time.time()
-    selected = groups or ['S1', 'S2', 'S3', 'S4', 'S5', 'S6', 'S1M', 'S2M', 'S5M']
-    for name, fn in (('S1', s1), ('S2', s2), ('S3', s3), ('S4', s4), ('S5', s5), ('S6', s6),
+    selected = groups or ['S1', 'S2', 'S3', 'S4', 'S5', 'S6', 'COV', 'S1M', 'S2M', 'S5M']
+    for name, fn in (('S1', s1), ('S2', s2), ('S3', s3), ('S4', s4), ('S5', s5), ('S6', s6), ('COV', coverage),
                      ('S1M', lambda s: start_matrix(s, 'v3')), ('S2M', lambda s: start_matrix(s, 'v7')),
                      ('S5M', projection_matrix)):
         if name in selected:

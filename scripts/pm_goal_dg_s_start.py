@@ -164,7 +164,7 @@ class NativeOwner(W.DGOwner, A.ActivationOwner):
                                execution_owner_epoch=body['record']['execution_owner_epoch'], pending_operation_id=None)
         return value
 
-    def birth_run(self, descriptor_handle, descriptor_owner_id, edit_body=None):
+    def birth_run(self, descriptor_handle, descriptor_owner_id, edit_body=None, edit_origin=None):
         """Original birth: native before-state, StartControl epoch 0, its origin, A4 outbox."""
         e, ctx = self.edition, self.ctx
         ref, descriptor = A.acquire(self.registry, descriptor_owner_id, 'start_installed_descriptor',
@@ -194,6 +194,8 @@ class NativeOwner(W.DGOwner, A.ActivationOwner):
                                 original_causation_ref='TEST_ONLY:accepted-birth:' + ctx.token,
                                 issued_at_utc=ctx.now(), issued_value_key=start_control['physical_key'],
                                 issued_record_sha256=cdigest(start_control['record']))
+        if edit_origin:
+            origin = edit_origin(origin)
         e.bank.validate(e.activation + '#/$defs/OwnerIssueOriginPhysical', origin, 'birth/start_control_origin')
         outbox = dict(qualification=QUALIFICATION, schema_id='pm.storage_value.workflow_start_outbox.v1',
                       schema_version='1.0.0', record=dict(scope=copy.deepcopy(ctx.scope), state='prepared',
@@ -569,7 +571,8 @@ class StartWorld:
         self.node_ids, self.request_ids = node_ids, request_ids
         # 3. native birth (after descriptor and graph), StartControl epoch 0
         h['native_birth'] = (o['native'].owner_id, o['native'].birth_run(h['descriptor'][1], h['descriptor'][0],
-                                                                       edits.get('native_body'))[0])
+                                                                       edits.get('native_body'),
+                                                                       edits.get('native_origin'))[0])
         # 4. seven durable original inputs and seven activation sources, each its own owner
         for k in W.SEVEN_INPUTS:
             owner = o['input:' + k]
@@ -1028,6 +1031,8 @@ class StartOwner(W.DGOwner):
                                            original_append, edits)
             if 'before_publish' in edits:
                 edits['before_publish'](self.world)
+            if 'union' in edits:
+                union = edits['union'](union)
             tx = StartStorageParticipantOps.commit_original(self.world, handle, union)
             receipt = self.world.owners['native'].transition_receipt(op, request['causation_ref'],
                                                                      native['body']['record']['revision'])
