@@ -639,7 +639,7 @@
   function insertTarget(body, id, r) {
     if (r.notOffered) return;
     const blocks = [...body.querySelectorAll(':scope > section.o55-insp-block')];
-    const choices = blocks.find((b) => b.querySelector('.o55-insp-choice')) || blocks.find((b) => /^(Your choices|Choose any)$/i.test((b.querySelector('h4') || {}).textContent || ''));
+    const choices = blocks.find((b) => b.querySelector('.o55-insp-choice, .o55-pick-trigger')) || blocks.find((b) => /^(Your choices|Choose any)$/i.test((b.querySelector('h4') || {}).textContent || ''));
     if (!choices) return;
     const tg = S.targets[id] || PSX.targetFor(id, r, S.ctx);
     if (!tg) return;

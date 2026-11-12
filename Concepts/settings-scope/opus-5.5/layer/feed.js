@@ -246,7 +246,7 @@
     el.addEventListener('click', (e) => schedule(srcOf(e.target)), true);
     el.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') schedule(srcOf(e.target)); }, true);
   }
-  const srcOf = (t) => (t && t.closest && t.closest('.detail-inspector') && t.closest('.o55-insp-choice') ? 'panel' : t && t.closest && t.closest('#themeMenu') ? 'theme' : 'row');
+  const srcOf = (t) => (t && t.closest && t.closest('.detail-inspector') && t.closest('.o55-insp-choice, .o55-pick-trigger, .o55-pick-inline') ? 'panel' : t && t.closest && t.closest('#themeMenu') ? 'theme' : 'row');
   function diff() {
     const K = kimi(); if (!K || feeding) return;
     const st = K.getState().settings || {};

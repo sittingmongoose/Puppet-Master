@@ -23,6 +23,8 @@ Parallel runs are safe: each gets its own browser and run folder. Give each its 
 
 | Check file | What it asserts |
 |---|---|
+| `chat-look-compact` | FO-156: fixed 400 px composer, three look pairs in both motion directions; settled compact state and every tool inside the composer. Both surfaces. |
+| `settings-picker-feed` | FO-158: Details destination tastebook and a new inline picker choice reach the project feed. Run against the settings-scope app build, both surfaces. |
 | `editor-build-input`, `editor-build-completion` | SW-01 trusted first Activity click at editor construction onset; phased build duration, still-pointer completion and immediate editor demand, both surfaces. `editor-build-input` accepts the standard `--set page=` (published page by default), or `--set buildDir=<old/fix directory>` for paired inputs, and optional `--set build=predecessor`; `--set owner=sound|usage` measures the independent native sound or Usage owner (a short owner that finishes before the trusted input arrives is reported as an unproven overlap). |
 | `chat-sweep`, `chat-sweep-surfaces`, `chat-sweep-project`, `chat-gaze` | Stream F chat sweep: first Activity cover paint after a fresh reload (trusted-input/frame-swap clock), a held press on an Activity button builds no preview while keyboard focus still opens one (SW-01), a long idle job asked with `PM_BUSY.idle(…, {quiet: 600})` waits until the real pointer has been still 600 ms while a plain one runs during the motion (SW-01), duplicate agent identity, shared sound switch, dock width, Room controls, Retro face, Reduced Motion loops and entry speed. |
 | `chat-detail-film` | SW-01 input-clock first-click films and SW-36 already-open selected Detail resize, normal and opaque child surfaces. |

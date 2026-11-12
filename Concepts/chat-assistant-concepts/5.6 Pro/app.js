@@ -2363,6 +2363,13 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     return w;
   }
   let composerMeasureCache=null;
+  // FO-156: hosted paint can update the host's theme before its onTheme hook runs.
+  // Width need not change when a look or motion mode changes: discard the intrinsic
+  // labeled width and use the same chrome sync as a resize after the new paint lands.
+  new MutationObserver(()=>{
+    composerMeasureCache=null;
+    if(chromeSyncFrame===null) chromeSyncFrame=requestAnimationFrame(runChromeSync);
+  }).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme','data-motion','data-o55-nier']});
   function syncComposerCompact(){
     if(measuringCompact) return;
     // FO-143: only this chat's own composer (#pmRoot), never another surface's .composer-box on the same page
