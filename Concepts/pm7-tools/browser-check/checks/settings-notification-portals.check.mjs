@@ -48,7 +48,7 @@ async function checkLook(t,look){
    await press(t,action('add-event'));await box(t,f,`${look} ${w} preset parent`,w,h,false);
    const preset=f.locator('#pm-settings-portals [data-action="pm51-notifications-add-catalog"]').first();
    await t.check(`${look} ${w}: an unused preset is reachable`,await preset.count()>0);await press(t,preset);await box(t,f,`${look} ${w} preset alert setup`,w,h);
-   await press(t,action('event'));await box(t,f,`${look} ${w} event parent`,w,h,false);
+   await press(t,n.locator('[data-action="pm51-notifications-event"][data-event="nightly-report-ready"]').first());await box(t,f,`${look} ${w} custom event parent`,w,h,false);
    await press(t,f.locator('#pm-settings-portals [data-action="pm51-notifications-event-remove"]').first());await box(t,f,`${look} ${w} remove event confirmation`,w,h);await t.page.keyboard.press('Escape');await t.settle();
    // A seeded agent exposes its removal confirmation; cancel it through the header.
    await press(t,action('group'));await box(t,f,`${look} ${w} agent parent`,w,h,false);
