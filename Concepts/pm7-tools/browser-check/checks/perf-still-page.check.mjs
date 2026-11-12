@@ -294,8 +294,8 @@ export default async function (t) {
 	await stillBefore('visibilitychange');
 	await f.evaluate(() => {
 		window.__stillVisibility = [];
-		window.addEventListener('visibilitychange', () => {
-			const row = { visible: document.visibilityState === 'visible', before: document.documentElement.hasAttribute('data-pm-still') };
+		window.addEventListener('visibilitychange', (e) => {
+			const row = { trusted: e.isTrusted, visible: document.visibilityState === 'visible', before: document.documentElement.hasAttribute('data-pm-still') };
 			window.__stillVisibility.push(row);
 		}, true);
 		// Registered after the product's document listener: read after it handles this same event, before focus can run.
@@ -304,18 +304,19 @@ export default async function (t) {
 		});
 	});
 	await cdp.send('Emulation.setFocusEmulationEnabled', { enabled: false });
-	let other;
 	try {
-		other = await t.page.context().newPage();
-		await other.bringToFront();
-		await f.waitForFunction(() => document.visibilityState === 'hidden', null, { timeout: 5000 });
+		// A second headless target need not hide the first. Chromium's frozen transition calls WasHidden();
+		// unfreeze while hidden to inspect it, then restore visibility with focus emulation (real browser events).
+		await cdp.send('Page.setWebLifecycleState', { state: 'frozen' });
+		await cdp.send('Page.setWebLifecycleState', { state: 'active' });
+		await f.waitForFunction(() => document.visibilityState === 'hidden', null, { timeout: 5000, polling: 100 });
 		await t.check('becoming hidden leaves the page still', await f.evaluate(() => document.documentElement.hasAttribute('data-pm-still')));
-		await t.page.bringToFront();
-		await f.waitForFunction(() => document.visibilityState === 'visible', null, { timeout: 5000 });
+		await cdp.send('Emulation.setFocusEmulationEnabled', { enabled: true });
+		await f.waitForFunction(() => document.visibilityState === 'visible', null, { timeout: 5000, polling: 100 });
 		const changes = await f.evaluate(() => window.__stillVisibility);
-		await t.check('becoming visible itself wakes the still page', changes.some((x) => x.visible && x.before && x.after === false), JSON.stringify(changes));
+		await t.check('becoming visible itself wakes the still page', changes.some((x) => x.trusted && x.visible && x.before && x.after === false), JSON.stringify(changes));
 	} finally {
-		if (other) await other.close();
+		await cdp.send('Page.setWebLifecycleState', { state: 'active' });
 		await cdp.send('Emulation.setFocusEmulationEnabled', { enabled: true });
 	}
 
