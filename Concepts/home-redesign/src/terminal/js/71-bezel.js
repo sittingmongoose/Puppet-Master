@@ -164,7 +164,7 @@
       light: light, bg: th.bg, fg: th.fg, accent: th.palette ? th.palette[4] : th.fg, glow: !!(ap.effects && ap.effects.glow && ap.effects.glow.on), look: look };
     var hidden = !this.on();
     if (this.el.hidden !== hidden) this.el.hidden = hidden;
-    this.view.root.setAttribute('data-pmt-bezel', this.spec.style);
+    if (this.view.root.getAttribute('data-pmt-bezel') !== this.spec.style) this.view.root.setAttribute('data-pmt-bezel', this.spec.style);
     this.geoKey = '';
     if (!this.on()) this._release();
   };
