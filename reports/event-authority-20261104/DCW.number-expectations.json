@@ -1,0 +1,149 @@
+{
+  "changes": [
+    {
+      "id": "bundle.revision_requested/round6_original_sequence_decimal",
+      "before": "schema",
+      "after": "original_full_value",
+      "reason": "SP-1101 removes the current integer annotation from frozen shared resources. The transient supplied copy is still refused by its exact authenticated-original join."
+    },
+    {
+      "id": "bundle.revision_requested/round6_original_sequence_exponent",
+      "before": "schema",
+      "after": "original_full_value",
+      "reason": "SP-1101 removes the current integer annotation from frozen shared resources. The transient supplied copy is still refused by its exact authenticated-original join."
+    },
+    {
+      "id": "bundle.revision_started/round6_original_sequence_decimal",
+      "before": "schema",
+      "after": "original_full_value",
+      "reason": "SP-1101 removes the current integer annotation from frozen shared resources. The transient supplied copy is still refused by its exact authenticated-original join."
+    },
+    {
+      "id": "bundle.revision_started/round6_original_sequence_exponent",
+      "before": "schema",
+      "after": "original_full_value",
+      "reason": "SP-1101 removes the current integer annotation from frozen shared resources. The transient supplied copy is still refused by its exact authenticated-original join."
+    },
+    {
+      "id": "bundle.revision_completed/round6_original_sequence_decimal",
+      "before": "schema",
+      "after": "original_full_value",
+      "reason": "SP-1101 removes the current integer annotation from frozen shared resources. The transient supplied copy is still refused by its exact authenticated-original join."
+    },
+    {
+      "id": "bundle.revision_completed/round6_original_sequence_exponent",
+      "before": "schema",
+      "after": "original_full_value",
+      "reason": "SP-1101 removes the current integer annotation from frozen shared resources. The transient supplied copy is still refused by its exact authenticated-original join."
+    },
+    {
+      "id": "bundle.revision_interrupted/round6_original_sequence_decimal",
+      "before": "schema",
+      "after": "original_full_value",
+      "reason": "SP-1101 removes the current integer annotation from frozen shared resources. The transient supplied copy is still refused by its exact authenticated-original join."
+    },
+    {
+      "id": "bundle.revision_interrupted/round6_original_sequence_exponent",
+      "before": "schema",
+      "after": "original_full_value",
+      "reason": "SP-1101 removes the current integer annotation from frozen shared resources. The transient supplied copy is still refused by its exact authenticated-original join."
+    },
+    {
+      "id": "wizard.opened/round6_original_sequence_decimal",
+      "before": "schema",
+      "after": "original_full_value",
+      "reason": "SP-1101 removes the current integer annotation from frozen shared resources. The transient supplied copy is still refused by its exact authenticated-original join."
+    },
+    {
+      "id": "wizard.opened/round6_original_sequence_exponent",
+      "before": "schema",
+      "after": "original_full_value",
+      "reason": "SP-1101 removes the current integer annotation from frozen shared resources. The transient supplied copy is still refused by its exact authenticated-original join."
+    },
+    {
+      "id": "wizard.deferred_payload.loaded/round6_original_sequence_decimal",
+      "before": "schema",
+      "after": "original_full_value",
+      "reason": "SP-1101 removes the current integer annotation from frozen shared resources. The transient supplied copy is still refused by its exact authenticated-original join."
+    },
+    {
+      "id": "wizard.deferred_payload.loaded/round6_original_sequence_exponent",
+      "before": "schema",
+      "after": "original_full_value",
+      "reason": "SP-1101 removes the current integer annotation from frozen shared resources. The transient supplied copy is still refused by its exact authenticated-original join."
+    },
+    {
+      "id": "wizard.deferred_payload.loaded/round7_opened_prepared_sequence_decimal_append",
+      "before": "schema",
+      "after": "latest_source_event",
+      "reason": "The independently owned retained opened predecessor uses its frozen shared envelope domain even during a new append. Its forged prepared copy remains refused by the exact original-event join."
+    },
+    {
+      "id": "wizard.deferred_payload.loaded/round7_opened_prepared_sequence_decimal_publish",
+      "before": "schema",
+      "after": "latest_source_event",
+      "reason": "The independently owned retained opened predecessor uses its frozen shared envelope domain even during a new append. Its forged prepared copy remains refused by the exact original-event join."
+    },
+    {
+      "id": "wizard.deferred_payload.loaded/round7_opened_prepared_sequence_decimal_retry",
+      "before": "schema",
+      "after": "latest_source_event",
+      "reason": "The independently owned retained opened predecessor uses its frozen shared envelope domain even during a new append. Its forged prepared copy remains refused by the exact original-event join."
+    },
+    {
+      "id": "wizard.deferred_payload.loaded/round7_opened_prepared_sequence_decimal_read",
+      "before": "schema",
+      "after": "latest_source_event",
+      "reason": "The independently owned retained opened predecessor uses its frozen shared envelope domain even during a new append. Its forged prepared copy remains refused by the exact original-event join."
+    },
+    {
+      "id": "wizard.deferred_payload.loaded/round7_opened_prepared_sequence_decimal_rebuild",
+      "before": "schema",
+      "after": "latest_source_event",
+      "reason": "The independently owned retained opened predecessor uses its frozen shared envelope domain even during a new append. Its forged prepared copy remains refused by the exact original-event join."
+    },
+    {
+      "id": "wizard.deferred_payload.loaded/round7_opened_prepared_sequence_decimal_compatibility_read",
+      "before": "schema",
+      "after": "latest_source_event",
+      "reason": "The independently owned retained opened predecessor uses its frozen shared envelope domain even during a new append. Its forged prepared copy remains refused by the exact original-event join."
+    },
+    {
+      "id": "wizard.deferred_payload.loaded/round7_opened_prepared_sequence_exponent_append",
+      "before": "schema",
+      "after": "latest_source_event",
+      "reason": "The independently owned retained opened predecessor uses its frozen shared envelope domain even during a new append. Its forged prepared copy remains refused by the exact original-event join."
+    },
+    {
+      "id": "wizard.deferred_payload.loaded/round7_opened_prepared_sequence_exponent_publish",
+      "before": "schema",
+      "after": "latest_source_event",
+      "reason": "The independently owned retained opened predecessor uses its frozen shared envelope domain even during a new append. Its forged prepared copy remains refused by the exact original-event join."
+    },
+    {
+      "id": "wizard.deferred_payload.loaded/round7_opened_prepared_sequence_exponent_retry",
+      "before": "schema",
+      "after": "latest_source_event",
+      "reason": "The independently owned retained opened predecessor uses its frozen shared envelope domain even during a new append. Its forged prepared copy remains refused by the exact original-event join."
+    },
+    {
+      "id": "wizard.deferred_payload.loaded/round7_opened_prepared_sequence_exponent_read",
+      "before": "schema",
+      "after": "latest_source_event",
+      "reason": "The independently owned retained opened predecessor uses its frozen shared envelope domain even during a new append. Its forged prepared copy remains refused by the exact original-event join."
+    },
+    {
+      "id": "wizard.deferred_payload.loaded/round7_opened_prepared_sequence_exponent_rebuild",
+      "before": "schema",
+      "after": "latest_source_event",
+      "reason": "The independently owned retained opened predecessor uses its frozen shared envelope domain even during a new append. Its forged prepared copy remains refused by the exact original-event join."
+    },
+    {
+      "id": "wizard.deferred_payload.loaded/round7_opened_prepared_sequence_exponent_compatibility_read",
+      "before": "schema",
+      "after": "latest_source_event",
+      "reason": "The independently owned retained opened predecessor uses its frozen shared envelope domain even during a new append. Its forged prepared copy remains refused by the exact original-event join."
+    }
+  ],
+  "count": 24
+}
