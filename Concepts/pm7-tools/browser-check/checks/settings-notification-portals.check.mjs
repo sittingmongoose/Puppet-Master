@@ -20,7 +20,7 @@ async function checkLook(t,look){
   const n=f.locator('[data-continuous-workspace-body="notifications"]');
   const tab=async label=>{await press(t,n.locator('.manager-tab',{hasText:new RegExp('^\\s*'+label+'\\s*$')}).first());};
   const action=name=>n.locator(`[data-action="pm51-notifications-${name}"]`).first();
-  const menuItem=label=>f.locator('.pm51-popout.is-open .pm51-menu-item').filter({hasText:new RegExp('^'+label)}).first();
+  const menuItem=label=>f.locator('.pm51-popout.is-open .pm51-menu-item').filter({hasText:label}).first();
   for(const [w,h] of [[1280,900],[1390,900],[1920,1080]]){
    await t.viewport(w,h);
    for(const [section,name] of [['Quiet hours','diagnostics'],['Quiet hours','reset'],['Events','export-events'],['Events','import-events'],['Events','add-agent'],['History','history'],['Sounds','export-pack']]){
