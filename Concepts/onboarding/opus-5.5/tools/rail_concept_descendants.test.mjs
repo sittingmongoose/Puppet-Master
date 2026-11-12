@@ -23,11 +23,16 @@ const br=vm.runInContext('row({key:"fixture",name:"Fixture",meta:["One fact"],se
 const cs=read('../../../leftrail-redesign/src/concepts/c/08-panel.js');const c=vm.createContext({...common,P:{sel:'fixture',viewId:'fixture',reg(){}},panel:{id:'fixture'}});
 vm.runInContext(cs.match(/  P\.row = o => {[^]*?\n  };/)[0],c);
 const cr=vm.runInContext('P.row({key:"fixture",name:"Fixture"})',c);
+const menuSrc=read('../../../leftrail-redesign/src/js/20-menu.js');
+const menu=vm.createContext({...common,PMR:{...common.PMR,h},selectable:m=>m.value!=null});
+vm.runInContext(menuSrc.match(/const CHECK_SVG = [^]*?;/)[0]+'\n'+fn(menuSrc,'menuItemEl'),menu);
+const plainMenu=vm.runInContext('menuItemEl({},{label:"Fixture",meta:"Meta",key:"K"},{reserveIcon:true})',menu);
+const radioMenu=vm.runInContext('menuItemEl({value:"v"},{label:"Fixture",value:"v",meta:"Meta",key:"K"},{reserveIcon:true})',menu);
 const all=n=>n.children.flatMap(k=>[k,...all(k)]), failures=[];
-for(const [name,row,ids] of [['A',ar,[13,14]],['B',br,[13,14]],['C',cr,[0,6,13,14]]]) for(const id of ids) {
+for(const [name,row,ids] of [['A',ar,[13,14]],['B',br,[13,14]],['C',cr,[0,6,13,14]],['PMR menu',plainMenu,[0,13,14]],['PMR radio',radioMenu,[6,13,14]]]) for(const id of ids) {
  const r=rules.find(r=>r.rule===id),allowed=new Set([...r.replacement.matchAll(/\.([\w-]+)/g)].map(m=>m[1]));
  for(const el of all(row)) if(!el.classes.some(x=>allowed.has(x)))failures.push(`${name} rule ${id}: ${el.tag}.${el.classes.join('.')}`);
 }
 for(const f of failures)console.log('FAIL '+f);
 assert.equal(failures.length,0,'A/B/C builders lost descendant arms');
-console.log('PASS actual A/B/C row builders retain their text descendants in normal and chosen cursor rules');
+console.log('PASS actual A/B/C row and PMR menu builders retain text descendants in normal and chosen cursor rules');
