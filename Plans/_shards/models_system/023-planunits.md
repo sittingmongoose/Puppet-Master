@@ -2,9 +2,9 @@
 
 Source: `Plans/Models_System.md`
 
-Source lines: L1393-L7560
+Source lines: L1393-L7575
 
-Source SHA256: `5716a47a67a3e40e966f1d2b9ac82d7d4e6f78564343e0c7bbf2898ea03ce1f6`
+Source SHA256: `4685696c058fe6c44090aafea6432e1e13f104e1b7b6dc0b0552cddae1b1a110`
 
 ---
 
@@ -4034,18 +4034,21 @@ plan_unit_id: MS-073
 unit_type: runtime_contract
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: Persona preferences participate in effective run assembly only after passing through the provider capability
-  matrix.
+canonical_text: 'Only surviving non-model Persona controls participate in effective run assembly after the
+  provider capability matrix: prompt/response style, permitted sampling controls, tools and permissions. Model/provider/preset/depth
+  preferences are retired and cannot be restored by capability support. Resolve run model/depth through Models
+  §2 and the shared ACD-438 picker.'
 gui_related: false
-gui_classification_reason: The unit covers model/runtime policy, storage, provider compatibility, schema, or backend contract
-  behavior rather than direct GUI presentation.
+gui_classification_reason: The unit covers model/runtime policy, storage, provider compatibility, schema, or
+  backend contract behavior rather than direct GUI presentation.
 split_recommended: false
 depends_on:
 - MS-072
 unblocks: []
 acceptance_criteria:
 - Covered source spans remain losslessly available for exact-text audit.
-- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.
+- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving
+  coverage.
 - Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
@@ -4061,6 +4064,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0050
+- DL-476; settings batch3 fix round r1, 2026-11-12
 preserved_exact_tokens:
 - effective run assembly
 - MUST pass through a provider capability matrix
@@ -4074,8 +4078,8 @@ owner_boundary_notes:
 owner_hints:
 - Plans/Models_System.md
 preserved_contractrefs: []
-split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces were split
-  where safe.
+split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces
+  were split where safe.
 ```
 ### MS-074 - Effective Selection Identity Fields
 
@@ -4658,19 +4662,22 @@ plan_unit_id: MS-083
 unit_type: data_contract
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: GUI disclosure and runtime filtering resolve support state, context-window limits, max-token limits,
-  fallback-chain eligibility, provenance, and requested/effective model identity from one canonical machine-readable
-  capability snapshot produced by the shared capability resolver and provider/model metadata inputs.
+canonical_text: GUI disclosure and runtime filtering resolve support state, context-window limits, max-token
+  limits, fallback-chain eligibility, provenance, and requested/effective model identity from one canonical
+  machine-readable capability snapshot produced by the shared capability resolver and provider/model metadata
+  inputs.
 gui_related: false
-gui_classification_reason: The unit covers model/runtime policy, provider compatibility, data contracts, or backend execution
-  semantics rather than direct GUI presentation.
+gui_classification_reason: The unit covers model/runtime policy, provider compatibility, data contracts, or
+  backend execution semantics rather than direct GUI presentation.
 split_recommended: false
 depends_on:
 - MS-079
 unblocks: []
 acceptance_criteria:
-- Snapshot rows expose context/max-token fields, fallback-chain entries, source refs, verification state, and staleness state.
-- Every control and context-window disclosure shown to the user is derivable from the snapshot without ad hoc UI-only logic.
+- Snapshot rows expose context/max-token fields, fallback-chain entries, source refs, verification state, and
+  staleness state.
+- Every control and context-window disclosure shown to the user is derivable from the snapshot without ad hoc
+  UI-only logic.
 - Requested/effective model identity and fallback/clamp state remain visible to runtime and GUI consumers.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
@@ -4686,6 +4693,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0058
+- DL-476; settings batch3 fix round r1, 2026-11-12
 preserved_exact_tokens:
 - canonical machine-readable snapshot contract
 - provider_id
@@ -4715,19 +4723,22 @@ preserved_exact_tokens:
 negative_constraints:
 - Every control disclosure shown to the user must be derivable from the snapshot without ad hoc UI-only logic.
 - Do not source snapshot fields from legacy platform_specs or platform_specs.rs.
-- Do not hide requested/effective model differences, fallback, clamp, unsupported, inferred, stale, or opaque capability states.
+- Do not hide requested/effective model differences, fallback, clamp, unsupported, inferred, stale, or opaque
+  capability states.
 compatibility_only_notes:
 - platform_specs and platform_specs.rs are retired source-lineage only.
+- The old persona_reasoning_effort capability token is an inert compatibility alias, not a Persona preference.
+  Current effort capability is run-owned; current candidate_source follows Models §2 (the example uses config_default).
 stale_retired_dispositions:
-- Provider/model catalog snapshots carry boot_refresh_enabled, model_catalog_status, last_model_refresh_at, and selectable_unit_ids
-  so boot-time refresh and stale catalog state remain inspectable.
+- Provider/model catalog snapshots carry boot_refresh_enabled, model_catalog_status, last_model_refresh_at,
+  and selectable_unit_ids so boot-time refresh and stale catalog state remain inspectable.
 owner_boundary_notes:
 - Plans/Models_System.md remains the provider/model owner while referenced docs consume the preserved contract.
 owner_hints:
 - Plans/Models_System.md
 preserved_contractrefs: []
-split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces were split
-  where safe.
+split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces
+  were split where safe.
 ```
 
 ### MS-084 - Account Routing Capability Metadata Snapshot
@@ -5991,23 +6002,23 @@ plan_unit_id: MS-105
 unit_type: data_contract
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: >-
-  Provider/model selection emits a selection_reason object carrying selected provider/model, precedence tier,
-  optional fallback reason, alternatives considered, selection timestamp, and execution unit identity. precedence_tier
-  uses the versioned MS-005/099 1–6 order and names the source level/key; include actual work Server/Host/Environment and
-  null Project in app scope. Original historical audit records retain their original tier version/bytes; a number
-  from an older recipe is never silently reinterpreted. Computer capacity limits retain requested/effective and
-  clamp reasons.
+canonical_text: Provider/model selection emits a selection_reason object carrying selected provider/model,
+  precedence tier, optional fallback reason, alternatives considered, selection timestamp, and execution unit
+  identity. precedence_tier uses the versioned MS-005/099 1–6 order and names the source level/key; include
+  actual work Server/Host/Environment and null Project in app scope. Original historical audit records retain
+  their original tier version/bytes; a number from an older recipe is never silently reinterpreted. Computer
+  capacity limits retain requested/effective and clamp reasons.
 gui_related: false
-gui_classification_reason: The unit covers model/runtime policy, data contracts, selection semantics, or backend audit behavior
-  rather than direct GUI presentation.
+gui_classification_reason: The unit covers model/runtime policy, data contracts, selection semantics, or backend
+  audit behavior rather than direct GUI presentation.
 split_recommended: false
 depends_on:
 - MS-099
 unblocks: []
 acceptance_criteria:
 - Covered source spans remain losslessly available for exact-text audit.
-- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.
+- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving
+  coverage.
 - Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
@@ -6025,6 +6036,7 @@ source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0077
 - 'source_ref:projects-pass2-20261103:S2/S3/N12; Jared: "I approve the outstanding questions with their recommended
   settings."; SETTINGS-PROPOSAL.md and PLANS-EDIT-PLAN.md §3 A'
+- DL-476; settings batch3 fix round r1, 2026-11-12
 preserved_exact_tokens:
 - selection_reason
 - selected_provider
@@ -6041,7 +6053,10 @@ preserved_exact_tokens:
 - '''claude-3-opus'''
 - 1-7
 negative_constraints: []
-compatibility_only_notes: []
+compatibility_only_notes:
+- ModelPrecedenceAuditV2 / scoped_owner_ladder_v2 and models.strategy_tier_allowed describe historical audit
+  decoding only. They preserve old numeric tiers/policy names without permitting them as current emitters,
+  selection sources or Settings choices.
 stale_retired_dispositions: []
 owner_boundary_notes:
 - Plans/Models_System.md remains the provider/model owner while referenced docs consume the preserved contract.
@@ -6049,8 +6064,8 @@ owner_hints:
 - Plans/Models_System.md
 preserved_contractrefs:
 - 'ContractRef: Primitive:Persona, Primitive:ExecutionUnitContext, ContractName:Plans/Executor_Protocol.md'
-split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces were split
-  where safe.
+split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces
+  were split where safe.
 ```
 
 ### MS-106 - Selection Reason Audit Trail Traceability

@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L24714-L24946
+Source lines: L24791-L25037
 
-Source SHA256: `6bdfe125b06dc716f1dfd43d43fa90fdcad5372cb86b98c0c6f3afbfe4f0d8ea`
+Source SHA256: `fc512dd03b54966a93d3a047e22b33ceddadccacaf68d35e8ff9987129f5fe7c`
 
 ---
 
@@ -195,49 +195,63 @@ plan_unit_id: ACD-438
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: >-
-  Selecting a model closes the model mini-popout and automatically opens the reasoning-effort
-  popout above the model button, offering High, Medium, and Low; selecting an effort closes
-  the popout. At most one of the thoroughness popout, mode popout, model popout, effort
-  popout, or the footer fan-out stack is open at a time. The effort labels High, Medium, and
-  Low are a distinct control from Plan Thoroughness and its Light, Balanced, and Comprehensive
-  labels.
+canonical_text: Selecting a model closes the model mini-popout and, when the concrete selected route has proven
+  effort levels, automatically opens the separate reasoning-effort popout above the model button; selecting
+  an effort closes it and applies on the next turn. The options come from Models §7.3/§10.4.1, ACD-424 and
+  F3-400 capability truth. High, Medium and Low appear only when supported by that route; no proven levels
+  means no effort choices or empty popout, and Unknown support is not inferred as Unsupported. At most one
+  of thoroughness, mode, model, effort popouts or the footer fan-out stack is open. Plan Thoroughness keeps
+  its separate Light, Balanced and Comprehensive control. Every Settings model picker reuses this same sequential
+  interaction, effort step included, while saving the pair in its own declared scope.
 gui_related: true
 gui_classification_reason: Defines visible model and effort popout chaining behavior.
-depends_on: [ACD-424, ACD-035, F3-400, F3-318]
+depends_on:
+- ACD-424
+- ACD-035
+- F3-400
+- F3-318
+- MS-115
 unblocks: []
 acceptance_criteria:
-  - "Model selection closes the model popout and opens the effort popout above the model button."
-  - "The effort popout offers High, Medium, and Low; selection closes the popout and applies on the next turn."
-  - "At most one of thoroughness, mode, model, effort popouts or the footer fan-out is open at a time."
-  - "Effort High/Medium/Low and Plan Thoroughness Light/Balanced/Comprehensive remain distinct controls with distinct labels."
-  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- Model selection closes its popout and opens the separate effort popout above the model button only when the
+  concrete route proves supported levels.
+- The effort step uses only route-proven choices; High/Medium/Low are not a universal enum. A model without
+  proven levels shows no effort choices.
+- Choosing an effort closes its popout and applies on the next turn; Settings saves the same pair in the selected
+  row’s declared scope.
+- At most one of thoroughness, mode, model, effort popouts or the footer fan-out is open at a time.
+- Effort and Plan Thoroughness Light/Balanced/Comprehensive remain distinct controls with distinct labels.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
-  - python3 scripts/pm-plan-index.py validate
-  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 risk_class: chat_header_contract_drift
 reasoning_tier: standard
 context_scope: assistant_chat_header
 implementation_surfaces:
-  - Plans/assistant-chat-design.md
+- Plans/assistant-chat-design.md
 node_compile_hint:
   mode: chat_model_to_effort_popout_chaining
   create_worknodes: false
 source_lineage:
-  - "Plans/assistant-chat-design.md:2806"
-  - "Plans/assistant-chat-design.md:5112"
-  - "Plans/FinalGUISpec.md:20696"
-  - "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+- Plans/assistant-chat-design.md:2806
+- Plans/assistant-chat-design.md:5112
+- Plans/FinalGUISpec.md:20696
+- Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)
+- DL-476; settings batch3 fix round r1, 2026-11-12
 preserved_exact_tokens:
-  - "High"
-  - "Medium"
-  - "Low"
+- High
+- Medium
+- Low
 negative_constraints:
-  - "Effort High/Medium/Low labels must not be merged with Plan Thoroughness Light/Balanced/Comprehensive."
+- Effort High/Medium/Low labels must not be merged with Plan Thoroughness Light/Balanced/Comprehensive.
 compatibility_only_notes:
-  - "Slint portability: chained popouts map to sequential native popup surfaces anchored to the model button; no arbitrary-content backdrop blur, no SVG filters, precomputed color math."
+- 'Slint portability: chained popouts map to sequential native popup surfaces anchored to the model button;
+  no arbitrary-content backdrop blur, no SVG filters, precomputed color math.'
+- The old fixed High/Medium/Low wording is narrowed by the already-canonical Models7.3 and F3-400 route-supported
+  capability rule. No side-by-side model list/effort redesign is authorized.
 stale_retired_dispositions: []
 owner_boundary_notes: []
 owner_hints:
-  - Plans/assistant-chat-design.md
+- Plans/assistant-chat-design.md
 ```

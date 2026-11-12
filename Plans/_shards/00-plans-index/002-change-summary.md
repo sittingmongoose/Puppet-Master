@@ -4,7 +4,7 @@ Source: `Plans/00-plans-index.md`
 
 Source lines: L76-L265
 
-Source SHA256: `8b4015d9b473b92831a9c6f2a50bd42f18af7ffc275bf4b8bff9a01c9e94cd45`
+Source SHA256: `6242f27768e60a862aca56c25365e091a298c518d38a9d7b2cb14be832786c13`
 
 ---
 
