@@ -1283,7 +1283,8 @@
         body.innerHTML = '<div class="pmu-kpi is-wide"' + tileHover + '><div class="pmu-kpimain">' + head + subEl + (trend ? '<div class="pmu-kpitrend"></div>' : '') + foot + '</div>' +
           '<div class="pmu-kpiside">' + factsHtml + moreHtml + '</div></div>';
       } else {
-        body.innerHTML = '<div class="pmu-kpi"' + tileHover + '>' + head + subEl + factsHtml + moreHtml + (trend ? '<div class="pmu-kpitrend"></div>' : '') + foot + '</div>';
+        var html = '<div class="pmu-kpi"' + tileHover + '>' + head + subEl + factsHtml + moreHtml + (trend ? '<div class="pmu-kpitrend"></div>' : '') + foot + '</div>';
+        if (body.innerHTML !== html) body.innerHTML = html;
       }
       var sp = body.querySelector('.pmu-kpispark, .pmu-kpitrend');
       if (sp) C.chart(body, 'spark', sp, { values: m.spark.values, idx: m.spark.idx || 0, tk: m.spark.tk }, { label: ctx.def.title + ' trend' });
