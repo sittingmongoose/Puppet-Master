@@ -12,8 +12,6 @@ import copy
 import hashlib
 import json
 import importlib.util
-import re
-from datetime import datetime
 from functools import lru_cache
 import sys
 from pathlib import Path
@@ -23,7 +21,7 @@ from jsonschema import Draft202012Validator
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
-from pm_contract_formats import FormatChecker
+from pm_contract_formats import FormatChecker, instant
 import pm_event_payload_route as body_route
 from pm_ds_tables import Facts, entry as _ds_entry
 Draft202012Validator = body_route.StrictValidator
@@ -134,37 +132,17 @@ def checkpoint_v2_bundle(root=ROOT):
 @_ds_entry
 def checkpoint_failures(value, *, root=ROOT):
     entry = Facts("cr_checkpoint_entry", chain=True)
+    # CV-1101: the schema verdict checks updated_at_utc and withdrawn_at_utc ($defs/timestamp, format
+    # date-time) with the shared date_time predicate, event_record profile (pm_contract_formats.FormatChecker).
     if entry.stop("CC01_schema", lambda: not list(Draft202012Validator(checkpoint_bundle(root), format_checker=FormatChecker()).iter_errors(value))):
         return [entry.first_code()]
-    # date-time format support is optional in jsonschema installations. Validate
-    # the exact timestamp syntax and calendar ourselves before ordering instants.
-    instants = {}
-
-    def grammar(field):
-        return value[field] is None or re.fullmatch(r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})", value[field]) is not None
-
-    def calendar(field):
-        if value[field] is None:
-            return True
-        try:
-            instants[field] = datetime.fromisoformat(value[field].replace("Z", "+00:00"))
-        except (TypeError, ValueError):
-            return False
-        return True
-
-    for row, check in (("CC02_updated_grammar", lambda: grammar("updated_at_utc")),
-                       ("CC03_updated_calendar", lambda: calendar("updated_at_utc")),
-                       ("CC04_withdrawn_grammar", lambda: grammar("withdrawn_at_utc")),
-                       ("CC05_withdrawn_calendar", lambda: calendar("withdrawn_at_utc"))):
-        if entry.stop(row, check):
-            return [entry.first_code()]
     entry.done()
     cursor = value["source_cursor"]
     facts = Facts("cr_checkpoint")
     facts["CC06_scope_partition"] = value["scope_partition"] == scope_partition(value["project_id"])
     facts["CC07_range_order"] = cursor is None or value["first_retained_sequence_id"] <= value["index_through_sequence_id"]
     facts["CC08_cursor_through"] = cursor is None or cursor["last_sequence_id"] == value["index_through_sequence_id"]
-    facts["CC09_withdrawal_order"] = value["withdrawn_at_utc"] is None or instants["withdrawn_at_utc"] <= instants["updated_at_utc"]
+    facts["CC09_withdrawal_order"] = value["withdrawn_at_utc"] is None or instant(value["withdrawn_at_utc"]) <= instant(value["updated_at_utc"])
     facts["CC10_storage_uint64"] = body_route.storage_uint64_fields_ok(value)
     return facts.codes()
 
@@ -446,7 +424,7 @@ class CheckpointOracle:
         candidate.update(state="withdrawn", withdrawn_at_utc=at_utc, updated_at_utc=at_utc)
         if f.stop("WD04_candidate_valid", lambda: not checkpoint_failures(candidate)):
             return f.first_code()
-        if f.stop("WD05_not_before_observation", lambda: datetime.fromisoformat(at_utc.replace("Z", "+00:00")) >= datetime.fromisoformat(self.checkpoint["updated_at_utc"].replace("Z", "+00:00"))):
+        if f.stop("WD05_not_before_observation", lambda: instant(at_utc) >= instant(self.checkpoint["updated_at_utc"])):
             return f.first_code()
         f.done()
         self.checkpoint = candidate

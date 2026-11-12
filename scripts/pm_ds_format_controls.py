@@ -1,4 +1,4 @@
-"""Explicit grammar controls; normal format refusal is required, never a crash."""
+"""Format controls of the shared CV-1101 date-time predicate as DS installs it; normal refusal, never a crash."""
 import pm_contract_formats as formats
 from jsonschema import Draft202012Validator
 
@@ -15,11 +15,11 @@ def cases():
     for value in invalid+valid:
         expected=value in valid
         def broken(v=value,e=expected):
-            try:return formats.date_time(v) is not e
+            try:return formats.date_time_ok(v) is not e
             except Exception:return True
         rows.append(('FORMAT:exact_grammar:'+value,broken))
     for value in (None,False,1,[],{}):
-        rows.append(('FORMAT:type_keyword_owns:'+repr(value),lambda v=value:formats.date_time(v) is not True))
+        rows.append(('FORMAT:type_keyword_owns:'+repr(value),lambda v=value:formats.FormatChecker().conforms(v,'date-time') is not True))
     def unknown():
         try:formats.FormatChecker().check('value','not-an-implemented-format')
         except formats.FormatError:return False
@@ -53,7 +53,7 @@ def refusal_cases():
     for name,_ in cases():
         if not name.startswith('FORMAT:exact_grammar:'):continue
         value=name[len('FORMAT:exact_grammar:'):]
-        if not formats.date_time(value):rows.append((name,lambda v=value:selected.is_valid(v)))
+        if not formats.date_time_ok(value):rows.append((name,lambda v=value:selected.is_valid(v)))
     unknown=Draft202012Validator({'type':'string','format':'not-an-implemented-format'},format_checker=formats.FormatChecker())
     rows.append(('FORMAT:unknown_format_schema_fault',lambda:unknown.is_valid('value')))
     return rows

@@ -1,4 +1,4 @@
-"""DS guard table rs_cleanup_anchor_time: cleanup anchor instant (entailed by RU02 core timestamp rows).
+"""DS guard table rs_cleanup_anchor_time: cleanup anchor instant (entailed by the RU02 schema verdict).
 
 Checker: scripts/pm_browser_workspace_reset.py.
 Method B guard rows (scripts/pm_guard_isolation.py). Each predicate reads the one boolean
@@ -16,7 +16,7 @@ def RU13_anchor_time(value, context):
 def case(value):
     context = None
     table = g.GuardTable([
-        g.Guard('RU13_anchor_time', g.Invariant('/RU13_anchor_time', "the retired core's first withdrawal parses as an instant"), 'cleanup_invalid_time', RU13_anchor_time),
+        g.Guard('RU13_anchor_time', g.Invariant('/RU13_anchor_time', "the retired core's first withdrawal passes the shared CV-1101 date_time predicate (event_record profile)"), 'cleanup_invalid_time', RU13_anchor_time),
     ])
 
     def check(value):

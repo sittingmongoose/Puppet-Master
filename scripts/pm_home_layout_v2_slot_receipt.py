@@ -35,7 +35,7 @@ from pathlib import Path
 from typing import Any, Iterator
 
 from jsonschema import Draft202012Validator, ValidationError, validators
-from pm_contract_formats import FormatChecker
+from pm_contract_formats import FormatChecker, keep_dialect, storage_properties
 from referencing import Registry, Resource
 from referencing.exceptions import Unresolvable
 from referencing.jsonschema import DRAFT202012
@@ -501,11 +501,15 @@ class _ExactDigitFactory:
         return getattr(self.cls, name)
 
 
-_Home4Class = validators.extend(Draft202012Validator, {"pattern": _ecma_pattern},
-                                type_checker=Draft202012Validator.TYPE_CHECKER.redefine("integer", _current_integer))
+# keep_dialect: the class (its CV-1100 integer, ECMA pattern and CV-253 Storage-field keyword) stays in force
+# across a $ref into a resource that declares $schema; jsonschema 4.19.2 would otherwise switch to the stock
+# class there (found while preparing sweep part 2B). storage_properties adds CV-253 storage_utc_z at the
+# inventoried Storage nodes (scripts/pm_contract_formats.py).
+_Home4Class = keep_dialect(validators.extend(Draft202012Validator, {"pattern": _ecma_pattern, "properties": storage_properties},
+                                             type_checker=Draft202012Validator.TYPE_CHECKER.redefine("integer", _current_integer)))
 # Retained bodies keep their originally admitted numeric domain (the stock JSON Schema integer)
 # and exact bytes. This reader class never authorizes a current append or computes replacement pins.
-_RetainedClass = validators.extend(_Home4Class, type_checker=Draft202012Validator.TYPE_CHECKER)
+_RetainedClass = keep_dialect(validators.extend(_Home4Class, type_checker=Draft202012Validator.TYPE_CHECKER))
 Home4Validator = _ExactDigitFactory(_Home4Class)
 RetainedBodyValidator = _ExactDigitFactory(_RetainedClass)
 
@@ -722,6 +726,23 @@ def layout_history_context_errors(ev: Any, source: Any, custody: Any) -> list[st
     facts.done()
     return []
 
+LAYOUT_NAMED_RECIPES = {"workspace-layout-v2/original-json-schema": "original-json-schema",
+                        "workspace-layout-v2/typed-integer": "typed-integer"}
+
+
+def layout_retained_recipe(ev: Any, source: Any) -> tuple[Any, Any]:
+    """SP-1101: (recipe, None) or (None, refusing code) for a retained layout original, from sealed custody.
+
+    The recipe the reader's source observation names is read only by the custody builder (the pre-SP-1101
+    selection it records); it never selects (scripts/pm_ds_retained.py).
+    """
+    import pm_ds_retained as retained
+    named = ("3.0.0" if isinstance(ev, dict) and ev.get("schema_version") == "3.0.0" else "2.0.0",
+             LAYOUT_NAMED_RECIPES.get(source.get("payload_validation_recipe")) if isinstance(source, dict) else None,
+             retained.NO_SOURCE)
+    return retained.retained_recipe(ev, None, named if named[1] else None)
+
+
 @_ds_entry
 def event_checks(err: list[str], ev: dict[str, Any], binding: dict[str, Any], d: str,
                  store: PayloadStore = EMPTY_STORE, *, historical: bool = False,
@@ -732,10 +753,15 @@ def event_checks(err: list[str], ev: dict[str, Any], binding: dict[str, Any], d:
         err.append(context.first_code())
         return {}
     context.done()
+    recipe = None
     if historical:
         history_errors = layout_history_context_errors(ev, historical_source, custody)
         if history_errors:
             err.extend(history_errors)
+            return {}
+        recipe, refused = layout_retained_recipe(ev, historical_source)
+        if refused:
+            err.append(refused)
             return {}
     # Home4 stored values also carry the explicitly retained 2.0.0 event form.
     # This chooses its physical decoder only; it never relaxes payload typing.
@@ -746,7 +772,7 @@ def event_checks(err: list[str], ev: dict[str, Any], binding: dict[str, Any], d:
         return {}
     schema = load(Path(__file__).resolve().parents[1], "Plans/event_payloads/workspace_layout_changed_v2.schema.json")
     selected = body_route.validator(schema)
-    if historical and historical_source['payload_validation_recipe'] == 'workspace-layout-v2/original-json-schema':
+    if historical and recipe[1] == 'original-json-schema':
         selected = RetainedBodyValidator(schema, registry=selected._registry, format_checker=FormatChecker())
     shape = Facts("h4_event_payload", chain=True)
     if shape.stop("H4E02_payload_schema", lambda: selected.is_valid(payload)):

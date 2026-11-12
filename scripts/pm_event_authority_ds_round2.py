@@ -13,16 +13,16 @@ import re
 import textwrap
 import types
 from functools import update_wrapper
-from datetime import datetime
 import subprocess
 import sys
 from contextlib import contextmanager, ExitStack, nullcontext
 from pathlib import Path
 from unittest.mock import patch
 from jsonschema import Draft202012Validator
-from pm_contract_formats import FormatChecker
+from pm_contract_formats import STORAGE_UTC_Z, FormatChecker
 from jsonschema._keywords import pattern as python_pattern
 import pm_event_payload_route as route
+import pm_ds_retained as retained
 import pm_home_layout_v2_slot_receipt as home
 import pm_browser_workspace_created as created
 import pm_browser_workspace_created_v2 as created_v2
@@ -48,22 +48,20 @@ def padded(body, target, field):
                 return value
     raise AssertionError('no exact encoded boundary')
 
-def compaction_timestamp_valid(value):
-    try:
-        datetime.fromisoformat(value.replace('Z','+00:00'))
-    except (ValueError,TypeError):
-        return False
-    return True
-
 @_ds_entry
-def compaction_payload_errors(payload):
+def compaction_payload_errors(payload, *, payload_profile='typed-integer'):
     schema = load('Plans/event_payload_context_compaction_completed.schema.json')
     shape = Facts('comp_payload_schema', chain=True)
-    if shape.stop('CP01_payload_schema', lambda: route.validator(schema).is_valid(payload)):
+    # CV-1101: committed_at_utc (format date-time with the owner's terminal-Z pattern) takes the shared
+    # date_time predicate under the strict storage_utc_z profile the owner pattern selects. A retained original
+    # sealed under the original JSON Schema integer domain is read with it (SP-1101, scripts/pm_ds_retained.py).
+    selected = route.validator(schema, profile=STORAGE_UTC_Z)
+    if payload_profile == 'original-json-schema':
+        selected = home.RetainedBodyValidator(schema, registry=selected._registry, format_checker=FormatChecker(profile=STORAGE_UTC_Z))
+    if shape.stop('CP01_payload_schema', lambda: selected.is_valid(payload)):
         return [shape.first_code()]
     shape.done()
     facts = Facts('comp_payload')
-    facts['CP02_commit_time_valid'] = compaction_timestamp_valid(payload['committed_at_utc'])
     facts['CP03_revision_increases'] = payload['output_context_revision'] > payload['input_context_revision']
     facts['CP04_gain_equation'] = payload['input_tokens'] - payload['output_tokens'] == payload['reclaimed_tokens']
     return facts.codes()
@@ -73,11 +71,19 @@ def compaction_event_errors(event, *, historical=False):
     entry = Facts('comp_event_entry', chain=True)
     if entry.stop('CE01_historical_bool', lambda: type(historical) is bool):
         return [entry.first_code()]
+    recipe = ('2.0.0', 'typed-integer', retained.NO_SOURCE)
+    if historical:
+        # SP-1101: the retained original's recipe comes from sealed custody (scripts/pm_ds_retained.py); the
+        # third argument names the pre-SP-1101 selection, read only by the custody builder.
+        recipe, refused = retained.retained_recipe(event, None, (
+            '3.0.0' if isinstance(event, dict) and event.get('schema_version') == '3.0.0' else '2.0.0', 'typed-integer', retained.NO_SOURCE))
+        if refused:
+            return [refused]
     fixtures = load('Plans/context_compaction_completion_contract_fixtures.json')
-    if entry.stop('CE02_envelope_schema', lambda: route.validator(load('Plans/event_record.schema.json')).is_valid(event)):
+    if entry.stop('CE02_envelope_schema', lambda: route.validator(load(retained.ENVELOPES[recipe[0]])).is_valid(event)):
         return [entry.first_code()]
     entry.done()
-    errors = compaction_payload_errors(event['payload'])
+    errors = compaction_payload_errors(event['payload'], payload_profile=recipe[1])
     if errors:
         return errors
     payload = event['payload']
@@ -292,10 +298,14 @@ def layout_event_errors(event, store=None, *, binding=None, historical=False, cu
         return [context.first_code()]
     context.done()
     errors = []
+    recipe = None
     if historical:
         errors=home.layout_history_context_errors(event,historical_source,custody)
         if errors:
             return errors
+        recipe, refused = home.layout_retained_recipe(event, historical_source)
+        if refused:
+            return [refused]
     binding_schema=load(home.SCHEMA)
     binding_schema['$ref']='#/$defs/operation_binding'
     shape = Facts('layout_binding_schema', chain=True)
@@ -306,7 +316,7 @@ def layout_event_errors(event, store=None, *, binding=None, historical=False, cu
     envelope = Facts('layout_envelope', chain=True)
     if envelope.stop('LE03_event_object', lambda: isinstance(event, dict)):
         return errors+[envelope.first_code()]
-    schema = load('Plans/event_record.schema.json' if event.get('schema_version')=='2.0.0' else 'Plans/event_record_v3.schema.json')
+    schema = load(retained.ENVELOPES[recipe[0]] if historical else 'Plans/event_record.schema.json' if event.get('schema_version')=='2.0.0' else 'Plans/event_record_v3.schema.json')
     if envelope.stop('LE04_envelope_schema', lambda: route.validator(schema).is_valid(event)):
         return errors+[envelope.first_code()]
     envelope.done()
@@ -320,7 +330,7 @@ def layout_event_errors(event, store=None, *, binding=None, historical=False, cu
         return errors
     payload_schema=load('Plans/event_payloads/workspace_layout_changed_v2.schema.json')
     selected=route.validator(payload_schema)
-    if historical and historical_source['payload_validation_recipe']=='workspace-layout-v2/original-json-schema':
+    if historical and recipe[1]=='original-json-schema':
         selected=home.RetainedBodyValidator(payload_schema,registry=selected._registry,format_checker=FormatChecker())
     payload = Facts('layout_payload', chain=True)
     if payload.stop('LE07_payload_schema', lambda: selected.is_valid(body)):

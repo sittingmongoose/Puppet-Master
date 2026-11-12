@@ -17,8 +17,19 @@ CREATED = 'scripts/pm_browser_workspace_created.py'
 CREATED_V2 = 'scripts/pm_browser_workspace_created_v2.py'
 RESET = 'scripts/pm_browser_workspace_reset.py'
 GATE = 'scripts/pm-browser-event-admission.py'
+RETAINED = 'scripts/pm_ds_retained.py'
 
 SPEC = {
+    'ds_retained_custody': ('SP-1101 retained original: one selection from sealed custody, one RetainedDispatcher resolution', RETAINED, """
+        OX01_original_sealed | retained_original_unsealed | Storage's sealed write custody holds an original at the event's ref (SP-1101)
+        OX02_original_binding | retained_original_binding | the presented record carries a complete original binding (event id, type, scope, idempotency key, operation)
+        OX03_original_authentic | retained_original_not_sealed_bytes | the presented record (and Case-L legacy source) bytes are the bytes sealed at that ref
+        OX04_recipe_installed | retained_recipe_unknown | the sealed write recipe tuple, with its frozen resource manifest, has an installed frozen verifier
+        OX05_original_verified | retained_original_verification | the frozen verifier recomputes the sealed original's edition, family, payload schema, binding and commitment under its recipe
+    """),
+    'ds_retained_custody_entailed': ('SP-1101 dispatcher refusals no input reaches first', RETAINED, """
+        OX06_dispatch_other | retained_original_dispatch | no other RetainedDispatcher refusal (sealed binding join, ambiguity, caller override, bytes type, disclosure)
+    """),
     'term_schema': ('retained payload schema closure', TERMINAL, """
         TS01_refs_resolved | unresolved_retained_schema_reference | every $ref reachable from the retained payload schema resolves
     """),
@@ -256,10 +267,9 @@ SPEC = {
         RD02_body_object | payload_schema | the referenced body is an object
     """),
     'comp_payload_schema': ('compaction payload schema', ROUND2, """
-        CP01_payload_schema | compaction_payload_schema | the payload validates against the compaction payload schema
+        CP01_payload_schema | compaction_payload_schema | the payload validates against the compaction payload schema (committed_at_utc: shared CV-1101 date_time, storage_utc_z profile, and the owner pattern)
     """),
     'comp_payload': ('compaction payload semantics', ROUND2, """
-        CP02_commit_time_valid | valid_utc_datetime | committed_at_utc is a calendar-valid instant
         CP03_revision_increases | revision_must_increase | the output context revision is greater than the input revision
         CP04_gain_equation | gain_equation | reclaimed tokens are input tokens minus output tokens
     """),
@@ -311,12 +321,8 @@ SPEC = {
         LE08_replay_policy | layout_replay_only_not_appendable | a current layout event uses dedupe_by_idempotency_key
         LE09_producer_jcs | layout_producer_semantic_unavailable | a current layout event's producer semantic projection has a qualified RFC 8785 encoding (SP-273, CV-1100)
     """),
-    'cr_checkpoint_entry': ('v1 checkpoint schema and timestamps', CREATED, """
-        CC01_schema | checkpoint_schema | the v1 checkpoint validates against its closed bundle
-        CC02_updated_grammar | checkpoint_schema | updated_at_utc matches the RFC 3339 grammar
-        CC03_updated_calendar | checkpoint_schema | updated_at_utc is a calendar-valid instant
-        CC04_withdrawn_grammar | checkpoint_schema | a present withdrawn_at_utc matches the RFC 3339 grammar
-        CC05_withdrawn_calendar | checkpoint_schema | a present withdrawn_at_utc is a calendar-valid instant
+    'cr_checkpoint_entry': ('v1 checkpoint schema (timestamps: shared CV-1101 date_time)', CREATED, """
+        CC01_schema | checkpoint_schema | the v1 checkpoint validates against its closed bundle (updated_at_utc, withdrawn_at_utc: shared CV-1101 date_time, event_record profile)
     """),
     'cr_checkpoint': ('v1 checkpoint relations', CREATED, """
         CC06_scope_partition | checkpoint_scope_partition | the scope partition is the encoded project~ partition of the Project
@@ -504,12 +510,9 @@ SPEC = {
         V2R05A_storage_uint64 | checkpoint_core_schema | every Storage sequence/offset/generation field is an SP-1100 uint64 (storage_uint64)
     """),
     'v2_core_times': ('v2 core timestamps', CREATED_V2, """
-        V2R06_updated_grammar | checkpoint_timestamp | updated_at_utc matches the RFC 3339 grammar
-        V2R07_withdrawn_grammar | checkpoint_timestamp | a present withdrawn_at_utc matches the RFC 3339 grammar
-        V2R08_published_grammar | checkpoint_timestamp | published_at_utc matches the RFC 3339 grammar
-        V2R09_updated_calendar | checkpoint_timestamp | updated_at_utc is a calendar-valid instant
-        V2R10_withdrawn_calendar | checkpoint_timestamp | a present withdrawn_at_utc is a calendar-valid instant
-        V2R11_published_calendar | checkpoint_timestamp | published_at_utc is a calendar-valid instant
+        V2R06_updated_datetime | checkpoint_timestamp | updated_at_utc passes the shared CV-1101 date_time predicate (event_record profile)
+        V2R07_withdrawn_datetime | checkpoint_timestamp | a present withdrawn_at_utc passes the shared CV-1101 date_time predicate (event_record profile)
+        V2R08_published_datetime | checkpoint_timestamp | published_at_utc passes the shared CV-1101 date_time predicate (event_record profile)
     """),
     'v2_core_order': ('v2 core time order', CREATED_V2, """
         V2R12_withdrawal_order | withdrawal_after_observation | a withdrawal is not after the last observation
@@ -802,14 +805,6 @@ SPEC = {
     'rs_core_storage_uint64': ('reset core Storage uint64 fields (entailed by the cursor schema and RC03/RC04)', RESET, """
         RC05A_storage_uint64 | checkpoint_schema | every Storage sequence/offset/generation field is an SP-1100 uint64 (storage_uint64)
     """),
-    'rs_core_times': ('reset core timestamps', RESET, """
-        RC06_updated_grammar | checkpoint_timestamp | updated_at_utc matches the RFC 3339 grammar
-        RC07_withdrawn_grammar | checkpoint_timestamp | a present withdrawn_at_utc matches the RFC 3339 grammar
-        RC08_published_grammar | checkpoint_timestamp | published_at_utc matches the RFC 3339 grammar
-        RC09_updated_calendar | checkpoint_timestamp | updated_at_utc is a calendar-valid instant
-        RC10_withdrawn_calendar | checkpoint_timestamp | a present withdrawn_at_utc is a calendar-valid instant
-        RC11_published_calendar | checkpoint_timestamp | published_at_utc is a calendar-valid instant
-    """),
     'rs_core_order': ('reset core time order', RESET, """
         RC12_withdrawal_order | withdrawal_after_observation | a withdrawal is not after the last observation
         RC13_birth_before_update | generation_birth_after_observation_or_withdrawal | publication is not after the last observation
@@ -909,17 +904,13 @@ SPEC = {
         RU08_access_allowed | cleanup_authority_or_hold_unproved | observation access_allowed is exactly true
         RU09_deletion_allows_audit | cleanup_authority_or_hold_unproved | observation deletion_allows_audit is exactly true
         RU10_retired_selected | cleanup_retired_identity_missing | exactly one retired core has the publication id
-        RU11_cleanup_time | cleanup_invalid_time | the cleanup time parses as an instant
-        RU12_cleanup_time_zone | cleanup_retention_window_open | the cleanup time carries a zone
+        RU11_cleanup_time | cleanup_invalid_time | the cleanup time passes the shared CV-1101 date_time predicate (event_record profile)
     """),
     'rs_cleanup_window': ('cleanup retention window', RESET, """
         RU15_retention_elapsed | cleanup_retention_window_open | 604800 seconds have elapsed since the first withdrawal
     """),
-    'rs_cleanup_times_comparable': ('cleanup instants comparable (entailed by RU12 and the zone grammar)', RESET, """
-        RU14_times_comparable | cleanup_invalid_time | the cleanup time and the anchor are comparable instants
-    """),
-    'rs_cleanup_anchor_time': ('cleanup anchor instant (entailed by RU02 core timestamp rows)', RESET, """
-        RU13_anchor_time | cleanup_invalid_time | the retired core's first withdrawal parses as an instant
+    'rs_cleanup_anchor_time': ('cleanup anchor instant (entailed by the RU02 schema verdict)', RESET, """
+        RU13_anchor_time | cleanup_invalid_time | the retired core's first withdrawal passes the shared CV-1101 date_time predicate (event_record profile)
     """),
     'rs_disclose': ('reset checkpoint disclosure', RESET, """
         RD01_observation_object | read_unavailable_no_disclosure | the observation is an object
@@ -998,8 +989,10 @@ SPEC = {
         GS40_handoff_source_fenced | handoff_source_not_fenced | a host reconstruction fenced its source
         GS41_handoff_no_unknown_effects | handoff_unknown_effects | a host reconstruction has no unknown effects
     """),
-    'gate_compatibility': ('Case-L compatibility history', GATE, """
+    'gate_compatibility_source_present': ('Case-L legacy source present (entailed by SP-1101 custody)', GATE, """
         GH01_source_present | browser_compatibility_source_missing | the authenticated legacy source observation is present
+    """),
+    'gate_compatibility': ('Case-L compatibility history', GATE, """
         GH02_source_normalizes | browser_compatibility_source_invalid | the legacy source normalizes under Case L
         GH03_no_rejection_reason | browser_compatibility_source_mismatch | Case-L normalization gives no rejection reason
         GH04_normalized_event | browser_compatibility_source_mismatch | the normalized legacy event is canonically the retained event
@@ -1092,31 +1085,32 @@ SPEC = {
 # never credited by the tool run (scripts/pm-ds-guard-tables.py skips these tables). The proof
 # names the earlier row or schema clause that always refuses first.
 ENTAILED = {
-    'h4_event_context': 'H4E01: the only complete-checker caller that passes a historical selector, layout_event_errors, refuses a non-boolean at LE01 (scripts/pm_event_authority_ds_round2.py:291) before it calls event_checks; slot_invariants and receipt_invariants call event_checks with the default False (scripts/pm_home_layout_v2_slot_receipt.py:885, :922).',
-    'h4_store_id_syntax': 'H4P01: every blake3_id the store resolves has passed the Home4 schema pattern ^[0-9a-f]{64}$ with ECMA end of input (Plans/home_layout_v2_slot_receipt.schema.json:1848, :1855): run() validates the schema before the invariants (scripts/pm_home_layout_v2_slot_receipt.py:1102, :1123), and a referenced value is validated at H4F06 (:1044) before its own slot/receipt invariants.',
-    'h4_source_reference_size': 'H4SB02: a layout source payload_ref has byte_size minimum 16385 in the Home4 schema (Plans/home_layout_v2_slot_receipt.schema.json:871), which the schema rows refuse before the invariants run (scripts/pm_home_layout_v2_slot_receipt.py:1102, :1123).',
+    'ds_retained_custody_entailed': 'OX06: dispatch_refusal (scripts/pm_ds_retained.py:246) passes no recipe_override and an OriginalBinding it built (OX02 refuses otherwise, :262), for a ref OX01 found sealed (:259), so RetainedDispatcher.resolve (scripts/pm_event_numbers.py:525, :528) never refuses caller_recipe_override or original_query; DSOriginalOwner (scripts/pm_ds_retained.py:181) always returns an OriginalCustody of a RecipeTuple and bytes (:209), so original_authority-by-type, recipe_selection and original_bytes_type (scripts/pm_event_numbers.py:531, :535, :540) cannot come first; the sealed binding was recorded from the same record bytes the owner just authenticated (_record, scripts/pm_ds_retained.py:227), so original_binding (scripts/pm_event_numbers.py:533) cannot; original_ambiguous needs two seals of one ref with the same bytes, which collision_report (scripts/pm_ds_retained.py:301) refuses to write and check_custody verifies is absent; disclose is always true here (:270; disclosure is each reader\'s own access rows), so current_disclosure (scripts/pm_event_numbers.py:544) cannot.',
+    'gate_compatibility_source_present': 'GH01: candidate_failures runs the Case-L branch only for an original whose sealed recipe is Case-L (scripts/pm-browser-event-admission.py:570), after ds_retained_custody resolved it (:517); DSOriginalOwner matches a Case-L seal only when the fetched legacy source hashes to the source sealed with it (scripts/pm_ds_retained.py:197), and a Case-L original is sealed only with its legacy source observation object (_record, :233; check_custody verifies every Case-L seal carries a source), so the source the branch receives is that object.',
+    'h4_event_context': 'H4E01: the only complete-checker caller that passes a historical selector, layout_event_errors, refuses a non-boolean at LE01 (scripts/pm_event_authority_ds_round2.py:297) before it calls event_checks; slot_invariants and receipt_invariants call event_checks with the default False (scripts/pm_home_layout_v2_slot_receipt.py:911, :948).',
+    'h4_store_id_syntax': 'H4P01: every blake3_id the store resolves has passed the Home4 schema pattern ^[0-9a-f]{64}$ with ECMA end of input (Plans/home_layout_v2_slot_receipt.schema.json:1848, :1855): run() validates the schema before the invariants (scripts/pm_home_layout_v2_slot_receipt.py:1128, :1149), and a referenced value is validated at H4F06 (:1070) before its own slot/receipt invariants.',
+    'h4_source_reference_size': 'H4SB02: a layout source payload_ref has byte_size minimum 16385 in the Home4 schema (Plans/home_layout_v2_slot_receipt.schema.json:871), which the schema rows refuse before the invariants run (scripts/pm_home_layout_v2_slot_receipt.py:1128, :1149).',
     'h4_receipt_capture_request_presence': 'H4IC01: the receipt schema requires original_normalized_request and a string identity_capture_bytes.normalized_request (Plans/home_layout_pending_receipt.schema.json:3445, :3496), so on a schema-valid receipt neither is null and the presence row always holds; H4S02 refuses first otherwise.',
-    'comp_event_project_present': 'CE04: the EventRecord schema binds scope_kind application to a null project_id and project to a non-empty string (Plans/event_record.schema.json:149), so a null project implies application scope, which CE03 (scripts/pm_event_authority_ds_round2.py:91) refuses first in the same compaction call; CE02 refuses any other null.',
-    'v2_core_storage_uint64': 'V2R05A: the SP-278 cursor and token fields carry maximum 18446744073709551615 (Plans/event_record_index_checkpoint.schema.json:146, last_frame :332) and refuse at V2K01/V2C01 first; the two unbounded fields are tied to them by V2R03 and V2R04 (scripts/pm_browser_workspace_created_v2.py:106, :107), which refuse first in the earlier relations table.',
-    'rs_core_storage_uint64': 'RC05A: as V2R05A, with the reset cursor/token schema maxima (Plans/event_record_index_checkpoint.schema.json:146, :332) refusing at RK01 first and RC03/RC04 (scripts/pm_browser_workspace_reset.py:372, :373) refusing first in the earlier relations table.',
-    'v2_advance_partition': 'V2A06: V2R01 (scripts/pm_browser_workspace_created_v2.py:104) holds for both values, so scope_partition is the injective encoding of project_id; a changed partition is a changed Project, which V2A05 refuses first (the refresh table is observed before this one, :375).',
-    'rs_advance_partition': 'RV24: RC01 (scripts/pm_browser_workspace_reset.py:370) holds for both values, so a changed partition is a changed Project, which RV23 (:533) refuses first in the refresh chain.',
+    'comp_event_project_present': 'CE04: the EventRecord schema binds scope_kind application to a null project_id and project to a non-empty string (Plans/event_record.schema.json:149), so a null project implies application scope, which CE03 (scripts/pm_event_authority_ds_round2.py:97) refuses first in the same compaction call; CE02 refuses any other null.',
+    'v2_core_storage_uint64': 'V2R05A: the SP-278 cursor and token fields carry maximum 18446744073709551615 (Plans/event_record_index_checkpoint.schema.json:146, last_frame :332) and refuse at V2K01/V2C01 first; the two unbounded fields are tied to them by V2R03 and V2R04 (scripts/pm_browser_workspace_created_v2.py:104, :105), which refuse first in the earlier relations table.',
+    'rs_core_storage_uint64': 'RC05A: as V2R05A, with the reset cursor/token schema maxima (Plans/event_record_index_checkpoint.schema.json:146, :332) refusing at RK01 first and RC03/RC04 (scripts/pm_browser_workspace_reset.py:371, :372) refusing first in the earlier relations table.',
+    'v2_advance_partition': 'V2A06: V2R01 (scripts/pm_browser_workspace_created_v2.py:102) holds for both values, so scope_partition is the injective encoding of project_id; a changed partition is a changed Project, which V2A05 refuses first (the refresh table is observed before this one, :362).',
+    'rs_advance_partition': 'RV24: RC01 (scripts/pm_browser_workspace_reset.py:369) holds for both values, so a changed partition is a changed Project, which RV23 (:513) refuses first in the refresh chain.',
     'v2_history_legacy_unwithdrawn': 'V2K03: a v1 custody wrapper requires legacy_checkpoint state withdrawn (Plans/browser_workspace_created_checkpoint_v2.schema.json:559), and the v1 contract requires a timestamp withdrawn_at_utc for that state (Plans/browser_workspace_created_contracts.schema.json:89), so the unwithdrawn branch never occurs on a value V2K01 accepts.',
-    'v2_history_legacy_custody_order': 'V2K05: with retired_at equal to the v1 first withdrawal W (V2K02, scripts/pm_browser_workspace_created_v2.py:207), W no later than the v1 last observation U (CC09, scripts/pm_browser_workspace_created.py:167, run first by legacy_failures at scripts/pm_browser_workspace_created_v2.py:203) and custody no earlier than U (V2K04, scripts/pm_browser_workspace_created_v2.py:209), retired_at <= custody; an input violating V2K05 violates CC09 or V2K02/V2K04 first.',
-    'v2_token_fields': 'TK09: the live read token is validated first at TK01 (scripts/pm_browser_workspace_created_v2.py:152) against the closed SP-278 read_token (additionalProperties false, ten required fields; Plans/event_record_index_checkpoint.schema.json:2570), so its field set is always the expected one.',
-    'rs_token_fields': 'RT10: the stored token is validated first at RT01 (scripts/pm_browser_workspace_reset.py:463) against the closed nine-field durable_read_token (Plans/browser_workspace_reset_contracts.schema.json:715).',
-    'v2_cleanup_tx_status': 'V2CL21: the cleanup transaction schema fixes status to committed (Plans/browser_workspace_created_checkpoint_v2.schema.json:722), which V2CL14 (scripts/pm_browser_workspace_created_v2.py:423) refuses first.',
-    'rs_cleanup_anchor_time': 'RU13: RU02 (scripts/pm_browser_workspace_reset.py:561) first validates every retired core: a retired core is withdrawn (Plans/browser_workspace_reset_contracts.schema.json:640) with a timestamp withdrawn_at_utc that RC06-RC11 (scripts/pm_browser_workspace_reset.py:392-397) parse, so the anchor always parses.',
-    'rs_cleanup_times_comparable': 'RU14: RU12 (scripts/pm_browser_workspace_reset.py:589) makes the cleanup time zone-aware, and the core timestamp grammar (RC06-RC08, :392) requires Z or an offset, so both instants are aware and comparable.',
-    'rs_preflight_state': 'RP22: reset_preflight_failures returns the shared candidate refusals first (scripts/pm_browser_workspace_reset.py:102); for a reset event that includes the payload schema, which fixes workspace_state to reset (Plans/browser_event_payloads.schema.json:557). Any other admitted type has no integer prior_workspace_generation equal to the transition\'s, so RP23 (scripts/pm_browser_workspace_reset.py:137) refuses first in the earlier join table.',
-    'rs_preflight_generation_order': 'RP25: the shared candidate check refuses payload facts whose prior generation is not below the generation (GS08, scripts/pm-browser-event-admission.py:390) before the reset joins run (scripts/pm_browser_workspace_reset.py:102); with advancing payload facts, a non-advancing transition differs from them, so RP23/RP24 (scripts/pm_browser_workspace_reset.py:137, :138) refuse first.',
-    'rs_preflight_event_type': 'RP01: an admitted non-reset event that passes the shared candidate check has no integer facts.prior_workspace_generation (a creation fixes it to null at GS09, scripts/pm-browser-event-admission.py:391; other types do not carry it), while the transition prior generation is a schema integer, so RP23 (scripts/pm_browser_workspace_reset.py:137) refuses first in the earlier join table.',
-    'cr_preflight_run_attempt': 'CR06: the request and result lineage schema pairs run_id and attempt_id (oneOf, Plans/section15_browser_program_contracts.schema.json:167), refused at CR0A/CR0B (scripts/pm_browser_workspace_created.py:243) first; with a paired request lineage, an unpaired payload context differs from it and CR09 (scripts/pm_browser_workspace_created.py:262) refuses first in the earlier join table.',
-    'cr_preflight_request_security': 'CR12: the request scope fixes session_security_class to ordinary (Plans/section15_browser_program_contracts.schema.json:234), refused first at CR0A (scripts/pm_browser_workspace_created.py:243).',
-    'cr_preflight_result_security': 'CR14: the result scope fixes session_security_class to ordinary (Plans/section15_browser_program_contracts.schema.json:234), refused first at CR0B (scripts/pm_browser_workspace_created.py:243).',
-    'gate_candidate_context': 'GC08: every Browser payload recipe takes $defs/common through allOf, and common requires context (Plans/browser_event_payloads.schema.json:368, :371) with $defs/context of type object (Plans/browser_event_payloads.schema.json:168, :169); validators[event_type] is that recipe (scripts/pm-browser-event-admission.py:517), so a missing or non-object context fails GC06 (scripts/pm-browser-event-admission.py:522) in the earlier gate_candidate_joins table before GC08 (scripts/pm-browser-event-admission.py:528) runs.',
-    'gate_candidate_scope_kind': 'GC09: GC04 (scripts/pm-browser-event-admission.py:508) validates the event against the 2.0.0 or 3.0.0 EventRecord schema (scripts/pm-browser-event-admission.py:506), and both require scope_kind with enum application or project (Plans/event_record.schema.json:11, :47; Plans/event_record_v3.schema.json:11, :47) and bind application to a null project_id (Plans/event_record.schema.json:144; Plans/event_record_v3.schema.json:153). GC06 (scripts/pm-browser-event-admission.py:522) requires payload context project_id as a non-empty $defs/id string (Plans/browser_event_payloads.schema.json:172, :195). A scope kind other than project therefore fails GC04, or else holds a null project_id that differs from the context project_id and fails GC10 (scripts/pm-browser-event-admission.py:533, project_id in IDENTITIES at scripts/pm-browser-event-admission.py:29) unless GC06 failed; all three run in earlier tables than GC09 (scripts/pm-browser-event-admission.py:540).',
-    'gate_candidate_payload_event_type': 'GC12: validators is keyed by the admission row event_type (scripts/pm-browser-event-admission.py:367) and the event row is the one selected (scripts/pm-browser-event-admission.py:517); for every one of the 53 admission rows the recipe fixes properties.event_type to that row event_type as a const (for example Plans/browser_event_payloads.schema.json:436) and common requires event_type (Plans/browser_event_payloads.schema.json:370), checked mechanically over Plans/browser_event_admission.json. A payload event type other than the event type fails GC06 (scripts/pm-browser-event-admission.py:522) in the earlier gate_candidate_joins table before GC12 (scripts/pm-browser-event-admission.py:542) runs.',
-    'gate_candidate_migration': 'GC15: both EventRecord schemas require migration (Plans/event_record.schema.json:36; Plans/event_record_v3.schema.json:36) as $defs/migration (Plans/event_record.schema.json:140; Plans/event_record_v3.schema.json:149) of type object (Plans/event_record.schema.json:216; Plans/event_record_v3.schema.json:225), so a missing or non-object migration fails GC04 (scripts/pm-browser-event-admission.py:508) in the earlier gate_candidate_envelope table before GC15 (scripts/pm-browser-event-admission.py:547) runs.',
-    'gate_central_referenced_pointer': 'GB15: the registry family schema fixes referenced_event_id_pointer to null unless scope_policy is inherits_referenced_event (Plans/event_family_registry.schema.json:338); GB02 refuses a schema violation and GB08 (scripts/pm-browser-event-admission.py:587) refuses the other scope policy first in the earlier table.',
+    'v2_history_legacy_custody_order': 'V2K05: with retired_at equal to the v1 first withdrawal W (V2K02, scripts/pm_browser_workspace_created_v2.py:194), W no later than the v1 last observation U (CC09, scripts/pm_browser_workspace_created.py:145, run first by legacy_failures at scripts/pm_browser_workspace_created_v2.py:190) and custody no earlier than U (V2K04, scripts/pm_browser_workspace_created_v2.py:196), retired_at <= custody; an input violating V2K05 violates CC09 or V2K02/V2K04 first.',
+    'v2_token_fields': 'TK09: the live read token is validated first at TK01 (scripts/pm_browser_workspace_created_v2.py:139) against the closed SP-278 read_token (additionalProperties false, ten required fields; Plans/event_record_index_checkpoint.schema.json:2570), so its field set is always the expected one.',
+    'rs_token_fields': 'RT10: the stored token is validated first at RT01 (scripts/pm_browser_workspace_reset.py:443) against the closed nine-field durable_read_token (Plans/browser_workspace_reset_contracts.schema.json:715).',
+    'v2_cleanup_tx_status': 'V2CL21: the cleanup transaction schema fixes status to committed (Plans/browser_workspace_created_checkpoint_v2.schema.json:722), which V2CL14 (scripts/pm_browser_workspace_created_v2.py:410) refuses first.',
+    'rs_cleanup_anchor_time': 'RU13: RU02 (scripts/pm_browser_workspace_reset.py:541) first validates the whole checkpoint against the closed reset schema, whose validator installs the shared CV-1101 date_time predicate (event_record profile; scripts/pm_browser_workspace_reset.py RK01, pm_contract_formats.FormatChecker): a retired core is withdrawn (Plans/browser_workspace_reset_contracts.schema.json:656) and a withdrawn core takes withdrawn_at_utc as $defs/timestamp, format date-time (:600, :42), so the anchor always passes the same predicate.',
+    'rs_preflight_state': 'RP22: reset_preflight_failures returns the shared candidate refusals first (scripts/pm_browser_workspace_reset.py:100); for a reset event that includes the payload schema, which fixes workspace_state to reset (Plans/browser_event_payloads.schema.json:557). Any other admitted type has no integer prior_workspace_generation equal to the transition\'s, so RP23 (scripts/pm_browser_workspace_reset.py:135) refuses first in the earlier join table.',
+    'rs_preflight_generation_order': 'RP25: the shared candidate check refuses payload facts whose prior generation is not below the generation (GS08, scripts/pm-browser-event-admission.py:391) before the reset joins run (scripts/pm_browser_workspace_reset.py:100); with advancing payload facts, a non-advancing transition differs from them, so RP23/RP24 (scripts/pm_browser_workspace_reset.py:135, :136) refuse first.',
+    'rs_preflight_event_type': 'RP01: an admitted non-reset event that passes the shared candidate check has no integer facts.prior_workspace_generation (a creation fixes it to null at GS09, scripts/pm-browser-event-admission.py:392; other types do not carry it), while the transition prior generation is a schema integer, so RP23 (scripts/pm_browser_workspace_reset.py:135) refuses first in the earlier join table.',
+    'cr_preflight_run_attempt': 'CR06: the request and result lineage schema pairs run_id and attempt_id (oneOf, Plans/section15_browser_program_contracts.schema.json:167), refused at CR0A/CR0B (scripts/pm_browser_workspace_created.py:221) first; with a paired request lineage, an unpaired payload context differs from it and CR09 (scripts/pm_browser_workspace_created.py:240) refuses first in the earlier join table.',
+    'cr_preflight_request_security': 'CR12: the request scope fixes session_security_class to ordinary (Plans/section15_browser_program_contracts.schema.json:234), refused first at CR0A (scripts/pm_browser_workspace_created.py:221).',
+    'cr_preflight_result_security': 'CR14: the result scope fixes session_security_class to ordinary (Plans/section15_browser_program_contracts.schema.json:234), refused first at CR0B (scripts/pm_browser_workspace_created.py:221).',
+    'gate_candidate_context': 'GC08: every Browser payload recipe takes $defs/common through allOf, and common requires context (Plans/browser_event_payloads.schema.json:368, :371) with $defs/context of type object (Plans/browser_event_payloads.schema.json:168, :169); validators[event_type] is that recipe (scripts/pm-browser-event-admission.py:530), so a missing or non-object context fails GC06 (scripts/pm-browser-event-admission.py:535) in the earlier gate_candidate_joins table before GC08 (scripts/pm-browser-event-admission.py:541) runs.',
+    'gate_candidate_scope_kind': 'GC09: GC04 (scripts/pm-browser-event-admission.py:521) validates the event against the 2.0.0 or 3.0.0 EventRecord schema (scripts/pm-browser-event-admission.py:507), and both require scope_kind with enum application or project (Plans/event_record.schema.json:11, :47; Plans/event_record_v3.schema.json:11, :47) and bind application to a null project_id (Plans/event_record.schema.json:144; Plans/event_record_v3.schema.json:153). GC06 (scripts/pm-browser-event-admission.py:535) requires payload context project_id as a non-empty $defs/id string (Plans/browser_event_payloads.schema.json:172, :195). A scope kind other than project therefore fails GC04, or else holds a null project_id that differs from the context project_id and fails GC10 (scripts/pm-browser-event-admission.py:546, project_id in IDENTITIES at scripts/pm-browser-event-admission.py:30) unless GC06 failed; all three run in earlier tables than GC09 (scripts/pm-browser-event-admission.py:553).',
+    'gate_candidate_payload_event_type': 'GC12: validators is keyed by the admission row event_type (scripts/pm-browser-event-admission.py:368) and the event row is the one selected (scripts/pm-browser-event-admission.py:530); for every one of the 53 admission rows the recipe fixes properties.event_type to that row event_type as a const (for example Plans/browser_event_payloads.schema.json:436) and common requires event_type (Plans/browser_event_payloads.schema.json:370), checked mechanically over Plans/browser_event_admission.json. A payload event type other than the event type fails GC06 (scripts/pm-browser-event-admission.py:535) in the earlier gate_candidate_joins table before GC12 (scripts/pm-browser-event-admission.py:555) runs.',
+    'gate_candidate_migration': 'GC15: both EventRecord schemas require migration (Plans/event_record.schema.json:36; Plans/event_record_v3.schema.json:36) as $defs/migration (Plans/event_record.schema.json:140; Plans/event_record_v3.schema.json:149) of type object (Plans/event_record.schema.json:216; Plans/event_record_v3.schema.json:225), so a missing or non-object migration fails GC04 (scripts/pm-browser-event-admission.py:521) in the earlier gate_candidate_envelope table before GC15 (scripts/pm-browser-event-admission.py:560) runs.',
+    'gate_central_referenced_pointer': 'GB15: the registry family schema fixes referenced_event_id_pointer to null unless scope_policy is inherits_referenced_event (Plans/event_family_registry.schema.json:338); GB02 refuses a schema violation and GB08 (scripts/pm-browser-event-admission.py:600) refuses the other scope policy first in the earlier table.',
 }

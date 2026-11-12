@@ -16,7 +16,8 @@ def cases():
     def refusal(uid,label,call):rows.append(('NEG-'+uid+':'+label,lambda:not call()))
     for field in v2.TIMES:
         if builder.cp[field] is None:continue
-        changed=copy.deepcopy(builder.cp);changed[field]=changed[field].replace('T','t')
+        # CV-1101 (part 2B): lowercase t is owner-valid; the shared predicate refuses a space separator.
+        changed=copy.deepcopy(builder.cp);changed[field]=changed[field].replace('T',' ')
         refusal('U076','strict_local_timestamp:'+field,lambda c=changed:v2.checkpoint_failures(c))
     for field in ('storage_instance_id','project_id'):
         _,after,_=builder.handoff(withdrawn=True)

@@ -6,7 +6,7 @@ from functools import lru_cache
 from pathlib import Path
 from urllib.parse import urljoin
 from jsonschema import Draft202012Validator
-from pm_contract_formats import FormatChecker
+from pm_contract_formats import EVENT_RECORD, FormatChecker
 from referencing import Registry, Resource
 from referencing.jsonschema import DRAFT202012
 from pm_ds_tables import Facts, entry as _ds_entry
@@ -63,15 +63,16 @@ def eager(registry, *schemas):
         closure.done()
         _eager_done.add(key)
 
-def validator(schema, root=ROOT):
-    return _validator(json.dumps(schema, sort_keys=True), root)
+def validator(schema, root=ROOT, *, profile=EVENT_RECORD):
+    """The DS validator of one schema; date-time fields take the shared CV-1101 predicate under `profile`."""
+    return _validator(json.dumps(schema, sort_keys=True), root, profile)
 
 @lru_cache(maxsize=32)
-def _validator(encoded, root):
+def _validator(encoded, root, profile):
     schema = json.loads(encoded)
     reg = schema_registry(root)
     eager(reg, schema)
-    return StrictValidator(schema, registry=reg, format_checker=FormatChecker())
+    return StrictValidator(schema, registry=reg, format_checker=FormatChecker(profile=profile))
 
 def encode(event, store):
     """Freeze one exact representation before append; store maps BLAKE3 to (media, bytes)."""

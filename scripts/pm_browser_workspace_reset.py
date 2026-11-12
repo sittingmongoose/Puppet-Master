@@ -11,8 +11,6 @@ import base64
 import copy
 import importlib.util
 import json
-import re
-from datetime import datetime, timedelta
 from functools import lru_cache
 import sys
 from pathlib import Path
@@ -24,7 +22,7 @@ from referencing import Registry, Resource
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
-from pm_contract_formats import FormatChecker
+from pm_contract_formats import FormatChecker, after_seconds, date_time_ok, instant
 import pm_event_payload_route as body_route
 from pm_ds_tables import Facts, entry as _ds_entry
 Draft202012Validator = body_route.StrictValidator
@@ -359,7 +357,8 @@ def checkpoint_failures(value, *, root=ROOT):
     return sorted(set(errors))
 
 def parse_time(value):
-    return datetime.fromisoformat(value.replace("Z", "+00:00"))
+    """Exact CV-1101 order key (shared date_time, event_record profile; raises its Refusal otherwise)."""
+    return instant(value)
 
 
 @_ds_entry
@@ -375,29 +374,10 @@ def checkpoint_core_failures(value):
     storage = Facts("rs_core_storage_uint64")
     storage["RC05A_storage_uint64"] = body_route.storage_uint64_fields_ok(value)
     errors = relations.codes() + storage.codes()
+    # CV-1101: the closed schema (RK01) has checked every core time with the shared date_time predicate
+    # (event_record profile) before this runs; the order rows compare exact instants.
     names = ("updated_at_utc", "withdrawn_at_utc", "published_at_utc")
-    grammar = r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})"
-    times = {}
-
-    def calendar(name):
-        if value[name] is None:
-            return True
-        try:
-            times[name] = parse_time(value[name])
-        except (ValueError, TypeError):
-            return False
-        return True
-
-    stamps = Facts("rs_core_times", chain=True)
-    for row, check in (("RC06_updated_grammar", lambda: value[names[0]] is None or re.fullmatch(grammar, value[names[0]]) is not None),
-                       ("RC07_withdrawn_grammar", lambda: value[names[1]] is None or re.fullmatch(grammar, value[names[1]]) is not None),
-                       ("RC08_published_grammar", lambda: value[names[2]] is None or re.fullmatch(grammar, value[names[2]]) is not None),
-                       ("RC09_updated_calendar", lambda: calendar(names[0])),
-                       ("RC10_withdrawn_calendar", lambda: calendar(names[1])),
-                       ("RC11_published_calendar", lambda: calendar(names[2]))):
-        if stamps.stop(row, check):
-            return errors + [stamps.first_code()]
-    stamps.done()
+    times = {name: parse_time(value[name]) for name in names if value[name] is not None}
     withdrawn = "withdrawn_at_utc" in times
     order = Facts("rs_core_order")
     order["RC12_withdrawal_order"] = not withdrawn or times["withdrawn_at_utc"] <= times["updated_at_utc"]
@@ -571,29 +551,23 @@ class CheckpointOracle:
             return len(selected) == 1
 
         def parsed(name, text):
-            try:
-                moment[name] = parse_time(text())
-            except (ValueError, TypeError, AttributeError):
+            # CV-1101: the shared date_time predicate (event_record profile), then the exact order key.
+            if not date_time_ok(text()):
                 return False
+            moment[name] = parse_time(text())
             return True
 
-        def comparable():
-            try:
-                moment["open"] = moment["now"] < moment["anchor"] + timedelta(seconds=604800)
-            except TypeError:
-                return False
-            return True
+        def window_open():
+            return moment["now"] < after_seconds(moment["anchor"], 604800)
 
         checks += [("RU10_retired_selected", one_selected),
-                   ("RU11_cleanup_time", lambda: parsed("now", lambda: at_utc)),
-                   ("RU12_cleanup_time_zone", lambda: moment["now"].tzinfo is not None)]
+                   ("RU11_cleanup_time", lambda: parsed("now", lambda: at_utc))]
         for row, check in checks:
             if f.stop(row, check):
                 return f.first_code()
         f.done()
         for phase, row, check in (("rs_cleanup_anchor_time", "RU13_anchor_time", lambda: parsed("anchor", lambda: selected[0]["checkpoint_core"]["withdrawn_at_utc"])),
-                                  ("rs_cleanup_times_comparable", "RU14_times_comparable", comparable),
-                                  ("rs_cleanup_window", "RU15_retention_elapsed", lambda: not moment["open"])):
+                                  ("rs_cleanup_window", "RU15_retention_elapsed", lambda: not window_open())):
             step = Facts(phase, chain=True)
             if step.stop(row, check):
                 return step.first_code()
@@ -639,7 +613,7 @@ class CheckpointOracle:
         candidate = {**self.checkpoint, "state": "withdrawn", "updated_at_utc": at_utc, "withdrawn_at_utc": at_utc}
         if f.stop("RW04_candidate_valid", lambda: not checkpoint_failures(candidate)):
             return f.first_code()
-        if f.stop("RW05_not_before_observation", lambda: datetime.fromisoformat(at_utc.replace("Z", "+00:00")) >= datetime.fromisoformat(self.checkpoint["updated_at_utc"].replace("Z", "+00:00"))):
+        if f.stop("RW05_not_before_observation", lambda: parse_time(at_utc) >= parse_time(self.checkpoint["updated_at_utc"])):
             return f.first_code()
         f.done()
         self.checkpoint = candidate

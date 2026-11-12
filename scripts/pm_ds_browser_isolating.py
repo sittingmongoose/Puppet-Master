@@ -111,7 +111,8 @@ def cases():
     cp=fixtures['checkpoint_fixture']
     bad=copy.deepcopy(cp);bad['state']='withdrawn';bad['withdrawn_at_utc']='2027-01-01T00:00:00Z'
     add('U057','created:withdrawal_after_observation',lambda:not created.checkpoint_failures(bad))
-    lower=copy.deepcopy(cp);lower['updated_at_utc']=lower['updated_at_utc'].replace('T','t')
+    # CV-1101 (part 2B): lowercase t is owner-valid; the shared date_time predicate refuses a space separator.
+    lower=copy.deepcopy(cp);lower['updated_at_utc']=lower['updated_at_utc'].replace('T',' ')
     add('U058','created:strict_checkpoint_timestamp_spelling',lambda:not created.checkpoint_failures(lower))
     def prior_bad():
         prior=copy.deepcopy(cp);prior['unexpected']=True

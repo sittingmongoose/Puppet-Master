@@ -12,8 +12,6 @@ from __future__ import annotations
 import copy
 import importlib.util
 import json
-import re
-from datetime import datetime, timedelta
 from functools import lru_cache
 import sys
 from pathlib import Path
@@ -23,7 +21,7 @@ from referencing import Registry, Resource
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
-from pm_contract_formats import FormatChecker
+from pm_contract_formats import FormatChecker, after_seconds, date_time_ok, instant as _instant
 import pm_event_payload_route as body_route
 from pm_ds_tables import Facts, entry as _ds_entry
 Draft202012Validator = body_route.StrictValidator
@@ -36,7 +34,6 @@ V1_ID = 'pm.storage_value.browser_workspace_created_index_checkpoint.v1'
 V2_ID = 'pm.storage_value.browser_workspace_created_index_checkpoint.v2'
 SCOPE = ('storage_instance_id', 'project_id', 'scope_partition')
 TIMES = ('updated_at_utc', 'withdrawn_at_utc', 'published_at_utc')
-TIMESTAMP = re.compile(r'\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})')
 
 
 def load(path, root=ROOT):
@@ -67,7 +64,8 @@ def validators(root=ROOT):
 
 
 def instant(value):
-    return datetime.fromisoformat(value.replace('Z', '+00:00'))
+    """Exact CV-1101 order key (shared date_time, event_record profile; raises its Refusal otherwise)."""
+    return _instant(value)
 
 
 def key(value):
@@ -109,27 +107,16 @@ def core_relation_failures(value, root=ROOT):
     storage = Facts('v2_core_storage_uint64')
     storage['V2R05A_storage_uint64'] = body_route.storage_uint64_fields_ok(value)
     errors = relations.codes() + storage.codes()
-    times = {}
-
-    def calendar(name):
-        if value[name] is None:
-            return True
-        try:
-            times[name] = instant(value[name])
-        except ValueError:
-            return False
-        return True
-
+    # CV-1101: each core time passes the shared date_time predicate (event_record profile). The schema verdict
+    # (V2C01) checks the same fields first; core_relation_failures is also called on its own.
     stamps = Facts('v2_core_times', chain=True)
-    for row, check in (('V2R06_updated_grammar', lambda: value['updated_at_utc'] is None or TIMESTAMP.fullmatch(value['updated_at_utc']) is not None),
-                       ('V2R07_withdrawn_grammar', lambda: value['withdrawn_at_utc'] is None or TIMESTAMP.fullmatch(value['withdrawn_at_utc']) is not None),
-                       ('V2R08_published_grammar', lambda: value['published_at_utc'] is None or TIMESTAMP.fullmatch(value['published_at_utc']) is not None),
-                       ('V2R09_updated_calendar', lambda: calendar('updated_at_utc')),
-                       ('V2R10_withdrawn_calendar', lambda: calendar('withdrawn_at_utc')),
-                       ('V2R11_published_calendar', lambda: calendar('published_at_utc'))):
+    for row, check in (('V2R06_updated_datetime', lambda: value['updated_at_utc'] is None or date_time_ok(value['updated_at_utc'])),
+                       ('V2R07_withdrawn_datetime', lambda: value['withdrawn_at_utc'] is None or date_time_ok(value['withdrawn_at_utc'])),
+                       ('V2R08_published_datetime', lambda: value['published_at_utc'] is None or date_time_ok(value['published_at_utc']))):
         if stamps.stop(row, check):
             return errors + [stamps.first_code()]
     stamps.done()
+    times = {name: instant(value[name]) for name in TIMES if value[name] is not None}
     withdrawn = 'withdrawn_at_utc' in times
     order = Facts('v2_core_order')
     order['V2R12_withdrawal_order'] = not withdrawn or times['withdrawn_at_utc'] <= times['updated_at_utc']
@@ -400,7 +387,7 @@ def cleanup_failures(before, after, publication_id, observation, root=ROOT):
     anchor = entry.get('retired_at_utc', entry.get('checkpoint_core', {}).get('withdrawn_at_utc'))
     holds = entry.get('hold_refs', entry.get('checkpoint_core', {}).get('hold_refs'))
     try:
-        eligible = instant(observation['now_utc']) >= instant(anchor) + timedelta(seconds=604800)
+        eligible = instant(observation['now_utc']) >= after_seconds(instant(anchor), 604800)
     except (ValueError, KeyError, TypeError, AttributeError):
         eligible = False
     resolved_holds = observation.get('resolved_hold_refs')

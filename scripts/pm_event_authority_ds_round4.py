@@ -101,8 +101,15 @@ def build():
     suite.positive('round4:home_event_retained_numeric', home_history)
     suite.negative('round4:layout_numeric_current_writer', 'integral_numeric_type',
                    lambda: not ds.layout_event_errors(retained, objects, binding=binding))
-    strict = ds.layout_history_observation(retained, 'workspace-layout-v2/typed-integer')
-    suite.positive('round4:strict_recorded_recipe_refuses_float', lambda: not historical(obs=strict))
+    # SP-1101 (part 2B): one original has one sealed write recipe, and the reader's named recipe selects nothing.
+    # The strict case is therefore its own original, sealed under typed-integer by the custody builder.
+    # (Its own bytes: the same event with only prior_layout_revision an integral float; the event id stays
+    # the one the operation digest forms.)
+    strict_large = copy.deepcopy(large)
+    strict_large['payload']['new_layout_revision'] = int(strict_large['payload']['new_layout_revision'])
+    strict_event, strict_objects = d3.invalid_external_numeric(strict_large)
+    strict = ds.layout_history_observation(strict_event, 'workspace-layout-v2/typed-integer')
+    suite.positive('round4:strict_recorded_recipe_refuses_float', lambda: not historical(e=strict_event, obj=strict_objects, obs=strict))
     for field in ('event_id', 'idempotency_key', 'project_id'):
         changed = copy.deepcopy(retained)
         changed[field] += '-forged'
@@ -190,10 +197,10 @@ def format_sweep():
         walk(schema)
     for path in sorted(paths):
         visit(path)
-    from pm_contract_formats import date_time
+    from pm_contract_formats import date_time_ok
     retained_forms=['2026-09-10T00:00:00.123456789Z','2026-09-10T01:00:00.123456789123+01:00',
                     '2026-09-10t00:00:00z','1990-12-31T23:59:60Z','1990-12-31T15:59:60-08:00']
-    positives={v:date_time(v) for v in retained_forms}
+    positives={v:date_time_ok(v) for v in retained_forms}
     return {'status': 'pass' if all(r['refused'] for r in rows+schema_rows) and all(positives.values()) else 'fail',
             'rows':rows,'schema_format_rows':schema_rows,'retained_format_positives':positives,
             'schema_resources':sorted(seen),'terminal':'Closed retained payload has no formats; its shared EventRecord formats are enforced. No disclosure permission or operating consumer inferred.',

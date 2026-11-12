@@ -16,7 +16,7 @@ def CP01_payload_schema(value, context):
 def case(value):
     context = None
     table = g.GuardTable([
-        g.Guard('CP01_payload_schema', g.Invariant('/CP01_payload_schema', 'the payload validates against the compaction payload schema'), 'compaction_payload_schema', CP01_payload_schema),
+        g.Guard('CP01_payload_schema', g.Invariant('/CP01_payload_schema', 'the payload validates against the compaction payload schema (committed_at_utc: shared CV-1101 date_time, storage_utc_z profile, and the owner pattern)'), 'compaction_payload_schema', CP01_payload_schema),
     ])
 
     def check(value):

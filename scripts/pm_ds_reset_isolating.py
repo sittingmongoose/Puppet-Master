@@ -1,14 +1,15 @@
 """Reset complete-entry joins/state controls with coherent observations."""
 import copy
 import importlib.util
-from datetime import timedelta
+from datetime import datetime, timedelta
 import pm_browser_workspace_reset as owner
 import pm_event_authority_ds_round2 as ds
 from pm_ds_home4_isolating import replace_strings
 
 
 def stamp(value,seconds):
-    return (owner.parse_time(value)+timedelta(seconds=seconds)).isoformat().replace('+00:00','Z')
+    # Builds a new uppercase-Z fixture time; the checker orders times with its own exact CV-1101 key.
+    return (datetime.fromisoformat(value.replace('Z','+00:00'))+timedelta(seconds=seconds)).isoformat().replace('+00:00','Z')
 
 
 def cases():
@@ -62,7 +63,8 @@ def cases():
     value=copy.deepcopy(cp);value['storage_instance_id']='22222222-2222-4222-8222-222222222222'
     checkpoint('U102','source_token_belongs_to_original_store',value)
     for field in ('updated_at_utc','published_at_utc'):
-        value=copy.deepcopy(cp);value[field]=value[field].replace('T','t')
+        # CV-1101 (part 2B): lowercase t is owner-valid; the shared predicate refuses a space separator.
+        value=copy.deepcopy(cp);value[field]=value[field].replace('T',' ')
         checkpoint('U104','timestamp_spelling:'+field,value)
     if cp['source_cursor'] is not None:
         for name in ('first_retained','last_sequence','frame_end'):

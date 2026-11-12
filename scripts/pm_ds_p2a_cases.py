@@ -39,7 +39,8 @@ import pm_terminal_workgroup_compatibility as term  # noqa: E402
 CASES = []
 JCS_EDGE = 2 ** 53 + 1          # representable physically, not by the producer JCS route
 UINT64_OVER = 2 ** 64           # one past SP-1100's uint64 range
-LEAP = '2016-12-31T23:59:60Z'   # RFC 3339 legitimate leap second: format-valid, not a datetime instant
+# Part 2B: the part 2A timestamp witnesses (CC03-05, V2R07/10/11, CP02, RC07/09-11, RU12) moved to
+# scripts/pm_ds_p2b_cases.py: CV-1101 makes their spellings owner-valid, or the shared predicate refuses them at an earlier row.
 
 
 def case(phase, row, ident=None):
@@ -481,29 +482,6 @@ def created_checkpoint():
     return copy.deepcopy(fixtures['checkpoint_fixture']), copy.deepcopy(fixtures['observation_fixture'])
 
 
-@case('cr_checkpoint_entry', 'CC03_updated_calendar')
-def _():
-    cp, _ = created_checkpoint()
-    cp['updated_at_utc'] = LEAP
-    return created.checkpoint_failures(cp)
-
-
-@case('cr_checkpoint_entry', 'CC04_withdrawn_grammar')
-def _():
-    cp, _ = created_checkpoint()
-    cp['state'] = 'withdrawn'
-    cp['withdrawn_at_utc'] = cp['updated_at_utc'].replace('Z', 'z')
-    return created.checkpoint_failures(cp)
-
-
-@case('cr_checkpoint_entry', 'CC05_withdrawn_calendar')
-def _():
-    cp, _ = created_checkpoint()
-    cp['state'] = 'withdrawn'
-    cp['withdrawn_at_utc'] = LEAP
-    return created.checkpoint_failures(cp)
-
-
 @case('cr_checkpoint', 'CC10_storage_uint64')
 def _():
     cp, _ = created_checkpoint()
@@ -641,29 +619,6 @@ def v2_refresh(mutate):
 def _():
     def mutate(c, i, o):
         c['source_cursor']['byte_offset'] = c['source_cursor']['frame_end_offset']
-    return v2_initial(mutate)
-
-
-@case('v2_core_times', 'V2R07_withdrawn_grammar')
-def _():
-    def mutate(c, i, o):
-        c['state'] = 'withdrawn'
-        c['withdrawn_at_utc'] = c['updated_at_utc'].replace('Z', 'z')
-    return v2_initial(mutate)
-
-
-@case('v2_core_times', 'V2R10_withdrawn_calendar')
-def _():
-    def mutate(c, i, o):
-        c['state'] = 'withdrawn'
-        c['withdrawn_at_utc'] = LEAP
-    return v2_initial(mutate)
-
-
-@case('v2_core_times', 'V2R11_published_calendar')
-def _():
-    def mutate(c, i, o):
-        c['published_at_utc'] = LEAP
     return v2_initial(mutate)
 
 
@@ -923,13 +878,6 @@ for _row, _key, _value in (('V2CL16_tx_before', 'before', lambda tx: {**tx['befo
     case('v2_cleanup_tx_join', _row)(_cleanup)
 
 
-@case('comp_payload', 'CP02_commit_time_valid')
-def _():
-    payload = compaction_event()['payload']
-    payload['committed_at_utc'] = LEAP
-    return ds.compaction_payload_errors(payload)
-
-
 # ------------------------------------------------------------------ browser.workspace.reset checkpoint and oracles
 def reset_values():
     return reset.fixture_values()
@@ -940,25 +888,6 @@ def reset_rotated(c):
     rotated = copy.deepcopy(c)
     rotated['retired_generations'] = [{'checkpoint_core': core, 'successor_publication_id': c['publication_id']}]
     return rotated
-
-
-@case('rs_core_times', 'RC07_withdrawn_grammar')
-def _():
-    _, c, _, _ = reset_values()
-    c['state'] = 'withdrawn'
-    c['withdrawn_at_utc'] = c['updated_at_utc'].replace('Z', 'z')
-    return reset.checkpoint_failures(c)
-
-
-for _row, _field in (('RC09_updated_calendar', 'updated_at_utc'), ('RC10_withdrawn_calendar', 'withdrawn_at_utc'),
-                     ('RC11_published_calendar', 'published_at_utc')):
-    def _leap(field=_field):
-        _, c, _, _ = reset_values()
-        if field == 'withdrawn_at_utc':
-            c['state'] = 'withdrawn'
-        c[field] = LEAP
-        return reset.checkpoint_failures(c)
-    case('rs_core_times', _row)(_leap)
 
 
 @case('rs_history_entry', 'RK02_publication_unique')
@@ -1081,11 +1010,6 @@ def _():
 @case('rs_cleanup', 'RU11_cleanup_time')
 def _():
     return reset_cleanup(at='not-a-time')
-
-
-@case('rs_cleanup', 'RU12_cleanup_time_zone')
-def _():
-    return reset_cleanup(at='2026-09-19T00:00:00')
 
 
 def reset_disclose(checkpoint, index, observation):

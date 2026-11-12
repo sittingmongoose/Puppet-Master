@@ -23,6 +23,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 from pm_contract_formats import FormatChecker
 import pm_event_payload_route as body_route
+import pm_ds_retained as retained
 from pm_ds_tables import Facts, entry as _ds_entry
 from pm_event_numbers import producer_semantic_digest
 Draft202012Validator = body_route.StrictValidator
@@ -477,9 +478,12 @@ def compatibility_history_failures(event, context, original):
         return True
 
     from pm_home_layout_v2_slot_receipt import event_value_or_none
+    present = Facts("gate_compatibility_source_present", chain=True)
+    if present.stop("GH01_source_present", lambda: isinstance(original, dict)):
+        return [present.first_code()]
+    present.done()
     f = Facts("gate_compatibility", chain=True)
-    for row, check in (("GH01_source_present", lambda: isinstance(original, dict)),
-                       ("GH02_source_normalizes", normalizes),
+    for row, check in (("GH02_source_normalizes", normalizes),
                        ("GH03_no_rejection_reason", lambda: normalization["value"][1] is None),
                        ("GH04_normalized_event", lambda: event_value_or_none(event) is not None and
                         event_value_or_none(normalization["value"][0]) == event_value_or_none(event))):
@@ -504,6 +508,18 @@ def candidate_failures(event, producer_component, context, *, payload_store=None
     entry.done()
     row = rows[event.get("event_type")]
     selected_envelope = load_json("Plans/event_record_v3.schema.json") if event.get("schema_version") == "3.0.0" else envelope
+    recipe = None
+    if historical:
+        # SP-1101: a retained read takes the original's write recipe from Storage's sealed custody and resolves it
+        # once through RetainedDispatcher; the record and the reader select nothing (scripts/pm_ds_retained.py).
+        # The second argument names the pre-SP-1101 selection, read only by the custody builder.
+        migration_set = isinstance(event.get("migration"), dict) and any(event["migration"].values())
+        recipe, refused = retained.retained_recipe(event, historical_source, (
+            "3.0.0" if event.get("schema_version") == "3.0.0" else "2.0.0", "original-json-schema",
+            retained.CASE_L if event.get("replay_policy") == "projector_replay_only" or migration_set else retained.NO_SOURCE))
+        if refused:
+            return [refused]
+        selected_envelope = load_json(retained.ENVELOPES[recipe[0]])
     shape = Facts("gate_candidate_envelope")
     shape["GC04_envelope_schema"] = not list(body_route.validator(selected_envelope).iter_errors(event))
     shape["GC04A_sequence_uint64"] = event.get("sequence_id") is None or body_route.storage_uint64_fields_ok({"sequence_id": event["sequence_id"]})
@@ -515,7 +531,7 @@ def candidate_failures(event, producer_component, context, *, payload_store=None
         return failures + [resolved.first_code()]
     resolved.done()
     payload_validator = validators[event['event_type']]
-    if historical:
+    if historical and recipe[1] == "original-json-schema":
         from pm_home_layout_v2_slot_receipt import RetainedBodyValidator
         payload_validator = RetainedBodyValidator(payload_validator.schema, registry=payload_validator._registry, format_checker=FormatChecker())
     joins = Facts("gate_candidate_joins")
@@ -551,7 +567,7 @@ def candidate_failures(event, producer_component, context, *, payload_store=None
     redaction["GC16_redaction_profile"] = event.get("redaction_profile") == "no_secrets"
     redaction["GC17_no_unadmitted_migration"] = historical or not any(migration.values())
     failures += redaction.codes()
-    if historical and (event.get('replay_policy') == 'projector_replay_only' or any(migration.values())):
+    if historical and recipe[2] == retained.CASE_L:
         failures.extend(compatibility_history_failures(event, context, historical_source))
     size = Facts("gate_candidate_size")
     size["GC18_total_byte_limit"] = len(exact_json_text(payload).encode()) <= MAX_PAYLOAD_BYTES

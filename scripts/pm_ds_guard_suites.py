@@ -78,6 +78,9 @@ def sources(include_unit_tests=True):
             out.append((f'cohort/{cohort}/{ident}', call))
     for ident, call in p2a.cases():
         out.append((f'p2a/{ident}', call))
+    import pm_ds_p2b_cases as p2b
+    for ident, call in p2b.cases():
+        out.append((f'p2b/{ident}', call))
     comp = json.loads((ROOT / 'Plans/context_compaction_completion_contract_fixtures.json').read_text())
 
     def compaction_fixtures():
