@@ -50,6 +50,21 @@ def node_key(row):
     return row["path"], row["origin"], row["pointer"]
 
 
+def nested_resource_pointer(path, pointer):
+    """Resource address within the two reviewed schema containers.
+
+    A recipe freezes its own schema, even when another recipe uses the same
+    $id. Descendants retain that schema's local reference address space.
+    """
+    if path == "Plans/storage_value_registry.json" and pointer.startswith("/families/"):
+        return "/".join(pointer.split("/")[:4])
+    if path == "Plans/dch_retained_recipes.json":
+        parts = pointer.split("/")
+        if len(parts) >= 5 and parts[1] == "recipes" and parts[3] == "schemas" and parts[2] and parts[4]:
+            return "/".join(parts[:5])
+    return ""
+
+
 def _unique_object(pairs):
     result = {}
     for key, value in pairs:
@@ -396,9 +411,7 @@ def scan(root=ROOT):
             fields = declarations(node)
             if not fields:
                 continue
-            resource_pointer = ""
-            if path == "Plans/storage_value_registry.json" and pointer.startswith("/families/"):
-                resource_pointer = "/".join(pointer.split("/")[:4])
+            resource_pointer = nested_resource_pointer(path, pointer)
             resource = at(value, resource_pointer)
             rows.append({"path": path, "origin": origin, "pointer": pointer,
                          "fields": list(fields), "resource_pointer": resource_pointer,
@@ -747,7 +760,9 @@ def check_inventory(root=ROOT):
         if errors:
             return {"status": "fail", "nodes": len(expected), "unclassified_nodes": 0,
                     "storage_nodes": 0, "other_owner_nodes": 0, "failures": errors}
-    except (OSError, ValueError, TypeError, KeyError) as error:
+        documents = {}
+        expected = [bind_nested_resource(row, _source_document(root, row, documents)) for row in expected]
+    except (OSError, ValueError, TypeError, KeyError, DatetimeAdmissionError) as error:
         return {"status": "fail", "nodes": 0, "unclassified_nodes": 0,
                 "storage_nodes": 0, "other_owner_nodes": 0,
                 "failures": [{"error": "inventory_unreadable", "detail": str(error)}]}
@@ -781,6 +796,28 @@ class DatetimeAdmissionError(Refusal):
     """Typed refusal: no schema fragment may weaken an unclassified owner."""
 
 
+def bind_nested_resource(row, document):
+    """Project a verified container pin onto its exact frozen schema.
+
+    Existing inventories pin the DCH container as a whole. Authenticate that
+    original pin and node before deriving a narrower resource fingerprint;
+    retain the original inventory and every frozen byte unchanged. An already
+    nested row must name this node's own recipe, including identical siblings.
+    """
+    pointer = nested_resource_pointer(row["path"], row["pointer"])
+    if row["path"] != "Plans/dch_retained_recipes.json" or not pointer:
+        return row
+    if row["resource_pointer"] not in ("", pointer):
+        raise DatetimeAdmissionError("datetime_resource_pointer_mismatch")
+    resource = at(document, row["resource_pointer"])
+    node = at(document, row["pointer"])
+    if (digest(resource) != row["resource_sha256"] or digest(node) != row["node_sha256"] or
+            resource.get("$id") != row["resource_id"]):
+        raise DatetimeAdmissionError("datetime_resource_binding_changed")
+    nested = at(document, pointer)
+    return dict(row, resource_pointer=pointer, resource_id=nested.get("$id"), resource_sha256=digest(nested))
+
+
 @lru_cache(maxsize=1)
 def resource_selections():
     """Exact resource digest -> ALL classified paths, after integrity checks."""
@@ -789,9 +826,11 @@ def resource_selections():
     if errors:
         raise DatetimeAdmissionError("datetime_inventory_invalid: " + json.dumps(errors[:3]))
     selections = {}
+    documents = {}
     for row in inventory["nodes"]:
         if row["classification"] == "source_lineage_schema_patch":
             continue
+        row = bind_nested_resource(row, _source_document(ROOT, row, documents))
         relative_pointer = row["pointer"][len(row["resource_pointer"]):]
         selections.setdefault(row["resource_sha256"], {})[relative_pointer] = row
     return selections
@@ -809,11 +848,11 @@ class StorageSelection:
         self.visited = {}
         self.resources = {}
         self.uri_pins = {}
-        inventory = json.loads((ROOT / INVENTORY).read_text())
         self.known_uris = {}
-        for row in inventory["nodes"]:
-            if row["resource_id"] and row["classification"] != "source_lineage_schema_patch":
-                self.known_uris.setdefault(row["resource_id"].rstrip("#"), set()).add(row["resource_sha256"])
+        for by_pointer in self.selections.values():
+            for row in by_pointer.values():
+                if row["resource_id"]:
+                    self.known_uris.setdefault(row["resource_id"].rstrip("#"), set()).add(row["resource_sha256"])
 
     def pin(self, uri, schema):
         fingerprint = digest(schema)
