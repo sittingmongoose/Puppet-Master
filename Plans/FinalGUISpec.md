@@ -46585,7 +46585,7 @@ canonical_text: |-
 gui_related: true
 gui_classification_reason: Defines how a dashboard looks and behaves as a tab kind in any panel.
 split_recommended: false
-depends_on: [DL-180, DL-186, DL-477, F3-514, F3-631, F3-635]
+depends_on: [DL-180, DL-186, F3-514, F3-631, F3-635]
 unblocks: [WS-030, WS-032, ATS-075]
 acceptance_criteria:
   - "A dashboard opens as a tab of kind dashboard in any panel; several may be open, each holding its own board on the Usage board engine, and Agents is drawn by the kind with its filters and no board record."

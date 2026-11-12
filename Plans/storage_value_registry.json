@@ -30771,7 +30771,7 @@
           },
           "root_goal_id": {
             "$ref": "#/$defs/non_empty_string",
-            "description": "GRS-052 / DL-478: root_goal_id must equal goal_id. This cross-property equality requires owner validation; Draft 2020-12 cannot express it."
+            "description": "GRS-052 / DL-478: root_goal_id must equal goal_id. Draft 2020-12 cannot express this cross-property equality, so the owner validator scripts/pm-goal-runtime-lineage.py enforces it (failure root_goal_id_must_equal_goal_id)."
           },
           "parent_goal_id": {
             "type": "null",
