@@ -21,7 +21,7 @@ export async function forcedPrewarm(t, { count = 1, settle = 40000, after = 3000
   const cdp = await t.page.context().newCDPSession(t.page);
   try {
    if (!parked) { await t.check(`prewarm control ${i}: actual third callback available`, false, JSON.stringify(await f.evaluate(prewarmSnapshot))); continue; }
-   await t.page.mouse.move(1914, 480 + (++px % 6) * 24);
+   await t.page.mouse.move(1914, 900 + (++px % 6) * 8);
    const start = Date.now();
    await f.evaluate(CENSUS);
    await t.page.waitForTimeout(Math.max(0, after - 400 - (Date.now() - start)));

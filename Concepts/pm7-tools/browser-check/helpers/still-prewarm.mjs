@@ -54,18 +54,31 @@ export const prewarmSnapshot = () => window.__stillPrewarm?.snapshot() || null;
 // Consume, never cancel, the once-per-board/look rehearsal. The source cache is set before its first RAF and is not
 // reset by an idle interval or revisit. The counter assertion also exposes any repetition on a resting page.
 export async function consumeUsagePrewarm(t, f, look) {
- // A fresh visit runs the board's normal arrival/build scheduler even when the previous matrix cell was Usage.
- await f.evaluate(() => PM_PAGES.go('dashboard'));
- await t.page.waitForTimeout(1500);
- await f.evaluate((label) => { window.__stillPrewarm.label = label; PM_PAGES.go('usage'); }, look);
- let completed = true;
- try {
-  await f.waitForFunction((label) => window.__stillPrewarm.runs.some((r) => r.usage && r.look === label && r.complete && r.steps === 6), look, { timeout: 45000, polling: 100 });
- } catch (e) { completed = false; }
+ // A visit renews the native scheduler's finite busy-retry round, even when the previous cell was Usage. The first
+ // arrival may spend that round before its film/build is ready. A second ordinary visit can admit the still-unspent
+ // rehearsal; no measured toggle has started and no cost is resampled. Real input keeps this setup visit awake.
+ let completed = false, pointer = 0;
+ const move = () => t.page.mouse.move(1914, 900 + (++pointer % 6) * 8);
+ for (let attempt = 0; attempt < 2 && !completed; attempt++) {
+  await move(); await f.evaluate(() => PM_PAGES.go('dashboard'));
+  await f.waitForFunction(() => document.querySelector('#panel-dashboard')?.classList.contains('active') && !document.querySelector('#panel-usage')?.classList.contains('active'));
+  await t.page.waitForTimeout(1500);
+  await move(); await f.evaluate((label) => { window.__stillPrewarm.label = label; PM_PAGES.go('usage'); }, look);
+  await f.waitForFunction(() => document.querySelector('#panel-usage')?.classList.contains('active'));
+  const until = Date.now() + 45000;
+  while (Date.now() < until) {
+   const s = await f.evaluate(prewarmSnapshot);
+   completed = s.runs.some((r) => r.usage && r.look === look && r.complete && r.steps === 6);
+   if (completed) break;
+   await move(); await t.page.waitForTimeout(750);
+  }
+  if (!completed) t.log(`${look} PREWARM setup visit ${attempt + 1} ended without a rehearsal: ${JSON.stringify(await f.evaluate(prewarmSnapshot))}`);
+ }
  const snapshot = await f.evaluate(prewarmSnapshot);
  const runs = snapshot.runs.filter((r) => r.usage && r.look === look);
  t.log(`${look} PREWARM CONSUMED: ${JSON.stringify(snapshot)}`);
  await t.check(`${look}: Usage's once-per-look prewarm completes before measured toggle cells`, completed && runs.length === 1 && snapshot.errors.length === 0,
   JSON.stringify(runs));
+ if (!completed || runs.length !== 1 || snapshot.errors.length) throw new Error(`${look}: prewarm isolation was not established; no toggle cells may be measured`);
  return snapshot;
 }
