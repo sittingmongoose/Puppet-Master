@@ -254,7 +254,7 @@ async function nameIt(t, f) {
 }
 // what the sampler saw; and a clean store for the next case's fresh load (a normal page keeps the session in localStorage:
 // Safe's online copy, set below, left the next case's Review unable to create)
-const result = async (t, f) => { const S = await f.evaluate(() => { const S = window.__sk; window.__sk = null; S.finish(); return { frames: S.frames, hits: S.hits, rings: S.rings, ringOut: S.ringOut, leaving: S.leaving, blocks: S.blocks, covered: S.covered, shunted: S.shunted,meta:S.meta,trace:S.trace }; }); if(S.trace)fs.appendFileSync(path.join(t.run.dir,'keepoff-trace.jsonl.gz'),zlib.gzipSync(JSON.stringify(S)+'\n')); await t.app.resetLayout(t); return S; };
+const result = async (t, f) => { if (t.args.placementLog) { const log = await f.evaluate(() => window.__bubblePlacementLog || []); fs.appendFileSync(path.join(t.run.dir, 'bubble-placement.jsonl'), JSON.stringify(log) + '\n'); } const S = await f.evaluate(() => { const S = window.__sk; window.__sk = null; S.finish(); return { frames: S.frames, hits: S.hits, rings: S.rings, ringOut: S.ringOut, leaving: S.leaving, blocks: S.blocks, covered: S.covered, shunted: S.shunted,meta:S.meta,trace:S.trace }; }); if(S.trace)fs.appendFileSync(path.join(t.run.dir,'keepoff-trace.jsonl.gz'),zlib.gzipSync(JSON.stringify(S)+'\n')); await t.app.resetLayout(t); return S; };
 
 async function nier(t, mode) {
 	for (const look of ['nier-light', 'nier-dark']) {
