@@ -3249,7 +3249,7 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "UI_Command_Catalog.md:1133 { project_id, gist_id }; UCC-230 identity_aliases: gist_id stands for the UCC-084..UCC-088 overlay identity memory_item_id? (UI_Command_Catalog.md:8857; DL-341 resolution 4); MemoryGist id (assistant-memory-subsystem.md §3.1)"
+          source: "UI_Command_Catalog.md:1133 { project_id, gist_id }; UCC-230 identity_aliases: gist_id stands for the UCC-084..UCC-088 overlay identity memory_item_id? (UI_Command_Catalog.md:8860; DL-341 resolution 4); MemoryGist id (assistant-memory-subsystem.md §3.1)"
       owner_request: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2
       result:
         response: Plans/ui_command_response.schema.json
@@ -3329,11 +3329,11 @@ command_payload_definitions:
               default: none
               constraints: {minimum: 1}
               provenance: gap
-              gap_note: "the per-gist half-life override stays a gist field (AMS-048, assistant-memory-subsystem.md:2787); minimum 1 day is chosen here (§9.2 gives per-kind defaults, no per-gist bound)."
+              gap_note: "the per-gist half-life override stays a gist field (AMS-048, assistant-memory-subsystem.md:2799); minimum 1 day is chosen here (§9.2 gives per-kind defaults, no per-gist bound)."
           provenance: gap
           gap_note: >-
             UI_Command_Catalog.md:1134 gives the key only ({ project_id, gist_id, patch }); no patch shape is
-            stated. AMS-048 (assistant-memory-subsystem.md:2787) makes Edit a versioned claim edit that writes a
+            stated. AMS-048 (assistant-memory-subsystem.md:2799) makes Edit a versioned claim edit that writes a
             new gist version, keeps the prior version and its evidence history, and resets the gist to Unverified.
             Choice: the fields below are the canon-named user-editable gist surfaces of §3.1 (claims[], tags[],
             half_life_days); whether Edit may set all of them is not stated.
@@ -3748,7 +3748,7 @@ command_payload_definitions:
         receipt_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: "dispatch receipt (catalog.chat_memory_preview_capsule); the row persists no domain event"}
     MemoryMaintenanceResultV1:
       fields:
-        status: {type: enum, values: [succeeded, failed], required: true, default: none, provenance: gap, gap_note: "maintenance operations report explicit success/failure status (assistant-memory-subsystem.md:412); canon names neither the field nor its values"}
+        status: {type: enum, values: [succeeded, failed], required: true, default: none, provenance: gap, gap_note: "maintenance operations report explicit success/failure status (assistant-memory-subsystem.md:413); canon names neither the field nor its values"}
         receipt_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: "dispatch receipt for the job's started/completed events (UI_Command_Catalog.md:1139-1144)"}
 ```
 
