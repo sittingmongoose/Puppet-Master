@@ -108,7 +108,7 @@
         v.setAttribute('data-fx', FX[fx] ? fx : 'basic');
       }
     } catch (_) { /* the fallbacks */ }
-    v.setAttribute('data-ready', '');
+    if (v.getAttribute('data-ready') !== '') v.setAttribute('data-ready', '');
     return v;
   }
   /* Painted ahead is not rastered ahead: a cover at opacity 0 is never drawn, so its motion parts were rastered on
