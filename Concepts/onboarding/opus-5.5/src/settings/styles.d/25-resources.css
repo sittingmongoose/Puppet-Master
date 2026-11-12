@@ -80,6 +80,11 @@
   #panel-settings .pm51-mgr .split-manager.pm51-split { grid-template-columns: 208px minmax(0, 1fr); }
   #panel-settings .pm51-mgr .pm51-roster .resource-avatar { display: none; }
   #panel-settings .pm51-mgr .o55-roster-group > small { display: none; }
+  /* FO-159 round 2: the 208 px list has 36 px of inset, so a group name that fitted its row at 10.5 px
+     ("Subscriptions and plans") needs a second line at 11 px. The group heading is its row's only content:
+     give it the inset instead of widening the list, so no detail row moves. */
+  #panel-settings .pm51-mgr .o55-roster-group { padding-left: 4px; padding-right: 4px; }
+  #panel-settings .pm51-mgr .pm51-roster .roster-list { padding-left: 6px; padding-right: 6px; }
 }
 /* Once the list is an off-canvas drawer behind the menu button (the engine does that at 720px), the slimmer list's
    column goes too: the detail takes the whole width. The drawer opens over the list/detail card it belongs to (not

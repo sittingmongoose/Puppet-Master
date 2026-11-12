@@ -939,6 +939,21 @@
   #panel-settings .library-grid { grid-template-columns: 1fr; }
 }
 
+/* FO-159 round 2: Home's setup and attention rows lose 12 px of inset to their dot, chevron and padding at this
+   width, which put "Sign in with Google to refresh its model list." on a second line at 11 px. The row's own
+   inset gives it back: no card, column or control moves. */
+@container settings-host (max-width: 900px) {
+  #panel-settings .setup-row, #panel-settings .attention-row { padding-left: 10px; padding-right: 10px; gap: 9px; }
+}
+
+/* FO-159 round 2: below this width the two-column metadata grid leaves each column about 232 px, so a value
+   that filled its one line at 10.5 px wraps to a second at 11 px (Code & Tools › Testing & Debug › History,
+   "None introduced · validation receipt on file"). One column gives each value the row's own width and the line
+   count it drew before. Only the columns change: no text gets smaller and nothing is spaced tighter. */
+@container settings-host (max-width: 900px) {
+  #panel-settings .info-grid { grid-template-columns: 1fr; }
+}
+
 @container settings-host (max-width: 720px) {
   #panel-settings > #pm-settings-root { --k3-rail-w: 0px; --k3-topbar-h: 55px; }
   #panel-settings .pm-shell { grid-template-columns: 1fr; }

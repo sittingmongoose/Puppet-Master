@@ -5,33 +5,49 @@
 // src/settings/** and the managers' own <style> blocks; every one now reads 11 px and nothing else about them
 // changed.
 //
-// Two parts, both on the surfaces asked for (normal and T3's sandbox unless --set sandbox= picks one):
-//   size — every control this item resized, on each chapter and each manager tab, in all ten looks, reads 11 px
+// Three parts, all on the surfaces asked for (normal and T3's sandbox unless --set sandbox= picks one):
+//   size  — every control this item resized, on each chapter and each manager tab, in all ten looks, reads 11 px
 //          or more. Settings also paints older 9–10.3 px micro-labels the item does not name (the page index's
 //          links, the rail's chapter headings and descriptions, key caps, side-card notes and health, table
 //          heads, tooltips, form help): they are counted and logged under NOTE, never silently dropped, so the
 //          residue is on the record. --set strict=1 asserts them too (the item's own sentence, "no visible
 //          Settings text below 11 px", lands there until someone owns that call).
-//   fit  — the controls whose text this item grew still hold it at 740x900, 860x900 and 1280x500: no word is
-//          cut by a box that clips its own overflow (hidden, clip, scroll: its scroll area against its client box,
-//          and the text's painted end past that box), and every control whose own CSS draws its label on one line
-//          (white-space: nowrap) still draws its words on one line (their line boxes' tops: exactly one). A button or
-//          chip whose label may wrap is judged by the cut rule alone.
+//   cut   — the controls whose text this item grew still hold it: no word is cut by a box that clips its own
+//          overflow (hidden, clip, scroll: its scroll area against its client box, and the text's painted end
+//          past that box).
+//   lines — every element whose computed font size went 10.5 px -> 11 px keeps the line count it drew on main,
+//          on every chapter, every workspace tab and every manager tab, in all ten looks and at 740x900,
+//          860x900, 1280x500 and 1920x1080 (FO-159 round 2; round 1 changed the size and let Settings' 860 px
+//          'Uncaptured state' value gain a second line). The baseline is recorded once from a build of the
+//          baseline commit with --set record=<json> (run it per surface; cells merge), and compared with
+//          --set lineBaseline=<json>; checks/settings-min-text.lines.json, beside this file, is that recording
+//          and is used when no path is given. It holds each 10.5 px element whose fullest line was at least 90%
+//          of its box (a shorter line cannot gain one: its own content still fits, so the same breaks stay
+//          feasible at 11 px) and it is keyed by tag and words, not by a DOM path, because a tab swap moves
+//          paths but not the words a person reads; two elements drawing the same words are compared by the
+//          fuller line count on each side. Sections past the second are content-visibility:auto, so the check
+//          lays all of them out (a measured line is the same wherever the scroller sits). --set out=<json>
+//          keeps the whole comparison: every cell's counters and every element that gained a line.
 // A control that is built to ellipsize its own text (text-overflow: ellipsis: resource names and meta) is
-// exempt from the cut rule and still held to one line.
+// exempt from the cut rule and still held to its line count.
 //   browser-check run Concepts/pm7-tools/browser-check/checks/settings-min-text.check.mjs --set page=<build>
-// --set only=size|fit, --set looks=a,b,c, --set fitLooks=a,b,c, --set widths=740x900,860x900,1280x500,
-// --set strict=1, --set list=1 (logs every sub-11 px element and asserts no size).
+// --set only=size|cut|lines, --set looks=a,b,c, --set fitLooks=a,b,c, --set widths=740x900,860x900,1280x500,
+// --set strict=1, --set list=1 (logs every sub-11 px element and asserts no size),
+// --set lineBaseline=<main-lines.json> [--set record=<out.json>] [--set out=<comparison.json>]
+import fs from 'node:fs';
+import { fileURLToPath } from 'node:url';
 import { LOOKS } from '../browser-check.config.mjs';
 
 const SIZES = [[740, 900], [860, 900], [1280, 500]];
 const FIT_LOOKS = ['basic-dark', 'retro-light', 'nier-dark'];
+/* FO-159 round 2's line matrix: every look, and the fourth size the 1920 desktop paints at. */
+const LINE_SIZES = [[740, 900], [860, 900], [1280, 500], [1920, 1080]];
 
 /* A hook for pinning an individual pre-existing micro-label rule by selector; empty today, because the residue
    is reported as a whole under NOTE rather than excused rule by rule. Matched with Element.matches. */
 const LEGACY = [];
 
-/* Every selector whose declared size went 10.5 px -> 11 px in this item: the controls part fit measures. */
+/* Every selector whose declared size went 10.5 px -> 11 px in this item: the controls part cut measures. */
 const AFFECTED = [
 	'#panel-settings .search-result-meta',
 	'#panel-settings .workspace-block .manager-page > .embedded-page-actions .btn',
@@ -142,17 +158,14 @@ const SCAN = ([legacy, affected]) => {
 	return out;
 };
 
-/* The controls whose text this item grew: does each still hold its words inside its own box, on the lines it
-   drew before. Self-contained: serialized into the page alone. */
-const FIT = ([affected]) => {
+/* The controls whose text this item grew: does each still hold its words inside its own box. Self-contained:
+   serialized into the page alone. A control that lets its text show (overflow visible) is not cutting it. */
+const CUT = ([affected]) => {
 	const vis = (el) => {
 		if (!el.getClientRects().length) return false;
 		if (el.closest('[inert], [aria-hidden="true"]')) return false;
 		return getComputedStyle(el).visibility !== 'hidden';
 	};
-	/* A control is held to one line only where its own CSS draws one (`white-space: nowrap`); a button or chip whose
-	   label may wrap is judged by the cut rule alone. */
-	const oneLine = (cs) => cs.whiteSpace === 'nowrap';
 	/* The painted rects of the element's own words, never its icons: a glyph beside a label is a different box on the
 	   same line, and counting it as a line made every icon button read as two. */
 	const textRects = (el) => {
@@ -168,7 +181,7 @@ const FIT = ([affected]) => {
 		walk(el);
 		return out.filter((b) => b.width > 0.5 && b.height > 0.5);
 	};
-	const out = { cut: [], wrapped: [], sampled: 0, ellipsis: 0 };
+	const out = { cut: [], sampled: 0, ellipsis: 0 };
 	const seen = new Set();
 	for (const sel of affected) {
 		for (const el of document.querySelectorAll(sel)) {
@@ -189,22 +202,75 @@ const FIT = ([affected]) => {
 			const bottom = Math.max(...rects.map((r) => r.bottom));
 			const ellipsis = cs.textOverflow === 'ellipsis';
 			if (ellipsis) out.ellipsis++;
-			/* A word is cut when a box that clips its own overflow (hidden, clip, scroll) paints it past that box's
-			   content edge: the width/height its scroll area reports against the client box, and the text's own
-			   painted end past the padding box. A control that lets its text show (overflow visible) is not cutting
-			   it, whatever the text's start sits on. Built-in ellipsis is the design's own choice and exempt. */
 			const clipsX = cs.overflowX !== 'visible', clipsY = cs.overflowY !== 'visible';
 			const scrolls = clipsX && el.scrollWidth > el.clientWidth + 1;
 			const tall = clipsY && el.scrollHeight > el.clientHeight + 1;
 			const past = (clipsX && right > padR + 1) || (clipsY && bottom > padB + 1);
 			if (!ellipsis && (past || scrolls || tall)) out.cut.push(`${label} text ${Math.round(left)}..${Math.round(right)} in ${Math.round(padL)}..${Math.round(padR)}${scrolls ? ` scrollX ${el.scrollWidth}>${el.clientWidth}` : ''}${tall ? ` scrollY ${el.scrollHeight}>${el.clientHeight}` : ''}`);
-			// wrapped: a control that draws its label on one line must still draw one line box
-			// one line = every painted rect on the same line box; an icon and its label are two rects on one line
-			const lines = new Set(rects.map((r) => Math.round(r.top))).size;
-			if (oneLine(cs) && lines > 1 && !ellipsis) out.wrapped.push(`${label} ${lines} lines`);
 		}
 	}
 	return out;
+};
+
+/* Lay out every Settings section: the level below the second is content-visibility:auto (29-navigation-motion),
+   so an unscrolled page reports no boxes for it and a pass over the document would measure only its first two
+   sections. Layout, not paint, is what a line count is read from. Self-contained: serialized into the page alone. */
+const LAYOUT_ALL = () => {
+	const id = 'pm-line-probe-layout';
+	if (document.getElementById(id)) return;
+	const s = document.createElement('style');
+	s.id = id;
+	s.textContent = '#panel-settings .workspace-block-body > .settings-section { content-visibility: visible !important; contain-intrinsic-size: auto !important; }';
+	document.head.appendChild(s);
+};
+
+/* Every element that draws its own words, the lines it draws them on, the size they are painted at, and (for the
+   baseline) how full its fullest line was against the box's content width. Self-contained: serialized into the
+   page alone. `minRatio` keeps a line that could gain a line when its glyphs grow 4.8% (10.5 -> 11 px): a line
+   shorter than that cannot, because the same breaks stay feasible. */
+const LINES = ([minRatio, only, ws]) => {
+	const want = only && only.length ? new Set(only) : null;
+	/* The domain page keeps every workspace as a block; only the open one is mounted. Measuring the whole panel
+	   would mix the others' headers (and any block a previous state left mounted) into this state's rows. */
+	const stage = document.getElementById('workspace-stage');
+	const root = (ws && stage && stage.querySelector(`[data-continuous-workspace-body="${ws}"]`)) || stage || document.getElementById('panel-settings');
+	if (!root) return { rows: [] };
+	const ownText = (el) => [...el.childNodes].filter((n) => n.nodeType === 3).map((n) => n.textContent).join(' ').replace(/\s+/g, ' ').trim();
+	const rectsOf = (el) => {
+		const out = [];
+		for (const n of el.childNodes) {
+			if (n.nodeType !== 3 || !n.textContent.trim()) continue;
+			const r = document.createRange();
+			r.selectNodeContents(n);
+			for (const b of r.getClientRects()) if (b.width > 0.5 && b.height > 0.5) out.push(b);
+		}
+		return out;
+	};
+	const linesOf = (rects) => {
+		const tops = rects.map((r) => r.top).sort((a, b) => a - b);
+		let n = 0, last = -1e9;
+		for (const y of tops) if (y - last > 1.5) { n++; last = y; }
+		return n;
+	};
+	const rows = [];
+	for (const el of root.querySelectorAll('*')) {
+		if (el.closest('[inert], [aria-hidden="true"]')) continue;
+		const text = ownText(el);
+		if (!text) continue;
+		if (!el.getClientRects().length || getComputedStyle(el).visibility === 'hidden') continue;
+		const rects = rectsOf(el);
+		if (!rects.length) continue;
+		const cs = getComputedStyle(el);
+		const width = el.clientWidth - (parseFloat(cs.paddingLeft) || 0) - (parseFloat(cs.paddingRight) || 0);
+		const fullest = Math.max(...rects.map((r) => r.width));
+		const lines = linesOf(rects);
+		/* The key is the element's own tag and words, never a DOM path: one wrapper more or less in a state moved
+		   every path in round 1's walk, and the words a person reads are what this check is about. */
+		const p = `${el.tagName.toLowerCase()}|${text.slice(0, 90)}`;
+		if (want && !want.has(p)) continue;
+		rows.push({ p, t: text.slice(0, 90), f: +parseFloat(cs.fontSize).toFixed(2), n: lines, w: +width.toFixed(1), r: width > 0 ? +(fullest / width).toFixed(3) : 0 });
+	}
+	return { rows };
 };
 
 const settle = (t, ms = 350) => t.page.waitForTimeout(ms);
@@ -250,33 +316,69 @@ async function guardLook(t, f, look, where) {
 	return ok;
 }
 
-/* Every chapter on the rail, and every manager tab inside one: Settings mounts a chapter's page lazily, so the
-   text only exists once it is opened. Returns the pages visited and measures each after visit(). */
+/* Every chapter on the rail, every workspace on it and every manager tab inside one: Settings mounts a chapter's
+   page lazily, so the text only exists once it is opened. A workspace is reached by its own tab (FO-159 round 2:
+   round 1's walk visited only the chapter's default workspace, so most manager tabs were never measured). Returns
+   the states visited and measures each after visit(). */
+/* A tab press morphs the old body into the new one (o55Morph): until it lands the page holds two `.manager-body`
+   trees, so a DOM path read now names a clone and a line count belongs to neither state. Wait for the morph to
+   leave one body and the pressed tab to be the active one before anything is measured. */
+async function settled(f, ws, tabId) {
+	await f.waitForFunction(([w, id]) => {
+		if (document.querySelector('.tab-swap-a, .tab-swap-b')) return false;
+		const body = document.querySelector(`[data-continuous-workspace-body="${w}"]`);
+		const page = body && body.querySelector('.pm51-mgr');
+		if (!page) return false;
+		const bodies = page.querySelectorAll(':scope > .manager-body');
+		if (bodies.length !== 1) return false;
+		if (!id) return true;
+		const active = page.querySelector(':scope > .pm51-tabs .manager-tab.active');
+		return !!active && active.getAttribute('data-tab') === id;
+	}, [ws, tabId || ''], { timeout: 4000 }).catch(() => {});
+	// the morphed body's own layout, then two equal reads: a page that re-renders a strip after its first paint
+	// (the sound-style segmented control does) would otherwise be measured in the narrower first state
+	await f.waitForFunction((w) => {
+		const b = (w && document.querySelector(`[data-continuous-workspace-body="${w}"]`)) || document.getElementById('workspace-stage');
+		if (!b) return false;
+		const sig = `${b.textContent.length}:${b.getBoundingClientRect().height.toFixed(1)}:${b.querySelectorAll('*').length}`;
+		const prev = window.__pmLineSig;
+		window.__pmLineSig = sig;
+		return prev === sig;
+	}, ws, { polling: 'raf', timeout: 4000 }).catch(() => {});
+}
+
 async function walkSettings(t, f, visit) {
-	// the rail re-renders on every chapter click, so chapters are addressed by their own data-domain, never by index
-	const domains = await f.evaluate(() => [...document.querySelectorAll('#pm-settings-root .domain-link')].filter((el) => el.getClientRects().length).map((el) => el.getAttribute('data-domain')).filter(Boolean));
-	const pages = [];
+	const states = [];
+	const once = async (name, ws) => { states.push(await visit(name, ws)); };
 	const home = f.locator('#pm-settings-root [data-action="home"]').first();
-	if (await home.count()) { await home.click().catch(() => {}); await settle(t, 300); pages.push(await visit('home')); }
+	if (await home.count()) { await home.click().catch(() => {}); await settle(t, 220); await once('home', ''); }
+	const domains = await f.evaluate(() => [...document.querySelectorAll('#pm-settings-root .domain-link[data-domain]')].map((el) => el.getAttribute('data-domain')));
 	for (const domain of [...new Set(domains)]) {
 		const link = f.locator(`#pm-settings-root .domain-link[data-domain="${domain}"]`).first();
 		if (!(await link.count())) continue;
-		const name = ((await link.innerText().catch(() => '')) || '').replace(/\s+/g, ' ').trim().slice(0, 36) || domain;
 		await link.click().catch(() => {});
-		await settle(t, 380);
-		pages.push(await visit(name));
-		const tabs = f.locator('#pm-settings-root .manager-tab');
-		const m = await tabs.count();
-		for (let j = 0; j < m; j++) {
-			const tab = tabs.nth(j);
-			if (!(await tab.isVisible().catch(() => false))) continue;
-			const tname = ((await tab.innerText().catch(() => '')) || '').replace(/\s+/g, ' ').trim();
-			await tab.click().catch(() => {});
-			await settle(t, 320);
-			pages.push(await visit(`${name} › ${tname}`));
+		await settle(t, 300);
+		const label = ((await link.innerText().catch(() => '')) || '').replace(/\s+/g, ' ').trim().slice(0, 28) || domain;
+		const workspaces = await f.evaluate(() => [...document.querySelectorAll('#pm-settings-root .workspace-tab[data-workspace]')].map((el) => ({ id: el.getAttribute('data-workspace'), label: el.textContent.trim() })));
+		for (const ws of workspaces) {
+			await f.evaluate(([d, w]) => window.PM51.go(d, w), [domain, ws.id]);
+			await f.waitForFunction((w) => { const b = document.querySelector(`[data-continuous-workspace-body="${w}"]`); return !!b && b.getAttribute('data-workspace-mounted') === 'true'; }, ws.id, { timeout: 15000 }).catch(() => {});
+			await settled(f, ws.id);
+			await settle(t, 120);
+			const where = `${label} › ${ws.label}`;
+			await once(where, ws.id);
+			const tabs = await f.evaluate((w) => [...document.querySelectorAll(`[data-continuous-workspace-body="${w}"] .manager-tab[data-tab]`)].filter((b) => b.getClientRects().length).map((b) => ({ id: b.getAttribute('data-tab'), label: b.textContent.trim() })), ws.id);
+			for (const tab of tabs) {
+				const btn = f.locator(`[data-continuous-workspace-body="${ws.id}"] .manager-tab[data-tab="${tab.id}"]`).first();
+				if (!(await btn.count()) || !(await btn.isVisible().catch(() => false))) continue;
+				await btn.click().catch(() => {});
+				await settled(f, ws.id, tab.id);
+				await settle(t, 120);
+				await once(`${where} › ${tab.label}`, ws.id);
+			}
 		}
 	}
-	return pages;
+	return states;
 }
 
 async function openSettings(t, surface, [w, h] = [1920, 1080]) {
@@ -286,6 +388,14 @@ async function openSettings(t, surface, [w, h] = [1920, 1080]) {
 	await f.locator('#tab-settings').click();
 	await t.settle();
 	return f;
+}
+
+const key = (surface, look, [w, h]) => `${surface}|${look}|${w}x${h}`;
+
+/* The line baseline: for every state, the rows whose fullest line was at least `ratio` of its box (a shorter line
+   cannot gain a line when the glyphs grow 4.8%) or that already drew more than one line. */
+function writeBaseline(path, cells, meta) {
+	fs.writeFileSync(path, JSON.stringify({ v: 1, ...meta, cells }));
 }
 
 export const tests = {};
@@ -303,8 +413,8 @@ for (const surface of ['normal', 'sandbox']) {
 			const r = await f.evaluate(SCAN, [LEGACY, AFFECTED]);
 			if (r.seen === 0) return { where, seen: 0 };
 			for (const x of r.small) {
-				const key = x.replace(/"[^"]*"/, '').replace(/\s+/g, ' ').trim();
-				residue.set(key, (residue.get(key) || 0) + 1);
+				const k = x.replace(/"[^"]*"/, '').replace(/\s+/g, ' ').trim();
+				residue.set(k, (residue.get(k) || 0) + 1);
 			}
 			if (list) { t.log(`${where}: ${r.seen} words, ${r.small.length} under 11 px (${r.rescoped.length} of them FO-159's)`); r.small.forEach((x) => t.log(`  under 11: ${x}`)); }
 			return { where, seen: r.seen, small: r.small, rescoped: r.rescoped };
@@ -368,7 +478,8 @@ for (const surface of ['normal', 'sandbox']) {
 
 	tests[`FO-159 the grown controls still hold their words (${surface})`] = async (t) => {
 		if (!t.app.surfaces().includes(surface)) { await t.check(`${surface} surface not asked for`, true); return; }
-		if (t.args.only && !String(t.args.only).split(',').map((s) => s.trim()).includes('fit')) { await t.check(`${surface} fit not asked for`, true); return; }
+		const want = (part) => !t.args.only || String(t.args.only).split(',').map((s) => s.trim()).includes(part);
+		if (!want('cut')) { await t.check(`${surface} cut not asked for`, true); return; }
 		const looks = String(t.args.fitLooks || FIT_LOOKS.join(',')).split(',');
 		const sizes = String(t.args.widths || '').split(',').filter(Boolean).length
 			? String(t.args.widths).split(',').map((s) => s.split('x').map(Number)).filter(([w, h]) => w && h)
@@ -385,22 +496,114 @@ for (const surface of ['normal', 'sandbox']) {
 					await t.viewport(w, h);
 					await settle(t, 400);
 					const ok = await guardLook(t, f, look, `${look} ${w}x${h}`);
-					const cut = [], wrapped = [];
+					const cut = [];
 					let sampled = 0, ellipsis = 0;
 					const pages = await walkSettings(t, f, async (where) => {
-						const r = await f.evaluate(FIT, [AFFECTED]);
+						const r = await f.evaluate(CUT, [AFFECTED]);
 						sampled += r.sampled; ellipsis += r.ellipsis;
 						cut.push(...r.cut.map((x) => `${where}: ${x}`));
-						wrapped.push(...r.wrapped.map((x) => `${where}: ${x}`));
 						return where;
 					});
 					t.log(`${look} ${w}x${h}: ${sampled} controls (${ellipsis} ellipsize by design) on ${pages.length} pages`);
 					await t.check(`${look} ${w}x${h}: the grown controls hold their words (${sampled} measured)`, ok && sampled > 0 && cut.length === 0, cut.slice(0, 5).join(' | ') || 'nothing measured');
-					await t.check(`${look} ${w}x${h}: no label grew a second line`, ok && wrapped.length === 0, wrapped.slice(0, 5).join(' | '));
 				});
 			}
 		}
 		await t.check(`the fit matrix ran ${cell} cells`, cell === looks.length * sizes.length, `${cell}`);
+		await t.noConsoleErrors('no console errors');
+	};
+
+	tests[`FO-159 every grown element keeps its line count (${surface})`] = async (t) => {
+		if (!t.app.surfaces().includes(surface)) { await t.check(`${surface} surface not asked for`, true); return; }
+		const want = (part) => !t.args.only || String(t.args.only).split(',').map((s) => s.trim()).includes(part);
+		if (!want('lines')) { await t.check(`${surface} lines not asked for`, true); return; }
+		const record = t.args.record ? String(t.args.record) : '';
+		/* The main baseline sits beside this check; --set lineBaseline= names another one (a fresh recording for
+		   another baseline commit). A kit run with neither skips this part rather than failing on a missing file. */
+		const own = new URL('./settings-min-text.lines.json', import.meta.url);
+		const baselinePath = t.args.lineBaseline ? String(t.args.lineBaseline) : (record || !fs.existsSync(own) ? '' : fileURLToPath(own));
+		if (!record && !baselinePath) { await t.check(`${surface}: line baseline not recorded yet (skipped)`, true); return; }
+		const baseline = record ? null : JSON.parse(fs.readFileSync(baselinePath, 'utf8'));
+		if (baseline && !baseline.cells) return t.check(`${surface}: the line baseline is readable`, false, `${baselinePath} has no cells`);
+		const looks = String(t.args.fitLooks || LOOKS.join(',')).split(',').map((s) => s.trim()).filter(Boolean);
+		const sizes = String(t.args.widths || '').split(',').filter(Boolean).length
+			? String(t.args.widths).split(',').map((s) => s.split('x').map(Number)).filter(([w, h]) => w && h)
+			: LINE_SIZES;
+		const ratio = t.args.minRatio ? Number(t.args.minRatio) : 0.9;
+		const f = await openSettings(t, surface);
+		await f.locator('#pm-settings-root [data-action="navigate-domain"][data-domain="general"]').first().click();
+		await t.settle();
+		const cells = {};
+		const counters = {};
+		const diffs = [];
+		let cellsRun = 0, cellsWithoutBaseline = 0;
+		for (const look of looks) {
+			await setLookBySetting(t, f, look);
+			for (const [w, h] of sizes) {
+				cellsRun++;
+				await t.step(`${look} ${w}x${h}`, async () => {
+					await t.viewport(w, h);
+					await settle(t, 350);
+					const ok = await guardLook(t, f, look, `${look} ${w}x${h}`);
+					await f.evaluate(LAYOUT_ALL);
+					const id = key(surface, look, [w, h]);
+					const states = await walkSettings(t, f, async (where, ws) => {
+						await f.evaluate(LAYOUT_ALL);
+						const r = await f.evaluate(LINES, [ratio, baseline && baseline.cells[id] && baseline.cells[id][where] ? baseline.cells[id][where].map((x) => x[0]) : [], ws]);
+						return { where, rows: r.rows };
+					});
+					const mine = {};
+					let measured = 0;
+					for (const s of states) {
+						if (!s || !s.rows || !s.rows.length) continue;
+						measured += s.rows.length;
+						mine[s.where] = record ? s.rows.filter((x) => Math.abs(x.f - 10.5) < 0.02 && x.r >= ratio).map((x) => [x.p, x.f, x.n, x.w]) : s.rows;
+					}
+					if (record) { cells[id] = mine; t.log(`${id}: ${states.length} states, ${measured} text elements, ${Object.values(mine).reduce((a, b) => a + b.length, 0)} recorded`); if (!ok) return; }
+					else {
+						const base = baseline.cells[id];
+						if (!base) { cellsWithoutBaseline++; diffs.push({ id, why: 'no baseline cell' }); return; }
+						let compared = 0, resized = 0, missing = 0, changed = 0;
+						for (const s of states) {
+							if (!s || !s.rows) continue;
+							const baseRows = base[s.where];
+							if (!baseRows) { diffs.push({ id, where: s.where, why: 'state missing from baseline', n: s.rows.length }); continue; }
+							/* Two elements can draw the same words in one state; the key holds them together and the
+							   fullest line count on each side is compared, so which of them a state happens to keep
+							   cannot hide a new line or invent one. */
+							const now = new Map();
+							for (const r of s.rows) { const prev = now.get(r.p); if (!prev || r.n > prev.n) now.set(r.p, r); }
+							const was = new Map();
+							for (const [p, bfs, blines, bwidth] of baseRows) { const prev = was.get(p); if (!prev || blines > prev.blines) was.set(p, { bfs, blines, bwidth }); }
+							for (const [p, b] of was) {
+								const cur = now.get(p);
+								if (!cur) { missing++; if (t.args.probe && missing < 4) t.log(`gone: ${s.where} ${p}`); continue; }
+								if (cur.t !== p.slice(p.indexOf('|') + 1)) { changed++; continue; }
+								if (Math.abs(b.bfs - 10.5) > 0.02 || cur.f < b.bfs + 0.4) { if (t.args.probe) t.log(`same: ${s.where} ${p} ${b.bfs}->${cur.f}`); continue; }
+								resized++; compared++;
+								if (cur.n > b.blines) diffs.push({ id, where: s.where, p, text: p.slice(p.indexOf('|') + 1), look, size: `${w}x${h}`, base: b.blines, fix: cur.n, from: b.bfs, to: cur.f, width: b.bwidth, nowWidth: cur.w });
+								if (t.args.probe) t.log(`kept: ${s.where} ${p} ${b.bfs}->${cur.f} ${b.blines}->${cur.n}`);
+							}
+						}
+						counters[id] = { states: states.length, rows: measured, compared, resized, missing, changed };
+						t.log(`${id}: ${states.length} states, ${measured} baseline rows seen, ${compared} of ${resized} resized elements compared, ${missing} gone, ${changed} retexted`);
+						await t.check(`${id}: every resized element keeps its line count (${compared} compared)`, ok && compared > 0 && diffs.filter((d) => d.id === id && d.fix).length === 0, diffs.filter((d) => d.id === id && d.fix).slice(0, 6).map((d) => `${d.where} ${d.text.slice(0, 40)} ${d.base}->${d.fix} lines @${d.width}px`).join(' | ') || 'no element behind the baseline');
+					}
+				});
+			}
+		}
+		if (record) {
+			let prior = {};
+			try { prior = JSON.parse(fs.readFileSync(record, 'utf8')).cells || {}; } catch (e) { prior = {}; }
+			writeBaseline(record, { ...prior, ...cells }, { looks, sizes, ratio, surface });
+			await t.check(`${surface}: the line baseline was recorded (${Object.keys(cells).length} cells)`, Object.keys(cells).length === cellsRun, record);
+			return;
+		}
+		if (t.args.out) fs.writeFileSync(String(t.args.out), JSON.stringify({ surface, ratio, cellsRun, counters, diffs }, null, 1));
+		const bad = diffs.filter((d) => d.fix);
+		await t.check(`${surface}: no element grew a line anywhere in the matrix (${bad.length} new lines)`, bad.length === 0, bad.slice(0, 8).map((d) => `${d.id} ${d.where} ${d.text.slice(0, 40)} ${d.base}->${d.fix}`).join(' | '));
+		await t.check(`${surface}: the line matrix ran its ${cellsRun} cells`, cellsRun === looks.length * sizes.length, `${cellsRun}/${looks.length * sizes.length}`);
+		await t.check(`${surface}: every cell had a main baseline (${cellsRun - cellsWithoutBaseline}/${cellsRun})`, cellsWithoutBaseline === 0, `${cellsWithoutBaseline} cells missing from ${baselinePath}`);
 		await t.noConsoleErrors('no console errors');
 	};
 }
