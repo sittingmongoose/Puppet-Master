@@ -274,6 +274,18 @@ def current_started_after_cancel(projector):
         raise RW.Refusal('current_started/not_in_scope')
 
 
+def commit_projection_in_child(projector,writes,cut):
+    """Use the actual integrated Storage directory for R6's process cut."""
+    w=projector.world;payload=w.tmp/'commit-writes.msgpack'
+    payload.write_bytes(RW.NR.event_value_bytes(writes,'child/writes'))
+    directory=w.storage.root
+    w.storage_close()
+    proc=RP.subprocess.run([RP.sys.executable,RP.__file__,'--child-commit',str(directory),str(payload),cut],
+                           cwd=str(Path(RP.__file__).parent),capture_output=True,text=True)
+    w.storage_reopen()
+    return dict(child_exit=proc.returncode,stderr=proc.stderr[-400:])
+
+
 class Projector(RP.ProjectorV7):
     def __init__(self,world):
         super().__init__(world)
@@ -282,6 +294,7 @@ class Projector(RP.ProjectorV7):
     def current_sources(self):return current_projection_sources(self)
 
     read_current_started=current_started_after_cancel
+    commit_in_child=commit_projection_in_child
 
 
 class PackOwner(RW.PhysOwner):
@@ -298,6 +311,33 @@ class PackOwner(RW.PhysOwner):
 class CancelWorld(IW.S1CancelWorld):
     consumer_class=Consumer
     projector_class=Projector
+
+    def storage_reopen(self):
+        """Fresh durable reopen; all live domain owners use the same instance."""
+        old=self.storage;storage=type(old).open(old.root)
+        guard('reopen/instance',storage.storage_instance_id==self.sid)
+        # Source owners stay alive during a derived-projection crash. Preserve
+        # their committed history only for cells unchanged in the fresh store;
+        # child-written cells receive only their actual durable current value.
+        storage.version_history={};storage.version_values={}
+        for family,rows in storage.cells.items():
+            for key,cell in rows.items():
+                value=SW.read_value(storage,family,key,'reopen/value')['value'];digest=physical_sha256(value)
+                prior=old.cell(family,key);history=old.__dict__.get('version_history',{}).get((family,key),[])
+                unchanged=(prior is not None and prior['version']==cell['version'] and prior.get('tx')==cell.get('tx')
+                           and bool(history) and history[-1]==digest)
+                storage.version_history[(family,key)]=copy.deepcopy(history) if unchanged else [digest]
+                values=old.__dict__.get('version_values',{}).get((family,key),{}) if unchanged else {}
+                storage.version_values[(family,key)]=copy.deepcopy(values);storage.version_values[(family,key)][digest]=copy.deepcopy(value)
+        sw=self.start_world;ca=self.goal_bridge.world
+        objects=[self,sw,sw.ctx,self.clock,self.append,sw.appender,ca,ca.appender,
+                 getattr(self,'certified_world',None),*self.registry._owners.values()]
+        for obj in objects:
+            if obj is None:continue
+            for name,value in list(vars(obj).items()):
+                if value is old:setattr(obj,name,storage)
+        self.registry.recorder.observe('storage:'+storage.storage_instance_id,storage.observe)
+        return storage
 
     def __init__(self,cfg=None,base=None):
         self.cfg=dict(cfg or {})

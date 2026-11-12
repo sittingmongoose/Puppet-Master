@@ -160,6 +160,7 @@ class Projector(C.RP.Projector):
     def current_sources(self):return C.current_projection_sources(self)
 
     read_current_started=C.current_started_after_cancel
+    commit_in_child=C.commit_projection_in_child
 
 
 World.projector_class=Projector
