@@ -21,6 +21,7 @@ import hashlib
 import ipaddress
 import json
 import re
+from pathlib import Path
 from jsonschema import Draft202012Validator, FormatChecker as JSONFormatChecker
 from pm_event_datetime import datetime_validator, format_checker as shared_format_checker
 from pm_event_datetime_inventory import DatetimeAdmissionError, declarations
@@ -98,6 +99,45 @@ def _key(kind, schema):
     return kind, hashlib.sha256(text.encode('utf-8')).hexdigest()
 
 
+_SELECTOR_PROFILE = json.loads((Path(__file__).resolve().parents[1] / 'Plans/dch_checkpoint_source_constraints.json').read_text())
+
+
+def effective_checkpoint_schema(schema):
+    """The unchanged strict owner constraints beside the canonical stored selector."""
+    def compose(node):
+        if isinstance(node, dict):
+            result = {key: compose(value) for key, value in node.items()}
+            properties = result.get('properties')
+            if isinstance(properties, dict) and properties.get('source_read_token') == _SELECTOR_PROFILE['canonical_durable_selector_schema']:
+                properties['source_read_token'] = copy.deepcopy(_SELECTOR_PROFILE['source_constraint_schema'])
+            return result
+        if isinstance(node, list):
+            return [compose(value) for value in node]
+        return node
+    return compose(schema)
+
+
+def _checkpoint_source_projection(schema):
+    """Timestamp-free supplementary constraints; the shared validator sees the real resource."""
+    if not isinstance(schema, dict):
+        return {}
+    projection = {}
+    properties = {}
+    for key, value in schema.get('properties', {}).items():
+        if key == 'source_read_token' and value == _SELECTOR_PROFILE['canonical_durable_selector_schema']:
+            properties[key] = copy.deepcopy(_SELECTOR_PROFILE['source_constraint_schema'])
+        else:
+            child = _checkpoint_source_projection(value)
+            if child:
+                properties[key] = child
+    if properties:
+        projection['properties'] = properties
+    child = _checkpoint_source_projection(schema.get('items'))
+    if child:
+        projection['items'] = child
+    return projection
+
+
 def validator(schema):
     """Current (strict-v4) boundary: the shared CV-1101 validator and DCH's URI rule.
 
@@ -108,8 +148,12 @@ def validator(schema):
     found = _CACHE.get(key)
     if found is None:
         owned = copy.deepcopy(schema)
-        found = _CACHE[key] = Composite(owned, (datetime_validator(owned),
-                                                Draft202012Validator(owned, format_checker=uri_checker())))
+        parts = [datetime_validator(owned), Draft202012Validator(owned, format_checker=uri_checker())]
+        source_projection = _checkpoint_source_projection(owned)
+        if source_projection:
+            assert _timestamp_free(source_projection)
+            parts.append(Draft202012Validator(source_projection, format_checker=JSONFormatChecker(formats=('uuid',))))
+        found = _CACHE[key] = Composite(owned, parts)
     return found
 
 

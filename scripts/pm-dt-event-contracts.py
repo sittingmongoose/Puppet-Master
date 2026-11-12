@@ -214,9 +214,34 @@ DTValidator = validators.extend(
     Draft202012Validator, type_checker=Draft202012Validator.TYPE_CHECKER.redefine('integer', exact_integer_type))
 
 
+
+def checkpoint_source_constraints(schema):
+    """Compose the existing private lexical profile with the canonical SP-278 selector.
+
+    The registry stores the exact nine-field nonsecret selector schema. This
+    additional source-boundary check preserves all pre-integration constraints;
+    it does not redact, rename, normalize or rewrite a selector value.
+    """
+    declaration = json.loads((Path(__file__).resolve().parents[1] / 'Plans/dt_checkpoint_source_constraints.json').read_text())
+    canonical = declaration['canonical_durable_selector_schema']
+    strict = declaration['source_constraint_schema']
+    def compose(node):
+        if isinstance(node, dict):
+            result = {key: compose(value) for key, value in node.items()}
+            properties = result.get('properties')
+            if isinstance(properties, dict) and properties.get('index_read_token') == canonical:
+                # The preserved profile only strengthens canonical lexical bounds.
+                properties['index_read_token'] = strict
+            return result
+        if isinstance(node, list):
+            return [compose(value) for value in node]
+        return node
+    return compose(schema)
+
+
 def lane_validator(schema):
     """The lane validator: owner schema, shared integer slots and the registered CV-1101 predicate."""
-    return DTValidator(schema, format_checker=DATE_TIME_FORMAT)
+    return DTValidator(checkpoint_source_constraints(schema), format_checker=DATE_TIME_FORMAT)
 
 
 STORAGE_TIME_FIELDS = ('observed_at_utc', 'persisted_at_utc')
@@ -529,7 +554,8 @@ def set_path(value, path, replacement):
 
 
 def identifier_checks(c, f, schemas, check):
-    """F7: mutate every populated patterned value, not just one token hash."""
+    """F7: mutate every populated effective owner constraint, including the source-selector profile."""
+    schemas = {key: checkpoint_source_constraints(value) for key, value in schemas.items()}
     name = c['event_type']; slug = name.replace('.', '_')
     cases = [(slug, f['valid_payload']), (slug + '_source', f['prepared_source']),
              (slug + '_source', f['completed_source']), (slug + '_checkpoint', f['checkpoint'])]

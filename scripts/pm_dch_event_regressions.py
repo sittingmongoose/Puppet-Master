@@ -85,7 +85,7 @@ def run(job, family_only=False):
                     unguard(v)
         unguard(entry['value_schema'])
     elif name == '5_history_identifier_lf':
-        checkpoint['with_history']['history'][0]['source_token']['generation_anchor_sha256'] += '\n'
+        checkpoint['with_history']['history'][0]['source_read_token']['generation_anchor_sha256'] += '\n'
     elif name == '6_whole_record_retry':
         def retry(a, b, available=True, original_provenance=None):
             result = original_retry(a, b, available, original_provenance)
@@ -95,8 +95,8 @@ def run(job, family_only=False):
         m.retry_outcome = retry
     elif name in ['7_checkpoint_storage_mismatch', '7_current_frontier_mismatch']:
         if name == '7_checkpoint_storage_mismatch':
-            for v in [checkpoint['valid'], checkpoint['valid']['source_token'],
-                      checkpoint['valid']['source_token']['source_selection']]:
+            for v in [checkpoint['valid'], checkpoint['valid']['source_read_token'],
+                      checkpoint['valid']['source_read_token']['source_selection']]:
                 v['storage_instance_id'] = '00000000-0000-4000-8000-000000000099'
         else:
             generation = checkpoint['source']['checkpoint']['current_generation_id']
@@ -121,12 +121,12 @@ def run(job, family_only=False):
             overrides[path] = payload
         else:
             if name == '9_history_file_ref_missing':
-                ref = 'DCH_DOES_NOT_EXIST.schema.json#/$defs/source_token'
+                ref = 'DCH_DOES_NOT_EXIST.schema.json#/$defs/source_read_token'
             if name in ['9_external_document_hidden_ref_missing', '9_external_document_cycle_valid']:
                 file_name = 'DCH_REFERENCE_PROBE.schema.json'
                 ref = file_name + '#/$defs/token'
                 external = {'$schema': 'https://json-schema.org/draft/2020-12/schema',
-                            '$defs': {'token': copy.deepcopy(schema['properties']['source_token']),
+                            '$defs': {'token': copy.deepcopy(schema['properties']['source_read_token']),
                                       'unused': {'$ref': '#/$defs/DCH_MISSING' if expected else '#/$defs/unused'}}}
                 overrides[str(Path(cp_path).parent/file_name)] = external
                 schema.setdefault('$defs', {})['external_probe'] = {'$ref': ref}
@@ -141,8 +141,8 @@ def run(job, family_only=False):
                 schema['allOf'] = [{'if': {'const': 'unreachable'}, 'then': {'$ref': ref}}]
             else:
                 if name == '9_valid_history_ref':
-                    ref = '#/properties/source_token'
-                schema['properties']['history']['items']['properties']['source_token'] = {'$ref': ref}
+                    ref = '#/properties/source_read_token'
+                schema['properties']['history']['items']['properties']['source_read_token'] = {'$ref': ref}
             # Equal copies prove that reference closure, rather than schema
             # equality alone, catches unexercised defects in either definition.
             if name != '9_registry_only_history_ref_missing':

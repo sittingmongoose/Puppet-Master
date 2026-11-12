@@ -1,4 +1,6 @@
 # INT2 — batch-2 Event Authority integration
+**Registry-repair continuation:** the lead superseded the earlier carry of313 technical diagnostics. Their repairs now leave only86 pending-retention diagnostics. Representative lane checks, the full DT checker, DCH’s seventeen-family preservation probe and the refreshed254-node inventory pass. Full affected-consumer and landing rechecks are in progress; no new full-gate credit is claimed yet. Details: `INT2-registry-technical-repairs.json`. The earlier packet below records the completed8d72011611 stage.
+
 
 **Review packet blocked at the dry landing gate.** The remaining inherited registry diagnostics are carried without credit under the lead’s decision; no exit-0 claim is made.
 

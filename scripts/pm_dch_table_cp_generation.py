@@ -38,9 +38,9 @@ def case(value):
     table = g.GuardTable([
         g.Guard('CP08_current_generation', g.Invariant('/source/checkpoint/current_generation_id', 'equals the token generation'), 'checkpoint_refused', CP08_current_generation),
         g.Guard('CP09_node_current', g.Invariant('/source/checkpoint/generations/<g>/state', 'is current'), 'checkpoint_refused', CP09_node_current),
-        g.Guard('CP10_token_key', g.Invariant('/value/source_token/checkpoint_key', 'equals the generic SP-278 checkpoint key'), 'checkpoint_refused', CP10_token_key),
+        g.Guard('CP10_token_key', g.Invariant('/value/source_read_token/checkpoint_key', 'equals the generic SP-278 checkpoint key'), 'checkpoint_refused', CP10_token_key),
         g.Guard('CP11_source_key', g.Invariant('/source/checkpoint_key', 'equals the generic SP-278 checkpoint key'), 'checkpoint_refused', CP11_source_key),
-        g.Guard('CP12_token_ref', g.Invariant('/value/source_token/checkpoint_ref', 'equals the generic key plus the generation pointer'), 'checkpoint_refused', CP12_token_ref),
+        g.Guard('CP12_token_ref', g.Invariant('/value/source_read_token/checkpoint_ref', 'equals the generic key plus the generation pointer'), 'checkpoint_refused', CP12_token_ref),
     ])
 
     def check(value):
