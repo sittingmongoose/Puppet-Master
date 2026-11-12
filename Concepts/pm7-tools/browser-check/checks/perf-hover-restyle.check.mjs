@@ -44,14 +44,21 @@ const BOUND = { usage: 190, files: 160, rail: 180, titlebar: 180, tab: 400, noti
 const CATS = ['devtools.timeline', 'disabled-by-default-devtools.timeline', 'blink.user_timing'].join(',');
 
 export async function trace(cdp, during, opts = {}) {
+	if (!opts.frame?.evaluate) throw new Error('input trace requires a renderer completion barrier');
 	await cdp.send('Tracing.start', { categories: CATS + (opts.track ? ',disabled-by-default-devtools.timeline.invalidationTracking,disabled-by-default-devtools.timeline.stack' : ''), transferMode: 'ReturnAsStream' });
-	try { await during(); } finally { /* always end the trace */ }
+	let failure;
+	try {
+		await during();
+		// Node's delay does not acknowledge the renderer's last input task. This mark is outside every input window.
+		await opts.frame.evaluate(() => performance.mark('jr:trace:done'));
+	} catch (e) { failure = e; }
 	const done = new Promise((r) => cdp.once('Tracing.tracingComplete', r));
 	await cdp.send('Tracing.end');
 	const { stream } = await done;
 	const parts = [];
 	for (;;) { const r = await cdp.send('IO.read', { handle: stream, size: 1 << 22 }); parts.push(r.base64Encoded ? Buffer.from(r.data, 'base64').toString('utf8') : r.data); if (r.eof) break; }
 	await cdp.send('IO.close', { handle: stream });
+	if (failure) throw failure;
 	const raw = parts.join('');
 	if (opts.keep) { mkdirSync(dirname(opts.keep), { recursive: true }); writeFileSync(opts.keep, gzipSync(raw)); }
 	const t = JSON.parse(raw);
@@ -190,7 +197,7 @@ async function runScenario(t, f, cdp, animationCdp, name, n, S) {
 				const p = P[i % 2]; await t.page.mouse.move(p.x, p.y); await t.page.waitForTimeout(450);
 			}
 		}
-	}, traceOpts));
+	}, { ...traceOpts, frame: f }));
 	await f.evaluate(() => { window.__jArm.tag = null; });
 	if (sc.teardown) await f.evaluate(sc.teardown).catch(() => {});
 	const counts = restyled(ev, 'jr:' + tag + ':');
@@ -266,7 +273,7 @@ export default async function (t) {
 							// released off the button: a press with no click (no screen change)
 							await t.page.mouse.move(p.x, p.y + 240); await t.page.mouse.up(); await t.page.waitForTimeout(350);
 						}
-					}, traceOpts));
+					}, { ...traceOpts, frame: f }));
 					await f.evaluate(() => { window.__jArm.tag = null; });
 					const counts = restyled(ev, 'jr:' + tag + ':');
 					const med = median(counts, n);

@@ -32,7 +32,7 @@ export default async function (t) {
   let before, after;
   const measure = async () => {
    before = await read();
-   const events = await trace(cdp, async () => { await t.page.mouse.move(360, 250); await t.page.waitForTimeout(180); });
+   const events = await trace(cdp, async () => { await t.page.mouse.move(360, 250); await t.page.waitForTimeout(180); }, { frame: f });
    after = await read();
    return restyled(events, 'jr:hold:');
   };
