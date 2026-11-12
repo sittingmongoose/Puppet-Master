@@ -124440,6 +124440,3700 @@
       }
     },
     {
+      "family_id": "memory_dedup_sweep_operation",
+      "deferred_owner": "Plans/assistant-memory-subsystem.md",
+      "deferred_reason": "Retention is PENDING_RETENTION_DECISION; exact event admission and native source adoption are absent.",
+      "reopen_condition": "RT resolves policy, independent per-family review and admission complete, and native owner custody is implemented.",
+      "storage_kind": "redb",
+      "status": "deferred_not_build_blocking",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "memory_dedup_sweep_operation.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(operation_id)}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.memory_dedup_sweep_operation.v1",
+      "value_schema_ref": "Plans/memory_maintenance_operation.schema.json#/$defs/dedup_sweep",
+      "owner_doc": "Plans/storage-plan.md#SP-630",
+      "producer": [
+        "MemoryMaintenance.dedup_sweep.started.v1@1.0.0",
+        "MemoryMaintenance.dedup_sweep.completed.v1@1.0.0"
+      ],
+      "consumers": [
+        "MemoryMaintenance.dedup_sweep.recovery.v1@1.0.0",
+        "reader.memory.dedup_sweep.started.history.v1@1.0.0",
+        "reader.memory.dedup_sweep.completed.history.v1@1.0.0"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "operation_id",
+        "command_id",
+        "request_sha256",
+        "source_revision_sha256",
+        "phase",
+        "started_event_id",
+        "completed_event_id",
+        "result_ref",
+        "result_sha256",
+        "status",
+        "started_occurred_at_utc",
+        "completed_occurred_at_utc"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [
+        "started_event_id",
+        "completed_event_id",
+        "result_ref",
+        "result_sha256",
+        "status",
+        "completed_occurred_at_utc"
+      ],
+      "replay_behavior": "Whole-value CAS with immutable request/source and frozen timestamps/outcome. Recover exact SP-286 originals; no repeated committed effect. Rebuilds durably prepare a closed target before selector CAS; exact selected target settles the original operation.",
+      "migration": "Store coordinator admits exact schema; incompatible input fences, no inferred migration.",
+      "migration_disposition": {
+        "mode": "store_coordinator",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-630",
+          "Plans/assistant-memory-subsystem.md#7-gui-and-maintenance"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "mandatory_backup",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/assistant-memory-subsystem.md#AMS-100",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-630",
+          "Plans/assistant-memory-subsystem.md#7-gui-and-maintenance"
+        ]
+      },
+      "retention_compaction": "Pending RT assignment and owner deletion policy; unknown policy is materially incomplete, no destructive inference or native activation.",
+      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "redaction_no_secret_rule": "Opaque ids, hashes and authorized result refs only; no gist/claim/evidence bodies, prompts, embeddings or secrets.",
+      "legacy_canonical_crosswalk_status": "Newly authored owner operation custody under DL-045, no legacy alias, prepared without admission.",
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-630",
+          "Plans/assistant-memory-subsystem.md#7-gui-and-maintenance"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "value_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schema_id",
+          "schema_version",
+          "storage_instance_id",
+          "project_id",
+          "operation_id",
+          "command_id",
+          "request_sha256",
+          "source_revision_sha256",
+          "phase",
+          "started_event_id",
+          "completed_event_id",
+          "result_ref",
+          "result_sha256",
+          "status",
+          "started_occurred_at_utc",
+          "completed_occurred_at_utc"
+        ],
+        "properties": {
+          "schema_id": {
+            "const": "pm.storage_value.memory_dedup_sweep_operation.v1"
+          },
+          "schema_version": {
+            "const": "1.0.0"
+          },
+          "storage_instance_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "project_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "operation_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "command_id": {
+            "const": "cmd.chat.memory.dedup_sweep"
+          },
+          "request_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$",
+            "minLength": 64,
+            "maxLength": 64
+          },
+          "source_revision_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$",
+            "minLength": 64,
+            "maxLength": 64
+          },
+          "phase": {
+            "enum": [
+              "accepted",
+              "started",
+              "effect_committed",
+              "completed"
+            ]
+          },
+          "started_event_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "^evt_mem_[0-9a-f]{64}$",
+            "minLength": 72,
+            "maxLength": 72
+          },
+          "completed_event_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "^evt_mem_[0-9a-f]{64}$",
+            "minLength": 72,
+            "maxLength": 72
+          },
+          "result_ref": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "minLength": 74,
+            "maxLength": 74,
+            "pattern": "^memresult_[0-9a-f]{64}$"
+          },
+          "result_sha256": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "^[0-9a-f]{64}$",
+            "minLength": 64,
+            "maxLength": 64
+          },
+          "status": {
+            "enum": [
+              null,
+              "succeeded",
+              "failed"
+            ]
+          },
+          "started_occurred_at_utc": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "Z$(?![\\s\\S])",
+            "maxLength": 64
+          },
+          "completed_occurred_at_utc": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time",
+            "pattern": "Z$(?![\\s\\S])",
+            "maxLength": 64
+          }
+        },
+        "oneOf": [
+          {
+            "properties": {
+              "phase": {
+                "const": "accepted"
+              },
+              "started_event_id": {
+                "type": "null"
+              },
+              "completed_event_id": {
+                "type": "null"
+              },
+              "result_ref": {
+                "type": "null"
+              },
+              "result_sha256": {
+                "type": "null"
+              },
+              "status": {
+                "type": "null"
+              },
+              "completed_occurred_at_utc": {
+                "type": "null"
+              }
+            }
+          },
+          {
+            "properties": {
+              "phase": {
+                "const": "started"
+              },
+              "started_event_id": {
+                "type": "string",
+                "pattern": "^evt_mem_[0-9a-f]{64}$",
+                "minLength": 72,
+                "maxLength": 72
+              },
+              "completed_event_id": {
+                "type": "null"
+              },
+              "result_ref": {
+                "type": "null"
+              },
+              "result_sha256": {
+                "type": "null"
+              },
+              "status": {
+                "type": "null"
+              },
+              "completed_occurred_at_utc": {
+                "type": "null"
+              }
+            }
+          },
+          {
+            "properties": {
+              "phase": {
+                "const": "effect_committed"
+              },
+              "started_event_id": {
+                "type": "string",
+                "pattern": "^evt_mem_[0-9a-f]{64}$",
+                "minLength": 72,
+                "maxLength": 72
+              },
+              "completed_event_id": {
+                "type": "null"
+              },
+              "result_ref": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "result_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$",
+                "minLength": 64,
+                "maxLength": 64
+              },
+              "status": {
+                "enum": [
+                  "succeeded",
+                  "failed"
+                ]
+              },
+              "completed_occurred_at_utc": {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "Z$(?![\\s\\S])"
+              }
+            }
+          },
+          {
+            "properties": {
+              "phase": {
+                "const": "completed"
+              },
+              "started_event_id": {
+                "type": "string",
+                "pattern": "^evt_mem_[0-9a-f]{64}$",
+                "minLength": 72,
+                "maxLength": 72
+              },
+              "completed_event_id": {
+                "type": "string",
+                "pattern": "^evt_mem_[0-9a-f]{64}$",
+                "minLength": 72,
+                "maxLength": 72
+              },
+              "result_ref": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "result_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$",
+                "minLength": 64,
+                "maxLength": 64
+              },
+              "status": {
+                "enum": [
+                  "succeeded",
+                  "failed"
+                ]
+              },
+              "completed_occurred_at_utc": {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "Z$(?![\\s\\S])"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "family_id": "memory_index_lexical_rebuild_operation",
+      "deferred_owner": "Plans/assistant-memory-subsystem.md",
+      "deferred_reason": "Retention is PENDING_RETENTION_DECISION; exact event admission and native source adoption are absent.",
+      "reopen_condition": "RT resolves policy, independent per-family review and admission complete, and native owner custody is implemented.",
+      "storage_kind": "redb",
+      "status": "deferred_not_build_blocking",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "memory_index_lexical_rebuild_operation.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(operation_id)}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.memory_index_lexical_rebuild_operation.v1",
+      "value_schema_ref": "Plans/memory_maintenance_operation.schema.json#/$defs/index_lexical_rebuild",
+      "owner_doc": "Plans/storage-plan.md#SP-632",
+      "producer": [
+        "MemoryMaintenance.index_lexical_rebuild.started.v1@1.0.0",
+        "MemoryMaintenance.index_lexical_rebuild.completed.v1@1.0.0"
+      ],
+      "consumers": [
+        "MemoryMaintenance.index_lexical_rebuild.recovery.v1@1.0.0",
+        "reader.memory.index.lexical.rebuild.started.history.v1@1.0.0",
+        "reader.memory.index.lexical.rebuild.completed.history.v1@1.0.0"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "operation_id",
+        "command_id",
+        "request_sha256",
+        "source_revision_sha256",
+        "phase",
+        "started_event_id",
+        "completed_event_id",
+        "result_ref",
+        "result_sha256",
+        "status",
+        "started_occurred_at_utc",
+        "completed_occurred_at_utc",
+        "prepared_target"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [
+        "started_event_id",
+        "completed_event_id",
+        "result_ref",
+        "result_sha256",
+        "status",
+        "completed_occurred_at_utc",
+        "prepared_target"
+      ],
+      "replay_behavior": "Whole-value CAS with immutable request/source and frozen timestamps/outcome. Recover exact SP-286 originals; no repeated committed effect. Rebuilds durably prepare a closed target before selector CAS; exact selected target settles the original operation.",
+      "migration": "Store coordinator admits exact schema; incompatible input fences, no inferred migration.",
+      "migration_disposition": {
+        "mode": "store_coordinator",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-632",
+          "Plans/assistant-memory-subsystem.md#7-gui-and-maintenance"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "mandatory_backup",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/assistant-memory-subsystem.md#AMS-102",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-632",
+          "Plans/assistant-memory-subsystem.md#7-gui-and-maintenance"
+        ]
+      },
+      "retention_compaction": "Pending RT assignment and owner deletion policy; unknown policy is materially incomplete, no destructive inference or native activation.",
+      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "redaction_no_secret_rule": "Opaque ids, hashes and authorized result refs only; no gist/claim/evidence bodies, prompts, embeddings or secrets.",
+      "legacy_canonical_crosswalk_status": "Newly authored owner operation custody under DL-045, no legacy alias, prepared without admission.",
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-632",
+          "Plans/assistant-memory-subsystem.md#7-gui-and-maintenance"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "value_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schema_id",
+          "schema_version",
+          "storage_instance_id",
+          "project_id",
+          "operation_id",
+          "command_id",
+          "request_sha256",
+          "source_revision_sha256",
+          "phase",
+          "started_event_id",
+          "completed_event_id",
+          "result_ref",
+          "result_sha256",
+          "status",
+          "started_occurred_at_utc",
+          "completed_occurred_at_utc",
+          "prepared_target"
+        ],
+        "properties": {
+          "schema_id": {
+            "const": "pm.storage_value.memory_index_lexical_rebuild_operation.v1"
+          },
+          "schema_version": {
+            "const": "1.0.0"
+          },
+          "storage_instance_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "project_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "operation_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "command_id": {
+            "const": "cmd.chat.memory.rebuild_lexical_index"
+          },
+          "request_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$",
+            "minLength": 64,
+            "maxLength": 64
+          },
+          "source_revision_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$",
+            "minLength": 64,
+            "maxLength": 64
+          },
+          "phase": {
+            "enum": [
+              "accepted",
+              "started",
+              "prepared",
+              "effect_committed",
+              "completed"
+            ]
+          },
+          "started_event_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "^evt_mem_[0-9a-f]{64}$",
+            "minLength": 72,
+            "maxLength": 72
+          },
+          "completed_event_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "^evt_mem_[0-9a-f]{64}$",
+            "minLength": 72,
+            "maxLength": 72
+          },
+          "result_ref": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "minLength": 74,
+            "maxLength": 74,
+            "pattern": "^memresult_[0-9a-f]{64}$"
+          },
+          "result_sha256": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "^[0-9a-f]{64}$",
+            "minLength": 64,
+            "maxLength": 64
+          },
+          "status": {
+            "enum": [
+              null,
+              "succeeded",
+              "failed"
+            ]
+          },
+          "started_occurred_at_utc": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "Z$(?![\\s\\S])",
+            "maxLength": 64
+          },
+          "completed_occurred_at_utc": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time",
+            "pattern": "Z$(?![\\s\\S])",
+            "maxLength": 64
+          },
+          "prepared_target": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "index_kind",
+                  "target_id",
+                  "source_revision_sha256",
+                  "manifest_sha256",
+                  "artifacts",
+                  "prior_selector_sha256"
+                ],
+                "properties": {
+                  "index_kind": {
+                    "const": "lexical"
+                  },
+                  "target_id": {
+                    "type": "string",
+                    "pattern": "^memtarget_[0-9a-f]{64}$",
+                    "minLength": 74,
+                    "maxLength": 74
+                  },
+                  "source_revision_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$",
+                    "minLength": 64,
+                    "maxLength": 64
+                  },
+                  "manifest_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$",
+                    "minLength": 64,
+                    "maxLength": 64
+                  },
+                  "artifacts": {
+                    "type": "array",
+                    "minItems": 1,
+                    "uniqueItems": true,
+                    "items": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "role",
+                        "relative_name",
+                        "sha256",
+                        "byte_length"
+                      ],
+                      "properties": {
+                        "role": {
+                          "enum": [
+                            "tantivy_file"
+                          ]
+                        },
+                        "relative_name": {
+                          "type": "string",
+                          "pattern": "^(?!\\.{1,2}$)[A-Za-z0-9_.-]+$(?![\\s\\S])",
+                          "maxLength": 256
+                        },
+                        "sha256": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{64}$",
+                          "minLength": 64,
+                          "maxLength": 64
+                        },
+                        "byte_length": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 9007199254740991
+                        }
+                      }
+                    },
+                    "maxItems": 32
+                  },
+                  "prior_selector_sha256": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "pattern": "^[0-9a-f]{64}$",
+                    "minLength": 64,
+                    "maxLength": 64
+                  }
+                }
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "oneOf": [
+          {
+            "properties": {
+              "phase": {
+                "const": "accepted"
+              },
+              "started_event_id": {
+                "type": "null"
+              },
+              "completed_event_id": {
+                "type": "null"
+              },
+              "result_ref": {
+                "type": "null"
+              },
+              "result_sha256": {
+                "type": "null"
+              },
+              "status": {
+                "type": "null"
+              },
+              "completed_occurred_at_utc": {
+                "type": "null"
+              },
+              "prepared_target": {
+                "type": "null"
+              }
+            }
+          },
+          {
+            "properties": {
+              "phase": {
+                "const": "started"
+              },
+              "started_event_id": {
+                "type": "string",
+                "pattern": "^evt_mem_[0-9a-f]{64}$",
+                "minLength": 72,
+                "maxLength": 72
+              },
+              "completed_event_id": {
+                "type": "null"
+              },
+              "result_ref": {
+                "type": "null"
+              },
+              "result_sha256": {
+                "type": "null"
+              },
+              "status": {
+                "type": "null"
+              },
+              "completed_occurred_at_utc": {
+                "type": "null"
+              },
+              "prepared_target": {
+                "type": "null"
+              }
+            }
+          },
+          {
+            "properties": {
+              "phase": {
+                "const": "prepared"
+              },
+              "started_event_id": {
+                "type": "string",
+                "pattern": "^evt_mem_[0-9a-f]{64}$",
+                "minLength": 72,
+                "maxLength": 72
+              },
+              "completed_event_id": {
+                "type": "null"
+              },
+              "result_ref": {
+                "type": "null"
+              },
+              "result_sha256": {
+                "type": "null"
+              },
+              "status": {
+                "type": "null"
+              },
+              "completed_occurred_at_utc": {
+                "type": "null"
+              },
+              "prepared_target": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "index_kind",
+                  "target_id",
+                  "source_revision_sha256",
+                  "manifest_sha256",
+                  "artifacts",
+                  "prior_selector_sha256"
+                ],
+                "properties": {
+                  "index_kind": {
+                    "const": "lexical"
+                  },
+                  "target_id": {
+                    "type": "string",
+                    "pattern": "^memtarget_[0-9a-f]{64}$",
+                    "minLength": 74,
+                    "maxLength": 74
+                  },
+                  "source_revision_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$",
+                    "minLength": 64,
+                    "maxLength": 64
+                  },
+                  "manifest_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$",
+                    "minLength": 64,
+                    "maxLength": 64
+                  },
+                  "artifacts": {
+                    "type": "array",
+                    "minItems": 1,
+                    "uniqueItems": true,
+                    "items": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "role",
+                        "relative_name",
+                        "sha256",
+                        "byte_length"
+                      ],
+                      "properties": {
+                        "role": {
+                          "enum": [
+                            "tantivy_file"
+                          ]
+                        },
+                        "relative_name": {
+                          "type": "string",
+                          "pattern": "^(?!\\.{1,2}$)[A-Za-z0-9_.-]+$(?![\\s\\S])",
+                          "maxLength": 256
+                        },
+                        "sha256": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{64}$",
+                          "minLength": 64,
+                          "maxLength": 64
+                        },
+                        "byte_length": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 9007199254740991
+                        }
+                      }
+                    },
+                    "maxItems": 32
+                  },
+                  "prior_selector_sha256": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "pattern": "^[0-9a-f]{64}$",
+                    "minLength": 64,
+                    "maxLength": 64
+                  }
+                }
+              }
+            }
+          },
+          {
+            "properties": {
+              "phase": {
+                "const": "effect_committed"
+              },
+              "started_event_id": {
+                "type": "string",
+                "pattern": "^evt_mem_[0-9a-f]{64}$",
+                "minLength": 72,
+                "maxLength": 72
+              },
+              "completed_event_id": {
+                "type": "null"
+              },
+              "result_ref": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "result_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$",
+                "minLength": 64,
+                "maxLength": 64
+              },
+              "status": {
+                "enum": [
+                  "succeeded",
+                  "failed"
+                ]
+              },
+              "completed_occurred_at_utc": {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "Z$(?![\\s\\S])"
+              },
+              "prepared_target": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "index_kind",
+                      "target_id",
+                      "source_revision_sha256",
+                      "manifest_sha256",
+                      "artifacts",
+                      "prior_selector_sha256"
+                    ],
+                    "properties": {
+                      "index_kind": {
+                        "const": "lexical"
+                      },
+                      "target_id": {
+                        "type": "string",
+                        "pattern": "^memtarget_[0-9a-f]{64}$",
+                        "minLength": 74,
+                        "maxLength": 74
+                      },
+                      "source_revision_sha256": {
+                        "type": "string",
+                        "pattern": "^[0-9a-f]{64}$",
+                        "minLength": 64,
+                        "maxLength": 64
+                      },
+                      "manifest_sha256": {
+                        "type": "string",
+                        "pattern": "^[0-9a-f]{64}$",
+                        "minLength": 64,
+                        "maxLength": 64
+                      },
+                      "artifacts": {
+                        "type": "array",
+                        "minItems": 1,
+                        "uniqueItems": true,
+                        "items": {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "required": [
+                            "role",
+                            "relative_name",
+                            "sha256",
+                            "byte_length"
+                          ],
+                          "properties": {
+                            "role": {
+                              "enum": [
+                                "tantivy_file"
+                              ]
+                            },
+                            "relative_name": {
+                              "type": "string",
+                              "pattern": "^(?!\\.{1,2}$)[A-Za-z0-9_.-]+$(?![\\s\\S])",
+                              "maxLength": 256
+                            },
+                            "sha256": {
+                              "type": "string",
+                              "pattern": "^[0-9a-f]{64}$",
+                              "minLength": 64,
+                              "maxLength": 64
+                            },
+                            "byte_length": {
+                              "type": "integer",
+                              "minimum": 0,
+                              "maximum": 9007199254740991
+                            }
+                          }
+                        },
+                        "maxItems": 32
+                      },
+                      "prior_selector_sha256": {
+                        "type": [
+                          "string",
+                          "null"
+                        ],
+                        "pattern": "^[0-9a-f]{64}$",
+                        "minLength": 64,
+                        "maxLength": 64
+                      }
+                    }
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "properties": {
+              "phase": {
+                "const": "completed"
+              },
+              "started_event_id": {
+                "type": "string",
+                "pattern": "^evt_mem_[0-9a-f]{64}$",
+                "minLength": 72,
+                "maxLength": 72
+              },
+              "completed_event_id": {
+                "type": "string",
+                "pattern": "^evt_mem_[0-9a-f]{64}$",
+                "minLength": 72,
+                "maxLength": 72
+              },
+              "result_ref": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "result_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$",
+                "minLength": 64,
+                "maxLength": 64
+              },
+              "status": {
+                "enum": [
+                  "succeeded",
+                  "failed"
+                ]
+              },
+              "completed_occurred_at_utc": {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "Z$(?![\\s\\S])"
+              },
+              "prepared_target": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "index_kind",
+                      "target_id",
+                      "source_revision_sha256",
+                      "manifest_sha256",
+                      "artifacts",
+                      "prior_selector_sha256"
+                    ],
+                    "properties": {
+                      "index_kind": {
+                        "const": "lexical"
+                      },
+                      "target_id": {
+                        "type": "string",
+                        "pattern": "^memtarget_[0-9a-f]{64}$",
+                        "minLength": 74,
+                        "maxLength": 74
+                      },
+                      "source_revision_sha256": {
+                        "type": "string",
+                        "pattern": "^[0-9a-f]{64}$",
+                        "minLength": 64,
+                        "maxLength": 64
+                      },
+                      "manifest_sha256": {
+                        "type": "string",
+                        "pattern": "^[0-9a-f]{64}$",
+                        "minLength": 64,
+                        "maxLength": 64
+                      },
+                      "artifacts": {
+                        "type": "array",
+                        "minItems": 1,
+                        "uniqueItems": true,
+                        "items": {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "required": [
+                            "role",
+                            "relative_name",
+                            "sha256",
+                            "byte_length"
+                          ],
+                          "properties": {
+                            "role": {
+                              "enum": [
+                                "tantivy_file"
+                              ]
+                            },
+                            "relative_name": {
+                              "type": "string",
+                              "pattern": "^(?!\\.{1,2}$)[A-Za-z0-9_.-]+$(?![\\s\\S])",
+                              "maxLength": 256
+                            },
+                            "sha256": {
+                              "type": "string",
+                              "pattern": "^[0-9a-f]{64}$",
+                              "minLength": 64,
+                              "maxLength": 64
+                            },
+                            "byte_length": {
+                              "type": "integer",
+                              "minimum": 0,
+                              "maximum": 9007199254740991
+                            }
+                          }
+                        },
+                        "maxItems": 32
+                      },
+                      "prior_selector_sha256": {
+                        "type": [
+                          "string",
+                          "null"
+                        ],
+                        "pattern": "^[0-9a-f]{64}$",
+                        "minLength": 64,
+                        "maxLength": 64
+                      }
+                    }
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            }
+          }
+        ],
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "status": {
+                  "const": "succeeded"
+                }
+              },
+              "required": [
+                "status"
+              ]
+            },
+            "then": {
+              "properties": {
+                "prepared_target": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "index_kind",
+                    "target_id",
+                    "source_revision_sha256",
+                    "manifest_sha256",
+                    "artifacts",
+                    "prior_selector_sha256"
+                  ],
+                  "properties": {
+                    "index_kind": {
+                      "const": "lexical"
+                    },
+                    "target_id": {
+                      "type": "string",
+                      "pattern": "^memtarget_[0-9a-f]{64}$",
+                      "minLength": 74,
+                      "maxLength": 74
+                    },
+                    "source_revision_sha256": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{64}$",
+                      "minLength": 64,
+                      "maxLength": 64
+                    },
+                    "manifest_sha256": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{64}$",
+                      "minLength": 64,
+                      "maxLength": 64
+                    },
+                    "artifacts": {
+                      "type": "array",
+                      "minItems": 1,
+                      "uniqueItems": true,
+                      "items": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "role",
+                          "relative_name",
+                          "sha256",
+                          "byte_length"
+                        ],
+                        "properties": {
+                          "role": {
+                            "enum": [
+                              "tantivy_file"
+                            ]
+                          },
+                          "relative_name": {
+                            "type": "string",
+                            "pattern": "^(?!\\.{1,2}$)[A-Za-z0-9_.-]+$(?![\\s\\S])",
+                            "maxLength": 256
+                          },
+                          "sha256": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{64}$",
+                            "minLength": 64,
+                            "maxLength": 64
+                          },
+                          "byte_length": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 9007199254740991
+                          }
+                        }
+                      },
+                      "maxItems": 32
+                    },
+                    "prior_selector_sha256": {
+                      "type": [
+                        "string",
+                        "null"
+                      ],
+                      "pattern": "^[0-9a-f]{64}$",
+                      "minLength": 64,
+                      "maxLength": 64
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "family_id": "memory_index_semantic_rebuild_operation",
+      "deferred_owner": "Plans/assistant-memory-subsystem.md",
+      "deferred_reason": "Retention is PENDING_RETENTION_DECISION; exact event admission and native source adoption are absent.",
+      "reopen_condition": "RT resolves policy, independent per-family review and admission complete, and native owner custody is implemented.",
+      "storage_kind": "redb",
+      "status": "deferred_not_build_blocking",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "memory_index_semantic_rebuild_operation.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(operation_id)}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.memory_index_semantic_rebuild_operation.v1",
+      "value_schema_ref": "Plans/memory_maintenance_operation.schema.json#/$defs/index_semantic_rebuild",
+      "owner_doc": "Plans/storage-plan.md#SP-634",
+      "producer": [
+        "MemoryMaintenance.index_semantic_rebuild.started.v1@1.0.0",
+        "MemoryMaintenance.index_semantic_rebuild.completed.v1@1.0.0"
+      ],
+      "consumers": [
+        "MemoryMaintenance.index_semantic_rebuild.recovery.v1@1.0.0",
+        "reader.memory.index.semantic.rebuild.started.history.v1@1.0.0",
+        "reader.memory.index.semantic.rebuild.completed.history.v1@1.0.0"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "operation_id",
+        "command_id",
+        "request_sha256",
+        "source_revision_sha256",
+        "phase",
+        "started_event_id",
+        "completed_event_id",
+        "result_ref",
+        "result_sha256",
+        "status",
+        "started_occurred_at_utc",
+        "completed_occurred_at_utc",
+        "prepared_target"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [
+        "started_event_id",
+        "completed_event_id",
+        "result_ref",
+        "result_sha256",
+        "status",
+        "completed_occurred_at_utc",
+        "prepared_target"
+      ],
+      "replay_behavior": "Whole-value CAS with immutable request/source and frozen timestamps/outcome. Recover exact SP-286 originals; no repeated committed effect. Rebuilds durably prepare a closed target before selector CAS; exact selected target settles the original operation.",
+      "migration": "Store coordinator admits exact schema; incompatible input fences, no inferred migration.",
+      "migration_disposition": {
+        "mode": "store_coordinator",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-634",
+          "Plans/assistant-memory-subsystem.md#7-gui-and-maintenance"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "mandatory_backup",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/assistant-memory-subsystem.md#AMS-104",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-634",
+          "Plans/assistant-memory-subsystem.md#7-gui-and-maintenance"
+        ]
+      },
+      "retention_compaction": "Pending RT assignment and owner deletion policy; unknown policy is materially incomplete, no destructive inference or native activation.",
+      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "redaction_no_secret_rule": "Opaque ids, hashes and authorized result refs only; no gist/claim/evidence bodies, prompts, embeddings or secrets.",
+      "legacy_canonical_crosswalk_status": "Newly authored owner operation custody under DL-045, no legacy alias, prepared without admission.",
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-634",
+          "Plans/assistant-memory-subsystem.md#7-gui-and-maintenance"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "value_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schema_id",
+          "schema_version",
+          "storage_instance_id",
+          "project_id",
+          "operation_id",
+          "command_id",
+          "request_sha256",
+          "source_revision_sha256",
+          "phase",
+          "started_event_id",
+          "completed_event_id",
+          "result_ref",
+          "result_sha256",
+          "status",
+          "started_occurred_at_utc",
+          "completed_occurred_at_utc",
+          "prepared_target"
+        ],
+        "properties": {
+          "schema_id": {
+            "const": "pm.storage_value.memory_index_semantic_rebuild_operation.v1"
+          },
+          "schema_version": {
+            "const": "1.0.0"
+          },
+          "storage_instance_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "project_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "operation_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "command_id": {
+            "const": "cmd.chat.memory.rebuild_semantic_index"
+          },
+          "request_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$",
+            "minLength": 64,
+            "maxLength": 64
+          },
+          "source_revision_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$",
+            "minLength": 64,
+            "maxLength": 64
+          },
+          "phase": {
+            "enum": [
+              "accepted",
+              "started",
+              "prepared",
+              "effect_committed",
+              "completed"
+            ]
+          },
+          "started_event_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "^evt_mem_[0-9a-f]{64}$",
+            "minLength": 72,
+            "maxLength": 72
+          },
+          "completed_event_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "^evt_mem_[0-9a-f]{64}$",
+            "minLength": 72,
+            "maxLength": 72
+          },
+          "result_ref": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "minLength": 74,
+            "maxLength": 74,
+            "pattern": "^memresult_[0-9a-f]{64}$"
+          },
+          "result_sha256": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "^[0-9a-f]{64}$",
+            "minLength": 64,
+            "maxLength": 64
+          },
+          "status": {
+            "enum": [
+              null,
+              "succeeded",
+              "failed"
+            ]
+          },
+          "started_occurred_at_utc": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "Z$(?![\\s\\S])",
+            "maxLength": 64
+          },
+          "completed_occurred_at_utc": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time",
+            "pattern": "Z$(?![\\s\\S])",
+            "maxLength": 64
+          },
+          "prepared_target": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "index_kind",
+                  "target_id",
+                  "source_revision_sha256",
+                  "manifest_sha256",
+                  "artifacts",
+                  "prior_selector_sha256"
+                ],
+                "properties": {
+                  "index_kind": {
+                    "const": "semantic"
+                  },
+                  "target_id": {
+                    "type": "string",
+                    "pattern": "^memtarget_[0-9a-f]{64}$",
+                    "minLength": 74,
+                    "maxLength": 74
+                  },
+                  "source_revision_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$",
+                    "minLength": 64,
+                    "maxLength": 64
+                  },
+                  "manifest_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$",
+                    "minLength": 64,
+                    "maxLength": 64
+                  },
+                  "artifacts": {
+                    "type": "array",
+                    "minItems": 1,
+                    "uniqueItems": true,
+                    "items": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "role",
+                        "relative_name",
+                        "sha256",
+                        "byte_length"
+                      ],
+                      "properties": {
+                        "role": {
+                          "enum": [
+                            "usearch_file",
+                            "mapping_redb"
+                          ]
+                        },
+                        "relative_name": {
+                          "type": "string",
+                          "pattern": "^(?!\\.{1,2}$)[A-Za-z0-9_.-]+$(?![\\s\\S])",
+                          "maxLength": 256
+                        },
+                        "sha256": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{64}$",
+                          "minLength": 64,
+                          "maxLength": 64
+                        },
+                        "byte_length": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 9007199254740991
+                        }
+                      }
+                    },
+                    "allOf": [
+                      {
+                        "contains": {
+                          "properties": {
+                            "role": {
+                              "const": "usearch_file"
+                            }
+                          },
+                          "required": [
+                            "role"
+                          ]
+                        },
+                        "minContains": 1,
+                        "maxContains": 1
+                      },
+                      {
+                        "contains": {
+                          "properties": {
+                            "role": {
+                              "const": "mapping_redb"
+                            }
+                          },
+                          "required": [
+                            "role"
+                          ]
+                        },
+                        "minContains": 1,
+                        "maxContains": 1
+                      }
+                    ],
+                    "maxItems": 2
+                  },
+                  "prior_selector_sha256": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "pattern": "^[0-9a-f]{64}$",
+                    "minLength": 64,
+                    "maxLength": 64
+                  }
+                }
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "oneOf": [
+          {
+            "properties": {
+              "phase": {
+                "const": "accepted"
+              },
+              "started_event_id": {
+                "type": "null"
+              },
+              "completed_event_id": {
+                "type": "null"
+              },
+              "result_ref": {
+                "type": "null"
+              },
+              "result_sha256": {
+                "type": "null"
+              },
+              "status": {
+                "type": "null"
+              },
+              "completed_occurred_at_utc": {
+                "type": "null"
+              },
+              "prepared_target": {
+                "type": "null"
+              }
+            }
+          },
+          {
+            "properties": {
+              "phase": {
+                "const": "started"
+              },
+              "started_event_id": {
+                "type": "string",
+                "pattern": "^evt_mem_[0-9a-f]{64}$",
+                "minLength": 72,
+                "maxLength": 72
+              },
+              "completed_event_id": {
+                "type": "null"
+              },
+              "result_ref": {
+                "type": "null"
+              },
+              "result_sha256": {
+                "type": "null"
+              },
+              "status": {
+                "type": "null"
+              },
+              "completed_occurred_at_utc": {
+                "type": "null"
+              },
+              "prepared_target": {
+                "type": "null"
+              }
+            }
+          },
+          {
+            "properties": {
+              "phase": {
+                "const": "prepared"
+              },
+              "started_event_id": {
+                "type": "string",
+                "pattern": "^evt_mem_[0-9a-f]{64}$",
+                "minLength": 72,
+                "maxLength": 72
+              },
+              "completed_event_id": {
+                "type": "null"
+              },
+              "result_ref": {
+                "type": "null"
+              },
+              "result_sha256": {
+                "type": "null"
+              },
+              "status": {
+                "type": "null"
+              },
+              "completed_occurred_at_utc": {
+                "type": "null"
+              },
+              "prepared_target": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "index_kind",
+                  "target_id",
+                  "source_revision_sha256",
+                  "manifest_sha256",
+                  "artifacts",
+                  "prior_selector_sha256"
+                ],
+                "properties": {
+                  "index_kind": {
+                    "const": "semantic"
+                  },
+                  "target_id": {
+                    "type": "string",
+                    "pattern": "^memtarget_[0-9a-f]{64}$",
+                    "minLength": 74,
+                    "maxLength": 74
+                  },
+                  "source_revision_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$",
+                    "minLength": 64,
+                    "maxLength": 64
+                  },
+                  "manifest_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$",
+                    "minLength": 64,
+                    "maxLength": 64
+                  },
+                  "artifacts": {
+                    "type": "array",
+                    "minItems": 1,
+                    "uniqueItems": true,
+                    "items": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "role",
+                        "relative_name",
+                        "sha256",
+                        "byte_length"
+                      ],
+                      "properties": {
+                        "role": {
+                          "enum": [
+                            "usearch_file",
+                            "mapping_redb"
+                          ]
+                        },
+                        "relative_name": {
+                          "type": "string",
+                          "pattern": "^(?!\\.{1,2}$)[A-Za-z0-9_.-]+$(?![\\s\\S])",
+                          "maxLength": 256
+                        },
+                        "sha256": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{64}$",
+                          "minLength": 64,
+                          "maxLength": 64
+                        },
+                        "byte_length": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 9007199254740991
+                        }
+                      }
+                    },
+                    "allOf": [
+                      {
+                        "contains": {
+                          "properties": {
+                            "role": {
+                              "const": "usearch_file"
+                            }
+                          },
+                          "required": [
+                            "role"
+                          ]
+                        },
+                        "minContains": 1,
+                        "maxContains": 1
+                      },
+                      {
+                        "contains": {
+                          "properties": {
+                            "role": {
+                              "const": "mapping_redb"
+                            }
+                          },
+                          "required": [
+                            "role"
+                          ]
+                        },
+                        "minContains": 1,
+                        "maxContains": 1
+                      }
+                    ],
+                    "maxItems": 2
+                  },
+                  "prior_selector_sha256": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "pattern": "^[0-9a-f]{64}$",
+                    "minLength": 64,
+                    "maxLength": 64
+                  }
+                }
+              }
+            }
+          },
+          {
+            "properties": {
+              "phase": {
+                "const": "effect_committed"
+              },
+              "started_event_id": {
+                "type": "string",
+                "pattern": "^evt_mem_[0-9a-f]{64}$",
+                "minLength": 72,
+                "maxLength": 72
+              },
+              "completed_event_id": {
+                "type": "null"
+              },
+              "result_ref": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "result_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$",
+                "minLength": 64,
+                "maxLength": 64
+              },
+              "status": {
+                "enum": [
+                  "succeeded",
+                  "failed"
+                ]
+              },
+              "completed_occurred_at_utc": {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "Z$(?![\\s\\S])"
+              },
+              "prepared_target": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "index_kind",
+                      "target_id",
+                      "source_revision_sha256",
+                      "manifest_sha256",
+                      "artifacts",
+                      "prior_selector_sha256"
+                    ],
+                    "properties": {
+                      "index_kind": {
+                        "const": "semantic"
+                      },
+                      "target_id": {
+                        "type": "string",
+                        "pattern": "^memtarget_[0-9a-f]{64}$",
+                        "minLength": 74,
+                        "maxLength": 74
+                      },
+                      "source_revision_sha256": {
+                        "type": "string",
+                        "pattern": "^[0-9a-f]{64}$",
+                        "minLength": 64,
+                        "maxLength": 64
+                      },
+                      "manifest_sha256": {
+                        "type": "string",
+                        "pattern": "^[0-9a-f]{64}$",
+                        "minLength": 64,
+                        "maxLength": 64
+                      },
+                      "artifacts": {
+                        "type": "array",
+                        "minItems": 1,
+                        "uniqueItems": true,
+                        "items": {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "required": [
+                            "role",
+                            "relative_name",
+                            "sha256",
+                            "byte_length"
+                          ],
+                          "properties": {
+                            "role": {
+                              "enum": [
+                                "usearch_file",
+                                "mapping_redb"
+                              ]
+                            },
+                            "relative_name": {
+                              "type": "string",
+                              "pattern": "^(?!\\.{1,2}$)[A-Za-z0-9_.-]+$(?![\\s\\S])",
+                              "maxLength": 256
+                            },
+                            "sha256": {
+                              "type": "string",
+                              "pattern": "^[0-9a-f]{64}$",
+                              "minLength": 64,
+                              "maxLength": 64
+                            },
+                            "byte_length": {
+                              "type": "integer",
+                              "minimum": 0,
+                              "maximum": 9007199254740991
+                            }
+                          }
+                        },
+                        "allOf": [
+                          {
+                            "contains": {
+                              "properties": {
+                                "role": {
+                                  "const": "usearch_file"
+                                }
+                              },
+                              "required": [
+                                "role"
+                              ]
+                            },
+                            "minContains": 1,
+                            "maxContains": 1
+                          },
+                          {
+                            "contains": {
+                              "properties": {
+                                "role": {
+                                  "const": "mapping_redb"
+                                }
+                              },
+                              "required": [
+                                "role"
+                              ]
+                            },
+                            "minContains": 1,
+                            "maxContains": 1
+                          }
+                        ],
+                        "maxItems": 2
+                      },
+                      "prior_selector_sha256": {
+                        "type": [
+                          "string",
+                          "null"
+                        ],
+                        "pattern": "^[0-9a-f]{64}$",
+                        "minLength": 64,
+                        "maxLength": 64
+                      }
+                    }
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "properties": {
+              "phase": {
+                "const": "completed"
+              },
+              "started_event_id": {
+                "type": "string",
+                "pattern": "^evt_mem_[0-9a-f]{64}$",
+                "minLength": 72,
+                "maxLength": 72
+              },
+              "completed_event_id": {
+                "type": "string",
+                "pattern": "^evt_mem_[0-9a-f]{64}$",
+                "minLength": 72,
+                "maxLength": 72
+              },
+              "result_ref": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "result_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$",
+                "minLength": 64,
+                "maxLength": 64
+              },
+              "status": {
+                "enum": [
+                  "succeeded",
+                  "failed"
+                ]
+              },
+              "completed_occurred_at_utc": {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "Z$(?![\\s\\S])"
+              },
+              "prepared_target": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "index_kind",
+                      "target_id",
+                      "source_revision_sha256",
+                      "manifest_sha256",
+                      "artifacts",
+                      "prior_selector_sha256"
+                    ],
+                    "properties": {
+                      "index_kind": {
+                        "const": "semantic"
+                      },
+                      "target_id": {
+                        "type": "string",
+                        "pattern": "^memtarget_[0-9a-f]{64}$",
+                        "minLength": 74,
+                        "maxLength": 74
+                      },
+                      "source_revision_sha256": {
+                        "type": "string",
+                        "pattern": "^[0-9a-f]{64}$",
+                        "minLength": 64,
+                        "maxLength": 64
+                      },
+                      "manifest_sha256": {
+                        "type": "string",
+                        "pattern": "^[0-9a-f]{64}$",
+                        "minLength": 64,
+                        "maxLength": 64
+                      },
+                      "artifacts": {
+                        "type": "array",
+                        "minItems": 1,
+                        "uniqueItems": true,
+                        "items": {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "required": [
+                            "role",
+                            "relative_name",
+                            "sha256",
+                            "byte_length"
+                          ],
+                          "properties": {
+                            "role": {
+                              "enum": [
+                                "usearch_file",
+                                "mapping_redb"
+                              ]
+                            },
+                            "relative_name": {
+                              "type": "string",
+                              "pattern": "^(?!\\.{1,2}$)[A-Za-z0-9_.-]+$(?![\\s\\S])",
+                              "maxLength": 256
+                            },
+                            "sha256": {
+                              "type": "string",
+                              "pattern": "^[0-9a-f]{64}$",
+                              "minLength": 64,
+                              "maxLength": 64
+                            },
+                            "byte_length": {
+                              "type": "integer",
+                              "minimum": 0,
+                              "maximum": 9007199254740991
+                            }
+                          }
+                        },
+                        "allOf": [
+                          {
+                            "contains": {
+                              "properties": {
+                                "role": {
+                                  "const": "usearch_file"
+                                }
+                              },
+                              "required": [
+                                "role"
+                              ]
+                            },
+                            "minContains": 1,
+                            "maxContains": 1
+                          },
+                          {
+                            "contains": {
+                              "properties": {
+                                "role": {
+                                  "const": "mapping_redb"
+                                }
+                              },
+                              "required": [
+                                "role"
+                              ]
+                            },
+                            "minContains": 1,
+                            "maxContains": 1
+                          }
+                        ],
+                        "maxItems": 2
+                      },
+                      "prior_selector_sha256": {
+                        "type": [
+                          "string",
+                          "null"
+                        ],
+                        "pattern": "^[0-9a-f]{64}$",
+                        "minLength": 64,
+                        "maxLength": 64
+                      }
+                    }
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            }
+          }
+        ],
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "status": {
+                  "const": "succeeded"
+                }
+              },
+              "required": [
+                "status"
+              ]
+            },
+            "then": {
+              "properties": {
+                "prepared_target": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "index_kind",
+                    "target_id",
+                    "source_revision_sha256",
+                    "manifest_sha256",
+                    "artifacts",
+                    "prior_selector_sha256"
+                  ],
+                  "properties": {
+                    "index_kind": {
+                      "const": "semantic"
+                    },
+                    "target_id": {
+                      "type": "string",
+                      "pattern": "^memtarget_[0-9a-f]{64}$",
+                      "minLength": 74,
+                      "maxLength": 74
+                    },
+                    "source_revision_sha256": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{64}$",
+                      "minLength": 64,
+                      "maxLength": 64
+                    },
+                    "manifest_sha256": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{64}$",
+                      "minLength": 64,
+                      "maxLength": 64
+                    },
+                    "artifacts": {
+                      "type": "array",
+                      "minItems": 1,
+                      "uniqueItems": true,
+                      "items": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "role",
+                          "relative_name",
+                          "sha256",
+                          "byte_length"
+                        ],
+                        "properties": {
+                          "role": {
+                            "enum": [
+                              "usearch_file",
+                              "mapping_redb"
+                            ]
+                          },
+                          "relative_name": {
+                            "type": "string",
+                            "pattern": "^(?!\\.{1,2}$)[A-Za-z0-9_.-]+$(?![\\s\\S])",
+                            "maxLength": 256
+                          },
+                          "sha256": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{64}$",
+                            "minLength": 64,
+                            "maxLength": 64
+                          },
+                          "byte_length": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 9007199254740991
+                          }
+                        }
+                      },
+                      "allOf": [
+                        {
+                          "contains": {
+                            "properties": {
+                              "role": {
+                                "const": "usearch_file"
+                              }
+                            },
+                            "required": [
+                              "role"
+                            ]
+                          },
+                          "minContains": 1,
+                          "maxContains": 1
+                        },
+                        {
+                          "contains": {
+                            "properties": {
+                              "role": {
+                                "const": "mapping_redb"
+                              }
+                            },
+                            "required": [
+                              "role"
+                            ]
+                          },
+                          "minContains": 1,
+                          "maxContains": 1
+                        }
+                      ],
+                      "maxItems": 2
+                    },
+                    "prior_selector_sha256": {
+                      "type": [
+                        "string",
+                        "null"
+                      ],
+                      "pattern": "^[0-9a-f]{64}$",
+                      "minLength": 64,
+                      "maxLength": 64
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "family_id": "memory_verification_sweep_operation",
+      "deferred_owner": "Plans/assistant-memory-subsystem.md",
+      "deferred_reason": "Retention is PENDING_RETENTION_DECISION; exact event admission and native source adoption are absent.",
+      "reopen_condition": "RT resolves policy, independent per-family review and admission complete, and native owner custody is implemented.",
+      "storage_kind": "redb",
+      "status": "deferred_not_build_blocking",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "memory_verification_sweep_operation.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(operation_id)}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.memory_verification_sweep_operation.v1",
+      "value_schema_ref": "Plans/memory_maintenance_operation.schema.json#/$defs/verification_sweep",
+      "owner_doc": "Plans/storage-plan.md#SP-636",
+      "producer": [
+        "MemoryMaintenance.verification_sweep.started.v1@1.0.0",
+        "MemoryMaintenance.verification_sweep.completed.v1@1.0.0"
+      ],
+      "consumers": [
+        "MemoryMaintenance.verification_sweep.recovery.v1@1.0.0",
+        "reader.memory.verification_sweep.started.history.v1@1.0.0",
+        "reader.memory.verification_sweep.completed.history.v1@1.0.0"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "operation_id",
+        "command_id",
+        "request_sha256",
+        "source_revision_sha256",
+        "phase",
+        "started_event_id",
+        "completed_event_id",
+        "result_ref",
+        "result_sha256",
+        "status",
+        "started_occurred_at_utc",
+        "completed_occurred_at_utc"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [
+        "started_event_id",
+        "completed_event_id",
+        "result_ref",
+        "result_sha256",
+        "status",
+        "completed_occurred_at_utc"
+      ],
+      "replay_behavior": "Whole-value CAS with immutable request/source and frozen timestamps/outcome. Recover exact SP-286 originals; no repeated committed effect. Rebuilds durably prepare a closed target before selector CAS; exact selected target settles the original operation.",
+      "migration": "Store coordinator admits exact schema; incompatible input fences, no inferred migration.",
+      "migration_disposition": {
+        "mode": "store_coordinator",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-636",
+          "Plans/assistant-memory-subsystem.md#7-gui-and-maintenance"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "mandatory_backup",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/assistant-memory-subsystem.md#AMS-106",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-636",
+          "Plans/assistant-memory-subsystem.md#7-gui-and-maintenance"
+        ]
+      },
+      "retention_compaction": "Pending RT assignment and owner deletion policy; unknown policy is materially incomplete, no destructive inference or native activation.",
+      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "redaction_no_secret_rule": "Opaque ids, hashes and authorized result refs only; no gist/claim/evidence bodies, prompts, embeddings or secrets.",
+      "legacy_canonical_crosswalk_status": "Newly authored owner operation custody under DL-045, no legacy alias, prepared without admission.",
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-636",
+          "Plans/assistant-memory-subsystem.md#7-gui-and-maintenance"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "value_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schema_id",
+          "schema_version",
+          "storage_instance_id",
+          "project_id",
+          "operation_id",
+          "command_id",
+          "request_sha256",
+          "source_revision_sha256",
+          "phase",
+          "started_event_id",
+          "completed_event_id",
+          "result_ref",
+          "result_sha256",
+          "status",
+          "started_occurred_at_utc",
+          "completed_occurred_at_utc"
+        ],
+        "properties": {
+          "schema_id": {
+            "const": "pm.storage_value.memory_verification_sweep_operation.v1"
+          },
+          "schema_version": {
+            "const": "1.0.0"
+          },
+          "storage_instance_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "project_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "operation_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "command_id": {
+            "const": "cmd.chat.memory.verification_sweep"
+          },
+          "request_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$",
+            "minLength": 64,
+            "maxLength": 64
+          },
+          "source_revision_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$",
+            "minLength": 64,
+            "maxLength": 64
+          },
+          "phase": {
+            "enum": [
+              "accepted",
+              "started",
+              "effect_committed",
+              "completed"
+            ]
+          },
+          "started_event_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "^evt_mem_[0-9a-f]{64}$",
+            "minLength": 72,
+            "maxLength": 72
+          },
+          "completed_event_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "^evt_mem_[0-9a-f]{64}$",
+            "minLength": 72,
+            "maxLength": 72
+          },
+          "result_ref": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "minLength": 74,
+            "maxLength": 74,
+            "pattern": "^memresult_[0-9a-f]{64}$"
+          },
+          "result_sha256": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "^[0-9a-f]{64}$",
+            "minLength": 64,
+            "maxLength": 64
+          },
+          "status": {
+            "enum": [
+              null,
+              "succeeded",
+              "failed"
+            ]
+          },
+          "started_occurred_at_utc": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "Z$(?![\\s\\S])",
+            "maxLength": 64
+          },
+          "completed_occurred_at_utc": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time",
+            "pattern": "Z$(?![\\s\\S])",
+            "maxLength": 64
+          }
+        },
+        "oneOf": [
+          {
+            "properties": {
+              "phase": {
+                "const": "accepted"
+              },
+              "started_event_id": {
+                "type": "null"
+              },
+              "completed_event_id": {
+                "type": "null"
+              },
+              "result_ref": {
+                "type": "null"
+              },
+              "result_sha256": {
+                "type": "null"
+              },
+              "status": {
+                "type": "null"
+              },
+              "completed_occurred_at_utc": {
+                "type": "null"
+              }
+            }
+          },
+          {
+            "properties": {
+              "phase": {
+                "const": "started"
+              },
+              "started_event_id": {
+                "type": "string",
+                "pattern": "^evt_mem_[0-9a-f]{64}$",
+                "minLength": 72,
+                "maxLength": 72
+              },
+              "completed_event_id": {
+                "type": "null"
+              },
+              "result_ref": {
+                "type": "null"
+              },
+              "result_sha256": {
+                "type": "null"
+              },
+              "status": {
+                "type": "null"
+              },
+              "completed_occurred_at_utc": {
+                "type": "null"
+              }
+            }
+          },
+          {
+            "properties": {
+              "phase": {
+                "const": "effect_committed"
+              },
+              "started_event_id": {
+                "type": "string",
+                "pattern": "^evt_mem_[0-9a-f]{64}$",
+                "minLength": 72,
+                "maxLength": 72
+              },
+              "completed_event_id": {
+                "type": "null"
+              },
+              "result_ref": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "result_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$",
+                "minLength": 64,
+                "maxLength": 64
+              },
+              "status": {
+                "enum": [
+                  "succeeded",
+                  "failed"
+                ]
+              },
+              "completed_occurred_at_utc": {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "Z$(?![\\s\\S])"
+              }
+            }
+          },
+          {
+            "properties": {
+              "phase": {
+                "const": "completed"
+              },
+              "started_event_id": {
+                "type": "string",
+                "pattern": "^evt_mem_[0-9a-f]{64}$",
+                "minLength": 72,
+                "maxLength": 72
+              },
+              "completed_event_id": {
+                "type": "string",
+                "pattern": "^evt_mem_[0-9a-f]{64}$",
+                "minLength": 72,
+                "maxLength": 72
+              },
+              "result_ref": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "result_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$",
+                "minLength": 64,
+                "maxLength": 64
+              },
+              "status": {
+                "enum": [
+                  "succeeded",
+                  "failed"
+                ]
+              },
+              "completed_occurred_at_utc": {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "Z$(?![\\s\\S])"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "family_id": "memory_index_lexical_selector",
+      "deferred_owner": "Plans/assistant-memory-subsystem.md",
+      "deferred_reason": "Selector/target retention is PENDING_RETENTION_DECISION; reviewed event admission and native target custody are absent.",
+      "reopen_condition": "RT resolves policy, independent per-family review and admission complete, and native owner custody is implemented.",
+      "storage_kind": "redb_projection",
+      "status": "deferred_not_build_blocking",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "memory_index_lexical_selector.v1:{hex(storage_instance_id)}:{hex(project_id)}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.memory_index_lexical_selector.v1",
+      "value_schema_ref": "Plans/memory_maintenance_rebuild_target.schema.json#/$defs/lexical_selector",
+      "owner_doc": "Plans/storage-plan.md#SP-632",
+      "producer": [
+        "MemoryMaintenance.index_lexical_rebuild.recovery.v1@1.0.0"
+      ],
+      "consumers": [
+        "MemoryMaintenance.index_lexical_rebuild.recovery.v1@1.0.0",
+        "AssistantMemory.lexical.selected_target_reader.v1@1.0.0"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "operation_id",
+        "target"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [],
+      "replay_behavior": "Derived selector in assistant_memory_derived.redb table memory_index_selectors. CAS exact prior row hash (null means absent) to the operation-owned prepared target, once. Recovery checks exact descriptor; another target is unavailable, never overwritten. Event replay cannot swap.",
+      "migration": "Store coordinator admits exact schema; incompatible input fences, no inferred migration.",
+      "migration_disposition": {
+        "mode": "rebuild_on_schema_change",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-632",
+          "Plans/assistant-memory-subsystem.md#7-gui-and-maintenance"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "rebuild_from_authority",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/assistant-memory-subsystem.md#AMS-102",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-632",
+          "Plans/assistant-memory-subsystem.md#7-gui-and-maintenance"
+        ]
+      },
+      "retention_compaction": "PENDING_RETENTION_DECISION; no selector/target collection or canonical gist deletion is authorized.",
+      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "redaction_no_secret_rule": "Opaque ids, hashes and authorized result refs only; no gist/claim/evidence bodies, prompts, embeddings or secrets.",
+      "legacy_canonical_crosswalk_status": "Newly authored derived selection custody under DL-045 for the exact rebuild event pair; not admission.",
+      "recovery_disposition": {
+        "authority_class": "derived_rebuildable",
+        "strategy": "rebuild_from_canonical_events_and_snapshot",
+        "source_family_ids": [
+          "memory_index_lexical_rebuild_operation"
+        ],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-632",
+          "Plans/assistant-memory-subsystem.md#7-gui-and-maintenance"
+        ],
+        "backup_required": false,
+        "data_loss_if_unavailable": false,
+        "user_disclosure_required": true
+      },
+      "value_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schema_id",
+          "schema_version",
+          "storage_instance_id",
+          "project_id",
+          "operation_id",
+          "target"
+        ],
+        "properties": {
+          "schema_id": {
+            "const": "pm.storage_value.memory_index_lexical_selector.v1"
+          },
+          "schema_version": {
+            "const": "1.0.0"
+          },
+          "storage_instance_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "project_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "operation_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "target": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "index_kind",
+              "target_id",
+              "source_revision_sha256",
+              "manifest_sha256",
+              "artifacts",
+              "prior_selector_sha256"
+            ],
+            "properties": {
+              "index_kind": {
+                "const": "lexical"
+              },
+              "target_id": {
+                "type": "string",
+                "pattern": "^memtarget_[0-9a-f]{64}$",
+                "minLength": 74,
+                "maxLength": 74
+              },
+              "source_revision_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$",
+                "minLength": 64,
+                "maxLength": 64
+              },
+              "manifest_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$",
+                "minLength": 64,
+                "maxLength": 64
+              },
+              "artifacts": {
+                "type": "array",
+                "minItems": 1,
+                "uniqueItems": true,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "role",
+                    "relative_name",
+                    "sha256",
+                    "byte_length"
+                  ],
+                  "properties": {
+                    "role": {
+                      "enum": [
+                        "tantivy_file"
+                      ]
+                    },
+                    "relative_name": {
+                      "type": "string",
+                      "pattern": "^(?!\\.{1,2}$)[A-Za-z0-9_.-]+$(?![\\s\\S])",
+                      "maxLength": 256
+                    },
+                    "sha256": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{64}$",
+                      "minLength": 64,
+                      "maxLength": 64
+                    },
+                    "byte_length": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9007199254740991
+                    }
+                  }
+                },
+                "maxItems": 32
+              },
+              "prior_selector_sha256": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "pattern": "^[0-9a-f]{64}$",
+                "minLength": 64,
+                "maxLength": 64
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "family_id": "memory_index_semantic_selector",
+      "deferred_owner": "Plans/assistant-memory-subsystem.md",
+      "deferred_reason": "Selector/target retention is PENDING_RETENTION_DECISION; reviewed event admission and native target custody are absent.",
+      "reopen_condition": "RT resolves policy, independent per-family review and admission complete, and native owner custody is implemented.",
+      "storage_kind": "redb_projection",
+      "status": "deferred_not_build_blocking",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "memory_index_semantic_selector.v1:{hex(storage_instance_id)}:{hex(project_id)}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.memory_index_semantic_selector.v1",
+      "value_schema_ref": "Plans/memory_maintenance_rebuild_target.schema.json#/$defs/semantic_selector",
+      "owner_doc": "Plans/storage-plan.md#SP-634",
+      "producer": [
+        "MemoryMaintenance.index_semantic_rebuild.recovery.v1@1.0.0"
+      ],
+      "consumers": [
+        "MemoryMaintenance.index_semantic_rebuild.recovery.v1@1.0.0",
+        "AssistantMemory.semantic.selected_target_reader.v1@1.0.0"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "operation_id",
+        "target"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [],
+      "replay_behavior": "Derived selector in assistant_memory_derived.redb table memory_index_selectors. CAS exact prior row hash (null means absent) to the operation-owned prepared target, once. Recovery checks exact descriptor; another target is unavailable, never overwritten. Event replay cannot swap.",
+      "migration": "Store coordinator admits exact schema; incompatible input fences, no inferred migration.",
+      "migration_disposition": {
+        "mode": "rebuild_on_schema_change",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-634",
+          "Plans/assistant-memory-subsystem.md#7-gui-and-maintenance"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "rebuild_from_authority",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/assistant-memory-subsystem.md#AMS-104",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-634",
+          "Plans/assistant-memory-subsystem.md#7-gui-and-maintenance"
+        ]
+      },
+      "retention_compaction": "PENDING_RETENTION_DECISION; no selector/target collection or canonical gist deletion is authorized.",
+      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "redaction_no_secret_rule": "Opaque ids, hashes and authorized result refs only; no gist/claim/evidence bodies, prompts, embeddings or secrets.",
+      "legacy_canonical_crosswalk_status": "Newly authored derived selection custody under DL-045 for the exact rebuild event pair; not admission.",
+      "recovery_disposition": {
+        "authority_class": "derived_rebuildable",
+        "strategy": "rebuild_from_canonical_events_and_snapshot",
+        "source_family_ids": [
+          "memory_index_semantic_rebuild_operation"
+        ],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-634",
+          "Plans/assistant-memory-subsystem.md#7-gui-and-maintenance"
+        ],
+        "backup_required": false,
+        "data_loss_if_unavailable": false,
+        "user_disclosure_required": true
+      },
+      "value_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schema_id",
+          "schema_version",
+          "storage_instance_id",
+          "project_id",
+          "operation_id",
+          "target"
+        ],
+        "properties": {
+          "schema_id": {
+            "const": "pm.storage_value.memory_index_semantic_selector.v1"
+          },
+          "schema_version": {
+            "const": "1.0.0"
+          },
+          "storage_instance_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "project_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "operation_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "target": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "index_kind",
+              "target_id",
+              "source_revision_sha256",
+              "manifest_sha256",
+              "artifacts",
+              "prior_selector_sha256"
+            ],
+            "properties": {
+              "index_kind": {
+                "const": "semantic"
+              },
+              "target_id": {
+                "type": "string",
+                "pattern": "^memtarget_[0-9a-f]{64}$",
+                "minLength": 74,
+                "maxLength": 74
+              },
+              "source_revision_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$",
+                "minLength": 64,
+                "maxLength": 64
+              },
+              "manifest_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$",
+                "minLength": 64,
+                "maxLength": 64
+              },
+              "artifacts": {
+                "type": "array",
+                "minItems": 1,
+                "uniqueItems": true,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "role",
+                    "relative_name",
+                    "sha256",
+                    "byte_length"
+                  ],
+                  "properties": {
+                    "role": {
+                      "enum": [
+                        "usearch_file",
+                        "mapping_redb"
+                      ]
+                    },
+                    "relative_name": {
+                      "type": "string",
+                      "pattern": "^(?!\\.{1,2}$)[A-Za-z0-9_.-]+$(?![\\s\\S])",
+                      "maxLength": 256
+                    },
+                    "sha256": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{64}$",
+                      "minLength": 64,
+                      "maxLength": 64
+                    },
+                    "byte_length": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9007199254740991
+                    }
+                  }
+                },
+                "allOf": [
+                  {
+                    "contains": {
+                      "properties": {
+                        "role": {
+                          "const": "usearch_file"
+                        }
+                      },
+                      "required": [
+                        "role"
+                      ]
+                    },
+                    "minContains": 1,
+                    "maxContains": 1
+                  },
+                  {
+                    "contains": {
+                      "properties": {
+                        "role": {
+                          "const": "mapping_redb"
+                        }
+                      },
+                      "required": [
+                        "role"
+                      ]
+                    },
+                    "minContains": 1,
+                    "maxContains": 1
+                  }
+                ],
+                "maxItems": 2
+              },
+              "prior_selector_sha256": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "pattern": "^[0-9a-f]{64}$",
+                "minLength": 64,
+                "maxLength": 64
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "family_id": "memory_monthly_summary_operation",
+      "deferred_owner": "Plans/assistant-memory-subsystem.md",
+      "deferred_reason": "No approved cutoff, operation retention unresolved, event admission absent and native custody NOT_RUN.",
+      "reopen_condition": "Jared approves cutoffs, Storage resolves operation custody retention, and exact family admission/native adoption complete.",
+      "storage_kind": "redb",
+      "status": "deferred_not_build_blocking",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "memory_monthly_summary_operation.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(operation_id)}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.memory_monthly_summary_operation.v1",
+      "value_schema_ref": "Plans/memory_maintenance_operation.schema.json#/$defs/monthly_summary",
+      "owner_doc": "Plans/storage-plan.md#SP-638",
+      "producer": [
+        "MemoryMaintenance.monthly_summary.started.v1@1.0.0",
+        "MemoryMaintenance.monthly_summary.completed.v1@1.0.0"
+      ],
+      "consumers": [
+        "MemoryMaintenance.monthly_summary.recovery.v1@1.0.0",
+        "reader.memory.monthly_summary.started.history.v1@1.0.0",
+        "reader.memory.monthly_summary.completed.history.v1@1.0.0"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "operation_id",
+        "command_id",
+        "request_sha256",
+        "source_revision_sha256",
+        "phase",
+        "started_event_id",
+        "completed_event_id",
+        "result_ref",
+        "result_sha256",
+        "status",
+        "started_occurred_at_utc",
+        "completed_occurred_at_utc",
+        "cutoff_ref",
+        "cutoff_sha256",
+        "month"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [
+        "started_event_id",
+        "completed_event_id",
+        "result_ref",
+        "result_sha256",
+        "status",
+        "completed_occurred_at_utc",
+        "month"
+      ],
+      "replay_behavior": "Whole-value CAS with immutable request/source and frozen timestamps/outcome. Recover exact SP-286 originals; no repeated committed effect. Rebuilds durably prepare a closed target before selector CAS; exact selected target settles the original operation.",
+      "migration": "Store coordinator admits exact schema; incompatible input fences, no inferred migration.",
+      "migration_disposition": {
+        "mode": "store_coordinator",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-638",
+          "Plans/assistant-memory-subsystem.md#7-gui-and-maintenance"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "mandatory_backup",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/assistant-memory-subsystem.md#7-gui-and-maintenance",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-638",
+          "Plans/assistant-memory-subsystem.md#7-gui-and-maintenance"
+        ]
+      },
+      "retention_compaction": "PENDING_RETENTION_DECISION for canonical operation/result custody; DL-401/G04 event history is separately seven years. No memory-original retention or deletion is selected.",
+      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "redaction_no_secret_rule": "Opaque ids, hashes and authorized result refs only; no gist/claim/evidence bodies, prompts, embeddings or secrets.",
+      "legacy_canonical_crosswalk_status": "Newly authored owner operation custody under DL-045, no legacy alias, prepared without admission.",
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-638",
+          "Plans/assistant-memory-subsystem.md#7-gui-and-maintenance"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "value_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schema_id",
+          "schema_version",
+          "storage_instance_id",
+          "project_id",
+          "operation_id",
+          "command_id",
+          "request_sha256",
+          "source_revision_sha256",
+          "phase",
+          "started_event_id",
+          "completed_event_id",
+          "result_ref",
+          "result_sha256",
+          "status",
+          "started_occurred_at_utc",
+          "completed_occurred_at_utc",
+          "cutoff_ref",
+          "cutoff_sha256",
+          "month"
+        ],
+        "properties": {
+          "schema_id": {
+            "const": "pm.storage_value.memory_monthly_summary_operation.v1"
+          },
+          "schema_version": {
+            "const": "1.0.0"
+          },
+          "storage_instance_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "project_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "operation_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "command_id": {
+            "const": "cmd.chat.memory.summarize_monthly"
+          },
+          "request_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$",
+            "minLength": 64,
+            "maxLength": 64
+          },
+          "source_revision_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$",
+            "minLength": 64,
+            "maxLength": 64
+          },
+          "phase": {
+            "enum": [
+              "accepted",
+              "started",
+              "effect_committed",
+              "completed"
+            ]
+          },
+          "started_event_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "^evt_mem_[0-9a-f]{64}$",
+            "minLength": 72,
+            "maxLength": 72
+          },
+          "completed_event_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "^evt_mem_[0-9a-f]{64}$",
+            "minLength": 72,
+            "maxLength": 72
+          },
+          "result_ref": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "minLength": 74,
+            "maxLength": 74,
+            "pattern": "^memresult_[0-9a-f]{64}$"
+          },
+          "result_sha256": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "^[0-9a-f]{64}$",
+            "minLength": 64,
+            "maxLength": 64
+          },
+          "status": {
+            "enum": [
+              null,
+              "succeeded",
+              "failed"
+            ]
+          },
+          "started_occurred_at_utc": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "Z$(?![\\s\\S])",
+            "maxLength": 64
+          },
+          "completed_occurred_at_utc": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time",
+            "pattern": "Z$(?![\\s\\S])",
+            "maxLength": 64
+          },
+          "cutoff_ref": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "cutoff_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$",
+            "minLength": 64,
+            "maxLength": 64
+          },
+          "month": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])$",
+            "minLength": 7,
+            "maxLength": 7
+          }
+        },
+        "oneOf": [
+          {
+            "properties": {
+              "phase": {
+                "const": "accepted"
+              },
+              "started_event_id": {
+                "type": "null"
+              },
+              "completed_event_id": {
+                "type": "null"
+              },
+              "result_ref": {
+                "type": "null"
+              },
+              "result_sha256": {
+                "type": "null"
+              },
+              "status": {
+                "type": "null"
+              },
+              "completed_occurred_at_utc": {
+                "type": "null"
+              }
+            }
+          },
+          {
+            "properties": {
+              "phase": {
+                "const": "started"
+              },
+              "started_event_id": {
+                "type": "string",
+                "pattern": "^evt_mem_[0-9a-f]{64}$",
+                "minLength": 72,
+                "maxLength": 72
+              },
+              "completed_event_id": {
+                "type": "null"
+              },
+              "result_ref": {
+                "type": "null"
+              },
+              "result_sha256": {
+                "type": "null"
+              },
+              "status": {
+                "type": "null"
+              },
+              "completed_occurred_at_utc": {
+                "type": "null"
+              }
+            }
+          },
+          {
+            "properties": {
+              "phase": {
+                "const": "effect_committed"
+              },
+              "started_event_id": {
+                "type": "string",
+                "pattern": "^evt_mem_[0-9a-f]{64}$",
+                "minLength": 72,
+                "maxLength": 72
+              },
+              "completed_event_id": {
+                "type": "null"
+              },
+              "result_ref": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "result_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$",
+                "minLength": 64,
+                "maxLength": 64
+              },
+              "status": {
+                "enum": [
+                  "succeeded",
+                  "failed"
+                ]
+              },
+              "completed_occurred_at_utc": {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "Z$(?![\\s\\S])"
+              }
+            }
+          },
+          {
+            "properties": {
+              "phase": {
+                "const": "completed"
+              },
+              "started_event_id": {
+                "type": "string",
+                "pattern": "^evt_mem_[0-9a-f]{64}$",
+                "minLength": 72,
+                "maxLength": 72
+              },
+              "completed_event_id": {
+                "type": "string",
+                "pattern": "^evt_mem_[0-9a-f]{64}$",
+                "minLength": 72,
+                "maxLength": 72
+              },
+              "result_ref": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "result_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$",
+                "minLength": 64,
+                "maxLength": 64
+              },
+              "status": {
+                "enum": [
+                  "succeeded",
+                  "failed"
+                ]
+              },
+              "completed_occurred_at_utc": {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "Z$(?![\\s\\S])"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "family_id": "memory_prune_archive_operation",
+      "deferred_owner": "Plans/assistant-memory-subsystem.md",
+      "deferred_reason": "No approved cutoff, operation retention unresolved, event admission absent and native custody NOT_RUN.",
+      "reopen_condition": "Jared approves cutoffs, Storage resolves operation custody retention, and exact family admission/native adoption complete.",
+      "storage_kind": "redb",
+      "status": "deferred_not_build_blocking",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "memory_prune_archive_operation.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(operation_id)}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.memory_prune_archive_operation.v1",
+      "value_schema_ref": "Plans/memory_maintenance_operation.schema.json#/$defs/prune_archive",
+      "owner_doc": "Plans/Contracts_V0.md#CV-658",
+      "producer": [
+        "MemoryMaintenance.prune_archive.started.v1@1.0.0",
+        "MemoryMaintenance.prune_archive.completed.v1@1.0.0"
+      ],
+      "consumers": [
+        "MemoryMaintenance.prune_archive.recovery.v1@1.0.0",
+        "reader.memory.prune_archive.started.history.v1@1.0.0",
+        "reader.memory.prune_archive.completed.history.v1@1.0.0"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "operation_id",
+        "command_id",
+        "request_sha256",
+        "source_revision_sha256",
+        "phase",
+        "started_event_id",
+        "completed_event_id",
+        "result_ref",
+        "result_sha256",
+        "status",
+        "started_occurred_at_utc",
+        "completed_occurred_at_utc",
+        "cutoff_ref",
+        "cutoff_sha256"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [
+        "started_event_id",
+        "completed_event_id",
+        "result_ref",
+        "result_sha256",
+        "status",
+        "completed_occurred_at_utc"
+      ],
+      "replay_behavior": "Whole-value CAS with immutable request/source and frozen timestamps/outcome. Recover exact SP-286 originals; no repeated committed effect. Rebuilds durably prepare a closed target before selector CAS; exact selected target settles the original operation.",
+      "migration": "Store coordinator admits exact schema; incompatible input fences, no inferred migration.",
+      "migration_disposition": {
+        "mode": "store_coordinator",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/Contracts_V0.md#CV-658",
+          "Plans/assistant-memory-subsystem.md#7-gui-and-maintenance"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "mandatory_backup",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/assistant-memory-subsystem.md#7-gui-and-maintenance",
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/Contracts_V0.md#CV-658",
+          "Plans/assistant-memory-subsystem.md#7-gui-and-maintenance"
+        ]
+      },
+      "retention_compaction": "PENDING_RETENTION_DECISION for canonical operation/result custody; DL-401/G04 event history is separately seven years. No memory-original retention or deletion is selected.",
+      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "redaction_no_secret_rule": "Opaque ids, hashes and authorized result refs only; no gist/claim/evidence bodies, prompts, embeddings or secrets.",
+      "legacy_canonical_crosswalk_status": "Newly authored owner operation custody under DL-045, no legacy alias, prepared without admission.",
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/Contracts_V0.md#CV-658",
+          "Plans/assistant-memory-subsystem.md#7-gui-and-maintenance"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "value_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schema_id",
+          "schema_version",
+          "storage_instance_id",
+          "project_id",
+          "operation_id",
+          "command_id",
+          "request_sha256",
+          "source_revision_sha256",
+          "phase",
+          "started_event_id",
+          "completed_event_id",
+          "result_ref",
+          "result_sha256",
+          "status",
+          "started_occurred_at_utc",
+          "completed_occurred_at_utc",
+          "cutoff_ref",
+          "cutoff_sha256"
+        ],
+        "properties": {
+          "schema_id": {
+            "const": "pm.storage_value.memory_prune_archive_operation.v1"
+          },
+          "schema_version": {
+            "const": "1.0.0"
+          },
+          "storage_instance_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "project_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "operation_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "command_id": {
+            "const": "cmd.chat.memory.prune_archive"
+          },
+          "request_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$",
+            "minLength": 64,
+            "maxLength": 64
+          },
+          "source_revision_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$",
+            "minLength": 64,
+            "maxLength": 64
+          },
+          "phase": {
+            "enum": [
+              "accepted",
+              "started",
+              "effect_committed",
+              "completed"
+            ]
+          },
+          "started_event_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "^evt_mem_[0-9a-f]{64}$",
+            "minLength": 72,
+            "maxLength": 72
+          },
+          "completed_event_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "^evt_mem_[0-9a-f]{64}$",
+            "minLength": 72,
+            "maxLength": 72
+          },
+          "result_ref": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "minLength": 74,
+            "maxLength": 74,
+            "pattern": "^memresult_[0-9a-f]{64}$"
+          },
+          "result_sha256": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "^[0-9a-f]{64}$",
+            "minLength": 64,
+            "maxLength": 64
+          },
+          "status": {
+            "enum": [
+              null,
+              "succeeded",
+              "failed"
+            ]
+          },
+          "started_occurred_at_utc": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "Z$(?![\\s\\S])",
+            "maxLength": 64
+          },
+          "completed_occurred_at_utc": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time",
+            "pattern": "Z$(?![\\s\\S])",
+            "maxLength": 64
+          },
+          "cutoff_ref": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "cutoff_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$",
+            "minLength": 64,
+            "maxLength": 64
+          }
+        },
+        "oneOf": [
+          {
+            "properties": {
+              "phase": {
+                "const": "accepted"
+              },
+              "started_event_id": {
+                "type": "null"
+              },
+              "completed_event_id": {
+                "type": "null"
+              },
+              "result_ref": {
+                "type": "null"
+              },
+              "result_sha256": {
+                "type": "null"
+              },
+              "status": {
+                "type": "null"
+              },
+              "completed_occurred_at_utc": {
+                "type": "null"
+              }
+            }
+          },
+          {
+            "properties": {
+              "phase": {
+                "const": "started"
+              },
+              "started_event_id": {
+                "type": "string",
+                "pattern": "^evt_mem_[0-9a-f]{64}$",
+                "minLength": 72,
+                "maxLength": 72
+              },
+              "completed_event_id": {
+                "type": "null"
+              },
+              "result_ref": {
+                "type": "null"
+              },
+              "result_sha256": {
+                "type": "null"
+              },
+              "status": {
+                "type": "null"
+              },
+              "completed_occurred_at_utc": {
+                "type": "null"
+              }
+            }
+          },
+          {
+            "properties": {
+              "phase": {
+                "const": "effect_committed"
+              },
+              "started_event_id": {
+                "type": "string",
+                "pattern": "^evt_mem_[0-9a-f]{64}$",
+                "minLength": 72,
+                "maxLength": 72
+              },
+              "completed_event_id": {
+                "type": "null"
+              },
+              "result_ref": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "result_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$",
+                "minLength": 64,
+                "maxLength": 64
+              },
+              "status": {
+                "enum": [
+                  "succeeded",
+                  "failed"
+                ]
+              },
+              "completed_occurred_at_utc": {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "Z$(?![\\s\\S])"
+              }
+            }
+          },
+          {
+            "properties": {
+              "phase": {
+                "const": "completed"
+              },
+              "started_event_id": {
+                "type": "string",
+                "pattern": "^evt_mem_[0-9a-f]{64}$",
+                "minLength": 72,
+                "maxLength": 72
+              },
+              "completed_event_id": {
+                "type": "string",
+                "pattern": "^evt_mem_[0-9a-f]{64}$",
+                "minLength": 72,
+                "maxLength": 72
+              },
+              "result_ref": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "result_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$",
+                "minLength": 64,
+                "maxLength": 64
+              },
+              "status": {
+                "enum": [
+                  "succeeded",
+                  "failed"
+                ]
+              },
+              "completed_occurred_at_utc": {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "Z$(?![\\s\\S])"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
       "family_id": "dch_bundle_selection_forward_blocked_checkpoint",
       "storage_kind": "redb_checkpoint",
       "status": "materialized",
@@ -196292,6 +199986,62 @@
         "storage_group": "conversations",
         "encoding_target": "messagepack_canonical",
         "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "memory_dedup_sweep_operation": {
+        "redb_file": "canonical",
+        "storage_group": "coordination_and_storage",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "Newly authored bounded DMEM metadata; physical file and 16 KiB value cap follow SP-340.",
+        "max_value_bytes": 16384
+      },
+      "memory_index_lexical_rebuild_operation": {
+        "redb_file": "canonical",
+        "storage_group": "coordination_and_storage",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "Newly authored bounded DMEM metadata; physical file and 16 KiB value cap follow SP-340.",
+        "max_value_bytes": 16384
+      },
+      "memory_index_semantic_rebuild_operation": {
+        "redb_file": "canonical",
+        "storage_group": "coordination_and_storage",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "Newly authored bounded DMEM metadata; physical file and 16 KiB value cap follow SP-340.",
+        "max_value_bytes": 16384
+      },
+      "memory_verification_sweep_operation": {
+        "redb_file": "canonical",
+        "storage_group": "coordination_and_storage",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "Newly authored bounded DMEM metadata; physical file and 16 KiB value cap follow SP-340.",
+        "max_value_bytes": 16384
+      },
+      "memory_index_lexical_selector": {
+        "redb_file": "derived",
+        "storage_group": "search_and_indexes",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "Newly authored bounded DMEM metadata; physical file and 16 KiB value cap follow SP-340.",
+        "max_value_bytes": 16384
+      },
+      "memory_index_semantic_selector": {
+        "redb_file": "derived",
+        "storage_group": "search_and_indexes",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "Newly authored bounded DMEM metadata; physical file and 16 KiB value cap follow SP-340.",
+        "max_value_bytes": 16384
+      },
+      "memory_monthly_summary_operation": {
+        "redb_file": "canonical",
+        "storage_group": "coordination_and_storage",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "Newly authored bounded DMEM metadata; physical file and 16 KiB value cap follow SP-340.",
+        "max_value_bytes": 16384
+      },
+      "memory_prune_archive_operation": {
+        "redb_file": "canonical",
+        "storage_group": "coordination_and_storage",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "Newly authored bounded DMEM metadata; physical file and 16 KiB value cap follow SP-340.",
         "max_value_bytes": 16384
       }
     },
