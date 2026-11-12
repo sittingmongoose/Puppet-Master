@@ -1828,6 +1828,10 @@ def timestamp_profile_failures(*, root: Path = ROOT) -> list[dict[str, Any]]:
     schema = load(PAYLOAD_PATH, root)
     found = []
     for name, definition in schema.get("$defs", {}).items():
+        # DO validates these exact board payload copies under their own timestamp profile.
+        # Keep this census on DCO's fifteen coordination fields. Unknown definitions still fail.
+        if name in BOARD_MEMBERS:
+            continue
         properties = definition.get("properties", {}) if isinstance(definition, dict) else {}
         for field, node in properties.items():
             if isinstance(node, dict) and node.get("format") == "date-time":
