@@ -15,7 +15,8 @@
 // elementCount within 60 ms of the mark (the frame that applies the new state; the page's always-running animations
 // restyle a few dozen elements in the frames around it). The median over the triggers must stay under the scenario's bound,
 // which sits between what main does and what the change does (counts, not milliseconds). A cell that could not be
-// judged (nothing to point at, no trace mark) fails.
+// judged fails: ALL n intended changes must have finite, nonnegative element counts. Missing marks/counts are logged;
+// the same complete-coverage rule applies to presses.
 // Both surfaces.   --set looks=<a,b>  --set scen=<a,b>  --set n=<triggers>  --set report=1 (no bounds: numbers only)
 import { muteSound } from '../helpers/quiet-page.mjs';
 import { LOOKS } from '../browser-check.config.mjs';
@@ -55,19 +56,29 @@ function restyled(events, prefix) {
 		const open = [];
 		for (const e of events) {
 			if (e.name !== 'UpdateLayoutTree' || !same(e)) continue;
-			if (e.ph === 'X') ult.push({ ts: e.ts, end: e.ts + (e.dur || 0), n: (e.args && (e.args.elementCount ?? e.args.endData?.elementCount)) || 0 });
+			if (e.ph === 'X') ult.push({ ts: e.ts, end: e.ts + (e.dur || 0), n: e.args?.elementCount ?? e.args?.endData?.elementCount ?? null });
 			else if (e.ph === 'B') open.push(e);
-			else if (e.ph === 'E') { const b = open.pop(); if (b) ult.push({ ts: b.ts, end: e.ts, n: (e.args && (e.args.elementCount ?? e.args.endData?.elementCount)) || (b.args && b.args.elementCount) || 0 }); }
+			else if (e.ph === 'E') { const b = open.pop(); if (b) ult.push({ ts: b.ts, end: e.ts, n: e.args?.elementCount ?? e.args?.endData?.elementCount ?? b.args?.elementCount ?? b.args?.endData?.elementCount ?? null }); }
 		}
 		// the change's own recalc: the largest one within 60 ms of the mark (the frame that applies the new state; the
 		// always-running animations restyle a few dozen elements in every other frame, a forced read in the input task
 		// restyles little, and the hover light's spring frames after it only touch the lit element)
-		const win = ult.filter((u) => u.ts >= m.ts && u.ts <= m.ts + 60000);
+		const win = ult.filter((u) => u.ts >= m.ts && u.ts <= m.ts + 60000 && validCount(u.n));
 		out.push(win.length ? Math.max(...win.map((u) => u.n)) : null);
 	}
 	return out;
 }
-const median = (a) => { const v = a.filter((x) => x != null).sort((x, y) => x - y); return v.length ? v[Math.floor((v.length - 1) / 2)] : null; };
+const validCount = (x) => Number.isFinite(x) && x >= 0;
+// Coverage precedes the median: no unmeasured change is silently removed from the sample.
+const median = (a, expected = a.length) => {
+ if (!(expected > 0) || a.length !== expected || !a.every(validCount)) return null;
+ const v = a.slice().sort((x, y) => x - y);
+ return v[Math.floor((v.length - 1) / 2)];
+};
+const measurementDetail = (counts, n) => {
+ const missing = counts.flatMap((x, i) => validCount(x) ? [] : [i]);
+ return `${counts.filter(validCount).length}/${n} valid, ${counts.length} marks; missing measurements at marks ${JSON.stringify(missing)}, missing marks ${Math.max(0, n - counts.length)}, extra marks ${Math.max(0, counts.length - n)}; counts ${JSON.stringify(counts)}`;
+};
 
 // in the page: mark each change from inside its own input task
 const ARM = () => {
@@ -148,8 +159,8 @@ async function runScenario(t, f, cdp, name, n, S) {
 	await f.evaluate(() => { window.__jArm.tag = null; });
 	if (sc.teardown) await f.evaluate(sc.teardown).catch(() => {});
 	const counts = restyled(ev, 'jr:' + tag + ':');
-	const med = median(counts);
-	return { name, judged: med != null && counts.length >= Math.min(n, 2), counts, med };
+	const med = median(counts, n);
+	return { name, judged: med != null, counts, med, why: measurementDetail(counts, n) };
 }
 
 export default async function (t) {
@@ -172,8 +183,8 @@ export default async function (t) {
 					const r = await runScenario(t, f, cdp, name, n, S).catch((e) => ({ name, judged: false, why: String(e.message).slice(0, 120) }));
 					rows.push({ surface, look, ...r });
 					const b = BOUND[name];
-					if (report) { t.log(`${S}${look} ${name}: median ${r.med} (${JSON.stringify(r.counts || r.why)})`); continue; }
-					await t.check(`${S}${look} ${name}: restyled by the change under ${b}`, r.judged && r.med < b, r.judged ? `median ${r.med} of ${JSON.stringify(r.counts)}` : `could not judge: ${r.why || 'no marks'}`);
+					if (report) { t.log(`${S}${look} ${name}: median ${r.med} (${r.why})`); continue; }
+					await t.check(`${S}${look} ${name}: restyled by the change under ${b}`, r.judged && r.med < b, r.judged ? `median ${r.med}; ${r.why}` : `could not judge: ${r.why || 'no marks'}`);
 				}
 			}
 			await cdp.detach().catch(() => {});
@@ -209,11 +220,12 @@ export default async function (t) {
 					});
 					await f.evaluate(() => { window.__jArm.tag = null; });
 					const counts = restyled(ev, 'jr:' + tag + ':');
-					r = { name: 'press', judged: median(counts) != null, counts, med: median(counts) };
+					const med = median(counts, n);
+					r = { name: 'press', judged: med != null, counts, med, why: measurementDetail(counts, n) };
 				}
 				rows.push({ surface, look, ...r });
-				if (report) { t.log(`${S}${look} press: median ${r.med} (${JSON.stringify(r.counts || r.why)})`); continue; }
-				await t.check(`${S}${look} press: restyled by the press under ${BOUND.press}`, r.judged && r.med < BOUND.press, r.judged ? `median ${r.med} of ${JSON.stringify(r.counts)}` : `could not judge: ${r.why}`);
+				if (report) { t.log(`${S}${look} press: median ${r.med} (${r.why})`); continue; }
+				await t.check(`${S}${look} press: restyled by the press under ${BOUND.press}`, r.judged && r.med < BOUND.press, r.judged ? `median ${r.med}; ${r.why}` : `could not judge: ${r.why}`);
 			}
 			await cdp.detach().catch(() => {});
 		}

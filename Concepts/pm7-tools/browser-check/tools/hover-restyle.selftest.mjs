@@ -1,0 +1,25 @@
+// Exercise the check's actual pure functions without loading a browser/config.
+import { readFileSync } from 'node:fs';
+import assert from 'node:assert/strict';
+const src = readFileSync(new URL('../checks/perf-hover-restyle.check.mjs', import.meta.url), 'utf8');
+const a = src.indexOf('function restyled('), b = src.indexOf('// in the page: mark', a);
+assert.ok(a >= 0 && b > a, 'pure-function boundaries exist');
+const { restyled, median } = new Function(src.slice(a, b) + '\nreturn {restyled, median};')();
+const marks = Array.from({ length: 4 }, (_, i) => ({ cat: 'blink.user_timing', name: 'jr:test:' + i, ts: i * 100000, pid: 1, tid: 1 }));
+const recalc = { name: 'UpdateLayoutTree', ph: 'X', ts: 310000, dur: 1000, pid: 1, tid: 1, args: { elementCount: 10 } };
+const counts = restyled([...marks, recalc], 'jr:test:');
+console.log('review input:', JSON.stringify(counts), 'median:', median(counts, 4));
+assert.deepEqual(counts, [null, null, null, 10]);
+assert.equal(median(counts, 4), null, 'three unmeasured changes cannot pass as a median of four');
+assert.equal(median([10, 10, 10], 4), null, 'a missing mark is also missing coverage');
+assert.equal(median([], 4), null);
+assert.equal(median([10, 20, 30, 40], 4), 20, 'complete data keeps the existing lower-median rule');
+assert.equal(median([10, NaN, 20, 30], 4), null);
+assert.equal(median([0, 0, 0, 0], 4), 0, 'a measured zero is valid');
+assert.equal(median([1, 2, 3, 4, 5], 4), null, 'extra marks do not silently change the intended sample');
+assert.deepEqual(restyled([...marks, { ...recalc, args: {} }], 'jr:test:'), [null, null, null, null], 'a recalc without elementCount is unmeasured');
+const otherThread = { ...recalc, tid: 2 };
+assert.deepEqual(restyled([...marks, otherThread], 'jr:test:'), [null, null, null, null]);
+const paired = [{ ...recalc, ph: 'B', args: {} }, { ...recalc, ph: 'E', ts: 311000 }];
+assert.deepEqual(restyled([...marks, ...paired], 'jr:test:'), counts);
+console.log('PASS missing measurements/marks stay unjudged; complete and paired trace controls pass');
