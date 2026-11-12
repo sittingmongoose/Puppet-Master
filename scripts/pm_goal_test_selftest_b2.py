@@ -576,9 +576,23 @@ def test_index(s, work):
         pr.lookup(r3, scope_partition=row.scope_partition, sequence_id=row.sequence_id, event_id=row.event_id)
     s.negative('index', 'lookup_pending_custody', pending, 'index/custody_unavailable')
     s.negative('index', 'index_source_wrong_type', lambda: G.EventRecordIndexSource(dict()), 'index_source/storage_type')
+    s.negative('index', 'storage_dataset_absent', lambda: st.index_rows('eig_' + '0' * 64),
+               'index/dataset_unavailable')
 
     # generic source: the token fields batch 2 adds
     gs = G.GenericSource(st)
+
+    def malformed_canonical(which):
+        raw = st.acquire_source()
+        raw['canonical'][which + '_raw'] = b''
+        if which == 'manifest':
+            # Keep the observed byte digest coherent with the malformed image.
+            raw['token']['source_selection']['manifest_bytes_sha256'] = S.sha256(b'')
+        gs.acquire(raw)
+    s.negative('index', 'source_canonical_manifest_malformed', lambda: malformed_canonical('manifest'),
+               'source/canonical_manifest_codec/numrule/physical_decode')
+    s.negative('index', 'source_checkpoint_malformed', lambda: malformed_canonical('checkpoint'),
+               'source/checkpoint_codec/numrule/physical_decode')
 
     def token_edit(edit):
         raw = st.acquire_source()
