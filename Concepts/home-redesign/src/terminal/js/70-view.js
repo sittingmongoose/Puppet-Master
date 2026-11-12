@@ -838,7 +838,7 @@
         break;
       }
     }
-    if (!cmd) { s.hidden = true; this.stickyCmd = null; return; }
+    if (!cmd) { if (s.hidden !== true) s.hidden = true; this.stickyCmd = null; return; }
     this.stickyCmd = cmd;
     var promptText = cmd.promptLine.text();
     s.hidden = false;
