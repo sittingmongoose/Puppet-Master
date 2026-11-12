@@ -8,12 +8,12 @@ import { execFileSync } from 'node:child_process';
 const ref = process.argv.indexOf('--ref');
 const src = ref < 0 ? readFileSync(new URL('../send-stop.js', import.meta.url), 'utf8') : execFileSync('git', ['show', `${process.argv[ref + 1]}:Concepts/chat-assistant-concepts/5.6 Pro/send-stop.js`], { encoding: 'utf8' });
 
-function chip({ change, notify = true, stall = false, lateEvery = 0, cadence = 'flowing' } = {}) {
-	let clock = 0, seq = 0, duration = cadence === 'flowing' ? 2200 : 3200, delay = 800, rate = 1, origin = 0, localOrigin = 0;
+function chip({ change, notify = true, stall = false, lateEvery = 0, staleAtChange = 0, cadence = 'flowing' } = {}) {
+	let lag = 0, clock = 0, seq = 0, duration = cadence === 'flowing' ? 2200 : 3200, delay = 800, rate = 1, origin = 0, localOrigin = 0;
 	const timers = new Map(), observers = [], switches = [], listeners = [];
 	const setTimeout = (cb, ms) => { const id = ++seq; timers.set(id, { at: clock + Math.max(0, ms), cb }); return id; };
 	const clearTimeout = (id) => timers.delete(id);
-	const local = () => localOrigin + (clock - origin) * rate;
+	const local = () => localOrigin + (clock - lag - origin) * rate;
 	const timing = () => ({ localTime: local(), duration, delay, currentIteration: local() < delay ? null : Math.floor((local() - delay) / duration) });
 	const newAnimation = () => ({ animationName: cadence === 'flowing' ? 'ss-breathe' : 'ss-breathe-w', playState: 'running', get playbackRate() { return rate; }, effect: { getComputedTiming: timing } });
 	let animation = newAnimation();
@@ -24,7 +24,7 @@ function chip({ change, notify = true, stall = false, lateEvery = 0, cadence = '
 		querySelector: () => ({ getAnimations: () => [animation] })
 	};
 	const window = {};
-	const document = { head: {}, documentElement: { getAttribute: () => null }, querySelector: () => b, addEventListener: (n) => listeners.push(n) };
+	const document = { head: {}, timeline: { get currentTime() { return clock - lag; } }, documentElement: { getAttribute: () => null }, querySelector: () => b, addEventListener: (n) => listeners.push(n) };
 	class MutationObserver {
 		constructor(cb) { this.cb = cb; observers.push(this); }
 		observe() { this.active = true; }
@@ -47,7 +47,11 @@ function chip({ change, notify = true, stall = false, lateEvery = 0, cadence = '
 			if (change === 'delay') delay = 1200;
 			if (change === 'rate') { localOrigin = local(); origin = clock; rate = 2; }
 			if (change === 'identity') animation = newAnimation();
+			/* the observer is told inside the long task that repainted the look: the animation's clock (the last frame's
+			   time) is `staleAtChange` ms behind the wall clock there, and up to date again at the next frame */
+			lag = staleAtChange;
 			if (notify) for (const o of observers) if (o.active) o.cb([{ target: { id: 'o55-look-scale' }, addedNodes: [], removedNodes: [] }]);
+			lag = 0;
 			continue;
 		}
 		timers.delete(next[0]);
@@ -165,6 +169,9 @@ const cases = [
 	   main's late animationiteration event does (main: 3044 ms in the second case). c7fc6dd7a3 let a change be made only
 	   within 32 ms of a boundary: one late timer put it off a whole loop (5200 ms), and a main thread that ran every
 	   boundary timer 40 ms late never changed cadence at all. [name, options, boundary, how late the change may be] */
+	/* a look repaint that leaves this loop's timing as it is (Fast does, for the flowing loop), told 90 ms into its long
+	   task: the timer armed there must still meet the boundary (PMConcept7 on Windows: 76 and 101 ms late, main 1 ms) */
+	['a speed change that leaves this loop alone, announced inside a 90 ms task', { change: 'none', staleAtChange: 90 }, 3000],
 	['one late timer: the change comes when it runs, not a loop later', { stall: true }, 3000, 500],
 	['every boundary timer 40 ms late: the change still comes, at the first one', { lateEvery: 40 }, 3000, 44]
 ];

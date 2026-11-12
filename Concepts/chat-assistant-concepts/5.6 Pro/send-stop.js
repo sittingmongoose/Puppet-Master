@@ -179,6 +179,12 @@
     watchBeat();
     var a = breath(b), t = a && a.playState === 'running' && a.effect ? a.effect.getComputedTiming() : null;
     var rate = a && a.playbackRate;
+    /* The animation's clock is the document timeline's: the time of the last frame, not of this call. In a callback
+       that runs inside a long task (the stylesheet observer above, told while Settings repaints the look) it is that
+       task's length behind, and a timer armed from it met the boundary that much late (76 and 101 ms on Windows where
+       main's event came at 1 ms). What it is behind by comes off every wait computed below. */
+    var stale = 0;
+    try { var tl = document.timeline && document.timeline.currentTime; if (typeof tl === 'number') stale = Math.max(0, Math.min(250, performance.now() - tl)); } catch (e) { }
     /* not styled yet, hidden, under reduced motion or paused: no running loop to follow, so look again later. The SAME
        animation found paused (PMConcept7's onboarding window pauses the app's animations while it is open) is not
        forgotten: it goes on from where it stood, and a boundary it crosses after the pause is a boundary of the loop
@@ -186,7 +192,7 @@
        a whole loop late (R8-1). */
     if (!t || typeof t.localTime !== 'number' || !(t.duration > 0) || !(rate > 0)) { if (!a || a !== beatAnim) beatAnim = null; beatT = setTimeout(beat, 500); return; }
     /* the loop's start delay (--ss-ld) still running: look again as it ends */
-    if (t.currentIteration == null) { beatAnim = null; beatT = setTimeout(beat, Math.max(16, (t.delay - t.localTime) / rate + 4)); return; }
+    if (t.currentIteration == null) { beatAnim = null; beatT = setTimeout(beat, Math.max(16, (t.delay - t.localTime) / rate - stale + 4)); return; }
     var same = a === beatAnim && beatTiming && t.duration === beatTiming.duration && t.delay === beatTiming.delay && rate === beatTiming.rate;
     var phase = t.localTime - t.delay - t.currentIteration * t.duration;
     /* The cadence changes when a loop boundary has gone by on the timing this timer was armed with (same): on time
@@ -208,7 +214,7 @@
     }
     beatAnim = a; beatIter = t.currentIteration;
     beatTiming = { duration: t.duration, delay: t.delay, rate: rate };
-    beatT = setTimeout(beat, Math.max(16, (t.delay + (t.currentIteration + 1) * t.duration - t.localTime) / rate + 4));
+    beatT = setTimeout(beat, Math.max(16, (t.delay + (t.currentIteration + 1) * t.duration - t.localTime) / rate - stale + 4));
   }
 
   /* A pointer that sends stays over the chip as it turns into Stop; NieR's rust hover waits until that pointer has
