@@ -7,9 +7,11 @@ local canonical digest; it is not the CV-317 producer projection.
 from __future__ import annotations
 
 import hashlib
+import json
 import sys
 from typing import Any
 
+from pm_event_datetime import COORDINATION_UTC_Z, EVENT_RECORD, STORAGE_UTC_Z, date_time
 from pm_event_numbers import (
     FrozenRecipe,
     OriginalBinding,
@@ -27,6 +29,17 @@ PAYLOAD_URI = "https://puppetmaster.local/schemas/coordination_event_payloads/1.
 # reapplied to a retained original; the recipe id is not caller-selectable.
 RECIPE_ID = "coordination-sp320-string-array-v1"
 LOCAL_PAYLOAD_RECIPE = "coordination-local-payload-v1"
+# CV-1101: the coordination record timestamp profile is trailing uppercase Z.
+# SP-1101 seals this on the frozen recipe. A request cannot select another profile.
+SEALED_TIMESTAMP_PROFILE = COORDINATION_UTC_Z
+TIMESTAMP_FIELDS = (
+    "started_at_utc",
+    "observed_at_utc",
+    "finished_at_utc",
+    "detected_at_utc",
+    "aborted_at_utc",
+    "exported_at_utc",
+)
 
 
 def _definition(schema: dict[str, Any], ref: str) -> dict[str, Any] | None:
@@ -170,26 +183,73 @@ def resource_sha256(blob: bytes) -> str:
     return hashlib.sha256(blob).hexdigest()
 
 
-def retained_retry_matches(recipe_id: str | None, stored_digest: str, presented_digest: str) -> bool:
-    """SP-1101 lookup: only the frozen SP-320 recipe can replay an exact original digest."""
-    if recipe_id != RECIPE_ID or type(stored_digest) is not str or stored_digest != presented_digest:
+def timestamp_accepted(value: Any, profile: str) -> bool:
+    """True when date_time keeps the exact string under the named profile."""
+    if type(profile) is not str:
         return False
-    if len(stored_digest) != 64:
+    try:
+        return date_time(value, profile=profile) == value
+    except Refusal:
         return False
-    recipe = recipe_tuple(resource_sha256(RECIPE_ID.encode("ascii")))
-    binding = OriginalBinding(
+
+
+def coordination_timestamp(value: Any) -> bool:
+    """CV-353 rule 5 through the sealed coordination_utc_z profile."""
+    return timestamp_accepted(value, SEALED_TIMESTAMP_PROFILE)
+
+
+def _timestamp_payload(value: dict[str, Any]) -> dict[str, Any]:
+    nested = value.get("payload")
+    return nested if type(nested) is dict else value
+
+
+def timestamps_match_sealed_profile(record_bytes: bytes) -> bool:
+    """The frozen verifier's profile. A record field named like a profile is not a selector."""
+    if type(record_bytes) is not bytes:
+        return False
+    try:
+        value = json.loads(record_bytes.decode("utf-8"))
+    except (UnicodeDecodeError, json.JSONDecodeError):
+        return False
+    if type(value) is not dict:
+        return False
+    payload = _timestamp_payload(value)
+    if type(payload) is not dict:
+        return False
+    for field in TIMESTAMP_FIELDS:
+        if field in payload and not coordination_timestamp(payload[field]):
+            return False
+    if payload is not value:
+        # A full EventRecord: CV-1101 keeps occurred_at_utc on event_record and the retained
+        # Storage fields on CV-253's storage_utc_z. Each is required on an envelope.
+        if not timestamp_accepted(value.get("occurred_at_utc"), EVENT_RECORD):
+            return False
+        if any(not timestamp_accepted(value.get(field), STORAGE_UTC_Z) for field in ("observed_at_utc", "persisted_at_utc")):
+            return False
+    return True
+
+
+def _retained_binding(digest: str) -> OriginalBinding:
+    return OriginalBinding(
         storage_instance_id="coordination-retained",
         scope_kind="project",
         server_id="coordination-retained",
         project_id="coordination-retained",
         event_type="coordination.agent_registered",
-        event_id="evt_coordination_" + stored_digest,
+        event_id="evt_coordination_" + digest,
         idempotency_key="coordination:retained",
         owner_operation_id="AgentCoordinator",
-        source_commitment=stored_digest,
+        source_commitment=digest,
     )
-    body = b"coordination-retained-original"
-    custody = OriginalCustody(binding, recipe, body, body, body)
+
+
+def _retained_dispatcher(recipe: RecipeTuple, custody: OriginalCustody) -> RetainedDispatcher:
+    def verify(item: OriginalCustody) -> bool:
+        if item.recipe is not recipe:
+            return False
+        if SEALED_TIMESTAMP_PROFILE != COORDINATION_UTC_Z:
+            return False
+        return timestamps_match_sealed_profile(item.record_bytes)
 
     class _Owner:
         def authenticated_original(self, original_ref: str) -> OriginalCustody:
@@ -197,9 +257,55 @@ def retained_retry_matches(recipe_id: str | None, stored_digest: str, presented_
                 raise Refusal("original_query")
             return custody
 
-    dispatcher = RetainedDispatcher(_Owner(), {recipe: FrozenRecipe(lambda item: item.recipe is recipe)})
+    return RetainedDispatcher(_Owner(), {recipe: FrozenRecipe(verify)})
+
+
+def retained_record_verifies(record_bytes: bytes) -> bool:
+    """SP-1101: one frozen recipe verifies timestamp fields with coordination_utc_z."""
+    if type(record_bytes) is not bytes:
+        return False
+    recipe = recipe_tuple(resource_sha256(RECIPE_ID.encode("ascii")))
+    digest = hashlib.sha256(record_bytes).hexdigest()
+    binding = _retained_binding(digest)
+    custody = OriginalCustody(binding, recipe, record_bytes, record_bytes, record_bytes)
     try:
-        dispatcher.resolve("coordination-retained", binding, disclose=lambda _binding: True)
+        _retained_dispatcher(recipe, custody).resolve(
+            "coordination-retained", binding, disclose=lambda _binding: True)
+    except Refusal:
+        return False
+    return True
+
+
+def retained_override_refused() -> bool:
+    """A caller profile or recipe override is not a selector."""
+    recipe = recipe_tuple(resource_sha256(RECIPE_ID.encode("ascii")))
+    body = b"{}"
+    binding = _retained_binding("a" * 64)
+    custody = OriginalCustody(binding, recipe, body, body, body)
+    try:
+        _retained_dispatcher(recipe, custody).resolve(
+            "coordination-retained", binding, disclose=lambda _binding: True,
+            recipe_override=SEALED_TIMESTAMP_PROFILE)
+    except Refusal as refusal:
+        return refusal.reason == "caller_recipe_override"
+    return False
+
+
+def retained_retry_matches(recipe_id: str | None, stored_digest: str, presented_digest: str) -> bool:
+    """SP-1101 lookup: only the frozen SP-320 recipe can replay an exact original digest."""
+    if recipe_id != RECIPE_ID or type(stored_digest) is not str or stored_digest != presented_digest:
+        return False
+    if len(stored_digest) != 64:
+        return False
+    recipe = recipe_tuple(resource_sha256(RECIPE_ID.encode("ascii")))
+    binding = _retained_binding(stored_digest)
+    # No timestamp fields: the digest match is the retry. The same verifier
+    # refuses a record whose timestamp fields miss the sealed profile.
+    body = b"{}"
+    custody = OriginalCustody(binding, recipe, body, body, body)
+    try:
+        _retained_dispatcher(recipe, custody).resolve(
+            "coordination-retained", binding, disclose=lambda _binding: True)
     except Refusal:
         return False
     return True
