@@ -14,7 +14,7 @@
   "doc_count": 96,
   "docs_still_source_preserving_count": 0,
   "expected_doc_count": 96,
-  "generated_at_utc": "2026-11-09T18:31:12Z",
+  "generated_at_utc": "2026-11-12T02:13:16Z",
   "governance_seal_required": true,
   "historical_artifacts_modified": false,
   "implementation_files_created": false,
@@ -35,7 +35,7 @@
   "pre_conversion_preserved_in_place_rows": 0,
   "production_build_tasks_created": false,
   "residual_source_preserving_plan_units": [],
-  "run_id": "pds-20261109-002-current-planunit-snapshot",
+  "run_id": "pds-20261112-001-current-planunit-snapshot",
   "schema_id": "pm.plan_migration.current_snapshot_final_summary.v1",
   "shard_check_status": "not_asserted_by_snapshot",
   "snapshot_mode": "current_planunit_state_snapshot",
@@ -47,7 +47,7 @@
   "status": "COMPLETE",
   "supersedes_run_ids": [
     "pds-20260611-002-atomize-planunits",
-    "pds-20261109-001-current-planunit-snapshot"
+    "pds-20261109-003-current-planunit-snapshot"
   ],
   "unique_live_plan_unit_count": 7526,
   "vague_pre_conversion_rows": 0

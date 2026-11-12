@@ -1,0 +1,65 @@
+{
+  "audit_id": "audit-20260616-004-goal-runtime-system",
+  "closures": [
+    {
+      "appended_matrix_line": 1,
+      "appended_matrix_sha256": "918f0390f1897814dcd7703df14a95c4d1339be743f99496f51022c14a0bad31",
+      "appended_registry_line": 1123,
+      "appended_registry_sha256": "bc6f9f74bfaafebb5a8f5b36e3ca703d5e404fa8160ba2812301bb2b535b76e8",
+      "closes": {
+        "source_artifact": "semantic_risks.jsonl",
+        "source_row": 3
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/00-plans-index.md#section=Native Goal Runtime Map (2026-06-16)": "71b3e926e0dc67672289947ead0fd5eafff05294abb3cd4cde14b09984bbf8e8",
+        "Plans/Contracts_V0.md#unit=CV-286": "7247c74966817143f898f38369551d0d0bdec25396db0d86bb551f3bc92aeb8d",
+        "Plans/Contracts_V0.md#unit=CV-287": "a9f1166158257f476b5ff4de31e45b79225337e58e5cd04677e3bcf26e52039e",
+        "Plans/Goal_Runtime_System.md#section=Goal and GoalRun payload minima": "ff962cb3bbdd39101a780f868f0075d79f4f2d5caaaa8242f0d8565656754717",
+        "Plans/Permissions_System.md#unit=PS-114": "792d26daaedabeddfec2a8a5ee32a1b980a9596ef64b7d4186c7a0381b217fa1",
+        "Plans/storage-plan.md#unit=SP-214": "d25c5e3c20979fa541ec62489aa88873058443aa52b8cfbf7bc014d1d48354f2"
+      },
+      "finding_key": "sfk-a72185b65b5d9a776ccf69a0",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "fb441b27fd75440e14115fb382b15a5258ad7ea3",
+      "ref_source": "audit_report_recorded_range",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260616-004-goal-runtime-system-semantic-risks-jsonl-3",
+      "reviews": {
+        "astra": {
+          "batch": "S02",
+          "file": "supplemental/batches/S02/review-astra-r1.jsonl",
+          "packet_row_digest": "d58207e0c670bc78a01657ff774509619142266705ffb934cf4584d0ae74fa9a",
+          "reason": "CV-286/CV-287, SP-214 and PS-114 now explicitly own the shared Goal envelope/event registry, storage and permission boundaries. The index and Goal payload-minima section route to these owners, repairing the missing owner-PlanUnit registration identified by the audit.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "S02",
+          "file": "supplemental/batches/S02/review-sol-r1.jsonl",
+          "packet_row_digest": "d58207e0c670bc78a01657ff774509619142266705ffb934cf4584d0ae74fa9a",
+          "reason": "The formerly missing adjacent-owner PlanUnits now exist: CV-286/287 register the envelope and event contract, SP-214 owns persistence/replay/projection, and PS-114 owns consumed approval rules. The Goal payload section and index explicitly route these responsibilities to those owners.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    }
+  ],
+  "decision": {
+    "decision_record": "Plans/Decision_Log.md#DL-334",
+    "owner_unit": "Plans/Planning_Ledger_System.md#PLS-026",
+    "route": "new_registry_row",
+    "source": "Jared, \"approve all\", T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521, 2026-11-05T02:48:03Z (stream C question 7, option (a)); extended to the other June audits with uncovered rows by pm7-build's relay of the same approved option (pm-mail 1105030457-ade2, 2026-11-05)"
+  },
+  "matrix": {
+    "original_rows": 0,
+    "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "path": "repair_closure_matrix.jsonl"
+  },
+  "pass_id": "audit-20260616-004-goal-runtime-system-supplemental-20261111",
+  "reviews": "Sol and Astra blind reviews are listed on each closures entry (verdict, your_verdict, your_status, packet_row_digest, batch file)",
+  "schema_id": "pm.audit_supplemental_closure_pass.v1"
+}

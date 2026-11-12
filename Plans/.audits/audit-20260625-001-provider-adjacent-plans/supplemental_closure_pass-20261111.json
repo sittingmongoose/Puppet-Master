@@ -1,0 +1,61 @@
+{
+  "audit_id": "audit-20260625-001-provider-adjacent-plans",
+  "closures": [
+    {
+      "appended_matrix_line": 1,
+      "appended_matrix_sha256": "941179f94319aeaa70fc65ef4d1fb33ef91eb530b462f39dce63d2118e0f6f73",
+      "appended_registry_line": 1198,
+      "appended_registry_sha256": "fd52f541852b7817dd15dd8d489a1af6fd2336d7dbaf3ab4cb77206b0b480a0a",
+      "closes": {
+        "source_artifact": "validator_results.json",
+        "source_row": "results.unnamed"
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/.audits/audit-20260625-001-provider-adjacent-plans/FINAL_REPORT.md": "aed373518851b5a39ff5039567544eca7b5994a14431b9b2bd1938390b17a8b9",
+        "Plans/.audits/audit-20260625-001-provider-adjacent-plans/validator_results.json": "404b66ae9a0116e83a2630fa18fe339e58fc0c7c191134524adc7fb405ca7a48"
+      },
+      "finding_key": "sfk-c3afa604993f4aaee6ccb3df",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "77bae0c63605d0a6f643aa3f1d8c51c2f3bb7947",
+      "ref_source": "record.observation_commit",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260625-001-provider-adjacent-plans-validator-results-json-results-unnamed",
+      "reviews": {
+        "astra": {
+          "batch": "SF1",
+          "file": "supplemental/batches/SF1/review-astra-max-r1.jsonl",
+          "packet_row_digest": "ef3552d329bd3d2a6169493208794062bbbf3d2bf2fb8fc8becc6bf1d9597d57",
+          "reason": "The source row is a passing shard check, not the separately recorded run-gates failure or any F-00x semantic finding. Both immutable validator_results.json and FINAL_REPORT.md record the same 56-document/1008-shard pass, supporting false_positive without consulting effective_status.json.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "false_positive",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "SF1",
+          "file": "supplemental/batches/SF1/review-sol-max-r1.jsonl",
+          "packet_row_digest": "ef3552d329bd3d2a6169493208794062bbbf3d2bf2fb8fc8becc6bf1d9597d57",
+          "reason": "The original validator artifact and FINAL_REPORT both identify this exact shard check as a pass with 56 documents and 1008 shards. That result reports no defect; the separate run-gates failure and F-00x provider findings do not turn this passing row into one.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "false_positive",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    }
+  ],
+  "decision": {
+    "decision_record": "Plans/Decision_Log.md#DL-334",
+    "owner_unit": "Plans/Planning_Ledger_System.md#PLS-026",
+    "route": "new_registry_row",
+    "source": "Jared, \"approve all\", T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521, 2026-11-05T02:48:03Z (stream C question 7, option (a)); extended to the other June audits with uncovered rows by pm7-build's relay of the same approved option (pm-mail 1105030457-ade2, 2026-11-05)"
+  },
+  "matrix": {
+    "original_rows": 0,
+    "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "path": "repair_closure_matrix.jsonl"
+  },
+  "pass_id": "audit-20260625-001-provider-adjacent-plans-supplemental-20261111",
+  "reviews": "Sol and Astra blind reviews are listed on each closures entry (verdict, your_verdict, your_status, packet_row_digest, batch file)",
+  "schema_id": "pm.audit_supplemental_closure_pass.v1"
+}

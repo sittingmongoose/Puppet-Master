@@ -1,0 +1,108 @@
+{
+  "audit_id": "audit-20260616-003-goal-runtime-system",
+  "closures": [
+    {
+      "appended_matrix_line": 1,
+      "appended_matrix_sha256": "b602593d2d15082626c9e35e9b29aa55338d5b46d88080f70b2b120c51c86434",
+      "appended_registry_line": 1121,
+      "appended_registry_sha256": "a2d5fede55bea3aec68f455b30ece20ae8fa74bead013b0d38dc8ae541bc75ef",
+      "closes": {
+        "source_artifact": "semantic_risks.jsonl",
+        "source_row": 1
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/00-plans-index.md#section=Native Goal Runtime Map (2026-06-16)": "71b3e926e0dc67672289947ead0fd5eafff05294abb3cd4cde14b09984bbf8e8",
+        "Plans/Goal_Runtime_System.md#section=8. Source Lineage And Governance": "4da3d1212258ee67988f157f08ebd749e62907161ec75f9281e853e6d11bc9b6",
+        "Plans/Goal_Runtime_System.md#unit=GRS-021": "10e72dcafbdeda53c4bb87d8bc4768e8ba7934ac6cd9eb6b6a52eddd0817d47c",
+        "Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system/state/current.json#json=/governance_status": "6248de8c916da2d0fe49f63c83197b5673acaf91acac3855966ff8b19d6dab03"
+      },
+      "finding_key": "sfk-6c0bef8cec8971f929b4c05c",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "fb441b27fd75440e14115fb382b15a5258ad7ea3",
+      "ref_source": "audit_report_recorded_range",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260616-003-goal-runtime-system-semantic-risks-jsonl-1",
+      "reviews": {
+        "astra": {
+          "batch": "S02",
+          "file": "supplemental/batches/S02/review-astra-r1.jsonl",
+          "packet_row_digest": "af51e05973e0088b0195a45047ac8a451a82df188a1b8b5de3b10c4b12723ce0",
+          "reason": "The owner now explicitly says this ledger was sealed, while GRS-021 and the index describe pending_seal as the boundary for future pre-seal work. The ledger's sealed state therefore no longer contradicts those compile-phase instructions.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "S02",
+          "file": "supplemental/batches/S02/review-sol-r1.jsonl",
+          "packet_row_digest": "af51e05973e0088b0195a45047ac8a451a82df188a1b8b5de3b10c4b12723ce0",
+          "reason": "The source-lineage section explicitly records that this ledger has since been sealed, while GRS-021 and the index describe pending_seal as the rule for a pre-seal phase. That distinction agrees with the ledger governance_status of sealed.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    },
+    {
+      "appended_matrix_line": 2,
+      "appended_matrix_sha256": "8c7a583b4554579c80f84cca955a1b213784e0f9fa988045ac39964df7731f54",
+      "appended_registry_line": 1122,
+      "appended_registry_sha256": "c95bc8c6225f11c6647215b29bc6755065334928e0be48dbfa66d2c7ee5ff4c0",
+      "closes": {
+        "source_artifact": "semantic_risks.jsonl",
+        "source_row": 2
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/Automated_Testing_System.md#unit=ATS-001": "68f5ef14cf5d710f8e928317dbc0f69f8d8c6d96d4a2be4a6fd9db12d714bd6a",
+        "Plans/evidence_artifact_binding_modes.json#json=/entries/2": "b790c0c6bb76bbc958bf2f4afa9d578c1b67659acb066151b56831dcdd091023",
+        "Plans/plan_graph.json#json=/nodes/2/node_id": "c880e84c61c426232e36c225cff304f188615513232d6b37282c1afdc54256e8",
+        "scripts/pm-plans-verify.py#pydef=cmd_validate_evidence": "d5f4605fecb8ab432c123d23cac47149ac6667e524f816d4001952eb2e61296c",
+        "scripts/pm-plans-verify.py#pydef=validate_evidence_file": "3c83931342ca81f08a5ad409bb836a04580511ed66a0cfbf3d5db2480f06eff1"
+      },
+      "finding_key": "sfk-eb621a43e00c13c58805d7fb",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "fb441b27fd75440e14115fb382b15a5258ad7ea3",
+      "ref_source": "audit_report_recorded_range",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260616-003-goal-runtime-system-semantic-risks-jsonl-2",
+      "reviews": {
+        "astra": {
+          "batch": "S02",
+          "file": "supplemental/batches/S02/review-astra-r1.jsonl",
+          "packet_row_digest": "ad89d8224565d6ec41399055f2b8223a90ae91fad2cae4ad905e98c3ef94e8c6",
+          "reason": "The hash-pinned Goal Runtime evidence bundle uses pm.build-governance.final-seal, and that exact node exists in plan_graph. The validator also checks both manifest-pinned node identity and graph membership, so the reported orphan is repaired.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "S02",
+          "file": "supplemental/batches/S02/review-sol-r1.jsonl",
+          "packet_row_digest": "ad89d8224565d6ec41399055f2b8223a90ae91fad2cae4ad905e98c3ef94e8c6",
+          "reason": "The binding manifest pins the Goal Runtime bundle to the existing final-seal node; the actual bundle has that node and matches its pinned bundle hash. The validator checks both the pinned node identity and membership in plan_graph, so the reported orphan is repaired.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    }
+  ],
+  "decision": {
+    "decision_record": "Plans/Decision_Log.md#DL-334",
+    "owner_unit": "Plans/Planning_Ledger_System.md#PLS-026",
+    "route": "new_registry_row",
+    "source": "Jared, \"approve all\", T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521, 2026-11-05T02:48:03Z (stream C question 7, option (a)); extended to the other June audits with uncovered rows by pm7-build's relay of the same approved option (pm-mail 1105030457-ade2, 2026-11-05)"
+  },
+  "matrix": {
+    "original_rows": 0,
+    "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "path": "repair_closure_matrix.jsonl"
+  },
+  "pass_id": "audit-20260616-003-goal-runtime-system-supplemental-20261111",
+  "reviews": "Sol and Astra blind reviews are listed on each closures entry (verdict, your_verdict, your_status, packet_row_digest, batch file)",
+  "schema_id": "pm.audit_supplemental_closure_pass.v1"
+}
