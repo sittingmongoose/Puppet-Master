@@ -6231,7 +6231,7 @@ canonical_text: Memory Add/Edit/Delete commands are cmd.chat.memory.add, cmd.cha
   and the chat sheet produces them. Legacy Verify/Pin/Discard/toggle_auto_save_unverified/preview_capsule
   IDs remain support/compatibility only, with no ordinary GUI, search or prompt-preview producer; they
   cannot restore retired features or verification bypasses. Native handlers remain unavailable until evidence
-  closes wiring. DL-407 and AMS-130/CV-785/SP-765 replace the seven command history spellings with memory.gist_state_changed once per successful real mutation; requested or failed verification and no-ops retain only their command results.
+  closes wiring. DL-407 and AMS-130/CV-785/SP-765 replace the seven command history spellings with memory.gist_state_changed once per successful real mutation; requested or failed verification and no-ops retain only their command results. Under DL-408, the auto-save-unverified switch records only settings.layer.changed; settings.updated is retired as superseded.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
 split_recommended: false
@@ -6267,6 +6267,7 @@ preserved_exact_tokens:
 - cmd.chat.memory.toggle_auto_save_unverified
 - cmd.chat.memory.preview_capsule
 - settings.updated
+- settings.layer.changed
 - Assistant chat Gist Review panel
 - cmd.chat.memory.add
 - cmd.chat.memory.delete
@@ -6274,7 +6275,8 @@ negative_constraints: []
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/assistant-memory-subsystem.md#5-verification-and-triggers, ContractName:Plans/assistant-memory-subsystem.md#7-gui-and-maintenance, ContractName:Plans/Contracts_V0.md#7-uicommand'
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- settings.updated is retired as superseded by settings.layer.changed under DL-408.
 owner_hints:
 - Plans/UI_Command_Catalog.md
 ```
@@ -7904,15 +7906,14 @@ plan_unit_id: UCC-104
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: 'Under DL-041, the DRY Method toggle''s eventual mutation path reuses cmd.settings.transaction.preview
+canonical_text: 'Under DL-408 (replacing DL-041 naming), the DRY Method toggle''s eventual mutation path reuses cmd.settings.transaction.preview
   and cmd.settings.transaction.apply from SSYS-018 and the Settings atomic mutation envelope. Until an owner-proven
   mapping from the exact guard key to a valid ordinary setting_id and its writer exists, the toggle is disabled
   with the existing owner_contract_missing reason and dispatches no mutation command or setting write. Preserve
   the exact guard identity app.agent_rules.dry_method_default_guard and values enabled | disabled_by_user.
-  The approved future event identity for this change is settings.updated, carrying that exact setting key and
+  The sole Settings change event identity for this change is settings.layer.changed, carrying that exact setting key and
   the existing transaction_id from pm.settings_transaction_result.v1, joined to request_id, project_id, changed_setting_ids,
-  revisions and receipt_ref under the current owner contract. Event Authority must independently admit a closed
-  payload and producer/consumer binding before emission; this naming choice does not register a family. The
+  revisions and receipt_ref under the current owner contract. The existing SSYS-060/DL-300 family and its owner-adoption prerequisites govern emission; DL-408 retires settings.updated as superseded and grants no missing writer authority. The
   historical settings.agent_rules.dry_method_default_guard.updated spelling is read-only source/history lineage,
   not an automatic alias or permission to rewrite old payloads. cmd.settings.agent_rules.dry_method_default_guard.set
   is retired source lineage, with no primary handler, production row or dispatch alias. Visible Settings >
@@ -7943,8 +7944,8 @@ acceptance_criteria:
   and dispatches zero mutation commands and writes zero setting values. After that prerequisite, the existing
   preview/apply sequence and enabled | disabled_by_user values apply; no per-setting command or handler is
   reintroduced.
-- Future settings.updated records preserve app.agent_rules.dry_method_default_guard and the existing committed
-  transaction identity after independent Event Authority admission; historical dedicated spellings remain read-only
+- Under DL-408, settings.layer.changed records preserve app.agent_rules.dry_method_default_guard and the existing committed
+  transaction identity under the existing family and owner-adoption prerequisites; historical dedicated spellings remain read-only
   without an assumed payload alias.
 - The visible command copy explains that disabling DRY only disables the default reuse-first guard.
 - Command handling preserves DRY receipt provenance and does not weaken non-DRY authority boundaries.
@@ -8648,12 +8649,14 @@ The Persona rows below preserve historical Project-only command sketches, not th
 
 The selected Persona result vocabulary is `requested_persona` / `effective_persona` (Personas section 10), never parallel `_id` runtime fields. The select result’s existing authenticated owner_result_ref carries original frozen resolution evidence (CV-691 persona_selected_resolution); historical `_id` spellings are read-only migration/source-lineage aliases and cannot authorize a current write or fresh Settings resolution. CV-691/P-124 supplies the exact event binding.
 
+**DL-408:** All four theme mutations below record only `settings.layer.changed`; `settings.theme.updated` is retired as superseded. Existing Settings transactions and owner-adoption prerequisites apply.
+
 | Command ID | Payload fields | Result fields | Error/disabled fields | Receipt or event effect |
 |---|---|---|---|---|
-| `cmd.theme.set_mode` | `project_id?`, `scope`, `mode` (`light`, `dark`, or `auto`), `expected_theme_revision`, `idempotency_key` | `theme_revision`, `effective_mode`, `effective_variant` (resolved theme; in `auto` it tracks OS `prefers-color-scheme` live), `contrast_profile` | `stale_projection`, `permission_denied`, `invalid_args` | `settings.theme.updated` |
-| `cmd.theme.set_accent` | `project_id?`, `scope`, `accent_token`, `expected_theme_revision`, `idempotency_key` | `theme_revision`, `effective_accent_token` | `invalid_args`, `stale_projection` | `settings.theme.updated` |
-| `cmd.theme.set_density` | `project_id?`, `scope`, `density`, `expected_theme_revision`, `idempotency_key` | `theme_revision`, `effective_density` | `invalid_args`, `stale_projection` | `settings.theme.updated` |
-| `cmd.theme.reset` | `project_id?`, `scope`, `expected_theme_revision`, `idempotency_key` | `theme_revision`, `reset_scope` | `stale_projection`, `permission_denied` | `settings.theme.updated` |
+| `cmd.theme.set_mode` | `project_id?`, `scope`, `mode` (`light`, `dark`, or `auto`), `expected_theme_revision`, `idempotency_key` | `theme_revision`, `effective_mode`, `effective_variant` (resolved theme; in `auto` it tracks OS `prefers-color-scheme` live), `contrast_profile` | `stale_projection`, `permission_denied`, `invalid_args` | `settings.layer.changed` (DL-408) |
+| `cmd.theme.set_accent` | `project_id?`, `scope`, `accent_token`, `expected_theme_revision`, `idempotency_key` | `theme_revision`, `effective_accent_token` | `invalid_args`, `stale_projection` | `settings.layer.changed` (DL-408) |
+| `cmd.theme.set_density` | `project_id?`, `scope`, `density`, `expected_theme_revision`, `idempotency_key` | `theme_revision`, `effective_density` | `invalid_args`, `stale_projection` | `settings.layer.changed` (DL-408) |
+| `cmd.theme.reset` | `project_id?`, `scope`, `expected_theme_revision`, `idempotency_key` | `theme_revision`, `reset_scope` | `stale_projection`, `permission_denied` | `settings.layer.changed` (DL-408) |
 | `cmd.persona.create` | `project_id`, `persona_spec`, `source_refs[]`, `idempotency_key` | `persona_id`, `persona_revision` | `invalid_args`, `permission_denied`, `stale_projection` | `persona.created` |
 | `cmd.persona.update` | `project_id`, `persona_id`, `persona_patch`, `expected_persona_revision`, `idempotency_key` | `persona_id`, `persona_revision` | `stale_projection`, `invalid_args`, `permission_denied` | `persona.updated` |
 | `cmd.persona.delete` | `project_id`, `persona_id`, `expected_persona_revision`, `confirmation_token`, `idempotency_key` | `persona_id`, `terminal_state` | `blocked_state_required`, `permission_denied`, `stale_projection` | `persona.deleted` |
@@ -8735,7 +8738,7 @@ plan_unit_id: UCC-108
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: 'The FABLE GUI command repair registers missing theme, persona, alert, concern, model, chat
+canonical_text: 'DL-408 retires settings.theme.updated as superseded by settings.layer.changed, the sole Settings change event including theme changes; existing owner-adoption requirements remain. The FABLE GUI command repair registers missing theme, persona, alert, concern, model, chat
   send/stop, panel undock/redock, Orchestrator pause/resume, Dashboard widget, Free Models onboarding, launch-chain,
   runtime recovery, and FileManager command contracts with field-level payload, result, error, and receipt/event
   requirements. Existing FileManager CRUD, launch-chain, and runtime allowed-action rows remain canonical and
@@ -8745,7 +8748,7 @@ canonical_text: 'The FABLE GUI command repair registers missing theme, persona, 
   NieR (Q22), the Guided Tour bar''s Look menu and the NieR Mode editor compose cmd.settings.transaction.preview
   then cmd.settings.transaction.apply as UCC-120''s local affordances do; no theme family or NieR command is
   added. The application''s start and onboarding''s look previews (ui.onboarding.start, ui.onboarding.choose_look)
-  dispatch no cmd.theme.* and emit no settings.theme.updated: the pre-paint reads the one resolved Everywhere/Device/actual-Project
+  dispatch no cmd.theme.* and emit no settings.layer.changed: the pre-paint reads the one resolved Everywhere/Device/actual-Project
   theme pair; No project omits Project and never flashes a forced Basic Dark, while owner-declared factory/pre-claim
   fallback and nonpersistent onboarding preview remain (F3-468, DL-153). Amended 2026-10-09 (DL-180): from
   the home layout cmd.panel.undock and cmd.panel.redock are dispatched only with chat, into a window (UCC-203);
@@ -8782,7 +8785,7 @@ acceptance_criteria:
 - No command in this addendum uses or authorizes fabricated `*.command_applied` events.
 - No PM7 look control dispatches a cmd.theme.* command (amended 2026-10-17, DL-228, from only the title bar's
   Light/Dark/Auto control); Light/Dark/Auto, family, NieR Mode and NieR editor changes use the Settings transaction
-  pair, and the application's start and onboarding's look previews dispatch no cmd.theme.* and emit no settings.theme.updated
+  pair, and the application's start and onboarding's look previews dispatch no cmd.theme.* and emit no settings.layer.changed
   (F3-468, DL-153).
 - Validate application versus actual Project-target cases, original exact Project replay, stale scope/preview/permission/Stop/return
   refusal and the exact command/local/tool binding from UCC-214; no native/event/governance proof follows from
