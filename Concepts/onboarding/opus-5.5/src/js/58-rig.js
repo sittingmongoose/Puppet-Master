@@ -494,7 +494,10 @@
       /* the whole prop stays inside the pane it is painted in, as it swings too: a sign with a long name hung at pairB
          crossed the pane's right edge at the divider and lost its end (SOL-AST1-01); it moves in, or is drawn smaller
          only when even that is not room enough. Its strings move with it. */
-      const fit = this.fit(pr, hang, sc, tieMid); hang[0] += fit.dx; hang[1] += fit.dy; sc *= fit.f; pr.dx = fit.dx; pr.box = fit.box; pr.placedN = this.renderN;
+      const fit = this.fit(pr, hang, sc, tieMid); hang[0] += fit.dx; hang[1] += fit.dy; sc *= fit.f; pr.dx = fit.dx;
+      /* (how far its painted box moved since the last draw: placeBubble keeps off a settled prop's box only while it stays) */
+      if (pr.boxN !== this.renderN) { pr.boxMove = pr.box && fit.box ? Math.max(...fit.box.map((v, i) => Math.abs(v - pr.box[i]))) : Infinity; pr.boxN = this.renderN; }
+      pr.box = fit.box; pr.placedN = this.renderN;
       const cv = rot([-tieMid[0] * sc, -tieMid[1] * sc], pr.a);
       pr.pos = [hang[0] + cv[0], hang[1] + cv[1]];
       const sq = this.reduced ? 0 : clamp(pr.sq || 0, -.12, .12), squash = Math.abs(sq) > .002 ? ` translate(0 ${R(pr.foot)}) scale(${R(1 + sq * .6)} ${R(1 - sq)}) translate(0 ${R(-pr.foot)})` : '';
@@ -1788,9 +1791,12 @@
            settled prop sent to a new slot keeps its flag as it travels, and its moving box
            swept through the bubble's place, which jumped twice within a line (Basic Dark
            r-source, the restore moving as a hover brings the folder in: 97-172 px, QA-4).
-           At rest is step()'s own arrival test. */
-        const tgp = this.propTarget(pr), resting = Math.abs(pr.len - tgp.len) < 2.5 && Math.abs(pr.ax - tgp.ax) < 2.5
-          && (pr.aimDx == null || pr.spec.stack != null || (Math.abs(pr.aimDx - pose.dx) < 2.5 && Math.abs(pr.aimDy - pose.dy) < 2.5));
+           It is left out only while that box is moving (over a unit since the last draw), which is
+           what the restore does as it eases to its new place. Not a test of its springs against
+           this destination: that offset follows the speech band, and Begin's page, standing still,
+           read 30 units off it, so its box was dropped and the next line was placed differently
+           (stage-keepoff Begins as, 1-3 runs in 8-9). */
+        const resting = !(pr.boxMove > 1);
         if (pr.settled && resting && pr.op > .5 && pr.box) {
           const a = this.toScreen([pr.box[0], pr.box[1]]), c = this.toScreen([pr.box[2], pr.box[3]]);
           obs.push(projected([a[0] - gap, a[1] - gap, c[0] + gap, c[1] + gap]));
