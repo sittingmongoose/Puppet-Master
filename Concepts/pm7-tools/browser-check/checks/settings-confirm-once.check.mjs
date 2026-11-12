@@ -1,13 +1,12 @@
 // FO-154: a Settings confirm used to say its message twice — once as the dialog subtitle and again in the alert
 // box drawn in the body ("Delete all memories?" was the reported case). confirmDialog now puts the message in one
 // place: a warning-tone confirm (danger) keeps it in the alert box and leaves the subtitle empty; every other
-// confirm keeps it in the subtitle and has no body at all. This check opens Settings confirms by real clicks
-// (a press Playwright cannot land falls back to the page's own click, so a covered control is still visited; a
-// "More …" menu row is pressed by that click on the row itself, because a pointer press has to scroll to reach a
-// row and a scroll closes the menu it is in, FO-147; each chapter, each workspace, and each of the workspace's
-// manager tabs: its danger and confirm-labelled
-// buttons, and the danger/confirm rows of its "More …" menus), and asserts the dialog's message text appears
-// exactly once, in the place the tone owns, fully readable (its own box not clipped, inside the dialog), and that
+// confirm keeps it in the subtitle and has no body at all. This check opens Settings confirms by real clicks:
+// every chapter, every workspace, and every manager tab of a workspace, taking its danger and confirm-labelled
+// buttons and the danger/confirm rows of its "More …" menus (a press Playwright cannot land falls back to the
+// page's own click, and a menu row is pressed by that click on the row itself, because a pointer press has to
+// scroll to reach a row and a scroll closes the menu it is in — FO-147). It asserts the dialog's message text
+// appears exactly once, in the place the tone owns, fully readable (its own box not clipped, inside the dialog), and that
 // a body holding no content is absent, display:none or no taller than its own hairline — round 1 left a 34 px
 // blank band of body padding in every plain confirm. It needs at least one of each tone, must reach the item's
 // own example, "Delete all memories?", and must leave no confirm it set out to visit (skipped === 0). Nothing here
