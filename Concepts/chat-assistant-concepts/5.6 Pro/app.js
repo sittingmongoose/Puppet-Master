@@ -2363,13 +2363,19 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     return w;
   }
   let composerMeasureCache=null;
-  // FO-156: hosted paint can update the host's theme before its onTheme hook runs.
-  // Width need not change when a look or motion mode changes: discard the intrinsic
-  // labeled width and use the same chrome sync as a resize after the new paint lands.
-  new MutationObserver(()=>{
+  // FO-156: a look can measure its fallback font before the final face loads.
+  // Neither a look/motion change nor font completion must resize the fixed-width
+  // tools row, so both invalidate the intrinsic width and use the resize sync.
+  function invalidateComposerMeasure(){
     composerMeasureCache=null;
     if(chromeSyncFrame===null) chromeSyncFrame=requestAnimationFrame(runChromeSync);
-  }).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme','data-motion','data-o55-nier']});
+  }
+  new MutationObserver(invalidateComposerMeasure).observe(document.documentElement,
+    {attributes:true,attributeFilter:['data-theme','data-motion','data-o55-nier']});
+  if(document.fonts){
+    document.fonts.addEventListener('loadingdone',invalidateComposerMeasure);
+    document.fonts.addEventListener('loadingerror',invalidateComposerMeasure);
+  }
   function syncComposerCompact(){
     if(measuringCompact) return;
     // FO-143: only this chat's own composer (#pmRoot), never another surface's .composer-box on the same page
