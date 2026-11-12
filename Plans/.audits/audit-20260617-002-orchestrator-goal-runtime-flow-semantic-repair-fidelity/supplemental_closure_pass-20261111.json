@@ -1,0 +1,410 @@
+{
+  "audit_id": "audit-20260617-002-orchestrator-goal-runtime-flow-semantic-repair-fidelity",
+  "closures": [
+    {
+      "appended_matrix_line": 1,
+      "appended_matrix_sha256": "c600d2dc5e290e41b3a44583c650f526fd1335948659e6696053b917e3d1b4fc",
+      "appended_registry_line": 1157,
+      "appended_registry_sha256": "007b767a282f8fbe49c6afc98f9b5c13f24649c46593da52acca21778381d90a",
+      "closes": {
+        "source_artifact": "semantic_risks.jsonl",
+        "source_row": 18
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/FinalGUISpec.md#unit=F3-395": "e1576655a77f807255490f936c07e1d0f1bf5bdd4db06320346e8cc758757681",
+        "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/records/design_atoms.jsonl#jsonl=atom_id=atom-0098": "be3297b6d0caf6b40d78afc9cbafbc73d55fced6a012c9408106496279c10105"
+      },
+      "finding_key": "sfk-b6b63d5997a79837dea8ac19",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "fb441b27fd75440e14115fb382b15a5258ad7ea3",
+      "ref_source": "audit_report.current_ref",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260617-002-orchestrator-goal-runtime-flow-semantic-repair-fidelity-semantic-risks-jsonl-18",
+      "reviews": {
+        "astra": {
+          "batch": "S06",
+          "file": "supplemental/batches/S06/review-astra-r1.jsonl",
+          "packet_row_digest": "c92196410dc925f8e8da066da5bd4cb55b8969238258269bee5cabb6fd581108",
+          "reason": "F3-395 now uses gui_impact_matrix in canonical prose, names all eight exact tokens specified by atom-0098 across prose and acceptance criteria, and cites that atom. These are substantive surface-placement requirements rather than tokens present only in metadata.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "S06",
+          "file": "supplemental/batches/S06/review-sol-r1.jsonl",
+          "packet_row_digest": "c92196410dc925f8e8da066da5bd4cb55b8969238258269bee5cabb6fd581108",
+          "reason": "F3-395 restores gui_impact_matrix in canonical prose and the flagged GUI surface names in prose or acceptance criteria. The matrix specifies owner-record projections, and Evidence/Audit coverage is substantive rather than a preserved-token-only entry.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    },
+    {
+      "appended_matrix_line": 2,
+      "appended_matrix_sha256": "acad1fcd7acac78414416fc09b0659dfb0357c26c920872e91ff530f1f4d36ba",
+      "appended_registry_line": 1158,
+      "appended_registry_sha256": "99386fa2330789c8d85d446bbe01381559924f9045be735e777bd04d5ad4cc24",
+      "closes": {
+        "plan_unit_id": "SP-215",
+        "source_artifact": "semantic_risks.jsonl",
+        "source_row": 23
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/records/design_atoms.jsonl#jsonlset=compiled_output_plan_unit_ids=SP-215": "ff6bf2bd8a2a85d8b05c20dc82f0002dd1c5c64ef489365f5d245e5af4f75310",
+        "Plans/storage-plan.md#unit=SP-215": "18e35ab12e9294f9235657b66050f3da43b429f20d927553d83be6da49943d73"
+      },
+      "finding_key": "sfk-c575a495f7028c25d14c42f7",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "fb441b27fd75440e14115fb382b15a5258ad7ea3",
+      "ref_source": "audit_report.current_ref",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260617-002-orchestrator-goal-runtime-flow-semantic-repair-fidelity-semantic-risks-jsonl-23",
+      "reviews": {
+        "astra": {
+          "batch": "S06",
+          "file": "supplemental/batches/S06/review-astra-r1.jsonl",
+          "packet_row_digest": "5abc0b458f377ca3fc040d72619a1076631d082f5431df77cea4a38c715941c8",
+          "reason": "SP-215 now cites atom-0053 and atom-0094, and both atoms include SP-215 in compiled_output_plan_unit_ids. Typed finding fields are required by acceptance criteria, and status failed | passed | blocked is preserved in canonical prose, acceptance criteria and preserved_exact_tokens.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "S06",
+          "file": "supplemental/batches/S06/review-sol-r1.jsonl",
+          "packet_row_digest": "5abc0b458f377ca3fc040d72619a1076631d082f5431df77cea4a38c715941c8",
+          "reason": "SP-215 now cites atom-0053 and atom-0094, and both source atoms list SP-215 as a compiled output. Its storage acceptance criteria require the typed fields, and the exact status failed | passed | blocked wording appears in canonical text, acceptance criteria and preserved tokens.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    },
+    {
+      "appended_matrix_line": 3,
+      "appended_matrix_sha256": "d01e6eeec0b5739bbcfc32e0ce63a9448efbd158446bb540d9ad25e86d76e8fd",
+      "appended_registry_line": 1159,
+      "appended_registry_sha256": "30c9f9c559e67a0bdba441c1fb3f2e0af22db22dd309f0940809244000e9dfa6",
+      "closes": {
+        "plan_unit_id": "MS-109",
+        "source_artifact": "semantic_risks.jsonl",
+        "source_row": 21
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/Models_System.md#unit=MS-109": "9b9198405fd985350f78916fa4130a336966573b6b99904abf0eab6e22b9bfe4",
+        "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/records/design_atoms.jsonl#jsonl=atom_id=atom-0031": "050c2433b07ab5615da12cc1cd73840a75f569e6d75e9c04aad5daa3cb04f3d8",
+        "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/records/design_atoms.jsonl#jsonl=atom_id=atom-0032": "1b40e78438ad523a546916002a6219330d0e41026b5e55b0cacb444972959af3"
+      },
+      "finding_key": "sfk-a974109232eca8e6bf3dd45e",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "fb441b27fd75440e14115fb382b15a5258ad7ea3",
+      "ref_source": "audit_report.current_ref",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260617-002-orchestrator-goal-runtime-flow-semantic-repair-fidelity-semantic-risks-jsonl-21",
+      "reviews": {
+        "astra": {
+          "batch": "S06",
+          "file": "supplemental/batches/S06/review-astra-r1.jsonl",
+          "packet_row_digest": "31da02388b962ffc2d2a7536de553153f2ae06d341a81b962f51d8f7bb48caf9",
+          "reason": "MS-109 no longer embeds raw atom IDs or claims atom-0031/0032 were moved into EP-098/GRS-026/GRS-027, and the non-standard moved_owner_lineage key is absent. Its product prose now confines Models ownership to capability/role resolution and treats write/certification policies as references to their owners.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "S06",
+          "file": "supplemental/batches/S06/review-sol-r1.jsonl",
+          "packet_row_digest": "31da02388b962ffc2d2a7536de553153f2ae06d341a81b962f51d8f7bb48caf9",
+          "reason": "MS-109 canonical text now states model/provider binding policy without raw ledger atom IDs or the false atom-0031/0032 placement claim, and moved_owner_lineage is absent from the unit. The bounded-subagent policy is substantively carried by OSI-428 rather than asserted as Models-owned placement prose.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    },
+    {
+      "appended_matrix_line": 4,
+      "appended_matrix_sha256": "b02ca4740e952adf95bbdf219bb034e098f33396e2ad045c835dc67c245957aa",
+      "appended_registry_line": 1160,
+      "appended_registry_sha256": "85ff79421fec1511d4946dad5e572e0ef2c733580c3560c258c18c8a377e3981",
+      "closes": {
+        "source_artifact": "semantic_risks.jsonl",
+        "source_row": 29
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/Models_System.md#unit=MS-109": "9b9198405fd985350f78916fa4130a336966573b6b99904abf0eab6e22b9bfe4",
+        "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/records/design_atoms.jsonl#jsonl=atom_id=atom-0031": "050c2433b07ab5615da12cc1cd73840a75f569e6d75e9c04aad5daa3cb04f3d8",
+        "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/records/design_atoms.jsonl#jsonl=atom_id=atom-0032": "1b40e78438ad523a546916002a6219330d0e41026b5e55b0cacb444972959af3"
+      },
+      "finding_key": "sfk-ba753bb643358d1f399ba100",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "fb441b27fd75440e14115fb382b15a5258ad7ea3",
+      "ref_source": "audit_report.current_ref",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260617-002-orchestrator-goal-runtime-flow-semantic-repair-fidelity-semantic-risks-jsonl-29",
+      "reviews": {
+        "astra": {
+          "batch": "S06",
+          "file": "supplemental/batches/S06/review-astra-r1.jsonl",
+          "packet_row_digest": "a83cfc6e96c4cb1a8935c9c8dec54b1ee1176b260e67c4c58fdbd446233b3ecd",
+          "reason": "MS-109 no longer embeds raw atom IDs or claims atom-0031/0032 were moved into EP-098/GRS-026/GRS-027, and the non-standard moved_owner_lineage key is absent. Its product prose now confines Models ownership to capability/role resolution and treats write/certification policies as references to their owners.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "S06",
+          "file": "supplemental/batches/S06/review-sol-r1.jsonl",
+          "packet_row_digest": "a83cfc6e96c4cb1a8935c9c8dec54b1ee1176b260e67c4c58fdbd446233b3ecd",
+          "reason": "MS-109 canonical text now states model/provider binding policy without raw ledger atom IDs or the false atom-0031/0032 placement claim, and moved_owner_lineage is absent from the unit. The bounded-subagent policy is substantively carried by OSI-428 rather than asserted as Models-owned placement prose.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    },
+    {
+      "appended_matrix_line": 5,
+      "appended_matrix_sha256": "0da334cb8f4a586049bf32cbb28ba24ae8cb7026715b1a3251e5f72b5d2c95e5",
+      "appended_registry_line": 1191,
+      "appended_registry_sha256": "556e7554b718f86e3301011c888da8f35a4044a6b6fb900c7ebab2631ba1bd14",
+      "closes": {
+        "source_artifact": "semantic_risks.jsonl",
+        "source_row": 2
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/Goal_Runtime_System.md#unit=GRS-026": "5c1e5dcd81c5c49c41d1b257b63a3088905da6886dee8aedb0d1a1fe01c6acf7",
+        "Plans/Goal_Runtime_System.md#unit=GRS-027": "56d4d5ffa81b932ef7fc3cdd2a6a59f440ff399d0ffe17c0704b890afe71b85f",
+        "Plans/Goal_Runtime_System.md#unit=GRS-049": "c1950e71741a02e7ec92a3a8efbbe432baa29d7fed5101cb7227ab98ddd3f352",
+        "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/records/design_atoms.jsonl#jsonl=atom_id=atom-0035": "b87f9f15eb8af00f64eac3fa04b0d7a0c573425d2f18a6f0ae42bae8062da8b4",
+        "Plans/orchestrator-subagent-integration.md#unit=OSI-428": "866fdffefbaf60e3a10567b2ce47786b52908169fe744c8eee382c15c3bfa66b"
+      },
+      "finding_key": "sfk-3c059abdf017dad7c2a1640f",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "77bae0c63605d0a6f643aa3f1d8c51c2f3bb7947",
+      "ref_source": "audit_report.current_ref",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260617-002-orchestrator-goal-runtime-flow-semantic-repair-fidelity-semantic-risks-jsonl-2",
+      "reviews": {
+        "astra": {
+          "batch": "SF1",
+          "file": "supplemental/batches/SF1/review-astra-max-r1.jsonl",
+          "packet_row_digest": "87886c35d655dd6de3f113b7b7b22e52c0b827d1336ab651cc2758e18047090d",
+          "reason": "OSI-428 preserves all nine source roles in accepted canonical routing/certification prose and cites atom-0035. GRS-049 explains why the Goal engine no longer imposes the role cast, and GRS-027 is superseded, so the repair is supported at the current Orchestrator owner.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "SF1",
+          "file": "supplemental/batches/SF1/review-sol-max-r1.jsonl",
+          "packet_row_digest": "87886c35d655dd6de3f113b7b7b22e52c0b827d1336ab651cc2758e18047090d",
+          "reason": "The surviving Orchestrator owner OSI-428 names all nine atom-0035 roles and cites that atom. Goal V2 intentionally removes a mandatory Goal role cast, and the old GRS-027 loop is explicitly retired and transferred to workflow owners.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    },
+    {
+      "appended_matrix_line": 6,
+      "appended_matrix_sha256": "8465785901cb366bbc9bac6107b14a917fcf2245f55255b9f40d764ef18076fd",
+      "appended_registry_line": 1192,
+      "appended_registry_sha256": "1da42d31379135da1d3e1f65e3c967ecb76b5d4238f4101dbf2a58a1d2df2570",
+      "closes": {
+        "source_artifact": "semantic_risks.jsonl",
+        "source_row": 4
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/Executor_Protocol.md#unit=EP-098": "ca143b3b15aa3f4060c94180bc9e7704c4a2e0a5c0f0ab780b013f80d84dab8b",
+        "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/records/design_atoms.jsonl#jsonl=atom_id=atom-0041": "d8deef92ce89140ef9989ae6b37869c93ec1f8e01af9c9447fc298d9f784107a"
+      },
+      "finding_key": "sfk-9226a592f68ba6749b450ad0",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "77bae0c63605d0a6f643aa3f1d8c51c2f3bb7947",
+      "ref_source": "audit_report.current_ref",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260617-002-orchestrator-goal-runtime-flow-semantic-repair-fidelity-semantic-risks-jsonl-4",
+      "reviews": {
+        "astra": {
+          "batch": "SF1",
+          "file": "supplemental/batches/SF1/review-astra-max-r1.jsonl",
+          "packet_row_digest": "1107d131c3c0ac0832a521bb3164c68237576f5cdb8a9833379eb8a113b7605d",
+          "reason": "EP-098 now states the high-end controller/planner decomposition behavior and a matching acceptance criterion, with direct atom-0041 lineage. WorkGraph and bounded WorkNode requests remain subject to Executor readiness and dispatch policy, preserving the source requirement's authority split.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "SF1",
+          "file": "supplemental/batches/SF1/review-sol-max-r1.jsonl",
+          "packet_row_digest": "1107d131c3c0ac0832a521bb3164c68237576f5cdb8a9833379eb8a113b7605d",
+          "reason": "EP-098 now directly states the controller/planner WorkGraph and bounded WorkNode decomposition, while retaining Executor readiness and scheduler authority over actual dispatch. Both its acceptance criterion and atom-0041 lineage back the repair.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    },
+    {
+      "appended_matrix_line": 7,
+      "appended_matrix_sha256": "468a993f411d529951b0dff1b5600437f282c9e14956869220a084e2a24e8396",
+      "appended_registry_line": 1193,
+      "appended_registry_sha256": "ecae3cfcc079970c487ac620e4b02855d4e61575f30787b21b6d6cb984eae59d",
+      "closes": {
+        "source_artifact": "semantic_risks.jsonl",
+        "source_row": 7
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/Contracts_V0.md#unit=CV-288": "30cb2e62a81553c7e38b2e605ba3ada9f9ad675b268352f2a5ac9948ae7fa917",
+        "Plans/Goal_Runtime_System.md#unit=GRS-027": "56d4d5ffa81b932ef7fc3cdd2a6a59f440ff399d0ffe17c0704b890afe71b85f",
+        "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/records/design_atoms.jsonl#jsonl=atom_id=atom-0053": "5feeee1009704180ff61cc248023ca7b1c747e18a54ad025638126c57d488e29",
+        "Plans/storage-plan.md#unit=SP-215": "18e35ab12e9294f9235657b66050f3da43b429f20d927553d83be6da49943d73"
+      },
+      "finding_key": "sfk-9053f54c1b3339ad0b269ec3",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "77bae0c63605d0a6f643aa3f1d8c51c2f3bb7947",
+      "ref_source": "audit_report.current_ref",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260617-002-orchestrator-goal-runtime-flow-semantic-repair-fidelity-semantic-risks-jsonl-7",
+      "reviews": {
+        "astra": {
+          "batch": "SF1",
+          "file": "supplemental/batches/SF1/review-astra-max-r1.jsonl",
+          "packet_row_digest": "eaff4d7c8f7bf159977dcb31d340ab4c6edb12f5f08c091262123ea69f8419ee",
+          "reason": "Both accepted record owners, CV-288 and SP-215, retain affected artifact/path/span with the other defect-signature fields in canonical text and acceptance checks and cite atom-0053. The formerly narrowed phrase is absent; GRS-027 is retained as superseded lineage rather than the live schema owner.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "SF1",
+          "file": "supplemental/batches/SF1/review-sol-max-r1.jsonl",
+          "packet_row_digest": "eaff4d7c8f7bf159977dcb31d340ab4c6edb12f5f08c091262123ea69f8419ee",
+          "reason": "Affected artifact/path/span is present in both active owner units with the rest of atom-0053's defect-signature fields and matching acceptance criteria. Their direct atom-0053 lineage is present; the old Goal-side unit is explicitly retired.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    },
+    {
+      "appended_matrix_line": 8,
+      "appended_matrix_sha256": "abd487aa88dec10ab99d0eade78f716ad1660e873a43c0024218fa1e3e845b66",
+      "appended_registry_line": 1194,
+      "appended_registry_sha256": "db31b1d11031d33eb753dd5c960140b129d15a27d2ec988b88db9c5ac24f57f8",
+      "closes": {
+        "source_artifact": "semantic_risks.jsonl",
+        "source_row": 15
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/Contracts_V0.md#unit=CV-288": "30cb2e62a81553c7e38b2e605ba3ada9f9ad675b268352f2a5ac9948ae7fa917",
+        "Plans/Orchestrator_Page.md#unit=OP-022": "601dddb429e0919be41d42f8a14831330e6add5fcedb9688bb9ec1ed88cc8f0a",
+        "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/records/design_atoms.jsonl#jsonl=atom_id=atom-0053": "5feeee1009704180ff61cc248023ca7b1c747e18a54ad025638126c57d488e29",
+        "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/records/design_atoms.jsonl#jsonl=atom_id=atom-0094": "6c7995df1261a9fcb7a3357a44f07bd7dfb8195ecbdd97d2c901361dd874be14",
+        "Plans/storage-plan.md#unit=SP-215": "18e35ab12e9294f9235657b66050f3da43b429f20d927553d83be6da49943d73"
+      },
+      "finding_key": "sfk-c407a3ff524bddba275ecb55",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "77bae0c63605d0a6f643aa3f1d8c51c2f3bb7947",
+      "ref_source": "audit_report.current_ref",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260617-002-orchestrator-goal-runtime-flow-semantic-repair-fidelity-semantic-risks-jsonl-15",
+      "reviews": {
+        "astra": {
+          "batch": "SF1",
+          "file": "supplemental/batches/SF1/review-astra-max-r1.jsonl",
+          "packet_row_digest": "420b9bd36ccfe125ecdfcbca10d05b6381c027ba54ddc04b7da51b49ba7f7449",
+          "reason": "Atom-0053 supports the additional typed finding/signature details and reciprocally names CV-288/SP-215, both of which now cite it beside atom-0094. The complete atom-0094 field set and narrow failed | passed | blocked enum remain governed, so adding sourced fields no longer creates the audited unsupported claim.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "SF1",
+          "file": "supplemental/batches/SF1/review-sol-max-r1.jsonl",
+          "packet_row_digest": "420b9bd36ccfe125ecdfcbca10d05b6381c027ba54ddc04b7da51b49ba7f7449",
+          "reason": "Atom-0053 directly supports the additional typed finding fields, and both contract/storage units cite it alongside atom-0094. The current example still preserves atom-0094's original keys and narrow status enum, so the addition is supported rather than an unexplained extension.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    },
+    {
+      "appended_matrix_line": 9,
+      "appended_matrix_sha256": "330767ee605fc966b0c55d4e9161cb49d8800e9b900449bfa41b90798e3b87c5",
+      "appended_registry_line": 1195,
+      "appended_registry_sha256": "62b5506c04502a71ee3afea9fe6fb8203e97cf06207afd041e328e742853eec9",
+      "closes": {
+        "plan_unit_id": "CV-288",
+        "source_artifact": "semantic_risks.jsonl",
+        "source_row": 20
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/Contracts_V0.md#unit=CV-288": "30cb2e62a81553c7e38b2e605ba3ada9f9ad675b268352f2a5ac9948ae7fa917",
+        "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/records/design_atoms.jsonl#jsonlset=compiled_output_plan_unit_ids=CV-288": "090b13ccb68a61c8687b408b6b41c2d2a332d5b52d8edac9284f40b4858c7f9e"
+      },
+      "finding_key": "sfk-dcc81f3f02b0e1be96ceb725",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "77bae0c63605d0a6f643aa3f1d8c51c2f3bb7947",
+      "ref_source": "audit_report.current_ref",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260617-002-orchestrator-goal-runtime-flow-semantic-repair-fidelity-semantic-risks-jsonl-20",
+      "reviews": {
+        "astra": {
+          "batch": "SF1",
+          "file": "supplemental/batches/SF1/review-astra-max-r1.jsonl",
+          "packet_row_digest": "42968256dee2aaee101f005e1b1692d56dff388b15918e64505dfe6dafae226c",
+          "reason": "CV-288 has reciprocal atom-0053/atom-0094 lineage, an acceptance criterion requiring the typed finding details, and the exact status failed | passed | blocked string in governed prose and tokens. Those changes address both parts of the source row rather than relying only on token presence.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "SF1",
+          "file": "supplemental/batches/SF1/review-sol-max-r1.jsonl",
+          "packet_row_digest": "42968256dee2aaee101f005e1b1692d56dff388b15918e64505dfe6dafae226c",
+          "reason": "CV-288 directly cites atoms 0053 and 0094, and both source records list CV-288 as an output. Its acceptance criteria cover the typed fields, and status failed | passed | blocked is preserved in governed prose and the exact-token list.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    }
+  ],
+  "decision": {
+    "decision_record": "Plans/Decision_Log.md#DL-334",
+    "owner_unit": "Plans/Planning_Ledger_System.md#PLS-026",
+    "route": "new_registry_row",
+    "source": "Jared, \"approve all\", T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521, 2026-11-05T02:48:03Z (stream C question 7, option (a)); extended to the other June audits with uncovered rows by pm7-build's relay of the same approved option (pm-mail 1105030457-ade2, 2026-11-05)"
+  },
+  "matrix": {
+    "original_rows": 0,
+    "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "path": "repair_closure_matrix.jsonl"
+  },
+  "pass_id": "audit-20260617-002-orchestrator-goal-runtime-flow-semantic-repair-fidelity-supplemental-20261111",
+  "reviews": "Sol and Astra blind reviews are listed on each closures entry (verdict, your_verdict, your_status, packet_row_digest, batch file)",
+  "schema_id": "pm.audit_supplemental_closure_pass.v1"
+}

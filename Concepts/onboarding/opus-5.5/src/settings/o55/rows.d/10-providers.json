@@ -283,7 +283,6 @@
    "choices": [
     "anthropic",
     "codex",
-    "openai",
     "antigravity-cli",
     "grok",
     "muse",
@@ -308,7 +307,7 @@
    "options": {
     "anthropic": "Claude",
     "codex": "ChatGPT / Codex",
-    "openai": "OpenAI API key",
+    "openai": "ChatGPT / Codex",
     "antigravity-cli": "Google Antigravity",
     "grok": "Grok Build",
     "muse": "Muse Code",
@@ -327,7 +326,7 @@
     "qwen-token": "Alibaba Token Plan",
     "opencode-zen": "OpenCode Console",
     "free-models": "Free Models",
-    "opencode": "OpenCode on your computer",
+    "opencode": "OpenCode server",
     "local-endpoint": "Local model server"
    },
    "why": "You pay for one service and want it used before the others.",
@@ -475,9 +474,12 @@
     "Cursor": "Cursor",
     "Gemini Direct": "Gemini API",
     "Antigravity CLI": "Google Antigravity",
-    "OpenCode": "OpenCode on your computer"
+    "OpenCode": "OpenCode server"
    },
-   "empty": "The everyday model’s service"
+   "empty": "The everyday model’s service",
+   "choices": [
+    ""
+   ]
   },
   "ai.models.per-lane-model": {
    "label": "Model for each lane",
@@ -634,7 +636,6 @@
    "noun": "service",
    "valueChoices": [
     "anthropic",
-    "codex",
     "openai",
     "antigravity-cli",
     "grok",
@@ -660,7 +661,7 @@
    "options": {
     "anthropic": "Claude",
     "codex": "ChatGPT / Codex",
-    "openai": "OpenAI API key",
+    "openai": "ChatGPT / Codex",
     "antigravity-cli": "Google Antigravity",
     "grok": "Grok Build",
     "muse": "Muse Code",
@@ -679,7 +680,7 @@
     "qwen-token": "Alibaba Token Plan",
     "opencode-zen": "OpenCode Console",
     "free-models": "Free Models",
-    "opencode": "OpenCode on your computer",
+    "opencode": "OpenCode server",
     "local-endpoint": "Local model server"
    },
    "help": "Used when several services could do a job."
@@ -789,11 +790,7 @@
   "ai.usage.quota-management": {
    "label": "Quota and budget console",
    "actionLabel": "Open the console",
-   "route": {
-    "domain": "ai",
-    "workspace": "providers",
-    "tab": "usage"
-   }
+   "pm51": "pm51-providers-console"
   },
   "ai.usage.pressure-history": {
    "label": "Pressure history",

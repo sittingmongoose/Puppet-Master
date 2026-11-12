@@ -346,6 +346,75 @@
       snaps[p.id] = { label: p.name, settings, revision: 3 + pi };
     });
   }
+  /* FO-133 (GUIDED-FLOWS-CHECK rows 3.02, 3.04, 3.17; Plans/Settings_System.md SSYS-062 and the selector sets SSYS-007):
+     - Copy is offered whenever setup creates a new registry Project, including one that registers content nobody had
+       registered yet (an existing folder here or on a NAS, a Project kept online); never when the folder is already a
+       Project Puppet Master knows, never for a restore, Later or connect-only.
+     - Your usual settings is the default, and says what it is: the settings every Project shares.
+     - Advanced chooses by kind (the owner's disjoint eleven sets: ten kinds plus About its own files, which is off by
+       default), by setting (the source's own values, each its own switch), by thing (what the source Project owns, each
+       previewed with what it becomes here) and by account (Use the same AI accounts and models: the account choices, never
+       the sign-ins, each with its readiness on the computer that does the work). The engine applies exactly the settings
+       left picked: the kinds' engine categories, less every value switched off (stageSettings, 72-screens-review.js). */
+  const KINDS = ['appearance_workspace', 'assistant_chat', 'providers_accounts_models_routing', 'planning_goal', 'orchestrator_automation', 'tools_integrations', 'testing_browser_devices', 'permissions_security', 'memory_retention_history', 'notifications_usage_budgets', 'project_only_rows'];
+  const AI_KIND = 'providers_accounts_models_routing', FILES_KIND = 'project_only_rows';
+  /* (the look chosen in onboarding is the new Project's own; it is never copied over) */
+  const LOOK_IDS = ['general.visual.theme', 'general.visual.theme-mode', 'general.visual.nier-mode', 'general.visual.nier-parts', 'general.visual.nier-background'];
+  /* each setting belongs to exactly one set: the engine's Project & sync rows are about the Project's own files and paths */
+  function kindOf(id) {
+    const st = ST(); if (st && st.categoryFor(id) === 'Project & sync') return FILES_KIND;
+    if (/^general\.visual\.|^general\.startup\./.test(id)) return 'appearance_workspace';
+    if (/^general\.interaction\.|^chat\./.test(id)) return 'assistant_chat';
+    if (/^ai\.(models|accounts|routing)\./.test(id)) return AI_KIND;
+    if (/^planning\.testing\.|^browser\./.test(id)) return 'testing_browser_devices';
+    if (/^planning\.|^goals\./.test(id)) return 'planning_goal';
+    if (/^branching\.subagents\.|^orchestrator\.|^automation\./.test(id)) return 'orchestrator_automation';
+    if (/^safety\./.test(id)) return 'permissions_security';
+    if (/^memory\./.test(id)) return 'memory_retention_history';
+    if (/^notifications\.|^ai\.usage\./.test(id)) return 'notifications_usage_budgets';
+    return 'tools_integrations';
+  }
+  const shown = (v) => (v === true ? T('like.on') : v === false ? T('like.off') : v == null || v === '' ? '—' : Array.isArray(v) ? v.join(', ') : typeof v === 'object' ? JSON.stringify(v) : String(v)).slice(0, 48);
+  /* the source's own values: what it has that differs from the settings every Project starts with */
+  const OWN = new Map();
+  function ownValues(S, id) {
+    const st = ST(), tome = window.PM7_SETTINGS_TOME; if (!st || !tome) return [];
+    const snap = tome.projectSnapshot(id); if (!snap || !snap.settings) return [];
+    const key = id + '@' + (snap.revision || 0); if (OWN.has(key)) return OWN.get(key);
+    const canon = new Map(Object.values((window.PM12_REFERENCE && window.PM12_REFERENCE.byCat) || {}).flatMap((c) => c.settings || []).map((r) => [r.id, r]));
+    /* (your usual settings are the ones in use now, which a new Project starts on: a value equal to them is not its own) */
+    const live = (window.PM12_KIMI && window.PM12_KIMI.getState && (window.PM12_KIMI.getState() || {}).settings) || {};
+    const usualOf = (sid, row) => (Object.prototype.hasOwnProperty.call(live, sid) ? live[sid] : row.default);
+    const pv = st.draftPreview(id, null), out = [];
+    if (pv && pv.ok) Object.values(pv.groups).forEach((list) => list.forEach((x) => {
+      const row = canon.get(x.id); if (!row || LOOK_IDS.includes(x.id)) return;
+      const usual = usualOf(x.id, row); if (JSON.stringify(x.value) === JSON.stringify(usual)) return;
+      out.push({ id: x.id, label: row.label || x.id, value: x.value, usual, kind: kindOf(x.id), cat: st.categoryFor(x.id) });
+    }));
+    OWN.set(key, out); return out;
+  }
+  const sourceOf = (S, id) => O55.like.sources(S).find((x) => x.id === id) || null;
+  /* the computer that does the work, where a chosen account must be signed in */
+  const workComputer = (S) => (onServer(S) ? serverName(S) : T('like.thisComputer'));
+  function accountState(S, pid) {
+    const pr = S.env.here.providers[pid], name = (O55.fixtures.provider && O55.fixtures.provider(pid) || {}).name || pr && pr.name || pid.charAt(0).toUpperCase() + pid.slice(1), comp = workComputer(S);
+    if (!onServer(S)) return pr && pr.signedIn ? { pid, name, state: 'ready_here', text: T('like.acct.ready', { computer: comp }) } : pr && pr.installed === false ? { pid, name, state: 'not_installed', text: T('like.acct.install', { computer: comp }) } : { pid, name, state: 'sign_in_there', text: T('like.acct.signin', { computer: comp }) };
+    const srv = O55.connect && O55.connect.allServers(S).find((x) => x.id === md(S).server_ref), there = srv && (srv.accounts || []).find((a) => a.provider === pid && a.ready);
+    return there ? { pid, name, state: 'check_there', text: T('like.acct.checked', { computer: comp }) } : { pid, name, state: 'sign_in_there', text: T('like.acct.signin', { computer: comp }) };
+  }
+  /* what the person picked under Advanced, per source (a new source starts from its defaults) */
+  function pick(S, id) {
+    const L = S.sess.like = S.sess.like || {};
+    if (!L.pick || L.pick.src !== id) L.pick = { src: id, kinds: KINDS.filter((k) => k !== FILES_KIND), off: [], things: {}, accounts: true, q: '' };
+    return L.pick;
+  }
+  function plan(S, id) {
+    const p = pick(S, id), own = ownValues(S, id), src = sourceOf(S, id) || {};
+    const rows = own.filter((x) => p.kinds.includes(x.kind) && !p.off.includes(x.id) && (p.accounts || x.kind !== AI_KIND));
+    const things = (src.things || []).filter((x) => p.things[x.id] !== false);
+    const accounts = p.accounts ? (src.providers || []).map((pid) => accountState(S, pid)) : [];
+    return { rows, things, accounts, own };
+  }
   O55.like = {
     sources(S) {
       const known = S.env.here.projects.concat(serverProjects(S));
@@ -353,12 +422,54 @@
       seed(S, known);
       return known.filter((p) => window.PM7_SETTINGS_TOME.projectSnapshot(p.id));
     },
-    eligible(S) { const d = md(S); return d.journey === 'new_or_local' && d.project_mode === 'new' && O55.like.sources(S).length > 0 && ST().categories().length > 0; },
-    preview(S, id) { const st = ST(); if (!st) return null; const cats = (S.sess.like && S.sess.like.categories) || null; return st.draftPreview(id, cats); }
+    /* a new registry Project: new, or content registered now (a folder here or on a NAS, a Project kept online); opening a
+       Project that is already registered is the connect journey, and a restore or Later creates none */
+    registers(S) { const d = md(S); return d.journey === 'new_or_local' && ['new', 'existing_local', 'existing_online'].includes(d.project_mode); },
+    eligible(S) { return O55.like.registers(S) && O55.like.sources(S).length > 0 && ST().categories().length > 0; },
+    preview(S, id) { const st = ST(); if (!st) return null; const cats = (S.sess.like && S.sess.like.categories) || null; return st.draftPreview(id, cats); },
+    /* what the engine is asked to copy: the engine categories of the picked values, less every value of theirs not picked */
+    selection(S) {
+      const d = md(S), id = d.settings_transfer.source_project_id; if (!id) return { cats: [], excluded: LOOK_IDS.slice(), count: 0 };
+      const st = ST(), P = plan(S, id), keep = new Set(P.rows.map((x) => x.id)), cats = [...new Set(P.rows.map((x) => x.cat).filter(Boolean))];
+      const pv = cats.length ? st.draftPreview(id, cats) : null, excluded = new Set(LOOK_IDS);
+      if (pv && pv.ok) Object.values(pv.groups).forEach((list) => list.forEach((x) => { if (!keep.has(x.id)) excluded.add(x.id); }));
+      return { cats, excluded: [...excluded], count: keep.size, things: P.things.map((x) => x.id), accounts: P.accounts.map((x) => x.pid) };
+    },
+    plan, kindOf, KINDS
   };
   async function sha256(text) {
     try { const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text)); return Array.from(new Uint8Array(buf)).map((b) => b.toString(16).padStart(2, '0')).join(''); }
     catch (_) { let h = ''; for (let i = 0; i < 8; i++) h += U.hash(text + i).toString(16).padStart(8, '0'); return h; }
+  }
+  const listWords = (names) => (names.length > 1 ? names.slice(0, -1).join(', ') + ' ' + T('like.and') + ' ' + names[names.length - 1] : names[0] || '');
+  const kindWord = (k) => (O55.tx('like.kinds')[k] || {}).word || k;
+  const kindTitle = (k) => (O55.tx('like.kinds')[k] || {}).title || k;
+  /* the preview under the chosen Project: what comes along, as the plan has it now */
+  function comesAlong(S, sel) {
+    const P = plan(S, sel), p = sourceOf(S, sel) || { name: sel };
+    const kinds = KINDS.filter((k) => P.rows.some((x) => x.kind === k)).map(kindWord);
+    let inner = P.rows.length ? `<p class="o55-previewtext" data-key="like-diffs">${U.esc(T('like.diffs', { n: P.rows.length, kinds: listWords(kinds) }))}</p>` : `<p class="o55-previewtext" data-key="like-diffs">${U.esc(T('like.diffsNone'))}</p>`;
+    if (P.things.length) inner += `<p class="o55-previewtext" data-key="like-things">${U.esc(T('like.things', { things: listWords(P.things.map((x) => x.name)) }))}</p>`;
+    if (P.accounts.length) inner += `<p class="o55-previewtext" data-key="like-accounts">${U.esc(T('like.accounts', { accounts: listWords(P.accounts.map((x) => x.name)) }))}</p>`;
+    inner += C.note(T('like.never'), 'info', 'lock') + `<p class="o55-hint" data-key="like-separate">${U.esc(T('like.separate'))}</p>`;
+    if (P.accounts.some((x) => x.state !== 'ready_here' && x.state !== 'check_there')) inner += C.note(T('like.unavailable', { project: p.name, computer: workComputer(S) }), 'warn', 'spark');
+    inner += `<div class="o55-sublinks" data-key="choose">${C.link(T('like.choose'), 'choose')}</div>`;
+    return C.group(T('like.previewTitle'), inner, { cls: 'o55-preview' });
+  }
+  /* Advanced: kinds, single settings (find one), things, accounts */
+  function advanced(S, sel) {
+    const p = pick(S, sel), own = ownValues(S, sel), src = sourceOf(S, sel) || { name: sel }, n = (k) => own.filter((x) => x.kind === k).length;
+    const kinds = KINDS.map((k) => C.toggle({ do: 'cat', arg: k, on: p.kinds.includes(k), label: kindTitle(k), sub: n(k) ? T('like.kindCount', { n: n(k) }) : T('like.kindNone') })).join('');
+    const q = String(p.q || '').trim().toLowerCase();
+    const rows = own.filter((x) => p.kinds.includes(x.kind) && (p.accounts || x.kind !== AI_KIND) && (!q || x.label.toLowerCase().includes(q) || x.id.includes(q)));
+    const single = C.field({ bind: 'likeFind', label: T('like.singleFind'), value: p.q || '', placeholder: T('like.singlePlaceholder') })
+      + (rows.length ? rows.map((x) => C.toggle({ do: 'pickrow', arg: x.id, on: !p.off.includes(x.id), label: x.label, sub: T('like.singleRow', { usual: shown(x.usual), project: src.name, value: shown(x.value) }) })).join('') : `<p class="o55-hint" data-key="like-nosingle">${U.esc(T(q ? 'like.singleNoMatch' : 'like.singleNone'))}</p>`);
+    const things = (src.things || []).length ? src.things.map((x) => C.toggle({ do: 'thing', arg: x.id, on: p.things[x.id] !== false, label: T('like.thingRow', { thing: x.name, kind: x.kind }), sub: x.outcome })).join('') : `<p class="o55-hint" data-key="like-nothings">${U.esc(T('like.thingNone', { project: src.name }))}</p>`;
+    const names = src.providers || [];
+    const accts = C.toggle({ do: 'accts', on: !!p.accounts, label: T('like.acctSwitch'), sub: T('like.acctSwitchSub') })
+      + (p.accounts ? names.map((pid) => { const a = accountState(S, pid); return C.row({ key: 'acct-' + pid, title: a.name, meta: a.text, state: [a.state === 'ready_here' ? 'ready' : a.state === 'check_there' ? 'info' : 'needs', T('like.acct.state.' + a.state)] }); }).join('') : `<p class="o55-hint" data-key="like-acctoff">${U.esc(T('like.acctOff'))}</p>`);
+    return C.group(T('like.kindsTitle'), kinds, { cls: 'o55-like-kinds' }) + C.group(T('like.singleTitle'), single, { cls: 'o55-like-single' })
+      + C.group(T('like.thingsTitle'), things, { cls: 'o55-like-things' }) + C.group(T('like.acctTitle'), accts, { cls: 'o55-like-accts' });
   }
   def('like', {
     chapter: 'project', stage: 'first_project', charmSlot: 'like',
@@ -372,19 +483,10 @@
       /* what would be copied from the chosen Project: under that Project's card (QA round 2, Q7) */
       let under = '', sheet = '';
       if (sel !== 'fresh') {
-        const pv = O55.like.preview(S, sel), p = sources.find((x) => x.id === sel) || { name: sel };
+        const pv = O55.like.preview(S, sel);
         if (pv && pv.ok) {
-          const names = Object.keys(pv.groups).map((g) => O55.tx('like.groups')[g] || g.toLowerCase());
-          const list = names.length > 1 ? names.slice(0, -1).join(', ') + ' ' + T('like.and') + ' ' + names[names.length - 1] : names[0] || '';
-          let inner = `<p class="o55-previewtext">${U.esc(T('like.preview', { groups: list }))}</p>` + C.note(T('like.never'), 'info', 'lock');
-          const unavailable = (p.providers || []).filter((pid) => { const pr = S.env.here.providers[pid]; return !(pr && pr.signedIn); });
-          if (unavailable.length) inner += C.note(T('like.unavailable', { project: p.name }), 'warn', 'spark');
-          inner += `<div class="o55-sublinks" data-key="choose">${C.link(T('like.choose'), 'choose')}</div>`;
-          under = C.group(T('like.previewTitle'), inner, { cls: 'o55-preview' });
-          if (S.sess.ui.sheet === 'cats') {
-            const all = ST().categories(), on = new Set((S.sess.like && S.sess.like.categories) || all);
-            sheet = C.sheet(S, 'cats', T('like.chooseTitle'), all.map((cat) => C.toggle({ do: 'cat', arg: cat, on: on.has(cat), label: cat, sub: T('like.count', { n: (pv.groups[cat] || []).length }) })).join(''), O55.ui.btn({ label: T('chrome.done'), do: 'sheet-close' }, 'o55-primary'));
-          }
+          under = comesAlong(S, sel);
+          if (S.sess.ui.sheet === 'cats') sheet = C.sheet(S, 'cats', T('like.chooseTitle'), advanced(S, sel), O55.ui.btn({ label: T('chrome.done'), do: 'sheet-close' }, 'o55-primary'));
         } else if (pv) under = C.note(pv.reason || '', 'warn');
       }
       const out = C.cards('pick', [{ v: 'fresh', glyph: 'seed', title: T('like.fresh'), sub: T('like.freshSub') }].concat(sources.map((p) => ({ v: p.id, glyph: 'stack', title: p.name, sub: T('like.updated', { when: p.updated || '' }), under: p.id === sel ? under : '' }))), sel, { label: T('like.title') }) + sheet;
@@ -400,19 +502,41 @@
         const p = O55.like.sources(S).find((x) => x.id === v) || { name: v };
         O55.draft.set(d, { settings_transfer: { mode: 'copy_from_project', source_project_id: v, source_revision: Math.max(1, Number(snap.revision) || 1), draft_preview_ref: 'settings-preview:' + v, draft_preview_sha256: null, explicit_choice_setting_ids: [], settings_applied: false } });
         S.sess.like = Object.assign(S.sess.like || {}, { name: p.name });
+        pick(S, v);
         S.save(); O55.ui.refresh(); O55.ui.charm(el, p.name, 'stack');
         const hash = await sha256(JSON.stringify(pv || {}));
         if (md(S).settings_transfer.source_project_id === v) { md(S).settings_transfer.draft_preview_sha256 = hash; S.save(); }
       },
       choose(S) { S.sess.ui.sheet = 'cats'; S.save(); O55.ui.refresh(); seeSheet(S); },
-      cat(S, cat) {
-        const all = ST().categories(), cur = new Set((S.sess.like && S.sess.like.categories) || all);
-        if (cur.has(cat)) cur.delete(cat); else cur.add(cat);
-        S.sess.like = Object.assign(S.sess.like || {}, { categories: all.filter((c) => cur.has(c)) });
-        S.save(); O55.ui.refresh();
-        O55.sound.play(cur.has(cat) ? 'toggleOn' : 'toggleOff');
+      /* a kind on or off (About its own files starts off) */
+      cat(S, k) {
+        const id = md(S).settings_transfer.source_project_id; if (!id || !KINDS.includes(k)) return;
+        const p = pick(S, id), on = !p.kinds.includes(k);
+        p.kinds = KINDS.filter((x) => (x === k ? on : p.kinds.includes(x)));
+        S.save(); O55.ui.refresh(); O55.sound.play(on ? 'toggleOn' : 'toggleOff');
+      },
+      /* one of the source's own values on or off */
+      pickrow(S, sid) {
+        const id = md(S).settings_transfer.source_project_id; if (!id) return;
+        const p = pick(S, id), off = p.off.includes(sid);
+        p.off = off ? p.off.filter((x) => x !== sid) : p.off.concat(sid);
+        S.save(); O55.ui.refresh(); O55.sound.play(off ? 'toggleOn' : 'toggleOff');
+      },
+      thing(S, tid) {
+        const id = md(S).settings_transfer.source_project_id; if (!id) return;
+        const p = pick(S, id), on = p.things[tid] === false;
+        p.things = Object.assign({}, p.things, { [tid]: on });
+        S.save(); O55.ui.refresh(); O55.sound.play(on ? 'toggleOn' : 'toggleOff');
+      },
+      accts(S) {
+        const id = md(S).settings_transfer.source_project_id; if (!id) return;
+        const p = pick(S, id); p.accounts = !p.accounts;
+        S.save(); O55.ui.refresh(); O55.sound.play(p.accounts ? 'toggleOn' : 'toggleOff');
       },
       next(S) { O55.ui.go('safe'); }
+    },
+    bind: {
+      likeFind(S, v) { const id = md(S).settings_transfer.source_project_id; if (!id) return; pick(S, id).q = v; S.save(); O55.ui.refresh(); }
     },
     leave(S) { if (S.sess.ui.sheet === 'cats') { S.sess.ui.sheet = null; S.save(); } }
   });

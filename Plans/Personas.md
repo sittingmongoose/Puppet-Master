@@ -177,7 +177,7 @@ aliases: []
 | `preferred_tools` | Optional | `string[]` | Tool IDs the Persona should proactively prefer when planning execution. Guidance only by default; it does not override Permissions allow/ask/deny enforcement. |
 | `discouraged_tools` | Optional | `string[]` | Tool IDs the Persona should avoid unless needed. Guidance only by default. |
 | `tool_usage_guidance` | Optional | `string` | Freeform tool-planning guidance for this Persona. |
-| `tags` | Recommended | `string[]` | Categorization tags for filtering and search. Values from: `phase`, `task`, `subtask`, `iteration`, `cross-phase`, `language`, `domain`, `framework`, and freeform tags. |
+| `tags` | Recommended | `string[]` | Free tags for filtering and search. Suggested kinds: `phase`, `task`, `subtask`, `iteration`, `cross-phase`, `language`, `domain`, `framework`; arbitrary freeform tags are valid. Settings row `personas.library.persona-tags` exposes this tag input (DL-474). |
 | `aliases` | Optional | `string[]` | Natural-language invocation aliases and display synonyms used during Persona resolution. |
 
 ### 3.3 Validation rules
@@ -1081,7 +1081,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Personas.md
 canonical_text: >-
-  PERSONA.md consists of YAML frontmatter followed by Markdown body, with frontmatter fields and enum/value meanings defined by the Personas schema.
+  PERSONA.md consists of YAML frontmatter followed by Markdown body; its frontmatter fields are id, name, description, default_mode, default_platform, default_permissions_profile, default_model, default_variant, temperature, top_p, reasoning_effort, talkativeness, default_skill_refs, disabled_plugins, preferred_tools, discouraged_tools, tool_usage_guidance, tags and aliases, and the field definitions own each one's required, recommended or optional status and its enum and value meanings. The tags field is a free string list: phase, task, subtask, iteration, cross-phase, language, domain and framework are suggested kinds, not a closed enum. DL-474 confirms that Settings row personas.library.persona-tags uses the same free tag input and existing Persona-owned storage.
 gui_related: false
 gui_classification_reason: This unit defines Persona runtime, storage, schema, governance, or owner-boundary behavior rather than visual presentation.
 split_recommended: false

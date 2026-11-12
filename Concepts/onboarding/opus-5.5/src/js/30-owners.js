@@ -65,6 +65,11 @@
     'cmd.backup.destination.test': { owner: 'Backup', phase: 'postcommit_backup' },
     'cmd.backup.recovery_key.export': { owner: 'Backup', phase: 'postcommit_backup' },
     'cmd.backup.recovery_key.test': { owner: 'Backup', phase: 'postcommit_backup' },
+    /* the rest of the Recovery Key custody set (BRS-012/BRS-017): Settings › Backup & Restore runs every one of them */
+    'cmd.backup.recovery_key.print': { owner: 'Backup', phase: 'postcommit_backup' },
+    'cmd.backup.recovery_key.copy': { owner: 'Backup', phase: 'postcommit_backup' },
+    'cmd.backup.recovery_key.rotate': { owner: 'Backup', phase: 'postcommit_backup' },
+    'cmd.backup.recovery_key.reencrypt': { owner: 'Backup', phase: 'postcommit_backup' },
     'cmd.backup.policy.update': { owner: 'Backup', phase: 'postcommit_backup' },
     'cmd.tool_product.install': { owner: 'Providers', phase: 'postcommit_provider', canonical: false },
     'cmd.integration.connection.add': { owner: 'Providers', phase: 'postcommit_provider' },
@@ -286,7 +291,13 @@
         const now = Date.now();
         res.stepup = { outcome: 'verified', request_id: req.id, nonce: req.nonce, client: req.client, server: req.server, project: req.project, recovery_set_id: req.recovery_set_id,
           recovery_generation: req.recovery_generation, audience: 'initiating_human_client', one_time: true, evidence_ref: ref + ':stepup', issued_at: now, expires_at: now + 60000 };
-        Object.assign(res.postcondition, req.operation.endsWith('.export') ? { delivery: 'verified', savedAck: true } : { unlock: 'verified', scratch: 'verified' });
+        /* each operation's own completion evidence, as the panel that asked checks it (54-backup.js handoff opts.check) */
+        const op = req.operation.slice('cmd.backup.recovery_key.'.length);
+        Object.assign(res.postcondition, op === 'export' || op === 'print' ? { delivery: 'verified', savedAck: true }
+          : op === 'copy' ? { delivery: 'verified' }
+          : op === 'rotate' ? { newSlot: 'verified', oldRemoved: true, order: 'new-before-old' }
+          : op === 'reencrypt' ? { newDomain: true, reencrypted: true }
+          : { unlock: 'verified', scratch: 'verified' });
       } else if (req.operation === 'cmd.backup.policy.update') res.postcondition.policy = 'on';
       /* every other request (a Server's claim and setup) takes the generic owner result */
       return fault(S, req, res);
@@ -376,11 +387,25 @@
       return { ok: true };
     }
     function reset() { Object.keys(adoptedIds).forEach((k) => { delete adoptedIds[k]; }); Object.keys(fixtures).forEach((k) => { delete fixtures[k]; }); Object.keys(begun).forEach((k) => { delete begun[k]; }); seq = 0; }
+    /* The concept host's client is the fixture world's, whether or not the onboarding window has opened in this page:
+       S.env and S.sess exist only once it has (60-ui-core open()), and a returning person, or the app loaded with
+       onboarding off, reaches Settings › Backup & Restore without it. Its Server is the one onboarding recorded. */
+    let conceptWorld = null;
+    const conceptClient = (S) => {
+      const env = (S && S.env) || conceptWorld || (conceptWorld = (window.O55.fixtures && window.O55.fixtures.make) ? window.O55.fixtures.make(window.O55.store.get('scenario', 'fresh')) : null);
+      return (env && env.client && env.client.id) || 'client:this';
+    };
+    const conceptServer = (S) => {
+      let sess = S && S.sess;
+      if (!sess) { try { sess = window.O55.store.get('onboarding', null); } catch (_) { sess = null; } }
+      const main = sess && sess.drafts && sess.drafts.main;
+      return (main && main.server_ref) || 'concept:server:this-device';
+    };
     function protectedContext(project) {
       /* the concept host's own protected context for this page's Project (never where a real or injected one is) */
-      if (!window.__O55_OWNER_CONTEXT__ && conceptOn() && project && window.O55 && window.O55.S) {
+      if (!window.__O55_OWNER_CONTEXT__ && conceptOn() && project && window.O55) {
         const S = window.O55.S;
-        return { project, client: S.env.client.id, server: S.sess.drafts.main.server_ref || 'concept:server:this-device', recovery_set_id: 'concept:recovery-set:' + project, recovery_generation: 1 };
+        return { project, client: conceptClient(S), server: conceptServer(S), recovery_set_id: 'concept:recovery-set:' + project, recovery_generation: 1 };
       }
       const c = window.__O55_OWNER_CONTEXT__;
       if (!c || c.project !== project || !c.client || !c.server || !c.recovery_set_id || !Number.isInteger(c.recovery_generation)) return null;

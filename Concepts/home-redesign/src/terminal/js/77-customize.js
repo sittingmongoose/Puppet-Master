@@ -303,8 +303,9 @@
     var html = '';
     html += '<div class="pmt-cz-scrim" data-act="scrim" aria-hidden="true"><i class="pmt-cz-sh"></i><i class="pmt-cz-sh"></i><i class="pmt-cz-sh"></i><i class="pmt-cz-sh"></i></div><div class="pmt-cz-frame" aria-hidden="true"><span class="pmt-cz-framelabel">This terminal</span></div>';
     /* data-lg-surface="menu": the Liquid Glass layer's opt-in for a floating sheet (its CONTRACT.md); data-lg-dense: a
-       large dialog full of text takes its heavier tint (both inert without Liquid Glass) */
-    html += '<section class="pmt-cz-dialog" role="dialog" aria-modal="true" aria-labelledby="pmt-cz-title" aria-describedby="pmt-cz-lead" tabindex="-1" data-lg-surface="menu" data-lg-dense>';
+       large dialog full of text takes its heavier tint (both inert without Liquid Glass). aria-modal is the shown
+       screen's alone (reveal sets it, a close takes it away): a parked screen is no open modal (FO-145) */
+    html += '<section class="pmt-cz-dialog" role="dialog" aria-labelledby="pmt-cz-title" aria-describedby="pmt-cz-lead" tabindex="-1" data-lg-surface="menu" data-lg-dense>';
     html += '<header class="pmt-cz-head"><div class="pmt-cz-titles"><p class="pmt-cz-kicker"><span>' + esc('Customize · ' + label) + '</span></p>' +
       '<h2 class="pmt-cz-title" id="pmt-cz-title">Terminal appearance</h2>' +
       '<p class="pmt-cz-lead" id="pmt-cz-lead">Pick what you want to change. The preview and this terminal show it at once, and it is saved.</p></div>' +
@@ -339,7 +340,7 @@
       '<div class="pmt-cz-dock" data-dock hidden aria-hidden="true"><span class="pmt-cz-docktitle">Preview</span><div class="pmt-cz-dockbox" data-dock-box></div></div></nav>';
     /* colours */
     html += '<section class="pmt-cz-group" data-group="colors" aria-labelledby="pmt-cz-g-colors">' + ghead('colors', 'Colors', 'One catalog with the code editor. Hover a scheme to see it here and on the terminal; click to keep it.') +
-      '<div class="pmt-cz-findrow"><input class="pmt-cz-search pmt-pop-search" type="search" placeholder="Find a scheme" aria-label="Find a scheme"' + NOTAG + '><span class="pmt-cz-findn" data-find-n></span></div>' +
+      '<div class="pmt-cz-findrow"><input class="pmt-cz-search pmt-pop-search" type="search" placeholder="Find a scheme" aria-label="Find a scheme"' + NOTAG + '><span class="pmt-cz-findn" data-find-n role="status" aria-live="polite" aria-atomic="true"></span></div>' +
       '<div class="pmt-cz-tiles pmt-cz-schemes" role="radiogroup" aria-label="Colour scheme">' + schemeTiles() + '</div>' +
       '<div class="pmt-cz-row">' + chip('schemePair', 'Switch with light and dark', 'A scheme you pick swaps for its family’s other version when the app changes mode.') +
       '<div class="pmt-cz-field"><span class="pmt-cz-flabel">Minimum text contrast</span>' + seg('minContrast', [[1, 'Off'], [3, '3:1'], [4.5, '4.5:1'], [7, '7:1']], 'Minimum text contrast') +
@@ -528,6 +529,9 @@
     var overlay = document.getElementById('pmw-overlay') || document.body;
     var root = el('div', 'pmt-cz pmt-calm pmt-cz-parked');
     root.setAttribute('aria-hidden', 'true');
+    /* parked: out of the focus order, hit testing and find-in-page as a whole, as the editor's screen is (FO-145: a parked
+       screen read as an open modal dialog that nothing made inert) */
+    root.inert = true;
     root.setAttribute('data-pmw-overlay', 'terminal-appearance');
     root.innerHTML = skeleton(v, staged);
     if (!staged) overlay.appendChild(root);
@@ -1525,9 +1529,10 @@
       endPreview(); detach();
       if (renaming) presetRenameEnd(false, false);
       if (preview) { preview.stopDemo(); if (pv) pv.onHide(); }
-      root.setAttribute('aria-hidden', 'true');
+      root.setAttribute('aria-hidden', 'true'); dialog.removeAttribute('aria-modal');
       root.classList.remove('pmt-cz-in', 'pmt-cz-unveil');
-      function park() { if (closing === visit && !disposed) { root.classList.add('pmt-cz-parked'); parkedWatch(true); } }
+      /* inert again with the class that hides its contents: one restyle of the screen, not two */
+      function park() { if (closing === visit && !disposed) { root.inert = true; root.classList.add('pmt-cz-parked'); parkedWatch(true); } }
       if (noFocus) park(); else T.Motion.leave(root, park);
     };
     function dispose() {
@@ -1612,6 +1617,7 @@
       if (v.pop && v.pop !== root) v.closeAppearance(true);
       v.pop = root;
       v._apOnClose = typeof opts.onClose === 'function' ? opts.onClose : null;
+      v._apReturn = typeof opts.returnFocus === 'function' ? opts.returnFocus : null;
       scope = opts.scope === 'app' ? 'app' : v._apScope || 'tab';
       closed = false;
       /* something changed while it was parked and its catch-up has not run yet (a look just switched, a screen kept from a
@@ -1644,10 +1650,12 @@
       function reveal() {
         requestAnimationFrame(function () {
           if (closed || showing !== visit) return;
+          /* no longer inert in the frame that already restyles every element in it (the unveil) */
+          root.inert = false;
           root.classList.add('pmt-cz-unveil');
           requestAnimationFrame(function () {
             if (closed || showing !== visit) return;
-            root.removeAttribute('aria-hidden');
+            root.removeAttribute('aria-hidden'); dialog.setAttribute('aria-modal', 'true');
             root.classList.remove('pmt-cz-parked', 'pmt-cz-unveil');
             T.Motion.play(root, 'pmt-cz-in');
             setTimeout(function () {

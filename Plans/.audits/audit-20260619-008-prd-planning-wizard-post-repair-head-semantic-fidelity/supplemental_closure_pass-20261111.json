@@ -1,0 +1,293 @@
+{
+  "audit_id": "audit-20260619-008-prd-planning-wizard-post-repair-head-semantic-fidelity",
+  "closures": [
+    {
+      "appended_matrix_line": 1,
+      "appended_matrix_sha256": "8fc6828bed3a6d47bd01aaa8643b66d2f5a34ad2c7efcde35c4d77b5e206109d",
+      "appended_registry_line": 1161,
+      "appended_registry_sha256": "d221150e5b7b35b23be58e71d24306d4beef64a89897688f288357365cd3e15d",
+      "closes": {
+        "source_artifact": "semantic_risks.jsonl",
+        "source_row": 1
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/Contracts_V0.md#unit=CV-289": "56223979d66034ab53d89d376bb106c1f31005d5e8c543f0de775fef719cd080",
+        "Plans/Contracts_V0.md#unit=CV-290": "8fade1fee4c3d86a15475dfeccb89072934bd6a7065c2b7952a11dc9fb21e0f4",
+        "Plans/Plan_To_Node_Compilation.md#unit=PNC-014": "46c60cc1a52579a60cdd18e9c0b97815171f36684f284e9a6339a798728082b8",
+        "Plans/Plan_To_Node_Compilation.md#unit=PNC-015": "2d0773f40e02bf39efc77cff7524bf14d344fa9d3647fad49d5baa4daf198eac",
+        "Plans/plans_to_code_handoff.schema.json#json=/description": "8c33a94245e1102515609861470c42fa2640eda24d98b55cb8bdfe38873d224c",
+        "Plans/plans_to_code_handoff.schema.json#json=/title": "4c495e2a0a4c92aed5688a8d35035a36f7082c3b4f470498cc0f019b5d56bfe4"
+      },
+      "finding_key": "sfk-0c7eb19c70f02ce7066d6e0d",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "fb441b27fd75440e14115fb382b15a5258ad7ea3",
+      "ref_source": "audit_report",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260619-008-prd-planning-wizard-post-repair-head-semantic-fidelity-semantic-risks-jsonl-1",
+      "reviews": {
+        "astra": {
+          "batch": "S06",
+          "file": "supplemental/batches/S06/review-astra-r1.jsonl",
+          "packet_row_digest": "605a908a361e4112f8120e8c86ad6c654ecb9b7af49cbba27b7a4a81215bf6a3",
+          "reason": "The schema title/description now identify the runtime-aware schema and both source branches; PNC-014 and CV-289 explicitly qualify bootstrap/v1 design_only as historical and disabled. PNC-015 and CV-290 preserve the native_runtime extension with enablement evidence, so the old framing no longer excludes that branch.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "S06",
+          "file": "supplemental/batches/S06/review-sol-r1.jsonl",
+          "packet_row_digest": "605a908a361e4112f8120e8c86ad6c654ecb9b7af49cbba27b7a4a81215bf6a3",
+          "reason": "The schema description now identifies both source branches, and PNC-014/CV-289 explicitly qualify design_only as the historical disabled bootstrap branch while routing native_runtime to PNC-015/CV-290. The current runtime-aware schema framing therefore no longer presents the whole shared document as design-only.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    },
+    {
+      "appended_matrix_line": 2,
+      "appended_matrix_sha256": "d5805d484fa64182d89d9e3b208896d0c8963be079f7d3eddacfe41fc8a29e48",
+      "appended_registry_line": 1162,
+      "appended_registry_sha256": "09f883fdf33d27ddb09844f1bb759de5159787d380fa0d56319e1dadd3cf8804",
+      "closes": {
+        "source_artifact": "semantic_risks.jsonl",
+        "source_row": 2
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/Goal_Runtime_System.md#unit=GRS-002": "b15cbe1426ef358b4b01e3bbf9cb46575a77eb849b9e8c700d25447819ab5465",
+        "Plans/PRD_Builder.md#unit=PRDB-001": "f0c29b116387bcc29505e3a73b5129f9ab8d6c6cc8b7bf7c76d4f89e6fe15076",
+        "Plans/Planning_Wizard.md#unit=PWIZ-001": "cdffffa3f367d261f2ec17cf2780a281966ef439c0602683fedb9008b8888eb3",
+        "Plans/chain-wizard-flexibility.md#unit=CWF-151": "781b2a310115f346d5f398da2abd0127d386d1989644acbe306bb0487d92c6f4",
+        "Plans/chain-wizard.md#unit=CW-008": "de95dc33025556b6be996fb0f92575c224c9230795bb1d762342f4ba4f9fd574"
+      },
+      "finding_key": "sfk-72786f2a2004aee6d979f38c",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "fb441b27fd75440e14115fb382b15a5258ad7ea3",
+      "ref_source": "audit_report",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260619-008-prd-planning-wizard-post-repair-head-semantic-fidelity-semantic-risks-jsonl-2",
+      "reviews": {
+        "astra": {
+          "batch": "S06",
+          "file": "supplemental/batches/S06/review-astra-r1.jsonl",
+          "packet_row_digest": "3e5a4c28b46fec2dbf146db3fa21ac4ee41e1e65b01b9edf1b3d3b7bc906039c",
+          "reason": "CW-008 and CWF-151 are retired and explicitly restrict the former names to compatibility/source lineage; GRS-002 now names future Planning Wizard in implementation_surfaces. Active PWIZ-001 and PRDB-001 confirm Planning Wizard and PRD Builder as the current names, closing the mixed active-name defect.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "S06",
+          "file": "supplemental/batches/S06/review-sol-r1.jsonl",
+          "packet_row_digest": "3e5a4c28b46fec2dbf146db3fa21ac4ee41e1e65b01b9edf1b3d3b7bc906039c",
+          "reason": "CW-008 and CWF-151 are retired and expressly restrict the old builder/wizard names to compatibility or source lineage; GRS-002 now names future Planning Wizard. The current Planning Wizard owner still prohibits those old names as active product terminology, so the flagged active-field drift is repaired.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    },
+    {
+      "appended_matrix_line": 3,
+      "appended_matrix_sha256": "97681bc5262120a4b26a323198b0c16388e8380f3448c56beec5e66ba095dc8f",
+      "appended_registry_line": 1163,
+      "appended_registry_sha256": "9cf9d9ac629e87898f6c64c6c589a389225f635d4f049adffb10587450c1b03c",
+      "closes": {
+        "source_artifact": "ledger_consistency.json",
+        "source_row": "findings[0]"
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/.audits/audit-20260619-010-prd-planning-wizard-post-repair-head-semantic-fidelity/repair_report.json": "4c42a9ae8def71ed5171be8ce5674ddda696a373ee3948f65091b9ca71e4996c",
+        "Plans/ledgers/v2/ledger_registry.json#json=/sealed_ledgers/8/latest_audit_ref": "ddc486a9967fbefdbca5ed0e04dc56a0dcfc11be7a9a7c5c14933db99eb791b0",
+        "Plans/ledgers/v2/ledger_registry.json#json=/sealed_ledgers/8/latest_audit_validated_at_utc": "f599a79c6125abaa8e9e83c5210c34d4e7ddcc8a6ec001a06815abad926b65e2",
+        "Plans/ledgers/v2/ledger_registry.json#json=/sealed_ledgers/8/ledger_id": "b5a6a590364b4dfb1c703a23a46d713370dc2604540bf189b14b1f371188e8ba",
+        "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/registry_entry.json#json=/latest_audit_ref": "ddc486a9967fbefdbca5ed0e04dc56a0dcfc11be7a9a7c5c14933db99eb791b0",
+        "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/registry_entry.json#json=/latest_audit_validated_at_utc": "f599a79c6125abaa8e9e83c5210c34d4e7ddcc8a6ec001a06815abad926b65e2",
+        "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/compile_queue.json#json=/latest_audit_ref": "ddc486a9967fbefdbca5ed0e04dc56a0dcfc11be7a9a7c5c14933db99eb791b0",
+        "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/compile_queue.json#json=/latest_audit_validated_at_utc": "f599a79c6125abaa8e9e83c5210c34d4e7ddcc8a6ec001a06815abad926b65e2",
+        "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/current.json#json=/latest_audit_ref": "ddc486a9967fbefdbca5ed0e04dc56a0dcfc11be7a9a7c5c14933db99eb791b0",
+        "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/current.json#json=/latest_audit_validated_at_utc": "f599a79c6125abaa8e9e83c5210c34d4e7ddcc8a6ec001a06815abad926b65e2",
+        "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/current.json#json=/post_audit_20260619_010_repair_summary/validated_at_utc": "f599a79c6125abaa8e9e83c5210c34d4e7ddcc8a6ec001a06815abad926b65e2",
+        "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/handoff.json#json=/latest_audit_ref": "ddc486a9967fbefdbca5ed0e04dc56a0dcfc11be7a9a7c5c14933db99eb791b0",
+        "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/handoff.json#json=/latest_audit_validated_at_utc": "f599a79c6125abaa8e9e83c5210c34d4e7ddcc8a6ec001a06815abad926b65e2",
+        "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/open_items.json#json=/latest_audit_ref": "ddc486a9967fbefdbca5ed0e04dc56a0dcfc11be7a9a7c5c14933db99eb791b0",
+        "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/state/open_items.json#json=/latest_audit_validated_at_utc": "f599a79c6125abaa8e9e83c5210c34d4e7ddcc8a6ec001a06815abad926b65e2",
+        "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/validation/ledger_health.json#json=/latest_audit_ref": "ddc486a9967fbefdbca5ed0e04dc56a0dcfc11be7a9a7c5c14933db99eb791b0",
+        "Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/validation/ledger_health.json#json=/latest_audit_validated_at_utc": "f599a79c6125abaa8e9e83c5210c34d4e7ddcc8a6ec001a06815abad926b65e2"
+      },
+      "finding_key": "sfk-9a51be56b6e4c1e4e9ee864a",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "fb441b27fd75440e14115fb382b15a5258ad7ea3",
+      "ref_source": "audit_report",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260619-008-prd-planning-wizard-post-repair-head-semantic-fidelity-ledger-consistency-json-findings-0",
+      "reviews": {
+        "astra": {
+          "batch": "S06",
+          "file": "supplemental/batches/S06/review-astra-r1.jsonl",
+          "packet_row_digest": "aeb88cd14b2e6a605ee525cbbdaf35ede4929f4dd5494bb94885943aad771100",
+          "reason": "All six local projections and the matching sealed registry entry now agree on the audit-010 repair pointer and latest_audit_validated_at_utc=2026-06-19T17:15:59Z. That value matches the recorded audit-010 validated_at_utc, resolving the cross-projection timestamp drift.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "S06",
+          "file": "supplemental/batches/S06/review-sol-r1.jsonl",
+          "packet_row_digest": "89a8d0297b2f5ba7ee094fbf35192b5622021076c3deddc9e74a9842cdc723a0",
+          "reason": "All six local projections and the sole global-registry entry for this ledger agree on audit-010 and latest_audit_validated_at_utc=2026-06-19T17:15:59Z, matching the recorded repair validation time. The report generation time is later and does not recreate cross-projection validation-time drift.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    },
+    {
+      "appended_matrix_line": 4,
+      "appended_matrix_sha256": "5d3bc2bcb8e9366b7e882c1afe3ac41d612f91e1ea2e3c0bc18e723a975d21b9",
+      "appended_registry_line": 1199,
+      "appended_registry_sha256": "3f783eeaa4e7e135e079811475b190b56144c8a9d1f8593199aa4486cacc8e5d",
+      "closes": {
+        "source_artifact": "validator_results.json",
+        "source_row": "results.pm_bootstrap_ledger_validate_prd_planning_wizard"
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/.audits/audit-20260619-008-prd-planning-wizard-post-repair-head-semantic-fidelity/FINAL_REPORT.md": "0fe70bec6d0369692292b009e1ec969a404414f7c3deb9ee1049cbd210f0ac75",
+        "Plans/.audits/audit-20260619-008-prd-planning-wizard-post-repair-head-semantic-fidelity/validator_results.json": "925fb616183063eb117bd1cdb391f23ab40ee16298a2c8b0f57a5406892275a5"
+      },
+      "finding_key": "sfk-ae2d2dd3a63dc0a4082ba259",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "77bae0c63605d0a6f643aa3f1d8c51c2f3bb7947",
+      "ref_source": "audit_report",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260619-008-prd-planning-wizard-post-repair-head-semantic-fidelity-validator-results-json-results-pm-bootstrap-ledger-validate-prd-planning-wizard",
+      "reviews": {
+        "astra": {
+          "batch": "SF1",
+          "file": "supplemental/batches/SF1/review-astra-max-r1.jsonl",
+          "packet_row_digest": "4562ec4f6a0083c01d40d5f6fa801615eca2f291e33aa649c0ba3a8df3cdfac2",
+          "reason": "The original bootstrap-ledger invocation failed before validation because yaml could not be imported; its own row is marked superseded_environment_failure and repair_required=false. The matching PYTHONPATH rerun passed, and the audit final report expressly excludes these superseded environment observations from the four repair-required findings.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "false_positive",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "SF1",
+          "file": "supplemental/batches/SF1/review-sol-max-r1.jsonl",
+          "packet_row_digest": "4562ec4f6a0083c01d40d5f6fa801615eca2f291e33aa649c0ba3a8df3cdfac2",
+          "reason": "This bootstrap-ledger validation invocation failed on the missing yaml module and is explicitly classified as a superseded environment failure. The named with_pythonpath rerun passed, and the audit's own final report records zero actionable validator failures, so false_positive fits this row.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "false_positive",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    },
+    {
+      "appended_matrix_line": 5,
+      "appended_matrix_sha256": "50f96d1790fe6845a33c444ef1209c7c96433856bc540ae7c085d7be2f1757da",
+      "appended_registry_line": 1200,
+      "appended_registry_sha256": "db97066a512a64f7dd7c87cac551c47073c1eca066f807d4e66fbb0963224414",
+      "closes": {
+        "source_artifact": "validator_results.json",
+        "source_row": "results.pm_plan_index_validate"
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/.audits/audit-20260619-008-prd-planning-wizard-post-repair-head-semantic-fidelity/FINAL_REPORT.md": "0fe70bec6d0369692292b009e1ec969a404414f7c3deb9ee1049cbd210f0ac75",
+        "Plans/.audits/audit-20260619-008-prd-planning-wizard-post-repair-head-semantic-fidelity/validator_results.json": "925fb616183063eb117bd1cdb391f23ab40ee16298a2c8b0f57a5406892275a5"
+      },
+      "finding_key": "sfk-92689f47da42e808bffd15e1",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "77bae0c63605d0a6f643aa3f1d8c51c2f3bb7947",
+      "ref_source": "audit_report",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260619-008-prd-planning-wizard-post-repair-head-semantic-fidelity-validator-results-json-results-pm-plan-index-validate",
+      "reviews": {
+        "astra": {
+          "batch": "SF1",
+          "file": "supplemental/batches/SF1/review-astra-max-r1.jsonl",
+          "packet_row_digest": "5993c62553ced74c6cc4eb331b4a75e07287e19d6474f6e8a66ed8aa40ae0564",
+          "reason": "The original plan-index invocation is explicitly a superseded missing-yaml environment failure, with no Plan validation result or repair requirement. The matching PYTHONPATH rerun has exit code 0/status pass, and the audit report records zero actionable validator failures, supporting false_positive.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "false_positive",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "SF1",
+          "file": "supplemental/batches/SF1/review-sol-max-r1.jsonl",
+          "packet_row_digest": "5993c62553ced74c6cc4eb331b4a75e07287e19d6474f6e8a66ed8aa40ae0564",
+          "reason": "This PlanUnit index validation invocation failed on the missing yaml module and is explicitly classified as a superseded environment failure. The named with_pythonpath rerun passed, and the audit's own final report records zero actionable validator failures, so false_positive fits this row.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "false_positive",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    },
+    {
+      "appended_matrix_line": 6,
+      "appended_matrix_sha256": "ff38d9dd5bdadc418c17a8544b1e7c542adbbd890dbfae030babcef461333f4d",
+      "appended_registry_line": 1201,
+      "appended_registry_sha256": "a83ace6878f49e3d6d049faeb54efc322b537164a34ab698d1150227c05a3faf",
+      "closes": {
+        "source_artifact": "validator_results.json",
+        "source_row": "results.pm_plan_migration_validate"
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/.audits/audit-20260619-008-prd-planning-wizard-post-repair-head-semantic-fidelity/FINAL_REPORT.md": "0fe70bec6d0369692292b009e1ec969a404414f7c3deb9ee1049cbd210f0ac75",
+        "Plans/.audits/audit-20260619-008-prd-planning-wizard-post-repair-head-semantic-fidelity/validator_results.json": "925fb616183063eb117bd1cdb391f23ab40ee16298a2c8b0f57a5406892275a5"
+      },
+      "finding_key": "sfk-a9abe2191e91ca9f277abf77",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "77bae0c63605d0a6f643aa3f1d8c51c2f3bb7947",
+      "ref_source": "audit_report",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260619-008-prd-planning-wizard-post-repair-head-semantic-fidelity-validator-results-json-results-pm-plan-migration-validate",
+      "reviews": {
+        "astra": {
+          "batch": "SF1",
+          "file": "supplemental/batches/SF1/review-astra-max-r1.jsonl",
+          "packet_row_digest": "575896faa1dd75936b5445d798b5e4e85d5c24301d898a61666633ede3718d2d",
+          "reason": "The original plan-migration invocation failed on the yaml import and was explicitly superseded by the same validation command rerun with PYTHONPATH. That rerun passed with no failures, and the audit's own final report treats all three base-environment failures as non-actionable observations.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "false_positive",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "SF1",
+          "file": "supplemental/batches/SF1/review-sol-max-r1.jsonl",
+          "packet_row_digest": "575896faa1dd75936b5445d798b5e4e85d5c24301d898a61666633ede3718d2d",
+          "reason": "This plan-migration validation invocation failed on the missing yaml module and is explicitly classified as a superseded environment failure. The named with_pythonpath rerun passed, and the audit's own final report records zero actionable validator failures, so false_positive fits this row.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "false_positive",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    }
+  ],
+  "decision": {
+    "decision_record": "Plans/Decision_Log.md#DL-334",
+    "owner_unit": "Plans/Planning_Ledger_System.md#PLS-026",
+    "route": "new_registry_row",
+    "source": "Jared, \"approve all\", T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521, 2026-11-05T02:48:03Z (stream C question 7, option (a)); extended to the other June audits with uncovered rows by pm7-build's relay of the same approved option (pm-mail 1105030457-ade2, 2026-11-05)"
+  },
+  "matrix": {
+    "original_rows": 0,
+    "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "path": "repair_closure_matrix.jsonl"
+  },
+  "pass_id": "audit-20260619-008-prd-planning-wizard-post-repair-head-semantic-fidelity-supplemental-20261111",
+  "reviews": "Sol and Astra blind reviews are listed on each closures entry (verdict, your_verdict, your_status, packet_row_digest, batch file)",
+  "schema_id": "pm.audit_supplemental_closure_pass.v1"
+}

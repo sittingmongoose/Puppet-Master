@@ -10794,87 +10794,28 @@ plan_unit_id: PS-147
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Permissions_System.md
-canonical_text: 'O1–O3 approve a build grant once at exact human Plan approval for a Project-bound Planning
-  Wizard/Orchestrator build. The review lists the repositories to create/push, registry namespaces/package/image/template
-  destinations, CI configuration/execution and deployment targets with allowed operations. It also lists exclusions,
-  risky cleanup eligibility and actions with no safe Undo. Approval of a Plan alone is not an unbounded grant:
-  the person must approve the exact manifest. The Orchestrator then runs yolo within that grant without repeating
-  ordinary per-action human clicks. Application chat Goals/Crew/Assistant Plan builds and schedules cannot
-  issue a Project Orchestrator grant or obtain one through a message.
+canonical_text: |-
+  O1–O3 approve a build grant once at exact human Plan approval for a Project-bound Planning Wizard/Orchestrator build. The review lists the repositories to create/push, registry namespaces/package/image/template destinations, CI configuration/execution and deployment targets with allowed operations. It also lists exclusions, risky cleanup eligibility and actions with no safe Undo. Approval of a Plan alone is not an unbounded grant: the person must approve the exact manifest. The Orchestrator then runs yolo within that grant without repeating ordinary per-action human clicks. Application chat Goals/Crew/Assistant Plan builds and schedules cannot issue a Project Orchestrator grant or obtain one through a message.
 
+  A BuildGrant binds grant_id and revision, actual issuing person and auth context/time, project_id, named_plan_id plus exact approved revision/hash, reserved build_run_id and the Project allowed-Computers policy reference, plus the exact approved Environment/route/account and operation/resource authority, allowed operation classes and typed stable target/resource selectors, permission snapshot and policy generation, validity/expiry when set, revocation generation and current user Stop epoch. A new-resource selector names exact provider/instance/account/parent container/namespace/name and creation constraints; it is not a wildcard for all future resources. A named existing resource binds immutable ID and only its listed permissible operations. Namespace grants enumerate allowed child kinds and operations; membership or a name prefix grants nothing. The permission snapshot and grant digest must be committed before build admission. Plan, target, account, permission ceiling or grant drift cannot widen authority; invalidated evidence blocks for refresh/review and any expansion requires another human decision.
 
-  A BuildGrant binds grant_id and revision, actual issuing person and auth context/time, project_id, named_plan_id
-  plus exact approved revision/hash, reserved build_run_id, scope/Computer/Host/Environment/route/account,
-  allowed operation classes and typed stable target/resource selectors, permission snapshot and policy generation,
-  validity/expiry when set, revocation generation and current user Stop epoch. A new-resource selector names
-  exact provider/instance/account/parent container/namespace/name and creation constraints; it is not a wildcard
-  for all future resources. A named existing resource binds immutable ID and only its listed permissible operations.
-  Namespace grants enumerate allowed child kinds and operations; membership or a name prefix grants nothing.
-  The permission snapshot and grant digest must be committed before build admission. Plan, target, account,
-  permission ceiling or grant drift cannot widen authority; invalidated evidence blocks for refresh/review
-  and any expansion requires another human decision.
+  Permissions is the sole grant writer. Canonical commands are cmd.build_grant.preview, cmd.build_grant.approve and cmd.build_grant.revoke with sole planned handlers handlers::permissions::build_grant_preview, handlers::permissions::build_grant_approve and handlers::permissions::build_grant_revoke. Preview is read-only and returns exact manifest/ref/hash/owner revisions, exclusions and blockers. Approve binds that current preview, current approved Plan/hash/build identity, expected grant-absence/revision CAS, issuer and idempotency key; it is human-only, including expansion. Revoke targets grant_id/revision under current actor authority, records revocation and fences all future child/provider dispatch. Existing run-owner Start/Stop/abort commands remain the execution controls; no second build runner or stop engine is introduced. Agent requests may prepare a preview but cannot resolve their own protected approval, issue, expand, renew or un-revoke the grant.
 
+  Each actual successful create appends a CreatedResourceManifest entry joined to the exact grant/build/task/operation receipt: provider/instance/account/parent, stable immutable resource ID/UID and generation, creation time, idempotency identity and verified result evidence. A failed or unknown create is not ownership proof; reconcile before adoption/retry. Pre-existing resources and a same-named replacement remain unowned regardless of selector or prefix. Observe identity/generation immediately before mutation/cleanup; replacement, owner drift, unknown provenance, user modification or other references/holds refuse the claimed automatic cleanup.
 
-  Permissions is the sole grant writer. Canonical commands are cmd.build_grant.preview, cmd.build_grant.approve
-  and cmd.build_grant.revoke with sole planned handlers handlers::permissions::build_grant_preview, handlers::permissions::build_grant_approve
-  and handlers::permissions::build_grant_revoke. Preview is read-only and returns exact manifest/ref/hash/owner
-  revisions, exclusions and blockers. Approve binds that current preview, current approved Plan/hash/build
-  identity, expected grant-absence/revision CAS, issuer and idempotency key; it is human-only, including expansion.
-  Revoke targets grant_id/revision under current actor authority, records revocation and fences all future
-  child/provider dispatch. Existing run-owner Start/Stop/abort commands remain the execution controls; no
-  second build runner or stop engine is introduced. Agent requests may prepare a preview but cannot resolve
-  their own protected approval, issue, expand, renew or un-revoke the grant.
+  The grant can change its exact listed resources and delete only what the build itself demonstrably created. The retained Y1 risky actions—prune, remote branch/repository delete, destructive discard and Kubernetes delete/exec—avoid another ask only when that exact operation and verified grant-created object are inside the approved grant. A named pre-existing target may receive listed non-destructive build/deploy operations, but it never receives that risky-action exception. Broad Docker/system/registry prune cannot become a closed owned-resource cleanup by naming a namespace. There is no failure-setup or conversion-Undo automatic remote-repository deletion, no unrelated Project/environment mutation, no main/default/protected force-push, no secret value exposure or Recovery Kit export, no protected sign-in/trust/claim/Always bypass, no paid signup or human-only Azure team-project administration. Existing credentials may be consumed only as already-admitted opaque references under their owner; the grant never acquires or exports secret bytes.
 
+  Every coordinator, task/child admission and final local/remote effect checks exact grant/Plan/build/task/target/permission/ownership generations, parent ceiling and Stop/revocation epoch. Children receive at most their exact subset and cannot transfer authority to another Project/run/chat or broaden selectors. Logical operation idempotency binds exact operation/target/request under the grant; original historical receipts remain fixed and cannot re-authorize an attempt after drift. A remote indeterminate outcome reconciles before repeating work. Stop/revoke races fence new effects and late completions remain truthful rather than erased or re-executed.
 
-  Each actual successful create appends a CreatedResourceManifest entry joined to the exact grant/build/task/operation
-  receipt: provider/instance/account/parent, stable immutable resource ID/UID and generation, creation time,
-  idempotency identity and verified result evidence. A failed or unknown create is not ownership proof; reconcile
-  before adoption/retry. Pre-existing resources and a same-named replacement remain unowned regardless of
-  selector or prefix. Observe identity/generation immediately before mutation/cleanup; replacement, owner
-  drift, unknown provenance, user modification or other references/holds refuse the claimed automatic cleanup.
+  O3's live What the build did list is an existing ObservableWork/History projection of every remote action and target, authority, outcome, time and linked owner receipt. It also exposes pending/blocked/unknown effects, Stop and available true Undo or explicitly labelled compensation/No safe Undo. It is not a new parallel action log or inferred build.* event family. Undo itself requires exact currentness/ownership/permission; revoking or stopping does not delete resources or reverse completed external actions. End-of-run YOLO scans/reconciliation and required verification still run. Static grant schemas/fixtures do not certify a native build, provider path or resource-ownership proof.
 
+  The Project Home Server Permissions owner holds the canonical grant, ownership manifest and authority-receipt references in the Project Vault under Storage-registered versioned families. These records are not disposable projections and must be included coherently in Project Backup and retained with build/audit/recovery holds. A restored grant is historical until the current owner, Plan, permission generation and Stop/revocation checks re-admit it; backup restore never resurrects an active grant by itself.
 
-  The grant can change its exact listed resources and delete only what the build itself demonstrably created.
-  The retained Y1 risky actions—prune, remote branch/repository delete, destructive discard and Kubernetes
-  delete/exec—avoid another ask only when that exact operation and verified grant-created object are inside
-  the approved grant. A named pre-existing target may receive listed non-destructive build/deploy operations,
-  but it never receives that risky-action exception. Broad Docker/system/registry prune cannot become a closed
-  owned-resource cleanup by naming a namespace. There is no failure-setup or conversion-Undo automatic remote-repository
-  deletion, no unrelated Project/environment mutation, no main/default/protected force-push, no secret value
-  exposure or Recovery Kit export, no protected sign-in/trust/claim/Always bypass, no paid signup or human-only
-  Azure team-project administration. Existing credentials may be consumed only as already-admitted opaque
-  references under their owner; the grant never acquires or exports secret bytes.
+  SP-353 is the sole physical owner for build_grant, created_resource_manifest and grant_revocation, referring to selected Permissions bodies and actual original authority sources. Missing immutable grant_revocation record/source materialization keeps that dispatch path unavailable; command request/result shapes or restored stale grants cannot substitute for current revocation authority. These records and required receipt/source refs retain independent audit/backup/hold lifetimes after chat conversion or Undo expiry.
 
+  DL-473 changes build location scope to any Computer currently allowed for this Project by a person, including one the person allows later: allowing that Computer is itself the person's act, so the build grant does not freeze an enumerated machine list at approval. Preview names this dynamic Project allowed-set policy and the then-current members plainly. Auto and agents cannot add Computers or device identities, widen that set or manufacture authority. A new Computer/device identity still asks even in YOLO. Allowing a Computer is only location authorization; new accounts, routes, environments, resources or operations outside existing authority retain their own protected approval and readiness checks. Removing/draining/revoking a Computer removes future eligibility and requires truthful active-work disposition; it never broadens another candidate.
 
-  Every coordinator, task/child admission and final local/remote effect checks exact grant/Plan/build/task/target/permission/ownership
-  generations, parent ceiling and Stop/revocation epoch. Children receive at most their exact subset and cannot
-  transfer authority to another Project/run/chat or broaden selectors. Logical operation idempotency binds
-  exact operation/target/request under the grant; original historical receipts remain fixed and cannot re-authorize
-  an attempt after drift. A remote indeterminate outcome reconciles before repeating work. Stop/revoke races
-  fence new effects and late completions remain truthful rather than erased or re-executed.
-
-
-  O3''s live What the build did list is an existing ObservableWork/History projection of every remote action
-  and target, authority, outcome, time and linked owner receipt. It also exposes pending/blocked/unknown effects,
-  Stop and available true Undo or explicitly labelled compensation/No safe Undo. It is not a new parallel
-  action log or inferred build.* event family. Undo itself requires exact currentness/ownership/permission;
-  revoking or stopping does not delete resources or reverse completed external actions. End-of-run YOLO scans/reconciliation
-  and required verification still run. Static grant schemas/fixtures do not certify a native build, provider
-  path or resource-ownership proof.
-
-
-  The Project Home Server Permissions owner holds the canonical grant, ownership manifest and authority-receipt
-  references in the Project Vault under Storage-registered versioned families. These records are not disposable
-  projections and must be included coherently in Project Backup and retained with build/audit/recovery holds.
-  A restored grant is historical until the current owner, Plan, permission generation and Stop/revocation
-  checks re-admit it; backup restore never resurrects an active grant by itself.
-
-
-  SP-353 is the sole physical owner for build_grant, created_resource_manifest and grant_revocation, referring
-  to selected Permissions bodies and actual original authority sources. Missing immutable grant_revocation
-  record/source materialization keeps that dispatch path unavailable; command request/result shapes or restored
-  stale grants cannot substitute for current revocation authority. These records and required receipt/source
-  refs retain independent audit/backup/hold lifetimes after chat conversion or Undo expiry.'
+  Each dispatch freezes one exact Computer/Host/Environment/source/account/route/attempt/owner epoch and the current allowed-set generation, with fresh Plan/build/grant/permission/Stop/revocation rechecks under PS-148 and SIR-056. Other tasks may select another allowed Computer without new location approval; a started task moves only after safe checkpoint, reconciliation and old-owner fencing. The approved Project source/context must still verify on that actual Computer; dynamic location scope never approves a new baseline or target. Historical exact-location grants keep their historical meaning. A governed grant/context successor and per-dispatch selection receipt must carry this policy before native use; do not reinterpret a v1 record or hand-widen its closed schema.
 gui_related: true
 gui_classification_reason: Approval cards, scope selection, live action targets and recovery controls are
   user-visible.
@@ -10894,6 +10835,8 @@ acceptance_criteria:
   messages cannot adopt a Project grant.
 - Unknown create/push is reconciled before retry; action projection includes actual target/authority and no
   unsafe invented Undo.
+- "Build location scope follows the current person-allowed Project set, including later human additions, while each attempt freezes exactly one current selection."
+- "YOLO/Auto/agents cannot add a Computer/device identity or widen operation/account/resource authority; historical exact grants are not upgraded implicitly."
 validation_surfaces:
 - scripts/pm-projects-refresh-contracts.py
 - scripts/pm-plan-index.py
@@ -10907,6 +10850,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+- "share/puppet-master/2026-11-09-settings-feedback/BRIEF-plans-where-work-runs.md; Jared 2026-11-09"
 - source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards O1/O2/O3; Y1
 - 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "Isnt orchestrator
   going to need a lot of permissions to fully build an entire platform from plans that the planning wizard
@@ -10955,68 +10899,22 @@ plan_unit_id: PS-148
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Permissions_System.md
-canonical_text: 'All tool, domain, CLI/DAE interception, child, scheduled and remote-effect dispatch uses
-  one Permissions admission pipeline, policy.may_execute_tool(), on finalized operation context. Select a
-  legitimate authority source—actual human decision, scoped mode authority under PS-146, or a previously human-approved
-  PS-147 build grant—then intersect runtime/profile/Managed/parent/receiver ceilings, target/resource ownership,
-  capability/account/auth/route, root/trust/FileSafe/DAE, actual network/body disclosure, currentness, storage
-  integrity/writer and Stop/pause/revocation gates. Hook changes and final remote target/body changes require
-  revalidation before effect. A broad mode/profile/default or a receipt from another task does not substitute
-  for those independent joins.
+canonical_text: |-
+  All tool, domain, CLI/DAE interception, child, scheduled and remote-effect dispatch uses one Permissions admission pipeline, policy.may_execute_tool(), on finalized operation context. Select a legitimate authority source—actual human decision, scoped mode authority under PS-146, or a previously human-approved PS-147 build grant—then intersect runtime/profile/Managed/parent/receiver ceilings, target/resource ownership, capability/account/auth/route, root/trust/FileSafe/DAE, actual network/body disclosure, currentness, storage integrity/writer and Stop/pause/revocation gates. Hook changes and final remote target/body changes require revalidation before effect. A broad mode/profile/default or a receipt from another task does not substitute for those independent joins.
 
+  Only ordinary asks covered by the exact mode/grant are skipped. Y1 risky actions retain PS-146 asks except for the exact grant-created-resource exception. Grant issuance/expansion, durable Always, S15 source loosening, protected secrets/auth/trust/claim, screen/provider disclosure and paid signup stay human decisions. Source Project Off and receiver read-only/Regular ceilings are never widened by the sender. An app Goal, Crew, Plan build or schedule uses its own immutable app authority and roots; duration/delegation/scheduling does not mint a Project grant. A timer uses its frozen scope/target/configuration plus fresh actual eligibility, not the visible chat's mode. Conversion retires source dispatch and reissues destination authority under N25/N27, retaining both source and destination Stop/pause fences; it never auto-resumes.
 
-  Only ordinary asks covered by the exact mode/grant are skipped. Y1 risky actions retain PS-146 asks except
-  for the exact grant-created-resource exception. Grant issuance/expansion, durable Always, S15 source loosening,
-  protected secrets/auth/trust/claim, screen/provider disclosure and paid signup stay human decisions. Source
-  Project Off and receiver read-only/Regular ceilings are never widened by the sender. An app Goal, Crew,
-  Plan build or schedule uses its own immutable app authority and roots; duration/delegation/scheduling does
-  not mint a Project grant. A timer uses its frozen scope/target/configuration plus fresh actual eligibility,
-  not the visible chat''s mode. Conversion retires source dispatch and reissues destination authority under
-  N25/N27, retaining both source and destination Stop/pause fences; it never auto-resumes.
+  The immutable decision/dispatch receipt identifies authority_kind=human|mode|build_grant with the real human decision or mode/task/snapshot or grant/issuer/revision reference. Keep approval_source compatibility values and add versioned provenance rather than rewriting old exact codecs. Human confirmation is never fabricated. Out-of-scope actions stop before effect with blocked_policy/blocked_approval/blocked_preflight as appropriate, canonical blocked_reason_code and ordered allowed_action_ids[], exact target and executed=false. A headless retained ask blocks with headless_ask_denied; absent handler/admitted contract/capability stays handler_unavailable or its existing closed owner reason. Typed app tool approval and Orchestrator blocked-node approval remain distinct envelopes through the same host.
 
+  Stop/revocation is enforced at every child admission and immediately before each new external effect. In-flight outcomes and reconciliation retain truth and original idempotency; neither cancellation, reconnection, a fresh setting nor projection replay clears a recovery hold, grants new authority or rewrites history. Ordinary publication admitted under YOLO is not blocked again by a domain wrapper seeking another generic yes. No static schema, browser/concept or fixture boolean proves native authority joins or execution.
 
-  The immutable decision/dispatch receipt identifies authority_kind=human|mode|build_grant with the real human
-  decision or mode/task/snapshot or grant/issuer/revision reference. Keep approval_source compatibility values
-  and add versioned provenance rather than rewriting old exact codecs. Human confirmation is never fabricated.
-  Out-of-scope actions stop before effect with blocked_policy/blocked_approval/blocked_preflight as appropriate,
-  canonical blocked_reason_code and ordered allowed_action_ids[], exact target and executed=false. A headless
-  retained ask blocks with headless_ask_denied; absent handler/admitted contract/capability stays handler_unavailable
-  or its existing closed owner reason. Typed app tool approval and Orchestrator blocked-node approval remain
-  distinct envelopes through the same host.
+  Backup first-policy creation consumes the Backup owner absent-key CAS/current preview and confers no backup-completed, repository-initialization, unlock, restore or prune authority. Archive pause is an owner-routed schedule consequence and never destructive maintenance. Recovery Kit Save/Copy/Print/Test and secret export, protected auth, paid account signup and ADO-008 external team-project administration remain person-owned even inside an approved build. New UI results preserve the exact initiating Client/invocation/return context and continuation generation; Back/Close is not cancellation of an already dispatched effect. New/changed commands remain handler_unavailable until actual native admission; declared expected_event_types=[] or a static fixture never invents a live producer.
 
+  CV-365/366 provide the selected scope, complete original-source/wrapper/hash graph and immutable app authority edition; SP-353 owns its physical custody, not another permission resolver. Only actual Project Orchestrator children inherit a narrowed BuildGrant subset. App/child/receiver work cannot borrow a foreign grant or turn restored evidence into current authority. Goal user_direct|agent_proposed_user_approved objective authority, S15 acceptance and every retained person decision remain separate from ordinary mode allow.
 
-  Stop/revocation is enforced at every child admission and immediately before each new external effect. In-flight
-  outcomes and reconciliation retain truth and original idempotency; neither cancellation, reconnection, a
-  fresh setting nor projection replay clears a recovery hold, grants new authority or rewrites history. Ordinary
-  publication admitted under YOLO is not blocked again by a domain wrapper seeking another generic yes. No
-  static schema, browser/concept or fixture boolean proves native authority joins or execution.
+  Delayed app Goal/Crew/Plan/message/task work uses the frozen request plus fresh PS-145 admission at owner eligibility and immediately before effect, including actual task/scope user_stop_epoch, roots, account, permission/writer and receiver/parent ceiling. Saved Ask me first remains a hold in YOLO. CV-368/SP-352 and SQR-019/020 own the independent Server app pause and exact one-dispatch direct-user exception; only a real user may change or clear pause. application_automation_paused blocks and app_automation_pause_unavailable fails closed, never treating missing custody as paused=false. Neither the exception nor a false clear erases task latches or source/destination holds. Conversion explicitly re-admits the exact destination target/version, consent and both scope epochs without borrowing current-view mode, another account or old authority.
 
-
-  Backup first-policy creation consumes the Backup owner absent-key CAS/current preview and confers no backup-completed,
-  repository-initialization, unlock, restore or prune authority. Archive pause is an owner-routed schedule
-  consequence and never destructive maintenance. Recovery Kit Save/Copy/Print/Test and secret export, protected
-  auth, paid account signup and ADO-008 external team-project administration remain person-owned even inside
-  an approved build. New UI results preserve the exact initiating Client/invocation/return context and continuation
-  generation; Back/Close is not cancellation of an already dispatched effect. New/changed commands remain
-  handler_unavailable until actual native admission; declared expected_event_types=[] or a static fixture
-  never invents a live producer.
-
-
-  CV-365/366 provide the selected scope, complete original-source/wrapper/hash graph and immutable app authority
-  edition; SP-353 owns its physical custody, not another permission resolver. Only actual Project Orchestrator
-  children inherit a narrowed BuildGrant subset. App/child/receiver work cannot borrow a foreign grant or
-  turn restored evidence into current authority. Goal user_direct|agent_proposed_user_approved objective authority,
-  S15 acceptance and every retained person decision remain separate from ordinary mode allow.
-
-
-  Delayed app Goal/Crew/Plan/message/task work uses the frozen request plus fresh PS-145 admission at owner
-  eligibility and immediately before effect, including actual task/scope user_stop_epoch, roots, account,
-  permission/writer and receiver/parent ceiling. Saved Ask me first remains a hold in YOLO. CV-368/SP-352
-  and SQR-019/020 own the independent Server app pause and exact one-dispatch direct-user exception; only
-  a real user may change or clear pause. application_automation_paused blocks and app_automation_pause_unavailable
-  fails closed, never treating missing custody as paused=false. Neither the exception nor a false clear erases
-  task latches or source/destination holds. Conversion explicitly re-admits the exact destination target/version,
-  consent and both scope epochs without borrowing current-view mode, another account or old authority.'
+  Placement under SIR-056 never supplies authority. A person's pin binds agents unless that person lets them choose; an agent can choose Auto or pin one task only within current allowed Computers and parent/human constraints, never alter Project/Everywhere defaults. At every dispatch join the actual worker's Computer/Project ceilings, allowed-set generation, source/context, account/tools, required minimums/slot leases and immutable selection to the existing authority pipeline. Recheck current grant/Plan/build/task/target/permission/Stop/revocation before effects. A permitted later human Computer addition is not grant expansion solely for location; other authority expansions still ask. New Computer/device identity always asks, including YOLO. An unavailable human pin waits with its reason rather than relaxing permissions or falling back. No placement bypasses mandatory DAE/FileSafe/testing/ownership/recovery or creates another Home writer.
 gui_related: false
 gui_classification_reason: Defines permission, scope, admission and recovery policy consumed by UI owners.
 depends_on:
@@ -11048,6 +10946,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+- "share/puppet-master/2026-11-09-settings-feedback/BRIEF-plans-where-work-runs.md; Jared 2026-11-09"
 - source_ref:projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-d; cards S13/S15/S16; N3/N4/N18/N25/N27;
   Y1/O1–O3
 - 'source_ref:share/puppet-master/2026-11-02-projects-pass2/README.md; Jared 2026-11-03: "YOLO mode needs

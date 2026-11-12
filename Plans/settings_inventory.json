@@ -11,7 +11,7 @@
   "provenance": {
     "source_path": "Concepts/pm6-build/sidecar/pm_settings_data.json",
     "source_sha256": "9b24e5bcf7f3dae8f0251215eb113c357d1a0ee22f185ac035e8969fd76b5c8d",
-    "disposition": "source-lineage-only concept demo baseline; this registry is the canonical restatement and may contain later owner-approved rows. Demo runtime fields (value, static status, src attributions) are excluded: status is derived from live subsystem state per F3-435 and never authored here. Q22, Jared 2026-10-30 (DL-257): NieR is the fifth family; retired nier-mode is migration-only, not an inventory row. Current census 1010."
+    "disposition": "source-lineage-only concept demo baseline; this registry is the canonical restatement and may contain later owner-approved rows. Demo runtime fields (value, static status, src attributions) are excluded: status is derived from live subsystem state per F3-435 and never authored here. Q22, Jared 2026-10-30 (DL-257): NieR is the fifth family; retired nier-mode is migration-only, not an inventory row. The live census is the unique IDs in settings, including later owner-approved additions; dated admission counts are historical."
   },
   "related_features_vocabulary": [
     "assistant_memory",
@@ -9095,7 +9095,7 @@
         "ask-me-first"
       ],
       "option_labels": {
-        "hands-off": "Hands-off",
+        "hands-off": "Without pausing",
         "ask-me-first": "Ask at checkpoints"
       },
       "default": "hands-off",
@@ -30325,31 +30325,27 @@
     {
       "id": "personas.library.persona-tags",
       "label": "Tags",
-      "desc": "Help search and automatic picking find this persona.",
+      "desc": "Free tags for filtering and search, with suggested kinds. Type any tag.",
       "type": "list",
       "options": [
-        "seam",
-        "package",
-        "lane",
-        "node",
+        "phase",
+        "task",
+        "subtask",
         "iteration",
-        "cross-seam",
+        "cross-phase",
         "language",
         "domain",
-        "framework",
-        "freeform"
+        "framework"
       ],
       "option_labels": {
-        "seam": "Seam",
-        "package": "Package",
-        "lane": "Lane",
-        "node": "Step",
+        "phase": "Phase",
+        "task": "Task",
+        "subtask": "Subtask",
         "iteration": "Iteration",
-        "cross-seam": "Across seams",
+        "cross-phase": "Across phases",
         "language": "Language",
         "domain": "Domain",
-        "framework": "Framework",
-        "freeform": "Other"
+        "framework": "Framework"
       },
       "default": [],
       "scope": [
@@ -30363,7 +30359,12 @@
         "node",
         "task",
         "subtask",
-        "Persona Tags"
+        "Persona Tags",
+        "phase",
+        "cross-phase",
+        "free tags",
+        "freeform",
+        "suggested kinds"
       ],
       "related_features": [
         "personas"
@@ -30380,7 +30381,8 @@
           "device": "set_inside_a_thing",
           "project": "set_inside_a_thing"
         }
-      }
+      },
+      "presentation_contract": "Plans/Personas.md#P-010 and DL-474: free string tag input. options are suggestions only, not an allowed-value list; arbitrary freeform tags remain valid. Tags belong to the Persona record and keep its existing owner scope and layering."
     },
     {
       "id": "personas.library.persona-aliases",
@@ -39531,6 +39533,269 @@
         "ask",
         "allow"
       ]
+    },
+    {
+      "id": "code.execution.auto-preset",
+      "label": "How Auto chooses",
+      "desc": "Balanced weighs free CPU, free memory in GB, free disk and queued work. A Project may override this Everywhere preset. Has the files already is Advanced only, default 0.",
+      "type": "select",
+      "default": "balanced",
+      "scope": [
+        "global",
+        "project"
+      ],
+      "tier": "advanced",
+      "search": [
+        "Computer",
+        "Auto",
+        "where work runs",
+        "placement",
+        "How Auto chooses"
+      ],
+      "layering": {
+        "home": "everywhere",
+        "may_differ_by": [
+          "everywhere",
+          "project"
+        ],
+        "computer_key": null,
+        "combine": "most_specific",
+        "atomic_group": null,
+        "not_offered": {
+          "computer": "same_for_you",
+          "device": "not_about_the_screen"
+        }
+      },
+      "options": [
+        "balanced",
+        "fastest",
+        "keep_my_computer_free"
+      ],
+      "option_labels": {
+        "balanced": "Balanced",
+        "fastest": "Fastest",
+        "keep_my_computer_free": "Keep my computer free"
+      }
+    },
+    {
+      "id": "code.execution.auto-weights",
+      "label": "Auto weights",
+      "desc": "Advanced weight sliders for free CPU, free memory, free disk, GPU headroom, queued work, has the files already and file-route speed. Auto always checks the requirements first.",
+      "type": "keyvalue",
+      "default": {
+        "free_cpu": 1,
+        "free_memory_gb": 1,
+        "free_disk_gb": 1,
+        "queued_work": 1,
+        "gpu_headroom": 0,
+        "has_the_files_already": 0,
+        "file_route_speed": 0
+      },
+      "scope": [
+        "global"
+      ],
+      "tier": "advanced",
+      "search": [
+        "Computer",
+        "Auto",
+        "where work runs",
+        "placement",
+        "Auto weights"
+      ],
+      "layering": {
+        "home": "everywhere",
+        "may_differ_by": [
+          "everywhere"
+        ],
+        "computer_key": null,
+        "combine": "most_specific",
+        "atomic_group": null,
+        "not_offered": {
+          "computer": "same_for_you",
+          "device": "not_about_the_screen",
+          "project": "same_for_you"
+        }
+      }
+    },
+    {
+      "id": "code.execution.computer-level",
+      "label": "How often to use this Computer",
+      "desc": "How often Auto uses this Computer. Only when I choose it keeps it out of Auto; you or an allowed agent can choose it for a task.",
+      "type": "select",
+      "default": "normal",
+      "scope": [
+        "global"
+      ],
+      "tier": "advanced",
+      "search": [
+        "Computer",
+        "Auto",
+        "where work runs",
+        "placement",
+        "How often to use this Computer"
+      ],
+      "layering": {
+        "home": "computer",
+        "may_differ_by": [
+          "computer"
+        ],
+        "computer_key": "execution_host",
+        "combine": "most_specific",
+        "atomic_group": null,
+        "not_offered": {
+          "everywhere": "about_hardware",
+          "device": "about_hardware",
+          "project": "about_hardware"
+        }
+      },
+      "options": [
+        "prefer",
+        "normal",
+        "less_often",
+        "only_when_i_choose_it"
+      ],
+      "option_labels": {
+        "prefer": "Prefer",
+        "normal": "Normal",
+        "less_often": "Less often",
+        "only_when_i_choose_it": "Only when I choose it"
+      }
+    },
+    {
+      "id": "code.execution.in-use-less-often",
+      "label": "Use a busy Computer less often",
+      "desc": "On by default. Someone at the keyboard or battery power makes a Computer count as Less often, without raising Only when I choose it. Visible apps still need their own permission.",
+      "type": "toggle",
+      "default": true,
+      "scope": [
+        "global"
+      ],
+      "tier": "advanced",
+      "search": [
+        "Computer",
+        "Auto",
+        "where work runs",
+        "placement",
+        "Use a busy Computer less often"
+      ],
+      "layering": {
+        "home": "everywhere",
+        "may_differ_by": [
+          "everywhere"
+        ],
+        "computer_key": null,
+        "combine": "most_specific",
+        "atomic_group": null,
+        "not_offered": {
+          "computer": "same_for_you",
+          "device": "not_about_the_screen",
+          "project": "same_for_you"
+        }
+      }
+    },
+    {
+      "id": "code.execution.work-placement",
+      "label": "Where new Project work runs",
+      "desc": "Auto chooses an eligible allowed Computer. Chosen pins to the Project default Computer. A person's pin wins unless that person lets agents choose; started work keeps its admitted Computer.",
+      "type": "select",
+      "default": "auto",
+      "scope": [
+        "project"
+      ],
+      "tier": "advanced",
+      "search": [
+        "Computer",
+        "Auto",
+        "where work runs",
+        "placement",
+        "Where new Project work runs"
+      ],
+      "layering": {
+        "home": "project",
+        "may_differ_by": [
+          "project"
+        ],
+        "computer_key": null,
+        "combine": "most_specific",
+        "atomic_group": null,
+        "not_offered": {
+          "everywhere": "about_this_project",
+          "computer": "about_this_project",
+          "device": "about_this_project"
+        }
+      },
+      "options": [
+        "auto",
+        "chosen"
+      ],
+      "option_labels": {
+        "auto": "Auto",
+        "chosen": "Chosen Computer"
+      }
+    },
+    {
+      "id": "code.execution.allowed-computers",
+      "label": "Allowed Computers",
+      "desc": "Computers you have allowed for this Project. A build may also use Computers you allow later. Only you can change this list. Adding a new Computer or device still asks, even in YOLO.",
+      "type": "list",
+      "default": [],
+      "scope": [
+        "project"
+      ],
+      "tier": "advanced",
+      "search": [
+        "Computer",
+        "Auto",
+        "where work runs",
+        "placement",
+        "Allowed Computers"
+      ],
+      "layering": {
+        "home": "project",
+        "may_differ_by": [
+          "project"
+        ],
+        "computer_key": null,
+        "combine": "most_specific",
+        "atomic_group": null,
+        "not_offered": {
+          "everywhere": "about_this_project",
+          "computer": "about_this_project",
+          "device": "about_this_project"
+        }
+      }
+    },
+    {
+      "id": "code.execution.default-computer",
+      "label": "Default Computer",
+      "desc": "Choose a Computer from this Project's allowed list during setup. Auto uses it when Computers rank equally; Chosen Computer keeps new work there.",
+      "type": "select",
+      "default": null,
+      "scope": [
+        "project"
+      ],
+      "tier": "advanced",
+      "search": [
+        "Computer",
+        "Auto",
+        "where work runs",
+        "placement",
+        "Default Computer"
+      ],
+      "layering": {
+        "home": "project",
+        "may_differ_by": [
+          "project"
+        ],
+        "computer_key": null,
+        "combine": "most_specific",
+        "atomic_group": null,
+        "not_offered": {
+          "everywhere": "about_this_project",
+          "computer": "about_this_project",
+          "device": "about_this_project"
+        }
+      }
     }
   ]
 }

@@ -22,6 +22,9 @@
       cancel: 'steps(4,end)', grow: 'steps(7,end)', spring: 'steps(3,end)' }
   };
   var speedCache = { key: null, value: 1 };
+  /* Settings' Animation speed changed (17-look.js 'pm-animation-speed'): read it again on the next ask (FO-153; it was
+     read again only when the look changed) */
+  window.addEventListener('pm-animation-speed', function () { speedCache.key = null; });
 
   function reduced() { return root.getAttribute('data-motion') === 'reduced' || !!(mq && mq.matches); }
   /* onboarding open: entrances wait (DESIGN-SPEC 8.7) */
