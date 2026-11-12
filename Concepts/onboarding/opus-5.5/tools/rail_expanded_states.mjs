@@ -33,13 +33,14 @@ export async function openRailDisclosures(page,scope='#sidePanelSlot, #pmr-overl
 }
 async function showPanel(page,id){
  await page.evaluate(id=>{
-  const e=document.querySelector('.activity-bar [data-target="panel-'+id+'"]');if(!e)throw Error('no real activity control '+id);e.click();
+  const target='panel-'+id,e=document.querySelector('.activity-bar [data-target="'+target+'"]');if(!e)throw Error('no real activity control '+id);if(!PMR.host.isShown(target))e.click();
  },id);await page.waitForTimeout(50);
+ await page.waitForFunction(id=>{const target='panel-'+id,c=PMR.concepts.current(),view=document.getElementById(c==='d'?target:'pmr-view-'+id);return PMR.host.isShown(target)&&view&&view.getBoundingClientRect().width>0&&getComputedStyle(view).display!=='none';},id,{timeout:15000});
 }
 const settle=async page=>{await page.evaluate(()=>{for(const a of document.getAnimations())if(a.effect?.getTiming().iterations!==Infinity)try{a.finish();}catch{}});await page.waitForTimeout(25);};
 export async function visitExpandedRails(page,visit,{concepts=['a','b','c','d']}={}){
  const states=[];
- const record=async meta=>{const scope=(meta.concept==='d'?'#panel-':'#pmr-view-')+meta.panel+', #pmr-overlay';const expansion=await openRailDisclosures(page,scope);const state={...meta,expansion};states.push(state);await visit(state);};
+ const record=async meta=>{const scope=(meta.concept==='d'?'#panel-':'#pmr-view-')+meta.panel+', #pmr-overlay';const expansion=await openRailDisclosures(page,scope);const panelVisible=await page.evaluate(meta=>{const e=document.getElementById((meta.concept==='d'?'panel-':'pmr-view-')+meta.panel);return !!(e&&e.getBoundingClientRect().width>0&&getComputedStyle(e).display!=='none'&&PMR.host.isShown('panel-'+meta.panel));},meta);if(!panelVisible)throw Error('rail panel hidden in expanded state '+JSON.stringify(meta));const state={...meta,expansion,panelVisible};states.push(state);await visit(state);};
  for(const concept of concepts)for(const engine of ['git','jj']){
   await page.evaluate(([c,e])=>{PMR.state.set('source.engine',e);PMR.host.setConcept(c,{force:true});},[concept,engine]);await settle(page);
   const panels=await page.evaluate(c=>c==='d'?[...document.querySelectorAll('#sidePanelSlot > .side-panel-view')].map(e=>e.id.replace('panel-','')):PMR.PANELS.map(p=>p.id),concept);
