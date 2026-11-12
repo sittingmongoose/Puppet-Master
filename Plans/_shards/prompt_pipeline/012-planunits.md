@@ -2,9 +2,9 @@
 
 Source: `Plans/Prompt_Pipeline.md`
 
-Source lines: L678-L3510
+Source lines: L678-L3521
 
-Source SHA256: `2896b4e4980fd55255a59c9aa16ca36480fe9be538138f3a4c0a6ac5bd010ede`
+Source SHA256: `c4989e6b7fe9049b7a7f890296422a27be887e3426b45b43202eefa2b83c367b`
 
 ---
 
@@ -636,8 +636,10 @@ status: accepted
 owner_doc: Plans/Prompt_Pipeline.md
 canonical_text: >-
   The compiled prompt includes an Instruction Bundle with active execution context, requested/effective overlay, Persona IDs, rules context, tool policy, Injected Context breakdown, and active Investigation Context summary when applicable.
-gui_related: true
-gui_classification_reason: This unit includes user-visible Injected Context and Debug investigation bundle surfaces.
+gui_related: false
+gui_classification_reason: >-
+  Internal Instruction Bundle assembly and enforcement; the separate Debug Investigation Context
+  presentation remains with its existing GUI owner.
 split_recommended: false
 depends_on:
   - "PP-008"
@@ -660,6 +662,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0012
+  - "DL-475; settings batch 2 round r2 complete context-inspection sweep, 2026-11-12"
 preserved_exact_tokens:
   - "INSTRUCTION-BUNDLE"
   - "InstructionBundleAssembly"
@@ -673,7 +676,8 @@ preserved_exact_tokens:
   - "tool-policy snapshot"
   - "Injected Context breakdown"
   - "active Investigation Context summary"
-negative_constraints: []
+negative_constraints:
+  - "Do not restore user-facing context source inspection or per-run inclusion receipts through a legacy title, preserved token, shared projection or saved view state."
 preserved_contractrefs:
   - "ContractRef: ContractName:Plans/Contracts_V0.md#InstructionBundleAssembly, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-chat-design.md"
 owner_hints:
@@ -1300,18 +1304,23 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Prompt_Pipeline.md
 canonical_text: >-
-  The GUI exposes an Injected Context breakdown per run or turn, including paths, byte counts, truncation reason, and a safe preview of compiled prompt sections for transparency and debugging.
+  Injected Context paths/byte counts, inclusion/omission and truncation records and compiled
+  prompt/section previews remain internal for enforcement and debugging. Chat context surfaces show
+  capacity, cost, effective model information and useful compaction/transition status. Source
+  composition, Curated/Raw source inspection, raw source payloads and per-run inclusion receipts
+  remain internal for enforcement/debugging and are not user-facing.
 gui_related: true
-gui_classification_reason: This unit defines GUI inspection and user-visible prompt transparency behavior.
+gui_classification_reason: >-
+  Defines the user-facing status versus internal compiled-context diagnostics boundary.
 split_recommended: false
 depends_on:
   - "PP-014"
   - "PP-024"
 unblocks: []
 acceptance_criteria:
-  - "GUI Injected Context Transparency remains addressable as a fine-grained Prompt Pipeline PlanUnit."
-  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
-  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+  - "Basic capacity/cost/effective-model facts and useful compaction/truncation status remain available on demand."
+  - "Internal records preserve source paths, inclusion/byte counts, truncation reason/order and permissioned compiled prompt diagnostics."
+  - "The GUI exposes no source-composition chart, safe/raw/curated compiled prompt preview or per-run/turn inclusion receipt; the historical unit title supplies no GUI obligation."
 validation_surfaces:
   - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
   - "python3 scripts/pm-plan-index.py validate"
@@ -1325,6 +1334,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
   - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0021"
+  - "DL-475; settings batch 2 round r2 complete context-inspection sweep, 2026-11-12"
 preserved_exact_tokens:
   - "GUI"
   - "Injected Context"
@@ -1332,7 +1342,8 @@ preserved_exact_tokens:
   - "truncation reason"
   - "safe preview"
   - "compiled prompt"
-negative_constraints: []
+negative_constraints:
+  - "Do not restore user-facing context source inspection or per-run inclusion receipts through a legacy title, preserved token, shared projection or saved view state."
 preserved_contractrefs:
   - "ContractRef: ContractName:Plans/FinalGUISpec.md"
 owner_hints:

@@ -576,7 +576,7 @@ A pre-start run estimate reads these rates only through the pricing snapshot it 
 
 Provider-sensitive token counting uses `token_counting_adapter_id`, `token_counting_basis`, and `counting_semantics` before cost or budget enforcement reads canonical UF-085 token buckets. Provider raw counts may be preserved for audit, but the adapter result is what feeds `input_total`, `input_non_cached`, `cache_read`, `cache_write`, `cache_write_1h` / `cache_write_ttl` where exposed, `output_total`, `output_visible`, `reasoning` / `thoughts`, `provider_total`, and `context_estimate`. Legacy `input_tokens`, `output_tokens`, `cache_read_input_tokens`, `cache_creation_input_tokens`, and `reasoning_tokens` remain compatibility import/export aliases only.
 
-Context-detail `Breakdown` views that consume model/runtime usage metadata show the context usage bar, token buckets, and grouped breakdowns by role, tools, and provider/model when available.
+Thread context details retain basic capacity/effective-window, token/cost and effective model information plus useful compaction status. Role/tool/source composition and grouped source breakdowns remain internal for enforcement/debugging, with no Curated/Raw source inspection or per-run inclusion receipt (DL-475).
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/usage-feature.md
 
@@ -2971,8 +2971,12 @@ plan_unit_id: MS-029
 unit_type: gui_contract
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: Context-detail Breakdown views that consume model/runtime usage metadata show the context usage bar, token
-  buckets, and grouped breakdowns by role, tools, and provider/model when available.
+canonical_text: >-
+  Thread context details consume canonical model/runtime usage metadata for basic
+  capacity/effective-window, token/cost, effective model facts and useful compaction status.
+  Role/tool/source composition and grouped source breakdowns stay internal for
+  enforcement/debugging; no user-facing Breakdown/Curated/Raw source-inspection view or per-run
+  inclusion receipt is required.
 gui_related: true
 gui_classification_reason: The unit covers user-visible model selection, display, settings, inspector, or usage presentation
   behavior.
@@ -2981,10 +2985,11 @@ depends_on:
 - MS-028
 unblocks: []
 acceptance_criteria:
-- Covered source spans remain losslessly available for exact-text audit.
-- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.
-- Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
-- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+  - "Covered source spans remain losslessly available for exact-text audit."
+  - "The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage."
+  - "Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+  - "Thread context details retain capacity/cost/effective-model facts and useful compaction status without role/tool/source composition, raw/curated source inspection or per-run inclusion receipts."
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -2998,6 +3003,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0026
+- "DL-475; settings batch 2 round r2 complete context-inspection sweep, 2026-11-12"
 preserved_exact_tokens:
 - Context-detail
 - Breakdown
@@ -3006,7 +3012,8 @@ preserved_exact_tokens:
 - role
 - tools
 - provider/model
-negative_constraints: []
+negative_constraints:
+  - "Do not restore user-facing context source inspection or per-run inclusion receipts through a legacy title, preserved token, shared projection or saved view state."
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes:

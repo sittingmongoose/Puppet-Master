@@ -249,10 +249,11 @@ Context Injection behavior defaults use the one Settings resolver at admitted Ev
 1) Parent Summary — default ON
 2) Scoped AGENTS.md (beyond top-level) — default ON
 3) Attempt Journal — default ON
-GUI must show an “Injected Context” breakdown per run:
-- which AGENTS.md were included (paths + byte counts)
-- whether parent summary and attempt journal were included (byte counts)
-- whether truncation occurred (and why)
+Keep the “Injected Context” record internally for enforcement and debugging:
+- AGENTS.md identity, paths and byte counts
+- parent summary and attempt journal inclusion and byte counts
+- truncation occurrence, reason and order
+The GUI keeps basic capacity/cost/model facts and useful compaction/truncation status, with no source-composition view, prompt preview or per-run inclusion receipt (DL-475). Existing admitted Settings controls remain owner-governed; retired presentation controls are not restored.
 
 Each instruction/rules target has exactly one control mode: `PM Controlled` or `Manual Override`. A `PM Controlled` target is regenerated only from the saved canonical instruction source. A target can switch from `Manual Override` back to `PM Controlled` only after the canonical instruction source is saved and the target is refreshed from that source.
 ---
@@ -284,7 +285,7 @@ Before a run:
 3) With attempt journal enabled, attempt N+1 includes the most recent attempt_journal from attempt N in the same node lineage, and never includes older journals by default.
 4) Parent summary injection can be toggled off; when on it is capped at 10 lines and included in attempt context.
 5) Promotion never grows AGENTS.md beyond budget; if budget would be exceeded, promotion requires replacement/condense.
-6) GUI exposes the three toggles with correct defaults and displays injected context breakdown including truncation.
+6) The existing Settings resolver preserves admitted injection defaults and restrictions; the GUI keeps basic capacity/cost/model and useful compaction/truncation status. Source identities, inclusion/byte counts and truncation detail remain internal; no source view or per-run inclusion receipt appears.
 7) AGENTS.md lint flags wiki-content patterns and budget violations; strict mode can block runs.
 
 ---
@@ -1837,23 +1838,29 @@ plan_unit_id: ARC-027
 unit_type: requirement
 status: accepted
 owner_doc: Plans/agent-rules-context.md
-canonical_text: GUI Requirements add Context Injection settings per project with optional per-run override for Parent Summary,
-  Scoped AGENTS.md beyond top-level, and Attempt Journal defaults ON; the GUI must show Injected Context breakdown with AGENTS.md
-  paths and byte counts, summary/journal inclusion byte counts, truncation occurrence and reason, and each instruction/rules
-  target has exactly one control mode PM Controlled or Manual Override with refresh rules for returning to PM Controlled.
+canonical_text: >-
+  Context Injection defaults and any currently admitted controls use the one Settings resolver at
+  their declared levels, preserving Parent Summary, Scoped AGENTS.md beyond top-level and Attempt
+  Journal default policy without restoring retired controls. Keep AGENTS.md paths/byte counts,
+  summary/journal inclusion and truncation records internally for enforcement/debugging. Chat
+  context surfaces show capacity, cost, effective model information and useful compaction/transition
+  status. Source composition, Curated/Raw source inspection, raw source payloads and per-run
+  inclusion receipts remain internal for enforcement/debugging and are not user-facing. Each
+  instruction/rules target still has exactly one mode, PM Controlled or Manual Override, with the
+  existing saved-source refresh rules.
 gui_related: true
-gui_classification_reason: This unit directly covers Context Injection settings, toggles, injected-context breakdown, control
-  modes, and truncation UI.
+gui_classification_reason: >-
+  Defines retained instruction control modes and the visible-status/internal-accounting boundary.
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- Covered source spans remain losslessly available for exact-text audit.
-- The covered rules-context fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
-  bridge.
-- Plans/agent-rules-context.md remains the owner for application/project rules context while referenced owners retain their
-  own contracts.
-- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+  - "Covered source spans remain losslessly available for exact-text audit."
+  - "The covered rules-context fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving bridge."
+  - "Plans/agent-rules-context.md remains the owner for application/project rules context while referenced owners retain their own contracts."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+  - "Injection defaults/restrictions remain owner-governed; no retired control is reintroduced."
+  - "AGENTS.md and summary/journal inclusion/byte counts and truncation reasons remain internal; the GUI retains basic capacity/cost/model and useful compaction status without source inspection or per-run inclusion receipts."
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -1867,6 +1874,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:agent-rules-context-S0037
+- "DL-475; settings batch 2 round r2 complete context-inspection sweep, 2026-11-12"
 preserved_exact_tokens:
 - GUI Requirements (Product)
 - Context Injection
@@ -1880,7 +1888,8 @@ preserved_exact_tokens:
 - truncation occurred (and why)
 - PM Controlled
 - Manual Override
-negative_constraints: []
+negative_constraints:
+  - "Do not restore user-facing context source inspection or per-run inclusion receipts through a legacy title, preserved token, shared projection or saved view state."
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes:
@@ -2111,20 +2120,24 @@ plan_unit_id: ARC-032
 unit_type: requirement
 status: accepted
 owner_doc: Plans/agent-rules-context.md
-canonical_text: Acceptance criteria require the GUI to expose the three toggles with correct defaults and display injected
-  context breakdown including truncation.
+canonical_text: >-
+  Acceptance preserves existing admitted resolver defaults and restrictions and requires truthful
+  visible capacity/cost/model and useful compaction/truncation status. Injected Context source
+  identities, inclusion/byte counts and truncation detail remain internal for enforcement/debugging;
+  no context source view or per-run inclusion receipt is required.
 gui_related: true
-gui_classification_reason: This unit directly covers GUI toggles and injected-context display.
+gui_classification_reason: >-
+  Defines truthful visible context status without source-inspection receipts.
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- Covered source spans remain losslessly available for exact-text audit.
-- The covered rules-context fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
-  bridge.
-- Plans/agent-rules-context.md remains the owner for application/project rules context while referenced owners retain their
-  own contracts.
-- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+  - "Covered source spans remain losslessly available for exact-text audit."
+  - "The covered rules-context fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving bridge."
+  - "Plans/agent-rules-context.md remains the owner for application/project rules context while referenced owners retain their own contracts."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+  - "Existing admitted Settings defaults and restrictions remain effective; retired source/presentation controls are not restored."
+  - "Capacity/cost/model and useful compaction/truncation status remain visible, while source composition, prompt/source inspection and per-run inclusion receipts are absent."
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -2138,11 +2151,13 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:agent-rules-context-S0041
+- "DL-475; settings batch 2 round r2 complete context-inspection sweep, 2026-11-12"
 preserved_exact_tokens:
 - GUI exposes the three toggles
 - correct defaults
 - displays injected context breakdown including truncation
-negative_constraints: []
+negative_constraints:
+  - "Do not restore user-facing context source inspection or per-run inclusion receipts through a legacy title, preserved token, shared projection or saved view state."
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes: []

@@ -2,9 +2,9 @@
 
 Source: `Plans/usage-feature.md`
 
-Source lines: L927-L5063
+Source lines: L927-L5071
 
-Source SHA256: `3f1df103feb5a8f801edf9d6f18d457a3d6a2bd748903470cee6e037d3be5dbd`
+Source SHA256: `3fe9cb5e5bef8706451b8fa41734ff0843f170762c7f79507889d688533a3ae4`
 
 ---
 
@@ -661,7 +661,12 @@ plan_unit_id: UF-013
 unit_type: requirement
 status: accepted
 owner_doc: Plans/usage-feature.md
-canonical_text: 'Per-thread estimated cost and context usage preserve provider-sensitive caveats: reasoning tokens may be charged at output-token estimate when needed, cache read/write buckets remain visible, and raw/debug paths disclose normalization limits instead of claiming exact billing truth.'
+canonical_text: >-
+  Per-thread estimated cost/context usage preserves provider-sensitive caveats through truthful
+  visible cost/value-state and model/token/cache facts. Reasoning may use an output-token estimate
+  where needed, and visible labels never claim exact/provider-authoritative billing without
+  evidence. Raw/debug normalization evidence remains internal; ordinary chat has no raw/curated
+  source inspection, source composition or per-run inclusion receipt.
 gui_related: true
 gui_classification_reason: The unit governs visible per-thread cost/usage copy and caveat presentation.
 split_recommended: false
@@ -672,9 +677,10 @@ depends_on:
 - PNC-001
 unblocks: []
 acceptance_criteria:
-- UF-013 remains addressable as a fine-grained Usage Feature PlanUnit with source-span coverage.
-- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
-- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+  - "UF-013 remains addressable as a fine-grained Usage Feature PlanUnit with source-span coverage."
+  - "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+  - "Visible chat cost/value-state copy retains provider-sensitive estimate and cache-counting caveats; raw normalization/source evidence stays internal rather than a chat Raw view."
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -688,6 +694,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0023
+- "DL-475; settings batch 2 round r2 complete context-inspection sweep, 2026-11-12"
 preserved_exact_tokens:
 - estimated cost
 - reasoning tokens
@@ -696,7 +703,8 @@ preserved_exact_tokens:
 - provider-sensitive cache normalization caveats
 - raw/debug paths
 negative_constraints:
-- Provider-sensitive cache normalization caveats must remain visible in raw/debug paths and must not be hidden behind authoritative wording in the chat UI.
+  - "Do not hide provider-sensitive uncertainty behind authoritative billing wording. Keep normalization evidence internally without exposing a chat raw/debug source view or inclusion receipt."
+  - "Do not restore user-facing context source inspection or per-run inclusion receipts through a legacy title, preserved token, shared projection or saved view state."
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FinalGUISpec.md'
 - 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Prompt_Pipeline.md'

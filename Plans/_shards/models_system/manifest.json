@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-11-03T22:13:31Z",
+  "generated_at_utc": "2026-11-12T07:35:19Z",
   "index_path": "Plans/_shards/models_system/00-index.md",
-  "index_sha256": "a34613a8533397cae433efde05f0204dcdf450cf80e9bdecfe0d2f28e14143ca",
+  "index_sha256": "e5a9267f8235647b092377b0e8a08705195d32825d80fa6e42c208176bc87b34",
   "manifest_path": "Plans/_shards/models_system/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/models_system/001-preamble.md",
-      "sha256": "33ac1d8de760e7f20a14dd5b073266efa0fc627c362f0c9f8249307620e980a5",
+      "sha256": "782b053e08b5f432c3cbd48bc2f4ab6c60c7174d7bf76e4dc4fcf149c100f9ce",
       "shard_id": "001",
       "source_line_end": 1,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "Canonical owner-section requirements",
       "path": "Plans/_shards/models_system/002-canonical-owner-section-requirements.md",
-      "sha256": "8b8085a931b12348ad0e1729a40d13c2c37457e73ff0d260b3c00ee80e88a06c",
+      "sha256": "fc7727c7d2a502e0b83168c9b9246e12450786ca1af112fe1de83e3ba5ddac03",
       "shard_id": "002",
       "source_line_end": 9,
       "source_line_start": 4,
@@ -26,7 +26,7 @@
     {
       "heading": "0. Scope and SSOT status",
       "path": "Plans/_shards/models_system/003-0.-scope-and-ssot-status.md",
-      "sha256": "94e5da24b6bdef3ff4cd166d410ede687fb6bc7f6ae32fe437fd28ebdf32c375",
+      "sha256": "a884b1dd9b160df7a1831452170e57b6ce6664e634d3d1991dd8e01a5e22c5f9",
       "shard_id": "003",
       "source_line_end": 32,
       "source_line_start": 11,
@@ -35,7 +35,7 @@
     {
       "heading": "Provider/model precedence and settings resolution",
       "path": "Plans/_shards/models_system/004-provider-model-precedence-and-settings-resolution.md",
-      "sha256": "84c7c2834c01204af3e1c48c1906fd7bcdf4951df84c3eb3b974df0275ff05c0",
+      "sha256": "3a2223266d03d63e7b0b4e4e37a3f37b0ed19e9c42bb87370aabdd01c46121b6",
       "shard_id": "004",
       "source_line_end": 203,
       "source_line_start": 34,
@@ -44,7 +44,7 @@
     {
       "heading": "1. Canonical model identifier",
       "path": "Plans/_shards/models_system/005-1.-canonical-model-identifier.md",
-      "sha256": "9ee1b5ad327a735cb475fdb5bf5c9a5d891142c7bd78a32c21ee031520be30bf",
+      "sha256": "4ccb70c1b0be40be23f5db7cd6665cc6eb795a55327141dbd0ea58676f11dcfc",
       "shard_id": "005",
       "source_line_end": 245,
       "source_line_start": 205,
@@ -53,7 +53,7 @@
     {
       "heading": "2. Model and runtime selection priority",
       "path": "Plans/_shards/models_system/006-2.-model-and-runtime-selection-priority.md",
-      "sha256": "b031f4cdc324b4cb11195816ab2807ace1008ac11d8a3ef60034f212651492e0",
+      "sha256": "2088f2f6147298c7d134e0a19a07b4f1ccd6cf18c05d1366b8120f9b13d5ab04",
       "shard_id": "006",
       "source_line_end": 274,
       "source_line_start": 246,
@@ -62,7 +62,7 @@
     {
       "heading": "3. Model options configuration",
       "path": "Plans/_shards/models_system/007-3.-model-options-configuration.md",
-      "sha256": "fa870c648ba84b37e7e333a33a24155deb2e43736e62d918aafd826eca3cab23",
+      "sha256": "e73253ef11506a2ad17b32a06e801b889645231ae29b91605c12796969749324",
       "shard_id": "007",
       "source_line_end": 290,
       "source_line_start": 275,
@@ -71,7 +71,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260624-001-provider-updates",
       "path": "Plans/_shards/models_system/008-ledger-compile-addendum-pldg-20260624-001-provider-updates.md",
-      "sha256": "8ed6f6252a792502411f6303e7f842472618c0d395abc103f7ac3cf91693d58f",
+      "sha256": "1228658888585d524920276b5a071c0d885bd679c6ffd0d43750c71c78d25700",
       "shard_id": "008",
       "source_line_end": 538,
       "source_line_start": 292,
@@ -80,7 +80,7 @@
     {
       "heading": "4. Model availability and error handling",
       "path": "Plans/_shards/models_system/009-4.-model-availability-and-error-handling.md",
-      "sha256": "1b60d3186b8068008134419a853103fc204d99177f82b838e2ddac0c872cd4b0",
+      "sha256": "dc76b1d41b6fe262010c39dad85486e9b41689d80c1330b251a9f69ccfee264a",
       "shard_id": "009",
       "source_line_end": 670,
       "source_line_start": 540,
@@ -89,7 +89,7 @@
     {
       "heading": "5. Per-Persona runtime preferences",
       "path": "Plans/_shards/models_system/010-5.-per-persona-runtime-preferences.md",
-      "sha256": "594c3518931947b4ac20677c8071bd30e950abd22bbda71da6c2eab55847700e",
+      "sha256": "d04465f48482064dd4931a843fbecf860d867da4874e452f4c9aaa1fdb4cffdd",
       "shard_id": "010",
       "source_line_end": 708,
       "source_line_start": 671,
@@ -98,7 +98,7 @@
     {
       "heading": "6. Variants system",
       "path": "Plans/_shards/models_system/011-6.-variants-system.md",
-      "sha256": "caa13031bcf2d9a9efb6d267b65717cae25c06ab4ba19a76d906a1557329e145",
+      "sha256": "67bd131f56455e9bcd01ac5f60d7f91df653b93223669c937515a7bc8141513d",
       "shard_id": "011",
       "source_line_end": 819,
       "source_line_start": 710,
@@ -107,7 +107,7 @@
     {
       "heading": "7. GUI requirements",
       "path": "Plans/_shards/models_system/012-7.-gui-requirements.md",
-      "sha256": "f6fa0b287a140bbd518fbf62fb3682a523889697c4564eda4ad733a8eda095f7",
+      "sha256": "a956971c648ed1cec78cb381377da9d6c6eaa442a95d11dd333bcca55fcd6733",
       "shard_id": "012",
       "source_line_end": 876,
       "source_line_start": 821,
@@ -116,7 +116,7 @@
     {
       "heading": "8. OpenCode baseline and Puppet Master deltas",
       "path": "Plans/_shards/models_system/013-8.-opencode-baseline-and-puppet-master-deltas.md",
-      "sha256": "d077d1b15c15c689d7ade8fd496c66ac1d0f6b36c00bfbb3a3de2be39e23a8ba",
+      "sha256": "a70e5b68353b180208d578423006c1718dd617c1a579a7658d9faa8c1bc4d895",
       "shard_id": "013",
       "source_line_end": 899,
       "source_line_start": 877,
@@ -125,7 +125,7 @@
     {
       "heading": "9. Acceptance criteria",
       "path": "Plans/_shards/models_system/014-9.-acceptance-criteria.md",
-      "sha256": "b8f4534c8fb0b093c8c78600585f33ad091deebe23315514a4589400dfc0f77a",
+      "sha256": "2c7ba9456dcf7bb0926799422bb356248bd6899484d49e09e5e2c71a4367038e",
       "shard_id": "014",
       "source_line_end": 935,
       "source_line_start": 901,
@@ -134,7 +134,7 @@
     {
       "heading": "10. Persona Runtime Controls and Provider Capability Matrix (2026-03-06)",
       "path": "Plans/_shards/models_system/015-10.-persona-runtime-controls-and-provider-capability-matrix-2026.md",
-      "sha256": "29b3b6602de8d31cf1f71eaa1845844a97e759ddbfffd4c6ed45173e1ee85400",
+      "sha256": "1a7f5938c4b0c69876bd4e2245f84e8e3719e0172da3745902ada171d43e094a",
       "shard_id": "015",
       "source_line_end": 1284,
       "source_line_start": 936,
@@ -143,7 +143,7 @@
     {
       "heading": "Provider Failure-Class Alignment Addendum (2026-03-08)",
       "path": "Plans/_shards/models_system/016-provider-failure-class-alignment-addendum-2026-03-08.md",
-      "sha256": "f9a3dfcdd133b54f8913e0374511bfff562bb203c0eb047293b02a1160c62c2f",
+      "sha256": "bcb28062f5a4893e8157454750280c44cd989bf1e47929f9c10c49c9e6ee4ea4",
       "shard_id": "016",
       "source_line_end": 1293,
       "source_line_start": 1286,
@@ -152,7 +152,7 @@
     {
       "heading": "Runtime Retry / Fallback Ownership Addendum (2026-03-09)",
       "path": "Plans/_shards/models_system/017-runtime-retry-fallback-ownership-addendum-2026-03-09.md",
-      "sha256": "aab9a8299ffddd4ed110f19793528099065d0aa5357278383230e4b52497345a",
+      "sha256": "0703bef4f923fad265f256676007f629eb591484ab5661a3b0b4b0d9833ed5db",
       "shard_id": "017",
       "source_line_end": 1309,
       "source_line_start": 1294,
@@ -161,7 +161,7 @@
     {
       "heading": "Requested/Effective Model and Retry Ownership Canonical Alignment (2026-03-09)",
       "path": "Plans/_shards/models_system/018-requested-effective-model-and-retry-ownership-canonical-alignmen.md",
-      "sha256": "b480d9996a01dda6433561614126b9244f6ebcd79dc3262fd609dc6a3023fc1f",
+      "sha256": "ebed2d9978a17e827540f0ef4b988b0633ddea56a9ba61b5a1cf9f05f6421269",
       "shard_id": "018",
       "source_line_end": 1317,
       "source_line_start": 1310,
@@ -170,7 +170,7 @@
     {
       "heading": "Model Selection Versus Runtime Retry Ownership Consolidation Addendum (2026-03-09)",
       "path": "Plans/_shards/models_system/019-model-selection-versus-runtime-retry-ownership-consolidation-add.md",
-      "sha256": "97318951886a2f0fbe72952c08a7cc99893e82d24d89ea877b6c5a599ad44c70",
+      "sha256": "0078c181720b629e9aa080dabadb7da369ebdcbfad7d50d0783b13691d386305",
       "shard_id": "019",
       "source_line_end": 1327,
       "source_line_start": 1318,
@@ -179,7 +179,7 @@
     {
       "heading": "Requested / Effective Model Snapshot Alignment",
       "path": "Plans/_shards/models_system/020-requested-effective-model-snapshot-alignment.md",
-      "sha256": "d6e2ca059db1e22b51fff232afcbf5baf0238c4734eecf791196f31974688ada",
+      "sha256": "69603a2ec51bb9eace48c63511af90f7d1552c636a0c91e0ea90573618ca08fe",
       "shard_id": "020",
       "source_line_end": 1356,
       "source_line_start": 1328,
@@ -188,7 +188,7 @@
     {
       "heading": "Provider/model selection policy and audit addendum",
       "path": "Plans/_shards/models_system/021-provider-model-selection-policy-and-audit-addendum.md",
-      "sha256": "0ad45f9017bff69e7ce4515f51266bb1446daa07bffe33b2d67385d34fd11044",
+      "sha256": "98f725d41bda36b3acdf7022caf3190b1096dfc4610cabc3b66672db95605bbf",
       "shard_id": "021",
       "source_line_end": 1436,
       "source_line_start": 1358,
@@ -197,7 +197,7 @@
     {
       "heading": "Owner / Consumer Map",
       "path": "Plans/_shards/models_system/022-owner-consumer-map.md",
-      "sha256": "243f99f0fe2373f8f29ad77b59a717fd95e816e902d0e735ec3379ddbca95d7a",
+      "sha256": "95bbff10446f2296d5a64c5c840efd70a21da8f2fe5d8ecec4c67e44377c7c10",
       "shard_id": "022",
       "source_line_end": 1442,
       "source_line_start": 1438,
@@ -206,160 +206,160 @@
     {
       "heading": "PlanUnits",
       "path": "Plans/_shards/models_system/023-planunits.md",
-      "sha256": "3657c12da5adc5bcc2de2ae31ca4a36696196bcad6c5e30c50dfe135a6289287",
+      "sha256": "936f5b76d2de51656e9a4f0fc21c9281583f3abec639d1d81ae1c0454cf22809",
       "shard_id": "023",
-      "source_line_end": 7530,
+      "source_line_end": 7537,
       "source_line_start": 1444,
       "split_rule": "heading-##"
     },
     {
       "heading": "Migration Coverage",
       "path": "Plans/_shards/models_system/024-migration-coverage.md",
-      "sha256": "595af084eb1c87ff6fce1a95a3fac84e384185ce228865e1f6c6a1b04a8a34eb",
+      "sha256": "046506f3301cc263512f8c0178a46832686c7932b8db9453eba3707bb17bc78a",
       "shard_id": "024",
-      "source_line_end": 7542,
-      "source_line_start": 7532,
+      "source_line_end": 7549,
+      "source_line_start": 7539,
       "split_rule": "heading-##"
     },
     {
       "heading": "Ledger Compile Addendum - pldg-20260614-001",
       "path": "Plans/_shards/models_system/025-ledger-compile-addendum-pldg-20260614-001.md",
-      "sha256": "f087bcfdd913add00bf86d035a6daf36118354c53d9ff61c7590321ae25d3357",
+      "sha256": "f0369871bcb7fe70d3f025a1b07d9262480940b133ef75cc756ba4bbe6861d80",
       "shard_id": "025",
-      "source_line_end": 7579,
-      "source_line_start": 7544,
+      "source_line_end": 7586,
+      "source_line_start": 7551,
       "split_rule": "heading-##"
     },
     {
       "heading": "Ledger Compile Addendum - pldg-20260616-001",
       "path": "Plans/_shards/models_system/026-ledger-compile-addendum-pldg-20260616-001.md",
-      "sha256": "2ee5aafa029dd59399ed119078bdb4f3a151baf5faab983a8e4b58db8ffa6367",
+      "sha256": "87e68d672af72b6a04c89d34d90e8561170b6b0ca001a2a0575228575d539903",
       "shard_id": "026",
-      "source_line_end": 7640,
-      "source_line_start": 7581,
+      "source_line_end": 7647,
+      "source_line_start": 7588,
       "split_rule": "heading-##"
     },
     {
       "heading": "Ledger Compile Addendum - pldg-20260616-002",
       "path": "Plans/_shards/models_system/027-ledger-compile-addendum-pldg-20260616-002.md",
-      "sha256": "2d56e6ca8833048436dfb5f6cd615fcb3119886185c243e1859d953ae8424484",
+      "sha256": "6ee03358bbc035cfaca7d2d06f1c04e1083d74a24791e9612ca07871e0457a0f",
       "shard_id": "027",
-      "source_line_end": 7727,
-      "source_line_start": 7642,
+      "source_line_end": 7734,
+      "source_line_start": 7649,
       "split_rule": "heading-##"
     },
     {
       "heading": "Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff",
       "path": "Plans/_shards/models_system/028-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md",
-      "sha256": "29b90e845f7891f658157bb8192cade4b3f52f703a7b5d09035c553ddb6b707f",
+      "sha256": "7ff2b51509439849c61b22c2a87fb6360ae9d0f9212202b235b27d9d52c543b2",
       "shard_id": "028",
-      "source_line_end": 7857,
-      "source_line_start": 7729,
+      "source_line_end": 7864,
+      "source_line_start": 7736,
       "split_rule": "heading-##"
     },
     {
       "heading": "Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard",
       "path": "Plans/_shards/models_system/029-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md",
-      "sha256": "5ff89fd53840f4933e3a92d9d0a1026e280aa4e4a592df5aedb2e6ed8547b9e6",
+      "sha256": "27078d48727c2ceb70f3276aa940896555466877fe7ca318e68d6bd5404494e8",
       "shard_id": "029",
-      "source_line_end": 7917,
-      "source_line_start": 7860,
+      "source_line_end": 7924,
+      "source_line_start": 7867,
       "split_rule": "heading-##"
     },
     {
       "heading": "Ledger Compile Addendum - pldg-20260626-001-feature-name",
       "path": "Plans/_shards/models_system/030-ledger-compile-addendum-pldg-20260626-001-feature-name.md",
-      "sha256": "57657b26815276dcb33e6aa5aaa382c1b7dbcfac1c35d0c4713855db6f4b615d",
+      "sha256": "d2aae2f349579ddff1dc173bebc43b3d750484741fbe75b274b625f20f1fa079",
       "shard_id": "030",
-      "source_line_end": 8159,
-      "source_line_start": 7920,
+      "source_line_end": 8166,
+      "source_line_start": 7927,
       "split_rule": "heading-##"
     },
     {
       "heading": "Ledger Compile Addendum - pldg-20260629-001-feature-name",
       "path": "Plans/_shards/models_system/031-ledger-compile-addendum-pldg-20260629-001-feature-name.md",
-      "sha256": "8aea9073c153efd3e78a281d8e3f75ccf9b930ddf55b2e61b8806c0ad5c4ead7",
+      "sha256": "c22c2e9dd9d7961a3779c53e715a2333eda5a61dd415615d309e4ab38f0eaf26",
       "shard_id": "031",
-      "source_line_end": 8421,
-      "source_line_start": 8161,
+      "source_line_end": 8428,
+      "source_line_start": 8168,
       "split_rule": "heading-##"
     },
     {
       "heading": "Ledger Compile Addendum - pldg-20260701-001-feature-intake",
       "path": "Plans/_shards/models_system/032-ledger-compile-addendum-pldg-20260701-001-feature-intake.md",
-      "sha256": "48cb457b42a4a94de6c7ac3390046ac4f61ccbd7f732b259bd6dfc87d6d38fa6",
+      "sha256": "14711d7be4f0961858b936010c39593c416e31ea620b908a0725673df3d55f5b",
       "shard_id": "032",
-      "source_line_end": 8655,
-      "source_line_start": 8423,
+      "source_line_end": 8662,
+      "source_line_start": 8430,
       "split_rule": "heading-##"
     },
     {
       "heading": "Ledger Compile Addendum - pldg-20260703-001-feature-intake",
       "path": "Plans/_shards/models_system/033-ledger-compile-addendum-pldg-20260703-001-feature-intake.md",
-      "sha256": "d86055edf52be66cad9347958414d815d6991a49a7b9a7573199df5a2eb16e08",
+      "sha256": "2a64a60f068b3b6d285ef9bba4e5991fd558b2c27b8ed1b5451f84392358baba",
       "shard_id": "033",
-      "source_line_end": 9587,
-      "source_line_start": 8657,
+      "source_line_end": 9594,
+      "source_line_start": 8664,
       "split_rule": "heading-##"
     },
     {
       "heading": "FABLE Residual Models Contract Cleanup Addendum - 2026-07-07",
       "path": "Plans/_shards/models_system/034-fable-residual-models-contract-cleanup-addendum-2026-07-07.md",
-      "sha256": "271b70e9536a34d8792c6b662812f1563bcccdc1a1dc95079b1558b6017e30a8",
+      "sha256": "574aec144da70aebe56f2f8e44f992098e9936e2445b6cf9e6b0ed0596f8d485",
       "shard_id": "034",
-      "source_line_end": 9661,
-      "source_line_start": 9589,
+      "source_line_end": 9668,
+      "source_line_start": 9596,
       "split_rule": "heading-##"
     },
     {
       "heading": "Usage GUI Propagation Addendum - 2026-07-09",
       "path": "Plans/_shards/models_system/035-usage-gui-propagation-addendum-2026-07-09.md",
-      "sha256": "35f9214b14b7d95b0578cafc14355124f2897ba6ec27ca74f5adb22d7be6717a",
+      "sha256": "6fba116cc001f2b3906f7da83861a7d32d1358af05322fb8b8962c5be80d5990",
       "shard_id": "035",
-      "source_line_end": 9724,
-      "source_line_start": 9663,
+      "source_line_end": 9731,
+      "source_line_start": 9670,
       "split_rule": "heading-##"
     },
     {
       "heading": "`run.started` Models owner join",
       "path": "Plans/_shards/models_system/036-run.started-models-owner-join.md",
-      "sha256": "c89af548749cab69076bfbcd7e8a9c1e03beca50104d7ec05688cbc4c42a7553",
+      "sha256": "303cd788423c0e7cec0c50287041b506d09d59c39352c4a4292cd0388d7a6a56",
       "shard_id": "036",
-      "source_line_end": 9733,
-      "source_line_start": 9727,
+      "source_line_end": 9740,
+      "source_line_start": 9734,
       "split_rule": "heading-##"
     },
     {
       "heading": "Remaining Runtime Canon Closure Addendum (2026-08-14)",
       "path": "Plans/_shards/models_system/037-remaining-runtime-canon-closure-addendum-2026-08-14.md",
-      "sha256": "cf967935e470ce554d022cf90193fbef8316de95de88617b339f599bf354b0d2",
+      "sha256": "e9517ffcfd52bc45ae1c063419bfb2cb1d28e39e2e78651f69752dccf6041583",
       "shard_id": "037",
-      "source_line_end": 9762,
-      "source_line_start": 9735,
+      "source_line_end": 9769,
+      "source_line_start": 9742,
       "split_rule": "heading-##"
     },
     {
       "heading": "Additive Correction v4 \u2014 Requested Versus Effective, And No Silent Fallback (2026-09-03)",
       "path": "Plans/_shards/models_system/038-additive-correction-v4-requested-versus-effective-and-no-silent-.md",
-      "sha256": "72a36a7a68ed5dfb7c8c890b968bce471cc003597865396ae428db642fb13d17",
+      "sha256": "d2549f4939417261e89ee1832e72211a215fc009eaa5d8e8530b52a1b40a4485",
       "shard_id": "038",
-      "source_line_end": 9784,
-      "source_line_start": 9764,
+      "source_line_end": 9791,
+      "source_line_start": 9771,
       "split_rule": "heading-##"
     },
     {
       "heading": "Continuity Capability Snapshot Addendum (2026-09-05)",
       "path": "Plans/_shards/models_system/039-continuity-capability-snapshot-addendum-2026-09-05.md",
-      "sha256": "1d8ce84508ca1755209962c4929e6eba8b97b8a1f6355f758b8c260b15e64608",
+      "sha256": "788aef4a379cc2a82b7bad722057bbcdde71159d026c91d96210169473809246",
       "shard_id": "039",
-      "source_line_end": 9904,
-      "source_line_start": 9786,
+      "source_line_end": 9911,
+      "source_line_start": 9793,
       "split_rule": "heading-##"
     }
   ],
   "source": {
-    "line_count": 9904,
+    "line_count": 9911,
     "path": "Plans/Models_System.md",
-    "sha256": "98cedbe72059189d8dedef8480350441120a92631e6e4ef4f973487aefcf68c4"
+    "sha256": "34ea4b6c2934cb4e6aaf64baa418c10460c117e15e78acb895b7187bf3a79a75"
   }
 }

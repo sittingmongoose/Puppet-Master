@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L3688-L17653
+Source lines: L3688-L17657
 
-Source SHA256: `974b4a737050357f760deafa8f6247c7679b93d6352a1c45684f72d219510105`
+Source SHA256: `4b70f80fd8b3fd121e33fa29ddb9f8828ad20d3063407af3393b2445bbf53296`
 
 ---
 
@@ -9204,17 +9204,19 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: >-
-  The context-detail editor tab has top-level Curated and raw inspection paths;
-  Curated contains Overview, Breakdown, and Messages, and Deep Plan remains a
-  distinct workflow identity and display label.
+  The context-detail editor tab retains basic capacity/cost/effective-model information and useful
+  compaction/transition status. Source composition, Curated/raw source inspection, serialized source
+  payloads, provider metadata and path/runtime records remain internal for enforcement/debugging,
+  with no per-run inclusion receipt. Deep Plan remains a distinct workflow identity and display
+  label.
 gui_related: true
 gui_classification_reason: This unit defines visible context-detail tab paths and labels.
 split_recommended: false
 depends_on: [CV-190]
 unblocks: []
 acceptance_criteria:
-  - "Curated contains Overview, Breakdown, and Messages."
-  - "Raw inspection may expose serialized payloads, provider metadata, and path/runtime data for log, detail, and debugging."
+  - "Context details retain basic capacity/cost/effective-model facts and useful compaction/transition status."
+  - "No user-facing source composition, Curated/raw source-inspection path, serialized prompt payload or per-run inclusion receipt is exposed; source records stay internal under existing permission/redaction rules."
   - "Deep Plan remains distinct from generic plan mode."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -9230,6 +9232,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0068
+  - "DL-475; settings batch 2 round r2 complete context-inspection sweep, 2026-11-12"
 preserved_exact_tokens:
   - "`Curated`"
   - "`/raw`"
@@ -9239,7 +9242,8 @@ preserved_exact_tokens:
   - "Breakdown"
   - "Messages"
 negative_constraints:
-  - "Raw/log/detail/debug fields must not become chat-facing labels."
+  - "Do not expose internal source records, prompt payloads or raw/log/detail/debug fields through ordinary chat context or message-info UI."
+  - "Do not restore user-facing context source inspection or per-run inclusion receipts through a legacy title, preserved token, shared projection or saved view state."
 owner_hints:
   - Plans/Contracts_V0.md
   - Plans/assistant-chat-design.md
