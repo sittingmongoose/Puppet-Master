@@ -729,7 +729,7 @@
     var g = this.gutter, m = this.metrics, buf = this.term.buf, self = this;
     var marks = this._marks || (this._marks = new Map());
     if (buf.isAlt) { marks.clear(); g.innerHTML = ''; g.classList.add('pmt-gutter-alt'); return; }
-    g.classList.remove('pmt-gutter-alt');
+    if (g.classList.contains('pmt-gutter-alt')) g.classList.remove('pmt-gutter-alt');
     var top = this.viewTop(), rows = buf.rows, cmds = this.term.commands, seen = new Set();
     this._gutterCmds = [];
     for (var i = cmds.length - 1; i >= 0; i--) {
