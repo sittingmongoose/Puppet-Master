@@ -376,7 +376,7 @@ The same predicate covers projection copies (`projection_timestamp_bad`, `script
 | `agent_crashed.detected_at_utc` and its ApplicationV1 copy | `:569`, `:1017` | `date_time`, **coordination_utc_z** |
 | `agent_aborted.aborted_at_utc` and its ApplicationV1 copy | `:705`, `:916` | `date_time`, **coordination_utc_z** |
 | `debug_mirror_exported.exported_at_utc` | `:764` | `date_time`, **coordination_utc_z**. No ApplicationV1 copy. |
-| Projection timestamps (`started_at_utc`, `observed_at_utc`, `finished_at_utc`, `detected_at_utc`, `aborted_at_utc`, `exported_at_utc`, `first_observed_at_utc`, `last_observed_at_utc`, `updated_at_utc`, `withdrawn_at_utc`, `published_at_utc`), including copies under the projection `timestamp` / `timestampApplicationV1` pattern (`Plans/coordination_projection_contracts.schema.json:119`) | `PROJECTION_TIME_FIELDS`, `:653` | `date_time`, **coordination_utc_z**. Null `withdrawn_at_utc` is the absence, not a timestamp. Row `projection_timestamp`. |
+| Projection timestamps: every property that refs `#/$defs/timestamp` or `timestampApplicationV1` (`started_at_utc`, `occurred_at_utc`, `observed_at_utc`, `first_observed_at_utc`, `last_observed_at_utc`, `updated_at_utc`, `withdrawn_at_utc`, `published_at_utc`), including `agent_terminal.occurred_at_utc` and `agent_terminalApplicationV1.occurred_at_utc`. **Corrected in fix round 1:** the part 2B hand list omitted `occurred_at_utc` (DCO-1) and named four payload-only fields no projection definition has. | `projection_time_fields`, derived from the schema by `projection_timestamp_sites` (`scripts/pm_coordination_events.py:678`, `:707`) | `date_time`, **coordination_utc_z**. Null `withdrawn_at_utc` is the absence, not a timestamp. Row `projection_timestamp`. |
 | EventRecord `occurred_at_utc` | envelope `:1382` | `date_time`, **event_record**. The join to the payload family timestamp is unchanged, so a live coordination event's `occurred_at_utc` stays uppercase Z. |
 | EventRecord `observed_at_utc`, `persisted_at_utc` | envelope `:1384` | `date_time`, **storage_utc_z** |
 
@@ -475,3 +475,90 @@ Prepared for the batch-2 review. Not READY.
 | `python3 -B scripts/pm_event_datetime_inventory.py` | 1 | 238 rows, table above; 0 `inventory_node_changed` |
 | `python3 scripts/pm_event_datetime.py --self-test` | — | not run; no entry point; not credited |
 
+## Fix round 1 after the Opus recheck
+
+Recheck: `reviews/GROK-RECHECK/DF-DCO.md` (Opus 5.5, NOT_READY: DCO-1 and DCO-2 blocking). Brief: `lanes/GROK-FIX-DF-DCO.md`. Worked on Nas1 in a trimmed worktree (no plan-migration snapshot runs other than 001, 002 and the current run). Old head `7da6d92bb52afcd54884ac914f0cfd64b20ab70e`.
+
+| Commit | What |
+|---|---|
+| `fbce30148a` | DCO-1, DCO-2, DCO-N1, DCO-N2, DCO-N3: checker, fixtures, guard witnesses, tests |
+| `1fb0a004d0` | DCO-N4: one CV-1101 sentence per owner unit; shards and index regenerated for the two documents |
+| this commit | report, self-grade pin hashes |
+
+### Findings and fixes
+
+| Finding | Fix | Where | Evidence |
+|---|---|---|---|
+| **DCO-1** (blocking) projection `agent_terminal.occurred_at_utc` and `agent_terminalApplicationV1.occurred_at_utc` never reached `date_time` | The hand list `PROJECTION_TIME_FIELDS` is gone. `projection_timestamp_sites` walks the projection document, and the application-workflow definitions its ApplicationV1 entries `$ref`, for every property whose schema is a `$ref` to `#/$defs/timestamp` or `timestampApplicationV1` (directly or as a `oneOf`/`anyOf`/`allOf` branch). `projection_time_fields` is the set of those names; `projection_value_failures` passes it to `projection_timestamp_bad`. New positives `projection_agent_terminal_application` (definition `agent_terminalApplicationV1`) and `checkpoint_withdrawn`. New negatives `agent_terminal_occurred_hour_24`, `agent_terminal_occurred_trailing_lf`, `agent_terminal_application_occurred_hour_24`, `checkpoint_withdrawn_at_hour_24`, each `projection_timestamp`. Guard witness: one hour-24 witness per instance site (14), all required to return exactly `["projection_timestamp"]` (`Witnesses.add_all`). | `scripts/pm_coordination_events.py:678`, `:707`, `:712`; `Plans/coordination_event_contract_fixtures.json`; `scripts/pm_coordination_guard_run.py:61`, `:215` | On `projection_agent_crashed`, `terminal.occurred_at_utc` set to `2026-09-25T24:00:00Z`, `2026-02-30T04:17:00Z`, `2026-09-25T23:59:60Z`, `2026-09-25T04:60:00Z` or `"2026-09-25T04:17:00Z\n"` now returns `["projection_timestamp"]`; the same five on `agent_terminalApplicationV1` too; a real leap second is accepted (`ProjectionTimestampTests.test_terminal_occurred_at_reaches_date_time`). The derived set is `first_observed_at_utc`, `last_observed_at_utc`, `observed_at_utc`, `occurred_at_utc`, `published_at_utc`, `started_at_utc`, `updated_at_utc`, `withdrawn_at_utc`. The four payload-only names the old list carried (`finished_at_utc`, `detected_at_utc`, `aborted_at_utc`, `exported_at_utc`) are not properties of any projection definition, and every projection definition is closed, so dropping them weakens nothing. |
+| **DCO-2** (blocking) the `envelope_occurred_at` witness and the `envelope/hour-24` probe left the payload family time stale | Both set `occurred_at_utc` and the payload family time (`FAMILY_TIME[event_type]`) to `2026-09-25T24:00:00Z`, so the CV-353 rule 8 join holds and only the `event_record` check refuses. | `scripts/pm_coordination_guard_run.py:285`; `scripts/pm_coordination_events.py:1879` | Cut the `event_record` check in the real checker: the rebuilt witness returns `None` (accepted); the stale form still returns `occurred_at_join` (`ProjectionTimestampTests.test_envelope_occurred_at_witness_is_single_defect`). Recheck mutation M12 now fails the probe with detail `None` (the input is accepted), not with a code. |
+| **DCO-N3** (note) projection fields only partly witnessed | `PROJECTION_TIMESTAMP_INSTANCE_PROBES` (14 sites: each runs the full projection check on its positive with one field changed, five refused forms, three accepted forms and a `str` subclass) and `PROJECTION_TIMESTAMP_NODE_PROBES` (12 ApplicationV1 sites in definitions this offline registry cannot instantiate, because they need `application_context` or the application-workflow document; probed as nodes). A census compares the written site list with the schema walk, so a new timestamp `$ref` or a dropped site fails. | `scripts/pm_coordination_events.py:1667`, `:1694`, `:1720`, called at `:1904` | M7 and M9 caught (below). A new `$ref` to `timestamp` joins the set and fails the census (`test_a_new_timestamp_ref_joins_the_set_and_fails_the_census`). |
+| **DCO-N4** (note) owner units did not cite CV-1101 | One sentence per unit (SP-540..545 in the "Payload and scope" paragraph, OSI-650 at the end of its prose): payload family time and projection copies `coordination_utc_z`, EventRecord `occurred_at_utc` `event_record`, Storage-assigned `observed_at_utc` and `persisted_at_utc` `storage_utc_z`. | `Plans/storage-plan.md:27487`, `:27559`, `:27633`, `:27705`, `:27777`, `:27849`; `Plans/orchestrator-subagent-integration.md:3969` | `pm-shard-plans.py --generate`, `pm-plan-index.py generate`, `pm-shard-plans.py --check` pass (3,100 shards). Regeneration touched only `Plans/_shards/storage-plan` (91 files), `Plans/_shards/orchestrator-subagent-integration` (60) and five index files; in `plan_units.jsonl` 791 units of those two documents changed, each only in `source_doc_sha256`. No `canonical_text` changed. |
+| DCO-N1 (note, fixed because it is in this lane's code) a `str` subclass skipped the projection check | `isinstance(item, str)`; `date_time` refuses the subclass (`date_time_type`). | `scripts/pm_coordination_events.py:719` | `test_str_subclass_is_refused_at_a_projection_field`; added mutation M15 caught. |
+| DCO-N2 (note, fixed because it is in this lane's code) the SP-1101 frozen verifier checked only the six payload fields | On a full EventRecord (a nested `payload`), `timestamps_match_sealed_profile` also requires `occurred_at_utc` under `event_record` and `observed_at_utc`, `persisted_at_utc` under `storage_utc_z`, each present. The retry path still hands the verifier `b"{}"`; giving it the authenticated original's bytes waits for native custody integration (unchanged open item). | `scripts/pm_coordination_numbers.py:222`; probes `retained-envelope-good` and `retained-envelope/*` in `timestamp_profile_failures` | The lane's valid record verifies; `observed_at_utc` `+00:00`, `persisted_at_utc` hour 24, `occurred_at_utc` Feb 30 and a missing `occurred_at_utc` do not. Added mutation M14 caught. |
+| Not this round | `pm_coordination_events.py` is not reconciled with lane DO; that union is batch-2 integration (`state/INTEGRATION-NOTES.md`). | — | — |
+
+### Guard-witness cuts in the real checker (check 11 for every changed row)
+
+Each new or changed date-time guard was cut in the real checker (monkeypatch, nothing edited) and its witness rerun. Output: `real-cuts.txt` in the evidence folder.
+
+| Row | Witness | Guard present | Guard cut |
+|---|---|---|---|
+| `envelope_occurred_at` | `occurred_at_utc` and payload `started_at_utc` hour 24 | `envelope_occurred_at` | `None` (accepted) |
+| `envelope_storage_time` | `observed_at_utc` `+00:00` | `envelope_storage_time` | `None` |
+| `valid_utc_datetime` | `started_at_utc` Feb 30 | `valid_utc_datetime` | `None` |
+| `projection_timestamp` | hour 24 at each of the 14 instance sites | `["projection_timestamp"]` (14/14) | `[]` (14/14) |
+
+### Guard tool
+
+- **Witness collection on Nas1:** `Witnesses().collect()` and `gaps()` at `fbce30148a`: `MISSING` is empty; rows found per phase are unchanged from part 2B (payload_schema 17, payload_instance 7, projection_schema 13, projection_value 12, ledger 9, registry 4, preflight 1, svr 3, envelope 12, fixtures 22, validation 5, ats 2, transition 8, wave2 4 = 119). 2 min 14 s, 130 MB.
+- **Gated tool run: still to do, on the VM.** `scripts/pm_coordination_guard_run.py:583` hard-codes `MemoryGate(max_rss=8192, pause_when_low=10, resume_at=13.5)`. Nas1 has about 12 GB and never reaches 13.5 GB available, and the brief says not to edit that file's gate, so the line is unchanged. Command, in a VM worktree at this branch's head, started at 13.5 GB available or more:
+  `long-job start dco-guard-fix1 -- env PYTHONPATH=scripts python3 -B scripts/pm_coordination_guard_run.py`
+  Expected: `MISSING` empty, 14 tables PASS, 119/119, failure kinds empty. The witness edits are in `Witnesses` only; `run_tool` and the tables are unchanged.
+
+### Checks (Nas1, at `1fb0a004d0`)
+
+| Command | Exit | Result |
+|---|---:|---|
+| `python3 -B scripts/pm_coordination_events.py` | 0 | `"status": "pass"`, `failures: []`; 45/69 payloads, 7/32 events, 24 sequences (91 steps), **13 positive / 24 negative projection cases** |
+| `python3 -B scripts/pm_coordination_wave2.py` | 0 | `"status": "pass"` |
+| `python3 -B -m unittest -v tests.test_pm_coordination_events` | 0 | 57 tests, OK (50 before, 7 new in `ProjectionTimestampTests`) |
+| `python3 -B scripts/pm_coordination_number_corpus.py` | 0 | pass, 16 agree / 3 refusals / 0 crash; retained exact True, forged False |
+| `python3 scripts/pm_event_numbers.py --self-test --scope numbers` | 0 | `"status": "pass"`, **580/580**, failures `[]` |
+| `python3 scripts/pm_event_numbers.py --self-test` (scope all) | 1 | `NOT_RUN_ADMISSION_REFUSED`, only `datetime_inventory_complete_and_classified` |
+| `python3 -B scripts/pm_event_datetime_inventory.py` | 1 | In this trimmed worktree the gate stops at `scan_exclusions_invalid` (`exclusion_purpose_citation_unreadable: Plans/.plan_migration/pds-20260906-017-current-planunit-snapshot/span_map.jsonl`, a snapshot run the brief leaves out of the sparse tree) and reports the 233 nodes as `inventory_node_missing`. Not comparable with the full-tree 238 rows above. |
+| `pm-shard-plans.py --check` | 0 | pass |
+
+`datetime_validator` and the inventory gate run at batch-2 integration (addendum 2). Nas1 lacked `blake3` and `rfc8785`; every command ran in a scratch venv with `--system-site-packages` plus `blake3 1.0.11`, `rfc8785 0.1.4`, `msgpack 1.2.4`.
+
+### Recheck mutations (in memory, through `validate()`)
+
+The recheck's harness `dco_mut.py` re-pointed at this worktree. M7 and M9 edited the old hand list, which no longer exists; they now drop the same names from the derived set. M13-M15 are new.
+
+| # | Mutation | Result | Caught by |
+|---|---|---|---|
+| — | baseline | clean | — |
+| M1 | payload profile `event_record` | caught (5) | `timestamp_profile` census, 4 transition fixtures |
+| M2 | Storage accepts lowercase `z` | caught | `envelope/lowercase-z` |
+| M3 | `persisted_at_utc` dropped from the envelope check | caught | `envelope/lowercase-z`, `envelope/trailing-lf` |
+| M4 | hour 24 accepted | caught (56) | the four new projection negatives, profile and payload probes |
+| M5 | trailing LF accepted | caught (52) | `agent_terminal_occurred_trailing_lf`, probes |
+| M6 | `str` subclass accepted | caught (22) | payload subclass probes |
+| M7 | projection `updated_at_utc` dropped | **caught (14)** (survived at `7da6d92bb5`) | `projection/checkpoint/updated_at_utc/*`, `projection/checkpoint_core/updated_at_utc/*` |
+| M8 | every second 60 refused | caught (52) | accept probes |
+| M9 | projection `first_observed_at_utc`, `last_observed_at_utc` dropped | **caught (14)** (survived at `7da6d92bb5`) | `projection/operation_projection/*` |
+| M10 | frozen verifier ignores timestamps | caught (5) | `retained-profile`, `retained-envelope/*` |
+| M11 | year 0000 refused | caught (49) | accept probes |
+| M12 | envelope `occurred_at_utc` check removed | **caught on acceptance** (was reason code only) | `envelope/hour-24`, detail `None` |
+| M13 | projection `occurred_at_utc` dropped (the DCO-1 defect) | caught (15) | the three new `agent_terminal*` negatives, site probes |
+| M14 | frozen verifier ignores envelope times | caught (4) | `retained-envelope/*` |
+| M15 | projection check skips a `str` subclass | caught (14) | `projection/*/subclass` |
+
+**15 of 15 caught.**
+
+### Grades and self-grade
+
+No cell moves: 66 PASS / 6 ABSENT. The projection timestamp copies were already counted under the timestamp caveat removed in part 2B; DCO-1 was a miss inside that claim and is now closed with negatives. Self-grade: 91 pins, every quote still exact at its lines; 85 pins point into `Plans/storage-plan.md` and `Plans/orchestrator-subagent-integration.md`, whose bytes changed with DCO-N4, so their `file_sha256` was rewritten to the new file hashes (quotes and `excerpt_sha256` unchanged).
+
+### Readiness
+
+Prepared for re-review. Not READY. Open: the gated guard-tool rerun on the VM (command above); batch-2 items unchanged (inventory refresh, `datetime_validator`, the combined self-test, DO union, index fork drift). Membership ABSENT, native NOT_RUN. No new ids, no Decision Log entry, no registry append. **Stopped for Jared:** none.
