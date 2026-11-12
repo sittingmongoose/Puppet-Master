@@ -3097,7 +3097,7 @@
     if (typeof p.cooldownSec === 'number') {
       D.cooldown = p.cooldownSec;
       var cd = document.getElementById('pm6DashCooldown');
-      if (cd) cd.textContent = fmtCooldown(D.cooldown);
+      if (cd) { var text = fmtCooldown(D.cooldown); if (cd.textContent !== text) cd.textContent = text; }
     }
     var qs = p.quotas;
     if (qs && qs.length) {
