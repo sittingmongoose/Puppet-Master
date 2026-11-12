@@ -137,7 +137,7 @@
      as every effect), outside a full-screen program, and never under Reduced Motion or a battery saver (round 2) */
   Policy.prototype.groundLive = function (now) {
     var v = this.view, self = this;
-    if (!v.root.classList.contains('pmt-bg-moves')) { v.root.classList.remove('pmt-bg-live'); return; }
+    if (!v.root.classList.contains('pmt-bg-moves')) { if (v.root.classList.contains('pmt-bg-live')) v.root.classList.remove('pmt-bg-live'); return; }
     now = now || T.util.now();
     var left = IDLE_MS - (now - this.lastActivity);
     /* where no GPU draws the terminal nothing moves (F3-643): the ground shows its still frame */
