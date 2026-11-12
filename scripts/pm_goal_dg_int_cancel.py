@@ -652,7 +652,9 @@ class CancelWorld(IW.S1CancelWorld):
         cells['binding_origin']=(ca.binding.ORIGIN,keys['origin'])
         cells['writer_head']=(ca.binding.HEAD,'goal_execution_writer_domain_head.v1:'+ca.binding.storage_key())
         ca.binding.read_current(r.scope)
-        return dict(cells={name:ca.value(*key) for name,key in cells.items()},
+        selected={name:ca.cell(*key) for name,key in cells.items()}
+        return dict(cells={name:None if cell is None else cell['value'] for name,cell in selected.items()},
+            cell_versions={name:None if cell is None else cell['version'] for name,cell in selected.items()},
             owner_epochs={name:getattr(ca,name).owner_epoch for name in ('goal','host_stop','binding','permissions')})
 
     def _safe_stop(self):

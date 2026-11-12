@@ -1311,6 +1311,15 @@ def r4_current_cases():
     def withdraw_after_historical(w, p):
         p.hooks['after_historical'] = lambda w_, p_: setattr(p_, 'reader_withdrawn', True)
         return p.read_current_cancelled()
+    def stop_bytes_restored_after_current(w,p):
+        host,scope=w.goal_bridge.world.host_stop,w.goal_bridge.route.scope
+        original=copy.deepcopy(host.current(scope)['value'])
+        def restore(world,projector):
+            advance_current_goal_stop(world)
+            cell=host.current(scope)
+            world.storage.transact([dict(table=host.FAMILY,key=host.key(scope),expected=cell['version'],value=original)])
+        p.hooks['after_current']=restore
+        return p.read_current_cancelled()
     def native_advance_after_historical(w, p):
         def adv(w_, p_):
             body = w_.native.prepare_body(w_.body2, 'cancelled')
@@ -1319,6 +1328,7 @@ def r4_current_cases():
         p.hooks['after_historical'] = adv
         return p.read_current_cancelled()
     for name, step, expected in [('goal_stop_after_current_helper', drift_after_current, 'current/goal_stop'),
+                                 ('goal_stop_original_bytes_restored_after_advance',stop_bytes_restored_after_current,'current/goal_stop'),
                                  ('reader_withdrawn_before_current_release', withdraw_after_historical, 'reader/withdrawn'),
                                  ('native_advance_before_current_release', native_advance_after_historical, 'current/native_body')]:
         run_case(out, 'R4/' + name, 'R4', 'negative', projector_case(S0, [publish, cutover, step]), expected)
