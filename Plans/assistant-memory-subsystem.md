@@ -382,7 +382,7 @@ Required operations:
 1. Rebuild Tantivy index from `assistant_memory.redb`
 2. Rebuild USearch index from `assistant_memory.redb` (re-embed + rebuild)
 3. Verification sweep: re-evaluate verification_state for all gists
-4. Dedup sweep: merge identical `embed_text_hash` gists (policy-driven; preserve evidence refs)
+4. Dedup sweep: merge only eligible identical `embed_text_hash` gists. Keep the oldest by original creation time, breaking ties by the unchanging note ID. Preserve every evidence reference and the merge record. Archive the other eligible originals with identities, evidence references, versions and survivor links retained; history remains available and automatic deletion is forbidden (DL-444, DL-445). Pins stay excluded; skip a merge that pin protection forbids.
 5. Monthly summarize/compress: consolidate older low-activation `Note` gists into a monthly `Note` gist (policy-driven; preserve EvidenceRefs)
 6. Prune/archive: archive-only under DL-402/403/444–447; preserve originals/evidence and exclude pins. Delete is the user's action; all existing holds remain.
 7. Store compaction (amended 2026-10-31, DL-270): follow SP-340's store compaction under the maintenance lease, only while PM is idle and fragmentation passes its threshold: the derived memory redb file is rebuilt, and `assistant_memory.redb` is compacted by copying its live records into a new file swapped in during a brief pause, then the reclaimed bytes are verified. Storage health shows usage, budget, reclaimable bytes and the last compaction (SP-340); the reclaim action is the existing `cmd.storage.compaction.request`, started from there.
@@ -392,6 +392,15 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/rewrite-tie-
 
 Rule: Maintenance remains local and in-process, behind the page. Rebuild/recheck recovery uses existing support owners; there is no user cleanup workbench. Monthly summarize/compress and prune/archive are archive-only, preserve originals and EvidenceRefs, and never archive or merge pinned notes. DL-403/444–447 holds remain: approved answers alone do not enable jobs before their application and remaining definition/review/recording approvals. No immediate automatic maintenance is authorized.
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/UI_Command_Catalog.md
+
+Rule: DL-446 answers DL-403 for monthly summary (E-CARDS-2 Card 6.c, option A). Allow monthly summary to select Note memories idle for at least 90 days AND with usefulness score below 0.10. Apply the test separately inside each Project. If a chat outside a Project later receives its own fully specified and reviewed saved maintenance record and separate approval to record it, apply the test only inside that calling chat; never pool chats or Projects. Count idle days from the later of the last edit and last access, using creation time when either is absent. Use the existing computed usefulness ranking with inputs captured when the job chooses memories. Exclude pins before scoring. A crowded list alone must never trigger archiving. Keep the existing monthly grouping. Create the monthly summary and archive every selected original, retaining all evidence references and versions. Deletion remains your action. This cutoff choice supplies no separate permission to run outside a Project.
+
+Rule: DL-447 answers DL-403 for prune/archive (E-CARDS-2 Card 6.d, option A). Allow prune/archive to select eligible memories of any kind idle for at least 180 days AND with usefulness score below 0.05. Apply the test separately inside each Project. If a chat outside a Project later receives its own fully specified and reviewed saved maintenance record and separate approval to record it, apply the test only inside that calling chat; never pool chats or Projects. Count idle days from the later of the last edit and last access, using creation time when either is absent. Use the existing computed usefulness ranking with inputs captured when the job chooses memories. Exclude pins before scoring. A crowded list alone must never trigger archiving. Archive the selected originals only; retain their evidence references and versions. Deletion remains your action. This cutoff choice supplies no separate permission to run outside a Project.
+
+Rule: Usefulness is section 6.3's computed ranking, not a percentage. Use its existing per-kind and Done decay and zero contribution for each missing BM25/ANN score. These approved cutoffs replace the missing-cutoffs condition only. Automatic jobs and Memory-panel buttons remain unavailable until all remaining definition, review and recording approvals pass; actual Project permission, admission, operation/result retention, single-writer/source fences and original-start custody still gate dispatch and effects. A missing authenticated policy binding still refuses `cutoffs_unavailable`; a caller Boolean or arbitrary policy cannot authorize a job.
+
+Source: E-CARDS-2 as presented, Card 6 options A, SHA-256 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30; decision-answers/E-CARDS-2.as-presented-6db25be3.md and ANSWERS_E-CARDS-2_20261105.md under /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104; DL-444 through DL-447, landed in Plans/Decision_Log.md on main. Jared's verbatim answer was "i approve all of it"; the deck's fast-reply rule maps that answer to option A.
+ContractRef: ContractName:Plans/Decision_Log.md#DL-402, ContractName:Plans/Decision_Log.md#DL-403, ContractName:Plans/Decision_Log.md#DL-444, ContractName:Plans/Decision_Log.md#DL-445, ContractName:Plans/Decision_Log.md#DL-446, ContractName:Plans/Decision_Log.md#DL-447
 
 ---
 
@@ -4347,3 +4356,418 @@ command_payload_definitions:
 ```
 
 ContractRef: ContractName:Plans/UI_Command_Catalog.md#UCC-230, ContractName:Plans/UI_Command_Catalog.md#UCC-084, ContractName:Plans/UI_Command_Catalog.md#UCC-085, ContractName:Plans/Decision_Log.md#DL-333, ContractName:Plans/Decision_Log.md#DL-402, ContractName:Plans/Decision_Log.md#DL-403, ContractName:Plans/Decision_Log.md#DL-444, ContractName:Plans/Decision_Log.md#DL-445, ContractName:Plans/Decision_Log.md#DL-446, ContractName:Plans/Decision_Log.md#DL-447, ContractName:Plans/Wiring_Matrix.production.json, ContractName:Plans/application_workflow_contracts.schema.json, ContractName:Plans/Contracts_V0.md#7-uicommand
+
+
+### AMS-100 - memory.dedup_sweep.completed semantic contract
+
+```yaml
+plan_unit_id: AMS-100
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-memory-subsystem.md
+canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.dedup_sweep.completed@1.0.0, prepared
+  without admission. Per-family current-canon search and negative evidence: reports/event-authority-20261104/DMEM-search.json.
+  Reuse UCC-085''s cmd.chat.memory.dedup_sweep Project command and AMS section 7.2, with AMS-054 scope separation.
+  This edition is project_only: actual Project permission and canonical corpus are required. It does not narrow
+  or expand AMS-054''s app memory; app-thread events require their own owner binding. Merge only identical embed_text_hash
+  candidates under section 7.2, preserving the union of EvidenceRefs, pins and existing claim provenance. Existing owner eligibility gates still apply; an unset eligibility policy blocks the underlying mutation. Never infer gist admission from this maintenance event.
+
+  The exact emitter is MemoryMaintenance.dedup_sweep.completed.v1@1.0.0. GUI command and internal job use the same
+  authenticated in-process handler and durable operation identity; this defines no new UI command or job schedule.
+  memory.dedup_sweep.completed records the already durably settled success or failure, never a fabricated success.
+  No event is an instruction to merge, verify, delete, index or inject. Failure details are opaque authorized result
+  refs, never gist text, prompts, embeddings, paths, secrets or EvidenceRef bodies. Event fields and all payload
+  joins are governed by CV-650; persistence and read-only history by SP-630. Existing pinned protection, claim verification,
+  NullMemoryProvider and locked-rule rules survive. Automatic deletion is forbidden by DL-445; only the user deletes memories. Native emission and recovery are NOT_RUN.
+
+  DL-444 and DL-445 apply E-CARDS-2 Card 6.a and 6.b option A. Among owner-eligible identical embed_text_hash memories, keep the oldest by original created_at, breaking a tie by the unchanging note ID (lexical id order). Preserve every original EvidenceRef and the merge record identifying every original and the survivor; the survivor retains the union of evidence references. Archive the other eligible originals with their original identities, evidence references, versions and links to the survivor intact. They remain available in history and are never automatically deleted. Only the user deletes memories. Pinned memories stay excluded; skip any merge that pin protection forbids. These decisions do not broaden existing eligibility or scope, admit a writer, settle operation retention or bypass start custody. Scores for separate archive jobs do not select a duplicate survivor. Source E-CARDS-2 as presented, Card 6 options A, SHA-256 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30; decision-answers/E-CARDS-2.as-presented-6db25be3.md and ANSWERS_E-CARDS-2_20261105.md under /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104; DL-444 through DL-447, landed in Plans/Decision_Log.md on main.'
+gui_related: false
+gui_classification_reason: Typed events, identity, custody and recovery; no visual behavior.
+depends_on:
+- DL-045
+- UCC-085
+- AMS-054
+unblocks: []
+acceptance_criteria:
+- Exact family remains quarantined until its own admission and retention resolution.
+- Schema, identity, custody, replay and withdrawal match this unit.
+validation_surfaces:
+- python3 scripts/pm_memory_maintenance_events.py
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: ea_wave2_DMEM_20261104
+implementation_surfaces:
+- Plans/assistant-memory-subsystem.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+source_lineage:
+- reports/event-authority-20261104/DMEM-search.json
+preserved_exact_tokens: []
+negative_constraints:
+- No admission, automatic deletion, app-scope expansion or native proof.
+```
+
+
+### AMS-101 - memory.dedup_sweep.started semantic contract
+
+```yaml
+plan_unit_id: AMS-101
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-memory-subsystem.md
+canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.dedup_sweep.started@1.0.0, prepared
+  without admission. Per-family current-canon search and negative evidence: reports/event-authority-20261104/DMEM-search.json.
+  Reuse UCC-085''s cmd.chat.memory.dedup_sweep Project command and AMS section 7.2, with AMS-054 scope separation.
+  This edition is project_only: actual Project permission and canonical corpus are required. It does not narrow
+  or expand AMS-054''s app memory; app-thread events require their own owner binding. Merge only identical embed_text_hash
+  candidates under section 7.2, preserving the union of EvidenceRefs, pins and existing claim provenance. Existing owner eligibility gates still apply; an unset eligibility policy blocks the underlying mutation. Never infer gist admission from this maintenance event.
+
+  The exact emitter is MemoryMaintenance.dedup_sweep.started.v1@1.0.0. GUI command and internal job use the same
+  authenticated in-process handler and durable operation identity; this defines no new UI command or job schedule.
+  memory.dedup_sweep.started records acceptance before any maintenance effect. No event is an instruction to merge,
+  verify, delete, index or inject. Failure details are opaque authorized result refs, never gist text, prompts,
+  embeddings, paths, secrets or EvidenceRef bodies. Event fields and all payload joins are governed by CV-651; persistence
+  and read-only history by SP-631. Existing pinned protection, claim verification, NullMemoryProvider and locked-rule
+  rules survive. Automatic deletion is forbidden by DL-445; only the user deletes memories. Native emission and recovery
+  are NOT_RUN.
+
+  DL-444 and DL-445 apply E-CARDS-2 Card 6.a and 6.b option A. Among owner-eligible identical embed_text_hash memories, keep the oldest by original created_at, breaking a tie by the unchanging note ID (lexical id order). Preserve every original EvidenceRef and the merge record identifying every original and the survivor; the survivor retains the union of evidence references. Archive the other eligible originals with their original identities, evidence references, versions and links to the survivor intact. They remain available in history and are never automatically deleted. Only the user deletes memories. Pinned memories stay excluded; skip any merge that pin protection forbids. These decisions do not broaden existing eligibility or scope, admit a writer, settle operation retention or bypass start custody. Scores for separate archive jobs do not select a duplicate survivor. Source E-CARDS-2 as presented, Card 6 options A, SHA-256 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30; decision-answers/E-CARDS-2.as-presented-6db25be3.md and ANSWERS_E-CARDS-2_20261105.md under /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104; DL-444 through DL-447, landed in Plans/Decision_Log.md on main.'
+gui_related: false
+gui_classification_reason: Typed events, identity, custody and recovery; no visual behavior.
+depends_on:
+- DL-045
+- UCC-085
+- AMS-054
+unblocks: []
+acceptance_criteria:
+- Exact family remains quarantined until its own admission and retention resolution.
+- Schema, identity, custody, replay and withdrawal match this unit.
+validation_surfaces:
+- python3 scripts/pm_memory_maintenance_events.py
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: ea_wave2_DMEM_20261104
+implementation_surfaces:
+- Plans/assistant-memory-subsystem.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+source_lineage:
+- reports/event-authority-20261104/DMEM-search.json
+preserved_exact_tokens: []
+negative_constraints:
+- No admission, automatic deletion, app-scope expansion or native proof.
+```
+
+
+### AMS-102 - memory.index.lexical.rebuild.completed semantic contract
+
+```yaml
+plan_unit_id: AMS-102
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-memory-subsystem.md
+canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.index.lexical.rebuild.completed@1.0.0,
+  prepared without admission. Per-family current-canon search and negative evidence: reports/event-authority-20261104/DMEM-search.json.
+  Reuse UCC-085''s cmd.chat.memory.rebuild_lexical_index Project command and AMS section 7.2, with AMS-054 scope
+  separation. This edition is project_only: actual Project permission and canonical corpus are required. It does
+  not narrow or expand AMS-054''s app memory; app-thread events require their own owner binding. Rebuild Tantivy
+  from the bound canonical assistant_memory.redb gist corpus using section 4.1 delete+add by gist id. Stage the
+  new derived index, validate its source revision, then publish under the existing maintenance fence. Never rewrite
+  canonical gists.
+
+  The exact emitter is MemoryMaintenance.index_lexical_rebuild.completed.v1@1.0.0. GUI command and internal job
+  use the same authenticated in-process handler and durable operation identity; this defines no new UI command or
+  job schedule. memory.index.lexical.rebuild.completed records the already durably settled success or failure, never
+  a fabricated success. No event is an instruction to merge, verify, delete, index or inject. Failure details are
+  opaque authorized result refs, never gist text, prompts, embeddings, paths, secrets or EvidenceRef bodies. Event
+  fields and all payload joins are governed by CV-652; persistence and read-only history by SP-632. Existing pinned
+  protection, claim verification, NullMemoryProvider and locked-rule rules survive. Policy-dependent deletion remains
+  unavailable until Jared settles it. Native emission and recovery are NOT_RUN.'
+gui_related: false
+gui_classification_reason: Typed events, identity, custody and recovery; no visual behavior.
+depends_on:
+- DL-045
+- UCC-085
+- AMS-054
+unblocks: []
+acceptance_criteria:
+- Exact family remains quarantined until its own admission and retention resolution.
+- Schema, identity, custody, replay and withdrawal match this unit.
+validation_surfaces:
+- python3 scripts/pm_memory_maintenance_events.py
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: ea_wave2_DMEM_20261104
+implementation_surfaces:
+- Plans/assistant-memory-subsystem.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+source_lineage:
+- reports/event-authority-20261104/DMEM-search.json
+preserved_exact_tokens: []
+negative_constraints:
+- No admission, deletion-policy decision, app-scope expansion or native proof.
+```
+
+
+### AMS-103 - memory.index.lexical.rebuild.started semantic contract
+
+```yaml
+plan_unit_id: AMS-103
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-memory-subsystem.md
+canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.index.lexical.rebuild.started@1.0.0,
+  prepared without admission. Per-family current-canon search and negative evidence: reports/event-authority-20261104/DMEM-search.json.
+  Reuse UCC-085''s cmd.chat.memory.rebuild_lexical_index Project command and AMS section 7.2, with AMS-054 scope
+  separation. This edition is project_only: actual Project permission and canonical corpus are required. It does
+  not narrow or expand AMS-054''s app memory; app-thread events require their own owner binding. Rebuild Tantivy
+  from the bound canonical assistant_memory.redb gist corpus using section 4.1 delete+add by gist id. Stage the
+  new derived index, validate its source revision, then publish under the existing maintenance fence. Never rewrite
+  canonical gists.
+
+  The exact emitter is MemoryMaintenance.index_lexical_rebuild.started.v1@1.0.0. GUI command and internal job use
+  the same authenticated in-process handler and durable operation identity; this defines no new UI command or job
+  schedule. memory.index.lexical.rebuild.started records acceptance before any maintenance effect. No event is an
+  instruction to merge, verify, delete, index or inject. Failure details are opaque authorized result refs, never
+  gist text, prompts, embeddings, paths, secrets or EvidenceRef bodies. Event fields and all payload joins are governed
+  by CV-653; persistence and read-only history by SP-633. Existing pinned protection, claim verification, NullMemoryProvider
+  and locked-rule rules survive. Policy-dependent deletion remains unavailable until Jared settles it. Native emission
+  and recovery are NOT_RUN.'
+gui_related: false
+gui_classification_reason: Typed events, identity, custody and recovery; no visual behavior.
+depends_on:
+- DL-045
+- UCC-085
+- AMS-054
+unblocks: []
+acceptance_criteria:
+- Exact family remains quarantined until its own admission and retention resolution.
+- Schema, identity, custody, replay and withdrawal match this unit.
+validation_surfaces:
+- python3 scripts/pm_memory_maintenance_events.py
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: ea_wave2_DMEM_20261104
+implementation_surfaces:
+- Plans/assistant-memory-subsystem.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+source_lineage:
+- reports/event-authority-20261104/DMEM-search.json
+preserved_exact_tokens: []
+negative_constraints:
+- No admission, deletion-policy decision, app-scope expansion or native proof.
+```
+
+
+### AMS-104 - memory.index.semantic.rebuild.completed semantic contract
+
+```yaml
+plan_unit_id: AMS-104
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-memory-subsystem.md
+canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.index.semantic.rebuild.completed@1.0.0,
+  prepared without admission. Per-family current-canon search and negative evidence: reports/event-authority-20261104/DMEM-search.json.
+  Reuse UCC-085''s cmd.chat.memory.rebuild_semantic_index Project command and AMS section 7.2, with AMS-054 scope
+  separation. This edition is project_only: actual Project permission and canonical corpus are required. It does
+  not narrow or expand AMS-054''s app memory; app-thread events require their own owner binding. Re-embed deterministic
+  embed_text, verify embed_text_hash and rebuild/repack USearch. Follow the DL-270 amendment in section 4.2: vector_slot
+  mapping and tombstones are in the separate derived redb file, never assistant_memory.redb. A source revision change
+  invalidates the staged target.
+
+  The exact emitter is MemoryMaintenance.index_semantic_rebuild.completed.v1@1.0.0. GUI command and internal job
+  use the same authenticated in-process handler and durable operation identity; this defines no new UI command or
+  job schedule. memory.index.semantic.rebuild.completed records the already durably settled success or failure,
+  never a fabricated success. No event is an instruction to merge, verify, delete, index or inject. Failure details
+  are opaque authorized result refs, never gist text, prompts, embeddings, paths, secrets or EvidenceRef bodies.
+  Event fields and all payload joins are governed by CV-654; persistence and read-only history by SP-634. Existing
+  pinned protection, claim verification, NullMemoryProvider and locked-rule rules survive. Policy-dependent deletion
+  remains unavailable until Jared settles it. Native emission and recovery are NOT_RUN.'
+gui_related: false
+gui_classification_reason: Typed events, identity, custody and recovery; no visual behavior.
+depends_on:
+- DL-045
+- UCC-085
+- AMS-054
+unblocks: []
+acceptance_criteria:
+- Exact family remains quarantined until its own admission and retention resolution.
+- Schema, identity, custody, replay and withdrawal match this unit.
+validation_surfaces:
+- python3 scripts/pm_memory_maintenance_events.py
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: ea_wave2_DMEM_20261104
+implementation_surfaces:
+- Plans/assistant-memory-subsystem.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+source_lineage:
+- reports/event-authority-20261104/DMEM-search.json
+preserved_exact_tokens: []
+negative_constraints:
+- No admission, deletion-policy decision, app-scope expansion or native proof.
+```
+
+
+### AMS-105 - memory.index.semantic.rebuild.started semantic contract
+
+```yaml
+plan_unit_id: AMS-105
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-memory-subsystem.md
+canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.index.semantic.rebuild.started@1.0.0,
+  prepared without admission. Per-family current-canon search and negative evidence: reports/event-authority-20261104/DMEM-search.json.
+  Reuse UCC-085''s cmd.chat.memory.rebuild_semantic_index Project command and AMS section 7.2, with AMS-054 scope
+  separation. This edition is project_only: actual Project permission and canonical corpus are required. It does
+  not narrow or expand AMS-054''s app memory; app-thread events require their own owner binding. Re-embed deterministic
+  embed_text, verify embed_text_hash and rebuild/repack USearch. Follow the DL-270 amendment in section 4.2: vector_slot
+  mapping and tombstones are in the separate derived redb file, never assistant_memory.redb. A source revision change
+  invalidates the staged target.
+
+  The exact emitter is MemoryMaintenance.index_semantic_rebuild.started.v1@1.0.0. GUI command and internal job use
+  the same authenticated in-process handler and durable operation identity; this defines no new UI command or job
+  schedule. memory.index.semantic.rebuild.started records acceptance before any maintenance effect. No event is
+  an instruction to merge, verify, delete, index or inject. Failure details are opaque authorized result refs, never
+  gist text, prompts, embeddings, paths, secrets or EvidenceRef bodies. Event fields and all payload joins are governed
+  by CV-655; persistence and read-only history by SP-635. Existing pinned protection, claim verification, NullMemoryProvider
+  and locked-rule rules survive. Policy-dependent deletion remains unavailable until Jared settles it. Native emission
+  and recovery are NOT_RUN.'
+gui_related: false
+gui_classification_reason: Typed events, identity, custody and recovery; no visual behavior.
+depends_on:
+- DL-045
+- UCC-085
+- AMS-054
+unblocks: []
+acceptance_criteria:
+- Exact family remains quarantined until its own admission and retention resolution.
+- Schema, identity, custody, replay and withdrawal match this unit.
+validation_surfaces:
+- python3 scripts/pm_memory_maintenance_events.py
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: ea_wave2_DMEM_20261104
+implementation_surfaces:
+- Plans/assistant-memory-subsystem.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+source_lineage:
+- reports/event-authority-20261104/DMEM-search.json
+preserved_exact_tokens: []
+negative_constraints:
+- No admission, deletion-policy decision, app-scope expansion or native proof.
+```
+
+
+### AMS-106 - memory.verification_sweep.completed semantic contract
+
+```yaml
+plan_unit_id: AMS-106
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-memory-subsystem.md
+canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.verification_sweep.completed@1.0.0,
+  prepared without admission. Per-family current-canon search and negative evidence: reports/event-authority-20261104/DMEM-search.json.
+  Reuse UCC-085''s cmd.chat.memory.verification_sweep Project command and AMS section 7.2, with AMS-054 scope separation.
+  This edition is project_only: actual Project permission and canonical corpus are required. It does not narrow
+  or expand AMS-054''s app memory; app-thread events require their own owner binding. Re-evaluate each claim under
+  the current amended section 5.3 rules, including semantic support, scope and currentness; mere EvidenceRef existence
+  cannot promote a claim. Preserve original versions/history and never convert Out of date into a fourth stored
+  verification_state.
+
+  The exact emitter is MemoryMaintenance.verification_sweep.completed.v1@1.0.0. GUI command and internal job use
+  the same authenticated in-process handler and durable operation identity; this defines no new UI command or job
+  schedule. memory.verification_sweep.completed records the already durably settled success or failure, never a
+  fabricated success. No event is an instruction to merge, verify, delete, index or inject. Failure details are
+  opaque authorized result refs, never gist text, prompts, embeddings, paths, secrets or EvidenceRef bodies. Event
+  fields and all payload joins are governed by CV-656; persistence and read-only history by SP-636. Existing pinned
+  protection, claim verification, NullMemoryProvider and locked-rule rules survive. Policy-dependent deletion remains
+  unavailable until Jared settles it. Native emission and recovery are NOT_RUN.'
+gui_related: false
+gui_classification_reason: Typed events, identity, custody and recovery; no visual behavior.
+depends_on:
+- DL-045
+- UCC-085
+- AMS-054
+unblocks: []
+acceptance_criteria:
+- Exact family remains quarantined until its own admission and retention resolution.
+- Schema, identity, custody, replay and withdrawal match this unit.
+validation_surfaces:
+- python3 scripts/pm_memory_maintenance_events.py
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: ea_wave2_DMEM_20261104
+implementation_surfaces:
+- Plans/assistant-memory-subsystem.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+source_lineage:
+- reports/event-authority-20261104/DMEM-search.json
+preserved_exact_tokens: []
+negative_constraints:
+- No admission, deletion-policy decision, app-scope expansion or native proof.
+```
+
+
+### AMS-107 - memory.verification_sweep.started semantic contract
+
+```yaml
+plan_unit_id: AMS-107
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-memory-subsystem.md
+canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.verification_sweep.started@1.0.0,
+  prepared without admission. Per-family current-canon search and negative evidence: reports/event-authority-20261104/DMEM-search.json.
+  Reuse UCC-085''s cmd.chat.memory.verification_sweep Project command and AMS section 7.2, with AMS-054 scope separation.
+  This edition is project_only: actual Project permission and canonical corpus are required. It does not narrow
+  or expand AMS-054''s app memory; app-thread events require their own owner binding. Re-evaluate each claim under
+  the current amended section 5.3 rules, including semantic support, scope and currentness; mere EvidenceRef existence
+  cannot promote a claim. Preserve original versions/history and never convert Out of date into a fourth stored
+  verification_state.
+
+  The exact emitter is MemoryMaintenance.verification_sweep.started.v1@1.0.0. GUI command and internal job use the
+  same authenticated in-process handler and durable operation identity; this defines no new UI command or job schedule.
+  memory.verification_sweep.started records acceptance before any maintenance effect. No event is an instruction
+  to merge, verify, delete, index or inject. Failure details are opaque authorized result refs, never gist text,
+  prompts, embeddings, paths, secrets or EvidenceRef bodies. Event fields and all payload joins are governed by
+  CV-657; persistence and read-only history by SP-637. Existing pinned protection, claim verification, NullMemoryProvider
+  and locked-rule rules survive. Policy-dependent deletion remains unavailable until Jared settles it. Native emission
+  and recovery are NOT_RUN.'
+gui_related: false
+gui_classification_reason: Typed events, identity, custody and recovery; no visual behavior.
+depends_on:
+- DL-045
+- UCC-085
+- AMS-054
+unblocks: []
+acceptance_criteria:
+- Exact family remains quarantined until its own admission and retention resolution.
+- Schema, identity, custody, replay and withdrawal match this unit.
+validation_surfaces:
+- python3 scripts/pm_memory_maintenance_events.py
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: ea_wave2_DMEM_20261104
+implementation_surfaces:
+- Plans/assistant-memory-subsystem.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+source_lineage:
+- reports/event-authority-20261104/DMEM-search.json
+preserved_exact_tokens: []
+negative_constraints:
+- No admission, deletion-policy decision, app-scope expansion or native proof.
+```
