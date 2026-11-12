@@ -38,11 +38,13 @@ function makePage({ search = '', reduced = false } = {}) {
 	};
 	document.getAnimations = () => animations.slice();
 	document.querySelectorAll = (sel) => (sel === '[data-pm-held]' ? elements.filter((e) => e.hasAttribute('data-pm-held')) : []);
+	const mediaListeners = new Set();
+	const mq = { matches: false, media: '(prefers-reduced-motion: reduce)', addEventListener(type, fn) { if (type === 'change') mediaListeners.add(fn); } };
 	const window = {
 		location: { search }, CSSAnimation,
-		O55: { motion: { reduced: () => reduced } },
+		O55: { motion: { reduced: () => reduced || mq.matches } },
 		addEventListener: (t, fn) => { (listeners[t] ||= []).push(fn); },
-		matchMedia: () => ({ matches: false, addEventListener() {} }),
+		matchMedia: () => mq,
 		requestIdleCallback: (fn) => { const id = ++seq; timers.set(id, { at: now + 50, fn }); return id; }
 	};
 	const ctx = {
@@ -67,6 +69,7 @@ function makePage({ search = '', reduced = false } = {}) {
 			now = end;
 		},
 		input(type = 'pointermove', trusted = true) { for (const fn of listeners[type] || []) fn({ isTrusted: trusted, type, target: type === 'visibilitychange' ? document : window }); },
+		systemReduced(matches) { if (mq.matches === matches) return; mq.matches = matches; for (const fn of mediaListeners) fn({ matches, media: mq.media }); },
 		fire(type, target, animationName, pseudoElement = '') { for (const fn of listeners[type] || []) fn({ type, target, animationName, pseudoElement }); },
 		held: (e) => e.getAttribute('data-pm-held'),
 		// another renderer patches an element in place and drops the attributes it did not write
@@ -167,6 +170,30 @@ const tests = {
 		p.advance(60000);
 		assert.equal(p.window.PM_STILL.still(), false);
 		assert.equal(p.held(e), null);
+	},
+	'system reduction on and off after going still leaves an idle check without input'() {
+		const p = makePage(); const e = p.el('loop'); p.anim(e);
+		p.advance(21000); assert.equal(p.window.PM_STILL.still(), true); assert.equal(p.held(e), 'self');
+		p.systemReduced(true);
+		assert.equal(p.window.PM_STILL.still(), false, 'reduction wakes immediately'); assert.equal(p.held(e), null);
+		p.systemReduced(false); p.advance(21000);
+		assert.equal(p.window.PM_STILL.still(), true, 'still again with no intervening input'); assert.equal(p.held(e), 'self');
+		assert.equal(p.window.PM_STILL.since(), 42000, 'preference changes are not input');
+	},
+	'system reduction on and off before still preserves 20 s from the last input'() {
+		const p = makePage(); const e = p.el('loop'); p.anim(e);
+		p.advance(5000); p.input(); p.advance(5000); p.systemReduced(true);
+		p.advance(5000); p.systemReduced(false); p.advance(9900);
+		assert.equal(p.window.PM_STILL.still(), false, '19.9 s from input: not still'); assert.equal(p.held(e), null);
+		p.advance(200);
+		assert.equal(p.window.PM_STILL.still(), true, '20.1 s from input: still'); assert.equal(p.held(e), 'self');
+		assert.equal(p.window.PM_STILL.since(), 20100, 'neither preference edge resets the input clock');
+	},
+	'system reduction staying on never goes still or marks a loop'() {
+		const p = makePage(); const e = p.el('loop'); p.anim(e);
+		p.advance(10000); p.systemReduced(true); p.advance(180000);
+		assert.equal(p.window.PM_STILL.still(), false); assert.equal(p.html.hasAttribute('data-pm-still'), false);
+		assert.equal(p.held(e), null); assert.equal(p.window.PM_STILL.held(), 0);
 	},
 	'the onboarding window or the tour opening while still wakes it, and it waits while they are open'() {
 		for (const attr of ['data-o55-open', 'data-o55-tour']) {

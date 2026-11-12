@@ -150,7 +150,14 @@
     new MutationObserver(() => { if (still && heldBack()) { wake(); arm(after); } })
       .observe(html, { attributes: true, attributeFilter: ['data-motion', 'data-o55-open', 'data-o55-tour'] });
   } catch (_) { /* none */ }
-  try { const mq = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)'); if (mq && mq.addEventListener) mq.addEventListener('change', () => { if (mq.matches) wake(); }); } catch (_) { /* none */ }
+  try {
+    const mq = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (mq && mq.addEventListener) mq.addEventListener('change', () => {
+      if (mq.matches) wake();
+      // A preference change is not input: keep the last-input clock and any pending deadline, but replace a spent check.
+      if (!timer && after !== Infinity) arm(after);
+    });
+  } catch (_) { /* none */ }
   if (after !== Infinity) arm(after);
   window.PM_STILL = {
     still: () => still,
