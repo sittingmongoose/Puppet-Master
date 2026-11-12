@@ -2,7 +2,7 @@
 // Two test-only references expose existing A/C instances; no DOM/marker writer is replaced.
 export async function installRailReview(page,bundle){
  await page.addStyleTag({content:bundle.css});await page.addScriptTag({content:bundle.js});
- await page.evaluate(()=>{window.__pmrExpandedAudit={queue:[],seen:new Set()};});
+ await page.evaluate(()=>{window.__pmrExpandedAudit={queue:[],seen:new Set()};});await page.evaluate(installOriginalSelectorProbe);
 }
 export async function openRailDisclosures(page,scope='#sidePanelSlot, #pmr-overlay'){
  return page.evaluate(scope=>{
@@ -89,4 +89,30 @@ export async function visitExpandedRails(page,visit,{concepts=['a','b','c','d']}
   }
  }
  return states;
+}
+
+// Installed in the page: undo only the build's class-arm split, at the existing CSSOM positions.
+// A late extra !important rule can change tied declarations on marked ancestors and give a false raw-leaf failure.
+export function installOriginalSelectorProbe(){
+ window.__pmrOriginalSelectorProbe=variant=>{
+  const prefix=variant.replacement.slice(0,variant.replacement.lastIndexOf(':where(')).trim();
+  const compact=prefix.replace(/\s*([,>()+~])\s*/g,'$1'),parts=[];
+  const optional=()=>{if(parts.at(-1)!=='\\s*')parts.push('\\s*');};
+  for(const ch of compact){
+   if(/\s/.test(ch))parts.push('\\s+');
+   else if(',>()+~'.includes(ch)){optional();parts.push(ch.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'));optional();}
+   else parts.push(ch.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'));
+  }
+  const pattern=new RegExp(parts.join('')+'\\s+:where\\([^()]*\\)(?=\\s*(?:,|$))','g'),swaps=[];let arms=0;
+  const walk=rules=>{for(const rule of rules){
+   if(rule.selectorText){const previous=rule.selectorText;let found=0;const next=previous.replace(pattern,()=>{found++;return variant.original;});
+    if(found){rule.selectorText=next;swaps.push([rule,previous]);arms+=found;}
+   }
+   if(rule.cssRules)walk(rule.cssRules);
+  }};
+  try{for(const sheet of [...document.styleSheets,...document.adoptedStyleSheets]){let rules;try{rules=sheet.cssRules;}catch{continue;}walk(rules);}}
+  catch(e){for(const[rule,previous]of swaps)rule.selectorText=previous;throw e;}
+  if(!swaps.length)throw Error('No compiled selector arms found for '+prefix);
+  return {rules:swaps.length,arms,restore(){for(const[rule,previous]of swaps)rule.selectorText=previous;}};
+ };
 }

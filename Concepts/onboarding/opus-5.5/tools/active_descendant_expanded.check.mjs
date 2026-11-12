@@ -29,9 +29,10 @@ const FORCE = [
 FORCE.push({cls:'o55np-cur-over',sel:'.pmr-cur'},{cls:'is-current',sel:'.pmr-cur'},{attr:['aria-selected','true'],sel:'.pmr-cur'});
 export default async function(t){
  await t.viewport(1920,1080);await muteSound(t.page);await t.emulate({reducedMotion:'no-preference'});
+ const actualRules=t.args.rules?JSON.parse(readFileSync(String(t.args.rules),'utf8')).rules:RULES;
  const page=await t.app.open({query:'pm-warm=0',sandbox:false});
  await installRailReview(page,JSON.parse(readFileSync(String(t.args.bundle),'utf8')));
- const result={page:t.args.page,states:[],maxMatches:{},totalMatches:{},features:{},rawInherited:{},rawStyleDifferences:[],mismatches:[],errors:[]};
+ const result={page:t.args.page,states:[],maxMatches:{},totalMatches:{},features:{},rawInherited:{},rawRestoreMax:{},rawStyleDifferences:[],mismatches:[],errors:[]};
  const save=()=>writeFileSync(String(t.args.out),JSON.stringify(result,null,1)+'\n');
  const check=async meta=>{
   const rows=await page.evaluate(([rules,force,decls])=>{
@@ -46,10 +47,10 @@ export default async function(t){
     const real=missing.filter(e=>!inherited.includes(e));
     const feature=e=>e.matches('.pmr-btn')?'pmr-btn':e.matches('.pmr-btn-label')?'pmr-btn-label':e.classList.length?[...e.classList].sort().join('.'):'unmarked:'+e.tagName.toLowerCase();
     const groups={};for(const e of real){const k=feature(e);const g=groups[k]||={n:0,samples:[]};g.n++;if(g.samples.length<3&&!g.samples.includes(describe(e)))g.samples.push(describe(e));}
-    const rawChanges=[];
-    if(forced&&inherited.length){const props=decls[r.rule].includes('-webkit-text-fill-color')?['color','-webkit-text-fill-color']:['color'];const values=()=>inherited.map(e=>props.map(p=>getComputedStyle(e).getPropertyValue(p)).join('|'));const before=values(),style=document.createElement('style');style.textContent=v.original+'{'+decls[r.rule]+'}';document.head.appendChild(style);let after;try{after=values();}finally{style.remove();}for(let i=0;i<inherited.length;i++)if(before[i]!==after[i])rawChanges.push({el:describe(inherited[i]),before:before[i],original:after[i]});}
+    const rawChanges=[];let rawRestore=null;
+    if(forced&&inherited.length){const props=decls[r.rule].includes('-webkit-text-fill-color')?['color','-webkit-text-fill-color']:['color'];const values=()=>inherited.map(e=>props.map(p=>getComputedStyle(e).getPropertyValue(p)).join('|'));const before=values(),restored=window.__pmrOriginalSelectorProbe(v);rawRestore={rules:restored.rules,arms:restored.arms};let after;try{after=values();}finally{restored.restore();}for(let i=0;i<inherited.length;i++)if(before[i]!==after[i])rawChanges.push({el:describe(inherited[i]),before:before[i],original:after[i]});}
     const raw={};for(const e of inherited){const k=e.tagName.toLowerCase();raw[k]=(raw[k]||0)+1;}
-    return {rule:r.rule,variant:vi,forced,original:a.length,replacement:b.length,groups,raw,rawChanges,extra:extra.map(describe),omitted:!!r.omit};
+    return {rule:r.rule,variant:vi,forced,original:a.length,replacement:b.length,groups,raw,rawChanges,rawRestore,extra:extra.map(describe),omitted:!!r.omit};
    }));
    const rows=compare(false);
    try{for(const f of force)for(const e of document.querySelectorAll(f.sel)){
@@ -58,10 +59,11 @@ export default async function(t){
    }rows.push(...compare(true));}
    finally{for(const[e,c]of added)e.classList.remove(c);for(const[e,k,v]of attrs.reverse())v===null?e.removeAttribute(k):e.setAttribute(k,v);}
    return rows;
-  },[RULES,FORCE,DECLS]);
+  },[actualRules,FORCE,DECLS]);
   const state={...meta,rules:rows.map(({rule,variant,forced,original,replacement})=>({rule,variant,forced,original,replacement}))};result.states.push(state);
   for(const row of rows){const r=row.rule;result.maxMatches[r]=Math.max(result.maxMatches[r]||0,row.original);result.totalMatches[r]=(result.totalMatches[r]||0)+row.original;
    for(const[k,n]of Object.entries(row.raw)){const raw=result.rawInherited[r]||={};raw[k]=(raw[k]||0)+n;}
+   if(row.rawRestore)result.rawRestoreMax[r]={rules:Math.max(result.rawRestoreMax[r]?.rules||0,row.rawRestore.rules),arms:Math.max(result.rawRestoreMax[r]?.arms||0,row.rawRestore.arms)};
    if(row.rawChanges.length)result.rawStyleDifferences.push({state:result.states.length-1,rule:r,changes:row.rawChanges});
    for(const[k,g]of Object.entries(row.groups)){const group=(result.features[r]||={})[k]||={elements:0,states:0,samples:g.samples,first:meta};group.elements+=g.n;group.states++;}
    if(Object.keys(row.groups).length||row.extra.length||row.omitted&&row.original)result.mismatches.push({state:result.states.length-1,...row});
@@ -81,7 +83,7 @@ export default async function(t){
    await page.evaluate(()=>PMR.menu.closeAll());
   }
  }catch(e){result.errors.push(String(e.stack||e));throw e;}
- finally{result.notExercised=RULES.filter(r=>!r.omit&&!result.maxMatches[r.rule]).map(r=>r.rule);result.pass=!result.mismatches.length&&!result.rawStyleDifferences.length&&!result.notExercised.length&&!result.errors.length;save();t.log('EXPANDED RESULT '+JSON.stringify({states:result.states.length,features:result.features,maxMatches:result.maxMatches,notExercised:result.notExercised,errors:result.errors}));}
+ finally{result.notExercised=actualRules.filter(r=>!r.omit&&!result.maxMatches[r.rule]).map(r=>r.rule);result.pass=!result.mismatches.length&&!result.rawStyleDifferences.length&&!result.notExercised.length&&!result.errors.length;save();t.log('EXPANDED RESULT '+JSON.stringify({states:result.states.length,features:result.features,maxMatches:result.maxMatches,notExercised:result.notExercised,errors:result.errors}));}
  await t.check('expanded real builders retain every non-inherited descendant feature',!result.mismatches.length,JSON.stringify(result.features));
  await t.check('raw primitive groups retain original computed colour/text-fill',!result.rawStyleDifferences.length,JSON.stringify({groups:result.rawStyleDifferences.length}));
  await t.check('every rewritten rule matched',!result.notExercised.length,JSON.stringify(result.notExercised));
