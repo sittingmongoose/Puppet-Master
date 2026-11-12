@@ -1,14 +1,16 @@
 {
   "schema_id": "pm.assurance.event_authority.step08_current_depth.v1",
-  "assessment_id": "EA-W2-DCW-SWEEP-P2A-NUMBERS-20261108",
-  "assessment_kind": "worker_self_grade_after_guard_tables_and_number_adoption",
+  "assessment_id": "EA-W2-DCW-SWEEP-P2B-20261111",
+  "assessment_kind": "worker_self_grade_after_datetime_adoption",
   "assessed_tree": {
     "branch": "plans/ea-w2-chain-wizard-20261104",
     "base": "7847bbc409e875a9bfddb02309cb0638690f798b",
-    "commit": "8ea0e8de8cc8ac473bb43157848468fe7fc49b88",
-    "read_method": "Exact gated guard tool and number-only scope merged without rebase. Named assertion-phase rows are distinct from complete-boundary or schema-keyword proof. Timestamp review is interim only; native authority is NOT_RUN.",
+    "commit": "6bd3b82b1a00beeaff307410aed11ae822f223c9",
+    "read_method": "Gated NUMRULE date-time head merged without rebase. Shared date_time uses the EventRecord profile for format date-time and storage_utc_z for observed_at_utc and persisted_at_utc. datetime_validator and the inventory gate run at batch-2 integration. Native authority is NOT_RUN.",
     "start_commit": "7847bbc409e875a9bfddb02309cb0638690f798b",
-    "previous_part1_base": "d5ec2f70c0d69c469796eea9b9cfdae30f281f42"
+    "previous_part1_base": "d5ec2f70c0d69c469796eea9b9cfdae30f281f42",
+    "datetime_merge": "919789c1e7349368013bf3935bfb0fa17e0769ae",
+    "datetime_gated": "58c2816ff33365384d4039553f5efdb5370930e6"
   },
   "rubric": {
     "rubric_md": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08-depth42-20260924/rubric.md",
@@ -150,8 +152,8 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "canonical_json/exact_equal",
-              "line_start": 780,
-              "line_end": 785,
+              "line_start": 787,
+              "line_end": 792,
               "quote": "def canonical_json(value, sort_keys=False):\n\n    def domain(item):\n        guard_rows.enforce('O196', {'site': 'O196', 'code': 'integer_json_domain', 'v0': type(item).__name__, 'v1': type(None).__name__})\n        if type(item) is dict:\n            for key, child in item.items():"
             }
           ],
@@ -299,8 +301,8 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "source_storage",
-              "line_start": 524,
-              "line_end": 524,
+              "line_start": 531,
+              "line_end": 531,
               "quote": "guard_rows.enforce('O146', {'site': 'O146', 'code': 'source_payload_not_durable', 'v0': payload['durable']})"
             }
           ],
@@ -353,8 +355,8 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "bundle.revision_requested",
-              "line_start": 990,
-              "line_end": 990,
+              "line_start": 1004,
+              "line_end": 1004,
               "quote": "guard_rows.enforce('O232', {'site': 'O232', 'code': 'index_event_join', 'v0': selected})"
             }
           ],
@@ -366,9 +368,9 @@
           "change_reason": "B1 complete registered-source dispatch is fixed and tested on every history path."
         },
         "compatibility_withdrawal": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "PARTIAL: current caller admission is separate from authenticated original-number dispatch and passive replay policy. Exact physical values and original custody remain checked. Timestamp profile/edition review is interim only, and native original authentication is NOT_RUN.",
+          "finding": "PASS: current caller admission stays separate from authenticated original dispatch and passive replay policy. occurred_at_utc and family ts use pm_event_datetime.date_time with the EventRecord profile; Storage observed_at_utc and persisted_at_utc use storage_utc_z. SP-1101 selects those profiles for a retained original. Native original authentication remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -387,8 +389,8 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "bundle.revision_requested",
-              "line_start": 608,
-              "line_end": 609,
+              "line_start": 615,
+              "line_end": 616,
               "quote": "        supplied_original = dict(event, replay_policy=original_event['replay_policy'])\n        guard_rows.enforce('O185', {'site': 'O185', 'code': 'original_full_value', 'v0': typed_observation(supplied_original), 'v1': typed_observation(original_event)})"
             },
             {
@@ -397,46 +399,67 @@
               "line_start": 16017,
               "line_end": 16017,
               "quote": "persisted timestamps are UTC ISO-8601 values with Z"
+            },
+            {
+              "path": "scripts/pm_dcw_event_oracles.py",
+              "unit": "require_storage_timestamps",
+              "line_start": 852,
+              "line_end": 852,
+              "quote": "event_datetime.date_time(item, profile=event_datetime.STORAGE_UTC_Z)"
+            },
+            {
+              "path": "scripts/pm_dcw_number_custody.py",
+              "unit": "retained_timestamps",
+              "line_start": 41,
+              "line_end": 41,
+              "quote": "dt.date_time(event[field], profile=dt.STORAGE_UTC_Z)"
+            },
+            {
+              "path": "scripts/pm_dcw_number_custody.py",
+              "unit": "install",
+              "line_start": 72,
+              "line_end": 72,
+              "quote": "retained_timestamps(n.decode_storage_value(candidate.record_bytes, profile=n.EVENT_VALUE))"
             }
           ],
           "prior": {
             "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "B2/B3 remain explicit sweep limitations."
+          "change": "upgraded",
+          "change_reason": "CV-1101 date_time profiles now cover the timestamp review that kept this cell partial. Native authentication stays NOT_RUN and does not lower the grade."
         },
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "PARTIAL: named Method B phase rows and complete-path regression witnesses are reported separately. Unproved rows and remaining complete-boundary refusals retain no isolation credit; aggregate schema-status rows do not prove individual schema keywords. Timestamp review is interim only; native campaigns remain NOT_RUN.",
+          "finding": "PARTIAL: named Method B phase rows and complete-path regression witnesses are reported separately. Unproved by-construction rows, including L001 and LE001, and remaining complete-boundary refusals retain no isolation credit; aggregate schema-status rows do not prove individual schema keywords. Shared date_time now checks timestamp fields, EventRecord or storage_utc_z per field. Native campaigns remain NOT_RUN.",
           "evidence": [
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "source_storage",
-              "line_start": 512,
-              "line_end": 512,
+              "line_start": 519,
+              "line_end": 519,
               "quote": "guard_rows.enforce('O140', {'site': 'O140', 'code': 'refuse_oversized_source', 'v0': canonical_msgpack(stored), 'v1': profile['max_value_bytes']})"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "full checker",
-              "line_start": 722,
-              "line_end": 722,
+              "line_start": 729,
+              "line_end": 729,
               "quote": "assert outcome == case['expected'], (row['event_type'], case['case_id'], case['expected'], outcome)"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "verify",
-              "line_start": 591,
-              "line_end": 591,
+              "line_start": 598,
+              "line_end": 598,
               "quote": "writer_policy(scenario['retry_request']['replay_policy'])"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "run",
-              "line_start": 692,
-              "line_end": 692,
+              "line_start": 699,
+              "line_end": 699,
               "quote": "schema_references(schema)"
             },
             {
@@ -484,8 +507,8 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "bundle.revision_requested",
-              "line_start": 990,
-              "line_end": 990,
+              "line_start": 1004,
+              "line_end": 1004,
               "quote": "guard_rows.enforce('O232', {'site': 'O232', 'code': 'index_event_join', 'v0': selected})"
             }
           ],
@@ -494,13 +517,13 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "B2/B3 remain explicit sweep limitations."
+          "change_reason": "Timestamp profiles are adopted. Unproved phase rows and schema-keyword limits remain."
         }
       },
       "remaining_gaps": [
         "Membership/admission intentionally absent.",
         "PENDING_RETENTION_DECISION for event and original source; RT decision required.",
-        "B2/CV-1101 timestamp adoption remains pending; timestamp review is interim only.",
+        "Shared date_time covers timestamp fields: EventRecord for format date-time, storage_utc_z for observed_at_utc and persisted_at_utc. datetime_validator and the inventory gate run at batch-2 integration.",
         "B3: gated phase tables adopted, with named unproved rows and no individual schema-keyword or complete-boundary isolation credit.",
         "Native original-number custody, Storage I/O and operational campaigns remain NOT_RUN."
       ],
@@ -515,7 +538,7 @@
         "scripts/pm-dcw-guard-tables.py",
         "scripts/pm-dcw-number-checks.py"
       ],
-      "notes": "Current sweep: 8 PASS / 3 PARTIAL / 1 ABSENT; no prepared PASS. Number scope adopted; phase proof and timestamp limitations remain explicit. Earlier review_round fields are historical lineage, not the current grade.",
+      "notes": "Current sweep: 9 PASS / 2 PARTIAL / 1 ABSENT; no prepared PASS. Number scope and CV-1101 date_time profiles are adopted. Phase-proof limits remain explicit. Earlier review_round fields are historical lineage, not the current grade.",
       "review_round_4": {
         "before": "8 PASS / 3 PARTIAL / 1 ABSENT",
         "after": "10 PASS / 1 PARTIAL / 1 ABSENT",
@@ -693,8 +716,8 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "canonical_json/exact_equal",
-              "line_start": 780,
-              "line_end": 785,
+              "line_start": 787,
+              "line_end": 792,
               "quote": "def canonical_json(value, sort_keys=False):\n\n    def domain(item):\n        guard_rows.enforce('O196', {'site': 'O196', 'code': 'integer_json_domain', 'v0': type(item).__name__, 'v1': type(None).__name__})\n        if type(item) is dict:\n            for key, child in item.items():"
             }
           ],
@@ -754,8 +777,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-591",
-              "line_start": 24623,
-              "line_end": 24624,
+              "line_start": 24700,
+              "line_end": 24701,
               "quote": "scope_kind=project, project_id and thread_id equal payload values, run_id/attempt_id are null; application or\n  focus fallback is refused. actor_ref names the authenticated review owner"
             }
           ],
@@ -781,8 +804,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-591",
-              "line_start": 24643,
-              "line_end": 24645,
+              "line_start": 24720,
+              "line_end": 24722,
               "quote": "replay_only_not_appendable;\n  compatibility history remains passive and cannot select the writer. EventRecord follows Contracts_V0.md#EventRecord\n  and Plans/event_record.schema.json, w"
             }
           ],
@@ -801,8 +824,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-576",
-              "line_start": 29757,
-              "line_end": 29758,
+              "line_start": 29855,
+              "line_end": 29856,
               "quote": "retention_policy_ref=PENDING_RETENTION_DECISION. Candidate classes are Case L-3 receipt/audit authority/source\n  lineage versus Chat content for this Deep Plan review history; no exact "
             }
           ],
@@ -842,8 +865,8 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "source_storage",
-              "line_start": 524,
-              "line_end": 524,
+              "line_start": 531,
+              "line_end": 531,
               "quote": "guard_rows.enforce('O146', {'site': 'O146', 'code': 'source_payload_not_durable', 'v0': payload['durable']})"
             }
           ],
@@ -882,22 +905,22 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-576",
-              "line_start": 29737,
-              "line_end": 29739,
+              "line_start": 29835,
+              "line_end": 29837,
               "quote": "SP-278 and reuses the existing\n  projector.storage.event_record_index@1.0.0 and reader.storage.event_record_index@1.0.0; their physical checkpoint\n  is event_record_index_checkpoint.v1:"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-576",
-              "line_start": 29739,
-              "line_end": 29740,
+              "line_start": 29837,
+              "line_end": 29838,
               "quote": "event_record_index_checkpoint.v1:{storage_instance_id}, value pm.storage_value.event_record_index_checkpoint.v1@1.0.0,\n  and lookup rows are event_record_index.v2 in the current selecte"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "bundle.revision_started",
-              "line_start": 990,
-              "line_end": 990,
+              "line_start": 1004,
+              "line_end": 1004,
               "quote": "guard_rows.enforce('O232', {'site': 'O232', 'code': 'index_event_join', 'v0': selected})"
             }
           ],
@@ -909,9 +932,9 @@
           "change_reason": "B1 complete registered-source dispatch is fixed and tested on every history path."
         },
         "compatibility_withdrawal": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "PARTIAL: current caller admission is separate from authenticated original-number dispatch and passive replay policy. Exact physical values and original custody remain checked. Timestamp profile/edition review is interim only, and native original authentication is NOT_RUN.",
+          "finding": "PASS: current caller admission stays separate from authenticated original dispatch and passive replay policy. occurred_at_utc and family ts use pm_event_datetime.date_time with the EventRecord profile; Storage observed_at_utc and persisted_at_utc use storage_utc_z. SP-1101 selects those profiles for a retained original. Native original authentication remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -923,15 +946,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-576",
-              "line_start": 29765,
-              "line_end": 29767,
+              "line_start": 29863,
+              "line_end": 29865,
               "quote": "replacement reader must explicitly\n  support retained schemas and authenticate complete SP-278 rebuild/currentness before publication. Cutoff does\n  not delete original events or reset "
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "bundle.revision_started",
-              "line_start": 608,
-              "line_end": 609,
+              "line_start": 615,
+              "line_end": 616,
               "quote": "        supplied_original = dict(event, replay_policy=original_event['replay_policy'])\n        guard_rows.enforce('O185', {'site': 'O185', 'code': 'original_full_value', 'v0': typed_observation(supplied_original), 'v1': typed_observation(original_event)})"
             },
             {
@@ -940,46 +963,67 @@
               "line_start": 16017,
               "line_end": 16017,
               "quote": "persisted timestamps are UTC ISO-8601 values with Z"
+            },
+            {
+              "path": "scripts/pm_dcw_event_oracles.py",
+              "unit": "require_storage_timestamps",
+              "line_start": 852,
+              "line_end": 852,
+              "quote": "event_datetime.date_time(item, profile=event_datetime.STORAGE_UTC_Z)"
+            },
+            {
+              "path": "scripts/pm_dcw_number_custody.py",
+              "unit": "retained_timestamps",
+              "line_start": 41,
+              "line_end": 41,
+              "quote": "dt.date_time(event[field], profile=dt.STORAGE_UTC_Z)"
+            },
+            {
+              "path": "scripts/pm_dcw_number_custody.py",
+              "unit": "install",
+              "line_start": 72,
+              "line_end": 72,
+              "quote": "retained_timestamps(n.decode_storage_value(candidate.record_bytes, profile=n.EVENT_VALUE))"
             }
           ],
           "prior": {
             "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "B2/B3 remain explicit sweep limitations."
+          "change": "upgraded",
+          "change_reason": "CV-1101 date_time profiles now cover the timestamp review that kept this cell partial. Native authentication stays NOT_RUN and does not lower the grade."
         },
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "PARTIAL: named Method B phase rows and complete-path regression witnesses are reported separately. Unproved rows and remaining complete-boundary refusals retain no isolation credit; aggregate schema-status rows do not prove individual schema keywords. Timestamp review is interim only; native campaigns remain NOT_RUN.",
+          "finding": "PARTIAL: named Method B phase rows and complete-path regression witnesses are reported separately. Unproved by-construction rows, including L001 and LE001, and remaining complete-boundary refusals retain no isolation credit; aggregate schema-status rows do not prove individual schema keywords. Shared date_time now checks timestamp fields, EventRecord or storage_utc_z per field. Native campaigns remain NOT_RUN.",
           "evidence": [
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "source_storage",
-              "line_start": 512,
-              "line_end": 512,
+              "line_start": 519,
+              "line_end": 519,
               "quote": "guard_rows.enforce('O140', {'site': 'O140', 'code': 'refuse_oversized_source', 'v0': canonical_msgpack(stored), 'v1': profile['max_value_bytes']})"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "full checker",
-              "line_start": 722,
-              "line_end": 722,
+              "line_start": 729,
+              "line_end": 729,
               "quote": "assert outcome == case['expected'], (row['event_type'], case['case_id'], case['expected'], outcome)"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "verify",
-              "line_start": 591,
-              "line_end": 591,
+              "line_start": 598,
+              "line_end": 598,
               "quote": "writer_policy(scenario['retry_request']['replay_policy'])"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "run",
-              "line_start": 692,
-              "line_end": 692,
+              "line_start": 699,
+              "line_end": 699,
               "quote": "schema_references(schema)"
             },
             {
@@ -1027,8 +1071,8 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "bundle.revision_started",
-              "line_start": 990,
-              "line_end": 990,
+              "line_start": 1004,
+              "line_end": 1004,
               "quote": "guard_rows.enforce('O232', {'site': 'O232', 'code': 'index_event_join', 'v0': selected})"
             }
           ],
@@ -1037,13 +1081,13 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "B2/B3 remain explicit sweep limitations."
+          "change_reason": "Timestamp profiles are adopted. Unproved phase rows and schema-keyword limits remain."
         }
       },
       "remaining_gaps": [
         "Membership/admission intentionally absent.",
         "PENDING_RETENTION_DECISION for event and original source; RT decision required.",
-        "B2/CV-1101 timestamp adoption remains pending; timestamp review is interim only.",
+        "Shared date_time covers timestamp fields: EventRecord for format date-time, storage_utc_z for observed_at_utc and persisted_at_utc. datetime_validator and the inventory gate run at batch-2 integration.",
         "B3: gated phase tables adopted, with named unproved rows and no individual schema-keyword or complete-boundary isolation credit.",
         "Native original-number custody, Storage I/O and operational campaigns remain NOT_RUN."
       ],
@@ -1058,7 +1102,7 @@
         "scripts/pm-dcw-guard-tables.py",
         "scripts/pm-dcw-number-checks.py"
       ],
-      "notes": "Current sweep: 8 PASS / 3 PARTIAL / 1 ABSENT; no prepared PASS. Number scope adopted; phase proof and timestamp limitations remain explicit. Earlier review_round fields are historical lineage, not the current grade.",
+      "notes": "Current sweep: 9 PASS / 2 PARTIAL / 1 ABSENT; no prepared PASS. Number scope and CV-1101 date_time profiles are adopted. Phase-proof limits remain explicit. Earlier review_round fields are historical lineage, not the current grade.",
       "review_round_4": {
         "before": "8 PASS / 3 PARTIAL / 1 ABSENT",
         "after": "10 PASS / 1 PARTIAL / 1 ABSENT",
@@ -1208,8 +1252,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-577",
-              "line_start": 29722,
-              "line_end": 29724,
+              "line_start": 29919,
+              "line_end": 29921,
               "quote": "SP-286 and CV-339 including strict full-value v2\n  resolution, SP-336/SP-347 durability classes, and Case L-2/SP-026/SP-236 SeglogFrameV2 bytes. NEW owner contract\n  under DL-045: produ"
             },
             {
@@ -1236,8 +1280,8 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "canonical_json/exact_equal",
-              "line_start": 780,
-              "line_end": 785,
+              "line_start": 787,
+              "line_end": 792,
               "quote": "def canonical_json(value, sort_keys=False):\n\n    def domain(item):\n        guard_rows.enforce('O196', {'site': 'O196', 'code': 'integer_json_domain', 'v0': type(item).__name__, 'v1': type(None).__name__})\n        if type(item) is dict:\n            for key, child in item.items():"
             }
           ],
@@ -1297,8 +1341,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-592",
-              "line_start": 24623,
-              "line_end": 24624,
+              "line_start": 24777,
+              "line_end": 24778,
               "quote": "scope_kind=project, project_id and thread_id equal payload values, run_id/attempt_id are null; application or\n  focus fallback is refused. actor_ref names the authenticated review owner"
             }
           ],
@@ -1324,8 +1368,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-592",
-              "line_start": 24643,
-              "line_end": 24645,
+              "line_start": 24797,
+              "line_end": 24799,
               "quote": "replay_only_not_appendable;\n  compatibility history remains passive and cannot select the writer. EventRecord follows Contracts_V0.md#EventRecord\n  and Plans/event_record.schema.json, w"
             }
           ],
@@ -1344,8 +1388,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-577",
-              "line_start": 29757,
-              "line_end": 29758,
+              "line_start": 29954,
+              "line_end": 29955,
               "quote": "retention_policy_ref=PENDING_RETENTION_DECISION. Candidate classes are Case L-3 receipt/audit authority/source\n  lineage versus Chat content for this Deep Plan review history; no exact "
             }
           ],
@@ -1385,8 +1429,8 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "source_storage",
-              "line_start": 524,
-              "line_end": 524,
+              "line_start": 531,
+              "line_end": 531,
               "quote": "guard_rows.enforce('O146', {'site': 'O146', 'code': 'source_payload_not_durable', 'v0': payload['durable']})"
             }
           ],
@@ -1425,22 +1469,22 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-577",
-              "line_start": 29737,
-              "line_end": 29739,
+              "line_start": 29934,
+              "line_end": 29936,
               "quote": "SP-278 and reuses the existing\n  projector.storage.event_record_index@1.0.0 and reader.storage.event_record_index@1.0.0; their physical checkpoint\n  is event_record_index_checkpoint.v1:"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-577",
-              "line_start": 29739,
-              "line_end": 29740,
+              "line_start": 29936,
+              "line_end": 29937,
               "quote": "event_record_index_checkpoint.v1:{storage_instance_id}, value pm.storage_value.event_record_index_checkpoint.v1@1.0.0,\n  and lookup rows are event_record_index.v2 in the current selecte"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "bundle.revision_completed",
-              "line_start": 990,
-              "line_end": 990,
+              "line_start": 1004,
+              "line_end": 1004,
               "quote": "guard_rows.enforce('O232', {'site': 'O232', 'code': 'index_event_join', 'v0': selected})"
             }
           ],
@@ -1452,9 +1496,9 @@
           "change_reason": "B1 complete registered-source dispatch is fixed and tested on every history path."
         },
         "compatibility_withdrawal": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "PARTIAL: current caller admission is separate from authenticated original-number dispatch and passive replay policy. Exact physical values and original custody remain checked. Timestamp profile/edition review is interim only, and native original authentication is NOT_RUN.",
+          "finding": "PASS: current caller admission stays separate from authenticated original dispatch and passive replay policy. occurred_at_utc and family ts use pm_event_datetime.date_time with the EventRecord profile; Storage observed_at_utc and persisted_at_utc use storage_utc_z. SP-1101 selects those profiles for a retained original. Native original authentication remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -1466,15 +1510,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-577",
-              "line_start": 29765,
-              "line_end": 29767,
+              "line_start": 29962,
+              "line_end": 29964,
               "quote": "replacement reader must explicitly\n  support retained schemas and authenticate complete SP-278 rebuild/currentness before publication. Cutoff does\n  not delete original events or reset "
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "bundle.revision_completed",
-              "line_start": 608,
-              "line_end": 609,
+              "line_start": 615,
+              "line_end": 616,
               "quote": "        supplied_original = dict(event, replay_policy=original_event['replay_policy'])\n        guard_rows.enforce('O185', {'site': 'O185', 'code': 'original_full_value', 'v0': typed_observation(supplied_original), 'v1': typed_observation(original_event)})"
             },
             {
@@ -1483,46 +1527,67 @@
               "line_start": 16017,
               "line_end": 16017,
               "quote": "persisted timestamps are UTC ISO-8601 values with Z"
+            },
+            {
+              "path": "scripts/pm_dcw_event_oracles.py",
+              "unit": "require_storage_timestamps",
+              "line_start": 852,
+              "line_end": 852,
+              "quote": "event_datetime.date_time(item, profile=event_datetime.STORAGE_UTC_Z)"
+            },
+            {
+              "path": "scripts/pm_dcw_number_custody.py",
+              "unit": "retained_timestamps",
+              "line_start": 41,
+              "line_end": 41,
+              "quote": "dt.date_time(event[field], profile=dt.STORAGE_UTC_Z)"
+            },
+            {
+              "path": "scripts/pm_dcw_number_custody.py",
+              "unit": "install",
+              "line_start": 72,
+              "line_end": 72,
+              "quote": "retained_timestamps(n.decode_storage_value(candidate.record_bytes, profile=n.EVENT_VALUE))"
             }
           ],
           "prior": {
             "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "B2/B3 remain explicit sweep limitations."
+          "change": "upgraded",
+          "change_reason": "CV-1101 date_time profiles now cover the timestamp review that kept this cell partial. Native authentication stays NOT_RUN and does not lower the grade."
         },
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "PARTIAL: named Method B phase rows and complete-path regression witnesses are reported separately. Unproved rows and remaining complete-boundary refusals retain no isolation credit; aggregate schema-status rows do not prove individual schema keywords. Timestamp review is interim only; native campaigns remain NOT_RUN.",
+          "finding": "PARTIAL: named Method B phase rows and complete-path regression witnesses are reported separately. Unproved by-construction rows, including L001 and LE001, and remaining complete-boundary refusals retain no isolation credit; aggregate schema-status rows do not prove individual schema keywords. Shared date_time now checks timestamp fields, EventRecord or storage_utc_z per field. Native campaigns remain NOT_RUN.",
           "evidence": [
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "source_storage",
-              "line_start": 512,
-              "line_end": 512,
+              "line_start": 519,
+              "line_end": 519,
               "quote": "guard_rows.enforce('O140', {'site': 'O140', 'code': 'refuse_oversized_source', 'v0': canonical_msgpack(stored), 'v1': profile['max_value_bytes']})"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "full checker",
-              "line_start": 722,
-              "line_end": 722,
+              "line_start": 729,
+              "line_end": 729,
               "quote": "assert outcome == case['expected'], (row['event_type'], case['case_id'], case['expected'], outcome)"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "verify",
-              "line_start": 591,
-              "line_end": 591,
+              "line_start": 598,
+              "line_end": 598,
               "quote": "writer_policy(scenario['retry_request']['replay_policy'])"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "run",
-              "line_start": 692,
-              "line_end": 692,
+              "line_start": 699,
+              "line_end": 699,
               "quote": "schema_references(schema)"
             },
             {
@@ -1570,8 +1635,8 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "bundle.revision_completed",
-              "line_start": 990,
-              "line_end": 990,
+              "line_start": 1004,
+              "line_end": 1004,
               "quote": "guard_rows.enforce('O232', {'site': 'O232', 'code': 'index_event_join', 'v0': selected})"
             }
           ],
@@ -1580,13 +1645,13 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "B2/B3 remain explicit sweep limitations."
+          "change_reason": "Timestamp profiles are adopted. Unproved phase rows and schema-keyword limits remain."
         }
       },
       "remaining_gaps": [
         "Membership/admission intentionally absent.",
         "PENDING_RETENTION_DECISION for event and original source; RT decision required.",
-        "B2/CV-1101 timestamp adoption remains pending; timestamp review is interim only.",
+        "Shared date_time covers timestamp fields: EventRecord for format date-time, storage_utc_z for observed_at_utc and persisted_at_utc. datetime_validator and the inventory gate run at batch-2 integration.",
         "B3: gated phase tables adopted, with named unproved rows and no individual schema-keyword or complete-boundary isolation credit.",
         "Native original-number custody, Storage I/O and operational campaigns remain NOT_RUN."
       ],
@@ -1601,7 +1666,7 @@
         "scripts/pm-dcw-guard-tables.py",
         "scripts/pm-dcw-number-checks.py"
       ],
-      "notes": "Current sweep: 8 PASS / 3 PARTIAL / 1 ABSENT; no prepared PASS. Number scope adopted; phase proof and timestamp limitations remain explicit. Earlier review_round fields are historical lineage, not the current grade.",
+      "notes": "Current sweep: 9 PASS / 2 PARTIAL / 1 ABSENT; no prepared PASS. Number scope and CV-1101 date_time profiles are adopted. Phase-proof limits remain explicit. Earlier review_round fields are historical lineage, not the current grade.",
       "review_round_4": {
         "before": "8 PASS / 3 PARTIAL / 1 ABSENT",
         "after": "10 PASS / 1 PARTIAL / 1 ABSENT",
@@ -1751,8 +1816,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-578",
-              "line_start": 29722,
-              "line_end": 29724,
+              "line_start": 30018,
+              "line_end": 30020,
               "quote": "SP-286 and CV-339 including strict full-value v2\n  resolution, SP-336/SP-347 durability classes, and Case L-2/SP-026/SP-236 SeglogFrameV2 bytes. NEW owner contract\n  under DL-045: produ"
             },
             {
@@ -1779,8 +1844,8 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "canonical_json/exact_equal",
-              "line_start": 780,
-              "line_end": 785,
+              "line_start": 787,
+              "line_end": 792,
               "quote": "def canonical_json(value, sort_keys=False):\n\n    def domain(item):\n        guard_rows.enforce('O196', {'site': 'O196', 'code': 'integer_json_domain', 'v0': type(item).__name__, 'v1': type(None).__name__})\n        if type(item) is dict:\n            for key, child in item.items():"
             }
           ],
@@ -1840,8 +1905,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-593",
-              "line_start": 24623,
-              "line_end": 24624,
+              "line_start": 24854,
+              "line_end": 24855,
               "quote": "scope_kind=project, project_id and thread_id equal payload values, run_id/attempt_id are null; application or\n  focus fallback is refused. actor_ref names the authenticated review owner"
             }
           ],
@@ -1887,8 +1952,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-578",
-              "line_start": 29757,
-              "line_end": 29758,
+              "line_start": 30053,
+              "line_end": 30054,
               "quote": "retention_policy_ref=PENDING_RETENTION_DECISION. Candidate classes are Case L-3 receipt/audit authority/source\n  lineage versus Chat content for this Deep Plan review history; no exact "
             }
           ],
@@ -1928,8 +1993,8 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "source_storage",
-              "line_start": 524,
-              "line_end": 524,
+              "line_start": 531,
+              "line_end": 531,
               "quote": "guard_rows.enforce('O146', {'site': 'O146', 'code': 'source_payload_not_durable', 'v0': payload['durable']})"
             }
           ],
@@ -1968,22 +2033,22 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-578",
-              "line_start": 29737,
-              "line_end": 29739,
+              "line_start": 30033,
+              "line_end": 30035,
               "quote": "SP-278 and reuses the existing\n  projector.storage.event_record_index@1.0.0 and reader.storage.event_record_index@1.0.0; their physical checkpoint\n  is event_record_index_checkpoint.v1:"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-578",
-              "line_start": 29739,
-              "line_end": 29740,
+              "line_start": 30035,
+              "line_end": 30036,
               "quote": "event_record_index_checkpoint.v1:{storage_instance_id}, value pm.storage_value.event_record_index_checkpoint.v1@1.0.0,\n  and lookup rows are event_record_index.v2 in the current selecte"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "bundle.revision_interrupted",
-              "line_start": 990,
-              "line_end": 990,
+              "line_start": 1004,
+              "line_end": 1004,
               "quote": "guard_rows.enforce('O232', {'site': 'O232', 'code': 'index_event_join', 'v0': selected})"
             }
           ],
@@ -1995,9 +2060,9 @@
           "change_reason": "B1 complete registered-source dispatch is fixed and tested on every history path."
         },
         "compatibility_withdrawal": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "PARTIAL: current caller admission is separate from authenticated original-number dispatch and passive replay policy. Exact physical values and original custody remain checked. Timestamp profile/edition review is interim only, and native original authentication is NOT_RUN.",
+          "finding": "PASS: current caller admission stays separate from authenticated original dispatch and passive replay policy. occurred_at_utc and family ts use pm_event_datetime.date_time with the EventRecord profile; Storage observed_at_utc and persisted_at_utc use storage_utc_z. SP-1101 selects those profiles for a retained original. Native original authentication remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -2009,15 +2074,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-578",
-              "line_start": 29765,
-              "line_end": 29767,
+              "line_start": 30061,
+              "line_end": 30063,
               "quote": "replacement reader must explicitly\n  support retained schemas and authenticate complete SP-278 rebuild/currentness before publication. Cutoff does\n  not delete original events or reset "
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "bundle.revision_interrupted",
-              "line_start": 608,
-              "line_end": 609,
+              "line_start": 615,
+              "line_end": 616,
               "quote": "        supplied_original = dict(event, replay_policy=original_event['replay_policy'])\n        guard_rows.enforce('O185', {'site': 'O185', 'code': 'original_full_value', 'v0': typed_observation(supplied_original), 'v1': typed_observation(original_event)})"
             },
             {
@@ -2026,46 +2091,67 @@
               "line_start": 16017,
               "line_end": 16017,
               "quote": "persisted timestamps are UTC ISO-8601 values with Z"
+            },
+            {
+              "path": "scripts/pm_dcw_event_oracles.py",
+              "unit": "require_storage_timestamps",
+              "line_start": 852,
+              "line_end": 852,
+              "quote": "event_datetime.date_time(item, profile=event_datetime.STORAGE_UTC_Z)"
+            },
+            {
+              "path": "scripts/pm_dcw_number_custody.py",
+              "unit": "retained_timestamps",
+              "line_start": 41,
+              "line_end": 41,
+              "quote": "dt.date_time(event[field], profile=dt.STORAGE_UTC_Z)"
+            },
+            {
+              "path": "scripts/pm_dcw_number_custody.py",
+              "unit": "install",
+              "line_start": 72,
+              "line_end": 72,
+              "quote": "retained_timestamps(n.decode_storage_value(candidate.record_bytes, profile=n.EVENT_VALUE))"
             }
           ],
           "prior": {
             "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "B2/B3 remain explicit sweep limitations."
+          "change": "upgraded",
+          "change_reason": "CV-1101 date_time profiles now cover the timestamp review that kept this cell partial. Native authentication stays NOT_RUN and does not lower the grade."
         },
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "PARTIAL: named Method B phase rows and complete-path regression witnesses are reported separately. Unproved rows and remaining complete-boundary refusals retain no isolation credit; aggregate schema-status rows do not prove individual schema keywords. Timestamp review is interim only; native campaigns remain NOT_RUN.",
+          "finding": "PARTIAL: named Method B phase rows and complete-path regression witnesses are reported separately. Unproved by-construction rows, including L001 and LE001, and remaining complete-boundary refusals retain no isolation credit; aggregate schema-status rows do not prove individual schema keywords. Shared date_time now checks timestamp fields, EventRecord or storage_utc_z per field. Native campaigns remain NOT_RUN.",
           "evidence": [
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "source_storage",
-              "line_start": 512,
-              "line_end": 512,
+              "line_start": 519,
+              "line_end": 519,
               "quote": "guard_rows.enforce('O140', {'site': 'O140', 'code': 'refuse_oversized_source', 'v0': canonical_msgpack(stored), 'v1': profile['max_value_bytes']})"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "full checker",
-              "line_start": 722,
-              "line_end": 722,
+              "line_start": 729,
+              "line_end": 729,
               "quote": "assert outcome == case['expected'], (row['event_type'], case['case_id'], case['expected'], outcome)"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "verify",
-              "line_start": 591,
-              "line_end": 591,
+              "line_start": 598,
+              "line_end": 598,
               "quote": "writer_policy(scenario['retry_request']['replay_policy'])"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "run",
-              "line_start": 692,
-              "line_end": 692,
+              "line_start": 699,
+              "line_end": 699,
               "quote": "schema_references(schema)"
             },
             {
@@ -2113,8 +2199,8 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "bundle.revision_interrupted",
-              "line_start": 990,
-              "line_end": 990,
+              "line_start": 1004,
+              "line_end": 1004,
               "quote": "guard_rows.enforce('O232', {'site': 'O232', 'code': 'index_event_join', 'v0': selected})"
             }
           ],
@@ -2123,13 +2209,13 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "B2/B3 remain explicit sweep limitations."
+          "change_reason": "Timestamp profiles are adopted. Unproved phase rows and schema-keyword limits remain."
         }
       },
       "remaining_gaps": [
         "Membership/admission intentionally absent.",
         "PENDING_RETENTION_DECISION for event and original source; RT decision required.",
-        "B2/CV-1101 timestamp adoption remains pending; timestamp review is interim only.",
+        "Shared date_time covers timestamp fields: EventRecord for format date-time, storage_utc_z for observed_at_utc and persisted_at_utc. datetime_validator and the inventory gate run at batch-2 integration.",
         "B3: gated phase tables adopted, with named unproved rows and no individual schema-keyword or complete-boundary isolation credit.",
         "Native original-number custody, Storage I/O and operational campaigns remain NOT_RUN."
       ],
@@ -2144,7 +2230,7 @@
         "scripts/pm-dcw-guard-tables.py",
         "scripts/pm-dcw-number-checks.py"
       ],
-      "notes": "Current sweep: 8 PASS / 3 PARTIAL / 1 ABSENT; no prepared PASS. Number scope adopted; phase proof and timestamp limitations remain explicit. Earlier review_round fields are historical lineage, not the current grade.",
+      "notes": "Current sweep: 9 PASS / 2 PARTIAL / 1 ABSENT; no prepared PASS. Number scope and CV-1101 date_time profiles are adopted. Phase-proof limits remain explicit. Earlier review_round fields are historical lineage, not the current grade.",
       "review_round_4": {
         "before": "8 PASS / 3 PARTIAL / 1 ABSENT",
         "after": "10 PASS / 1 PARTIAL / 1 ABSENT",
@@ -2309,8 +2395,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-596",
-              "line_start": 24935,
-              "line_end": 24935,
+              "line_start": 25119,
+              "line_end": 25119,
               "quote": "NEW identity recipe"
             }
           ],
@@ -2349,15 +2435,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-596",
-              "line_start": 25209,
-              "line_end": 25209,
+              "line_start": 25211,
+              "line_end": 25211,
               "quote": "Retention is explicit: event retention_policy_ref=PENDING_RETENTION_DECISION. The original wizard_blocked_evidence"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-596",
-              "line_start": 25213,
-              "line_end": 25213,
+              "line_start": 25215,
+              "line_end": 25215,
               "quote": "Exact question: For wizard.blocked event history, which Case L-3 class/lifetime applies: planning/chat"
             }
           ],
@@ -2416,8 +2502,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-596",
-              "line_start": 25195,
-              "line_end": 25195,
+              "line_start": 25197,
+              "line_end": 25197,
               "quote": "NEW passive operating consumer reader.wizard_blocked_history@1.0.0 selects only wizard.blocked at this exact supported"
             }
           ],
@@ -2429,16 +2515,37 @@
           "change_reason": "Round 10 applies deck-2 Card 4.a/4.b option A; inherited shared sweep qualifications remain."
         },
         "compatibility_withdrawal": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "PARTIAL: current caller admission is separate from authenticated original-number dispatch and passive replay policy. Exact physical values and original custody remain checked. Timestamp profile/edition review is interim only, and native original authentication is NOT_RUN.",
+          "finding": "PASS: current caller admission stays separate from authenticated original dispatch and passive replay policy. occurred_at_utc and family ts use pm_event_datetime.date_time with the EventRecord profile; Storage observed_at_utc and persisted_at_utc use storage_utc_z. SP-1101 selects those profiles for a retained original. Native original authentication remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-596",
-              "line_start": 25222,
-              "line_end": 25222,
+              "line_start": 25224,
+              "line_end": 25224,
               "quote": "Compatibility/withdrawal for wizard.blocked alone: dispatch only explicitly supported exact family/schema/version;"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-596",
+              "line_start": 25191,
+              "line_end": 25191,
+              "quote": "Under CV-1101, ts and occurred_at_utc use pm_event_datetime.date_time with the EventRecord profile; under CV-253,"
+            },
+            {
+              "path": "scripts/pm_dcw_blockage_events.py",
+              "unit": "envelope",
+              "line_start": 24,
+              "line_end": 24,
+              "quote": "m.check_schema('Plans/event_record.schema.json', event)"
+            },
+            {
+              "path": "scripts/pm_dcw_event_oracles.py",
+              "unit": "require_storage_timestamps",
+              "line_start": 852,
+              "line_end": 852,
+              "quote": "event_datetime.date_time(item, profile=event_datetime.STORAGE_UTC_Z)"
             }
           ],
           "prior": {
@@ -2446,18 +2553,18 @@
             "status": "ABSENT"
           },
           "change": "upgraded",
-          "change_reason": "Round 10 applies deck-2 Card 4.a/4.b option A; inherited shared sweep qualifications remain."
+          "change_reason": "CV-1101 date_time profiles now cover the timestamp review that kept this cell partial. Native authentication stays NOT_RUN and does not lower the grade."
         },
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "PARTIAL: named Method B phase rows and complete-path regression witnesses are reported separately. Unproved rows and remaining complete-boundary refusals retain no isolation credit; aggregate schema-status rows do not prove individual schema keywords. Timestamp review is interim only; native campaigns remain NOT_RUN.",
+          "finding": "PARTIAL: named Method B phase rows and complete-path regression witnesses are reported separately. Unproved by-construction rows, including L001 and LE001, and remaining complete-boundary refusals retain no isolation credit; aggregate schema-status rows do not prove individual schema keywords. Shared date_time now checks timestamp fields, EventRecord or storage_utc_z per field. Native campaigns remain NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-596",
-              "line_start": 25233,
-              "line_end": 25233,
+              "line_start": 25235,
+              "line_end": 25235,
               "quote": "Positive/negative static oracles for this exact family are Plans/dcw_blockage_event_fixtures.json and scripts/pm_dcw_blockage_fixtures.py,"
             },
             {
@@ -2473,14 +2580,14 @@
             "status": "ABSENT"
           },
           "change": "upgraded",
-          "change_reason": "Round 10 applies deck-2 Card 4.a/4.b option A; inherited shared sweep qualifications remain."
+          "change_reason": "Timestamp profiles are adopted. Unproved phase rows and schema-keyword limits remain."
         }
       },
       "prepared_pass": false,
       "remaining_gaps": [
         "Membership/admission intentionally absent.",
         "PENDING_RETENTION_DECISION for event and original source; RT decision required.",
-        "B2/CV-1101 timestamp adoption remains pending; timestamp review is interim only.",
+        "Shared date_time covers timestamp fields: EventRecord for format date-time, storage_utc_z for observed_at_utc and persisted_at_utc. datetime_validator and the inventory gate run at batch-2 integration.",
         "B3: gated phase tables adopted, with named unproved rows and no individual schema-keyword or complete-boundary isolation credit.",
         "Native original-number custody, Storage I/O and operational campaigns remain NOT_RUN."
       ],
@@ -2523,7 +2630,7 @@
         },
         "evidence": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCW/sweep-p1/targeted-controls.json"
       },
-      "notes": "Current sweep: 8 PASS / 3 PARTIAL / 1 ABSENT; no prepared PASS. Number scope adopted; phase proof and timestamp limitations remain explicit. Earlier review_round fields are historical lineage, not the current grade."
+      "notes": "Current sweep: 9 PASS / 2 PARTIAL / 1 ABSENT; no prepared PASS. Number scope and CV-1101 date_time profiles are adopted. Phase-proof limits remain explicit. Earlier review_round fields are historical lineage, not the current grade."
     },
     {
       "event_type": "wizard.deferred_payload.loaded",
@@ -2645,15 +2752,15 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "canonical_json/exact_equal",
-              "line_start": 780,
-              "line_end": 785,
+              "line_start": 787,
+              "line_end": 792,
               "quote": "def canonical_json(value, sort_keys=False):\n\n    def domain(item):\n        guard_rows.enforce('O196', {'site': 'O196', 'code': 'integer_json_domain', 'v0': type(item).__name__, 'v1': type(None).__name__})\n        if type(item) is dict:\n            for key, child in item.items():"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "opened_source_custody",
-              "line_start": 836,
-              "line_end": 836,
+              "line_start": 843,
+              "line_end": 843,
               "quote": "verify(opened_row, predecessor, 'read', None)"
             }
           ],
@@ -2808,15 +2915,15 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "source_storage",
-              "line_start": 524,
-              "line_end": 524,
+              "line_start": 531,
+              "line_end": 531,
               "quote": "guard_rows.enforce('O146', {'site': 'O146', 'code': 'source_payload_not_durable', 'v0': payload['durable']})"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "opened_source_custody",
-              "line_start": 836,
-              "line_end": 836,
+              "line_start": 843,
+              "line_end": 843,
               "quote": "verify(opened_row, predecessor, 'read', None)"
             }
           ],
@@ -2869,8 +2976,8 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "wizard.deferred_payload.loaded",
-              "line_start": 990,
-              "line_end": 990,
+              "line_start": 1004,
+              "line_end": 1004,
               "quote": "guard_rows.enforce('O232', {'site': 'O232', 'code': 'index_event_join', 'v0': selected})"
             }
           ],
@@ -2882,9 +2989,9 @@
           "change_reason": "B1 complete registered-source dispatch is fixed and tested on every history path."
         },
         "compatibility_withdrawal": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "PARTIAL: current caller admission is separate from authenticated original-number dispatch and passive replay policy. Exact physical values and original custody remain checked. Timestamp profile/edition review is interim only, and native original authentication is NOT_RUN.",
+          "finding": "PASS: current caller admission stays separate from authenticated original dispatch and passive replay policy. occurred_at_utc and family ts use pm_event_datetime.date_time with the EventRecord profile; Storage observed_at_utc and persisted_at_utc use storage_utc_z. SP-1101 selects those profiles for a retained original. Native original authentication remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -2903,8 +3010,8 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "wizard.deferred_payload.loaded",
-              "line_start": 608,
-              "line_end": 609,
+              "line_start": 615,
+              "line_end": 616,
               "quote": "        supplied_original = dict(event, replay_policy=original_event['replay_policy'])\n        guard_rows.enforce('O185', {'site': 'O185', 'code': 'original_full_value', 'v0': typed_observation(supplied_original), 'v1': typed_observation(original_event)})"
             },
             {
@@ -2913,46 +3020,67 @@
               "line_start": 16017,
               "line_end": 16017,
               "quote": "persisted timestamps are UTC ISO-8601 values with Z"
+            },
+            {
+              "path": "scripts/pm_dcw_event_oracles.py",
+              "unit": "require_storage_timestamps",
+              "line_start": 852,
+              "line_end": 852,
+              "quote": "event_datetime.date_time(item, profile=event_datetime.STORAGE_UTC_Z)"
+            },
+            {
+              "path": "scripts/pm_dcw_number_custody.py",
+              "unit": "retained_timestamps",
+              "line_start": 41,
+              "line_end": 41,
+              "quote": "dt.date_time(event[field], profile=dt.STORAGE_UTC_Z)"
+            },
+            {
+              "path": "scripts/pm_dcw_number_custody.py",
+              "unit": "install",
+              "line_start": 72,
+              "line_end": 72,
+              "quote": "retained_timestamps(n.decode_storage_value(candidate.record_bytes, profile=n.EVENT_VALUE))"
             }
           ],
           "prior": {
             "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "B2/B3 remain explicit sweep limitations."
+          "change": "upgraded",
+          "change_reason": "CV-1101 date_time profiles now cover the timestamp review that kept this cell partial. Native authentication stays NOT_RUN and does not lower the grade."
         },
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "PARTIAL: named Method B phase rows and complete-path regression witnesses are reported separately. Unproved rows and remaining complete-boundary refusals retain no isolation credit; aggregate schema-status rows do not prove individual schema keywords. Timestamp review is interim only; native campaigns remain NOT_RUN.",
+          "finding": "PARTIAL: named Method B phase rows and complete-path regression witnesses are reported separately. Unproved by-construction rows, including L001 and LE001, and remaining complete-boundary refusals retain no isolation credit; aggregate schema-status rows do not prove individual schema keywords. Shared date_time now checks timestamp fields, EventRecord or storage_utc_z per field. Native campaigns remain NOT_RUN.",
           "evidence": [
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "source_storage",
-              "line_start": 512,
-              "line_end": 512,
+              "line_start": 519,
+              "line_end": 519,
               "quote": "guard_rows.enforce('O140', {'site': 'O140', 'code': 'refuse_oversized_source', 'v0': canonical_msgpack(stored), 'v1': profile['max_value_bytes']})"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "full checker",
-              "line_start": 722,
-              "line_end": 722,
+              "line_start": 729,
+              "line_end": 729,
               "quote": "assert outcome == case['expected'], (row['event_type'], case['case_id'], case['expected'], outcome)"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "verify",
-              "line_start": 591,
-              "line_end": 591,
+              "line_start": 598,
+              "line_end": 598,
               "quote": "writer_policy(scenario['retry_request']['replay_policy'])"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "run",
-              "line_start": 692,
-              "line_end": 692,
+              "line_start": 699,
+              "line_end": 699,
               "quote": "schema_references(schema)"
             },
             {
@@ -3000,8 +3128,8 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "opened_source_custody",
-              "line_start": 836,
-              "line_end": 836,
+              "line_start": 843,
+              "line_end": 843,
               "quote": "verify(opened_row, predecessor, 'read', None)"
             },
             {
@@ -3014,8 +3142,8 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "wizard.deferred_payload.loaded",
-              "line_start": 990,
-              "line_end": 990,
+              "line_start": 1004,
+              "line_end": 1004,
               "quote": "guard_rows.enforce('O232', {'site': 'O232', 'code': 'index_event_join', 'v0': selected})"
             }
           ],
@@ -3024,13 +3152,13 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "B2/B3 remain explicit sweep limitations."
+          "change_reason": "Timestamp profiles are adopted. Unproved phase rows and schema-keyword limits remain."
         }
       },
       "remaining_gaps": [
         "Membership/admission intentionally absent.",
         "PENDING_RETENTION_DECISION for event and original source; RT decision required.",
-        "B2/CV-1101 timestamp adoption remains pending; timestamp review is interim only.",
+        "Shared date_time covers timestamp fields: EventRecord for format date-time, storage_utc_z for observed_at_utc and persisted_at_utc. datetime_validator and the inventory gate run at batch-2 integration.",
         "B3: gated phase tables adopted, with named unproved rows and no individual schema-keyword or complete-boundary isolation credit.",
         "Native original-number custody, Storage I/O and operational campaigns remain NOT_RUN."
       ],
@@ -3046,7 +3174,7 @@
         "scripts/pm-dcw-guard-tables.py",
         "scripts/pm-dcw-number-checks.py"
       ],
-      "notes": "Current sweep: 8 PASS / 3 PARTIAL / 1 ABSENT; no prepared PASS. Number scope adopted; phase proof and timestamp limitations remain explicit. Earlier review_round fields are historical lineage, not the current grade.",
+      "notes": "Current sweep: 9 PASS / 2 PARTIAL / 1 ABSENT; no prepared PASS. Number scope and CV-1101 date_time profiles are adopted. Phase-proof limits remain explicit. Earlier review_round fields are historical lineage, not the current grade.",
       "review_round_4": {
         "before": "8 PASS / 3 PARTIAL / 1 ABSENT",
         "after": "10 PASS / 1 PARTIAL / 1 ABSENT",
@@ -3223,8 +3351,8 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "canonical_json/exact_equal",
-              "line_start": 780,
-              "line_end": 785,
+              "line_start": 787,
+              "line_end": 792,
               "quote": "def canonical_json(value, sort_keys=False):\n\n    def domain(item):\n        guard_rows.enforce('O196', {'site': 'O196', 'code': 'integer_json_domain', 'v0': type(item).__name__, 'v1': type(None).__name__})\n        if type(item) is dict:\n            for key, child in item.items():"
             }
           ],
@@ -3379,8 +3507,8 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "source_storage",
-              "line_start": 524,
-              "line_end": 524,
+              "line_start": 531,
+              "line_end": 531,
               "quote": "guard_rows.enforce('O146', {'site': 'O146', 'code': 'source_payload_not_durable', 'v0': payload['durable']})"
             }
           ],
@@ -3433,8 +3561,8 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "wizard.opened",
-              "line_start": 990,
-              "line_end": 990,
+              "line_start": 1004,
+              "line_end": 1004,
               "quote": "guard_rows.enforce('O232', {'site': 'O232', 'code': 'index_event_join', 'v0': selected})"
             }
           ],
@@ -3446,9 +3574,9 @@
           "change_reason": "B1 complete registered-source dispatch is fixed and tested on every history path."
         },
         "compatibility_withdrawal": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "PARTIAL: current caller admission is separate from authenticated original-number dispatch and passive replay policy. Exact physical values and original custody remain checked. Timestamp profile/edition review is interim only, and native original authentication is NOT_RUN.",
+          "finding": "PASS: current caller admission stays separate from authenticated original dispatch and passive replay policy. occurred_at_utc and family ts use pm_event_datetime.date_time with the EventRecord profile; Storage observed_at_utc and persisted_at_utc use storage_utc_z. SP-1101 selects those profiles for a retained original. Native original authentication remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -3467,8 +3595,8 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "wizard.opened",
-              "line_start": 608,
-              "line_end": 609,
+              "line_start": 615,
+              "line_end": 616,
               "quote": "        supplied_original = dict(event, replay_policy=original_event['replay_policy'])\n        guard_rows.enforce('O185', {'site': 'O185', 'code': 'original_full_value', 'v0': typed_observation(supplied_original), 'v1': typed_observation(original_event)})"
             },
             {
@@ -3477,46 +3605,67 @@
               "line_start": 16017,
               "line_end": 16017,
               "quote": "persisted timestamps are UTC ISO-8601 values with Z"
+            },
+            {
+              "path": "scripts/pm_dcw_event_oracles.py",
+              "unit": "require_storage_timestamps",
+              "line_start": 852,
+              "line_end": 852,
+              "quote": "event_datetime.date_time(item, profile=event_datetime.STORAGE_UTC_Z)"
+            },
+            {
+              "path": "scripts/pm_dcw_number_custody.py",
+              "unit": "retained_timestamps",
+              "line_start": 41,
+              "line_end": 41,
+              "quote": "dt.date_time(event[field], profile=dt.STORAGE_UTC_Z)"
+            },
+            {
+              "path": "scripts/pm_dcw_number_custody.py",
+              "unit": "install",
+              "line_start": 72,
+              "line_end": 72,
+              "quote": "retained_timestamps(n.decode_storage_value(candidate.record_bytes, profile=n.EVENT_VALUE))"
             }
           ],
           "prior": {
             "source": "cycle9-evidence/regrade.json at 92276eeff0c6ef8a7f3bd3946a1fdd786567ff8d",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "B2/B3 remain explicit sweep limitations."
+          "change": "upgraded",
+          "change_reason": "CV-1101 date_time profiles now cover the timestamp review that kept this cell partial. Native authentication stays NOT_RUN and does not lower the grade."
         },
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "PARTIAL: named Method B phase rows and complete-path regression witnesses are reported separately. Unproved rows and remaining complete-boundary refusals retain no isolation credit; aggregate schema-status rows do not prove individual schema keywords. Timestamp review is interim only; native campaigns remain NOT_RUN.",
+          "finding": "PARTIAL: named Method B phase rows and complete-path regression witnesses are reported separately. Unproved by-construction rows, including L001 and LE001, and remaining complete-boundary refusals retain no isolation credit; aggregate schema-status rows do not prove individual schema keywords. Shared date_time now checks timestamp fields, EventRecord or storage_utc_z per field. Native campaigns remain NOT_RUN.",
           "evidence": [
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "source_storage",
-              "line_start": 512,
-              "line_end": 512,
+              "line_start": 519,
+              "line_end": 519,
               "quote": "guard_rows.enforce('O140', {'site': 'O140', 'code': 'refuse_oversized_source', 'v0': canonical_msgpack(stored), 'v1': profile['max_value_bytes']})"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "full checker",
-              "line_start": 722,
-              "line_end": 722,
+              "line_start": 729,
+              "line_end": 729,
               "quote": "assert outcome == case['expected'], (row['event_type'], case['case_id'], case['expected'], outcome)"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "verify",
-              "line_start": 591,
-              "line_end": 591,
+              "line_start": 598,
+              "line_end": 598,
               "quote": "writer_policy(scenario['retry_request']['replay_policy'])"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "run",
-              "line_start": 692,
-              "line_end": 692,
+              "line_start": 699,
+              "line_end": 699,
               "quote": "schema_references(schema)"
             },
             {
@@ -3564,8 +3713,8 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "wizard.opened",
-              "line_start": 990,
-              "line_end": 990,
+              "line_start": 1004,
+              "line_end": 1004,
               "quote": "guard_rows.enforce('O232', {'site': 'O232', 'code': 'index_event_join', 'v0': selected})"
             }
           ],
@@ -3574,13 +3723,13 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "B2/B3 remain explicit sweep limitations."
+          "change_reason": "Timestamp profiles are adopted. Unproved phase rows and schema-keyword limits remain."
         }
       },
       "remaining_gaps": [
         "Membership/admission intentionally absent.",
         "PENDING_RETENTION_DECISION for event and original source; RT decision required.",
-        "B2/CV-1101 timestamp adoption remains pending; timestamp review is interim only.",
+        "Shared date_time covers timestamp fields: EventRecord for format date-time, storage_utc_z for observed_at_utc and persisted_at_utc. datetime_validator and the inventory gate run at batch-2 integration.",
         "B3: gated phase tables adopted, with named unproved rows and no individual schema-keyword or complete-boundary isolation credit.",
         "Native original-number custody, Storage I/O and operational campaigns remain NOT_RUN."
       ],
@@ -3595,7 +3744,7 @@
         "scripts/pm-dcw-guard-tables.py",
         "scripts/pm-dcw-number-checks.py"
       ],
-      "notes": "Current sweep: 8 PASS / 3 PARTIAL / 1 ABSENT; no prepared PASS. Number scope adopted; phase proof and timestamp limitations remain explicit. Earlier review_round fields are historical lineage, not the current grade.",
+      "notes": "Current sweep: 9 PASS / 2 PARTIAL / 1 ABSENT; no prepared PASS. Number scope and CV-1101 date_time profiles are adopted. Phase-proof limits remain explicit. Earlier review_round fields are historical lineage, not the current grade.",
       "review_round_4": {
         "before": "8 PASS / 3 PARTIAL / 1 ABSENT",
         "after": "10 PASS / 1 PARTIAL / 1 ABSENT",
@@ -3666,8 +3815,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-597",
-              "line_start": 25072,
-              "line_end": 25072,
+              "line_start": 25297,
+              "line_end": 25297,
               "quote": "prepared without admission."
             },
             {
@@ -3693,8 +3842,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-597",
-              "line_start": 25074,
-              "line_end": 25074,
+              "line_start": 25299,
+              "line_end": 25299,
               "quote": "Semantic owner is current Plans/Planning_Wizard.md#PWIZ-002,"
             }
           ],
@@ -3713,8 +3862,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-597",
-              "line_start": 25323,
-              "line_end": 25323,
+              "line_start": 25326,
+              "line_end": 25326,
               "quote": "Producer emitter.wizard_unblocked@1.0.0 is the responsible Planning Wizard component''s observer of its original"
             }
           ],
@@ -3733,8 +3882,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-597",
-              "line_start": 25314,
-              "line_end": 25314,
+              "line_start": 25317,
+              "line_end": 25317,
               "quote": "All properties of Plans/event_payloads/planning_wizard/wizard_unblocked.schema.json are required-present, root"
             },
             {
@@ -3760,8 +3909,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-597",
-              "line_start": 24935,
-              "line_end": 24935,
+              "line_start": 25343,
+              "line_end": 25343,
               "quote": "NEW identity recipe"
             }
           ],
@@ -3780,8 +3929,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-597",
-              "line_start": 25127,
-              "line_end": 25127,
+              "line_start": 25351,
+              "line_end": 25351,
               "quote": "Retry compares exactly the producer-owned semantic fields enumerated by CV-339: event_type, scope_kind, project_id,"
             }
           ],
@@ -3800,15 +3949,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-597",
-              "line_start": 25431,
-              "line_end": 25431,
+              "line_start": 25436,
+              "line_end": 25436,
               "quote": "Retention is explicit: event retention_policy_ref=PENDING_RETENTION_DECISION. The original wizard_unblocked_evidence"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-597",
-              "line_start": 25435,
-              "line_end": 25435,
+              "line_start": 25440,
+              "line_end": 25440,
               "quote": "Exact question: For wizard.unblocked event history, which Case L-3 class/lifetime applies: planning/chat"
             }
           ],
@@ -3827,8 +3976,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-597",
-              "line_start": 25382,
-              "line_end": 25382,
+              "line_start": 25385,
+              "line_end": 25385,
               "quote": "NEW original custody source wizard_unblocked_evidence is materialized in Plans/storage_value_registry.json under"
             }
           ],
@@ -3847,8 +3996,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-597",
-              "line_start": 25364,
-              "line_end": 25364,
+              "line_start": 25367,
+              "line_end": 25367,
               "quote": "The planning component''s immutable conditions_cleared observation identifies the complete required conditions"
             }
           ],
@@ -3867,8 +4016,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-597",
-              "line_start": 25417,
-              "line_end": 25417,
+              "line_start": 25422,
+              "line_end": 25422,
               "quote": "NEW passive operating consumer reader.wizard_unblocked_history@1.0.0 selects only wizard.unblocked at this exact"
             }
           ],
@@ -3880,16 +4029,37 @@
           "change_reason": "Round 10 applies deck-2 Card 4.a/4.b option A; inherited shared sweep qualifications remain."
         },
         "compatibility_withdrawal": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "PARTIAL: current caller admission is separate from authenticated original-number dispatch and passive replay policy. Exact physical values and original custody remain checked. Timestamp profile/edition review is interim only, and native original authentication is NOT_RUN.",
+          "finding": "PASS: current caller admission stays separate from authenticated original dispatch and passive replay policy. occurred_at_utc and family ts use pm_event_datetime.date_time with the EventRecord profile; Storage observed_at_utc and persisted_at_utc use storage_utc_z. SP-1101 selects those profiles for a retained original. Native original authentication remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-597",
-              "line_start": 25444,
-              "line_end": 25444,
+              "line_start": 25449,
+              "line_end": 25449,
               "quote": "Compatibility/withdrawal for wizard.unblocked alone: dispatch only explicitly supported exact family/schema/version;"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-597",
+              "line_start": 25416,
+              "line_end": 25416,
+              "quote": "Under CV-1101, ts and occurred_at_utc use pm_event_datetime.date_time with the EventRecord profile; under CV-253,"
+            },
+            {
+              "path": "scripts/pm_dcw_blockage_events.py",
+              "unit": "envelope",
+              "line_start": 24,
+              "line_end": 24,
+              "quote": "m.check_schema('Plans/event_record.schema.json', event)"
+            },
+            {
+              "path": "scripts/pm_dcw_event_oracles.py",
+              "unit": "require_storage_timestamps",
+              "line_start": 852,
+              "line_end": 852,
+              "quote": "event_datetime.date_time(item, profile=event_datetime.STORAGE_UTC_Z)"
             }
           ],
           "prior": {
@@ -3897,18 +4067,18 @@
             "status": "ABSENT"
           },
           "change": "upgraded",
-          "change_reason": "Round 10 applies deck-2 Card 4.a/4.b option A; inherited shared sweep qualifications remain."
+          "change_reason": "CV-1101 date_time profiles now cover the timestamp review that kept this cell partial. Native authentication stays NOT_RUN and does not lower the grade."
         },
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "PARTIAL: named Method B phase rows and complete-path regression witnesses are reported separately. Unproved rows and remaining complete-boundary refusals retain no isolation credit; aggregate schema-status rows do not prove individual schema keywords. Timestamp review is interim only; native campaigns remain NOT_RUN.",
+          "finding": "PARTIAL: named Method B phase rows and complete-path regression witnesses are reported separately. Unproved by-construction rows, including L001 and LE001, and remaining complete-boundary refusals retain no isolation credit; aggregate schema-status rows do not prove individual schema keywords. Shared date_time now checks timestamp fields, EventRecord or storage_utc_z per field. Native campaigns remain NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-597",
-              "line_start": 25233,
-              "line_end": 25233,
+              "line_start": 25460,
+              "line_end": 25460,
               "quote": "Positive/negative static oracles for this exact family are Plans/dcw_blockage_event_fixtures.json and scripts/pm_dcw_blockage_fixtures.py,"
             },
             {
@@ -3924,14 +4094,14 @@
             "status": "ABSENT"
           },
           "change": "upgraded",
-          "change_reason": "Round 10 applies deck-2 Card 4.a/4.b option A; inherited shared sweep qualifications remain."
+          "change_reason": "Timestamp profiles are adopted. Unproved phase rows and schema-keyword limits remain."
         }
       },
       "prepared_pass": false,
       "remaining_gaps": [
         "Membership/admission intentionally absent.",
         "PENDING_RETENTION_DECISION for event and original source; RT decision required.",
-        "B2/CV-1101 timestamp adoption remains pending; timestamp review is interim only.",
+        "Shared date_time covers timestamp fields: EventRecord for format date-time, storage_utc_z for observed_at_utc and persisted_at_utc. datetime_validator and the inventory gate run at batch-2 integration.",
         "B3: gated phase tables adopted, with named unproved rows and no individual schema-keyword or complete-boundary isolation credit.",
         "Native original-number custody, Storage I/O and operational campaigns remain NOT_RUN."
       ],
@@ -3974,7 +4144,7 @@
         },
         "evidence": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCW/sweep-p1/targeted-controls.json"
       },
-      "notes": "Current sweep: 8 PASS / 3 PARTIAL / 1 ABSENT; no prepared PASS. Number scope adopted; phase proof and timestamp limitations remain explicit. Earlier review_round fields are historical lineage, not the current grade."
+      "notes": "Current sweep: 9 PASS / 2 PARTIAL / 1 ABSENT; no prepared PASS. Number scope and CV-1101 date_time profiles are adopted. Phase-proof limits remain explicit. Earlier review_round fields are historical lineage, not the current grade."
     }
   ],
   "summary": {
@@ -3985,15 +4155,16 @@
     "pending_retention": 8,
     "admissions": 0,
     "native_execution": "NOT_RUN",
-    "current_evidence_quotes": 292,
-    "sweep_items": [
-      "B2/CV-1101 timestamps only"
-    ],
+    "current_evidence_quotes": 302,
+    "sweep_items": [],
     "complete_check11": "PARTIAL_PHASE_TABLES; schema keywords and complete boundary unproved",
     "total_static_family_cases": 5951,
     "new_family_contract_cases": 477,
     "new_family_repair_controls": 433,
-    "prior_static_case_counts": "The existing total_static_family_cases/new_family fields below are part-1 lineage; sweep_part2_verification supplies final counts."
+    "prior_static_case_counts": "The existing total_static_family_cases/new_family fields below are part-1 lineage; sweep_part2_verification supplies final counts.",
+    "sweep_items_closed": [
+      "B2/CV-1101 timestamps: adopted in sweep part 2B (6bd3b82b1a)"
+    ]
   },
   "round5_verification": {
     "require_sites": 131,
@@ -4867,5 +5038,122 @@
         "pauses": 0
       }
     ]
+  },
+  "sweep_part2b_verification": {
+    "implementation": "6bd3b82b1a00beeaff307410aed11ae822f223c9",
+    "datetime_merge": "919789c1e7349368013bf3935bfb0fa17e0769ae",
+    "gated": "58c2816ff33365384d4039553f5efdb5370930e6",
+    "grok_worker": "Cursor Grok 4.7 (stopped at weekly limit); finished and corrected by the stream E lead",
+    "lead_fixes": [
+      "L001 UTC-Z predicate restored (Grok merged it into LE001)",
+      "Storage +23:59 positive converted to negative nonzero_offset instead of dropped",
+      "CV-596/CV-597 CV-253 and CV-1100/SP-1100/SP-1101/CV-1101 citations restored",
+      "compatibility_withdrawal evidence added; 38 cross-unit or shifted pins re-pinned inside their declared units"
+    ],
+    "removed_negatives": "none; year-0000 negatives converted to positives",
+    "timestamp": {
+      "event_record": [
+        "occurred_at_utc",
+        "payload ts",
+        "DCW source format date-time fields"
+      ],
+      "storage_utc_z": [
+        "observed_at_utc",
+        "persisted_at_utc"
+      ],
+      "retained": "SP-1101 frozen recipe tuples (+CV-1101)",
+      "datetime_validator_and_inventory_gate": "batch-2 integration (addendum 2); in-tree gate exit 1: 3 inventory_node_changed rows on Plans/event_record.schema.json; scope-all self-test NOT_RUN_ADMISSION_REFUSED"
+    },
+    "checks": {
+      "blockage-wizard.blocked": 0,
+      "blockage-wizard.unblocked": 0,
+      "guard-batch-000": 0,
+      "guard-batch-016": 0,
+      "guard-batch-032": 1,
+      "guard-batch-048": 1,
+      "guard-batch-064": 1,
+      "guard-batch-080": 1,
+      "guard-batch-096": 0,
+      "guard-batch-112": 1,
+      "guard-batch-128": 1,
+      "guard-batch-144": 1,
+      "guard-batch-160": 0,
+      "guard-collect": 0,
+      "number-lane": 0,
+      "number-scope": 0,
+      "ordinary-bundle.revision_completed": 0,
+      "ordinary-bundle.revision_interrupted": 0,
+      "ordinary-bundle.revision_requested": 0,
+      "ordinary-bundle.revision_started": 0,
+      "ordinary-wizard.deferred_payload.loaded": 0,
+      "ordinary-wizard.opened": 0,
+      "registered-bundle.revision_completed": 0,
+      "registered-bundle.revision_interrupted": 0,
+      "registered-bundle.revision_requested": 0,
+      "registered-bundle.revision_started": 0,
+      "registered-wizard.deferred_payload.loaded": 0,
+      "registered-wizard.opened": 0,
+      "standing-bundle.revision_completed": 0,
+      "standing-bundle.revision_interrupted": 0,
+      "standing-bundle.revision_requested": 0,
+      "standing-bundle.revision_started": 0,
+      "standing-wizard.deferred_payload.loaded": 0,
+      "standing-wizard.opened": 0,
+      "table-check": 0
+    },
+    "killed_by_cap": [],
+    "peaks_by_kind_MiB": {
+      "blockage": 168.6,
+      "guard-batch": 110.8,
+      "guard-collect": 239.2,
+      "number-lane": 188.6,
+      "number-scope": 126.5,
+      "ordinary": 196.3,
+      "registered": 204.4,
+      "standing": 199.5,
+      "table-check": 30.8
+    },
+    "memory_rule": "uncapped 13.5 GiB; capped (systemd MemoryMax=2G or MemoryGate 2048 MiB, pause below 10) 11 GiB (lead 2026-11-11 23:22Z, 2026-11-12 01:05Z)",
+    "guard": {
+      "tool": "004bdedd632d9463f3535190a6ed5772338cdce1",
+      "rows": 393,
+      "proved": 379,
+      "unproved": 14,
+      "masked": 0,
+      "unrelated_changes": 0,
+      "tables": {
+        "PASS": 153,
+        "FAIL": 14
+      },
+      "evaluations": 24880,
+      "collection_executions": 6985,
+      "distinct_negatives": 1099,
+      "by_construction": [
+        "O014",
+        "O041",
+        "O077",
+        "O108",
+        "O109",
+        "O110",
+        "O117",
+        "O124",
+        "O125",
+        "B001",
+        "B054",
+        "L001",
+        "OE007",
+        "LE001"
+      ]
+    },
+    "number_lane_cases": 3040,
+    "number_helper": "580/580, 304 negatives, pass",
+    "status_counts": {
+      "ABSENT": 8,
+      "PASS": 72,
+      "PARTIAL": 16
+    },
+    "cell_evidence_quotes": 302,
+    "quote_check": "every cell quote matches at its lines inside its declared unit (quotes.py)",
+    "native": "NOT_RUN"
   }
 }

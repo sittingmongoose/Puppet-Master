@@ -1,8 +1,153 @@
-# DCW — sweep part 2A and part 2B numbers
+# DCW — sweep parts 2A and 2B
 
-Branch `plans/ea-w2-chain-wizard-20261104`; implementation **`8ea0e8de8cc8ac473bb43157848468fe7fc49b88`**. Start `7847bbc409e875a9bfddb02309cb0638690f798b`; no rebase. Guard-tool merge **`47eb2aa6359cd413bc634ccdb2575277ff31ccf8`** takes exact gated `004bdedd632d9463f3535190a6ed5772338cdce1`. Number merge **`5c0d54188378581237327af9008b5b3f162f40b0`** takes exact gated `a16f67c1ef21796758f4209ff12c0f4d12b86ce9`, after that tool merge. Generated merge conflicts were regenerated. Neither gated tool's files were edited.
+Branch `plans/ea-w2-chain-wizard-20261104`; implementation **`8ea0e8de8cc8ac473bb43157848468fe7fc49b88`**. Start `7847bbc409e875a9bfddb02309cb0638690f798b`; no rebase. Guard-tool merge **`47eb2aa6359cd413bc634ccdb2575277ff31ccf8`** takes exact gated `004bdedd632d9463f3535190a6ed5772338cdce1`. Number merge **`5c0d54188378581237327af9008b5b3f162f40b0`** takes exact gated `a16f67c1ef21796758f4209ff12c0f4d12b86ce9`, after that tool merge. Generated merge conflicts were regenerated. Neither gated tool's files were edited. Date-time merge **`919789c1e7349368013bf3935bfb0fa17e0769ae`** takes exact gated `58c2816ff33365384d4039553f5efdb5370930e6`. Sweep part 2B adoption is **`6bd3b82b1a00beeaff307410aed11ae822f223c9`**.
 
-All eight families remain **8 PASS / 3 PARTIAL / 1 ABSENT**. Named phase proofs earn the bounded credit below. Complete check 11 and individual schema-keyword isolation remain unproved (fix 1 below raises named phase proofs to 379 of 393; see "Sweep part 2A fix 1: missing witnesses"). Timestamp review is **interim only**; no date-time helper, validator or inventory gate was adopted. Native authority remains **NOT_RUN**. No prepared PASS, admission or new PlanUnit ID.
+After sweep part 2B, all eight families are **9 PASS / 2 PARTIAL / 1 ABSENT** (part 2A: 8 / 3 / 1). Named phase proofs earn the bounded credit below. Complete check 11 and individual schema-keyword isolation remain unproved (fix 1 below raises named phase proofs to 379 of 393; see "Sweep part 2A fix 1: missing witnesses"). Timestamps are checked by the shared CV-1101 `date_time` predicate with each field's owner profile (sweep part 2B); the review is no longer interim. `datetime_validator` and the inventory gate run at batch-2 integration. Native authority remains **NOT_RUN**. No prepared PASS, admission or new PlanUnit ID.
+
+## Sweep part 2B: findings and responses
+
+**Merge.** `919789c1e7349368013bf3935bfb0fa17e0769ae` merges exactly the gated NUMRULE head `58c2816ff33365384d4039553f5efdb5370930e6` into the part 2A head `7e5f4892da52b986e0b17df4b7957b48112286c5` (`git merge --no-ff`). There were no conflicts, and its tree equals `git merge-tree --write-tree 7e5f4892da 58c2816ff3` (`a17ee5a53e31672bec60addca5ae94a6682d904e`). DCW had already merged `a16f67c1ef`, so the merge brings only the seven date-time files (`scripts/pm_event_datetime*.py|json`, `reports/event-authority-20261104/NUMRULE.md`). No NUMRULE file, inventory or exclusion was edited: `git diff --name-only 58c2816ff3 HEAD` names none of them. No rebase.
+
+**Adoption** is commit `6bd3b82b1a00beeaff307410aed11ae822f223c9`. The Cursor Grok 4.7 worker wrote it uncommitted, and the lead's review corrected it (below). Every DCW timestamp now goes through `pm_event_datetime.date_time` with an explicit profile. DCW is date-time only in this pass: its numbers were already adopted in part 2B numbers, and it has no SP-1101 item deferred to 2B.
+
+| Item | Change | Location and how to verify |
+|---|---|---|
+| **SW-B2 / CV-1101 field profiles** | The lane's own RFC 3339 grammar, which refused legitimate leap seconds and accepted non-Z Storage times, is replaced at every `format: date-time` by the shared predicate with the EventRecord profile. Storage-assigned `observed_at_utc` and `persisted_at_utc` additionally take `storage_utc_z` on every EventRecord validation, current and frozen, and on every index row. The legacy bundle parser `datetime.fromisoformat` is replaced by the same predicate (LE001). The UTC-Z guard L001 keeps its own predicate. | `scripts/pm_dcw_event_oracles.py:854` (`valid_date_time`, installed on `FORMAT` with `raises=Refusal`); `scripts/pm_dcw_event_oracles.py:845` (`require_storage_timestamps`), called at `:114` (`check_schema`) and `:922` (`index_content`); `scripts/pm_bundle_revision_events.py:18-24` (`validate`, L001/LE001). Every validator passes `format_checker=FORMAT` (`pm_dcw_event_oracles.py:112`, `pm_dcw_registered_schemas.py:121`, `pm_dcw_event_numeric_cases.py:16`). Verify: the eight complete family checkers below. |
+| **SP-1101 original timestamp profile** | The frozen verifier of each authenticated original re-checks its retained record under the profiles bound to its recipe tuple: EventRecord for `occurred_at_utc` and payload `ts`, `storage_utc_z` for Storage times. There is no current-then-legacy probe, and request data cannot choose a profile. The recipe tuple names carry the binding (`dcw-original-v1+CV-1101`, `dcw-number-cv1100-v1+CV-1101`); these names are used only in this static catalog adapter. Valid retained lowercase, offset and arbitrarily precise source strings are preserved byte for byte. Retained Storage times stay uppercase-Z, as CV-1101 requires: a skipped past format check is not an owner-valid legacy grammar. | `scripts/pm_dcw_number_custody.py:30` (`retained_timestamps`), `:55` (`install`, recipe tuple), `:72` (`verify_issued`). Verify: standing and registered regressions (retained, replay-only, restore and forged-catalog cases), and `datetime_occurred_offset` (read/rebuild/compatibility). |
+| **Owner text** | CV-596 and CV-597 (wizard.blocked and wizard.unblocked) said "adoption remains the shared number/format sweep" and "timestamp review is interim only". They now name the profile per field, keep their CV-253 and CV-1100/SP-1100/SP-1101/CV-1101 citations, and keep "The number-only bindings below do not change timestamp admission or retained timestamp strings". CV-590–595 and the SP/ACD/PWIZ units carry no timestamp sentence and are unchanged. | `Plans/Contracts_V0.md:25189-25194` and `:25241-25242` (CV-596); `:25414-25419` and `:25466-25467` (CV-597). Shards and index were regenerated (below). |
+| **Lane-local leaks now refused (tests)** | `24:00:00Z` (`hour_24`), trailing LF, `+00:00`, `-00:00`, a nonzero offset and lowercase `z` on Storage fields are all refused. A legitimate leap second (`2016-12-31T23:59:60Z`), year `0000`, lowercase `t` and nine fractional digits are accepted. An unannounced `2026-12-31T23:59:60Z` is refused. | `scripts/pm_dcw_index_cases.py:146-241` (six ordinary families, every operation listed below); `scripts/pm_dcw_blockage_fixtures.py:451-460` and `:617-623` (both blockage families). |
+
+### Timestamp fields and the shared check that covers each
+
+| Field | Owner | Profile | Enforced at |
+|---|---|---|---|
+| `occurred_at_utc` (EventRecord, current and frozen 1.0.0 compatibility reader) | EventRecord / CV-317 / CV-1101 | `event_record` | `pm_dcw_event_oracles.py:854` through `check_schema` `:112`; retained `pm_dcw_number_custody.py:38` |
+| `observed_at_utc`, `persisted_at_utc` (EventRecord, index rows, retained originals) | CV-253 (Storage-assigned) | `storage_utc_z` | `pm_dcw_event_oracles.py:845-852` from `:114` and `:922`; retained `pm_dcw_number_custody.py:39-41` |
+| Payload `ts` (four bundle and four wizard families; schemas also require `Z$`) | Family payload schemas under CV-590–597 | `event_record` | `pm_dcw_event_oracles.py:854`; bundle `pm_bundle_revision_events.py:20` (LE001), `:18` (L001 UTC-Z); retained `pm_dcw_number_custody.py:44` |
+| Source evidence times (`revision_run` `created_at`, `interrupted_at`, `accepted_at`, `occurred_at_utc`; wizard evidence `occurred_at_utc` and `ts`) | DCW source schemas `Plans/dcw/*.json` | `event_record` | `pm_dcw_event_oracles.py:854` through every source-schema validation |
+| Registered payload times of other families (index sources) | Their own family schemas | `event_record` (format only) | `pm_dcw_registered_schemas.py:121` |
+
+The shared receipt's `acknowledged_at_utc` belongs to another owner, so DCW claims no profile for it. It is validated with the format checker it already had.
+
+**`datetime_validator` and the inventory gate run at batch-2 integration**, as addendum 2 says. In this tree the gate fails closed on hash drift only. `python3 scripts/pm_event_datetime_inventory.py` exits 1 with three `inventory_node_changed` rows, all on `Plans/event_record.schema.json`: the root `resource_sha256` and `node_sha256`, and `/$defs/event_record_1_0_0_compatibility_reader` `resource_sha256`. That schema differs from `58c2816ff3` because of DCW's part 2A edits (`git diff --stat 58c2816ff3 7e5f4892da -- Plans/event_record.schema.json`: 6 insertions, 3 deletions); this pass did not touch it. `python3 scripts/pm_event_numbers.py --self-test` (scope all) exits 1 with `case_execution: NOT_RUN_ADMISSION_REFUSED` and `datetime_inventory_complete_and_classified: false`. Both are recorded, not credited. The inventory and exclusions were not edited.
+
+### Lead-ordered review of the Grok work
+
+The lead read the worktree's whole uncommitted diff against `919789c1e7` and checked it against `lanes/SWEEP-P2B.md`. The merge was exact and clean, no NUMRULE file was touched, and every field got the right profile. Fixed:
+
+1. **L001 weakened and merged into LE001.** Grok replaced L001's UTC-Z predicate `payload['ts'].endswith('Z')` with "date_time succeeded". That made L001 the same predicate as LE001, enforced at two sites. **Fix:** L001 is restored byte for byte, and LE001 alone carries the shared parser (`scripts/pm_bundle_revision_events.py:18-24`, row spec `scripts/pm-dcw-table-generate.py` L001/LE001). `pm_dcw_table_142.py` is again identical to part 2A.
+2. **A Storage negative dropped instead of converted.** The old Storage positive `2026-11-04T12:00:00+23:59` was deleted, although `storage_utc_z` refuses it. **Fix:** it is restored as the negative `nonzero_offset` for both Storage fields and the payload (`scripts/pm_dcw_index_cases.py:155`).
+3. **Owner citations removed.** Grok's CV-596 and CV-597 text dropped "CV-253 and original Storage byte/number owners apply" and the CV-1100/SP-1100/SP-1101/CV-1101 citations, and rewrote the "number-only bindings" sentence. **Fix:** the citations and the sentence are restored, and only the "remains the sweep" and "interim only" clauses are replaced.
+4. **Self-grade pins.** The PASS upgrade of `compatibility_withdrawal` cited no date-time evidence. **Fix:** each of the eight cells now quotes `require_storage_timestamps`, and either the retained-recipe check (ordinary families) or the CV-596/CV-597 sentence and the blockage envelope call. 38 pins were re-pinned inside their declared unit. 13 had moved with the CV-596/CV-597 edit. 25 were older pins that pointed at a sibling family's identical text, for example `bundle.revision_started` quoting SP-575 lines under SP-576 and `wizard.unblocked` quoting CV-596 under CV-597. All 302 cell quotes now match at their lines inside their declared units.
+
+**Removed negatives: none remain.** DF's pattern does not appear here. The year-`0000` Storage and payload negatives were converted to positives, not deleted, because the shared grammar accepts year 0000. The one deleted case (item 2) is restored, and no negative was weakened.
+
+### Fixture expectation changes
+
+No committed fixture file changed: `Plans/dcw_event_contract_fixtures.json` and `Plans/dcw_blockage_event_fixtures.json` are untouched, and every case in them keeps its expected result. The generated timestamp cases change as follows. Case IDs are `round8_<name>_<operation>`, each in all six ordinary families. F is `observed_at_utc` or `persisted_at_utc`; ops6 is append, publish, retry, read, rebuild and compatibility_read; ops3 is read, rebuild and compatibility_read.
+
+| Case IDs | Before | After | Refusing row / reason |
+|---|---|---|---|
+| `datetime_F_year_zero` (ops6), `datetime_payload_year_zero` (ops6) | `schema` | removed; replaced by positives `datetime_valid_F_year_zero` (ops3) and `datetime_payload_valid_year_zero` (ops6) → `accept` | The shared RFC 3339 grammar accepts year 0000 under both profiles. |
+| `datetime_valid_F_offset` (`+23:59`, ops3) | `accept` | `datetime_F_nonzero_offset` (ops6) → `schema` | OE001 via `require_storage_timestamps`: `date_time_utc_z` (CV-253). |
+| `datetime_valid_F_lowercase` (`t…z`, ops3) | `accept` | `datetime_F_lowercase_z` (ops6) → `schema` | OE001: `date_time_utc_z`. |
+| `datetime_F_{hour_24,plus_zero,minus_zero}`, `datetime_payload_{hour_24,nonzero_offset,plus_zero,minus_zero,lowercase_z}` | — | new, `schema` | OE001: `date_time_hour` or `date_time_utc_z`; payload offsets and lowercase z by the schema pattern `Z$`. |
+| `datetime_valid_F_{lowercase_t,announced_leap}` (ops3), `datetime_payload_valid_{announced_leap,lowercase_t,fraction}` (ops6) | — | new, `accept` | Owner-valid under the field's profile. |
+| `datetime_occurred_offset` (ops6) | — | new, `original_time` | `occurred_at_utc` `+00:00` is valid EventRecord but differs from the payload `ts` string. |
+| Blockage: `occurred_offset`, `storage_offset`, `storage_lowercase_z`, `announced_leap_second`, `timestamp_lowercase_t`, `timestamp_trailing_lf` | — | new: `original_time`, `schema`, `schema`, `accept`, `accept`, `schema` | B010 `original_time`; OE001 `date_time_utc_z`; OE001 trailing-LF syntax. |
+
+### Checks
+
+**Memory rule change (lead, 2026-11-11 23:22Z).** With ten stream E workers, the VM sat at 10-11 GiB available, so 13.5 GiB start gates starved. The lead's new rule: a run whose own gate caps each step's RSS at 2 GiB or less and pauses below 10 GiB may start or resume at 11 GiB; other runs keep the 13.5 GiB start. For DCW, only the gated-tool table batches qualify: `g.MemoryGate(max_rss=2048, pause_when_low=10, resume_at=11)`. `scripts/pm-dcw-guard-tables.py` gained `--pause-when-low` and `--resume-at` options; their defaults (10 and 13.5) keep the old behavior, and collection stays at 13.5 because it is not capped. The lead's follow-up at 2026-11-12 01:05Z allowed the plain checkers a hard cap: `systemd-run --user --scope -q -p MemoryMax=2G -p MemorySwapMax=0 -- <cmd>`. A capped run starts at 11 GiB; below 10 GiB the runner SIGSTOPs it, and it SIGCONTs at 11 GiB. No earlier peak RSS existed for these checkers (the Grok logs have none), so the first run of each kind was capped as the measurement. Later runs of a kind stayed capped only while every measured peak of that kind was at or below 1,536 MiB. A run killed by the cap counts as a visible failure, and that step reruns uncapped at 13.5 GiB. The guard collection follows the same rule; `--resume-at 11` is passed only when it is capped. The job was stopped and restarted for each change before it had started any step, so nothing was lost.
+
+**Measured peak RSS** (`os.wait4` `ru_maxrss` of the capped process; `/usr/bin/time -v` for the regeneration steps):
+
+| Kind | Runs | Peak RSS MiB (max) | Capped |
+|---|---:|---:|---|
+| blockage | 2 | 168.6 | yes, MemoryMax=2G |
+| guard-batch | 11 | 110.8 | MemoryGate |
+| guard-collect | 1 | 239.2 | yes, MemoryMax=2G |
+| number-lane | 1 | 188.6 | yes, MemoryMax=2G |
+| number-scope | 1 | 126.5 | yes, MemoryMax=2G |
+| ordinary | 6 | 196.3 | yes, MemoryMax=2G |
+| registered | 6 | 204.4 | yes, MemoryMax=2G |
+| standing | 6 | 199.5 | yes, MemoryMax=2G |
+| table-check | 1 | 30.8 | yes, MemoryMax=2G |
+
+Every peak is under 250 MiB, far below the 2 GiB cap, so every plain checker after its first measurement run stayed capped. No run was killed by the cap. The guard batches' MemoryGate cap is checked by the tool itself on the process peak.
+
+All heavy runs were serial. Uncapped runs started at 13.5 GiB or more and capped runs at 11 GiB or more. The lowest start was 11.40 GiB, and no run was killed by the cap. Every check below ran on the final tree, after the lead's fixes. Grok's earlier family, standing and registered runs (20:56-22:21Z) are superseded and not credited. No browsers.
+
+| Command / group | Cap | Exit | Peak RSS MiB | Pauses | Result |
+|---|---|---|---:|---:|---|
+| `blockage-wizard.blocked` | MemoryMax=2G | 0 | 162.6 | 0 | PASS; 25 positive, 212 negative, 212 repair controls |
+| `blockage-wizard.unblocked` | MemoryMax=2G | 0 | 168.6 | 1 | PASS; 23 positive, 229 negative, 229 repair controls |
+| `guard-batch-000` | MemoryGate 2048 MiB | 0 | 110.8 | 0 | 16 tables: 16 PASS, 0 FAIL |
+| `guard-batch-016` | MemoryGate 2048 MiB | 0 | 105.2 | 0 | 16 tables: 16 PASS, 0 FAIL |
+| `guard-batch-032` | MemoryGate 2048 MiB | 1 | 75.0 | 0 | 16 tables: 15 PASS, 1 FAIL |
+| `guard-batch-048` | MemoryGate 2048 MiB | 1 | 53.3 | 0 | 16 tables: 15 PASS, 1 FAIL |
+| `guard-batch-064` | MemoryGate 2048 MiB | 1 | 53.3 | 0 | 16 tables: 12 PASS, 4 FAIL |
+| `guard-batch-080` | MemoryGate 2048 MiB | 1 | 53.8 | 0 | 16 tables: 13 PASS, 3 FAIL |
+| `guard-batch-096` | MemoryGate 2048 MiB | 0 | 57.7 | 0 | 16 tables: 16 PASS, 0 FAIL |
+| `guard-batch-112` | MemoryGate 2048 MiB | 1 | 56.5 | 0 | 16 tables: 15 PASS, 1 FAIL |
+| `guard-batch-128` | MemoryGate 2048 MiB | 1 | 57.3 | 0 | 16 tables: 14 PASS, 2 FAIL |
+| `guard-batch-144` | MemoryGate 2048 MiB | 1 | 54.2 | 0 | 16 tables: 14 PASS, 2 FAIL |
+| `guard-batch-160` | MemoryGate 2048 MiB | 0 | 49.9 | 0 | 7 tables: 7 PASS, 0 FAIL |
+| `guard-collect` | MemoryMax=2G | 0 | 239.2 | 0 | 6985 executions, 0 mismatches, 0 untracked, 393 controls |
+| `number-lane` | MemoryMax=2G | 0 | 188.6 | 5 | pass; 3040 cases, 139 raw and 216 scalar shared-corpus inputs, 0 failed |
+| `number-scope` | MemoryMax=2G | 0 | 126.5 | 0 | `"status": "pass"`, 580/580 (304 negatives) |
+| `ordinary-bundle.revision_completed` | MemoryMax=2G | 0 | 174.1 | 0 | PASS; 915 full-contract cases, 962 checks |
+| `ordinary-bundle.revision_interrupted` | MemoryMax=2G | 0 | 174.2 | 0 | PASS; 913 full-contract cases, 960 checks |
+| `ordinary-bundle.revision_requested` | MemoryMax=2G | 0 | 161.2 | 0 | PASS; 909 full-contract cases, 946 checks |
+| `ordinary-bundle.revision_started` | MemoryMax=2G | 0 | 166.1 | 0 | PASS; 914 full-contract cases, 962 checks |
+| `ordinary-wizard.deferred_payload.loaded` | MemoryMax=2G | 0 | 196.3 | 1 | PASS; 1463 full-contract cases, 1463 checks |
+| `ordinary-wizard.opened` | MemoryMax=2G | 0 | 163.3 | 0 | PASS; 925 full-contract cases, 925 checks |
+| `registered-bundle.revision_completed` | MemoryMax=2G | 0 | 201.0 | 2 | PASS; 129 outcomes |
+| `registered-bundle.revision_interrupted` | MemoryMax=2G | 0 | 200.0 | 0 | PASS; 129 outcomes |
+| `registered-bundle.revision_requested` | MemoryMax=2G | 0 | 204.4 | 0 | PASS; 129 outcomes |
+| `registered-bundle.revision_started` | MemoryMax=2G | 0 | 201.7 | 0 | PASS; 129 outcomes |
+| `registered-wizard.deferred_payload.loaded` | MemoryMax=2G | 0 | 176.3 | 0 | PASS; 129 outcomes |
+| `registered-wizard.opened` | MemoryMax=2G | 0 | 176.3 | 0 | PASS; 129 outcomes |
+| `standing-bundle.revision_completed` | MemoryMax=2G | 0 | 181.1 | 0 | PASS; 11 groups, 176 cases |
+| `standing-bundle.revision_interrupted` | MemoryMax=2G | 0 | 181.1 | 1 | PASS; 11 groups, 177 cases |
+| `standing-bundle.revision_requested` | MemoryMax=2G | 0 | 171.5 | 0 | PASS; 11 groups, 177 cases |
+| `standing-bundle.revision_started` | MemoryMax=2G | 0 | 175.6 | 0 | PASS; 11 groups, 178 cases |
+| `standing-wizard.deferred_payload.loaded` | MemoryMax=2G | 0 | 199.5 | 0 | PASS; 11 groups, 178 cases |
+| `standing-wizard.opened` | MemoryMax=2G | 0 | 173.8 | 0 | PASS; 11 groups, 178 cases |
+| `table-check` | MemoryMax=2G | 0 | 30.8 | 0 | 393 rows in 167 tables; current |
+| `pm-shard-plans.py --generate --config Plans/sharding_config.json` | MemoryMax=2G | 0 | 71.5 | 0 | regenerated; changed only `Plans/_shards/contracts_v0/` (66 files) |
+| `pm-plan-index.py generate` | MemoryMax=2G | 0 | 278.8 | 0 | 6 `Plans/.plan_index/` files; no currentness or readiness phantom rows (inputs copied, `diff -rq` identical) |
+| `pm-shard-plans.py --check --config Plans/sharding_config.json` | MemoryMax=2G | 0 | 60.3 | 0 | pass, 3,115 shards, 0 failures |
+| `pm-plan-index.py validate` at `origin/main` `e9c6a46389626c2c5d70b1ff98936172fb65e6c1` | MemoryMax=2G | 1 | 467.8 | 0 | 60 failures: 39 `plan_unit_removed_without_ledger_decision`, 21 `plan_unit_removal_ledger_invalid` (classified below) |
+| `python3 scripts/pm_event_datetime_inventory.py` (final tree) | MemoryMax=2G | 1 | 82.2 | 0 | recorded, not credited: 233 nodes, 3 `inventory_node_changed` rows, all on `Plans/event_record.schema.json` (above) |
+| `python3 scripts/pm_event_numbers.py --self-test` (scope all, final tree) | MemoryMax=2G | 1 | 126.3 | 0 | recorded, not credited: `NOT_RUN_ADMISSION_REFUSED`, 0 of 13,626 cases, failing `datetime_inventory_complete_and_classified` |
+
+The 60 validate failures are not a DCW regression. Each of the 39 "removed" units exists on `origin/main` but at none of: the part 2A head `7e5f4892da`, the merge, and this tree. They were added on main after the lane's base; part 2A rules forbid a rebase, and none is a DCW unit. The 21 ledger-invalid rows are in untouched `Plans/ledgers/v2/**` files. Part 2A recorded 53 at an older `origin/main`. The guard batches exit 1 only in the seven batches that hold a by-construction table, by design (part 2A fix 1 had the same seven).
+
+### Guard tool
+
+Gated tool `004bdedd632d9463f3535190a6ed5772338cdce1` (`scripts/pm_guard_isolation.py`, unedited; tool SHA-256 `e8038992eabbe067c8bcba8d48824b97fbb6b5b7e69cbfe28a669f939a96c0b8`). It was rerun in full, because adoption changed LE001's predicate and added date_time refusals at OE001: a collection, then 11 batches with `--include-unproved`. Collection: 6,985 executions (part 2A fix 1 had 6,317; the increase is the new timestamp cases), 0 mismatches, 0 untracked exceptions, 393 controls and 1,099 distinct negatives. Tool: 167 tables (153 PASS / 14 FAIL), 24,880 evaluations. **379 of 393 rows proved, with 0 masked negatives and 0 unrelated changes.** Per checker: `pm_dcw_event_oracles` 240/250, `pm_dcw_blockage_events` 106/108, `pm_bundle_revision_events` 20/22 and `pm_dcw_registered_schemas` 13/13, identical to fix 1. Each proved row has its own negatives, all of which flip; every peer stays rejected; restoration matches. The 14 FAIL tables are exactly the 14 by-construction rows: O014, O041, O077, O108, O109, O110, O117, O124, O125, B001, B054, L001, OE007 and LE001. Each sits alone in its own table, so no proved row loses credit. Each has a `path:line` proof in [DCW.guard-removal.md](DCW.guard-removal.md), updated for the shifted lines and the shared parser. L001 keeps its own UTC-Z predicate, and `pm_dcw_table_142.py` is byte-identical to part 2A; LE001's invariant now names the shared parser. Supplementary `DISABLED` full-path diagnostics: of 1,099 distinct negatives, 936 cuts accept, 133 refuse later and 30 hit a derivation exception. Later refusals and exceptions earn **zero complete-boundary isolation credit**.
+
+### Grades
+
+| Family | Before | After |
+|---|---|---|
+| `bundle.revision_requested` | 8 / 3 / 1 | 9 / 2 / 1 |
+| `bundle.revision_started` | 8 / 3 / 1 | 9 / 2 / 1 |
+| `bundle.revision_completed` | 8 / 3 / 1 | 9 / 2 / 1 |
+| `bundle.revision_interrupted` | 8 / 3 / 1 | 9 / 2 / 1 |
+| `wizard.blocked` | 8 / 3 / 1 | 9 / 2 / 1 |
+| `wizard.deferred_payload.loaded` | 8 / 3 / 1 | 9 / 2 / 1 |
+| `wizard.opened` | 8 / 3 / 1 | 9 / 2 / 1 |
+| `wizard.unblocked` | 8 / 3 / 1 | 9 / 2 / 1 |
+
+Counts are PASS / PARTIAL / ABSENT. `compatibility_withdrawal` moves from PARTIAL to PASS in all eight families. Its only remaining qualification was B2: the cycle-9 regrade and the part 2A record say "`compatibility_withdrawal` remains PARTIAL for B2". The shared check now covers that, with evidence in each cell. Native original authentication stays NOT_RUN, as it does for every other PASS cell. `positive_negative_oracles` stays PARTIAL: its timestamp qualification is gone, but the phase-proof (B3) limits remain. `retention` stays PARTIAL (RT owns it), and `membership_version` stays ABSENT.
+
+**Readiness:** `NOT_READY_REVIEW_PENDING`. Timestamps are adopted and no longer interim. The lane waits for its Sol max and Astra max review and for batch-2 integration, which runs `datetime_validator`, the inventory gate and the scope-all self-test. No DL-045 question was stopped for Jared. No new IDs.
+
+### Evidence (sweep part 2B)
+
+Evidence root: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCW/sweep-p2b/`, with `SHA256SUMS`. It holds the report, the self-grade, `DCW.guard-removal.md`, `HEAD.txt`, `final-checks.tar.gz` (every log and per-step metadata with cap, peak RSS and pauses), `verification-summary.json`, `checks-table.md`, `guard-results.json.gz`, `guard-tool-reports.tar.gz` (all 167 table reports and the batch summaries), `collection-summary.json`, `number-lane.json.gz`, `regeneration.tar.gz` (shard, index, inventory and scope-all outputs with `/usr/bin/time` peaks, `origin-main.txt` and `status-after.txt`), `grok-canary.tar.gz` (the Grok worker's superseded runs, kept for lineage) and the verification programs (`finish.py`, `summarize-guard.py`, `checks-table.py`, `quotes.py`, `regen.sh`). Raw work stays on the VM under `/home/sittingmongoose/pm-scratch/ea-DCW-p2b-resume/`.
 
 ## Sweep part 2A: findings and responses
 
@@ -87,11 +232,11 @@ The `DISABLED` diagnostics are supplementary only. Their totals include the expl
 | `B093` | The older-epoch comparison lacks a coherently admitted newer-source/older-authority restore witness preserving preceding restore admission joins. |
 | `B095` | Original custody is authenticated earlier by source_contract/original_receipt before restore membership. No independent absence witness reaches this later check. |
 | `B096` | The exactly-one matching restore member check lacks an independently reissued complete admission retaining all required member/owner facts. No schema/member compound cut. |
-| `L001` | The bundle payload schema UTC-Z shape precedes this endswith assertion. No individual schema-pattern cut. Timestamp review remains interim only. |
+| `L001` | The bundle payload schema UTC-Z shape precedes this endswith assertion. No individual schema-pattern cut. (Part 2A wording; part 2B proof in DCW.guard-removal.md.) |
 | `L013` | The requested payload schema fixes predecessor_event_id to null before this runtime assertion. No individual schema-const cut. |
 | `L014` | The requested payload schema fixes phase_sequence to zero before this runtime assertion. No individual schema-const cut. |
 | `OE007` | With the canonical callback every product refusal is now m.Refusal and is rethrown in the preceding except branch; no AssertionError/ValidationError witness is supplied for this legacy fallback. |
-| `LE001` | The enforced bundle payload date-time validation precedes datetime.fromisoformat. No parser-specific invalid value survives it; timestamp work remains interim only. |
+| `LE001` | The enforced bundle payload date-time validation precedes datetime.fromisoformat. No parser-specific invalid value survives it. (Part 2A wording; part 2B replaced the parser with the shared predicate.) |
 
 These are evidence limitations, not a claim that all rows are mathematically unreachable. Earlier schema enforcement is not a proven duplicate without individual clause cuts. A missing coherent multi-generation/original-custody witness is missing coverage. Full check11 remains PARTIAL until those boundaries and individual schema predicates are covered and independently reviewed.
 
@@ -102,8 +247,8 @@ above. Each of the 55 rows was classified from the checker code, by probing the
 complete paths: **41 reachable** rows now have a coherent single-defect negative
 refused first at exactly that row, and **14 by-construction** rows stay unproved
 in their own tables for the reason cited. No gated guard-tool or NUMRULE file
-was edited; no date-time code was adopted; timestamp review stays **interim
-only**. Witnesses are in `scripts/pm_dcw_p2a_cases.py:296` (`cases`, fix-1
+was edited; no date-time code was adopted in fix 1; timestamp adoption followed
+in sweep part 2B. Witnesses are in `scripts/pm_dcw_p2a_cases.py:296` (`cases`, fix-1
 section; helpers at `:39`) and `scripts/pm_dcw_legacy_guard_cases.py:54`, and
 run through the complete checkers in the guard collection
 (`scripts/pm_dcw_guard_suites.py:135`, `collect`).
@@ -224,13 +369,13 @@ Number-call and expectation changes are in `ed8ff2efab`; frozen dispatch and lar
 | **Owner / schema prose** | CV-590–597 cites CV-1100/SP-1100/SP-1101 beside each existing local identity, CV-317/CV-339, SP-278, SP-286 and SP-337 binding. Remove parsed-negative-zero normalization prose. Shared envelope/receipt frozen compatibility definitions lose lane-authored current-only pm-uint annotations; live checkpoint slots remain strict. No owner policy or product behavior choice was made. | `Plans/Contracts_V0.md:24611` (CV-590); `Plans/Contracts_V0.md:24688` (CV-591); `Plans/Contracts_V0.md:24765` (CV-592); `Plans/Contracts_V0.md:24842` (CV-593); `Plans/Contracts_V0.md:24920` (CV-594); `Plans/Contracts_V0.md:24993` (CV-595); `Plans/Contracts_V0.md:25068` (CV-596); `Plans/Contracts_V0.md:25290` (CV-597); `Plans/event_record.schema.json`; `Plans/event_append_receipt_contracts.schema.json`; `Plans/event_record_index_checkpoint.schema.json`. Shards/index regenerated; output scope and validation result below. |
 | **Shared corpus and credit** | 3040/3040 lane integration checks pass (exit0). 139 raw JSON/byte inputs and 216 typed scalar entries from the shared number corpus are projected into each of eight families’ actual nullable nonnegative producer-sequence caller slots. Parser refusals stop before a value exists; every parsed/projected value traverses the complete caller retry checker. The slot expectation follows this lane’s field domain and producer route, not the original corpus operation’s different bounds/profile. Full-u64 old-edition originals, receipt/retry/read/rebuild, retained registered integral-float frames, current floats, forged history and 4,400-digit cases run separately. Other corpus operations retain shared-helper credit only; no claim that all 580 original operations execute inside every lane path. | `python3 scripts/pm-dcw-number-checks.py --output <file>` and `python3 scripts/pm_event_numbers.py --self-test --scope numbers`. Shared helper: **580/580, 304 negatives, status pass, exit0**, credited exactly as reported. The number-only self-test confirms no date-time module import. |
 
-### Timestamp fields — interim only
+### Timestamp fields (part 2B numbers record, superseded by sweep part 2B)
 
-This review is **interim only**. Existing lane `valid_date_time`/format enforcement and legacy `datetime.fromisoformat` behavior remain. The previous round's valid leap-second refusal and non-Z Storage-time acceptance are still open; no timestamp correctness claim is added. Frozen number selection does not certify a frozen timestamp profile. No `pm_event_datetime`, `datetime_validator`, `date_time` or inventory gate is called.
+At that point the review was interim; sweep part 2B (above) supersedes this paragraph. Existing lane `valid_date_time`/format enforcement and legacy `datetime.fromisoformat` behavior remain. The previous round's valid leap-second refusal and non-Z Storage-time acceptance are still open; no timestamp correctness claim is added. Frozen number selection does not certify a frozen timestamp profile. No `pm_event_datetime`, `datetime_validator`, `date_time` or inventory gate is called.
 
 ## Part 2B items
 
-Timestamp items only:
+Timestamp items only. Both are **DONE** in sweep part 2B (`6bd3b82b1a`, section above); the list below is the original item list.
 
 - **SW-B2 / CV-1101 field profiles:** `scripts/pm_dcw_event_oracles.py:838` (`valid_date_time`); `scripts/pm_dcw_event_oracles.py:96` (`check_schema`); `scripts/pm_bundle_revision_events.py:17` (`validate`); `scripts/pm_dcw_blockage_events.py:23` (`envelope`); `scripts/pm_dcw_index_cases.py` timestamp cases. Apply the gated shared timestamp validator at complete envelope/source/receipt/checkpoint boundaries, selecting `storage_utc_z` for Storage observed/persisted times and the actual field-owner profile elsewhere. Preserve exact strings and permitted fractional precision; cover legitimate leap seconds, offsets, lowercase, malformed calendar values and trailing bytes.
 - **SP-1101 original timestamp profile:** `scripts/pm_dcw_number_custody.py:30` (`install`); `scripts/pm_dcw_event_oracles.py:47` (`frozen_shared`); `scripts/pm_dcw_event_oracles.py:54` (`historical_boundary`); `scripts/pm_dcw_event_oracles.py:1037` (`original_scope`). Extend the authentic original tuple/resources to the gated date-time profile. Preserve lawful retained original strings and avoid current-then-legacy probing; rerun history, retry and receipt cases with current request admission separate.
@@ -283,7 +428,7 @@ No stopped DL-045 product-choice item remains. Retention answers stay with RT; n
 
 Index validate was read at the top level against `origin/main` **`268a9382f7ba2efaf8909f5e69403a5afe82b114`**. Index validation remains FAIL: 53 diagnostics (21 unchanged ledger-input errors and 32 units present on newer main but absent at this branch’s merge base). Every failure path is byte-identical to the number-merge base; no unit was removed in this pass. index-failure-classification.json records the exact proof. No clean-index claim, unrelated repair or rebase is made. No governance reseal, baseline reset, registry append or Decision Log write was performed.
 
-Recurring classes retain direct full-path regressions: original/source/receipt/Project forgeries and assigned metadata; coherent historical reads after live changes, lawful replay-only history and forged/withdrawn originals; exact type-aware joins; eager unused local/external/transitive references; complete encoded byte sizes and independent event/source references; predecessor custody and restore dependencies; current-writer/retry policy and semantic-only comparison; exact failure exit handling. Schema clause, compound/loop occurrence and complete-boundary isolation limits remain explicit. Timestamp review stays interim only. Native source adapters/authentication, real Storage bytes/CRC, redb CAS/concurrency, append/lost-ack, crash recovery, backup/restore, access/deletion and retention campaigns remain **NOT_RUN**.
+Recurring classes retain direct full-path regressions: original/source/receipt/Project forgeries and assigned metadata; coherent historical reads after live changes, lawful replay-only history and forged/withdrawn originals; exact type-aware joins; eager unused local/external/transitive references; complete encoded byte sizes and independent event/source references; predecessor custody and restore dependencies; current-writer/retry policy and semantic-only comparison; exact failure exit handling. Schema clause, compound/loop occurrence and complete-boundary isolation limits remain explicit. Timestamp review stayed interim in that pass; sweep part 2B supersedes it. Native source adapters/authentication, real Storage bytes/CRC, redb CAS/concurrency, append/lost-ack, crash recovery, backup/restore, access/deletion and retention campaigns remain **NOT_RUN**.
 
 ## Delivery and evidence
 
