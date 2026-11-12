@@ -297,8 +297,11 @@ export default async function (t) {
 		window.addEventListener('visibilitychange', () => {
 			const row = { visible: document.visibilityState === 'visible', before: document.documentElement.hasAttribute('data-pm-still') };
 			window.__stillVisibility.push(row);
-			queueMicrotask(() => { row.after = document.documentElement.hasAttribute('data-pm-still'); });
 		}, true);
+		// Registered after the product's document listener: read after it handles this same event, before focus can run.
+		document.addEventListener('visibilitychange', () => {
+			window.__stillVisibility.at(-1).after = document.documentElement.hasAttribute('data-pm-still');
+		});
 	});
 	await cdp.send('Emulation.setFocusEmulationEnabled', { enabled: false });
 	let other;
