@@ -10595,3 +10595,273 @@ negative_constraints:
 owner_hints:
 - Plans/Automated_Testing_System.md
 ```
+
+### ATS-330 - alert.acknowledged contract oracles
+
+```yaml
+plan_unit_id: ATS-330
+unit_type: contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: alert.acknowledged is checked independently by python3 scripts/pm-alert-event-contracts-check.py
+  with Plans/alert_event_contracts/alert_acknowledged.fixtures.json. Positive closed payload/current successor and
+  negative added secret field, missing field, stale revision, wrong handler, no-change, lost acknowledgement, altered
+  retry payload and prohibited checkpoint snapshot are required. Recovery/atomicity/withdrawal native tests remain
+  NOT_RUN and must prove every SP-660 boundary; static pass cannot authorize append. Retention PENDING_RETENTION_DECISION.
+  The same full checker must reject the former 1000-ref checkpoint and a foreign Storage token, accept exactly 16384
+  encoded MessagePack bytes, reject 16385, and traverse 1000 matching events plus empty nonmatching pages without
+  storing refs in the checkpoint. These are static contract oracles; native SP-278 read/authentication/CAS/withdrawal
+  and OS/storage durability remain NOT_RUN.
+
+
+  The full checker additionally rejects current/retry projector_replay_only and trailing-LF identifiers, and measures the complete closed History response with the actual nine-field token and publication/continuation/refs/completion metadata. Large valid tokens, exact 16384/16385-byte responses and individually unpageable metadata/ref cases are required; native enforcement remains NOT_RUN.
+gui_related: false
+gui_classification_reason: Storage/event contract, no new UI.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- alert.acknowledged is denied until its own admission; exact identity, custody, recovery and negative paths are
+  checked.
+- Retention remains PENDING_RETENTION_DECISION; native execution NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm-alert-event-contracts-check.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: alert_acknowledged
+implementation_surfaces:
+- Plans/event_payloads/attention/alert_acknowledged.schema.json
+- Plans/storage-plan.md#SP-660
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/FinalGUISpec.md#F3-453
+preserved_exact_tokens:
+- alert.acknowledged
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- No append, native activation, checkpoint advance or admission from this preparation.
+```
+
+### ATS-331 - alert.dismissed contract oracles
+
+```yaml
+plan_unit_id: ATS-331
+unit_type: contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: alert.dismissed is checked independently by python3 scripts/pm-alert-event-contracts-check.py with
+  Plans/alert_event_contracts/alert_dismissed.fixtures.json. Positive closed payload/current successor and negative
+  added secret field, missing field, stale revision, wrong handler, no-change, lost acknowledgement, altered retry
+  payload and prohibited checkpoint snapshot are required. Recovery/atomicity/withdrawal native tests remain NOT_RUN
+  and must prove every SP-661 boundary; static pass cannot authorize append. Retention PENDING_RETENTION_DECISION.
+  The same full checker must reject the former 1000-ref checkpoint and a foreign Storage token, accept exactly 16384
+  encoded MessagePack bytes, reject 16385, and traverse 1000 matching events plus empty nonmatching pages without
+  storing refs in the checkpoint. These are static contract oracles; native SP-278 read/authentication/CAS/withdrawal
+  and OS/storage durability remain NOT_RUN.
+
+
+  The full checker additionally rejects current/retry projector_replay_only and trailing-LF identifiers, and measures the complete closed History response with the actual nine-field token and publication/continuation/refs/completion metadata. Large valid tokens, exact 16384/16385-byte responses and individually unpageable metadata/ref cases are required; native enforcement remains NOT_RUN.
+gui_related: false
+gui_classification_reason: Storage/event contract, no new UI.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- alert.dismissed is denied until its own admission; exact identity, custody, recovery and negative paths are checked.
+- Retention remains PENDING_RETENTION_DECISION; native execution NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm-alert-event-contracts-check.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: alert_dismissed
+implementation_surfaces:
+- Plans/event_payloads/attention/alert_dismissed.schema.json
+- Plans/storage-plan.md#SP-661
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/FinalGUISpec.md#F3-453
+preserved_exact_tokens:
+- alert.dismissed
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- No append, native activation, checkpoint advance or admission from this preparation.
+```
+
+### ATS-332 - alert.rule_muted contract oracles
+
+```yaml
+plan_unit_id: ATS-332
+unit_type: contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: alert.rule_muted is checked independently by python3 scripts/pm-alert-event-contracts-check.py with
+  Plans/alert_event_contracts/alert_rule_muted.fixtures.json. Positive closed payload/current successor and negative
+  added secret field, missing field, stale revision, wrong handler, no-change, lost acknowledgement, altered retry
+  payload and prohibited checkpoint snapshot are required. Recovery/atomicity/withdrawal native tests remain NOT_RUN
+  and must prove every SP-662 boundary; static pass cannot authorize append. Retention PENDING_RETENTION_DECISION.
+  The same full checker must reject the former 1000-ref checkpoint and a foreign Storage token, accept exactly 16384
+  encoded MessagePack bytes, reject 16385, and traverse 1000 matching events plus empty nonmatching pages without
+  storing refs in the checkpoint. These are static contract oracles; native SP-278 read/authentication/CAS/withdrawal
+  and OS/storage durability remain NOT_RUN.
+
+
+  The full checker additionally rejects current/retry projector_replay_only and trailing-LF identifiers, and measures the complete closed History response with the actual nine-field token and publication/continuation/refs/completion metadata. Large valid tokens, exact 16384/16385-byte responses and individually unpageable metadata/ref cases are required; native enforcement remains NOT_RUN.
+gui_related: false
+gui_classification_reason: Storage/event contract, no new UI.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- alert.rule_muted is denied until its own admission; exact identity, custody, recovery and negative paths are checked.
+- Retention remains PENDING_RETENTION_DECISION; native execution NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm-alert-event-contracts-check.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: alert_rule_muted
+implementation_surfaces:
+- Plans/event_payloads/attention/alert_rule_muted.schema.json
+- Plans/storage-plan.md#SP-662
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/FinalGUISpec.md#F3-453
+preserved_exact_tokens:
+- alert.rule_muted
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- No append, native activation, checkpoint advance or admission from this preparation.
+```
+
+### ATS-333 - alert.snoozed contract oracles
+
+```yaml
+plan_unit_id: ATS-333
+unit_type: contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: alert.snoozed is checked independently by python3 scripts/pm-alert-event-contracts-check.py with
+  Plans/alert_event_contracts/alert_snoozed.fixtures.json. Positive closed payload/current successor and negative
+  added secret field, missing field, stale revision, wrong handler, no-change, lost acknowledgement, altered retry
+  payload and prohibited checkpoint snapshot are required. Recovery/atomicity/withdrawal native tests remain NOT_RUN
+  and must prove every SP-663 boundary; static pass cannot authorize append. Retention PENDING_RETENTION_DECISION.
+  The same full checker must reject the former 1000-ref checkpoint and a foreign Storage token, accept exactly 16384
+  encoded MessagePack bytes, reject 16385, and traverse 1000 matching events plus empty nonmatching pages without
+  storing refs in the checkpoint. These are static contract oracles; native SP-278 read/authentication/CAS/withdrawal
+  and OS/storage durability remain NOT_RUN.
+
+
+  The full checker additionally rejects current/retry projector_replay_only and trailing-LF identifiers, and measures the complete closed History response with the actual nine-field token and publication/continuation/refs/completion metadata. Large valid tokens, exact 16384/16385-byte responses and individually unpageable metadata/ref cases are required; native enforcement remains NOT_RUN.
+gui_related: false
+gui_classification_reason: Storage/event contract, no new UI.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- alert.snoozed is denied until its own admission; exact identity, custody, recovery and negative paths are checked.
+- Retention remains PENDING_RETENTION_DECISION; native execution NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm-alert-event-contracts-check.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: alert_snoozed
+implementation_surfaces:
+- Plans/event_payloads/attention/alert_snoozed.schema.json
+- Plans/storage-plan.md#SP-663
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/FinalGUISpec.md#F3-453
+preserved_exact_tokens:
+- alert.snoozed
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- No append, native activation, checkpoint advance or admission from this preparation.
+```
+
+### ATS-334 - Independent current chat panel event oracles
+
+```yaml
+plan_unit_id: ATS-334
+unit_type: contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: 'panel.redocked is checked independently by python3 scripts/pm-panel-event-contracts-check.py with
+  Plans/panel_event_contracts/panel_redocked.fixtures.json: valid current chat-only 2.0.0 and stored v1 read dispatch;
+  invalid generic panel, saved host, co-emission, wrong command/host, old layout fields, stale host revision, missing/foreign
+  session/scope, original receipt, retry and withdrawal; bounded checkpoint 16384 accepted/16385 refused and 1000-ref
+  source traversal. SP-664/CV-684/F3-704 bind its original settlement, journal, SP-286 recovery and SP-278 History.
+
+
+  panel.undocked is checked independently by the same checker with Plans/panel_event_contracts/panel_undocked.fixtures.json:
+  valid desktop current chat-only 2.0.0 and stored v1 read dispatch; the same listed boundaries are tested with
+  this family''s own command, hosts, window and identity, plus unsupported web/absent-family refusal. SP-665/CV-685/F3-705
+  bind its independent original settlement, journal, SP-286 recovery and SP-278 History.
+
+
+  The checker is a static reference oracle, not a real OS window, source-authorization, first-receipt or crash test.
+  Native settlement/persistence failure, live/ended session recovery, coherent backup, original receipt authentication,
+  permission/deletion/read-fence and SP-278 source/generation/CAS tests remain NOT_RUN separately for both families.
+  No static pass authorizes emission. Retention PENDING_RETENTION_DECISION.
+
+  Both independent panel fixture paths include unchanged-digest settled_at_utc and interaction_transaction_id mutations, command-only digest rejection, changed-command rejection, complete command/payload hash recomputation, application@1:{hex(server_id)}:{hex(owner_operation_id)} current app keys, raw Project partition rejection, replay_only_not_appendable and trailing-LF identifier negatives. Both use their actual complete History response metadata for large valid tokens, exact 16384/16385-byte response boundaries and individually unpageable metadata/ref refusal. Alert ATS-330 through ATS-333 use the same complete-response measurement with each own token; the original ref-only plus 4096-byte allowance is retired.
+
+  concern.created has its own independent python3 scripts/pm-concern-created-contracts-check.py and
+  Plans/concern_created_contracts/concern_created.fixtures.json. Positives cover each of OP-002''s five authorized
+  creator kinds, independent User/External Resource accountable owners, absent -> active revision one and exact
+  record/command/payload/digest/receipt/scope joins. Negatives cover Worker/User/External Resource/Recovery direct
+  creation, absent registry, stale/foreign source/currentness/permission, existing record/subject, changed frozen
+  command/payload/record with original digest, wrong original receipt, LF identifiers, projector_replay_only,
+  polluted checkpoints, large-valid-token complete History byte bounds, unpageable metadata/ref and withdrawal.
+  Native creator/source/permission authentication, atomic original commit/receipt/CAS, recovery, backup/deletion
+  and rebuild remain NOT_RUN. SP-666/CV-686 and OP-004 own this exact prepared family; event membership ABSENT,
+  event/operation/checkpoint retention PENDING_RETENTION_DECISION. This oracle grants no sibling action privilege.'
+
+gui_related: false
+gui_classification_reason: Event custody and validation, no new UI.
+split_recommended: false
+depends_on:
+- SP-664
+- SP-665
+unblocks: []
+acceptance_criteria:
+- ATS-334 binds only its explicitly named exact family, prepared without admission; native execution NOT_RUN.
+- Exact event admission precedes effects; retention remains PENDING_RETENTION_DECISION.
+validation_surfaces:
+- python3 scripts/pm-panel-event-contracts-check.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: chat_panel_event_authority
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+- Plans/panel_event_contracts/
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/Contracts_V0.md#CV-361
+- Plans/storage-plan.md#SP-330
+preserved_exact_tokens:
+- PENDING_RETENTION_DECISION
+- SP-278
+- SP-286
+negative_constraints:
+- No event admission, saved pop-out host, Home revision advance, replayed OS window effect, retention decision or
+  native execution proof.
+```
