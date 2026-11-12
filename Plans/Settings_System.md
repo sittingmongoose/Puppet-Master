@@ -3748,7 +3748,7 @@ The former 20-row Plan depth & questions group and 26-row Terminal & shell group
 | Commands & Shortcuts | Shortcuts (one shortcut list in three groups, everywhere, in the message box and in the terminal, with clashes checked across all three; shortcut hints, with clash display on CS-081's warn policy; More options: Reset and back up); Commands (Safety; Your commands; More options: Defaults for new commands, Built-in names) |
 | Testing & Debug | Profiles (Running sessions); When to test (the one switch for all automated testing; Before merging); What it can test, was Browser & Native (Browser testing; Desktop and mobile apps; Behind the scenes; More options: Test tools and windows); Debug (Debug profiles; What debugging may do on its own; More options: Debug loop limits); History (Keeping proof) |
 | Memory | One page: memory switch, search, All / This project / Every project level filter, saved-note list, Add/Edit/Delete and collapsed Archived; the chat button opens the same page as a sheet. Instructions, History/privacy, capacity and Run limits stay outside it. |
-| Goals | Defaults, shown first (New Goals start with; Keeping an eye on progress; Scheduled runs; Progress view); Templates (kind of job set per template); Recovery (If something interrupts; Changing the plan; When a check fails); Checks (Before a Goal is called done; Goal evidence, with the receipt a finished Goal earns shown as a read-only line; More options: Stricter proof); no Active Goals tab |
+| Goals | Defaults for host continuation, interruption handling and progress; Goal evidence under GRS-050, with a read-only evidence receipt; no Active Goals tab. Templates, replan/check policies, certification levels and earned receipt strength are retired by DL-478. |
 | Personas | Personas (Your personas; inside the selected persona: About this persona, How it answers, Spending cap, Tools and instructions; More options: Skipped settings); Crews (Crews; New crews start with; Crew Auto); Group work (BrainStorm: who takes part; BrainStorm: debate and vote; Review; Chat Room); Helpers (Helper agents; Which helpers; Keeping helpers safe; More options: Limits for all agents, Helper contracts); Defaults (Choosing a persona; In a chat) |
 | Back Seat Driver | Overview (one Advisor group; More options: Expert options); Stages (Where the advisor watches); Findings |
 | Source Control | Code Services (each service connected through a guided set-up; GitHub sign-in inside GitHub; push access by SSH key or HTTPS token); Local Tools; Repositories (Create a new repository; Contribute to another project; Workspaces for chats; Before and after each run; More options: Workspace storage); Defaults & Safety (Git on this server: the name and email on changes, how Git signs in and signing changes, set up by Set up Git; Files that need care: big files and files never saved in history; How runs use version history; Safety, with protected branches as an editable list; Recovery; More options: Source Control panel); Actions & Pipelines (Pinned workflows; Keeping checks current) |
@@ -3807,7 +3807,7 @@ A manager keeps no second copy of a choice an inventory row makes; the inventory
 | Commands & Shortcuts | second copies of the shortcut search, hints, reset and save/load | the inventory rows and actions beside the one shortcut list, which writes the inventory map of changed keys |
 | Testing & Debug | the manager's own built-in-browser, visual-inspection and native-checks switches | the capability rows, read as Automatic, Always or Never |
 | Memory | the old fade, verification, source, preview and cleanup workbench controls | Built-in fading and held archive-only upkeep; Instructions, History/privacy and Run limits retain their own controls. |
-| Goals | the manager’s saving-progress/resume/retry/then/evidence/approval copies, plus retired helper and Goal-owned model defaults | Recovery and Checks keep their admitted non-model owners. No helper/Goal worker/verifier model setting is offered; runs use their initiating chat choice and Models §2, with shared model defaults elsewhere. |
+| Goals | the manager’s saving-progress/resume/retry/then/evidence/approval copies, plus retired helper and Goal-owned model defaults | Host continuation, interruption handling and GRS-050 evidence keep their owners. Goal templates, replan/check policies and certification controls are retired by DL-478. No helper/Goal worker/verifier model setting is offered; runs use their initiating chat choice and Models §2, with shared model defaults elsewhere. |
 | Personas | repeated Persona rows, obsolete Defaults inheritance switches and Goals row | Only surviving non-model fields live inside a Persona; old provider/model/preset/depth values are inert compatibility reads. Model/depth uses the shared defaults list or explicit run picker. |
 | Source Control | the manager's own branch name and worktree folder; the per-service default switch | `branching.worktrees.default-branch` and the workspace folder row for new repositories, clones, worktrees and runs; Make default; the Pinned workflows row; the safety level decides its three switches unless it is Custom |
 | Built-in browser | its own screenshot switch and Testing's copy; retention and redaction copies | one capture choice shown on both pages; Testing's run-evidence retention and `safety.protection.screenshot-redaction`, shown with a way to change them |
@@ -3831,7 +3831,7 @@ No Settings action opens the generic "What this does" preview panel whose button
 
 A Settings search result for an action row, such as Restore home layout for `general.startup.reset-home-layout`, lands on that exact row and asks the row's own plain question; search never opens Details for an id that is not on the page it opens, which would draw an empty panel.
 
-Adding an MCP server, a plugin, a skill, a command, a shortcut, a persona, a crew, a Goal template, a language server, a formatter, a debug profile, a permission profile, a server, an SSH computer or an SSH key, setting up a way in from away, moving or copying a workspace, copying, loading or saving settings, connecting a code service, setting up Git, creating a repository and contributing to another project are guided set-ups in one window over the dimmed page, in the onboarding wizard's form: the steps as a rail, one plain question per step, Back and Continue, and a click on the dimmed page never closes it. Each commits through its owner's command; the answers a row remembers are its inventory values.
+Adding an MCP server, a plugin, a skill, a command, a shortcut, a persona, a crew, a language server, a formatter, a debug profile, a permission profile, a server, an SSH computer or an SSH key, setting up a way in from away, moving or copying a workspace, copying, loading or saving settings, connecting a code service, setting up Git, creating a repository and contributing to another project are guided set-ups in one window over the dimmed page, in the onboarding wizard's form: the steps as a rail, one plain question per step, Back and Continue, and a click on the dimmed page never closes it. Each commits through its owner's command; the answers a row remembers are its inventory values.
 
 ### 7. Structured editors
 
@@ -3891,8 +3891,8 @@ that would reach an outside computer or service says so and, in the concept, is 
   saved in history); protected branches are an editable list.
 - Settings sets defaults and does no live work: no view shows, starts, pauses or stops a live chat or Goal. Goals are
   started in the assistant chat or by the Planning Wizard, so Goals in Settings holds the defaults every new Goal
-  starts with, templates (which can be created, edited, duplicated, exported and deleted) and the recovery and check
-  rules; saved notes have only This project and Every project levels, and private thread records stay internal; one chat's own
+  starts with for host continuation and interruption handling, plus GRS-050 evidence; Goal templates and checking
+  policies are retired by DL-478. Saved notes have only This project and Every project levels, and private thread records stay internal; one chat's own
   actions, such as Squeeze now, live in that chat's menu.
 - A persona's tuning rows (Creativity, Word choice range, Spending cap) read Same as the project until the persona
   sets its own value, which is then set with a slider or amount that can go back to the project's; a persona-only row
@@ -4058,7 +4058,7 @@ status: accepted
 owner_doc: Plans/Settings_System.md
 canonical_text: 'Settings sets defaults and runs guided set-ups; it does no live work. No Settings view
   shows, starts, pauses or stops a live chat or Goal: Goals start in the assistant chat or the Planning
-  Wizard, Goals in Settings holds new-Goal defaults, templates, recovery and check rules, and one chat''s
+  Wizard, Goals in Settings holds host-continuation/interruption defaults and GRS-050 evidence, and one chat''s
   own actions live in that chat''s menu. Every set-up listed in the presentation section''s owner-routes
   subsection runs in the onboarding wizard''s form and ends with its result shown where it was started,
   changeable and removable. A permission profile carries its four answers and its own rules, which form
