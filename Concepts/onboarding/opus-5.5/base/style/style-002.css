@@ -1319,10 +1319,11 @@
     [data-theme^="basic"] .minimap-viewport { background: rgba(100,181,246,0.06); border-color: rgba(100,181,246,0.15); }
     [data-theme^="basic"] .minimap-heat-strip { border-radius: 2px; }
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    /* FO-171: the viewport is not a scroll owner. Hidden still allows native
-       focus/scrollIntoView to scroll the body and carry Settings' absolute
-       portal above the viewport; clip leaves scrolling to the inner panes. */
-    html, body { height: 100%; overflow: clip; font-family: var(--body-font); font-size: var(--base-font-size); color: var(--text-primary); background: var(--background); line-height: var(--line-height); letter-spacing: var(--letter-spacing); }
+    html, body { height: 100%; overflow: hidden; font-family: var(--body-font); font-size: var(--base-font-size); color: var(--text-primary); background: var(--background); line-height: var(--line-height); letter-spacing: var(--letter-spacing); }
+    /* FO-171: native focus/scrollIntoView must scroll inner panes only. Pin the
+       shell's body to the viewport and remove its hidden scroll container;
+       overflow alone on the root propagates to the viewport and can still scroll. */
+    body { position: fixed; inset: 0; width: 100%; overflow: clip; }
     button:focus-visible, .title-bar .page-tabs .page-tab:focus-visible, .orch-tab:focus-visible,
     input:focus-visible, select:focus-visible, textarea:focus-visible {
       outline: 2px solid var(--accent-blue);
