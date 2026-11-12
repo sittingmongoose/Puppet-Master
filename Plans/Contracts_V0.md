@@ -31572,3 +31572,657 @@ negative_constraints:
 ```
 
 ContractRef: ContractName:Plans/Executor_Protocol.md#EP-225, ContractName:Plans/Contracts_V0.md#CV-515, ContractName:Plans/storage-plan.md#SP-515
+
+
+### CV-650 - memory.dedup_sweep.completed payload contract
+
+```yaml
+plan_unit_id: CV-650
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: Newly authored closed payload owner contract for exactly memory.dedup_sweep.completed@1.0.0 under
+  DL-045, searched independently in reports/event-authority-20261104/DMEM-search.json. Payload schema Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_dedup_sweep_completed
+  is a distinct closed definition; schema_version and event_type are exact constants. All listed properties are
+  required and unknown properties fail. Project id must equal the project_only EventRecord envelope, operation_id
+  must equal its correlation_id, causation_event_id is the same-operation started_event_id. Source revision is the
+  hash of the frozen canonical corpus revision selected at acceptance; a current snapshot substituted on retry fails.
+  occurred_at_utc is strict UTC and is frozen at first logical publication, not retry time. Inline payload only;
+  payload_ref=null. The producer validates root, dates, permission, joins and no-secret metadata before append.
+  Completed result_ref/hash use this family's SP-bound memresult_ identity and immutable operation outcome;
+  status/ref/hash and frozen time must exactly equal the operation and retained original full value. The ref never grants body access. Reject terminal-before-start, mismatched Project/operation/source revision, missing receipt, changed request
+  bytes or unsupported version. Event identity and ordered recovery are defined for this family by SP-630, not borrowed
+  from another event.
+
+  DL-444 and DL-445 apply E-CARDS-2 Card 6.a and 6.b option A. Among owner-eligible identical embed_text_hash memories, keep the oldest by original created_at, breaking a tie by the unchanging note ID (lexical id order). Preserve every original EvidenceRef and the merge record identifying every original and the survivor; the survivor retains the union of evidence references. Archive the other eligible originals with their original identities, evidence references, versions and links to the survivor intact. They remain available in history and are never automatically deleted. Only the user deletes memories. Pinned memories stay excluded; skip any merge that pin protection forbids. These decisions do not broaden existing eligibility or scope, admit a writer, settle operation retention or bypass start custody. Scores for separate archive jobs do not select a duplicate survivor. Source E-CARDS-2 as presented, Card 6 options A, SHA-256 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30; decision-answers/E-CARDS-2.as-presented-6db25be3.md and ANSWERS_E-CARDS-2_20261105.md under /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104; DL-444 through DL-447, landed in Plans/Decision_Log.md on main.
+gui_related: false
+gui_classification_reason: Typed events, identity, custody and recovery; no visual behavior.
+depends_on:
+- DL-045
+- AMS-100
+unblocks: []
+acceptance_criteria:
+- Exact family remains quarantined until its own admission and retention resolution.
+- Schema, identity, custody, replay and withdrawal match this unit.
+validation_surfaces:
+- python3 scripts/pm_memory_maintenance_events.py
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: ea_wave2_DMEM_20261104
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+source_lineage:
+- reports/event-authority-20261104/DMEM-search.json
+preserved_exact_tokens: []
+negative_constraints:
+- No admission, deletion-policy decision, app-scope expansion or native proof.
+```
+
+
+### CV-651 - memory.dedup_sweep.started payload contract
+
+```yaml
+plan_unit_id: CV-651
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: Newly authored closed payload owner contract for exactly memory.dedup_sweep.started@1.0.0 under
+  DL-045, searched independently in reports/event-authority-20261104/DMEM-search.json. Payload schema Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_dedup_sweep_started
+  is a distinct closed definition; schema_version and event_type are exact constants. All listed properties are
+  required and unknown properties fail. Project id must equal the project_only EventRecord envelope, operation_id
+  must equal its correlation_id, causation_event_id is null. Source revision is the hash of the frozen canonical
+  corpus revision selected at acceptance; a current snapshot substituted on retry fails. occurred_at_utc is strict
+  UTC and is frozen at first logical publication, not retry time. Inline payload only; payload_ref=null. The producer
+  validates root, dates, permission, joins and no-secret metadata before append. Completed result_ref/hash resolve
+  the immutable original outcome under authorized custody and never imply body access. Reject terminal-before-start,
+  mismatched Project/operation/source revision, missing receipt, changed request bytes or unsupported version. Event
+  identity and ordered recovery are defined for this family by SP-631, not borrowed from another event.
+
+  DL-444 and DL-445 apply E-CARDS-2 Card 6.a and 6.b option A. Among owner-eligible identical embed_text_hash memories, keep the oldest by original created_at, breaking a tie by the unchanging note ID (lexical id order). Preserve every original EvidenceRef and the merge record identifying every original and the survivor; the survivor retains the union of evidence references. Archive the other eligible originals with their original identities, evidence references, versions and links to the survivor intact. They remain available in history and are never automatically deleted. Only the user deletes memories. Pinned memories stay excluded; skip any merge that pin protection forbids. These decisions do not broaden existing eligibility or scope, admit a writer, settle operation retention or bypass start custody. Scores for separate archive jobs do not select a duplicate survivor. Source E-CARDS-2 as presented, Card 6 options A, SHA-256 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30; decision-answers/E-CARDS-2.as-presented-6db25be3.md and ANSWERS_E-CARDS-2_20261105.md under /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104; DL-444 through DL-447, landed in Plans/Decision_Log.md on main.
+gui_related: false
+gui_classification_reason: Typed events, identity, custody and recovery; no visual behavior.
+depends_on:
+- DL-045
+- AMS-101
+unblocks: []
+acceptance_criteria:
+- Exact family remains quarantined until its own admission and retention resolution.
+- Schema, identity, custody, replay and withdrawal match this unit.
+validation_surfaces:
+- python3 scripts/pm_memory_maintenance_events.py
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: ea_wave2_DMEM_20261104
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+source_lineage:
+- reports/event-authority-20261104/DMEM-search.json
+preserved_exact_tokens: []
+negative_constraints:
+- No admission, deletion-policy decision, app-scope expansion or native proof.
+```
+
+
+### CV-652 - memory.index.lexical.rebuild.completed payload contract
+
+```yaml
+plan_unit_id: CV-652
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: Newly authored closed payload owner contract for exactly memory.index.lexical.rebuild.completed@1.0.0
+  under DL-045, searched independently in reports/event-authority-20261104/DMEM-search.json. Payload schema Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_index_lexical_rebuild_completed
+  is a distinct closed definition; schema_version and event_type are exact constants. All listed properties are
+  required and unknown properties fail. Project id must equal the project_only EventRecord envelope, operation_id
+  must equal its correlation_id, causation_event_id is the same-operation started_event_id. Source revision is the
+  hash of the frozen canonical corpus revision selected at acceptance; a current snapshot substituted on retry fails.
+  occurred_at_utc is strict UTC and is frozen at first logical publication, not retry time. Inline payload only;
+  payload_ref=null. The producer validates root, dates, permission, joins and no-secret metadata before append.
+  Completed result_ref/hash use this family's SP-bound memresult_ identity and immutable operation outcome;
+  status/ref/hash and frozen time must exactly equal the operation and retained original full value. The ref never grants body access. Reject terminal-before-start, mismatched Project/operation/source revision, missing receipt, changed request
+  bytes or unsupported version. Event identity and ordered recovery are defined for this family by SP-632, not borrowed
+  from another event.
+gui_related: false
+gui_classification_reason: Typed events, identity, custody and recovery; no visual behavior.
+depends_on:
+- DL-045
+- AMS-102
+unblocks: []
+acceptance_criteria:
+- Exact family remains quarantined until its own admission and retention resolution.
+- Schema, identity, custody, replay and withdrawal match this unit.
+validation_surfaces:
+- python3 scripts/pm_memory_maintenance_events.py
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: ea_wave2_DMEM_20261104
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+source_lineage:
+- reports/event-authority-20261104/DMEM-search.json
+preserved_exact_tokens: []
+negative_constraints:
+- No admission, deletion-policy decision, app-scope expansion or native proof.
+```
+
+
+### CV-653 - memory.index.lexical.rebuild.started payload contract
+
+```yaml
+plan_unit_id: CV-653
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: Newly authored closed payload owner contract for exactly memory.index.lexical.rebuild.started@1.0.0
+  under DL-045, searched independently in reports/event-authority-20261104/DMEM-search.json. Payload schema Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_index_lexical_rebuild_started
+  is a distinct closed definition; schema_version and event_type are exact constants. All listed properties are
+  required and unknown properties fail. Project id must equal the project_only EventRecord envelope, operation_id
+  must equal its correlation_id, causation_event_id is null. Source revision is the hash of the frozen canonical
+  corpus revision selected at acceptance; a current snapshot substituted on retry fails. occurred_at_utc is strict
+  UTC and is frozen at first logical publication, not retry time. Inline payload only; payload_ref=null. The producer
+  validates root, dates, permission, joins and no-secret metadata before append. Completed result_ref/hash resolve
+  the immutable original outcome under authorized custody and never imply body access. Reject terminal-before-start,
+  mismatched Project/operation/source revision, missing receipt, changed request bytes or unsupported version. Event
+  identity and ordered recovery are defined for this family by SP-633, not borrowed from another event.
+gui_related: false
+gui_classification_reason: Typed events, identity, custody and recovery; no visual behavior.
+depends_on:
+- DL-045
+- AMS-103
+unblocks: []
+acceptance_criteria:
+- Exact family remains quarantined until its own admission and retention resolution.
+- Schema, identity, custody, replay and withdrawal match this unit.
+validation_surfaces:
+- python3 scripts/pm_memory_maintenance_events.py
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: ea_wave2_DMEM_20261104
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+source_lineage:
+- reports/event-authority-20261104/DMEM-search.json
+preserved_exact_tokens: []
+negative_constraints:
+- No admission, deletion-policy decision, app-scope expansion or native proof.
+```
+
+
+### CV-654 - memory.index.semantic.rebuild.completed payload contract
+
+```yaml
+plan_unit_id: CV-654
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: Newly authored closed payload owner contract for exactly memory.index.semantic.rebuild.completed@1.0.0
+  under DL-045, searched independently in reports/event-authority-20261104/DMEM-search.json. Payload schema Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_index_semantic_rebuild_completed
+  is a distinct closed definition; schema_version and event_type are exact constants. All listed properties are
+  required and unknown properties fail. Project id must equal the project_only EventRecord envelope, operation_id
+  must equal its correlation_id, causation_event_id is the same-operation started_event_id. Source revision is the
+  hash of the frozen canonical corpus revision selected at acceptance; a current snapshot substituted on retry fails.
+  occurred_at_utc is strict UTC and is frozen at first logical publication, not retry time. Inline payload only;
+  payload_ref=null. The producer validates root, dates, permission, joins and no-secret metadata before append.
+  Completed result_ref/hash use this family's SP-bound memresult_ identity and immutable operation outcome;
+  status/ref/hash and frozen time must exactly equal the operation and retained original full value. The ref never grants body access. Reject terminal-before-start, mismatched Project/operation/source revision, missing receipt, changed request
+  bytes or unsupported version. Event identity and ordered recovery are defined for this family by SP-634, not borrowed
+  from another event.
+gui_related: false
+gui_classification_reason: Typed events, identity, custody and recovery; no visual behavior.
+depends_on:
+- DL-045
+- AMS-104
+unblocks: []
+acceptance_criteria:
+- Exact family remains quarantined until its own admission and retention resolution.
+- Schema, identity, custody, replay and withdrawal match this unit.
+validation_surfaces:
+- python3 scripts/pm_memory_maintenance_events.py
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: ea_wave2_DMEM_20261104
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+source_lineage:
+- reports/event-authority-20261104/DMEM-search.json
+preserved_exact_tokens: []
+negative_constraints:
+- No admission, deletion-policy decision, app-scope expansion or native proof.
+```
+
+
+### CV-655 - memory.index.semantic.rebuild.started payload contract
+
+```yaml
+plan_unit_id: CV-655
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: Newly authored closed payload owner contract for exactly memory.index.semantic.rebuild.started@1.0.0
+  under DL-045, searched independently in reports/event-authority-20261104/DMEM-search.json. Payload schema Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_index_semantic_rebuild_started
+  is a distinct closed definition; schema_version and event_type are exact constants. All listed properties are
+  required and unknown properties fail. Project id must equal the project_only EventRecord envelope, operation_id
+  must equal its correlation_id, causation_event_id is null. Source revision is the hash of the frozen canonical
+  corpus revision selected at acceptance; a current snapshot substituted on retry fails. occurred_at_utc is strict
+  UTC and is frozen at first logical publication, not retry time. Inline payload only; payload_ref=null. The producer
+  validates root, dates, permission, joins and no-secret metadata before append. Completed result_ref/hash resolve
+  the immutable original outcome under authorized custody and never imply body access. Reject terminal-before-start,
+  mismatched Project/operation/source revision, missing receipt, changed request bytes or unsupported version. Event
+  identity and ordered recovery are defined for this family by SP-635, not borrowed from another event.
+gui_related: false
+gui_classification_reason: Typed events, identity, custody and recovery; no visual behavior.
+depends_on:
+- DL-045
+- AMS-105
+unblocks: []
+acceptance_criteria:
+- Exact family remains quarantined until its own admission and retention resolution.
+- Schema, identity, custody, replay and withdrawal match this unit.
+validation_surfaces:
+- python3 scripts/pm_memory_maintenance_events.py
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: ea_wave2_DMEM_20261104
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+source_lineage:
+- reports/event-authority-20261104/DMEM-search.json
+preserved_exact_tokens: []
+negative_constraints:
+- No admission, deletion-policy decision, app-scope expansion or native proof.
+```
+
+
+### CV-656 - memory.verification_sweep.completed payload contract
+
+```yaml
+plan_unit_id: CV-656
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: Newly authored closed payload owner contract for exactly memory.verification_sweep.completed@1.0.0
+  under DL-045, searched independently in reports/event-authority-20261104/DMEM-search.json. Payload schema Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_verification_sweep_completed
+  is a distinct closed definition; schema_version and event_type are exact constants. All listed properties are
+  required and unknown properties fail. Project id must equal the project_only EventRecord envelope, operation_id
+  must equal its correlation_id, causation_event_id is the same-operation started_event_id. Source revision is the
+  hash of the frozen canonical corpus revision selected at acceptance; a current snapshot substituted on retry fails.
+  occurred_at_utc is strict UTC and is frozen at first logical publication, not retry time. Inline payload only;
+  payload_ref=null. The producer validates root, dates, permission, joins and no-secret metadata before append.
+  Completed result_ref/hash use this family's SP-bound memresult_ identity and immutable operation outcome;
+  status/ref/hash and frozen time must exactly equal the operation and retained original full value. The ref never grants body access. Reject terminal-before-start, mismatched Project/operation/source revision, missing receipt, changed request
+  bytes or unsupported version. Event identity and ordered recovery are defined for this family by SP-636, not borrowed
+  from another event.
+gui_related: false
+gui_classification_reason: Typed events, identity, custody and recovery; no visual behavior.
+depends_on:
+- DL-045
+- AMS-106
+unblocks: []
+acceptance_criteria:
+- Exact family remains quarantined until its own admission and retention resolution.
+- Schema, identity, custody, replay and withdrawal match this unit.
+validation_surfaces:
+- python3 scripts/pm_memory_maintenance_events.py
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: ea_wave2_DMEM_20261104
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+source_lineage:
+- reports/event-authority-20261104/DMEM-search.json
+preserved_exact_tokens: []
+negative_constraints:
+- No admission, deletion-policy decision, app-scope expansion or native proof.
+```
+
+
+### CV-657 - memory.verification_sweep.started payload contract
+
+```yaml
+plan_unit_id: CV-657
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: Newly authored closed payload owner contract for exactly memory.verification_sweep.started@1.0.0
+  under DL-045, searched independently in reports/event-authority-20261104/DMEM-search.json. Payload schema Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_verification_sweep_started
+  is a distinct closed definition; schema_version and event_type are exact constants. All listed properties are
+  required and unknown properties fail. Project id must equal the project_only EventRecord envelope, operation_id
+  must equal its correlation_id, causation_event_id is null. Source revision is the hash of the frozen canonical
+  corpus revision selected at acceptance; a current snapshot substituted on retry fails. occurred_at_utc is strict
+  UTC and is frozen at first logical publication, not retry time. Inline payload only; payload_ref=null. The producer
+  validates root, dates, permission, joins and no-secret metadata before append. Completed result_ref/hash resolve
+  the immutable original outcome under authorized custody and never imply body access. Reject terminal-before-start,
+  mismatched Project/operation/source revision, missing receipt, changed request bytes or unsupported version. Event
+  identity and ordered recovery are defined for this family by SP-637, not borrowed from another event.
+gui_related: false
+gui_classification_reason: Typed events, identity, custody and recovery; no visual behavior.
+depends_on:
+- DL-045
+- AMS-107
+unblocks: []
+acceptance_criteria:
+- Exact family remains quarantined until its own admission and retention resolution.
+- Schema, identity, custody, replay and withdrawal match this unit.
+validation_surfaces:
+- python3 scripts/pm_memory_maintenance_events.py
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: ea_wave2_DMEM_20261104
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+source_lineage:
+- reports/event-authority-20261104/DMEM-search.json
+preserved_exact_tokens: []
+negative_constraints:
+- No admission, deletion-policy decision, app-scope expansion or native proof.
+```
+
+
+### CV-658 - memory.prune_archive.completed Card 1b contract
+
+```yaml
+plan_unit_id: CV-658
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.prune_archive.completed@1.0.0, prepared
+  without admission. Search and negative evidence: this exact family''s row in reports/event-authority-20261104/DMEM-card1b-search.json.
+  Semantic owner is Plans/assistant-memory-subsystem.md section 7.2, as amended by DL-402, DL-403 and DL-447. This
+  unit owns this family''s payload and storage contract. Its producer is MemoryMaintenance.prune_archive.completed.v1@1.0.0
+  through cmd.chat.memory.prune_archive, the same authenticated in-process handler for GUI and internal maintenance.
+  Project-only edition, never a synthetic Project for AMS-054 app-thread memory; application editions and their
+  count bucket require separate owner work.
+
+
+  Archive eligible very low-activation originals in place with their versions and EvidenceRefs; never delete them.
+  Never archive or merge a pinned memory. The optional UCC-085 policy argument may only identify the approved cutoff
+  policy, never override it or introduce deletion. Both jobs only archive and only the user deletes a memory (DL-402);
+  pins still permit verification, index rebuilds and out-of-date marking. The separate duplicate-sweep survivor and archive disposition follow DL-444 and DL-445; they do not set these archive-job cutoffs.
+
+
+  Explicit adoption for this exact family: adopt every producer, first-append, operation-CAS, outcome, replay, redaction,
+  backup/restore, access, generic checkpoint, compatibility and withdrawal obligation in Plans/storage-plan.md#SP-636,
+  including its round-4 start custody gate, and the closed payload/joins of Plans/Contracts_V0.md#CV-656, with the
+  following exhaustive substitutions. Replace verification_sweep by prune_archive, command_id by cmd.chat.memory.prune_archive,
+  current family by memory.prune_archive.completed, counterpart by memory.prune_archive.started, operation definition
+  by Plans/memory_maintenance_operation.schema.json#/$defs/prune_archive, operation family by memory_prune_archive_operation,
+  schema_id by pm.storage_value.memory_prune_archive_operation.v1, and history consumer by reader.memory.prune_archive.completed.history.v1@1.0.0.
+  No verification action or index target/selector behavior is adopted: this is the four-phase non-index atomic gist
+  transaction accepted -> started -> effect_committed -> completed. The payload is its own closed definition Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_prune_archive_completed;
+  all declared fields required, additionalProperties=false, version=1.0.0, payload_ref=null. Completed status/result
+  ref/hash and started_event_id equal the frozen operation and retained original. Started payload uses the frozen
+  acceptance time. Every identifier has exact lengths or full-input guards, including trailing-LF negatives. Ordinary
+  inline payloads and operation values stay within 16 KiB under SP-337/SP-340; oversized data uses Storage''s SP-337
+  payload-reference protocol rather than embedding memory/evidence bodies, but this bounded edition never accepts
+  an oversized inline body or silently changes its schema.
+
+
+  Identity for exactly memory.prune_archive.completed: event_id="evt_mem_"+SHA-256(strict UTF-8 compact JSON ["pm.memory.maintenance.event.v1",storage_instance_id,project_id,operation_id,"memory.prune_archive.completed"]);
+  idempotency_key="memory-maintenance:"+the same lower-hex digest. The caller-supplied semantic EventRecord fields
+  and payload alone participate in retry equality; sequence_id, observed_at_utc and persisted_at_utc are Storage-assigned
+  and excluded. Scope joins use project~{base64url_no_pad(UTF8(project_id))}, never a raw Project or an Application
+  key. Replay policy is dedupe_by_idempotency_key. Exact payload_schema_id=https://puppetmaster.local/Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_prune_archive_completed.
+  Current append and retry refuse projector_replay_only as replay_only_not_appendable, before any original return
+  or effect. The closed operation key is memory_prune_archive_operation.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(operation_id)}
+  in memory_maintenance_operations; its schema is admitted only by StorageMigrationCoordinator. Add immutable cutoff_ref
+  and cutoff_sha256 to this family''s row; bind the approved cutoff and exact command arguments into the accepted
+  request digest. No separate gist store or command journal.
+
+
+  Start custody gate for exactly memory.prune_archive.completed@1.0.0: CV-658 explicitly adopts SP-286/CV-339 and
+  the whole SP-636 start custody rule for this exact operation, not a sibling''s admission. On every path after
+  first start admission, resolve the full-flush original memory.prune_archive.started under this operation key through
+  storage.first_append_receipt.resolve_full_value.v1. Check recomputed identity, digest, exact Project/operation/source/command/frozen
+  time, lawful phase, settled receipt, and all later causation/started_event_id joins; fence withdrawal of either
+  edition. Before and again at commit, missing/corrupted/mismatched custody refuses start_receipt_missing, withdrawal
+  permission_or_withdrawal; no append, CAS, effect, output or reissuance. The only absence relaxation is memory.prune_archive.started''s
+  first append from accepted with no receipt and no later original; an original already present is always verified.
+  The terminal advance, retries of either original, recovery in every phase, canonical writer, boundary and history
+  read all use this rule. The counterpart''s own unit is CV-659.
+
+
+  DL-447 answers DL-403 for this exact job with E-CARDS-2 Card 6.d option A. Allow prune/archive to select eligible memories of any kind idle for at least 180 days AND with usefulness score below 0.05. Apply the test separately inside each Project. If a chat outside a Project later receives its own fully specified and reviewed saved maintenance record and separate approval to record it, apply the test only inside that calling chat; never pool chats or Projects. Count idle days from the later of the last edit and last access, using creation time when either is absent. Use the existing computed usefulness ranking with inputs captured when the job chooses memories. Exclude pins before scoring. A crowded list alone must never trigger archiving. Archive the selected originals only; retain their evidence references and versions. Deletion remains your action. This cutoff choice supplies no separate permission to run outside a Project. The usefulness ranking is the existing section 6.3 formula, including per-kind and Done decay and zero contribution for missing retrieval scores; captured scores are owner-declared numeric values compared directly with the approved threshold, not integer identity inputs. Do not round scores or introduce a lane-local score range, number cap or serializer.
+
+  The authenticated cutoff binding remains additional to admission and start custody. The missing-cutoffs product decision is resolved, but automatic and Memory-panel dispatch remain unavailable until all remaining definition, review and recording approvals pass. Resolve the exact authenticated owner policy for this job and Project, freeze its ref/content hash and captured selection inputs in the accepted operation/source/request binding, and recheck it before each current writer/effect boundary. If the binding is unavailable, refuse cutoffs_unavailable with unchanged durable state and no output; the panel explains the actual missing approval/binding. Direct invocation, a Boolean, caller policy argument, wrong-scope ref, altered digest or sibling-job approval cannot bypass this gate. Lookup key, resolved self-reference and frozen operation ref identify exactly one owner record; resolved job/scope/Project and recomputed hash agree with every operation/request/start/terminal copy. A coherent rehash cannot authorize contradictory refs. Fixtures inject synthetic resolver authority only to exercise the approved cutoffs, never runtime admission. Source E-CARDS-2 as presented, Card 6 options A, SHA-256 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30; decision-answers/E-CARDS-2.as-presented-6db25be3.md and ANSWERS_E-CARDS-2_20261105.md under /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104; DL-444 through DL-447, landed in Plans/Decision_Log.md on main. History reads do not
+  require a currently available cutoff: a retained authentic event valid when written remains readable after cutoffs,
+  source, request or live counters change; withdrawal, revoked permission, missing start custody or forgery still
+  refuses.
+
+
+  This family''s exact reader reader.memory.prune_archive.completed.history.v1@1.0.0 explicitly adopts SP-278: reader.storage.event_record_index@1.0.0,
+  projector.storage.event_record_index@1.0.0, checkpoints/event_record_index_checkpoint.v1:{storage_instance_id},
+  Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint, atomic root/frontier CAS and generation-qualified
+  event_record_index.v2@{generation_id}. Nine-field durable token excludes redb_snapshot_id; ten-field live token
+  stays in its read transaction. No family-owned cursor or checkpoint. Join the actual event''s storage identity
+  and root; mismatches fail. Preserve BRS-031 coherent canonical memory/operation/receipt/EventRecord boundaries;
+  derived indexes rebuild and cannot resurrect deleted gists. All history/ref disclosure rechecks current access,
+  deletion/hold state and withdrawal, and never exposes note, prompt, embedding, path, secret or EvidenceRef bodies.
+  Result refs are opaque and grant no access.
+
+
+  Retention for this exact Project event is RP-OPERATIONAL-2555D@1.0.0 under DL-401/G04, landed in Plans/Decision_Log.md on main with the CA-RET assignment in Plans/storage-plan.md and Plans/storage_value_registry.json
+  (read on this lane at origin/plans/ea-retention-cards1-20261104 2663667e14346235daaa561d193e959422640b6e): 2,555 days, terminal-transition anchor, 2,000,000 per Project, refuse
+  new records at cap, all existing holds/live/recovery/backup references override expiry. Counts/outcomes only,
+  never memory text. This supersedes only SP-636''s pending EVENT assignment for this adoption. Canonical operation/result
+  custody retention remains PENDING_RETENTION_DECISION and native activation stays fenced until its owner resolves
+  that independent policy; no retention rule for underlying memories is selected. Generic index/checkpoint policies
+  stay RP-EVENT-INDEX-SOURCE and RP-PROJECTION-3GEN. Application count bucket is unresolved and no Application event
+  edition is prepared.
+
+
+  Only exact edition 1.0.0 is specified. Incompatible/unknown editions fail closed while original bytes survive
+  authorized historical reads. Withdrawal first fences this family''s command/writer, retains unresolved original
+  custody without reissue, then fences its exact reader and invalidates its live tokens under the same maintenance/read
+  fence; other generic readers continue. A successor requires explicit admission and retained-source rebuild; no
+  alias or migration by resemblance. Oracles are ATS-316 and scripts/pm_memory_archive_events.py, including positive
+  conditional lifecycle, failed outcome, original retry, crash/recovery, historical independence, archive/evidence/pin
+  negatives, unavailable buttons and guard-removal proof. Native execution is NOT_RUN. Membership is ABSENT; no
+  admission or readiness follows from this unit. The started and completed payloads also require cutoff_ref and
+  cutoff_sha256 exactly equal to the immutable operation fields, so start custody freezes the selected approval
+  across recovery and retries.
+
+  Current producer-semantic projections and current identity inputs follow CV-1100 (current recipe cv1100-exact-integer-write-v3): every numeric leaf is an exact integer primitive, never a boolean, runtime float or fraction/exponent token, within the range its field owner schema declares; no global safe-integer ceiling applies, and raw input uses the CV-1100 current JSON integer grammar (scripts/pm_event_numbers.py loads_current_json), so 01, +1, -0, 1.0 and 1e0 are never read as integers. This producer route excludes Storage-assigned sequence_id, observed_at_utc and persisted_at_utc under Contracts_V0.md#EventRecord. Storage sequence_id independently adopts SP-236 exact uint64, 0 through 18446744073709551615 inclusive, with exact integer type; booleans, floats and strings refuse. Fresh writes and metadata-only retries preserve that full domain without a producer-number ceiling. Decimal and exponent tokens decode losslessly to exact decimal carriers before validation and are never folded into integers. Identity, idempotency, result and target commitments keep their local recipes, sorted-key compact UTF-8 JSON over unchanged preimages, and admit only exact integers: a fraction, exponent or float spelling, a nonfinite value or an integer outside the range of its field owner refuses before hashing or append instead of being normalized. A current-writer retained EventRecord carries the unchanged CV-339 full-value commitment (pm.storage.original_event_value_commitment.v1 over the complete 2.0.0 EventRecord map in SP-236 EVENT_VALUE bytes, scripts/pm_event_numbers.py full_value_commitment) with exact Storage uint64 metadata; no new serializer is introduced. Historical originals instead use their frozen write-time recipe integer-json-v1: pm.event.v0 envelope editions 1.0.0 and 2.0.0 both retain their original unbounded integral sequence domains; operation/target edition 1.0.0 uses the explicit historical_ definitions frozen from 77323e87d65908dbce2ea655ee344b6185a13ff1, including artifact byte_length up to 9223372036854775807. The two frozen envelope editions share the integer-json-v1 numeric/hash recipe, and no record field, edition included, selects a recipe. Reader dispatch follows SP-1101: each retained canonical original (the writer''s returned or canonical start original, a canonical history original and its start record, a checkpoint-joined original) resolves once through the shared RetainedDispatcher, which takes the write-time recipe tuple (envelope edition, writer recipe, full-value profile and resources) from Storage''s sealed custody of that exact retained record, never from the record''s schema_id/schema_version, a recipe field or the caller, and the composition-installed frozen verifier of that tuple then runs its checks. An original Storage did not seal at its seglog ref, one sealed with more than one binding or recipe, a sealed binding that is not the reader''s, or a recipe with no installed verifier refuses at the site''s custody guard; there is no current-then-legacy probing, permissive fallback or current writer predicate. The original full-value commitment is recomputed under that recipe with no rewrite of retained values, hashes, frozen operation or receipt. Historical numeric decoding preserves the original typed integer or binary64 stored value; a current lossless decimal parse never reinterprets an older binary64 original. Original verification in current-writer retries and checkpoint reader projections uses the sealed recipe of that original (CV-339 for a current-writer original, frozen integer-json-v1 for an older one); only the new caller producer-semantic projection and new-write producer admission use the strict current recipe; new caller Storage metadata is independently checked against SP-236. Valid retained large integers remain readable in canonical, replay-only, compatibility and compatibility-replay modes after live state/admission/cutoffs change; forged commitments, rehashed foreign values, unknown editions/recipe fields, lost custody, revoked permission and withdrawal still refuse. Plans/memory_maintenance_event_record.schema.json keeps SP-236 current Storage uint64 bounds (SP-1100, checked with storage_uint64), the producer_sequence_id domain of the EventRecord owner without an added ceiling, and unchanged frozen reader definitions; operation/target schemas keep current definitions and their frozen historical_ counterparts. Generic Storage metadata ownership is unchanged. Every declared date-time format is enforced by the shared CV-1101 predicate (scripts/pm_event_datetime.py date_time) with the explicit profile of its field owner, without optional validator packages: payload and EventRecord occurred_at_utc and the SP-278 checkpoint times take the broad event_record profile (RFC 3339 with an explicit zone, lowercase t or z, offsets, year 0000, any fraction length and announced leap seconds); Storage-assigned observed_at_utc and persisted_at_utc take CV-253 storage_utc_z at the current and every retained envelope edition; the operation row''s frozen started_occurred_at_utc and completed_occurred_at_utc keep their terminal-uppercase-Z owner pattern and take storage_utc_z. Bad calendar fields or separators, missing zones, an unannounced second 60 and trailing LF refuse, and a skipped old format check never authorizes invalid retained history. Existing length constraints remain. Timestamp strings retain their exact hash bytes. UUID uses the full 8-4-4-4-12 hexadecimal grammar. The selected recipe''s frozen verifier applies the same profiles to retained originals; there is no narrower historical format edition.
+
+  Permission/admission and withdrawal fields, and every Boolean boundary receipt/source/acceptance fence, require the exact Boolean type before their value is evaluated; strings, numeric 0/1, null, arrays and objects never grant authority or clear a fence. Historical reads still use current typed permission/withdrawal only, not current admission or cutoffs.
+
+  Before archive selection and post-state validation, every resolved memory''s pinned and archived fields in both input and output must have the exact Boolean type. A malformed flag refuses the whole settlement without state change or output; correctly typed pins and all original versions/EvidenceRefs retain the existing DL-402 preservation rules.'
+gui_related: true
+gui_classification_reason: Binds unavailable Memory-panel buttons as well as typed maintenance events.
+depends_on:
+- DL-045
+- SP-636
+- CV-656
+- SP-278
+- SP-286
+- CV-339
+unblocks: []
+acceptance_criteria:
+- Exact family has its own conditional contract; approved DL-447 cutoff; no admission.
+- Archive-only, pin/evidence preservation and cutoff refusal pass ATS-316.
+validation_surfaces:
+- python3 scripts/pm_memory_archive_events.py
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: ea_DMEM_card1b_20261104
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+source_lineage:
+- reports/event-authority-20261104/DMEM-card1b-search.json
+- DL-402/DL-403 on origin/plans/ea-cards1-answers-20261104 at b6332f391a7870bad5f01a29a7e9d080050dac27
+preserved_exact_tokens:
+- memory.prune_archive.completed
+- cutoffs_unavailable
+- RP-OPERATIONAL-2555D@1.0.0
+negative_constraints:
+- No admission, automatic deletion, user deletion policy expansion, app edition or native proof.
+```
+
+
+### CV-659 - memory.prune_archive.started Card 1b contract
+
+```yaml
+plan_unit_id: CV-659
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.prune_archive.started@1.0.0, prepared
+  without admission. Search and negative evidence: this exact family''s row in reports/event-authority-20261104/DMEM-card1b-search.json.
+  Semantic owner is Plans/assistant-memory-subsystem.md section 7.2, as amended by DL-402, DL-403 and DL-447. This
+  unit owns this family''s payload and storage contract. Its producer is MemoryMaintenance.prune_archive.started.v1@1.0.0
+  through cmd.chat.memory.prune_archive, the same authenticated in-process handler for GUI and internal maintenance.
+  Project-only edition, never a synthetic Project for AMS-054 app-thread memory; application editions and their
+  count bucket require separate owner work.
+
+
+  Archive eligible very low-activation originals in place with their versions and EvidenceRefs; never delete them.
+  Never archive or merge a pinned memory. The optional UCC-085 policy argument may only identify the approved cutoff
+  policy, never override it or introduce deletion. Both jobs only archive and only the user deletes a memory (DL-402);
+  pins still permit verification, index rebuilds and out-of-date marking. The separate duplicate-sweep survivor and archive disposition follow DL-444 and DL-445; they do not set these archive-job cutoffs.
+
+
+  Explicit adoption for this exact family: adopt every producer, first-append, operation-CAS, outcome, replay, redaction,
+  backup/restore, access, generic checkpoint, compatibility and withdrawal obligation in Plans/storage-plan.md#SP-637,
+  including its round-4 start custody gate, and the closed payload/joins of Plans/Contracts_V0.md#CV-657, with the
+  following exhaustive substitutions. Replace verification_sweep by prune_archive, command_id by cmd.chat.memory.prune_archive,
+  current family by memory.prune_archive.started, counterpart by memory.prune_archive.completed, operation definition
+  by Plans/memory_maintenance_operation.schema.json#/$defs/prune_archive, operation family by memory_prune_archive_operation,
+  schema_id by pm.storage_value.memory_prune_archive_operation.v1, and history consumer by reader.memory.prune_archive.started.history.v1@1.0.0.
+  No verification action or index target/selector behavior is adopted: this is the four-phase non-index atomic gist
+  transaction accepted -> started -> effect_committed -> completed. The payload is its own closed definition Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_prune_archive_started;
+  all declared fields required, additionalProperties=false, version=1.0.0, payload_ref=null. Completed status/result
+  ref/hash and started_event_id equal the frozen operation and retained original. Started payload uses the frozen
+  acceptance time. Every identifier has exact lengths or full-input guards, including trailing-LF negatives. Ordinary
+  inline payloads and operation values stay within 16 KiB under SP-337/SP-340; oversized data uses Storage''s SP-337
+  payload-reference protocol rather than embedding memory/evidence bodies, but this bounded edition never accepts
+  an oversized inline body or silently changes its schema.
+
+
+  Identity for exactly memory.prune_archive.started: event_id="evt_mem_"+SHA-256(strict UTF-8 compact JSON ["pm.memory.maintenance.event.v1",storage_instance_id,project_id,operation_id,"memory.prune_archive.started"]);
+  idempotency_key="memory-maintenance:"+the same lower-hex digest. The caller-supplied semantic EventRecord fields
+  and payload alone participate in retry equality; sequence_id, observed_at_utc and persisted_at_utc are Storage-assigned
+  and excluded. Scope joins use project~{base64url_no_pad(UTF8(project_id))}, never a raw Project or an Application
+  key. Replay policy is dedupe_by_idempotency_key. Exact payload_schema_id=https://puppetmaster.local/Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_prune_archive_started.
+  Current append and retry refuse projector_replay_only as replay_only_not_appendable, before any original return
+  or effect. The closed operation key is memory_prune_archive_operation.v1:{hex(storage_instance_id)}:{hex(project_id)}:{hex(operation_id)}
+  in memory_maintenance_operations; its schema is admitted only by StorageMigrationCoordinator. Add immutable cutoff_ref
+  and cutoff_sha256 to this family''s row; bind the approved cutoff and exact command arguments into the accepted
+  request digest. No separate gist store or command journal.
+
+
+  Start custody gate for exactly memory.prune_archive.started@1.0.0: CV-659 explicitly adopts SP-286/CV-339 and
+  the whole SP-637 start custody rule for this exact operation, not a sibling''s admission. On every path after
+  first start admission, resolve the full-flush original memory.prune_archive.started under this operation key through
+  storage.first_append_receipt.resolve_full_value.v1. Check recomputed identity, digest, exact Project/operation/source/command/frozen
+  time, lawful phase, settled receipt, and all later causation/started_event_id joins; fence withdrawal of either
+  edition. Before and again at commit, missing/corrupted/mismatched custody refuses start_receipt_missing, withdrawal
+  permission_or_withdrawal; no append, CAS, effect, output or reissuance. The only absence relaxation is memory.prune_archive.started''s
+  first append from accepted with no receipt and no later original; an original already present is always verified.
+  The terminal advance, retries of either original, recovery in every phase, canonical writer, boundary and history
+  read all use this rule. The counterpart''s own unit is CV-658.
+
+
+  DL-447 answers DL-403 for this exact job with E-CARDS-2 Card 6.d option A. Allow prune/archive to select eligible memories of any kind idle for at least 180 days AND with usefulness score below 0.05. Apply the test separately inside each Project. If a chat outside a Project later receives its own fully specified and reviewed saved maintenance record and separate approval to record it, apply the test only inside that calling chat; never pool chats or Projects. Count idle days from the later of the last edit and last access, using creation time when either is absent. Use the existing computed usefulness ranking with inputs captured when the job chooses memories. Exclude pins before scoring. A crowded list alone must never trigger archiving. Archive the selected originals only; retain their evidence references and versions. Deletion remains your action. This cutoff choice supplies no separate permission to run outside a Project. The usefulness ranking is the existing section 6.3 formula, including per-kind and Done decay and zero contribution for missing retrieval scores; captured scores are owner-declared numeric values compared directly with the approved threshold, not integer identity inputs. Do not round scores or introduce a lane-local score range, number cap or serializer.
+
+  The authenticated cutoff binding remains additional to admission and start custody. The missing-cutoffs product decision is resolved, but automatic and Memory-panel dispatch remain unavailable until all remaining definition, review and recording approvals pass. Resolve the exact authenticated owner policy for this job and Project, freeze its ref/content hash and captured selection inputs in the accepted operation/source/request binding, and recheck it before each current writer/effect boundary. If the binding is unavailable, refuse cutoffs_unavailable with unchanged durable state and no output; the panel explains the actual missing approval/binding. Direct invocation, a Boolean, caller policy argument, wrong-scope ref, altered digest or sibling-job approval cannot bypass this gate. Lookup key, resolved self-reference and frozen operation ref identify exactly one owner record; resolved job/scope/Project and recomputed hash agree with every operation/request/start/terminal copy. A coherent rehash cannot authorize contradictory refs. Fixtures inject synthetic resolver authority only to exercise the approved cutoffs, never runtime admission. Source E-CARDS-2 as presented, Card 6 options A, SHA-256 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30; decision-answers/E-CARDS-2.as-presented-6db25be3.md and ANSWERS_E-CARDS-2_20261105.md under /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104; DL-444 through DL-447, landed in Plans/Decision_Log.md on main. History reads do not
+  require a currently available cutoff: a retained authentic event valid when written remains readable after cutoffs,
+  source, request or live counters change; withdrawal, revoked permission, missing start custody or forgery still
+  refuses.
+
+
+  This family''s exact reader reader.memory.prune_archive.started.history.v1@1.0.0 explicitly adopts SP-278: reader.storage.event_record_index@1.0.0,
+  projector.storage.event_record_index@1.0.0, checkpoints/event_record_index_checkpoint.v1:{storage_instance_id},
+  Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint, atomic root/frontier CAS and generation-qualified
+  event_record_index.v2@{generation_id}. Nine-field durable token excludes redb_snapshot_id; ten-field live token
+  stays in its read transaction. No family-owned cursor or checkpoint. Join the actual event''s storage identity
+  and root; mismatches fail. Preserve BRS-031 coherent canonical memory/operation/receipt/EventRecord boundaries;
+  derived indexes rebuild and cannot resurrect deleted gists. All history/ref disclosure rechecks current access,
+  deletion/hold state and withdrawal, and never exposes note, prompt, embedding, path, secret or EvidenceRef bodies.
+  Result refs are opaque and grant no access.
+
+
+  Retention for this exact Project event is RP-OPERATIONAL-2555D@1.0.0 under DL-401/G04, landed in Plans/Decision_Log.md on main with the CA-RET assignment in Plans/storage-plan.md and Plans/storage_value_registry.json
+  (read on this lane at origin/plans/ea-retention-cards1-20261104 2663667e14346235daaa561d193e959422640b6e): 2,555 days, terminal-transition anchor, 2,000,000 per Project, refuse
+  new records at cap, all existing holds/live/recovery/backup references override expiry. Counts/outcomes only,
+  never memory text. This supersedes only SP-637''s pending EVENT assignment for this adoption. Canonical operation/result
+  custody retention remains PENDING_RETENTION_DECISION and native activation stays fenced until its owner resolves
+  that independent policy; no retention rule for underlying memories is selected. Generic index/checkpoint policies
+  stay RP-EVENT-INDEX-SOURCE and RP-PROJECTION-3GEN. Application count bucket is unresolved and no Application event
+  edition is prepared.
+
+
+  Only exact edition 1.0.0 is specified. Incompatible/unknown editions fail closed while original bytes survive
+  authorized historical reads. Withdrawal first fences this family''s command/writer, retains unresolved original
+  custody without reissue, then fences its exact reader and invalidates its live tokens under the same maintenance/read
+  fence; other generic readers continue. A successor requires explicit admission and retained-source rebuild; no
+  alias or migration by resemblance. Oracles are ATS-316 and scripts/pm_memory_archive_events.py, including positive
+  conditional lifecycle, failed outcome, original retry, crash/recovery, historical independence, archive/evidence/pin
+  negatives, unavailable buttons and guard-removal proof. Native execution is NOT_RUN. Membership is ABSENT; no
+  admission or readiness follows from this unit. The started and completed payloads also require cutoff_ref and
+  cutoff_sha256 exactly equal to the immutable operation fields, so start custody freezes the selected approval
+  across recovery and retries.
+
+  Current producer-semantic projections and current identity inputs follow CV-1100 (current recipe cv1100-exact-integer-write-v3): every numeric leaf is an exact integer primitive, never a boolean, runtime float or fraction/exponent token, within the range its field owner schema declares; no global safe-integer ceiling applies, and raw input uses the CV-1100 current JSON integer grammar (scripts/pm_event_numbers.py loads_current_json), so 01, +1, -0, 1.0 and 1e0 are never read as integers. This producer route excludes Storage-assigned sequence_id, observed_at_utc and persisted_at_utc under Contracts_V0.md#EventRecord. Storage sequence_id independently adopts SP-236 exact uint64, 0 through 18446744073709551615 inclusive, with exact integer type; booleans, floats and strings refuse. Fresh writes and metadata-only retries preserve that full domain without a producer-number ceiling. Decimal and exponent tokens decode losslessly to exact decimal carriers before validation and are never folded into integers. Identity, idempotency, result and target commitments keep their local recipes, sorted-key compact UTF-8 JSON over unchanged preimages, and admit only exact integers: a fraction, exponent or float spelling, a nonfinite value or an integer outside the range of its field owner refuses before hashing or append instead of being normalized. A current-writer retained EventRecord carries the unchanged CV-339 full-value commitment (pm.storage.original_event_value_commitment.v1 over the complete 2.0.0 EventRecord map in SP-236 EVENT_VALUE bytes, scripts/pm_event_numbers.py full_value_commitment) with exact Storage uint64 metadata; no new serializer is introduced. Historical originals instead use their frozen write-time recipe integer-json-v1: pm.event.v0 envelope editions 1.0.0 and 2.0.0 both retain their original unbounded integral sequence domains; operation/target edition 1.0.0 uses the explicit historical_ definitions frozen from 77323e87d65908dbce2ea655ee344b6185a13ff1, including artifact byte_length up to 9223372036854775807. The two frozen envelope editions share the integer-json-v1 numeric/hash recipe, and no record field, edition included, selects a recipe. Reader dispatch follows SP-1101: each retained canonical original (the writer''s returned or canonical start original, a canonical history original and its start record, a checkpoint-joined original) resolves once through the shared RetainedDispatcher, which takes the write-time recipe tuple (envelope edition, writer recipe, full-value profile and resources) from Storage''s sealed custody of that exact retained record, never from the record''s schema_id/schema_version, a recipe field or the caller, and the composition-installed frozen verifier of that tuple then runs its checks. An original Storage did not seal at its seglog ref, one sealed with more than one binding or recipe, a sealed binding that is not the reader''s, or a recipe with no installed verifier refuses at the site''s custody guard; there is no current-then-legacy probing, permissive fallback or current writer predicate. The original full-value commitment is recomputed under that recipe with no rewrite of retained values, hashes, frozen operation or receipt. Historical numeric decoding preserves the original typed integer or binary64 stored value; a current lossless decimal parse never reinterprets an older binary64 original. Original verification in current-writer retries and checkpoint reader projections uses the sealed recipe of that original (CV-339 for a current-writer original, frozen integer-json-v1 for an older one); only the new caller producer-semantic projection and new-write producer admission use the strict current recipe; new caller Storage metadata is independently checked against SP-236. Valid retained large integers remain readable in canonical, replay-only, compatibility and compatibility-replay modes after live state/admission/cutoffs change; forged commitments, rehashed foreign values, unknown editions/recipe fields, lost custody, revoked permission and withdrawal still refuse. Plans/memory_maintenance_event_record.schema.json keeps SP-236 current Storage uint64 bounds (SP-1100, checked with storage_uint64), the producer_sequence_id domain of the EventRecord owner without an added ceiling, and unchanged frozen reader definitions; operation/target schemas keep current definitions and their frozen historical_ counterparts. Generic Storage metadata ownership is unchanged. Every declared date-time format is enforced by the shared CV-1101 predicate (scripts/pm_event_datetime.py date_time) with the explicit profile of its field owner, without optional validator packages: payload and EventRecord occurred_at_utc and the SP-278 checkpoint times take the broad event_record profile (RFC 3339 with an explicit zone, lowercase t or z, offsets, year 0000, any fraction length and announced leap seconds); Storage-assigned observed_at_utc and persisted_at_utc take CV-253 storage_utc_z at the current and every retained envelope edition; the operation row''s frozen started_occurred_at_utc and completed_occurred_at_utc keep their terminal-uppercase-Z owner pattern and take storage_utc_z. Bad calendar fields or separators, missing zones, an unannounced second 60 and trailing LF refuse, and a skipped old format check never authorizes invalid retained history. Existing length constraints remain. Timestamp strings retain their exact hash bytes. UUID uses the full 8-4-4-4-12 hexadecimal grammar. The selected recipe''s frozen verifier applies the same profiles to retained originals; there is no narrower historical format edition.
+
+  Permission/admission and withdrawal fields, and every Boolean boundary receipt/source/acceptance fence, require the exact Boolean type before their value is evaluated; strings, numeric 0/1, null, arrays and objects never grant authority or clear a fence. Historical reads still use current typed permission/withdrawal only, not current admission or cutoffs.
+
+  Before archive selection and post-state validation, every resolved memory''s pinned and archived fields in both input and output must have the exact Boolean type. A malformed flag refuses the whole settlement without state change or output; correctly typed pins and all original versions/EvidenceRefs retain the existing DL-402 preservation rules.'
+gui_related: true
+gui_classification_reason: Binds unavailable Memory-panel buttons as well as typed maintenance events.
+depends_on:
+- DL-045
+- SP-637
+- CV-657
+- SP-278
+- SP-286
+- CV-339
+unblocks: []
+acceptance_criteria:
+- Exact family has its own conditional contract; approved DL-447 cutoff; no admission.
+- Archive-only, pin/evidence preservation and cutoff refusal pass ATS-316.
+validation_surfaces:
+- python3 scripts/pm_memory_archive_events.py
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: ea_DMEM_card1b_20261104
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+source_lineage:
+- reports/event-authority-20261104/DMEM-card1b-search.json
+- DL-402/DL-403 on origin/plans/ea-cards1-answers-20261104 at b6332f391a7870bad5f01a29a7e9d080050dac27
+preserved_exact_tokens:
+- memory.prune_archive.started
+- cutoffs_unavailable
+- RP-OPERATIONAL-2555D@1.0.0
+negative_constraints:
+- No admission, automatic deletion, user deletion policy expansion, app edition or native proof.
+```
