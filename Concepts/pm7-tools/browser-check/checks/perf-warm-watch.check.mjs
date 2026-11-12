@@ -15,7 +15,14 @@
 // watched GPU step whose every interval is within the steady bar, back to zero for a watched step with one over it, and
 // back to zero for ANY judged interval over the slow bar (max(40 ms, 3x the refresh interval)). The log does not say
 // whether a two-interval row is a cpu step (no part in the counter) or a light chain's last watched step (counted), so
-// the replay keeps the highest and the lowest value the counter can have had, and fails only on what is certain:
+// the replay keeps the highest and the lowest value the counter can have had, and fails only on what is certain.
+// Intervals the queue notes but no row shows set the counter back to zero too: the two frames it looks at before
+// admitting a step (an admission attempt, admitted or not, writes no row) and those of a step whose judging the page's
+// hiding cut short (its row has frameMs null). For those the product writes watchReset: true on the next row it logs,
+// whatever that row is (a step, or one 'skipped' or 'dropped' without frameMs): since the row before it, an interval
+// over the slow bar that no row's frameMs shows set the count of steady watches back to zero. The replay sets both
+// bounds to zero on such a row, before judging it (lane C3, the R1 review: without it a slow admission frame after 16
+// steady watches made the next, rightly watched, step "needless"; tools/warm-watch-replay.selftest.mjs replays that):
 //   a. a step logged `watched: false` while even the highest possible count is under 16: the watch was dropped early;
 //   b. a three-interval row (a watched GPU step, certainly) whose own first two intervals are within the slow bar while
 //      even the lowest possible count is 16 or more: the watch was kept when the rule drops it. This is what the page
@@ -29,8 +36,7 @@
 // Both surfaces. Fewer than 40 GPU steps judged (warming off, software rendering, a page that never went idle) fails as
 // "could not judge".
 import { muteSound, refreshRate, parkPointer } from '../helpers/quiet-page.mjs';
-
-const KEEP = 16, STEADY_MS = 25;
+import { KEEP, replayWatch } from '../helpers/warm-watch-replay.mjs';
 
 export default async function (t) {
 	const W = 1920, H = 1080, look = String(t.args.look || 'glass-dark'), waitS = Number(t.args.wait || 200);
@@ -46,7 +52,7 @@ export default async function (t) {
 	while (Date.now() < until) {
 		const snap = await f.evaluate(() => {
 			const w = window.PM_WARM; if (!w) return null;
-			return { state: w.state(), log: (w.log || []).map((e) => ({ t: e.t, owner: e.owner, name: e.name, frameMs: e.frameMs || null, outcome: e.outcome, watched: e.watched })) };
+			return { state: w.state(), log: (w.log || []).map((e) => ({ t: e.t, owner: e.owner, name: e.name, frameMs: e.frameMs || null, outcome: e.outcome, watched: e.watched, watchReset: e.watchReset })) };
 		});
 		if (!snap) { await t.check('the page has the warm-up queue (PM_WARM)', false, 'window.PM_WARM is missing: could not judge'); return; }
 		state = snap.state;
@@ -57,33 +63,8 @@ export default async function (t) {
 		await t.page.waitForTimeout(3000);
 	}
 	const hz = await refreshRate(f);
-	const gap = 1000 / hz, steady = Math.max(STEADY_MS, 1.5 * gap), slow = Math.max(40, 3 * gap);
 	const steps = [...seen.values()].sort((a, b) => a.t - b.t);
-
-	// hi and lo: the highest and the lowest value the product's counter can have here (see the header). Logged intervals
-	// are rounded to 1 ms, so a value within 1 ms of a bar counts for whichever side keeps the check from a false failure.
-	let hi = 0, lo = 0, longest = 0, gpu = 0, watched = 0, unwatched = 0, overSlow = 0;
-	const early = [], needless = [];
-	for (const e of steps) {
-		const fm = e.frameMs; if (!fm || !fm.length) continue;
-		const worst = Math.max(...fm);
-		if (worst > slow + 1) { hi = 0; lo = 0; overSlow++; if (e.watched === false) { gpu++; unwatched++; } else if (fm.length === 3) { gpu++; watched++; } continue; }
-		if (worst >= slow - 1) lo = 0;
-		if (e.watched === false) {
-			gpu++; unwatched++;
-			if (hi < KEEP) early.push(`${e.owner}:${e.name} at ${Math.round(e.t)} ms: at most ${hi} steady watches before it`);
-			continue;
-		}
-		if (fm.length === 3) {
-			gpu++; watched++;
-			if (lo >= KEEP && Math.max(fm[0], fm[1]) < slow - 1) needless.push(`${e.owner}:${e.name} at ${Math.round(e.t)} ms [${fm.join(', ')}] after ${lo} or more steady watches`);
-			if (worst <= steady - 1) { hi++; lo++; } else if (worst <= steady + 1) { hi++; lo = 0; } else { hi = 0; lo = 0; }
-		} else if (fm.length === 2) {
-			// a cpu step (not counted) or a light chain's last watched step (counted, or a reset when over the steady bar)
-			if (worst <= steady + 1) hi++; else lo = 0;
-		}
-		longest = Math.max(longest, lo);
-	}
+	const { steady, slow, gpu, watched, unwatched, overSlow, longest, early, needless } = replayWatch(steps, hz);
 	t.log(`${look}: ${hz.toFixed(0)} Hz, steady bar ${steady.toFixed(0)} ms, slow bar ${slow.toFixed(0)} ms; ${steps.length} steps logged, ${gpu} GPU steps (${watched} watched, ${unwatched} not), ${overSlow} rows with an interval over the slow bar, longest certain run of steady watches ${longest}; queue ${JSON.stringify(state)}`);
 	const judged = gpu >= 40;
 	await t.check('the queue ran GPU steps here', judged, `${gpu} GPU steps in ${steps.length} logged steps${judged ? '' : ` (queue ${JSON.stringify(state)}): could not judge`}`);
