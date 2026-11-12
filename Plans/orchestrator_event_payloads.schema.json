@@ -1,0 +1,3244 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/orchestrator_event_payloads/1.0.0/schema.json",
+  "$defs": {
+    "config_validation_failed": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "scope",
+        "storage_instance_id",
+        "server_id",
+        "run_id",
+        "thread_id",
+        "operation_id",
+        "occurrence",
+        "occurred_at_utc",
+        "invalid_names",
+        "available_names",
+        "error_code"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.event_payload.config_validation_failed.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope": {
+          "enum": [
+            "project"
+          ]
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "server_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "occurrence": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "occurred_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "invalid_names": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "available_names": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "error_code": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "scope": {
+                "const": "project"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "project_id"
+            ]
+          },
+          "else": {
+            "not": {
+              "required": [
+                "project_id"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "crew_board_message_posted": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "scope",
+        "storage_instance_id",
+        "server_id",
+        "run_id",
+        "thread_id",
+        "operation_id",
+        "occurrence",
+        "occurred_at_utc",
+        "crew_id",
+        "parent_run_id",
+        "child_run_id",
+        "message_id",
+        "from_agent_id",
+        "subject",
+        "priority"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope": {
+          "enum": [
+            "application",
+            "project"
+          ]
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "server_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "occurrence": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "occurred_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "crew_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "parent_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "child_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "message_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "from_agent_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "to_agent_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "to_agent_type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "subject": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "not": {
+            "pattern": "sk-[A-Za-z0-9_-]{8,}|-----BEGIN [A-Z ]*PRIVATE KEY|[Bb]earer +[A-Za-z0-9._~+/=-]{8,}|gh[pousr]_[A-Za-z0-9]{16,}|github_pat_[A-Za-z0-9_]{16,}|AKIA[0-9A-Z]{16}|(?:[Pp]assword|[Pp]asswd|[Ss]ecret|[Tt]oken|[Aa]pi[_-]?[Kk]ey)[ \\t]*[=:][ \\t]*[^ \\t]|[A-Za-z][A-Za-z0-9+.-]*://[^/ \\t:@]+:[^/ \\t@]+@"
+          }
+        },
+        "priority": {
+          "enum": [
+            "low",
+            "normal",
+            "high",
+            "urgent"
+          ]
+        },
+        "content": {
+          "type": "string",
+          "maxLength": 16384,
+          "format": "pm-utf8-body-16k",
+          "not": {
+            "pattern": "sk-[A-Za-z0-9_-]{8,}|-----BEGIN [A-Z ]*PRIVATE KEY|[Bb]earer +[A-Za-z0-9._~+/=-]{8,}|gh[pousr]_[A-Za-z0-9]{16,}|github_pat_[A-Za-z0-9_]{16,}|AKIA[0-9A-Z]{16}|(?:[Pp]assword|[Pp]asswd|[Ss]ecret|[Tt]oken|[Aa]pi[_-]?[Kk]ey)[ \\t]*[=:][ \\t]*[^ \\t]|[A-Za-z][A-Za-z0-9+.-]*://[^/ \\t:@]+:[^/ \\t@]+@"
+          }
+        },
+        "content_ref": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "blake3_id",
+            "byte_size",
+            "media_type"
+          ],
+          "properties": {
+            "blake3_id": {
+              "type": "string",
+              "pattern": "^blake3:[0-9a-f]{64}$",
+              "minLength": 71,
+              "maxLength": 71
+            },
+            "byte_size": {
+              "type": "integer",
+              "minimum": 16385
+            },
+            "media_type": {
+              "const": "text/plain; charset=utf-8"
+            }
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "scope": {
+                "const": "project"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "project_id"
+            ]
+          },
+          "else": {
+            "not": {
+              "required": [
+                "project_id"
+              ]
+            }
+          }
+        }
+      ],
+      "oneOf": [
+        {
+          "required": [
+            "content"
+          ],
+          "not": {
+            "required": [
+              "content_ref"
+            ]
+          }
+        },
+        {
+          "required": [
+            "content_ref"
+          ],
+          "not": {
+            "required": [
+              "content"
+            ]
+          }
+        }
+      ]
+    },
+    "crew_board_message_read": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "scope",
+        "storage_instance_id",
+        "server_id",
+        "run_id",
+        "thread_id",
+        "operation_id",
+        "occurrence",
+        "occurred_at_utc",
+        "crew_id",
+        "message_id",
+        "agent_id",
+        "read_at_utc"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope": {
+          "enum": [
+            "application",
+            "project"
+          ]
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "server_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "occurrence": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "occurred_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "crew_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "message_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "agent_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "read_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "scope": {
+                "const": "project"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "project_id"
+            ]
+          },
+          "else": {
+            "not": {
+              "required": [
+                "project_id"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "crew_board_messages_archived": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "scope",
+        "storage_instance_id",
+        "server_id",
+        "run_id",
+        "thread_id",
+        "operation_id",
+        "occurrence",
+        "occurred_at_utc",
+        "crew_id",
+        "archived_before_utc",
+        "message_ids",
+        "archive_reason"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope": {
+          "enum": [
+            "application",
+            "project"
+          ]
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "server_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "occurrence": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "occurred_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "crew_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "archived_before_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "message_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "archive_reason": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "not": {
+            "pattern": "sk-[A-Za-z0-9_-]{8,}|-----BEGIN [A-Z ]*PRIVATE KEY|[Bb]earer +[A-Za-z0-9._~+/=-]{8,}|gh[pousr]_[A-Za-z0-9]{16,}|github_pat_[A-Za-z0-9_]{16,}|AKIA[0-9A-Z]{16}|(?:[Pp]assword|[Pp]asswd|[Ss]ecret|[Tt]oken|[Aa]pi[_-]?[Kk]ey)[ \\t]*[=:][ \\t]*[^ \\t]|[A-Za-z][A-Za-z0-9+.-]*://[^/ \\t:@]+:[^/ \\t@]+@"
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "scope": {
+                "const": "project"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "project_id"
+            ]
+          },
+          "else": {
+            "not": {
+              "required": [
+                "project_id"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "parser_error": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "scope",
+        "storage_instance_id",
+        "server_id",
+        "run_id",
+        "thread_id",
+        "operation_id",
+        "occurrence",
+        "occurred_at_utc",
+        "provider",
+        "raw_output_preview",
+        "raw_output_ref",
+        "error_code"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.event_payload.parser_error.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope": {
+          "enum": [
+            "project"
+          ]
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "server_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "occurrence": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "occurred_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "provider": {
+          "type": "string",
+          "minLength": 1
+        },
+        "raw_output_preview": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 500
+        },
+        "raw_output_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "error_code": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "scope": {
+                "const": "project"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "project_id"
+            ]
+          },
+          "else": {
+            "not": {
+              "required": [
+                "project_id"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "phase_force_completed": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "scope",
+        "storage_instance_id",
+        "server_id",
+        "run_id",
+        "thread_id",
+        "operation_id",
+        "occurrence",
+        "occurred_at_utc",
+        "phase_id",
+        "question_count",
+        "max_questions",
+        "reason",
+        "answers_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.event_payload.phase_force_completed.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope": {
+          "enum": [
+            "project"
+          ]
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "server_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "occurrence": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "occurred_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "phase_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "question_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "max_questions": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "reason": {
+          "const": "max_questions_exceeded"
+        },
+        "answers_ref": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "scope": {
+                "const": "project"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "project_id"
+            ]
+          },
+          "else": {
+            "not": {
+              "required": [
+                "project_id"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "subagent_budget_warning": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "scope",
+        "storage_instance_id",
+        "server_id",
+        "run_id",
+        "thread_id",
+        "operation_id",
+        "occurrence",
+        "occurred_at_utc",
+        "agent_id",
+        "parent_run_id",
+        "child_run_id",
+        "budget_used_pct",
+        "budget_limit",
+        "parent_thread_id",
+        "requested_runtime_ref",
+        "effective_runtime_ref",
+        "permission_snapshot_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.event_payload.subagent_budget_warning.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope": {
+          "enum": [
+            "application",
+            "project"
+          ]
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "server_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "occurrence": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "occurred_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "agent_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "parent_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "child_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "budget_used_pct": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "budget_limit": {
+          "type": "number",
+          "minimum": 0
+        },
+        "parent_thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "requested_runtime_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "effective_runtime_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "permission_snapshot_ref": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "scope": {
+                "const": "project"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "project_id"
+            ]
+          },
+          "else": {
+            "not": {
+              "required": [
+                "project_id"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "subagent_cancelled": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "scope",
+        "storage_instance_id",
+        "server_id",
+        "run_id",
+        "thread_id",
+        "operation_id",
+        "occurrence",
+        "occurred_at_utc",
+        "agent_id",
+        "parent_run_id",
+        "child_run_id",
+        "reason",
+        "duration_ms",
+        "parent_thread_id",
+        "requested_runtime_ref",
+        "effective_runtime_ref",
+        "permission_snapshot_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.event_payload.subagent_cancelled.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope": {
+          "enum": [
+            "application",
+            "project"
+          ]
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "server_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "occurrence": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "occurred_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "agent_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "parent_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "child_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "duration_ms": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "parent_thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "requested_runtime_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "effective_runtime_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "permission_snapshot_ref": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "scope": {
+                "const": "project"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "project_id"
+            ]
+          },
+          "else": {
+            "not": {
+              "required": [
+                "project_id"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "subagent_completed": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "scope",
+        "storage_instance_id",
+        "server_id",
+        "run_id",
+        "thread_id",
+        "operation_id",
+        "occurrence",
+        "occurred_at_utc",
+        "agent_id",
+        "parent_run_id",
+        "child_run_id",
+        "result_summary",
+        "duration_ms",
+        "token_usage",
+        "parent_thread_id",
+        "requested_runtime_ref",
+        "effective_runtime_ref",
+        "permission_snapshot_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.event_payload.subagent_completed.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope": {
+          "enum": [
+            "application",
+            "project"
+          ]
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "server_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "occurrence": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "occurred_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "agent_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "parent_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "child_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "result_summary": {
+          "type": "string",
+          "minLength": 1
+        },
+        "duration_ms": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "token_usage": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "input_tokens",
+            "output_tokens"
+          ],
+          "properties": {
+            "input_tokens": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "output_tokens": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
+        "parent_thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "requested_runtime_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "effective_runtime_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "permission_snapshot_ref": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "scope": {
+                "const": "project"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "project_id"
+            ]
+          },
+          "else": {
+            "not": {
+              "required": [
+                "project_id"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "subagent_context_warning": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "scope",
+        "storage_instance_id",
+        "server_id",
+        "run_id",
+        "thread_id",
+        "operation_id",
+        "occurrence",
+        "occurred_at_utc",
+        "agent_id",
+        "parent_run_id",
+        "child_run_id",
+        "context_usage_pct",
+        "threshold",
+        "parent_thread_id",
+        "requested_runtime_ref",
+        "effective_runtime_ref",
+        "permission_snapshot_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.event_payload.subagent_context_warning.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope": {
+          "enum": [
+            "application",
+            "project"
+          ]
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "server_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "occurrence": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "occurred_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "agent_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "parent_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "child_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "context_usage_pct": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "threshold": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "parent_thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "requested_runtime_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "effective_runtime_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "permission_snapshot_ref": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "scope": {
+                "const": "project"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "project_id"
+            ]
+          },
+          "else": {
+            "not": {
+              "required": [
+                "project_id"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "subagent_escalated": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "scope",
+        "storage_instance_id",
+        "server_id",
+        "run_id",
+        "thread_id",
+        "operation_id",
+        "occurrence",
+        "occurred_at_utc",
+        "agent_id",
+        "parent_run_id",
+        "child_run_id",
+        "escalation_reason",
+        "target",
+        "parent_thread_id",
+        "requested_runtime_ref",
+        "effective_runtime_ref",
+        "permission_snapshot_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.event_payload.subagent_escalated.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope": {
+          "enum": [
+            "application",
+            "project"
+          ]
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "server_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "occurrence": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "occurred_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "agent_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "parent_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "child_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "escalation_reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "target": {
+          "type": "string",
+          "minLength": 1
+        },
+        "parent_thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "requested_runtime_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "effective_runtime_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "permission_snapshot_ref": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "scope": {
+                "const": "project"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "project_id"
+            ]
+          },
+          "else": {
+            "not": {
+              "required": [
+                "project_id"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "subagent_failed": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "scope",
+        "storage_instance_id",
+        "server_id",
+        "run_id",
+        "thread_id",
+        "operation_id",
+        "occurrence",
+        "occurred_at_utc",
+        "agent_id",
+        "parent_run_id",
+        "child_run_id",
+        "error_code",
+        "error_message",
+        "duration_ms",
+        "parent_thread_id",
+        "requested_runtime_ref",
+        "effective_runtime_ref",
+        "permission_snapshot_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.event_payload.subagent_failed.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope": {
+          "enum": [
+            "application",
+            "project"
+          ]
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "server_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "occurrence": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "occurred_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "agent_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "parent_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "child_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "error_code": {
+          "type": "string",
+          "minLength": 1
+        },
+        "error_message": {
+          "type": "string",
+          "minLength": 1
+        },
+        "duration_ms": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "parent_thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "requested_runtime_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "effective_runtime_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "permission_snapshot_ref": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "scope": {
+                "const": "project"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "project_id"
+            ]
+          },
+          "else": {
+            "not": {
+              "required": [
+                "project_id"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "subagent_message_received": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "scope",
+        "storage_instance_id",
+        "server_id",
+        "run_id",
+        "thread_id",
+        "operation_id",
+        "occurrence",
+        "occurred_at_utc",
+        "agent_id",
+        "parent_run_id",
+        "child_run_id",
+        "response_preview",
+        "turn_index",
+        "parent_thread_id",
+        "requested_runtime_ref",
+        "effective_runtime_ref",
+        "permission_snapshot_ref",
+        "message_id"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.event_payload.subagent_message_received.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope": {
+          "enum": [
+            "application",
+            "project"
+          ]
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "server_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "occurrence": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "occurred_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "agent_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "parent_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "child_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "response_preview": {
+          "type": "string",
+          "minLength": 1
+        },
+        "turn_index": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "parent_thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "requested_runtime_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "effective_runtime_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "permission_snapshot_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "message_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "scope": {
+                "const": "project"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "project_id"
+            ]
+          },
+          "else": {
+            "not": {
+              "required": [
+                "project_id"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "subagent_message_sent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "scope",
+        "storage_instance_id",
+        "server_id",
+        "run_id",
+        "thread_id",
+        "operation_id",
+        "occurrence",
+        "occurred_at_utc",
+        "agent_id",
+        "parent_run_id",
+        "child_run_id",
+        "message_preview",
+        "turn_index",
+        "parent_thread_id",
+        "requested_runtime_ref",
+        "effective_runtime_ref",
+        "permission_snapshot_ref",
+        "message_id"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.event_payload.subagent_message_sent.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope": {
+          "enum": [
+            "application",
+            "project"
+          ]
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "server_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "occurrence": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "occurred_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "agent_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "parent_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "child_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "message_preview": {
+          "type": "string",
+          "minLength": 1
+        },
+        "turn_index": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "parent_thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "requested_runtime_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "effective_runtime_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "permission_snapshot_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "message_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "scope": {
+                "const": "project"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "project_id"
+            ]
+          },
+          "else": {
+            "not": {
+              "required": [
+                "project_id"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "subagent_model_switched": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "scope",
+        "storage_instance_id",
+        "server_id",
+        "run_id",
+        "thread_id",
+        "operation_id",
+        "occurrence",
+        "occurred_at_utc",
+        "agent_id",
+        "parent_run_id",
+        "child_run_id",
+        "from_model",
+        "to_model",
+        "reason",
+        "parent_thread_id",
+        "requested_runtime_ref",
+        "effective_runtime_ref",
+        "permission_snapshot_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.event_payload.subagent_model_switched.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope": {
+          "enum": [
+            "application",
+            "project"
+          ]
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "server_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "occurrence": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "occurred_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "agent_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "parent_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "child_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "from_model": {
+          "type": "string",
+          "minLength": 1
+        },
+        "to_model": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "parent_thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "requested_runtime_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "effective_runtime_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "permission_snapshot_ref": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "scope": {
+                "const": "project"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "project_id"
+            ]
+          },
+          "else": {
+            "not": {
+              "required": [
+                "project_id"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "subagent_output_truncated": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "scope",
+        "storage_instance_id",
+        "server_id",
+        "run_id",
+        "thread_id",
+        "operation_id",
+        "occurrence",
+        "occurred_at_utc",
+        "agent_id",
+        "parent_run_id",
+        "child_run_id",
+        "original_length",
+        "truncated_length",
+        "parent_thread_id",
+        "requested_runtime_ref",
+        "effective_runtime_ref",
+        "permission_snapshot_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.event_payload.subagent_output_truncated.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope": {
+          "enum": [
+            "application",
+            "project"
+          ]
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "server_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "occurrence": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "occurred_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "agent_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "parent_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "child_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_length": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "truncated_length": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "parent_thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "requested_runtime_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "effective_runtime_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "permission_snapshot_ref": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "scope": {
+                "const": "project"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "project_id"
+            ]
+          },
+          "else": {
+            "not": {
+              "required": [
+                "project_id"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "subagent_paused": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "scope",
+        "storage_instance_id",
+        "server_id",
+        "run_id",
+        "thread_id",
+        "operation_id",
+        "occurrence",
+        "occurred_at_utc",
+        "agent_id",
+        "parent_run_id",
+        "child_run_id",
+        "reason",
+        "parent_thread_id",
+        "requested_runtime_ref",
+        "effective_runtime_ref",
+        "permission_snapshot_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.event_payload.subagent_paused.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope": {
+          "enum": [
+            "application",
+            "project"
+          ]
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "server_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "occurrence": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "occurred_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "agent_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "parent_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "child_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "parent_thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "requested_runtime_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "effective_runtime_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "permission_snapshot_ref": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "scope": {
+                "const": "project"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "project_id"
+            ]
+          },
+          "else": {
+            "not": {
+              "required": [
+                "project_id"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "subagent_progress": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "scope",
+        "storage_instance_id",
+        "server_id",
+        "run_id",
+        "thread_id",
+        "operation_id",
+        "occurrence",
+        "occurred_at_utc",
+        "agent_id",
+        "parent_run_id",
+        "child_run_id",
+        "status_text",
+        "parent_thread_id",
+        "requested_runtime_ref",
+        "effective_runtime_ref",
+        "permission_snapshot_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.event_payload.subagent_progress.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope": {
+          "enum": [
+            "application",
+            "project"
+          ]
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "server_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "occurrence": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "occurred_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "agent_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "parent_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "child_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "progress_pct": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "status_text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "parent_thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "requested_runtime_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "effective_runtime_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "permission_snapshot_ref": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "scope": {
+                "const": "project"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "project_id"
+            ]
+          },
+          "else": {
+            "not": {
+              "required": [
+                "project_id"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "subagent_resumed": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "scope",
+        "storage_instance_id",
+        "server_id",
+        "run_id",
+        "thread_id",
+        "operation_id",
+        "occurrence",
+        "occurred_at_utc",
+        "agent_id",
+        "parent_run_id",
+        "child_run_id",
+        "trigger",
+        "parent_thread_id",
+        "requested_runtime_ref",
+        "effective_runtime_ref",
+        "permission_snapshot_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.event_payload.subagent_resumed.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope": {
+          "enum": [
+            "application",
+            "project"
+          ]
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "server_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "occurrence": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "occurred_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "agent_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "parent_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "child_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "trigger": {
+          "type": "string",
+          "minLength": 1
+        },
+        "parent_thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "requested_runtime_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "effective_runtime_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "permission_snapshot_ref": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "scope": {
+                "const": "project"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "project_id"
+            ]
+          },
+          "else": {
+            "not": {
+              "required": [
+                "project_id"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "subagent_retried": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "scope",
+        "storage_instance_id",
+        "server_id",
+        "run_id",
+        "thread_id",
+        "operation_id",
+        "occurrence",
+        "occurred_at_utc",
+        "agent_id",
+        "parent_run_id",
+        "child_run_id",
+        "attempt_number",
+        "retry_reason",
+        "parent_thread_id",
+        "requested_runtime_ref",
+        "effective_runtime_ref",
+        "permission_snapshot_ref",
+        "retry_cause",
+        "prior_attempt_number"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.event_payload.subagent_retried.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope": {
+          "enum": [
+            "application",
+            "project"
+          ]
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "server_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "occurrence": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "occurred_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "agent_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "parent_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "child_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "attempt_number": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "retry_reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "parent_thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "requested_runtime_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "effective_runtime_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "permission_snapshot_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "retry_cause": {
+          "enum": [
+            "failure",
+            "blockage",
+            "interruption"
+          ]
+        },
+        "prior_attempt_number": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "scope": {
+                "const": "project"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "project_id"
+            ]
+          },
+          "else": {
+            "not": {
+              "required": [
+                "project_id"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "subagent_spawned": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "scope",
+        "storage_instance_id",
+        "server_id",
+        "run_id",
+        "thread_id",
+        "operation_id",
+        "occurrence",
+        "occurred_at_utc",
+        "agent_id",
+        "agent_type",
+        "parent_run_id",
+        "child_run_id",
+        "parent_thread_id",
+        "model_id",
+        "requested_runtime_ref",
+        "effective_runtime_ref",
+        "permission_snapshot_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.event_payload.subagent_spawned.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope": {
+          "enum": [
+            "application",
+            "project"
+          ]
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "server_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "occurrence": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "occurred_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "agent_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "agent_type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "parent_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "child_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "parent_thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "model_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "requested_runtime_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "effective_runtime_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "permission_snapshot_ref": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "scope": {
+                "const": "project"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "project_id"
+            ]
+          },
+          "else": {
+            "not": {
+              "required": [
+                "project_id"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "subagent_started": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "scope",
+        "storage_instance_id",
+        "server_id",
+        "run_id",
+        "thread_id",
+        "operation_id",
+        "occurrence",
+        "occurred_at_utc",
+        "agent_id",
+        "parent_run_id",
+        "child_run_id",
+        "prompt_preview",
+        "parent_thread_id",
+        "requested_runtime_ref",
+        "effective_runtime_ref",
+        "permission_snapshot_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.event_payload.subagent_started.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope": {
+          "enum": [
+            "application",
+            "project"
+          ]
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "server_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "occurrence": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "occurred_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "agent_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "parent_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "child_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "prompt_preview": {
+          "type": "string",
+          "minLength": 1
+        },
+        "parent_thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "requested_runtime_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "effective_runtime_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "permission_snapshot_ref": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "scope": {
+                "const": "project"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "project_id"
+            ]
+          },
+          "else": {
+            "not": {
+              "required": [
+                "project_id"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "subagent_timeout": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "scope",
+        "storage_instance_id",
+        "server_id",
+        "run_id",
+        "thread_id",
+        "operation_id",
+        "occurrence",
+        "occurred_at_utc",
+        "agent_id",
+        "parent_run_id",
+        "child_run_id",
+        "timeout_ms",
+        "parent_thread_id",
+        "requested_runtime_ref",
+        "effective_runtime_ref",
+        "permission_snapshot_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.event_payload.subagent_timeout.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope": {
+          "enum": [
+            "application",
+            "project"
+          ]
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "server_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "occurrence": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "occurred_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "agent_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "parent_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "child_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "timeout_ms": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "partial_result": {
+          "type": "string",
+          "minLength": 1
+        },
+        "parent_thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "requested_runtime_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "effective_runtime_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "permission_snapshot_ref": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "scope": {
+                "const": "project"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "project_id"
+            ]
+          },
+          "else": {
+            "not": {
+              "required": [
+                "project_id"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "subagent_tool_called": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "scope",
+        "storage_instance_id",
+        "server_id",
+        "run_id",
+        "thread_id",
+        "operation_id",
+        "occurrence",
+        "occurred_at_utc",
+        "agent_id",
+        "parent_run_id",
+        "child_run_id",
+        "tool_name",
+        "tool_args_preview",
+        "parent_thread_id",
+        "requested_runtime_ref",
+        "effective_runtime_ref",
+        "permission_snapshot_ref",
+        "invocation_id"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.event_payload.subagent_tool_called.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope": {
+          "enum": [
+            "application",
+            "project"
+          ]
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "server_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "occurrence": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "occurred_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "agent_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "parent_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "child_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "tool_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "tool_args_preview": {
+          "type": "string",
+          "minLength": 1
+        },
+        "parent_thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "requested_runtime_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "effective_runtime_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "permission_snapshot_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "invocation_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "scope": {
+                "const": "project"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "project_id"
+            ]
+          },
+          "else": {
+            "not": {
+              "required": [
+                "project_id"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "subagent_tool_completed": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "scope",
+        "storage_instance_id",
+        "server_id",
+        "run_id",
+        "thread_id",
+        "operation_id",
+        "occurrence",
+        "occurred_at_utc",
+        "agent_id",
+        "parent_run_id",
+        "child_run_id",
+        "tool_name",
+        "success",
+        "duration_ms",
+        "parent_thread_id",
+        "requested_runtime_ref",
+        "effective_runtime_ref",
+        "permission_snapshot_ref",
+        "invocation_id"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.event_payload.subagent_tool_completed.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope": {
+          "enum": [
+            "application",
+            "project"
+          ]
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "server_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "occurrence": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "occurred_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "agent_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "parent_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "child_run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "tool_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "duration_ms": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "parent_thread_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "requested_runtime_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "effective_runtime_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "permission_snapshot_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "invocation_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "scope": {
+                "const": "project"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "project_id"
+            ]
+          },
+          "else": {
+            "not": {
+              "required": [
+                "project_id"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  }
+}

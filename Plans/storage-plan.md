@@ -29518,6 +29518,9 @@ canonical_text: |-
   Original Goal start joins independently accepted app intent, original source, canonical body/origin/control and content-free command custody, actual append/first receipt and SIR original terminal result. Update joins original direct Save or approved complete agent proposal, shared app body reservation/commit, progress, event/receipt and immutable terminal audit; Cancel latches real host Stop first, retains source/Stop/partial effects and hidden control, then its actual content-free fact and original result. Each family’s role/current versus retained reader follows CV-366, never event-derived objective or late recapture. Every live writer/read/cancel/backup/restore/retention edge adopts its app graph together or is unavailable. Historical-only and Project Workflow/certified graphs remain closed; ordinary app dispatch never invents WorkNode evidence. A canonical completion receipt is non-rebuildable and cannot be reconstructed from events or a disposable projection.
   Crew definition/config/team/run/participant/transcript/messages/questions/artifacts and exact requested/effective snapshots use the existing four protocols and parent ceilings. App Crew Auto is a real thread configuration with revision1, separate from Project commit or thread override-only check. Application coordination uses one sole coordinator/appender, seven actual agent families only when admitted, exact AgentMessage app definition at both canonical producer/consumer sites, 16 KiB inline and BLAKE3 refs. Agent/file/operation/snapshot/board/checkpoint keys preserve actual Server/thread/crew/run/root/Host. Read tokens/checkpoints are from their full original source and current publication, never copied authority or JSON files. Same path on another Host/root/crew does not alias.
   App Goal bodies/history/origin/control keep RP-GOAL-THREAD-LIFETIME; immutable command/update/cancel/association/permission/receipt audit keeps RP-AUTHORITY-INDEFINITE, matching original rows. Coordination events keep RP-COORDINATION-180D and derived views/checkpoints RP-PROJECTION-3GEN with complete source holds/coverage. The app bound is one Server counterpart bucket, not one per chat. No new numeric Goal/Crew cap is invented; existing explicit none plus disk budget/refuse policy remains. Full Server Backup captures canonical body/control/accepted source/Stop/receipt/association/coordination parent records and referenced payloads coherently under BRS-033, with actual app source/native replay obligations; derived projections rebuild from genuine sources only. Restore never clears a newer Stop or revives a source fenced by conversion. Linked destination records and fresh admission follow CV-367/SP-350; ordinary mutation cannot change immutable bindings or run scope. Canonical source/receipt/held payload lifetime does not end with chat Undo.
+  CV-740/SP-723 governs the separately versioned header-bearing app board message/source/wrapper successor
+  for current board posts and V2 originals consumed by reads/archives. Frozen V1 remains selected for
+  supported retained V1 originals; whole V2 read/backup/restore adoption never rebinds an old URI.
 gui_related: false
 gui_classification_reason: Defines data, identity, custody, version or source contracts; no presentation ownership.
 depends_on:
@@ -29784,3 +29787,177 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md#CV-365
+
+
+### SP-720 — crew.board_message_posted canonical coordination member
+
+**SP-720: newly authored owner contract under DL-045, prepared without admission.** Per-family search scope: current non-generated Plans Markdown and JSON, especially SP-320/SP-351, OSI-299/OSI-440/OSI-681, CV-366 and both coordination/application payload and source schemas. Existing coordination_event_records has only seven agent members and debug_mirror_exported; crew_board_message_application stores a message, not this EventRecord. No member or run-anchor binding for `crew.board_message_posted` was found. Reuse those owners rather than adding a coordinator, database, mirror, projector or retention policy.
+
+**Member and producer.** The exact `crew.board_message_posted` key shape is appended to coordination_event_records after its existing eight key shapes. Its closed member `crew_board_message_posted` is copied from Plans/coordination_event_payloads.schema.json#/$defs/crew_board_message_posted, the file the row's value_schema_ref names, including schema_version and scope union; that definition equals Plans/orchestrator_event_payloads.schema.json#/$defs/crew_board_message_posted apart from its $schema and $id. The old eight definitions, keys and their original Project codecs are unchanged. Composition identity pm.storage_value.coordination_event_records.v1 is nonstored. As SP-320 requires of an event-record member, this one carries schema_version and no stored schema_id, because the EventRecord's payload_schema_id `pm.event_payload.crew_board_message_posted.v1@1.0.0` names it. The row's required/optional summary is the exact intersection/union of all members, never permission to relax an individual schema.
+
+AgentCoordinator alone prepares `crew.board_message_posted` via `AgentCoordinator / post board message` after the attributable committed message and its event-inline content or verified SP-337 content_ref. Project appends adopt storage.coordination_append.v1@1.0.0 with their original source; application posts adopt CV-740 storage.coordination_append.application@2.0.0, app.coordination_append.v2 and Plans/application_board_message_v2.schema.json#/$defs/OriginalCoordinationAppendSourceV2. Each affected original AgentMessageApplicationV2 and complete original stage custody remain genuine and scope-bound. operation_id joins original_operation_id; the persisted observation component in OSI-681 is the exact effect identity inside that original operation. For an archive batch, every message has its own original source join; a read or archive never fabricates a post. SP-723 crew_board_message_application_v2 key/wrapper and its actual Server/thread/crew/run/message identities must match the source and payload; missing/unknown/foreign input or source edition refuses. No fabricated Project, inherited focus, copied accepted source or checkpoint can supply authority. The existing canonical owner settles its operation, verifies SP-337 referenced bytes before append, adopts SP-286/CV-339 full EventRecord/first-AppendReceipt recovery, and publishes history only after the original durable receipt. Uncertain append resolves that same full value; replay never posts, acknowledges, archives or schedules again.
+
+**Selected-source static verification.** Application posted cases select the full CV-740/SP-723 V2 message/source/wrapper graph, with original subject/priority/body/routing equality, all original operation/stage/accepted-source commitments and separate complete semantic/physical digests. The actual key includes Storage/Server/thread/crew/run/message hex components. Missing/foreign headers, invalid priority, wrong edition, source/body/lineage/digest mismatch and unknown members refuse. No stopped facet remains; static synthetic originals still do not prove native custody or append admission. Complete MessagePack payload/wrapper bytes obey SP-337's aggregate 16 KiB limit and larger body bytes use genuine BLAKE3 refs. Project and V1 resources remain exact, with supported historical V1 selection rather than fabricated V1 headers.
+
+**Application post source successor.** CV-740/SP-723 now select the complete original V2 header-bearing source/input/wrapper graph. A real closed synthetic application post must join original subject/priority/body/targets and accepted-source/stage/semantic/physical commitments; no event-derived header or default is accepted. Frozen Project/V1 resources remain exact and native custody/authentication/durability remain NOT_RUN.
+
+**Read and custody.** The operating reader is `reader.orchestrator.crew_board_message_posted.history.v1@1.0.0`, adopting SP-278 and its original generic index/checkpoint, exactly as OSI-681 states. This board EventRecord is not an agent lifecycle input to storage.coordination_projector.v1; an unknown agent-reducer route refuses. Coherent backup retains canonical message/operation/source/full receipt, this EventRecord and reachable payload-store bytes. Restore revalidates scope, source, admission and current fences before publication, with no reconstruction of canonical messages from events. CV-353's IDs/refs/bounded-text restriction continues unchanged for the original agent members. For this board member, OSI-299/OSI-681 specifically allow sanitized subject/body or body reference on posted messages, acknowledgement identities on reads and bounded sanitized archive_reason on archives. No credential, raw prompt/model dump, tool argument, file/diff blob, environment value or private cross-thread data may leak; scan/redact before commit and recheck source permission, deletion/tombstone and hold fences before disclosing even inline text. Holds retain custody without restoring deleted visibility.
+
+**Run anchor and dependency.** run_completion is the first durable terminal canonical Run record named by this member's actual run_id, joined in the same scope/Server/thread/crew lineage. An unresolved terminal source makes this member ineligible for expiry; archive/leave-board/event timestamps never start or reset the anchor. `RP-COORDINATION-180D@1.0.0` remains the DL-085 assignment as landed in `Plans/storage_value_registry.json` (Storage retention landing `4d52bd2758526cd0e8a56358baaa73049c1d4bdd`); this branch adds no assignment or numeric limit. SP-351's application Server counterpart applies only as that owner's current policy join; Storage report Q1 and Q3 remain integration follow-ups, not answered here. Retention stays PARTIAL until dependency integration and per-family admission; source holds/access/deletion rules remain effective. Unsupported versions refuse. Withdrawal cuts this family's append admission, settles first receipts and fences its reader before successor publication; it never withdraws another member, clears a shared cursor or deletes source.
+
+**Oracles.** ATS-360 and python3 scripts/pm-orchestrator-event-contracts.py validate both scope editions against this actual coordination_event_records member, exact key/member census, source/envelope/Run joins and rejection of missing, additional, foreign-scope, source-edition, anchor and conflicting-key cases. A stored schema_id on this member is refused: readiness reports storage_value_registry_keyed_composition_payload_member_has_stored_header, and append, retry and history refuse it as an additional property. Body boundaries are enforced on the stored posted member as on its source schema. Native append/body/receipt/backup/replay/deletion/withdrawal cases remain authored NOT_RUN; fixture truth never admits a writer.
+
+```yaml
+plan_unit_id: SP-720
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: >-
+  crew.board_message_posted has the exact coordination_event_records storage member, original producer/source, run-completion anchor and custody contract immediately above, prepared without admission under DL-045.
+gui_related: false
+gui_classification_reason: Canonical event storage, identity and custody; no visual behavior.
+depends_on: [OSI-681, SP-320, SP-351, CV-366, SP-286, SP-278]
+unblocks: []
+acceptance_criteria:
+- The exact closed member and original source joins reject foreign scope and unsupported editions.
+- Replay has no board effect; unresolved run completion is ineligible for expiry.
+validation_surfaces: [python3 scripts/pm-orchestrator-event-contracts.py]
+risk_class: event_authority
+reasoning_tier: high
+context_scope: exact_event_family
+implementation_surfaces: [Plans/storage_value_registry.json]
+node_compile_hint: {mode: contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage: [Plans/Decision_Log.md#DL-045, Plans/Decision_Log.md#DL-085]
+preserved_exact_tokens: [crew.board_message_posted, coordination_event_records, OriginalCoordinationAppendSource]
+negative_constraints: [No event admission or runtime certification follows.]
+owner_hints: [Plans/storage-plan.md]
+```
+
+
+### SP-721 — crew.board_message_read canonical coordination member
+
+**SP-721: newly authored owner contract under DL-045, prepared without admission.** Per-family search scope: current non-generated Plans Markdown and JSON, especially SP-320/SP-351, OSI-299/OSI-440/OSI-682, CV-366 and both coordination/application payload and source schemas. Existing coordination_event_records has only seven agent members and debug_mirror_exported; crew_board_message_application stores a message, not this EventRecord. No member or run-anchor binding for `crew.board_message_read` was found. Reuse those owners rather than adding a coordinator, database, mirror, projector or retention policy.
+
+**Member and producer.** The exact `crew.board_message_read` key shape is appended to coordination_event_records after its existing eight key shapes. Its closed member `crew_board_message_read` is copied from Plans/coordination_event_payloads.schema.json#/$defs/crew_board_message_read, the file the row's value_schema_ref names, including schema_version and scope union; that definition equals Plans/orchestrator_event_payloads.schema.json#/$defs/crew_board_message_read apart from its $schema and $id. The old eight definitions, keys and their original Project codecs are unchanged. Composition identity pm.storage_value.coordination_event_records.v1 is nonstored. As SP-320 requires of an event-record member, this one carries schema_version and no stored schema_id, because the EventRecord's payload_schema_id `pm.event_payload.crew_board_message_read.v1@1.0.0` names it. The row's required/optional summary is the exact intersection/union of all members, never permission to relax an individual schema.
+
+AgentCoordinator alone prepares `crew.board_message_read` via `AgentCoordinator / acknowledge board read` after the committed message read acknowledgement and its original reader/message identity. Project appends adopt storage.coordination_append.v1@1.0.0 with their original source; application appends adopt storage.coordination_append.application@1.0.0, CV-366 app.coordination_append.v1 and Plans/application_workflow_sources.schema.json#/$defs/OriginalCoordinationAppendSource. Each affected original AgentMessageApplicationV1 and complete original stage custody remain genuine and scope-bound. operation_id joins original_operation_id; the persisted observation component in OSI-682 is the exact effect identity inside that original operation. For an archive batch, every message has its own original source join; a read or archive never fabricates a post. SP-351 crew_board_message_application key/wrapper and its actual Server/thread/crew/run/message identities must match the source and payload; missing/unknown/foreign input or source edition refuses. No fabricated Project, inherited focus, copied accepted source or checkpoint can supply authority. The existing canonical owner settles its operation, verifies SP-337 referenced bytes before append, adopts SP-286/CV-339 full EventRecord/first-AppendReceipt recovery, and publishes history only after the original durable receipt. Uncertain append resolves that same full value; replay never posts, acknowledges, archives or schedules again.
+
+**Selected-source static verification.** Application cases validate the full closed `OriginalCoordinationAppendSource`, its `AgentMessageApplicationV1` input, every required original/stage/accepted-source member and the actual closed SP-351 `CrewBoardMessageStorageApplicationV1` wrapper. The complete SP-351 physical key includes actual Storage instance, Server, thread, crew, run and message hex components; source/input/wrapper/message joins and semantic hashes reject missing/foreign fields. Project fixtures use an explicitly synthetic adapter of the current canonical Project board message; no existing Project source codec is replaced. Synthetic evidence never authenticates original custody or grants append admission. The complete logical payload uses the SP-337 inline/external binding in OSI-682; individual-text bounds alone do not establish the complete inline byte budget.
+
+**V2 original-message consumption.** A V2 original uses CV-740/SP-723's whole `app.coordination_append.v2` source/input/wrapper/key/codec and canonical read/backup/restore graph; supported V1 originals keep the exact V1 selection above. Select by genuine original schema/source edition, never by focus or a payload-invented header. This read/archive never manufactures a post or upgrades missing V1 headers.
+
+**Read and custody.** The operating reader is `reader.orchestrator.crew_board_message_read.history.v1@1.0.0`, adopting SP-278 and its original generic index/checkpoint, exactly as OSI-682 states. This board EventRecord is not an agent lifecycle input to storage.coordination_projector.v1; an unknown agent-reducer route refuses. Coherent backup retains canonical message/operation/source/full receipt, this EventRecord and reachable payload-store bytes. Restore revalidates scope, source, admission and current fences before publication, with no reconstruction of canonical messages from events. CV-353's IDs/refs/bounded-text restriction continues unchanged for the original agent members. For this board member, OSI-299/OSI-682 specifically allow sanitized subject/body or body reference on posted messages, acknowledgement identities on reads and bounded sanitized archive_reason on archives. No credential, raw prompt/model dump, tool argument, file/diff blob, environment value or private cross-thread data may leak; scan/redact before commit and recheck source permission, deletion/tombstone and hold fences before disclosing even inline text. Holds retain custody without restoring deleted visibility.
+
+**Run anchor and dependency.** run_completion is the first durable terminal canonical Run record named by this member's actual run_id, joined in the same scope/Server/thread/crew lineage. An unresolved terminal source makes this member ineligible for expiry; archive/leave-board/event timestamps never start or reset the anchor. `RP-COORDINATION-180D@1.0.0` remains the DL-085 assignment as landed in `Plans/storage_value_registry.json` (Storage retention landing `4d52bd2758526cd0e8a56358baaa73049c1d4bdd`); this branch adds no assignment or numeric limit. SP-351's application Server counterpart applies only as that owner's current policy join; Storage report Q1 and Q3 remain integration follow-ups, not answered here. Retention stays PARTIAL until dependency integration and per-family admission; source holds/access/deletion rules remain effective. Unsupported versions refuse. Withdrawal cuts this family's append admission, settles first receipts and fences its reader before successor publication; it never withdraws another member, clears a shared cursor or deletes source.
+
+**Oracles.** ATS-360 and python3 scripts/pm-orchestrator-event-contracts.py validate both scope editions against this actual coordination_event_records member, exact key/member census, source/envelope/Run joins and rejection of missing, additional, foreign-scope, source-edition, anchor and conflicting-key cases. A stored schema_id on this member is refused: readiness reports storage_value_registry_keyed_composition_payload_member_has_stored_header, and append, retry and history refuse it as an additional property. Body boundaries are enforced on the stored posted member as on its source schema. Native append/body/receipt/backup/replay/deletion/withdrawal cases remain authored NOT_RUN; fixture truth never admits a writer.
+
+```yaml
+plan_unit_id: SP-721
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: >-
+  crew.board_message_read has the exact coordination_event_records storage member, original producer/source, run-completion anchor and custody contract immediately above, prepared without admission under DL-045.
+gui_related: false
+gui_classification_reason: Canonical event storage, identity and custody; no visual behavior.
+depends_on: [OSI-682, SP-320, SP-351, CV-366, SP-286, SP-278]
+unblocks: []
+acceptance_criteria:
+- The exact closed member and original source joins reject foreign scope and unsupported editions.
+- Replay has no board effect; unresolved run completion is ineligible for expiry.
+validation_surfaces: [python3 scripts/pm-orchestrator-event-contracts.py]
+risk_class: event_authority
+reasoning_tier: high
+context_scope: exact_event_family
+implementation_surfaces: [Plans/storage_value_registry.json]
+node_compile_hint: {mode: contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage: [Plans/Decision_Log.md#DL-045, Plans/Decision_Log.md#DL-085]
+preserved_exact_tokens: [crew.board_message_read, coordination_event_records, OriginalCoordinationAppendSource]
+negative_constraints: [No event admission or runtime certification follows.]
+owner_hints: [Plans/storage-plan.md]
+```
+
+
+### SP-722 — crew.board_messages_archived canonical coordination member
+
+**SP-722: newly authored owner contract under DL-045, prepared without admission.** Per-family search scope: current non-generated Plans Markdown and JSON, especially SP-320/SP-351, OSI-299/OSI-440/OSI-683, CV-366 and both coordination/application payload and source schemas. Existing coordination_event_records has only seven agent members and debug_mirror_exported; crew_board_message_application stores a message, not this EventRecord. No member or run-anchor binding for `crew.board_messages_archived` was found. Reuse those owners rather than adding a coordinator, database, mirror, projector or retention policy.
+
+**Member and producer.** The exact `crew.board_messages_archived` key shape is appended to coordination_event_records after its existing eight key shapes. Its closed member `crew_board_messages_archived` is copied from Plans/coordination_event_payloads.schema.json#/$defs/crew_board_messages_archived, the file the row's value_schema_ref names, including schema_version and scope union; that definition equals Plans/orchestrator_event_payloads.schema.json#/$defs/crew_board_messages_archived apart from its $schema and $id. The old eight definitions, keys and their original Project codecs are unchanged. Composition identity pm.storage_value.coordination_event_records.v1 is nonstored. As SP-320 requires of an event-record member, this one carries schema_version and no stored schema_id, because the EventRecord's payload_schema_id `pm.event_payload.crew_board_messages_archived.v1@1.0.0` names it. The row's required/optional summary is the exact intersection/union of all members, never permission to relax an individual schema.
+
+AgentCoordinator alone prepares `crew.board_messages_archived` via `AgentCoordinator / archive stale board messages` after the committed archive visibility change and the exact list of affected original messages. Project appends adopt storage.coordination_append.v1@1.0.0 with their original source; application appends adopt storage.coordination_append.application@1.0.0, CV-366 app.coordination_append.v1 and Plans/application_workflow_sources.schema.json#/$defs/OriginalCoordinationAppendSource. Each affected original AgentMessageApplicationV1 and complete original stage custody remain genuine and scope-bound. operation_id joins original_operation_id; the persisted observation component in OSI-683 is the exact effect identity inside that original operation. For an archive batch, every message has its own original source join; a read or archive never fabricates a post. SP-351 crew_board_message_application key/wrapper and its actual Server/thread/crew/run/message identities must match the source and payload; missing/unknown/foreign input or source edition refuses. No fabricated Project, inherited focus, copied accepted source or checkpoint can supply authority. The existing canonical owner settles its operation, verifies SP-337 referenced bytes before append, adopts SP-286/CV-339 full EventRecord/first-AppendReceipt recovery, and publishes history only after the original durable receipt. Uncertain append resolves that same full value; replay never posts, acknowledges, archives or schedules again.
+
+**Selected-source static verification.** Application cases validate the full closed `OriginalCoordinationAppendSource`, its `AgentMessageApplicationV1` input, every required original/stage/accepted-source member and the actual closed SP-351 `CrewBoardMessageStorageApplicationV1` wrapper. The complete SP-351 physical key includes actual Storage instance, Server, thread, crew, run and message hex components; source/input/wrapper/message joins and semantic hashes reject missing/foreign fields. Project fixtures use an explicitly synthetic adapter of the current canonical Project board message; no existing Project source codec is replaced. Synthetic evidence never authenticates original custody or grants append admission. The complete logical payload uses the SP-337 inline/external binding in OSI-683; individual-text bounds alone do not establish the complete inline byte budget.
+
+**V2 original-message consumption.** A V2 original uses CV-740/SP-723's whole `app.coordination_append.v2` source/input/wrapper/key/codec and canonical read/backup/restore graph; supported V1 originals keep the exact V1 selection above. Select by genuine original schema/source edition, never by focus or a payload-invented header. This read/archive never manufactures a post or upgrades missing V1 headers.
+
+**Read and custody.** The operating reader is `reader.orchestrator.crew_board_messages_archived.history.v1@1.0.0`, adopting SP-278 and its original generic index/checkpoint, exactly as OSI-683 states. This board EventRecord is not an agent lifecycle input to storage.coordination_projector.v1; an unknown agent-reducer route refuses. Coherent backup retains canonical message/operation/source/full receipt, this EventRecord and reachable payload-store bytes. Restore revalidates scope, source, admission and current fences before publication, with no reconstruction of canonical messages from events. CV-353's IDs/refs/bounded-text restriction continues unchanged for the original agent members. For this board member, OSI-299/OSI-683 specifically allow sanitized subject/body or body reference on posted messages, acknowledgement identities on reads and bounded sanitized archive_reason on archives. No credential, raw prompt/model dump, tool argument, file/diff blob, environment value or private cross-thread data may leak; scan/redact before commit and recheck source permission, deletion/tombstone and hold fences before disclosing even inline text. Holds retain custody without restoring deleted visibility.
+
+**Run anchor and dependency.** run_completion is the first durable terminal canonical Run record named by this member's actual run_id, joined in the same scope/Server/thread/crew lineage. An unresolved terminal source makes this member ineligible for expiry; archive/leave-board/event timestamps never start or reset the anchor. `RP-COORDINATION-180D@1.0.0` remains the DL-085 assignment as landed in `Plans/storage_value_registry.json` (Storage retention landing `4d52bd2758526cd0e8a56358baaa73049c1d4bdd`); this branch adds no assignment or numeric limit. SP-351's application Server counterpart applies only as that owner's current policy join; Storage report Q1 and Q3 remain integration follow-ups, not answered here. Retention stays PARTIAL until dependency integration and per-family admission; source holds/access/deletion rules remain effective. Unsupported versions refuse. Withdrawal cuts this family's append admission, settles first receipts and fences its reader before successor publication; it never withdraws another member, clears a shared cursor or deletes source.
+
+**Oracles.** ATS-360 and python3 scripts/pm-orchestrator-event-contracts.py validate both scope editions against this actual coordination_event_records member, exact key/member census, source/envelope/Run joins and rejection of missing, additional, foreign-scope, source-edition, anchor and conflicting-key cases. A stored schema_id on this member is refused: readiness reports storage_value_registry_keyed_composition_payload_member_has_stored_header, and append, retry and history refuse it as an additional property. Body boundaries are enforced on the stored posted member as on its source schema. Native append/body/receipt/backup/replay/deletion/withdrawal cases remain authored NOT_RUN; fixture truth never admits a writer.
+
+```yaml
+plan_unit_id: SP-722
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: >-
+  crew.board_messages_archived has the exact coordination_event_records storage member, original producer/source, run-completion anchor and custody contract immediately above, prepared without admission under DL-045.
+gui_related: false
+gui_classification_reason: Canonical event storage, identity and custody; no visual behavior.
+depends_on: [OSI-683, SP-320, SP-351, CV-366, SP-286, SP-278]
+unblocks: []
+acceptance_criteria:
+- The exact closed member and original source joins reject foreign scope and unsupported editions.
+- Replay has no board effect; unresolved run completion is ineligible for expiry.
+validation_surfaces: [python3 scripts/pm-orchestrator-event-contracts.py]
+risk_class: event_authority
+reasoning_tier: high
+context_scope: exact_event_family
+implementation_surfaces: [Plans/storage_value_registry.json]
+node_compile_hint: {mode: contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage: [Plans/Decision_Log.md#DL-045, Plans/Decision_Log.md#DL-085]
+preserved_exact_tokens: [crew.board_messages_archived, coordination_event_records, OriginalCoordinationAppendSource]
+negative_constraints: [No event admission or runtime certification follows.]
+owner_hints: [Plans/storage-plan.md]
+```
+
+
+### SP-723 — Governed application board message V2 storage/source successor
+
+**Newly authored technical owner contract under DL-045 and DL-085; prepared without admission.** The per-family search in OSI-681/CV-740 found the frozen V1 message/source/wrapper cannot retain the already required headers. This successor supplies the existing behavior; it introduces no board engine, payload store, Server bucket, retention choice or event admission.
+
+Select `crew_board_message_application_v2` in `Plans/storage_value_registry.json`, key `crew_board_message.application.v2:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(crew_id)}:{hex(run_id)}:{hex(message_id)}` in the existing canonical redb store. Values select `CrewBoardMessageStorageApplicationV2@2.0.0` and exact V2 immutable URI in CV-740. Codec `pm.crew_board_message.application.physical_messagepack.v2` explicitly uses the unchanged deterministic `pm.application.physical_messagepack.v1` algorithm on the complete V2 wrapper; its identity never rebinds the old codec. `physical_record_sha256` is SHA-256 of those exact wrapper bytes. CV-366 `accepted_source` semantic hashes cover the complete typed original message, including subject/priority/routing/body and original operation/stage/source custody; they are distinct from physical SHA-256 and SP-337 BLAKE3 body identities.
+
+The complete `Plans/application_board_message_v2_graph.json` selects source/input/output, append method, wrapper/key/codec, canonical read, coherent BRS-033 backup/restore and retention. The sole existing AgentCoordinator commits the complete original message before `crew.board_message_posted`, verifies source/accepted-source and stage operation/method commitments and current scope/Stop/permission fences, then adopts SP-286/CV-339 full-value first receipt and uncertain-result resolution. SP-337 measures each complete inline EventRecord payload and physical wrapper at 16,384 MessagePack bytes; larger body uses the existing verified BLAKE3 store with exact byte/media/length and bytes/index durability before the referencing commit. If the remaining complete wrapper still exceeds the limit, refuse instead of truncating.
+
+Canonical `storage.crew_board_message.read.application@2.0.0`, backup and restore method identities in the graph use that same source/wrapper/physical edition; they revalidate current access/deletion/hold fences and preserve original source/operation/accepted-source/full receipt/EventRecord/reachable payloads together. Restore cannot fabricate an original or clear a newer Stop. Before publication or any application V1/V2 consumer path, the five original pre-publication stages (original_intent, accepted_original_source, current_owner_and_stop_fence, canonical_pending_or_reservation, owner_commit) must be accepted and have resolved original request/result/owner-evidence records. Recompute each stage-evidence digest from its exact retained record and join evidence owner/revision/generation, operation, selected method, input and accepted-source commitments and actual wrapper key/physical bytes; missing, foreign, refused, unknown or not-reached originals refuse. Accepted-source witness/hash, physical wrapper digest and all stage-method joins apply equally to post, read, archive and recovery. Original commit-result custody is distinct from admission-dependent event append/first receipt, whose prepared stage remains not_reached. These are original captured facts, not a current producer-state gate on retained history; native source authentication remains NOT_RUN. OSI-681's exact historical reader adopts SP-278; no new generic projector, checkpoint or agent-reducer route is created. SP-351 counterpart bucket/holds and DL-085 retention remain unchanged and PARTIAL pending the named integration.
+
+Compatibility keeps every Project and V1 schema/source/URI/key/codec exact. Supported V1 canonical reads still select V1 and never pretend to contain headers; V1 cannot prove a new V2 post. The storage-owned upgrader `storage.crew_board_message.upgrade.application.v1_to_v2@2.0.0` is unavailable unless genuine original committed subject/priority and all required fields exist with full original custody; an event or body text is not that source. It preserves old bytes and installs a separately keyed new edition only through the same complete graph/admission/receipt fences. Current V2 append is unavailable until native graph adoption and exact event admission. Withdrawal fences this exact V2 writer, settles uncertain original receipts, then fences V2 canonical/history publication and in-memory joins before a governed successor/rebuild. An explicitly supported compatibility reader may retain V1/V2 originals with original admission/schema/source proof and current disclosure fences. Withdrawal never deletes source, resets another cursor or withdraws the shared index.
+
+```yaml
+plan_unit_id: SP-723
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: >-
+  The governed application board V2 storage/source/key/codec/read/backup/restore successor immediately above preserves original subject and priority and the full original message under CV-740/OSI-681; prepared without admission.
+gui_related: false
+gui_classification_reason: Versioned source, storage and custody contracts.
+depends_on: [CV-740, OSI-681, SP-351, SP-337, SP-286, SP-278]
+unblocks: []
+acceptance_criteria:
+- Complete original V2 headers/body/routing/custody join before append; frozen V1 and Project resources remain exact.
+- Exact supported historical reads respect withdrawal and current disclosure fences independent of live producer state.
+validation_surfaces: [python3 scripts/pm-orchestrator-event-contracts.py]
+risk_class: event_authority
+reasoning_tier: high
+context_scope: exact_event_family
+implementation_surfaces: [Plans/application_board_message_v2.schema.json, Plans/application_board_message_v2_graph.json, Plans/storage_value_registry.json]
+node_compile_hint: {mode: contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage: [Plans/Decision_Log.md#DL-045, Plans/Decision_Log.md#DL-085]
+preserved_exact_tokens: [crew.board_message_posted, AgentMessageApplicationV2, OriginalCoordinationAppendSourceV2]
+negative_constraints: [No header invention, frozen-resource rebinding, event admission or native proof.]
+owner_hints: [Plans/storage-plan.md]
+```
