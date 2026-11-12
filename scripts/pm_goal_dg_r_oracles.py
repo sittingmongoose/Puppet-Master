@@ -123,6 +123,7 @@ def run_case(out, case_id, group, kind, fn, expected=None, detail=None):
     except Exception as error:  # noqa: BLE001
         out.append(dict(id=case_id, group=group, kind=kind, expected=expected, status='fail',
                         got='%s: %s' % (type(error).__name__, error), trace=traceback.format_exc(limit=4)))
+    print(case_id,out[-1]['status'],out[-1].get('got',''),file=sys.stderr,flush=True)
 
 
 def world_case(cfg, read='inspect', post=None, check=None):
