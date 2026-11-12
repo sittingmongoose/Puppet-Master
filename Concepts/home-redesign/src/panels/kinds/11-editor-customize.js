@@ -790,7 +790,9 @@ function* construct(opts) {
     var fa = root.querySelector('[data-follow-art]');
     if (fa && lt && fa.getAttribute('data-for') !== lkKey) {
       var g = function (n) { return lt[n] || ''; };
-      fa.innerHTML = codeArt({ bg: g('--pmw-ed-gutbg') || g('--pmw-ed-bg'), fg: g('--pmw-ed-fg'), kw: g('--pmw-ed-s-kw'), fn: g('--pmw-ed-s-fn'), str: g('--pmw-ed-s-str'), com: g('--pmw-ed-s-com'), b0: g('--pmw-ed-bp-0'), word: 'the look' });
+      var art = codeArt({ bg: g('--pmw-ed-gutbg') || g('--pmw-ed-bg'), fg: g('--pmw-ed-fg'), kw: g('--pmw-ed-s-kw'), fn: g('--pmw-ed-s-fn'), str: g('--pmw-ed-s-str'), com: g('--pmw-ed-s-com'), b0: g('--pmw-ed-bp-0'), word: 'the look' });
+      var parsed = document.createElement('template'); parsed.innerHTML = art;
+      if (fa.innerHTML !== parsed.innerHTML) fa.innerHTML = art;
       fa.setAttribute('data-for', lkKey);
     }
     var fm = root.querySelector('[data-follow-meta]'), fs2 = EL().followScheme(), ftxt = fs2 ? 'Like ' + fs2.name : 'The look’s own';

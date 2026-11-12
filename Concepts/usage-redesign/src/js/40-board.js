@@ -1454,9 +1454,9 @@
       flushLeaving(true);
       dropOld();
       cardsNow().forEach(destroyCard);
-      boardEl.setAttribute('data-held', '');
+      if (boardEl.getAttribute('data-held') !== '') boardEl.setAttribute('data-held', '');
       boardEl.removeAttribute('data-hold-bodies');
-      boardEl.setAttribute('data-room', room);
+      if (boardEl.getAttribute('data-room') !== room) boardEl.setAttribute('data-room', room);
       setBoardClass();
       boardEl.removeAttribute('data-op');
       boardEl.textContent = '';

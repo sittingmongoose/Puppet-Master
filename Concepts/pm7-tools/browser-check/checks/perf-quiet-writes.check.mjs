@@ -33,6 +33,15 @@
 //                (37 in NieR Dark, 12 in Basic Dark) is mostly the terminal view's own (70-view.js: its three canvases'
 //                width and height, which also clear them, and the preview root's class) and is logged;
 //   chat         #pmRoot's aria-busy, rewritten "false" on every full render of the chat.
+//   retained list/agenda bodies (lane P, 2026-11-12): the list renderer (50-w-common.js) and agenda renderer
+//                (53-w-atlas.js) replace the root that receives their fresh click handler. A same-HTML setter guard
+//                alone would retain the old handler and add another, or keep stale row/model closures if binding were
+//                skipped. These two lifecycle replacements remain on purpose: a call-time diagnostic across the fresh
+//                load and its resizes saw two identical list replacements and one identical agenda replacement.
+//                They are still counted against the existing bounds; no numeric or selector exemption is added.
+//                One Basic look-window agenda record was different at the setter (a new row, 2 more -> 1 more), but
+//                removed/added nodes converged after fitting. DOM_READ serializes those nodes later, so that one
+//                record is a retrospective false positive, tracked for the tool batch; do not suppress its real update.
 // Then the Artifacts shelf is opened: the counter shows the current count in the first frame it is drawn and goes on
 // counting.
 //

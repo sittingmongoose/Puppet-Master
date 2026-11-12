@@ -229,7 +229,8 @@
     this.root.style.setProperty('--pmt-glow-color', roles.glow || C.toHex(ap.theme.fg));
     this.root.style.setProperty('--pmt-pad-x', (ap.padding ? ap.padding.x : 8) + 'px');
     this.root.style.setProperty('--pmt-pad-y', (ap.padding ? ap.padding.y : 6) + 'px');
-    this.root.setAttribute('data-pmt-scheme', ap.theme.appearance || '');
+    var scheme = ap.theme.appearance || '';
+    if (this.root.getAttribute('data-pmt-scheme') !== scheme) this.root.setAttribute('data-pmt-scheme', scheme);
     /* the background, and its worst pixel for the text's contrast floor (24-renderer.js; none over the scheme's own
        surface) */
     this.contrastGround = this._applyBackground(ap.background || { kind: 'theme' });
@@ -364,10 +365,11 @@
   View.prototype._applyBackground = function (bg) {
     var L = this.bgLayer, th = this.theme, G = T.Grounds, ground = typeof bg.ground === 'number' ? bg.ground : null, dim = 0;
     this._bgSpec = bg; this._bgKey = '';
-    L.style.cssText = '';
-    L.className = 'pmt-bglayer pmt-bg-' + (bg.kind || 'theme') + (bg.cat ? ' pmt-bg-' + bg.cat : '') + (bg.custom ? ' pmt-bg-custom' : '') + (bg.motion ? ' pmt-bg-moving' : '');
+    if (L.getAttribute('style') !== '') L.style.cssText = '';
+    var classes = 'pmt-bglayer pmt-bg-' + (bg.kind || 'theme') + (bg.cat ? ' pmt-bg-' + bg.cat : '') + (bg.custom ? ' pmt-bg-custom' : '') + (bg.motion ? ' pmt-bg-moving' : '');
+    if (L.className !== classes) L.className = classes;
     var mv = this.bgMove, moving = !!(bg.motion && G);
-    if (!moving) { mv.hidden = true; mv.style.cssText = ''; mv.removeAttribute('data-anim'); }
+    if (!moving) { if (mv.hidden !== true) mv.hidden = true; if (mv.getAttribute('style') !== '') mv.style.cssText = ''; mv.removeAttribute('data-anim'); }
     if ((bg.paint || moving) && G && th) {
       var r = this.bodyEl.getBoundingClientRect(), w = r.width || 960, h = r.height || 600;
       this._bgKey = sizeStep(w) + 'x' + sizeStep(h);
@@ -727,7 +729,7 @@
     var g = this.gutter, m = this.metrics, buf = this.term.buf, self = this;
     var marks = this._marks || (this._marks = new Map());
     if (buf.isAlt) { marks.clear(); g.innerHTML = ''; g.classList.add('pmt-gutter-alt'); return; }
-    g.classList.remove('pmt-gutter-alt');
+    if (g.classList.contains('pmt-gutter-alt')) g.classList.remove('pmt-gutter-alt');
     var top = this.viewTop(), rows = buf.rows, cmds = this.term.commands, seen = new Set();
     this._gutterCmds = [];
     for (var i = cmds.length - 1; i >= 0; i--) {
@@ -836,7 +838,7 @@
         break;
       }
     }
-    if (!cmd) { s.hidden = true; this.stickyCmd = null; return; }
+    if (!cmd) { if (s.hidden !== true) s.hidden = true; this.stickyCmd = null; return; }
     this.stickyCmd = cmd;
     var promptText = cmd.promptLine.text();
     s.hidden = false;
