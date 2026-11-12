@@ -76,7 +76,11 @@
     /* a thread switch: the new thread's state as a jump, and a one-shot still pending (a launch, halt or ignite armed
        on the thread we left) is dropped, so it never replays on a chip where nothing happened */
     if (o.tid !== tid0) { if (tid0 !== undefined) { armSnap(); fx = null; clearTimeout(fxT); } tid0 = o.tid; }
-    if (s === 'stop' && lastSs !== 'stop') { flow = (now() - lastTok < 900 || streaming(o.tid)) ? 'flowing' : 'waiting'; flowed = false; }
+    /* (a chip that becomes Stop starts its own boundary timer, below: one left pending by the last Stop chip, armed for
+       that chip's loop, is cleared. Kept, it was first looked at after the new chip's first loop boundary whenever the
+       new run began within about 0.2 s of the old one's end, and the cadence changed one loop later than it should) */
+    var fresh = s === 'stop' && lastSs !== 'stop';
+    if (fresh) { flow = (now() - lastTok < 900 || streaming(o.tid)) ? 'flowing' : 'waiting'; flowed = false; clearTimeout(beatT); beatT = 0; }
     if (s !== 'stop') flowed = false;
     if (s === 'stop' && !beatT) beatT = setTimeout(beat, 50);
     if (s === 'queue' || s === 'full') { if (q) shownQ = q; }
