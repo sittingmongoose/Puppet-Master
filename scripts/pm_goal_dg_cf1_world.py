@@ -135,6 +135,29 @@ def rvalidate(name, value, code):
     return value
 
 
+# ------------------------------------------------------------------ coordinator family keys
+
+_PHYSICAL = json.loads((ROOT / COORD_PKG / 'physical-retention-install.json').read_bytes())
+
+
+def _hex(text):
+    require('key/utf8', type(text) is str and text != '')
+    return text.encode('utf-8', 'strict').hex()
+
+
+def coord_family_key(family, project_id, goal_run_id):
+    templates = {f['key'].split(':', 1)[0]: f['key'] for f in _PHYSICAL['families']}
+    template = templates['goal_certified_event_%s.v1' % family]
+    require('key/template', template.endswith('{project_hex}:{run_hex}'))
+    return template.replace('{project_hex}', _hex(project_id)).replace('{run_hex}', _hex(goal_run_id))
+
+
+def decode_family_key(key):
+    prefix, project_hex, run_hex = key.split(':')
+    require('key/lowercase_even_hex', all(len(h) % 2 == 0 and h == h.lower() and h != '' for h in (project_hex, run_hex)))
+    return prefix, bytes.fromhex(project_hex).decode('utf-8', 'strict'), bytes.fromhex(run_hex).decode('utf-8', 'strict')
+
+
 # ------------------------------------------------------------------ codecs and paths
 
 def sj(value):
@@ -533,6 +556,9 @@ class BirthCoordinator(A.TestOwner):
             control = self.control_for(birth, edits)
             require('birth/writer_contract', native['writer_contract'] == 'pm.executor.workflow_source.all_writers.v7')
             require('birth/initial_control_key', birth['initial_control_key'] == control_key)
+            for key in (birth_key, birth['initial_control_key']):
+                _, proj, run = decode_family_key(key)
+                require('birth/key_identity', proj == scope['project_id'] and run == scope['goal_run_id'])
             require('birth/control_selects_birth', control['birth'] == dict(key=birth_key, sha256=sha(A.canonical(birth))))
             require('birth/initial_epoch', birth['initial_control_epoch'] == 0 == control['epoch'])
             require('birth/initial_phase', birth['initial_phase'] == 'empty' == control['phase'])
@@ -1737,9 +1763,10 @@ class World:
                     scope_partition=S.scope_partition(dict(scope_kind='project', project_id=scope['project_id'])))
 
     def coord_key(self, family, scope, cscope=None):
+        """Coordinator family key from physical-retention-install.json: the package's own lowercase
+        even-length hex of exact nonempty UTF-8 (not SP-311/SP-312 K(s))."""
         cscope = cscope or self.coord_scope(scope)
-        return 'goal_certified_event_%s.v1:%s:%s' % (family, S.k_component(cscope['project_id']),
-                                                      S.k_component(cscope['goal_run_id']))
+        return coord_family_key(family, cscope['project_id'], cscope['goal_run_id'])
 
     def cf2_inputs(self, obs):
         """Whole native/producer roots DG-CF2 consumes at the DG merge (owner handles, not copies)."""

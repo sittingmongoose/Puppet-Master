@@ -187,6 +187,10 @@ def check_positive(obs, label):
     A.require('cf05/birth_selects_native', b['birth']['original_native_birth']['sha256'] ==
               W.sha(A.canonical(native_birth['value'])))
     A.require('cf05/control_selects_birth', b['control']['birth']['sha256'] == W.sha(A.canonical(b['birth'])))
+    for key in (w.coord_key('birth', scope), w.coord_key('control', scope)):
+        _, proj, run = W.decode_family_key(key)
+        A.require('cf05/family_key_hex_roundtrip', proj == scope['project_id'] and run == scope['goal_run_id'] and
+                  key.split(':')[1] == scope['project_id'].encode('utf-8').hex())
     order = [m for _, m in w.recorder.sequence(True)]
 
     def idx(name):
@@ -439,6 +443,10 @@ def negatives():
         c, birth=dict(c['birth'], sha256='6' * 64)))), 'birth/control_selects_birth')
     add('CF-05', 'circular_birth_selects_own_key',
         dict(birth_edits=dict(birth=lambda b: dict(b, initial_control_key=b['original_native_birth']['key']))),
+        'birth/initial_control_key')
+    add('CF-05', 'control_key_base64url_codec', dict(birth_edits=dict(birth=lambda b: dict(
+        b, initial_control_key='goal_certified_event_control.v1:%s:%s' % (S.k_component(W.default_values()['project_id']),
+                                                                         S.k_component(W.default_values()['goal_run_id']))))),
         'birth/initial_control_key')
     add('CF-05', 'initial_control_epoch_nonzero', dict(birth_edits=dict(birth=lambda b: dict(
         b, initial_control_epoch=1))), 'birth/initial_epoch')
