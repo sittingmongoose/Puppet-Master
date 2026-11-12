@@ -76,6 +76,9 @@ function sampler(options) {
 	};
 	// QA-4 trade: entering props may pass behind a settled bubble (lead ruling 18:40Z). The bubble's placement at the
 	// moment it was made, as pip-bubble-clear reads it, so stillness can be judged per entry
+	// --set negative=still: the bubble nudged 3 px on alternate placements while a claim band is up, inside the placement
+	// reader below, so both the placement and the painted translate move (the stillness condition bites)
+	if (options?.negative === 'still') { const st3 = document.querySelector('#pm-o55-onboarding .o55-stage')?.__pipStage; const pl = st3.placeBubble; let n = 0; st3.placeBubble = function (H, ang) { const r = pl.call(this, H, ang); if (this.bubbleKeepOff) { const m = /^(-?[\d.]+)px (-?[\d.]+)px$/.exec(this.bubble.style.translate || ''); if (m) this.bubble.style.translate = `${+m[1] + (++n % 2) * 3}px ${m[2]}px`; } return r; }; }
 	const wrap = () => {
 		const st2 = document.querySelector('#pm-o55-onboarding .o55-stage')?.__pipStage;
 		if (!st2 || st2.__skWrapped) return;
@@ -84,8 +87,6 @@ function sampler(options) {
 		st2.__skWrapped = true;
 	};
 	wrap();
-	// --set negative=still: the bubble nudged 3 px on alternate frames while a claim band is up (the stillness condition bites)
-	if (options?.negative === 'still') { const st3 = document.querySelector('#pm-o55-onboarding .o55-stage')?.__pipStage; const pl = st3.placeBubble; let n = 0; st3.placeBubble = function (H, ang) { const r = pl.call(this, H, ang); if (this.bubbleKeepOff) { const m = /^(-?[\d.]+)px (-?[\d.]+)px$/.exec(this.bubble.style.translate || ''); if (m) this.bubble.style.translate = `${+m[1] + (++n % 2) * 3}px ${m[2]}px`; } return r; }; }
 	const span1 = (vs, i) => vs.length ? Math.max(...vs.map((v) => v[i])) - Math.min(...vs.map((v) => v[i])) : 0;
 	const stillSpan = (ep) => Math.max(Math.min(span1(ep.rels, 0), span1(ep.trs, 0)), Math.min(span1(ep.rels, 1), span1(ep.trs, 1)));
 	const finishEp = (ep) => {
