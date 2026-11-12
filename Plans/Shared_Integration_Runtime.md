@@ -33,7 +33,7 @@ ContractRef: ContractName:Plans/DRY_Rules.md#2, ContractName:Plans/Contracts_V0.
 
 ## 2. Platform invariants
 
-1. Puppet Master is Server-first. Every Project has one Project Home Server and one physical Project Vault. The Home Server is the default Execution Host; additional Execution Hosts are explicit. Every operation binds an exact Execution Host, Execution Environment, and Source Location before admission.
+1. Puppet Master is Server-first. Every Project has one Project Home Server and one physical Project Vault. New Project work defaults to Auto under SIR-056 among the Project's allowed Computers; each Project also has a default Computer for ties. The Home Server remains the records home, not a mandatory worker. Every operation binds an exact Execution Host, Execution Environment, and Source Location before admission.
 2. Native Windows, macOS, and Linux hosts, standalone Servers, and supported container Servers are execution-capable. WSL is optional and environment-specific. Kubernetes execution is namespace-scoped unless a separately approved owner policy grants narrower capabilities; silent host or namespace fallback is prohibited.
 3. `RuntimeResourceGovernor` is the single shared resource-policy and admission mechanism. Enforcement is host-local even when policy originates on the Home Server.
 4. `ObservableWork` is the single shared truth for phase, wait reason, progress, cancellation, and terminal outcome. A spinner, command dispatch receipt, or connection state is not work truth.
@@ -1486,23 +1486,18 @@ plan_unit_id: SIR-026
 unit_type: command_contract
 status: accepted
 owner_doc: Plans/Shared_Integration_Runtime.md
-canonical_text: >-
-  ProjectHostBinding and SourceLocationRegistry own the eight exact Project topology operations in the
-  inventory. Home Server, execution Host, execution policy, and Source Location are separate typed
-  bindings; changing one does not silently change routes, move a Project, delete external source payloads,
-  or select another binding. Repointing a Project after its folder was moved outside Puppet Master uses
-  cmd.project.source_location.test then cmd.project.source_location.update with verified stable identity;
-  it moves no content. Moving content uses PSB-005 cmd.project.move.preflight and cmd.project.move.start
-  with verified copy/cutover/rollback; app chat transfer consumes PSB-007. Read-only repository inspection
-  consumes this topology and stays with Source Control, never the topology owner.
+canonical_text: |-
+  ProjectHostBinding and SourceLocationRegistry own the eight exact Project topology operations in the inventory. Home Server, execution Host, execution policy, and Source Location are separate typed bindings; changing one does not silently change routes, move a Project, delete external source payloads, or select another binding. Repointing a Project after its folder was moved outside Puppet Master uses cmd.project.source_location.test then cmd.project.source_location.update with verified stable identity; it moves no content. Moving content uses PSB-005 cmd.project.move.preflight and cmd.project.move.start with verified copy/cutover/rollback; app chat transfer consumes PSB-007. Read-only repository inspection consumes this topology and stays with Source Control, never the topology owner.
+
+  SIR-056 owns the one placement policy consumed by cmd.project.execution_policy.set, cmd.project.execution_host.select and cmd.execution_host.*. ExecutionTopologyRegistry and ProjectHostBinding keep the sole policy/default/allowed-set state; Settings is a reviewed editing surface, not a second store or scheduler. A policy or pin mutation uses expected policy/topology generations and actor precedence; a stale pin/dispatch race refuses or reevaluates before effects. Existing native-handler evidence gates still apply.
 gui_related: true
 depends_on: [SIR-004, SIR-015, SIR-025]
 unblocks: []
 acceptance_criteria:
-  - All eight commands use ProjectTopology request/result/error/availability/permission contracts and the sole handlers listed above.
-  - Add/update/remove/set-primary/test settle exact Project and Source Location identities under current generations.
-  - Removing a binding never implies deletion of the external source payload.
-  - Every command remains handler_unavailable until its exact native handler has evidence.
+- All eight commands use ProjectTopology request/result/error/availability/permission contracts and the sole handlers listed above.
+- Add/update/remove/set-primary/test settle exact Project and Source Location identities under current generations.
+- Removing a binding never implies deletion of the external source payload.
+- Every command remains handler_unavailable until its exact native handler has evidence.
 validation_surfaces: [Plans/shared_integration_runtime_expansion_contracts.schema.json, Plans/shared_integration_runtime_expansion_fixtures.json, focused SIR expansion validator]
 risk_class: project_topology_binding_or_external_data_loss
 reasoning_tier: high
@@ -1510,10 +1505,11 @@ context_scope: project_topology_commands
 implementation_surfaces: [Plans/Shared_Integration_Runtime.md, future ProjectHostBinding and SourceLocationRegistry]
 node_compile_hint: {mode: shared_runtime_static_contract_only, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - "server-command-gap-adjudication rows 106-108 and 122-127"
-  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
-  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
-  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
+- "share/puppet-master/2026-11-09-settings-feedback/BRIEF-plans-where-work-runs.md; Jared 2026-11-09"
+- "server-command-gap-adjudication rows 106-108 and 122-127"
+- "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+- "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+- "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 negative_constraints: [No implicit Project Move., No implicit route change., No external payload deletion.]
 ```
 
@@ -3292,3 +3288,59 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Shared_Integration_Runtime.md#SIR-055, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md
+
+
+### SIR-056 - Where Work Runs: Auto, Pins And Safe Reassignment
+
+```yaml
+plan_unit_id: SIR-056
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Shared_Integration_Runtime.md
+canonical_text: |-
+  A Project has one records home and a separate default Computer. New Project work requests Auto by default. Resolve the requested policy before candidate selection; a candidate's own Settings cannot choose itself. The Project default Computer is a tie-break, not a pin. Registration must obtain a person's allowed-Computer decision and record a stable default execution_host_id from that allowed set; it never implicitly allows every discovered Computer. Existing verified Project work bindings may supply the initial default without moving work. If that default is later unavailable or removed, disclose it and require a reviewed replacement; never silently substitute the records home.
+
+  Settings owns the reviewed rows in SSYS-059; ExecutionTopologyRegistry/ProjectHostBinding remain the sole runtime policy owners. Everywhere supplies the preset and Advanced weights; each Computer has a level; a Project may override the preset, choose Auto or a person-chosen Computer, and has its allowed set/default. A task, WorkNode or child adds minimums, never a priority, preset or weight override. A bounded run/task pin is operational state, not a new Settings level. Device is never a placement level. cmd.execution_host.* and cmd.project.execution_policy.set retain their existing owner routes; the existing scheduler consumes this policy and RuntimeResourceGovernor alone admits resources.
+
+  Eligibility is a conjunction of must-haves, never a score: the Computer is answering with current trusted identity; it is enabled, not drained and allowed for this Project and work; it has the exact required files/baseline or separate permission to prepare them; the exact Environment, provider/account sign-ins and tools are ready; task OS/architecture, GPU/device, memory and disk minimums and current authority all pass. Check both before ranking and immediately before dispatch. Missing, stale or conflicted proofs exclude with a reason, never zero load. Preparation is pending work under its own authority and cannot run a task until verified. Discovery and an allowed-Computer entry grant no protected trust, credentials, source access or external operation.
+
+  The governor enforces person-configured per-Computer memory and disk floors in GB plus the task's declared minimums. Capacity accounting reserves each admitted running task's declared minimum, including expected ramp-up, atomically with dispatch so concurrent tasks cannot spend the same headroom. Reconcile measurements with reservations without double charging already observed use. Check the actual destination volume, container limits and shared physical-parent budget. Browser sessions, GPU recording/encoder sessions, phones/simulators and exclusive GPU access are countable leased must-haves. Use Linux available memory rather than free-only pages, Windows commit headroom alongside available physical memory, and macOS memory pressure plus usable headroom. Unknown measurements or floors cannot be guessed. Account quota is shared across Computers: spreading work adds no quota. Current account admission remains authoritative; warn if known quota/sign-in lifetime is shorter than expected work, and label unknown lifetime honestly. Keep existing Project concurrency caps and fair queued waves; a Project cannot consume reserved control/verification capacity or all shared slots by adding Computers.
+
+  Only eligible Computers enter ranking. Levels are Prefer, Normal, Less often, and Only when I choose it. Auto excludes Only when I choose it; an explicit permitted pin may use it. Higher preference levels rank first, then the effective preset's weighted measures. The in-use setting is on by default: keyboard activity or battery power makes a Computer count as Less often, capped there without raising an already lower/manual-only level. This never authorizes opening visible windows/apps in someone's session; existing explicit desktop/display authority remains required. Battery, thermal/GPU contention, pending restart and runner durability are disclosed risk/health facts under the existing governor, not new permission. Repeated file/task timeouts demote health even when heartbeat answers; unknown or unhealthy file service cannot masquerade as ready.
+
+  Balanced is the default and gives nonzero weight to free usable CPU, free memory in GB, free disk space and queued work (less queued work ranks higher). Has the files already is only an Advanced measure, default 0; it is not in Balanced. Fastest favors free work-family CPU capacity and measured file-route speed. Keep my computer free retains Balanced measures and favors leaving the person's active Computer idle; it does not turn off the global in-use demotion for other presets. Advanced exposes weights for free CPU, free memory, free disk, GPU headroom, queued work, has the files already and file-route speed. A zero weight never disables a must-have. GPU minimums and leased slots stay gates even when GPU headroom is weighted. Scores consume fresh governor observations and existing latency/IO-wait/work-family health, not a second CPU-count estimator. Publish a versioned normalization, coefficients, freshness limits and hysteresis contract before native implementation; these numbers are not inferred from T3 or certified by this prose. The explanation names the selected preset, weights and policy version. Equal final ranks prefer the Project default Computer, then canonical stable execution_host_id order; renaming or discovery order cannot change a tie. One eligible Computer simply wins; none waits/blocks visibly, with no unmeasured fallback.
+
+  A valid person's pin wins and constrains delegated work unless that person explicitly lets agents choose. An agent may pin one task/WorkNode/child or request Auto only within current allowed Computers, parent subset and that human constraint. Its pin never changes Project or Everywhere defaults. Both use the same owner admission and record actor, scope, expected policy generation and reason. Clearing a pin returns to inheritance. An unavailable pin waits with its reason; Auto never overrides it. Even in YOLO, adding a new Computer/device identity still asks the person; Auto and agents never widen the allowed set, trust or authority. PS-147/148 authorize a build on the Project's current person-allowed Computers, including a Computer the person allows later, but every dispatch independently checks all remaining authority.
+
+  Resolve every independently dispatchable task, WorkNode and child; keep branch/worktree/scratch-dependent chains on their bound Computer. Favor local disk for Git-heavy preparation through actual file-route observations. Hysteresis retains eligible related follow-ups when scores are close; never move a running attempt to improve a score. Timing-sensitive work and heavy builds declare work-family requirements so the governor avoids harmful co-admission using load and IO wait. Before the first effect, freeze exactly one Computer/Host, Environment, source/baseline/worktree, account/route, operation/attempt and owner epoch with current policy/topology/permission/build/Plan/Stop/revocation evidence. host_assignment_id references that original decision; no extra fields are added to execution_unit_context 1.0.0. Record the candidate/allowed-set generation actually used without freezing future human changes for the entire build. Recheck approved Plan context and source compatibility on the chosen Computer; location permission is not approval of a different baseline, branch or target. Stale generations and pin races refuse or reevaluate before effects.
+
+  Wait, then safe retry: started work waits and resumes on its Computer. Route or Client loss is not proof the worker stopped. Stop new dependent dispatch to a lost Computer, disclose last verified state and uncertain outcomes, reconnect and reconcile. A later attempt/handoff may move only from a safe checkpoint after fencing the old owner and settling nonportable resources and unknown external effects; lease expiry alone is insufficient proof against duplicate work. Recheck retry policy, source, Plan and authority before the new attempt. Unstarted independent Auto work may choose another eligible Computer. Policy changes affect unstarted work; they never rewrite a frozen attempt. The Home Server never fails over automatically and an offline Home is a separate control-plane outage, not permission for a second Vault writer.
+
+  Each selected Computer needs its own verified Project source/workspace binding at the required immutable baseline. Separately authorized preparation may clone/fetch or stage a verified snapshot, then acquire durable ownership/lease, materialize the required isolated branch/worktree, verify identity/baseline/roots/permissions, attach, and only then start the child (W-080). Honor the work's existing isolation contract; remote placement never weakens it to a shared checkout. Resolve folders against the actual worker's Host-specific configuration, never the viewing Client's home. Verify revision/object availability, filesystem/case behavior, submodules/LFS/backend needs and allowed roots; equal URL/path/name is insufficient. Dirty, generated/untracked files and attachments transfer only as explicitly included reviewed inputs; never silently copy or drop them. Serialize shared Git administration and parent/sibling writes. Returned commits/patches/artifacts keep source/attempt lineage and verify before integration. Cleanup/result custody stays on that Computer; an offline orphan waits for reconciliation rather than being presumed deleted. Working copies are not additional canonical Vaults.
+
+  Sign-ins and tool private roots stay on the actual worker. Computer selection never copies credentials, grants executable/Host trust, signs into a paid account, changes billing route or silently installs a provider CLI. A needed setup uses the existing protected flow on that named Computer. Host/account/route or relevant generation changes invalidate prior readiness, permission evidence and protected return bindings. Placement chooses location, never authority: PS-148 still intersects Managed, Computer/Project, parent/receiver/task ceilings and retained FileSafe/DAE/testing/custody/recovery gates.
+
+  The owner receipt retains requested/effective mode and Computer, choosing actor/scope, candidate exclusions, actual resource numbers/floors/slots/queues and observation age, level/preset/weights/version, source/readiness refs, policy/topology/authority generations, original admitted attempt and reevaluation boundary. Work shows Auto → <Computer> or Chosen: <Computer> with who chose it. Why this computer explains the winning reasons and why others were left out, including exact floor/slot failures; requested and effective values stay visible when different. Log selection and later outcome through existing ObservableWork/History owner receipts for tuning, never a parallel log or raw secrets. GUI reads the same projection; visible Resources sampling is distinct from admission telemetry. SRV-017 and general.interaction.no-project-default-computer remain unchanged: Keep the computer you're on, with the claimed-local/main starter rule and first-message freeze.
+gui_related: true
+gui_classification_reason: Defines visible placement choices, controls and explanations.
+depends_on: [SIR-025, SIR-026, SIR-039, PS-147, PS-148]
+unblocks: []
+acceptance_criteria:
+- "Gates exclude stale, untrusted, disallowed, drained, resource/slot-exhausted, missing-source/sign-in/tool and incompatible candidates before scoring."
+- "Balanced weighs CPU, absolute memory, disk and queue; file locality defaults to zero and is Advanced only. Human pins win; agent pins never mutate shared defaults."
+- "Equal ranks use Project default then stable Host id; no ready candidate and unavailable pins explain a wait rather than fallback."
+- "Each dispatch freezes one exact selection; offline started work cannot duplicate effects, and Home never automatically fails over."
+- "Files/worktree, credentials, current Plan/build/Stop and Computer/Project authority are verified on the actual worker; no-project policy stays unchanged."
+validation_surfaces: [future placement gate/ranking/pin/recovery fixtures, scripts/pm-plan-index.py]
+risk_class: placement_authority_and_duplicate_effects
+reasoning_tier: high
+context_scope: project_work_placement
+implementation_surfaces: [Plans/Shared_Integration_Runtime.md]
+node_compile_hint: {mode: owner_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+- "share/puppet-master/2026-11-09-settings-feedback/BRIEF-plans-where-work-runs.md; Jared 2026-11-09"
+preserved_exact_tokens: ["Auto", "Computer", "Why this computer", "Auto → <Computer>", "Chosen: <Computer>", "RuntimeResourceGovernor", "host_assignment_id"]
+negative_constraints:
+- No placement widens authority or changes the Project Home Server.
+- No native readiness or governance seal is inferred from accepted prose.
+```

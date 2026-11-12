@@ -2,9 +2,9 @@
 
 Source: `Plans/Containers_Registry_and_Unraid.md`
 
-Source lines: L6544-L6976
+Source lines: L6544-L6981
 
-Source SHA256: `0263a7722ce9525e6a26baffc162d7c688500c9b9ff96672e28d7b2cb83a4663`
+Source SHA256: `95bfb633848bbd57d1c954d260433ae631bf27239507418e2f352d011a70394e`
 
 ---
 
@@ -23,9 +23,12 @@ status: accepted
 owner_doc: Plans/Containers_Registry_and_Unraid.md
 canonical_text: >-
   Container and host capability is resolved within one Project topology: exactly one Project Home Server and one
-  physical Project Vault, with the Home Server as the default Execution Host. A Project may register additional
-  Execution Hosts, and every executable operation names an explicit Execution Environment and Source Location rather
-  than inferring either from the active Client, a mounted path, container id, or current shell. The Project Vault is
+  physical Project Vault. The Home Server remains the records home; it is not the Execution Host by default. New
+  Project work is placed by the Shared Integration Runtime's work-placement policy (SIR-056), which requests Auto by
+  default among the Computers the person allowed for the Project, and a person's pin wins. A Project may register
+  additional Execution Hosts, and every executable operation names an explicit Execution Host, Execution Environment
+  and Source Location, frozen for that dispatch, rather than inferring any of them from the active Client, a mounted
+  path, container id, or current shell. The Project Vault is
   physical project storage, not an Execution Host, container image layer, Tool Store, CLI-profile store, or generic
   source-location alias. This owner consumes the Shared Integration Runtime's read-only RuntimeTopologyProjection and
   its ProjectHomeServerId, ProjectVaultId, ExecutionHostId, ExecutionEnvironmentId, SourceLocationId, and
@@ -37,7 +40,7 @@ depends_on: [CRAU-090, CRAU-091, SIR-002]
 unblocks: [CRAU-101, CRAU-102, CRAU-103]
 acceptance_criteria:
   - Every container, server, Kubernetes, and host-capability operation resolves one Project Home Server, one physical Project Vault, one Execution Host, one Execution Environment, and one Source Location.
-  - The Home Server is the deterministic default Execution Host; selecting an additional Host is explicit and receipt-visible.
+  - Containers consumes the Execution Host chosen by SIR-056 placement (Auto by default, a person's pin wins) and never defaults to the Home Server on its own; each dispatch freezes one exact Host, and the chosen Host, who or what chose it and why are receipt-visible.
   - Client location, mounted-path location, Source Location, Execution Environment, Execution Host, and physical Vault remain separate identities.
   - Containers consumes RuntimeTopologyProjection freshness and exact identity bindings; unavailable, stale, or conflicted topology cannot be replaced by a local guess.
   - No Containers flow claims ownership of Project Sync/Backbone content sync, move, app-content update, or source relocation.
@@ -59,10 +62,12 @@ source_lineage:
   - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/01_OWNER_AND_ARCHITECTURE_BOUNDARIES.md#server-first-topology
   - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/07_SERVER_WSL_CONTAINER_RESOURCE_AND_SECURITY.md#execution-forms
   - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/reference/SERVER_BACKBONE_INTEGRATION_RUNTIME_RETURN.md
+  - "share/puppet-master/2026-11-09-settings-feedback/BRIEF-plans-where-work-runs.md; Jared 2026-11-09; review r1 F1"
 preserved_exact_tokens:
   - "one Project Home Server"
   - "one physical Project Vault"
-  - "Home Server as default Execution Host"
+  - "Home Server remains the records home"
+  - "work-placement policy (SIR-056)"
   - "additional Execution Hosts"
   - "Execution Environment"
   - "Source Location"

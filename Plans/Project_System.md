@@ -39,7 +39,7 @@ The registry lifecycle is:
 
 `registering -> registration_failed` is allowed. `registration_failed -> registering` requires an explicit retry with the same idempotency binding or a new request. `removed_from_list -> registering` is re-registration and may recover the same `project_id` only through a verified stable config reference or migration alias; path equality alone is insufficient. Data deletion is an external Storage-owned operation. While deletion is requested or blocked, the Project projection may show `data_deletion_pending` or `data_deletion_blocked`, but Project System does not execute or certify deletion.
 
-`ProjectRecord` contains only Project identity and registry metadata: immutable ID, display name, lifecycle, registration kind, stable config ref, Project Home Server/Vault/source/repository refs when known, created/updated/last-opened timestamps, revision, currentness hash, bounded warning codes, and migration lineage. It does not embed Settings values, file trees, Git state, sync manifests, backup payloads, credentials, active agents, runtime health, or shell layout.
+`ProjectRecord` contains only Project identity and registry metadata: immutable ID, display name, lifecycle, registration kind, stable config ref, Project Home Server/Vault/source/repository refs when known, created/updated/last-opened timestamps, revision, currentness hash, bounded warning codes, and migration lineage. The Project's default work choice, default Computer and allowed-Computer set are referenced through its existing stable config and ProjectHostBinding refs, not duplicated as mutable ProjectRecord Settings fields. Each Project has a stable default Computer and new work defaults to Auto under SIR-056. It does not embed Settings values, file trees, Git state, sync manifests, backup payloads, credentials, active agents, runtime health, or shell layout.
 
 Registration is transactional. Candidate inspection may discover metadata, but a Project is not visible as `listed` until identity, stable config ref, minimum permission/FileSafe checks, and owner handoff refs are committed together. Failure leaves no half-registered row. A temporary mount remains temporary until explicitly promoted. A restore owner returns either `restore_same_project` with verified identity or `restore_as_new`; the latter receives a new `project_id`.
 
@@ -912,13 +912,15 @@ owner_doc: Plans/Project_System.md
 canonical_text: |-
   Projects is the primary registry/list management surface with one New Project launcher and labelled Open, Details and More actions. It consumes one current Project registry and the existing project_summary and project_attention_item rollups. Canonical blocked episodes take precedence over derived warnings; stale/degraded summaries disclose reduced confidence rather than manufacturing a blocker or healthy success. Render one primary owner reason using FinalGUISpec §7.5 precedence. History/backend/branch or bookmark, online-copy service plus checked ahead/behind facts, and the last complete backup/last verified backup/later failed or unverified attempt remain independent Safe facts, never one protection boolean.
 
-  Details shows full source path and work Computer, copy/open-in-file-manager, Find folder or Move folder, owner-routed history/online actions and Backup history/Back Up Now/Restore as New, Project Settings, Rename and New project like this. Technical identities/hashes and destructive Delete data stay in their exact detail/strong-confirmation surfaces. Empty, filtered-empty, archived, removed, unavailable/missing-folder, recovery-required and duplicate-name states are explicit. Search/filter changes never mutate a Project. P11 Import from another app is shown not here yet with its reason, receives no working command and does not revive retired Origin integration.
+  Details shows full source path, records home, default Computer, requested work choice and current active Computers, copy/open-in-file-manager, Find folder or Move folder, owner-routed history/online actions and Backup history/Back Up Now/Restore as New, Project Settings, Rename and New project like this. Technical identities/hashes and destructive Delete data stay in their exact detail/strong-confirmation surfaces. Empty, filtered-empty, archived, removed, unavailable/missing-folder, recovery-required and duplicate-name states are explicit. Search/filter changes never mutate a Project. P11 Import from another app is shown not here yet with its reason, receives no working command and does not revive retired Origin integration.
 
   cmd.project.rename uses sole handlers::project::rename and the existing Project action family. It trims and validates display_name by the Project metadata policy while preserving interior spaces; expected Project/registry revisions and hashes, exact return, authority and idempotency fence the write/readback. Only display_name and its registry revision/timestamp change; immutable project_id, stable config, folder, repo, Vault, sources and running work retain identity. A stale/concurrent rename fails rather than overwriting. Folder names for new content retain the accepted name spaces subject to the actual destination filesystem and collision rules; they are not silently lowercased or dash-slugged.
 
   Missing-folder repair offers Locate/repoint through source_location.test then source_location.update with stable Project/Host/Environment/source identity, as clarified by SIR-026. It moves no files. Content relocation uses PSB-005 cmd.project.move.preflight/start and its verified lifecycle; the page performs neither operation privately. Archive is reversible and consumes BRS-033 schedule pause; unarchive uses current owner eligibility without hidden backup. Remove remains list-only, with Undo using verified re-registration of the retained stable config/identity. Delete data remains a separate Storage-owned operation under holds. Switching or opening never stops background work in other Projects.
 
   Projects surfaces retained unfinished-setup notices separately from listed registry rows, keyed by recovery_id under SP-321. Opening a notice reads the same current owner recovery projection and re-enters the shared setup view; it never automatically resumes, creates a Project row or treats a verified remote as a listed Project. Continue Setup uses cmd.project.resume_creation only when the exact current owner eligibility and effective dispatch gates hold; Open Repository and separately human-confirmed Delete Repository retain PJCT-007/010 boundaries.
+
+  The summary says Auto or the scoped chosen Computer and separately lists current active Computers; it never claims the whole Project works on one Computer. Details exposes person-edited allowed Computers and default Computer via SIR-026/056, with Project preset override via Settings. Each work item consumes Auto → <Computer> or Chosen: <Computer>, chooser and Why this computer from the placement owner. Requested/effective differences, excluded candidates and stale facts stay visible. Opening, renaming or repointing a Project never retargets frozen work.
 gui_related: true
 gui_classification_reason: Defines visible setup, choice, status, recovery or exact return behavior.
 depends_on:
@@ -934,6 +936,7 @@ acceptance_criteria:
 - Remove preserves every data/history/backup object and re-add/Undo requires stable identity evidence.
 - Missing/archived/filtered/recovery/long-path states, all ten looks, keyboard/focus and Reduced Motion consume
   shared GUI primitives and owner status.
+- "Project records home, default Computer, requested placement and actual workers remain distinct, including simultaneous multi-Computer work."
 validation_surfaces:
 - Plans/project_system_contracts.schema.json
 - scripts/pm-projects-refresh-contracts.py
@@ -948,6 +951,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+- "share/puppet-master/2026-11-09-settings-feedback/BRIEF-plans-where-work-runs.md; Jared 2026-11-09"
 - /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md#P5/P7/P9/P10/P11; pass-1 §4
 - 'Jared, 2026-11-03 (verbatim): I approve the outstanding questions with their recommended settings.'
 - /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-e
