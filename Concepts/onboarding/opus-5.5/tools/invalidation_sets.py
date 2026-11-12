@@ -251,7 +251,10 @@ def simples(comp: str) -> list[tuple[str, str, str]]:
             i += m.end() if m else 1
             continue
         if re.match(r'[A-Za-z_\\-]', c) and not out:
-            m = re.match(r'(?:[\w-]+\|)?([\w-]+)', comp[i:])
+            m = re.match(r'(?:[\w-]+\|)?((?:\\.|[\w-])+)', comp[i:])
+            if not m:
+                i += 1
+                continue
             out.append(('tag', m.group(1).lower() if not re.search(r'[A-Z]', m.group(1)) else m.group(1), ''))
             i += m.end()
             continue
@@ -482,16 +485,27 @@ def set_entries(sel: str):
 
 
 def blocks_of(page: str):
-    """(block id, css, first line) for every <style> of a built page."""
-    out, pos, lines = [], 0, 0
-    for m in re.finditer(r'<style\b([^>]*)>', page):
-        e = page.find('</style>', m.end())
-        if e < 0:
+    """Actual HTML style blocks; a <style> literal in a script/comment is not a stylesheet."""
+    out, pos, line = [], 0, 1
+    tags = re.compile(r'<!--.*?-->|<(script|style)\b([^>]*)>', re.S | re.I)
+    closes = {k: re.compile(r'</' + k + r'\s*>', re.I) for k in ('script', 'style')}
+    while (m := tags.search(page, pos)):
+        line += page.count('\n', pos, m.end())
+        if m.group(1) is None:
+            pos = m.end()
             continue
-        lines += page.count('\n', pos, m.end())
-        pos = m.end()
-        idm = re.search(r'\bid="([^"]+)"', m.group(1)) or re.search(r'data-pm-split-of="([^"]+)"', m.group(1))
-        out.append((idm.group(1) if idm else 'style@%d' % (lines + 1), page[m.end():e], lines + 1))
+        kind = m.group(1).lower()
+        close = closes[kind].search(page, m.end())
+        if close is None:
+            break
+        end = close.start()
+        if kind == 'style':
+            attrs = m.group(2)
+            idm = re.search(r'\bid="([^"]+)"', attrs) or re.search(r'data-pm-split-of="([^"]+)"', attrs)
+            out.append((idm.group(1) if idm else 'style@%d' % line, page[m.end():end], line))
+        next_pos = close.end()
+        line += page.count('\n', m.end(), next_pos)
+        pos = next_pos
     return out
 
 
