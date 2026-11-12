@@ -1,0 +1,195 @@
+{
+  "schema_id": "pm.assurance.dr.sweep_part1_checks.v1",
+  "implementation_commit": "bcf623e86b82f28f12ccc530049c6e1dd6d99c27",
+  "status": "part_1_verified_part_2_pending",
+  "baseline": {
+    "status": "pass",
+    "cases": 20564,
+    "per_family": {
+      "runtime_artifact.api_web_call": 929,
+      "shared": 33,
+      "runtime_artifact.artifact_version": 953,
+      "runtime_artifact.before_after_snapshot": 977,
+      "runtime_artifact.browser_recording": 1049,
+      "runtime_artifact.code_diff": 929,
+      "runtime_artifact.context_snapshot": 953,
+      "runtime_artifact.cost_usage": 1292,
+      "runtime_artifact.document": 953,
+      "runtime_artifact.evidence": 953,
+      "runtime_artifact.failed_attempts": 929,
+      "runtime_artifact.hitl_approval": 929,
+      "runtime_artifact.implementation_plan": 929,
+      "runtime_artifact.reasoning_summary": 929,
+      "runtime_artifact.restore_point": 2815,
+      "runtime_artifact.screenshot": 953,
+      "runtime_artifact.subagent_lineage": 929,
+      "runtime_artifact.suggested_next_steps": 929,
+      "runtime_artifact.tool_llm_trace": 1272,
+      "runtime_artifact.validation_test": 929
+    },
+    "failures": [],
+    "family_runs": [
+      {
+        "family": "runtime_artifact.api_web_call",
+        "exit_code": 0,
+        "status": "pass",
+        "available_ram_GB": 15
+      },
+      {
+        "family": "runtime_artifact.artifact_version",
+        "exit_code": 0,
+        "status": "pass",
+        "available_ram_GB": 13
+      },
+      {
+        "family": "runtime_artifact.before_after_snapshot",
+        "exit_code": 0,
+        "status": "pass",
+        "available_ram_GB": 11
+      },
+      {
+        "family": "runtime_artifact.browser_recording",
+        "exit_code": 0,
+        "status": "pass",
+        "available_ram_GB": 10
+      },
+      {
+        "family": "runtime_artifact.code_diff",
+        "exit_code": 0,
+        "status": "pass",
+        "available_ram_GB": 9
+      },
+      {
+        "family": "runtime_artifact.context_snapshot",
+        "exit_code": 0,
+        "status": "pass",
+        "available_ram_GB": 10
+      },
+      {
+        "family": "runtime_artifact.cost_usage",
+        "exit_code": 0,
+        "status": "pass",
+        "available_ram_GB": 12
+      },
+      {
+        "family": "runtime_artifact.document",
+        "exit_code": 0,
+        "status": "pass",
+        "available_ram_GB": 14
+      },
+      {
+        "family": "runtime_artifact.evidence",
+        "exit_code": 0,
+        "status": "pass",
+        "available_ram_GB": 13
+      },
+      {
+        "family": "runtime_artifact.failed_attempts",
+        "exit_code": 0,
+        "status": "pass",
+        "available_ram_GB": 14
+      },
+      {
+        "family": "runtime_artifact.hitl_approval",
+        "exit_code": 0,
+        "status": "pass",
+        "available_ram_GB": 13
+      },
+      {
+        "family": "runtime_artifact.implementation_plan",
+        "exit_code": 0,
+        "status": "pass",
+        "available_ram_GB": 14
+      },
+      {
+        "family": "runtime_artifact.reasoning_summary",
+        "exit_code": 0,
+        "status": "pass",
+        "available_ram_GB": 15
+      },
+      {
+        "family": "runtime_artifact.restore_point",
+        "exit_code": 0,
+        "status": "pass",
+        "available_ram_GB": 16
+      },
+      {
+        "family": "runtime_artifact.screenshot",
+        "exit_code": 0,
+        "status": "pass",
+        "available_ram_GB": 13
+      },
+      {
+        "family": "runtime_artifact.subagent_lineage",
+        "exit_code": 0,
+        "status": "pass",
+        "available_ram_GB": 12
+      },
+      {
+        "family": "runtime_artifact.suggested_next_steps",
+        "exit_code": 0,
+        "status": "pass",
+        "available_ram_GB": 12
+      },
+      {
+        "family": "runtime_artifact.tool_llm_trace",
+        "exit_code": 0,
+        "status": "pass",
+        "available_ram_GB": 12
+      },
+      {
+        "family": "runtime_artifact.validation_test",
+        "exit_code": 0,
+        "status": "pass",
+        "available_ram_GB": 14
+      }
+    ],
+    "native_execution": "NOT_RUN",
+    "admission": "NONE",
+    "mode": "baseline",
+    "checker_sha256": "2631dc37c1dea20eab99d74c5ad31363ef2c86849d000f7f32400c199b983037",
+    "trial_sha256": "2631dc37c1dea20eab99d74c5ad31363ef2c86849d000f7f32400c199b983037",
+    "validation_codec_result_caches": false,
+    "immutable_file_reads_reused_and_verified": true
+  },
+  "new_pairs": 58,
+  "individual_predicates": {
+    "trace_quota_observed": {
+      "exit": 1,
+      "status": "fail",
+      "cases": 20564,
+      "target_failures": 20,
+      "unrelated_failures": 0,
+      "expected_exit": 1,
+      "outcome": "caught"
+    },
+    "checkpoint_node_generation_copy": {
+      "exit": 1,
+      "status": "fail",
+      "cases": 20564,
+      "target_failures": 19,
+      "unrelated_failures": 0,
+      "expected_exit": 1,
+      "outcome": "caught"
+    },
+    "checkpoint_anchor_retained_event_count": {
+      "exit": 1,
+      "status": "fail",
+      "cases": 20564,
+      "target_failures": 19,
+      "unrelated_failures": 0,
+      "expected_exit": 1,
+      "outcome": "caught"
+    }
+  },
+  "index_validation": {
+    "status": "fail",
+    "failure_count": 22,
+    "failure_kinds": {
+      "plan_unit_removal_ledger_invalid": 21,
+      "plan_unit_removed_without_ledger_decision": 1
+    }
+  },
+  "native_execution": "NOT_RUN",
+  "admission": "NONE"
+}

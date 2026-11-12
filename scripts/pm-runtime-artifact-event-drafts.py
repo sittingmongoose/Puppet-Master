@@ -1,0 +1,2036 @@
+#!/usr/bin/env python3
+"""DR static contracts: real hashes over fixture bytes, bounded custody/append models.
+
+Install scripts/requirements-runtime-artifact-drafts.txt in a venv. No native
+storage, transaction, source authentication, receipt issuance or admission runs.
+"""
+import copy
+import argparse
+import ast
+import base64
+from contextlib import contextmanager
+import hashlib
+import importlib
+import json
+from pathlib import Path
+import re
+import struct
+import sys
+from types import SimpleNamespace
+from urllib.parse import urldefrag, urljoin
+
+from blake3 import blake3
+import rfc8785
+from jsonschema import Draft202012Validator, FormatChecker, ValidationError, validators
+from referencing import Registry, Resource
+from referencing.exceptions import Unresolvable
+from referencing.jsonschema import DRAFT202012
+
+from pm_event_index_binding import binding_digest
+# Sweep part 2B: the shared CV-1100/SP-1100/SP-1101 number and recipe calls and
+# the shared CV-1101/CV-253 date-time check replace the lane's own surrogates.
+from pm_event_numbers import (EVENT_VALUE, FrozenRecipe, JsonNumber, OriginalBinding, OriginalCustody, RecipeTuple,
+                              Refusal, RetainedDispatcher, current_integer, decode_storage_value, full_value_commitment,
+                              producer_semantic_digest, qualified_jcs, storage_value_bytes)
+from pm_event_datetime import datetime_validator
+from pm_runtime_artifact_guard_cases import accepted as guard_accepted, cases as guard_cases
+from pm_runtime_artifact_round8_cases import observation_source
+
+ROOT = Path(__file__).resolve().parents[1]
+INLINE_LIMIT = 16384
+SEMANTIC_FIELDS = (
+    'event_type', 'scope_kind', 'project_id', 'thread_id', 'run_id', 'node_id',
+    'attempt_id', 'actor_ref', 'requested_account_ref', 'effective_account_ref',
+    'occurred_at_utc', 'producer_sequence_id', 'correlation_id',
+    'causation_event_id', 'parent_event_id', 'idempotency_key',
+    'payload_schema_id', 'payload', 'payload_ref', 'redaction_profile', 'migration',
+)
+STORAGE_FIELDS = ('sequence_id', 'observed_at_utc', 'persisted_at_utc')
+PACK_REF = re.compile(r'pm\.payload_pack\.v1:blake3:([0-9a-f]{64}):([1-9][0-9]*):application/json\Z')
+CHECKPOINT_SCHEMA = 'Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint'
+CHECKPOINT_KEY = 'event_record_index_checkpoint.v1:{storage_instance_id}'
+PROVIDER_HASH_PATHS = {
+    'runtime_artifact.cost_usage': ('type_payload', 'authority', 'provider_payload_hash'),
+    'runtime_artifact.tool_llm_trace': ('type_payload', 'raw_payload', 'provider_payload_hash'),
+}
+CURRENT_WRITER = 'current-writer'
+HISTORICAL_V1 = 'historical-v1-before-provider-hash'
+
+# Method B guard tables (sweep part 2A). Every product refusal of this checker
+# is one named row of one phase table, evaluated in the table's declared order.
+# Derivation code below only computes observations (bytes, digests, resolved
+# routes, presence); it never decides acceptance. A boundary is an ordered chain
+# of phases; reused boundaries (schema, decode, full value, inspect) are phases.
+TABLE_PHASES = {
+    'schema.case': ('schema', 'case'), 'schema.overlay': ('schema_overlay', 'overlay_case'),
+    'codec_value': ('codec_value', 'value_case'), 'codec_identity': ('codec_identity', 'identity_case'),
+    'codec_profile': ('codec_profile', 'profile_case'), 'codec_storage': ('codec_storage', 'storage_case'),
+    'codec_oracle': ('codec_oracle', 'oracle_case'), 'codec_references': ('codec_references', 'references_case'),
+    'decode_envelope': ('decode_envelope', 'envelope_case'), 'decode_pack_ref': ('decode_pack_ref', 'pack_ref_case'),
+    'decode_pack_source': ('decode_pack_source', 'pack_source_case'), 'decode_pack_body': ('decode_pack_body', 'pack_body_case'),
+    'decode_provider_source': ('decode_provider_source', 'provider_source_case'),
+    'decode_provider_digest': ('decode_provider_digest', 'provider_digest_case'),
+    'decode_joins': ('decode_joins', 'joins_case'), 'decode_identity': ('decode_identity', 'identity_case'),
+    'decode_identity.restore': ('decode_identity_restore', 'restore_identity_case'),
+    'stored': ('stored', 'case'),
+    'inspect_flags': ('inspect_flags', 'flags_case'), 'inspect_payload': ('inspect_payload', 'payload_case'),
+    'inspect_deleted': ('inspect_deleted', 'deleted_case'),
+    'full_value_bytes': ('full_value_bytes', 'bytes_case'), 'full_value_ids_a': ('full_value_ids_a', 'ids_a_case'),
+    'full_value_ids_b': ('full_value_ids_b', 'ids_b_case'),
+    'history': ('history', 'case'),
+    'append_gate': ('append_gate', 'gate_case'), 'append_replay': ('append_replay', 'replay_case'),
+    'append_policy': ('append_policy', 'policy_case'), 'append_dedupe': ('append_dedupe', 'dedupe_case'),
+    'policies': ('policies', 'case'),
+    **{'checkpoint_' + k: ('checkpoint_' + k, k + '_case') for k in (
+        'route', 'store', 'node_a', 'node_b', 'token_a', 'token_b', 'source_event', 'source', 'manifest_type',
+        'manifest_a', 'manifest_b', 'anchor', 'coverage', 'frame', 'segment_a', 'segment_b', 'dataset')},
+    **{'observation_' + k: ('observation_' + k, k + '_case') for k in (
+        'source', 'group', 'snapshot', 'first', 'recipe', 'lineage_a', 'lineage_b', 'advance')},
+    **{'agreement_' + k: ('agreement_' + k, k + '_case') for k in (
+        'browser', 'cost_refs_a', 'cost_refs_b', 'cost_usage_a', 'cost_usage_b', 'trace_refs_a', 'trace_refs_b', 'trace_flags')},
+}
+AGREEMENT_PHASES = {
+    'pm.runtime_artifact.browser_recording.schema.v1': ('agreement_browser',),
+    'pm.runtime_artifact.cost_usage.schema.v1': ('agreement_cost_refs_a', 'agreement_cost_refs_b',
+                                                 'agreement_cost_usage_a', 'agreement_cost_usage_b'),
+    'pm.runtime_artifact.tool_llm_trace.schema.v1': ('agreement_trace_refs_a', 'agreement_trace_refs_b', 'agreement_trace_flags'),
+}
+_TABLE_ROWS = {}
+# Set to a list only by the guard-table suite builder; never by a checker path.
+RECORDER = None
+
+
+class TableRefusal(ValueError):
+    """A refusal issued by one named table row (phase, row, code)."""
+    def __init__(self, phase, row, code):
+        self.phase, self.row, self.code = phase, row, code
+        super().__init__(code)
+
+
+def table_rows(phase):
+    """The phase's (row, predicate, context) list in declared table order."""
+    rows = _TABLE_ROWS.get(phase)
+    if rows is None:
+        module_name, factory_name = TABLE_PHASES[phase]
+        module = importlib.import_module('pm_runtime_artifact_table_' + module_name)
+        case = getattr(module, factory_name)(None)
+        rows = _TABLE_ROWS[phase] = [(name, guard.predicate, case.context) for name, guard in case.table.guards.items()]
+    return rows
+
+
+def table_fields(phase):
+    module_name, _ = TABLE_PHASES[phase]
+    return importlib.import_module('pm_runtime_artifact_table_' + module_name).FIELDS
+
+
+def table_refusal(phase, facts):
+    """First refusing row of one phase, as (row, code), or None.
+
+    The observation passed to the rows holds exactly the module's FIELDS.
+    """
+    observed = {k: facts[k] for k in table_fields(phase)}
+    refusal = None
+    for name, predicate, context in table_rows(phase):
+        code = predicate(observed, context)
+        if code is not None:
+            refusal = (name, code)
+            break
+    if RECORDER is not None:
+        RECORDER.append((phase, copy.deepcopy(observed), refusal))
+    return refusal
+
+
+def require(phase, facts):
+    refusal = table_refusal(phase, facts)
+    if refusal is not None:
+        raise TableRefusal(phase, *refusal)
+
+
+def table_order_errors():
+    """Each factory's check() requires its rows in exactly the table order."""
+    errors = []
+    for phase, (module_name, factory_name) in TABLE_PHASES.items():
+        module = importlib.import_module('pm_runtime_artifact_table_' + module_name)
+        tree = ast.parse(Path(module.__file__).read_text())
+        factory = next(n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name == factory_name)
+        check = next(n for n in factory.body if isinstance(n, ast.FunctionDef) and n.name == 'check')
+        required = [c.args[0].value for c in ast.walk(check) if isinstance(c, ast.Call)
+                    and ast.unparse(c.func) == 'table.require']
+        if required != [name for name, _, _ in table_rows(phase)]:
+            errors.append(phase)
+    return errors
+
+
+def at(value, *keys):
+    """Total observation read: None when any step is absent or not a container."""
+    for key in keys:
+        if type(value) is dict:
+            value = value.get(key)
+        elif type(value) is list and type(key) is int and 0 <= key < len(value):
+            value = value[key]
+        else:
+            return None
+    return value
+
+
+class SchemaReferences:
+    """Preflight whole schema documents, including unused definitions/branches.
+
+    Resolve declared IDs, relative files, JSON pointers and anchors locally;
+    never fetch an unknown URI. Instance traversal cannot establish this rule.
+    """
+    def __init__(self):
+        self.documents = {str(p.relative_to(ROOT)): load(str(p.relative_to(ROOT)))
+                          for p in sorted((ROOT / 'Plans').glob('*.schema.json'))}
+        self.registry, self.owners = self.register(self.documents)
+
+    @staticmethod
+    def register(documents, registry=None):
+        resources, owners = [], {}
+
+        def register(resource, base, owner):
+            uri = urljoin(base, resource.id()) if resource.id() else base
+            owners[uri] = owner
+            for child in resource.subresources():
+                register(child, uri, owner)
+
+        for path, schema in documents.items():
+            uri = (ROOT / path).as_uri()
+            owners[uri] = path
+            canonical_uri = 'https://puppetmaster.local/' + path
+            owners[canonical_uri] = path
+            resource = Resource.from_contents(schema, default_specification=DRAFT202012)
+            resources.append((uri, resource))
+            resources.append((canonical_uri, resource))
+            register(resource, uri, path)
+            if resource.id():
+                resources.append((urljoin(uri, resource.id()), resource))
+        return (registry or Registry()).with_resources(resources).crawl(), owners
+
+    def errors(self, paths, overrides=None):
+        documents = dict(self.documents, **(overrides or {}))
+        registry, owners = self.registry, dict(self.owners)
+        if overrides:
+            # Remove aliases/anchors of replaced resources as well as their file
+            # routes; an old registry entry must never redeem a removed target.
+            for uri, owner in self.owners.items():
+                if owner in overrides and uri in registry:
+                    registry = registry.remove(uri)
+                    owners.pop(uri, None)
+            registry, replaced = self.register(overrides, registry)
+            owners.update(replaced)
+        errors, visited = [], set()
+
+        def visit(path):
+            if path in visited:
+                return
+            visited.add(path)
+            if path not in documents:
+                errors.append(path + ': missing schema')
+                return
+
+            def walk(node, base, pointer=''):
+                if isinstance(node, dict):
+                    if '$id' in node:
+                        base = urljoin(base, node['$id'])
+                    if '$ref' in node:
+                        ref = node['$ref']
+                        try:
+                            target = registry.resolver(base).lookup(ref)
+                            if not isinstance(target.contents, (dict, bool)):
+                                raise ValueError('reference target is not a schema')
+                            uri = urldefrag(base if ref.startswith('#') else urljoin(base, ref))[0]
+                            if uri in owners:
+                                visit(owners[uri])  # Walk its entire document, not only the fragment.
+                        except (Unresolvable, ValueError, TypeError) as error:
+                            errors.append(f'{path}{pointer}/$ref: {ref!r}: {error}')
+                    for key, child in node.items():
+                        walk(child, base, pointer + '/' + key.replace('~', '~0').replace('/', '~1'))
+                elif isinstance(node, list):
+                    for index, child in enumerate(node):
+                        walk(child, base, pointer + '/' + str(index))
+            walk(documents[path], (ROOT / path).as_uri())
+
+        for path in paths:
+            visit(path)
+        return errors
+
+
+def exact_pattern(validator_, pattern, instance, schema):
+    """Keep every schema rule; anchored identifiers additionally require fullmatch.
+
+    Python's `$` admits a final LF. Historical schema IDs/bytes stay unchanged;
+    this stricter adopted boundary applies to payloads and stored values alike.
+    """
+    yield from Draft202012Validator.VALIDATORS['pattern'](validator_, pattern, instance, schema)
+    if isinstance(instance, str) and pattern.startswith('^') and pattern.endswith('$'):
+        if re.search(pattern, instance) and re.fullmatch(pattern, instance) is None:
+            yield ValidationError('identifier must match the entire value')
+
+
+def exact_pattern_properties(validator_, patterns, instance, schema):
+    yield from Draft202012Validator.VALIDATORS['patternProperties'](validator_, patterns, instance, schema)
+    if isinstance(instance, dict):
+        for pattern in patterns:
+            if pattern.startswith('^') and pattern.endswith('$'):
+                for key in instance:
+                    if re.search(pattern, key) and re.fullmatch(pattern, key) is None:
+                        yield ValidationError('identifier key must match the entire value', path=[key])
+
+
+@contextmanager
+def exact_digits():
+    """Render and parse integers exactly (no 4300-digit limit), restored on exit.
+
+    CV-1100 sets no global cap, so a schema-valid long integer must reach a
+    refusal row instead of a ValueError raised while text is produced.
+    """
+    previous = sys.get_int_max_str_digits()
+    sys.set_int_max_str_digits(0)
+    try:
+        yield
+    finally:
+        sys.set_int_max_str_digits(previous)
+
+
+def integer_refusal(value, **bounds):
+    """The shared CV-1100 current_integer verdict as a refusal reason, or None."""
+    try:
+        current_integer(value, **bounds)
+    except Refusal as refusal:
+        return refusal.reason
+    return None
+
+
+def current_integer_slot(checker, instance):
+    """CV-1100: a current schema integer slot accepts only what current_integer accepts.
+
+    Stock Draft 2020-12 calls an integral float an integer; the shared call
+    refuses runtime floats and booleans. Field bounds stay the schema's own.
+    """
+    return integer_refusal(instance) is None
+
+
+def agreement_sites(payload):
+    """Every copied source agreement pair, by its agreement table row, without coercion.
+
+    Missing optional copies add no pair. Explicit null is a value and must
+    agree. Session and action provenance, snapshots at different times, parent
+    and child usage, and streaming delta/cumulative are distinct source roles.
+    A payload whose shape does not reach a copy yields no pair: shape and type
+    refusals belong to the closed schema rows, which run first.
+    """
+    sites = {}
+
+    def pair(site, copy_value, source_value):
+        sites.setdefault(site, []).append([copy_value, source_value])
+
+    try:
+        body = payload['type_payload']
+        family = payload['artifact_type']
+        if family == 'browser_recording':
+            for action in body['actions']:
+                pair('browser_action_session', action['browser_session_id'], body['browser_session_id'])
+                page = action.get('page_representation')
+                if page is not None:
+                    if 'page_representation_ref' in action:
+                        pair('browser_page_ref', action['page_representation_ref'], page['page_representation_id'])
+                    for field, site in (('screenshot_artifact_ref', 'browser_page_screenshot'), ('pdf_artifact_ref', 'browser_page_pdf'),
+                                        ('console_ref', 'browser_page_console'), ('network_ref', 'browser_page_network')):
+                        if field in action and field in page:
+                            pair(site, action[field], page[field])
+                    if 'redaction_profile_id' in page:
+                        pair('browser_page_redaction', page['redaction_profile_id'], body['redaction_profile_id'])
+            return sites
+        if family not in ('cost_usage', 'tool_llm_trace'):
+            return sites
+        refs = body['refs']
+        rule = 'usage_refs' if family == 'cost_usage' else 'trace_refs'
+        for field in ('provider_attempt_ref', 'usage_event_ref', 'usage_record_id', 'receipt_refs'):
+            if field in payload and field in refs:
+                pair(rule + '_root_' + field, payload[field], refs[field])
+        if family == 'cost_usage':
+            for field in ('usage_event_ref', 'usage_record_id'):
+                pair('usage_refs_body_' + field, refs[field], body[field])
+            for field in ('run_id', 'attempt_id', 'thread_id', 'node_id'):
+                if field in refs:
+                    pair('usage_refs_' + field, refs[field], payload.get(field))
+            pair('usage_refs_raw_payload_ref', refs['raw_payload_ref'], body['authority']['raw_payload_ref'])
+            usage = body['usage']
+            pair('usage_alias_reasoning', body['reasoning_tokens'], usage['reasoning_tokens'])
+            if 'total_tokens' in body:
+                pair('usage_alias_total', body['total_tokens'], usage['provider_total'])
+            semantics = usage['counting_semantics']
+            caches = [usage[k] for k in ('cache_read', 'cache_write', 'cache_write_1h')]
+            if semantics['input_total_includes_cache'] == 'yes' and all(type(v) is int for v in [usage['input_total'], *caches]):
+                pair('usage_input', usage['input_non_cached'], usage['input_total'] - sum(caches))
+            if semantics['output_total_includes_reasoning'] == 'yes' and all(type(usage[k]) is int for k in ('output_total', 'reasoning_tokens')):
+                pair('usage_output', usage['output_visible'], usage['output_total'] - usage['reasoning_tokens'])
+            if semantics['provider_total_semantics'] == 'derived_input_plus_output':
+                total = None if any(usage[k] is None for k in ('input_total', 'output_total')) else usage['input_total'] + usage['output_total']
+                pair('usage_total', usage['provider_total'], total)
+            costs = body['cost'].get('bucket_costs_microdollars')
+            if costs and all(type(v) is int for v in costs.values()):
+                pair('usage_cost', body['cost']['cost_microdollars'], sum(costs.values()))
+            source_class = body['authority']['source_class']
+            for field, site, classes in (
+                    ('is_provider_reported', 'usage_flag_provider_reported', ('provider_reported', 'provider_header')),
+                    ('is_cli_reported', 'usage_flag_cli_reported', ('cli_reported',)),
+                    ('is_local_context_estimate', 'usage_flag_local_context_estimate', ('local_estimated',)),
+                    ('is_estimated', 'usage_flag_estimated', ('local_estimated', 'pricing_estimated'))):
+                pair(site, body['flags'][field], source_class in classes)
+        else:
+            for field in ('provider_attempt_ref', 'usage_event_ref', 'usage_record_id'):
+                pair('trace_refs_body_' + field, refs[field], body[field])
+            pair('trace_refs_raw_payload_ref', refs['raw_payload_ref'], body['raw_payload']['raw_payload_ref'])
+            for field in ('usage_event_ref', 'usage_record_id'):
+                pair('trace_settlement_' + field, body['settlement'][field], body[field])
+            if body['raw_payload']['redaction_status'] in ('redacted', 'not_needed'):
+                pair('trace_flag_redacted', body['flags']['redacted'], body['raw_payload']['redaction_status'] == 'redacted')
+            if (body['usage_event_ref'] is not None or body['usage_record_id'] is not None
+                    or body['settlement']['usage_artifact_ref'] is not None):
+                pair('trace_flag_usage_observed', body['flags']['usage_observed'], True)
+            if body['settlement'].get('quota_artifact_ref') is not None or refs.get('quota_refs'):
+                pair('trace_flag_quota_observed', body['flags']['quota_observed'], True)
+            if body['retry']['relation'] == 'none':
+                pair('trace_retry_none', body['retry']['parent_trace_ref'], None)
+            elif body['retry']['relation'] in ('retry_of', 'escalation_of', 'resume_of'):
+                pair('trace_retry_parent', body['retry']['parent_trace_ref'] is not None, True)
+    except (KeyError, TypeError, AttributeError):
+        return {}
+    return sites
+
+
+# Only the identifier full-match overlays: every other keyword keeps its
+# Draft 2020-12 meaning, so a refusal here is the LF rule alone.
+LF_VALUE_VALIDATOR = validators.extend(Draft202012Validator, {'pattern': exact_pattern})
+LF_KEY_VALIDATOR = validators.extend(Draft202012Validator, {'patternProperties': exact_pattern_properties})
+LF_BOTH_VALIDATOR = validators.extend(Draft202012Validator, {'pattern': exact_pattern, 'patternProperties': exact_pattern_properties})
+# Only the integer type changes: every other keyword keeps its Draft 2020-12
+# meaning, so a refusal here (after the stock pass) is the integer-slot rule alone.
+INTEGER_SLOT_VALIDATOR = validators.extend(
+    Draft202012Validator, type_checker=Draft202012Validator.TYPE_CHECKER.redefine('integer', current_integer_slot))
+DR_KEYWORDS = ('drCurrentIntegerSlots', 'drSourceAgreement')
+# Closed, preloaded resource map for the shared date-time validator (CV-1101):
+# every schema an adopted occurrence can reach. Nothing is retrieved on demand.
+DATETIME_RESOURCES = {
+    'https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json': 'Plans/event_record.schema.json',
+    'https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0': 'Plans/event_append_receipt_contracts.schema.json',
+    'https://puppetmaster.local/schemas/event_record_index_checkpoint/1.0.0/schema.json': 'Plans/event_record_index_checkpoint.schema.json',
+    'https://puppetmaster.local/Plans/shared_integration_runtime.schema.json': 'Plans/shared_integration_runtime.schema.json',
+}
+_DATETIME_REGISTRY = None
+_DATETIME_VALIDATORS = {}
+
+
+def stock_format_checker():
+    """Every registered format except date-time: S08 alone runs the shared date-time check."""
+    return FormatChecker(formats=[name for name in FormatChecker.checkers if name != 'date-time'])
+
+
+def datetime_registry():
+    global _DATETIME_REGISTRY
+    if _DATETIME_REGISTRY is None:
+        _DATETIME_REGISTRY = Registry().with_resources(
+            (uri, Resource.from_contents(load(path), default_specification=DRAFT202012)) for uri, path in DATETIME_RESOURCES.items())
+    return _DATETIME_REGISTRY
+
+
+def shared_datetime_validator(base, definition):
+    """CV-1101/CV-253 through pm_event_datetime.datetime_validator at the complete outer boundary.
+
+    A definition of a preloaded resource is reached through a neutral $ref
+    wrapper, so the resource bytes stay exactly the registered ones. Built once
+    per schema occurrence (construction only; validation is never cached).
+    """
+    resource = base.get('$id') if isinstance(base, dict) else None
+    if definition and resource in DATETIME_RESOURCES and load(DATETIME_RESOURCES[resource]) == base:
+        root = {'$ref': resource + '#/$defs/' + definition}
+    elif definition:
+        root = dict(base, **{'$ref': '#/$defs/' + definition})
+    else:
+        root = base
+    key = json.dumps(root, sort_keys=True)
+    built = _DATETIME_VALIDATORS.get(key)
+    if built is None:
+        built = _DATETIME_VALIDATORS[key] = datetime_validator(root, registry=datetime_registry())
+    return built
+
+
+def load(path):
+    return json.loads((ROOT / path).read_text())
+
+
+class TableValidator:
+    """One adopted schema occurrence, refused only through the schema rows.
+
+    .schema keeps the composed schema of the earlier ExactValidator edition
+    (overlays and profile keywords included) for callers that read it.
+    """
+    def __init__(self, schema, base, overlaid, validation, datetime_base=None, definition=None):
+        self.schema = schema
+        self.validation = validation
+        checker = stock_format_checker()
+        self.structural = Draft202012Validator(base, format_checker=checker)
+        self.datetime = shared_datetime_validator(base if datetime_base is None else datetime_base, definition)
+        self.integer_slot = INTEGER_SLOT_VALIDATOR(base) if validation == CURRENT_WRITER else None
+        self.lf_value = LF_VALUE_VALIDATOR(base, format_checker=checker)
+        self.lf_key = LF_KEY_VALIDATOR(base, format_checker=checker)
+        self.lf_both = LF_BOTH_VALIDATOR(base, format_checker=checker)
+        self.overlay = None if overlaid is None else Draft202012Validator(overlaid, format_checker=checker)
+        self.overlay_phase = () if overlaid is None else ('schema.overlay',)
+        self.agreement = AGREEMENT_PHASES.get(schema.get('$id'), ()) if validation == CURRENT_WRITER else ()
+
+    def refusal(self, instance):
+        with exact_digits():
+            structural = sum(1 for _ in self.structural.iter_errors(instance))
+            clean = structural == 0
+            # One combined pass decides that neither overlay refuses; only a
+            # refusal is split into its value and key observations.
+            lf_any = clean and not self.lf_both.is_valid(instance)
+            facts = dict(structural_errors=structural,
+                         datetime_rejects=clean and not self.datetime.is_valid(instance),
+                         lf_rejects=lf_any and not self.lf_value.is_valid(instance),
+                         key_lf_rejects=lf_any and not self.lf_key.is_valid(instance),
+                         integer_slot_rejects=clean and self.integer_slot is not None and not self.integer_slot.is_valid(instance),
+                         overlay_rejects=clean and self.overlay is not None and not self.overlay.is_valid(instance))
+        for phase in ('schema.case',) + self.overlay_phase:
+            refusal = table_refusal(phase, facts)
+            if refusal is not None:
+                return (phase,) + refusal
+        if self.agreement:
+            sites = agreement_sites(instance)
+            for phase in self.agreement:
+                refusal = table_refusal(phase, {k: sites.get(k, []) for k in table_fields(phase)})
+                if refusal is not None:
+                    return (phase,) + refusal
+        return None
+
+    def iter_errors(self, instance):
+        refusal = self.refusal(instance)
+        if refusal is not None:
+            yield ValidationError(':'.join(refusal))
+
+    def is_valid(self, instance):
+        return self.refusal(instance) is None
+
+
+def provider_overlay(schema):
+    """CV-526/CV-537 current-writer provider hash lexical overlay."""
+    schema = copy.deepcopy(schema)
+    digest = {'type': ['string', 'null'], 'pattern': '^sha256:[0-9a-f]{64}$',
+              'minLength': 71, 'maxLength': 71}
+    if schema['$id'] == 'pm.runtime_artifact.cost_usage.schema.v1':
+        fields = schema['$defs']['authorityFields']['properties']
+    else:
+        fields = schema['properties']['type_payload']['properties']['raw_payload']['properties']
+    fields['provider_payload_hash'] = {'allOf': [fields['provider_payload_hash'], digest]}
+    return schema
+
+
+def validator(schema, definition=None, *, validation=CURRENT_WRITER):
+    # CV-526/CV-537 current-writer lexical overlays. Historical schema files and
+    # explicitly versioned historical decoders retain their original contracts.
+    require('codec_profile', {'profile': validation})
+    if validation == HISTORICAL_V1:
+        schema = {k: v for k, v in schema.items() if k not in DR_KEYWORDS}
+    base = {k: v for k, v in schema.items() if k not in DR_KEYWORDS}
+    datetime_base = base
+    overlaid = None
+    if validation == CURRENT_WRITER and schema.get('$id') in ('pm.runtime_artifact.cost_usage.schema.v1',
+                                                             'pm.runtime_artifact.tool_llm_trace.schema.v1'):
+        schema = provider_overlay(schema)
+        overlaid = provider_overlay(base)
+    if definition:
+        schema = dict(schema, **{'$ref': '#/$defs/' + definition})
+        base = dict(base, **{'$ref': '#/$defs/' + definition})
+        if overlaid is not None:
+            overlaid = dict(overlaid, **{'$ref': '#/$defs/' + definition})
+    if validation == CURRENT_WRITER:
+        schema = dict(schema, drCurrentIntegerSlots=True)
+        if schema.get('$id') in AGREEMENT_PHASES:
+            schema['drSourceAgreement'] = schema['$id']
+    return TableValidator(schema, base, overlaid, validation, datetime_base, definition)
+
+
+EVENT_VALIDATOR = validator(load('Plans/event_record.schema.json'))
+RECEIPT_SCHEMA = load('Plans/event_append_receipt_contracts.schema.json')
+RECEIPT_VALIDATOR = validator(RECEIPT_SCHEMA, 'AppendReceipt')
+CUSTODY_VALIDATOR = validator(RECEIPT_SCHEMA, 'custody_v2')
+RESULT_VALIDATOR = validator(RECEIPT_SCHEMA, 'full_value_result')
+
+
+def identity(event, payload, revision=None):
+    members = [event, payload['project_id'], payload['artifact_id'], payload['schema_id']]
+    prefix = 'ra1:'
+    if event == 'runtime_artifact.restore_point':
+        require('codec_identity', {'revision_refusal': integer_refusal(revision, minimum=0)})
+        with exact_digits():
+            members.append(str(revision))
+        prefix = 'ra-observation1:'
+    encoded = [v.encode('utf-8', errors='strict') for v in members]
+    return prefix + hashlib.sha256(b''.join(struct.pack('>I', len(v)) + v for v in encoded)).hexdigest()
+
+
+def grouping_identity(event, payload):
+    """RAP-113's four-member artifact group, without the observation ordinal."""
+    members = [event, payload['project_id'], payload['artifact_id'], payload['schema_id']]
+    encoded = [v.encode('utf-8', errors='strict') for v in members]
+    return 'ra1:' + hashlib.sha256(b''.join(struct.pack('>I', len(v)) + v for v in encoded)).hexdigest()
+
+
+def semantic_digest(event):
+    """The exact Contracts §1.2 / CV-317 producer preimage through the shared CV-1100 qualifier.
+
+    None when the JCS route cannot preserve a value (CV-1100: refuse before
+    effects); callers refuse through A08/F14, never with a substitute digest.
+    """
+    try:
+        return producer_semantic_digest(event)
+    except Refusal:
+        return None
+
+
+def physical_bytes(value):
+    """(bytes, refusal reason) of the SP-1100 EVENT_VALUE canonical MessagePack profile."""
+    try:
+        return storage_value_bytes(value, profile=EVENT_VALUE), None
+    except Refusal as refusal:
+        return None, refusal.reason
+
+
+def value_bytes(value):
+    """SP-236/SP-1100 EVENT_VALUE bytes (shared storage_value_bytes); refusals are codec rows."""
+    raw, reason = physical_bytes(value)
+    require('codec_value', {'physical_refusal': reason})
+    if raw is None:
+        raise AssertionError('untracked EVENT_VALUE refusal: ' + reason)
+    return raw
+
+
+def value_sha256(value):
+    return hashlib.sha256(value_bytes(value)).hexdigest()
+
+
+def commitment(event):
+    domain = 'pm.storage.original_event_value_commitment.v1'
+    codec = EVENT_VALUE
+    value_bytes(event)  # EVENT_VALUE refusals stay codec rows; the shared tuple below repeats no check.
+    return dict(schema_id=domain, schema_version='1.0.0', codec=codec, domain=domain,
+                event_schema_id=event['schema_id'], event_schema_version=event['schema_version'],
+                sha256=full_value_commitment(event))
+
+
+def storage_form(payload, packs):
+    # CV-1100: the pack body is an actual RFC 8785 preimage, qualified against
+    # each original integer before any effect; an unavailable route refuses.
+    try:
+        body, refusal = qualified_jcs(payload), None
+    except Refusal as error:
+        body, refusal = None, error.reason
+    require('codec_storage', {'jcs_refusal': refusal})
+    if len(body) <= INLINE_LIMIT:
+        return copy.deepcopy(payload), None
+    digest = blake3(body).hexdigest()
+    packs[digest] = dict(body=body, durable=True, authorized=True)
+    return {}, f'pm.payload_pack.v1:blake3:{digest}:{len(body)}:application/json'
+
+
+def canonical_size(value):
+    """Bytes of the qualified RFC 8785 encoding (CV-1100), or None when the route is unavailable."""
+    try:
+        return len(qualified_jcs(value))
+    except Refusal:
+        return None
+
+
+def parse_pack_body(body):
+    """Observations of a pack body: UTF-8, one JSON value, duplicate members, canonical bytes."""
+    facts = dict(body_utf8=False, body_json=False, body_duplicate_member=None,
+                 body_sha256=hashlib.sha256(body).hexdigest(), canonical_sha256=None, body_length=len(body))
+    try:
+        text = body.decode('utf-8', errors='strict')
+    except UnicodeError:
+        return facts, None
+    facts['body_utf8'] = True
+    duplicates = []
+
+    def members(pairs):
+        result = {}
+        for key, value in pairs:
+            if key in result:
+                duplicates.append(key)
+            result[key] = value
+        return result
+    try:
+        # Integer tokens are read exactly (no binary64, no digit limit).
+        payload = json.loads(text, object_pairs_hook=members, parse_int=lambda t: JsonNumber(t, True).exact())
+    except ValueError:
+        return facts, None
+    facts.update(body_json=True, body_duplicate_member=bool(duplicates))
+    if not duplicates:
+        try:
+            facts['canonical_sha256'] = hashlib.sha256(qualified_jcs(payload)).hexdigest()
+        except Refusal:
+            pass
+    return facts, payload
+
+
+def decode(row, event, packs, *, validation=CURRENT_WRITER, raw_sources=None):
+    """Validate actual fixture EventRecord and its resolved unchanged logical schema."""
+    event_validator = EVENT_VALIDATOR if validation == CURRENT_WRITER else validator(EVENT_VALIDATOR.schema, validation=validation)
+    refusal = event_validator.refusal(event)
+    if refusal is not None:
+        raise TableRefusal(*refusal)
+    ref = event['payload_ref']
+    route = 'inline' if ref is None else 'packed'
+    require('decode_envelope', dict(
+        event_type=event['event_type'], row_event_type=row['event_type'],
+        payload_schema_id=event['payload_schema_id'], row_payload_schema_id=row['payload_schema_id'],
+        scope_kind=event['scope_kind'], replay_policy=event['replay_policy'], redaction_profile=event['redaction_profile'],
+        route=route, inline_size=canonical_size(event['payload']) if route == 'inline' else None))
+    if route == 'inline':
+        payload = event['payload']
+    else:
+        match = PACK_REF.fullmatch(ref) if type(ref) is str else None
+        require('decode_pack_ref', dict(ref_grammar=match is not None, placeholder=event['payload']))
+        digest, size = match.groups()
+        source = packs.get(digest) if type(packs) is dict else None
+        present = bool(source) and type(source) is dict
+        body = source.get('body') if present else None
+        body = body if type(body) is bytes else None
+        require('decode_pack_source', dict(
+            pack_present=present, pack_durable=source.get('durable') if present else None,
+            pack_authorized=source.get('authorized') if present else None,
+            body_length=None if body is None else len(body), ref_size=int(size),
+            body_blake3=None if body is None else blake3(body).hexdigest(), ref_digest=digest))
+        facts, payload = parse_pack_body(body)
+        require('decode_pack_body', facts)
+    schema = load(row['payload_schema_ref'])
+    refusal = validator(schema, validation=validation).refusal(payload)
+    if refusal is not None:
+        raise TableRefusal(*refusal)
+    if validation == CURRENT_WRITER and row['event_type'] in PROVIDER_HASH_PATHS:
+        evidence = payload['type_payload']['authority' if row['event_type'].endswith('.cost_usage') else 'raw_payload']
+        if raw_sources is None:
+            fixtures = load('Plans/runtime_artifact_event_drafts.fixtures.json')
+            original = fixtures['positive_payloads'][row['event_type']]['type_payload']
+            original = original['authority' if row['event_type'].endswith('.cost_usage') else 'raw_payload']
+            raw_sources = {original['raw_payload_ref']: fixtures['provider_hash_source_utf8'][row['event_type']].encode('utf-8')}
+        raw = raw_sources.get(evidence['raw_payload_ref'], False)
+        require('decode_provider_source', dict(provider_source_present=raw is not False, provider_source_type=type(raw).__name__))
+        expected = None if raw is None else 'sha256:' + hashlib.sha256(raw).hexdigest()
+        require('decode_provider_digest', dict(provider_payload_hash=evidence['provider_payload_hash'], provider_expected_hash=expected))
+    require('decode_joins', dict(
+        payload_project_id=payload.get('project_id'), event_project_id=event['project_id'],
+        event_run_id=event['run_id'], payload_run_id=payload.get('run_id'),
+        event_attempt_id=event['attempt_id'], payload_attempt_id=payload.get('attempt_id'),
+        event_thread_id=event['thread_id'], payload_thread_id=payload.get('thread_id'),
+        event_node_id=event['node_id'], payload_node_id=payload.get('node_id'),
+        event_occurred_at_utc=event['occurred_at_utc'], payload_created_at_utc=payload.get('created_at_utc'),
+        payload_actor_present='actor_ref' in payload, payload_actor_ref=payload.get('actor_ref'), event_actor_ref=event['actor_ref']))
+    expected = identity(row['event_type'], payload, event['producer_sequence_id'])
+    facts = dict(idempotency_key=event['idempotency_key'], expected_identity=expected,
+                 point_project_id=at(payload, 'type_payload', 'project_id'), payload_project_id=payload.get('project_id'))
+    require('decode_identity.restore' if row['event_type'] == 'runtime_artifact.restore_point' else 'decode_identity', facts)
+    return payload
+
+
+def inspect(row, payload, source):
+    """Original source/body checks retained; full-envelope checks run separately."""
+    refusal = table_refusal('inspect_flags', dict(
+        withdrawn=at(source, 'withdrawn'), authorized=at(source, 'authorized'),
+        source_valid=at(source, 'source_valid'), receipt_valid=at(source, 'receipt_valid'),
+        source_project_id=at(source, 'project_id'), payload_project_id=at(payload, 'project_id'),
+        source_event_type=at(source, 'event_type'), row_event_type=row['event_type']))
+    if refusal is None:
+        refusal = table_refusal('inspect_payload', dict(original_payload_sha256=value_sha256(at(source, 'original_payload')),
+                                                       payload_sha256=value_sha256(payload)))
+    if refusal is None:
+        refusal = table_refusal('inspect_deleted', dict(body_deleted=at(source, 'body_deleted')))
+    if refusal is not None:
+        return refusal[1]
+    return 'metadata_only' if source['body_deleted'] else 'metadata_and_authorized_refs'
+
+
+def codec_refusal_is_false(check):
+    """A codec row refusal inside a join (e.g. an integer past the SP-1100 physical
+    range) is that join's refusal: False, never an escaping exception."""
+    def wrapped(*args, **kwargs):
+        try:
+            return check(*args, **kwargs)
+        except TableRefusal as refusal:
+            if not refusal.phase.startswith('codec_'):
+                raise
+            return False
+    wrapped.__name__, wrapped.__doc__ = check.__name__, check.__doc__
+    return wrapped
+
+
+@codec_refusal_is_false
+def full_value_matches(candidate, original, result, custody, *, validation=CURRENT_WRITER):
+    receipt_validator, custody_validator, result_validator = RECEIPT_VALIDATOR, CUSTODY_VALIDATOR, RESULT_VALIDATOR
+    if validation != CURRENT_WRITER:
+        receipt_validator = validator(RECEIPT_SCHEMA, 'AppendReceipt', validation=validation)
+        custody_validator = validator(RECEIPT_SCHEMA, 'custody_v2', validation=validation)
+        result_validator = validator(RECEIPT_SCHEMA, 'full_value_result', validation=validation)
+    stored = at(original, 'event')
+    receipt = at(result, 'first_append_receipt')
+    if (not stored_event_valid(candidate, validation=validation) or not stored_event_valid(stored, validation=validation)
+            or not receipt_validator.is_valid(receipt) or not custody_validator.is_valid(custody)
+            or not result_validator.is_valid(result) or not custody_validator.is_valid(at(original, 'custody'))
+            or not result_validator.is_valid(at(original, 'result'))):
+        return False
+    if table_refusal('full_value_bytes', dict(
+            candidate_sha256=value_sha256(candidate), stored_sha256=value_sha256(stored),
+            result_sha256=value_sha256(result), original_result_sha256=value_sha256(original['result']),
+            custody_sha256=value_sha256(custody), original_custody_sha256=value_sha256(original['custody']),
+            receipt_sha256=value_sha256(receipt), custody_receipt_sha256=value_sha256(custody['first_append_receipt']))):
+        return False
+    project = candidate['project_id']
+    if table_refusal('full_value_ids_a', dict(
+            receipt_event_id=receipt['event_id'], candidate_event_id=candidate['event_id'], custody_event_id=custody['event_id'],
+            custody_scope_partition=custody['scope_partition'],
+            expected_scope_partition=scope_partition(project) if type(project) is str else None,
+            custody_event_type=custody['event_type'], candidate_event_type=candidate['event_type'],
+            custody_idempotency_key=custody['idempotency_key'], candidate_idempotency_key=candidate['idempotency_key'])):
+        return False
+    return table_refusal('full_value_ids_b', dict(
+        receipt_sequence_code=value_bytes(receipt['sequence_id']).hex(), candidate_sequence_code=value_bytes(candidate['sequence_id']).hex(),
+        result_segment_ref=result['original_segment_ref'], custody_segment_ref=custody['original_segment_ref'],
+        expected_commitment=commitment(candidate), custody_commitment=custody['original_event_value_commitment'],
+        result_commitment=result['original_event_value_commitment'],
+        expected_semantic_digest=semantic_digest(candidate), custody_semantic_digest=custody['producer_semantic_digest'])) is None
+
+
+def stored_event_valid(event, *, validation=CURRENT_WRITER):
+    """Lexical/schema validation of original copies, without changing hash domains."""
+    event_validator = EVENT_VALIDATOR if validation == CURRENT_WRITER else validator(EVENT_VALIDATOR.schema, validation=validation)
+    if not event_validator.is_valid(event):
+        return False
+    ref = event['payload_ref']
+    route = 'inline' if ref is None else 'packed'
+    dispatch = None
+    if route == 'inline':
+        dispatch = next((row for row in load('Plans/runtime_artifact_event_drafts.json')['rows']
+                         if event['event_type'] == row['event_type'] and event['payload_schema_id'] == row['payload_schema_id']), None)
+    if table_refusal('stored', dict(
+            scope_kind=event['scope_kind'], replay_policy=event['replay_policy'], route=route,
+            ref_grammar=type(ref) is str and PACK_REF.fullmatch(ref) is not None,
+            placeholder=event['payload'] if route == 'packed' else None, dispatch_found=dispatch is not None,
+            inline_size=canonical_size(event['payload']) if route == 'inline' else None)):
+        return False
+    if route == 'packed':
+        return True
+    return validator(load(dispatch['payload_schema_ref']), validation=validation).is_valid(event['payload'])
+
+
+def frozen_resource_manifest(row):
+    """SHA-256 over the frozen resources a DR edition verifies against.
+
+    Modelling assumption (stated in the report): the static model records this
+    head's schema bytes as the frozen resources of each modelled edition.
+    """
+    digest = hashlib.sha256()
+    for path in ('Plans/event_record.schema.json', 'Plans/event_append_receipt_contracts.schema.json', row['payload_schema_ref']):
+        data = (ROOT / path).read_bytes()
+        digest.update(struct.pack('>I', len(path)) + path.encode('utf-8') + struct.pack('>Q', len(data)) + data)
+    return digest.hexdigest()
+
+
+def recipe_tuple(row, edition):
+    """The SP-1101 recipe tuple a DR original records at write time, for one edition."""
+    restore = row['event_type'] == 'runtime_artifact.restore_point'
+    return RecipeTuple(
+        envelope_schema_id='pm.event.v0', envelope_schema_version='2.0.0',
+        payload_schema_id=row['payload_schema_id'], payload_schema_version='1',
+        owner_source_id=row['event_type'], owner_edition=edition, registry_revision='prepared-without-admission',
+        identity_recipe='ra-observation1' if restore else 'ra1', producer_recipe='CV-317 RFC 8785 producer projection',
+        physical_profile=EVENT_VALUE, full_value_profile='pm.storage.original_event_value_commitment.v1',
+        local_source_profile='none', payload_profile='pm.payload_pack.v1 application/json (SP-337)',
+        resource_manifest_sha256=frozen_resource_manifest(row))
+
+
+# SP-1101 binds an original to its Server and original owner operation as well,
+# and no stored event, result or custody byte carries either. The static model
+# has one Server and no native owner operation id: a request names these two
+# constants, while the sealed source adapter reports the Server and owner
+# operation that hold its authenticated original (history_source_for).
+STATIC_SERVER_ID, STATIC_OWNER_OPERATION_ID = 'dr-static-server', 'dr-static-owner-operation'
+# Single-defect SP-1101 binding faults: the adapter reports another Server or
+# another original owner operation for an original whose bytes equal the
+# requested original, so only the binding comparison can refuse it.
+FOREIGN_PLACEMENTS = (('foreign_server', 'authenticated_server_id', 'dr-other-server'),
+                      ('foreign_owner_operation', 'authenticated_owner_operation_id', 'dr-other-owner-operation'))
+
+
+def original_binding(original, server_id, owner_operation_id):
+    """SP-1101 binding of one original (Storage, scope, Server, Project, family, identity,
+    owner operation, value commitment), or None.
+
+    The requested side passes the request's Server and owner operation; the
+    authenticated side passes the adapter's. Every other field is read from the
+    original itself. An absent or empty fact makes no binding (None), so the
+    dispatcher refuses it as original_binding.
+    """
+    event, custody = at(original, 'event'), at(original, 'custody')
+    try:
+        return OriginalBinding(
+            storage_instance_id=at(custody, 'storage_instance_id'), scope_kind=at(event, 'scope_kind'),
+            server_id=server_id, project_id=at(event, 'project_id'), event_type=at(event, 'event_type'),
+            event_id=at(event, 'event_id'), idempotency_key=at(event, 'idempotency_key'),
+            owner_operation_id=owner_operation_id,
+            source_commitment=at(custody, 'original_event_value_commitment', 'sha256'))
+    except Refusal:
+        return None
+
+
+class SourceOwner:
+    """Static original owner: its authenticated read is the frozen source adapter.
+
+    The binding and the write-time recipe come from the adapter's authenticated
+    original, the Server and owner operation it reports for that original, and
+    its recorded edition, never from the request, the event, the supplied
+    result or the supplied custody.
+    """
+    def __init__(self, row, source):
+        self.row, self.source = row, source
+
+    def authenticated_original(self, original_ref):
+        original = at(self.source, 'authenticated_original')
+        edition = at(self.source, 'recorded_decoder')
+        recipe = recipe_tuple(self.row, edition) if type(edition) is str and edition else None
+        binding = original_binding(original, at(self.source, 'authenticated_server_id'),
+                                   at(self.source, 'authenticated_owner_operation_id'))
+        return OriginalCustody(binding=binding, recipe=recipe, record_bytes=value_bytes(original),
+                               result_bytes=value_bytes(at(original, 'result')),
+                               receipt_bytes=value_bytes(at(original, 'result', 'first_append_receipt')))
+
+
+def frozen_verifier(row, packs, edition):
+    """The frozen recipe for one edition: verify the authenticated original with that edition's resources.
+
+    It reads only the custody bytes (and the pack store), recomputes the
+    original's dispatch, joins, identity, commitment and digest, and never
+    applies a current-writer or live-state guard to an older edition.
+    """
+    def verify(custody):
+        original = decode_storage_value(custody.record_bytes, profile=EVENT_VALUE)
+        if (custody.result_bytes != value_bytes(at(original, 'result'))
+                or custody.receipt_bytes != value_bytes(at(original, 'result', 'first_append_receipt'))):
+            return False
+        event = at(original, 'event')
+        decode(row, event, packs, validation=edition)
+        return full_value_matches(event, original, at(original, 'result'), at(original, 'custody'), validation=edition)
+    return FrozenRecipe(verify_original=verify)
+
+
+def dispatch_original(row, requested, source, packs, editions, recipe_override=None):
+    """SP-1101 retained dispatch: (authenticated custody, None) or (None, refusal reason).
+
+    The recipe map is installed from this head's resources for the editions
+    the route supports; the request never selects or overrides a recipe.
+    """
+    recipes = {recipe_tuple(row, edition): frozen_verifier(row, packs, edition) for edition in editions}
+    dispatcher = RetainedDispatcher(SourceOwner(row, source), recipes)
+    try:
+        return dispatcher.resolve('dr-original', original_binding(requested, STATIC_SERVER_ID, STATIC_OWNER_OPERATION_ID),
+                                  disclose=lambda binding: True,
+                                  recipe_override=recipe_override), None
+    except Refusal as refusal:
+        return None, refusal.reason
+
+
+def resolve_history(row, original, source, packs, *, recipe_override=None):
+    """Retained route for older (historical v1) originals through the shared SP-1101 dispatcher.
+
+    The authenticated owner selects the recipe; the request cannot. No
+    current-writer fallback, new receipt or rehash/rewrite of retained data.
+    Current disclosure (withdrawal, authorization, source/receipt validity)
+    stays with inspect's rows after the original is verified.
+    """
+    try:
+        custody, reason = dispatch_original(row, original, source, packs, (HISTORICAL_V1,), recipe_override)
+        if table_refusal('history', {'dispatch_refusal': reason}):
+            return 'unavailable'
+        # Only a proof run that cuts a history row reaches here without custody;
+        # it continues with the owner's recorded edition, exactly as before.
+        edition = custody.recipe.owner_edition if custody is not None else at(source, 'recorded_decoder')
+        event = at(original, 'event')
+        payload = decode(row, event, packs, validation=edition)
+        if not full_value_matches(event, at(source, 'authenticated_original'), at(original, 'result'),
+                                  at(original, 'custody'), validation=edition):
+            return 'unavailable'
+        return inspect(row, payload, source)
+    except TableRefusal:
+        return 'unavailable'
+
+
+def scope_partition(project_id):
+    return 'project~' + base64.urlsafe_b64encode(project_id.encode()).decode().rstrip('=')
+
+
+class AppendModel:
+    """Hypothetical admitted append only; registry absence still refuses by default."""
+    def __init__(self, row, packs, receipt, custody, raw_sources=None):
+        self.row, self.packs = row, packs
+        self.receipt, self.custody = receipt, custody
+        self.raw_sources = raw_sources
+        self.scoped, self.global_ids = {}, {}
+
+    def append(self, event, admission=False, source_valid=True, dedupe_available=True):
+        refusal = table_refusal('append_gate', dict(admission=admission, source_valid=source_valid, dedupe_available=dedupe_available))
+        if refusal is not None:
+            return refusal[1]
+        if not EVENT_VALIDATOR.is_valid(event):
+            return 'invalid'
+        # Replay policy is deliberately outside the canonical semantic digest.
+        # Validate it before either global or scoped dedupe can return success.
+        for phase in ('append_replay', 'append_policy'):
+            refusal = table_refusal(phase, dict(replay_policy=event['replay_policy']))
+            if refusal is not None:
+                return refusal[1]
+        digest = semantic_digest(event)
+        key = (event['project_id'], event['event_type'], event['idempotency_key'])
+        scoped = self.scoped.get(key)
+        refusal = table_refusal('append_dedupe', dict(
+            global_digest=self.global_ids.get(event['event_id']), digest=digest,
+            scoped_digest=None if scoped is None else scoped['custody']['producer_semantic_digest']))
+        if refusal is not None:
+            return refusal[1]
+        if scoped is not None:
+            return scoped
+        try:
+            decode(self.row, event, self.packs, raw_sources=self.raw_sources)
+            return self.issue(event, key, digest)
+        except TableRefusal:
+            # Includes an unavailable physical route (SP-1100): refused before effects.
+            return 'invalid'
+
+    def issue(self, event, key, digest):
+        receipt = copy.deepcopy(self.receipt)
+        receipt.update(event_id=event['event_id'], sequence_id=event['sequence_id'])
+        custody = copy.deepcopy(self.custody)
+        partition = scope_partition(event['project_id'])
+        custody.update(event_id=event['event_id'], scope_partition=partition, event_type=event['event_type'],
+                       idempotency_key=event['idempotency_key'], producer_semantic_digest=digest,
+                       first_append_receipt=receipt, original_event_value_commitment=commitment(event))
+        result = {k: copy.deepcopy(custody[k]) for k in ('first_append_receipt', 'original_segment_ref', 'original_event_value_commitment')}
+        original = dict(event=copy.deepcopy(event), result=result, custody=custody)
+        if not full_value_matches(event, original, result, custody):
+            return 'invalid'
+        self.scoped[key] = original
+        self.global_ids[event['event_id']] = digest
+        return original
+
+
+def policies_match(row, index_policy, checkpoint_policy):
+    return table_refusal('policies', dict(
+        index_retention_policy_ref=row.get('index_retention_policy_ref'), index_policy=index_policy,
+        checkpoint_retention_policy_ref=row.get('checkpoint_retention_policy_ref'), checkpoint_policy=checkpoint_policy,
+        derived_present='derived_retention_policy_ref' in row)) is None
+
+
+def binding_or_none(value):
+    """SP-278 binding digest, or None when the value has no binding encoding."""
+    try:
+        return binding_digest(value)
+    except (ValueError, TypeError, KeyError, OverflowError):
+        return None
+
+
+def sha_or_none(value):
+    """sha256 of canonical value bytes, or None when the codec rows refuse the value."""
+    try:
+        return value_sha256(value)
+    except TableRefusal:
+        return None
+
+
+def field_code(value, key):
+    """Canonical bytes (hex) of one present field; None when it is absent."""
+    if type(value) is not dict or key not in value:
+        return None
+    try:
+        return value_bytes(value[key]).hex()
+    except TableRefusal:
+        return None
+
+
+@codec_refusal_is_false
+def checkpoint_matches(row, event, original, bundle):
+    """Bounded SP-278 initial-generation join, using its real schema and codec.
+
+    The single-segment source adapter is synthetic and assumed verified. This
+    exercises identities/bytes, never native controls, CRC, redb, sync or CAS.
+    Every refusal is a checkpoint_* table row, in the order of the original
+    conjunction. Re-checks of a predicate an earlier row already enforced on
+    the same values are not repeated (see the sweep part 2A report).
+    """
+    if table_refusal('checkpoint_route', dict(
+            row_checkpoint_key=at(row, 'checkpoint_key'), key_template=CHECKPOINT_KEY,
+            row_checkpoint_schema_ref=at(row, 'checkpoint_schema_ref'), schema_ref=CHECKPOINT_SCHEMA)):
+        return False
+    schema = load(CHECKPOINT_SCHEMA.split('#', 1)[0])
+    checkpoint, token, source = (at(bundle, k) for k in ('checkpoint', 'read_token', 'selected_source'))
+    if not validator(schema, 'checkpoint').is_valid(checkpoint) or not validator(schema, 'read_token').is_valid(token):
+        return False
+    custody = at(original, 'custody')
+    receipt = at(original, 'result', 'first_append_receipt')
+    storage = at(custody, 'storage_instance_id')
+    key = CHECKPOINT_KEY.format(storage_instance_id=storage)
+    if table_refusal('checkpoint_store', dict(
+            key=key, bundle_checkpoint_key=at(bundle, 'checkpoint_key'), token_checkpoint_key=token['checkpoint_key'],
+            storage=storage, checkpoint_storage=checkpoint['storage_instance_id'], token_storage=token['storage_instance_id'],
+            source_storage=at(source, 'storage_instance_id'))):
+        return False
+    generation = checkpoint['current_generation_id']
+    node = checkpoint['generations'].get(generation)
+    if table_refusal('checkpoint_node_a', dict(
+            node_present=type(node) is dict, node_generation_id=at(node, 'generation_id'), generation=generation,
+            node_state=at(node, 'state'),
+            current_count=sum(1 for n in checkpoint['generations'].values() if at(n, 'state') == 'current'))):
+        return False
+    anchor, frontier = node['anchor'], node['frontier']
+    selection = at(source, 'source_selection')
+    selection_sha256 = sha_or_none(selection)
+    if table_refusal('checkpoint_node_b', dict(
+            selection_storage=at(selection, 'storage_instance_id'), storage=storage, node_present=True,
+            anchor_selection_storage=at(anchor, 'source_selection', 'storage_instance_id'),
+            frontier_selection_sha256=sha_or_none(frontier['source_selection']), selection_sha256=selection_sha256,
+            token_selection_sha256=sha_or_none(token['source_selection']),
+            source_verified=at(source, 'verified'), source_redb_snapshot_id=at(source, 'redb_snapshot_id'),
+            token_redb_snapshot_id=token['redb_snapshot_id'])):
+        return False
+    expected_generation = 'eig_' + str(binding_or_none(dict(
+        domain='pm.event_index.generation.v1', storage_instance_id=storage,
+        projector_version=node['projector_version'], birth_source_selection=anchor['source_selection'],
+        generation_seed_sha256=anchor['generation_seed_sha256'])))
+    expected_token = dict(storage_instance_id=storage, checkpoint_key=key,
+        checkpoint_ref=key + '#/generations/' + generation, generation_id=generation,
+        generation_anchor_sha256=binding_or_none(anchor), frontier_revision=frontier['publication_revision'],
+        frontier_sha256=binding_or_none(frontier), index_dataset_name='event_record_index.v2@' + generation,
+        source_selection=selection, redb_snapshot_id=at(source, 'redb_snapshot_id'))
+    # Token storage/key/selection/snapshot equality is enforced by C03b, C03d,
+    # C04g and C04i above on the same schema-typed string/byte values, and the
+    # closed read_token schema (all ten fields required, no others) fixes the
+    # field set, so whole-token byte equality is the per-field rows below.
+    if table_refusal('checkpoint_token_a', dict(
+            generation=generation, expected_generation=expected_generation,
+            token_checkpoint_ref=field_code(token, 'checkpoint_ref'), expected_checkpoint_ref=field_code(expected_token, 'checkpoint_ref'),
+            token_generation_id=field_code(token, 'generation_id'), expected_generation_id=field_code(expected_token, 'generation_id'),
+            token_anchor_sha256=field_code(token, 'generation_anchor_sha256'),
+            expected_anchor_sha256=field_code(expected_token, 'generation_anchor_sha256'))):
+        return False
+    if table_refusal('checkpoint_token_b', dict(
+            token_frontier_revision=field_code(token, 'frontier_revision'),
+            expected_frontier_revision=field_code(expected_token, 'frontier_revision'),
+            token_frontier_sha256=field_code(token, 'frontier_sha256'), expected_frontier_sha256=field_code(expected_token, 'frontier_sha256'),
+            token_dataset_name=field_code(token, 'index_dataset_name'), expected_dataset_name=field_code(expected_token, 'index_dataset_name'),
+            node_dataset_name=node['index_dataset_name'], token_dataset_name_text=token['index_dataset_name'])):
+        return False
+    if not full_value_matches(event, original, at(original, 'result'), custody):
+        return False
+    if table_refusal('checkpoint_source_event', dict(source_event_sha256=sha_or_none(at(source, 'event')),
+                                                     event_sha256=value_sha256(event))):
+        return False
+    partition = scope_partition(event['project_id'])
+    event_value_sha256 = value_sha256(event)
+    # The custody partition is C03-independent: F03 inside full_value_matches
+    # above already required custody['scope_partition'] == this partition.
+    if table_refusal('checkpoint_source', dict(
+            source_partition=at(source, 'scope_partition'), partition=partition,
+            source_event_value_sha256=at(source, 'event_value_sha256'), event_value_sha256=event_value_sha256,
+            source_locator_sha256=sha_or_none(at(source, 'source_locator')),
+            expected_locator_sha256=value_sha256({k: receipt[k] for k in ('segment_generation', 'segment_name', 'byte_offset', 'sequence_id')}),
+            selection_segment_generation=at(selection, 'selected_segment_generation'),
+            receipt_segment_generation=receipt['segment_generation'])):
+        return False
+    manifest, current = at(source, 'manifest'), at(source, 'current')
+    if table_refusal('checkpoint_manifest_type', dict(
+            current_generation_type=type(at(current, 'selected_segment_generation')).__name__,
+            manifest_segment_type=type(at(manifest, 'selected_segment_generation')).__name__,
+            manifest_generation_type=type(at(manifest, 'manifest_generation')).__name__,
+            recovery_epoch_type=type(at(manifest, 'recovery_epoch')).__name__)):
+        return False
+    if table_refusal('checkpoint_manifest_a', dict(
+            selection_current_sha256=at(selection, 'current_bytes_sha256'), current_sha256=sha_or_none(current),
+            selection_manifest_sha256=at(selection, 'manifest_bytes_sha256'), manifest_sha256=sha_or_none(manifest),
+            current_generation=at(current, 'selected_segment_generation'),
+            selection_segment_generation=at(selection, 'selected_segment_generation'),
+            manifest_segment=at(manifest, 'selected_segment_generation'),
+            manifest_generation=at(manifest, 'manifest_generation'), selection_manifest_generation=at(selection, 'manifest_generation'),
+            recovery_epoch=at(manifest, 'recovery_epoch'), selection_recovery_epoch=at(selection, 'recovery_epoch'))):
+        return False
+    inventory = at(manifest, 'retained_inventory')
+    if table_refusal('checkpoint_manifest_b', dict(
+            survivor_prefix=at(manifest, 'survivor_prefix_sha256'), selection_survivor_prefix=at(selection, 'manifest_survivor_prefix_sha256'),
+            inventory_sha256=sha_or_none(inventory), segments_sha256=sha_or_none(at(source, 'segments')),
+            selection_inventory_digest=at(selection, 'retained_inventory_sha256'), inventory_digest=binding_or_none(inventory),
+            selection_watermarks_digest=at(selection, 'durable_watermarks_sha256'),
+            watermarks_digest=binding_or_none(at(manifest, 'durable_watermarks')),
+            selection_excluded_digest=at(selection, 'excluded_ranges_sha256'), excluded_digest=binding_or_none(at(manifest, 'excluded_ranges')),
+            selection_retired_digest=at(selection, 'retired_inputs_sha256'), retired_digest=binding_or_none(at(manifest, 'retired_inputs')))):
+        return False
+    # This fixture edition represents one complete initial source/dataset.
+    # It cannot be used to claim a translated or partial/multi-segment read.
+    prefix = binding_or_none(dict(domain='pm.event_index.retained_prefix.v1', entries=[dict(
+        sequence_id=event['sequence_id'], event_id=event['event_id'], scope_partition=partition,
+        source_value_bytes_sha256=source['event_value_sha256'])]))
+    coverage = frontier['coverage']
+    # complete_to_captured_boundary is const true in the checkpoint schema, and
+    # empty_retained_source=true forces retained_event_count 0 there, so the
+    # coverage count row below decides both earlier truth tests.
+    if table_refusal('checkpoint_anchor', dict(
+            anchor_selection_sha256=sha_or_none(anchor['source_selection']), selection_sha256=selection_sha256,
+            translation=node['translation'], anchor_count=anchor['retained_event_count'],
+            anchor_first=anchor['first_retained_sequence_id'], anchor_through=anchor['through_sequence_id'],
+            event_sequence_id=event['sequence_id'], anchor_prefix=anchor['retained_event_prefix_sha256'], prefix=prefix,
+            anchor_gaps=anchor['sequence_gaps_sha256'], no_gaps_digest=binding_digest([]))):
+        return False
+    if table_refusal('checkpoint_coverage', dict(
+            coverage_count=coverage['retained_event_count'], coverage_gaps=coverage['sequence_gaps'],
+            coverage_prefix=coverage['retained_event_prefix_sha256'], prefix=prefix,
+            coverage_first=coverage['first_retained_sequence_id'], coverage_through=coverage['through_sequence_id'],
+            event_sequence_id=event['sequence_id'])):
+        return False
+    segments = at(source, 'segments')
+    last = dict(segment_generation=receipt['segment_generation'], segment_name=receipt['segment_name'],
+                byte_offset=receipt['byte_offset'], frame_end_offset=at(source, 'frame_end_offset'),
+                last_sequence_id=event['sequence_id'], last_event_id=event['event_id'])
+    if table_refusal('checkpoint_frame', dict(
+            last_frame_sha256=sha_or_none(coverage['last_frame']), expected_last_frame_sha256=sha_or_none(last),
+            coverage_segments_sha256=sha_or_none(coverage['segments']), segments_sha256=sha_or_none(segments),
+            segment_count=len(segments) if type(segments) is list else None)):
+        return False
+    # scan_start_offset is const 0 in the checkpoint schema's coverage segments,
+    # and C10b above makes the source segments byte-equal to them.
+    segment = segments[0]
+    frame_end = at(source, 'frame_end_offset')
+    try:
+        beyond = frame_end > receipt['durable_end_offset']
+    except TypeError:
+        beyond = True
+    seg = dict(segment_present=type(segment) is dict, segment_generation=at(segment, 'segment_generation'),
+               receipt_segment_generation=receipt['segment_generation'], segment_name=at(segment, 'segment_name'),
+               receipt_segment_name=receipt['segment_name'],
+               scanned_through=at(segment, 'scanned_through_offset'), frame_end=frame_end,
+               segment_durable_end=at(segment, 'source_durable_end_offset'), receipt_durable_end=receipt['durable_end_offset'],
+               segment_durable_sha256=at(segment, 'source_durable_bytes_sha256'),
+               source_event_value_sha256=source['event_value_sha256'], event_value_length=len(value_bytes(event)),
+               frame_beyond_durable=beyond is not False, segment_count_events=at(segment, 'retained_event_count'),
+               segment_first=at(segment, 'first_sequence_id'), segment_last=at(segment, 'last_sequence_id'),
+               event_sequence_id=event['sequence_id'])
+    if table_refusal('checkpoint_segment_a', seg) or table_refusal('checkpoint_segment_b', seg):
+        return False
+    row_key = f"event_record_index.v2:{partition}:{event['sequence_id']:020}:{event['event_id']}"
+    expected_row = dict(schema_id='pm.storage_value.event_record_index.v2', schema_version='2.0.0',
+        scope_kind='project', project_id=event['project_id'], scope_partition=partition,
+        sequence_id=event['sequence_id'], event_id=event['event_id'], event_type=event['event_type'],
+        source_locator=source['source_locator'], publication_locator=dict(
+            manifest_generation=selection['manifest_generation'], recovery_epoch=selection['recovery_epoch'],
+            survivor_prefix_sha256=selection['manifest_survivor_prefix_sha256'],
+            checkpoint_ref=token['checkpoint_ref'], compaction_translation_manifest_ref=None),
+        payload_sha256=hashlib.sha256(value_bytes(event['payload'])).hexdigest(),
+        producer_semantic_digest=semantic_digest(event), idempotency_key=event['idempotency_key'],
+        correlation_id=event['correlation_id'], causation_event_id=event['causation_event_id'],
+        persisted_at_utc=event['persisted_at_utc'], redaction_profile=event['redaction_profile'],
+        source_schema_id=event['schema_id'], source_schema_version=event['schema_version'], projector_replay_only=False)
+    return table_refusal('checkpoint_dataset', dict(
+        datasets_sha256=sha_or_none(at(bundle, 'datasets')),
+        expected_datasets_sha256=sha_or_none({token['index_dataset_name']: {row_key: expected_row}}),
+        row_count=frontier['index_row_count'], row_set_digest=frontier['index_row_set_sha256'],
+        expected_row_set_digest=binding_or_none(dict(domain='pm.event_index.row_set.v1',
+                                                     entries=[dict(key=row_key, value=expected_row)])))) is None
+
+
+def checkpoint_rebind(event, original, bundle, preserve_token=()):
+    """Recompute observations NOT targeted by a single checkpoint defect.
+
+    This is fixture construction only. It never repairs data on a read path.
+    Keep an intentionally stale token component when that component IS the
+    defect. Missing datasets remain missing, with their source commitment intact.
+    """
+    cp, source = bundle['checkpoint'], bundle['selected_source']
+    node = cp['generations'][cp['current_generation_id']]
+    anchor, frontier = node['anchor'], node['frontier']
+    storage = original['custody']['storage_instance_id']
+    key = CHECKPOINT_KEY.format(storage_instance_id=storage)
+    generation = 'eig_' + binding_digest(dict(domain='pm.event_index.generation.v1',
+        storage_instance_id=storage, projector_version=node['projector_version'],
+        birth_source_selection=anchor['source_selection'], generation_seed_sha256=anchor['generation_seed_sha256']))
+    cp['current_generation_id'] = generation
+    node['generation_id'] = generation
+    node['index_dataset_name'] = 'event_record_index.v2@' + generation
+    cp['generations'] = {generation: node}
+    old_token = bundle['read_token']
+    token = dict(storage_instance_id=storage, checkpoint_key=key,
+        checkpoint_ref=key+'#/generations/'+generation, generation_id=generation,
+        generation_anchor_sha256=binding_digest(anchor), frontier_revision=frontier['publication_revision'],
+        frontier_sha256=binding_digest(frontier), index_dataset_name=node['index_dataset_name'],
+        source_selection=copy.deepcopy(source['source_selection']), redb_snapshot_id=source['redb_snapshot_id'])
+    token.update({k:copy.deepcopy(old_token[k]) for k in preserve_token})
+    bundle['read_token'] = token
+    if bundle['datasets']:
+        dataset = next(iter(bundle['datasets'].values()))
+        for value in dataset.values():
+            value['source_locator'] = copy.deepcopy(source['source_locator'])
+            value['publication_locator']['checkpoint_ref'] = token['checkpoint_ref']
+        bundle['datasets'] = {node['index_dataset_name']:dataset}
+        frontier['index_row_set_sha256'] = binding_digest(dict(domain='pm.event_index.row_set.v1',
+            entries=[dict(key=k,value=v) for k,v in sorted(dataset.items())]))
+    if 'frontier_sha256' not in preserve_token:
+        token['frontier_sha256'] = binding_digest(frontier)
+
+
+def checkpoint_negative(name, row, event, original, bundle):
+    """Independent, schema-valid where possible, identity/route fault injection."""
+    row, event, original, bundle = copy.deepcopy((row, event, original, bundle))
+    foreign = '22222222-2222-4222-8222-222222222222'
+    cp, token, source = (bundle[k] for k in ('checkpoint', 'read_token', 'selected_source'))
+    node = cp['generations'][cp['current_generation_id']]
+    if name == 'wrong_store_key': bundle['checkpoint_key'] = CHECKPOINT_KEY.format(storage_instance_id=foreign)
+    elif name == 'wrong_checkpoint_store': cp['storage_instance_id'] = foreign
+    elif name == 'wrong_token_store': token['storage_instance_id'] = foreign
+    elif name == 'wrong_source_store': source['storage_instance_id'] = foreign
+    elif name == 'wrong_anchor_store': node['anchor']['source_selection']['storage_instance_id'] = foreign
+    elif name == 'wrong_frontier_store': node['frontier']['source_selection']['storage_instance_id'] = foreign
+    elif name == 'wrong_token_source_store': token['source_selection']['storage_instance_id'] = foreign
+    elif name == 'wrong_source_selection': source['source_selection']['manifest_bytes_sha256'] = '0'*64
+    elif name == 'wrong_event': source['event']['event_id'] += '-other'
+    elif name == 'wrong_custody_store': original['custody']['storage_instance_id'] = foreign
+    elif name == 'wrong_custody_event': original['custody']['event_id'] += '-other'
+    elif name == 'wrong_partition': source['scope_partition'] = event['project_id']
+    elif name == 'wrong_locator': source['source_locator']['byte_offset'] += 1
+    elif name == 'wrong_schema_ref': row['checkpoint_schema_ref'] = 'Plans/DOES_NOT_EXIST.schema.json#/$defs/checkpoint'
+    elif name == 'wrong_key_route': row['checkpoint_key'] = CHECKPOINT_KEY.format(storage_instance_id=foreign)
+    elif name == 'wrong_pointer': token['checkpoint_ref'] = token['checkpoint_ref'].rsplit('/',1)[0]+'/eig_'+'0'*64
+    elif name == 'missing_dataset': bundle['datasets'] = {}
+    elif name == 'wrong_frontier': node['frontier']['publication_revision'] += 1
+    elif name == 'unverified_source': source['verified'] = False
+    elif name == 'wrong_live_snapshot': token['redb_snapshot_id'] += '-other'
+    else: raise ValueError('unknown checkpoint fault: ' + name)
+    # Source-selection changes must update every observational copy, while a
+    # deliberately mismatched anchor/frontier/token selection stays mismatched.
+    if name == 'wrong_source_selection':
+        node['anchor']['source_selection'] = copy.deepcopy(source['source_selection'])
+        node['frontier']['source_selection'] = copy.deepcopy(source['source_selection'])
+    if name == 'wrong_custody_store':
+        storage = original['custody']['storage_instance_id']
+        bundle['checkpoint_key'] = CHECKPOINT_KEY.format(storage_instance_id=storage)
+        cp['storage_instance_id'] = storage
+        source['source_selection']['storage_instance_id'] = storage
+        node['anchor']['source_selection'] = copy.deepcopy(source['source_selection'])
+        node['frontier']['source_selection'] = copy.deepcopy(source['source_selection'])
+        # The selected source's original store remains the conflicting truth.
+    preserve = {
+        'wrong_token_store': ('storage_instance_id',),
+        'wrong_token_source_store': ('source_selection',),
+        'wrong_pointer': ('checkpoint_ref',),
+        'wrong_frontier': ('frontier_revision',),
+        'wrong_live_snapshot': ('redb_snapshot_id',),
+    }.get(name,())
+    checkpoint_rebind(event,original,bundle,preserve)
+    return row, event, original, bundle
+
+
+def at_path(value, path):
+    for key in path:
+        value = value[key]
+    return value
+
+
+def set_path(value, path, replacement):
+    at_path(value, path[:-1])[path[-1]] = replacement
+
+
+def identifier_paths(value, schema):
+    """Enumerate concrete identifier strings accepted by an adopted pattern.
+
+    Includes local $defs and patternProperties; const/enum joins are still
+    checked independently. Unselected application definitions supply no values.
+    """
+    def values(node, selected, path=()):
+        if not isinstance(selected, dict):
+            return
+        if '$ref' in selected:
+            target = schema
+            for key in selected['$ref'].removeprefix('#/').split('/'):
+                target = target[key.replace('~1','/').replace('~0','~')]
+            yield from values(node, target, path)
+        if isinstance(node, str) and 'pattern' in selected and re.fullmatch(selected['pattern'], node):
+            yield path
+        if isinstance(node, dict):
+            for key, child in node.items():
+                if key in selected.get('properties', {}):
+                    yield from values(child, selected['properties'][key], path + (key,))
+                for pattern, child_schema in selected.get('patternProperties', {}).items():
+                    if re.fullmatch(pattern, key): yield from values(child, child_schema, path + (key,))
+        if isinstance(node, list) and 'items' in selected:
+            for key, child in enumerate(node): yield from values(child, selected['items'], path + (key,))
+        for keyword in ('allOf', 'anyOf', 'oneOf'):
+            for child_schema in selected.get(keyword, []): yield from values(node, child_schema, path)
+    return sorted(set(values(value, schema)), key=str)
+
+
+def standing_oracles(check, row, full, first, fixtures, references):
+    event = row['event_type']
+    check(event, 'S2_project_only_contract', row['scope_policy'] == 'project_only')
+    for key in fixtures['application_keys']:
+        bad = copy.deepcopy(full); bad.update(scope_kind='application', project_id=None, idempotency_key=key)
+        model = AppendModel(row, {}, fixtures['first_append_receipts'][event], fixtures['custody_template'])
+        check(event, 'S2_application_refused_' + key, not isinstance(model.append(bad, True), dict) and not model.scoped and not model.global_ids)
+    # Compute the expected partition independently of the writer helper.
+    expected_partition = 'project~' + base64.urlsafe_b64encode(full['project_id'].encode()).decode().rstrip('=')
+    check(event, 'S3_encoded_project_partition', first['custody']['scope_partition'] == expected_partition)
+    bad = copy.deepcopy(first); bad['custody']['scope_partition'] = full['project_id']
+    check(event, 'S3_stored_raw_partition_refused', not full_value_matches(full,bad,bad['result'],bad['custody']))
+    check(event, 'S3_raw_project_partition_refused', not checkpoint_matches(row, full, bad, fixtures['checkpoint_positives'][event]))
+    check(event, 'S8_failure_oracle_rejects_success', not rejected(lambda: 0))
+
+    # Every family must catch a reference in an optional property, an unused
+    # definition and external documents/fragments, before instance traversal.
+    schema_path = row['payload_schema_ref']
+    for name, ref in fixtures['unresolved_schema_refs'].items():
+        bad_schema = copy.deepcopy(references.documents[schema_path])
+        if name == 'unused_definition':
+            bad_schema.setdefault('$defs', {})['DR_UNUSED'] = {'$ref': ref}
+        else:
+            bad_schema['properties']['actor_ref'] = {'$ref': ref}
+        check(event, 'S9_unresolved_' + name,
+              bool(references.errors([schema_path], {schema_path: bad_schema})))
+    # The referenced external document must be walked in full as well.
+    external_path = 'Plans/event_record.schema.json'
+    bad_schema = copy.deepcopy(references.documents[schema_path])
+    bad_schema['properties']['actor_ref'] = {'$ref': references.documents[external_path]['$id'] + '#/properties/event_id'}
+    check(event, 'S9_declared_external_id_positive', not references.errors([schema_path], {schema_path: bad_schema}))
+    external = copy.deepcopy(references.documents[external_path])
+    external.setdefault('$defs', {})['DR_UNUSED'] = {'$ref': '#/$defs/DR_MISSING'}
+    check(event, 'S9_unresolved_in_external_unused_definition', bool(references.errors(
+        [schema_path], {schema_path: bad_schema, external_path: external})))
+
+    for case in fixtures['history_cases']:
+        source = source_for(row, full['payload']); source.update(case['overrides'])
+        check(event, 'S10_' + case['id'], inspect(row, full['payload'], source) == case['expected'])
+    historical_source = history_source_for(row,full['payload'],first)
+    historical_source['current_live_state'] = {'owner_active':False,'status':'deleted','revision':999}
+    original_bytes = value_bytes(first)
+    check(event,'S10_original_custody_full_resolution',resolve_history(row,first,historical_source,{})
+          == 'metadata_and_authorized_refs' and value_bytes(first) == original_bytes)
+    for name, fact, value in FOREIGN_PLACEMENTS:
+        check(event, 'S10_original_custody_' + name + '_refused', resolve_history(
+              row, first, dict(historical_source, **{fact: value}), {}) == 'unavailable' and value_bytes(first) == original_bytes)
+
+    for case in fixtures['historical_originals']['cases'] + fixtures['historical_numeric_originals']['cases']:
+        if case['event_type'] != event:
+            continue
+        original = copy.deepcopy(case['original'])
+        before = value_bytes(original)
+        packs = {k: dict(v, body=v['body'].encode()) for k,v in case['packs'].items()}
+        source = history_source_for(row, case['logical_payload'], original)
+        source['current_live_state'] = {'owner_active': False, 'status': 'deleted', 'revision': 999}
+        label = 'S10_older_original_' + case['route']
+        check(event, label + '_preserved', resolve_history(row, original, source, packs)
+              == 'metadata_and_authorized_refs' and value_bytes(original) == before)
+        check(event, label + '_full_value', full_value_matches(original['event'], original,
+              original['result'], original['custody'], validation=HISTORICAL_V1))
+        current = AppendModel(row, packs, fixtures['first_append_receipts'][event], fixtures['custody_template'])
+        check(event, label + '_current_write_refused', current.append(original['event'], True) == 'invalid' and not current.scoped)
+        for flag in ('withdrawn', 'authorized', 'source_valid', 'receipt_valid'):
+            bad_source = copy.deepcopy(source); bad_source[flag] = flag == 'withdrawn'
+            check(event, label + '_' + flag + '_refused', resolve_history(row, original, bad_source, packs) == 'unavailable')
+        # SP-1101: only the authenticated owner's recorded edition selects the frozen verifier.
+        for decoder in ('unknown-decoder', CURRENT_WRITER, None):
+            check(event, label + '_' + str(decoder) + '_refused',
+                  resolve_history(row, original, dict(source, recorded_decoder=decoder), packs) == 'unavailable')
+        check(event, label + '_caller_recipe_refused', resolve_history(row, original, source, packs, recipe_override=HISTORICAL_V1) == 'unavailable')
+        foreign = copy.deepcopy(source); foreign['authenticated_original']['event']['event_id'] += '-foreign'
+        check(event, label + '_foreign_binding_refused', resolve_history(row, original, foreign, packs) == 'unavailable')
+        for name, fact, value in FOREIGN_PLACEMENTS:
+            check(event, label + '_' + name + '_refused',
+                  resolve_history(row, original, dict(source, **{fact: value}), packs) == 'unavailable')
+        deleted = dict(source, body_deleted=True)
+        check(event, label + '_body_deleted', resolve_history(row,original,deleted,packs) == 'metadata_only')
+        forged = copy.deepcopy(original); forged['custody']['original_event_value_commitment']['sha256'] = '0'*64
+        check(event, label + '_forged_custody_refused', resolve_history(row,forged,source,packs) == 'unavailable')
+        forged = copy.deepcopy(original); forged['event']['observed_at_utc'] = '2026-07-03T00:00:00Z'
+        check(event, label + '_forged_event_refused', resolve_history(row,forged,source,packs) == 'unavailable')
+        forged = copy.deepcopy(original); forged['custody']['group_digest'] = '0'*64
+        check(event, label + '_forged_well_formed_custody_refused',resolve_history(row,forged,source,packs) == 'unavailable')
+        forged = copy.deepcopy(original); forged['result']['first_append_receipt']['acknowledged_at_utc'] = '2026-07-03T00:00:00Z'
+        check(event,label + '_forged_well_formed_receipt_refused',resolve_history(row,forged,source,packs) == 'unavailable')
+
+    if event in PROVIDER_HASH_PATHS:
+        path = PROVIDER_HASH_PATHS[event]
+        adopted = validator(load(schema_path))
+        for name, digest in fixtures['provider_hash_values'].items():
+            permitted = name in ('valid', 'unknown')
+            if name == 'valid':
+                digest = at_path(full['payload'], path)
+            evidence = full['payload']['type_payload']['authority' if event.endswith('.cost_usage') else 'raw_payload']
+            raw_sources = ({evidence['raw_payload_ref']: None} if name == 'unknown' else None)
+            for route in ('inline', 'packed'):
+                bad = copy.deepcopy(full); set_path(bad['payload'], path, digest)
+                check(event, 'S5_provider_hash_schema_' + name + '_' + route,
+                      adopted.is_valid(bad['payload']) == permitted)
+                packs = {}
+                if route == 'packed':
+                    bad['payload']['summary'] = 'x' * 17000
+                    bad['payload'], bad['payload_ref'] = storage_form(bad['payload'], packs)
+                check(event, 'S5_provider_hash_decode_' + name + '_' + route,
+                      rejected(lambda: decode(row, bad, packs, raw_sources=raw_sources)) != permitted)
+                model = AppendModel(row, packs, fixtures['first_append_receipts'][event], fixtures['custody_template'], raw_sources=raw_sources)
+                result = model.append(bad, True)
+                check(event, 'S5_provider_hash_append_' + name + '_' + route,
+                      isinstance(result, dict) == permitted and bool(model.scoped) == permitted)
+            bad = copy.deepcopy(full); set_path(bad['payload'], path, digest)
+            stored = copy.deepcopy(first); stored['event'] = bad
+            stored['custody']['producer_semantic_digest'] = semantic_digest(bad)
+            stored['custody']['original_event_value_commitment'] = commitment(bad)
+            stored['result']['original_event_value_commitment'] = commitment(bad)
+            check(event, 'S5_provider_hash_stored_' + name,
+                  full_value_matches(bad, stored, stored['result'], stored['custody']) == permitted)
+
+    # All concrete identifier patterns, including original stored copies.
+    for label, value, schema in [('event', full, EVENT_VALIDATOR.schema),
+                                  ('payload', full['payload'], load(row['payload_schema_ref'])),
+                                  ('custody', first['custody'], RECEIPT_SCHEMA),
+                                  ('result', first['result'], RECEIPT_SCHEMA)]:
+        valid = {'event': EVENT_VALIDATOR, 'payload': validator(schema),
+                 'custody': CUSTODY_VALIDATOR, 'result': RESULT_VALIDATOR}[label]
+        for path in identifier_paths(value, valid.schema):
+            bad = copy.deepcopy(value); set_path(bad, path, at_path(value, path) + '\n')
+            check(event, 'S5_' + label + '_LF_' + '/'.join(map(str, path)), not valid.is_valid(bad))
+    for field in fixtures['payload_digest_fields'].get(event, []):
+        for name, digest in fixtures['malformed_identifiers'].items():
+            bad = copy.deepcopy(full); bad['payload']['type_payload'][field] = digest
+            check(event, 'S5_payload_schema_' + field + '_' + name, not validator(load(row['payload_schema_ref'])).is_valid(bad['payload']))
+            for route in ('inline', 'packed'):
+                packs = {}
+                if route == 'packed':
+                    bad['payload']['summary'] = 'x'*17000
+                    bad['payload'], bad['payload_ref'] = storage_form(bad['payload'], packs)
+                check(event, 'S5_payload_decode_' + field + '_' + name + '_' + route, rejected(lambda: decode(row, bad, packs)))
+                model = AppendModel(row, packs, fixtures['first_append_receipts'][event], fixtures['custody_template'])
+                check(event, 'S5_payload_append_' + field + '_' + name + '_' + route, model.append(bad, True) == 'invalid' and not model.scoped)
+            # Self-consistent hashes/equality cannot redeem invalid stored payloads.
+            bad = copy.deepcopy(full); bad['payload']['type_payload'][field] = digest
+            stored = copy.deepcopy(first); stored['event'] = bad
+            stored['custody']['producer_semantic_digest'] = semantic_digest(bad)
+            stored['custody']['original_event_value_commitment'] = commitment(bad)
+            stored['result']['original_event_value_commitment'] = commitment(bad)
+            check(event, 'S5_stored_payload_' + field + '_' + name, not full_value_matches(bad, stored, stored['result'], stored['custody']))
+    for name, digest in fixtures['malformed_identifiers'].items():
+        for path in [('group_digest',), ('producer_semantic_digest',), ('original_event_value_commitment', 'sha256')]:
+            stored = copy.deepcopy(first); set_path(stored['custody'], path, digest)
+            if path[0] == 'original_event_value_commitment':
+                stored['result']['original_event_value_commitment']['sha256'] = digest
+            check(event, 'S5_stored_custody_' + '/'.join(path) + '_' + name,
+                  not CUSTODY_VALIDATOR.is_valid(stored['custody']) and not full_value_matches(full, stored, stored['result'], stored['custody']))
+        template = copy.deepcopy(fixtures['custody_template']); template['group_digest'] = digest
+        model = AppendModel(row, {}, fixtures['first_append_receipts'][event], template)
+        check(event, 'S5_custody_append_' + name, model.append(full, True) == 'invalid' and not model.scoped and not model.global_ids)
+
+    bundle = fixtures['checkpoint_positives'][event]
+    check(event, 'S7_checkpoint_positive', checkpoint_matches(row, full, first, bundle))
+    for name in fixtures['checkpoint_negative_cases']:
+        args = checkpoint_negative(name, row, full, first, bundle)
+        check(event, 'S7_' + name, not checkpoint_matches(*args))
+    cp_schema = load(CHECKPOINT_SCHEMA.split('#')[0])
+    for label, value, definition in [('checkpoint', bundle['checkpoint'], 'checkpoint'), ('read_token', bundle['read_token'], 'read_token')]:
+        valid = validator(cp_schema, definition)
+        for path in identifier_paths(value, valid.schema):
+            bad = copy.deepcopy(value); set_path(bad, path, at_path(value, path) + '\n')
+            check(event, 'S5_' + label + '_LF_' + '/'.join(map(str,path)), not valid.is_valid(bad))
+        if label == 'checkpoint':
+            bad = copy.deepcopy(value); key = bad['current_generation_id']; bad['generations'][key+'\n'] = bad['generations'].pop(key)
+            check(event, 'S5_checkpoint_map_key_LF', not valid.is_valid(bad))
+
+
+def untracked(action):
+    """Run one complete route: its result, or 'refused' for a table row; any other exception propagates."""
+    try:
+        return action()
+    except TableRefusal:
+        return 'refused'
+
+
+def reseal(original, event):
+    """Fixture construction only: an authentic original sealed over a changed event."""
+    original = copy.deepcopy(original)
+    original['event'] = copy.deepcopy(event)
+    original['custody']['producer_semantic_digest'] = semantic_digest(event)
+    original['custody']['original_event_value_commitment'] = commitment(event)
+    original['result']['original_event_value_commitment'] = commitment(event)
+    return original
+
+
+def part2b_oracles(check, row, full, fixtures):
+    """Sweep part 2B: CV-1101/CV-253 timestamps and CV-1100/SP-1100/SP-1101 numbers on complete routes."""
+    from pm_runtime_artifact_round10_cases import BROAD_INVALID, BROAD_VALID, STORAGE_INVALID, STORAGE_VALID
+    event = row['event_type']
+    receipt, template = fixtures['first_append_receipts'][event], fixtures['custody_template']
+
+    def append(candidate):
+        return AppendModel(row, {}, receipt, template).append(candidate, True)
+
+    def at_time(field, value):
+        candidate = copy.deepcopy(full)
+        candidate[field] = value
+        if field == 'occurred_at_utc':
+            candidate['payload']['created_at_utc'] = value  # the D15 authored-time copy moves with it
+        return candidate
+    # Owner-valid source spellings are kept exactly; Storage fields take only uppercase-Z UTC.
+    for name, value in BROAD_VALID.items():
+        result = append(at_time('occurred_at_utc', value))
+        check(event, 'S08_route_occurred_at_' + name + '_appends', isinstance(result, dict)
+              and result['event']['occurred_at_utc'] == value)
+    for name, value in BROAD_INVALID.items():
+        check(event, 'S08_route_occurred_at_' + name + '_refused', append(at_time('occurred_at_utc', value)) == 'invalid')
+    for field in ('observed_at_utc', 'persisted_at_utc'):
+        for name, value in STORAGE_VALID.items():
+            result = append(at_time(field, value))
+            check(event, 'S08_route_' + field + '_' + name + '_appends', isinstance(result, dict) and result['event'][field] == value)
+        for name, value in STORAGE_INVALID.items():
+            check(event, 'S08_route_' + field + '_' + name + '_refused', append(at_time(field, value)) == 'invalid')
+    bad_receipt = dict(receipt, acknowledged_at_utc=BROAD_INVALID['hour_24'])
+    check(event, 'S08_route_receipt_hour_24_refused', AppendModel(row, {}, bad_receipt, template).append(copy.deepcopy(full), True) == 'invalid')
+    # SP-1101: an authentic older original keeps an owner-valid offset source time
+    # and its exact spelling; a sealed Storage field with an offset never reads.
+    case = next((c for c in fixtures['historical_originals']['cases'] + fixtures['historical_numeric_originals']['cases']
+                 if c['event_type'] == event and c['route'] == 'inline'), None)
+    if case is not None:
+        for field, value, expected in (('occurred_at_utc', BROAD_VALID['offset'], 'metadata_and_authorized_refs'),
+                                       ('occurred_at_utc', BROAD_VALID['lowercase_separators'], 'metadata_and_authorized_refs'),
+                                       ('observed_at_utc', STORAGE_INVALID['plus_zero_offset'], 'unavailable'),
+                                       ('persisted_at_utc', STORAGE_INVALID['lowercase_z'], 'unavailable'),
+                                       ('occurred_at_utc', BROAD_INVALID['february_30'], 'unavailable')):
+            old = copy.deepcopy(case['original']['event'])
+            old[field] = value
+            payload = copy.deepcopy(case['logical_payload'])
+            if field == 'occurred_at_utc':
+                old['payload']['created_at_utc'] = payload['created_at_utc'] = value
+            original = reseal(case['original'], old)
+            source = history_source_for(row, payload, original)
+            before = value_bytes(original)
+            outcome = untracked(lambda: resolve_history(row, original, source, {}))
+            check(event, 'S08_history_' + field + '_' + value.replace(':', '').replace('+', 'p') + '_' + expected,
+                  outcome == expected and value_bytes(original) == before)
+    # CV-1100 long integers (no global cap): every route refuses through a row, never an exception.
+    long_integer = 10 ** 4399
+    check(event, 'N2_4400_digit_sequence_refused', untracked(lambda: append(dict(full, sequence_id=long_integer))) == 'invalid')
+    if event.endswith('.restore_point'):
+        candidate = dict(full, producer_sequence_id=long_integer)
+        candidate['idempotency_key'] = identity(event, candidate['payload'], long_integer)
+    else:
+        candidate = dict(full, producer_sequence_id=long_integer)
+    check(event, 'N2_4400_digit_producer_sequence_refused', untracked(lambda: append(candidate)) == 'invalid')
+    if not event.endswith('.restore_point'):  # the restore ordinal is the identity revision (O-rows)
+        check(event, 'N2_2_53_producer_sequence_appends', isinstance(append(dict(full, producer_sequence_id=2 ** 53)), dict))
+    check(event, 'N2_uint64_max_sequence_appends', isinstance(append(dict(full, sequence_id=2 ** 64 - 1)), dict))
+    paths = [p for p in integer_slot_paths(full['payload'])]
+    if paths:
+        candidate = copy.deepcopy(full)
+        set_path(candidate['payload'], paths[0], long_integer)
+        check(event, 'N2_4400_digit_payload_integer_refused', untracked(lambda: decode(row, candidate, {})) == 'refused')
+
+
+def integer_slot_paths(value, path=()):
+    if type(value) is int:
+        yield path
+    elif type(value) is dict:
+        for key, child in value.items():
+            yield from integer_slot_paths(child, (*path, key))
+    elif type(value) is list:
+        for index, child in enumerate(value):
+            yield from integer_slot_paths(child, (*path, index))
+
+
+def source_for(row, payload):
+    return dict(project_id=payload['project_id'], event_type=row['event_type'], original_payload=copy.deepcopy(payload),
+                authorized=True, source_valid=True, receipt_valid=True, withdrawn=False, body_deleted=False)
+
+
+def history_source_for(row, payload, authentic_original):
+    """Freeze the synthetic source adapter's independently authenticated read.
+
+    Caller-supplied candidate/custody is compared to this original, never used
+    to authenticate itself. The adapter also reports the Server and original
+    owner operation holding the original (SP-1101 binding facts no stored byte
+    carries). Real authentication/receipt issuance stays NOT_RUN.
+    """
+    return dict(source_for(row,payload),authenticated_original=copy.deepcopy(authentic_original),
+                authenticated_server_id=STATIC_SERVER_ID, authenticated_owner_operation_id=STATIC_OWNER_OPERATION_ID,
+                recorded_decoder=HISTORICAL_V1)
+
+
+def rejected(action):
+    raised = False
+    try:
+        action()
+    except (ValueError, KeyError, UnicodeError, TypeError):
+        raised = True
+    return table_refusal('codec_oracle', {'raised': raised}) is None
+
+
+def references_resolve(errors):
+    """S9 preflight decision: the reference walk's errors refuse through the table."""
+    return table_refusal('codec_references', {'unresolved_count': len(errors)}) is None
+
+
+def observation_admissible(candidate, previous, row, packs, source):
+    """Ordinal/predecessor/source model; not a native owner fence or read proof."""
+    if table_refusal('observation_source', dict(
+            proof_valid=at(source, 'proof_valid'), predecessor_complete=at(source, 'predecessor_complete'),
+            snapshot_current=at(source, 'snapshot_current'))):
+        return False
+    try:
+        payload = decode(row, candidate, packs)
+    except TableRefusal:
+        return False
+    if table_refusal('observation_group', dict(correlation_id=candidate['correlation_id'],
+                                               grouping_identity=grouping_identity(row['event_type'], payload))):
+        return False
+    # The independently supplied owner snapshot must satisfy the same closed
+    # JSON types BEFORE a value join. Python equality aliases False/0/0.0 and
+    # True/1/1.0; encoded equality also keeps nested source copies exact.
+    canonical_point = at(source, 'canonical_point')
+    source_payload = dict(payload, type_payload=canonical_point)
+    if not validator(load(row['payload_schema_ref'])).is_valid(source_payload):
+        return False
+    if table_refusal('observation_snapshot', dict(point_sha256=value_sha256(payload['type_payload']),
+                                                  snapshot_sha256=value_sha256(canonical_point))):
+        return False
+    if previous is None:
+        return table_refusal('observation_first', dict(producer_sequence_id=candidate['producer_sequence_id'],
+                                                       parent_event_id=candidate['parent_event_id'])) is None
+    # The adapter authenticates the write-time recipe independently of the
+    # supplied predecessor/receipt. Never select a profile from event data.
+    predecessor_source = at(source, 'predecessor_source')
+    try:
+        predecessor = dict(event=previous, custody=at(source, 'predecessor_custody'))
+        custody, reason = dispatch_original(row, predecessor, predecessor_source, packs, (CURRENT_WRITER, HISTORICAL_V1))
+        if table_refusal('observation_recipe', {'dispatch_refusal': reason}):
+            return False
+        decoder = custody.recipe.owner_edition if custody is not None else at(predecessor_source, 'recorded_decoder')
+        if not full_value_matches(previous, at(predecessor_source, 'authenticated_original'),
+                                  at(source, 'predecessor_result'), at(source, 'predecessor_custody'),
+                                  validation=decoder):
+            return False
+        old = decode(row, previous, packs, validation=decoder)
+        if inspect(row, old, predecessor_source) not in ('metadata_only', 'metadata_and_authorized_refs'):
+            return False
+    except TableRefusal:
+        return False
+    point, old_point = payload['type_payload'], old['type_payload']
+    lineage = dict(artifact_id=payload['artifact_id'], old_artifact_id=old['artifact_id'])
+    for field, name in (('restore_point_id', 'restore_point_id'), ('project_id', 'point_project_id'), ('record_ref', 'record_ref'),
+                        ('record_sha256', 'record_sha256'), ('source_thread_id', 'source_thread_id'),
+                        ('source_branch_id', 'source_branch_id'), ('source_message_id', 'source_message_id')):
+        lineage[name], lineage['old_' + name] = at(point, field), at(old_point, field)
+    if table_refusal('observation_lineage_a', lineage) or table_refusal('observation_lineage_b', lineage):
+        return False
+    try:
+        expected_ordinal = previous['producer_sequence_id'] + 1
+    except TypeError:
+        expected_ordinal = None
+    # An unchanged source returns the original and never allocates the next ordinal.
+    return table_refusal('observation_advance', dict(
+        point=point, old_point=old_point, old_status=at(old_point, 'status'), status=at(point, 'status'),
+        producer_sequence_id=candidate['producer_sequence_id'], expected_ordinal=expected_ordinal,
+        parent_event_id=candidate['parent_event_id'], previous_event_id=previous['event_id'],
+        correlation_id=candidate['correlation_id'], previous_correlation_id=previous['correlation_id'])) is None
+
+
+def main(families=None):
+    document = load('Plans/runtime_artifact_event_drafts.json')
+    fixtures = load('Plans/runtime_artifact_event_drafts.fixtures.json')
+    references = SchemaReferences()
+    failures, counts, unresolved_families = [], {}, set()
+    def check(family, name, passed):
+        counts[family] = counts.get(family, 0) + 1
+        if not passed:
+            failures.append(family + ':' + name)
+
+    # An independently frozen CV-339 complete-value vector catches codec/preimage drift.
+    known = load('Plans/event_append_receipt_full_value_fixtures.json')
+    check('shared', 'full_value_known_answer', commitment(known['base_original_event'])['sha256'] == known['commitment_sha256'])
+    a, b = dict(project_id='bc', artifact_id='d', schema_id='e'), dict(project_id='c', artifact_id='d', schema_id='e')
+    check('shared', 'length_framing', identity('a', a) != identity('ab', b))
+    check('shared', 'blake3_known_answer', blake3(b'').hexdigest() == 'af1349b9f5f9a1a6a0404dea36dcc9499bcb25c9adc112b7cc9a93cae41f3262')
+    check('shared', 'rfc8785_known_answer', rfc8785.dumps({'\U0001f600':1, '\ue000':2}) == '{"\U0001f600":1,"\ue000":2}'.encode())
+    check('shared', 'all_19_rows', len(document['rows']) == 19 and {r['event_type'] for r in document['rows']} == set(fixtures['positive_payloads']) == set(fixtures['positive_events']) == set(fixtures['checkpoint_positives']) == set(fixtures['first_append_receipts']))
+    check('shared', 'inline_limit_exact', INLINE_LIMIT == 16384)
+    # Sweep part 2B (CV-1100): untyped values and storage_form inputs have no
+    # integer slot, so integral floats there are legal. Before this pass the
+    # lane refused them everywhere (N01 blanket walk); each change is reported.
+    for name, value in [('float', 1.0), ('exponent', json.loads('1e0')), ('positive_zero', 0.0), ('negative_zero', json.loads('-0.0'))]:
+        check('shared', 'numrule_float_open_map_' + name + '_accepted',
+              validator({'type': 'object', 'additionalProperties': True}).is_valid({'v': value}))
+        for route, size in (('inline', 0), ('packed', 17000)):
+            check('shared', 'numrule_float_storage_form_' + name + '_' + route + '_accepted',
+                  untracked(lambda: storage_form({'number': value, 'summary': 'x' * size}, {})) != 'refused')
+    # The shared CV-339 tuple and this lane's commitment agree on every positive.
+    fixtures_known = load('Plans/runtime_artifact_event_drafts.fixtures.json')
+    check('shared', 'shared_full_value_commitment_agrees', all(
+        commitment(e)['sha256'] == fixtures_known['known_answers'][f]['full_value_sha256'] == full_value_commitment(e)
+        for f, e in fixtures_known['positive_events'].items()))
+    check('shared', 'shared_producer_digest_agrees', all(
+        semantic_digest(e) == fixtures_known['known_answers'][f]['producer_semantic_digest']
+        for f, e in fixtures_known['positive_events'].items()))
+    # Every refusal row is reached in its table's declared order (Method B).
+    order_errors = table_order_errors()
+    check('shared', 'table_require_order' + (': ' + ', '.join(order_errors) if order_errors else ''), not order_errors)
+    generic = load('Plans/event_record_index_checkpoint_contract_fixtures.json')['positive']['initial_mixed_scope']['checkpoint']
+    node = generic['generations'][generic['current_generation_id']]
+    check('shared', 'SP278_generation_known_answer', generic['current_generation_id'] == 'eig_' + binding_digest(dict(
+        domain='pm.event_index.generation.v1', storage_instance_id=generic['storage_instance_id'],
+        projector_version=node['projector_version'], birth_source_selection=node['anchor']['source_selection'],
+        generation_seed_sha256=node['anchor']['generation_seed_sha256'])))
+    check('shared', 'all_semantic_fields_tested', set(fixtures['semantic_mutations']) == set(SEMANTIC_FIELDS))
+    check('shared', 'all_receipt_fields_tested', set(fixtures['receipt_mutations']) == set(RECEIPT_SCHEMA['$defs']['AppendReceipt']['required']))
+    registry = load('Plans/storage_value_registry.json')['families']
+    index_policy = next(f['retention_policy_ref'] for f in registry if f['family_id'] == 'event_record_index')
+    checkpoint_policy = next(f['retention_policy_ref'] for f in registry if f['family_id'] == 'event_record_index_checkpoint')
+    for row in document['rows']:
+        event = row['event_type']
+        if families is not None and event not in families:
+            unresolved_families.add(event)
+            continue
+        ref_errors = references.errors([row['payload_schema_ref'], 'Plans/event_record.schema.json',
+                                       'Plans/event_append_receipt_contracts.schema.json',
+                                       CHECKPOINT_SCHEMA.split('#')[0]])
+        resolved = references_resolve(ref_errors)
+        check(event, 'S9_schema_reference_preflight' + (': ' + '; '.join(ref_errors) if ref_errors else ''), resolved)
+        if not resolved:
+            unresolved_families.add(event)
+            continue  # Fail closed before any payload or optional branch is visited.
+        check(event, 'prepared_contract', row['outcome'] == 'register (prepared)')
+        check(event, 'index_retention', row['index_retention_policy_ref'] == index_policy == 'RP-EVENT-INDEX-SOURCE')
+        check(event, 'checkpoint_retention', policies_match(row, index_policy, checkpoint_policy) and checkpoint_policy == 'RP-PROJECTION-3GEN')
+        # Negative policy cases would have caught B1's conflated derived assignment.
+        check(event, 'wrong_index_policy_rejected', not policies_match(dict(row, index_retention_policy_ref='RP-PROJECTION-3GEN'), index_policy, checkpoint_policy))
+        schema = load(row['payload_schema_ref'])
+        check(event, 'closed_schema', schema['additionalProperties'] is False and schema['$id'] == row['payload_schema_id'])
+        Draft202012Validator.check_schema(schema)
+        valid = validator(schema)
+        payload = fixtures['positive_payloads'][event]
+        check(event, 'valid', not list(valid.iter_errors(payload)))
+        for name, field, value in [('closed_root','unexpected_event_extension',True), ('wrong_type','artifact_type','wrong_type')]:
+            bad = copy.deepcopy(payload); bad[field] = value
+            check(event, name, bool(list(valid.iter_errors(bad))))
+        bad = copy.deepcopy(payload); del bad['artifact_id']
+        check(event, 'missing_identity', bool(list(valid.iter_errors(bad))))
+        for case in fixtures['source_cases']:
+            source = source_for(row, payload); source.update(case['overrides'])
+            check(event, case['id'], inspect(row, payload, source) == case['expected'])
+        changed = copy.deepcopy(payload); changed['summary'] = 'changed semantic summary'
+        revision = 0 if event.endswith('.restore_point') else None
+        check(event, 'immutable_payload', identity(event, payload, revision) == identity(event, changed, revision)
+              and inspect(row, changed, source_for(row, payload)) == 'identity_conflict')
+        other = copy.deepcopy(payload); other['project_id'] += '-other'
+        check(event, 'cross_project_identity', identity(event, payload, revision) != identity(event, other, revision))
+        packs = {}
+        full = copy.deepcopy(fixtures['positive_events'][event])
+        check(event, 'full_envelope', not rejected(lambda: decode(row, full, packs)) and decode(row, full, packs) == payload)
+        check(event, 'semantic_known_answer', semantic_digest(full) == fixtures['known_answers'][event]['producer_semantic_digest'])
+        check(event, 'full_value_known_answer', commitment(full)['sha256'] == fixtures['known_answers'][event]['full_value_sha256'])
+        receipt = fixtures['first_append_receipts'][event]
+        model = AppendModel(row, packs, receipt, fixtures['custody_template'])
+        first = model.append(full, admission=True)
+        check(event, 'full_first_receipt', isinstance(first, dict) and full_value_matches(full, first, first['result'], first['custody']))
+        if not isinstance(first, dict):
+            unresolved_families.add(event)
+            continue  # Invalid positive inputs must produce a structured failure, never false success.
+        standing_oracles(check, row, full, first, fixtures, references)
+        part2b_oracles(check, row, full, fixtures)
+        replay = model.append(copy.deepcopy(full), admission=True)
+        check(event, 'lost_ack_exact_result', first is replay and len(model.scoped) == 1)
+        alternate = copy.deepcopy(full); alternate['event_id'] += '-other-delivery'
+        check(event, 'alternate_event_id_returns_original', model.append(alternate, admission=True) is first and len(model.scoped) == 1)
+        for policy, expected in fixtures['append_policy_refusals'].items():
+            bad = copy.deepcopy(full); bad['replay_policy'] = policy
+            fresh = AppendModel(row, packs, receipt, fixtures['custody_template'])
+            before = copy.deepcopy((model.scoped, model.global_ids))
+            check(event, 'policy_schema_valid_' + policy, not list(EVENT_VALIDATOR.iter_errors(bad)))
+            check(event, 'policy_digest_unchanged_' + policy, semantic_digest(bad) == semantic_digest(full))
+            check(event, 'fresh_policy_refused_' + policy, fresh.append(bad, True) == expected and not fresh.scoped and not fresh.global_ids)
+            check(event, 'retry_policy_refused_' + policy, model.append(bad, True) == expected and (model.scoped, model.global_ids) == before)
+            bad['event_id'] += '-other-delivery'
+            check(event, 'alternate_id_policy_refused_' + policy, model.append(bad, True) == expected and (model.scoped, model.global_ids) == before)
+        check(event, 'withdrawal_no_append', model.append(full) == 'withdrawn' and len(model.scoped) == 1)
+        check(event, 'unproven_source_no_append', model.append(full, True, False) == 'unavailable' and len(model.scoped) == 1)
+        check(event, 'dedupe_unavailable_no_append', model.append(full, True, True, False) == 'unavailable' and len(model.scoped) == 1)
+        mutated = copy.deepcopy(full); mutated['payload'] = changed
+        check(event, 'retry_conflict_no_append', model.append(mutated, True) == 'idempotency_conflict' and len(model.scoped) == 1)
+        for field in EVENT_VALIDATOR.schema['required']:
+            bad = copy.deepcopy(full); del bad[field]
+            check(event, 'missing_envelope_' + field, bool(list(EVENT_VALIDATOR.iter_errors(bad))))
+        bad = copy.deepcopy(full); bad['unknown_envelope'] = True
+        check(event, 'closed_envelope', bool(list(EVENT_VALIDATOR.iter_errors(bad))))
+        for field, value in fixtures['semantic_mutations'].items():
+            bad = copy.deepcopy(full); bad[field] = value
+            if field == 'scope_kind':
+                bad['project_id'] = None
+            check(event, 'semantic_digest_' + field, semantic_digest(bad) != semantic_digest(full))
+            check(event, 'semantic_conflict_' + field, model.append(bad, True) == 'idempotency_conflict' and len(model.scoped) == 1)
+        for field in STORAGE_FIELDS:
+            bad = copy.deepcopy(full); bad[field] = fixtures['storage_mutations'][field]
+            check(event, 'storage_excluded_' + field, semantic_digest(bad) == semantic_digest(full) and model.append(bad, True) is first)
+            check(event, 'full_value_binds_' + field, not full_value_matches(bad, first, first['result'], first['custody']))
+        for field, value in fixtures['receipt_mutations'].items():
+            bad_result, bad_custody = copy.deepcopy(first['result']), copy.deepcopy(first['custody'])
+            bad_result['first_append_receipt'][field] = value
+            bad_custody['first_append_receipt'][field] = value
+            check(event, 'receipt_binds_' + field, not full_value_matches(full, first, bad_result, bad_custody))
+            del bad_result['first_append_receipt'][field]
+            check(event, 'receipt_requires_' + field, bool(list(RECEIPT_VALIDATOR.iter_errors(bad_result['first_append_receipt']))))
+        bad_result = copy.deepcopy(first['result']); bad_result['original_event_value_commitment']['sha256'] = '0'*64
+        check(event, 'corrupt_full_commitment', not full_value_matches(full, first, bad_result, first['custody']))
+        bad_custody = copy.deepcopy(first['custody']); bad_custody['schema_id']='pm.storage_value.event_append_receipt_custody.v1'; bad_custody['schema_version']='1.0.0'
+        check(event, 'v1_custody_no_full_value_fallback', not full_value_matches(full, first, first['result'], bad_custody))
+        bad = copy.deepcopy(full); bad['event_id'] += '-semantic-duplicate'
+        check(event, 'full_value_requires_original_event_id', not full_value_matches(bad, first, first['result'], first['custody']))
+        bad_result = copy.deepcopy(first['result']); bad_result['first_append_receipt']['unexpected']=True
+        check(event, 'closed_first_receipt', not full_value_matches(full,first,bad_result,first['custody']))
+        for field in ('schema_version','payload_schema_id','event_type','project_id','run_id','attempt_id','thread_id','node_id','occurred_at_utc','idempotency_key'):
+            bad = copy.deepcopy(full); bad[field] = 'unsupported' if field != 'occurred_at_utc' else '2026-07-03T00:00:00Z'
+            check(event, 'dispatch_join_' + field, rejected(lambda: decode(row, bad, packs)))
+        for size in (16383, 16384, 16385, 17000):
+            large = copy.deepcopy(payload); large['summary'] = ''
+            padding = size - len(rfc8785.dumps(large))
+            large['summary'] = 'x' * padding
+            check(event, 'size_valid_' + str(size), not list(valid.iter_errors(large)) and len(rfc8785.dumps(large)) == size)
+            candidate = copy.deepcopy(full)
+            candidate['payload'], candidate['payload_ref'] = storage_form(large, packs)
+            check(event, 'size_dispatch_' + str(size), decode(row, candidate, packs) == large and (candidate['payload_ref'] is None) == (size <= 16384))
+            if size > 16384:
+                bad = copy.deepcopy(candidate); bad['payload'], bad['payload_ref'] = large, None
+                check(event, 'oversized_inline_rejected_' + str(size), rejected(lambda: decode(row, bad, packs)))
+                stored = copy.deepcopy(first); stored['event'] = bad
+                stored['custody']['producer_semantic_digest'] = semantic_digest(bad)
+                stored['custody']['original_event_value_commitment'] = commitment(bad)
+                stored['result']['original_event_value_commitment'] = commitment(bad)
+                check(event, 'S4_stored_oversized_inline_' + str(size), not full_value_matches(bad,stored,stored['result'],stored['custody']))
+        # The review's exact 17,000-byte-summary counterexample, independently of total size.
+        large = copy.deepcopy(payload); large['summary'] = 'x' * 17000
+        candidate = copy.deepcopy(full); candidate['payload'], candidate['payload_ref'] = storage_form(large, packs)
+        check(event, 'review_17000_summary_externalized', decode(row, candidate, packs) == large and candidate['payload_ref'] is not None)
+        packed = copy.deepcopy(packs)
+        digest = PACK_REF.fullmatch(candidate['payload_ref']).group(1)
+        # Digest corruption preserves reachability, size, JSON canonicality and
+        # the logical schema. Missing bytes and size faults have separate cases.
+        corrupt = copy.deepcopy(large); corrupt['summary'] = 'y' + corrupt['summary'][1:]
+        corrupt_body = rfc8785.dumps(corrupt)
+        check(event, 'corrupt_pack_other_guards_valid', len(corrupt_body) == len(packed[digest]['body'])
+              and valid.is_valid(corrupt) and rfc8785.dumps(json.loads(corrupt_body)) == corrupt_body)
+        for name, update in [('missing_pack',None), ('corrupt_pack',{'body':corrupt_body}), ('unsynced_pack',{'durable':False}), ('unauthorized_pack',{'authorized':False})]:
+            broken = copy.deepcopy(packed)
+            if update is None:
+                del broken[digest]
+            else:
+                broken[digest].update(update)
+            check(event, name, rejected(lambda: decode(row, candidate, broken)))
+        for name, ref in [('missing_digest',candidate['payload_ref'].replace(digest,'0'*64)),
+                          ('wrong_size',candidate['payload_ref'].replace(':'+str(len(rfc8785.dumps(large)))+':', ':1:')),
+                          ('wrong_media',candidate['payload_ref'].replace('application/json','text/plain')),
+                          ('S5_pack_reference_LF',candidate['payload_ref']+'\n')]:
+            bad = copy.deepcopy(candidate); bad['payload_ref'] = ref
+            check(event, name, rejected(lambda: decode(row, bad, packed)))
+        bad = copy.deepcopy(candidate); bad['payload'] = copy.deepcopy(payload)
+        check(event, 'both_payload_routes', rejected(lambda: decode(row, bad, packed)))
+        bad = copy.deepcopy(candidate); bad['payload_ref'] = None
+        check(event, 'neither_payload_route', rejected(lambda: decode(row, bad, packed)))
+        # Correctly hashed, otherwise well-formed pack containing the wrong logical family.
+        wrong = copy.deepcopy(large); wrong['artifact_type'] = 'wrong_type'
+        bad = copy.deepcopy(full); bad['payload'],bad['payload_ref'] = storage_form(wrong, packs)
+        check(event, 'external_schema_dispatch', rejected(lambda: decode(row, bad, packs)))
+        for name, body in [('duplicate_json_key', rfc8785.dumps(large)[:-1]+b',"summary":"'+b'x'*17000+b'"}'),
+                           ('noncanonical_json', json.dumps(large, indent=2).encode())]:
+            digest_bad = blake3(body).hexdigest(); packs[digest_bad] = dict(body=body,durable=True,authorized=True)
+            bad = copy.deepcopy(full); bad['payload'] = {}; bad['payload_ref'] = f'pm.payload_pack.v1:blake3:{digest_bad}:{len(body)}:application/json'
+            check(event, name, rejected(lambda: decode(row, bad, packs)))
+        # External replay also binds original reference bytes and all receipt fields.
+        external_model = AppendModel(row, packed, receipt, fixtures['custody_template'])
+        external = external_model.append(candidate, True)
+        check(event, 'external_full_receipt_replay', isinstance(external,dict) and full_value_matches(candidate,external,external['result'],external['custody']) and external_model.append(copy.deepcopy(candidate),True) is external)
+        bad = copy.deepcopy(candidate); bad['payload_ref'] += '\n'
+        stored = copy.deepcopy(external); stored['event'] = bad
+        stored['custody']['producer_semantic_digest'] = semantic_digest(bad)
+        stored['custody']['original_event_value_commitment'] = commitment(bad)
+        stored['result']['original_event_value_commitment'] = commitment(bad)
+        check(event, 'S5_stored_pack_reference_LF', not full_value_matches(bad,stored,stored['result'],stored['custody']))
+        for policy, expected in fixtures['append_policy_refusals'].items():
+            bad = copy.deepcopy(candidate); bad['replay_policy'] = policy
+            fresh = AppendModel(row, packed, receipt, fixtures['custody_template'])
+            before = copy.deepcopy((external_model.scoped, external_model.global_ids))
+            check(event, 'external_fresh_policy_refused_' + policy, fresh.append(bad, True) == expected and not fresh.scoped and not fresh.global_ids)
+            check(event, 'external_retry_policy_refused_' + policy, external_model.append(bad, True) == expected and (external_model.scoped, external_model.global_ids) == before)
+        if event.endswith('.restore_point'):
+            def observe(candidate, previous, row, packs, source):
+                # Test setup issues current-format controls before the boundary.
+                proof = observation_source(SimpleNamespace(**globals()), fixtures, row, previous, packs, source)
+                return observation_admissible(candidate, previous, row, packs, proof)
+            source = dict(proof_valid=True, predecessor_complete=True, snapshot_current=True, canonical_point=payload['type_payload'])
+            check(event, 'first_observation', observe(full,None,row,packs,source))
+            check(event, 'grouping_known_answer', grouping_identity(event, payload) == full['correlation_id'])
+            other_group = copy.deepcopy(payload); other_group['artifact_id'] += '-other-group'
+            for name, correlation in [('incorrect', 'not-the-ra1-grouping-key'), ('cross_group', grouping_identity(event, other_group))]:
+                bad = copy.deepcopy(full); bad['correlation_id'] = correlation
+                check(event, 'first_' + name + '_correlation_schema_valid', decode(row, bad, packs) == payload)
+                check(event, 'first_' + name + '_correlation_refused', not observe(bad,None,row,packs,source))
+            successor = copy.deepcopy(fixtures['restore_successor'])
+            source['canonical_point'] = successor['payload']['type_payload']
+            check(event, 'next_lifecycle_observation', observe(successor,full,row,packs,source))
+            for name, correlation in [('incorrect', 'not-the-ra1-grouping-key'), ('cross_group', grouping_identity(event, other_group))]:
+                bad = copy.deepcopy(successor); bad['correlation_id'] = correlation
+                check(event, 'next_' + name + '_correlation_refused', not observe(bad,full,row,packs,source))
+                predecessor = copy.deepcopy(full); predecessor['correlation_id'] = correlation
+                check(event, 'matching_wrong_' + name + '_correlations_refused', not observe(bad,predecessor,row,packs,source))
+            check(event, 'same_point_artifact_new_event_identity', successor['payload']['artifact_id'] == payload['artifact_id'] and successor['payload']['type_payload']['restore_point_id'] == payload['type_payload']['restore_point_id'] and successor['idempotency_key'] != full['idempotency_key'])
+            second = model.append(successor,True)
+            check(event, 'successor_replay', isinstance(second,dict) and model.append(copy.deepcopy(successor),True) is second and len(model.scoped)==2)
+            for field,value in [('producer_sequence_id',0),('producer_sequence_id',2),('parent_event_id',None),('parent_event_id','other-event')]:
+                bad = copy.deepcopy(successor); bad[field] = value
+                if field == 'producer_sequence_id':
+                    bad['idempotency_key'] = identity(event, bad['payload'], value)
+                check(event, 'stale_predecessor_dispatch_'+field+'_'+str(value), decode(row,bad,packs) == bad['payload'])
+                check(event, 'stale_predecessor_'+field+'_'+str(value), not observe(bad,full,row,packs,source))
+            for flag in ('proof_valid','predecessor_complete','snapshot_current'):
+                bad_source = dict(source); bad_source[flag] = False
+                check(event, 'observation_'+flag, not observe(successor,full,row,packs,bad_source))
+            refresh = copy.deepcopy(successor); refresh['payload'] = copy.deepcopy(payload)
+            refresh['payload']['projection_freshness']='current'; refresh['payload']['summary']='viewer refresh'
+            unchanged = dict(source,canonical_point=payload['type_payload'])
+            check(event, 'refresh_does_not_advance', not observe(refresh,full,row,packs,unchanged))
+            bad = copy.deepcopy(successor); bad['payload']['type_payload']['restore_point_id'] += '-other'
+            check(event, 'cross_point_observation', not observe(bad,full,row,packs,dict(source,canonical_point=bad['payload']['type_payload'])))
+            bad = copy.deepcopy(successor); bad['payload']['type_payload']['actions']['apply']['availability']='available'
+            check(event, 'terminal_action_remains_unavailable', bool(list(valid.iter_errors(bad['payload']))))
+            for status, terminal in fixtures['restore_terminal_observations'].items():
+                actual = dict(source, canonical_point=terminal['payload']['type_payload'])
+                check(event, 'terminal_' + status, observe(terminal,full,row,packs,actual))
+                for action in ('apply','branch','delete'):
+                    broken = copy.deepcopy(terminal['payload']); broken['type_payload']['actions'][action]['availability']='available'
+                    check(event, 'terminal_'+status+'_'+action+'_refused', bool(list(valid.iter_errors(broken))))
+            for flag in ('mutates_source_thread','mutates_source_branch','mutates_source_worktree','mutates_git_index','mutates_runtime_safe_points','restores_files'):
+                broken = copy.deepcopy(payload); broken['type_payload']['workspace_effects'][flag]=True
+                check(event, 'no_source_effect_' + flag, bool(list(valid.iter_errors(broken))))
+    boundary = SimpleNamespace(**globals())
+    boundary.SchemaReferences = lambda: references
+    omitted = unresolved_families | {r['event_type'] for r in document['rows']
+                                      if families is not None and r['event_type'] not in families}
+    for guard, family, name, positive, negative in guard_cases(boundary, excluded=omitted):
+        check(family, 'S11_' + guard + '_' + name + '_positive', guard_accepted(lambda: positive(boundary)))
+        check(family, 'S11_' + guard + '_' + name + '_negative', not guard_accepted(lambda: negative(boundary)))
+    print(json.dumps(dict(status='fail' if failures else 'pass', cases=sum(counts.values()), per_family=counts,
+                          failures=failures, native_execution='NOT_RUN', admission='NONE',
+                          scope='static full-envelope/schema/receipt/hash and bounded source/append/observation models'),indent=2))
+    return bool(failures)
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--family', choices=[r['event_type'] for r in load('Plans/runtime_artifact_event_drafts.json')['rows']])
+    args = parser.parse_args()
+    sys.exit(main({args.family} if args.family else None))
