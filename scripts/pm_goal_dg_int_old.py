@@ -113,7 +113,12 @@ class World(C.CancelWorld):
         self.knobs=self.cfg.get('knobs',{})
         RW.World.CURRENT=self
         self.tmp=Path(tempfile.mkdtemp(prefix='dgint-c3-old-',dir=base))
-        sw=ST.StartWorld(self.tmp/'s1',SW.v3_edition(),segment_target_bytes=int(self.cfg.get('segment_target_bytes',65536)))
+        ids={}
+        pad=RW.NR.uint64(self.cfg.get('id_pad',0),'int/old/id_pad')
+        if pad:
+            tag=RW.uuid.uuid4().hex[:6]+'x'*pad
+            ids=dict(project='TEST_ONLY-project-'+tag,goal='TEST_ONLY-goal-'+tag,run='TEST_ONLY-goal-run-'+tag)
+        sw=ST.StartWorld(self.tmp/'s1',SW.v3_edition(),segment_target_bytes=int(self.cfg.get('segment_target_bytes',65536)),**ids)
         sw.storage.__class__=V.Storage
         sw.storage._tx_handles=weakref.WeakKeyDictionary()
         sw.storage.lane_cut_point=None
