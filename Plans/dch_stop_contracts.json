@@ -1,0 +1,44 @@
+{
+  "status": "prepared_without_admission",
+  "event_type": "chat.response_stop_requested",
+  "family_revision": "1.0.0",
+  "authority_refs": [
+    "DL-045",
+    "DL-406",
+    "DL-427"
+  ],
+  "decision_sources": {
+    "DL-406": "origin/plans/ea-cards1-answers-20261104:Plans/Decision_Log.md#DL-406",
+    "DL-427": "origin/plans/ea-cards2-answers-20261105:Plans/Decision_Log.md#DL-427"
+  },
+  "owner_unit": "ACD-627",
+  "payload_unit": "CV-647",
+  "storage_unit": "SP-627",
+  "outcome_owner_unit": "ACD-628",
+  "retirement_unit": "SP-628",
+  "oracle_unit": "ATS-306",
+  "payload_schema_ref": "Plans/dch_stop_request.schema.json",
+  "outcome_schema_ref": "Plans/dch_stop_outcome.schema.json",
+  "reader": "reader.chat.response_stop_requested@1.0.0",
+  "projector": "projector.storage.event_record_index@1.0.0",
+  "checkpoint_key": "event_record_index_checkpoint.v1:{storage_instance_id}",
+  "checkpoint_schema_ref": "Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint",
+  "append_policy": "dedupe_by_idempotency_key",
+  "retention_policy_ref": "RP-CHAT-THREAD-LIFETIME",
+  "retention_policy_version": "1.0.0",
+  "retention_assignment_ref": "DL-401 G15; origin/plans/ea-retention-cards2-20261105:Plans/storage-plan.md Case L-3",
+  "outcome_record": {
+    "family_id": "assistant_turn_stop_outcome",
+    "key_shape": "assistant_turn_stop_outcome.v1:{storage_instance_id}:{stop_request_event_id}",
+    "authority_class": "canonical_non_rebuildable",
+    "storage_kind": "redb_canonical",
+    "max_inline_bytes": 16384,
+    "overflow": "SP-337 exact complete payload reference",
+    "retention_policy_ref": "PENDING_RETENTION_DECISION",
+    "retention_question": "Should the saved assistant-turn Stop outcome be kept and deleted with its chat under RP-CHAT-THREAD-LIFETIME@1.0.0, or have a separate lifetime? If separate, what window, count bucket, deletion behavior and hold rules apply in Project and application chats?",
+    "status": "prepared_non_emitting_pending_retention_and_storage_materialization"
+  },
+  "retirement_application_ref": "reports/event-authority-20261104/DCH-stop-retirement-application.json",
+  "native_execution": "NOT_RUN",
+  "check_11": "PARTIAL; shared guard-isolation sweep; lane proof script unchanged"
+}
