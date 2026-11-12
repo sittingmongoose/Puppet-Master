@@ -131,7 +131,7 @@ function actionRow(actions, o) {
   const why = list.filter(a => a.disabled);
   if (!why.length || o.reasons === false) return row;
   return h('div', { class: cx('pmr-a-actblock', o.blockCls) }, row,
-    why.map(a => h('p.pmr-a-why', PMR.glyph('blocked'), h('span', h('b', { text: a.label + ': ' }), a.disabled))));
+    why.map(a => h('p.pmr-a-why', PMR.glyph('blocked'), h('span.pmr-part-text', h('b', { class: 'pmr-part-text', text: a.label + ': ' }), a.disabled))));
 }
 function menuItemsOf(actions) {
   return ordered(actions).map(a => ({ label: a.label, icon: a.icon, cmd: a.cmd, arg: a.arg, commandId: a.commandId, uiActionId: a.uiActionId,
@@ -205,7 +205,7 @@ function factLine(f) {
   const [label, value, opt] = f;
   const o = opt || {};
   const v = h('span', { class: cx('pmr-a-fv', o.mono && 'is-mono'), 'data-state': o.state || null },
-    o.state ? PMR.glyph(o.state) : null, h('span', { text: String(value) }));
+    o.state ? PMR.glyph(o.state) : null, h('span', { class: 'pmr-part-text', text: String(value) }));
   return h('div', { class: 'pmr-a-fact pmr-a-dline', 'data-canon': o.canon || null }, h('span.pmr-a-fk', { text: label }), v);
 }
 function factsBlock(inst, facts, keyBase) {
@@ -391,7 +391,7 @@ function factItem(inst, item, o) {
     h('div.pmr-a-fhead', h('span.pmr-a-fk', { text: item.name }), showWord && val ? PMR.statusEl(item.status) : null),
     h('span', { class: cx('pmr-a-fv', item.mono && 'is-mono') },
       showWord && !val ? PMR.statusEl(item.status) : (item.status && !showWord ? PMR.glyph(item.status.state) : null),
-      val ? h('span', { text: val }) : null));
+      val ? h('span', { class: 'pmr-part-text', text: val }) : null));
   if (item.metrics && item.metrics.length) el.append(h('div.pmr-a-metrics', item.metrics.map(meter)));
   if (item.note) el.append(h('p.pmr-a-note', { text: item.note }));
   if (item.children && item.children.length) el.append(h('div.pmr-a-kids', item.children.map(c => childLine(c))));
@@ -419,7 +419,7 @@ function section(inst, sec, o) {
   const inlineAct = acts.length === 1 && !acts[0].primary && sec.kind !== 'form' && sec.kind !== 'chain' ? act(acts[0], { variant: 'quiet', cls: 'pmr-a-secact', menus: o.menus, onLocal: o.onLocal }) : null;
   const sub = [];
   if (sec.status) sub.push(PMR.statusEl(sec.status));
-  if (!numeric && sec.count != null && sec.count !== '' && !(sec.status && sec.status.word === sec.count)) sub.push(h('span', { text: String(sec.count) }));
+  if (!numeric && sec.count != null && sec.count !== '' && !(sec.status && sec.status.word === sec.count)) sub.push(h('span', { class: 'pmr-part-text', text: String(sec.count) }));
   const headRow = h('div.pmr-a-sechead', head, inlineAct);
   const subEl = sub.length ? h('div.pmr-a-secsub', joinFacts(sub)) : null;
   const body = h('div.pmr-a-secbody', { hidden: !open });
@@ -698,7 +698,7 @@ function defaultPane(inst, v, o) {
   if (v.conditional && v.conditional.shown === false) {
     const acts = [v.conditional.action].concat(v.empty && v.empty.action && (!v.conditional.action || v.empty.action.arg !== v.conditional.action.arg) ? [v.empty.action] : []).filter(Boolean);
     out.push(h('div.pmr-a-empty', { 'data-kind': (v.empty && v.empty.kind) || 'not_relevant' },
-      h('p.pmr-a-empty-t', PMR.glyph('info'), h('span', { text: (v.empty && v.empty.text) || v.summary })),
+      h('p.pmr-a-empty-t', PMR.glyph('info'), h('span', { class: 'pmr-part-text', text: (v.empty && v.empty.text) || v.summary })),
       h('p.pmr-a-empty-why', { text: v.conditional.why }),
       acts.length ? h('div.pmr-a-acts', acts.map(a => act(a))) : null));
   }
