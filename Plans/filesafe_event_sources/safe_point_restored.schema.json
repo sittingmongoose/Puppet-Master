@@ -1,0 +1,2431 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/filesafe_event_sources/safe_point_restored/1.0.0",
+  "title": "safe_point.restored original owner views; no persisted table or admission",
+  "$defs": {
+    "Request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation_id",
+        "scope",
+        "execution_context",
+        "actor_ref",
+        "original_input_ref",
+        "original_input_sha256",
+        "restore_transaction_id",
+        "safe_point_id",
+        "run_id",
+        "node_id",
+        "attempt_id",
+        "target_state_sha256",
+        "pre_restore_state_sha256"
+      ],
+      "properties": {
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scope": {
+          "$ref": "pm.shared_integration_runtime.command_contracts.schema.v1#/$defs/WorkflowScopeV2"
+        },
+        "execution_context": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "thread_id": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "run_id": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "computer_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "host_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "environment_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "root_id": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "root_generation": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "working_directory": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "pattern": "^(?:/|[A-Za-z]:[\\\\/]|\\\\\\\\).+"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "thread_id",
+            "run_id",
+            "computer_id",
+            "host_id",
+            "environment_id",
+            "root_id",
+            "root_generation",
+            "working_directory"
+          ]
+        },
+        "restore_transaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "safe_point_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "node_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "attempt_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "target_state_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        },
+        "pre_restore_state_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        },
+        "actor_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_input_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_input_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        }
+      }
+    },
+    "Result": {
+      "$ref": "https://puppetmaster.local/schemas/event_payloads/safe_point_restored/2.0.0"
+    },
+    "project_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation_id",
+        "scope",
+        "execution_context",
+        "actor_ref",
+        "original_input_ref",
+        "original_input_sha256",
+        "restore_transaction_id",
+        "safe_point_id",
+        "run_id",
+        "node_id",
+        "attempt_id",
+        "target_state_sha256",
+        "pre_restore_state_sha256"
+      ],
+      "properties": {
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scope": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+            },
+            {
+              "properties": {
+                "scope_kind": {
+                  "const": "project"
+                }
+              }
+            }
+          ]
+        },
+        "execution_context": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "thread_id": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "run_id": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "computer_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "host_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "environment_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "root_id": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "root_generation": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "working_directory": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "pattern": "^(?:/|[A-Za-z]:[\\\\/]|\\\\\\\\).+"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "thread_id",
+            "run_id",
+            "computer_id",
+            "host_id",
+            "environment_id",
+            "root_id",
+            "root_generation",
+            "working_directory"
+          ]
+        },
+        "restore_transaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "safe_point_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "node_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "attempt_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "target_state_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        },
+        "pre_restore_state_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        },
+        "actor_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_input_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_input_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        }
+      }
+    },
+    "project_source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "interface_id",
+        "source_ref",
+        "storage_instance_id",
+        "writer_epoch",
+        "original_commit_ref",
+        "original_request",
+        "original_result",
+        "body_members",
+        "accepted_source_sha256",
+        "native_project_record"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.filesafe.safe_point_restored.original_source.project.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "interface_id": {
+          "const": "owner.filesafe.safe_point_restored.original_source.project@1.0.0"
+        },
+        "source_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "writer_epoch": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Current admission requires type(value) is int (not float or bool), before any hash or epoch join. Retained sources retain their original versioned commitment recipe."
+        },
+        "original_commit_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_request": {
+          "$ref": "#/$defs/project_request"
+        },
+        "original_result": {
+          "$ref": "https://puppetmaster.local/schemas/event_payloads/safe_point_restored/2.0.0"
+        },
+        "body_members": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "role",
+              "ref",
+              "sha256"
+            ],
+            "properties": {
+              "role": {
+                "enum": [
+                  "restore_request",
+                  "safe_point_record",
+                  "restore_transaction",
+                  "equality_result"
+                ]
+              },
+              "ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$",
+                "minLength": 64,
+                "maxLength": 64
+              }
+            }
+          },
+          "minItems": 4,
+          "maxItems": 4
+        },
+        "accepted_source_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        },
+        "native_project_record": {
+          "$ref": "https://puppetmaster.local/schemas/filesafe_event_sources/original-project/original-safe-point-restore-transaction.v1.schema.json"
+        }
+      }
+    },
+    "application_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation_id",
+        "scope",
+        "execution_context",
+        "actor_ref",
+        "original_input_ref",
+        "original_input_sha256",
+        "restore_transaction_id",
+        "safe_point_id",
+        "run_id",
+        "node_id",
+        "attempt_id",
+        "target_state_sha256",
+        "pre_restore_state_sha256"
+      ],
+      "properties": {
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scope": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+            },
+            {
+              "properties": {
+                "scope_kind": {
+                  "const": "application"
+                }
+              }
+            }
+          ]
+        },
+        "execution_context": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "thread_id": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "run_id": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "computer_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "host_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "environment_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "root_id": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "root_generation": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "working_directory": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "pattern": "^(?:/|[A-Za-z]:[\\\\/]|\\\\\\\\).+"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "thread_id",
+            "run_id",
+            "computer_id",
+            "host_id",
+            "environment_id",
+            "root_id",
+            "root_generation",
+            "working_directory"
+          ]
+        },
+        "restore_transaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "safe_point_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "node_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "attempt_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "target_state_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        },
+        "pre_restore_state_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        },
+        "actor_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_input_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_input_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        }
+      }
+    },
+    "application_source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "interface_id",
+        "source_ref",
+        "storage_instance_id",
+        "writer_epoch",
+        "original_commit_ref",
+        "original_request",
+        "original_result",
+        "body_members",
+        "accepted_source_sha256",
+        "application_records"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.filesafe.safe_point_restored.original_source.application.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "interface_id": {
+          "const": "owner.filesafe.safe_point_restored.original_source.application@1.0.0"
+        },
+        "source_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "writer_epoch": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Current admission requires type(value) is int (not float or bool), before any hash or epoch join. Retained sources retain their original versioned commitment recipe."
+        },
+        "original_commit_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_request": {
+          "$ref": "#/$defs/application_request"
+        },
+        "original_result": {
+          "$ref": "https://puppetmaster.local/schemas/event_payloads/safe_point_restored/2.0.0"
+        },
+        "body_members": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "role",
+              "ref",
+              "sha256"
+            ],
+            "properties": {
+              "role": {
+                "enum": [
+                  "restore_request",
+                  "safe_point_record",
+                  "snapshot_manifest",
+                  "snapshot_blobs",
+                  "pre_restore_manifest",
+                  "post_restore_manifest",
+                  "restore_transaction",
+                  "equality_result"
+                ]
+              },
+              "ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$",
+                "minLength": 64,
+                "maxLength": 64
+              }
+            }
+          },
+          "minItems": 8,
+          "maxItems": 8
+        },
+        "accepted_source_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        },
+        "application_records": {
+          "$ref": "#/$defs/application_records"
+        }
+      }
+    },
+    "source": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/project_source"
+        },
+        {
+          "$ref": "#/$defs/application_source"
+        }
+      ]
+    },
+    "materialization": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "event",
+        "custody"
+      ],
+      "properties": {
+        "source": {
+          "$ref": "#/$defs/source"
+        },
+        "event": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json"
+        },
+        "custody": {
+          "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/custody_v2"
+        }
+      }
+    },
+    "application_safe_point_record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "scope",
+        "execution_context",
+        "safe_point_id",
+        "run_id",
+        "worktree_path",
+        "baseline_ref",
+        "snapshot_format_version",
+        "content_scope_version",
+        "snapshot_manifest_ref",
+        "capture_status",
+        "created_by_actor_ref",
+        "replan_generation",
+        "snapshot_manifest_sha256",
+        "content_state_sha256",
+        "entry_count",
+        "total_bytes",
+        "created_at_utc",
+        "hold_refs",
+        "restore_eligible",
+        "redaction_profile",
+        "last_hold_released_at_utc",
+        "capture_operation_id",
+        "node_id",
+        "attempt_id",
+        "scm"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.filesafe.safe_point_record.application.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+            },
+            {
+              "properties": {
+                "scope_kind": {
+                  "const": "application"
+                }
+              }
+            }
+          ]
+        },
+        "execution_context": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "thread_id": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "run_id": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "computer_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "host_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "environment_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "root_id": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "root_generation": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "working_directory": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "pattern": "^(?:/|[A-Za-z]:[\\\\/]|\\\\\\\\).+"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "thread_id",
+            "run_id",
+            "computer_id",
+            "host_id",
+            "environment_id",
+            "root_id",
+            "root_generation",
+            "working_directory"
+          ]
+        },
+        "safe_point_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "worktree_path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "baseline_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "snapshot_format_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "content_scope_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "snapshot_manifest_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "capture_status": {
+          "const": "complete"
+        },
+        "created_by_actor_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "replan_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "snapshot_manifest_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        },
+        "content_state_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        },
+        "entry_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "total_bytes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "created_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "hold_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "restore_eligible": {
+          "type": "boolean"
+        },
+        "redaction_profile": {
+          "enum": [
+            "no_secrets",
+            "redacted_refs_only"
+          ]
+        },
+        "last_hold_released_at_utc": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "capture_operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "node_id": {
+          "type": "null"
+        },
+        "attempt_id": {
+          "type": "null"
+        },
+        "scm": {
+          "anyOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "repo_id",
+                "worktree_id",
+                "worktree_path",
+                "branch_name",
+                "HEAD_sha",
+                "index_state_sha256",
+                "index_entries"
+              ],
+              "properties": {
+                "repo_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "worktree_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "worktree_path": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "branch_name": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "HEAD_sha": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "index_state_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$",
+                  "minLength": 64,
+                  "maxLength": 64
+                },
+                "index_entries": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "path",
+                      "stage",
+                      "oid",
+                      "mode"
+                    ],
+                    "properties": {
+                      "path": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "stage": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 3
+                      },
+                      "oid": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "mode": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "application_snapshot_manifest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "scope",
+        "execution_context",
+        "snapshot_format_version",
+        "content_scope_version",
+        "profile",
+        "scm",
+        "entries",
+        "entry_count",
+        "total_bytes",
+        "canonical_algorithm"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.filesafe.snapshot_manifest.application.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+            },
+            {
+              "properties": {
+                "scope_kind": {
+                  "const": "application"
+                }
+              }
+            }
+          ]
+        },
+        "execution_context": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "thread_id": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "run_id": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "computer_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "host_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "environment_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "root_id": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "root_generation": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "working_directory": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "pattern": "^(?:/|[A-Za-z]:[\\\\/]|\\\\\\\\).+"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "thread_id",
+            "run_id",
+            "computer_id",
+            "host_id",
+            "environment_id",
+            "root_id",
+            "root_generation",
+            "working_directory"
+          ]
+        },
+        "snapshot_format_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "content_scope_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "profile": {
+          "enum": [
+            "full_root",
+            "whole_turn"
+          ]
+        },
+        "scm": {
+          "anyOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "repo_id",
+                "worktree_id",
+                "worktree_path",
+                "branch_name",
+                "HEAD_sha",
+                "index_state_sha256",
+                "index_entries"
+              ],
+              "properties": {
+                "repo_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "worktree_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "worktree_path": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "branch_name": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "HEAD_sha": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "index_state_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$",
+                  "minLength": 64,
+                  "maxLength": 64
+                },
+                "index_entries": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "path",
+                      "stage",
+                      "oid",
+                      "mode"
+                    ],
+                    "properties": {
+                      "path": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "stage": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 3
+                      },
+                      "oid": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "mode": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "entries": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "identity",
+              "kind",
+              "present",
+              "tracked",
+              "ignored",
+              "authorized_write_set",
+              "payload_id",
+              "blob_sha256",
+              "length",
+              "symlink_target_hex",
+              "git_mode",
+              "gitlink_oid",
+              "executable",
+              "posix_mode",
+              "windows_read_only"
+            ],
+            "properties": {
+              "identity": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "canonical_absolute_path",
+                  "root_id",
+                  "root_generation",
+                  "host_id",
+                  "environment_id",
+                  "permission_snapshot_ref"
+                ],
+                "properties": {
+                  "canonical_absolute_path": {
+                    "type": "string",
+                    "pattern": "^(?:/|[A-Za-z]:[\\\\/]|\\\\\\\\).+"
+                  },
+                  "root_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "root_generation": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "host_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "environment_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "permission_snapshot_ref": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              },
+              "kind": {
+                "enum": [
+                  "file",
+                  "directory",
+                  "symlink",
+                  "gitlink"
+                ]
+              },
+              "present": {
+                "type": "boolean"
+              },
+              "tracked": {
+                "type": "boolean"
+              },
+              "ignored": {
+                "type": "boolean"
+              },
+              "authorized_write_set": {
+                "type": "boolean"
+              },
+              "payload_id": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "blob_sha256": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$",
+                    "minLength": 64,
+                    "maxLength": 64
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "length": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "symlink_target_hex": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "pattern": "^(?:[0-9a-f]{2})*$(?![\\s\\S])"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "git_mode": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "gitlink_oid": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "executable": {
+                "type": "boolean"
+              },
+              "posix_mode": {
+                "anyOf": [
+                  {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "windows_read_only": {
+                "anyOf": [
+                  {
+                    "type": "boolean"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "entry_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "total_bytes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "canonical_algorithm": {
+          "const": "RFC8785-SHA256"
+        }
+      }
+    },
+    "application_snapshot_blobs": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "scope",
+        "execution_context",
+        "blobs"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.filesafe.snapshot_blob_inventory.application.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+            },
+            {
+              "properties": {
+                "scope_kind": {
+                  "const": "application"
+                }
+              }
+            }
+          ]
+        },
+        "execution_context": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "thread_id": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "run_id": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "computer_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "host_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "environment_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "root_id": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "root_generation": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "working_directory": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "pattern": "^(?:/|[A-Za-z]:[\\\\/]|\\\\\\\\).+"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "thread_id",
+            "run_id",
+            "computer_id",
+            "host_id",
+            "environment_id",
+            "root_id",
+            "root_generation",
+            "working_directory"
+          ]
+        },
+        "blobs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "payload_id",
+              "ref",
+              "sha256",
+              "length"
+            ],
+            "properties": {
+              "payload_id": {
+                "type": "string",
+                "pattern": "^blake3:[0-9a-f]{64}$",
+                "minLength": 71,
+                "maxLength": 71
+              },
+              "ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$",
+                "minLength": 64,
+                "maxLength": 64
+              },
+              "length": {
+                "type": "integer",
+                "minimum": 0
+              }
+            }
+          }
+        }
+      }
+    },
+    "application_restore_transaction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "scope",
+        "execution_context",
+        "restore_transaction_id",
+        "safe_point_id",
+        "canonical_safe_point_key",
+        "run_id",
+        "node_id",
+        "attempt_id",
+        "target_manifest_ref",
+        "target_manifest_sha256",
+        "target_state_sha256",
+        "pre_restore_manifest_ref",
+        "pre_restore_manifest_sha256",
+        "pre_restore_state_sha256",
+        "operations",
+        "phase",
+        "operation_cursor",
+        "mutation_lease_ref",
+        "hold_refs",
+        "started_at_utc",
+        "updated_at_utc",
+        "restart_count",
+        "restore_outcome",
+        "conflict_reason_code",
+        "post_restore_state_sha256",
+        "recovered_after_restart",
+        "result_event_ref",
+        "redaction_profile",
+        "path_mutation_count",
+        "fence_active"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.filesafe.safe_point_restore_transaction.application.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+            },
+            {
+              "properties": {
+                "scope_kind": {
+                  "const": "application"
+                }
+              }
+            }
+          ]
+        },
+        "execution_context": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "thread_id": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "run_id": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "computer_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "host_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "environment_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "root_id": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "root_generation": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "working_directory": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "pattern": "^(?:/|[A-Za-z]:[\\\\/]|\\\\\\\\).+"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "thread_id",
+            "run_id",
+            "computer_id",
+            "host_id",
+            "environment_id",
+            "root_id",
+            "root_generation",
+            "working_directory"
+          ]
+        },
+        "restore_transaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "safe_point_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "canonical_safe_point_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "node_id": {
+          "type": "null"
+        },
+        "attempt_id": {
+          "type": "null"
+        },
+        "target_manifest_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "target_manifest_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        },
+        "target_state_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        },
+        "pre_restore_manifest_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "pre_restore_manifest_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        },
+        "pre_restore_state_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        },
+        "operations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "operation_id",
+              "identity",
+              "operation_kind",
+              "expected_before_sha256",
+              "expected_before_type",
+              "target_sha256",
+              "target_type",
+              "stage_ref",
+              "tombstone_ref",
+              "state"
+            ],
+            "properties": {
+              "operation_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "identity": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "canonical_absolute_path",
+                  "root_id",
+                  "root_generation",
+                  "host_id",
+                  "environment_id",
+                  "permission_snapshot_ref"
+                ],
+                "properties": {
+                  "canonical_absolute_path": {
+                    "type": "string",
+                    "pattern": "^(?:/|[A-Za-z]:[\\\\/]|\\\\\\\\).+"
+                  },
+                  "root_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "root_generation": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "host_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "environment_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "permission_snapshot_ref": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              },
+              "operation_kind": {
+                "enum": [
+                  "create",
+                  "replace",
+                  "delete",
+                  "metadata"
+                ]
+              },
+              "expected_before_sha256": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$",
+                    "minLength": 64,
+                    "maxLength": 64
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "expected_before_type": {
+                "anyOf": [
+                  {
+                    "enum": [
+                      "file",
+                      "directory",
+                      "symlink",
+                      "gitlink"
+                    ]
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "target_sha256": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$",
+                    "minLength": 64,
+                    "maxLength": 64
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "target_type": {
+                "anyOf": [
+                  {
+                    "enum": [
+                      "file",
+                      "directory",
+                      "symlink",
+                      "gitlink"
+                    ]
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "stage_ref": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "description": "Required for create/replace; null for delete; exact original composition checked under CV-558."
+              },
+              "tombstone_ref": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "description": "Transaction-owned same-directory rollback/tombstone required for delete; null for create; retained under FileSafe 11.1.2b."
+              },
+              "state": {
+                "enum": [
+                  "pending",
+                  "intent",
+                  "applied",
+                  "rolled_back"
+                ]
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "operation_kind": {
+                      "const": "create"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "expected_before_type": {
+                      "type": "null"
+                    },
+                    "expected_before_sha256": {
+                      "type": "null"
+                    },
+                    "target_type": {
+                      "enum": [
+                        "file",
+                        "directory",
+                        "symlink",
+                        "gitlink"
+                      ]
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "operation_kind": {
+                      "const": "replace"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "expected_before_type": {
+                      "enum": [
+                        "file",
+                        "directory",
+                        "symlink",
+                        "gitlink"
+                      ]
+                    },
+                    "target_type": {
+                      "enum": [
+                        "file",
+                        "directory",
+                        "symlink",
+                        "gitlink"
+                      ]
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "operation_kind": {
+                      "const": "delete"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "expected_before_type": {
+                      "enum": [
+                        "file",
+                        "directory",
+                        "symlink",
+                        "gitlink"
+                      ]
+                    },
+                    "target_type": {
+                      "type": "null"
+                    },
+                    "target_sha256": {
+                      "type": "null"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "operation_kind": {
+                      "const": "metadata"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "expected_before_type": {
+                      "enum": [
+                        "file",
+                        "directory",
+                        "symlink",
+                        "gitlink"
+                      ]
+                    },
+                    "target_type": {
+                      "enum": [
+                        "file",
+                        "directory",
+                        "symlink",
+                        "gitlink"
+                      ]
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "phase": {
+          "enum": [
+            "prepared",
+            "applying",
+            "verifying_target",
+            "committed",
+            "rolling_back",
+            "verifying_rollback",
+            "rolled_back",
+            "recovery_required"
+          ]
+        },
+        "operation_cursor": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "mutation_lease_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "hold_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true,
+          "minItems": 1
+        },
+        "started_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updated_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "restart_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "restore_outcome": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            null,
+            "restored_clean",
+            "restore_failed",
+            "restore_skipped",
+            "restore_refused",
+            "restore_recovery_required"
+          ]
+        },
+        "conflict_reason_code": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            null,
+            "worktree_path_mismatch",
+            "branch_mismatch",
+            "head_mismatch",
+            "baseline_stale",
+            "snapshot_missing",
+            "snapshot_corrupt",
+            "snapshot_scope_unsupported",
+            "target_path_conflict",
+            "restore_conflict",
+            "concurrent_edit_conflict",
+            "historical_commit_missing",
+            "restore_recovery_required",
+            "canonicalization_failed",
+            "permission_denied"
+          ]
+        },
+        "post_restore_state_sha256": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "recovered_after_restart": {
+          "type": "boolean"
+        },
+        "result_event_ref": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1,
+          "description": "Null in the original pre-append capture; otherwise exactly the original result EventRecord.event_id (CV-558)."
+        },
+        "redaction_profile": {
+          "enum": [
+            "no_secrets",
+            "redacted_refs_only"
+          ]
+        },
+        "path_mutation_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "fence_active": {
+          "type": "boolean"
+        }
+      }
+    },
+    "application_equality_result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "scope",
+        "execution_context",
+        "restore_transaction_id",
+        "safe_point_id",
+        "target_manifest_sha256",
+        "pre_restore_manifest_sha256",
+        "post_restore_manifest_sha256",
+        "scm_equal_target",
+        "scm_equal_pre_restore",
+        "path_mutation_count",
+        "hold_refs",
+        "fence_active"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.filesafe.safe_point_equality_result.application.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+            },
+            {
+              "properties": {
+                "scope_kind": {
+                  "const": "application"
+                }
+              }
+            }
+          ]
+        },
+        "execution_context": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "thread_id": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "run_id": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "computer_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "host_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "environment_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "root_id": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "root_generation": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "working_directory": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "pattern": "^(?:/|[A-Za-z]:[\\\\/]|\\\\\\\\).+"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "thread_id",
+            "run_id",
+            "computer_id",
+            "host_id",
+            "environment_id",
+            "root_id",
+            "root_generation",
+            "working_directory"
+          ]
+        },
+        "restore_transaction_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "safe_point_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "target_manifest_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        },
+        "pre_restore_manifest_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        },
+        "post_restore_manifest_sha256": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$",
+              "minLength": 64,
+              "maxLength": 64
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "scm_equal_target": {
+          "type": "boolean"
+        },
+        "scm_equal_pre_restore": {
+          "type": "boolean"
+        },
+        "path_mutation_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "hold_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "fence_active": {
+          "type": "boolean"
+        }
+      }
+    },
+    "application_records": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "safe_point_record",
+        "snapshot_manifest",
+        "snapshot_blobs",
+        "pre_restore_manifest",
+        "post_restore_manifest",
+        "restore_transaction",
+        "equality_result"
+      ],
+      "properties": {
+        "safe_point_record": {
+          "$ref": "#/$defs/application_safe_point_record"
+        },
+        "snapshot_manifest": {
+          "$ref": "#/$defs/application_snapshot_manifest"
+        },
+        "snapshot_blobs": {
+          "$ref": "#/$defs/application_snapshot_blobs"
+        },
+        "pre_restore_manifest": {
+          "$ref": "#/$defs/application_snapshot_manifest"
+        },
+        "post_restore_manifest": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/application_snapshot_manifest"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "restore_transaction": {
+          "$ref": "#/$defs/application_restore_transaction"
+        },
+        "equality_result": {
+          "$ref": "#/$defs/application_equality_result"
+        }
+      }
+    },
+    "payload_reference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "payload_id",
+        "byte_size",
+        "media_type"
+      ],
+      "properties": {
+        "payload_id": {
+          "type": "string",
+          "pattern": "^blake3:[0-9a-f]{64}$",
+          "minLength": 71,
+          "maxLength": 71
+        },
+        "byte_size": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "media_type": {
+          "const": "application/json"
+        }
+      }
+    }
+  }
+}
