@@ -2,9 +2,9 @@
 
 Source: `Plans/Models_System.md`
 
-Source lines: L7581-L7640
+Source lines: L7626-L7688
 
-Source SHA256: `98cedbe72059189d8dedef8480350441120a92631e6e4ef4f973487aefcf68c4`
+Source SHA256: `eb9a2bf3826aab67fe1fc232497cc0ffad9874e0d885322cc7e9b8c8102e96ee`
 
 ---
 
@@ -18,19 +18,23 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Models_System.md
 canonical_text: >-
-  Models_System owns concrete requested/effective model resolution for Goal Runtime worker, planner, evaluator, verifier, and adjudicator roles, plus model capability evidence needed by Goal_Runtime_System certification policy. Goal_Runtime_System owns block/degrade semantics, and provider-specific default tier mappings remain deferred.
+  The Goal Runtime worker/planner/evaluator/verifier/adjudicator model-role cast, worker_default policy
+  and certification-owned model selectors are retired with Goal V2. Goals use ordinary Assistant model
+  selection; a separate Review chooses checking models through its invocation sheet. Models_System still
+  owns requested/effective model identity and capability evidence. The old role words remain
+  compatibility/source-lineage only, never active Settings or Goal-owned model policy.
 gui_related: false
 gui_classification_reason: Concrete model-role resolution and capability evidence are backend provider/model policy; F3-393 owns the visible Settings selectors.
 depends_on:
-  - MS-017
-  - MS-073
-  - MS-074
-  - GRS-010
+- MS-017
+- MS-073
+- MS-074
+- GRS-049
 unblocks: []
 acceptance_criteria:
-  - Goal Runtime role policies can request model resolution for worker, planner, evaluator, verifier, and adjudicator roles.
-  - Resolution exposes requested/effective model identity and capability evidence for each role where relevant.
-  - Models_System does not override Goal Runtime certification-tier block/degrade semantics and does not hard-code provider defaults.
+- Goals use the ordinary Assistant model resolver and expose no worker/verifier selectors.
+- Legacy role-policy values are inert compatibility reads and cannot recreate retired Goal roles.
+- Independent checking and implementation remain distinct work requests under MS-109.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - future Goal Runtime model-role resolver review
@@ -61,8 +65,7 @@ preserved_exact_tokens:
   - "requested/effective model"
   - "capability evidence"
 negative_constraints:
-  - Do not hard-code provider defaults in Models_System for Goal Runtime certification correctness.
-  - Do not collapse verifier/adjudicator and worker model roles into one effective selection.
+- Do not revive Goal model-role policy or certification tier semantics from compatibility data.
 owner_hints:
   - Plans/Models_System.md
   - Plans/Goal_Runtime_System.md

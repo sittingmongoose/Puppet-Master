@@ -45,7 +45,7 @@ Goal Runtime does not own:
 
 Assistant Chat renders the Goal Activity domain: the Activity-bar item, the interactive hover preview, and Goal Activity Detail. Goal is never a transcript card. `Plans/assistant-chat-design.md` owns that placement and chrome; this document owns the state and the actions those controls dispatch.
 
-FinalGUISpec owns Settings GUI placement. The two Goal Mode model selectors for worker and verifier/adjudicator roles are retired with the role cast; Goal-driven work uses the ordinary Assistant model/Persona selection owned by `Plans/Models_System.md` and `Plans/Personas.md`.
+FinalGUISpec owns Settings GUI placement. The two Goal Mode model selectors for worker and verifier/adjudicator roles are retired with the role cast; Goal-driven work starts with the initiating chat's ordinary model/Persona selection owned by `Plans/Models_System.md` and `Plans/Personas.md`. Goals may not use Crews. Crews, plans, reviews and similar systems may start a separate Goal with no parent edge (GRS-052). Testing uses the existing Let the assistant test its work and Speed or thoroughness choices, with no named test profiles. Goals finish when their proof is in, without Ask me to confirm; existing pauses remain.
 
 Planning Ledger, Plan Document, and Plan-To-Node docs remain owners for ledger records, PlanUnits, generated indexes, and the readiness-only compiler boundary. Goal Runtime may consume those contracts for ledger-to-Plans goals, but it does not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
 
@@ -598,8 +598,15 @@ plan_unit_id: GRS-052
 unit_type: constraint
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
-canonical_text: >-
-  Child Goals, child-goal topology, parent completion authority over children, child write leases, and subgoal tree display are retired. A Goal has zero or one active_run_ref and no queue of children. Work that was previously a child Goal is either a To-Do under ToDo Runtime, a participant under Collaborative Workflows, or a separate Goal with no parent edge. Write isolation, worktree separation, and scope-conflict detection remain requirements of the executing run and worktree owners. No subagent may resume or advance a Goal; only the host continuation loop admits the next turn.
+canonical_text: Child Goals, child-goal topology, parent completion authority over children, child write
+  leases, and subgoal tree display are retired. A Goal has zero or one active_run_ref and no queue of
+  children. Work that was previously a child Goal is either a To-Do under ToDo Runtime, a participant
+  under Collaborative Workflows, or a separate Goal with no parent edge. Write isolation, worktree separation,
+  and scope-conflict detection remain requirements of the executing run and worktree owners. No subagent
+  may resume or advance a Goal; only the host continuation loop admits the next turn. Crews, plans, reviews
+  and similar systems may start a separate Goal with no parent edge through the normal Goal owner and
+  authority checks. The new Goal uses its initiating chat Persona/model and cannot itself use a Crew;
+  starting a Goal creates no child topology or parent-completion authority.
 gui_related: true
 gui_classification_reason: This retires the collapsible child-goal display and every child-count projection from the Assistant surface.
 depends_on: [GRS-048]
@@ -622,8 +629,9 @@ node_compile_hint:
   mode: goal_child_retirement
   create_worknodes: false
 source_lineage:
-  - pm-assistant-implementation-2026-09-02-recovered:GOAL-006
-  - pm-assistant-implementation-2026-09-02-recovered:AUTHORITY_AND_PRECEDENCE.md#4
+- pm-assistant-implementation-2026-09-02-recovered:GOAL-006
+- pm-assistant-implementation-2026-09-02-recovered:AUTHORITY_AND_PRECEDENCE.md#4
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
   - "child goals"
   - "active_run_ref"
@@ -916,14 +924,17 @@ plan_unit_id: GRS-046
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
-canonical_text: >-
-  A GoalRun freezes its requested and effective provider, model, account, route, Persona, mode, topology,
-  policy generations, and resolver evidence at admission. Replan, provider rotation, fallback, or user
-  route change creates an explicit revisioned rebind with reason, authority/currentness checks, prior/new
-  snapshots, and owner epoch; focus, thread selection, reconnect, compaction, or current Settings never
-  silently retarget an admitted GoalRun. App admission uses real thread/Computer/roots with null Project;
-  scope conversion cannot use this ordinary runtime rebind to change Goal identity. GRS-087 requires
-  linked birth or its separate association transaction.
+canonical_text: 'A GoalRun freezes its requested and effective provider, model, account, route, Persona,
+  mode, topology, policy generations, and resolver evidence at admission. Replan, provider rotation, fallback,
+  or user route change creates an explicit revisioned rebind with reason, authority/currentness checks,
+  prior/new snapshots, and owner epoch; focus, thread selection, reconnect, compaction, or current Settings
+  never silently retarget an admitted GoalRun. App admission uses real thread/Computer/roots with null
+  Project; scope conversion cannot use this ordinary runtime rebind to change Goal identity. GRS-087 requires
+  linked birth or its separate association transaction. DL-475: a Goal starts with the Persona and model
+  of the chat thread that started it. Goals may not use Crews at all, in Project or app scope. Existing
+  explicit revisioned runtime rebind rules remain; no separate new-Goal Persona/Crew preference is admitted.
+  Testing uses Let the assistant test its work and Speed or thoroughness, never named test profiles. Proof
+  completes the Goal without an Ask me to confirm switch; existing pauses remain authoritative.'
 gui_related: false
 depends_on: [GRS-044, MS-137]
 unblocks: []
@@ -938,10 +949,12 @@ context_scope: frozen_goal_route
 implementation_surfaces: [Plans/Goal_Runtime_System.md, Plans/Models_System.md, Plans/Multi-Account.md]
 node_compile_hint: {mode: goal_route_binding_contract, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - "PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/ACCOUNTABILITY_MATRIX.json#AGT-003"
-  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
-  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
-  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
+- PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/ACCOUNTABILITY_MATRIX.json#AGT-003
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c
+- projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03
+- 'Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It''s only planning
+  wizard/prd builder/orchestrator that isn''t.'
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 negative_constraints: [Do not retarget a Goal from focus or current settings., Do not commit late prior-binding work.]
 ```
 
@@ -2683,52 +2696,67 @@ plan_unit_id: GRS-025
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
-canonical_text: >-
-  Goal chip/status/task-drawer styling, persistence substrate, and provider-specific model-role tier mappings are required implementation-bound decisions for the Goal Runtime product surface. The Goal implementation plan must bind each choice to named owner docs, durable state records, provider-policy records, validation surfaces, and acceptance evidence before production readiness can be certified. The accepted runtime contract requires functional Assistant Chat controls, durable goal state, separate worker and verifier/adjudicator policy surfaces, and certification-tier verifier requirements; unresolved styling, persistence, or provider defaults must block certification rather than remain as unbound implementation gaps.
+canonical_text: Goal chip/status/task-drawer styling and persistence bind to their named owner docs, durable
+  state/event families, validation surfaces and acceptance evidence before production readiness. Model/account
+  selection belongs to Models System and Multi-Account under GRS-049; the Goal uses its initiating chat choice
+  and has no own model-role policy, certification tier or required verifier/adjudicator cast. Retired provider-specific
+  Goal model-default/tier maps are not unresolved implementation choices and cannot block a Goal outcome. Any
+  genuine review is an explicitly configured Review run or workflow-owned certification step, preserving that
+  owner’s bounded authority and evidence requirements.
 gui_related: true
-gui_classification_reason: This requirement includes final visual styling, iconography, and layout for Goal UI surfaces.
+gui_classification_reason: This requirement includes final visual styling, iconography, and layout for Goal
+  UI surfaces.
 depends_on:
-  - GRS-005
-  - GRS-007
-  - GRS-010
+- GRS-005
+- GRS-007
+- GRS-010
+- GRS-049
 unblocks: []
 acceptance_criteria:
 - Goal visual styling binds to owner-doc UI contracts before certification.
-- 'Persistence binds to durable state and event-log contracts before certification. Amended 2026-10-31 (DL-270): the substrate is no longer an open choice. Goal records and events persist in the canonical seglog and redb families (SP-335, SP-336, SP-340), and SQLite-format engines are excluded (SP-342). Closing this gate means checking the binding against those units.'
-- Provider defaults bind to separate worker/verifier-adjudicator policy and strong-certification blocking rules before certification.
+- 'Persistence binds to durable state and event-log contracts before certification. Amended 2026-10-31 (DL-270):
+  the substrate is no longer an open choice. Goal records and events persist in the canonical seglog and redb
+  families (SP-335, SP-336, SP-340), and SQLite-format engines are excluded (SP-342). Closing this gate means
+  checking the binding against those units.'
+- Model/account selection follows Models System, Multi-Account and GRS-049; no Goal-owned model defaults, role
+  cast or certification tier is recreated.
 validation_surfaces:
-  - python3 scripts/pm-plan-index.py validate
-  - UI design, persistence, and provider-policy reviews
+- python3 scripts/pm-plan-index.py validate
+- UI design, persistence, and provider-policy reviews
 risk_class: implementation_binding_drift
 reasoning_tier: standard
 context_scope: goal_runtime_implementation_bindings
 implementation_surfaces:
-  - Plans/Goal_Runtime_System.md
-  - Plans/assistant-chat-design.md
-  - Plans/FinalGUISpec.md
+- Plans/Goal_Runtime_System.md
+- Plans/assistant-chat-design.md
+- Plans/FinalGUISpec.md
 node_compile_hint:
   mode: goal_runtime_implementation_bindings
   create_worknodes: false
 source_lineage:
-  - pldg-20260616-001-goal-runtime-system:atom-0017
-  - pldg-20260616-001-goal-runtime-system:atom-0031
-  - pldg-20260616-001-goal-runtime-system:atom-0104
-  - pldg-20260616-001-goal-runtime-system:atom-0105
-  - pldg-20260616-001-goal-runtime-system:q-0003
-  - pldg-20260616-001-goal-runtime-system:q-0004
-  - pldg-20260616-001-goal-runtime-system:q-0005
+- pldg-20260616-001-goal-runtime-system:atom-0017
+- pldg-20260616-001-goal-runtime-system:atom-0031
+- pldg-20260616-001-goal-runtime-system:atom-0104
+- pldg-20260616-001-goal-runtime-system:atom-0105
+- pldg-20260616-001-goal-runtime-system:q-0003
+- pldg-20260616-001-goal-runtime-system:q-0004
+- pldg-20260616-001-goal-runtime-system:q-0005
+- DL-476; settings batch3 fix round r1, 2026-11-12
 preserved_exact_tokens:
-  - "final visual styling, iconography, and exact layout"
-  - "database tables, project files, or a hybrid"
-  - "default model-role tier mappings"
-  - "worker, planner, evaluator, verifier, and adjudicator"
+- final visual styling, iconography, and exact layout
+- database tables, project files, or a hybrid
+- default model-role tier mappings
+- worker, planner, evaluator, verifier, and adjudicator
 negative_constraints:
-  - Do not treat deferred styling as absence of required Goal controls.
-  - Do not hard-code provider-specific model defaults as canonical correctness requirements in this compile.
+- Do not treat deferred styling as absence of required Goal controls.
+- Do not hard-code provider-specific model defaults as canonical correctness requirements in this compile.
 owner_hints:
-  - Plans/Goal_Runtime_System.md
-  - Plans/assistant-chat-design.md
-  - Plans/FinalGUISpec.md
+- Plans/Goal_Runtime_System.md
+- Plans/assistant-chat-design.md
+- Plans/FinalGUISpec.md
+compatibility_only_notes:
+- Historical provider-default/tier mapping and separate Goal worker/verifier policy language is retired by
+  GRS-049; it is not current readiness or completion authority.
 ```
 
 ## 3. Contracts, Schemas, Events, Or Data Shapes
@@ -3953,7 +3981,7 @@ This owner repair does not create or execute fixtures, oracle artifacts, checker
 - Plan_To_Node_Compilation owns the accepted compiler boundary for plan graph build goals and prevents PlanUnit indexing from creating NodeSeed/WorkNode artifacts.
 - Permissions_System resolves global approval policy; Goal Runtime invokes approval for high-risk goal actions.
 - Runtime_Artifacts_Panel and storage owners consume Goal Runtime evidence and receipt identities for browsing, retention, and redaction.
-- Models_System and Multi-Account own concrete requested/effective model and account resolution for Goal Runtime roles; provider-specific docs may contribute existing provider capability/model discovery surfaces, but exact Goal Runtime provider-default tier mappings remain deferred unless later promoted through a provider-specific hook.
+- Models_System and Multi-Account own concrete requested/effective model and account resolution for Goal runs, not a Goal-owned role cast or default map; provider-specific docs may contribute existing provider capability/model discovery surfaces, but exact Goal Runtime provider-default tier mappings remain deferred unless later promoted through a provider-specific hook.
 
 ## 5. Validation And Acceptance
 
@@ -3982,7 +4010,7 @@ Deferred:
 
 - exact legacy Chain Wizard compatibility flow after native Goal Mode exists;
 - final visual styling, iconography, and exact layout for Goal chip/status/task drawer;
-- provider-specific default model-role tier mappings.
+- no Goal-owned provider/default model-role tier mapping: those maps are retired by GRS-049; Models/Multi-Account own run selection and an explicitly configured Review remains workflow-owned.
 
 Retired or non-goal:
 
@@ -8217,7 +8245,7 @@ canonical_text: 'An explicitly requested Goal may be born in an app thread with 
   app Goal custody creates no user folder until a file save/command requires one. The existing Goal host reloads
   canonical state, checks owner/current permission/recovery/storage/Stop epochs and evidence and admits bounded
   ordinary continuations; no Assistant Plan, NamedPlan, repository, WorkGraph, WorkNode or Orchestrator run is required.
-  It may use Crew only under parent ceilings. Body/revisions/origin/control/pending, creation/update/cancel results,
+  It may not use Crew at all. Crews, plans, reviews and similar systems may start a separate Goal with no parent edge under GRS-052; the Goal uses the initiating chat Persona/model. Body/revisions/origin/control/pending, creation/update/cancel results,
   associations and every needed active event/read/backup edge adopt one explicit app-version map together or stay
   unavailable. Original pm.goal.record.v2 and owner.goal.body.mutation@1.0.0 Project codecs and hashes remain exact
   and readable; app siblings have distinct schema IDs and hash domains, never null coerced into a Project string.

@@ -193,7 +193,7 @@ Required controls (placement: the chat header selector row, in the order Persona
 | Control | Requirement |
 |---|---|
 | **Persona** | Selector-row entrypoint to the Personas system (persona control canon later in this document). Selection applies to the current thread and the next turn. |
-| **Model** | Dropdown listing models for the currently selected provider entry. Models are dynamically discovered where supported, cached, and user-manageable via Settings or a manage-models entrypoint. Fallback model lists come from the shared provider/model registry and capability resolver, never `platform_specs::fallback_model_ids(platform)`. Selecting a model chains into the reasoning/effort popout. |
+| **Model** | Dropdown listing models for the currently selected provider entry. Models are dynamically discovered where supported, cached, and user-manageable via Settings or a manage-models entrypoint. Fallback model lists come from the shared provider/model registry and capability resolver, never `platform_specs::fallback_model_ids(platform)`. Selecting a model follows ACD-438: keep one picker open with supported depth levels beside the model list on desktop and inside the same picker on phone, then commit the model/depth pair atomically. A model without supported levels shows none. |
 | **Mode** | Selector-row slot for the chat mode (Ask, Agent, Debug, Plan, Deep Plan). Mode selection is part of the selector row, not a separate button strip. |
 | **Reasoning / effort** | Reached through model-selection chaining rather than a standing header dropdown. Shown only when the active platform supports it. Applies to the next turn rather than interrupting an in-flight response. |
 | **Worktree** | Icon button (rightmost in header strip, appended after the selector row). Dropdown for per-thread worktree binding: create, unbind, merge, PR, remove. Visual states: unbound (dimmed glyph), bound-clean (lit glyph), bound-dirty (lit glyph + dot indicator), bound-conflict (lit glyph + warning triangle). Hidden when the active project has no git repository. Full specification in the "Worktrees in Assistant" section below. |
@@ -460,25 +460,21 @@ What Teach stores:
 - recurring environment facts such as canonical commands, repository structure, or approval expectations
 - negative constraints such as "never edit derived files" or "always plan before execution for risky tasks"
 
-Persistence scope:
-- each taught item MUST declare a scope before commit: `thread`, `project`, or `user`
-- `thread` scope persists only with the current thread and its descendants where lineage explicitly carries that memory
-- `project` scope persists across future threads in the same project/workspace
-- `user` scope persists as a user-level preference only when the content is not project-confidential; the user asserts that explicitly (`public_safe`) before `user` can be chosen, and confirm refuses `user` scope without it (ACD-477)
-- an edit (`mode: correct`) may keep or narrow a rule's scope but never widen it; a wider scope is a new rule
-- persisted Teach records store at minimum `memory_id`, `scope`, `source_thread_id`, `author_message_id`, `captured_at`, and `normalized_fact`, plus optional `supersedes_memory_id` / `revoked_at`
+Persistence scope and user controls (DL-475):
+- Saved notes use only This project and Every project, through the same Memory page and AMS-141 Add/Edit/Delete contracts. Teacher may offer an explicit save, but one-off guidance never saves automatically.
+- Old thread/project/user Teach codecs remain readable for retained records; thread-private content is not a new visible memory level or a helper handoff.
+- Source identity, provenance, version/supersession/conflict, legacy lock protection and rollback custody remain internal. No lock/unlock, conflict chooser, source inspector or rollback control is shown.
+- New ordinary capture does not set a legacy lock or silently broaden availability; secret checks, source restrictions, stale-revision refusal and protected-record safeguards still apply.
+- Deliberately written rules live in Settings > Personas & Crews > Defaults > Standing instructions, as Rules for every project and Rules for this project, through the existing instruction writer. Teach is separate from the saved-note Memory page.
 
 Effect on future responses:
-- taught knowledge is retrieved into future prompt assembly as explicit memory/context rather than as undocumented hidden prompt mutation
-- when a taught fact materially changes an answer, plan, or execution choice, the assistant should be able to disclose that the response was influenced by taught memory
-- conflicting teachings do not silently overwrite prior knowledge; PM records supersession or revocation so the user can audit why a newer fact won. When a similar taught rule exists, confirm waits for the user's explicit choice between replacing it (`conflict_resolution: replace`, recorded as `supersedes_memory_id`) and keeping both (`keep_both`) (ACD-477)
-- taught knowledge may influence future responses, planning posture, tool-selection defaults, and code-generation choices only within its approved persistence scope
+- Saved notes may affect future work only under their authorized scope and source restrictions; helper reads remain permission-checked and read-only.
+- Only a durable successful save may add Saved to memory · View to a reply; View opens the one Memory page as a sheet. No memory-use citation, receipt, tick, chip, count, source detail, verification or Followed/Missed decoration is shown.
+- Ordinary task evidence and requested instruction editing keep their own owners; memory use is never cited or proved by an inclusion record.
 
 Safety and audit rules:
-- users can inspect, narrow, supersede, or revoke taught knowledge later
-- turning one rule off is `cmd.chat.teach.revoke`, and locking or unlocking one rule is `cmd.chat.teach.set_lock`, which is the explicit user unlock this section's first paragraph requires (DL-130, ACD-481)
-- Teach MUST NOT persist secrets, tokens, passwords, or other credentials; the capture step screens the text before confirm, says in words when it looks like a secret, and confirm stays refused until it is removed
-- ordinary one-off chat instructions do not become taught knowledge unless the user explicitly confirms persistence
+- One-off Teacher guidance is not automatically saved, and secrets are never persisted.
+- Internal history, conflicts, legacy protections and deletion suppression remain enforceable without a user workbench.
 
 ContractRef: ContractName:Plans/Decision_Policy.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Tools.md
 
@@ -1280,30 +1276,25 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/usage-featur
 
 ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Contracts_V0.md
 
-**Context Detail Pane information architecture:**
-- the editor-tab pane has top-level `Curated` and `Raw` views
-- `Curated` contains `Overview`, `Breakdown`, and `Messages`
-- `Overview` shows thread/session title, message counts, headline provider/model/mode/persona summary (`/model/mode/persona`), effort/worker summary when relevant, and headline tokens/context/cost metrics (`/context/cost`)
-- `Breakdown` shows the context usage bar, token buckets, and grouped breakdowns by role, tools, provider, and model when available
-- `Messages` shows one expandable row per message with role, worker type, mode, model, time or duration, total tokens, and cost
-- `Raw` shows an accordion list of messages; expanding a message exposes the full serialized payload for that message, plus related `tool-part` payloads, provider metadata blobs, and path/runtime data needed for debugging
-- Amended 2026-10-31 (DL-270): `Raw` rows resolve payload references through the payload store (SP-337), will open the record inspector (F3-666) once their own production wiring row lands, show a bounded preview, and load the full body only on demand.
+**Context Detail Pane information architecture (DL-475):**
+- the thread-keyed editor tab provides basic on-demand capacity, effective window/loaded tokens, cost and provider/model/mode/persona information (`/model/mode/persona`, `/context/cost`)
+- useful compaction/transition state, outcome, reason and history remain visible; unknown or estimated values are labelled truthfully
+- message info retains human-readable runtime identity, token and cost facts through its existing owner
+- the former `Curated`/`Raw` source-inspection views, assembled-source `Breakdown`, raw message accordions and per-run inclusion receipts are retired from the user surface
 
-**Required Context Detail Pane breakdown:**
-- system and instruction blocks
-- user and assistant messages
-- compiled context attachments and forwarded document selections
-- tool-derived or activity-derived context when the thread uses it
-- run-level or message-level usage snapshots derived from canonical `usage.event` and `run.completed.usage`
-- debug-only Investigation Context items when the thread is an active debug-thread / debug thread
+**Internal source accounting:**
+- retain system/instruction blocks, messages, compiled attachments and forwarded selections, tool/activity sources, notebook/capsule and workflow contributions with their source restrictions
+- retain canonical usage snapshots, inclusion/omission records, truncation reasons/order, redaction and serialization state for enforcement and debugging
+- serialized message and `tool-part` payloads, provider metadata and path/runtime data remain permissioned internal diagnostics; they are not exposed by a chat Raw toggle or source-composition chart
+- DL-270 payload-store and record-inspector custody remains storage-owned (SP-337, F3-666); retiring the chat source-inspection entry creates no replacement reader, store or new inspector entry
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Runtime_Artifacts_Panel.md
 
 Rules:
 - the thread surface MUST derive usage from canonical runtime records; it MUST NOT invent a second chat-local cost model
-- Amended 2026-10-31 (DL-270): thread usage totals and widgets read the redb usage rollups and never scan raw `usage.event` records (UF-108, SP-341). Raw `usage.event` reads are limited to the on-demand per-turn drill-down in the Raw view.
-- hidden/background helper calls MAY roll into thread totals, but their source class MUST remain inspectable in raw/detail views
-- truncation, redaction, and context-serialization state remain visible per item; the UI MUST NOT silently present omitted context as if it were still serialized
+- thread usage totals and widgets read the redb usage rollups (UF-108, SP-341); raw `usage.event` reads stay on the existing permissioned diagnostic path, not a user-facing thread Raw view
+- hidden/background calls may contribute to truthful thread totals; source-class attribution remains internal rather than a user-facing inclusion receipt
+- useful compaction/transition status must not claim omitted, truncated, redacted or unknown content is present; per-source details remain internal
 
 ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
 
@@ -1365,7 +1356,8 @@ ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts
 - `Export bundle`
 - `Revalidate target`
 - `Revoke item`
-- `Show raw in Context Detail Pane`
+
+`Show raw in Context Detail Pane` is retired (DL-475): raw message, tool, provider and runtime payloads stay internal (ACD-092), and investigation evidence opens through `Open artifacts`.
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/FileManager.md, ContractName:Plans/UI_Command_Catalog.md
 ## 13. Activity transparency: search, bash, and file activity
@@ -1999,9 +1991,9 @@ Rule: The Work Bundle acceptance criteria MUST NEVER be truncated; if truncation
 
 ContractRef: ContractName:Plans/Contracts_V0.md#AgentsMdLightEnforcement
 
-### 17.2 Injected-context breakdown + truncation transparency (UI)
+### 17.2 Injected-context accounting and useful truncation status
 
-Rule: The chat UI MUST surface an “Injected Context” breakdown per run/turn, including: included `AGENTS.md` paths + byte counts; parent summary and attempt journal inclusion + byte counts; and whether truncation occurred (and the reason/order that was applied).
+Rule (DL-475): Keep the “Injected Context” record internally for enforcement and debugging, including `AGENTS.md` paths and byte counts, parent summary and attempt journal inclusion/byte counts, and truncation occurrence, reason and order. Chat shows basic capacity, cost and model information plus useful compaction/truncation status; it does not show source composition or a per-run/turn inclusion receipt.
 
 ContractRef: ContractName:Plans/Contracts_V0.md#ContextInjectionToggles
 
@@ -2033,7 +2025,7 @@ Rule: For Assistant turns with a selected project, chat context assembly MUST ca
 
 ContractRef: ContractName:Plans/assistant-memory-subsystem.md#6-prompt-injection-contract, ContractName:Plans/assistant-memory-subsystem.md#8-integration-points, ContractName:Plans/assistant-memory-subsystem.md#9-deterministic-defaults
 
-Rule: Automatic memory injection in chat MUST apply eligibility gating per the Assistant-memory SSOT (Verified-only by default; any Unverified inclusion requires explicit user action).
+Rule: Automatic memory injection in chat MUST apply AMS-014 support and source/permission gating. Legacy manual-verification or pinned-Unverified bypasses remain disabled under SSYS-059; no user verification/pin action admits unsupported claims.
 
 ContractRef: ContractName:Plans/assistant-memory-subsystem.md#5-verification-and-triggers, ContractName:Plans/assistant-memory-subsystem.md#6-prompt-injection-contract, ContractName:Plans/assistant-memory-subsystem.md#9-deterministic-defaults
 
@@ -2041,11 +2033,11 @@ Rule: Memory injection in chat MUST use summary-only memory text and MUST remain
 
 ContractRef: ContractName:Plans/assistant-memory-subsystem.md#3-data-model, ContractName:Plans/agent-rules-context.md
 
-Rule: Assistant memory MUST NOT be forwarded to subagents or non-Assistant execution paths from chat.
+Rule: Authorized read-only helper access follows AMS-026; private app-thread and denied material MUST NOT be forwarded through chat or derived context.
 
 ContractRef: ContractName:Plans/assistant-memory-subsystem.md#1-capability-boundary, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/interview-subagent-integration.md
 
-Rule: Gist Review actions in Assistant chat MUST dispatch canonical `cmd.chat.memory.*` UI command IDs from `Plans/UI_Command_Catalog.md` and MUST NOT use ad-hoc command identifiers.
+Rule (DL-475): the one Memory page/sheet dispatches only the current Add/Edit/Delete and shared-page navigation contracts from `Plans/UI_Command_Catalog.md`; no Gist Review, verification, pin, capsule-preview, source, lock/conflict or upkeep control is produced. Retained legacy command IDs are internal compatibility/support only.
 ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/assistant-memory-subsystem.md#7-gui-and-maintenance, ContractName:Plans/Contracts_V0.md#7-uicommand
 
 ### 17.5 Project retrieval injection (chat/code/logs) — “RAG” for long threads (project-only)
@@ -2058,7 +2050,7 @@ Rule: Project retrieval injection MUST remain **separate** from Assistant memory
 
 Rule: Project retrieval injection MUST respect:
 - **Thread-local Auto Retrieval override** (chip; default On; user can disable per thread).
-- **Per-project retrieval settings** (allowlist + modes + budgets; Settings/Memory).
+- **Per-project retrieval settings** (allowlist + modes + budgets; no longer under Settings/Memory, and none of them is a Memory-page control since DL-475): which project files are searchable stays with the Indexing settings (FinalGUISpec F3-107), and retrieval modes and budgets use built-in owner behavior with the existing policy/source restrictions and smaller limits (SSYS-040 hides the old `memory.retention.retrieval-*` tuning rows).
 - **Context Lens overlays** (§17.6) to avoid injecting muted content or ignoring focused selections.
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Tools.md, ContractName:Plans/FinalGUISpec.md
@@ -2367,102 +2359,51 @@ Historical note:
 
 ### 26.1 Context
 
-The mandatory Auditor invariant loop (see `Plans/assistant-chat-design.md §26.10–§26.14`) runs after every interview/wizard project-plan generation cycle. It repeats audit, bounded repair, and re-audit until certification or a critical block/authority boundary, using one resolved Auditor validation loop provider and model. This section specifies the loop (§26.10–§26.14) and the **settings UX** that exposes that single Auditor loop selection to the user.
+The mandatory Auditor invariant loop (§26.10–§26.14) keeps its audit, bounded repair and re-audit behavior and authority/certification gates. Its model/depth comes from Checking finished work in the common Settings > Models > Default models list, with an explicit run override when offered; Models §2 owns selection. No separate Auditor provider/model/depth default is introduced.
 
 ### 26.2 Settings Location
 
-The Auditor validation loop provider and model selection lives in a dedicated **Auditor Validation** settings group within the existing app Settings surface, not in the chat UI itself.
-
-**Navigation path:** Settings -> Interview / Planning Wizard -> Auditor Validation
-
-This placement keeps validation configuration co-located with other interview/wizard settings and away from the chat session controls, which govern the interactive conversation only.
+Settings > Models > Default models is the only default editor. The Interview / Planning Wizard Auditor Validation location is a compatibility redirect to Checking finished work, not another set of saved selectors. The flow gets one common-default/override explanation, not a screen redesign.
 
 ### 26.3 Auditor Loop Controls
 
-The **Auditor Validation** settings group exposes one row for the Auditor validation loop.
+Auditor Validation reads Checking finished work and shows its current model/depth and named source. Editing a default opens that shared row and reuses ACD-438, effort step included. An explicit per-run override uses the same picker and does not write a separate Auditor setting. No separate Provider/Model dropdown pair or reasoning-depth row survives here.
 
-| Loop | Label | Default Provider | Default Model |
-|------|-------|-----------------|---------------|
-| Auditor Validation | Audit / Repair / Audit | Auditor Model role default | Auditor Model role default |
-
-**Controls:**
-
-- **Provider dropdown** — lists enabled provider entries from the same account-bound Provider -> models registry as the chat provider dropdown. Label: "Provider".
-- **Model dropdown** — lists models for the selected provider (dynamically discovered, cached; same data source as the chat model dropdown). Label: "Model". Fallback: shared provider/model registry and capability resolver.
-
-> **Note:** No reasoning/effort control is shown in this settings group. Effort settings apply to the interactive chat session and do not govern these background validation passes.
-
-// DRY:WIDGET:auditor-validation-provider-model-selector
+The historical wrapper token `// DRY:WIDGET:auditor-validation-provider-model-selector` is inert source-lineage, not authority to recreate the retired selector.
 
 ### 26.4 Default Resolution (Deterministic)
 
-Default provider and model values are resolved using the following deterministic priority chain:
+Resolve the Auditor job through Models §2: explicit run model/depth, scoped build-owner policy, surface/stage built-in default, manually selected account default when eligible, This project, Everywhere/factory. Checking finished work is the job default; its blank inheritance remains Models-owned. There is no fallback through primary chat settings, first discovered provider, Persona, last-used state or provider-default model.
 
-1. **Explicit stored Auditor loop value** — if `model_roles.auditor.provider` / `model_roles.auditor.model` is present in app settings, use it.
-2. **Auditor Model role default** — if no explicit Auditor loop value is stored, use the configured Auditor Model role default from `Plans/Models_System.md`.
-3. **Primary chat platform + model** — if the Auditor Model role is also unset, use the provider and model selected in the main chat settings.
-4. **First eligible provider entry + model** — if the primary chat provider/model is also unset, select the first eligible account-bound provider entry and model from the Provider -> models registry after readiness, capability, and policy filtering.
-
-**Invariants:**
-- Given the same app settings state, the same provider and model are always selected (no randomness, no environment-dependent branching).
-- On first explicit save of the Auditor loop setting, the resolved default is written to app settings so that subsequent reads are reproducible.
-- Pass 1, Pass 2, and Pass 3 are not independently configurable model selections or active process stages.
+For identical inputs the result is deterministic. Freeze the actual run selection for evidence without writing resolved defaults back as new preferences. Pass 1 / Pass 2 / Pass 3 remain inert compatibility names, never independent selectors or process stages.
 
 ### 26.5 Storage
 
-Auditor loop selections are stored in **app settings** only. They are not stored in project artifacts, not emitted to seglog as project data, and not included in project exports.
+The common list’s model/depth pair is stored atomically at its admitted Everywhere/Project level through the Settings transaction; No project skips Project. Existing shared preset/build policy and parent/managed ceilings remain. Historical `model_roles.auditor.provider` and `model_roles.auditor.model` scalar values are inert inspection-only reads: preserve originals, omit new writes/imports, explain the redirect, and never silently migrate them into shared defaults.
 
-For auditability, each Auditor cycle report's payload fields (`provider`, `model`) mirror the Auditor loop provider/model that was active when the sweep started (see `Plans/Project_Output_Artifacts.md §10.2`). Legacy `validation_pass_report` exports may mirror the same values for compatibility. This does not store the settings keys themselves as project artifacts.
+Each `auditor_cycle_report` records the actual frozen provider/model and requested/effective effort when present; legacy `validation_pass_report` may mirror the same runtime values only with `compatibility_only` and `cycle_report_ref`. These are run evidence, not editable defaults or an event-built preference store.
 
-**Normative storage keys:**
+### 26.6 UX Copy and Source Disclosure
 
-| Key | Purpose |
-|-----|---------|
-| `model_roles.auditor.provider` | Provider for the Auditor validation loop |
-| `model_roles.auditor.model` | Model for the Auditor validation loop |
+Auditor Validation names Checking finished work and shows the actual inherited source plus current model/depth. Editing opens the common defaults row; a run override is explicitly scoped to that run. The old standalone `(Default)` indicator and its separate-save behavior are inert source-lineage, not another default editor.
 
-These keys are written to the same app settings store as all other GUI configuration values. See `Plans/Provider_OpenCode.md §10.1` for the OpenCode provider settings surface reference.
+### 26.7 Data Source and DRY Requirements
 
-### 26.6 UX Copy
+Reuse the chat composer picker as ACD-438 defines it, effort step included. Choices come from the account-bound Provider -> models registry and concrete route capability resolver; never hardcode provider/model/effort lists. The retired auditor-validation-provider-model-selector wrapper tag is historical and cannot create an independent selector.
 
-| Element | Copy |
-|---------|------|
-| Section header | "Auditor Validation" |
-| Section description | "Puppet Master runs the canonical validation sweep with the Auditor Model. Choose the provider and model for the whole audit loop." |
-| Loop description | "Audit / Repair / Re-audit - repeats bounded repair and review until certified or critically blocked with one Auditor loop model." |
-| Default indicator | Show "(Default)" next to the automatically resolved provider/model when no explicit Auditor loop selection has been saved. |
+### 26.8 Persistence and Sweep Boundary
 
-### 26.7 DRY Rules
+Shared defaults survive app restarts through their normal Settings owner. Common-list edits and explicit run choices affect the next sweep; an in-progress sweep keeps its frozen requested/effective model/depth and account identity. Legacy per-pass and independent Auditor setting values remain inert inspection-only reads, omitted from new writes/imports with a retirement notice.
 
-- Provider and model lists **MUST** be sourced from the account-bound Provider -> models registry and shared capability resolver (same SSOT as §1.1 chat controls). No hardcoded provider names or model lists anywhere in this feature. Legacy `platform_specs` is source-lineage only.
-- Reuse the same provider + model dropdown widgets as the §1.1 chat controls. Tag new reusable settings wrappers with: `// DRY:WIDGET:auditor-validation-provider-model-selector`.
+An unavailable frozen request stays visibly unavailable/blocked with the existing Models recovery path. Any policy-permitted account or provider fallback uses the unchanged Models/Multi-Account rules and requested/effective disclosure; no local Auditor primary-chat/first-provider fallback or silent model substitution is added.
 
-ContractRef: PolicyRule:Plans/DRY_Rules.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Models_System.md
+### 26.9 Acceptance Criteria
 
-### 26.8 Acceptance Criteria
+- One shared Checking finished work default supplies the Auditor loop, using Models §2 and ACD-438, with named inheritance and an explicit run override when offered.
+- Shared picker capability, exact-name testing and requested/effective disclosure remain unchanged; no retired Persona/command/helper/per-pass/independent-Auditor field is recreated.
+- An active sweep keeps its frozen model/depth. Each auditor_cycle_report records actual provider/model and effort outcomes; legacy validation_pass_report mirrors require compatibility_only and cycle_report_ref.
+- The audit/repair/re-audit/certification loop below retains all its existing evidence, authority, clarification and terminal-state guards.
 
-| # | Criterion |
-|---|-----------|
-| 1 | Settings changes take effect on the **next** validation sweep run — not mid-sweep. A sweep in progress uses the provider/model that was active when it started. |
-| 2 | When a saved provider is no longer available (platform uninstalled or disabled), Puppet Master falls back to the deterministic default (§26.4) and displays a warning: *"Auditor validation provider [name] is unavailable; using Auditor Model default."* |
-| 3 | Auditor validation provider/model settings are preserved across app restarts. |
-| 4 | Pass 1, Pass 2, and Pass 3 are not independently configurable model settings or active process stages; any legacy pass reports mirror the same Auditor loop provider/model. |
-| 5 | The "(Default)" indicator (§26.6) is visible whenever no explicit Auditor loop selection has been saved, and disappears once the user saves an explicit choice. |
-| 6 | Provider and model dropdowns draw from the same Provider -> models registry and Models_System capability resolver as the §1.1 chat controls -- no divergence. |
-| 7 | For each emitted Auditor cycle report, `.provider` and `.model` values match the resolved Auditor loop provider/model from sweep start; legacy `validation_pass_report` mirrors follow the same rule (see `Plans/Project_Output_Artifacts.md §10.2`). |
-
-### 26.9 References (Section 26)
-
-- `Plans/assistant-chat-design.md §26.10–§26.14` — Auditor invariant loop (primary specification)
-- `Plans/Provider_OpenCode.md §10.1` — OpenCode provider settings surface reference
-- `Plans/Project_Output_Artifacts.md §10.2` — Auditor cycle report payload fields (`provider`, `model`), with legacy validation pass mirrors only for compatibility
-- `Plans/Models_System.md` — Auditor Model role ownership for audit/repair/audit verification loops
-- `Plans/Decision_Policy.md §2` — deterministic default policy
-- `Plans/DRY_Rules.md` — DRY/SSOT rules
-- `Plans/Contracts_V0.md` -- requested/effective provider/model snapshot refs and cross-surface capability-ref envelopes
-- Section 1.1 of this document — chat platform + model controls (shared widget source)
-
-ContractRef: ContractName:Plans/assistant-chat-design.md§26, ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/Models_System.md, PolicyRule:Decision_Policy.md§2
 ### 26.10 Context
 
 This section defines an **always-on mandatory Auditor invariant loop** that runs immediately after the Contract Unification Pass (§6.6) produces the **provisional** canonical project artifact pack. It is **separate** from the optional `Plans/Crosswalk.md §3.16` Multi-Pass Review (which is user-facing and off by default). The invariant loop **cannot be disabled** and always runs even when other review features are present or enabled.
@@ -4829,15 +4770,21 @@ plan_unit_id: ACD-020
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Teach is an explicit capture workflow for durable codebase knowledge, user preferences, and workflow constraints. It uses user-locked records and requires explicit user confirmation before storage; it is not a separate closed mode_overlay.
+canonical_text: >-
+  Teach is explicit deliberate standing-instruction capture through its existing writer at Settings
+  > Personas & Crews > Defaults > Standing instructions. It requires confirmation before storage,
+  preserves secret/privacy/revision and retained protected-record safeguards internally, and creates
+  no separate closed mode_overlay. A requested saved note instead uses AMS-141 Add/Edit/Delete on
+  the shared Memory page at This project or Every project; no lock/unlock, conflict, source or
+  rollback controls appear.
 gui_related: false
 gui_classification_reason: Teach capture and memory persistence behavior are backend/chat workflow behavior rather than visual implementation.
 depends_on: []
 unblocks: [ACD-021, ACD-022]
 acceptance_criteria:
-  - Teach may be invoked through /teach or equivalent natural-language persistence intent.
-  - Persistence requires explicit user-confirming action before knowledge is stored.
-  - Teach does not create a separate closed mode_overlay.
+  - "Teach opens the existing written-instruction owner through /teach or equivalent deliberate intent and persists only after confirmation."
+  - "Saved notes reuse AMS-141 and the two allowed levels without a separate capture or inspection workflow."
+  - "Legacy protected-record state is internal and Teach creates no separate closed mode_overlay."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -4853,6 +4800,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0028
+  - "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 preserved_exact_tokens:
   - "user-locked"
   - "/teach"
@@ -4921,15 +4869,19 @@ plan_unit_id: ACD-022
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Teach retrieval, disclosure, conflict handling, inspection, narrowing, supersession, revocation, and secret exclusion are auditable safety rules. Taught knowledge enters prompts as explicit memory/context rather than undocumented hidden prompt mutation.
+canonical_text: >-
+  Teach and saved-note persistence retain scope, secret exclusion, revisions and legacy protections
+  internally; inclusion records prove no compliance. Only a durable successful save may add Saved to
+  memory · View to a reply; View opens the one Memory page as a sheet. No memory-use citation,
+  receipt, tick, chip, count, source detail, verification or Followed/Missed decoration is shown.
+  Ordinary task evidence remains available; written instructions use their separate owner.
 gui_related: false
 gui_classification_reason: Teach audit and secret-exclusion behavior are memory governance requirements, not GUI implementation.
 depends_on: [ACD-020, ACD-021]
 unblocks: []
 acceptance_criteria:
-  - Conflicting teachings record supersession or revocation rather than silently overwriting prior knowledge.
-  - Users can inspect, narrow, supersede, or revoke taught knowledge later.
-  - Teach does not persist secrets, tokens, passwords, or other credentials.
+  - "Only a durable successful save may add Saved to memory · View to a reply; View opens the one Memory page as a sheet. No memory-use citation, receipt, tick, chip, count, source detail, verification or Followed/Missed decoration is shown."
+  - "No source or verification receipt, automatic rule-use or rule-check receipt, named-note hover, conflict/lock/rollback control or third saved-note level is exposed. The deliberate Rule saved · View Teach receipt stays; its View opens Settings > Personas & Crews > Defaults > Standing instructions."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -4944,12 +4896,14 @@ node_compile_hint:
   mode: teach_audit_safety
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0028
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0028
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 preserved_exact_tokens:
   - "explicit memory/context"
   - "MUST NOT persist secrets, tokens, passwords, or other credentials"
 negative_constraints:
-  - "Teach MUST NOT persist secrets, tokens, passwords, or other credentials."
+- Do not expose retired memory-use, verification or rule-check receipt UI.
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/Decision_Policy.md
@@ -6969,18 +6923,17 @@ plan_unit_id: ACD-066
 unit_type: constraint
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: >-
-  Retrieved results enter the Work bundle as a Retrieved Context block with
-  source type, provenance, snippet sizes, and truncation notes. Retrieved
-  Context is not Assistant memory and must respect Context Lens overlays.
+canonical_text: Retrieved Context stays ephemeral Work Bundle data with source provenance, snippet/truncation
+  and Context Lens restrictions, distinct from saved memories, written rules, conversations and task notes.
+  Assembled-source inspection is internal diagnostics; ordinary chat shows basic capacity/cost facts.
 gui_related: false
 gui_classification_reason: Retrieved Context assembly and memory boundaries are prompt/context pipeline behavior.
 depends_on: [ACD-063, ACD-064]
 unblocks: []
 acceptance_criteria:
-  - Retrieved Context carries source type, provenance, byte/token sizes, and truncation notes.
-  - Retrieved Context is not written to Assistant memory unless separately captured as a verified gist.
-  - Context Lens muted, focused, and subcompacted rules affect retrieval injection.
+- Retrieved Context stays ephemeral Work Bundle data with source provenance, snippet/truncation and Context
+  Lens restrictions, distinct from saved memories, written rules, conversations and task notes. Assembled-source
+  inspection is internal diagnostics; ordinary chat shows basic capacity/cost facts.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -6995,7 +6948,8 @@ node_compile_hint:
   mode: retrieved_context_memory_boundary
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0047
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0047
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
   - "Retrieved Context"
   - "Work bundle"
@@ -7003,7 +6957,7 @@ preserved_exact_tokens:
   - "Plans/assistant-memory-subsystem.md"
   - "Context Lens"
 negative_constraints:
-  - "Retrieved Context is not \"memory\" and must not be written into the Assistant memory store unless separately captured as a verified gist."
+- Do not expose retired memory-use, verification or rule-check receipt UI.
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/assistant-memory-subsystem.md
@@ -8251,20 +8205,19 @@ plan_unit_id: ACD-092
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: >-
-  The Context Detail Pane is an editor-tab pane with top-level `Curated` and
-  `Raw` views; `Curated` contains `Overview`, `Breakdown`, and `Messages`, and
-  `Raw` exposes message payloads, related `tool-part` payloads, provider
-  metadata blobs, and path/runtime debug data through an accordion.
+canonical_text: Context Detail retains basic on-demand chat capacity/cost, effective model/usage facts
+  and useful compaction/transition feedback. Assembled-source Breakdown, raw message/tool/provider/runtime
+  payloads and memory-selection explanations are internal debugging, not an ordinary user view or alternate
+  Memory editor. No memory raw data or used-note list is exposed.
 gui_related: true
 gui_classification_reason: Context Detail Pane tabs and accordions are visible editor-pane UI.
 depends_on: [ACD-091]
 unblocks: [ACD-093, ACD-100]
 acceptance_criteria:
-  - Context Detail Pane opens as an editor-tab pane.
-  - Top-level Curated and Raw views are available.
-  - Curated includes Overview, Breakdown, and Messages.
-  - Raw exposes payloads, tool-part data, provider metadata, and runtime/path debug data.
+- Context Detail retains basic on-demand chat capacity/cost, effective model/usage facts and useful compaction/transition
+  feedback. Assembled-source Breakdown, raw message/tool/provider/runtime payloads and memory-selection
+  explanations are internal debugging, not an ordinary user view or alternate Memory editor. No memory
+  raw data or used-note list is exposed.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -8279,7 +8232,8 @@ node_compile_hint:
   mode: context_detail_pane_ia
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0060
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0060
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
   - "Curated"
   - "Raw"
@@ -8289,7 +8243,8 @@ preserved_exact_tokens:
   - "/model/mode/persona"
   - "/context/cost"
   - "tool-part"
-negative_constraints: []
+negative_constraints:
+- Do not expose retired memory-use, verification or rule-check receipt UI.
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/FinalGUISpec.md
@@ -8302,20 +8257,21 @@ plan_unit_id: ACD-093
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: >-
-  Context Detail Pane breakdowns include system/instruction blocks,
-  user/assistant messages, compiled attachments and forwarded document
-  selections, tool/activity-derived context, canonical `usage.event` and
-  `run.completed.usage` snapshots, and debug-only Investigation Context items
-  for active debug threads.
+canonical_text: Internal context records retain instruction/message/attachment/tool/notebook/workflow
+  source classes, canonical usage snapshots, redaction/truncation and debug provenance for correct enforcement.
+  No assembled-source chart, raw memory detail or selection explanation is a user-facing memory surface;
+  basic capacity/cost information remains on demand.
 gui_related: true
-gui_classification_reason: Breakdown rows and source groups are visible in the Context Detail Pane.
+gui_classification_reason: >-
+  Keeps basic visible context status while source groups and source-level breakdowns remain internal
+  accounting.
 depends_on: [ACD-092]
 unblocks: [ACD-094, ACD-095]
 acceptance_criteria:
-  - Context breakdowns include all canonical user, assistant, system, attachment, tool, usage, and debug source families.
-  - Investigation Context items appear only for active debug threads.
-  - Canonical usage snapshots remain separate from ordinary chat-local message estimates.
+- Internal context records retain instruction/message/attachment/tool/notebook/workflow source classes,
+  canonical usage snapshots, redaction/truncation and debug provenance for correct enforcement. No assembled-source
+  chart, raw memory detail or selection explanation is a user-facing memory surface; basic capacity/cost
+  information remains on demand.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -8330,12 +8286,16 @@ node_compile_hint:
   mode: context_breakdown_source_taxonomy
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0060
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0060
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
+- "DL-475; settings batch 2 round r2 complete context-inspection sweep, 2026-11-12"
 preserved_exact_tokens:
   - "usage.event"
   - "run.completed.usage"
   - "Investigation Context"
-negative_constraints: []
+negative_constraints:
+- Do not expose retired memory-use, verification or rule-check receipt UI.
+- "Do not restore user-facing context source inspection or per-run inclusion receipts through a legacy title, preserved token, shared projection or saved view state."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/Prompt_Pipeline.md
@@ -8348,23 +8308,19 @@ plan_unit_id: ACD-094
 unit_type: constraint
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: >-
-  The thread surface derives usage from canonical runtime records and must not
-  invent a second chat-local cost model; hidden/background helper usage remains
-  source-class inspectable, and truncation, redaction, and
-  context-serialization state remain visible so omitted context is never
-  presented as serialized.
-  Amended 2026-10-31 (DL-270): thread usage summaries read the redb rollups (UF-108);
-  raw usage.event reads are limited to the per-turn Context Detail drill-down.
+canonical_text: Thread usage derives from canonical runtime records/redb rollups (UF-108), never a second
+  chat-local cost model. Basic on-demand model/capacity/cost facts stay available; source-family charts
+  and raw payload views remain internal diagnostics. Unknown or omitted/truncated/redacted data never
+  masquerades as serialized context; permission enforcement retains internal records.
 gui_related: true
 gui_classification_reason: Runtime usage source and omitted-context state affect user-visible usage/cost display.
 depends_on: [ACD-091, ACD-093]
 unblocks: []
 acceptance_criteria:
-  - Usage derives from canonical runtime records.
-  - Hidden/background helper usage remains inspectable by source class.
-  - Truncation, redaction, and serialization state remain visible.
-  - Omitted context is never presented as serialized.
+- Thread usage derives from canonical runtime records/redb rollups (UF-108), never a second chat-local
+  cost model. Basic on-demand model/capacity/cost facts stay available; source-family charts and raw payload
+  views remain internal diagnostics. Unknown or omitted/truncated/redacted data never masquerades as serialized
+  context; permission enforcement retains internal records.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -8380,13 +8336,13 @@ node_compile_hint:
   mode: context_usage_runtime_source_boundary
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0060
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0060
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
   - "MUST NOT invent a second chat-local cost model"
   - "UI MUST NOT silently present omitted context as if it were still serialized"
 negative_constraints:
-  - "MUST NOT invent a second chat-local cost model"
-  - "UI MUST NOT silently present omitted context as if it were still serialized"
+- Do not expose retired memory-use, verification or rule-check receipt UI.
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/usage-feature.md
@@ -8654,8 +8610,10 @@ canonical_text: >-
   Investigation Context may render as card, `/chip/panel`, or compact
   equivalent with explicit attach, `/removal/revocation`, `/revoke`,
   provenance, timestamp, redaction/truncation state, filtering, and actions
-  `Open target`, `Open artifacts`, `Export bundle`, `Revalidate target`,
-  `Revoke item`, and `Show raw in Context Detail Pane`.
+  `Open target`, `Open artifacts`, `Export bundle`, `Revalidate target`
+  and `Revoke item`. `Show raw in Context Detail Pane` is retired (DL-475):
+  raw payloads stay internal (ACD-092), and investigation evidence opens
+  through `Open artifacts`.
 gui_related: true
 gui_classification_reason: Rendering, filtering, and actions are visible Investigation Context UI.
 depends_on: [ACD-092, ACD-095, ACD-097, ACD-099]
@@ -8663,7 +8621,7 @@ unblocks: []
 acceptance_criteria:
   - Investigation Context renders as a card, /chip/panel, or compact equivalent.
   - Attach, removal/revocation, provenance, timestamps, redaction/truncation, and filtering are visible.
-  - Open, export, revalidate, revoke, and raw-detail actions are available where supported.
+  - Open, export, revalidate and revoke actions are available where supported; no raw-detail action opens the Context Detail Pane (DL-475).
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -12594,18 +12552,19 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  Chat UI surfaces an "Injected Context" breakdown per run or turn, including
-  included `AGENTS.md` paths and byte counts, parent summary and attempt
-  journal inclusion plus byte counts, and whether truncation occurred with its
-  reason and order.
+  The Injected Context record retains AGENTS.md paths and byte counts, parent summary and attempt
+  journal inclusion/byte counts, and truncation occurrence, reason and order internally for
+  enforcement and debugging. Chat retains basic on-demand capacity, cost and effective model
+  information plus useful compaction/truncation status. Source composition and per-run or per-turn
+  inclusion receipts are not user-facing.
 gui_related: true
-gui_classification_reason: Injected Context breakdown is visible chat UI.
+gui_classification_reason: "Defines the boundary between visible capacity/compaction status and internal source accounting."
 depends_on: [ACD-178]
 unblocks: []
 acceptance_criteria:
-  - Injected Context breakdown appears per run or turn.
-  - AGENTS.md, parent summary, and attempt journal inclusion disclose byte counts.
-  - Truncation occurrence, reason, and order are visible.
+  - "Internal Injected Context records retain source identity, inclusion/byte counts and truncation occurrence/reason/order under the existing permission and redaction rules."
+  - "Chat keeps basic capacity, cost and effective model information and useful compaction/truncation status available on demand."
+  - "The chat ring, menu, Context Detail Pane and replies show no assembled-source breakdown or per-run/turn inclusion receipt."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -12621,15 +12580,19 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0088
+  - "DL-475; settings batch 2 review R1, quiet context display reconciliation, 2026-11-12"
 preserved_exact_tokens:
   - "Injected Context"
   - "AGENTS.md"
   - "parent summary"
   - "attempt journal"
-negative_constraints: []
+negative_constraints:
+  - "Do not expose assembled-source composition, raw source payloads or per-run inclusion receipts in the chat context ring, menu or Context Detail Pane."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/Contracts_V0.md
+stale_retired_dispositions:
+  - "DL-475 retires the user-facing Injected Context breakdown; the historical title and preserved tokens identify internal accounting, not a required GUI label or receipt."
 ```
 
 ### ACD-181 - Context Injector User Configuration
@@ -12919,19 +12882,21 @@ plan_unit_id: ACD-187
 unit_type: constraint
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: >-
-  Automatic memory injection applies Assistant-memory SSOT eligibility gating:
-  Verified-only by default, Unverified inclusion only with explicit user
-  action, memory text summary-only, and memory injection separate from the
-  Application/Project rules pipeline.
+canonical_text: Memory injection uses bounded supported summary-only selection separate from written rules,
+  and memory off disables save/use. User-authored preferences/statements are supported as what the user
+  said at that version, without a Verify chore; world claims still require scoped current evidence. Edits
+  invalidate stale summary/index eligibility and are checked internally; no pinned/manual bypass can make
+  unsupported claims proven.
 gui_related: false
 gui_classification_reason: Memory eligibility and summary-only boundaries are prompt/context policy behavior.
 depends_on: [ACD-186]
 unblocks: [ACD-188]
 acceptance_criteria:
-  - Verified-only automatic inclusion remains default.
-  - Unverified memory inclusion requires explicit user action.
-  - Memory text is summary-only and separate from Application/Project rules.
+- Memory injection uses bounded supported summary-only selection separate from written rules, and memory
+  off disables save/use. User-authored preferences/statements are supported as what the user said at that
+  version, without a Verify chore; world claims still require scoped current evidence. Edits invalidate
+  stale summary/index eligibility and are checked internally; no pinned/manual bypass can make unsupported
+  claims proven.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -12946,14 +12911,15 @@ node_compile_hint:
   mode: assistant_memory_eligibility_summary_boundary
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0090
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0090
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
   - "Verified-only"
   - "Unverified"
   - "summary-only"
   - "Application/Project rules pipeline"
 negative_constraints:
-  - "Any Unverified inclusion requires explicit user action."
+- Do not expose retired memory-use, verification or rule-check receipt UI.
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/assistant-memory-subsystem.md
@@ -12966,15 +12932,19 @@ plan_unit_id: ACD-188
 unit_type: constraint
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Assistant memory MUST NOT be forwarded to subagents or non-Assistant execution paths from chat.
+canonical_text: Crews, reviews and the chat assistant's other helpers may read the current Project's notes
+  and the same user's personal Every project notes, read-only under current actor/source/phase permissions.
+  No helper-owned memory, other-Project access or private app-thread access follows. Summaries and handoffs
+  inherit restrictions; paraphrase cannot widen them.
 gui_related: false
 gui_classification_reason: Assistant memory forwarding boundary is execution/context policy behavior.
 depends_on: [ACD-186, ACD-187]
 unblocks: []
 acceptance_criteria:
-  - Assistant memory remains scoped to Assistant chat.
-  - Subagents do not receive Assistant memory from chat.
-  - Non-Assistant execution paths do not receive Assistant memory from chat.
+- Crews, reviews and the chat assistant's other helpers may read the current Project's notes and the same
+  user's personal Every project notes, read-only under current actor/source/phase permissions. No helper-owned
+  memory, other-Project access or private app-thread access follows. Summaries and handoffs inherit restrictions;
+  paraphrase cannot widen them.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -12990,11 +12960,12 @@ node_compile_hint:
   mode: assistant_memory_non_forwarding
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0090
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0090
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
   - "Assistant memory MUST NOT be forwarded"
 negative_constraints:
-  - "Assistant memory MUST NOT be forwarded to subagents or non-Assistant execution paths from chat."
+- Do not widen source restrictions, private app-thread access or helper writes.
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/assistant-memory-subsystem.md
@@ -13007,17 +12978,35 @@ plan_unit_id: ACD-189
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: >-
-  Gist Review actions in Assistant chat dispatch canonical
-  `cmd.chat.memory.*` UI command IDs and must not use ad-hoc command
-  identifiers.
+canonical_text: Memory is one saved-note page, opened from Settings and as that same page in the chat
+  Memory button/wand sheet. It has one on/off switch, search including archived notes, a level filter
+  All / This project / Every project, text/level/updated list rows, Add memory, Edit, Delete and collapsed
+  Archived. Title is optional, kind inferred. Delete all names the exact scope; deletion is distinct from
+  Discard/archive and cannot be silently undone from old chats. Verification, sources, pins, conflicts,
+  ranking, preview, upkeep and competing recovery controls stay off the page. Instructions, History/privacy,
+  chat capacity and Run limits remain separate. Add/Edit/Delete use cmd.chat.memory.add, cmd.chat.memory.edit
+  and cmd.chat.memory.delete under AMS-141; never relabel Discard as Delete or use ad-hoc handlers. User-authored
+  preferences/statements are supported as what the user said at that version, without a Verify chore;
+  world claims still require scoped current evidence. Edits invalidate stale summary/index eligibility
+  and are checked internally; no pinned/manual bypass can make unsupported claims proven.
 gui_related: true
-gui_classification_reason: Gist Review actions and UI command IDs are visible chat commands.
+gui_classification_reason: >-
+  The shared Memory page/sheet has current CRUD/navigation controls only; Gist Review is a
+  historical identity and produces no separate surface.
 depends_on: [ACD-186]
 unblocks: []
 acceptance_criteria:
-  - Gist Review actions dispatch cmd.chat.memory.* UI command IDs.
-  - Ad-hoc memory command identifiers are prohibited.
+- Memory is one saved-note page, opened from Settings and as that same page in the chat Memory button/wand
+  sheet. It has one on/off switch, search including archived notes, a level filter All / This project
+  / Every project, text/level/updated list rows, Add memory, Edit, Delete and collapsed Archived. Title
+  is optional, kind inferred. Delete all names the exact scope; deletion is distinct from Discard/archive
+  and cannot be silently undone from old chats. Verification, sources, pins, conflicts, ranking, preview,
+  upkeep and competing recovery controls stay off the page. Instructions, History/privacy, chat capacity
+  and Run limits remain separate. Add/Edit/Delete use cmd.chat.memory.add, cmd.chat.memory.edit and cmd.chat.memory.delete
+  under AMS-141; never relabel Discard as Delete or use ad-hoc handlers. User-authored preferences/statements
+  are supported as what the user said at that version, without a Verify chore; world claims still require
+  scoped current evidence. Edits invalidate stale summary/index eligibility and are checked internally;
+  no pinned/manual bypass can make unsupported claims proven.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -13033,11 +13022,13 @@ node_compile_hint:
   mode: gist_review_memory_command_canon
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0090
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0090
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 preserved_exact_tokens:
   - "cmd.chat.memory.*"
 negative_constraints:
-  - "Gist Review actions in Assistant chat MUST NOT use ad-hoc command identifiers."
+- Do not expose retired memory-use, verification or rule-check receipt UI.
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/UI_Command_Catalog.md
@@ -13050,18 +13041,17 @@ plan_unit_id: ACD-190
 unit_type: constraint
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: >-
-  Project retrieval injection may add project-scoped chat/code/log context for
-  the current turn, but it remains separate from Assistant memory injection and
-  is fresh, ephemeral Work Bundle context.
+canonical_text: Project chat/code/log retrieval is fresh ephemeral Work Bundle context, separate from
+  saved Memory, written Instructions, conversation history and Working Notebook. Finding material does
+  not itself save a reusable memory or create proof.
 gui_related: false
 gui_classification_reason: Project retrieval separation is context assembly policy, not GUI behavior.
 depends_on: [ACD-186]
 unblocks: [ACD-191]
 acceptance_criteria:
-  - Project retrieval injection stays separate from Assistant memory injection.
-  - Retrieved context is fresh, ephemeral context for the current turn.
-  - Assistant memory is never implicitly expanded by chat/code/log retrieval.
+- Project chat/code/log retrieval is fresh ephemeral Work Bundle context, separate from saved Memory,
+  written Instructions, conversation history and Working Notebook. Finding material does not itself save
+  a reusable memory or create proof.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -13076,14 +13066,15 @@ node_compile_hint:
   mode: project_retrieval_separation
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0091
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0091
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
   - "project-scoped retrieved context"
   - "chat/code/logs"
   - "MUST remain separate"
   - "fresh, ephemeral context"
 negative_constraints:
-  - "Assistant memory injection is never implicitly expanded by chat/code/log retrieval."
+- Do not expose retired memory-use, verification or rule-check receipt UI.
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/assistant-memory-subsystem.md
@@ -13100,7 +13091,7 @@ canonical_text: >-
   Project retrieval injection respects the Thread-local Auto Retrieval chip,
   per-project retrieval settings, and Context Lens overlays.
 gui_related: true
-gui_classification_reason: Retrieval chips, Settings/Memory controls, and Context Lens overlays are visible or user-configurable UI.
+gui_classification_reason: Retrieval chips and Context Lens overlays are visible or user-configurable UI; per-project retrieval has no Memory-page control (DL-475).
 depends_on: [ACD-190]
 unblocks: [ACD-194]
 acceptance_criteria:
@@ -15787,35 +15778,43 @@ plan_unit_id: ACD-253
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: One Auditor validation-loop setting exposes provider/model choices for the Auditor invariant loop after interview/wizard project-plan generation; per-pass settings are retired compatibility lineage.
+canonical_text: The Auditor invariant loop consumes Checking finished work from the common Settings > Models
+  > Default models list and permits an explicit run override through Models §2. Retire independent Auditor
+  and per-pass provider/model settings; old values are inert compatibility reads, not a second default store.
 gui_related: true
-gui_classification_reason: Auditor validation provider/model settings are visible Settings UI.
+gui_classification_reason: Defines the shared Checking finished work source/redirect and frozen Auditor runtime
+  selection; retired independent selectors are not current UI.
 depends_on: []
-unblocks: [ACD-254]
+unblocks:
+- ACD-254
 acceptance_criteria:
-  - Auditor invariant loop is exposed through one provider/model settings row.
-  - Settings apply after interview/wizard project-plan generation cycles.
+- The whole Auditor loop consumes Checking finished work from the one shared defaults list.
+- The loop applies after interview/wizard project-plan generation cycles.
 validation_surfaces:
-  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
-  - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
 risk_class: validation_settings
 reasoning_tier: high
 context_scope: gui
 implementation_surfaces:
-  - Plans/assistant-chat-design.md
+- Plans/assistant-chat-design.md
 node_compile_hint:
   mode: validation_settings_context
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0114
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0115
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0114
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0115
+- DL-476; settings batch3 fix round r1, 2026-11-12
 preserved_exact_tokens:
-  - "Three-Pass Canonical Validation Workflow"
-  - "provider + model selection"
+- Three-Pass Canonical Validation Workflow
+- provider + model selection
 negative_constraints:
-  - "Do not expose per-pass provider/model settings."
+- Do not expose per-pass provider/model settings.
 owner_hints:
-  - Plans/assistant-chat-design.md
+- Plans/assistant-chat-design.md
+compatibility_only_notes:
+- Historical Auditor selector/storage/resolver exact tokens are inert compatibility/source-lineage only; they
+  cannot recreate separate settings or override the common list.
 ```
 
 ### ACD-254 - Validation Settings Location
@@ -15825,37 +15824,48 @@ plan_unit_id: ACD-254
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Auditor validation loop provider/model selection lives in Settings -> Interview / Planning Wizard -> Auditor Validation, not the chat UI.
+canonical_text: The Interview / Planning Wizard Auditor Validation location redirects to Checking finished
+  work in Settings > Models > Default models. It exposes no independent provider/model/depth selectors; a run
+  override remains run-scoped.
 gui_related: true
-gui_classification_reason: Settings navigation and non-chat placement are visible configuration UI.
-depends_on: [ACD-253]
-unblocks: [ACD-255, ACD-261]
+gui_classification_reason: Defines the shared Checking finished work source/redirect and frozen Auditor runtime
+  selection; retired independent selectors are not current UI.
+depends_on:
+- ACD-253
+unblocks:
+- ACD-255
+- ACD-261
 acceptance_criteria:
-  - Auditor Validation settings group exists under Interview / Planning Wizard settings.
-  - Auditor loop selection is not placed in chat UI.
-  - Validation settings remain co-located with interview/wizard settings.
+- Default editing redirects from Auditor Validation to Settings > Models > Default models > Checking finished
+  work.
+- An explicit Auditor run override remains run-scoped rather than a saved second default.
+- No Interview/Wizard-specific model/depth selector or store is created.
 validation_surfaces:
-  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
-  - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
 risk_class: validation_settings
 reasoning_tier: standard
 context_scope: gui
 implementation_surfaces:
-  - Plans/assistant-chat-design.md
-  - Plans/FinalGUISpec.md
+- Plans/assistant-chat-design.md
+- Plans/FinalGUISpec.md
 node_compile_hint:
   mode: auditor_validation_settings_location
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0116
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0116
+- DL-476; settings batch3 fix round r1, 2026-11-12
 preserved_exact_tokens:
-  - "Auditor Validation"
-  - "Settings -> Interview / Planning Wizard -> Auditor Validation"
+- Auditor Validation
+- Settings -> Interview / Planning Wizard -> Auditor Validation
 negative_constraints:
-  - "Fixed Pass 1 / Pass 2 / Pass 3 provider and model selections are retired."
+- Fixed Pass 1 / Pass 2 / Pass 3 provider and model selections are retired.
 owner_hints:
-  - Plans/assistant-chat-design.md
-  - Plans/FinalGUISpec.md
+- Plans/assistant-chat-design.md
+- Plans/FinalGUISpec.md
+compatibility_only_notes:
+- Historical Auditor selector/storage/resolver exact tokens are inert compatibility/source-lineage only; they
+  cannot recreate separate settings or override the common list.
 ```
 
 ### ACD-255 - Validation Pass Controls
@@ -15865,53 +15875,58 @@ plan_unit_id: ACD-255
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: >-
-  Auditor Validation settings expose one row for the Auditor validation loop
-  with label, default provider, default model, and Provider and Model dropdowns
-  sourced from the Provider -> models registry and Models_System capability
-  resolver.
+canonical_text: |-
+  Auditor Validation reads its model/depth and named fallback source from Checking finished work. Default editing opens that common row, using the one open ACD-438 model/depth picker; explicit run choices use the same picker. No separate Provider/Model dropdown pair or thinking-depth Settings row survives.
 gui_related: true
-gui_classification_reason: Auditor validation loop row and provider/model dropdowns are visible Settings UI.
-depends_on: [ACD-254]
-unblocks: [ACD-256, ACD-262]
+gui_classification_reason: Defines the shared Checking finished work source/redirect and frozen Auditor runtime
+  selection; retired independent selectors are not current UI.
+depends_on:
+- ACD-254
+unblocks:
+- ACD-256
+- ACD-262
 acceptance_criteria:
-  - Auditor Validation has one settings row for the whole validation loop.
-  - Provider dropdown lists enabled provider entries from the account-bound Provider -> models registry.
-  - Model dropdown lists provider models and falls back through the Models_System `fallback_chain[]` contract.
-  - Legacy `platform_specs::fallback_model_ids(platform)` is not an active fallback source.
+- The loop uses the common Checking finished work row and shared ACD-438 model/depth picker, with supported levels beside the still-open model list on desktop and inside the picker on phone.
+- Provider/model choices come from the account-bound Provider -> models registry and route capability resolver.
+- Models §2 owns inheritance and missing-model recovery; no first-provider fallback is added.
+- Legacy platform_specs::fallback_model_ids(platform) is not an active fallback source.
 validation_surfaces:
-  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
-  - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
 risk_class: validation_settings
 reasoning_tier: high
 context_scope: gui
 implementation_surfaces:
-  - Plans/assistant-chat-design.md
-  - Plans/Contracts_V0.md
-  - Plans/FinalGUISpec.md
-  - Plans/Models_System.md
+- Plans/assistant-chat-design.md
+- Plans/Contracts_V0.md
+- Plans/FinalGUISpec.md
+- Plans/Models_System.md
 node_compile_hint:
   mode: auditor_validation_controls
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0117
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0117
+- DL-476; settings batch3 fix round r1, 2026-11-12
 preserved_exact_tokens:
-  - "Document Creation"
-  - "Docs + Canonical Alignment"
-  - "Canonical Systems Only"
-  - "Auditor Validation"
-  - "Provider"
-  - "Model"
-  - "fallback_chain[]"
+- Document Creation
+- Docs + Canonical Alignment
+- Canonical Systems Only
+- Auditor Validation
+- Provider
+- Model
+- fallback_chain[]
 negative_constraints:
-  - "Do not expose independent Pass 1 / Pass 2 / Pass 3 provider/model rows."
-  - "Do not use legacy `platform_specs` or `platform_specs::fallback_model_ids(platform)` as the active Auditor Validation dropdown source."
+- Do not expose independent Pass 1 / Pass 2 / Pass 3 provider/model rows.
+- Do not use legacy `platform_specs` or `platform_specs::fallback_model_ids(platform)` as the shared model-picker
+  source.
 compatibility_only_notes:
-  - "`platform_specs::fallback_model_ids(platform)` is retired source-lineage only."
+- '`platform_specs::fallback_model_ids(platform)` is retired source-lineage only.'
+- Historical Auditor selector/storage/resolver exact tokens are inert compatibility/source-lineage only; they
+  cannot recreate separate settings or override the common list.
 owner_hints:
-  - Plans/assistant-chat-design.md
-  - Plans/Contracts_V0.md
-  - Plans/Models_System.md
+- Plans/assistant-chat-design.md
+- Plans/Contracts_V0.md
+- Plans/Models_System.md
 ```
 
 ### ACD-256 - No Effort Control Widget Tag
@@ -15921,36 +15936,45 @@ plan_unit_id: ACD-256
 unit_type: constraint
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Auditor Validation settings show no reasoning/effort control and tag reusable wrappers with `// DRY:WIDGET:auditor-validation-provider-model-selector`.
+canonical_text: |-
+  The Auditor uses ACD-438 one open model/depth picker, with supported depth levels beside the model list on desktop and inside the same picker on phone; it has no separate reasoning-effort Settings row. The old auditor-validation-provider-model-selector wrapper token is inert source lineage and does not require a second selector.
 gui_related: true
-gui_classification_reason: The omitted effort control and reusable widget tag govern visible Auditor Validation settings controls.
-depends_on: [ACD-255]
-unblocks: [ACD-263]
+gui_classification_reason: Defines the shared Checking finished work source/redirect and frozen Auditor runtime
+  selection; retired independent selectors are not current UI.
+depends_on:
+- ACD-255
+unblocks:
+- ACD-263
 acceptance_criteria:
-  - Reasoning/effort control is not shown in Auditor Validation settings.
-  - Auditor validation provider/model selector wrappers use the DRY widget tag.
+- Effort is chosen within the shared model-picker interaction; no separate reasoning-effort Settings row exists.
+- The old auditor-validation-provider-model-selector wrapper tag is inert source lineage.
 validation_surfaces:
-  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
-  - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
 risk_class: validation_settings
 reasoning_tier: high
 context_scope: dry
 implementation_surfaces:
-  - Plans/assistant-chat-design.md
-  - Plans/DRY_Rules.md
-  - Plans/FinalGUISpec.md
+- Plans/assistant-chat-design.md
+- Plans/DRY_Rules.md
+- Plans/FinalGUISpec.md
 node_compile_hint:
   mode: auditor_no_effort_control_widget_tag
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0117
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0117
+- DL-476; settings batch3 fix round r1, 2026-11-12
 preserved_exact_tokens:
-  - "// DRY:WIDGET:auditor-validation-provider-model-selector"
+- // DRY:WIDGET:auditor-validation-provider-model-selector
 negative_constraints:
-  - "No reasoning/effort control is shown in this settings group."
+- Do not create a separate reasoning-effort Settings row; the common model picker retains the ACD-438 effort
+  step.
 owner_hints:
-  - Plans/assistant-chat-design.md
-  - Plans/DRY_Rules.md
+- Plans/assistant-chat-design.md
+- Plans/DRY_Rules.md
+compatibility_only_notes:
+- Historical Auditor selector/storage/resolver exact tokens are inert compatibility/source-lineage only; they
+  cannot recreate separate settings or override the common list.
 ```
 
 ### ACD-257 - Validation Default Chain
@@ -15960,42 +15984,52 @@ plan_unit_id: ACD-257
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Default provider/model resolution uses the explicit Auditor loop stored value, then Auditor Model role default, then primary chat provider/model, then first available provider entry plus the first eligible Models_System fallback-chain entry.
+canonical_text: 'Auditor selection follows exactly Models §2: explicit run model/depth, scoped owner policy,
+  surface/stage default, eligible manually selected account default, This project, Everywhere/factory. Checking
+  finished work supplies the job default. Historical model_roles.auditor scalars, primary chat fallback and
+  first-discovered provider order are not selection sources.'
 gui_related: false
-gui_classification_reason: Default resolution priority is settings/config behavior.
-depends_on: [ACD-253]
-unblocks: [ACD-258, ACD-259]
+gui_classification_reason: Defines shared-default resolution, storage or runtime-report boundaries, not an
+  independent Auditor selector.
+depends_on:
+- ACD-253
+unblocks:
+- ACD-258
+- ACD-259
 acceptance_criteria:
-  - Stored model_roles.auditor provider/model values take priority.
-  - Auditor Model role default is second priority.
-  - Primary chat platform/model is third priority.
-  - First available provider entry plus the first eligible fallback-chain entry is final fallback.
+- Explicit run selection wins, then scoped owner policy, surface/stage default, eligible manually selected
+  account, This project and Everywhere/factory.
+- Checking finished work and its named inheritance remain Models-owned.
+- Historical independent Auditor keys and primary-chat/first-provider fallbacks supply no model precedence.
 validation_surfaces:
-  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
-  - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
 risk_class: validation_settings
 reasoning_tier: high
 context_scope: defaults
 implementation_surfaces:
-  - Plans/assistant-chat-design.md
-  - Plans/Contracts_V0.md
+- Plans/assistant-chat-design.md
+- Plans/Contracts_V0.md
 node_compile_hint:
   mode: validation_default_chain
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0118
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0118
+- DL-476; settings batch3 fix round r1, 2026-11-12
 preserved_exact_tokens:
-  - "model_roles.auditor.provider"
-  - "model_roles.auditor.model"
-  - "fallback_chain"
+- model_roles.auditor.provider
+- model_roles.auditor.model
+- fallback_chain
 negative_constraints:
-  - "Do not resolve Auditor defaults through legacy `platform_specs::fallback_model_ids(platform)`."
+- Do not resolve Auditor defaults through legacy `platform_specs::fallback_model_ids(platform)`.
 compatibility_only_notes:
-  - "`platform_specs::fallback_model_ids(platform)` is retired source-lineage only."
+- '`platform_specs::fallback_model_ids(platform)` is retired source-lineage only.'
+- Historical Auditor selector/storage/resolver exact tokens are inert compatibility/source-lineage only; they
+  cannot recreate separate settings or override the common list.
 owner_hints:
-  - Plans/assistant-chat-design.md
-  - Plans/Contracts_V0.md
-  - Plans/Models_System.md
+- Plans/assistant-chat-design.md
+- Plans/Contracts_V0.md
+- Plans/Models_System.md
 ```
 
 ### ACD-258 - Validation Default Invariants
@@ -16005,36 +16039,46 @@ plan_unit_id: ACD-258
 unit_type: constraint
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Validation defaults are deterministic for the same app settings and resolved defaults are written on first explicit save for reproducible reads.
+canonical_text: Auditor default resolution is deterministic for the same permitted inputs and freezes the actual
+  run selection. It never writes a resolved inherited default back as a new preference; only an explicit common-list
+  transaction changes a default.
 gui_related: false
-gui_classification_reason: Default invariants are deterministic settings behavior.
-depends_on: [ACD-257]
-unblocks: [ACD-259]
+gui_classification_reason: Defines shared-default resolution, storage or runtime-report boundaries, not an
+  independent Auditor selector.
+depends_on:
+- ACD-257
+unblocks:
+- ACD-259
 acceptance_criteria:
-  - Same app settings state resolves the same provider/model.
-  - First explicit save writes resolved default to app settings.
-  - Resolution avoids randomness and environment-dependent branching.
+- The same permitted inputs resolve the same provider/model/effort pair.
+- Only explicit shared-list transactions write own defaults; resolving inheritance never copies it into an
+  own setting.
+- Resolution avoids randomness and environment-dependent branching.
 validation_surfaces:
-  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
-  - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
 risk_class: validation_settings
 reasoning_tier: high
 context_scope: defaults
 implementation_surfaces:
-  - Plans/assistant-chat-design.md
-  - Plans/Contracts_V0.md
+- Plans/assistant-chat-design.md
+- Plans/Contracts_V0.md
 node_compile_hint:
   mode: validation_default_invariants
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0118
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0118
+- DL-476; settings batch3 fix round r1, 2026-11-12
 preserved_exact_tokens:
-  - "no randomness, no environment-dependent branching"
+- no randomness, no environment-dependent branching
 negative_constraints:
-  - "Default resolution uses no randomness and no environment-dependent branching."
+- Default resolution uses no randomness and no environment-dependent branching.
 owner_hints:
-  - Plans/assistant-chat-design.md
-  - Plans/Contracts_V0.md
+- Plans/assistant-chat-design.md
+- Plans/Contracts_V0.md
+compatibility_only_notes:
+- Historical Auditor selector/storage/resolver exact tokens are inert compatibility/source-lineage only; they
+  cannot recreate separate settings or override the common list.
 ```
 
 ### ACD-259 - Validation App Settings Only
@@ -16044,46 +16088,55 @@ plan_unit_id: ACD-259
 unit_type: constraint
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: >-
-  Auditor validation-loop preferences are ordinary Settings values at exactly their inventory-admitted
-  Everywhere/Computer/Project/owner levels. They are not Project artifacts or event-built configuration.
-  App work skips Project; every consumer uses one resolver/transaction and freezes its actual run
-  selection. Source/export includes only the chosen permitted own configuration under Settings exclusions;
-  live loop progress/history is never copied as a default. No competing app-only preference store or
-  direct feature YAML writer is added.
+canonical_text: Auditor model/depth defaults are the shared Checking finished work row, stored atomically at
+  its inventory-admitted Everywhere/Project levels; app work skips Project. Existing Settings transactions
+  and transfer exclusions apply. Historical independent model_roles.auditor values are inert old-data inspection,
+  omitted from new writes/imports and never silently promoted to shared defaults. Run evidence is not a preference
+  store.
 gui_related: false
-gui_classification_reason: Auditor validation settings storage scope is persistence/config behavior.
-depends_on: [ACD-257]
-unblocks: [ACD-260]
+gui_classification_reason: Defines shared-default resolution, storage or runtime-report boundaries, not an
+  independent Auditor selector.
+depends_on:
+- ACD-257
+unblocks:
+- ACD-260
 acceptance_criteria:
-  - Auditor validation loop selections are stored in app settings only.
-  - Auditor validation loop selections are not project artifacts.
-  - Auditor validation loop selections are not emitted to seglog as project data or included in exports.
+- The common Checking finished work pair is stored through Settings at its admitted Everywhere/Project levels;
+  app work skips Project.
+- Run reports and project artifacts are not configuration stores.
+- Settings copy/export applies only to admitted own values under the shared exclusions; retired independent
+  keys are omitted with a notice.
 validation_surfaces:
-  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
-  - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
 risk_class: validation_storage
 reasoning_tier: high
 context_scope: settings
 implementation_surfaces:
-  - Plans/assistant-chat-design.md
-  - Plans/Project_Output_Artifacts.md
+- Plans/assistant-chat-design.md
+- Plans/Project_Output_Artifacts.md
 node_compile_hint:
   mode: app_settings_only
   create_worknodes: false
 source_lineage:
-  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0119"
-  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
-  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
-  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0119
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c
+- projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03
+- 'Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It''s only planning wizard/prd
+  builder/orchestrator that isn''t.'
+- DL-476; settings batch3 fix round r1, 2026-11-12
 preserved_exact_tokens:
-  - "not stored in project artifacts"
-  - "not emitted to seglog as project data"
-  - "not included in project exports"
+- not stored in project artifacts
+- not emitted to seglog as project data
+- not included in project exports
 negative_constraints:
-  - "Auditor validation loop selections are app settings only."
+- Do not create an independent app-only Auditor default store or put shared default keys in Project artifacts;
+  Settings owns the permitted Everywhere/Project values.
 owner_hints:
-  - Plans/assistant-chat-design.md
+- Plans/assistant-chat-design.md
+compatibility_only_notes:
+- Historical Auditor selector/storage/resolver exact tokens are inert compatibility/source-lineage only; they
+  cannot recreate separate settings or override the common list.
 ```
 
 ### ACD-260 - Validation Storage Keys
@@ -16093,47 +16146,51 @@ plan_unit_id: ACD-260
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: >-
-  Each Auditor cycle report records the resolved Auditor validation loop
-  provider/model in `auditor_cycle_report` payload fields and uses normative
-  `model_roles.auditor.{provider,model}` storage keys. Legacy
-  `validation_pass_report` mirrors may copy those values only with
-  compatibility_only true and cycle_report_ref.
+canonical_text: Each auditor_cycle_report records the actual frozen provider/model and effort requested/effective
+  outcomes when present. Old model_roles.auditor.provider/model keys are inert historical reads and no longer
+  normative new-write keys; legacy validation_pass_report mirrors only runtime values under compatibility_only
+  with cycle_report_ref.
 gui_related: false
-gui_classification_reason: Validation storage keys and audit payload fields are persistence behavior.
-depends_on: [ACD-259]
+gui_classification_reason: Defines shared-default resolution, storage or runtime-report boundaries, not an
+  independent Auditor selector.
+depends_on:
+- ACD-259
 unblocks: []
 acceptance_criteria:
-  - auditor_cycle_report records resolved Auditor loop provider and model.
-  - validation_pass_report mirrors resolved Auditor loop provider and model only as a compatibility mirror with compatibility_only true and cycle_report_ref.
-  - Normative model_roles.auditor provider/model keys are used.
-  - Settings keys themselves are not stored as project artifacts.
+- auditor_cycle_report records the actual frozen provider/model and requested/effective effort when present.
+- validation_pass_report mirrors resolved runtime values only with compatibility_only true and cycle_report_ref.
+- Old model_roles.auditor provider/model scalar keys are inert reads and are not written or silently promoted.
+- Settings keys themselves are not stored as project artifacts.
 validation_surfaces:
-  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
-  - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
 risk_class: validation_storage
 reasoning_tier: high
 context_scope: audit
 implementation_surfaces:
-  - Plans/assistant-chat-design.md
-  - Plans/Project_Output_Artifacts.md
+- Plans/assistant-chat-design.md
+- Plans/Project_Output_Artifacts.md
 node_compile_hint:
   mode: validation_storage_keys
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0119
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0119
+- DL-476; settings batch3 fix round r1, 2026-11-12
 preserved_exact_tokens:
-  - "auditor_cycle_report"
-  - "validation_pass_report"
-  - "cycle_report_ref"
-  - "compatibility_only"
-  - "provider"
-  - "model"
-  - "model_roles.auditor.provider"
-  - "model_roles.auditor.model"
+- auditor_cycle_report
+- validation_pass_report
+- cycle_report_ref
+- compatibility_only
+- provider
+- model
+- model_roles.auditor.provider
+- model_roles.auditor.model
 negative_constraints: []
 owner_hints:
-  - Plans/assistant-chat-design.md
+- Plans/assistant-chat-design.md
+compatibility_only_notes:
+- Historical Auditor selector/storage/resolver exact tokens are inert compatibility/source-lineage only; they
+  cannot recreate separate settings or override the common list.
 ```
 
 ### ACD-261 - Validation UX Copy
@@ -16143,41 +16200,48 @@ plan_unit_id: ACD-261
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Auditor Validation UX copy uses the specified section header, loop description, and `(Default)` indicator.
+canonical_text: Auditor Validation copy names Checking finished work and the actual inherited source/current
+  model/depth. Default editing redirects to the shared row; the old standalone (Default) indicator and independent
+  save behavior are inert lineage.
 gui_related: true
-gui_classification_reason: Auditor Validation labels and descriptions are visible Settings copy.
-depends_on: [ACD-254]
+gui_classification_reason: Defines the shared Checking finished work source/redirect and frozen Auditor runtime
+  selection; retired independent selectors are not current UI.
+depends_on:
+- ACD-254
 unblocks: []
 acceptance_criteria:
-  - Section header is "Auditor Validation".
-  - Section description and loop description match the specified copy.
-  - Default indicator shows "(Default)" for automatically resolved provider/model values.
+- The shared row and inherited source are named; no unexplained Default or independent save is shown.
 validation_surfaces:
-  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
-  - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
 risk_class: validation_settings
 reasoning_tier: standard
 context_scope: copy
 implementation_surfaces:
-  - Plans/assistant-chat-design.md
-  - Plans/FinalGUISpec.md
+- Plans/assistant-chat-design.md
+- Plans/FinalGUISpec.md
 node_compile_hint:
   mode: auditor_validation_ux_copy
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0120
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0120
+- DL-476; settings batch3 fix round r1, 2026-11-12
 preserved_exact_tokens:
-  - "Auditor Validation"
-  - "Puppet Master runs the canonical validation sweep with the Auditor Model. Choose the provider and model for the whole audit loop."
-  - "Audit / Repair / Audit"
-  - "Document Creation"
-  - "Canonical Alignment"
-  - "Canonical Systems Only"
-  - "(Default)"
+- Auditor Validation
+- Puppet Master runs the canonical validation sweep with the Auditor Model. Choose the provider and model for
+  the whole audit loop.
+- Audit / Repair / Audit
+- Document Creation
+- Canonical Alignment
+- Canonical Systems Only
+- (Default)
 negative_constraints: []
 owner_hints:
-  - Plans/assistant-chat-design.md
-  - Plans/FinalGUISpec.md
+- Plans/assistant-chat-design.md
+- Plans/FinalGUISpec.md
+compatibility_only_notes:
+- Historical independent Auditor UI/default/storage tokens are inert source-lineage and cannot override Models
+  §2.
 ```
 
 ### ACD-262 - Provider Models Registry Only
@@ -16187,41 +16251,49 @@ plan_unit_id: ACD-262
 unit_type: constraint
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Provider and model lists must come from the account-bound Provider -> models registry and shared capability resolver; hardcoded provider names or model lists are not allowed, and legacy platform_specs is source-lineage only.
+canonical_text: The common Auditor model/depth picker uses the account-bound Provider -> models registry and
+  shared capability resolver. No hardcoded provider/model/effort lists or local platform_specs fallback is
+  admitted. This data-source contract does not create a separate Auditor selector.
 gui_related: false
-gui_classification_reason: Provider/model source-of-truth is DRY/config behavior.
-depends_on: [ACD-255]
-unblocks: [ACD-263]
+gui_classification_reason: Defines shared-default resolution, storage or runtime-report boundaries, not an
+  independent Auditor selector.
+depends_on:
+- ACD-255
+unblocks:
+- ACD-263
 acceptance_criteria:
-  - Provider lists source from the account-bound Provider -> models registry.
-  - Model lists source from the shared provider/model registry and capability resolver.
-  - Hardcoded provider names and model lists are prohibited.
+- Provider lists source from the account-bound Provider -> models registry.
+- Model lists source from the shared provider/model registry and capability resolver.
+- Hardcoded provider names and model lists are prohibited.
 validation_surfaces:
-  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
-  - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
 risk_class: validation_settings
 reasoning_tier: high
 context_scope: dry
 implementation_surfaces:
-  - Plans/assistant-chat-design.md
-  - Plans/DRY_Rules.md
-  - Plans/Contracts_V0.md
+- Plans/assistant-chat-design.md
+- Plans/DRY_Rules.md
+- Plans/Contracts_V0.md
 node_compile_hint:
   mode: provider_models_registry_only
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0121
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0121
+- DL-476; settings batch3 fix round r1, 2026-11-12
 preserved_exact_tokens:
-  - "platform_specs"
-  - "No hardcoded provider names or model lists"
+- platform_specs
+- No hardcoded provider names or model lists
 negative_constraints:
-  - "Provider and model lists MUST NOT be sourced from legacy platform_specs."
-  - "No hardcoded provider names or model lists anywhere in this feature."
+- Provider and model lists MUST NOT be sourced from legacy platform_specs.
+- No hardcoded provider names or model lists anywhere in this feature.
 compatibility_only_notes:
-  - "platform_specs is preserved only as a retired source-lineage token."
+- platform_specs is preserved only as a retired source-lineage token.
+- Historical independent Auditor UI/default/storage tokens are inert source-lineage and cannot override Models
+  §2.
 owner_hints:
-  - Plans/assistant-chat-design.md
-  - Plans/DRY_Rules.md
+- Plans/assistant-chat-design.md
+- Plans/DRY_Rules.md
 ```
 
 ### ACD-263 - Validation Dropdown Reuse
@@ -16231,37 +16303,44 @@ plan_unit_id: ACD-263
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Auditor Validation reuses the same provider and model dropdown widgets as chat controls and applies the auditor-validation DRY widget tag.
+canonical_text: |-
+  Auditor default editing and explicit run overrides reuse the chat composer picker as ACD-438 defines it, with supported depth levels beside the still-open model list on desktop and inside the same picker on phone. The old separate provider/model dropdown wrapper and DRY tag are inert historical references, not new UI requirements.
 gui_related: true
-gui_classification_reason: Provider/model dropdown reuse affects visible Auditor Validation settings controls.
-depends_on: [ACD-256, ACD-262]
+gui_classification_reason: Defines the shared Checking finished work source/redirect and frozen Auditor runtime
+  selection; retired independent selectors are not current UI.
+depends_on:
+- ACD-256
+- ACD-262
 unblocks: []
 acceptance_criteria:
-  - Auditor Validation uses the same provider dropdown widget as chat controls.
-  - Auditor Validation uses the same model dropdown widget as chat controls.
-  - Reusable settings wrappers carry the auditor-validation DRY widget tag.
+- ACD-438 defines the shared interaction; one popout is open at a time.
+- The old wrapper tag cannot recreate an independent Auditor selector.
 validation_surfaces:
-  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
-  - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
 risk_class: validation_settings
 reasoning_tier: high
 context_scope: dry
 implementation_surfaces:
-  - Plans/assistant-chat-design.md
-  - Plans/DRY_Rules.md
-  - Plans/FinalGUISpec.md
+- Plans/assistant-chat-design.md
+- Plans/DRY_Rules.md
+- Plans/FinalGUISpec.md
 node_compile_hint:
   mode: auditor_validation_dropdown_reuse
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0121
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0121
+- DL-476; settings batch3 fix round r1, 2026-11-12
 preserved_exact_tokens:
-  - "§1.1 chat controls"
-  - "// DRY:WIDGET:auditor-validation-provider-model-selector"
+- §1.1 chat controls
+- // DRY:WIDGET:auditor-validation-provider-model-selector
 negative_constraints: []
 owner_hints:
-  - Plans/assistant-chat-design.md
-  - Plans/DRY_Rules.md
+- Plans/assistant-chat-design.md
+- Plans/DRY_Rules.md
+compatibility_only_notes:
+- Historical independent Auditor UI/default/storage tokens are inert source-lineage and cannot override Models
+  §2.
 ```
 
 ### ACD-264 - Validation Next Sweep Application
@@ -16271,36 +16350,42 @@ plan_unit_id: ACD-264
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: >-
-  Validation settings changes take effect only on the next validation sweep run;
-  an in-progress sweep continues with the provider/model active when it started.
+canonical_text: Shared Checking finished work edits and explicit run choices affect only the next validation
+  sweep. An in-progress sweep preserves its frozen requested/effective provider/model/effort and account identity.
 gui_related: false
-gui_classification_reason: Validation sweep timing is lifecycle behavior rather than GUI implementation.
-depends_on: [ACD-253, ACD-257]
+gui_classification_reason: Defines shared-default resolution, storage or runtime-report boundaries, not an
+  independent Auditor selector.
+depends_on:
+- ACD-253
+- ACD-257
 unblocks: []
 acceptance_criteria:
-  - Settings changes apply on the next validation sweep run.
-  - A validation sweep in progress does not change provider/model mid-sweep.
+- Settings changes apply on the next validation sweep run.
+- A validation sweep in progress does not change provider/model mid-sweep.
 validation_surfaces:
-  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
-  - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
 risk_class: validation_lifecycle
 reasoning_tier: high
 context_scope: validation_settings
 implementation_surfaces:
-  - Plans/assistant-chat-design.md
+- Plans/assistant-chat-design.md
 node_compile_hint:
   mode: validation_next_sweep_application
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0122
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0122
+- DL-476; settings batch3 fix round r1, 2026-11-12
 preserved_exact_tokens:
-  - "next"
-  - "not mid-sweep"
+- next
+- not mid-sweep
 negative_constraints:
-  - "Settings changes must not mutate provider/model selection for a validation sweep already in progress."
+- Settings changes must not mutate provider/model selection for a validation sweep already in progress.
 owner_hints:
-  - Plans/assistant-chat-design.md
+- Plans/assistant-chat-design.md
+compatibility_only_notes:
+- Historical independent Auditor UI/default/storage tokens are inert source-lineage and cannot override Models
+  §2.
 ```
 
 ### ACD-265 - Validation Unavailable Provider Warning
@@ -16310,39 +16395,44 @@ plan_unit_id: ACD-265
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: >-
-  When a saved validation provider is unavailable, Puppet Master falls back to
-  the deterministic default and displays the warning "Auditor validation provider
-  [name] is unavailable; using Auditor Model default."
+canonical_text: An unavailable frozen Auditor model request is visibly unavailable/blocked with the existing
+  Models recovery path. Policy-permitted account/provider fallback remains Models/Multi-Account-owned and disclosed;
+  no independent Auditor fallback through primary chat, first provider or a hidden model default is added.
 gui_related: true
-gui_classification_reason: The unavailable-provider warning is visible user-facing settings feedback.
-depends_on: [ACD-257]
+gui_classification_reason: Defines the shared Checking finished work source/redirect and frozen Auditor runtime
+  selection; retired independent selectors are not current UI.
+depends_on:
+- ACD-257
 unblocks: []
 acceptance_criteria:
-  - Unavailable saved validation providers fall back to the deterministic default.
-  - The fallback displays the specified warning text.
+- Unavailable requests preserve their requested identity and existing recovery/authority rules.
+- No independent default fallback or silent substitution occurs.
 validation_surfaces:
-  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
-  - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
 risk_class: silent_fallback
 reasoning_tier: high
 context_scope: validation_settings
 implementation_surfaces:
-  - Plans/assistant-chat-design.md
-  - Plans/Decision_Policy.md
-  - Plans/FinalGUISpec.md
+- Plans/assistant-chat-design.md
+- Plans/Decision_Policy.md
+- Plans/FinalGUISpec.md
 node_compile_hint:
   mode: validation_unavailable_provider_warning
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0122
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0122
+- DL-476; settings batch3 fix round r1, 2026-11-12
 preserved_exact_tokens:
-  - "Auditor validation provider [name] is unavailable; using Auditor Model default."
+- Auditor validation provider [name] is unavailable; using Auditor Model default.
 negative_constraints:
-  - "Unavailable saved validation providers must not fail silently."
+- Unavailable saved validation providers must not fail silently.
 owner_hints:
-  - Plans/assistant-chat-design.md
-  - Plans/FinalGUISpec.md
+- Plans/assistant-chat-design.md
+- Plans/FinalGUISpec.md
+compatibility_only_notes:
+- Historical independent Auditor UI/default/storage tokens are inert source-lineage and cannot override Models
+  §2.
 ```
 
 ### ACD-266 - Validation Pass Persistence And Independence
@@ -16352,37 +16442,46 @@ plan_unit_id: ACD-266
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Auditor validation provider/model settings persist across app restarts, and Pass 1, Pass 2, and Pass 3 are compatibility aliases only, not independently configurable model settings or active stages.
+canonical_text: The shared Checking finished work row persists through the normal Settings owner. Auditor cycle
+  reports freeze actual runtime selection; legacy Pass 1/2/3 names and independent Auditor settings remain
+  inert compatibility reads, never separate model selectors or active stages.
 gui_related: false
-gui_classification_reason: Restart persistence and one-loop Auditor validation settings are configuration behavior.
-depends_on: [ACD-253, ACD-260]
+gui_classification_reason: Defines shared-default resolution, storage or runtime-report boundaries, not an
+  independent Auditor selector.
+depends_on:
+- ACD-253
+- ACD-260
 unblocks: []
 acceptance_criteria:
-  - Auditor validation settings are preserved across app restarts.
-  - Auditor cycle reports use the same resolved Auditor validation loop provider/model.
-  - Legacy Pass 1, Pass 2, and Pass 3 report mirrors are compatibility aliases only.
+- Common-list own values persist at their admitted levels.
+- Cycle reports use the frozen runtime selection.
+- Legacy pass names and independent settings cannot recreate active defaults.
 validation_surfaces:
-  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
-  - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
 risk_class: validation_settings
 reasoning_tier: standard
 context_scope: validation_storage
 implementation_surfaces:
-  - Plans/assistant-chat-design.md
-  - Plans/Project_Output_Artifacts.md
+- Plans/assistant-chat-design.md
+- Plans/Project_Output_Artifacts.md
 node_compile_hint:
   mode: auditor_validation_persistence_no_pass_independence
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0122
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0122
+- DL-476; settings batch3 fix round r1, 2026-11-12
 preserved_exact_tokens:
-  - "Pass 1"
-  - "Pass 2"
-  - "Pass 3"
+- Pass 1
+- Pass 2
+- Pass 3
 negative_constraints:
-  - "Pass 1, Pass 2, and Pass 3 are not independently configurable model settings."
+- Pass 1, Pass 2, and Pass 3 are not independently configurable model settings.
 owner_hints:
-  - Plans/assistant-chat-design.md
+- Plans/assistant-chat-design.md
+compatibility_only_notes:
+- Historical independent Auditor UI/default/storage tokens are inert source-lineage and cannot override Models
+  §2.
 ```
 
 ### ACD-267 - Validation Default Indicator Lifecycle
@@ -16392,34 +16491,43 @@ plan_unit_id: ACD-267
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: The `(Default)` indicator is visible until an explicit Auditor validation loop provider/model selection is saved, then disappears.
+canonical_text: Auditor default display follows the shared list’s named source and current model/depth; it
+  has no independent saved-selection state or standalone (Default) indicator. Run overrides remain clearly
+  scoped and do not write shared defaults.
 gui_related: true
-gui_classification_reason: The default indicator is visible settings UI.
-depends_on: [ACD-254, ACD-261]
+gui_classification_reason: Defines the shared Checking finished work source/redirect and frozen Auditor runtime
+  selection; retired independent selectors are not current UI.
+depends_on:
+- ACD-254
+- ACD-261
 unblocks: []
 acceptance_criteria:
-  - The `(Default)` indicator appears when no explicit Auditor validation loop selection is saved.
-  - The `(Default)` indicator disappears after the user saves an explicit Auditor validation loop selection.
+- Source and current model/depth are explicit.
+- Old (Default) display tokens are inert history, not an independent write path.
 validation_surfaces:
-  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
-  - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
 risk_class: validation_settings
 reasoning_tier: standard
 context_scope: gui
 implementation_surfaces:
-  - Plans/assistant-chat-design.md
-  - Plans/FinalGUISpec.md
+- Plans/assistant-chat-design.md
+- Plans/FinalGUISpec.md
 node_compile_hint:
   mode: auditor_validation_default_indicator_lifecycle
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0122
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0122
+- DL-476; settings batch3 fix round r1, 2026-11-12
 preserved_exact_tokens:
-  - "(Default)"
+- (Default)
 negative_constraints: []
 owner_hints:
-  - Plans/assistant-chat-design.md
-  - Plans/FinalGUISpec.md
+- Plans/assistant-chat-design.md
+- Plans/FinalGUISpec.md
+compatibility_only_notes:
+- Historical independent Auditor UI/default/storage tokens are inert source-lineage and cannot override Models
+  §2.
 ```
 
 ### ACD-268 - Validation Dropdown And Report Parity
@@ -16429,48 +16537,53 @@ plan_unit_id: ACD-268
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: >-
-  Auditor validation provider/model dropdowns draw from the account-bound Provider -> models registry and shared capability resolver, and
-  each Auditor cycle report emits provider and model values matching the
-  resolved Auditor validation loop provider/model; legacy
-  `validation_pass_report.provider` and `.model` values mirror them for
-  compatibility.
+canonical_text: The common model/depth picker uses the same Provider -> models capability truth as chat. Each
+  auditor_cycle_report records the frozen actual provider/model and effort outcomes; validation_pass_report
+  mirrors only runtime values with compatibility_only true and cycle_report_ref. Independent Auditor dropdowns
+  and storage keys are inert reads.
 gui_related: false
-gui_classification_reason: Dropdown data-source and emitted report parity are contract/config behavior.
-depends_on: [ACD-260, ACD-262, ACD-263]
+gui_classification_reason: Defines shared-default resolution, storage or runtime-report boundaries, not an
+  independent Auditor selector.
+depends_on:
+- ACD-260
+- ACD-262
+- ACD-263
 unblocks: []
 acceptance_criteria:
-  - Auditor validation dropdowns use the same Provider -> models and capability resolver source as chat controls.
-  - Each emitted Auditor cycle report provider/model matches the resolved Auditor validation loop settings.
-  - Legacy validation pass report provider/model values mirror the Auditor cycle report values only with compatibility_only true and cycle_report_ref.
+- Picker choices use the shared registry/capability resolver.
+- Actual frozen runtime selection matches each cycle report.
+- Legacy report mirrors require compatibility_only true and cycle_report_ref.
 validation_surfaces:
-  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
-  - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
 risk_class: validation_storage
 reasoning_tier: high
 context_scope: validation_report
 implementation_surfaces:
-  - Plans/assistant-chat-design.md
-  - Plans/Contracts_V0.md
-  - Plans/Project_Output_Artifacts.md
+- Plans/assistant-chat-design.md
+- Plans/Contracts_V0.md
+- Plans/Project_Output_Artifacts.md
 node_compile_hint:
   mode: auditor_validation_dropdown_report_parity
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0122
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0122
+- DL-476; settings batch3 fix round r1, 2026-11-12
 preserved_exact_tokens:
-  - "platform_specs"
-  - "validation_pass_report.provider"
-  - ".model"
-  - "model_roles.auditor.provider"
-  - "model_roles.auditor.model"
+- platform_specs
+- validation_pass_report.provider
+- .model
+- model_roles.auditor.provider
+- model_roles.auditor.model
 negative_constraints:
-  - "Do not use legacy platform_specs as the active Auditor validation dropdown source."
+- Do not use legacy platform_specs as the shared model-picker source.
 compatibility_only_notes:
-  - "platform_specs remains preserved only as a retired source-lineage token."
+- platform_specs remains preserved only as a retired source-lineage token.
+- Historical independent Auditor UI/default/storage tokens are inert source-lineage and cannot override Models
+  §2.
 owner_hints:
-  - Plans/assistant-chat-design.md
-  - Plans/Contracts_V0.md
+- Plans/assistant-chat-design.md
+- Plans/Contracts_V0.md
 ```
 
 ### ACD-269 - Auditor Invariant Loop And Settings Ownership
@@ -16480,32 +16593,33 @@ plan_unit_id: ACD-269
 unit_type: constraint
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Section 26 owns the mandatory Auditor invariant loop specified in §26.10–§26.14 and its model/provider
-  settings. The initial Auditor audit cycle validates and completes the provisional artifact pack, may mirror legacy
-  Pass 1 / validation_pass_report fields for document_creation compatibility, and writes a read-only requirements_quality_report
-  without authoring requirements or contract fragments. Bounded Auditor repair compares project artifacts against
-  contracts and canon, applies resolvable fixes, applies auto_fixable requirement-quality fixes, updates reports,
-  and records unresolved findings without treating legacy Pass 2 as an active process stage. The Auditor certification
-  gate enforces DRY/SSOT, plan graph, wiring, evidence, and deterministic decision invariants while never modifying
-  requirements.md, plan.md, or user-intent-derived content; legacy Pass 3 fields are compatibility aliases only.
-  The sweep runs deterministically and headlessly, uses one Auditor validation loop provider/model setting for all
-  Auditor cycle reports, emits enough reports to prove audit/repair/re-audit/certification or block, and treats
-  legacy pass reports as compatibility rows only. Auditor loop blocks route to user-visible clarification or resolution
-  surfaces using distinct needs_user_clarification and unresolved_findings artifacts while preserving corrected-but-blocked
-  artifacts for resume. Auditor cycle reports carry lineage fields and skipped-verdict support, legacy validation_pass_report
+canonical_text: Section 26 owns the mandatory Auditor invariant loop specified in §26.10–§26.14 and its consumption
+  of the shared Checking finished work default. The initial Auditor audit cycle validates and completes the
+  provisional artifact pack, may mirror legacy Pass 1 / validation_pass_report fields for document_creation
+  compatibility, and writes a read-only requirements_quality_report without authoring requirements or contract
+  fragments. Bounded Auditor repair compares project artifacts against contracts and canon, applies resolvable
+  fixes, applies auto_fixable requirement-quality fixes, updates reports, and records unresolved findings without
+  treating legacy Pass 2 as an active process stage. The Auditor certification gate enforces DRY/SSOT, plan
+  graph, wiring, evidence, and deterministic decision invariants while never modifying requirements.md, plan.md,
+  or user-intent-derived content; legacy Pass 3 fields are compatibility aliases only. The sweep runs deterministically
+  and headlessly, freezes one resolved shared-job model/depth selection for all Auditor cycle reports, emits
+  enough reports to prove audit/repair/re-audit/certification or block, and treats legacy pass reports as compatibility
+  rows only. Auditor loop blocks route to user-visible clarification or resolution surfaces using distinct
+  needs_user_clarification and unresolved_findings artifacts while preserving corrected-but-blocked artifacts
+  for resume. Auditor cycle reports carry lineage fields and skipped-verdict support, legacy validation_pass_report
   mirrors may expose the same data only with compatibility_only true and cycle_report_ref, and effective runtime
   identity survives validation into launch handoff. Section 26 consumes Plans/Project_Output_Artifacts.md §10.2,
   Plans/Decision_Policy.md §2 and DP-066, Plans/DRY_Rules.md, Plans/Contracts_V0.md, and Section 1.1 chat controls
   without re-owning those contracts.
 gui_related: true
-gui_classification_reason: Owns loop failure routing to clarification and review/resolution UI as well as backend
-  validation.
+gui_classification_reason: Defines the shared Checking finished work source/redirect and frozen Auditor runtime
+  selection; retired independent selectors are not current UI.
 depends_on:
 - ACD-253
 unblocks: []
 acceptance_criteria:
-- Section 26 owns the loop; output artifact, decision policy, DRY, and provider/model capability contracts remain
-  with their linked owners.
+- Section 26 owns the loop; output artifact, decision policy, DRY, and provider/model capability contracts
+  remain with their linked owners.
 - Initial Auditor audit validates and completes the provisional artifact pack produced by Contract Unification.
 - Initial Auditor audit may materialize missing derived artifacts or deterministic projections.
 - Initial Auditor audit is not the first author of requirements or contract fragments.
@@ -16532,7 +16646,8 @@ acceptance_criteria:
 - Auditor certification never modifies requirements.md, plan.md, or user-intent-derived artifacts.
 - Auditor loop cycles run deterministically without human intervention.
 - Each cycle runs headless with no GUI and no approval gate inside the loop.
-- Auditor validation loop provider and model are configurable through app settings.
+- Auditor model/depth comes from shared Checking finished work defaults and an explicit run override under
+  Models §2.
 - Defaults are deterministic and safe when not explicitly configured.
 - Each Auditor cycle report includes provider and model matching the resolved Auditor validation loop provider/model
   from sweep start.
@@ -16553,8 +16668,8 @@ acceptance_criteria:
 - Auditor cycle reports include staged_bundle_ref.
 - Auditor cycle reports include requirements_quality_report_ref.
 - Auditor cycle reports include run_id.
-- Auditor validation cycles emit lineage-rich cycle reports explaining what was evaluated and what execution was
-  seeded.
+- Auditor validation cycles emit lineage-rich cycle reports explaining what was evaluated and what execution
+  was seeded.
 - Legacy validation_pass_report mirrors carry compatibility_only true and cycle_report_ref.
 - pass_verdict supports skipped.
 - Effective runtime identity survives validation into launch handoff.
@@ -16582,6 +16697,7 @@ source_lineage:
 - Plans/chain-wizard-flexibility.md#CWF-086 (retired source; generic loop moved per DL-472)
 - Plans/chain-wizard-flexibility.md#CWF-087 (retired source; generic loop moved per DL-472)
 - Plans/chain-wizard-flexibility.md §12 (retired source; moved per DL-472)
+- DL-476; settings batch3 fix round r1, 2026-11-12
 preserved_exact_tokens:
 - ContractName:Plans/assistant-chat-design.md§26
 - ContractName:Plans/Project_Output_Artifacts.md
@@ -16663,8 +16779,8 @@ negative_constraints:
 - Pass 2 is a compatibility alias only.
 - Bounded Auditor repair does not escalate directly.
 - Pass 3 is a compatibility alias only.
-- Auditor certification MUST NOT modify requirements.md, plan.md, or any artifact whose content is driven by user
-  intent or product scope.
+- Auditor certification MUST NOT modify requirements.md, plan.md, or any artifact whose content is driven by
+  user intent or product scope.
 - No GUI is required and no user approval gate exists between passes.
 - Do not expose fixed Pass 1 / Pass 2 / Pass 3 model settings.
 owner_hints:
@@ -23908,14 +24024,14 @@ plan_unit_id: ACD-426
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Teach is the feature and Teacher is the Persona used inside it. Teacher runs as a normal Assistant
-  Chat thread/persona mode, launched by help icons, /teach, or natural-language summons, with current-surface context,
-  role/persona badge, model/context/source chips, thread summary/state, activity cards, and handoff disclosure.
-  Teach durable memory capture stays distinct from one-off Teacher-guided instruction; eligible answers may offer
-  Save as taught memory through an explicit capture card with scope, source, secret-safety, conflict/supersession,
-  Save/Cancel, and later inspect/narrow/supersede/revoke/unlock actions. Amended 2026-11-05 under DL-333, following
-  DL-127, typing /teach opens the Teach popup through cmd.chat.teach.capture, not the Teacher; the Teacher is summoned
-  through help icons and the natural-language summons above.
+canonical_text: >-
+  Teach is deliberate standing-instruction capture; Teacher is a Persona in an ordinary Assistant
+  chat. Help and natural-language Teacher summons retain the shared chat runtime. /teach opens
+  cmd.chat.teach.capture and the existing instruction owner at Settings > Personas & Crews >
+  Defaults > Standing instructions. Confirm/cancel, secret screening, revision checks and retained
+  protected-record safeguards remain; no user lock/unlock, conflict, source or rollback control is
+  shown. Reusable saved notes use the separate shared Memory page Add/Edit/Delete at This project or
+  Every project, without a third visible scope or duplicate verification document.
 gui_related: true
 gui_classification_reason: Defines Teacher-in-chat threads, help launches, activity cards, capture UI, and thread
   states.
@@ -23927,10 +24043,8 @@ unblocks:
 - G-026
 - ATS-014
 acceptance_criteria:
-- Live PlanUnit exists in the adjudicated owner doc with reciprocal ledger source_lineage.
-- Exact source tokens, negative constraints, owner hints, and user corrections are preserved in PlanUnit metadata.
-- No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks
-  are created by this compile.
+  - "Teach and Teacher remain distinct, using the existing chat and written-instruction owners."
+  - "Saved notes use only This project and Every project on the one Memory page; no lock/conflict/source/rollback controls, receipts or duplicate document."
 validation_surfaces:
 - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name
 - python3 scripts/pm-plan-index.py validate
@@ -23980,6 +24094,8 @@ source_lineage:
 - Concepts/PMConcept.html#chat-panel
 - Concepts/PMConcept.html#chat-thread-sidebar
 - Concepts/PMConcept.html#switchToChatThread
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 source_atom_ids:
 - atom-0090
 - atom-0093
@@ -24087,45 +24203,7 @@ preserved_exact_tokens:
 - Assistant Chat
 - persona
 negative_constraints:
-- Do not introduce `requested_persona_id` or `effective_persona_id` as canonical fields; those are stale aliases
-  in Personas.md.
-- Do not make Teacher a hidden subagent for this feature; existing Plans say `teacher` is user-facing and not subagent-only.
-- Do not call Teach implementation-ready while Teacher-guided PM help and GUI-control behavior remain underspecified.
-- Do not assume the existing durable Teach memory-capture section alone satisfies the user-facing teaching feature.
-- Do not make Teacher-guided instruction automatically persist memory.
-- Do not make durable Teach capture a closed mode overlay detached from the current thread runtime/mode selection.
-- Do not weaken existing `user-locked` Teach records through automated cleanup or summarization.
-- Do not reuse an unrelated active chat thread when the help-icon contract says to open a new teaching conversation.
-- Do not launch Teacher without preserving current surface context needed for useful help.
-- Do not replace Teacher launch with static help pages only.
-- Do not let Teacher silently manipulate or navigate the GUI with no chat-visible activity trail.
-- Do not hide blocked/skipped reasons or requested/effective Persona/model state when they affect the teaching flow.
-- Do not let a low-end Teacher model continue silently when the task has become implementation/build work requiring
-  handoff.
-- Do not bury Teach behind only slash commands.
-- Do not add a loud or decorative help affordance that competes with primary workflow controls.
-- Do not launch Teacher without current-surface context.
-- Do not create a detached Teacher-only shell that hides standard Assistant Chat controls.
-- Do not omit requested/effective persona or model disclosure from the Teacher thread.
-- Do not make Teacher launch a modal that blocks normal navigation as the only path.
-- Do not make GUI guidance silent or invisible in the chat thread.
-- Do not show vague activity text when PM knows the route/control/action.
-- Do not hide blocked, skipped, fallback, or handoff state.
-- Do not silently mutate an existing non-Teacher thread into Teacher mode.
-- Do not lose the originating surface/control context during launch.
-- Do not require users to know `/teach` before discovering help.
-- Do not invent a separate chat product surface for Teacher.
-- Do not hide requested/effective Persona/model state.
-- Do not show Save as taught memory unless the content is eligible and user confirmation is still required.
-- Do not make Teacher GUI actions silent.
-- Do not hide blocked/degraded activity rows after the immediate step passes.
-- Do not force users into raw traces for normal teaching transparency.
-- Do not auto-save one-off Teacher guidance as taught memory.
-- Do not persist secrets, tokens, passwords, or credentials.
-- Do not allow conflicting teachings to silently overwrite prior locked records.
-- Do not invent a separate Teach-only chat surface when the Assistant Chat thread model can carry Teacher.
-- Do not lose Teacher persona/model/source/context disclosure when launching from a help icon or summon phrase.
-- Do not hide thread state such as working, unread, blocked, degraded, draft, archived, or handoff state when relevant.
+- Do not expose retired memory-use, verification or rule-check receipt UI.
 owner_hints:
 - Plans/assistant-chat-design.md
 - Plans/Personas.md
@@ -24141,7 +24219,7 @@ owner_hints:
 - Plans/Glossary.md
 ```
 
-Amended 2026-09-27: the explicit capture card through which an answer is saved as taught memory is the Teach sheet, prefilled from the answer (DL-127, ACD-477); there is no inline capture card in the chat. The later unlock and revoke actions are `cmd.chat.teach.set_lock` and `cmd.chat.teach.revoke` (DL-130, ACD-481).
+DL-475 supersedes the 2026-09-27 capture presentation: requested saved notes use the shared Memory page and AMS-141 Add/Edit/Delete at This project or Every project. Deliberate written rules use the existing Teach/instruction writer at Settings > Personas & Crews > Defaults > Standing instructions. No inline capture card or user lock/unlock, conflict/source/rollback control appears; cmd.chat.teach.set_lock remains internal compatibility only, while explicit instruction revocation stays with its owner.
 
 ## Ledger Compile Addendum - pldg-20260627-001-feature-intake
 
@@ -24637,18 +24715,27 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  The chat header context circle, click-opened context status module, More Details action, Compact Now action, Context Detail Pane, message info-popover, and Raw/Curated views consume the same UsageRecord/context projection records used by Usage, Ledger, Runtime Artifacts, Run Graph, and Orchestrator. The context circle is an entrypoint and status disclosure, not a cost calculator. The context status module (opened by clicking the context circle per ACD-441; hovering the circle shows only an accent glow affordance) shows stateful usage, tokens, context, cost, quota, freshness, and hidden/background contribution summaries from UsageRecord projections. More Details opens or focuses the editor-tab Context Detail Pane through canonical route/open. Compact Now dispatches only `cmd.chat.compact_context` and never recalculates usage. Message info-popovers link to the message-scoped UsageRecord/context rows by usage_event_ref, provider_attempt_ref, attempt_id, node_id, tool_call_id, raw_payload_ref, trace_ref, or receipt refs when available. Curated view renders normalized provider, token, context, cost, quota, authority, settlement, and source-confidence fields; Raw view renders redacted raw_payload_ref, redaction_status, provider_payload_hash, omitted evidence counts, and permission state without exposing secrets.
+  The chat header context circle, click-opened status module, More Details, Compact Now, Context
+  Detail Pane and message-info popover consume the canonical UsageRecord/context projections used by
+  the other Usage consumers, with no chat-local cost calculator or second message schema. The
+  click-opened module and existing thread detail tab retain capacity, effective window/model,
+  tokens, estimated cost, quota/value state, freshness/settlement, cache and useful
+  compaction/transition status. More Details uses canonical route/open and Compact Now dispatches
+  only cmd.chat.compact_context without rewriting historical totals. Correlation identities,
+  raw_payload_ref, redaction/hash/omission/source records remain internal for enforcement/debugging.
+  Normalized human-readable message facts remain available; chat has no Curated/Raw
+  source-inspection view, source-composition chart or per-run inclusion receipt.
 gui_related: true
 gui_classification_reason: Defines visible chat context, usage, compact, detail-pane, and message inspection behavior.
 depends_on: [ACD-092, ACD-410, UF-085, UF-086, UF-087, RAP-043]
 unblocks: []
 acceptance_criteria:
-  - The click-opened context status module displays provider authority, estimated cost or value state, stale projection state, partial settlement state, unknown confidence or value state, hidden_byok, hidden_subscription, disabled, and not_exposed states using UsageRecord value_state, projection state, settlement_status, cost_status, source_class, source_authority, and source_confidence values high, medium, low, or unknown, not chat-local math.
-  - "`More Details` opens the editor-tab Context Detail Pane through route/open and preserves usage_event_ref plus attempt_id, provider_attempt_ref, node_id, tool_call_id, trace_ref, receipt refs, and raw_payload_ref when present."
+  - "The click-opened context status module displays provider authority, estimated cost or value state, stale projection state, partial settlement state, unknown confidence or value state, hidden_byok, hidden_subscription, disabled, and not_exposed states using UsageRecord value_state, projection state, settlement_status, cost_status, source_class, source_authority, and source_confidence values high, medium, low, or unknown, not chat-local math."
+  - "More Details opens the existing thread Context Detail Pane through route/open; canonical event/attempt/tool/trace/raw-payload correlations are preserved internally, not displayed as source-inclusion receipts."
   - "`Compact Now` dispatches only `cmd.chat.compact_context`, preserves the context epoch, and does not mutate or recompute historical UsageRecord totals."
-  - Context Detail Pane displays cache_read, cache_write, cache_write_1h or cache_write_ttl, output_total, output_visible, reasoning/thoughts, provider_total, context_estimate, counting_semantics, settlement_status, and projection_freshness when present.
-  - Message info-popover shows human-readable fields first and deep-links to the message's canonical usage/context record rather than constructing a second message usage schema.
-  - Raw view shows redacted refs, hashes, omitted counts, and permissioned-unavailable states, and never displays credentials, account identifiers, unredacted provider payloads, or local machine paths.
+  - "Context Detail Pane displays cache_read, cache_write, cache_write_1h or cache_write_ttl, output_total, output_visible, reasoning/thoughts, provider_total, context_estimate, counting_semantics, settlement_status, and projection_freshness when present."
+  - "Message info-popover shows human-readable fields first and deep-links to the message's canonical usage/context record rather than constructing a second message usage schema."
+  - "Chat context and message-info surfaces show normalized capacity/cost/model/value-state/settlement facts and useful compaction status; source composition, Raw/Curated source inspection and per-run inclusion receipts are absent. Internal records retain redaction, hash, omission and permission context."
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-plans-verify.py lint-contractrefs
@@ -24674,6 +24761,7 @@ source_lineage:
   - "uploaded:opencode-dev/packages/app/src/components/session-context-usage.tsx"
   - "uploaded:opencode-dev/packages/app/src/components/session/session-context-tab.tsx"
   - "https://github.com/anomalyco/opencode/issues/30649"
+  - "DL-475; settings batch 2 round r2 complete context-inspection sweep, 2026-11-12"
 preserved_exact_tokens:
   - Context Detail Pane
   - context circle
@@ -24689,11 +24777,12 @@ preserved_exact_tokens:
   - settlement_status
   - counting_semantics
 negative_constraints:
-  - Do not implement a chat-local cost model or message-local usage schema.
-  - Do not treat context_estimate as billing, cost, quota, or provider authority.
-  - Do not make context module disclosure dispatch compaction or detail navigation without explicit user action.
-  - Do not expose unredacted raw provider payloads, credentials, account identifiers, or local paths in Raw view.
-  - Do not keep `cmd.chat.open_thread_usage`, `cmd.chat.focus_thread_usage`, or `cmd.chat.close_thread_usage` as canonical chat commands.
+  - "Do not implement a chat-local cost model or message-local usage schema."
+  - "Do not treat context_estimate as billing, cost, quota, or provider authority."
+  - "Do not make context module disclosure dispatch compaction or detail navigation without explicit user action."
+  - "Do not expose source composition, raw/curated source inspection, inclusion receipts, raw payload refs, hashes or internal omission/source records through ordinary chat context/message UI."
+  - "Do not keep cmd.chat.open_thread_usage, cmd.chat.focus_thread_usage or cmd.chat.close_thread_usage as canonical chat commands."
+  - "Do not restore user-facing context source inspection or per-run inclusion receipts through a legacy title, preserved token, shared projection or saved view state."
 stale_retired_dispositions:
   - "Hover-opened context status module retired per PMConcept7 context ring canon; the module opens on click (ACD-441) and ring hover shows only an accent glow affordance."
 owner_hints:
@@ -24883,58 +24972,61 @@ owner_hints:
   - Plans/assistant-chat-design.md
 ```
 
-### ACD-438 - Model To Effort Popout Chaining And Single-Overlay Invariant
+### ACD-438 - One Model And Depth Picker And Single-Overlay Invariant
 
 ```yaml
 plan_unit_id: ACD-438
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: >-
-  Selecting a model closes the model mini-popout and automatically opens the reasoning-effort
-  popout above the model button, offering High, Medium, and Low; selecting an effort closes
-  the popout. At most one of the thoroughness popout, mode popout, model popout, effort
-  popout, or the footer fan-out stack is open at a time. The effort labels High, Medium, and
-  Low are a distinct control from Plan Thoroughness and its Light, Balanced, and Comprehensive
-  labels.
+canonical_text: |-
+  The chat composer uses one open model/depth picker. Selecting a model keeps its list open and shows that concrete route’s supported depth levels beside the list on desktop and inside the same picker on phone. Model and depth are committed together as one atomic value and apply on the next turn; a model without supported levels commits with no depth. The options come from Models §7.3/§10.4.1, ACD-424 and F3-400 capability truth. High, Medium and Low appear only when supported by that route; no proven levels means no depth choices or empty depth panel, and Unknown support is not inferred as Unsupported. At most one of the combined model/depth picker, mode, thoroughness or persona popouts, or the footer fan-out stack is open. Plan Thoroughness keeps its separate Light, Balanced and Comprehensive control. Every Settings model picker reuses this same interaction, with depth inside the one open picker, while saving the whole pair in its own declared scope.
 gui_related: true
-gui_classification_reason: Defines visible model and effort popout chaining behavior.
-depends_on: [ACD-424, ACD-035, F3-400, F3-318]
+gui_classification_reason: Defines the visible shared model/depth picker and single-overlay behavior.
+depends_on:
+- ACD-424
+- ACD-035
+- F3-400
+- F3-318
+- MS-115
 unblocks: []
 acceptance_criteria:
-  - "Model selection closes the model popout and opens the effort popout above the model button."
-  - "The effort popout offers High, Medium, and Low; selection closes the popout and applies on the next turn."
-  - "At most one of thoroughness, mode, model, effort popouts or the footer fan-out is open at a time."
-  - "Effort High/Medium/Low and Plan Thoroughness Light/Balanced/Comprehensive remain distinct controls with distinct labels."
-  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- The model list stays open while supported depth levels appear beside it on desktop and inside the same picker on phone; depth stays in this same open picker.
+- Only route-proven depth choices are offered; High/Medium/Low are not a universal enum. A model without proven levels shows no depth choices, and Unknown remains Unknown.
+- Model and depth commit atomically and apply on the next turn; Settings saves the whole pair in the selected row’s declared scope.
+- At most one combined model/depth picker, mode, thoroughness or persona popout, or footer fan-out is open at a time.
+- Effort and Plan Thoroughness Light/Balanced/Comprehensive remain distinct controls with distinct labels.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
-  - python3 scripts/pm-plan-index.py validate
-  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 risk_class: chat_header_contract_drift
 reasoning_tier: standard
 context_scope: assistant_chat_header
 implementation_surfaces:
-  - Plans/assistant-chat-design.md
+- Plans/assistant-chat-design.md
 node_compile_hint:
-  mode: chat_model_to_effort_popout_chaining
+  mode: chat_model_depth_picker
   create_worknodes: false
 source_lineage:
-  - "Plans/assistant-chat-design.md:2806"
-  - "Plans/assistant-chat-design.md:5112"
-  - "Plans/FinalGUISpec.md:20696"
-  - "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+- Plans/assistant-chat-design.md:2806
+- Plans/assistant-chat-design.md:5112
+- Plans/FinalGUISpec.md:20696
+- Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)
+- DL-476; settings batch3 fix round r1, 2026-11-12
 preserved_exact_tokens:
-  - "High"
-  - "Medium"
-  - "Low"
+- High
+- Medium
+- Low
 negative_constraints:
-  - "Effort High/Medium/Low labels must not be merged with Plan Thoroughness Light/Balanced/Comprehensive."
+- Effort High/Medium/Low labels must not be merged with Plan Thoroughness Light/Balanced/Comprehensive.
 compatibility_only_notes:
-  - "Slint portability: chained popouts map to sequential native popup surfaces anchored to the model button; no arbitrary-content backdrop blur, no SVG filters, precomputed color math."
+- 'Slint portability: one native popup anchored to the model button contains both the model list and its supported depth choices; no arbitrary-content backdrop blur, no SVG filters, precomputed color math.'
+- The old fixed High/Medium/Low wording is limited by Models §7.3 and F3-400 route-supported capability truth. Jared’s approved v2 screenshots and the lead’s r2 correction define the current combined model/depth interaction.
 stale_retired_dispositions: []
 owner_boundary_notes: []
 owner_hints:
-  - Plans/assistant-chat-design.md
+- Plans/assistant-chat-design.md
 ```
 
 
@@ -24969,18 +25061,18 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: |-
-  Chat transient popouts - the model, mode, persona, effort, and thoroughness selector popouts, the header chrome menus, and the context status module - share one corner-origin sprout motion contract: each popout sprouts from and collapses into the corner or edge nearest its trigger, opening in roughly 300ms with overshoot easing from a non-uniform closed scale and closing in roughly 220ms with opacity held until late followed by a short fade. Search-driven size changes in the model and persona popouts spring the height with overshoot and a brief size-bounce. The modes popout opens directly on its Ask, Agent, Debug, Plan, and Deep Plan options with no search field, while model and persona popouts keep search. Under reduced motion, open and close render as instant show/hide. The single-overlay invariant of ACD-438 is preserved. L8 B, Jared 2026-10-30: DR-079 is the single menu sprout lifecycle for chat, Usage, Home and every other menu consumer. Chat retains this unit's visible motion, search, focus and single-overlay contracts and delegates origin/fade, timely painted entrance completion, close completion with cancellation/reopen guards and bounded fallback, instant/Reduced Motion settle, in-flight drag/hidden gates, resize/morph and teardown to DR-079. No chat-specific lifecycle, script registration, selector, class or JavaScript signature is required. Shared presentation creates no new product command or saved key.
+  Chat transient popouts - the combined model/depth picker and the mode, persona, and thoroughness selector popouts, the header chrome menus, and the context status module - share one corner-origin sprout motion contract: each popout sprouts from and collapses into the corner or edge nearest its trigger, opening in roughly 300ms with overshoot easing from a non-uniform closed scale and closing in roughly 220ms with opacity held until late followed by a short fade. Search-driven size changes in the model and persona popouts spring the height with overshoot and a brief size-bounce. The modes popout opens directly on its Ask, Agent, Debug, Plan, and Deep Plan options with no search field, while model and persona popouts keep search. Under reduced motion, open and close render as instant show/hide. The single-overlay invariant of ACD-438 is preserved. L8 B, Jared 2026-10-30: DR-079 is the single menu sprout lifecycle for chat, Usage, Home and every other menu consumer. Chat retains this unit's visible motion, search, focus and single-overlay contracts and delegates origin/fade, timely painted entrance completion, close completion with cancellation/reopen guards and bounded fallback, instant/Reduced Motion settle, in-flight drag/hidden gates, resize/morph and teardown to DR-079. No chat-specific lifecycle, script registration, selector, class or JavaScript signature is required. Shared presentation creates no new product command or saved key.
 gui_related: true
 gui_classification_reason: Defines visible open/close motion and search behavior for chat popouts.
 split_recommended: false
 depends_on: [ACD-438]
 unblocks: [ACD-440, ACD-441, ACD-442]
 acceptance_criteria:
-  - "Model, mode, persona, effort, and thoroughness popouts sprout from and collapse into the corner or edge nearest their trigger, with an overshoot open and a late-fade close."
-  - "Search-driven size changes in the model and persona popouts spring the height with overshoot and a brief size-bounce."
-  - "The modes popout opens directly on Ask, Agent, Debug, Plan, and Deep Plan options with no search field, while model and persona popouts keep search."
-  - "At most one popout, flyout, or fan-out is open at a time per ACD-438, and reduced motion renders open and close as instant show/hide."
-  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- The combined model/depth picker and the mode, persona, and thoroughness popouts sprout from and collapse into the corner or edge nearest their trigger, with an overshoot open and a late-fade close.
+- Search-driven size changes in the model and persona popouts spring the height with overshoot and a brief size-bounce.
+- The modes popout opens directly on Ask, Agent, Debug, Plan, and Deep Plan options with no search field, while model and persona popouts keep search.
+- At most one popout, flyout, or fan-out is open at a time per ACD-438, and reduced motion renders open and close as instant show/hide.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
 - "scripts/pm-plan-migration.py"
 - "scripts/pm-plan-index.py"
@@ -25019,23 +25111,18 @@ plan_unit_id: ACD-440
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: >-
-  The effort/thoroughness side flyout resizes in place: when the flyout is already open and
-  the hovered row changes to one whose available option count differs, the open flyout
-  spring-resizes its height with overshoot and a brief size-bounce instead of re-running the
-  sprout open. First open uses the corner-origin sprout of ACD-439, and hovering the same row
-  again only repositions and refreshes content. This applies to the model-effort flyout and
-  to the mode Plan/Deep Plan thoroughness flyout, which share the same flyout portal.
+canonical_text: |-
+  The supported-depth region of the one open model/depth picker resizes in place when the selected or hovered model changes the available option count: beside the still-visible model list on desktop, inside the same picker on phone. It spring-resizes its height with overshoot and a brief size-bounce rather than closing the model list or re-running the sprout open. First open uses ACD-439; hovering the same row again only repositions and refreshes content. The mode Plan/Deep Plan thoroughness flyout keeps this same in-place resize treatment in its own single-overlay interaction, separate from model depth.
 gui_related: true
-gui_classification_reason: Defines visible side-flyout resize behavior when option counts change.
+gui_classification_reason: Defines in-place resize of supported depth inside the model picker and of the separate Plan Thoroughness flyout.
 split_recommended: false
 depends_on: [ACD-438, ACD-439]
 unblocks: []
 acceptance_criteria:
-  - "With the flyout open, hovering a row with a different available option count spring-resizes the flyout height in place with overshoot and a brief size-bounce, without re-running the sprout open."
-  - "First open uses the corner-origin sprout; same-row hover repositions and refreshes content only."
-  - "The behavior applies to model-effort and to mode Plan/Deep Plan thoroughness through the same flyout portal."
-  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- While the model/depth picker stays open, changing the model’s supported depth count spring-resizes the depth region beside the list on desktop or inside the same picker on phone, with overshoot and a brief size-bounce; the model list remains visible.
+- First open uses the corner-origin sprout; same-row hover repositions and refreshes content only.
+- The mode Plan/Deep Plan thoroughness flyout shares the in-place resize treatment, while model depth stays inside its combined picker.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
   - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
   - "python3 scripts/pm-plan-index.py validate"
@@ -25057,7 +25144,7 @@ preserved_exact_tokens:
 negative_constraints:
   - "An option-count change while the flyout is open must not re-sprout the flyout from its origin."
 compatibility_only_notes:
-  - "Slint portability: the side flyout renders as an opaque precomputed popup surface whose height change animates via Slint property animations with overshoot easing; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
+- 'Slint portability: the depth region resizes inside the one native model/depth popup; the separate mode thoroughness popup shares the same height-animation treatment. Use opaque precomputed surfaces and Slint property animations with overshoot easing; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed.'
 stale_retired_dispositions: []
 owner_boundary_notes:
   - "Effort/thoroughness option semantics and label distinctness stay owned by ACD-438; this unit owns the resize-in-place presentation behavior."
@@ -25349,12 +25436,13 @@ Amended 2026-10-09 (DL-180): Home's seat is the fixed chat column on the right (
 saved dock, and More Details opens or reveals the thread's context tab in the home centre (ACD-448, ACD-500).
 
 The context ring is the compact projection of the active thread's actual context state. Its compact surface
-shows current-window usage/percentage, effective window and tokens loaded, cache hit, and source
-composition. Clicking opens a compact menu with `Compact Now` and `More Details`; menu disclosure itself is
+shows current-window usage/percentage, effective window and tokens loaded, cache hit, estimated cost,
+and effective model information. Source composition and per-run inclusion receipts remain internal. Clicking opens a compact menu with `Compact Now` and `More Details`; menu disclosure itself is
 local and dispatches nothing. `Compact Now` explicitly dispatches `cmd.chat.compact_context` and updates the
 ring and drawer coherently from the owner result/projection. `More Details` dispatches
-`cmd.chat.open_thread_context_details` and reuses the existing thread Context Detail Pane, whose Curated and
-Raw views include routing, fallback, cache, model/limit, compaction state, and compaction history. Focus and
+`cmd.chat.open_thread_context_details` and reuses the existing thread Context Detail Pane for basic
+capacity/cost/model information, cache/limit facts and useful compaction/transition state and history.
+Assembled-source charts and raw source payloads remain internal diagnostics. Focus and
 close reuse the existing focus/close commands. No app-wide Usage route, second context drawer, or second
 context store is created.
 
@@ -25368,36 +25456,37 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  One shared Assistant node/controller/transcript/context store is re-seated between the
-  saved Home dock and the right-side global host on every primary page, preserving thread,
-  draft, attachment, activity, Context Detail Pane, and focus continuity and returning to
-  the saved Home dock. The active-thread context ring exposes current-window use,
-  effective window/tokens, cache hit, and source composition; its click menu is local and
-  offers Compact Now plus More Details. Compact Now alone dispatches
-  cmd.chat.compact_context and updates ring/detail projections coherently, while More
-  Details reuses cmd.chat.open_thread_context_details and the existing focus/close commands and
-  Curated/Raw routing, fallback, cache, limits, compaction-state, and history views. No
-  Assistant clone, app-wide Usage substitute, second detail drawer, or second context
-  store is permitted.
-  Amended 2026-10-09 (DL-180): Home's seat is the fixed chat column on the right (Plans/FinalGUISpec.md#F3-637), not a
-  saved dock: returning Home puts the same Assistant back in its column, and its only other place is the popped-out
-  window, which Dock back returns (Plans/UI_Command_Catalog.md#UCC-203). Boot never restores a floating Home
-  placement, and nothing floats the chat inside the window. More Details opens or reveals the thread's context tab in
-  the home centre (ACD-500).
+  One shared Assistant node/controller/transcript/context store is re-seated between the saved Home
+  dock and the right-side global host on every primary page, preserving thread, draft, attachment,
+  activity, Context Detail Pane, and focus continuity and returning to the saved Home dock. The
+  active-thread context ring exposes current-window use, effective window/tokens, cache hit,
+  estimated cost and effective model information; its click menu is local and offers Compact Now
+  plus More Details. Compact Now alone dispatches cmd.chat.compact_context and updates ring/detail
+  projections coherently, while More Details reuses cmd.chat.open_thread_context_details and the
+  existing focus/close commands and basic capacity/cost/model, cache/limit, and useful
+  compaction/transition state and history views. Source records, assembled-source composition and
+  raw source payloads stay internal for enforcement/debugging, with no user-facing per-run inclusion
+  receipt. No Assistant clone, app-wide Usage substitute, second detail drawer, or second context
+  store is permitted. Amended 2026-10-09 (DL-180): Home's seat is the fixed chat column on the right
+  (Plans/FinalGUISpec.md#F3-637), not a saved dock: returning Home puts the same Assistant back in
+  its column, and its only other place is the popped-out window, which Dock back returns
+  (Plans/UI_Command_Catalog.md#UCC-203). Boot never restores a floating Home placement, and nothing
+  floats the chat inside the window. More Details opens or reveals the thread's context tab in the
+  home centre (ACD-500).
 gui_related: true
 gui_classification_reason: The unit defines cross-page Assistant visibility, identity continuity, context-ring fields, menu actions, and detail views.
 split_recommended: false
 depends_on: [ACD-441, ACD-445, ACD-447, CS-068, UCC-147, WM-045, UIW-012, DR-039, DL-180]
 unblocks: []
 acceptance_criteria:
-  - Home, Projects, Planning Wizard, Orchestrator, Usage, Settings, and every other primary page show/hide or re-seat the same Assistant node/store rather than cloning it.
+  - "Home, Projects, Planning Wizard, Orchestrator, Usage, Settings, and every other primary page show/hide or re-seat the same Assistant node/store rather than cloning it."
   - "Returning Home restores that same node to the chat column (F3-637) with active thread, draft, attachments, transcript, context, details, and focus continuity intact; boot never restores floating placement (DL-180)."
-  - The context ring/menu exposes current-window use, effective window/tokens loaded, cache hit, and source composition.
-  - The click menu contains Compact Now and More Details; opening or hovering the menu dispatches nothing.
-  - Compact Now dispatches cmd.chat.compact_context only after explicit selection and updates the ring plus detail state coherently for started, already_running, cancelled, no_op, degraded, unavailable, retry_scheduled, completed, and failed results.
-  - More Details reuses the existing thread Context Detail Pane with Curated and Raw views covering routing, fallback, cache, limits, compaction state, and history.
-  - No second Assistant component, controller, transcript store, context store, or page-local detail drawer is created.
-  - No WorkNodes, NodeSeeds, executable queues, implementation files, final node manifests, or production build tasks are created.
+  - "The context ring/menu exposes current-window use, effective window/tokens loaded, cache hit, estimated cost and effective model information; it exposes no source-composition chart or per-run inclusion receipt."
+  - "The click menu contains Compact Now and More Details; opening or hovering the menu dispatches nothing."
+  - "Compact Now dispatches cmd.chat.compact_context only after explicit selection and updates the ring plus detail state coherently for started, already_running, cancelled, no_op, degraded, unavailable, retry_scheduled, completed, and failed results."
+  - "More Details reuses the existing thread Context Detail Pane for basic capacity/cost/model and cache/limit facts plus useful compaction/transition state and history; raw source payloads and source/inclusion records remain internal under their existing enforcement/debugging restrictions."
+  - "No second Assistant component, controller, transcript store, context store, or page-local detail drawer is created."
+  - "No WorkNodes, NodeSeeds, executable queues, implementation files, final node manifests, or production build tasks are created."
 validation_surfaces:
   - scripts/pm-plans-verify.py
   - scripts/pm-plan-index.py
@@ -25420,6 +25509,7 @@ source_lineage:
   - "Plans/Decision_Log.md#DL-180"
   - "Plans/assistant-chat-design.md#ACD-500"
   - "DL-260 source lineage only (no product API or implementation obligation): chatPanel and chatResizer were concept DOM identities; the shared Assistant component, resize ownership and state continuity remain product requirements."
+  - "DL-475; settings batch 2 review R1, quiet context display reconciliation, 2026-11-12"
 preserved_exact_tokens:
   - Compact Now
   - More Details
@@ -25432,8 +25522,10 @@ negative_constraints:
   - Do not dispatch compaction from hover or menu disclosure.
   - Do not route thread context details through app-wide Usage or create a second detail store.
   - Do not treat concept-local storage as canonical Assistant state.
+  - "Do not expose assembled-source composition, raw source payloads or per-run inclusion receipts in the chat context ring, menu or Context Detail Pane."
 stale_retired_dispositions:
   - "Amended 2026-10-09 (DL-180): the saved Home dock is the fixed chat column of F3-637; DL-180 is in depends_on now that it depends on no earlier unit, and ACD-500 stays in source_lineage because ACD-500 reaches this unit through F3-569, ACD-480 and ACD-452."
+  - "DL-475 retires Curated/Raw source inspection and source composition from the thread context surface; those preserved tokens are historical lineage, not visible view requirements."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/FinalGUISpec.md
@@ -25495,7 +25587,7 @@ Packet `PM-WNC-2026-09-05-v1`. Notebook semantics are owned by `Plans/Working_No
 
 User corrections and additions are attributed revision-safe actions: a user edit creates a new attributed revision (CAS; a conflicting agent edit surfaces the stale-edit conflict instead of overwriting), in-flight requests keep their original receipt-bound bytes, and dependent future assembly revalidates or invalidates as necessary. Editing never claims to change bytes already sent.
 
-Context Detail and context controls disclose continuity truthfully: the Context Detail Pane shows notebook/capsule contributions as distinct source classes (separate from memory, history, and workflow state), requested/effective fresh-window transition reason and path, checkpoint status, omitted/truncated/redacted classes, and unknown native state labeled unknown — never fabricated. The context controls offer a separately labeled **fresh-context request** distinct from **Compact Now**: Compact Now remains compaction (`cmd.chat.compact_context`, unchanged); the fresh-context request is a new labeled affordance rendering truthful eligibility and disabled reasons (unsupported route, unsaved required checkpoint, deferred) and is never mislabeled as complete session deletion or `done.rotated`. Occupancy drops after a fresh window while cumulative usage and quota display stay correct per UF-099.
+Context Detail and context controls disclose continuity truthfully: basic capacity/cost/model information, requested/effective fresh-window transition reason and path, checkpoint status and useful compaction results remain visible, with unknown native state labelled unknown. Notebook/capsule contributions and memory/history/workflow source classes, inclusion records and per-source omission/truncation/redaction details remain internal for enforcement and debugging; they produce no user-facing source-composition view or per-run inclusion receipt. The context controls offer a separately labeled **fresh-context request** distinct from **Compact Now**: Compact Now remains compaction (`cmd.chat.compact_context`, unchanged); the fresh-context request is a new labeled affordance rendering truthful eligibility and disabled reasons (unsupported route, unsaved required checkpoint, deferred) and is never mislabeled as complete session deletion or `done.rotated`. Occupancy drops after a fresh window while cumulative usage and quota display stay correct per UF-099.
 
 ```yaml
 plan_unit_id: ACD-449
@@ -25536,14 +25628,20 @@ plan_unit_id: ACD-450
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: "Context Details discloses continuity truthfully: notebook/capsule contributions render as a distinct source class separate from memory, history, and workflow state; requested/effective fresh-window transition reason/path, checkpoint status, omitted/truncated/redacted source classes, and unknown native state render as unknown rather than fabricated. A separately labeled fresh-context request exists in context controls with truthful eligibility and disabled reasons; Compact Now remains compaction with unchanged semantics; fresh context is never labeled session deletion or done.rotated."
+canonical_text: Basic on-demand Context Details remains truthful about capacity/cost, fresh-context eligibility,
+  actual checkpoint/transition result, omitted/truncated/redacted data and unknown native state. Assembled
+  source-family charts, raw memory data and selection explanations stay internal diagnostics with full
+  restriction enforcement. Compact Now remains compaction, distinct from fresh context, session deletion
+  and done.rotated.
 gui_related: true
 gui_classification_reason: This unit is Context Details and context-control UI behavior.
 depends_on: [ACD-449, PP-085]
 unblocks: []
 acceptance_criteria:
-  - The user can distinguish notebook, memory, history, and workflow contributions.
-  - Fresh-context request and Compact Now are visibly distinct with truthful disabled reasons.
+- Basic on-demand Context Details remains truthful about capacity/cost, fresh-context eligibility, actual
+  checkpoint/transition result, omitted/truncated/redacted data and unknown native state. Assembled source-family
+  charts, raw memory data and selection explanations stay internal diagnostics with full restriction enforcement.
+  Compact Now remains compaction, distinct from fresh context, session deletion and done.rotated.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py run-gates
 risk_class: misleading_disclosure
@@ -25552,13 +25650,13 @@ context_scope: assistant_chat
 implementation_surfaces: [Plans/assistant-chat-design.md, Plans/usage-feature.md, Plans/Prompt_Pipeline.md]
 node_compile_hint: {mode: gui_surface_spec, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - source_packet:PM-WNC-2026-09-05-v1:WNC-X03
-  - source_packet:PM-WNC-2026-09-05-v1:WNC-A34
-  - source_packet:PM-WNC-2026-09-05-v1:WNC-A53
+- source_packet:PM-WNC-2026-09-05-v1:WNC-X03
+- source_packet:PM-WNC-2026-09-05-v1:WNC-A34
+- source_packet:PM-WNC-2026-09-05-v1:WNC-A53
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens: ["Compact Now", "fresh-context request", "unknown", "done.rotated"]
 negative_constraints:
-  - Do not repurpose Compact Now as a fresh-context control.
-  - Do not render unknown native state as known.
+- Do not expose retired memory-use, verification or rule-check receipt UI.
 owner_hints: [Plans/assistant-chat-design.md, Plans/usage-feature.md]
 ```
 
@@ -27442,57 +27540,30 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  Teach capture and confirm (section 6). The wand's Teach…, /teach, natural-language intent and Save as a
-  rule… in a message's More row each dispatch cmd.chat.teach.capture with mode new, prefilled with the
-  proposed rule text and a reference to its source message; the user's message stays in the chat as sent.
-  Editing a taught rule dispatches cmd.chat.teach.capture with mode correct. Capture only opens the
-  capture step, and the capture step is the Teach sheet (FinalGUISpec F3-579) for every entry point,
-  /teach and natural-language intent included: there is no inline capture card in the chat (DL-127). The
-  save action is cmd.chat.teach.confirm, and Cancel, close and Escape are cmd.chat.teach.cancel, which
-  persists nothing. Scope is exactly one of thread, project and user, shown nested from narrowest to
-  widest as This thread, This project and Every project. The user scope needs public_safe: the user's
-  explicit statement that the rule holds no private names, links or code; without it confirm refuses user
-  scope and says why. In correct mode the scope may stay or narrow but never widen; a wider rule is a new
-  rule. Before confirm the capture step screens the text for passwords, keys and tokens; when one is found
-  it says so in words and confirm stays refused until it is removed. When a similar taught rule is in
-  reach, the capture step shows the old and the new wording side by side and confirm waits for the user's
-  choice: replace the old rule, which records supersedes_memory_id and keeps the old version in history,
-  or keep both. The user may also mark the rule locked at confirm (ACD-481). The confirm request is
-  TeachConfirmRequest {scope, public_safe, locked, conflict_resolution: replace:<memory_id> | keep_both,
-  supersedes_memory_id?}. Each confirmed change leaves one receipt line in the chat (saved, or updated to
-  a new version), and consecutive saves coalesce into one line. The reply's note about taught rules
-  follows DL-116 as the design lead's ruling of 2026-09-27 applied it and AMS-053 of
-  assistant-memory-subsystem defines it. A rule counts as followed only when it was given to the assistant
-  for that reply and the finished reply passed that rule's check; inclusion alone is never shown as
-  following. The note counts only rules that passed, for example "Followed 1 of your rules". When any
-  included rule failed its check the reply shows "Missed 1 of your rules" (the number is how many failed),
-  with a way to see which rule was missed and a way to ask for a fix; the fix starts only when the user
-  asks, and a failed check is never hidden behind a Followed count. A rule whose check could not run earns
-  no tick, and a reply with no passed or failed check shows no rule note. Used is never shown in place of
-  either note. Section 6's user-locked sentence is unchanged. DL-138 confirms the final wording. Persisted
-  AMS-053 check results drive the note on reopen: passed counts as Followed, failed counts as Missed and
-  could_not_run earns no tick. A mixed result is one line, Missed first, for example "Missed 1 of your
-  rules · followed 2". See which rule opens the saved check evidence as view state. Ask for a fix reuses
-  cmd.review.send_findings_to_agent with the taught_rule_check source variant (UCC-172): it fills the
-  source thread's empty composer, returns ComposerBufferResult, refuses composer_not_empty, and never
-  sends or executes a fix. The user sends it. In No project omit the project choice, retain thread and
-  user with the user label Everywhere, and preserve public_safe, screening, conflict, locked-rule and
-  no-widening checks. Settings' Computer layer changes behavior defaults, not a new Teach memory scope.
-  Conversion keeps thread rules thread-wide and does not widen them.
+  The wand Teach, /teach, natural-language instruction intent and Save as a rule open the existing
+  Teach step through cmd.chat.teach.capture; capture persists nothing and Cancel remains
+  cmd.chat.teach.cancel. Written instruction changes use their instruction owner and return to
+  Settings > Personas & Crews > Defaults > Standing instructions. A Teacher answer offered as a
+  saved note instead uses the shared Memory page and AMS-141 Add/Edit/Delete owner. This project and
+  Every project are the only visible saved-note levels. Add/Edit/Delete use AMS-141 quiet Memory
+  contracts; automatic fading/archiving, deletion suppression, privacy and existing source
+  restrictions remain. Private app-thread records stay private and are not a third visible level. No
+  thread-level selector, locked checkbox, Replace/Keep both chooser, source preview or automatic
+  save/update receipt is shown. Existing TeachConfirmRequest thread/public_safe/locked/conflict
+  fields are compatibility/storage inputs, not an ordinary UI contract. Legacy protections, privacy
+  checks and revision refusal remain; capture never changes the Persona to Teacher. Only a durable
+  successful save may add Saved to memory · View to a reply; View opens the one Memory page as a
+  sheet. No memory-use citation, receipt, tick, chip, count, source detail, verification or
+  Followed/Missed decoration is shown.
 gui_related: true
 gui_classification_reason: "Defines what the user sets and sees when teaching Puppet Master a rule."
 split_recommended: false
 depends_on: [ACD-469, DL-127, DL-116, AMS-053]
 unblocks: [F3-570, F3-574, F3-579]
 acceptance_criteria:
-  - "Reopening retains the saved rule-check result, mixed results show one Missed-first line, and Ask for a fix only fills an empty composer until the user sends."
-  - "Every entry point dispatches cmd.chat.teach.capture and opens the Teach sheet; nothing persists before cmd.chat.teach.confirm."
-  - "No entry point renders an inline capture card in the chat."
-  - "Confirm refuses user scope without public_safe and refuses text that looks like a secret, with the reason in words."
-  - "Correct mode never widens a rule's scope."
-  - "A similar rule blocks confirm until replace or keep both is chosen; replace records supersedes_memory_id."
-  - "TeachConfirmRequest carries scope, public_safe, locked, conflict_resolution and supersedes_memory_id and no other new field."
-  - "A reply's rule note counts only included rules whose check passed; a failed check shows \"Missed 1 of your rules\" with a way to see which rule and to ask for a fix; a rule whose check could not run earns no tick."
+  - "All saved-note entry points reuse the same Memory page and typed Add/Edit/Delete owner at This project or Every project."
+  - "Teach persists nothing on open/cancel and uses the existing written-instruction owner; no lock/conflict/source/rollback picker or third saved-note level appears."
+  - "Only a durable successful save may add Saved to memory · View to a reply; View opens the one Memory page as a sheet. No memory-use citation, receipt, tick, chip, count, source detail, verification or Followed/Missed decoration is shown."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -27508,16 +27579,22 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/Decision_Log.md#DL-138 (owner answers, 2026-09-29)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de) sections 8.11, 8.15"
-  - "IMPACT-REGISTER B-ACD-02 (NOW part; the capture form and the locked field compiled 2026-09-27 from DL-127 and DL-130)"
-  - "Plans/Decision_Log.md#DL-127"
-  - "Plans/Decision_Log.md#DL-130"
-  - "Plans/Decision_Log.md#DL-116 (card n07, E-36; the design lead's ruling of 2026-09-27)"
-  - "Plans/assistant-memory-subsystem.md#AMS-053"
-  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
-  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
-  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
+- Plans/Decision_Log.md#DL-138 (owner answers, 2026-09-29)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de)
+  sections 8.11, 8.15
+- IMPACT-REGISTER B-ACD-02 (NOW part; the capture form and the locked field compiled 2026-09-27 from DL-127
+  and DL-130)
+- Plans/Decision_Log.md#DL-127
+- Plans/Decision_Log.md#DL-130
+- Plans/Decision_Log.md#DL-116 (card n07, E-36; the design lead's ruling of 2026-09-27)
+- Plans/assistant-memory-subsystem.md#AMS-053
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c
+- projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03
+- 'Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It''s only planning
+  wizard/prd builder/orchestrator that isn''t.'
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 preserved_exact_tokens:
   - "composer_not_empty"
   - "ComposerBufferResult"
@@ -27541,12 +27618,8 @@ preserved_exact_tokens:
   - "Missed 1 of your rules"
   - "AMS-053"
 negative_constraints:
-  - "Do not persist anything on capture."
-  - "Do not let an edit widen a rule's scope."
-  - "Do not save text that looks like a password, key or token."
-  - "Do not overwrite a similar rule without the user's replace choice."
-  - "Do not render an inline capture card for /teach or natural-language intent."
-  - "Do not show a rule as followed because it was included in the reply's context."
+  - "Do not persist on capture/cancel, save secrets, silently broaden availability, overwrite protected records or restore old capture controls."
+  - "Do not turn /teach into a Teacher Persona switch or an alternate Memory manager."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/assistant-memory-subsystem.md
@@ -27635,20 +27708,26 @@ status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
   Each automatic or explicit naming of a thread is one ThreadTitleAttempt {thread_id, attempt_id,
-  requested_route, effective_route?, outcome, title?, at} with outcome pending | named | policy_off | route_unavailable | awaiting_first_message | user_locked. thread.title_locked is set by a manual
-  rename and cleared only by cmd.chat.thread.regenerate_title (ACD-462); while it is set, automatic
-  naming records user_locked and changes nothing. An unavailable title model records
-  route_unavailable and is never silently replaced by another model. The chat header's title shows
-  the attempt's state without pills: New chat with a naming shimmer while pending, the title once
-  named, a lock glyph while title_locked is set, and a warning glyph when naming is unavailable,
-  each with a hover that says why. A failure never opens a modal. The header is a source surface of
-  cmd.chat.thread.regenerate_title (chat_header) beside the thread menu, where the regenerate
-  action sits directly under Rename and is disabled with its reason when the policy is off or the
-  model is unavailable. The naming outcome reads as a plain sentence per outcome (naming, named,
-  not named because automatic naming is off, could not name because the model is unavailable,
-  waiting for the first message, kept the user's name). The command's visible label, in the thread
-  menu and in the header's hovers, is Name it for me; it replaces the catalog label Regenerate Title
-  (DL-134), and the command id is unchanged.
+  requested_route, effective_route?, outcome, title?, at} with outcome pending | named | policy_off |
+  route_unavailable | awaiting_first_message | user_locked. thread.title_locked is set by a manual rename
+  and cleared only by cmd.chat.thread.regenerate_title (ACD-462); while it is set, automatic naming
+  records user_locked and changes nothing. An unavailable title model records route_unavailable and is
+  never silently replaced by another model. The chat header's title shows the attempt's state without
+  pills: New chat with a naming shimmer while pending, the title once named, a lock glyph while
+  title_locked is set, and a warning glyph when naming is unavailable, each with a hover that says why. A
+  failure never opens a modal. The header is a source surface of cmd.chat.thread.regenerate_title
+  (chat_header) beside the thread menu, where the regenerate action sits directly under Rename and is
+  disabled with its reason when the policy is off or the model is unavailable. The naming outcome reads
+  as a plain sentence per outcome (naming, named, not named because automatic naming is off, could not
+  name because the model is unavailable, waiting for the first message, kept the user's name). The
+  command's visible label, in the thread menu and in the header's hovers, is Name it for me; it replaces
+  the catalog label Regenerate Title (DL-134), and the command id is unchanged. The naming row lives in
+  Settings > Models > Default models. Default resolves the smallest allowed runnable model when a naming
+  attempt is created; None displays Off and produces policy_off. An explicit model and its optional
+  proven depth use the shared picker, including WL4 B validation of typed names before saving. The
+  resolved requested route is then frozen, so an unavailable title model still records route_unavailable
+  and is never silently substituted. Manual title locks, first-message-only naming and no-modal failure
+  remain unchanged.
 gui_related: true
 gui_classification_reason: "Defines the chat title record and the header title states."
 split_recommended: false
@@ -27773,34 +27852,21 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  Per-rule lock and turn off for taught rules (section 6; DL-130 adds both commands). A rule is
-  locked when the user ticks Locked in the Teach sheet, which sets TeachConfirmRequest.locked, or
-  uses Lock on the rule's row in Your rules. cmd.chat.teach.set_lock {locked} sets or clears the
-  user-locked flag of one taught rule; a locked rule can be changed only by the user, and this
-  command is the explicit user unlock that section 6 requires before automated cleanup,
-  summarization or profile migration may weaken a user-locked rule. Unlocking is the same command
-  with locked false. Turning a rule off is cmd.chat.teach.revoke: it sets revoked_at on one rule, the
-  rule stays in history, older versions do not come back, and the rule leaves future prompt
-  assembly; there is no undo, and the way back is to teach the rule again. Turn off asks inline in
-  the rule's row, never in a modal: "Stop using this rule? It stays in history, and older versions
-  don't come back." with Keep it, which is view state and dispatches nothing, and Turn off, which
-  dispatches the command. Both commands act on one rule at its current revision and refuse a stale
-  revision or an already turned-off rule with the reason in words. Turning a rule off leaves one
-  receipt line in the chat (Rule turned off: and the rule's words); locking and unlocking change the
-  rule's row and write no chat line. Your rules (the taught memory document) is the source surface of
-  both commands, and the Memory sheet is a source surface of cmd.chat.teach.revoke. The catalog rows
-  are UI_Command_Catalog's and the stored flags are assistant-memory-subsystem's; this unit states
-  the chat behaviour.
+  Written instructions remain directly editable through Settings > Personas & Crews > Defaults >
+  Standing instructions. Memory never edits a standing instruction. Existing Teach lock/revocation
+  and version codecs remain for internal compatibility and protection; cmd.chat.teach.set_lock has
+  no ordinary GUI producer. No user lock/unlock or rollback control and no automatic memory
+  rule-change proposal panel is shown. Explicit user edits/deletions still use the owning
+  instruction or Memory writer with revision/privacy checks; automatic upkeep cannot weaken retained
+  protections.
 gui_related: true
 gui_classification_reason: "Defines how a user locks, unlocks and turns off a taught rule."
 split_recommended: false
 depends_on: [ACD-477, DL-130]
 unblocks: [F3-579]
 acceptance_criteria:
-  - "cmd.chat.teach.set_lock changes the lock of exactly one rule and is the only way a user-locked rule is unlocked."
-  - "cmd.chat.teach.revoke sets revoked_at on one rule, keeps it in history and never restores an older version."
-  - "Keep it dispatches nothing; Turn off never opens a modal."
-  - "A stale revision is refused with its reason."
+  - "Written instructions and saved notes use their separate existing owners; no Memory rule editor, lock/unlock, conflict or rollback control exists."
+  - "Legacy protected records retain their internal safeguards without ordinary UI producers."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -27816,9 +27882,12 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de) section 8.11 (G-26, G-33)"
-  - "IMPACT-REGISTER B-ACD-02 (WAIT part: lock and revoke, card p15, E-32)"
-  - "Plans/Decision_Log.md#DL-130"
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de)
+  section 8.11 (G-26, G-33)
+- 'IMPACT-REGISTER B-ACD-02 (WAIT part: lock and revoke, card p15, E-32)'
+- Plans/Decision_Log.md#DL-130
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 preserved_exact_tokens:
   - "cmd.chat.teach.set_lock"
   - "cmd.chat.teach.revoke"
@@ -27826,9 +27895,7 @@ preserved_exact_tokens:
   - "Keep it"
   - "Rule turned off:"
 negative_constraints:
-  - "Do not let automated cleanup unlock or weaken a user-locked rule."
-  - "Do not restore an older version when a rule is turned off."
-  - "Do not ask to turn a rule off in a modal."
+- Do not expose retired memory-use, verification or rule-check receipt UI.
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/assistant-memory-subsystem.md
@@ -28144,156 +28211,157 @@ plan_unit_id: ACD-500
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: 'Everything the chat and its wizards open lands in the home centre through the one opening module (Plans/FinalGUISpec.md#F3-634,
-  Plans/DRY_Rules.md#DR-071); the chat keeps no placement or dedupe rule of its own (DL-180, D7, D8). Files open by F3-634''s
-  file rules from every place a person clicks one in the chat: a file name or path in a message or card, a diff view,
-  a Changes row of Activity Detail, a transcript file record, and a Read: or Edited: entry of the files-touched strip.
-  A single click opens the panel''s one preview tab, with an italic label, which the next single click replaces; a double
-  click, an edit or dragging the tab keeps it; a file already open anywhere is revealed where it is, never opened twice;
-  Alt+click opens it in a new panel. A diff opens the editor in its diff mode at the file and line it names, never a
-  diff drawn by the chat. Everything else the user clicks in the chat opens and takes focus, each as its tab kind (F3-635):
-  a plan revision, a Deep Plan document or its discovery rounds as a plan tab (ACD-455), every Open plan button and a
-  bound Goal''s Open exact Plan · Vn opening that exact version through cmd.chat.plan.open_version (DL-157, Plans/UI_Command_Catalog.md#UCC-176),
-  the Plan''s own tab while that version is current and its retained read-only document otherwise, never Plan Details;
-  a collaboration run view and its evidence as a run tab (ACD-480); a subagent''s or a helper''s history as a transcript
-  tab (ACD-485); the thread''s More Details as that thread''s context tab, one per thread (ACD-448); a fetched page or
-  a link as a browser tab; a search, MCP, app-inspector or work record as a record tab; the rules list, Gist Review,
-  a revert''s files, a debug investigation, a lens source and Wonderer results as document tabs; an artifact card''s
-  Open, an attachment''s Open and an artifact embedded in a plan as the artifact viewer tab (Plans/Runtime_Artifacts_Panel.md#RAP-065),
-  or the editor for a file; a Mermaid diagram card''s Open in editor as an editor buffer tab holding the diagram''s source,
-  and its Open detached preview as the artifact viewer tab showing the rendered diagram, never a separate window (section
-  28); a command''s session as its terminal tab (ACD-502). Each open dispatches the route Plans/UI_Command_Catalog.md#UCC-200
-  lists for the thing opened, with the placement fields of Plans/Contracts_V0.md#CV-360. What an agent opens by itself,
-  for example a Deep Plan document it wrote (ACD-041) or a terminal it started (ACD-502), lands as a background tab with
-  the hollow square and a polite announcement, never takes keyboard focus and never changes the active tab of a panel
-  the user is typing in; files an agent opens open kept, and terminals, browsers, dashboards and the tool tabs go where
-  F3-634''s kind affinity puts them. These stay out of the panels: Activity Detail stays inside the chat (D3, F3-637,
-  v3 item 2); the wand''s setup sheets, the debug-target prompt and the thread dialogs are app modals in the one overlay
-  root (Plans/DRY_Rules.md#DR-067); Plan Export and PDF are a download or a print window; Send to Planning Wizard goes
-  to the Planning Wizard page; an attachment''s More Info stays a popover. The chat''s Goal tab is gone (DL-147): View
-  goal shows the Goal panel of Activity Detail. The 5.6 Pro chat''s contract with its editor pane maps onto the module
-  this way. Open or focus by a stable identity is the module''s one id, one tab rule: the chat names the thing by its
-  domain identity (a plan revision, a run, a child run''s thread, a thread''s context, a file path, an artifact and its
-  version, a terminal session), the tab kind derives the tab id, and aliases resolve to one tab, so a plan''s query form
-  and its plan id open one tab. The chat supplies the label of a tab whose body it draws and may change it. It draws
-  into a body the host owns and redraws it when asked; the host owns the strip, the panel and the placement (F3-635''s
-  host contract). Closing is cmd.panel_tab.close (cmd.editor.close_tab is its alias), and the host tells the chat when
-  a tab it draws has closed, so a run card gets its controls back. The host tells the chat which tab is active in each
-  panel, so Plans/FinalGUISpec.md#F3-569''s run-card rule holds while a run tab is active. Narrow reveal is F3-634''s
-  narrow rule and Plans/FinalGUISpec.md#F3-636''s panel switcher. The chat is never a tab. Return to chat retires for
-  Home: no tab ever covers the chat, and when the chat has folded to its narrow edge strip that strip opens it again
-  (F3-636). The chat column is F3-637''s: fixed on the right from the title bar to the status bar, never a tab, never
-  in the split tree and never moved inside the window; Pop out in the desktop app is its only way to move and Dock back
-  returns it to its column; the web client offers no Pop out and the chat stays in its column (F3-637) (Plans/UI_Command_Catalog.md#UCC-203).
-  A popped-out chat starts back in its column after a restart: the pop-out is never saved (DL-187, D32). Showing and
-  hiding the chat are F3-637''s (cmd.panel.switch with chat, UCC-203); the chat stays an entry of the left rail, which
-  shows or hides the column on every page (DL-187, D40). The chat has no layout mode to choose: the Chat Layout setting
-  retires (Plans/Settings_System.md#SSYS-050, DL-187). Its default width, drag range, the limit that keeps the centre
-  wide enough, the one that keeps the Usage page''s board at least 400 px wide, how it eases and folds in narrow windows,
-  and the choice Keep the chat open in narrow windows, which sits on the chat''s own header menu and is not a Settings
-  row, are F3-637''s and F3-636''s; they replace every chat minimum this document stated (ACD-458, ACD-480, v3 item 19).
-  The chat sizes itself by its own column, never by the window (ACD-501). The History list is the 5.6 Pro chat''s and
-  the only thread-history list (ACD-444''s Chats rail goes when the chat is ported). It opens as a flyout over the chat
-  by default; pinning it widens the column by the list''s own width instead of narrowing the messages. The pin is kept
-  in the chat column state of the home layout record (Plans/storage-plan.md#SP-330), and the setting general.interaction.chat-history-list
-  (Plans/Settings_System.md#SSYS-050) gives only its starting value where no choice is saved. Activity Detail stays inside
-  the chat (F3-637, ACD-453, v3 item 2), never a panel tab. The 5.6 Pro chat''s inline Shell box is replaced by a compact
-  command card (D27). It shows the command, the folder it ran in, its status as a glyph and words, how long it ran (counting
-  while it runs), the last lines of its output as plain text, and who ran it. Amended 2026-10-10 (DL-185, terminal SPEC
-  section 11 at 01c5e78c42): the status words are Running, Needs input, Done, Failed and Interrupted, and canon adds
-  Ended with the earlier session, described below; a stopped command says its exit code in words after its status, "Failed
-  · exited 101", "Done · exited 0", "Interrupted · exited 130", and a failed command with no exit code reads Failed alone,
-  so the exit code is part of the status. Interrupted is muted and still, in the tone of the one status set''s Skipped
-  mark (Plans/FinalGUISpec.md#F3-585), with no motion. The elapsed time is set in tabular figures and updated once a
-  second from one timer that every card shares, so the line never shifts. The output is ACD-126''s 5-line collapsed and
-  15-line expanded preview of the last lines: the lines above the window are counted at the top as "N earlier lines"
-  ("1 earlier line"), the first row fading into that count; lines keep their spacing, never wrap and scroll sideways,
-  a cut-off line fading at its edge; a line is cut at 1000 characters; a finished command with no output says "No output";
-  expanded also shows the whole command and folder. Who ran it: "You ran in <folder>", or the terminal gutter''s agent
-  mark and "<Agent> ran in <folder>" with the name in the primary ink, from the command record''s by (Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-183).
-  In a chat 360 px wide the failure line wraps after / and :: so a file:line stays whole, and who and where take a line
-  of their own. Nothing on the card moves on first paint; a status change rolls the status word over while its line slides
-  to its new width, the glyph settles in each look''s motion language, and the exit words, the failure line and Rerun
-  in Terminal come in after; new output scrolls the window a row at a time, jumping when more than 3 lines arrive at
-  once; expanding and collapsing grow and shrink from the last line; under Reduced Motion only 120 ms fades remain. Text
-  reaches 4.5:1 and marks 3:1 in every look and mode, hover states included. Its states read the command card states
-  of ACD-146 and are never a second lifecycle: running for starting, running and restoring while the restore is under
-  way; ok (Done) for exited with exit code 0; failed for failed and exited with any other code; interrupted for terminated;
-  waiting (Needs input) for attention_required; ended for disconnected before the command finished and for a restore
-  that did not bring its session back. Ended is honest about what is not known: a command whose session ended while it
-  still ran (the page reloaded, the app restarted or its session disconnected) is neither done nor failed, so the card
-  shows the words Ended with the earlier session, with no exit code, never Running, Done or Failed, as the terminal''s
-  own command mark does (SMPFS-180''s indeterminate finalisation, Plans/FinalGUISpec.md#F3-641). Its actions are 24 px
-  text buttons and follow its session: Open in Terminal, only while the command has a live terminal session, opens or
-  reveals that session''s terminal tab through F3-634 (ACD-502); Rerun in Terminal once the command has stopped (ACD-108,
-  ACD-502); View output only when there is no session (ACD-129). View output, and View output log in the card''s menu,
-  open the command''s retained output as an editor buffer tab: read-only, kept and never a preview, titled with its command
-  line, opened and taking focus through F3-634 by cmd.panel_tab.open with an editor buffer spec, the same tab the terminal''s
-  Open output in an editor tab opens (Plans/FinalGUISpec.md#F3-641, Plans/UI_Command_Catalog.md#UCC-201). The chat never
-  draws the output in a viewer of its own. Output lines keep their spacing, never wrap and scroll sideways. The card
-  has no pill, no coloured side stripe and no box nested inside a card, and the chat never draws a terminal of its own.
-  Explaining commands is the Teacher persona''s job in the chat (Plans/Personas.md section 11.8, DL-181, D19): when the
-  user asks about a command or its output, Teacher answers as an ordinary reply in the thread. The command card and the
-  terminal carry no Explain action, and Teacher never reads a terminal on its own and never types into one. This supersedes
-  the 5.6 Pro chat''s own editor pane as the host of what it opens and its inline Shell box (concept lineage), the left
-  editor/document tab system and Return to chat of ACD-455 and v3 item 15 for Home, the "beside the chat" wording of
-  ACD-480 and ACD-485, the 360 px chat minimum of ACD-458 and v3 item 19, and the chat''s Goal tab. Amended DL-260, Jared
-  2026-10-31: only real product behavior remains an implementation requirement. DL-259 FX-1 final, 2026-10-31: an export/print
-  attempt that fails before producing a PDF closes any unusable temporary print window and says plainly in its result/receipt
-  and visible failure notice that no PDF was made. Opening the print flow alone is not proof that a file was created.
-  A receipt records only the artifact owner’s actual result and never claims a successful PDF that was not made; failure
-  or cancellation leaves the exact Plan revision unchanged. This is an outcome/feedback rule, not a new export command,
-  receipt family or platform-detection mechanism.'
+canonical_text: >-
+  Everything the chat and its wizards open lands in the home centre through the one opening module
+  (Plans/FinalGUISpec.md#F3-634, Plans/DRY_Rules.md#DR-071); the chat keeps no placement or dedupe
+  rule of its own (DL-180, D7, D8). Files open by F3-634's file rules from every place a person
+  clicks one in the chat: a file name or path in a message or card, a diff view, a Changes row of
+  Activity Detail, a transcript file record, and a Read: or Edited: entry of the files-touched
+  strip. A single click opens the panel's one preview tab, with an italic label, which the next
+  single click replaces; a double click, an edit or dragging the tab keeps it; a file already open
+  anywhere is revealed where it is, never opened twice; Alt+click opens it in a new panel. A diff
+  opens the editor in its diff mode at the file and line it names, never a diff drawn by the chat.
+  Everything else the user clicks in the chat opens and takes focus, each as its tab kind (F3-635):
+  a plan revision, a Deep Plan document or its discovery rounds as a plan tab (ACD-455), every Open
+  plan button and a bound Goal's Open exact Plan · Vn opening that exact version through
+  cmd.chat.plan.open_version (DL-157, Plans/UI_Command_Catalog.md#UCC-176), the Plan's own tab while
+  that version is current and its retained read-only document otherwise, never Plan Details; a
+  collaboration run view and its evidence as a run tab (ACD-480); a subagent's or a helper's history
+  as a transcript tab (ACD-485); the thread's More Details as that thread's context tab, one per
+  thread (ACD-448); a fetched page or a link as a browser tab; a search, MCP, app-inspector or work
+  record as a record tab; the written-rules owner, a revert's files, a debug investigation, a lens
+  source and Wonderer results as document tabs; an artifact card's Open, an attachment's Open and an
+  artifact embedded in a plan as the artifact viewer tab (Plans/Runtime_Artifacts_Panel.md#RAP-065),
+  or the editor for a file; a Mermaid diagram card's Open in editor as an editor buffer tab holding
+  the diagram's source, and its Open detached preview as the artifact viewer tab showing the
+  rendered diagram, never a separate window (section 28); a command's session as its terminal tab
+  (ACD-502). Each open dispatches the route Plans/UI_Command_Catalog.md#UCC-200 lists for the thing
+  opened, with the placement fields of Plans/Contracts_V0.md#CV-360. What an agent opens by itself,
+  for example a Deep Plan document it wrote (ACD-041) or a terminal it started (ACD-502), lands as a
+  background tab with the hollow square and a polite announcement, never takes keyboard focus and
+  never changes the active tab of a panel the user is typing in; files an agent opens open kept, and
+  terminals, browsers, dashboards and the tool tabs go where F3-634's kind affinity puts them. These
+  stay out of the panels: Activity Detail stays inside the chat (D3, F3-637, v3 item 2); the wand's
+  setup sheets, the debug-target prompt and the thread dialogs are app modals in the one overlay
+  root (Plans/DRY_Rules.md#DR-067); Plan Export and PDF are a download or a print window; Send to
+  Planning Wizard goes to the Planning Wizard page; an attachment's More Info stays a popover. The
+  chat's Goal tab is gone (DL-147): View goal shows the Goal panel of Activity Detail. The 5.6 Pro
+  chat's contract with its editor pane maps onto the module this way. Open or focus by a stable
+  identity is the module's one id, one tab rule: the chat names the thing by its domain identity (a
+  plan revision, a run, a child run's thread, a thread's context, a file path, an artifact and its
+  version, a terminal session), the tab kind derives the tab id, and aliases resolve to one tab, so
+  a plan's query form and its plan id open one tab. The chat supplies the label of a tab whose body
+  it draws and may change it. It draws into a body the host owns and redraws it when asked; the host
+  owns the strip, the panel and the placement (F3-635's host contract). Closing is
+  cmd.panel_tab.close (cmd.editor.close_tab is its alias), and the host tells the chat when a tab it
+  draws has closed, so a run card gets its controls back. The host tells the chat which tab is
+  active in each panel, so Plans/FinalGUISpec.md#F3-569's run-card rule holds while a run tab is
+  active. Narrow reveal is F3-634's narrow rule and Plans/FinalGUISpec.md#F3-636's panel switcher.
+  The chat is never a tab. Return to chat retires for Home: no tab ever covers the chat, and when
+  the chat has folded to its narrow edge strip that strip opens it again (F3-636). The chat column
+  is F3-637's: fixed on the right from the title bar to the status bar, never a tab, never in the
+  split tree and never moved inside the window; Pop out in the desktop app is its only way to move
+  and Dock back returns it to its column; the web client offers no Pop out and the chat stays in its
+  column (F3-637) (Plans/UI_Command_Catalog.md#UCC-203). A popped-out chat starts back in its column
+  after a restart: the pop-out is never saved (DL-187, D32). Showing and hiding the chat are
+  F3-637's (cmd.panel.switch with chat, UCC-203); the chat stays an entry of the left rail, which
+  shows or hides the column on every page (DL-187, D40). The chat has no layout mode to choose: the
+  Chat Layout setting retires (Plans/Settings_System.md#SSYS-050, DL-187). Its default width, drag
+  range, the limit that keeps the centre wide enough, the one that keeps the Usage page's board at
+  least 400 px wide, how it eases and folds in narrow windows, and the choice Keep the chat open in
+  narrow windows, which sits on the chat's own header menu and is not a Settings row, are F3-637's
+  and F3-636's; they replace every chat minimum this document stated (ACD-458, ACD-480, v3 item 19).
+  The chat sizes itself by its own column, never by the window (ACD-501). The History list is the
+  5.6 Pro chat's and the only thread-history list (ACD-444's Chats rail goes when the chat is
+  ported). It opens as a flyout over the chat by default; pinning it widens the column by the list's
+  own width instead of narrowing the messages. The pin is kept in the chat column state of the home
+  layout record (Plans/storage-plan.md#SP-330), and the setting
+  general.interaction.chat-history-list (Plans/Settings_System.md#SSYS-050) gives only its starting
+  value where no choice is saved. Activity Detail stays inside the chat (F3-637, ACD-453, v3 item
+  2), never a panel tab. The 5.6 Pro chat's inline Shell box is replaced by a compact command card
+  (D27). It shows the command, the folder it ran in, its status as a glyph and words, how long it
+  ran (counting while it runs), the last lines of its output as plain text, and who ran it. Amended
+  2026-10-10 (DL-185, terminal SPEC section 11 at 01c5e78c42): the status words are Running, Needs
+  input, Done, Failed and Interrupted, and canon adds Ended with the earlier session, described
+  below; a stopped command says its exit code in words after its status, "Failed · exited 101",
+  "Done · exited 0", "Interrupted · exited 130", and a failed command with no exit code reads Failed
+  alone, so the exit code is part of the status. Interrupted is muted and still, in the tone of the
+  one status set's Skipped mark (Plans/FinalGUISpec.md#F3-585), with no motion. The elapsed time is
+  set in tabular figures and updated once a second from one timer that every card shares, so the
+  line never shifts. The output is ACD-126's 5-line collapsed and 15-line expanded preview of the
+  last lines: the lines above the window are counted at the top as "N earlier lines" ("1 earlier
+  line"), the first row fading into that count; lines keep their spacing, never wrap and scroll
+  sideways, a cut-off line fading at its edge; a line is cut at 1000 characters; a finished command
+  with no output says "No output"; expanded also shows the whole command and folder. Who ran it:
+  "You ran in <folder>", or the terminal gutter's agent mark and "<Agent> ran in <folder>" with the
+  name in the primary ink, from the command record's by
+  (Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-183). In a chat 360 px wide the failure line
+  wraps after / and :: so a file:line stays whole, and who and where take a line of their own.
+  Nothing on the card moves on first paint; a status change rolls the status word over while its
+  line slides to its new width, the glyph settles in each look's motion language, and the exit
+  words, the failure line and Rerun in Terminal come in after; new output scrolls the window a row
+  at a time, jumping when more than 3 lines arrive at once; expanding and collapsing grow and shrink
+  from the last line; under Reduced Motion only 120 ms fades remain. Text reaches 4.5:1 and marks
+  3:1 in every look and mode, hover states included. Its states read the command card states of
+  ACD-146 and are never a second lifecycle: running for starting, running and restoring while the
+  restore is under way; ok (Done) for exited with exit code 0; failed for failed and exited with any
+  other code; interrupted for terminated; waiting (Needs input) for attention_required; ended for
+  disconnected before the command finished and for a restore that did not bring its session back.
+  Ended is honest about what is not known: a command whose session ended while it still ran (the
+  page reloaded, the app restarted or its session disconnected) is neither done nor failed, so the
+  card shows the words Ended with the earlier session, with no exit code, never Running, Done or
+  Failed, as the terminal's own command mark does (SMPFS-180's indeterminate finalisation,
+  Plans/FinalGUISpec.md#F3-641). Its actions are 24 px text buttons and follow its session: Open in
+  Terminal, only while the command has a live terminal session, opens or reveals that session's
+  terminal tab through F3-634 (ACD-502); Rerun in Terminal once the command has stopped (ACD-108,
+  ACD-502); View output only when there is no session (ACD-129). View output, and View output log in
+  the card's menu, open the command's retained output as an editor buffer tab: read-only, kept and
+  never a preview, titled with its command line, opened and taking focus through F3-634 by
+  cmd.panel_tab.open with an editor buffer spec, the same tab the terminal's Open output in an
+  editor tab opens (Plans/FinalGUISpec.md#F3-641, Plans/UI_Command_Catalog.md#UCC-201). The chat
+  never draws the output in a viewer of its own. Output lines keep their spacing, never wrap and
+  scroll sideways. The card has no pill, no coloured side stripe and no box nested inside a card,
+  and the chat never draws a terminal of its own. Explaining commands is the Teacher persona's job
+  in the chat (Plans/Personas.md section 11.8, DL-181, D19): when the user asks about a command or
+  its output, Teacher answers as an ordinary reply in the thread. The command card and the terminal
+  carry no Explain action, and Teacher never reads a terminal on its own and never types into one.
+  This supersedes the 5.6 Pro chat's own editor pane as the host of what it opens and its inline
+  Shell box (concept lineage), the left editor/document tab system and Return to chat of ACD-455 and
+  v3 item 15 for Home, the "beside the chat" wording of ACD-480 and ACD-485, the 360 px chat minimum
+  of ACD-458 and v3 item 19, and the chat's Goal tab. Amended DL-260, Jared 2026-10-31: only real
+  product behavior remains an implementation requirement. DL-259 FX-1 final, 2026-10-31: an
+  export/print attempt that fails before producing a PDF closes any unusable temporary print window
+  and says plainly in its result/receipt and visible failure notice that no PDF was made. Opening
+  the print flow alone is not proof that a file was created. A receipt records only the artifact
+  owner’s actual result and never claims a successful PDF that was not made; failure or cancellation
+  leaves the exact Plan revision unchanged. This is an outcome/feedback rule, not a new export
+  command, receipt family or platform-detection mechanism. DL-475 overrides the historical Gist
+  Review document route: Memory opens the same saved-note page as a sheet, never an additional
+  rules/source/verification document.
 gui_related: true
 gui_classification_reason: Defines where everything the chat opens lands, the chat column as the chat reads it, the compact command card and how Teacher explains commands.
 split_recommended: false
 depends_on: [DL-180, DL-181, DL-185, DL-187, DL-188, DL-157, F3-634, F3-635, F3-636, F3-637, F3-569, F3-641, DR-071, CV-360, UCC-200, UCC-201, UCC-203, SP-330, SSYS-050, SMPFS-180, SMPFS-183, ACD-126, ACD-146]
 unblocks: [ACD-039, ACD-041, ACD-416, ACD-444, ACD-453, ACD-455, ACD-458, ACD-485, ACD-501, ATS-075]
 acceptance_criteria:
-- Every file reference a person clicks in the chat (message and card paths, diff views, Changes rows, transcript file
-  records, files-touched entries) opens the preview tab on a single click and a kept tab on a double click, reveals a
-  file already open anywhere, and opens a new panel on Alt+click, all through F3-634.
-- Plans, run views, transcripts, the thread's context, browsers, records, documents, artifacts and terminals the user
-  opens from the chat open as their F3-635 tab kinds and take focus; nothing the chat opens is drawn in a pane of its
-  own or as a centred modal.
-- A Mermaid diagram card's Open in editor opens its source in an editor tab and its Open detached preview opens the artifact
-  viewer tab, never a separate window (DL-180).
-- What an agent opens by itself lands as a background tab with the hollow square and an announcement and never takes
-  keyboard focus.
-- Activity Detail, the wand's setup sheets, Plan Export and Send to Planning Wizard never become panel tabs, and no Goal
-  tab exists.
-- Opening the same plan, run, child transcript or thread context twice reveals one tab; closing a tab the chat draws
-  tells the chat, and the active tab in each panel is reported to it.
-- The chat's width, drag range and narrow behaviour are F3-637's and F3-636's; no unit of this document states another
-  chat minimum, and no tab covers the chat at any width.
-- History is a flyout by default, pinning it widens the column by the list's width, the pin is saved in the home layout
-  record, and only one thread-history list exists after the port.
-- The command card shows the command, folder, status words with the exit code, elapsed time, the last lines with the
-  count of earlier lines, and who ran it; Open in Terminal appears only with a session and reveals its terminal tab;
-  Rerun in Terminal and View output follow ACD-108 and ACD-129.
-- 'Amended 2026-10-10 (DL-185, terminal SPEC section 11): a stopped command''s status reads Done · exited 0, Failed ·
-  exited <code> or Interrupted · exited <code>, and Failed alone when it has no exit code; Interrupted is muted and still;
-  the count of lines above the window reads N earlier lines at the top of the output; who ran it reads You ran in <folder>
-  or <Agent> ran in <folder> beside the agent mark; the elapsed time never shifts the line; a finished command with no
-  output reads No output; at 360 px the failure line keeps file:line whole; nothing moves on first paint and Reduced
-  Motion leaves only 120 ms fades; text reaches 4.5:1 and marks 3:1 in every look and mode.'
-- 'Amended 2026-10-10 (DL-187): a popped-out chat starts back in its column after a restart, the left rail''s Chat entry
-  shows or hides the column on every page, the chat offers no layout mode, and Keep the chat open in narrow windows is
-  on the chat''s header menu, not in Settings.'
-- 'Amended 2026-10-10 (DL-188, lead ruling F8): every Open plan button and a bound Goal''s Open exact Plan · Vn open
-  that version through cmd.chat.plan.open_version and the one opening module, never Plan Details.'
-- View output and View output log on a command with no terminal session open its output as a read-only, kept editor buffer
-  tab through F3-634 (cmd.panel_tab.open with an editor buffer spec), never a preview and never a viewer drawn by the
-  chat (DL-180, F3-641).
-- A command whose session ended while it still ran shows Ended with the earlier session with no exit code, never Running,
-  Done or Failed (SMPFS-180, F3-641).
-- The command card has no pill, no coloured side stripe and no nested box, and no terminal is drawn inside the chat.
-- Teacher explains a command only when the user asks, in the chat; no Explain action exists on the card or in the terminal.
-- 'DL-259 FX-1 final, 2026-10-31: an export/print attempt that fails before producing a PDF closes any unusable temporary
-  print window and says plainly in its result/receipt and visible failure notice that no PDF was made. Opening the print
-  flow alone is not proof that a file was created. A receipt records only the artifact owner’s actual result and never
-  claims a successful PDF that was not made; failure or cancellation leaves the exact Plan revision unchanged. This is
-  an outcome/feedback rule, not a new export command, receipt family or platform-detection mechanism.'
+  - "Every file reference a person clicks in the chat (message and card paths, diff views, Changes rows, transcript file records, files-touched entries) opens the preview tab on a single click and a kept tab on a double click, reveals a file already open anywhere, and opens a new panel on Alt+click, all through F3-634."
+  - "Plans, run views, transcripts, the thread's context, browsers, records, documents, artifacts and terminals the user opens from the chat open as their F3-635 tab kinds and take focus; nothing the chat opens is drawn in a pane of its own or as a centred modal."
+  - "A Mermaid diagram card's Open in editor opens its source in an editor tab and its Open detached preview opens the artifact viewer tab, never a separate window (DL-180)."
+  - "What an agent opens by itself lands as a background tab with the hollow square and an announcement and never takes keyboard focus."
+  - "Activity Detail, the wand's setup sheets, Plan Export and Send to Planning Wizard never become panel tabs, and no Goal tab exists."
+  - "Opening the same plan, run, child transcript or thread context twice reveals one tab; closing a tab the chat draws tells the chat, and the active tab in each panel is reported to it."
+  - "The chat's width, drag range and narrow behaviour are F3-637's and F3-636's; no unit of this document states another chat minimum, and no tab covers the chat at any width."
+  - "History is a flyout by default, pinning it widens the column by the list's width, the pin is saved in the home layout record, and only one thread-history list exists after the port."
+  - "The command card shows the command, folder, status words with the exit code, elapsed time, the last lines with the count of earlier lines, and who ran it; Open in Terminal appears only with a session and reveals its terminal tab; Rerun in Terminal and View output follow ACD-108 and ACD-129."
+  - "Amended 2026-10-10 (DL-185, terminal SPEC section 11): a stopped command's status reads Done · exited 0, Failed · exited <code> or Interrupted · exited <code>, and Failed alone when it has no exit code; Interrupted is muted and still; the count of lines above the window reads N earlier lines at the top of the output; who ran it reads You ran in <folder> or <Agent> ran in <folder> beside the agent mark; the elapsed time never shifts the line; a finished command with no output reads No output; at 360 px the failure line keeps file:line whole; nothing moves on first paint and Reduced Motion leaves only 120 ms fades; text reaches 4.5:1 and marks 3:1 in every look and mode."
+  - "Amended 2026-10-10 (DL-187): a popped-out chat starts back in its column after a restart, the left rail's Chat entry shows or hides the column on every page, the chat offers no layout mode, and Keep the chat open in narrow windows is on the chat's header menu, not in Settings."
+  - "Amended 2026-10-10 (DL-188, lead ruling F8): every Open plan button and a bound Goal's Open exact Plan · Vn open that version through cmd.chat.plan.open_version and the one opening module, never Plan Details."
+  - "View output and View output log on a command with no terminal session open its output as a read-only, kept editor buffer tab through F3-634 (cmd.panel_tab.open with an editor buffer spec), never a preview and never a viewer drawn by the chat (DL-180, F3-641)."
+  - "A command whose session ended while it still ran shows Ended with the earlier session with no exit code, never Running, Done or Failed (SMPFS-180, F3-641)."
+  - "The command card has no pill, no coloured side stripe and no nested box, and no terminal is drawn inside the chat."
+  - "Teacher explains a command only when the user asks, in the chat; no Explain action exists on the card or in the terminal."
+  - "DL-259 FX-1 final, 2026-10-31: an export/print attempt that fails before producing a PDF closes any unusable temporary print window and says plainly in its result/receipt and visible failure notice that no PDF was made. Opening the print flow alone is not proof that a file was created. A receipt records only the artifact owner’s actual result and never claims a successful PDF that was not made; failure or cancellation leaves the exact Plan revision unchanged. This is an outcome/feedback rule, not a new export command, receipt family or platform-detection mechanism."
+  - "Memory opens the one shared saved-note page/sheet; historical Gist Review document identities do not create another editor."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -28346,6 +28414,7 @@ source_lineage:
   (concept-only Studio inventory, not product counts or native APIs)
 - 'PM7 foundations FX-1 final d8df03ac1820a7cb68d0d1b4897eeb03fa228a6b: plans.js PDF export outcome/error cleanup; lead
   1031173939-a128. Source implementation/preview mechanics do not become product requirements.'
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 preserved_exact_tokens:
   - "Open in Terminal"
   - "Rerun in Terminal"
@@ -28976,31 +29045,39 @@ plan_unit_id: ACD-507
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: 'PC1–PC5/S1–S9, X1/X3, L1. F3-594 is the single Pip agent primitive, reached through shared mark/row/empty/sheet
-  functions rather than innerHTML hooks, observers or layered legacy drawings. Cast/role props, helper marks, Activity
-  agent rows, sheet host by Close, Scheduled/Memory faces, Plans, wand and sleeping empty lists share kit/parts. Host
-  watches at 420 ms, wonders while typing, oops on unusable primary without activation and cheers on success; blink changes,
-  stable last-pointer gaze, no random wink, paused shared sway. Lift-off is one overlay-owned copy released on finish.
-  Pip in Orbit centre has current-tool badge and hands off with thinking placeholder, one Pip per reply. No added chat
-  capability/welcome-back message. Main-button keyboard/pointer acknowledgement ≤100 ms, single commit; fix busy stall
-  instead of delaying dispatch. Parts use SSYS-056’s one transaction and app voice obeys master/chat mute. PC1/X3 sheet
-  motion (2026-10-29): a host drops in when its sheet opens, using the shared rig and installed parts. Dots, sleep and
-  happy faces never follow the pointer; other gaze retains the last known position. Retro entrance/face changes step;
-  live NieR sheet changes cut with a bounded flicker, no black frame. Effective Reduced Motion/Still snaps to the settled
-  state without entrance, sway, flicker or lift-off travel. Static NieR brand/tray/app marks remain static; acknowledgement
-  stays ≤100 ms with no dispatch deferral or double commit. PC1–PC5/S5, DL-260: sheet hosts, face lists and Orbit consume
-  the shared Pip kit; chat mute gates that same sound owner. Existing controls acknowledge within 100 ms and commit once
-  without replaying activation. Transcript reconciliation preserves the shared loader’s owner identity and attributes,
-  never a replacement observer or private loader. Source adapter and scheduling helper spellings remain lineage only.
-  QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q16: You is the person alone, head and shoulders in each family’s
-  materials and small-size maps. It carries no marionette cross, strings, holding arm/control or connection to a cross,
-  and is never an agent Pip. Diagram edges to You express the plate’s result/topology, not puppet strings. DL-260: the
-  one shared You primitive serves crew diagrams, cast plates, run cards and rosters. Optional agent strings and the single
-  Pip primitive retain their existing meaning. Q15: the menu head and trigger use the same registry wand with the same
-  rod/star/sparkle ink roles. Pip and that wand remain the head’s own children so a wrapper cannot discard the glyph’s
-  role-specific colours. The sign’s kind glyph matches its sheet head; do not fork a second wand or fallback icon. DL-259
-  Q1 B, Jared 2026-10-31: shared say/vocals use F3-599’s one per-look kit room, sends 0.35 (Glass 0.30, NieR 0.16), no
-  stacked rooms and approximately 0.4 dB loudness bound; the shared preference and gesture gates still apply.'
+canonical_text: >-
+  PC1–PC5/S1–S9, X1/X3, L1. F3-594 is the single Pip agent primitive, reached through shared
+  mark/row/empty/sheet functions rather than innerHTML hooks, observers or layered legacy drawings.
+  Cast/role props, helper marks, Activity agent rows, sheet host by Close, Scheduled delivery faces
+  (Memory rows have no delivery or verification faces), Plans, wand and sleeping empty lists share
+  kit/parts. Host watches at 420 ms, wonders while typing, oops on unusable primary without
+  activation and cheers on success; blink changes, stable last-pointer gaze, no random wink, paused
+  shared sway. Lift-off is one overlay-owned copy released on finish. Pip in Orbit centre has
+  current-tool badge and hands off with thinking placeholder, one Pip per reply. No added chat
+  capability/welcome-back message. Main-button keyboard/pointer acknowledgement ≤100 ms, single
+  commit; fix busy stall instead of delaying dispatch. Parts use SSYS-056’s one transaction and app
+  voice obeys master/chat mute. PC1/X3 sheet motion (2026-10-29): a host drops in when its sheet
+  opens, using the shared rig and installed parts. Dots, sleep and happy faces never follow the
+  pointer; other gaze retains the last known position. Retro entrance/face changes step; live NieR
+  sheet changes cut with a bounded flicker, no black frame. Effective Reduced Motion/Still snaps to
+  the settled state without entrance, sway, flicker or lift-off travel. Static NieR brand/tray/app
+  marks remain static; acknowledgement stays ≤100 ms with no dispatch deferral or double commit.
+  PC1–PC5/S5, DL-260: sheet hosts, face lists and Orbit consume the shared Pip kit; chat mute gates
+  that same sound owner. Existing controls acknowledge within 100 ms and commit once without
+  replaying activation. Transcript reconciliation preserves the shared loader’s owner identity and
+  attributes, never a replacement observer or private loader. Source adapter and scheduling helper
+  spellings remain lineage only. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q16: You is
+  the person alone, head and shoulders in each family’s materials and small-size maps. It carries no
+  marionette cross, strings, holding arm/control or connection to a cross, and is never an agent
+  Pip. Diagram edges to You express the plate’s result/topology, not puppet strings. DL-260: the one
+  shared You primitive serves crew diagrams, cast plates, run cards and rosters. Optional agent
+  strings and the single Pip primitive retain their existing meaning. Q15: the menu head and trigger
+  use the same registry wand with the same rod/star/sparkle ink roles. Pip and that wand remain the
+  head’s own children so a wrapper cannot discard the glyph’s role-specific colours. The sign’s kind
+  glyph matches its sheet head; do not fork a second wand or fallback icon. DL-259 Q1 B, Jared
+  2026-10-31: shared say/vocals use F3-599’s one per-look kit room, sends 0.35 (Glass 0.30, NieR
+  0.16), no stacked rooms and approximately 0.4 dB loudness bound; the shared preference and gesture
+  gates still apply.
 gui_related: true
 gui_classification_reason: Defines visible PM7 presentation and interactions.
 split_recommended: false
@@ -29013,21 +29090,13 @@ depends_on:
 - DR-072
 unblocks: []
 acceptance_criteria:
-- Sheets use a single shared Pip host with 420 ms watch, deterministic face/gaze exceptions and family-specific entrance/change/rest
-  behavior.
-- Pointer and keyboard main-button acknowledgement are ≤100 ms with exactly one commit; disabled oops never activates.
-- Orbit/thinking handoff shows one Pip per reply, and casts/lists/Plans/wand/empty surfaces use shared primitives and
-  owner states.
-- All optional placements, sound/motion and exit copies obey SSYS-056, the common player/overlay and teardown gates.
-- 'QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q16: You is the person alone, head and shoulders in each family’s
-  materials and small-size maps. It carries no marionette cross, strings, holding arm/control or connection to a cross,
-  and is never an agent Pip. Diagram edges to You express the plate’s result/topology, not puppet strings. DL-260: the
-  one shared You primitive serves crew diagrams, cast plates, run cards and rosters. Optional agent strings and the single
-  Pip primitive retain their existing meaning. Q15: the menu head and trigger use the same registry wand with the same
-  rod/star/sparkle ink roles. Pip and that wand remain the head’s own children so a wrapper cannot discard the glyph’s
-  role-specific colours. The sign’s kind glyph matches its sheet head; do not fork a second wand or fallback icon.'
-- 'DL-259 Q1 B, Jared 2026-10-31: shared say/vocals use F3-599’s one per-look kit room, sends 0.35 (Glass 0.30, NieR
-  0.16), no stacked rooms and approximately 0.4 dB loudness bound; the shared preference and gesture gates still apply.'
+  - "Sheets use a single shared Pip host with 420 ms watch, deterministic face/gaze exceptions and family-specific entrance/change/rest behavior."
+  - "Pointer and keyboard main-button acknowledgement are ≤100 ms with exactly one commit; disabled oops never activates."
+  - "Orbit/thinking handoff shows one Pip per reply, and casts/lists/Plans/wand/empty surfaces use shared primitives and owner states."
+  - "All optional placements, sound/motion and exit copies obey SSYS-056, the common player/overlay and teardown gates."
+  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q16: You is the person alone, head and shoulders in each family’s materials and small-size maps. It carries no marionette cross, strings, holding arm/control or connection to a cross, and is never an agent Pip. Diagram edges to You express the plate’s result/topology, not puppet strings. DL-260: the one shared You primitive serves crew diagrams, cast plates, run cards and rosters. Optional agent strings and the single Pip primitive retain their existing meaning. Q15: the menu head and trigger use the same registry wand with the same rod/star/sparkle ink roles. Pip and that wand remain the head’s own children so a wrapper cannot discard the glyph’s role-specific colours. The sign’s kind glyph matches its sheet head; do not fork a second wand or fallback icon."
+  - "DL-259 Q1 B, Jared 2026-10-31: shared say/vocals use F3-599’s one per-look kit room, sends 0.35 (Glass 0.30, NieR 0.16), no stacked rooms and approximately 0.4 dB loudness bound; the shared preference and gesture gates still apply."
+  - "Memory rows are quiet note rows with no delivery or verification face."
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
@@ -29050,6 +29119,7 @@ source_lineage:
 - 'DL-260 implementation lineage only: PM56_PIP, PM56_SHELL.pmxPip/pmxStatusFace/pmxEmpty/pmxPipHost/pmxPipLook/pmxPipMood/pmxPipOn,
   O55.sound.pip.chatMute, PMX kept-subtree slots, ppYou/PX_YOU/pnYou and the press helper are source adapters, not native
   product APIs.'
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 preserved_exact_tokens: []
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.

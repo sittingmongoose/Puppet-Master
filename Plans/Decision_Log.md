@@ -29721,3 +29721,165 @@ negative_constraints:
 - Do not infer native implementation, readiness or a governance seal from this decision.
 owner_hints: [Plans/Settings_System.md, Plans/assistant-memory-subsystem.md, Plans/Goal_Runtime_System.md, Plans/Personas.md, Plans/FinalGUISpec.md]
 ```
+
+### DL-475 - Quiet Memory, Authorized Helper Reads And Goals Rulings
+
+```yaml
+plan_unit_id: DL-475
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared's 2026-11-11 decisions, relayed verbatim by pm7-build: "ok that memory system looks good"
+  (about 11:05 PM EST); "No named sets"; "No switch"; "goals may not use crews at all. Goals run
+  with whatever the persona and model was in the chat thread that started it. crews could spawn
+  goals though, same for plans or reviews and some of the other systems." (Goals about 7:30 PM EST).
+  The approved quiet Memory design supersedes DL-474's still-open Q2 memory choices: one Memory
+  page, This project and Every project levels, one memory switch, search/level
+  filter/list/Add/Edit/Delete/Archived; the chat Memory button opens that same page as a sheet.
+  Personal notes can live at Every project, resolving MEM-SCOPE. The Assistant remains
+  writer/manager; Crews, reviews and chat helpers may read Project and personal notes read-only
+  under source restrictions. Private app-thread memory stays private; no helper-owned store or
+  other-Project access follows. Saved to memory · View appears only after a real save; memory-use
+  chips/counts/preview/ribbon/ranking/pin/conflict/source/verification UI and ordinary
+  Followed/Missed rule receipts retire. Fading and archive-only upkeep stay built in, preserving
+  saved pin protections and DL-403/444–447 holds. Delete is a real user action with durable
+  suppression against silent recreation from old chats. No new memory database, service or
+  per-helper store is introduced.  DL-474's Q2 Goals questions are closed: no new-Goal Persona/Crew
+  default, no named test profiles and no Ask me to confirm completion switch. Goals use their
+  initiating chat Persona/model, never use Crews, and finish when proof is in while existing pauses
+  remain. Existing Let the assistant test its work and Speed or thoroughness steer testing. Crews,
+  plans, reviews and similar systems may start separate Goals with no parent edge under GRS-052. The
+  concept drops New Goals start with, Run test profile and Ask me to confirm; these three were never
+  Plans inventory rows. DL-474 remains history, not a current list of unanswered Q2 questions.
+  Retire 43 memory.* inventory rows from search, All Settings and transfer; eight remain in their
+  proper owners. SSYS-040 defines all 51 dispositions/compatibility reads and source-off/privacy
+  migration to equivalent or stricter read restrictions. Existing storage architecture, bounded
+  context, source/currentness and native admission gates remain. This decision authorizes these
+  owner contracts and required companion alignment, not native implementation or governance
+  resealing. Follow-up, Jared 2026-11-12 at 8:12 AM EST: "Keep them there". Rules for every project
+  and Rules for this project live in Settings > Personas & Crews > Defaults > Standing instructions.
+  The existing application/project instruction writer and storage remain; Memory does not become
+  their editor. Ordinary Memory/Teach capture has no lock, conflict, source or rollback controls;
+  retained legacy protection and codecs remain internal.
+gui_related: true
+gui_classification_reason: Records the approved Memory page/reply behavior and removes concept-only Goals controls.
+depends_on:
+- DL-474
+- AMS-026
+- AMS-054
+- AMS-141
+- SSYS-040
+- GRS-046
+- GRS-052
+unblocks: []
+acceptance_criteria:
+  - "All Q2 memory and Goals questions in DL-474 have the explicit dispositions above."
+  - "The exact Jared quotes are preserved; DL-474 remains unchanged history."
+  - "No source restriction is relaxed, private app thread shared, held cleanup enabled or native readiness inferred."
+  - "Jared’s exact follow-up \"Keep them there\" is preserved, and both named rule editors remain in Settings > Personas & Crews > Defaults > Standing instructions."
+validation_surfaces:
+- scripts/pm-settings-layering-check.py
+- scripts/pm-command-payload-defs-check.py
+- scripts/pm-new-contracts-verify.py
+- scripts/pm7-build-check.py
+risk_class: memory_privacy_deletion_and_goal_execution
+reasoning_tier: high
+context_scope: settings_batch2_20261112
+implementation_surfaces:
+- Plans/assistant-memory-subsystem.md
+- Plans/Settings_System.md
+- Plans/Goal_Runtime_System.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- share/puppet-master/2026-11-09-settings-feedback/BRIEF-plans-settings-batch2.md
+- share/puppet-master/2026-11-11-memory-review/PACKET.md#3-proposed-pm-design
+- share/puppet-master/2026-11-11-memory-review/mock/README.md
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
+preserved_exact_tokens:
+- ok that memory system looks good
+- No named sets
+- No switch
+- goals may not use crews at all. Goals run with whatever the persona and model was in the chat thread that started
+  it. crews could spawn goals though, same for plans or reviews and some of the other systems.
+- Memory
+- This project
+- Every project
+- Saved to memory
+- "Keep them there"
+negative_constraints:
+- No Goal uses a Crew.
+- No new database, memory service or per-helper store.
+- No source-off/privacy choice silently restores access.
+- No native implementation or governance seal is inferred.
+```
+
+### DL-476 - One Model Defaults List And Jared Model Answers
+
+```yaml
+plan_unit_id: DL-476
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: |-
+  Jared answered the model-design questions at about 11:55 PM EST on 2026-11-11, relayed by pm7-build in the settings batch 3 brief. The answers, verbatim as relayed, are:
+  MD1: "A".
+  MD2: "NEITHER".
+  MD3: "A".
+  MD4: "A".
+  Helper agents, verbatim: "If a helper is a subagent, then the main agent should be able to choose any model it wants at any effort level that is available. There shouldnt be a separate setting for it, if it needs a default, it can follow the other default settings like a regular agent would."
+  The which-wins line, verbatim: "What you pick for a run wins; then the account's own default if you sent the run to that account; then this project's list; then Everywhere."
+  The accepted design is one list in Settings > Models, with thinking depth chosen inside each model picker. MD1 A permits the same list for This project with Everywhere fallback. MD2 NEITHER removes Persona model/service/preset/effort and command model fields, not merely their priority: old definitions remain compatibility-read only. MD3 A activates an account's own model/depth only when the person sends the run to that account and no earlier source names a model. MD4 A makes Reading pictures the first bridge choice with no separately saved backup; later automatic fallback still requires policy permission and disclosure. The helper model and helper-depth rows are removed; a parent may choose any allowed runnable model/effort within existing parent and policy ceilings, otherwise normal defaults apply.
+  Behaviour: keep build-internal scoped owner policy and a page's built-in default as technical detail, remove the old Persona, Computer, last-used and provider-default model sources, and retire configurable resolution policy and stored default variants. Preserve all parent/managed/capability/account/currentness/cost gates and requested/effective receipts. Presets stay picker/key shortcuts. Keep the six jobs including Easy, routine jobs, separate checking from cheap implementation, naming on the smallest available model with Off, explaining with its small-model and no-silent-costly-fallback guard, BSD following Checking finished work, and per-kind picture/video/speech/music models. WL4 = B remains accepted: test an exact typed model name with one small call before saving; a refused or unreachable name is never saved, and acceptance proves no capability.
+  Behaviour: retire 18 model-related rows with the compatibility reads in settings_inventory.json; admit Easy, routine jobs, one account model/depth field and three enabled-media model rows. Search, All Settings, transfer, Reset and census derive their active admission from that inventory. Old values remain inspectable, never an extra selection source or new write authority. The PRD Builder, Wizard, building and Scout read the common defaults and allow run overrides; their screen redesign is separate.
+  Wording: this one Decision_Log entry records both P17 and E13; it does not reseal governance or claim native runtime proof.
+gui_related: true
+gui_classification_reason: Owns visible model/depth defaults, compatibility disclosure, Settings search and
+  transfer behavior.
+depends_on:
+- SSYS-077
+- MS-005
+- MS-109
+- F3-396
+unblocks: []
+acceptance_criteria:
+- The exact MD1 A, MD2 NEITHER, MD3 A, MD4 A, helper words and plain order are preserved.
+- Removed settings remain compatible reads without active model precedence or new writes.
+- Every model picker includes its supported depth and WL4 B validation.
+validation_surfaces:
+- python3 scripts/pm-plans-verify.py validate-settings-layering
+- python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema
+- python3 -m unittest discover -s tests -p test_pm_settings_draft_transfer.py
+risk_class: model_default_precedence_and_retirement_drift
+reasoning_tier: high
+context_scope: settings_models_batch3_20261112
+implementation_surfaces: &id001
+- Plans/Models_System.md
+- Plans/Settings_System.md
+- Plans/FinalGUISpec.md
+- Plans/settings_inventory.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- settings-model-design-20261112:MD1-A/MD2-NEITHER/MD3-A/MD4-A/helpers
+- share/puppet-master/2026-11-11-model-selection-map/PACKET-v2.md
+- share/puppet-master/2026-11-11-work-lanes/PACKET.md
+preserved_exact_tokens:
+- MD1
+- MD2
+- NEITHER
+- MD3
+- MD4
+- There shouldnt be a separate setting for it
+- WL4 = B
+- Easy, routine jobs
+negative_constraints:
+- Do not preserve Persona, command or helper-owned model/depth defaults.
+- Do not silently reinterpret historical source tiers, old backup values or old Computer model preferences.
+owner_hints: *id001
+```

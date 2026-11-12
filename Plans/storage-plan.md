@@ -15933,24 +15933,31 @@ plan_unit_id: SP-220
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Teach memory capture is explicit and separate from one-off Teacher-guided instruction. Eligible
-  Teacher answers may offer Save as taught memory; durable records preserve normalized fact, scope selector thread/project/user,
-  source message/thread, secret-safety warning, conflict or supersession state, and user-locked record state. Users
-  can inspect, narrow, supersede, revoke, or unlock records; one-off guidance is not auto-saved and secrets must
-  not be persisted.
-gui_related: false
-gui_classification_reason: Durable taught-memory scope and record state are storage behavior; capture UI is owned
-  by Assistant Chat.
+canonical_text: >-
+  Teach/Teacher guidance is not automatically saved. A requested saved note uses the shared Memory
+  page and existing AMS-141 Add/Edit/Delete contracts. This project and Every project are the only
+  visible saved-note levels. Add/Edit/Delete use AMS-141 quiet Memory contracts; automatic
+  fading/archiving, deletion suppression, privacy and existing source restrictions remain. Private
+  app-thread records stay private and are not a third visible level. Durable records keep normalized
+  text, source identity, versions, conflict/supersession state, redaction and legacy
+  protected-record custody internally. Users see the note and its two-level availability,
+  Edit/Delete and Archived; they do not manage memory stores, locks, conflicts, provenance or
+  rollback. Written instructions use Settings > Personas & Crews > Defaults > Standing instructions
+  under the instruction owner. Existing historical Teach codecs and thread-private records remain
+  readable without becoming a third visible memory level.
+gui_related: true
+gui_classification_reason: >-
+  Defines the visible saved-note boundary: one Memory page, two levels and CRUD/Archived without
+  internal accounting controls.
 depends_on:
 - ACD-426
 unblocks:
 - G-026
 - ATS-014
 acceptance_criteria:
-- Live PlanUnit exists in the adjudicated owner doc with reciprocal ledger source_lineage.
-- Exact source tokens, negative constraints, owner hints, and user corrections are preserved in PlanUnit metadata.
-- No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks
-  are created by this compile.
+  - "Explicit saved-note capture uses only This project or Every project and the shared Memory CRUD owner."
+  - "Source/history/conflict/legacy-lock/rollback metadata remains internal; no corresponding ordinary UI is required."
+  - "Secret exclusion, revision checks, privacy restrictions, deletion suppression and retained protections remain."
 validation_surfaces:
 - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name
 - python3 scripts/pm-plan-index.py validate
@@ -15977,6 +15984,7 @@ source_lineage:
 - chat:teach-bundle-accepted-pmconcept-reference
 - chat:work-through-teach-gaps
 - Plans/assistant-chat-design.md#6-teach
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 source_atom_ids:
 - atom-0094
 - atom-0122
@@ -16028,17 +16036,9 @@ preserved_exact_tokens:
 - revoke
 - unlock
 negative_constraints:
-- Do not make Teacher-guided instruction automatically persist memory.
-- Do not make durable Teach capture a closed mode overlay detached from the current thread runtime/mode selection.
-- Do not weaken existing `user-locked` Teach records through automated cleanup or summarization.
-- Do not persist Teach conversation content as memory without confirmation.
-- Do not use taught memory outside its approved scope.
-- Do not bury edit/delete controls away from the memory explanation.
-- Do not let later Teach runs overwrite locked corrections without explicit user action.
-- Do not cite a locked record without showing its scope/source when relevant.
-- Do not auto-save one-off Teacher guidance as taught memory.
-- Do not persist secrets, tokens, passwords, or credentials.
-- Do not allow conflicting teachings to silently overwrite prior locked records.
+  - "Do not auto-save one-off guidance, persist secrets, broaden scope, weaken legacy protections or recreate deleted notes."
+  - "Do not turn legacy thread scopes, lock/conflict fields or stored provenance into ordinary capture controls."
+  - "Do not emit a memory-use citation or receipt to explain why a note influenced a response."
 owner_hints:
 - Plans/assistant-chat-design.md
 - Plans/Prompt_Pipeline.md
@@ -17486,7 +17486,8 @@ Kept with the Goal's chat, `RP-GOAL-THREAD-LIFETIME@1.0.0`, 1 name: G29, `goal.c
 
 **Names given no rule.** Eleven of the table's names leave it under Jared's Card 2 answers and get no rule here, because a retired name is never admitted: `browser.session.navigated` and `browser.session.resized` (G10), which DL-405 retires; the seven memory command events `memory.gist.verification_requested`, `memory.gist.verified`, `memory.gist.verification_failed`, `memory.gist.updated`, `memory.gist.pinned`, `memory.gist.unpinned` and `memory.gist.discarded` (G03), which DL-407 retires once the full contract of `memory.gist_state_changed` covers successful edits, pins, discards and automatic changes; and `settings.updated` and `settings.theme.updated` (G22), which DL-408 retires as superseded by `settings.layer.changed`. DL-408 keeps records already written under the older dedicated DRY-guard spelling readable; this text changes nothing about them. `scheduler.pass` is not among these groups: the plans already class it as one-year runtime history, which DL-401 records as decided.
 
-**Memory maintenance (DL-402, DL-403).** The G04 histories record maintenance runs. Under DL-402 the monthly summary and prune jobs only archive: a memory is deleted only when its user deletes it, the monthly summary keeps its originals archived with all their evidence references, and neither job archives or merges a pinned memory; pins do not stop verification, index rebuilds or out-of-date marking. Under DL-403 neither job runs, automatically or from the Memory panel, until cutoffs exist: the Memory panel's two maintenance buttons show as unavailable with the reason, and the memory owner proposes an age and a score that return to Jared. Until then `memory.monthly_summary.*` and `memory.prune_archive.*` record nothing. The duplicate sweep's survivor and disposition stay open; G04 covers only how long its history is kept. The memory owner's own text (`Plans/assistant-memory-subsystem.md` section 7.2) is a separate edit.
+**Memory maintenance (DL-402, DL-403, DL-475).** G04 histories and internal support machinery retain their existing custody. Monthly summary and prune are archive-only, preserve originals/evidence and exclude pins. Their DL-403/444–447 application/definition/review/recording holds remain: neither automatic nor support execution starts before its approvals are satisfied. Memory has no maintenance buttons or unavailable placeholders, now or after those holds close. No retention job, deletion rule, protected-record policy or native admission is enabled by this UI retirement.
+
 
 **Records that belong to no Project (DL-401, DL-416 through DL-421).** Card 1.b through 1.g, option A, approve six separate count buckets in this Puppet Master installation (one Storage instance). Each has its own policy entry below and in `Plans/storage_value_registry.json`; its `cardinality_scope=instance` applies only to that policy's expressly named no-project members. These six counts are independent of each other, every Project bucket, and the existing `app:github_sign_in`, `app:storage_operational` and `app:platform_capability` buckets. DL-401's GitHub sign-in allowance is unchanged and widened to no other type. A count key is neither a Project nor a scope/dedupe partition or physical key; records retain their actual application scope, null Project and original identities. Selection requires the exact registered type and actual scope, never a prefix, guessed Project or default bucket; unregistered types remain refused. Project records stay under their existing Project policy and count, never both counts.
 

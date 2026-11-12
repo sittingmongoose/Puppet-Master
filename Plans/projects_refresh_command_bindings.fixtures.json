@@ -5,7 +5,7 @@
   "evidence_level": "static_contract_examples_only",
   "native_runtime_executed": false,
   "source_companion_ref": "Plans/projects_refresh_command_bindings.json",
-  "source_companion_sha256": "6dc32b7cf1adae1b344cab9516d59f0e59ac0b7cd7bca4c253a147186fe9588c",
+  "source_companion_sha256": "6cdbc8daffb51742d680c70a882169ebfbc709cbe7a4b40910c9ceea1cd9ee30",
   "projects_refresh_cases": [
     {
       "case_id": "fd-binding-commands",
@@ -2673,7 +2673,9 @@
             "result_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2",
             "group": "no_project",
             "gui_consumers": [
-              "Puppet Master Assistant > teach_capture"
+              "wand",
+              "chat_header",
+              "memory_save_receipt"
             ],
             "effect": "Owner typed result and projection under Plans/assistant-memory-subsystem.md. No EventRecord is admitted by this closure; proposed event names remain requires_central_adjudication.",
             "availability": "No project is genuine application scope, with a named fixed Computer after first message, lazy visible chat folder and no invented Project/Vault. Admit ordinary files/browser/editor/terminal/tools/notebook/history/recovery under exact app roots and owner versions, retaining private notebook/memory isolation and counterpart limits. Six projects.* read tools return explicit requested/looked_in/not_looked_in/partial coverage; source read grants do not authorize writes. Existing cmd.thread.request/spawn Send uses current local previews and receiver authority; maximum three automatic round trips. Two equal conversion choices share one manifest/copy-check/cutover/report/Undo engine; stop/fence Goal/Crew/Plan/timers and use linked destination records by default. No new work plus seven days bounds chat Undo, not independent canonical custody. Screen use is off until exact chat/app/controller/disclosure admission, with one targeted Stop. Resolve the selected WorkflowScopeV2: application has an actual Server/Computer, scope_partition=app and project_id=null, with owner-required thread or pre-message draft and Host/root identity. Server-owned pause/trust/home operations use their actual Server scope without fabricating a thread; view-only and metadata reads require only their declared owner targets. Project operations use actual immutable Project identity. Never use focus, an empty ID, a sentinel Project, HOME or CWD as authority.",
@@ -3446,7 +3448,8 @@
             "result_schema_ref": "Plans/collaborative_workflows_contracts.schema.json#/$defs/ComposerBufferResultScopeV2",
             "group": "goal_crew",
             "gui_consumers": [
-              "Puppet Master Assistant > review_card"
+              "review_card",
+              "review_panel"
             ],
             "effect": "Draft-only ComposerBufferResult under CWR-031 and AMS-053: source-specific review_findings or taught_rule_check lineage accompanies an empty-source-composer fill. No message is sent or fix executed; no EventRecord is admitted by static closure.",
             "availability": "The six existing cmd.chat.goal.* mutations, Goal editor, four collaboration kinds, participant/message actions and Crew Auto admit explicit app siblings and original exact Project contracts. Scope, original accepted source/hash, body/control/Stop, parent/receiver authority, roots, roster/config revisions and canonical backup join at final dispatch. Ordinary updates never retarget immutable Goal/Plan/Crew bindings. No retired goal.scheduled/degraded/child-state producer or Project Workflow/WorkNode certification is revived. App Crew Auto uses an app-thread configuration revision, distinct from a thread override and Project configuration; the same evaluator/coordination board remains sole owner. Conversion defaults to linked new destination records after safe stop/fence. Resolve the selected WorkflowScopeV2: application has an actual Server/Computer, scope_partition=app and project_id=null, with owner-required thread or pre-message draft and Host/root identity. Server-owned pause/trust/home operations use their actual Server scope without fabricating a thread; view-only and metadata reads require only their declared owner targets. Project operations use actual immutable Project identity. Never use focus, an empty ID, a sentinel Project, HOME or CWD as authority.",
@@ -10854,9 +10857,7 @@
             "request_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2",
             "result_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2",
             "group": "no_project",
-            "gui_consumers": [
-              "Assistant Chat surface"
-            ],
+            "gui_consumers": [],
             "effect": "cmd.chat.memory.dedup_sweep has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
             "availability": "No project is genuine application scope, with a named fixed Computer after first message, lazy visible chat folder and no invented Project/Vault. Admit ordinary files/browser/editor/terminal/tools/notebook/history/recovery under exact app roots and owner versions, retaining private notebook/memory isolation and counterpart limits. Six projects.* read tools return explicit requested/looked_in/not_looked_in/partial coverage; source read grants do not authorize writes. Existing cmd.thread.request/spawn Send uses current local previews and receiver authority; maximum three automatic round trips. Two equal conversion choices share one manifest/copy-check/cutover/report/Undo engine; stop/fence Goal/Crew/Plan/timers and use linked destination records by default. No new work plus seven days bounds chat Undo, not independent canonical custody. Screen use is off until exact chat/app/controller/disclosure admission, with one targeted Stop. Resolve the selected WorkflowScopeV2: application has an actual Server/Computer, scope_partition=app and project_id=null, with owner-required thread or pre-message draft and Host/root identity. Server-owned pause/trust/home operations use their actual Server scope without fabricating a thread; view-only and metadata reads require only their declared owner targets. Project operations use actual immutable Project identity. Never use focus, an empty ID, a sentinel Project, HOME or CWD as authority.",
             "permission": "Permissions PS-144–148 alone composes actual human|mode|build_grant evidence with retained FileSafe, trust, secrets, capabilities, root and parent/receiver ceilings. An app chat or copied receipt conveys no Project mutation/build-grant authority.",
@@ -10901,7 +10902,8 @@
             "contract_status": "scope-aware definition specified; historical resources remain exact; native evidence unproved",
             "production_row_ids": [
               "catalog.chat_memory_dedup_sweep"
-            ]
+            ],
+            "ui_disposition": "internal_support_only"
           },
           {
             "command_id": "cmd.chat.memory.discard",
@@ -10910,9 +10912,7 @@
             "request_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2",
             "result_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2",
             "group": "no_project",
-            "gui_consumers": [
-              "Assistant Chat surface"
-            ],
+            "gui_consumers": [],
             "effect": "cmd.chat.memory.discard has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
             "availability": "No project is genuine application scope, with a named fixed Computer after first message, lazy visible chat folder and no invented Project/Vault. Admit ordinary files/browser/editor/terminal/tools/notebook/history/recovery under exact app roots and owner versions, retaining private notebook/memory isolation and counterpart limits. Six projects.* read tools return explicit requested/looked_in/not_looked_in/partial coverage; source read grants do not authorize writes. Existing cmd.thread.request/spawn Send uses current local previews and receiver authority; maximum three automatic round trips. Two equal conversion choices share one manifest/copy-check/cutover/report/Undo engine; stop/fence Goal/Crew/Plan/timers and use linked destination records by default. No new work plus seven days bounds chat Undo, not independent canonical custody. Screen use is off until exact chat/app/controller/disclosure admission, with one targeted Stop. Resolve the selected WorkflowScopeV2: application has an actual Server/Computer, scope_partition=app and project_id=null, with owner-required thread or pre-message draft and Host/root identity. Server-owned pause/trust/home operations use their actual Server scope without fabricating a thread; view-only and metadata reads require only their declared owner targets. Project operations use actual immutable Project identity. Never use focus, an empty ID, a sentinel Project, HOME or CWD as authority.",
             "permission": "Permissions PS-144–148 alone composes actual human|mode|build_grant evidence with retained FileSafe, trust, secrets, capabilities, root and parent/receiver ceilings. An app chat or copied receipt conveys no Project mutation/build-grant authority.",
@@ -10957,19 +10957,20 @@
             "contract_status": "scope-aware definition specified; historical resources remain exact; native evidence unproved",
             "production_row_ids": [
               "catalog.chat_memory_discard"
-            ]
+            ],
+            "ui_disposition": "internal_support_only"
           },
           {
             "command_id": "cmd.chat.memory.edit",
             "owner_ref": "Plans/assistant-chat-design.md#ACD-508",
             "handler": "handlers::chat::memory_edit",
-            "request_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2",
-            "result_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2",
+            "request_schema_ref": "Plans/assistant_memory_contracts.schema.json#/$defs/MemoryNoteEditRequestV1",
+            "result_schema_ref": "Plans/assistant_memory_contracts.schema.json#/$defs/MemoryNoteMutationResultV1",
             "group": "no_project",
             "gui_consumers": [
               "Assistant Chat surface"
             ],
-            "effect": "cmd.chat.memory.edit has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+            "effect": "Owner-checked canonical MemoryGist versioned edit with exact scope/currentness, derived-cache invalidation and durable owner receipt; no EventRecord writer is admitted here.",
             "availability": "No project is genuine application scope, with a named fixed Computer after first message, lazy visible chat folder and no invented Project/Vault. Admit ordinary files/browser/editor/terminal/tools/notebook/history/recovery under exact app roots and owner versions, retaining private notebook/memory isolation and counterpart limits. Six projects.* read tools return explicit requested/looked_in/not_looked_in/partial coverage; source read grants do not authorize writes. Existing cmd.thread.request/spawn Send uses current local previews and receiver authority; maximum three automatic round trips. Two equal conversion choices share one manifest/copy-check/cutover/report/Undo engine; stop/fence Goal/Crew/Plan/timers and use linked destination records by default. No new work plus seven days bounds chat Undo, not independent canonical custody. Screen use is off until exact chat/app/controller/disclosure admission, with one targeted Stop. Resolve the selected WorkflowScopeV2: application has an actual Server/Computer, scope_partition=app and project_id=null, with owner-required thread or pre-message draft and Host/root identity. Server-owned pause/trust/home operations use their actual Server scope without fabricating a thread; view-only and metadata reads require only their declared owner targets. Project operations use actual immutable Project identity. Never use focus, an empty ID, a sentinel Project, HOME or CWD as authority.",
             "permission": "Permissions PS-144–148 alone composes actual human|mode|build_grant evidence with retained FileSafe, trust, secrets, capabilities, root and parent/receiver ceilings. An app chat or copied receipt conveys no Project mutation/build-grant authority.",
             "currentness": "Validate the exact operation-declared source/target refs and revisions/hashes. Mutation/execution rechecks the sole writer/lease, permission and Stop/pause/revocation generations at entry and immediately before effect. Read/navigation/local paths validate their declared read target/source/view generation; they do not demand a write lease merely to inspect. Owner-admitted stale/as-of read-only presentation never claims fresh authority or enables effects. Same idempotency key/digest returns the original result; conflict or dedupe unavailable performs no effect.",
@@ -11022,9 +11023,7 @@
             "request_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2",
             "result_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2",
             "group": "no_project",
-            "gui_consumers": [
-              "Assistant Chat surface"
-            ],
+            "gui_consumers": [],
             "effect": "cmd.chat.memory.pin has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
             "availability": "No project is genuine application scope, with a named fixed Computer after first message, lazy visible chat folder and no invented Project/Vault. Admit ordinary files/browser/editor/terminal/tools/notebook/history/recovery under exact app roots and owner versions, retaining private notebook/memory isolation and counterpart limits. Six projects.* read tools return explicit requested/looked_in/not_looked_in/partial coverage; source read grants do not authorize writes. Existing cmd.thread.request/spawn Send uses current local previews and receiver authority; maximum three automatic round trips. Two equal conversion choices share one manifest/copy-check/cutover/report/Undo engine; stop/fence Goal/Crew/Plan/timers and use linked destination records by default. No new work plus seven days bounds chat Undo, not independent canonical custody. Screen use is off until exact chat/app/controller/disclosure admission, with one targeted Stop. Resolve the selected WorkflowScopeV2: application has an actual Server/Computer, scope_partition=app and project_id=null, with owner-required thread or pre-message draft and Host/root identity. Server-owned pause/trust/home operations use their actual Server scope without fabricating a thread; view-only and metadata reads require only their declared owner targets. Project operations use actual immutable Project identity. Never use focus, an empty ID, a sentinel Project, HOME or CWD as authority.",
             "permission": "Permissions PS-144–148 alone composes actual human|mode|build_grant evidence with retained FileSafe, trust, secrets, capabilities, root and parent/receiver ceilings. An app chat or copied receipt conveys no Project mutation/build-grant authority.",
@@ -11069,7 +11068,8 @@
             "contract_status": "scope-aware definition specified; historical resources remain exact; native evidence unproved",
             "production_row_ids": [
               "catalog.chat_memory_pin"
-            ]
+            ],
+            "ui_disposition": "internal_support_only"
           },
           {
             "command_id": "cmd.chat.memory.preview_capsule",
@@ -11078,9 +11078,7 @@
             "request_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2",
             "result_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2",
             "group": "no_project",
-            "gui_consumers": [
-              "Assistant Chat surface"
-            ],
+            "gui_consumers": [],
             "effect": "cmd.chat.memory.preview_capsule has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
             "availability": "No project is genuine application scope, with a named fixed Computer after first message, lazy visible chat folder and no invented Project/Vault. Admit ordinary files/browser/editor/terminal/tools/notebook/history/recovery under exact app roots and owner versions, retaining private notebook/memory isolation and counterpart limits. Six projects.* read tools return explicit requested/looked_in/not_looked_in/partial coverage; source read grants do not authorize writes. Existing cmd.thread.request/spawn Send uses current local previews and receiver authority; maximum three automatic round trips. Two equal conversion choices share one manifest/copy-check/cutover/report/Undo engine; stop/fence Goal/Crew/Plan/timers and use linked destination records by default. No new work plus seven days bounds chat Undo, not independent canonical custody. Screen use is off until exact chat/app/controller/disclosure admission, with one targeted Stop. Resolve the selected WorkflowScopeV2: application has an actual Server/Computer, scope_partition=app and project_id=null, with owner-required thread or pre-message draft and Host/root identity. Server-owned pause/trust/home operations use their actual Server scope without fabricating a thread; view-only and metadata reads require only their declared owner targets. Project operations use actual immutable Project identity. Never use focus, an empty ID, a sentinel Project, HOME or CWD as authority.",
             "permission": "Permissions PS-144–148 alone composes actual human|mode|build_grant evidence with retained FileSafe, trust, secrets, capabilities, root and parent/receiver ceilings. An app chat or copied receipt conveys no Project mutation/build-grant authority.",
@@ -11125,7 +11123,8 @@
             "contract_status": "scope-aware definition specified; historical resources remain exact; native evidence unproved",
             "production_row_ids": [
               "catalog.chat_memory_preview_capsule"
-            ]
+            ],
+            "ui_disposition": "internal_support_only"
           },
           {
             "command_id": "cmd.chat.memory.prune_archive",
@@ -11134,9 +11133,7 @@
             "request_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2",
             "result_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2",
             "group": "no_project",
-            "gui_consumers": [
-              "Assistant Chat surface"
-            ],
+            "gui_consumers": [],
             "effect": "cmd.chat.memory.prune_archive has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
             "availability": "No project is genuine application scope, with a named fixed Computer after first message, lazy visible chat folder and no invented Project/Vault. Admit ordinary files/browser/editor/terminal/tools/notebook/history/recovery under exact app roots and owner versions, retaining private notebook/memory isolation and counterpart limits. Six projects.* read tools return explicit requested/looked_in/not_looked_in/partial coverage; source read grants do not authorize writes. Existing cmd.thread.request/spawn Send uses current local previews and receiver authority; maximum three automatic round trips. Two equal conversion choices share one manifest/copy-check/cutover/report/Undo engine; stop/fence Goal/Crew/Plan/timers and use linked destination records by default. No new work plus seven days bounds chat Undo, not independent canonical custody. Screen use is off until exact chat/app/controller/disclosure admission, with one targeted Stop. Resolve the selected WorkflowScopeV2: application has an actual Server/Computer, scope_partition=app and project_id=null, with owner-required thread or pre-message draft and Host/root identity. Server-owned pause/trust/home operations use their actual Server scope without fabricating a thread; view-only and metadata reads require only their declared owner targets. Project operations use actual immutable Project identity. Never use focus, an empty ID, a sentinel Project, HOME or CWD as authority.",
             "permission": "Permissions PS-144–148 alone composes actual human|mode|build_grant evidence with retained FileSafe, trust, secrets, capabilities, root and parent/receiver ceilings. An app chat or copied receipt conveys no Project mutation/build-grant authority.",
@@ -11181,7 +11178,8 @@
             "contract_status": "scope-aware definition specified; historical resources remain exact; native evidence unproved",
             "production_row_ids": [
               "catalog.chat_memory_prune_archive"
-            ]
+            ],
+            "ui_disposition": "internal_support_only"
           },
           {
             "command_id": "cmd.chat.memory.rebuild_lexical_index",
@@ -11190,9 +11188,7 @@
             "request_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2",
             "result_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2",
             "group": "no_project",
-            "gui_consumers": [
-              "Assistant Chat surface"
-            ],
+            "gui_consumers": [],
             "effect": "cmd.chat.memory.rebuild_lexical_index has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
             "availability": "No project is genuine application scope, with a named fixed Computer after first message, lazy visible chat folder and no invented Project/Vault. Admit ordinary files/browser/editor/terminal/tools/notebook/history/recovery under exact app roots and owner versions, retaining private notebook/memory isolation and counterpart limits. Six projects.* read tools return explicit requested/looked_in/not_looked_in/partial coverage; source read grants do not authorize writes. Existing cmd.thread.request/spawn Send uses current local previews and receiver authority; maximum three automatic round trips. Two equal conversion choices share one manifest/copy-check/cutover/report/Undo engine; stop/fence Goal/Crew/Plan/timers and use linked destination records by default. No new work plus seven days bounds chat Undo, not independent canonical custody. Screen use is off until exact chat/app/controller/disclosure admission, with one targeted Stop. Resolve the selected WorkflowScopeV2: application has an actual Server/Computer, scope_partition=app and project_id=null, with owner-required thread or pre-message draft and Host/root identity. Server-owned pause/trust/home operations use their actual Server scope without fabricating a thread; view-only and metadata reads require only their declared owner targets. Project operations use actual immutable Project identity. Never use focus, an empty ID, a sentinel Project, HOME or CWD as authority.",
             "permission": "Permissions PS-144–148 alone composes actual human|mode|build_grant evidence with retained FileSafe, trust, secrets, capabilities, root and parent/receiver ceilings. An app chat or copied receipt conveys no Project mutation/build-grant authority.",
@@ -11237,7 +11233,8 @@
             "contract_status": "scope-aware definition specified; historical resources remain exact; native evidence unproved",
             "production_row_ids": [
               "catalog.chat_memory_rebuild_lexical_index"
-            ]
+            ],
+            "ui_disposition": "internal_support_only"
           },
           {
             "command_id": "cmd.chat.memory.rebuild_semantic_index",
@@ -11246,9 +11243,7 @@
             "request_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2",
             "result_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2",
             "group": "no_project",
-            "gui_consumers": [
-              "Assistant Chat surface"
-            ],
+            "gui_consumers": [],
             "effect": "cmd.chat.memory.rebuild_semantic_index has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
             "availability": "No project is genuine application scope, with a named fixed Computer after first message, lazy visible chat folder and no invented Project/Vault. Admit ordinary files/browser/editor/terminal/tools/notebook/history/recovery under exact app roots and owner versions, retaining private notebook/memory isolation and counterpart limits. Six projects.* read tools return explicit requested/looked_in/not_looked_in/partial coverage; source read grants do not authorize writes. Existing cmd.thread.request/spawn Send uses current local previews and receiver authority; maximum three automatic round trips. Two equal conversion choices share one manifest/copy-check/cutover/report/Undo engine; stop/fence Goal/Crew/Plan/timers and use linked destination records by default. No new work plus seven days bounds chat Undo, not independent canonical custody. Screen use is off until exact chat/app/controller/disclosure admission, with one targeted Stop. Resolve the selected WorkflowScopeV2: application has an actual Server/Computer, scope_partition=app and project_id=null, with owner-required thread or pre-message draft and Host/root identity. Server-owned pause/trust/home operations use their actual Server scope without fabricating a thread; view-only and metadata reads require only their declared owner targets. Project operations use actual immutable Project identity. Never use focus, an empty ID, a sentinel Project, HOME or CWD as authority.",
             "permission": "Permissions PS-144–148 alone composes actual human|mode|build_grant evidence with retained FileSafe, trust, secrets, capabilities, root and parent/receiver ceilings. An app chat or copied receipt conveys no Project mutation/build-grant authority.",
@@ -11293,7 +11288,8 @@
             "contract_status": "scope-aware definition specified; historical resources remain exact; native evidence unproved",
             "production_row_ids": [
               "catalog.chat_memory_rebuild_semantic_index"
-            ]
+            ],
+            "ui_disposition": "internal_support_only"
           },
           {
             "command_id": "cmd.chat.memory.summarize_monthly",
@@ -11302,9 +11298,7 @@
             "request_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2",
             "result_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2",
             "group": "no_project",
-            "gui_consumers": [
-              "Assistant Chat surface"
-            ],
+            "gui_consumers": [],
             "effect": "cmd.chat.memory.summarize_monthly has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
             "availability": "No project is genuine application scope, with a named fixed Computer after first message, lazy visible chat folder and no invented Project/Vault. Admit ordinary files/browser/editor/terminal/tools/notebook/history/recovery under exact app roots and owner versions, retaining private notebook/memory isolation and counterpart limits. Six projects.* read tools return explicit requested/looked_in/not_looked_in/partial coverage; source read grants do not authorize writes. Existing cmd.thread.request/spawn Send uses current local previews and receiver authority; maximum three automatic round trips. Two equal conversion choices share one manifest/copy-check/cutover/report/Undo engine; stop/fence Goal/Crew/Plan/timers and use linked destination records by default. No new work plus seven days bounds chat Undo, not independent canonical custody. Screen use is off until exact chat/app/controller/disclosure admission, with one targeted Stop. Resolve the selected WorkflowScopeV2: application has an actual Server/Computer, scope_partition=app and project_id=null, with owner-required thread or pre-message draft and Host/root identity. Server-owned pause/trust/home operations use their actual Server scope without fabricating a thread; view-only and metadata reads require only their declared owner targets. Project operations use actual immutable Project identity. Never use focus, an empty ID, a sentinel Project, HOME or CWD as authority.",
             "permission": "Permissions PS-144–148 alone composes actual human|mode|build_grant evidence with retained FileSafe, trust, secrets, capabilities, root and parent/receiver ceilings. An app chat or copied receipt conveys no Project mutation/build-grant authority.",
@@ -11349,7 +11343,8 @@
             "contract_status": "scope-aware definition specified; historical resources remain exact; native evidence unproved",
             "production_row_ids": [
               "catalog.chat_memory_summarize_monthly"
-            ]
+            ],
+            "ui_disposition": "internal_support_only"
           },
           {
             "command_id": "cmd.chat.memory.toggle_auto_save_unverified",
@@ -11358,9 +11353,7 @@
             "request_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2",
             "result_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2",
             "group": "no_project",
-            "gui_consumers": [
-              "Assistant Chat surface"
-            ],
+            "gui_consumers": [],
             "effect": "cmd.chat.memory.toggle_auto_save_unverified has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
             "availability": "No project is genuine application scope, with a named fixed Computer after first message, lazy visible chat folder and no invented Project/Vault. Admit ordinary files/browser/editor/terminal/tools/notebook/history/recovery under exact app roots and owner versions, retaining private notebook/memory isolation and counterpart limits. Six projects.* read tools return explicit requested/looked_in/not_looked_in/partial coverage; source read grants do not authorize writes. Existing cmd.thread.request/spawn Send uses current local previews and receiver authority; maximum three automatic round trips. Two equal conversion choices share one manifest/copy-check/cutover/report/Undo engine; stop/fence Goal/Crew/Plan/timers and use linked destination records by default. No new work plus seven days bounds chat Undo, not independent canonical custody. Screen use is off until exact chat/app/controller/disclosure admission, with one targeted Stop. Resolve the selected WorkflowScopeV2: application has an actual Server/Computer, scope_partition=app and project_id=null, with owner-required thread or pre-message draft and Host/root identity. Server-owned pause/trust/home operations use their actual Server scope without fabricating a thread; view-only and metadata reads require only their declared owner targets. Project operations use actual immutable Project identity. Never use focus, an empty ID, a sentinel Project, HOME or CWD as authority.",
             "permission": "Permissions PS-144–148 alone composes actual human|mode|build_grant evidence with retained FileSafe, trust, secrets, capabilities, root and parent/receiver ceilings. An app chat or copied receipt conveys no Project mutation/build-grant authority.",
@@ -11405,7 +11398,8 @@
             "contract_status": "scope-aware definition specified; historical resources remain exact; native evidence unproved",
             "production_row_ids": [
               "catalog.chat_memory_toggle_auto_save_unverified"
-            ]
+            ],
+            "ui_disposition": "internal_support_only"
           },
           {
             "command_id": "cmd.chat.memory.verification_sweep",
@@ -11414,9 +11408,7 @@
             "request_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2",
             "result_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2",
             "group": "no_project",
-            "gui_consumers": [
-              "Assistant Chat surface"
-            ],
+            "gui_consumers": [],
             "effect": "cmd.chat.memory.verification_sweep has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
             "availability": "No project is genuine application scope, with a named fixed Computer after first message, lazy visible chat folder and no invented Project/Vault. Admit ordinary files/browser/editor/terminal/tools/notebook/history/recovery under exact app roots and owner versions, retaining private notebook/memory isolation and counterpart limits. Six projects.* read tools return explicit requested/looked_in/not_looked_in/partial coverage; source read grants do not authorize writes. Existing cmd.thread.request/spawn Send uses current local previews and receiver authority; maximum three automatic round trips. Two equal conversion choices share one manifest/copy-check/cutover/report/Undo engine; stop/fence Goal/Crew/Plan/timers and use linked destination records by default. No new work plus seven days bounds chat Undo, not independent canonical custody. Screen use is off until exact chat/app/controller/disclosure admission, with one targeted Stop. Resolve the selected WorkflowScopeV2: application has an actual Server/Computer, scope_partition=app and project_id=null, with owner-required thread or pre-message draft and Host/root identity. Server-owned pause/trust/home operations use their actual Server scope without fabricating a thread; view-only and metadata reads require only their declared owner targets. Project operations use actual immutable Project identity. Never use focus, an empty ID, a sentinel Project, HOME or CWD as authority.",
             "permission": "Permissions PS-144–148 alone composes actual human|mode|build_grant evidence with retained FileSafe, trust, secrets, capabilities, root and parent/receiver ceilings. An app chat or copied receipt conveys no Project mutation/build-grant authority.",
@@ -11461,7 +11453,8 @@
             "contract_status": "scope-aware definition specified; historical resources remain exact; native evidence unproved",
             "production_row_ids": [
               "catalog.chat_memory_verification_sweep"
-            ]
+            ],
+            "ui_disposition": "internal_support_only"
           },
           {
             "command_id": "cmd.chat.memory.verify",
@@ -11470,9 +11463,7 @@
             "request_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2",
             "result_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2",
             "group": "no_project",
-            "gui_consumers": [
-              "Assistant Chat surface"
-            ],
+            "gui_consumers": [],
             "effect": "cmd.chat.memory.verify has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
             "availability": "No project is genuine application scope, with a named fixed Computer after first message, lazy visible chat folder and no invented Project/Vault. Admit ordinary files/browser/editor/terminal/tools/notebook/history/recovery under exact app roots and owner versions, retaining private notebook/memory isolation and counterpart limits. Six projects.* read tools return explicit requested/looked_in/not_looked_in/partial coverage; source read grants do not authorize writes. Existing cmd.thread.request/spawn Send uses current local previews and receiver authority; maximum three automatic round trips. Two equal conversion choices share one manifest/copy-check/cutover/report/Undo engine; stop/fence Goal/Crew/Plan/timers and use linked destination records by default. No new work plus seven days bounds chat Undo, not independent canonical custody. Screen use is off until exact chat/app/controller/disclosure admission, with one targeted Stop. Resolve the selected WorkflowScopeV2: application has an actual Server/Computer, scope_partition=app and project_id=null, with owner-required thread or pre-message draft and Host/root identity. Server-owned pause/trust/home operations use their actual Server scope without fabricating a thread; view-only and metadata reads require only their declared owner targets. Project operations use actual immutable Project identity. Never use focus, an empty ID, a sentinel Project, HOME or CWD as authority.",
             "permission": "Permissions PS-144–148 alone composes actual human|mode|build_grant evidence with retained FileSafe, trust, secrets, capabilities, root and parent/receiver ceilings. An app chat or copied receipt conveys no Project mutation/build-grant authority.",
@@ -11517,7 +11508,8 @@
             "contract_status": "scope-aware definition specified; historical resources remain exact; native evidence unproved",
             "production_row_ids": [
               "catalog.chat_memory_verify"
-            ]
+            ],
+            "ui_disposition": "internal_support_only"
           },
           {
             "command_id": "cmd.chat.mode",
@@ -30258,7 +30250,9 @@
             "result_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2",
             "group": "no_project",
             "gui_consumers": [
-              "Puppet Master Assistant > teach_capture"
+              "wand",
+              "chat_header",
+              "memory_save_receipt"
             ],
             "effect": "Owner typed result and projection under Plans/assistant-memory-subsystem.md. No EventRecord is admitted by this closure; proposed event names remain requires_central_adjudication.",
             "availability": "No project is genuine application scope, with a named fixed Computer after first message, lazy visible chat folder and no invented Project/Vault. Admit ordinary files/browser/editor/terminal/tools/notebook/history/recovery under exact app roots and owner versions, retaining private notebook/memory isolation and counterpart limits. Six projects.* read tools return explicit requested/looked_in/not_looked_in/partial coverage; source read grants do not authorize writes. Existing cmd.thread.request/spawn Send uses current local previews and receiver authority; maximum three automatic round trips. Two equal conversion choices share one manifest/copy-check/cutover/report/Undo engine; stop/fence Goal/Crew/Plan/timers and use linked destination records by default. No new work plus seven days bounds chat Undo, not independent canonical custody. Screen use is off until exact chat/app/controller/disclosure admission, with one targeted Stop. Resolve the selected WorkflowScopeV2: application has an actual Server/Computer, scope_partition=app and project_id=null, with owner-required thread or pre-message draft and Host/root identity. Server-owned pause/trust/home operations use their actual Server scope without fabricating a thread; view-only and metadata reads require only their declared owner targets. Project operations use actual immutable Project identity. Never use focus, an empty ID, a sentinel Project, HOME or CWD as authority.",
@@ -31031,7 +31025,8 @@
             "result_schema_ref": "Plans/collaborative_workflows_contracts.schema.json#/$defs/ComposerBufferResultScopeV2",
             "group": "goal_crew",
             "gui_consumers": [
-              "Puppet Master Assistant > review_card"
+              "review_card",
+              "review_panel"
             ],
             "effect": "Draft-only ComposerBufferResult under CWR-031 and AMS-053: source-specific review_findings or taught_rule_check lineage accompanies an empty-source-composer fill. No message is sent or fix executed; no EventRecord is admitted by static closure.",
             "availability": "The six existing cmd.chat.goal.* mutations, Goal editor, four collaboration kinds, participant/message actions and Crew Auto admit explicit app siblings and original exact Project contracts. Scope, original accepted source/hash, body/control/Stop, parent/receiver authority, roots, roster/config revisions and canonical backup join at final dispatch. Ordinary updates never retarget immutable Goal/Plan/Crew bindings. No retired goal.scheduled/degraded/child-state producer or Project Workflow/WorkNode certification is revived. App Crew Auto uses an app-thread configuration revision, distinct from a thread override and Project configuration; the same evaluator/coordination board remains sole owner. Conversion defaults to linked new destination records after safe stop/fence. Resolve the selected WorkflowScopeV2: application has an actual Server/Computer, scope_partition=app and project_id=null, with owner-required thread or pre-message draft and Host/root identity. Server-owned pause/trust/home operations use their actual Server scope without fabricating a thread; view-only and metadata reads require only their declared owner targets. Project operations use actual immutable Project identity. Never use focus, an empty ID, a sentinel Project, HOME or CWD as authority.",
@@ -38439,9 +38434,7 @@
             "request_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2",
             "result_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2",
             "group": "no_project",
-            "gui_consumers": [
-              "Assistant Chat surface"
-            ],
+            "gui_consumers": [],
             "effect": "cmd.chat.memory.dedup_sweep has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
             "availability": "No project is genuine application scope, with a named fixed Computer after first message, lazy visible chat folder and no invented Project/Vault. Admit ordinary files/browser/editor/terminal/tools/notebook/history/recovery under exact app roots and owner versions, retaining private notebook/memory isolation and counterpart limits. Six projects.* read tools return explicit requested/looked_in/not_looked_in/partial coverage; source read grants do not authorize writes. Existing cmd.thread.request/spawn Send uses current local previews and receiver authority; maximum three automatic round trips. Two equal conversion choices share one manifest/copy-check/cutover/report/Undo engine; stop/fence Goal/Crew/Plan/timers and use linked destination records by default. No new work plus seven days bounds chat Undo, not independent canonical custody. Screen use is off until exact chat/app/controller/disclosure admission, with one targeted Stop. Resolve the selected WorkflowScopeV2: application has an actual Server/Computer, scope_partition=app and project_id=null, with owner-required thread or pre-message draft and Host/root identity. Server-owned pause/trust/home operations use their actual Server scope without fabricating a thread; view-only and metadata reads require only their declared owner targets. Project operations use actual immutable Project identity. Never use focus, an empty ID, a sentinel Project, HOME or CWD as authority.",
             "permission": "Permissions PS-144–148 alone composes actual human|mode|build_grant evidence with retained FileSafe, trust, secrets, capabilities, root and parent/receiver ceilings. An app chat or copied receipt conveys no Project mutation/build-grant authority.",
@@ -38486,7 +38479,8 @@
             "contract_status": "scope-aware definition specified; historical resources remain exact; native evidence unproved",
             "production_row_ids": [
               "catalog.chat_memory_dedup_sweep"
-            ]
+            ],
+            "ui_disposition": "internal_support_only"
           },
           {
             "command_id": "cmd.chat.memory.discard",
@@ -38495,9 +38489,7 @@
             "request_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2",
             "result_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2",
             "group": "no_project",
-            "gui_consumers": [
-              "Assistant Chat surface"
-            ],
+            "gui_consumers": [],
             "effect": "cmd.chat.memory.discard has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
             "availability": "No project is genuine application scope, with a named fixed Computer after first message, lazy visible chat folder and no invented Project/Vault. Admit ordinary files/browser/editor/terminal/tools/notebook/history/recovery under exact app roots and owner versions, retaining private notebook/memory isolation and counterpart limits. Six projects.* read tools return explicit requested/looked_in/not_looked_in/partial coverage; source read grants do not authorize writes. Existing cmd.thread.request/spawn Send uses current local previews and receiver authority; maximum three automatic round trips. Two equal conversion choices share one manifest/copy-check/cutover/report/Undo engine; stop/fence Goal/Crew/Plan/timers and use linked destination records by default. No new work plus seven days bounds chat Undo, not independent canonical custody. Screen use is off until exact chat/app/controller/disclosure admission, with one targeted Stop. Resolve the selected WorkflowScopeV2: application has an actual Server/Computer, scope_partition=app and project_id=null, with owner-required thread or pre-message draft and Host/root identity. Server-owned pause/trust/home operations use their actual Server scope without fabricating a thread; view-only and metadata reads require only their declared owner targets. Project operations use actual immutable Project identity. Never use focus, an empty ID, a sentinel Project, HOME or CWD as authority.",
             "permission": "Permissions PS-144–148 alone composes actual human|mode|build_grant evidence with retained FileSafe, trust, secrets, capabilities, root and parent/receiver ceilings. An app chat or copied receipt conveys no Project mutation/build-grant authority.",
@@ -38542,19 +38534,20 @@
             "contract_status": "scope-aware definition specified; historical resources remain exact; native evidence unproved",
             "production_row_ids": [
               "catalog.chat_memory_discard"
-            ]
+            ],
+            "ui_disposition": "internal_support_only"
           },
           {
             "command_id": "cmd.chat.memory.edit",
             "owner_ref": "Plans/assistant-chat-design.md#ACD-508",
             "handler": "handlers::chat::memory_edit",
-            "request_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2",
-            "result_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2",
+            "request_schema_ref": "Plans/assistant_memory_contracts.schema.json#/$defs/MemoryNoteEditRequestV1",
+            "result_schema_ref": "Plans/assistant_memory_contracts.schema.json#/$defs/MemoryNoteMutationResultV1",
             "group": "no_project",
             "gui_consumers": [
               "Assistant Chat surface"
             ],
-            "effect": "cmd.chat.memory.edit has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+            "effect": "Owner-checked canonical MemoryGist versioned edit with exact scope/currentness, derived-cache invalidation and durable owner receipt; no EventRecord writer is admitted here.",
             "availability": "No project is genuine application scope, with a named fixed Computer after first message, lazy visible chat folder and no invented Project/Vault. Admit ordinary files/browser/editor/terminal/tools/notebook/history/recovery under exact app roots and owner versions, retaining private notebook/memory isolation and counterpart limits. Six projects.* read tools return explicit requested/looked_in/not_looked_in/partial coverage; source read grants do not authorize writes. Existing cmd.thread.request/spawn Send uses current local previews and receiver authority; maximum three automatic round trips. Two equal conversion choices share one manifest/copy-check/cutover/report/Undo engine; stop/fence Goal/Crew/Plan/timers and use linked destination records by default. No new work plus seven days bounds chat Undo, not independent canonical custody. Screen use is off until exact chat/app/controller/disclosure admission, with one targeted Stop. Resolve the selected WorkflowScopeV2: application has an actual Server/Computer, scope_partition=app and project_id=null, with owner-required thread or pre-message draft and Host/root identity. Server-owned pause/trust/home operations use their actual Server scope without fabricating a thread; view-only and metadata reads require only their declared owner targets. Project operations use actual immutable Project identity. Never use focus, an empty ID, a sentinel Project, HOME or CWD as authority.",
             "permission": "Permissions PS-144–148 alone composes actual human|mode|build_grant evidence with retained FileSafe, trust, secrets, capabilities, root and parent/receiver ceilings. An app chat or copied receipt conveys no Project mutation/build-grant authority.",
             "currentness": "Validate the exact operation-declared source/target refs and revisions/hashes. Mutation/execution rechecks the sole writer/lease, permission and Stop/pause/revocation generations at entry and immediately before effect. Read/navigation/local paths validate their declared read target/source/view generation; they do not demand a write lease merely to inspect. Owner-admitted stale/as-of read-only presentation never claims fresh authority or enables effects. Same idempotency key/digest returns the original result; conflict or dedupe unavailable performs no effect.",
@@ -38607,9 +38600,7 @@
             "request_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2",
             "result_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2",
             "group": "no_project",
-            "gui_consumers": [
-              "Assistant Chat surface"
-            ],
+            "gui_consumers": [],
             "effect": "cmd.chat.memory.pin has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
             "availability": "No project is genuine application scope, with a named fixed Computer after first message, lazy visible chat folder and no invented Project/Vault. Admit ordinary files/browser/editor/terminal/tools/notebook/history/recovery under exact app roots and owner versions, retaining private notebook/memory isolation and counterpart limits. Six projects.* read tools return explicit requested/looked_in/not_looked_in/partial coverage; source read grants do not authorize writes. Existing cmd.thread.request/spawn Send uses current local previews and receiver authority; maximum three automatic round trips. Two equal conversion choices share one manifest/copy-check/cutover/report/Undo engine; stop/fence Goal/Crew/Plan/timers and use linked destination records by default. No new work plus seven days bounds chat Undo, not independent canonical custody. Screen use is off until exact chat/app/controller/disclosure admission, with one targeted Stop. Resolve the selected WorkflowScopeV2: application has an actual Server/Computer, scope_partition=app and project_id=null, with owner-required thread or pre-message draft and Host/root identity. Server-owned pause/trust/home operations use their actual Server scope without fabricating a thread; view-only and metadata reads require only their declared owner targets. Project operations use actual immutable Project identity. Never use focus, an empty ID, a sentinel Project, HOME or CWD as authority.",
             "permission": "Permissions PS-144–148 alone composes actual human|mode|build_grant evidence with retained FileSafe, trust, secrets, capabilities, root and parent/receiver ceilings. An app chat or copied receipt conveys no Project mutation/build-grant authority.",
@@ -38654,7 +38645,8 @@
             "contract_status": "scope-aware definition specified; historical resources remain exact; native evidence unproved",
             "production_row_ids": [
               "catalog.chat_memory_pin"
-            ]
+            ],
+            "ui_disposition": "internal_support_only"
           },
           {
             "command_id": "cmd.chat.memory.preview_capsule",
@@ -38663,9 +38655,7 @@
             "request_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2",
             "result_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2",
             "group": "no_project",
-            "gui_consumers": [
-              "Assistant Chat surface"
-            ],
+            "gui_consumers": [],
             "effect": "cmd.chat.memory.preview_capsule has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
             "availability": "No project is genuine application scope, with a named fixed Computer after first message, lazy visible chat folder and no invented Project/Vault. Admit ordinary files/browser/editor/terminal/tools/notebook/history/recovery under exact app roots and owner versions, retaining private notebook/memory isolation and counterpart limits. Six projects.* read tools return explicit requested/looked_in/not_looked_in/partial coverage; source read grants do not authorize writes. Existing cmd.thread.request/spawn Send uses current local previews and receiver authority; maximum three automatic round trips. Two equal conversion choices share one manifest/copy-check/cutover/report/Undo engine; stop/fence Goal/Crew/Plan/timers and use linked destination records by default. No new work plus seven days bounds chat Undo, not independent canonical custody. Screen use is off until exact chat/app/controller/disclosure admission, with one targeted Stop. Resolve the selected WorkflowScopeV2: application has an actual Server/Computer, scope_partition=app and project_id=null, with owner-required thread or pre-message draft and Host/root identity. Server-owned pause/trust/home operations use their actual Server scope without fabricating a thread; view-only and metadata reads require only their declared owner targets. Project operations use actual immutable Project identity. Never use focus, an empty ID, a sentinel Project, HOME or CWD as authority.",
             "permission": "Permissions PS-144–148 alone composes actual human|mode|build_grant evidence with retained FileSafe, trust, secrets, capabilities, root and parent/receiver ceilings. An app chat or copied receipt conveys no Project mutation/build-grant authority.",
@@ -38710,7 +38700,8 @@
             "contract_status": "scope-aware definition specified; historical resources remain exact; native evidence unproved",
             "production_row_ids": [
               "catalog.chat_memory_preview_capsule"
-            ]
+            ],
+            "ui_disposition": "internal_support_only"
           },
           {
             "command_id": "cmd.chat.memory.prune_archive",
@@ -38719,9 +38710,7 @@
             "request_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2",
             "result_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2",
             "group": "no_project",
-            "gui_consumers": [
-              "Assistant Chat surface"
-            ],
+            "gui_consumers": [],
             "effect": "cmd.chat.memory.prune_archive has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
             "availability": "No project is genuine application scope, with a named fixed Computer after first message, lazy visible chat folder and no invented Project/Vault. Admit ordinary files/browser/editor/terminal/tools/notebook/history/recovery under exact app roots and owner versions, retaining private notebook/memory isolation and counterpart limits. Six projects.* read tools return explicit requested/looked_in/not_looked_in/partial coverage; source read grants do not authorize writes. Existing cmd.thread.request/spawn Send uses current local previews and receiver authority; maximum three automatic round trips. Two equal conversion choices share one manifest/copy-check/cutover/report/Undo engine; stop/fence Goal/Crew/Plan/timers and use linked destination records by default. No new work plus seven days bounds chat Undo, not independent canonical custody. Screen use is off until exact chat/app/controller/disclosure admission, with one targeted Stop. Resolve the selected WorkflowScopeV2: application has an actual Server/Computer, scope_partition=app and project_id=null, with owner-required thread or pre-message draft and Host/root identity. Server-owned pause/trust/home operations use their actual Server scope without fabricating a thread; view-only and metadata reads require only their declared owner targets. Project operations use actual immutable Project identity. Never use focus, an empty ID, a sentinel Project, HOME or CWD as authority.",
             "permission": "Permissions PS-144–148 alone composes actual human|mode|build_grant evidence with retained FileSafe, trust, secrets, capabilities, root and parent/receiver ceilings. An app chat or copied receipt conveys no Project mutation/build-grant authority.",
@@ -38766,7 +38755,8 @@
             "contract_status": "scope-aware definition specified; historical resources remain exact; native evidence unproved",
             "production_row_ids": [
               "catalog.chat_memory_prune_archive"
-            ]
+            ],
+            "ui_disposition": "internal_support_only"
           },
           {
             "command_id": "cmd.chat.memory.rebuild_lexical_index",
@@ -38775,9 +38765,7 @@
             "request_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2",
             "result_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2",
             "group": "no_project",
-            "gui_consumers": [
-              "Assistant Chat surface"
-            ],
+            "gui_consumers": [],
             "effect": "cmd.chat.memory.rebuild_lexical_index has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
             "availability": "No project is genuine application scope, with a named fixed Computer after first message, lazy visible chat folder and no invented Project/Vault. Admit ordinary files/browser/editor/terminal/tools/notebook/history/recovery under exact app roots and owner versions, retaining private notebook/memory isolation and counterpart limits. Six projects.* read tools return explicit requested/looked_in/not_looked_in/partial coverage; source read grants do not authorize writes. Existing cmd.thread.request/spawn Send uses current local previews and receiver authority; maximum three automatic round trips. Two equal conversion choices share one manifest/copy-check/cutover/report/Undo engine; stop/fence Goal/Crew/Plan/timers and use linked destination records by default. No new work plus seven days bounds chat Undo, not independent canonical custody. Screen use is off until exact chat/app/controller/disclosure admission, with one targeted Stop. Resolve the selected WorkflowScopeV2: application has an actual Server/Computer, scope_partition=app and project_id=null, with owner-required thread or pre-message draft and Host/root identity. Server-owned pause/trust/home operations use their actual Server scope without fabricating a thread; view-only and metadata reads require only their declared owner targets. Project operations use actual immutable Project identity. Never use focus, an empty ID, a sentinel Project, HOME or CWD as authority.",
             "permission": "Permissions PS-144–148 alone composes actual human|mode|build_grant evidence with retained FileSafe, trust, secrets, capabilities, root and parent/receiver ceilings. An app chat or copied receipt conveys no Project mutation/build-grant authority.",
@@ -38822,7 +38810,8 @@
             "contract_status": "scope-aware definition specified; historical resources remain exact; native evidence unproved",
             "production_row_ids": [
               "catalog.chat_memory_rebuild_lexical_index"
-            ]
+            ],
+            "ui_disposition": "internal_support_only"
           },
           {
             "command_id": "cmd.chat.memory.rebuild_semantic_index",
@@ -38831,9 +38820,7 @@
             "request_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2",
             "result_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2",
             "group": "no_project",
-            "gui_consumers": [
-              "Assistant Chat surface"
-            ],
+            "gui_consumers": [],
             "effect": "cmd.chat.memory.rebuild_semantic_index has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
             "availability": "No project is genuine application scope, with a named fixed Computer after first message, lazy visible chat folder and no invented Project/Vault. Admit ordinary files/browser/editor/terminal/tools/notebook/history/recovery under exact app roots and owner versions, retaining private notebook/memory isolation and counterpart limits. Six projects.* read tools return explicit requested/looked_in/not_looked_in/partial coverage; source read grants do not authorize writes. Existing cmd.thread.request/spawn Send uses current local previews and receiver authority; maximum three automatic round trips. Two equal conversion choices share one manifest/copy-check/cutover/report/Undo engine; stop/fence Goal/Crew/Plan/timers and use linked destination records by default. No new work plus seven days bounds chat Undo, not independent canonical custody. Screen use is off until exact chat/app/controller/disclosure admission, with one targeted Stop. Resolve the selected WorkflowScopeV2: application has an actual Server/Computer, scope_partition=app and project_id=null, with owner-required thread or pre-message draft and Host/root identity. Server-owned pause/trust/home operations use their actual Server scope without fabricating a thread; view-only and metadata reads require only their declared owner targets. Project operations use actual immutable Project identity. Never use focus, an empty ID, a sentinel Project, HOME or CWD as authority.",
             "permission": "Permissions PS-144–148 alone composes actual human|mode|build_grant evidence with retained FileSafe, trust, secrets, capabilities, root and parent/receiver ceilings. An app chat or copied receipt conveys no Project mutation/build-grant authority.",
@@ -38878,7 +38865,8 @@
             "contract_status": "scope-aware definition specified; historical resources remain exact; native evidence unproved",
             "production_row_ids": [
               "catalog.chat_memory_rebuild_semantic_index"
-            ]
+            ],
+            "ui_disposition": "internal_support_only"
           },
           {
             "command_id": "cmd.chat.memory.summarize_monthly",
@@ -38887,9 +38875,7 @@
             "request_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2",
             "result_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2",
             "group": "no_project",
-            "gui_consumers": [
-              "Assistant Chat surface"
-            ],
+            "gui_consumers": [],
             "effect": "cmd.chat.memory.summarize_monthly has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
             "availability": "No project is genuine application scope, with a named fixed Computer after first message, lazy visible chat folder and no invented Project/Vault. Admit ordinary files/browser/editor/terminal/tools/notebook/history/recovery under exact app roots and owner versions, retaining private notebook/memory isolation and counterpart limits. Six projects.* read tools return explicit requested/looked_in/not_looked_in/partial coverage; source read grants do not authorize writes. Existing cmd.thread.request/spawn Send uses current local previews and receiver authority; maximum three automatic round trips. Two equal conversion choices share one manifest/copy-check/cutover/report/Undo engine; stop/fence Goal/Crew/Plan/timers and use linked destination records by default. No new work plus seven days bounds chat Undo, not independent canonical custody. Screen use is off until exact chat/app/controller/disclosure admission, with one targeted Stop. Resolve the selected WorkflowScopeV2: application has an actual Server/Computer, scope_partition=app and project_id=null, with owner-required thread or pre-message draft and Host/root identity. Server-owned pause/trust/home operations use their actual Server scope without fabricating a thread; view-only and metadata reads require only their declared owner targets. Project operations use actual immutable Project identity. Never use focus, an empty ID, a sentinel Project, HOME or CWD as authority.",
             "permission": "Permissions PS-144–148 alone composes actual human|mode|build_grant evidence with retained FileSafe, trust, secrets, capabilities, root and parent/receiver ceilings. An app chat or copied receipt conveys no Project mutation/build-grant authority.",
@@ -38934,7 +38920,8 @@
             "contract_status": "scope-aware definition specified; historical resources remain exact; native evidence unproved",
             "production_row_ids": [
               "catalog.chat_memory_summarize_monthly"
-            ]
+            ],
+            "ui_disposition": "internal_support_only"
           },
           {
             "command_id": "cmd.chat.memory.toggle_auto_save_unverified",
@@ -38943,9 +38930,7 @@
             "request_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2",
             "result_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2",
             "group": "no_project",
-            "gui_consumers": [
-              "Assistant Chat surface"
-            ],
+            "gui_consumers": [],
             "effect": "cmd.chat.memory.toggle_auto_save_unverified has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
             "availability": "No project is genuine application scope, with a named fixed Computer after first message, lazy visible chat folder and no invented Project/Vault. Admit ordinary files/browser/editor/terminal/tools/notebook/history/recovery under exact app roots and owner versions, retaining private notebook/memory isolation and counterpart limits. Six projects.* read tools return explicit requested/looked_in/not_looked_in/partial coverage; source read grants do not authorize writes. Existing cmd.thread.request/spawn Send uses current local previews and receiver authority; maximum three automatic round trips. Two equal conversion choices share one manifest/copy-check/cutover/report/Undo engine; stop/fence Goal/Crew/Plan/timers and use linked destination records by default. No new work plus seven days bounds chat Undo, not independent canonical custody. Screen use is off until exact chat/app/controller/disclosure admission, with one targeted Stop. Resolve the selected WorkflowScopeV2: application has an actual Server/Computer, scope_partition=app and project_id=null, with owner-required thread or pre-message draft and Host/root identity. Server-owned pause/trust/home operations use their actual Server scope without fabricating a thread; view-only and metadata reads require only their declared owner targets. Project operations use actual immutable Project identity. Never use focus, an empty ID, a sentinel Project, HOME or CWD as authority.",
             "permission": "Permissions PS-144–148 alone composes actual human|mode|build_grant evidence with retained FileSafe, trust, secrets, capabilities, root and parent/receiver ceilings. An app chat or copied receipt conveys no Project mutation/build-grant authority.",
@@ -38990,7 +38975,8 @@
             "contract_status": "scope-aware definition specified; historical resources remain exact; native evidence unproved",
             "production_row_ids": [
               "catalog.chat_memory_toggle_auto_save_unverified"
-            ]
+            ],
+            "ui_disposition": "internal_support_only"
           },
           {
             "command_id": "cmd.chat.memory.verification_sweep",
@@ -38999,9 +38985,7 @@
             "request_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2",
             "result_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2",
             "group": "no_project",
-            "gui_consumers": [
-              "Assistant Chat surface"
-            ],
+            "gui_consumers": [],
             "effect": "cmd.chat.memory.verification_sweep has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
             "availability": "No project is genuine application scope, with a named fixed Computer after first message, lazy visible chat folder and no invented Project/Vault. Admit ordinary files/browser/editor/terminal/tools/notebook/history/recovery under exact app roots and owner versions, retaining private notebook/memory isolation and counterpart limits. Six projects.* read tools return explicit requested/looked_in/not_looked_in/partial coverage; source read grants do not authorize writes. Existing cmd.thread.request/spawn Send uses current local previews and receiver authority; maximum three automatic round trips. Two equal conversion choices share one manifest/copy-check/cutover/report/Undo engine; stop/fence Goal/Crew/Plan/timers and use linked destination records by default. No new work plus seven days bounds chat Undo, not independent canonical custody. Screen use is off until exact chat/app/controller/disclosure admission, with one targeted Stop. Resolve the selected WorkflowScopeV2: application has an actual Server/Computer, scope_partition=app and project_id=null, with owner-required thread or pre-message draft and Host/root identity. Server-owned pause/trust/home operations use their actual Server scope without fabricating a thread; view-only and metadata reads require only their declared owner targets. Project operations use actual immutable Project identity. Never use focus, an empty ID, a sentinel Project, HOME or CWD as authority.",
             "permission": "Permissions PS-144–148 alone composes actual human|mode|build_grant evidence with retained FileSafe, trust, secrets, capabilities, root and parent/receiver ceilings. An app chat or copied receipt conveys no Project mutation/build-grant authority.",
@@ -39046,7 +39030,8 @@
             "contract_status": "scope-aware definition specified; historical resources remain exact; native evidence unproved",
             "production_row_ids": [
               "catalog.chat_memory_verification_sweep"
-            ]
+            ],
+            "ui_disposition": "internal_support_only"
           },
           {
             "command_id": "cmd.chat.memory.verify",
@@ -39055,9 +39040,7 @@
             "request_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2",
             "result_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2",
             "group": "no_project",
-            "gui_consumers": [
-              "Assistant Chat surface"
-            ],
+            "gui_consumers": [],
             "effect": "cmd.chat.memory.verify has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
             "availability": "No project is genuine application scope, with a named fixed Computer after first message, lazy visible chat folder and no invented Project/Vault. Admit ordinary files/browser/editor/terminal/tools/notebook/history/recovery under exact app roots and owner versions, retaining private notebook/memory isolation and counterpart limits. Six projects.* read tools return explicit requested/looked_in/not_looked_in/partial coverage; source read grants do not authorize writes. Existing cmd.thread.request/spawn Send uses current local previews and receiver authority; maximum three automatic round trips. Two equal conversion choices share one manifest/copy-check/cutover/report/Undo engine; stop/fence Goal/Crew/Plan/timers and use linked destination records by default. No new work plus seven days bounds chat Undo, not independent canonical custody. Screen use is off until exact chat/app/controller/disclosure admission, with one targeted Stop. Resolve the selected WorkflowScopeV2: application has an actual Server/Computer, scope_partition=app and project_id=null, with owner-required thread or pre-message draft and Host/root identity. Server-owned pause/trust/home operations use their actual Server scope without fabricating a thread; view-only and metadata reads require only their declared owner targets. Project operations use actual immutable Project identity. Never use focus, an empty ID, a sentinel Project, HOME or CWD as authority.",
             "permission": "Permissions PS-144–148 alone composes actual human|mode|build_grant evidence with retained FileSafe, trust, secrets, capabilities, root and parent/receiver ceilings. An app chat or copied receipt conveys no Project mutation/build-grant authority.",
@@ -39102,7 +39085,8 @@
             "contract_status": "scope-aware definition specified; historical resources remain exact; native evidence unproved",
             "production_row_ids": [
               "catalog.chat_memory_verify"
-            ]
+            ],
+            "ui_disposition": "internal_support_only"
           },
           {
             "command_id": "cmd.chat.mode",

@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L40621-L41826
+Source lines: L40697-L41928
 
-Source SHA256: `c5957077f2c168bc1f73c05b9ae87b863ea363be0a7b1c647e73ba278fbb7aea`
+Source SHA256: `faba71dc4ce3fe68b94ea0639e20e448c3f9f3c74a8343e647aa275704933a7a`
 
 ---
 
@@ -19,75 +19,93 @@ plan_unit_id: F3-566
 unit_type: gui_requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: 'Wand modules redesign, 2026-09-27 (lineage J-1 and J-2, DL-109). For the wand modules'' surfaces only,
-  this contract supersedes the presentation clauses of the 2026-09-03 redesign section''s section 10 (one shared modal
-  shell, the card that pops out to a full panel) and section 13 (the Schedule Message and Build At modals'' layout),
-  and Additive Correction v4''s statement that nothing authorises a broad restyle. Every behaviour clause stays and applies
-  to these surfaces unchanged: MODAL, PART, SMSG, QMAX, PPROG, PFAIL, PSCHED and CDRY, the current themes and their tokens.
-  Every configuration popup is a configuration sheet with one anatomy. The head has the module''s kind mark (no tile,
-  no box), a sentence-case title with the canonical name inside, one lead sentence and the close control, and no header
-  pill. The hero is the most important input, first and focused. Then a plate, a flat drawing of who is involved and
-  where the result goes (in the four collaboration kinds, the cast plate of F3-595, DL-149), over the roster or the module''s
-  equivalent; then the questions, numbered only where the order is real (1 to 4 in the four collaboration kinds, 1 to
-  3 in Crew Auto), each number drawn as a step tile (F3-592, DL-148), and unnumbered elsewhere; the promise lines saying
-  what won''t happen, where the module has any (the Schedule Message sheet has none, DL-148); and one Advanced entry
-  that opens as a page inside the same sheet. Every control has a visible label and one helper line; options with descriptions
-  use the preserved dropdown trigger, and each description names the real difference between the options (for example
-  Single Agent against Multi-Pass Review, or the Deep Plan strategies Thorough, Exhaustive and BrainStorm; BrainStorm
-  has no Quick strategy); a disabled control prints its reason in words. The foot holds the read-back sentence, always
-  true for the current settings, the estimate line (never $0.00), Cancel and one primary naming a verb, the canonical
-  name and a count; a disabled primary prints its reason, and a refused Start replaces the read-back with the refusal
-  and a route to the control that fixes it. A sheet whose changes apply at once shows only Done. Every sheet sits over
-  a flat scrim. On the Skia GPU path a sheet is frosted glass, the extra blur of DL-114 drawn by the Skia renderer extensions
-  (DL-139, F3-582); on the Skia CPU raster it is a solid surface, and Glass keeps its near-opaque glass-coloured panel.
-  The scrim is never blurred, and F3-431''s blur budget admits this sheet blur and nothing more (DL-139). Motion (DL-113,
-  DL-115): each theme family moves with its own motion personality, aligned with the transcript''s motion voices of ACD-475
-  (Basic: ink; Friendly: hop; Glass: depth; Retro: type), so a sheet''s opening and closing and an in-chat card''s changes
-  take their family''s personality. Where a card takes part in a transcript beat (its family entrance, the fold), ACD-475
-  governs and the voice changes only path, easing and texture, never timing or order. This contract states the principle
-  only: the per-family duration and easing values are the design foundation''s tokens, recorded at the concept''s closing
-  step, and are not canon values. Reduce Motion lands every change at its end state instantly in every family. Sizes
-  are fixed per sheet: wide 1120 x 780 (the collaboration kinds, the Scheduled and Automations manager, Memory), standard
-  900 x 720 (Back Seat Driver, Schedule Message, Build At, Teach) and compact 720 wide at a fixed height per sheet (Revert,
-  ELI5 and the small raw-data and evidence dialogs; F3-581 gives ELI5''s), always clamped inside the window (at most
-  its width less 48 px and its height less 40 px). A sheet never resizes or re-centres while open. The common case never
-  scrolls at 1440 x 900 or 1280 x 800: the plate yields first as the roster grows, showing its richest mode that fits
-  and never scaled to fit (F3-595, DL-149), but never past its floor, the leanest drawing that fits its width (F3-601,
-  DL-154), and grows into spare height when the column is short; the roster scrolls in its own region only once its rows
-  no longer fit beside the plate''s floor, with Add a helper kept visible; the side column scrolls only below 1280 x
-  800; the hero field scrolls inside itself past three lines; below a 900 px sheet width the body becomes one column
-  that scrolls inside the sheet with head and foot fixed, the plate staying at the top of that column while its question
-  is on screen (F3-601); nothing overflows sideways. Hovering or focusing a control emphasises only the plate parts and
-  read-back phrases it affects, with no dimming, body recolouring, layout change or re-render (DL-259 FS-1). Kinds are
-  told apart by a kind mark drawn by shape, and each participant by its puppet, which replaced the cast mark (F3-594,
-  DL-149): a role prop, the theme family''s material and a puppet-drawn state, never initials or letters. Nothing draws
-  pills or capsules, side strips or vertical rules beside a block (columns are separated by space only), nested boxes,
-  uppercase micro-labels or emoji. Typography (J-1): every wand-module surface uses the theme''s own font with no separate
-  display face; the voice roles (read-backs, result and receipt headlines, pull-quotes, run-view headings) differ only
-  by size, weight and colour, and a quote is marked by quotation marks and the muted colour, never a different face.
-  Spacing (J-2) is a floor in every theme: text sits at least 8 px from a hairline, divider or border above or below
-  it (6 px inside a 40 px in-chat lane, whose height grows instead) and at least 12 px from a container''s side edge;
-  controls keep at least 10 px horizontal and 7 px vertical padding and sheet buttons are at least 32 px tall; adjacent
-  controls sit at least 10 px apart, stacked controls 12 px, and a control 16 px from unrelated text on its line; a secondary
-  line under a row sits at least 6 px below it and 12 px above what follows; roster rows are at least 52 px tall; body
-  and helper text keep a line height of at least 1.45 and headlines 1.25. When space runs short, text wraps or ellipsizes
-  or a secondary element drops; padding and gaps never compress. DL-138 confirms this scope: theme durations govern sheets
-  and a card''s own changes; transcript entrances retain ACD-475''s shared timing and order. Wand cards that opt out
-  of the family entrance do not acquire a second entrance animation. Amended 2026-10-29 (PC1/PC2; PM7): The common sheet
-  header may add Pip holding the kind sign on a third string, 10 px lower than the first concept and level with Close.
-  Existing title/kind/lead/close/focus/commit grammar remains; presentation adds no feature or dispatch. Optional host
-  follows SSYS-056. Amended Q22, Jared 2026-10-30 (DL-257): the fifth NieR family supersedes independent-override wording;
-  SSYS-043 owns migration and retained Adjust controls. DL-259 FS-1, 2026-10-31, supersedes Q17’s dimming: hover/focus
-  emphasis begins only at an actual control in its affects region, including an embedded plate control; plain text, empty
-  space and the picture alone trigger none. Affected marks take a one-pixel theme accent ring, with the shared soft glow
-  in Glass and ink in NieR; their connecting lines and the job-card edge take accent, and the linked read-back takes
-  the shared wash. Hover/focus never lowers another cast part’s opacity or recolours a Pip body, seat or label; each
-  retains its intrinsic colours. Genuine owner-state quietness remains independent of hover. Scheduled emphasises only
-  a row/mark with a drawn partner and never dims unrelated marks. Keyboard focus uses the same emphasis, Reduced Motion
-  settles it instantly, and emphasis changes no layout or owner state. One shared affects/partner owner serves every
-  sheet; there is no per-sheet hover engine. Q15: the menu head and trigger use the same registry wand with the same
-  rod/star/sparkle ink roles. Pip and that wand remain the head’s own children so a wrapper cannot discard the glyph’s
-  role-specific colours. The sign’s kind glyph matches its sheet head; do not fork a second wand or fallback icon.'
+canonical_text: 'Wand modules redesign, 2026-09-27 (lineage J-1 and J-2, DL-109). For the wand modules''
+  surfaces only, this contract supersedes the presentation clauses of the 2026-09-03 redesign section''s
+  section 10 (one shared modal shell, the card that pops out to a full panel) and section 13 (the Schedule
+  Message and Build At modals'' layout), and Additive Correction v4''s statement that nothing authorises
+  a broad restyle. Every behaviour clause stays and applies to these surfaces unchanged: MODAL, PART,
+  SMSG, QMAX, PPROG, PFAIL, PSCHED and CDRY, the current themes and their tokens. Every configuration
+  popup is a configuration sheet with one anatomy. The head has the module''s kind mark (no tile, no box),
+  a sentence-case title with the canonical name inside, one lead sentence and the close control, and no
+  header pill. The hero is the most important input, first and focused. Then a plate, a flat drawing of
+  who is involved and where the result goes (in the four collaboration kinds, the cast plate of F3-595,
+  DL-149), over the roster or the module''s equivalent; then the questions, numbered only where the order
+  is real (1 to 4 in the four collaboration kinds, 1 to 3 in Crew Auto), each number drawn as a step tile
+  (F3-592, DL-148), and unnumbered elsewhere; the promise lines saying what won''t happen, where the module
+  has any (the Schedule Message sheet has none, DL-148); and one Advanced entry that opens as a page inside
+  the same sheet. Every control has a visible label and one helper line; options with descriptions use
+  the preserved dropdown trigger, and each description names the real difference between the options (for
+  example Single Agent against Multi-Pass Review, or the Deep Plan strategies Thorough, Exhaustive and
+  BrainStorm; BrainStorm has no Quick strategy); a disabled control prints its reason in words. The foot
+  holds the read-back sentence, always true for the current settings, the estimate line (never $0.00),
+  Cancel and one primary naming a verb, the canonical name and a count; a disabled primary prints its
+  reason, and a refused Start replaces the read-back with the refusal and a route to the control that
+  fixes it. A sheet whose changes apply at once shows only Done. Every sheet sits over a flat scrim. On
+  the Skia GPU path a sheet is frosted glass, the extra blur of DL-114 drawn by the Skia renderer extensions
+  (DL-139, F3-582); on the Skia CPU raster it is a solid surface, and Glass keeps its near-opaque glass-coloured
+  panel. The scrim is never blurred, and F3-431''s blur budget admits this sheet blur and nothing more
+  (DL-139). Motion (DL-113, DL-115): each theme family moves with its own motion personality, aligned
+  with the transcript''s motion voices of ACD-475 (Basic: ink; Friendly: hop; Glass: depth; Retro: type),
+  so a sheet''s opening and closing and an in-chat card''s changes take their family''s personality. Where
+  a card takes part in a transcript beat (its family entrance, the fold), ACD-475 governs and the voice
+  changes only path, easing and texture, never timing or order. This contract states the principle only:
+  the per-family duration and easing values are the design foundation''s tokens, recorded at the concept''s
+  closing step, and are not canon values. Reduce Motion lands every change at its end state instantly
+  in every family. Sizes are fixed per sheet: wide 1120 x 780 (the collaboration kinds, the Scheduled
+  and Automations manager, Memory), standard 900 x 720 (Back Seat Driver, Schedule Message, Build At,
+  Teach) and compact 720 wide at a fixed height per sheet (Revert, ELI5 and the small raw-data and evidence
+  dialogs; F3-581 gives ELI5''s), always clamped inside the window (at most its width less 48 px and its
+  height less 40 px). A sheet never resizes or re-centres while open. The common case never scrolls at
+  1440 x 900 or 1280 x 800: the plate yields first as the roster grows, showing its richest mode that
+  fits and never scaled to fit (F3-595, DL-149), but never past its floor, the leanest drawing that fits
+  its width (F3-601, DL-154), and grows into spare height when the column is short; the roster scrolls
+  in its own region only once its rows no longer fit beside the plate''s floor, with Add a helper kept
+  visible; the side column scrolls only below 1280 x 800; the hero field scrolls inside itself past three
+  lines; below a 900 px sheet width the body becomes one column that scrolls inside the sheet with head
+  and foot fixed, the plate staying at the top of that column while its question is on screen (F3-601);
+  nothing overflows sideways. Hovering or focusing a control emphasises only the plate parts and read-back
+  phrases it affects, with no dimming, body recolouring, layout change or re-render (DL-259 FS-1). Kinds
+  are told apart by a kind mark drawn by shape, and each participant by its puppet, which replaced the
+  cast mark (F3-594, DL-149): a role prop, the theme family''s material and a puppet-drawn state, never
+  initials or letters. Nothing draws pills or capsules, side strips or vertical rules beside a block (columns
+  are separated by space only), nested boxes, uppercase micro-labels or emoji. Typography (J-1): every
+  wand-module surface uses the theme''s own font with no separate display face; the voice roles (read-backs,
+  result and receipt headlines, pull-quotes, run-view headings) differ only by size, weight and colour,
+  and a quote is marked by quotation marks and the muted colour, never a different face. Spacing (J-2)
+  is a floor in every theme: text sits at least 8 px from a hairline, divider or border above or below
+  it (6 px inside a 40 px in-chat lane, whose height grows instead) and at least 12 px from a container''s
+  side edge; controls keep at least 10 px horizontal and 7 px vertical padding and sheet buttons are at
+  least 32 px tall; adjacent controls sit at least 10 px apart, stacked controls 12 px, and a control
+  16 px from unrelated text on its line; a secondary line under a row sits at least 6 px below it and
+  12 px above what follows; roster rows are at least 52 px tall; body and helper text keep a line height
+  of at least 1.45 and headlines 1.25. When space runs short, text wraps or ellipsizes or a secondary
+  element drops; padding and gaps never compress. DL-138 confirms this scope: theme durations govern sheets
+  and a card''s own changes; transcript entrances retain ACD-475''s shared timing and order. Wand cards
+  that opt out of the family entrance do not acquire a second entrance animation. Amended 2026-10-29 (PC1/PC2;
+  PM7): The common sheet header may add Pip holding the kind sign on a third string, 10 px lower than
+  the first concept and level with Close. Existing title/kind/lead/close/focus/commit grammar remains;
+  presentation adds no feature or dispatch. Optional host follows SSYS-056. Amended Q22, Jared 2026-10-30
+  (DL-257): the fifth NieR family supersedes independent-override wording; SSYS-043 owns migration and
+  retained Adjust controls. DL-259 FS-1, 2026-10-31, supersedes Q17’s dimming: hover/focus emphasis begins
+  only at an actual control in its affects region, including an embedded plate control; plain text, empty
+  space and the picture alone trigger none. Affected marks take a one-pixel theme accent ring, with the
+  shared soft glow in Glass and ink in NieR; their connecting lines and the job-card edge take accent,
+  and the linked read-back takes the shared wash. Hover/focus never lowers another cast part’s opacity
+  or recolours a Pip body, seat or label; each retains its intrinsic colours. Genuine owner-state quietness
+  remains independent of hover. Scheduled emphasises only a row/mark with a drawn partner and never dims
+  unrelated marks. Keyboard focus uses the same emphasis, Reduced Motion settles it instantly, and emphasis
+  changes no layout or owner state. One shared affects/partner owner serves every sheet; there is no per-sheet
+  hover engine. Q15: the menu head and trigger use the same registry wand with the same rod/star/sparkle
+  ink roles. Pip and that wand remain the head’s own children so a wrapper cannot discard the glyph’s
+  role-specific colours. The sign’s kind glyph matches its sheet head; do not fork a second wand or fallback
+  icon. DL-475 overrides Memory-specific two-tab/verification/preview anatomy: the chat Memory button
+  and wand open the same single saved-note page used in Settings as a sheet. Memory is one saved-note
+  page, opened from Settings and as that same page in the chat Memory button/wand sheet. It has one on/off
+  switch, search including archived notes, a level filter All / This project / Every project, text/level/updated
+  list rows, Add memory, Edit, Delete and collapsed Archived. Title is optional, kind inferred. Delete
+  all names the exact scope; deletion is distinct from Discard/archive and cannot be silently undone from
+  old chats. Verification, sources, pins, conflicts, ranking, preview, upkeep and competing recovery controls
+  stay off the page. Instructions, History/privacy, chat capacity and Run limits remain separate.'
 gui_related: true
 gui_classification_reason: "Defines the grammar, sizes, typography and spacing of every wand module sheet."
 split_recommended: false
@@ -138,12 +156,15 @@ source_lineage:
   owner amendments J-1 and J-2, sections 2.2, 3.2, 3.5, 6.1-6.6
 - IMPACT-REGISTER B-FGS-01, B-FGS-05 (NOW part)
 - Plans/Decision_Log.md#DL-109
-- Plans/Decision_Log.md#DL-114 (the solid surface, compiled 2026-09-27; IMPACT-REGISTER B-FGS-17, card n05, E-24)
-- Plans/Decision_Log.md#DL-139 (sheet frosted on the Skia GPU path, solid on the CPU raster; owner confirmation 2026-10-01)
-- Plans/Decision_Log.md#DL-113 (the per-family motion principle, the lead's ruling of 2026-09-27 on card n04, E-22; the
-  token values stay out of canon, IMPACT-REGISTER B-FGS-19 OUT)
-- 'PM7 final FS-1: chatpip fc1aa3f503 / deliverable 8ae180658e; pmx-system generatedCss and scheduling linkStyle are
-  source evidence, not native APIs.'
+- Plans/Decision_Log.md#DL-114 (the solid surface, compiled 2026-09-27; IMPACT-REGISTER B-FGS-17, card
+  n05, E-24)
+- Plans/Decision_Log.md#DL-139 (sheet frosted on the Skia GPU path, solid on the CPU raster; owner confirmation
+  2026-10-01)
+- Plans/Decision_Log.md#DL-113 (the per-family motion principle, the lead's ruling of 2026-09-27 on card
+  n04, E-22; the token values stay out of canon, IMPACT-REGISTER B-FGS-19 OUT)
+- 'PM7 final FS-1: chatpip fc1aa3f503 / deliverable 8ae180658e; pmx-system generatedCss and scheduling
+  linkStyle are source evidence, not native APIs.'
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
   - "DL-138"
   - "configuration sheet"
@@ -429,32 +450,25 @@ plan_unit_id: F3-570
 unit_type: gui_requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  What a wand module attaches to an ordinary reply is one line each, never a card. The files row
-  under a reply whose turn changed files ("Changed 3 files +5 −3 · Revert") is visible at rest and
-  offers Revert per ACD-478. The quiet ticks live in the reply's meta row and follow that row's
-  existing message-chrome visibility: a memory note taken (relaxing to its glyph alone after a few
-  seconds) and verified once a check proves it; the rule note for taught rules; Sent on schedule
-  on the user message a schedule sent; and Simple explanation on a reply written in Simple (F3-581, DL-126). The rule note follows DL-116 as the design lead's ruling of
-  2026-09-27 applied it and assistant-memory-subsystem AMS-053 defines following. It reads
-  "Followed 1 of your rules" for the included rules whose check the finished reply passed (the
-  number is how many); inclusion alone never earns it, and a rule whose check could not run earns
-  no tick. When any included rule failed its check the reply shows "Missed 1 of your rules" (the
-  number is how many failed), never hidden behind a Followed count, with a way to see which rule
-  was missed and a way to ask for a fix, which starts only when the user asks. A reply with no
-  passed or failed check shows no rule note. Each tick's and note's detail is in the app hover
-  card, never a native tooltip. A reply that changed files, took a note and carries a rule note
-  grows by at most 40 px.
+canonical_text: Ordinary reply module traces retain the changed-files/Revert row (ACD-478), Sent on schedule
+  on scheduled user messages and Simple explanation where applicable. Routine replies show no memory-use
+  citations, chips, counts, previews, ribbons, permanent memory glyphs, named-note hovers, verification
+  badges or Followed/Missed rule receipts. Only after a durable save may a brief Saved to memory · View
+  line appear; View opens the same Memory page as a sheet and highlights the saved note. Requested save/edit
+  confirmation stays brief. Task evidence and ordinary links remain available. Remove the legacy Noted-to-glyph
+  transition, Verified line, named-note hover and Followed/Missed rule-note producer. Internal inclusion/check
+  records remain.
 gui_related: true
 gui_classification_reason: "Defines the one-line traces the wand modules leave on ordinary replies."
 split_recommended: false
 depends_on: [F3-566, ACD-478, DL-116, AMS-053]
 unblocks: []
 acceptance_criteria:
-  - "The files row is visible without hover; ticks follow the meta row's visibility."
-  - "The traces on one reply add at most 40 px."
-  - "The rule note counts only included rules whose check the finished reply passed; a rule whose check could not run earns no tick."
-  - "A failed check shows \"Missed 1 of your rules\" with a way to see which rule and a way to ask for a fix, and is never hidden behind a Followed count."
+- Routine replies show no memory-use citations, chips, counts, previews, ribbons, permanent memory glyphs,
+  named-note hovers, verification badges or Followed/Missed rule receipts. Only after a durable save may
+  a brief Saved to memory · View line appear; View opens the same Memory page as a sheet and highlights
+  the saved note. Requested save/edit confirmation stays brief. Task evidence and ordinary links remain
+  available.
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -471,10 +485,12 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de) sections 4.3 C22 and C24, 7.10, 8.7, 8.10"
-  - "IMPACT-REGISTER B-FGS-04"
-  - "Plans/Decision_Log.md#DL-116 (card n07, E-36; the design lead's ruling of 2026-09-27)"
-  - "Plans/assistant-memory-subsystem.md#AMS-053"
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de)
+  sections 4.3 C22 and C24, 7.10, 8.7, 8.10
+- IMPACT-REGISTER B-FGS-04
+- Plans/Decision_Log.md#DL-116 (card n07, E-36; the design lead's ruling of 2026-09-27)
+- Plans/assistant-memory-subsystem.md#AMS-053
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
   - "files row"
   - "Sent on schedule"
@@ -484,10 +500,7 @@ preserved_exact_tokens:
   - "AMS-053"
   - "Simple explanation"
 negative_constraints:
-  - "Do not render a reply trace as a card."
-  - "Do not hide the files row behind hover."
-  - "Do not show a rule as followed because it was included, or because its check could not run."
-  - "Do not show Used in place of the rule note."
+- Do not expose which memories or rules shaped an ordinary reply.
 owner_hints:
   - Plans/FinalGUISpec.md
 ```
@@ -696,30 +709,28 @@ plan_unit_id: F3-574
 unit_type: gui_requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: >-
-  Revert Last Agent Edit has four entry points: the wand row, Changes, the message overflow and the
-  files row under the reply that changed files. All open one compact confirm sheet (F3-566) over
-  the turn's change manifest, whose file list scrolls inside itself past five files. Each row names
-  the file, a plain verb and its counts; a file the user changed since is marked on its row with a
-  route that only looks; the sheet promises one more check right before reverting. The foot holds
-  Cancel and a warm primary naming the count, which the confirm chord fires only when it has focus
-  (F3-568). An ineligible target shows its reason and no primary. The outcome follows ACD-478: the
-  files row's rewind motion plays only after a durable restored_clean, a conflict gets no shake and
-  says nothing was touched, and each outcome leaves one receipt line (F3-569). The word is always
-  Revert, never Undo, Rollback or Rewind. Memory in the chat is never a card and never a pop-up: a
-  quiet tick in the reply's meta row when a note is taken, one verified tick when a check proves it,
-  and no noise when a note goes out of date (F3-570); assistant-memory-subsystem AMS-047 owns the
-  one memory line that asks the user to review a proposal. This satisfies section 14's rule that
-  ordinary automatic memory produces no constant pop-up.
+canonical_text: 'Revert Last Agent Edit has four entry points: the wand row, Changes, the message overflow
+  and the files row under the reply that changed files. All open one compact confirm sheet (F3-566) over
+  the turn''s change manifest, whose file list scrolls inside itself past five files. Each row names the
+  file, a plain verb and its counts; a file the user changed since is marked on its row with a route that
+  only looks; the sheet promises one more check right before reverting. The foot holds Cancel and a warm
+  primary naming the count, which the confirm chord fires only when it has focus (F3-568). An ineligible
+  target shows its reason and no primary. The outcome follows ACD-478: the files row''s rewind motion
+  plays only after a durable restored_clean, a conflict gets no shake and says nothing was touched, and
+  each outcome leaves one receipt line (F3-569). The word is always Revert, never Undo, Rollback or Rewind.
+  Routine replies show no memory-use citations, chips, counts, previews, ribbons, permanent memory glyphs,
+  named-note hovers, verification badges or Followed/Missed rule receipts. Only after a durable save may
+  a brief Saved to memory · View line appear; View opens the same Memory page as a sheet and highlights
+  the saved note. Requested save/edit confirmation stays brief. Task evidence and ordinary links remain
+  available.'
 gui_related: true
 gui_classification_reason: "Defines the Revert confirm sheet and the memory traces in the chat."
 split_recommended: false
 depends_on: [ACD-478, F3-566, F3-570]
 unblocks: []
 acceptance_criteria:
-  - "Every Revert entry point opens the same confirm sheet and none dispatches a revert by itself."
-  - "The rewind plays only after a durable restored_clean."
-  - "Automatic memory adds no card and no pop-up to the chat."
+- Existing Revert entry/confirmation/receipt behavior remains. Memory follows the quiet save-only acknowledgment
+  rule.
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -735,8 +746,10 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de) sections 8.10, 8.12"
-  - "IMPACT-REGISTER B-FGS-08 (NOW part)"
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de)
+  sections 8.10, 8.12
+- IMPACT-REGISTER B-FGS-08 (NOW part)
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
   - "Revert Last Agent Edit"
   - "restored_clean"
@@ -1002,20 +1015,31 @@ plan_unit_id: F3-579
 unit_type: gui_requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: |-
-  Teach is a standard sheet of F3-566 and the only capture form: the wand's Teach…, /teach, natural-language intent and Save as a rule… all open it, prefilled with the rule text and its source, and there is no inline capture card in the chat (DL-127, ACD-477). Head: the Teach mark, Teach Puppet Master a rule and one lead sentence; in correct mode, Edit your rule. The hero is the rule field, with example rules that fill it. Under it one safety line says either that no password or key was spotted or, in the warm tone, that the text looks like a password or key and must be removed to save. The plate is three nested rings, This thread inside the available This project ring inside Everywhere, each a button with a helper; Everywhere stays disabled with its reason until the tick "It's safe to use in my other projects" is set, and in correct mode the wider rings are disabled because an edit cannot widen a rule. A Locked tick says only the user can change the rule (ACD-481). Beside them, the rule card shows the rule exactly as it will be saved, with its scope, lock and source message; when a similar rule exists, the old and new wording are shown side by side with a choice between Replace the old rule and Keep both, and saving waits for it. The foot holds Cancel and one primary, Save rule, Save and replace or Save as version 2. In the chat each change is one receipt line of F3-569's grammar: Rule saved, Rule updated to a new version, Rule turned off, with several saves in a row coalesced into one line. Your rules is an editor document (the taught memory document): one row per rule with its words, its scope, lock and version, a state word (In use, In use · locked, Replaced by v2, Turned off) and the actions Edit, Lock or Unlock, Turn off and From your message; Turn off asks inline (ACD-481), never in a modal. Teacher stays a Persona, and the sheet says Teach isn't the Teacher Persona. The note a reply carries for its taught rules is F3-570's rule note under DL-116 as AMS-053 defines following: it counts only rules whose check the finished reply passed, a failed check reads "Missed 1 of your rules" with a way to see which rule and a way to ask for a fix, and a check that could not run earns no tick. DL-138 confirms the final wording. Persisted AMS-053 check results drive the note on reopen: passed counts as Followed, failed counts as Missed and could_not_run earns no tick. A mixed result is one line, Missed first, for example "Missed 1 of your rules · followed 2". See which rule opens the saved check evidence as view state. Ask for a fix reuses cmd.review.send_findings_to_agent with the taught_rule_check source variant (UCC-172): it fills the source thread's empty composer, returns ComposerBufferResult, refuses composer_not_empty, and never sends or executes a fix. The user sends it. In No project omit the inapplicable Project ring; Everywhere is the existing public_safe user-taught scope, not a new Computer memory tier. Keep the public-safe checkbox, correction narrowing and source evidence; the display name changes no historical teaching record.
+canonical_text: >-
+  Teach is the standard F3-566 sheet for deliberate written instructions, reached by the wand Teach,
+  /teach, natural-language intent and Save as a rule through cmd.chat.teach.capture (ACD-477).
+  Opening or Cancel writes nothing; existing confirmation, secret/privacy screening, stale-revision
+  refusal and retained protections still apply. It edits through the existing instruction writer and
+  returns to Settings > Personas & Crews > Defaults > Standing instructions, where Rules for every
+  project and Rules for this project live. A Teacher answer offered as a saved note instead uses the
+  same Memory page and AMS-141 Add/Edit/Delete at This project or Every project. The old nested This
+  thread/project/Everywhere rings, public-safe scope tick, Locked checkbox, source/lock/version
+  preview, Replace/Keep both chooser and separate Your rules taught-memory document are retired.
+  Internal compatibility records and legacy protected-state custody remain, without ordinary
+  lock/unlock, conflict, source or rollback controls. Teacher remains a Persona, distinct from
+  Teach. Only a durable successful save may add Saved to memory · View to a reply; View opens the
+  one Memory page as a sheet. No memory-use citation, receipt, tick, chip, count, source detail,
+  verification or Followed/Missed decoration is shown. Ordinary task evidence/links remain
+  available, and no No project view invents a Project or a Computer memory tier.
 gui_related: true
 gui_classification_reason: "Defines the Teach sheet, its chat receipts and the Your rules document."
 split_recommended: false
 depends_on: [F3-566, ACD-477, ACD-481, DL-127, DL-116, F3-570]
 unblocks: []
 acceptance_criteria:
-  - "Reopening retains the saved rule-check result, mixed results show one Missed-first line, and Ask for a fix only fills an empty composer until the user sends."
-  - "Every Teach entry point opens the Teach sheet; no inline capture card renders in the chat."
-  - "A reply's rule note never counts a rule as followed unless its check passed."
-  - "Every project cannot be chosen without the safe-for-other-projects tick, and correct mode cannot widen the scope."
-  - "A similar rule blocks saving until Replace the old rule or Keep both is chosen."
-  - "Turn off in Your rules asks inline and never opens a modal."
+  - "Every deliberate Teach entry uses the existing written-instruction owner and confirms before storage; saved notes use the one Memory page and AMS-141 at the two allowed levels."
+  - "No scope rings, public-safe tick, lock/conflict/source/rollback workbench, taught-memory duplicate document or automatic rule-use, rule-check or save/update receipt appears. A deliberate instruction save or edit confirms with the existing Rule saved · View Teach receipt, whose View opens Settings > Personas & Crews > Defaults > Standing instructions."
+  - "Only a durable successful save may add Saved to memory · View to a reply; View opens the one Memory page as a sheet. No memory-use citation, receipt, tick, chip, count, source detail, verification or Followed/Missed decoration is shown."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -1040,6 +1064,8 @@ source_lineage:
 - Plans/Decision_Log.md#DL-116 (card n07, E-36; the design lead's ruling of 2026-09-27)
 - /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
   /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; B-F08,B-F13,C-F11
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 preserved_exact_tokens:
   - "composer_not_empty"
   - "ComposerBufferResult"

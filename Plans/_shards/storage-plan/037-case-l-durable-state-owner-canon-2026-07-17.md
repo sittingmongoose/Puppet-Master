@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L17125-L18172
+Source lines: L17125-L18173
 
-Source SHA256: `46b65fa5cef7d5b67ad27e23a573b372e74628124d8a2210af1f16d9011b6b4e`
+Source SHA256: `4362f38c9d620efb67475185e6ee0f698b8942d4594a492ccf04fed44c935144`
 
 ---
 
@@ -372,7 +372,8 @@ Kept with the Goal's chat, `RP-GOAL-THREAD-LIFETIME@1.0.0`, 1 name: G29, `goal.c
 
 **Names given no rule.** Eleven of the table's names leave it under Jared's Card 2 answers and get no rule here, because a retired name is never admitted: `browser.session.navigated` and `browser.session.resized` (G10), which DL-405 retires; the seven memory command events `memory.gist.verification_requested`, `memory.gist.verified`, `memory.gist.verification_failed`, `memory.gist.updated`, `memory.gist.pinned`, `memory.gist.unpinned` and `memory.gist.discarded` (G03), which DL-407 retires once the full contract of `memory.gist_state_changed` covers successful edits, pins, discards and automatic changes; and `settings.updated` and `settings.theme.updated` (G22), which DL-408 retires as superseded by `settings.layer.changed`. DL-408 keeps records already written under the older dedicated DRY-guard spelling readable; this text changes nothing about them. `scheduler.pass` is not among these groups: the plans already class it as one-year runtime history, which DL-401 records as decided.
 
-**Memory maintenance (DL-402, DL-403).** The G04 histories record maintenance runs. Under DL-402 the monthly summary and prune jobs only archive: a memory is deleted only when its user deletes it, the monthly summary keeps its originals archived with all their evidence references, and neither job archives or merges a pinned memory; pins do not stop verification, index rebuilds or out-of-date marking. Under DL-403 neither job runs, automatically or from the Memory panel, until cutoffs exist: the Memory panel's two maintenance buttons show as unavailable with the reason, and the memory owner proposes an age and a score that return to Jared. Until then `memory.monthly_summary.*` and `memory.prune_archive.*` record nothing. The duplicate sweep's survivor and disposition stay open; G04 covers only how long its history is kept. The memory owner's own text (`Plans/assistant-memory-subsystem.md` section 7.2) is a separate edit.
+**Memory maintenance (DL-402, DL-403, DL-475).** G04 histories and internal support machinery retain their existing custody. Monthly summary and prune are archive-only, preserve originals/evidence and exclude pins. Their DL-403/444–447 application/definition/review/recording holds remain: neither automatic nor support execution starts before its approvals are satisfied. Memory has no maintenance buttons or unavailable placeholders, now or after those holds close. No retention job, deletion rule, protected-record policy or native admission is enabled by this UI retirement.
+
 
 **Records that belong to no Project (DL-401, DL-416 through DL-421).** Card 1.b through 1.g, option A, approve six separate count buckets in this Puppet Master installation (one Storage instance). Each has its own policy entry below and in `Plans/storage_value_registry.json`; its `cardinality_scope=instance` applies only to that policy's expressly named no-project members. These six counts are independent of each other, every Project bucket, and the existing `app:github_sign_in`, `app:storage_operational` and `app:platform_capability` buckets. DL-401's GitHub sign-in allowance is unchanged and widened to no other type. A count key is neither a Project nor a scope/dedupe partition or physical key; records retain their actual application scope, null Project and original identities. Selection requires the exact registered type and actual scope, never a prefix, guessed Project or default bucket; unregistered types remain refused. Project records stay under their existing Project policy and count, never both counts.
 

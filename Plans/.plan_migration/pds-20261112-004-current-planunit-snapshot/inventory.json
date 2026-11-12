@@ -447,7 +447,7 @@
     },
     {
       "anchor_count": 0,
-      "bytes": 745179,
+      "bytes": 745188,
       "contractref_count": 90,
       "gui_related_inferred": true,
       "has_planunits_section": true,
@@ -457,7 +457,7 @@
       "plan_unit_count": 130,
       "plan_unit_parse_errors": [],
       "recommended_batch": "governance_seal_needed",
-      "sha256": "61d2b00bc963a1e65481a07917b65eab4f24f3d7f783d8142f5bba85efec0a64",
+      "sha256": "96d03d8160253db09e54c3194dba8d8871a22e67d769f1715ab65dc3f9d13163",
       "sharded": true,
       "span_count": 289,
       "spec_locked": true
@@ -1314,17 +1314,17 @@
     },
     {
       "anchor_count": 3,
-      "bytes": 310857,
+      "bytes": 310867,
       "contractref_count": 24,
       "gui_related_inferred": true,
       "has_planunits_section": true,
       "heading_count": 132,
-      "line_count": 3632,
+      "line_count": 3633,
       "path": "Plans/Runtime_Artifacts_Panel.md",
       "plan_unit_count": 60,
       "plan_unit_parse_errors": [],
       "recommended_batch": "governance_seal_needed",
-      "sha256": "2f4d5adbe876e8cd92c268839c3fe83180f293de378709fea1c78e56f59b8b34",
+      "sha256": "911539ee450cf52fbdf0034698efc56b9ebb090c67688c4e7e19e1cc6056464c",
       "sharded": true,
       "span_count": 132,
       "spec_locked": false
@@ -1552,7 +1552,7 @@
     },
     {
       "anchor_count": 1,
-      "bytes": 456817,
+      "bytes": 456832,
       "contractref_count": 84,
       "gui_related_inferred": true,
       "has_planunits_section": true,
@@ -1562,7 +1562,7 @@
       "plan_unit_count": 108,
       "plan_unit_parse_errors": [],
       "recommended_batch": "governance_seal_needed",
-      "sha256": "389a72a0bc5714f2724e44823875a486b23e61d851475b3ae34137e471d5e37a",
+      "sha256": "34f9d35b34eb646892a11b83dff6df80cf13fba56a6f73c23c9230c5e38ded1e",
       "sharded": true,
       "span_count": 232,
       "spec_locked": true
@@ -1637,12 +1637,12 @@
     }
   ],
   "expected_doc_count": 96,
-  "generated_at_utc": "2026-11-12T04:45:59Z",
+  "generated_at_utc": "2026-11-12T16:29:06Z",
   "locked_doc_count": 37,
   "pilot_doc": "Plans/00-plans-index.md",
   "plan_unit_count": 7529,
-  "plans_manifest_sha256": "e77ad7a44a3b4e23d79ea39228ec2bf9ebfcd5db3ce2e83d2d5e2f0c1e84eca4",
-  "run_id": "pds-20261112-002-current-planunit-snapshot",
+  "plans_manifest_sha256": "67cb0d62f8f9f4d6b68755727babc9ba0ea5c0e10e7f53e36f0d8b8a91708421",
+  "run_id": "pds-20261112-004-current-planunit-snapshot",
   "schema_id": "pm.plan_migration.inventory.v1",
   "scope": "exact current top-level Plans/*.md",
   "sharded_doc_count": 74,
@@ -1651,6 +1651,6 @@
   "span_count": 14181,
   "supersedes_run_ids": [
     "pds-20260611-002-atomize-planunits",
-    "pds-20261112-001-current-planunit-snapshot"
+    "pds-20261112-003-current-planunit-snapshot"
   ]
 }

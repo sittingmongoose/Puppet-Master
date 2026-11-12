@@ -2,9 +2,9 @@
 
 Source: `Plans/Models_System.md`
 
-Source lines: L7920-L8159
+Source lines: L8012-L8256
 
-Source SHA256: `98cedbe72059189d8dedef8480350441120a92631e6e4ef4f973487aefcf68c4`
+Source SHA256: `eb9a2bf3826aab67fe1fc232497cc0ffad9874e0d885322cc7e9b8c8102e96ee`
 
 ---
 
@@ -110,11 +110,17 @@ plan_unit_id: MS-117
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: Teach/Teacher defaults to a low-end/fast model and exposes a GUI-adjustable scoped model setting.
-  Teacher threads disclose requested and effective model, fallback/clamp state, setting source, and whether a stronger
-  model is recommended for handoff. Setting states cover default, user override, unavailable route, capability clamp,
-  policy denial, inherited project/account default, and temporary fallback; Teach model defaults are explained in
-  Help/Glossary content.
+canonical_text: >-
+  Teach/Teacher defaults to a low-end/fast model and exposes a GUI-adjustable scoped model setting.
+  Teacher threads disclose requested and effective model, fallback/clamp state, setting source, and
+  whether a stronger model is recommended for handoff. Setting states cover default, user override,
+  unavailable route, capability clamp, policy denial, inherited project/account default, and temporary
+  fallback; Teach model defaults are explained in Help/Glossary content. The unset/fast policy resolves
+  the smallest allowed runnable model each time, never a hard-coded vendor model. If no small model is
+  available, Teach remains available through the permitted normal fallback, shows its effective model and
+  why before provider dispatch, and never silently selects an unrequested costly/high-effort route.
+  Preserve policy denial and all existing disclosure/permission gates. The model/depth selection lives in
+  the one Defaults list, not the Teacher Persona.
 gui_related: true
 gui_classification_reason: Defines visible settings, model chips, fallback states, and requested/effective model
   disclosure for Teach/Teacher.
@@ -227,8 +233,7 @@ negative_constraints:
 - Do not duplicate generic Chat model picker behavior without clarifying Teach/Teacher default scope.
 - Do not make Teach/Teacher model settings ambiguous about scope or precedence.
 - Do not show unavailable low-end preferences as applied when runtime fallback selected something else.
-- Do not add a seventh broad user-facing automation model setting when a Teach/Teacher-specific Persona/surface
-  override is enough.
+- Do not turn Teach into an eighth broad automation setting; its scoped Defaults-list row is sufficient.
 - Do not make Teach model configuration invisible in a raw PERSONA.md file only.
 - Do not create a broad new automation model class when a scoped Teach/Teacher row is sufficient.
 - Do not show fallback model choice as if the requested low-end setting was applied.
@@ -237,7 +242,7 @@ negative_constraints:
 - Do not reuse a broad automation model setting when a scoped Teach/Teacher setting is intended.
 - Do not hide requested/effective model differences.
 - Do not let Settings imply a provider honored a Teacher model preference when it was skipped or clamped.
-- Do not create a broad seventh automation model setting for Teach.
+- Do not create a broad eighth automation model setting for Teach.
 - Do not invent a separate chat product surface for Teacher.
 - Do not hide requested/effective Persona/model state.
 - Do not show Save as taught memory unless the content is eligible and user confirmation is still required.
