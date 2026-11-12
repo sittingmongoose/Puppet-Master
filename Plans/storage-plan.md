@@ -1054,6 +1054,140 @@ When an investigation needs relaunch or attach semantics, storage records enough
 
 ContractRef: ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Contracts_V0.md
 
+### SP-570 - Debug individual event history readers
+
+```yaml
+plan_unit_id: SP-570
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: 'debug.investigation.context_item_added@1.0.0 independently adopts its own CV-570 full
+  producer, identity, custody, transient consumer, SP-278 generic checkpoint and withdrawal contract.
+  Family checkpoint is none_required because the complete retained history is re-read and no result or
+  cursor is persisted. Newly authored owner contract: reader.debug.investigation.context_item_added@1.0.0,
+  with the two CV-570 named operating consumers; no durable family projection is materialized. retention_policy_ref
+  = PENDING_RETENTION_DECISION; Case L-3 operational, authority and Chat-content candidate classes require
+  RT/Jared adjudication. Preparing this family grants no append admission.
+
+
+  debug.investigation.context_item_state_changed@1.0.0 independently adopts its own CV-571 full producer,
+  identity, custody, transient consumer, SP-278 generic checkpoint and withdrawal contract. Family checkpoint
+  is none_required because the complete retained history is re-read and no result or cursor is persisted.
+  Newly authored owner contract: reader.debug.investigation.context_item_state_changed@1.0.0, with the
+  two CV-571 named operating consumers; no durable family projection is materialized. retention_policy_ref
+  = PENDING_RETENTION_DECISION; Case L-3 operational, authority and Chat-content candidate classes require
+  RT/Jared adjudication. Preparing this family grants no append admission.
+
+
+  debug.investigation.exported@1.0.0 independently adopts its own CV-572 full producer, identity, custody,
+  transient consumer, SP-278 generic checkpoint and withdrawal contract. Family checkpoint is none_required
+  because the complete retained history is re-read and no result or cursor is persisted. Newly authored
+  owner contract: reader.debug.investigation.exported@1.0.0, with the two CV-572 named operating consumers;
+  no durable family projection is materialized. retention_policy_ref = PENDING_RETENTION_DECISION; Case
+  L-3 operational, authority and Chat-content candidate classes require RT/Jared adjudication. Preparing
+  this family grants no append admission.
+
+
+  debug.investigation.imported@1.0.0 independently adopts its own CV-573 full producer, identity, custody,
+  transient consumer, SP-278 generic checkpoint and withdrawal contract. Family checkpoint is none_required
+  because the complete retained history is re-read and no result or cursor is persisted. Newly authored
+  owner contract: reader.debug.investigation.imported@1.0.0, with the two CV-573 named operating consumers;
+  no durable family projection is materialized. retention_policy_ref = PENDING_RETENTION_DECISION; Case
+  L-3 operational, authority and Chat-content candidate classes require RT/Jared adjudication. Preparing
+  this family grants no append admission.
+
+
+  debug.investigation.instrumentation_state_changed@1.0.0 independently adopts its own CV-574 full producer,
+  identity, custody, transient consumer, SP-278 generic checkpoint and withdrawal contract. Family checkpoint
+  is none_required because the complete retained history is re-read and no result or cursor is persisted.
+  Newly authored owner contract: reader.debug.investigation.instrumentation_state_changed@1.0.0, with
+  the two CV-574 named operating consumers; no durable family projection is materialized. retention_policy_ref
+  = RP-OPERATIONAL-2555D@1.0.0 from the exact G02 assignment in current Storage Case L-3, anchored to
+  the original terminal transition finishing the investigation operation. Its 2,555-day TTL, 2,000,000
+  per-Project operational bucket, fail-closed overflow and hold/reference/recovery/backup protections
+  are unchanged; unresolved cleanup protects its originals. There is no derived retained result/cursor
+  or new lifetime. DL-429 closes the previous field/domain and transition hold. This family is prepared
+  without admission; readers never perform a probe or cleanup effect.
+
+
+  debug.investigation.started@1.0.0 independently adopts its own CV-575 full producer, identity, custody,
+  transient consumer, SP-278 generic checkpoint and withdrawal contract. Family checkpoint is none_required
+  because the complete retained history is re-read and no result or cursor is persisted. Newly authored
+  owner contract: reader.debug.investigation.started@1.0.0, with the two CV-575 named operating consumers;
+  no durable family projection is materialized. retention_policy_ref = PENDING_RETENTION_DECISION; Case
+  L-3 operational, authority and Chat-content candidate classes require RT/Jared adjudication. Preparing
+  this family grants no append admission.
+
+
+  debug.investigation.target_bound@1.0.0 independently adopts its own CV-576 full producer, identity,
+  custody, transient consumer, SP-278 generic checkpoint and withdrawal contract. Family checkpoint is
+  none_required because the complete retained history is re-read and no result or cursor is persisted.
+  Newly authored owner contract: reader.debug.investigation.target_bound@1.0.0, with the two CV-576 named
+  operating consumers; no durable family projection is materialized. retention_policy_ref = PENDING_RETENTION_DECISION;
+  Case L-3 operational, authority and Chat-content candidate classes require RT/Jared adjudication. Preparing
+  this family grants no append admission.
+
+
+  debug.investigation.verification_recorded@1.0.0 independently adopts its own CV-577 full producer, identity,
+  custody, transient consumer, SP-278 generic checkpoint and withdrawal contract. Family checkpoint is
+  none_required because the complete retained history is re-read and no result or cursor is persisted.
+  Newly authored owner contract: reader.debug.investigation.verification_recorded@1.0.0, with the two
+  CV-577 named operating consumers; no durable family projection is materialized. retention_policy_ref
+  = PENDING_RETENTION_DECISION; Case L-3 operational, authority and Chat-content candidate classes require
+  RT/Jared adjudication. Preparing this family grants no append admission.
+
+
+  debug.investigation.state_changed@1.0.0 independently adopts its own CV-578 full producer, identity,
+  custody, transient consumer, SP-278 generic checkpoint and withdrawal contract. Family checkpoint is
+  none_required because the complete retained history is re-read and no result or cursor is persisted.
+  Newly authored owner contract: reader.debug.investigation.state_changed@1.0.0, with the two CV-578 named
+  operating consumers; no durable family projection is materialized. DL-428 closes the previous Failed
+  lifecycle conflict. This family is prepared without admission; readers never resume automation or mutate
+  a target on replay. This Project edition selects the existing G02 assignment RP-OPERATIONAL-2555D@1.0.0
+  with the original investigation terminal-transition anchor, its 2,555-day TTL, 2,000,000 per-Project
+  operational bucket, fail-closed overflow and unchanged hold/reference/recovery/backup protections. No
+  new lifetime or derived value is introduced.'
+gui_related: false
+gui_classification_reason: Event persistence and reader contract; existing UI behavior remains owned by
+  its surface.
+depends_on:
+- SP-278
+- SP-286
+- CV-570
+- CV-571
+- CV-572
+- CV-573
+- CV-574
+- CV-575
+- CV-576
+- CV-577
+- CV-578
+unblocks: []
+acceptance_criteria:
+- Exact family remains unadmitted until its own integration landing and all open product cells close.
+- Named positive and negative static oracles pass; native execution is NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm-debug-investigation-events.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: event_authority_debug_20261104
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/Contracts_V0.md#CV-123
+- reports/event-authority-20261104/DDBG.md
+preserved_exact_tokens:
+- SP-570
+negative_constraints:
+- No admission, retention decision, native readiness or governance seal.
+```
+
 Canonical key reconciliation notes:
 - `attempt_record.v1:{project_id}:{node_id}:{attempt_number}` is the canonical attempt key. `project_id` is required for cross-project queries, retention, and cleanup; `run_id` and `attempt_id` remain stored fields on the record but are not key components.
 - `blocked_projection.v1:{project_id}:{node_id}` is the canonical blocked-state key. The value includes `{ blocked_reason_code, blocked_at, blocked_family, approval_scope_key?, allowed_action_ids[] }`.
