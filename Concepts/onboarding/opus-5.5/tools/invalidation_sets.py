@@ -51,137 +51,191 @@ def strip_comments(css: str) -> str:
     return re.sub(r'/\*.*?\*/', lambda m: re.sub(r'[^\n]', ' ', m.group(0)), css, flags=re.S)
 
 
-# Chrome adds a rule to the style engine's rule set (and so its features to the invalidation sets) only while its @media
-# matches. These never match on the desktop the looks are measured on (no high-contrast mode, a mouse, a screen); every
-# other @media (widths, Reduced Motion, colour scheme) counts, because a user can be in it.
-INACTIVE_MEDIA = re.compile(r'forced-colors\s*:\s*active|prefers-contrast\s*:\s*(?:more|custom)|^\s*(?:only\s+)?print\b|'
-                            r'\(\s*hover\s*:\s*none\s*\)|\(\s*pointer\s*:\s*coarse\s*\)|\(\s*any-hover\s*:\s*none\s*\)')
+# Only a media condition proved false for the measured mouse/screen desktop may be skipped.
+# Width, scheme, motion and unknown features remain possible; OR/NOT must preserve that possibility.
+_DESKTOP = {'hover': 'hover', 'any-hover': 'hover', 'pointer': 'fine', 'forced-colors': 'none'}
+
+
+def _top_parts(text: str, separator: str) -> list[str]:
+    """Split at an unquoted, unescaped separator outside () and []; words need token boundaries."""
+    out, start, i, depth, quote = [], 0, 0, 0, None
+    while i < len(text):
+        c = text[i]
+        if c == '\\':
+            i += 2
+            continue
+        if quote:
+            if c == quote:
+                quote = None
+        elif c in '\"\'':
+            quote = c
+        elif c in '([':
+            depth += 1
+        elif c in ')]':
+            depth -= 1
+        elif depth == 0 and text.startswith(separator, i) and (len(separator) == 1 or (
+                (i == 0 or not re.match(r'[\w-]', text[i - 1])) and
+                (i + len(separator) == len(text) or not re.match(r'[\w-]', text[i + len(separator)])))):
+            out.append(text[start:i].strip())
+            i += len(separator)
+            start = i
+            continue
+        i += 1
+    out.append(text[start:].strip())
+    return out
+
+
+def _media_values(q: str) -> set[bool]:
+    """Possible truth values; uncertainty is kept rather than hiding a live rule."""
+    q = q.strip()
+    # A media-type prefix's `not` negates the entire query, including its `and` condition.
+    if re.match(r'^not\s+[a-z][\w-]*(?:\s|$)', q):
+        return {not v for v in _media_values(q[4:])}
+    for word in (',', 'or', 'and'):
+        parts = _top_parts(q, word)
+        if len(parts) > 1:
+            vals = _media_values(parts[0])
+            for p in parts[1:]:
+                other = _media_values(p)
+                vals = {(a and b) if word == 'and' else (a or b) for a in vals for b in other}
+            return vals
+    if q.startswith('not '):
+        return {not v for v in _media_values(q[4:])}
+    if q.startswith('only '):
+        return _media_values(q[5:])
+    if q.startswith('(') and q.endswith(')'):
+        inner = q[1:-1].strip()
+        m = re.fullmatch(r'([\w-]+)\s*:\s*([\w-]+)', inner)
+        if m:
+            name, value = m.groups()
+            if name in _DESKTOP:
+                return {value == _DESKTOP[name]}
+            if name == 'prefers-contrast' and value in ('more', 'custom'):
+                return {False}
+            return {False, True}
+        return _media_values(inner)
+    if q in ('screen', 'all'):
+        return {True}
+    if q == 'print':
+        return {False}
+    return {False, True}
 
 
 def media_inactive(prelude: str) -> bool:
-    """True for an @media that never matches on the measured desktop (every comma arm inactive)."""
-    q = prelude[len('@media'):].strip().lower()
-    arms = [a for a in split_top(q)] or [q]
-    return all(INACTIVE_MEDIA.search(a) and not a.startswith('not ') for a in arms)
+    return _media_values(prelude[len('@media'):].strip().lower()) == {False}
 
 
-BRACE_OR_QUOTE = re.compile(r'[{}"\']')
+# Strings and escapes are atomic, so braces/commas/brackets inside attributes or strings are never delimiters.
+_CSS_TOKEN = re.compile(r'/\*.*?\*/|\\.|"(?:\\.|[^"\\])*"|\'(?:\\.|[^\'\\])*\'|[{};()\[\]]', re.S)
+_AMP_TOKEN = re.compile(r'\\.|"(?:\\.|[^"\\])*"|\'(?:\\.|[^\'\\])*\'|&', re.S)
 
 
-def rules(css: str, base_line: int = 1):
-    """(selector list, line) for every style rule, inside @media/@supports/@layer/@container/@scope too (not inside an
-    @media that never matches on the desktop: INACTIVE_MEDIA)."""
-    i, n = 0, len(css)
-    nl_pos, nl_count = 0, 0  # lines counted incrementally (a count from 0 per rule was quadratic)
+def rules(css: str, base_line: int = 1, parent: str = ''):
+    """Style rules, including native nesting with explicit & or implicit descendants.
+
+    Grouping rules keep their enclosing style context. A parent selector list is :is()-wrapped, matching native
+    nesting's parent-list semantics. Declarations are skipped at semicolons outside strings/functions/attributes.
+    """
+    i, n, nl_pos, nl_count = 0, len(css), 0, 0
 
     def line_at(pos):
         nonlocal nl_pos, nl_count
         nl_count += css.count('\n', nl_pos, pos)
         nl_pos = pos
-        return nl_count
+        return base_line + nl_count
+
     while i < n:
-        j = css.find('{', i)
-        if j < 0:
-            break
-        prelude = css[i:j]
-        if ';' in prelude:
-            prelude = prelude.split(';')[-1]
-        lead = len(prelude) - len(prelude.lstrip())
-        start = j - len(prelude) + lead
-        prelude = prelude.strip()
-        depth, k = 1, j + 1
-        while depth:
-            m = BRACE_OR_QUOTE.search(css, k)
-            if not m:
-                k = n + 1
-                break
-            c, k = m.group(), m.end()
-            if c == '{':
+        depth, opening = 0, None
+        for m in _CSS_TOKEN.finditer(css, i):
+            t = m.group()
+            if t in ('(', '['):
                 depth += 1
-            elif c == '}':
+            elif t in (')', ']'):
                 depth -= 1
-            else:  # a string: to its closing quote, past escaped ones
-                while True:
-                    e = css.find(c, k)
-                    if e < 0:
-                        k = n
-                        break
-                    b = e - 1
-                    while b >= k and css[b] == '\\':
-                        b -= 1
-                    k = e + 1
-                    if (e - 1 - b) % 2 == 0:
-                        break
-        body = css[j + 1:k - 1]
-        line = base_line + line_at(max(start, nl_pos))
+            elif depth == 0 and t in (';', '{'):
+                opening = m
+                break
+        if opening is None:
+            break
+        if opening.group() == ';':
+            i = opening.end()
+            continue
+        j = opening.start()
+        prelude = _CSS_TOKEN.sub(lambda m: '' if m.group().startswith('/*') else m.group(), css[i:j]).strip()
+        start = i + len(css[i:j]) - len(css[i:j].lstrip())
+        line = line_at(start)
+        body_line = line_at(j + 1)
+        depth, end = 1, n
+        for m in _CSS_TOKEN.finditer(css, j + 1):
+            if m.group() == '{':
+                depth += 1
+            elif m.group() == '}':
+                depth -= 1
+                if not depth:
+                    end = m.start()
+                    break
+        body = css[j + 1:end]
         if prelude.startswith('@'):
-            name = prelude.split()[0].split('(')[0] if prelude.split() else ''
+            match = re.match(r'@[\w-]+', prelude)
+            name = match.group() if match else ''
             if name in ('@media', '@supports', '@layer', '@container', '@scope', '@starting-style', '@document'):
                 if not (name == '@media' and media_inactive(prelude)):
-                    yield from rules(body, base_line + line_at(j + 1))
-        elif prelude:
-            yield ' '.join(prelude.split()), line
-        i = k
+                    yield from rules(body, body_line, parent)
+        elif prelude and not prelude.startswith('--'):
+            sels = []
+            for sel in split_top(prelude):
+                if parent:
+                    has_amp = any(m.group() == '&' for m in _AMP_TOKEN.finditer(sel))
+                    sel = _AMP_TOKEN.sub(lambda m: parent if m.group() == '&' else m.group(), sel) if has_amp else parent + ' ' + sel
+                sels.append(' '.join(sel.split()))
+            resolved = ', '.join(sels)
+            yield resolved, line
+            ancestor = resolved if len(sels) == 1 else ':is(' + resolved + ')'
+            yield from rules(body, body_line, ancestor)
+        i = end + 1
 
 
 def split_top(sel: str, ch: str = ',') -> list[str]:
-    out, depth, cur, q = [], 0, '', None
-    for c in sel:
-        if q:
-            cur += c
-            if c == q:
-                q = None
-            continue
-        if c in '"\'':
-            q = c
-            cur += c
-            continue
-        if c in '([':
-            depth += 1
-        elif c in ')]':
-            depth -= 1
-        if c == ch and depth == 0:
-            out.append(cur)
-            cur = ''
-        else:
-            cur += c
-    out.append(cur)
-    return [x.strip() for x in out if x.strip()]
+    return [x for x in _top_parts(sel, ch) if x]
 
 
 def compounds(sel: str) -> list[tuple[str, str]]:
-    """[(combinator before it, compound)] left to right; the first combinator is ''."""
-    sel = re.sub(r'\s*([>+~])\s*(?![^\[]*\])', r' \1 ', sel.strip())
-    toks, cur, depth, q = [], '', 0, None
-    for c in sel:
-        if q:
-            cur += c
-            if c == q:
-                q = None
+    """[(combinator before it, compound)]; only unescaped top-level spaces and >+~ split compounds."""
+    out, cur, comb, depth, quote, i = [], '', '', 0, None, 0
+
+    def flush():
+        nonlocal cur, comb
+        if cur:
+            out.append((comb or (' ' if out else ''), cur))
+            cur, comb = '', ''
+
+    while i < len(sel):
+        c = sel[i]
+        if c == '\\':
+            cur += sel[i:i + 2]
+            i += 2
             continue
-        if c in '"\'':
-            q = c
+        if quote:
             cur += c
-            continue
-        if c in '([':
+            if c == quote:
+                quote = None
+        elif c in '\"\'':
+            cur += c
+            quote = c
+        elif c in '([':
             depth += 1
+            cur += c
         elif c in ')]':
             depth -= 1
-        if c == ' ' and depth == 0:
-            if cur:
-                toks.append(cur)
-                cur = ''
-            continue
-        cur += c
-    if cur:
-        toks.append(cur)
-    out, comb = [], ''
-    for t in toks:
-        if t in ('>', '+', '~'):
-            comb = t
-            continue
-        out.append((comb or (' ' if out else ''), t))
-        comb = ''
+            cur += c
+        elif not depth and (c.isspace() or c in '>+~'):
+            flush()
+            if c in '>+~':
+                comb = c
+        else:
+            cur += c
+        i += 1
+    flush()
     return out
 
 
@@ -446,7 +500,7 @@ def census(page_text: str, tokens: list[str] | None = None, kinds=('whole', 'tag
     tag-keyed (kinds), for the named tokens (all when None)."""
     res = defaultdict(list)
     for bid, css, line0 in blocks_of(page_text):
-        for sel_list, line in rules(strip_comments(css), line0):
+        for sel_list, line in rules(css, line0):
             for sel in split_top(sel_list):
                 if sel.startswith('@') or re.match(r'^(?:from|to|\d+%)', sel):
                     continue
