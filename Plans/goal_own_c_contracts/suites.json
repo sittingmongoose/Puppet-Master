@@ -260,6 +260,25 @@
         "adapters": "Plans/goal_own_c_contracts/protocol.md#shared-test_only-owner-adapters-2026-11-11",
         "qualification": "TEST_ONLY",
         "native_execution": "NOT_RUN"
+      },
+      "dg_cf2": {
+        "groups": [
+          "CF-06",
+          "CF-07",
+          "CF-08",
+          "CF-09",
+          "P7"
+        ],
+        "selection": "Plans/goal_own_c_contracts/protocol.md#dg-cf2-complete-original-path-oracles-goal_runcertified-cf-06-cf-07-cf-08-cf-09-p7-2026-11-11",
+        "oracle": "scripts/pm_goal_dg_cf2_oracles.py",
+        "world": [
+          "scripts/pm_goal_dg_cf2_world.py",
+          "scripts/pm_goal_dg_cf2_native.py",
+          "scripts/pm_goal_dg_cf2_consumer.py"
+        ],
+        "adapters": "Plans/goal_own_c_contracts/protocol.md#shared-test_only-owner-adapters-2026-11-11",
+        "qualification": "TEST_ONLY",
+        "native_execution": "NOT_RUN"
       }
     }
   ]

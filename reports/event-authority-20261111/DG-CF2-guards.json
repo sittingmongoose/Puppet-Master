@@ -1,0 +1,270 @@
+{
+ "guards": {
+  "append/conflict/producer25": [
+   "CF06-N21"
+  ],
+  "append/guard_outcome": [
+   "CF06-N03"
+  ],
+  "append/guard_scope": [
+   "CF08-N07"
+  ],
+  "append/guard_type": [
+   "CF08-N-omit-append"
+  ],
+  "append/guard_unavailable": [
+   "CF08-N09"
+  ],
+  "arm/guard_type": [
+   "CF08-N-omit-arm"
+  ],
+  "arm_final/permission": [
+   "CF08-N10"
+  ],
+  "commit/event_phase_bytes": [
+   "CF07-N10"
+  ],
+  "commit/guard_phase": [
+   "CF07-N09",
+   "CF07-N11"
+  ],
+  "commit/guard_reader": [
+   "CF08-N05"
+  ],
+  "commit/guard_stale": [
+   "CF08-N06"
+  ],
+  "commit/guard_type": [
+   "CF08-N-omit-commit"
+  ],
+  "commit/missing_participant": [
+   "CF07-N06"
+  ],
+  "commit/native_changed": [
+   "CF07-N07"
+  ],
+  "commit/write_set": [
+   "CF07-N04"
+  ],
+  "commit/write_value": [
+   "CF07-N05"
+  ],
+  "commit_final/effective_stop": [
+   "CF07-N08"
+  ],
+  "consumer_current/disclosure_denied": [
+   "P7-N03"
+  ],
+  "consumer_current/root_changed": [
+   "P7-N09"
+  ],
+  "consumer_current/stale_generic_token": [
+   "P7-N04"
+  ],
+  "consumer_current_final/permission": [
+   "P7-N08"
+  ],
+  "current/effective_stop": [
+   "P7-N02"
+  ],
+  "current/goal_current": [
+   "P7-N05"
+  ],
+  "current/guard_outcome": [
+   "CF07-N01",
+   "CF07-N02",
+   "P7-N01"
+  ],
+  "current/guard_type": [
+   "CF08-N-omit-current"
+  ],
+  "current/native_current": [
+   "P7-N07"
+  ],
+  "current_final/guard_stale": [
+   "CF08-N11"
+  ],
+  "f5a/append_attempted": [
+   "CF06-N22"
+  ],
+  "f5a/control_bytes": [
+   "CF06-N12"
+  ],
+  "f5a/effective_stop": [
+   "CF06-N08"
+  ],
+  "f5a/expected_control_epoch": [
+   "CF06-N24"
+  ],
+  "f5a/future_inputs": [
+   "CF06-N01"
+  ],
+  "f5a/future_receipt": [
+   "CF06-N27"
+  ],
+  "f5a/generic_prefix": [
+   "CF06-N28"
+  ],
+  "f5a/goal_current": [
+   "CF06-N07"
+  ],
+  "f5a/intent_bytes": [
+   "CF06-N11"
+  ],
+  "f5a/native_current": [
+   "CF06-N10"
+  ],
+  "f5a/permission": [
+   "CF06-N09"
+  ],
+  "f5a/preappend_source": [
+   "CF06-N02"
+  ],
+  "f5a/producer25": [
+   "CF06-N06"
+  ],
+  "f5a/replay_policy": [
+   "CF06-N04"
+  ],
+  "f5a/request_scope": [
+   "CF06-N23"
+  ],
+  "f5a/source_commitments": [
+   "CF06-N25"
+  ],
+  "f5a/storage_assigned_supplied": [
+   "CF06-N05"
+  ],
+  "f5c/all_members": [
+   "CF06-N19"
+  ],
+  "f5c/generic_prefix": [
+   "CF06-N29"
+  ],
+  "f5d/barrier_durability": [
+   "CF06-N13"
+  ],
+  "f5d/group": [
+   "CF06-N15"
+  ],
+  "f5d/member_custody": [
+   "CF06-N16"
+  ],
+  "f5d/member_event": [
+   "CF06-N18"
+  ],
+  "f5d/member_full_value": [
+   "CF06-N17"
+  ],
+  "f5d/member_set": [
+   "CF06-N14"
+  ],
+  "f5d_final/effective_stop": [
+   "CF06-N26"
+  ],
+  "guard_result/unavailable/partial_authority": [
+   "CF08-N14"
+  ],
+  "guard_result/unavailable/schema_unavailable": [
+   "CF08-N15"
+  ],
+  "guard_result/unavailable/source_changed": [
+   "CF08-N12",
+   "CF08-N13"
+  ],
+  "historical/atomic_publication": [
+   "CF09-N12"
+  ],
+  "historical/checkpoint_missing": [
+   "CF09-N11"
+  ],
+  "historical/row_binding": [
+   "CF09-N10"
+  ],
+  "historical/standard_expired": [
+   "P7-N06"
+  ],
+  "inspect/frame/read/frame_hash": [
+   "CF09-N09"
+  ],
+  "inspect/presented_not_original": [
+   "CF09-N08"
+  ],
+  "occurrence/caller_guard": [
+   "CF08-N02"
+  ],
+  "occurrence/declaration_sha256": [
+   "CF08-N01"
+  ],
+  "occurrence/final_changed": [
+   "CF08-N04"
+  ],
+  "occurrence/unknown_method": [
+   "CF08-N03"
+  ],
+  "prepare/guard_outcome": [
+   "CF08-N08"
+  ],
+  "prepare/guard_type": [
+   "CF08-N-omit-prepare"
+  ],
+  "readback/goal_unchanged": [
+   "CF07-N14"
+  ],
+  "readback/member/native_after_body": [
+   "CF07-N12"
+  ],
+  "readback/transaction/native_after_body": [
+   "CF07-N13"
+  ],
+  "reenter/live_invocation_lost": [
+   "CF07-N17"
+  ],
+  "release/guard_phase": [
+   "CF07-N03"
+  ],
+  "release/guard_type": [
+   "CF08-N-omit-release"
+  ],
+  "release/readback": [
+   "CF07-N15"
+  ],
+  "release_final/effective_stop": [
+   "CF07-N16"
+  ],
+  "retained/commit_selects/d01_head": [
+   "CF09-N14"
+  ],
+  "retained/commit_selects/d01_update": [
+   "CF09-N07"
+  ],
+  "retained/commit_selects/native_result": [
+   "CF09-N06"
+  ],
+  "retained/disclosure_denied": [
+   "CF09-N13"
+  ],
+  "retained/missing/commit": [
+   "CF09-N02"
+  ],
+  "retained/missing/eventphase": [
+   "CF09-N01"
+  ],
+  "retained/missing/release": [
+   "CF09-N03"
+  ],
+  "retained/standard_expired": [
+   "CF09-N05"
+  ],
+  "retained/unissued/control": [
+   "CF09-N04"
+  ],
+  "retry/producer25_conflict": [
+   "CF06-N20"
+  ]
+ },
+ "lane": "DG-CF2",
+ "native": "native evidence stays NOT_RUN and is a separate claim; a planning PASS must never read as native proof",
+ "qualification": "TEST_ONLY",
+ "tool": "scripts/pm_guard_isolation.py (sweep)"
+}
