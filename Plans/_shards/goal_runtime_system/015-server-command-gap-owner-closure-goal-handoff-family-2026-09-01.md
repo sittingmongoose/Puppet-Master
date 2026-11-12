@@ -2,9 +2,9 @@
 
 Source: `Plans/Goal_Runtime_System.md`
 
-Source lines: L863-L946
+Source lines: L871-L959
 
-Source SHA256: `59ed224d15e3e1a8b69889f2cbb2bb3390f5053a1b3f899f5b3cb443b6427170`
+Source SHA256: `700740d819bf70a0fb61030bbf2ff4082954ffcca15c443e210c3a284ecf8374`
 
 ---
 
@@ -64,14 +64,17 @@ plan_unit_id: GRS-046
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
-canonical_text: >-
-  A GoalRun freezes its requested and effective provider, model, account, route, Persona, mode, topology,
-  policy generations, and resolver evidence at admission. Replan, provider rotation, fallback, or user
-  route change creates an explicit revisioned rebind with reason, authority/currentness checks, prior/new
-  snapshots, and owner epoch; focus, thread selection, reconnect, compaction, or current Settings never
-  silently retarget an admitted GoalRun. App admission uses real thread/Computer/roots with null Project;
-  scope conversion cannot use this ordinary runtime rebind to change Goal identity. GRS-087 requires
-  linked birth or its separate association transaction.
+canonical_text: 'A GoalRun freezes its requested and effective provider, model, account, route, Persona,
+  mode, topology, policy generations, and resolver evidence at admission. Replan, provider rotation, fallback,
+  or user route change creates an explicit revisioned rebind with reason, authority/currentness checks,
+  prior/new snapshots, and owner epoch; focus, thread selection, reconnect, compaction, or current Settings
+  never silently retarget an admitted GoalRun. App admission uses real thread/Computer/roots with null
+  Project; scope conversion cannot use this ordinary runtime rebind to change Goal identity. GRS-087 requires
+  linked birth or its separate association transaction. DL-475: a Goal starts with the Persona and model
+  of the chat thread that started it. Goals may not use Crews at all, in Project or app scope. Existing
+  explicit revisioned runtime rebind rules remain; no separate new-Goal Persona/Crew preference is admitted.
+  Testing uses Let the assistant test its work and Speed or thoroughness, never named test profiles. Proof
+  completes the Goal without an Ask me to confirm switch; existing pauses remain authoritative.'
 gui_related: false
 depends_on: [GRS-044, MS-137]
 unblocks: []
@@ -86,9 +89,11 @@ context_scope: frozen_goal_route
 implementation_surfaces: [Plans/Goal_Runtime_System.md, Plans/Models_System.md, Plans/Multi-Account.md]
 node_compile_hint: {mode: goal_route_binding_contract, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - "PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/ACCOUNTABILITY_MATRIX.json#AGT-003"
-  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
-  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
-  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
+- PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/ACCOUNTABILITY_MATRIX.json#AGT-003
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c
+- projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03
+- 'Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It''s only planning
+  wizard/prd builder/orchestrator that isn''t.'
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 negative_constraints: [Do not retarget a Goal from focus or current settings., Do not commit late prior-binding work.]
 ```

@@ -111,7 +111,7 @@ class SettingsLayeringRefreshTests(unittest.TestCase):
     def test_complete_reviewed_corpus_and_semantic_expectations(self):
         errors, counts = self.check()
         self.assertEqual(errors, [])
-        self.assertEqual(counts['rows'], 1024)
+        self.assertEqual(counts['rows'], 981)
         self.assertGreater(counts['semantic_cases'], 30)
 
     def test_placement_preset_override_resolves_before_computer_selection(self):

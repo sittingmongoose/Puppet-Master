@@ -2041,7 +2041,7 @@ Rule: Memory injection in chat MUST use summary-only memory text and MUST remain
 
 ContractRef: ContractName:Plans/assistant-memory-subsystem.md#3-data-model, ContractName:Plans/agent-rules-context.md
 
-Rule: Assistant memory MUST NOT be forwarded to subagents or non-Assistant execution paths from chat.
+Rule: Authorized read-only helper access follows AMS-026; private app-thread and denied material MUST NOT be forwarded through chat or derived context.
 
 ContractRef: ContractName:Plans/assistant-memory-subsystem.md#1-capability-boundary, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/interview-subagent-integration.md
 
@@ -4921,15 +4921,23 @@ plan_unit_id: ACD-022
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Teach retrieval, disclosure, conflict handling, inspection, narrowing, supersession, revocation, and secret exclusion are auditable safety rules. Taught knowledge enters prompts as explicit memory/context rather than undocumented hidden prompt mutation.
+canonical_text: Teach scope, conflict/supersession, revocation and secret exclusion remain auditable instruction
+  safety rules. Inclusion records are internal and never proof of compliance. Routine replies show no
+  memory-use citations, chips, counts, previews, ribbons, permanent memory glyphs, named-note hovers,
+  verification badges or Followed/Missed rule receipts. Only after a durable save may a brief Saved to
+  memory · View line appear; View opens the same Memory page as a sheet and highlights the saved note.
+  Requested save/edit confirmation stays brief. Task evidence and ordinary links remain available.
 gui_related: false
 gui_classification_reason: Teach audit and secret-exclusion behavior are memory governance requirements, not GUI implementation.
 depends_on: [ACD-020, ACD-021]
 unblocks: []
 acceptance_criteria:
-  - Conflicting teachings record supersession or revocation rather than silently overwriting prior knowledge.
-  - Users can inspect, narrow, supersede, or revoke taught knowledge later.
-  - Teach does not persist secrets, tokens, passwords, or other credentials.
+- Teach scope, conflict/supersession, revocation and secret exclusion remain auditable instruction safety
+  rules. Inclusion records are internal and never proof of compliance. Routine replies show no memory-use
+  citations, chips, counts, previews, ribbons, permanent memory glyphs, named-note hovers, verification
+  badges or Followed/Missed rule receipts. Only after a durable save may a brief Saved to memory · View
+  line appear; View opens the same Memory page as a sheet and highlights the saved note. Requested save/edit
+  confirmation stays brief. Task evidence and ordinary links remain available.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -4944,12 +4952,13 @@ node_compile_hint:
   mode: teach_audit_safety
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0028
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0028
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
   - "explicit memory/context"
   - "MUST NOT persist secrets, tokens, passwords, or other credentials"
 negative_constraints:
-  - "Teach MUST NOT persist secrets, tokens, passwords, or other credentials."
+- Do not expose retired memory-use, verification or rule-check receipt UI.
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/Decision_Policy.md
@@ -6969,18 +6978,17 @@ plan_unit_id: ACD-066
 unit_type: constraint
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: >-
-  Retrieved results enter the Work bundle as a Retrieved Context block with
-  source type, provenance, snippet sizes, and truncation notes. Retrieved
-  Context is not Assistant memory and must respect Context Lens overlays.
+canonical_text: Retrieved Context stays ephemeral Work Bundle data with source provenance, snippet/truncation
+  and Context Lens restrictions, distinct from saved memories, written rules, conversations and task notes.
+  Assembled-source inspection is internal diagnostics; ordinary chat shows basic capacity/cost facts.
 gui_related: false
 gui_classification_reason: Retrieved Context assembly and memory boundaries are prompt/context pipeline behavior.
 depends_on: [ACD-063, ACD-064]
 unblocks: []
 acceptance_criteria:
-  - Retrieved Context carries source type, provenance, byte/token sizes, and truncation notes.
-  - Retrieved Context is not written to Assistant memory unless separately captured as a verified gist.
-  - Context Lens muted, focused, and subcompacted rules affect retrieval injection.
+- Retrieved Context stays ephemeral Work Bundle data with source provenance, snippet/truncation and Context
+  Lens restrictions, distinct from saved memories, written rules, conversations and task notes. Assembled-source
+  inspection is internal diagnostics; ordinary chat shows basic capacity/cost facts.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -6995,7 +7003,8 @@ node_compile_hint:
   mode: retrieved_context_memory_boundary
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0047
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0047
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
   - "Retrieved Context"
   - "Work bundle"
@@ -7003,7 +7012,7 @@ preserved_exact_tokens:
   - "Plans/assistant-memory-subsystem.md"
   - "Context Lens"
 negative_constraints:
-  - "Retrieved Context is not \"memory\" and must not be written into the Assistant memory store unless separately captured as a verified gist."
+- Do not expose retired memory-use, verification or rule-check receipt UI.
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/assistant-memory-subsystem.md
@@ -8251,20 +8260,19 @@ plan_unit_id: ACD-092
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: >-
-  The Context Detail Pane is an editor-tab pane with top-level `Curated` and
-  `Raw` views; `Curated` contains `Overview`, `Breakdown`, and `Messages`, and
-  `Raw` exposes message payloads, related `tool-part` payloads, provider
-  metadata blobs, and path/runtime debug data through an accordion.
+canonical_text: Context Detail retains basic on-demand chat capacity/cost, effective model/usage facts
+  and useful compaction/transition feedback. Assembled-source Breakdown, raw message/tool/provider/runtime
+  payloads and memory-selection explanations are internal debugging, not an ordinary user view or alternate
+  Memory editor. No memory raw data or used-note list is exposed.
 gui_related: true
 gui_classification_reason: Context Detail Pane tabs and accordions are visible editor-pane UI.
 depends_on: [ACD-091]
 unblocks: [ACD-093, ACD-100]
 acceptance_criteria:
-  - Context Detail Pane opens as an editor-tab pane.
-  - Top-level Curated and Raw views are available.
-  - Curated includes Overview, Breakdown, and Messages.
-  - Raw exposes payloads, tool-part data, provider metadata, and runtime/path debug data.
+- Context Detail retains basic on-demand chat capacity/cost, effective model/usage facts and useful compaction/transition
+  feedback. Assembled-source Breakdown, raw message/tool/provider/runtime payloads and memory-selection
+  explanations are internal debugging, not an ordinary user view or alternate Memory editor. No memory
+  raw data or used-note list is exposed.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -8279,7 +8287,8 @@ node_compile_hint:
   mode: context_detail_pane_ia
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0060
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0060
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
   - "Curated"
   - "Raw"
@@ -8289,7 +8298,8 @@ preserved_exact_tokens:
   - "/model/mode/persona"
   - "/context/cost"
   - "tool-part"
-negative_constraints: []
+negative_constraints:
+- Do not expose retired memory-use, verification or rule-check receipt UI.
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/FinalGUISpec.md
@@ -8302,20 +8312,19 @@ plan_unit_id: ACD-093
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: >-
-  Context Detail Pane breakdowns include system/instruction blocks,
-  user/assistant messages, compiled attachments and forwarded document
-  selections, tool/activity-derived context, canonical `usage.event` and
-  `run.completed.usage` snapshots, and debug-only Investigation Context items
-  for active debug threads.
+canonical_text: Internal context records retain instruction/message/attachment/tool/notebook/workflow
+  source classes, canonical usage snapshots, redaction/truncation and debug provenance for correct enforcement.
+  No assembled-source chart, raw memory detail or selection explanation is a user-facing memory surface;
+  basic capacity/cost information remains on demand.
 gui_related: true
 gui_classification_reason: Breakdown rows and source groups are visible in the Context Detail Pane.
 depends_on: [ACD-092]
 unblocks: [ACD-094, ACD-095]
 acceptance_criteria:
-  - Context breakdowns include all canonical user, assistant, system, attachment, tool, usage, and debug source families.
-  - Investigation Context items appear only for active debug threads.
-  - Canonical usage snapshots remain separate from ordinary chat-local message estimates.
+- Internal context records retain instruction/message/attachment/tool/notebook/workflow source classes,
+  canonical usage snapshots, redaction/truncation and debug provenance for correct enforcement. No assembled-source
+  chart, raw memory detail or selection explanation is a user-facing memory surface; basic capacity/cost
+  information remains on demand.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -8330,12 +8339,14 @@ node_compile_hint:
   mode: context_breakdown_source_taxonomy
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0060
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0060
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
   - "usage.event"
   - "run.completed.usage"
   - "Investigation Context"
-negative_constraints: []
+negative_constraints:
+- Do not expose retired memory-use, verification or rule-check receipt UI.
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/Prompt_Pipeline.md
@@ -8348,23 +8359,19 @@ plan_unit_id: ACD-094
 unit_type: constraint
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: >-
-  The thread surface derives usage from canonical runtime records and must not
-  invent a second chat-local cost model; hidden/background helper usage remains
-  source-class inspectable, and truncation, redaction, and
-  context-serialization state remain visible so omitted context is never
-  presented as serialized.
-  Amended 2026-10-31 (DL-270): thread usage summaries read the redb rollups (UF-108);
-  raw usage.event reads are limited to the per-turn Context Detail drill-down.
+canonical_text: Thread usage derives from canonical runtime records/redb rollups (UF-108), never a second
+  chat-local cost model. Basic on-demand model/capacity/cost facts stay available; source-family charts
+  and raw payload views remain internal diagnostics. Unknown or omitted/truncated/redacted data never
+  masquerades as serialized context; permission enforcement retains internal records.
 gui_related: true
 gui_classification_reason: Runtime usage source and omitted-context state affect user-visible usage/cost display.
 depends_on: [ACD-091, ACD-093]
 unblocks: []
 acceptance_criteria:
-  - Usage derives from canonical runtime records.
-  - Hidden/background helper usage remains inspectable by source class.
-  - Truncation, redaction, and serialization state remain visible.
-  - Omitted context is never presented as serialized.
+- Thread usage derives from canonical runtime records/redb rollups (UF-108), never a second chat-local
+  cost model. Basic on-demand model/capacity/cost facts stay available; source-family charts and raw payload
+  views remain internal diagnostics. Unknown or omitted/truncated/redacted data never masquerades as serialized
+  context; permission enforcement retains internal records.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -8380,13 +8387,13 @@ node_compile_hint:
   mode: context_usage_runtime_source_boundary
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0060
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0060
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
   - "MUST NOT invent a second chat-local cost model"
   - "UI MUST NOT silently present omitted context as if it were still serialized"
 negative_constraints:
-  - "MUST NOT invent a second chat-local cost model"
-  - "UI MUST NOT silently present omitted context as if it were still serialized"
+- Do not expose retired memory-use, verification or rule-check receipt UI.
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/usage-feature.md
@@ -12919,19 +12926,21 @@ plan_unit_id: ACD-187
 unit_type: constraint
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: >-
-  Automatic memory injection applies Assistant-memory SSOT eligibility gating:
-  Verified-only by default, Unverified inclusion only with explicit user
-  action, memory text summary-only, and memory injection separate from the
-  Application/Project rules pipeline.
+canonical_text: Memory injection uses bounded supported summary-only selection separate from written rules,
+  and memory off disables save/use. User-authored preferences/statements are supported as what the user
+  said at that version, without a Verify chore; world claims still require scoped current evidence. Edits
+  invalidate stale summary/index eligibility and are checked internally; no pinned/manual bypass can make
+  unsupported claims proven.
 gui_related: false
 gui_classification_reason: Memory eligibility and summary-only boundaries are prompt/context policy behavior.
 depends_on: [ACD-186]
 unblocks: [ACD-188]
 acceptance_criteria:
-  - Verified-only automatic inclusion remains default.
-  - Unverified memory inclusion requires explicit user action.
-  - Memory text is summary-only and separate from Application/Project rules.
+- Memory injection uses bounded supported summary-only selection separate from written rules, and memory
+  off disables save/use. User-authored preferences/statements are supported as what the user said at that
+  version, without a Verify chore; world claims still require scoped current evidence. Edits invalidate
+  stale summary/index eligibility and are checked internally; no pinned/manual bypass can make unsupported
+  claims proven.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -12946,14 +12955,15 @@ node_compile_hint:
   mode: assistant_memory_eligibility_summary_boundary
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0090
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0090
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
   - "Verified-only"
   - "Unverified"
   - "summary-only"
   - "Application/Project rules pipeline"
 negative_constraints:
-  - "Any Unverified inclusion requires explicit user action."
+- Do not expose retired memory-use, verification or rule-check receipt UI.
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/assistant-memory-subsystem.md
@@ -12966,15 +12976,19 @@ plan_unit_id: ACD-188
 unit_type: constraint
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Assistant memory MUST NOT be forwarded to subagents or non-Assistant execution paths from chat.
+canonical_text: Crews, reviews and the chat assistant's other helpers may read the current Project's notes
+  and the same user's personal Every project notes, read-only under current actor/source/phase permissions.
+  No helper-owned memory, other-Project access or private app-thread access follows. Summaries and handoffs
+  inherit restrictions; paraphrase cannot widen them.
 gui_related: false
 gui_classification_reason: Assistant memory forwarding boundary is execution/context policy behavior.
 depends_on: [ACD-186, ACD-187]
 unblocks: []
 acceptance_criteria:
-  - Assistant memory remains scoped to Assistant chat.
-  - Subagents do not receive Assistant memory from chat.
-  - Non-Assistant execution paths do not receive Assistant memory from chat.
+- Crews, reviews and the chat assistant's other helpers may read the current Project's notes and the same
+  user's personal Every project notes, read-only under current actor/source/phase permissions. No helper-owned
+  memory, other-Project access or private app-thread access follows. Summaries and handoffs inherit restrictions;
+  paraphrase cannot widen them.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -12990,11 +13004,12 @@ node_compile_hint:
   mode: assistant_memory_non_forwarding
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0090
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0090
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
   - "Assistant memory MUST NOT be forwarded"
 negative_constraints:
-  - "Assistant memory MUST NOT be forwarded to subagents or non-Assistant execution paths from chat."
+- Do not widen source restrictions, private app-thread access or helper writes.
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/assistant-memory-subsystem.md
@@ -13007,17 +13022,33 @@ plan_unit_id: ACD-189
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: >-
-  Gist Review actions in Assistant chat dispatch canonical
-  `cmd.chat.memory.*` UI command IDs and must not use ad-hoc command
-  identifiers.
+canonical_text: Memory is one saved-note page, opened from Settings and as that same page in the chat
+  Memory button/wand sheet. It has one on/off switch, search including archived notes, a level filter
+  All / This project / Every project, text/level/updated list rows, Add memory, Edit, Delete and collapsed
+  Archived. Title is optional, kind inferred. Delete all names the exact scope; deletion is distinct from
+  Discard/archive and cannot be silently undone from old chats. Verification, sources, pins, conflicts,
+  ranking, preview, upkeep and competing recovery controls stay off the page. Instructions, History/privacy,
+  chat capacity and Run limits remain separate. Add/Edit/Delete use cmd.chat.memory.add, cmd.chat.memory.edit
+  and cmd.chat.memory.delete under AMS-141; never relabel Discard as Delete or use ad-hoc handlers. User-authored
+  preferences/statements are supported as what the user said at that version, without a Verify chore;
+  world claims still require scoped current evidence. Edits invalidate stale summary/index eligibility
+  and are checked internally; no pinned/manual bypass can make unsupported claims proven.
 gui_related: true
 gui_classification_reason: Gist Review actions and UI command IDs are visible chat commands.
 depends_on: [ACD-186]
 unblocks: []
 acceptance_criteria:
-  - Gist Review actions dispatch cmd.chat.memory.* UI command IDs.
-  - Ad-hoc memory command identifiers are prohibited.
+- Memory is one saved-note page, opened from Settings and as that same page in the chat Memory button/wand
+  sheet. It has one on/off switch, search including archived notes, a level filter All / This project
+  / Every project, text/level/updated list rows, Add memory, Edit, Delete and collapsed Archived. Title
+  is optional, kind inferred. Delete all names the exact scope; deletion is distinct from Discard/archive
+  and cannot be silently undone from old chats. Verification, sources, pins, conflicts, ranking, preview,
+  upkeep and competing recovery controls stay off the page. Instructions, History/privacy, chat capacity
+  and Run limits remain separate. Add/Edit/Delete use cmd.chat.memory.add, cmd.chat.memory.edit and cmd.chat.memory.delete
+  under AMS-141; never relabel Discard as Delete or use ad-hoc handlers. User-authored preferences/statements
+  are supported as what the user said at that version, without a Verify chore; world claims still require
+  scoped current evidence. Edits invalidate stale summary/index eligibility and are checked internally;
+  no pinned/manual bypass can make unsupported claims proven.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -13033,11 +13064,12 @@ node_compile_hint:
   mode: gist_review_memory_command_canon
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0090
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0090
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
   - "cmd.chat.memory.*"
 negative_constraints:
-  - "Gist Review actions in Assistant chat MUST NOT use ad-hoc command identifiers."
+- Do not expose retired memory-use, verification or rule-check receipt UI.
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/UI_Command_Catalog.md
@@ -13050,18 +13082,17 @@ plan_unit_id: ACD-190
 unit_type: constraint
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: >-
-  Project retrieval injection may add project-scoped chat/code/log context for
-  the current turn, but it remains separate from Assistant memory injection and
-  is fresh, ephemeral Work Bundle context.
+canonical_text: Project chat/code/log retrieval is fresh ephemeral Work Bundle context, separate from
+  saved Memory, written Instructions, conversation history and Working Notebook. Finding material does
+  not itself save a reusable memory or create proof.
 gui_related: false
 gui_classification_reason: Project retrieval separation is context assembly policy, not GUI behavior.
 depends_on: [ACD-186]
 unblocks: [ACD-191]
 acceptance_criteria:
-  - Project retrieval injection stays separate from Assistant memory injection.
-  - Retrieved context is fresh, ephemeral context for the current turn.
-  - Assistant memory is never implicitly expanded by chat/code/log retrieval.
+- Project chat/code/log retrieval is fresh ephemeral Work Bundle context, separate from saved Memory,
+  written Instructions, conversation history and Working Notebook. Finding material does not itself save
+  a reusable memory or create proof.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -13076,14 +13107,15 @@ node_compile_hint:
   mode: project_retrieval_separation
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0091
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0091
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
   - "project-scoped retrieved context"
   - "chat/code/logs"
   - "MUST remain separate"
   - "fresh, ephemeral context"
 negative_constraints:
-  - "Assistant memory injection is never implicitly expanded by chat/code/log retrieval."
+- Do not expose retired memory-use, verification or rule-check receipt UI.
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/assistant-memory-subsystem.md
@@ -23908,14 +23940,11 @@ plan_unit_id: ACD-426
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Teach is the feature and Teacher is the Persona used inside it. Teacher runs as a normal Assistant
-  Chat thread/persona mode, launched by help icons, /teach, or natural-language summons, with current-surface context,
-  role/persona badge, model/context/source chips, thread summary/state, activity cards, and handoff disclosure.
-  Teach durable memory capture stays distinct from one-off Teacher-guided instruction; eligible answers may offer
-  Save as taught memory through an explicit capture card with scope, source, secret-safety, conflict/supersession,
-  Save/Cancel, and later inspect/narrow/supersede/revoke/unlock actions. Amended 2026-11-05 under DL-333, following
-  DL-127, typing /teach opens the Teach popup through cmd.chat.teach.capture, not the Teacher; the Teacher is summoned
-  through help icons and the natural-language summons above.
+canonical_text: Teach is deliberate standing-instruction capture; Teacher is a Persona in an ordinary
+  Assistant chat. Help and natural-language Teacher summons retain the shared chat runtime. /teach opens
+  cmd.chat.teach.capture, the same Teach sheet used by Save as a rule; explicit scoped confirm/cancel,
+  screening, lock, narrowing and revocation remain. Reusable learned notes use the separate Memory page
+  Add/Edit/Delete, without the duplicate verification document or capture ceremony for a user preference.
 gui_related: true
 gui_classification_reason: Defines Teacher-in-chat threads, help launches, activity cards, capture UI, and thread
   states.
@@ -23927,10 +23956,11 @@ unblocks:
 - G-026
 - ATS-014
 acceptance_criteria:
-- Live PlanUnit exists in the adjudicated owner doc with reciprocal ledger source_lineage.
-- Exact source tokens, negative constraints, owner hints, and user corrections are preserved in PlanUnit metadata.
-- No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks
-  are created by this compile.
+- Teach is deliberate standing-instruction capture; Teacher is a Persona in an ordinary Assistant chat.
+  Help and natural-language Teacher summons retain the shared chat runtime. /teach opens cmd.chat.teach.capture,
+  the same Teach sheet used by Save as a rule; explicit scoped confirm/cancel, screening, lock, narrowing
+  and revocation remain. Reusable learned notes use the separate Memory page Add/Edit/Delete, without
+  the duplicate verification document or capture ceremony for a user preference.
 validation_surfaces:
 - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name
 - python3 scripts/pm-plan-index.py validate
@@ -23980,6 +24010,7 @@ source_lineage:
 - Concepts/PMConcept.html#chat-panel
 - Concepts/PMConcept.html#chat-thread-sidebar
 - Concepts/PMConcept.html#switchToChatThread
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 source_atom_ids:
 - atom-0090
 - atom-0093
@@ -24087,45 +24118,7 @@ preserved_exact_tokens:
 - Assistant Chat
 - persona
 negative_constraints:
-- Do not introduce `requested_persona_id` or `effective_persona_id` as canonical fields; those are stale aliases
-  in Personas.md.
-- Do not make Teacher a hidden subagent for this feature; existing Plans say `teacher` is user-facing and not subagent-only.
-- Do not call Teach implementation-ready while Teacher-guided PM help and GUI-control behavior remain underspecified.
-- Do not assume the existing durable Teach memory-capture section alone satisfies the user-facing teaching feature.
-- Do not make Teacher-guided instruction automatically persist memory.
-- Do not make durable Teach capture a closed mode overlay detached from the current thread runtime/mode selection.
-- Do not weaken existing `user-locked` Teach records through automated cleanup or summarization.
-- Do not reuse an unrelated active chat thread when the help-icon contract says to open a new teaching conversation.
-- Do not launch Teacher without preserving current surface context needed for useful help.
-- Do not replace Teacher launch with static help pages only.
-- Do not let Teacher silently manipulate or navigate the GUI with no chat-visible activity trail.
-- Do not hide blocked/skipped reasons or requested/effective Persona/model state when they affect the teaching flow.
-- Do not let a low-end Teacher model continue silently when the task has become implementation/build work requiring
-  handoff.
-- Do not bury Teach behind only slash commands.
-- Do not add a loud or decorative help affordance that competes with primary workflow controls.
-- Do not launch Teacher without current-surface context.
-- Do not create a detached Teacher-only shell that hides standard Assistant Chat controls.
-- Do not omit requested/effective persona or model disclosure from the Teacher thread.
-- Do not make Teacher launch a modal that blocks normal navigation as the only path.
-- Do not make GUI guidance silent or invisible in the chat thread.
-- Do not show vague activity text when PM knows the route/control/action.
-- Do not hide blocked, skipped, fallback, or handoff state.
-- Do not silently mutate an existing non-Teacher thread into Teacher mode.
-- Do not lose the originating surface/control context during launch.
-- Do not require users to know `/teach` before discovering help.
-- Do not invent a separate chat product surface for Teacher.
-- Do not hide requested/effective Persona/model state.
-- Do not show Save as taught memory unless the content is eligible and user confirmation is still required.
-- Do not make Teacher GUI actions silent.
-- Do not hide blocked/degraded activity rows after the immediate step passes.
-- Do not force users into raw traces for normal teaching transparency.
-- Do not auto-save one-off Teacher guidance as taught memory.
-- Do not persist secrets, tokens, passwords, or credentials.
-- Do not allow conflicting teachings to silently overwrite prior locked records.
-- Do not invent a separate Teach-only chat surface when the Assistant Chat thread model can carry Teacher.
-- Do not lose Teacher persona/model/source/context disclosure when launching from a help icon or summon phrase.
-- Do not hide thread state such as working, unread, blocked, degraded, draft, archived, or handoff state when relevant.
+- Do not expose retired memory-use, verification or rule-check receipt UI.
 owner_hints:
 - Plans/assistant-chat-design.md
 - Plans/Personas.md
@@ -25536,14 +25529,20 @@ plan_unit_id: ACD-450
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: "Context Details discloses continuity truthfully: notebook/capsule contributions render as a distinct source class separate from memory, history, and workflow state; requested/effective fresh-window transition reason/path, checkpoint status, omitted/truncated/redacted source classes, and unknown native state render as unknown rather than fabricated. A separately labeled fresh-context request exists in context controls with truthful eligibility and disabled reasons; Compact Now remains compaction with unchanged semantics; fresh context is never labeled session deletion or done.rotated."
+canonical_text: Basic on-demand Context Details remains truthful about capacity/cost, fresh-context eligibility,
+  actual checkpoint/transition result, omitted/truncated/redacted data and unknown native state. Assembled
+  source-family charts, raw memory data and selection explanations stay internal diagnostics with full
+  restriction enforcement. Compact Now remains compaction, distinct from fresh context, session deletion
+  and done.rotated.
 gui_related: true
 gui_classification_reason: This unit is Context Details and context-control UI behavior.
 depends_on: [ACD-449, PP-085]
 unblocks: []
 acceptance_criteria:
-  - The user can distinguish notebook, memory, history, and workflow contributions.
-  - Fresh-context request and Compact Now are visibly distinct with truthful disabled reasons.
+- Basic on-demand Context Details remains truthful about capacity/cost, fresh-context eligibility, actual
+  checkpoint/transition result, omitted/truncated/redacted data and unknown native state. Assembled source-family
+  charts, raw memory data and selection explanations stay internal diagnostics with full restriction enforcement.
+  Compact Now remains compaction, distinct from fresh context, session deletion and done.rotated.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py run-gates
 risk_class: misleading_disclosure
@@ -25552,13 +25551,13 @@ context_scope: assistant_chat
 implementation_surfaces: [Plans/assistant-chat-design.md, Plans/usage-feature.md, Plans/Prompt_Pipeline.md]
 node_compile_hint: {mode: gui_surface_spec, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - source_packet:PM-WNC-2026-09-05-v1:WNC-X03
-  - source_packet:PM-WNC-2026-09-05-v1:WNC-A34
-  - source_packet:PM-WNC-2026-09-05-v1:WNC-A53
+- source_packet:PM-WNC-2026-09-05-v1:WNC-X03
+- source_packet:PM-WNC-2026-09-05-v1:WNC-A34
+- source_packet:PM-WNC-2026-09-05-v1:WNC-A53
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens: ["Compact Now", "fresh-context request", "unknown", "done.rotated"]
 negative_constraints:
-  - Do not repurpose Compact Now as a fresh-context control.
-  - Do not render unknown native state as known.
+- Do not expose retired memory-use, verification or rule-check receipt UI.
 owner_hints: [Plans/assistant-chat-design.md, Plans/usage-feature.md]
 ```
 
@@ -27441,58 +27440,39 @@ plan_unit_id: ACD-477
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: >-
-  Teach capture and confirm (section 6). The wand's Teach…, /teach, natural-language intent and Save as a
-  rule… in a message's More row each dispatch cmd.chat.teach.capture with mode new, prefilled with the
-  proposed rule text and a reference to its source message; the user's message stays in the chat as sent.
-  Editing a taught rule dispatches cmd.chat.teach.capture with mode correct. Capture only opens the
-  capture step, and the capture step is the Teach sheet (FinalGUISpec F3-579) for every entry point,
-  /teach and natural-language intent included: there is no inline capture card in the chat (DL-127). The
-  save action is cmd.chat.teach.confirm, and Cancel, close and Escape are cmd.chat.teach.cancel, which
-  persists nothing. Scope is exactly one of thread, project and user, shown nested from narrowest to
-  widest as This thread, This project and Every project. The user scope needs public_safe: the user's
-  explicit statement that the rule holds no private names, links or code; without it confirm refuses user
-  scope and says why. In correct mode the scope may stay or narrow but never widen; a wider rule is a new
-  rule. Before confirm the capture step screens the text for passwords, keys and tokens; when one is found
-  it says so in words and confirm stays refused until it is removed. When a similar taught rule is in
-  reach, the capture step shows the old and the new wording side by side and confirm waits for the user's
-  choice: replace the old rule, which records supersedes_memory_id and keeps the old version in history,
-  or keep both. The user may also mark the rule locked at confirm (ACD-481). The confirm request is
-  TeachConfirmRequest {scope, public_safe, locked, conflict_resolution: replace:<memory_id> | keep_both,
-  supersedes_memory_id?}. Each confirmed change leaves one receipt line in the chat (saved, or updated to
-  a new version), and consecutive saves coalesce into one line. The reply's note about taught rules
-  follows DL-116 as the design lead's ruling of 2026-09-27 applied it and AMS-053 of
-  assistant-memory-subsystem defines it. A rule counts as followed only when it was given to the assistant
-  for that reply and the finished reply passed that rule's check; inclusion alone is never shown as
-  following. The note counts only rules that passed, for example "Followed 1 of your rules". When any
-  included rule failed its check the reply shows "Missed 1 of your rules" (the number is how many failed),
-  with a way to see which rule was missed and a way to ask for a fix; the fix starts only when the user
-  asks, and a failed check is never hidden behind a Followed count. A rule whose check could not run earns
-  no tick, and a reply with no passed or failed check shows no rule note. Used is never shown in place of
-  either note. Section 6's user-locked sentence is unchanged. DL-138 confirms the final wording. Persisted
-  AMS-053 check results drive the note on reopen: passed counts as Followed, failed counts as Missed and
-  could_not_run earns no tick. A mixed result is one line, Missed first, for example "Missed 1 of your
-  rules · followed 2". See which rule opens the saved check evidence as view state. Ask for a fix reuses
-  cmd.review.send_findings_to_agent with the taught_rule_check source variant (UCC-172): it fills the
-  source thread's empty composer, returns ComposerBufferResult, refuses composer_not_empty, and never
-  sends or executes a fix. The user sends it. In No project omit the project choice, retain thread and
-  user with the user label Everywhere, and preserve public_safe, screening, conflict, locked-rule and
-  no-widening checks. Settings' Computer layer changes behavior defaults, not a new Teach memory scope.
-  Conversion keeps thread rules thread-wide and does not widen them.
+canonical_text: 'Teach capture and confirm (section 6). The wand''s Teach…, /teach, natural-language intent
+  and Save as a rule… in a message''s More row each dispatch cmd.chat.teach.capture with mode new, prefilled
+  with the proposed rule text and a reference to its source message; the user''s message stays in the
+  chat as sent. Editing a taught rule dispatches cmd.chat.teach.capture with mode correct. Capture only
+  opens the capture step, and the capture step is the Teach sheet (FinalGUISpec F3-579) for every entry
+  point, /teach and natural-language intent included: there is no inline capture card in the chat (DL-127).
+  The save action is cmd.chat.teach.confirm, and Cancel, close and Escape are cmd.chat.teach.cancel, which
+  persists nothing. Scope is exactly one of thread, project and user, shown nested from narrowest to widest
+  as This thread, This project and Every project. The user scope needs public_safe: the user''s explicit
+  statement that the rule holds no private names, links or code; without it confirm refuses user scope
+  and says why. In correct mode the scope may stay or narrow but never widen; a wider rule is a new rule.
+  Before confirm the capture step screens the text for passwords, keys and tokens; when one is found it
+  says so in words and confirm stays refused until it is removed. When a similar taught rule is in reach,
+  the capture step shows the old and the new wording side by side and confirm waits for the user''s choice:
+  replace the old rule, which records supersedes_memory_id and keeps the old version in history, or keep
+  both. The user may also mark the rule locked at confirm (ACD-481). The confirm request is TeachConfirmRequest
+  {scope, public_safe, locked, conflict_resolution: replace:<memory_id> | keep_both, supersedes_memory_id?}.
+  Each confirmed change leaves one receipt line in the chat (saved, or updated to a new version), and
+  consecutive saves coalesce into one line. DL-475 retires ordinary Followed/Missed rule receipts and
+  the taught_rule_check reply-fix producer; internal inclusion/check records remain. In No project omit
+  the project choice, retain thread and user with the user label Everywhere, and preserve public_safe,
+  screening, conflict, locked-rule and no-widening checks. Settings'' Computer layer changes behavior
+  defaults, not a new Teach memory scope. Conversion keeps thread rules thread-wide and does not widen
+  them.'
 gui_related: true
 gui_classification_reason: "Defines what the user sets and sees when teaching Puppet Master a rule."
 split_recommended: false
 depends_on: [ACD-469, DL-127, DL-116, AMS-053]
 unblocks: [F3-570, F3-574, F3-579]
 acceptance_criteria:
-  - "Reopening retains the saved rule-check result, mixed results show one Missed-first line, and Ask for a fix only fills an empty composer until the user sends."
-  - "Every entry point dispatches cmd.chat.teach.capture and opens the Teach sheet; nothing persists before cmd.chat.teach.confirm."
-  - "No entry point renders an inline capture card in the chat."
-  - "Confirm refuses user scope without public_safe and refuses text that looks like a secret, with the reason in words."
-  - "Correct mode never widens a rule's scope."
-  - "A similar rule blocks confirm until replace or keep both is chosen; replace records supersedes_memory_id."
-  - "TeachConfirmRequest carries scope, public_safe, locked, conflict_resolution and supersedes_memory_id and no other new field."
-  - "A reply's rule note counts only included rules whose check passed; a failed check shows \"Missed 1 of your rules\" with a way to see which rule and to ask for a fix; a rule whose check could not run earns no tick."
+- Teach capture/confirm/cancel, public_safe, screening, lock, narrowing and explicit conflict choices
+  remain.
+- No ordinary Followed/Missed receipt or taught_rule_check fix-link producer remains.
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -27508,16 +27488,21 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/Decision_Log.md#DL-138 (owner answers, 2026-09-29)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de) sections 8.11, 8.15"
-  - "IMPACT-REGISTER B-ACD-02 (NOW part; the capture form and the locked field compiled 2026-09-27 from DL-127 and DL-130)"
-  - "Plans/Decision_Log.md#DL-127"
-  - "Plans/Decision_Log.md#DL-130"
-  - "Plans/Decision_Log.md#DL-116 (card n07, E-36; the design lead's ruling of 2026-09-27)"
-  - "Plans/assistant-memory-subsystem.md#AMS-053"
-  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
-  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
-  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
+- Plans/Decision_Log.md#DL-138 (owner answers, 2026-09-29)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de)
+  sections 8.11, 8.15
+- IMPACT-REGISTER B-ACD-02 (NOW part; the capture form and the locked field compiled 2026-09-27 from DL-127
+  and DL-130)
+- Plans/Decision_Log.md#DL-127
+- Plans/Decision_Log.md#DL-130
+- Plans/Decision_Log.md#DL-116 (card n07, E-36; the design lead's ruling of 2026-09-27)
+- Plans/assistant-memory-subsystem.md#AMS-053
+- projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c
+- projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03
+- 'Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It''s only planning
+  wizard/prd builder/orchestrator that isn''t.'
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
   - "composer_not_empty"
   - "ComposerBufferResult"
@@ -27772,35 +27757,24 @@ plan_unit_id: ACD-481
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: >-
-  Per-rule lock and turn off for taught rules (section 6; DL-130 adds both commands). A rule is
-  locked when the user ticks Locked in the Teach sheet, which sets TeachConfirmRequest.locked, or
-  uses Lock on the rule's row in Your rules. cmd.chat.teach.set_lock {locked} sets or clears the
-  user-locked flag of one taught rule; a locked rule can be changed only by the user, and this
-  command is the explicit user unlock that section 6 requires before automated cleanup,
-  summarization or profile migration may weaken a user-locked rule. Unlocking is the same command
-  with locked false. Turning a rule off is cmd.chat.teach.revoke: it sets revoked_at on one rule, the
-  rule stays in history, older versions do not come back, and the rule leaves future prompt
-  assembly; there is no undo, and the way back is to teach the rule again. Turn off asks inline in
-  the rule's row, never in a modal: "Stop using this rule? It stays in history, and older versions
-  don't come back." with Keep it, which is view state and dispatches nothing, and Turn off, which
-  dispatches the command. Both commands act on one rule at its current revision and refuse a stale
-  revision or an already turned-off rule with the reason in words. Turning a rule off leaves one
-  receipt line in the chat (Rule turned off: and the rule's words); locking and unlocking change the
-  rule's row and write no chat line. Your rules (the taught memory document) is the source surface of
-  both commands, and the Memory sheet is a source surface of cmd.chat.teach.revoke. The catalog rows
-  are UI_Command_Catalog's and the stored flags are assistant-memory-subsystem's; this unit states
-  the chat behaviour.
+canonical_text: Taught-rule lock and revocation remain Instructions/Your rules actions. cmd.chat.teach.set_lock
+  is the explicit user lock/unlock; automated memory upkeep cannot weaken it. cmd.chat.teach.revoke checks
+  current revision, sets revoked_at and prevents old versions returning; its inline confirmation and explicit
+  user-operation receipt remain. Remove Memory-sheet rule-revoke producers and automatic memory rule-change
+  proposal panels. The user opens Instructions/Teach for requested edits; Memory never edits a standing
+  rule.
 gui_related: true
 gui_classification_reason: "Defines how a user locks, unlocks and turns off a taught rule."
 split_recommended: false
 depends_on: [ACD-477, DL-130]
 unblocks: [F3-579]
 acceptance_criteria:
-  - "cmd.chat.teach.set_lock changes the lock of exactly one rule and is the only way a user-locked rule is unlocked."
-  - "cmd.chat.teach.revoke sets revoked_at on one rule, keeps it in history and never restores an older version."
-  - "Keep it dispatches nothing; Turn off never opens a modal."
-  - "A stale revision is refused with its reason."
+- Taught-rule lock and revocation remain Instructions/Your rules actions. cmd.chat.teach.set_lock is the
+  explicit user lock/unlock; automated memory upkeep cannot weaken it. cmd.chat.teach.revoke checks current
+  revision, sets revoked_at and prevents old versions returning; its inline confirmation and explicit
+  user-operation receipt remain. Remove Memory-sheet rule-revoke producers and automatic memory rule-change
+  proposal panels. The user opens Instructions/Teach for requested edits; Memory never edits a standing
+  rule.
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -27816,9 +27790,11 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de) section 8.11 (G-26, G-33)"
-  - "IMPACT-REGISTER B-ACD-02 (WAIT part: lock and revoke, card p15, E-32)"
-  - "Plans/Decision_Log.md#DL-130"
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de)
+  section 8.11 (G-26, G-33)
+- 'IMPACT-REGISTER B-ACD-02 (WAIT part: lock and revoke, card p15, E-32)'
+- Plans/Decision_Log.md#DL-130
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
   - "cmd.chat.teach.set_lock"
   - "cmd.chat.teach.revoke"
@@ -27826,9 +27802,7 @@ preserved_exact_tokens:
   - "Keep it"
   - "Rule turned off:"
 negative_constraints:
-  - "Do not let automated cleanup unlock or weaken a user-locked rule."
-  - "Do not restore an older version when a rule is turned off."
-  - "Do not ask to turn a rule off in a modal."
+- Do not expose retired memory-use, verification or rule-check receipt UI.
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/assistant-memory-subsystem.md

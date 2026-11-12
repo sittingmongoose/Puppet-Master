@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L23766-L24144
+Source lines: L23798-L24137
 
-Source SHA256: `5be00385fb332d27e9b2e7b29ae5101b4031acc3777b8ed3e23faceb8dcf4b75`
+Source SHA256: `e4f79ff67ddc82d1dff604804a724884f5f52725b2540dd960f732fd9f417970`
 
 ---
 
@@ -153,14 +153,11 @@ plan_unit_id: ACD-426
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Teach is the feature and Teacher is the Persona used inside it. Teacher runs as a normal Assistant
-  Chat thread/persona mode, launched by help icons, /teach, or natural-language summons, with current-surface context,
-  role/persona badge, model/context/source chips, thread summary/state, activity cards, and handoff disclosure.
-  Teach durable memory capture stays distinct from one-off Teacher-guided instruction; eligible answers may offer
-  Save as taught memory through an explicit capture card with scope, source, secret-safety, conflict/supersession,
-  Save/Cancel, and later inspect/narrow/supersede/revoke/unlock actions. Amended 2026-11-05 under DL-333, following
-  DL-127, typing /teach opens the Teach popup through cmd.chat.teach.capture, not the Teacher; the Teacher is summoned
-  through help icons and the natural-language summons above.
+canonical_text: Teach is deliberate standing-instruction capture; Teacher is a Persona in an ordinary
+  Assistant chat. Help and natural-language Teacher summons retain the shared chat runtime. /teach opens
+  cmd.chat.teach.capture, the same Teach sheet used by Save as a rule; explicit scoped confirm/cancel,
+  screening, lock, narrowing and revocation remain. Reusable learned notes use the separate Memory page
+  Add/Edit/Delete, without the duplicate verification document or capture ceremony for a user preference.
 gui_related: true
 gui_classification_reason: Defines Teacher-in-chat threads, help launches, activity cards, capture UI, and thread
   states.
@@ -172,10 +169,11 @@ unblocks:
 - G-026
 - ATS-014
 acceptance_criteria:
-- Live PlanUnit exists in the adjudicated owner doc with reciprocal ledger source_lineage.
-- Exact source tokens, negative constraints, owner hints, and user corrections are preserved in PlanUnit metadata.
-- No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks
-  are created by this compile.
+- Teach is deliberate standing-instruction capture; Teacher is a Persona in an ordinary Assistant chat.
+  Help and natural-language Teacher summons retain the shared chat runtime. /teach opens cmd.chat.teach.capture,
+  the same Teach sheet used by Save as a rule; explicit scoped confirm/cancel, screening, lock, narrowing
+  and revocation remain. Reusable learned notes use the separate Memory page Add/Edit/Delete, without
+  the duplicate verification document or capture ceremony for a user preference.
 validation_surfaces:
 - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name
 - python3 scripts/pm-plan-index.py validate
@@ -225,6 +223,7 @@ source_lineage:
 - Concepts/PMConcept.html#chat-panel
 - Concepts/PMConcept.html#chat-thread-sidebar
 - Concepts/PMConcept.html#switchToChatThread
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 source_atom_ids:
 - atom-0090
 - atom-0093
@@ -332,45 +331,7 @@ preserved_exact_tokens:
 - Assistant Chat
 - persona
 negative_constraints:
-- Do not introduce `requested_persona_id` or `effective_persona_id` as canonical fields; those are stale aliases
-  in Personas.md.
-- Do not make Teacher a hidden subagent for this feature; existing Plans say `teacher` is user-facing and not subagent-only.
-- Do not call Teach implementation-ready while Teacher-guided PM help and GUI-control behavior remain underspecified.
-- Do not assume the existing durable Teach memory-capture section alone satisfies the user-facing teaching feature.
-- Do not make Teacher-guided instruction automatically persist memory.
-- Do not make durable Teach capture a closed mode overlay detached from the current thread runtime/mode selection.
-- Do not weaken existing `user-locked` Teach records through automated cleanup or summarization.
-- Do not reuse an unrelated active chat thread when the help-icon contract says to open a new teaching conversation.
-- Do not launch Teacher without preserving current surface context needed for useful help.
-- Do not replace Teacher launch with static help pages only.
-- Do not let Teacher silently manipulate or navigate the GUI with no chat-visible activity trail.
-- Do not hide blocked/skipped reasons or requested/effective Persona/model state when they affect the teaching flow.
-- Do not let a low-end Teacher model continue silently when the task has become implementation/build work requiring
-  handoff.
-- Do not bury Teach behind only slash commands.
-- Do not add a loud or decorative help affordance that competes with primary workflow controls.
-- Do not launch Teacher without current-surface context.
-- Do not create a detached Teacher-only shell that hides standard Assistant Chat controls.
-- Do not omit requested/effective persona or model disclosure from the Teacher thread.
-- Do not make Teacher launch a modal that blocks normal navigation as the only path.
-- Do not make GUI guidance silent or invisible in the chat thread.
-- Do not show vague activity text when PM knows the route/control/action.
-- Do not hide blocked, skipped, fallback, or handoff state.
-- Do not silently mutate an existing non-Teacher thread into Teacher mode.
-- Do not lose the originating surface/control context during launch.
-- Do not require users to know `/teach` before discovering help.
-- Do not invent a separate chat product surface for Teacher.
-- Do not hide requested/effective Persona/model state.
-- Do not show Save as taught memory unless the content is eligible and user confirmation is still required.
-- Do not make Teacher GUI actions silent.
-- Do not hide blocked/degraded activity rows after the immediate step passes.
-- Do not force users into raw traces for normal teaching transparency.
-- Do not auto-save one-off Teacher guidance as taught memory.
-- Do not persist secrets, tokens, passwords, or credentials.
-- Do not allow conflicting teachings to silently overwrite prior locked records.
-- Do not invent a separate Teach-only chat surface when the Assistant Chat thread model can carry Teacher.
-- Do not lose Teacher persona/model/source/context disclosure when launching from a help icon or summon phrase.
-- Do not hide thread state such as working, unread, blocked, degraded, draft, archived, or handoff state when relevant.
+- Do not expose retired memory-use, verification or rule-check receipt UI.
 owner_hints:
 - Plans/assistant-chat-design.md
 - Plans/Personas.md

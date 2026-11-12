@@ -4,7 +4,7 @@ Source: `Plans/rewrite-tie-in-memo.md`
 
 Source lines: L13-L87
 
-Source SHA256: `3abc641ce316c72a894a8507d216526468d06a9c256ba3e09ea7a9d46cd0d46d`
+Source SHA256: `284394c60f9e65adffaccab60ae54990b10e1fb409a796f1bd8fdf8a21896d0c`
 
 ---
 
@@ -78,8 +78,8 @@ ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipe
 - Persistence and search paths must use seglog/redb/Tantivy contracts directly; do not add SQLite-based alternatives in edited sections.
 - The Slint rewrite MUST remove all per-platform experimental settings: Settings > Advanced MUST NOT include an "Experimental features" section or per-platform "Enable Codex/Gemini/Copilot Experimental" toggles, config schemas MUST NOT include per-platform `experimentalEnabled` (or equivalent) keys, and provider invocations MUST NOT rely on provider-side experimental toggles (e.g., Copilot `--experimental` CLI flag, or legacy Gemini experimental settings) for runtime behavior. DirectApi providers (Codex, Copilot, Gemini) MUST expose only stable capabilities through their APIs, and CliBridge providers (Cursor, Claude Code) MUST NOT grow experimental toggles in the GUI or config.
   ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/FinalGUISpec.md
-- Assistant memory is an Assistant-only continuity capability and MUST NOT alter Provider spine contracts, unified event model ownership, or shared rules pipeline semantics; implementation is specified in `Plans/assistant-memory-subsystem.md`.
-  Note: Gist generation is artifact-driven (AutoRunBoundary/AutoMilestone) and remains Assistant-only; it does not change system SSOT ownership.
+- Memory permits owner-managed writes and authorized helper reads under AMS-026, preserving private app-thread separation. It MUST NOT alter Provider spine contracts, unified event model ownership or shared rules pipeline semantics; implementation is specified in `Plans/assistant-memory-subsystem.md`.
+  Note: Gist generation evaluates useful reusable content at AutoRunBoundary/AutoMilestone, not every finished reply; it does not change system SSOT ownership.
   ContractRef: ContractName:Plans/assistant-memory-subsystem.md#1-capability-boundary, ContractName:Plans/assistant-memory-subsystem.md#2-physical-storage-layout, ContractName:Plans/assistant-memory-subsystem.md#5-verification-and-triggers, ContractName:Plans/agent-rules-context.md, ContractName:Plans/storage-plan.md
 
 ---

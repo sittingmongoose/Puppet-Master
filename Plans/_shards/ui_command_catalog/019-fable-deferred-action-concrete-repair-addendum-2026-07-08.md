@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L8827-L10956
+Source lines: L8842-L10973
 
-Source SHA256: `3076b04b822023dbbc42190301d7803c7772652b6b3fc3f45d443c7c7683b726`
+Source SHA256: `4a5c534245eb40b9e056c081cd7631289e7b6fb420dfc89be21f42937111e168`
 
 ---
 
@@ -987,37 +987,37 @@ command_payload_definition_map:
     catalog_unit: UCC-231
     owner_unit: CRAU-115
     row_group: UCC-049..UCC-053
-    evidence: {doc: Plans/UI_Command_Catalog.md, unit: UCC-231, field: canonical_text, line: 21889, quote: "cmd.docker.bake is the live bare Bake command exposed by CRAU-011"}
+    evidence: {doc: Plans/UI_Command_Catalog.md, unit: UCC-231, field: canonical_text, quote: "cmd.docker.bake is the live bare Bake command exposed by CRAU-011"}
   - command_id: cmd.docker.container.stats
     catalog_unit: UCC-231
     owner_unit: CRAU-115
     row_group: UCC-049..UCC-053
-    evidence: {doc: Plans/UI_Command_Catalog.md, unit: UCC-231, field: canonical_text, line: 21890, quote: "cmd.docker.container.stats shows live or cached container stats with freshness markers"}
+    evidence: {doc: Plans/UI_Command_Catalog.md, unit: UCC-231, field: canonical_text, quote: "cmd.docker.container.stats shows live or cached container stats with freshness markers"}
   - command_id: cmd.git.worktree.merge
     catalog_unit: UCC-132
     owner_unit: W-095
     row_group: UCC-054..UCC-055
-    evidence: {doc: Plans/UI_Command_Catalog.md, unit: UCC-132, field: canonical_text, line: 13084, quote: "cmd.git.worktree.merge mints the project-scope worktree merge the UCC-054 family lacked"}
+    evidence: {doc: Plans/UI_Command_Catalog.md, unit: UCC-132, field: canonical_text, quote: "cmd.git.worktree.merge mints the project-scope worktree merge the UCC-054 family lacked"}
   - command_id: cmd.git.worktree.open_topology
     catalog_unit: UCC-231
     owner_unit: W-095
     row_group: UCC-054..UCC-055
-    evidence: {doc: Plans/UI_Command_Catalog.md, unit: UCC-231, field: canonical_text, line: 21892, quote: "cmd.git.worktree.open_topology and cmd.git.worktree.repair are the live project-scope ids listed"}
+    evidence: {doc: Plans/UI_Command_Catalog.md, unit: UCC-231, field: canonical_text, quote: "cmd.git.worktree.open_topology and cmd.git.worktree.repair are the live project-scope ids listed"}
   - command_id: cmd.git.worktree.repair
     catalog_unit: UCC-231
     owner_unit: W-095
     row_group: UCC-054..UCC-055
-    evidence: {doc: Plans/UI_Command_Catalog.md, unit: UCC-231, field: canonical_text, line: 21892, quote: "cmd.git.worktree.open_topology and cmd.git.worktree.repair are the live project-scope ids listed"}
+    evidence: {doc: Plans/UI_Command_Catalog.md, unit: UCC-231, field: canonical_text, quote: "cmd.git.worktree.open_topology and cmd.git.worktree.repair are the live project-scope ids listed"}
   - command_id: cmd.debug.record_verification
     catalog_unit: UCC-142
     owner_unit: CS-125
     row_group: UCC-077..UCC-083
-    evidence: {doc: Plans/UI_Command_Catalog.md, unit: UCC-142, field: canonical_text, line: 14068, quote: "cmd.debug.record_verification and cmd.debug.run_cleanup are registered with the"}
+    evidence: {doc: Plans/UI_Command_Catalog.md, unit: UCC-142, field: canonical_text, quote: "cmd.debug.record_verification and cmd.debug.run_cleanup are registered with the"}
   - command_id: cmd.debug.run_cleanup
     catalog_unit: UCC-142
     owner_unit: CS-125
     row_group: UCC-077..UCC-083
-    evidence: {doc: Plans/UI_Command_Catalog.md, unit: UCC-142, field: canonical_text, line: 14068, quote: "cmd.debug.record_verification and cmd.debug.run_cleanup are registered with the"}
+    evidence: {doc: Plans/UI_Command_Catalog.md, unit: UCC-142, field: canonical_text, quote: "cmd.debug.record_verification and cmd.debug.run_cleanup are registered with the"}
   unresolved_tokens: []
   non_definition_tokens:
   - token: cmd.docker.remove
@@ -2132,8 +2132,10 @@ command_payload_definition_map:
     canon_name: gist_id
     decision: DL-341
     evidence:
-      doc: Plans/UI_Command_Catalog.md
-      quote: '| `cmd.chat.memory.verify` | `{ project_id, gist_id }` |'
+      doc: Plans/assistant-memory-subsystem.md
+      unit: AMS-141
+      field: canonical_text
+      quote: gist_id and expected_revision
     note: 'DL-341 coordinator resolution 4: the memory item identity is gist_id in the catalog memory rows and in
       Plans/assistant-memory-subsystem.md (MemoryGist).'
   contested: []

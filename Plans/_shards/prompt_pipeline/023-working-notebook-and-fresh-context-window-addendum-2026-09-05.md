@@ -2,9 +2,9 @@
 
 Source: `Plans/Prompt_Pipeline.md`
 
-Source lines: L5721-L6039
+Source lines: L5721-L6050
 
-Source SHA256: `86f90ffb90e7a36627ac597c83f64e1fbb1e31f0064d56eed4f7e4e54c16783d`
+Source SHA256: `2896b4e4980fd55255a59c9aa16ca36480fe9be538138f3a4c0a6ac5bd010ede`
 
 ---
 
@@ -231,7 +231,17 @@ plan_unit_id: PP-089
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Prompt_Pipeline.md
-canonical_text: "Tool-result shaping policy survives replay and recovery: the effective per-tool/per-MCP-tool output policy (full/summarize/meta_only/exclude, caps, truncation markers, original artifact refs) is snapshotted with the assembled context, and resume/replay retains the effective policy snapshot so truncation/shaping stays consistent and observable. Shaping separates execution output retention from model-visible output: original artifacts and tool/result causal relationships remain recoverable where retained, the canonical tool history is never overwritten by the summary, and huge results never bypass context caps. Retrieval and notebook material remain explicit context source classes inspectable by source type, identity, derivation, and visibility, never permanent memory or canonical source history by retrieval alone."
+canonical_text: 'Tool-result shaping policy survives replay and recovery: the effective per-tool/per-MCP-tool
+  output policy (full/summarize/meta_only/exclude, caps, truncation markers, original artifact refs) is
+  snapshotted with the assembled context, and resume/replay retains the effective policy snapshot so truncation/shaping
+  stays consistent and observable. Shaping separates execution output retention from model-visible output:
+  original artifacts and tool/result causal relationships remain recoverable where retained, the canonical
+  tool history is never overwritten by the summary, and huge results never bypass context caps. Retrieval
+  and notebook material remain explicit context source classes inspectable by source type, identity, derivation,
+  and visibility, never permanent memory or canonical source history by retrieval alone. DL-475 retains
+  these source/identity/derivation/visibility records internally for replay and correct permission enforcement.
+  Ordinary user context views keep basic capacity/cost facts, not assembled-source charts, raw memory
+  or memory-selection explanations.'
 gui_related: false
 gui_classification_reason: Shaping policy is pipeline/tool-boundary behavior, not GUI work.
 depends_on: [PP-084]
@@ -248,8 +258,9 @@ context_scope: context_pipeline
 implementation_surfaces: [Plans/Prompt_Pipeline.md, Plans/Tools.md, Plans/MCP_Integration.md]
 node_compile_hint: {mode: pipeline_policy_spec, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - source_packet:PM-WNC-2026-09-05-v1:WNC-C13
-  - source_packet:PM-WNC-2026-09-05-v1:WNC-H06
+- source_packet:PM-WNC-2026-09-05-v1:WNC-C13
+- source_packet:PM-WNC-2026-09-05-v1:WNC-H06
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens: ["policy snapshot", "original artifact refs", "explicit context source classes"]
 negative_constraints:
   - Do not overwrite canonical tool history with shaped summaries.

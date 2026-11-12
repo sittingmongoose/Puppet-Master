@@ -2,9 +2,9 @@
 
 Source: `Plans/agent-rules-context.md`
 
-Source lines: L309-L2306
+Source lines: L309-L2318
 
-Source SHA256: `239ee9829dfe15dd51e8664b8363b46c63f10b843f88fe43aeedc72ad954280d`
+Source SHA256: `f1fcf46dfb4409ccfc30d507abf111d30631f8dbacfb9a44f5234344db24aa49`
 
 ---
 
@@ -862,10 +862,14 @@ plan_unit_id: ARC-015
 unit_type: requirement
 status: accepted
 owner_doc: Plans/agent-rules-context.md
-canonical_text: Instruction Bundle Integration preserves that durable rules remain user-editable source text while each agent
-  invocation assembles Application rules, Project rules, and scoped AGENTS.md in that order; the rules pipeline emits rules
-  content only, does not inject attempt journals, parent summaries, or assistant-only memory, and must not infer cache behavior
-  from rule text or model-id heuristics.
+canonical_text: 'Instruction Bundle Integration preserves that durable rules remain user-editable source
+  text while each agent invocation assembles Application rules, Project rules, and scoped AGENTS.md in
+  that order; the rules pipeline emits rules content only, does not inject attempt journals, parent summaries,
+  or assistant-only memory, and must not infer cache behavior from rule text or model-id heuristics. DL-475
+  changes memory readers, not the rules pipeline: Crews, reviews and the chat assistant''s other helpers
+  may read the current Project''s notes and the same user''s personal Every project notes, read-only under
+  current actor/source/phase permissions. No helper-owned memory, other-Project access or private app-thread
+  access follows. Summaries and handoffs inherit restrictions; paraphrase cannot widen them.'
 gui_related: false
 gui_classification_reason: This unit covers instruction assembly and provider/cache ownership boundaries, not GUI behavior.
 split_recommended: false
@@ -891,6 +895,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:agent-rules-context-S0017
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
 - Instruction Bundle Integration (Application + Project + Scoped `AGENTS.md`)
 - Instruction Bundle order
@@ -1240,11 +1245,17 @@ plan_unit_id: ARC-022
 unit_type: requirement
 status: accepted
 owner_doc: Plans/agent-rules-context.md
-canonical_text: Context Assembly Semantics require Puppet Master to construct explicit Instruction Bundle, Work Bundle, and
-  Memory Bundle for each agent run; Instruction Bundle includes top-level and scoped AGENTS.md with closest-scope precedence
-  and deterministic deduplication; Work Bundle contains only current node/attempt objective, acceptance criteria, inputs,
-  allowed tools, and explicit constraints; Memory Bundle injects bounded Attempt Journal and/or Parent Summary only when enabled
-  and keeps Assistant-only memory out of unrelated runs.
+canonical_text: Context Assembly Semantics require Puppet Master to construct explicit Instruction Bundle,
+  Work Bundle, and Memory Bundle for each agent run; Instruction Bundle includes top-level and scoped
+  AGENTS.md with closest-scope precedence and deterministic deduplication; Work Bundle contains only current
+  node/attempt objective, acceptance criteria, inputs, allowed tools, and explicit constraints; Memory
+  Bundle injects bounded Attempt Journal and/or Parent Summary only when enabled and keeps Assistant-only
+  memory out of unrelated runs. DL-475 permits a separate bounded supported Memory contribution to authorized
+  helper runs under AMS-026, without folding it into written Instructions or turning child coordination
+  into helper-owned memory. Crews, reviews and the chat assistant's other helpers may read the current
+  Project's notes and the same user's personal Every project notes, read-only under current actor/source/phase
+  permissions. No helper-owned memory, other-Project access or private app-thread access follows. Summaries
+  and handoffs inherit restrictions; paraphrase cannot widen them.
 gui_related: false
 gui_classification_reason: This unit covers runtime context assembly and bundle semantics, not GUI behavior.
 split_recommended: false
@@ -1273,6 +1284,7 @@ source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:agent-rules-context-S0027
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:agent-rules-context-S0028
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:agent-rules-context-S0029
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
 preserved_exact_tokens:
 - Context Assembly Semantics (Deterministic Cone)
 - Instruction Bundle
