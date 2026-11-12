@@ -4923,7 +4923,7 @@ def _real_in_place(context):
     results.append(_use_reason(validator, dict(event, occurred_at_utc="not-a-time")) ==
                    "datetime_schema_changed_after_admission")
     schema, validator, event = _committed_eventrecord(context)
-    node, row = next(entry for entry in validator.storage_selection.nodes.values() if entry[1]["pointer"] == "")
+    node, row = validator.storage_selection.nodes[id(schema)]
     saved = row["profile"]
     try:
         row["profile"] = "owner_schema"
@@ -5111,3 +5111,13 @@ def _nested_already_bound(context):
         resource = inv.at(document, pointer)
         row = dict(rows[0], resource_pointer=pointer, resource_id=resource["$id"], resource_sha256=inv.digest(resource))
         return inv.bind_nested_resource(row, document) == row
+
+
+@check("datetime_nested_root_mutation_uses_bound_node")
+def _nested_root_mutation(context):
+    """A complete resource may be classified by an identical frozen recipe's
+    row, whose inventory pointer is not empty. Mutate the actual admitted
+    root; all four mutation refusals must still be exercised.
+    """
+    with _nested_fixture(context):
+        return _real_in_place(context)
