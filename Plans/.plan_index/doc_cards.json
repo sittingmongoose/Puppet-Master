@@ -1999,7 +1999,7 @@
         "tests/test_pm_evidence_artifact_binding_modes.py",
         "tests/test_pm_working_notebook_contracts.py"
       ],
-      "line_count": 7658,
+      "line_count": 7661,
       "path": "Plans/Automated_Testing_System.md",
       "plan_unit_count": 84,
       "plan_unit_ids": [
@@ -2162,7 +2162,7 @@
         "wonderer_grilling_contract_coverage",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "bb88308334fa58c38d787bdaa07aeb1504a4b8faf3c0db7d4df66c42ecc8976a",
+      "sha256": "534e9fcc58fe5fbca3c9159961e0c1437447a91fb0fde6ddde6946a0557af8fa",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 83,
@@ -2224,6 +2224,8 @@
         "Plans/goal_execution_binding_custody.schema.json",
         "Plans/goal_history_reader_outputs.schema.json",
         "Plans/goal_lifecycle_successor_fixtures.json",
+        "Plans/goal_own_c_contracts/dg-u-corpus.v1.json",
+        "Plans/goal_own_c_contracts/dg-u-successor-v4/selection.json",
         "Plans/goal_own_c_contracts/protocol.md",
         "Plans/goal_own_c_contracts/source-witness-inputs.json",
         "Plans/goal_own_c_contracts/w12-successor-v2/approved-agent-source.v2.json",
@@ -2335,6 +2337,7 @@
         "python3 scripts/pm7-canon-check.py",
         "python3 scripts/pm_coordination_events.py",
         "python3 scripts/pm_goal_current_writer_oracles.py",
+        "python3 scripts/pm_goal_dg_u_oracles.py --output <result.json> --guards <guards.json>",
         "python3 scripts/pm_goal_history_reader_fixtures.py",
         "python3 scripts/pm_goal_lifecycle_successor_oracles.py",
         "python3 scripts/pm_goal_own_c3_w12_successor_oracles.py",
@@ -21731,7 +21734,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-05T12:51:09Z",
+  "generated_at_utc": "2026-11-12T00:06:13Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
