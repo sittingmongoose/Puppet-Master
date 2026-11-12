@@ -169,7 +169,7 @@ class Projector:
         if w.start_cause['kind'] == 'original_started':
             starts.append({k: copy.deepcopy(self.consumer.acquire(v)[1]) for k, v in presentation.start.items() if k != 'kind'})
         cancellations, goal, effects = [], [], []
-        if presentation.cancellation is not None:
+        if presentation.cancellation is not None and not getattr(w, 'preserved', False):
             native, goal, effects = self.consumer.assemble(self.consumer.tuple(presentation))
             self.consumer.check(R.request_of(w) if hasattr(R, 'request_of') else self.request(), native, goal, effects)
             cancellations.append(native)

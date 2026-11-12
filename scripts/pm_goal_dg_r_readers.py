@@ -97,7 +97,8 @@ class Consumer:
         out, safe, start, process, goal, filesafe = parts
         v = lambda pair: copy.deepcopy(pair[1])  # noqa: E731
         start_value = {k: v(x) for k, x in start.items() if k != 'kind'}
-        native = dict(event_candidate=v(out['event_candidate']), intent=v(out['intent']),
+        native = dict(event_candidate=v(out['event_candidate']) if 'event_candidate' in out else None,
+                      intent=v(out['intent']),
                       committed_control=v(out['committed_control']), result=v(out['result']),
                       prepare_origin=v(out['prepare_origin']), publish_origin=v(out['publish_origin']),
                       original_d01_update=v(out['original_d01_update']), original_d01_head=v(out['original_d01_head']),
@@ -130,20 +131,33 @@ class Consumer:
         return selector
 
     # -- R2/R3 predicates ------------------------------------------------------------
-    def check(self, request, native, goal_causes, effects):
+    def check(self, request, native, goal_causes, effects, mode='cancelled'):
         w = self.world
         R = self.roots
         guard('request/shape', type(request) is dict and set(request) == {'scope', 'storage_instance_id'})
         guard('request/storage', request['storage_instance_id'] == w.sid)
         R.validate('native_consumer', W.C + 'ScopeRequest', request, 'request')
-        R.validate('native_consumer', W.CA + 'RetainedNativeCancellation', native, 'tuple/native')
+        if mode == 'cancelled':
+            R.validate('native_consumer', W.CA + 'RetainedNativeCancellation', native, 'tuple/native')
+        else:
+            for name, root in (('intent', 'StorageIntent'), ('committed_control', 'StorageControl'),
+                               ('result', 'StorageResult'), ('prepare_origin', 'StorageOrigin'),
+                               ('publish_origin', 'StorageOrigin')):
+                R.validate('native_consumer', W.D06 + root, native[name], 'tuple/preserved/' + name)
+            for name, root in (('original_d01_update', 'StorageWorkflowUpdate'), ('original_d01_head', 'StorageWorkflowHead'),
+                               ('original_d01_origin', 'StorageWorkflowMutationOrigin')):
+                R.validate('native_consumer', W.WO + root, native[name], 'tuple/preserved/' + name)
+            R.validate('native_consumer', W.CA + 'RetainedD05Cause', native['original_safe_stop'], 'tuple/preserved/safe_stop')
+            R.validate('native_consumer', W.CA + 'RetainedProcessEffects', native['original_process_effects'],
+                       'tuple/preserved/process')
         R.validate('goal_consumer', W.GA + 'ProjectGoalCauses', goal_causes, 'tuple/goal')
         R.validate('filesafe_consumer', W.FA + 'RetainedFileSafeEffects', effects, 'tuple/filesafe')
         scope = request['scope']
         rec = lambda value: value.get('record', value.get('value'))  # noqa: E731
         for name in ('event_candidate', 'intent', 'committed_control', 'result', 'prepare_origin', 'publish_origin',
                      'original_d01_update', 'original_d01_origin'):
-            eq('scope/' + name, rec(native[name])['scope'], scope)
+            if native[name] is not None:
+                eq('scope/' + name, rec(native[name])['scope'], scope)
         # every selector in every argument resolves to Storage or immutable custody
         for path, ref in W.walk_refs(native):
             w.resolve(ref)
@@ -151,7 +165,8 @@ class Consumer:
             if W.is_selector(ref) or W.is_d05_ref(ref):
                 w.resolve(ref)
         intent, result = rec(native['intent']), rec(native['result'])
-        control, candidate = rec(native['committed_control']), rec(native['event_candidate'])
+        control = rec(native['committed_control'])
+        candidate = rec(native['event_candidate']) if native['event_candidate'] is not None else None
         prep, pub = rec(native['prepare_origin']), rec(native['publish_origin'])
         ss = native['original_safe_stop']
         agg = ss['aggregate_result']['value']
@@ -241,6 +256,8 @@ class Consumer:
         guard('d05/capability_reopened', all(disposed.get(k) == 1 for k in births))
         # R3: settlements cover the complete effect inventory exactly once
         self._check_effects(native, effects, agg, candidate)
+        if mode == 'preserved':
+            return self._check_preserved(native, intent, result, control, prep, pub)
         # Candidate precedes prepare outputs; prepare origin closes only its own commitments
         cand_sel = self._find_selector(native['event_candidate'])
         eq('d06/intent_candidate', intent['event_candidate'], cand_sel)
@@ -296,6 +313,61 @@ class Consumer:
         self._check_event(native, candidate, result, before, after, effects)
         self._check_start(native, intent, upd)
 
+    def _check_preserved(self, native, intent, result, control, prep, pub):
+        """Already-terminal byte preservation: no Event, no native write, genuine settlement."""
+        w = self.world
+        rec = lambda value: value.get('record', value.get('value'))  # noqa: E731
+        guard('preserve/intent_kind', intent['kind'] == 'preserve_terminal' and intent['event_candidate'] is None)
+        guard('preserve/result_kind', result['kind'] == 'terminal_preserved')
+        before = w.resolve(intent['before_body'])
+        bctl = w.resolve(intent['before_control'])
+        eq('preserve/prepared_unchanged', [intent['prepared_body_sha256'], intent['prepared_control_sha256']],
+           [physical_sha256(before), physical_sha256(bctl)])
+        eq('preserve/after_equals_before', [result['before_body'], result['after_body'], result['before_control'],
+                                            result['after_control']],
+           [intent['before_body'], intent['before_body'], intent['before_control'], intent['before_control']])
+        guard('preserve/status', rec(before)['status'] in ('certified', 'failed', 'cancelled') and
+              result['preserved_status'] == rec(before)['status'])
+        for name, sel in (('body', intent['before_body']), ('control', intent['before_control'])):
+            cell = w.storage.cell(sel['family_id'], sel['physical_key'])
+            guard('preserve/native_bytes', cell is not None and physical_sha256(cell['value']) == sel['physical_value_sha256'])
+        op = intent['operation_id']
+        events = [w.storage.read_event(e) for e in w.storage.events]
+        guard('preserve/no_event', w.storage.reservation_state('TEST_ONLY:append:' + op) is None and not any(
+            e['event_type'] == 'goal_run.cancelled' and e['payload'].get('payload', {}).get('goal_run_id') ==
+            w.scope['goal_run_id'] for e in events))
+        eq('d06/prepare_method', prep['issuer_method'], 'owner.workflow.executor_cancel.prepare_disposition.v3')
+        eq('d06/prepare_intent', prep['afterimages']['intent'], self._find_selector(native['intent']))
+        guard('preserve/prepare_no_candidate', prep['afterimages']['event_candidate'] is None)
+        prepared = w.resolve(prep['afterimages']['control'])
+        guard('d06/prepared_phase', rec(prepared)['phase'] == 'prepared' and rec(prepared)['result'] is None)
+        guard('d06/control_once', control['revision'] == rec(prepared)['revision'] + 1 and control['phase'] == 'committed')
+        eq('d06/control_result', control['result'], self._find_selector(native['result']))
+        eq('d06/publish_result', pub['afterimages']['result'], self._find_selector(native['result']))
+        eq('d06/publish_control', pub['afterimages']['control'], self._find_selector(native['committed_control']))
+        eq('preserve/publish_native', [pub['afterimages']['native_body'], pub['afterimages']['native_control']],
+           [intent['before_body'], intent['before_control']])
+        upd = rec(native['original_d01_update'])
+        guard('preserve/d01', upd['transition']['rule'] == 'd06_preserve_terminal' and upd['cause'] == 'owner_status' and
+              same([upd['before_body'], upd['before_control'], upd['after_body'], upd['after_control']],
+                   [intent['before_body'], intent['before_control'], intent['before_body'], intent['before_control']]))
+        eq('d01/owner_result', upd['original_owner_result'], self._find_selector(native['result']))
+        eq('d01/owner_origin', upd['original_owner_origin'], self._find_selector(native['publish_origin']))
+
+    def read_preserved(self, request, presentation):
+        """D06 retained result for a terminal preservation (whole RetainedResult root)."""
+        w = self.world
+        with w.recorder.call(self.owner_id, 'owner.workflow.executor_cancel.read_retained.v3', request) as slot:
+            native, goal, effects = self.assemble(self.tuple(presentation))
+            self.check(request, native, goal, effects, mode='preserved')
+            again, goal2, effects2 = self.assemble(self.tuple(presentation))
+            eq('final/native', again, native)
+            out = dict(result=copy.deepcopy(native['result']['record']), origin=copy.deepcopy(native['publish_origin']['record']),
+                       action_authority='none')
+            self.roots.validate('native_consumer', W.D06 + 'RetainedResult', out, 'preserved/success')
+            slot.set(dict(sha256=physical_sha256(out)))
+            return out
+
     def _selector_of(self, family, value, key):
         return dict(storage_instance_id=self.world.sid, family_id=family, physical_key=key,
                     schema_id=value['schema_id'], schema_version=value['schema_version'],
@@ -337,6 +409,44 @@ class Consumer:
             seen.add(key)
         guard('effects/process_partition', len(process['births']) == len(process['admissions']) ==
               len(process['termination_results']) == len(process['shutdown_results']))
+        # modeled effect state: owner-applied rollback and process shutdown
+        for e in effects:
+            journal = e['original_terminal_journal']['value']
+            guard('effects/unknown_outcome', journal['phase'] == 'committed' and
+                  journal['restore_outcome'] in ('restored_clean', 'restore_skipped'))
+            cell = w.storage.cell('test_only_filesafe_workspace', journal['target_manifest_ref'])
+            guard('effects/workspace_present', cell is not None and
+                  journal['pre_restore_manifest_ref'] == journal['target_manifest_ref'])
+            state = cell['value']['record']
+            eq('effects/workspace_digest', state['state_sha256'], W.state_digest(state['files']))
+            if journal['restore_outcome'] == 'restored_clean':
+                eq('effects/rollback_restores_safe_point', journal['post_restore_state_sha256'],
+                   journal['target_state_sha256'])
+                eq('effects/workspace_restored', state['state_sha256'], journal['target_state_sha256'])
+                for op in journal['operations']:
+                    path = op['canonical_path_ref'][len('TEST_ONLY:path:'):]
+                    eq('effects/restore_operations', op['target_sha256'], W.content_digest(state['files'].get(path)))
+                guard('effects/restore_operations', journal['operations'] != [] or
+                      journal['target_state_sha256'] == journal['pre_restore_state_sha256'])
+            else:
+                guard('effects/commit_keeps_mutation', journal['post_restore_state_sha256'] is None and
+                      journal['operations'] == [] and state['state_sha256'] == journal['pre_restore_state_sha256'])
+        for i, shutdown in enumerate(process['shutdown_results']):
+            birth, admission = process['births'][i], process['admissions'][i]
+            termination = process['termination_results'][i]
+            tv, sv = termination['value'], shutdown['value']
+            eq('effects/process_termination_join', [tv['probe_birth']['physical_key'], tv['shutdown_admission']['physical_key']],
+               [self._stored_for(birth).key, self._stored_for(admission).key])
+            eq('effects/process_shutdown_join', [sv['probe_birth']['physical_key'], sv['shutdown_admission']['physical_key'],
+                                                 sv['termination']['physical_key']],
+               [self._stored_for(birth).key, self._stored_for(admission).key, self._stored_for(termination).key])
+            guard('effects/process_unknown', tv['grace_signal_result']['result'] == 'delivered')
+            table = [c for (f, k, h), c in w.issued.items() if f == 'test_only_process_table' and
+                     c.wrapper['record']['process_operation_id'] == sv['operation_id']]
+            cell = w.storage.cell('test_only_process_table', table[0].key) if table else None
+            guard('effects/process_state', cell is not None and cell['value']['record']['state'] == 'shut_down')
+        if candidate is None:
+            return
         payload = candidate['producer_submission']['payload']['payload']
         census = bool(effects) or bool(process['births'])
         guard('effects/mutation_census', payload['mutation_started'] is census)
@@ -347,7 +457,7 @@ class Consumer:
         eq('effects/settlement_refs', payload.get('settlement_refs', []), refs)
         rollback = sorted(e['original_terminal_journal']['selector']['family_id'] + ':' +
                           e['original_terminal_journal']['selector']['physical_key'] for e in effects
-                          if w.filesafe_kind(e['original_terminal_journal']['selector']['physical_key']) == 'rollback')
+                          if e['original_terminal_journal']['value']['restore_outcome'] == 'restored_clean')
         eq('effects/rollback_refs', payload.get('rollback_refs', []), rollback)
 
     def _check_event(self, native, candidate, result, before, after, effects):

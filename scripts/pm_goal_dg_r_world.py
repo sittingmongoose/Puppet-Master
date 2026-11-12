@@ -732,6 +732,8 @@ class CancelWorld(World):
             self._start()
         else:
             self._no_start()
+        if cfg.get('terminal'):
+            self._terminal_before()
         self._goal_cancel()
         self._scheduler_stop()
         self._effects()
@@ -771,14 +773,14 @@ class CancelWorld(World):
              ('/record/workflow_owner_epoch', 1), ('/record/pending_operation_id', None)],
             mutable=True, knob=self.knob('d01_head:%d' % revision))
 
-    def _d01_origin(self, method, op, causation, update, head, choices=None):
+    def _d01_origin(self, method, op, causation, update, head, choices=None, knob_name=None):
         return self.d01.issue_physical(
             'executor_workflow_mutation_origin', 'native_consumer', WO + 'StorageWorkflowMutationOrigin',
             self.d01.key('executor_workflow_mutation_origin', op),
             [('/record/method', method), ('/record/operation_id', op), ('/record/causation', causation),
              ('/record/afterimages/workflow_update', update.selector()), ('/record/afterimages/workflow_head',
                                                                             head.selector())],
-            choices=choices or {'/record/afterimages': 1}, knob=self.knob('d01_origin:' + method))
+            choices=choices or {'/record/afterimages': 1}, knob=self.knob(knob_name or ('d01_origin:' + method)))
 
     def _birth(self):
         w = self
@@ -832,7 +834,7 @@ class CancelWorld(World):
                                commit, s_origin.selector(), None, 'owner.workflow.start.commit.v2', 1)
         head = w._d01_head(1, update, None, w.body1, origin0)
         d01_origin = w._d01_origin('owner.executor.workflow_source.update_workflow.v3', 'TEST_ONLY:op:d01:' + op[-12:],
-                                   commit.selector(), update, head)
+                                   commit.selector(), update, head, knob_name='d01_origin:start')
         w.start_cause = dict(kind='original_started', control=control0, initial_control_origin=origin0,
                              candidate=candidate, commit=commit, origin=s_origin, original_d01_update=update,
                              original_d01_origin=d01_origin, original_d01_head=head)
@@ -1062,15 +1064,35 @@ class CancelWorld(World):
         op = 'TEST_ONLY:op:process:' + uuid.uuid4().hex[:12]
         w.effect_ops.append(op)
         p = w.process
+        table_key = p.key('test_only_process_table', op)
+        w._process_state(table_key, op, 'running')
         birth = p.issue_physical('executor_process_birth', 'native_consumer', PS + 'ProcessBirthPhysical',
                                  p.key('executor_process_birth', op), [], knob=w.knob('process_birth'))
         admission = p.issue_physical('executor_process_shutdown_admission', 'native_consumer', PS + 'ShutdownAdmissionPhysical',
                                      p.key('executor_process_shutdown_admission', op), [], knob=w.knob('process_admission'))
+        signal = w.kval('process_signal_result', 'delivered')
         termination = p.issue_physical('executor_process_termination_result', 'native_consumer', PS + 'TerminationResultPhysical',
-                                       p.key('executor_process_termination_result', op), [],
+                                       p.key('executor_process_termination_result', op),
+                                       [('/value/probe_birth', ref_like(w, 'native_consumer', PS + 'TerminationResultPhysical',
+                                                                        '/value/probe_birth', birth)),
+                                        ('/value/shutdown_admission', ref_like(w, 'native_consumer', PS + 'TerminationResultPhysical',
+                                                                               '/value/shutdown_admission', admission)),
+                                        ('/value/grace_signal_result/result', signal), ('/value/operation_id', op)],
                                        knob=w.knob('process_termination'))
+        if signal == 'delivered' and not w.knob('process_not_shut_down'):
+            w._process_state(table_key, op, 'terminated')
         shutdown = p.issue_physical('executor_process_shutdown_result', 'native_consumer', PS + 'ProcessShutdownResultPhysical',
-                                    p.key('executor_process_shutdown_result', op), [], knob=w.knob('process_shutdown'))
+                                    p.key('executor_process_shutdown_result', op),
+                                    [('/value/probe_birth', ref_like(w, 'native_consumer', PS + 'ProcessShutdownResultPhysical',
+                                                                     '/value/probe_birth', birth)),
+                                     ('/value/shutdown_admission', ref_like(w, 'native_consumer', PS + 'ProcessShutdownResultPhysical',
+                                                                            '/value/shutdown_admission', admission)),
+                                     ('/value/termination', ref_like(w, 'native_consumer', PS + 'ProcessShutdownResultPhysical',
+                                                                     '/value/termination', termination)),
+                                     ('/value/operation_id', op)],
+                                    knob=w.knob('process_shutdown'))
+        if signal == 'delivered' and not w.knob('process_not_shut_down'):
+            w._process_state(table_key, op, 'shut_down')
         origin = p.issue_physical('executor_process_write_origin', 'native_consumer', PS + 'OriginalWriteOriginPhysical',
                                   p.key('executor_process_write_origin', op), [])
         w.process_effects = dict(births=[birth], admissions=[admission], termination_results=[termination],
@@ -1078,24 +1100,75 @@ class CancelWorld(World):
         invocation = w.seeder.seed('native_consumer', PS + 'ProcessInvocation')
         w.bind(invocation)
         invocation['invocation_id'] = op
-        w.process_invocations = [dict(invocation=invocation, result=shutdown, origin=origin, operation_id=op)]
+        w.process_invocations = [dict(invocation=invocation, result=shutdown, origin=origin, operation_id=op,
+                                      table_key=table_key)]
+
+    def _process_state(self, key, op, state):
+        """TEST_ONLY modeled process-table cell owned by the process owner."""
+        p = self.process
+        prior = p.current.get(('test_only_process_table', key))
+        wrapper = dict(schema_id='pm.storage_value.test_only_process_table.v1', schema_version='1.0.0',
+                       record=dict(qualification=QUALIFICATION, process_operation_id=op, state=state))
+        return p.write_wrapper('test_only_process_table', None, None, key, wrapper, mutable=prior is not None)
+
+    def _workspace(self, key, state):
+        """TEST_ONLY modeled workspace state cell owned by the FileSafe owner."""
+        f = self.filesafe
+        prior = f.current.get(('test_only_filesafe_workspace', key))
+        wrapper = dict(schema_id='pm.storage_value.test_only_filesafe_workspace.v1', schema_version='1.0.0',
+                       record=dict(qualification=QUALIFICATION, files=copy.deepcopy(state),
+                                   state_sha256=state_digest(state)))
+        return f.write_wrapper('test_only_filesafe_workspace', None, None, key, wrapper, mutable=prior is not None)
 
     def _filesafe_invocation(self, FI, op, kind):
-        """One FileSafe invocation: binding, terminal journal and origin cells.
+        """One FileSafe invocation with a modeled workspace.
 
-        Each is a whole original value under its FileSafe root, written at the
-        family its original selector names; the consumer receives
-        ``{selector, value}`` pairs whose selectors this owner issues.
+        The owner takes a safe point, the admitted invocation mutates the
+        workspace, and at cancellation a rollback applies the safe-point
+        restore (journal ``restored_clean``) while a kept mutation records a
+        skipped restore. ``unknown`` leaves the journal in recovery. The
+        journal's state digests and operations come from that execution.
         """
         w, f = self, self.filesafe
         out = dict(kind=kind, operation_id=op)
+        ws_key = f.key('test_only_filesafe_workspace', op)
+        safe = {'src/app.py': 'v1:' + op, 'README.md': 'docs:' + op}
+        mutated = dict(safe, **{'src/app.py': 'v2:' + op, 'src/new.py': 'added:' + op})
+        w._workspace(ws_key, safe)
+        w._workspace(ws_key, mutated)
+        paths = sorted(set(safe) | set(mutated))
+        changed = [pth for pth in paths if safe.get(pth) != mutated.get(pth)]
+        operations = []
+        for i, pth in enumerate(changed):
+            operations.append(dict(operation_id='%s:restore:%d' % (op, i), canonical_path_ref='TEST_ONLY:path:' + pth,
+                                   operation_kind=None, expected_before_sha256=content_digest(mutated.get(pth)),
+                                   target_sha256=content_digest(safe.get(pth)), stage_ref='TEST_ONLY:stage:%s:%d' % (op, i),
+                                   state=None))
+        if kind == 'rollback':
+            final = safe if not w.knob('filesafe_skip_apply') else mutated
+            phase, outcome, post = 'committed', 'restored_clean', state_digest(safe)
+        elif kind == 'commit':
+            final, phase, outcome, post = mutated, 'committed', 'restore_skipped', None
+            operations = []
+        else:
+            final, phase, outcome, post = mutated, 'recovery_required', 'restore_recovery_required', None
+        w._workspace(ws_key, final)
+        out['workspace_key'] = ws_key
         for name, root, sel in (('binding', 'FileSafeInvocationBinding', 'BindingSelector'),
                                 ('journal', 'OriginalRestoreTransaction', 'JournalSelector'),
                                 ('origin', 'FileSafeJournalOrigin', 'OriginSelector')):
             template = w.seeder.seed('filesafe_consumer', FI + sel)
             family = template['family_id']
-            value = f.build_wrapper(family, 'filesafe_consumer', FI + root, f.key(family, op), [],
+            overlay = []
+            if name == 'journal':
+                overlay = [('/restore_transaction_id', op), ('/target_state_sha256', state_digest(safe)),
+                           ('/pre_restore_state_sha256', state_digest(mutated)), ('/post_restore_state_sha256', post),
+                           ('/phase', phase), ('/restore_outcome', outcome),
+                           ('/target_manifest_ref', ws_key), ('/pre_restore_manifest_ref', ws_key)]
+            value = f.build_wrapper(family, 'filesafe_consumer', FI + root, f.key(family, op), overlay,
                                     knob=w.knob('filesafe_' + name))
+            if name == 'journal' and operations:
+                value = w._journal_operations(FI, value, operations)
             stored = f.write_wrapper(family, 'filesafe_consumer', FI + root, f.key(family, op), value)
             selector = dict(template, storage_instance_id=w.sid, physical_key=stored.key, physical_sha256=stored.sha256)
             out[name] = dict(selector=selector, value=stored.wrapper, stored=stored)
@@ -1103,6 +1176,28 @@ class CancelWorld(World):
         w.bind(out['invocation'])
         out['invocation']['invocation_id'] = op
         return out
+
+    def _journal_operations(self, FI, value, operations):
+        """Fill each restore operation's enum members from the journal root, keep the owner's digests."""
+        res = self.roots.lookup('filesafe_consumer', FI + 'OriginalRestoreTransaction')
+        node = res.contents
+        if '$ref' in node:
+            res = res.resolver.lookup(node['$ref'])
+            node = res.contents
+        item = node['properties']['operations']['items']
+        self.seeder.choices = _NonNull()
+        filled = []
+        for op in operations:
+            seed = self.seeder._seed([(item, res.resolver)], '/operations/item')
+            self.bind(seed)
+            seed.update({k: v for k, v in op.items() if v is not None})
+            filled.append(seed)
+        value = copy.deepcopy(value)
+        value['operations'] = filled
+        if self.knob('filesafe_operations'):
+            self.knob('filesafe_operations')(value)
+        self.roots.validate('filesafe_consumer', FI + 'OriginalRestoreTransaction', value, 'issue/filesafe_journal')
+        return value
 
     # -- D05 bounded original safe stop ---------------------------------------------
     def _d05_family(self, name):
@@ -1284,6 +1379,8 @@ class CancelWorld(World):
             w.knob('event_payload')(payload)
         partition = 'project~' + S.k_component(w.scope['project_id'])
         payload['idempotency_key'] = w.idempotency_key(payload, partition)
+        if w.knob('event_after_key'):
+            w.knob('event_after_key')(payload)
         event = dict(schema_id='pm.event.v0', schema_version='2.0.0', scope_kind='project',
                      event_id=str(uuid.uuid4()), event_type='goal_run.cancelled', project_id=w.scope['project_id'],
                      thread_id=None, run_id=None, node_id=None, attempt_id=None, actor_ref=payload['actor_ref'],
@@ -1296,9 +1393,20 @@ class CancelWorld(World):
                      replay_policy=w.kval('replay_policy', 'dedupe_by_idempotency_key'),
                      migration=dict(migrated_from_schema_id=None, migrated_from_schema_version=None, migration_id=None,
                                     compatibility_event_type=None))
+        if w.knob('event_envelope'):
+            w.knob('event_envelope')(event)
         return event
 
+    def _terminal_before(self):
+        """A lawful earlier terminal transition by the native owner (before D06)."""
+        w = self
+        body = w.native.prepare_body(w.body1, w.cfg['terminal'])
+        control = w.native.prepare_control(w.control1, body)
+        w.body1, w.control1 = w.native.commit(body, control, w.body1, w.control1)
+
     def _d06(self):
+        if self.cfg.get('terminal') and not self.knob('force_cancel'):
+            return self._d06_preserve()
         w, d = self, self.d06
         op = 'TEST_ONLY:op:d06:' + uuid.uuid4().hex[:12]
         tx = 'TEST_ONLY:d06-transaction:' + uuid.uuid4().hex[:12]
@@ -1339,7 +1447,7 @@ class CancelWorld(World):
                                     [('/record/operation_id', op), ('/record/revision', 1),
                                      ('/record/intent', intent.selector()), ('/record/phase', 'prepared'),
                                      ('/record/result', None), ('/record/last_origin_operation_id', op)],
-                                    mutable=True)
+                                    mutable=True, knob=w.knob('prepared_control'))
         prepare_origin = d.issue_physical('workflow_cancel_origin', 'native_consumer', D06 + 'StorageOrigin',
                                           d.key('workflow_cancel_origin', op, 'prepare'),
                                           scoped + owner + [
@@ -1356,6 +1464,94 @@ class CancelWorld(World):
         if w.cfg.get('stop_after') == 'prepare':
             return
         w.continue_d06()
+
+    def _d06_preserve(self):
+        """D06 on an already-terminal run: byte preservation, no Event, genuine settlement."""
+        w, d = self, self.d06
+        op = w.kval('d06_op', 'TEST_ONLY:op:d06-preserve:' + uuid.uuid4().hex[:12])
+        tx = 'TEST_ONLY:d06-transaction:' + uuid.uuid4().hex[:12]
+        w.ops['d06'] = op
+        owner = [('/record/workflow_owner_ref', w.ids['workflow_owner_ref']), ('/record/workflow_owner_epoch', 1)]
+        scoped = [('/record/operation_id', op), ('/record/transaction_id', tx)]
+        before_body, before_control = w.body1, w.control1
+        cause, sched, ss = w.goal_cause, w.sched, w.safe_stop
+        common = [('/record/association_selection', cause['original_binding_selection'].selector()),
+                  ('/record/scheduler_stop', sched['scheduler_stop'].selector()),
+                  ('/record/inventory_cut', sched['inventory'].selector()),
+                  ('/record/safe_stop_source', ss['aggregate_result'].selector())]
+        intent = d.issue_physical('workflow_cancel_intent', 'native_consumer', D06 + 'StorageIntent',
+                                  d.key('workflow_cancel_intent', op),
+                                  scoped + owner + common + [
+                                      ('/record/goal_stop', cause['original_stop_receipt'].selector()),
+                                      ('/record/before_body', before_body.selector()),
+                                      ('/record/before_control', before_control.selector()),
+                                      ('/record/prepared_body_sha256', before_body.sha256),
+                                      ('/record/prepared_control_sha256', before_control.sha256),
+                                      ('/record/kind', 'preserve_terminal'), ('/record/event_candidate', None)],
+                                  knob=w.knob('intent'))
+        control_key = d.key('workflow_cancel_control', op)
+        prepared = d.issue_physical('workflow_cancel_control', 'native_consumer', D06 + 'StorageControl', control_key,
+                                    [('/record/operation_id', op), ('/record/revision', 1),
+                                     ('/record/intent', intent.selector()), ('/record/phase', 'prepared'),
+                                     ('/record/result', None), ('/record/last_origin_operation_id', op)], mutable=True)
+        prepare_origin = d.issue_physical('workflow_cancel_origin', 'native_consumer', D06 + 'StorageOrigin',
+                                          d.key('workflow_cancel_origin', op, 'prepare'),
+                                          scoped + owner + [
+                                              ('/record/issuer_method', 'owner.workflow.executor_cancel.prepare_disposition.v3'),
+                                              ('/record/causation', cause['original_stop_receipt'].selector()),
+                                              ('/record/afterimages', dict(kind='prepare', intent=intent.selector(),
+                                                                           control=prepared.selector(),
+                                                                           event_candidate=None))])
+        if w.knob('preserve_native_write'):
+            body = w.native.prepare_body(before_body, before_body.wrapper['record']['status'])
+            ctl = w.native.prepare_control(before_control, body)
+            w.native.commit(body, ctl, before_body, before_control)
+        if w.knob('preserve_append'):
+            ev = w._event(op, before_body, before_body.wrapper)
+            w.append.append_original('TEST_ONLY:append:' + op, dict(op=op), [ev], durability_class='barrier')
+        after_body = w.kval('preserve_after_body', before_body.selector())
+        result = d.issue_physical('workflow_cancel_result', 'native_consumer', D06 + 'StorageResult',
+                                  d.key('workflow_cancel_result', op),
+                                  scoped + owner + common + [
+                                      ('/record/kind', 'terminal_preserved'), ('/record/intent', intent.selector()),
+                                      ('/record/before_body', before_body.selector()),
+                                      ('/record/before_control', before_control.selector()),
+                                      ('/record/after_body', after_body), ('/record/after_control', before_control.selector()),
+                                      ('/record/preserved_status', w.kval('preserved_status',
+                                                                          before_body.wrapper['record']['status'])),
+                                      ('/record/action_authority', 'none')],
+                                  choices={'/record': 1}, knob=w.knob('result'))
+        committed = d.issue_physical('workflow_cancel_control', 'native_consumer', D06 + 'StorageControl', control_key,
+                                     [('/record/operation_id', op), ('/record/revision', 2),
+                                      ('/record/intent', intent.selector()), ('/record/phase', 'committed'),
+                                      ('/record/result', result.selector()), ('/record/last_origin_operation_id', op)],
+                                     mutable=True)
+        publish_origin = d.issue_physical('workflow_cancel_origin', 'native_consumer', D06 + 'StorageOrigin',
+                                          d.key('workflow_cancel_origin', op, 'publish'),
+                                          scoped + owner + [
+                                              ('/record/issuer_method', 'owner.workflow.executor_cancel.publish_disposition.v3'),
+                                              ('/record/causation', intent.selector()),
+                                              ('/record/afterimages', dict(kind='publish', result=result.selector(),
+                                                                           control=committed.selector(),
+                                                                           native_body=before_body.selector(),
+                                                                           native_control=before_control.selector()))],
+                                          knob=w.knob('publish_origin'))
+        prior_head = w.head
+        revision = prior_head.wrapper['record']['revision'] + 1
+        d01_after = (w.body0, w.control0) if w.knob('preserve_d01_after_older') else (before_body, before_control)
+        update = w._d01_update(op, 'd06_preserve_terminal', 'owner_status', (before_body, before_control), d01_after,
+                               result, publish_origin.selector(), prior_head,
+                               'owner.workflow.executor_cancel.publish_disposition.v3', revision)
+        head = w._d01_head(revision, update, prior_head, w._activation_body(), w.activation_origin)
+        d01_origin = w._d01_origin('owner.executor.workflow_source.update_workflow.v3', 'TEST_ONLY:op:d01:' + op[-12:],
+                                   result.selector(), update, head)
+        w.head = head
+        w.preserved = True
+        w.d06_phase = 'published'
+        w.d06_prepared = dict(intent=intent, control=prepared, origin=prepare_origin, op=op, tx=tx)
+        w.cancellation = dict(intent=intent, committed_control=committed, result=result, prepare_origin=prepare_origin,
+                              publish_origin=publish_origin, original_d01_update=update, original_d01_head=head,
+                              original_d01_origin=d01_origin)
 
     def continue_d06(self):
         """Remaining D06 phases from the durable phase reached; re-entry resumes
@@ -1473,6 +1669,24 @@ class _NonNull(dict):
 
     def get(self, path, default=None):
         return lambda variants: next((i for i, v in enumerate(variants) if v.get('type') != 'null'), 0)
+
+
+def state_digest(state):
+    return sha256(NR.binding_value_bytes(['pm.goal_test.workspace_state.v1', sorted([k, v] for k, v in state.items())],
+                                         'workspace/state'))
+
+
+def content_digest(content):
+    return sha256(('' if content is None else content).encode('utf-8'))
+
+
+def ref_like(world, realm, root, path, stored):
+    """The issuing owner's reference to ``stored`` in the shape the root's seed uses at ``path``."""
+    template = get(world.seeder.seed(realm, root), path)
+    if is_selector(template):
+        return stored.selector()
+    out = stored.d05()
+    return {k: out.get(k, template[k]) for k in template}
 
 
 def _issued_by_value(self, value):

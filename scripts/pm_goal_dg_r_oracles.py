@@ -435,6 +435,173 @@ def r2_join_cases():
     return out
 
 
+def preserve_case(cfg, read='preserved', post=None, check=None):
+    def run():
+        w = W.CancelWorld(cfg, base=BASE)
+        try:
+            w.build()
+            presentation, request = R.Presentation(w), request_of(w)
+            if post is not None:
+                post(w, presentation, request)
+            consumer = R.Consumer(w)
+            before = w.recorder.snapshot()
+            out = consumer.read_preserved(request, presentation) if read == 'preserved' else \
+                consumer.read_retained_native(request, presentation)
+            after = w.recorder.snapshot()
+            W.guard('passive/no_effect', [k for k in after if after[k]['sha256'] != before[k]['sha256']] == [])
+            return check(w, out) if check else dict(kind=out['result']['kind'], status=out['result']['preserved_status'],
+                                                     events=w.storage.observe()['events'])
+        finally:
+            w.close()
+    return run
+
+
+def r2_preserve_cases():
+    """R2 already-terminal byte preservation: no new Event, genuine settlement still required."""
+    T = {'start': 'started', 'terminal': 'failed'}
+    knob = lambda base, **k: dict(base, knobs=k)  # noqa: E731
+    out = []
+    run_case(out, 'R2/positive/terminal_failed_preserved', 'R2', 'positive', preserve_case(T))
+    run_case(out, 'R2/positive/terminal_certified_preserved', 'R2', 'positive', preserve_case(dict(T, terminal='certified')))
+    run_case(out, 'R2/positive/terminal_preserved_with_effect_settlements', 'R2', 'positive', preserve_case(
+        dict(T, effects='mutation', filesafe=['rollback'])))
+
+    def started_only(w, p):
+        r = must_publish(w, p)
+        W.guard('preserve/started_row_only', r['row']['content']['record']['status_at_original_event'] == 'running')
+        return dict(row=r['row']['content']['record']['status_at_original_event'])
+    run_case(out, 'R2/positive/terminal_preserved_projects_no_cancelled_row', 'R2', 'positive', projector_case(T, [started_only]))
+    rows = [
+        ('preserve_appends_event', knob(T, preserve_append=True), 'preserve/no_event'),
+        ('preserve_writes_native', knob(T, preserve_native_write=True), 'preserve/native_bytes'),
+        ('preserve_after_body_other_genuine', knob(T, preserve_after_body=lambda w: w.body0.selector()),
+         'preserve/after_equals_before'),
+        ('preserve_status_mismatched', knob(T, preserved_status='certified'), 'preserve/status'),
+        ('preserve_prepared_commitment_substituted', knob(T, intent=lambda wr: W.put(wr, '/record/prepared_body_sha256', '4' * 64)),
+         'preserve/prepared_unchanged'),
+        ('preserve_d01_after_older_body', knob(T, preserve_d01_after_older=True), 'preserve/d01'),
+        ('preserve_without_genuine_settlement', dict(T, flush=['original_required_flush_failed', 'original_required_flush_durable']),
+         'd05/flush_sticky'),
+        ('preserve_publish_native_older_body', knob(T, publish_origin=swap('/record/afterimages/native_body',
+                                                                           lambda w: w.body0.selector())), 'preserve/publish_native'),
+        ('preserve_scheduler_join_other_genuine', knob(T, result=swap('/record/scheduler_stop', lambda w: w.sched['inventory'].selector())),
+         'join/scheduler/result'),
+    ]
+    for name, cfg, expected in rows:
+        run_case(out, 'R2/' + name, 'R2', 'negative', preserve_case(cfg), expected)
+    run_case(out, 'R2/preserved_tuple_presented_as_cancellation', 'R2', 'negative', preserve_case(T, read='retained'),
+             'tuple/native/schema/event_candidate')
+    run_case(out, 'R2/cancelled_tuple_presented_as_preservation', 'R2', 'negative',
+             preserve_case({'start': 'started'}), 'preserve/intent_kind')
+    return out
+
+
+def r2_guard_cases():
+    """One-defect negatives for the remaining R2/R3 consumer guards (session 2)."""
+    S0, N0, M = {'start': 'started'}, {'start': 'no_start'}, {'start': 'started', 'effects': 'mutation', 'filesafe': ['rollback']}
+    knob = lambda base, **k: dict(base, knobs=k)  # noqa: E731
+    put = lambda path, value: (lambda wr: W.put(wr, path, copy.deepcopy(value)))  # noqa: E731
+    U = 'd01_update:d06_cancel_nonterminal'
+    out = []
+    rows = [
+        ('d01_rule_preserve_on_cancel', knob(S0, **{U: put('/record/transition/rule', 'd06_preserve_terminal')}), 'd01/rule'),
+        ('d01_after_body_other_genuine', knob(S0, **{U: swap('/record/after_body', lambda w: w.body1.selector())}), 'd01/after_body'),
+        ('d01_after_control_other_genuine', knob(S0, **{U: swap('/record/after_control', lambda w: w.control1.selector())}),
+         'd01/after_control'),
+        ('d01_before_body_other_genuine', knob(S0, **{U: swap('/record/before_body', lambda w: w.body0.selector())}), 'd01/before_body'),
+        ('d01_origin_update_is_start', knob(S0, **{'d01_origin:owner.executor.workflow_source.update_workflow.v3': swap(
+            '/record/afterimages/workflow_update', lambda w: w.start_cause['original_d01_update'].selector())}), 'd01/origin_update'),
+        ('prepared_control_intent_other_genuine', knob(S0, prepared_control=swap('/record/intent', lambda w: next(
+            st for (f, k, h), st in w.issued.items() if f == 'workflow_cancel_event_candidate').selector())),
+         'd06/prepared_intent'),
+        ('prepared_control_phase_committed', knob(S0, prepared_control=put('/record/phase', 'committed')), 'd06/prepared_phase'),
+        ('publish_native_control_before', knob(S0, publish_origin=swap('/record/afterimages/native_control',
+                                                                       lambda w: w.control1.selector())), 'd06/publish_native_control'),
+        ('process_settlement_origin_is_birth', knob(M, settlements=lambda st: [st[0], dict(
+            st[1], original_origin=W.World.CURRENT.process_effects['births'][0].d05())]), 'effects/process_settlement_origin'),
+        ('settlement_refs_mismatched', knob(M, event_payload=lambda p: p['payload'].update(settlement_refs=['TEST_ONLY:other:ref'])),
+         'effects/settlement_refs'),
+        ('event_project_mismatched', knob(S0, event_payload=lambda p: p.update(project_id=p['project_id'] + '-other')), 'event/project'),
+        ('event_outer_key_mismatched', knob(S0, event_envelope=lambda e: e.update(idempotency_key=e['idempotency_key'] + 'x')),
+         'event/outer_key'),
+        ('event_key_not_recipe', knob(S0, event_after_key=lambda p: p.update(idempotency_key='pm.goal-runtime-event.v3:' + '5' * 64)),
+         'event/idempotency_key'),
+        ('candidate_submission_not_stored_event', knob(S0, event_candidate=lambda wr: (
+            W.put(wr, '/record/producer_submission/correlation_id', wr['record']['producer_submission']['correlation_id'] + ':x'),
+            W.put(wr, '/record/producer_semantic_digest', NR.producer_digest(wr['record']['producer_submission'])))), 'event/producer25'),
+        ('candidate_digest_substituted', knob(S0, event_candidate=put('/record/producer_semantic_digest', '6' * 64)),
+         'event/producer_digest'),
+        ('result_original_value_substituted', knob(S0, result=put('/record/original_event_value/sha256', '7' * 64)),
+         'event/original_value'),
+        ('goal_binding_origin_selection_substituted', knob(S0, goal_binding_selection=put(
+            '/record/binding_origin/complete_value_sha256', '8' * 64)), 'goal/binding_origin_selection'),
+        ('goal_receipt_audit_substituted', knob(S0, goal_stop_receipt=put('/record/source_audit_sha256', '9' * 64)),
+         'goal/stop_receipt_audit'),
+        ('goal_publication_commitment_substituted', knob(S0, goal_control_publication=put(
+            '/record/original_publication/original_event_value_commitment/sha256', 'a' * 64)), 'goal/publication_commitment'),
+        ('goal_publication_unknown_event', knob(S0, goal_control_publication=put('/record/original_publication/event_id',
+                                                                                  'TEST_ONLY-unknown-event')), 'goal/publication_custody'),
+        ('result_before_body_other_genuine', knob(S0, result=swap('/record/before_body', lambda w: w.body0.selector())),
+         'native/before_selection'),
+        ('result_before_control_other_genuine', knob(S0, result=swap('/record/before_control', lambda w: w.control0.selector())),
+         'native/before_control_selection'),
+        ('cancel_path_from_terminal_before', knob({'start': 'started', 'terminal': 'failed'}, force_cancel=True),
+         'native/before_nonterminal'),
+        ('scheduler_native_result_other_genuine', knob(S0, scheduler_stop=swap('/record/native_cancel_result', lambda w: next(
+            st for (f, k, h), st in w.issued.items() if f == 'executor_run_execution_control').selector())),
+         'scheduler/native_cancel_result'),
+        ('scheduler_native_origin_other_genuine', knob(S0, scheduler_stop=swap('/record/native_cancel_origin', lambda w: next(
+            st for (f, k, h), st in w.issued.items() if f == 'executor_run_execution_control').selector())),
+         'scheduler/native_cancel_origin'),
+        ('intent_selector_commitment_substituted', knob(S0, intent=put('/record/inventory_cut/physical_value_sha256', 'b' * 64)),
+         'select/commitment'),
+        ('intent_selector_schema_version_substituted', knob(S0, intent=lambda wr: W.put(
+            wr, '/record/inventory_cut/schema_version', '9.9.9')), 'select/schema'),
+        ('intent_selector_other_storage', knob(S0, intent=lambda wr: W.put(
+            wr, '/record/inventory_cut/storage_instance_id', str(__import__('uuid').uuid4()))), 'select/storage_instance'),
+        ('aggregate_origin_ref_absent', knob(S0, d05_aggregate=lambda wr: W.put(wr, '/value/origin/physical_key',
+                                                                                wr['value']['origin']['physical_key'] + 'Z')),
+         'select/origin_absent'),
+        ('aggregate_origin_ref_operation', knob(S0, d05_aggregate=lambda wr: W.put(wr, '/value/origin/operation_id', 'TEST_ONLY:op:z')),
+         'select/origin_operation'),
+        ('start_update_rule_prepare_start', knob(S0, **{'d01_update:original_workflow_start': lambda wr: (
+            W.put(wr, '/record/transition/rule', 'activation_prepare_start'),
+            W.put(wr, '/record/transition/original_writer_method', 'owner.workflow.activation.prepare_start.v1'),
+            W.put(wr, '/record/cause', 'prepare_start'))}), 'start/rule'),
+        ('start_update_origin_candidate', knob(S0, **{'d01_update:original_workflow_start': swap(
+            '/record/original_owner_origin', lambda w: w.start_cause_candidate.selector())}), 'start/origin'),
+        ('cancel_update_previous_head_other', knob(S0, **{U: swap('/record/previous_head', lambda w: w.sched['coverage'].selector())}),
+         'start/head_chain'),
+    ]
+    for scope_name, k in (('intent', 'intent'), ('result', 'result'), ('committed_control', 'committed_control'),
+                          ('prepare_origin', 'prepare_origin'), ('publish_origin', 'publish_origin'),
+                          ('original_d01_update', U)):
+        rows.append(('scope_' + scope_name + '_other_run', knob(S0, **{k: lambda wr: W.put(
+            wr, '/record/scope/goal_run_id', wr['record']['scope']['goal_run_id'] + '-other')}), 'scope/' + scope_name))
+    rows.append(('event_envelope_project_partition', knob(S0, event_envelope=lambda e: e.update(
+        project_id=e['project_id'] + '-other')), 'event/partition'))
+    rows.append(('scope_original_d01_origin_other_run', knob(S0, **{
+        'd01_origin:owner.executor.workflow_source.update_workflow.v3': lambda wr: W.put(
+            wr, '/record/scope/goal_run_id', wr['record']['scope']['goal_run_id'] + '-other')}), 'scope/original_d01_origin'))
+    for name, cfg, expected in rows:
+        run_case(out, 'R2/' + name, 'R2', 'negative', world_case(cfg), expected)
+
+    def reorder(w, p, r):
+        p.safe_stop['complete_original_origin_chain'] = list(reversed(p.safe_stop['complete_original_origin_chain']))
+    def bad_request_shape(w, p, r):
+        r['extra'] = 1
+    def bad_request_storage(w, p, r):
+        r['storage_instance_id'] = str(__import__('uuid').uuid4())
+    def bad_pair(w, p, r):
+        p.cancellation['intent'] = [p.cancellation['intent'][0], p.cancellation['intent'][1]]
+    for name, post, expected in [('origin_chain_reordered', reorder, 'd05/aggregate_origin_last'),
+                                 ('request_extra_member', bad_request_shape, 'request/shape'),
+                                 ('request_other_storage', bad_request_storage, 'request/storage'),
+                                 ('presented_pair_as_list', bad_pair, 'acquire/pair')]:
+        run_case(out, 'R2/' + name, 'R2', 'negative', world_case(S0, post=post), expected)
+    return out
+
+
 def r3_cases():
     M = {'start': 'started', 'effects': 'mutation', 'filesafe': ['rollback', 'commit']}
     knob = lambda base, **k: dict(base, knobs=k)  # noqa: E731
@@ -990,7 +1157,60 @@ def r4_cases():
     return out
 
 
-GROUPS = dict(R1=r1_cases, R2=lambda: r2_cases() + r2_join_cases(), R3=r3_cases, R4=r4_cases,
+def r3_effect_cases():
+    """R3 modeled effects: owner-applied safe-point restore and process shutdown (session 2)."""
+    M = {'start': 'started', 'effects': 'mutation', 'filesafe': ['rollback', 'commit']}
+    knob = lambda base, **k: dict(base, knobs=k)  # noqa: E731
+    out = []
+
+    def effect_state(w, r):
+        effects = r['native_cancellation']['original_process_effects']
+        journals = [w.storage.cell('test_only_filesafe_workspace', inv['workspace_key'])['value']['record']['state_sha256']
+                    for inv in w.filesafe_invocations]
+        return dict(workspaces=journals, processes=len(effects['shutdown_results']))
+    run_case(out, 'R3/positive/rollback_restores_and_commit_keeps', 'R3', 'positive', world_case(M, check=effect_state))
+    run_case(out, 'R3/positive/terminal_preservation_with_modeled_effects', 'R3', 'positive', preserve_case(
+        dict(M, terminal='failed')))
+    rows = [
+        ('rollback_post_state_not_safe_point', knob(M, filesafe_journal=lambda wr: W.put(
+            wr, '/post_restore_state_sha256', wr['pre_restore_state_sha256']) if wr['restore_outcome'] == 'restored_clean' else None),
+         'effects/rollback_restores_safe_point'),
+        ('rollback_not_applied_by_owner', knob(M, filesafe_skip_apply=True), 'effects/workspace_restored'),
+        ('restore_operation_target_mismatched', knob(M, filesafe_operations=lambda v: v['operations'][0].update(
+            target_sha256='c' * 64)), 'effects/restore_operations'),
+        ('unknown_restore_outcome', dict(M, filesafe=['unknown']), 'effects/unknown_outcome'),
+        ('kept_mutation_claims_post_state', knob(M, filesafe_journal=lambda wr: W.put(
+            wr, '/post_restore_state_sha256', wr['target_state_sha256']) if wr['restore_outcome'] == 'restore_skipped' else None),
+         'effects/commit_keeps_mutation'),
+        ('termination_probe_birth_other_genuine', knob(M, process_termination=lambda wr: W.put(
+            wr, '/value/probe_birth', __import__('pm_goal_dg_r_world').ref_like(
+                W.World.CURRENT, 'native_consumer', W.PS + 'TerminationResultPhysical', '/value/probe_birth',
+                next(st for (f, k, h), st in W.World.CURRENT.issued.items() if f == 'executor_process_shutdown_admission')))),
+         'effects/process_termination_join'),
+        ('shutdown_termination_other_genuine', knob(M, process_shutdown=lambda wr: W.put(
+            wr, '/value/termination', __import__('pm_goal_dg_r_world').ref_like(
+                W.World.CURRENT, 'native_consumer', W.PS + 'ProcessShutdownResultPhysical', '/value/termination',
+                next(st for (f, k, h), st in W.World.CURRENT.issued.items() if f == 'executor_process_birth')))),
+         'effects/process_shutdown_join'),
+        ('process_not_shut_down_by_owner', knob(M, process_not_shut_down=True), 'effects/process_state'),
+        ('grace_signal_not_delivered', knob(M, process_signal_result='failed'), 'effects/process_unknown'),
+    ]
+    for name, cfg, expected in rows:
+        run_case(out, 'R3/' + name, 'R3', 'negative', world_case(cfg), expected)
+
+    def workspace_substituted(w, p, r):
+        inv = w.filesafe_invocations[0]
+        cell = w.storage.cell('test_only_filesafe_workspace', inv['workspace_key'])
+        bad = copy.deepcopy(cell['value'])
+        bad['record']['state_sha256'] = 'd' * 64
+        w.storage.transact([dict(table='test_only_filesafe_workspace', key=inv['workspace_key'], expected=cell['version'],
+                                 value=bad)])
+    run_case(out, 'R3/workspace_state_substituted_at_rest', 'R3', 'negative', world_case(M, post=workspace_substituted),
+             'effects/workspace_digest')
+    return out
+
+
+GROUPS = dict(R1=r1_cases, R2=lambda: r2_cases() + r2_join_cases() + r2_preserve_cases() + r2_guard_cases(), R3=lambda: r3_cases() + r3_effect_cases(), R4=r4_cases,
               R5=r5_cases, R6=lambda: r6_cases() + r56_lower_cases())
 
 
