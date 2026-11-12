@@ -6111,9 +6111,12 @@ status: accepted
 owner_doc: Plans/Wiring_Matrix.md
 canonical_text: >-
   The seven UCC-171 rows are exact candidate exclusions in
-  Plans/Wiring_Matrix.production.exclusions.json under the DL-035 convention until admission,
-  rendering disabled with command_not_registered, and admission removes each exclusion atomically
-  with its registration and production wiring entry. Existing production wiring entries gain exactly
+  Plans/Wiring_Matrix.production.exclusions.json under the DL-035 convention until admission, and
+  admission removes each exclusion atomically with its registration and production wiring entry.
+  Until admission, the controls of the other six rows render disabled with command_not_registered.
+  cmd.chat.teach.set_lock is internal compatibility only (DL-475, CS-085, UCC-171): it keeps its
+  exclusion, codecs, protection and admission holds, and never renders an ordinary control or a
+  disabled placeholder. Existing production wiring entries gain exactly
   the UCC-172 surfaces: assistant.redesign.cmd.chat_crew_auto_open_config gains workflow_modal and
   crew_auto_receipt (DL-135), the Teach capture entry gains teach_document, teach_receipt returns to
   Standing instructions and never Memory; no ordinary capsule-preview producer remains.
@@ -6163,6 +6166,7 @@ acceptance_criteria:
   - "crew_auto_receipt appears only on assistant.redesign.cmd.chat_crew_auto_open_config and has no candidate exclusion. No wiring entry or candidate exclusion exists for cmd.runtime.automation_stop.set; it is excluded only as deliberately not registered. eli5_sheet is wired only as WM-064 states."
   - "Validate application versus actual Project-target cases, original exact Project replay, stale scope/preview/permission/Stop/return refusal and the exact command/local/tool binding from UCC-216; no native/event/governance proof follows from static closure."
   - "No Memory proposal/Teach-receipt/preview/verification/pin/cleanup or ordinary rule-check fix-link producer remains; current Memory CRUD and written instructions retain separate owners."
+  - "cmd.chat.teach.set_lock keeps its candidate exclusion but renders no ordinary control and no disabled placeholder (DL-475, CS-085, UCC-171)."
 validation_surfaces:
 - python3 scripts/pm-plans-verify.py validate-wiring-matrix
 - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json

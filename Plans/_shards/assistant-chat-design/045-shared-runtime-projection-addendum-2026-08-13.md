@@ -4,7 +4,7 @@ Source: `Plans/assistant-chat-design.md`
 
 Source lines: L3798-L23000
 
-Source SHA256: `a1e62de14816f795e9fc94a55c2795ad1d75949b990d7aa6e5c0b78d5622f373`
+Source SHA256: `b39d1daa693597934798f516954a3d30119aec7651d4624c976f58531d26c7e4`
 
 ---
 
@@ -9352,7 +9352,7 @@ canonical_text: >-
   Project retrieval injection respects the Thread-local Auto Retrieval chip,
   per-project retrieval settings, and Context Lens overlays.
 gui_related: true
-gui_classification_reason: Retrieval chips, Settings/Memory controls, and Context Lens overlays are visible or user-configurable UI.
+gui_classification_reason: Retrieval chips and Context Lens overlays are visible or user-configurable UI; per-project retrieval has no Memory-page control (DL-475).
 depends_on: [ACD-190]
 unblocks: [ACD-194]
 acceptance_criteria:

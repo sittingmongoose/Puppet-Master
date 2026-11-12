@@ -17065,7 +17065,7 @@ In the closure wave on 2026-09-27, three of them were settled. The owner confirm
 
 ### UCC-170 - Wand Module Command Census
 
-The census classifies the redesign's product controls: the sheets, cards, dock lines, run view, header, managers and documents of the redesigned Assistant wand modules. The redesign initially admitted 188 product controls. The owner's closure answers add three product controls that the audit did not count. Two come from DL-126: the ELI5 dot by the message box, and "Explain this reply simply" on a finished reply. The third comes from DL-136: the "Pause all automations" switch, which the design had shown read-only. DL-138 adds See which rule and Ask for a fix on the taught-rule note, bringing the census to 193 controls. DL-231 adds the Chat Room setup check and the run switch for Pause between rounds, bringing that historical census to 195; S5 adds Pip… as a Settings disposition for the current total of 196; the retired Ask Everyone remains classified as No producer.
+The census classifies the redesign's product controls: the sheets, cards, dock lines, run view, header, managers and documents of the redesigned Assistant wand modules. The redesign initially admitted 188 product controls. The owner's closure answers add three product controls that the audit did not count. Two come from DL-126: the ELI5 dot by the message box, and "Explain this reply simply" on a finished reply. The third comes from DL-136: the "Pause all automations" switch, which the design had shown read-only. DL-138 adds See which rule and Ask for a fix on the taught-rule note, bringing the census to 193 controls. DL-231 adds the Chat Room setup check and the run switch for Pause between rounds, bringing that historical census to 195; S5 adds Pip… as a Settings disposition for the current total of 196; the retired Ask Everyone remains classified as No producer, and DL-475 makes See which rule and Ask for a fix No producer too (rule checks stay internal).
 
 Each control has exactly one of these dispositions:
 - **Command**: it dispatches the named row unchanged.
@@ -17376,8 +17376,8 @@ canonical_text: >-
   The wand-module command census classifies all 196 product controls of the redesigned Assistant
   wand modules: the accepted control census plus the ELI5 dot, "Explain this reply simply" and the
   "Pause all automations" switch, which the closure answers add (DL-126, DL-136), plus See which
-  rule and Ask for a fix on the taught-rule note (DL-138), plus the Chat Room setup check and run
-  switch for Pause between rounds (DL-231). Ask Everyone has No producer because Start starts round
+  rule and Ask for a fix on the taught-rule note (DL-138; both No producer since DL-475), plus the
+  Chat Room setup check and run switch for Pause between rounds (DL-231). Ask Everyone has No producer because Start starts round
   1; cmd.chat_room.next_round is only the user's start of a round at the switch-on between-round
   wait. Automatic starts dispatch nothing. The setup check is a workflow_modal draft; the run switch
   is cmd.collaboration.reconfigure with set_pause_between_rounds from chat_room_card or
@@ -17403,10 +17403,12 @@ canonical_text: >-
   cmd.chat.crew_auto.set with scope project; the chat's Crew Auto check is cmd.chat.crew_auto.set
   with scope thread and never opens the sheet first; Allow Crews in this chat is retired into that
   check (DL-120, CWR-038). A Chat Room message sent mid-round is cmd.collaboration.message with
-  delivery_mode queue, or steer for Send now (DL-112, CWR-024). No control is Open. The Followed or
-  Missed note is saved reply metadata, not an extra action. See which rule is view state; Ask for a
-  fix on message_chrome dispatches cmd.review.send_findings_to_agent with taught_rule_check and
-  obeys UCC-172's empty-composer, source-thread and no-send contract (DL-138). Amended 2026-10-29
+  delivery_mode queue, or steer for Send now (DL-112, CWR-024). No control is Open. DL-475 retires
+  the Followed or Missed note, See which rule and Ask for a fix on message_chrome: rule checks stay
+  internal (AMS-053), no ordinary reply shows a rule-check receipt, and both controls are No
+  producer. The taught_rule_check source variant of cmd.review.send_findings_to_agent remains typed
+  internal compatibility without a GUI producer (UCC-172); Send Findings To Agent keeps its
+  review_card and review_panel producers. Amended 2026-10-29
   (PM7): S5: census now has 196 dispositions, adding wand Pip… → SSYS-056 editor (Settings
   disposition, no command). Earlier 195 totals are historical. Amended DL-260, Jared 2026-10-31:
   only real product behavior remains an implementation requirement.
@@ -17424,6 +17426,7 @@ acceptance_criteria:
   - "No Open control is given a command, surface or label before its card or follow-up is answered."
   - "No wand row produces cmd.collaboration.configure for Review or BrainStorm."
   - "Legacy Teach lock identities do not create an ordinary Lock/Unlock producer or placeholder."
+  - "No ordinary reply produces a Followed or Missed note, See which rule or Ask for a fix (DL-475); taught_rule_check stays internal compatibility."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
