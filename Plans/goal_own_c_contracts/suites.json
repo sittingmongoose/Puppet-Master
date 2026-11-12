@@ -95,7 +95,51 @@
       "inherited_full_tuple_coverage": "PARTIAL",
       "native_execution": "NOT_RUN",
       "part2_whole_tuple_coverage": "PARTIAL_NOT_CLOSED",
-      "part2_component_witnesses": []
+      "part2_component_witnesses": [],
+      "projection_reference_successor": {
+        "selection": "Plans/goal_run_projection_reference_contracts/started.physical.json",
+        "protocol": "Plans/goal_run_projection_reference_contracts/started.md",
+        "oracles": "scripts/pm_goal_own_c3_w34_reference_oracles.py",
+        "qualification": "NEWLY_AUTHORED_UNINSTALLED_FULL_ORIGINAL_PATH_REQUIRED",
+        "whole_root_closure": "NOT_COMPLETE_ORIGINAL_CORPUS_NOT_EXECUTED",
+        "native_v7_source_note": "Existing whole native-v7 companions/source-method composition are available; edition separation is not a blocker."
+      },
+      "part3_w34a_component_corpus": {
+        "script": "scripts/pm_goal_own_c3_w34a_oracles.py",
+        "scope": "TEST_ONLY complete retained-eight-object relation witnesses, scope-derived successor rows and pinned actual wire codec; no original Start issuance or full W3 claim",
+        "coverage": "PARTIAL",
+        "whole_root_closure": "NOT_COMPLETE",
+        "qualification_exit": 2,
+        "component_only_flag": "--component-only",
+        "native_execution": "NOT_RUN",
+        "shared_guard_proof": "guard and raw schema observations exported; shared-tool isolation remains required",
+        "remaining": [
+          "Original before-birth Start/Goal arguments and complete native/D01 production/publication/first-group custody/recovery",
+          "Separate native-v7 full method/source dispatch",
+          "Actual whole generic source/current frontier/retention gaps and reducer",
+          "Separate full fresh native and Goal/Stop/control sources at all lower/passive/final boundaries",
+          "Full source/root/frontier CAS, row/checkpoint crash/retry, staging/cutover and SP-424 withdrawal",
+          "Original-path reference and checkpoint-spill tuples"
+        ]
+      },
+      "dg_s_complete_original_path": {
+        "scripts": [
+          "scripts/pm_goal_dg_s_world.py",
+          "scripts/pm_goal_dg_s_start.py",
+          "scripts/pm_goal_dg_s_readers.py",
+          "scripts/pm_goal_dg_s_oracles.py"
+        ],
+        "adapters": "scripts/pm_goal_test_*.py (plans/ea-goal-adapter-20261111 at 62e61fe59a)",
+        "groups": ["S1", "S2", "S3", "S4", "S5", "S6"],
+        "editions": ["workflow_start_original.v2", "native-v7 composition (workflow_start_standard_source.v5)"],
+        "qualification": "TEST_ONLY",
+        "native_execution": "NOT_RUN",
+        "native_line": "native evidence stays NOT_RUN and is a separate claim; a planning PASS must never read as native proof",
+        "command": "python3 scripts/pm_goal_dg_s_oracles.py --output <path>",
+        "exit": "0 only when every case passes",
+        "guard_export": "every negative's expected code and the static require() inventory for scripts/pm_guard_isolation.py; no local removal engine",
+        "report": "reports/event-authority-20261111/DG-S.md"
+      }
     },
     {
       "event_type": "goal_run.cancelled",
@@ -119,7 +163,15 @@
       "inherited_full_tuple_coverage": "PARTIAL",
       "native_execution": "NOT_RUN",
       "part2_whole_tuple_coverage": "PARTIAL_NOT_CLOSED",
-      "part2_component_witnesses": []
+      "part2_component_witnesses": [],
+      "projection_reference_successor": {
+        "selection": "Plans/goal_run_projection_reference_contracts/cancelled.physical.json",
+        "protocol": "Plans/goal_run_projection_reference_contracts/cancelled.md",
+        "oracles": "scripts/pm_goal_own_c3_w34_reference_oracles.py",
+        "qualification": "NEWLY_AUTHORED_UNINSTALLED_FULL_ORIGINAL_PATH_REQUIRED",
+        "whole_root_closure": "NOT_COMPLETE_ORIGINAL_CORPUS_NOT_EXECUTED",
+        "native_v7_source_note": "Existing whole native-v7 companions/source-method composition are available; edition separation is not a blocker."
+      }
     },
     {
       "event_type": "goal_run.certified",

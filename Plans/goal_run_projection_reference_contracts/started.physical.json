@@ -1,0 +1,41 @@
+{
+  "status": "NEWLY_AUTHORED_UNINSTALLED",
+  "family": "started",
+  "old_whole_schema": {
+    "path": "Plans/goal_run_started_consumer_contracts/consumer.schema.json",
+    "sha256": "626cfe1aff57bbfcf67c2ab70a3b12c55ca4e137bfbe2c0fd54a3534bc359392"
+  },
+  "new_whole_schema": {
+    "path": "Plans/goal_run_projection_reference_contracts/started.v1.schema.json",
+    "sha256": "879efabbb2186856cb23c0e5095df8f56f046ce361239f8b7909dd3cf1f40893",
+    "retrieval_uri": "https://puppetmaster.local/schemas/goal_run_projection_reference/started/1.0.0"
+  },
+  "projection": {
+    "family_id": "goal_run_started_projection_reference_v1",
+    "schema_id": "pm.goal_run_projection.started.reference.v1",
+    "table": "goal_run_projection.started.reference.v1@<generation_id>",
+    "key": "goal_run_projection.started.reference.v1:K(project_id):K(goal_run_id)",
+    "schema_ref": "https://puppetmaster.local/schemas/goal_run_projection_reference/started/1.0.0#/$defs/StorageProjection"
+  },
+  "checkpoint": {
+    "family_id": "goal_run_started_checkpoint_reference_v1",
+    "schema_id": "pm.goal_run_started_checkpoint.reference.v1.storage",
+    "table": "checkpoints",
+    "key": "goal_run_started_checkpoint.reference.v1:K(storage_instance_id):K(project_id):K(goal_id):K(goal_run_id)",
+    "schema_ref": "https://puppetmaster.local/schemas/goal_run_projection_reference/started/1.0.0#/$defs/StorageCheckpoint"
+  },
+  "profile": "goal_run_started_projector.reference.v1",
+  "generation_prefix": "grsg_",
+  "method_edition": "reference.v1",
+  "projection_method": "owner.goal_run.started.project_prefix.reference.v1",
+  "historical_method": "owner.goal_run.started.read_historical.reference.v1",
+  "current_methods": [
+    "owner.goal_run.started.read_current.reference.v1"
+  ],
+  "original_bank": "Plans/goal_run_started_consumer_schema_resources.json",
+  "original_root": "https://puppetmaster.local/proposals/goal_run_started_consumer.v1.schema.json#/$defs/Projection",
+  "original_checkpoint_root": "https://puppetmaster.local/proposals/goal_run_started_consumer.v1.schema.json#/$defs/Checkpoint",
+  "max_stored_part_bytes": 16384,
+  "protocol": "Plans/goal_run_projection_reference_contracts/started.md",
+  "rebuild": "separate empty generation, full authentic original source replay, complete source/root CAS, atomic cutover; old bytes are never rewritten"
+}

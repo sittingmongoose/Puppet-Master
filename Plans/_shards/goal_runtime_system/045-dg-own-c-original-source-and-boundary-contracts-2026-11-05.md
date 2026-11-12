@@ -2,9 +2,9 @@
 
 Source: `Plans/Goal_Runtime_System.md`
 
-Source lines: L8920-L9195
+Source lines: L8920-L9293
 
-Source SHA256: `3ecfda58ed3bba5b0cf959a985cab0dd95df118e99b9acf688a35ff08b047218`
+Source SHA256: `b937ceea4a78abc663d8b0d0ebeb6389554729876031cfc5d8cb7cb051f58942`
 
 ---
 
@@ -131,8 +131,10 @@ canonical_text: Newly authored owner contract under DL-045. For exactly goal_run
   adopts its original complete source/method/realm and producer, first-receipt, immutable result, retained/current
   disclosure and applicable projection boundary. Use original Start/native D01, exact source-profile split,
   activation and SP-311 projection. Entire actual custody is independently resolved at every entry/helper/final
-  fence. The new executable adapter is TEST_ONLY and covers its stated slice; complete inherited native-root
-  fixture instantiation remains required before an oracle PASS.
+  fence. Amended 2026-11-11 (DG-S, DL-045) the complete original-path oracle is `scripts/pm_goal_dg_s_oracles.py`
+  on the shared TEST_ONLY owner adapters, in which independent test owners issue every whole original, the
+  Start coordinator performs its modeled issuance and Storage assigns sequence, time and first custody for S1
+  to S6 in both selected editions, with one-defect negatives and real child-process cuts. native evidence stays NOT_RUN and is a separate claim; a planning PASS must never read as native proof.
 gui_related: false
 gui_classification_reason: Defines original source custody, identity, recovery or testing boundaries without
   changing visual presentation.
@@ -284,3 +286,99 @@ negative_constraints:
 The complete newly authored contract is `Plans/goal_own_c_contracts/protocol.md` (goal_run.certified original complete boundary suite). Its schema roots are `Plans/goal_own_c_contracts/contracts.schema.json`; complete original source roots and methods remain selected in their original banks.
 
 ContractRef: ContractName:Plans/goal_own_c_contracts/protocol.md, ContractName:Plans/goal_own_c_contracts/contracts.schema.json
+
+### GRS-1136 - goal_run.started reference projection successor
+
+```yaml
+plan_unit_id: GRS-1136
+unit_type: owner_boundary
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: >-
+  Newly authored owner contract under DL-045 and C3-W34 part-2 technical ruling. Exactly goal_run.started adopts its own explicitly selected reference.v1 derived projection and checkpoint successor. SP-311/SP-312 whole Event identity, original whole-value commitment and SP-337 payload references are joined to actual original custody. Every complete stored row, checkpoint and operation is measured at 16 KiB; oversized metadata and checkpoint contents use separately verified pack references. Original banks, schemas, URIs, hashes, Event selectors, producer editions and historical bytes remain unchanged. Rebuild into a fresh isolated successor generation with full original sources and atomic fenced row/checkpoint publication and cutover; never rewrite old rows in place. Pack durability, access and source lifetime are independently rechecked at every helper and final boundary. Native remains NOT_RUN. ATS-1120 requires complete original-path W3/W4 or an exact technical blocker, never closure from schema specimens. Amended 2026-11-11 (DG-S, DL-045): K is SP-311's unpadded base64url of exact UTF-8 identity bytes; the W3 original-path corpus `scripts/pm_goal_dg_s_oracles.py` drives authentic test-owner Starts through inline, event_reference and checkpoint-spill publication and reconstructs the authentic record through record_reference packs, which an authentic Start cannot reach under its own 16 KiB wrapper bound. native evidence stays NOT_RUN and is a separate claim; a planning PASS must never read as native proof.
+gui_related: false
+gui_classification_reason: Internal source custody and stored representation; no visual presentation.
+split_recommended: false
+depends_on: [SP-311]
+unblocks: []
+acceptance_criteria:
+- Full original value reconstruction and original source predicates apply before every effect or disclosure.
+- Old whole bytes remain unchanged and all new stored parts and operations respect 16 KiB.
+- An incomplete original-root corpus remains explicitly blocked; native execution is NOT_RUN.
+validation_surfaces:
+- Plans/goal_run_projection_reference_contracts/started.md
+- Plans/goal_run_projection_reference_contracts/started.v1.schema.json
+- Plans/goal_run_projection_reference_contracts/started.physical.json
+- Plans/goal_run_projection_reference_contracts/started.resources.json
+- Plans/goal_run_projection_reference_contracts/started.methods.json
+- scripts/pm_goal_own_c3_w34_reference_oracles.py
+risk_class: projection_reference_or_original_source_substitution
+reasoning_tier: high
+context_scope: c3_w34_reference_successor
+implementation_surfaces:
+- Plans/goal_run_projection_reference_contracts/started.md
+- Plans/goal_run_projection_reference_contracts/started.v1.schema.json
+- Plans/goal_run_projection_reference_contracts/started.physical.json
+- Plans/goal_run_projection_reference_contracts/started.resources.json
+- Plans/goal_run_projection_reference_contracts/started.methods.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/storage-plan.md#SP-311
+- Plans/storage-plan.md#SP-312
+- Plans/storage-plan.md#SP-337
+negative_constraints:
+- No event registry change, admission, original-source hash restamping or new retention policy.
+- No in-place rewrite, source-lifetime extension, action authority or native proof from a projection.
+```
+
+### GRS-1137 - goal_run.cancelled reference projection successor
+
+```yaml
+plan_unit_id: GRS-1137
+unit_type: owner_boundary
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: >-
+  Newly authored owner contract under DL-045 and C3-W34 part-2 technical ruling. Exactly goal_run.cancelled adopts its own explicitly selected reference.v1 derived projection and checkpoint successor. SP-311/SP-312 whole Event identity, original whole-value commitment and SP-337 payload references are joined to actual original custody. Every complete stored row, checkpoint and operation is measured at 16 KiB; oversized metadata and checkpoint contents use separately verified pack references. Original banks, schemas, URIs, hashes, Event selectors, producer editions and historical bytes remain unchanged. Rebuild into a fresh isolated successor generation with full original sources and atomic fenced row/checkpoint publication and cutover; never rewrite old rows in place. Pack durability, access and source lifetime are independently rechecked at every helper and final boundary. Native remains NOT_RUN. ATS-1120 requires complete original-path W3/W4 or an exact technical blocker, never closure from schema specimens.
+gui_related: false
+gui_classification_reason: Internal source custody and stored representation; no visual presentation.
+split_recommended: false
+depends_on: [SP-312]
+unblocks: []
+acceptance_criteria:
+- Full original value reconstruction and original source predicates apply before every effect or disclosure.
+- Old whole bytes remain unchanged and all new stored parts and operations respect 16 KiB.
+- An incomplete original-root corpus remains explicitly blocked; native execution is NOT_RUN.
+validation_surfaces:
+- Plans/goal_run_projection_reference_contracts/cancelled.md
+- Plans/goal_run_projection_reference_contracts/cancelled.v1.schema.json
+- Plans/goal_run_projection_reference_contracts/cancelled.physical.json
+- Plans/goal_run_projection_reference_contracts/cancelled.resources.json
+- Plans/goal_run_projection_reference_contracts/cancelled.methods.json
+- scripts/pm_goal_own_c3_w34_reference_oracles.py
+risk_class: projection_reference_or_original_source_substitution
+reasoning_tier: high
+context_scope: c3_w34_reference_successor
+implementation_surfaces:
+- Plans/goal_run_projection_reference_contracts/cancelled.md
+- Plans/goal_run_projection_reference_contracts/cancelled.v1.schema.json
+- Plans/goal_run_projection_reference_contracts/cancelled.physical.json
+- Plans/goal_run_projection_reference_contracts/cancelled.resources.json
+- Plans/goal_run_projection_reference_contracts/cancelled.methods.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/storage-plan.md#SP-311
+- Plans/storage-plan.md#SP-312
+- Plans/storage-plan.md#SP-337
+negative_constraints:
+- No event registry change, admission, original-source hash restamping or new retention policy.
+- No in-place rewrite, source-lifetime extension, action authority or native proof from a projection.
+```

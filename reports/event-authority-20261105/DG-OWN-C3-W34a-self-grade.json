@@ -1,0 +1,682 @@
+{
+  "schema_id": "pm.assurance.event_authority.step08_current_depth.v1",
+  "rubric": {
+    "rubric_md": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08-depth42-20260924/rubric.md",
+    "criteria": [
+      "membership_version",
+      "owner_doc",
+      "producer",
+      "closed_payload_schema",
+      "scope_identity",
+      "replay_idempotency",
+      "retention",
+      "redaction_custody",
+      "transitions",
+      "consumers_checkpoints",
+      "compatibility_withdrawal",
+      "positive_negative_oracles"
+    ]
+  },
+  "membership_note": "Existing goal_run.started family/version and every Event registry byte remain unchanged. No admission, selector change or new source binding.",
+  "native_execution": "NOT_RUN",
+  "status_meaning": "Self-grade by the drafting worker; an independent grader and the Sol and Astra reviewers check it later.",
+  "assessment_id": "EA-DG-OWN-C3-W34a-20261105",
+  "assessment_kind": "unfinished_original_corpus_with_bounded_retained_relation_components",
+  "assessed_tree": {
+    "base_commit": "751bf01adec0b3175c115a80f0f46c03d27af864",
+    "branch": "plans/ea-goal-own-c3-w34a-20261105",
+    "canonical_Plans_changed": true
+  },
+  "rows": [
+    {
+      "event_type": "goal_run.started",
+      "family_id": "event-family-goal-run-started",
+      "family_revision": "3.0.0",
+      "disposition": "CURRENT_WRITER",
+      "drafted_by_lane_dg": true,
+      "pass_count": 10,
+      "prior_pass_count_d1a": 10,
+      "native_execution": "NOT_RUN",
+      "cells": {
+        "membership_version": {
+          "status": "PASS",
+          "representation": "registry_structured",
+          "finding": "Row event-family-goal-run-started at 3.0.0 in registry revision 2026-11-04.1, scope_policy application_or_project; Project payload_schema_ref resolves with matching $id and closed root; the DL-300 application payload version pm.goal_runtime_event.goal_run_started.application.v1 resolves to a closed $defs root whose schema_id const matches, under payload_selection_policy exact_scope_and_schema_id_no_fallback, and CV-366's table selects the same sibling. The one alias GoalRunStarted is the owner-sanctioned legacy normalization (Known-37 D-R20); no sibling admission.",
+          "evidence": [
+            {
+              "path": "Plans/executor_cancellation_contracts/schemas/goal-run-started.v3.schema.json",
+              "unit": "root",
+              "line_start": 750,
+              "line_end": 750,
+              "quote": "\"$id\": \"pm.goal_runtime_event.goal_run_started.schema.v3\",",
+              "excerpt_sha256": "636bd14541775d1205ff761f917c1204dab499a540e8683c8c5a3c2bdbae609b",
+              "file_sha256": "2cba0de288750206d9fd7c38f1498f16314fda508d7e866b036e2a0f50a67e0f",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Goal_Runtime_System.md",
+              "unit": "GRS-079",
+              "line_start": 7722,
+              "line_end": 7722,
+              "quote": "This unit adopts exactly the existing `event-family-goal-run-started` row at family revision 3.0.0.",
+              "excerpt_sha256": "2493aaf160080075fff9ce0fab4783bdf02f2059c04183abe72967c10202d453",
+              "file_sha256": "1766c325cc373ff909981fdf193a52ace3bdf18ce02bf1b8e8eb0ea4a3a05b52",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Goal_Runtime_System.md",
+              "unit": "GRS-079",
+              "line_start": 7728,
+              "line_end": 7728,
+              "quote": "Only GoalRunStarted normalizes to goal_run.started with original alias evidence. BuildStarted and other aliases are rejected.",
+              "excerpt_sha256": "dbaf10f4c7150209fa02f952da23deb3c065516cdca98a4c23ec1ae3faac4856",
+              "file_sha256": "1766c325cc373ff909981fdf193a52ace3bdf18ce02bf1b8e8eb0ea4a3a05b52",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/event_family_registry.json",
+              "unit": "registry header",
+              "line_start": 5,
+              "line_end": 5,
+              "quote": "\"registry_revision\": \"2026-11-04.1\"",
+              "excerpt_sha256": "3f5768a30d176acdbe9417fd49da767de0e94a663200f7c5ad89d2975600f3f0",
+              "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": {
+            "source": "C3-W34 part 2 at 751bf01adec0b3175c115a80f0f46c03d27af864",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Bounded component evidence does not complete the original W3 source/method corpus. Native NOT_RUN alone does not lower the grade."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "semantic_owner_doc is the GRS-079 PlanUnit (exact original Workflow started-v3 semantics) and payload_owner_doc the SP-311 PlanUnit (started-v3 reader and owned projection checkpoint); both govern v3.",
+          "evidence": [
+            {
+              "path": "Plans/event_family_registry.json",
+              "unit": "#/families/4",
+              "line_start": 274,
+              "line_end": 274,
+              "quote": "\"semantic_owner_doc\": \"Plans/Goal_Runtime_System.md#GRS-079\",",
+              "excerpt_sha256": "a064bfe5d67d234132612e0a1abbb3c06b38855f25a7b680d0edca5a05992916",
+              "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/event_family_registry.json",
+              "unit": "#/families/4",
+              "line_start": 275,
+              "line_end": 275,
+              "quote": "\"payload_owner_doc\": \"Plans/storage-plan.md#SP-311\",",
+              "excerpt_sha256": "cb73c487b4b6fbabdf8a4ad285edca5840ac9407c27c552b29c4b80454efa40d",
+              "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Goal_Runtime_System.md",
+              "unit": "GRS-079",
+              "line_start": 7720,
+              "line_end": 7720,
+              "quote": "### GRS-079 - Exact original Workflow started-v3 semantics and read roles",
+              "excerpt_sha256": "5861b580f17143e34ea57f24e0cefb0cfa91b4e467e2cbec031b940ac7a4bf81",
+              "file_sha256": "1766c325cc373ff909981fdf193a52ace3bdf18ce02bf1b8e8eb0ea4a3a05b52",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-311",
+              "line_start": 26479,
+              "line_end": 26479,
+              "quote": "Scope: exactly original `goal_run.started` carrying the frozen v3 payload and complete EventRecord 2.0.0",
+              "excerpt_sha256": "c778b1fdee769ef3b71fd94258644f91b3f4006e31b0cd6e3c9051021d241908",
+              "file_sha256": "3dd8a2f0f809713b0b427c2f58870e6b49873d6f23ebd12ca231c21eaa14100e",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": {
+            "source": "C3-W34 part 2 at 751bf01adec0b3175c115a80f0f46c03d27af864",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Bounded component evidence does not complete the original W3 source/method corpus. Native NOT_RUN alone does not lower the grade."
+        },
+        "producer": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "owner.workflow.activation.commit_start.v2 with owner.storage.workflow_start.commit_original.v2 (coordinator workflow_start_original.v2, EP-118/SP-309) publishes one coordinated outcome: native after-images, compact Commit/Control/Origin, D01, and one append with synced first barrier and full-value custody. SP-309 keeps SP-286/CV-339 mandatory; SP-311 depends on SP-286. No pre-append dispatch or charge.",
+          "evidence": [
+            {
+              "path": "Plans/Goal_Runtime_System.md",
+              "unit": "GRS-079",
+              "line_start": 7726,
+              "line_end": 7726,
+              "quote": "Original `owner.workflow.activation.commit_start.v2` with `owner.storage.workflow_start.commit_original.v2` retains the complete EP-118/SP-309 start coordinator",
+              "excerpt_sha256": "b42d5bac6ed85ce5d53f4850606504bb1e1e8f416b11a69ed1d7b40f4c2cf624",
+              "file_sha256": "1766c325cc373ff909981fdf193a52ace3bdf18ce02bf1b8e8eb0ea4a3a05b52",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Executor_Protocol.md",
+              "unit": "EP-118 Original Workflow start",
+              "line_start": 7602,
+              "line_end": 7602,
+              "quote": "The complete coordinated outcome contains one authentic EventRecord append, its synced first barrier and original full-value custody",
+              "excerpt_sha256": "03591f809c4bac2703c09801f4bfe3b7438b1611c5651971bbfe69b26eee7b4f",
+              "file_sha256": "fa5509d9a692063701a62614fee439fd0b74cd4c382fdd6fe1215c620e3d004a",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-309 Exact v3 event-depth handoff",
+              "line_start": 26235,
+              "line_end": 26235,
+              "quote": "SP-278 whole original read/custody and SP-286/CV-339 first-receipt/full-value obligations remain mandatory at their actual lifecycle boundaries.",
+              "excerpt_sha256": "c4daa193429a77511c74f8fcab88215378f192271c7134bb1bb2f1e01e98cffb",
+              "file_sha256": "3dd8a2f0f809713b0b427c2f58870e6b49873d6f23ebd12ca231c21eaa14100e",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-309 Exact original start event",
+              "line_start": 26166,
+              "line_end": 26166,
+              "quote": "First receipt must be synced with durability_class=barrier.",
+              "excerpt_sha256": "333186bfb3514c6537f5478ccd7d866ba88298f565d926040277f926387a15ba",
+              "file_sha256": "3dd8a2f0f809713b0b427c2f58870e6b49873d6f23ebd12ca231c21eaa14100e",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": {
+            "source": "C3-W34 part 2 at 751bf01adec0b3175c115a80f0f46c03d27af864",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Bounded component evidence does not complete the original W3 source/method corpus. Native NOT_RUN alone does not lower the grade."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "v3 root is closed (additionalProperties and unevaluatedProperties false) with a closed six-field event payload; expected_goal_revision and retired parent_goal_id are removed and Workflow clocks added. GRS-079 selects this whole resource, so it matches current owner precedence; the resource's own 'UNADOPTED PROPOSAL' $comment is stale byte-pinned text.",
+          "evidence": [
+            {
+              "path": "Plans/executor_cancellation_contracts/schemas/goal-run-started.v3.schema.json",
+              "unit": "root",
+              "line_start": 752,
+              "line_end": 752,
+              "quote": "\"additionalProperties\": false,",
+              "excerpt_sha256": "caf6261bd51214e3f0e1f79bb4be170af948f47d47080f04b366668a8b5af3bd",
+              "file_sha256": "2cba0de288750206d9fd7c38f1498f16314fda508d7e866b036e2a0f50a67e0f",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/executor_cancellation_contracts/schemas/goal-run-started.v3.schema.json",
+              "unit": "root",
+              "line_start": 859,
+              "line_end": 859,
+              "quote": "\"unevaluatedProperties\": false",
+              "excerpt_sha256": "3012344da2fc54fec7bbe525b328ec127fa0c0e07816bc5fbd740361688ea0ec",
+              "file_sha256": "2cba0de288750206d9fd7c38f1498f16314fda508d7e866b036e2a0f50a67e0f",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Goal_Runtime_System.md",
+              "unit": "GRS-079",
+              "line_start": 7724,
+              "line_end": 7724,
+              "quote": "`expected_goal_revision` and retired `parent_goal_id` are absent from this route.",
+              "excerpt_sha256": "5fc0f0f0caecda488af8c9df3031ed1d6a1ed3742bda57e56e06c9cc177e311e",
+              "file_sha256": "1766c325cc373ff909981fdf193a52ace3bdf18ce02bf1b8e8eb0ea4a3a05b52",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Goal_Runtime_System.md",
+              "unit": "GRS-079",
+              "line_start": 7722,
+              "line_end": 7722,
+              "quote": "The selected payload is the complete existing `Plans/executor_cancellation_contracts/schemas/goal-run-started.v3.schema.json` resource",
+              "excerpt_sha256": "6af6b08a5180ab2bea886336fe848d3b3b20ba35dddc46995177232e7e26556e",
+              "file_sha256": "1766c325cc373ff909981fdf193a52ace3bdf18ce02bf1b8e8eb0ea4a3a05b52",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": {
+            "source": "C3-W34 part 2 at 751bf01adec0b3175c115a80f0f46c03d27af864",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Bounded component evidence does not complete the original W3 source/method corpus. Native NOT_RUN alone does not lower the grade."
+        },
+        "scope_identity": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "application_or_project (Project edition project-scoped; app edition dormant) scope; exact v3 idempotency key pm.goal-runtime-event.v3 over scope_partition, event type, project, goal, goal_revision, both Workflow revisions, goal_run_id, workgraph_ref and activation_receipt_ref; Storage owns scope_partition and inner/outer keys match; outer run id equals the Workflow GoalRun and optional joins come from the original producer source.",
+          "evidence": [
+            {
+              "path": "Plans/Goal_Runtime_System.md",
+              "unit": "GRS-079",
+              "line_start": 7728,
+              "line_end": 7728,
+              "quote": "The idempotency key remains `pm.goal-runtime-event.v3:` plus lowercase SHA-256 of RFC8785 JCS",
+              "excerpt_sha256": "15dfdfe4324ce1d9d1ad0fd930559dc921a4689b3c8aae8bd8957ae92458dc36",
+              "file_sha256": "1766c325cc373ff909981fdf193a52ace3bdf18ce02bf1b8e8eb0ea4a3a05b52",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Goal_Runtime_System.md",
+              "unit": "GRS-079",
+              "line_start": 7728,
+              "line_end": 7728,
+              "quote": "Storage owns exact scope_partition and inner/outer keys byte-equal.",
+              "excerpt_sha256": "f80719635712fb3b599d40449245b1faff4c0a64581448a8a87322679f5b7702",
+              "file_sha256": "1766c325cc373ff909981fdf193a52ace3bdf18ce02bf1b8e8eb0ea4a3a05b52",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Goal_Runtime_System.md",
+              "unit": "GRS-079",
+              "line_start": 7724,
+              "line_end": 7724,
+              "quote": "Outer run identity equals the original Workflow GoalRun",
+              "excerpt_sha256": "d79c463638cbfc5bea40bf13973009485c88e1b098dc6feda55d4cd44d881a09",
+              "file_sha256": "1766c325cc373ff909981fdf193a52ace3bdf18ce02bf1b8e8eb0ea4a3a05b52",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": {
+            "source": "C3-W34 part 2 at 751bf01adec0b3175c115a80f0f46c03d27af864",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Bounded component evidence does not complete the original W3 source/method corpus. Native NOT_RUN alone does not lower the grade."
+        },
+        "replay_idempotency": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Same identity and digest admits no new append, CAS or effect; conflicting digest is idempotency_conflict, stale Workflow revision revision_conflict, unprovable dedupe dedupe_unavailable; a missing acknowledgement or new key/timestamp cannot restart the run; recover_start.v2 only classifies the original outcome and ambiguous publication stays fenced.",
+          "evidence": [
+            {
+              "path": "Plans/Goal_Runtime_System.md",
+              "unit": "GRS-079",
+              "line_start": 7728,
+              "line_end": 7728,
+              "quote": "Original same-identity/same-digest custody admits no new append/CAS/effect",
+              "excerpt_sha256": "601329b2e198c6c23d4ebde4b64ca2c50ca1829c6b682038ab4843cf2772de28",
+              "file_sha256": "1766c325cc373ff909981fdf193a52ace3bdf18ce02bf1b8e8eb0ea4a3a05b52",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Goal_Runtime_System.md",
+              "unit": "GRS-079",
+              "line_start": 7728,
+              "line_end": 7728,
+              "quote": "A missing acknowledgement, expired event or newly generated key/timestamp cannot restart the original run.",
+              "excerpt_sha256": "6eedfe2c0340129f097005718d395d56dc02886b901d04f2111f90ba112f2d40",
+              "file_sha256": "1766c325cc373ff909981fdf193a52ace3bdf18ce02bf1b8e8eb0ea4a3a05b52",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Executor_Protocol.md",
+              "unit": "EP-118 Original Workflow start",
+              "line_start": 7606,
+              "line_end": 7606,
+              "quote": "`recover_start.v2` only classifies authentic original outcome.",
+              "excerpt_sha256": "96210691f5af505b526bf98d2b76266d3bd4ee5fde91f92b9fa52f919145ff40",
+              "file_sha256": "fa5509d9a692063701a62614fee439fd0b74cd4c382fdd6fe1215c620e3d004a",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": {
+            "source": "C3-W34 part 2 at 751bf01adec0b3175c115a80f0f46c03d27af864",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Bounded component evidence does not complete the original W3 source/method corpus. Native NOT_RUN alone does not lower the grade."
+        },
+        "retention": {
+          "status": "PASS",
+          "representation": "registry_structured",
+          "finding": "Registered RP-RUNTIME-365D@1.0.0 is restated by SP-311/BRS-027 (31,536,000 seconds from run completion, caps, holds). The owned projection and checkpoint families use RP-PROJECTION-3GEN (three generations, retired plus 7 days) and compact Start custody RP-AUTHORITY-INDEFINITE; no open choice.",
+          "evidence": [
+            {
+              "path": "Plans/event_family_registry.json",
+              "unit": "#/families/4",
+              "line_start": 320,
+              "line_end": 320,
+              "quote": "\"policy_id\": \"RP-RUNTIME-365D\",",
+              "excerpt_sha256": "f36546d6ba62c5c97be97324fe8cc9f8201f953f1415980b2ad0887a4d5b4b63",
+              "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-311 Retention and forbidden effects",
+              "line_start": 26519,
+              "line_end": 26519,
+              "quote": "Original goal_run.started remains RP-RUNTIME-365D: 31,536,000 seconds from run completion",
+              "excerpt_sha256": "52e92b08c9272900ce44aa2d44242e1044fa20f56f08858307935d1c75606e7c",
+              "file_sha256": "3dd8a2f0f809713b0b427c2f58870e6b49873d6f23ebd12ca231c21eaa14100e",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/goal_run_started_consumer_contracts/physical-families.json",
+              "unit": "families[1]",
+              "line_start": 33,
+              "line_end": 33,
+              "quote": "\"retention\": \"RP-PROJECTION-3GEN; current no TTL, retired 7 days, max 3 including staged; holds and references fence removal\",",
+              "excerpt_sha256": "accfa54f69258360d4a144f5dd3b441e6b3d8ae5359ee94c6bdbbad4c9c0d57d",
+              "file_sha256": "81c84ceab43dc46b7c76a86e58b1dfd9a68cdfda5ac7250c13404e9f3ca03d7e",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Backup_Restore_System.md",
+              "unit": "BRS-027",
+              "line_start": 1735,
+              "line_end": 1735,
+              "quote": "Exact RP-PROJECTION-3GEN@1.0.0 governs its own generation/checkpoint lifecycle",
+              "excerpt_sha256": "666abcdebd3bbba4646a206819eda36f09454cb5dc2ae8f3cc70f97df45ee4a6",
+              "file_sha256": "e5a9d31d5d95fee9b0e3f9e5d7baaddc97d1fcfc8388cf94ccad063a7a4952db",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": {
+            "source": "C3-W34 part 2 at 751bf01adec0b3175c115a80f0f46c03d27af864",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Bounded component evidence does not complete the original W3 source/method corpus. Native NOT_RUN alone does not lower the grade."
+        },
+        "redaction_custody": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Registry rejects unhandled secrets; SP-309 compact custody carries no credentials or provider output. BRS-025/BRS-027 keep mandatory coherent backup of Start/D01 and Event/first-receipt custody, make projection disclosure source-coupled (expiry/deletion fences it), and restore derived units only after tombstones/permissions; SP-311 readers recheck permission/deletion/hold controls.",
+          "evidence": [
+            {
+              "path": "Plans/event_family_registry.json",
+              "unit": "#/families/4",
+              "line_start": 300,
+              "line_end": 300,
+              "quote": "\"mode\": \"reject_unhandled_secrets\",",
+              "excerpt_sha256": "69b326f5100c3747e56823aea733477b3b41747a52c403f57851d9d32534e475",
+              "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-309",
+              "line_start": 26220,
+              "line_end": 26220,
+              "quote": "receipts and terminal source origins contain no raw credentials",
+              "excerpt_sha256": "a2961e4b549df9b56ab18bdc74fedd7b57ae7b47d62f95222430568deecd6364",
+              "file_sha256": "3dd8a2f0f809713b0b427c2f58870e6b49873d6f23ebd12ca231c21eaa14100e",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Backup_Restore_System.md",
+              "unit": "BRS-027",
+              "line_start": 1731,
+              "line_end": 1731,
+              "quote": "BRS-025 remains the owner of mandatory coherent backup for original Workflow Start/D01 authority and genuine Event/first-receipt/seglog custody while retained.",
+              "excerpt_sha256": "3cbfee9d8524c2e586a67b9db6992c79d116a350c615ce8233cdf4d28930b5c8",
+              "file_sha256": "e5a9d31d5d95fee9b0e3f9e5d7baaddc97d1fcfc8388cf94ccad063a7a4952db",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Backup_Restore_System.md",
+              "unit": "BRS-027",
+              "line_start": 1735,
+              "line_end": 1735,
+              "quote": "Source expiry/deletion fences derivative content disclosure",
+              "excerpt_sha256": "e305f3849c9b9776848d73f5936b97351425ca597341d5d3b38f13467ca90055",
+              "file_sha256": "e5a9d31d5d95fee9b0e3f9e5d7baaddc97d1fcfc8388cf94ccad063a7a4952db",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": {
+            "source": "C3-W34 part 2 at 751bf01adec0b3175c115a80f0f46c03d27af864",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Bounded component evidence does not complete the original W3 source/method corpus. Native NOT_RUN alone does not lower the grade."
+        },
+        "transitions": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Current start commits Workflow ready->running and activation start_event_pending->active once, advancing body and activation revisions once while Goal body/control stay unchanged; readiness must prove materialization, entrypoints, permission, budget and no effective Stop; prestart abort needs proof of no append/effect and cannot reinterpret a committed start.",
+          "evidence": [
+            {
+              "path": "Plans/Goal_Runtime_System.md",
+              "unit": "GRS-079",
+              "line_start": 7726,
+              "line_end": 7726,
+              "quote": "The actual coordinated publication commits ready-to-running and start_event_pending-to-active once",
+              "excerpt_sha256": "20e0c949cd9e1b06847ecc60f76753f5499c27fd7a90cf20bdc8ed5d87486f24",
+              "file_sha256": "1766c325cc373ff909981fdf193a52ace3bdf18ce02bf1b8e8eb0ea4a3a05b52",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Executor_Protocol.md",
+              "unit": "EP-118 Original Workflow start",
+              "line_start": 7600,
+              "line_end": 7600,
+              "quote": "activation state changes start_event_pending to active and activation revision advances once",
+              "excerpt_sha256": "b3e4fbb30adbe60a4d34c6f92032ebddb929ac5c88981446ae1f2731e74b0583",
+              "file_sha256": "fa5509d9a692063701a62614fee439fd0b74cd4c382fdd6fe1215c620e3d004a",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Goal_Runtime_System.md",
+              "unit": "GRS-079",
+              "line_start": 7726,
+              "line_end": 7726,
+              "quote": "Original prestart abort requires genuine proof of no original append/effect and cannot reinterpret a committed start.",
+              "excerpt_sha256": "c4f679c94db6de33f8c354459fea0d01db6891a876d8e5ba5e95b4ba260e861d",
+              "file_sha256": "1766c325cc373ff909981fdf193a52ace3bdf18ce02bf1b8e8eb0ea4a3a05b52",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": {
+            "source": "C3-W34 part 2 at 751bf01adec0b3175c115a80f0f46c03d27af864",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Bounded component evidence does not complete the original W3 source/method corpus. Native NOT_RUN alone does not lower the grade."
+        },
+        "consumers_checkpoints": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "SP-1138 and GRS-1136 select the reference successor. Full original source/method, nine-token-field, global-prefix, CAS and current-cutover integration remains unfinished. No W3 source-definition blocker is claimed.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-311 Concrete projector and generation ownership",
+              "line_start": 26493,
+              "line_end": 26493,
+              "quote": "`owner.goal_run.started.project_prefix.v1` is the sole semantic writer of the new projection dataset and its checkpoint root.",
+              "excerpt_sha256": "a3ed6e14f1568c704b09fc03d781b30b24c4dbf30520397896d0d21b765d8fe9",
+              "file_sha256": "3dd8a2f0f809713b0b427c2f58870e6b49873d6f23ebd12ca231c21eaa14100e",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/goal_run_started_consumer_contracts/physical-families.json",
+              "unit": "families[1]",
+              "line_start": 26,
+              "line_end": 26,
+              "quote": "\"key\": \"goal_run_started_checkpoint.v1:K(storage_instance_id):K(project_id):K(goal_id):K(goal_run_id)\",",
+              "excerpt_sha256": "5877d4db8355d6813a378cef7fc1426853fc0111cdeac597397b8a8a2b6b09cc",
+              "file_sha256": "81c84ceab43dc46b7c76a86e58b1dfd9a68cdfda5ac7250c13404e9f3ca03d7e",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-311 Concrete projector and generation ownership",
+              "line_start": 26495,
+              "line_end": 26495,
+              "quote": "The immutable anchor includes the complete nine-field durable generic token.",
+              "excerpt_sha256": "efffc80fd8cb190c63f85485e62d2343252d8c21f9900f597012f468b98ec9c9",
+              "file_sha256": "3dd8a2f0f809713b0b427c2f58870e6b49873d6f23ebd12ca231c21eaa14100e",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-311 Global scan, prefix and atomicity",
+              "line_start": 26507,
+              "line_end": 26507,
+              "quote": "A Storage write transaction rereads and CAS-fences the actual generic root selection and full frontier token",
+              "excerpt_sha256": "49fc9b0ac2d6648ccc45d6a0d750b6f6767e2ec628fd11494c0e70207ca3a589",
+              "file_sha256": "3dd8a2f0f809713b0b427c2f58870e6b49873d6f23ebd12ca231c21eaa14100e",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/goal_run_started_consumer_contracts/consumer.schema.json",
+              "unit": "Projection",
+              "line_start": 113,
+              "line_end": 113,
+              "quote": "\"Projection\": {",
+              "excerpt_sha256": "7ae73fd34ec8dfd53bbf65e17de16f6430726c81bd6ec60f63db0f2fd629b844",
+              "file_sha256": "626cfe1aff57bbfcf67c2ab70a3b12c55ca4e137bfbe2c0fd54a3534bc359392",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/goal_run_projection_reference_contracts/started.md",
+              "unit": "Packs / complete physical sizes",
+              "line_start": 21,
+              "line_end": 21,
+              "quote": "Every redb stored part, including checkpoint, is at most 16 KiB in actual canonical MessagePack.",
+              "excerpt_sha256": "57bc0f852f71ef82ffe665042074d0cec06a0c8fffe5bd261b51f632ad0f96b3",
+              "file_sha256": "8eff996d9087b6ff333997032b636d57f1719bc2049f6123250b40f10bbb28df",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": {
+            "source": "C3-W34 part 2 at 751bf01adec0b3175c115a80f0f46c03d27af864",
+            "status": "PARTIAL"
+          },
+          "change": "carried",
+          "change_reason": "Bounded component evidence does not complete the original W3 source/method corpus. Native NOT_RUN alone does not lower the grade."
+        },
+        "compatibility_withdrawal": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "SP-424: publication-role withdrawal as writer cutoff, per-method reader withdrawal, projector stop and new-generation rebuild fence; GRS-079 routes.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-424",
+              "line_start": 26601,
+              "line_end": 26601,
+              "quote": "Rebuild fence: after reinstallation the projector stages a new generation from genuine survivors",
+              "excerpt_sha256": "35976f4639df48b4967c9f5fe853a95cb516c6b3c1bd93d36e387eb5defe8eba",
+              "file_sha256": "3dd8a2f0f809713b0b427c2f58870e6b49873d6f23ebd12ca231c21eaa14100e",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": {
+            "source": "C3-W34 part 2 at 751bf01adec0b3175c115a80f0f46c03d27af864",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Bounded component evidence does not complete the original W3 source/method corpus. Native NOT_RUN alone does not lower the grade."
+        },
+        "positive_negative_oracles": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "C3-W34a adds complete retained-eight-object relations, selected inline/Event-reference representation and actual pinned frame-codec components. Original source issuance, full method dispatch and transactional/generic corpus remain unfinished; W3 stays NOT_COMPLETE.",
+          "evidence": [
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-210",
+              "line_start": 7243,
+              "line_end": 7243,
+              "quote": "goal_run.started: the SP-311 started-only projector rule table.",
+              "excerpt_sha256": "186b2b50d694d28ae84c643bd36a7cbea54dedfa840fb35dd8584f8f4afba22e",
+              "file_sha256": "0bc0707040f6fd36ac75b7eadfebcd84ff8ff38a5b2256f1e1a860d1f955a8a3",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/goal_own_c_contracts/protocol.md",
+              "unit": "Common complete-path fixture and guard rules",
+              "line_start": 85,
+              "line_end": 85,
+              "quote": "the full inherited native-root corpus remains an integration obligation until actual complete specimens run.",
+              "excerpt_sha256": "042e904a2eed162b3149e716a37d561bf23fc95f6038f2e96643ca5c84b302d8",
+              "file_sha256": "412da1d78bf91f5b0856c8f878f043c64f47eb63bf274044dd755a1183157361",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/goal_own_c_contracts/protocol.md",
+              "unit": "Part 2 source witness qualification",
+              "line_start": 100,
+              "line_end": 100,
+              "quote": "W1-W5 whole executable closure and the remaining six-owner native migration source corpus therefore remain PARTIAL.",
+              "excerpt_sha256": "d56e8b9f02a667d5799ea15de2a04c87b14adbc31e5255f1bd3365375efe9295",
+              "file_sha256": "412da1d78bf91f5b0856c8f878f043c64f47eb63bf274044dd755a1183157361",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/goal_own_c_contracts/protocol.md",
+              "unit": "W3 component qualification",
+              "line_start": 65,
+              "line_end": 65,
+              "quote": "W3 stays NOT_COMPLETE, native remains NOT_RUN, and no new technical or product blocker is asserted.",
+              "excerpt_sha256": "28cc90459c2a00bcd7f08b3388b2c8ab0b9d58151e131f4e58242443991e2526",
+              "file_sha256": "412da1d78bf91f5b0856c8f878f043c64f47eb63bf274044dd755a1183157361",
+              "quote_check": "exact"
+            }
+          ],
+          "prior": {
+            "source": "C3-W34 part 2 at 751bf01adec0b3175c115a80f0f46c03d27af864",
+            "status": "PARTIAL"
+          },
+          "change": "carried",
+          "change_reason": "Bounded component evidence does not complete the original W3 source/method corpus. Native NOT_RUN alone does not lower the grade."
+        }
+      },
+      "remaining_gaps": [
+        "Original prebirth descriptor, complete Start and separate Goal arguments, producer/native/D01 joint transaction, publication, real first append group, semantic retry and recovery.",
+        "Separately selected native-v7 complete source and method tuples.",
+        "Whole actual generic CURRENT/manifest/frame/index/gap/current-frontier/reducer and nine-field durable token corpus.",
+        "Full independent current native and separate Goal/Stop/body/control helpers and every lower/passive/final predicate.",
+        "Source/root/full-frontier CAS, row/checkpoint atomic interruption/retry, staging/cutover and SP-424 withdrawal/rebuild.",
+        "Full-original inline, Event-reference, metadata-reference and checkpoint-spill method tuples. New relation/wire components do not close these."
+      ],
+      "normative_depth_complete": false,
+      "disposition_evidence": [
+        {
+          "path": "Plans/Goal_Runtime_System.md",
+          "unit": "GRS-079",
+          "line_start": 7726,
+          "line_end": 7726,
+          "quote": "Original `owner.workflow.activation.commit_start.v2` with `owner.storage.workflow_start.commit_original.v2` retains the complete EP-118/SP-309 start coordinator",
+          "excerpt_sha256": "b42d5bac6ed85ce5d53f4850606504bb1e1e8f416b11a69ed1d7b40f4c2cf624",
+          "file_sha256": "1766c325cc373ff909981fdf193a52ace3bdf18ce02bf1b8e8eb0ea4a3a05b52",
+          "quote_check": "exact"
+        }
+      ],
+      "static_checks_seen": [
+        "scripts/pm_goal_own_c3_w34a_oracles.py",
+        "scripts/pm_goal_own_c3_w34_reference_oracles.py"
+      ],
+      "prior_pass_count_pinned_base": 10,
+      "whole_root_closure": "NOT_COMPLETE",
+      "full_path_oracles_added": {
+        "positive": 0,
+        "negative": 0
+      },
+      "notes": [
+        "No unfillable technical blocker or new product question was established. The requested full W3 corpus is unfinished.",
+        "New evidence: 9 positive and 283 negative TEST_ONLY component cases; 118 runtime relation predicates observed; shared-tool removal proof remains outstanding.",
+        "Original native-v7 definitions exist. No missing-v7 blocker is asserted."
+      ]
+    }
+  ],
+  "static_checks_seen": [
+    "scripts/pm_goal_own_c3_w34a_oracles.py",
+    "scripts/pm_goal_own_c3_w34_reference_oracles.py",
+    "scripts/pm_goal_own_c_oracles.py",
+    "scripts/pm_goal_own_c_source_oracles.py"
+  ]
+}

@@ -2,9 +2,9 @@
 
 Source: `Plans/Executor_Protocol.md`
 
-Source lines: L9183-L9343
+Source lines: L9183-L9345
 
-Source SHA256: `fa5509d9a692063701a62614fee439fd0b74cd4c382fdd6fe1215c620e3d004a`
+Source SHA256: `e16b20f78121565f26acac73482f6935e3dc641e4db537a69ada3a0422fc1122`
 
 ---
 
@@ -20,8 +20,10 @@ owner_doc: Plans/Executor_Protocol.md
 canonical_text: Newly authored owner contract under DL-045. For exactly goal_run.started, W3 adopts the complete
   original EP-120 Start/native D01 publication and native-v7 source dispatch. Test original full arguments
   and every own entry/final boundary, first receipt/result and retained versus fresh current source. Do not
-  change a closed roster, enroll an old birth, cast a schema realm or use caller admission/source flags. Complete
-  inherited-root witnesses remain required and no native execution is claimed.
+  change a closed roster, enroll an old birth, cast a schema realm or use caller admission/source flags. Amended
+  2026-11-11 (DG-S, DL-045) the original Start contract of commit_start.v2 and its Storage participant runs on
+  TEST_ONLY owners in `scripts/pm_goal_dg_s_oracles.py`, with native-v7 dispatch, held-invocation-only
+  PublicationResult, classification-only recover_start and fenced pending prefixes. native evidence stays NOT_RUN and is a separate claim; a planning PASS must never read as native proof.
 gui_related: false
 gui_classification_reason: Defines original source custody, identity, recovery or testing boundaries without
   changing visual presentation.
