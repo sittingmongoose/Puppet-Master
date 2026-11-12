@@ -106,9 +106,14 @@ html[data-theme="friendly-light"]:not([data-o55-nier="on"]) {
   --pm-switch-swell: 0; --pm-switch-liquid: 0;
   --pm-switch-motion: hop;
 }
-/* onboarding's sticker is peach, the window's own warm colour (F1, as drafted) */
-html[data-theme="friendly-light"]:not([data-o55-nier="on"]) #pm-o55-onboarding { --pm-switch-fill: #FAD0C4; }
-html[data-theme="friendly-dark"]:not([data-o55-nier="on"]) #pm-o55-onboarding { --pm-switch-fill: #FFAD93; }
+/* onboarding's sticker is peach, the window's own warm colour (F1, as drafted). Every rule below that gives a part of the
+   app its own chip fill states its words, mark and hover line too, the look's own: a chosen accent repaints the shell's
+   chosen block from <html> (styles.d/12-look.css, B-7), and a fill stated here without its words inherited the accent's
+   (B7-R1, opus-recheck-b11c: Friendly Light's segmented choice read white on its white chip) */
+html[data-theme="friendly-light"]:not([data-o55-nier="on"]) #pm-o55-onboarding { --pm-switch-fill: #FAD0C4;
+  --pm-switch-ink-on: #2E2A33; --pm-switch-mark: var(--accent-lime); --pm-switch-mark-on: #2E2A33; --pm-switch-hover-line: #6B6473; }
+html[data-theme="friendly-dark"]:not([data-o55-nier="on"]) #pm-o55-onboarding { --pm-switch-fill: #FFAD93;
+  --pm-switch-ink-on: #1C1624; --pm-switch-mark: var(--pm6-cozy-mint); --pm-switch-mark-on: #1C1624; --pm-switch-hover-line: #B4AEBE; }
 /* Segmented toggles take each look's neutral selection fill, never an accent (DR-069; DRY_Rules "every segmented toggle
    use each look's neutral selection fill in Friendly, Glass and Basic"): in Basic, B2's pressed key (a flat well one step
    darker than the bar, a grey 1 px keyline, the words in full black or white); in Friendly, F1's sticker in the window's
@@ -117,18 +122,19 @@ html[data-theme="friendly-dark"]:not([data-o55-nier="on"]) #pm-o55-onboarding { 
    opaque chip's layer), so these tokens on the strip reach it. Hover and focus follow the look. */
 html[data-theme="basic-light"]:not([data-o55-nier="on"]) :is(#pm-o55-onboarding .o55-seg, #pm-settings-root .segmented, #themeMenu .pm6-tt-modes, #pmuRange, .pmt-cz .pmw-ink-row, #panel-wizard .pm6-wiz-intent-row, .pmw-ink-row) {
   --pm-switch-fill: #D3D7DD; --pm-switch-rim: inset 0 0 0 1px #5C6470; --pm-switch-shadow: inset 0 0 0 1px #5C6470; --pm-switch-r: 2px;
-  --pm-switch-ink-on: #000000; --pm-switch-mark-on: #000000;
+  --pm-switch-ink-on: #000000; --pm-switch-mark-on: #000000; --pm-switch-mark: var(--accent-primary); --pm-switch-hover-line: #0056B3;
 }
 html[data-theme="basic-dark"]:not([data-o55-nier="on"]) :is(#pm-o55-onboarding .o55-seg, #pm-settings-root .segmented, #themeMenu .pm6-tt-modes, #pmuRange, .pmt-cz .pmw-ink-row, #panel-wizard .pm6-wiz-intent-row, .pmw-ink-row) {
   --pm-switch-fill: #0E0E0E; --pm-switch-rim: inset 0 0 0 1px #7A818C; --pm-switch-shadow: inset 0 0 0 1px #7A818C; --pm-switch-r: 2px;
-  --pm-switch-ink-on: #FFFFFF; --pm-switch-mark-on: #FFFFFF;
+  --pm-switch-ink-on: #FFFFFF; --pm-switch-mark-on: #FFFFFF; --pm-switch-mark: var(--accent-primary); --pm-switch-hover-line: #64B5F6;
 }
 html[data-theme="friendly-light"]:not([data-o55-nier="on"]) :is(#pm-o55-onboarding .o55-seg, #pm-settings-root .segmented, #themeMenu .pm6-tt-modes, #pmuRange, .pmt-cz .pmw-ink-row, #panel-wizard .pm6-wiz-intent-row, .pmw-ink-row) {
   --pm-switch-fill: #FFFFFF;
+  --pm-switch-ink-on: #2E2A33; --pm-switch-mark: var(--accent-lime); --pm-switch-mark-on: #2E2A33; --pm-switch-hover-line: #6B6473;
 }
 html[data-theme="friendly-dark"]:not([data-o55-nier="on"]) :is(#pm-o55-onboarding .o55-seg, #pm-settings-root .segmented, #themeMenu .pm6-tt-modes, #pmuRange, .pmt-cz .pmw-ink-row, #panel-wizard .pm6-wiz-intent-row, .pmw-ink-row) {
   --pm-switch-fill: #45404E; --pm-switch-rim: inset 0 0 0 2px #C2BFC7; --pm-switch-shadow: inset 0 0 0 2px #C2BFC7, 2px 2px 0 #8C8892;
-  --pm-switch-ink-on: #F0EDF4; --pm-switch-mark-on: #F0EDF4;
+  --pm-switch-ink-on: #F0EDF4; --pm-switch-mark-on: #F0EDF4; --pm-switch-mark: var(--pm6-cozy-mint); --pm-switch-hover-line: #B4AEBE;
 }
 
 /* ---- Retro: reverse video ------------------------------------------------------------------------------------------- */

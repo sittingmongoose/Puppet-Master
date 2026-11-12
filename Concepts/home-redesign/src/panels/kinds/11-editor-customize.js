@@ -353,7 +353,9 @@ function guideArt(kind) { return '<span class="pmed-guides pmed-guides-' + kind 
 function skeleton(name) {
   var F = EL().FIELDS, html = '';
   html += '<div class="pmt-cz-scrim" data-act="scrim" aria-hidden="true"><i></i><i></i><i></i><i></i></div><div class="pmt-cz-frame" aria-hidden="true"><span class="pmt-cz-framelabel">This editor</span></div>';
-  html += '<section class="pmt-cz-dialog" role="dialog" aria-modal="true" aria-labelledby="pmed-cz-title" aria-describedby="pmed-cz-lead" tabindex="-1" data-lg-surface="menu" data-lg-dense>';
+  /* aria-modal is the shown screen's alone (show sets it, close takes it away): a prepared, parked screen is no open
+     modal dialog (FO-149) */
+  html += '<section class="pmt-cz-dialog" role="dialog" aria-labelledby="pmed-cz-title" aria-describedby="pmed-cz-lead" tabindex="-1" data-lg-surface="menu" data-lg-dense>';
   html += '<header class="pmt-cz-head"><div class="pmt-cz-titles"><p class="pmt-cz-kicker"><span>' + esc('Customize · ' + name) + '</span></p>' +
     '<h2 class="pmt-cz-title" id="pmed-cz-title">Editor appearance</h2>' +
     '<p class="pmt-cz-lead" id="pmed-cz-lead">Pick what you want to change. The preview and this editor show it at once, and it is saved.</p></div>' +
@@ -379,7 +381,7 @@ function skeleton(name) {
     '<div class="pmt-cz-dock" data-dock hidden aria-hidden="true"><span class="pmt-cz-docktitle">Preview</span><div class="pmt-cz-dockbox pmed-pvbox" data-dock-box></div></div></nav>';
   /* colours */
   html += '<section class="pmt-cz-group" data-group="colors" aria-labelledby="pmed-cz-g-colors">' + ghead('colors', 'Colors', 'One catalog with the terminal. Hover a scheme to see it here and on the editor; click to keep it.') +
-    '<div class="pmt-cz-findrow"><input class="pmt-cz-search pmt-pop-search" type="search" placeholder="Find a scheme" aria-label="Find a scheme"' + NOTAG + '><span class="pmt-cz-findn" data-find-n></span></div>' +
+    '<div class="pmt-cz-findrow"><input class="pmt-cz-search pmt-pop-search" type="search" placeholder="Find a scheme" aria-label="Find a scheme"' + NOTAG + '><span class="pmt-cz-findn" data-find-n role="status" aria-live="polite" aria-atomic="true"></span></div>' +
     '<div class="pmt-cz-tiles pmt-cz-schemes" role="radiogroup" aria-label="Code colours">' + schemeTiles() + '</div>' +
     '<p class="pmt-cz-note" data-note-colors hidden></p>' +
     '<div class="pmt-cz-chips">' + chip('schemePair', 'Switch with light and dark', 'A scheme you pick swaps for its family’s other version when the app changes mode.') +
@@ -1503,7 +1505,7 @@ function* construct(opts) {
     // Return focus before making the sheet inert. Its measured contents and
     // all exit effects stay mounted through the family animation.
     if (!noFocus) { try { (anchor && anchor.isConnected ? anchor : null) ? anchor.focus({ preventScroll: true }) : inst.focus(); } catch (_) {} }
-    root.setAttribute('aria-hidden', 'true'); focusStopsOn(false);
+    root.setAttribute('aria-hidden', 'true'); dialog.removeAttribute('aria-modal'); focusStopsOn(false);
     // Keep the whole sheet through its exit and reuse it on the next visit.
     // Neither teardown nor a fresh 37-tile build belongs inside an animation.
     function park() {
@@ -1565,7 +1567,7 @@ function* construct(opts) {
     if (needsPaint) paint(); else PMW.czFit(root, fitInFrame);
     fitLater = null;
     focusStopsOn(true);
-    root.removeAttribute('aria-hidden');
+    root.removeAttribute('aria-hidden'); dialog.setAttribute('aria-modal', 'true');
     passThrough(true);
     root.classList.remove('pmed-prepared');
     // the entrance's end lets the pointer hit the sheet too, for a pointer that has not moved

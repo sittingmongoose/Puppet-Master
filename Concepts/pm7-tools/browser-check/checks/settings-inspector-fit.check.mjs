@@ -13,6 +13,7 @@
 // opens the picker and the chosen row's tick is measured in its tick cell, by the same rule. --set nudge=1 shifts every
 // tick and the head glyph 1 px, to show the check fails an off-centre tick or glyph.
 import { LOOKS } from '../browser-check.config.mjs';
+import { setLookBySetting as setLookShared } from '../helpers/settings-look.mjs';
 
 /* Everything the open inspector shows: every ticked choice's mark, the header icon tile. One tick's painted
    box in client px: the glyph's own bbox from the svg's getBBox (viewBox units, no stroke), padded by half the
@@ -161,32 +162,10 @@ async function openInspector(t, f, setting) {
    painting `data-theme` directly. The settings engine re-applies the saved look pair on every render
    (`applyPaint`, base/script/pm4-settings-js.js), so a theme painted without saving (t.app.look, persist:false)
    is reset to Basic Dark the moment an inspector opens and every "look" pass would measure the same one
-   (sol-recheck-b10's false pass). */
-async function setLookBySetting(t, f, look) {
-  const [family, mode] = look.split('-');
-  for (const [setting, value] of [
-    ['general.visual.theme', family === 'nier' ? 'NieR' : family[0].toUpperCase() + family.slice(1)],
-    ['general.visual.theme-mode', mode === 'light' ? 'Light' : 'Dark']
-  ]) {
-    const trigger = f.locator(`select[data-setting="${setting}"]`).locator('..').locator('.pm51-dd-trigger');
-    const labels = await f.locator(`select[data-setting="${setting}"] option`).allTextContents();
-    const name = labels.includes(value) ? value : `${value} ${mode === 'light' ? 'Light' : 'Dark'}`;
-    await trigger.first().scrollIntoViewIfNeeded();
-    await trigger.first().click();
-    await f.getByRole('option', { name, exact: true }).click({ timeout: 8000 });
-    await f.locator('.pm51-dd-list').waitFor({ state: 'hidden', timeout: 8000 }).catch(() => {});
-    /* a family pick can start a look transition (NieR's wipe): let it finish before the next pick, or its
-       layer swallows the click and the popout never opens */
-    await f.waitForFunction(() => !(window.PM_LOOK_COVERED && PM_LOOK_COVERED()) && !(window.PM_THEME_TRANSITION && PM_THEME_TRANSITION.busy && PM_THEME_TRANSITION.busy()), null, { timeout: 15000 }).catch(() => {});
-    await t.page.waitForTimeout(400);
-  }
-  await f.waitForFunction(([fam, m]) => {
-    const theme = document.documentElement.getAttribute('data-theme') || '';
-    const nier = !!(window.PM_NIER && PM_NIER.on()) || theme.startsWith('nier');
-    return fam === 'nier' ? nier && theme.endsWith('-' + m) : !nier && theme === fam + '-' + m;
-  }, [family, mode], { timeout: 20000 }).catch(() => { /* the guard fails each of this look's cells with the painted theme */ });
-  await t.page.waitForTimeout(500);
-}
+   (sol-recheck-b10's false pass).
+   The picker is helpers/settings-look.mjs (shared with settings-layout and settings-save-still); this check is already
+   on General when it picks, so it does not navigate there first. */
+const setLookBySetting = (t, f, look) => setLookShared(t, f, look, { toGeneral: false });
 
 /* Measured only under the look the cell names: read back the painted theme at measurement time and fail the
    cell if the product's own render moved it (the reset sol-recheck-b10 witnessed). */
