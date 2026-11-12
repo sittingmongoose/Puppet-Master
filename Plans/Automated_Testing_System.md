@@ -7268,3 +7268,97 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/UI_Wiring_Rules.md#UIW-048, ContractName:Plans/UI_Wiring_Rules.md#UIW-052, ContractName:Plans/Test_Capture_and_Motion_Evidence.md#TCME-007, ContractName:Plans/FinalGUISpec.md#F3-668, ContractName:Plans/FinalGUISpec.md#F3-674
+
+### ATS-360 — DO exact-family static and native oracles
+
+```yaml
+plan_unit_id: ATS-360
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+  Each of OSI-680 through OSI-704 independently adopts its exact-family fixture in
+  Plans/orchestrator_event_contract_fixtures.json and python3 scripts/pm-orchestrator-event-contracts.py.
+  Run its positive payloads for every admitted scope, then individually remove every required field,
+  add an unknown field, change schema version, use a foreign scope, zero occurrence, invalid UTC,
+  absent Project identity or fabricated application Project. Every negative refuses.
+  Identity vectors preserve a retry and distinguish operation, occurrence, Server, thread, run and family.
+  OSI-681..683 and OSI-686..704 application vectors decode CV-366's exact application@1 Server and
+  original-operation observation component; the incompatible do1 application key refuses. Project
+  identity and project~base64url partitions remain exact. Same identity with changed full semantics
+  conflicts. OSI-681 tests inline content at 16,384 UTF-8 bytes, oversized ASCII and multibyte text,
+  missing/both body representations, closed SP-337 BLAKE3/byte-size/media-type references and secrets.
+  Each board family validates both scope editions against its actual coordination_event_records
+  member (SP-720..722), preserving all old members and rejecting missing members, source/append
+  edition drift, foreign Server/thread/crew/run/operation/message joins and false Run anchors.
+  OSI-699 tests a new attempt after failure, blockage and interruption independently, with terminal,
+  permission, parent-ceiling, Stop, deadline, resume/reroute/replacement and attempt-counter refusals.
+  All twenty-five families have full selected EventRecord@2.0.0 append/retry and joined generic
+  checkpoint/read-token vectors. Reject replay_only_not_appendable before append or retry; compare
+  each recorded project~ partition with its actual Project encoding. Use the exact EventRecord
+  producer-semantic RFC8785 field set, exclude Storage sequence/observed/persisted metadata, return
+  the original complete result on equal semantics and reject changed caller semantics without append.
+  Run every family's S1..S10 authored failure (each requires exit 1); success-labelled failures reject.
+  Enforce the complete inline MessagePack payload budget, exact ASCII/multibyte boundaries and
+  valid external SP-337 pack bytes, digest/length/media and bytes/index durability witnesses.
+  Missing/forged references, foreign Storage checkpoints, every changed token member, source/index
+  mismatch and a nonmatching append's frontier advance refuse. Enforce the phase count predicate,
+  retry counter/cause/current-source join, truncation ordering and existing board priority enum on
+  the actual selected payload. Validate full closed application originals/input/wrappers for every
+  board contract, including missing/foreign fields. Application posts select CV-740/SP-723's complete
+  governed V2 message/source/wrapper graph with genuine original headers/body/routing and separate
+  accepted-source/stage/semantic/physical commitments; frozen Project/V1 resources remain exact.
+  All V1/V2 application board consumers require accepted original pre-publication stages and resolved
+  original stage request/result/evidence joins; refuse each refused/not-reached/unknown stage,
+  absent request/result/evidence, foreign witness/method/operation and forged accepted-source/physical hash.
+  Admission-dependent event append/first receipt stays not_reached until actual admission.
+  Every family/scope runs 1.0, -0, 1e0 and 01 number-input refusals, synchronized event/retry controls,
+  actual RFC8785 identity/observation preimages and equal-semantic JCS digest checks.
+  Apply the shared CV-1100 calls only at current input boundaries before schema, identity, source
+  hash and retry comparison: `loads_current_json` at raw ingress, `current_integer` at every schema
+  integer slot with its own bounds, and `qualified_jcs` on the producer projection and identity preimage. The fixture loader preserves retained EventRecords, receipts and
+  typed source/wrapper values under their original selected codec without rewriting their numbers.
+  For every family, file-backed retained originals resolve through the SP-1101 RetainedDispatcher:
+  sealed custody authenticates the exact original bytes and selects ea-do-json-v1 or ea-do-rfc8785-v2,
+  whose frozen verifier recomputes key/ID and source commitment; the disclosed recipe label and evidence
+  are joined against custody, and a coherent forgery of the original's bytes refuses. Recompute with that
+  recipe only; unknown or unproven fallback refuses. The shared number corpus runs through the complete
+  append and retry routes, CV-1101 profiles are witnessed per payload and Storage timestamp field, and
+  `python3 scripts/pm_event_numbers.py --self-test --scope numbers` passes.
+  Exercise old 1.0, 1e0 and 1e20 originals, both recipes and compatibility reads through complete main,
+  exact original-result recovery/retry bytes, and forged IDs/keys with every Storage observation synced.
+  Foreign/unverified recipe evidence, withdrawn readers and invalid current number inputs still refuse.
+  Sweep all families for exact types before comparisons: string booleans/numbers, null, arrays and
+  nested objects; include payload/schema, producer context, receipt, durability and exit-code boundaries.
+  Join each board's declared family/schema/envelope to its unchanged selected complete EventRecord.
+  Eagerly resolve every declared selected $ref, including dormant optional branches and actual stored
+  compositions, with exact offline URIs and scoped JSON Pointers; unresolved resources/fragments refuse.
+  Every family runs retained originally-valid history after live producer state/writer admission changes,
+  supported compatibility reads, forged/unproven/foreign originals and exact-family withdrawal/publication
+  fences with an unchanged valid generic checkpoint. Current disclosure access/deletion/hold still applies.
+  Prove every lane guard by removing it in an isolated in-memory checker, showing its own single-defect
+  negatives pass and unrelated negatives still refuse; keep the full guard-removal table in the report.
+  Restore all production guards; no bypass flag or weakened production guard is permitted.
+  Native obligations remain NOT_RUN per family: race the exact producer predicate with cancellation,
+  commit referenced content before append, crash before and after first receipt, resolve full value on
+  uncertain acknowledgment, reject same-key changed semantics, replay without its semantic effect,
+  reject stale full SP-278 token even on nonmatching append, and fence changed permissions/deletion/hold,
+  restore and withdrawn/unsupported editions. Each fixture contract names its own predicate and reader;
+  a sibling pass supplies no evidence. Static success grants no admission or native execution proof.
+gui_related: false
+gui_classification_reason: Contract and source-authority verification.
+depends_on: [OSI-680, OSI-681, OSI-682, OSI-683, OSI-684, OSI-685, OSI-686, OSI-687, OSI-688, OSI-689, OSI-690, OSI-691, OSI-692, OSI-693, OSI-694, OSI-695, OSI-696, OSI-697, OSI-698, OSI-699, OSI-700, OSI-701, OSI-702, OSI-703, OSI-704]
+unblocks: []
+acceptance_criteria:
+- Every exact family has positive and negative static cases; native obligations stay NOT_RUN until executed.
+validation_surfaces: [python3 scripts/pm-orchestrator-event-contracts.py]
+risk_class: event_authority
+reasoning_tier: high
+context_scope: exact_event_family
+implementation_surfaces: [scripts/pm-orchestrator-event-contracts.py]
+node_compile_hint: {mode: contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage: [Plans/Decision_Log.md#DL-045]
+preserved_exact_tokens: [NOT_RUN, SP-278, SP-286]
+negative_constraints: [No registry admission or native proof follows.]
+owner_hints: [Plans/Automated_Testing_System.md]
+```
