@@ -821,6 +821,11 @@ class CancelWorld(IW.S1CancelWorld):
         agg=ss['aggregate_result'].wrapper['value']
         gss=self.goal_stop_sources()
         ca,run=self.goal_bridge.world,self.goal_bridge.route.wf_run
+        # A passive read resolves the boundary actually issued for this cut.
+        # WriterGraph.boundary() issues a new original and cannot run here.
+        boundary=copy.deepcopy(ss['final_domain_cut'].wrapper['value']['current_boundary'])
+        boundary=ca.native.writers.authenticate(
+            'boundary|'+agg['operation_id']+'|'+boundary['transaction_id'],boundary)
         source=[('/scope',dict(self.scope)),('/operation_id',agg['operation_id']),
             ('/goal_stop',agg['goal_stop']),('/scheduler_stop',agg['scheduler_stop']),('/inventory_cut',agg['inventory_cut']),
             ('/original_result',agg),('/result_source',ss['aggregate_result'].d05()),
@@ -835,7 +840,7 @@ class CancelWorld(IW.S1CancelWorld):
             ('/current_boundary/current_domain_cut',ss['final_domain_cut'].wrapper['value']),
             ('/current_boundary/current_executor',self.current_executor()),
             ('/current_boundary/reservation_lineage',run['lineage']),
-            ('/current_boundary/original_boundary',ca.native.writers.boundary(self.d05,agg['operation_id']))]
+            ('/current_boundary/original_boundary',boundary)]
         flush=ss['complete_required_flush_history'][-1]
         source += [('/source_readback/final_flush/record',flush.wrapper['value']),
             ('/source_readback/final_flush/record_source',flush.d05()),
