@@ -35,7 +35,11 @@
       "c3_w12a_whole_root_closure": "NOT_COMPLETE",
       "c3_w12a_predecessor_corpus_selection": "Plans/goal_own_c_contracts/w12a-corpus.v1.json",
       "c3_w12a_predecessor_oracles": "scripts/pm_goal_own_c3_w12a_oracles.py",
-      "c3_w12a_physical_successor": "Plans/goal_own_c_contracts/w12a-successor-v3/selection.json"
+      "c3_w12a_physical_successor": "Plans/goal_own_c_contracts/w12a-successor-v3/selection.json",
+      "dg_u_corpus_selection": "Plans/goal_own_c_contracts/dg-u-corpus.v1.json",
+      "dg_u_successor_selection": "Plans/goal_own_c_contracts/dg-u-successor-v4/selection.json",
+      "dg_u_oracles": "python3 scripts/pm_goal_dg_u_oracles.py --output <result.json> --guards <guards.json>",
+      "dg_u_closure": "see Plans/goal_own_c_contracts/dg-u-corpus.v1.json per-group closure; native NOT_RUN"
     },
     {
       "event_type": "goal.cancelled",
