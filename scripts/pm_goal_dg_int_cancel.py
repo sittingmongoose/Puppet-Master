@@ -422,11 +422,23 @@ class CancelWorld(IW.S1CancelWorld):
     def build_current(self,realm,root,prefer,overlays,knob_name):
         # Unread schema members have owner-held, explicitly nonauthoritative
         # ancillary provenance. Build it once; every actual source is re-read.
+        overlays=list(overlays)
+        if knob_name=='readback_edit':
+            sw=self.start_world;families=ST.d01_families(sw.edition)
+            overlays += [('/d06_readback/safe_stop/whole_original_safe_stop',self.successful_safe_stop()),
+                ('/d06_readback/original_d01_lineage/pointer',copy.deepcopy(
+                    self.storage.cell(families['pointer'],sw.owners['d01'].pointer_key())['value']))]
         cache=self.__dict__.setdefault('_current_seeds',{})
         key=(realm,root,tuple(path for path,_ in overlays),knob_name)
         if key not in cache:
             seed=self.seeder.seed(realm,root,prefer)
             self.bind(seed)
+            # Never manufacture ancillary originals for an actual owner graph
+            # that the caller supplies in full at this same boundary.
+            owned=set()
+            for path,member in overlays:put(seed,path,copy.deepcopy(member));owned.add(path)
+            self._current_cache=self.current_wrappers()
+            self._overlay_current(seed,owned)
             self.autofill(seed,'int/current/'+root.rsplit('/',1)[-1])
             for path,selector in list(G.CN.walk_selectors(seed)):
                 if selector['physical_key']!='x':continue
