@@ -1,0 +1,402 @@
+{
+  "status": "RESTART_HANDOFF_CHECKS_RUNNING_NOT_FINAL",
+  "utc": "2026-11-12T16:05:43Z",
+  "checked_source_head": "7a60dd72b9f1a1a132dfdb205ab5bfd838863ea0",
+  "technical_diagnostics_removed": 313,
+  "remaining_diagnostics": 86,
+  "remaining_kind": "storage_value_registry_retention_policy_ref_unknown",
+  "retention_choices_made": false,
+  "gate_filtering": false,
+  "jobs": [
+    {
+      "name": "int2-registry-consumers",
+      "attempt": 1,
+      "via": "systemd",
+      "unit": "long-job-int2-registry-consumers-4750ae",
+      "log": "/home/sittingmongoose/.local/state/long-job/jobs/int2-registry-consumers/out.log",
+      "cwd": "/home/sittingmongoose/pm-worktrees/int2",
+      "started": "2026-11-12T15:47:15Z",
+      "command": "bash /home/sittingmongoose/pm-scratch/ea-int2/bin/run-checks-resume.sh /home/sittingmongoose/pm-scratch/ea-int2/registry-repair/consumers.tsv /home/sittingmongoose/pm-scratch/ea-int2/registry-repair/consumers",
+      "state": "running",
+      "runtime": 1109.1312260627747
+    },
+    {
+      "name": "int2-landing-after-registry",
+      "attempt": 1,
+      "via": "systemd",
+      "unit": "long-job-int2-landing-after-registry-76f787",
+      "log": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/landing-queued-job.log",
+      "cwd": "/home/sittingmongoose/pm-worktrees/int2",
+      "started": "2026-11-12T16:04:50Z",
+      "command": "python3 -B /home/sittingmongoose/pm-scratch/ea-int2/registry-repair/queued-dry.py",
+      "state": "running",
+      "runtime": 54.30456519126892
+    }
+  ],
+  "serial_queue": [
+    {
+      "label": "DT-checker",
+      "command": "python3 scripts/pm-dt-event-contracts.py"
+    },
+    {
+      "label": "DT-tables",
+      "command": "python3 scripts/pm-dt-table-generate.py scripts --check"
+    },
+    {
+      "label": "DCH-checker",
+      "command": "python3 -B scripts/pm_dch_events.py"
+    },
+    {
+      "label": "DCH-stop",
+      "command": "python3 -B scripts/pm_dch_stop.py"
+    },
+    {
+      "label": "DCH-tables",
+      "command": "python3 scripts/pm-dch-table-generate.py scripts --check"
+    },
+    {
+      "label": "DG6A-domain-alert.acknowledged",
+      "command": "python3 scripts/pm-dg6a-domain-check.py --family alert.acknowledged --output /home/sittingmongoose/pm-scratch/ea-int2/registry-repair/consumer-artifacts/dg6a-domain-alert.acknowledged"
+    },
+    {
+      "label": "DG6A-regression-alert.acknowledged",
+      "command": "python3 scripts/pm-dg6a-final-regression-check.py --family alert.acknowledged --output /home/sittingmongoose/pm-scratch/ea-int2/registry-repair/consumer-artifacts/dg6a-regression-alert.acknowledged"
+    },
+    {
+      "label": "DG6A-domain-alert.dismissed",
+      "command": "python3 scripts/pm-dg6a-domain-check.py --family alert.dismissed --output /home/sittingmongoose/pm-scratch/ea-int2/registry-repair/consumer-artifacts/dg6a-domain-alert.dismissed"
+    },
+    {
+      "label": "DG6A-regression-alert.dismissed",
+      "command": "python3 scripts/pm-dg6a-final-regression-check.py --family alert.dismissed --output /home/sittingmongoose/pm-scratch/ea-int2/registry-repair/consumer-artifacts/dg6a-regression-alert.dismissed"
+    },
+    {
+      "label": "DG6A-domain-alert.rule_muted",
+      "command": "python3 scripts/pm-dg6a-domain-check.py --family alert.rule_muted --output /home/sittingmongoose/pm-scratch/ea-int2/registry-repair/consumer-artifacts/dg6a-domain-alert.rule_muted"
+    },
+    {
+      "label": "DG6A-regression-alert.rule_muted",
+      "command": "python3 scripts/pm-dg6a-final-regression-check.py --family alert.rule_muted --output /home/sittingmongoose/pm-scratch/ea-int2/registry-repair/consumer-artifacts/dg6a-regression-alert.rule_muted"
+    },
+    {
+      "label": "DG6A-domain-alert.snoozed",
+      "command": "python3 scripts/pm-dg6a-domain-check.py --family alert.snoozed --output /home/sittingmongoose/pm-scratch/ea-int2/registry-repair/consumer-artifacts/dg6a-domain-alert.snoozed"
+    },
+    {
+      "label": "DG6A-regression-alert.snoozed",
+      "command": "python3 scripts/pm-dg6a-final-regression-check.py --family alert.snoozed --output /home/sittingmongoose/pm-scratch/ea-int2/registry-repair/consumer-artifacts/dg6a-regression-alert.snoozed"
+    },
+    {
+      "label": "DG6A-domain-panel.redocked",
+      "command": "python3 scripts/pm-dg6a-domain-check.py --family panel.redocked --output /home/sittingmongoose/pm-scratch/ea-int2/registry-repair/consumer-artifacts/dg6a-domain-panel.redocked"
+    },
+    {
+      "label": "DG6A-regression-panel.redocked",
+      "command": "python3 scripts/pm-dg6a-final-regression-check.py --family panel.redocked --output /home/sittingmongoose/pm-scratch/ea-int2/registry-repair/consumer-artifacts/dg6a-regression-panel.redocked"
+    },
+    {
+      "label": "DG6A-domain-panel.undocked",
+      "command": "python3 scripts/pm-dg6a-domain-check.py --family panel.undocked --output /home/sittingmongoose/pm-scratch/ea-int2/registry-repair/consumer-artifacts/dg6a-domain-panel.undocked"
+    },
+    {
+      "label": "DG6A-regression-panel.undocked",
+      "command": "python3 scripts/pm-dg6a-final-regression-check.py --family panel.undocked --output /home/sittingmongoose/pm-scratch/ea-int2/registry-repair/consumer-artifacts/dg6a-regression-panel.undocked"
+    },
+    {
+      "label": "DG6A-domain-concern.created",
+      "command": "python3 scripts/pm-dg6a-domain-check.py --family concern.created --output /home/sittingmongoose/pm-scratch/ea-int2/registry-repair/consumer-artifacts/dg6a-domain-concern.created"
+    },
+    {
+      "label": "DG6A-regression-concern.created",
+      "command": "python3 scripts/pm-dg6a-final-regression-check.py --family concern.created --output /home/sittingmongoose/pm-scratch/ea-int2/registry-repair/consumer-artifacts/dg6a-regression-concern.created"
+    },
+    {
+      "label": "DG6A-audit-grade",
+      "command": "python3 scripts/pm-dg6a-final-regression-check.py --audit-grade-only"
+    },
+    {
+      "label": "DG6A-tables",
+      "command": "python3 scripts/pm-dg6a-table-generate.py scripts --check"
+    },
+    {
+      "label": "DG6A-guard-check",
+      "command": "python3 scripts/pm-dg6a-guard-check.py"
+    },
+    {
+      "label": "DG6B-checker",
+      "command": "python3 scripts/pm-dg6b-event-contracts.py"
+    },
+    {
+      "label": "DG6B-tables",
+      "command": "python3 scripts/pm-dg6b-table-generate.py scripts --check"
+    },
+    {
+      "label": "DFM-file.copied",
+      "command": "python3 scripts/pm-filemanager-event-contracts.py --family file.copied"
+    },
+    {
+      "label": "DFM-folder.copied",
+      "command": "python3 scripts/pm-filemanager-event-contracts.py --family folder.copied"
+    },
+    {
+      "label": "DFM-file.created",
+      "command": "python3 scripts/pm-filemanager-event-contracts.py --family file.created"
+    },
+    {
+      "label": "DFM-folder.created",
+      "command": "python3 scripts/pm-filemanager-event-contracts.py --family folder.created"
+    },
+    {
+      "label": "DFM-file.deleted",
+      "command": "python3 scripts/pm-filemanager-event-contracts.py --family file.deleted"
+    },
+    {
+      "label": "DFM-folder.deleted",
+      "command": "python3 scripts/pm-filemanager-event-contracts.py --family folder.deleted"
+    },
+    {
+      "label": "DFM-file.exported",
+      "command": "python3 scripts/pm-filemanager-event-contracts.py --family file.exported"
+    },
+    {
+      "label": "DFM-folder.exported",
+      "command": "python3 scripts/pm-filemanager-event-contracts.py --family folder.exported"
+    },
+    {
+      "label": "DFM-file.moved",
+      "command": "python3 scripts/pm-filemanager-event-contracts.py --family file.moved"
+    },
+    {
+      "label": "DFM-folder.moved",
+      "command": "python3 scripts/pm-filemanager-event-contracts.py --family folder.moved"
+    },
+    {
+      "label": "DFM-file.renamed",
+      "command": "python3 scripts/pm-filemanager-event-contracts.py --family file.renamed"
+    },
+    {
+      "label": "DFM-folder.renamed",
+      "command": "python3 scripts/pm-filemanager-event-contracts.py --family folder.renamed"
+    },
+    {
+      "label": "DFM-p2a",
+      "command": "python3 scripts/pm-filemanager-p2a-cases.py --check"
+    },
+    {
+      "label": "DFM-tables",
+      "command": "python3 scripts/pm-filemanager-table-generate.py --check"
+    },
+    {
+      "label": "DFM-registry-regression",
+      "command": "python3 scripts/pm-filemanager-registry-regression.py"
+    },
+    {
+      "label": "DO-test-shared-runtime",
+      "command": "python3 -m unittest tests.test_shared_runtime_storage_contracts tests.test_pm_event_index_binding"
+    },
+    {
+      "label": "DG6A-family-alert.acknowledged",
+      "command": "python3 scripts/pm-alert-event-contracts-check.py --family alert.acknowledged"
+    },
+    {
+      "label": "DG6A-family-alert.dismissed",
+      "command": "python3 scripts/pm-alert-event-contracts-check.py --family alert.dismissed"
+    },
+    {
+      "label": "DG6A-family-alert.rule_muted",
+      "command": "python3 scripts/pm-alert-event-contracts-check.py --family alert.rule_muted"
+    },
+    {
+      "label": "DG6A-family-alert.snoozed",
+      "command": "python3 scripts/pm-alert-event-contracts-check.py --family alert.snoozed"
+    },
+    {
+      "label": "DG6A-family-bundle.annotation_state_changed",
+      "command": "python3 scripts/pm-card5-event-contracts-check.py --family bundle.annotation_state_changed"
+    },
+    {
+      "label": "DG6A-family-bundle.note_created",
+      "command": "python3 scripts/pm-card5-event-contracts-check.py --family bundle.note_created"
+    },
+    {
+      "label": "DG6A-family-bundle.note_status_changed",
+      "command": "python3 scripts/pm-card5-event-contracts-check.py --family bundle.note_status_changed"
+    },
+    {
+      "label": "DG6A-family-concern.assigned",
+      "command": "python3 scripts/pm-card5-event-contracts-check.py --family concern.assigned"
+    },
+    {
+      "label": "DG6A-family-concern.created",
+      "command": "python3 scripts/pm-concern-created-contracts-check.py --family concern.created"
+    },
+    {
+      "label": "DG6A-family-concern.evidence_linked",
+      "command": "python3 scripts/pm-card5-event-contracts-check.py --family concern.evidence_linked"
+    },
+    {
+      "label": "DG6A-family-concern.promoted",
+      "command": "python3 scripts/pm-card5-event-contracts-check.py --family concern.promoted"
+    },
+    {
+      "label": "DG6A-family-concern.reopened",
+      "command": "python3 scripts/pm-card5-event-contracts-check.py --family concern.reopened"
+    },
+    {
+      "label": "DG6A-family-concern.resolved",
+      "command": "python3 scripts/pm-card5-event-contracts-check.py --family concern.resolved"
+    },
+    {
+      "label": "DG6A-family-concern.updated",
+      "command": "python3 scripts/pm-card5-event-contracts-check.py --family concern.updated"
+    },
+    {
+      "label": "DG6A-family-panel.redocked",
+      "command": "python3 scripts/pm-panel-event-contracts-check.py --family panel.redocked"
+    },
+    {
+      "label": "DG6A-family-panel.undocked",
+      "command": "python3 scripts/pm-panel-event-contracts-check.py --family panel.undocked"
+    },
+    {
+      "label": "SHARED-materializer",
+      "command": "python3 scripts/pm-shared-runtime-storage-materialize.py --check"
+    },
+    {
+      "label": "DG6A-domain-alert.acknowledged-REPLAY",
+      "command": "python3 scripts/pm-dg6a-domain-check.py --family alert.acknowledged --output /home/sittingmongoose/pm-scratch/ea-int2/registry-repair/consumer-artifacts/dg6a-domain-alert.acknowledged"
+    },
+    {
+      "label": "FINAL-registry",
+      "command": "python3 -B /home/sittingmongoose/pm-scratch/ea-int2/registry-repair/registry-current.py"
+    },
+    {
+      "label": "FINAL-custody",
+      "command": "python3 -B /home/sittingmongoose/pm-scratch/ea-int2/registry-repair/custody-current.py"
+    },
+    {
+      "label": "FINAL-shards",
+      "command": "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json"
+    },
+    {
+      "label": "FINAL-inventory",
+      "command": "cd /home/sittingmongoose/pm-scratch/ea-int2/clean && python3 scripts/pm_event_datetime_inventory.py"
+    },
+    {
+      "label": "FINAL-numbers-all",
+      "command": "cd /home/sittingmongoose/pm-scratch/ea-int2/clean && python3 scripts/pm_event_numbers.py --self-test"
+    },
+    {
+      "label": "FINAL-datetime",
+      "command": "python3 -B /home/sittingmongoose/pm-scratch/ea-int2/registry-repair/datetime-current.py"
+    },
+    {
+      "label": "FINAL-registry-bytes",
+      "command": "python3 -m unittest tests.test_shared_runtime_storage_contracts.SharedRuntimeStorageContractsTest.test_registry_bytes_match_materializer_render_behind_pending_retention"
+    },
+    {
+      "label": "DCW-full-routes",
+      "command": "python3 -B /home/sittingmongoose/pm-scratch/ea-int2/registry-repair/dcw-full.py"
+    },
+    {
+      "label": "DCH-guards",
+      "command": "python3 scripts/pm-dch-guard-tables.py --out /home/sittingmongoose/pm-scratch/ea-int2/registry-repair/dch-guards --max-rss 2048 --pause-when-low 10 --resume-at 11"
+    },
+    {
+      "label": "DT-guards",
+      "command": "python3 scripts/pm-dt-guard-tables.py --out /home/sittingmongoose/pm-scratch/ea-int2/registry-repair/dt-guards --max-rss 2048 --pause-when-low 10 --resume-at 11"
+    }
+  ],
+  "completed_at_handoff": [
+    {
+      "label": "DT-checker",
+      "mode": "capped2G",
+      "exit": 0,
+      "seconds": "100",
+      "max_rss_kb": "228348",
+      "log": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/consumers/DT-checker.log",
+      "sha256": "4842f5129778c73804a8d2d307012e23a3f33efd5979e08e6b108d2475643603"
+    },
+    {
+      "label": "DT-tables",
+      "mode": "capped2G",
+      "exit": 0,
+      "seconds": "1",
+      "max_rss_kb": "13860",
+      "log": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/consumers/DT-tables.log",
+      "sha256": "aaf39f6c03661900ef9ea534a218fada3341c0ac924abd56ff381f0ef4450027"
+    },
+    {
+      "label": "DCH-checker",
+      "mode": "capped2G",
+      "exit": 0,
+      "seconds": "446",
+      "max_rss_kb": "476388",
+      "log": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/consumers/DCH-checker.log",
+      "sha256": "0a55040d30045014d08d19be2335ae76ed4e02214dc979fe735fabe2c492c3df"
+    },
+    {
+      "label": "DCH-stop",
+      "mode": "capped2G",
+      "exit": 0,
+      "seconds": "39",
+      "max_rss_kb": "119312",
+      "log": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/consumers/DCH-stop.log",
+      "sha256": "4d26cd7b3dfe2174cfbe5a2eaf4fd35bd582fcb104da11edf0c5e1daefdb75d2"
+    },
+    {
+      "label": "DCH-tables",
+      "mode": "capped2G",
+      "exit": 0,
+      "seconds": "0",
+      "max_rss_kb": "14436",
+      "log": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/consumers/DCH-tables.log",
+      "sha256": "6ac4a02258d1cad57e87428f010e21287190e3552471dcd89006efc791d082f9"
+    },
+    {
+      "label": "DG6A-domain-alert.acknowledged",
+      "mode": "capped2G",
+      "exit": 1,
+      "seconds": "14",
+      "max_rss_kb": "66348",
+      "log": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/consumers/DG6A-domain-alert.acknowledged.log",
+      "sha256": "36bd5add2b6b7d478681a0266827f8be9a3098240e0ccd1a4f64f420b3b5e10a"
+    },
+    {
+      "label": "DG6A-regression-alert.acknowledged",
+      "mode": "capped2G",
+      "exit": 0,
+      "seconds": "262",
+      "max_rss_kb": "114564",
+      "log": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/consumers/DG6A-regression-alert.acknowledged.log",
+      "sha256": "d96e6a22f354491be8618af842b9468301d89b9c343d90dc509fd136148d6340"
+    },
+    {
+      "label": "DG6A-domain-alert.dismissed",
+      "mode": "capped2G",
+      "exit": 0,
+      "seconds": "13",
+      "max_rss_kb": "63180",
+      "log": "/home/sittingmongoose/pm-scratch/ea-int2/registry-repair/consumers/DG6A-domain-alert.dismissed.log",
+      "sha256": "b3aed277f1ce9a275fb173727d5e1457d2e80edda9485731afbbaa600d630ca6"
+    }
+  ],
+  "expected_full_dry": {
+    "unique_pending_families": 86,
+    "raw_blockers_expected": 174,
+    "explanation": "86 in each aggregate plus two derived registry self-test records; expectation, not a completed result."
+  },
+  "open_items": [
+    "Read all actual per-check exits; wrapper completion does not mean every check passed.",
+    "First DG6A acknowledged domain invocation failed solely because its local output parent was absent; parent is created, REPLAY is queued with a separate log.",
+    "DCW 167 guard reports historically have 14 declared FAILs/379 of393 rows; compare exact own-lane evidence rather than claiming all PASS.",
+    "Scope-all NUMRULE, final custody and actual datetime_validator are queued, not yet completed in this phase.",
+    "Final full dry is queued, not yet completed in this phase.",
+    "Jared deck4 retention answers pending with pm7-build; apply only those exact answers through DL-500+ entries, then rerun complete dry."
+  ],
+  "facts_sha256": {
+    "RETENTION-86.md": "02c5af8d7cdb554e5b6050b182471e7183c05f33a1494e0b91167d033bf8cee3",
+    "RETENTION-86.json": "965fcfc5e18394c1700d897469f0847e16b21eaa63ecaa479662c3010981f48f"
+  },
+  "no_native_execution_credit": true
+}
