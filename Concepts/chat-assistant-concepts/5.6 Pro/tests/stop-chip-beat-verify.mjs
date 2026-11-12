@@ -107,6 +107,50 @@ function relay(gap) {
 	assert.equal(after.length, 1, 'run 2 changes cadence once');
 	return { M, ...after[0] };
 }
+// R8-1 (the Astra max review; the defect is ae047049eb's): PMConcept7's onboarding window pauses the app's animations
+// while it is open (html[data-o55-open] body > [data-o55-held] *) and the host tells the chat as it opens and once it has
+// gone (PM56_HOST.onRest). The chip is flowing from t=0 with one word (2200 ms loop, 800 ms delay: first boundary at
+// local time 3000). The window opens at 2990 (the animation stops there) and closes at 3400, so the boundary comes at
+// 3410 on the wall clock, and with no more words the chip must turn to waiting there, as main's animationiteration did.
+// The timer that fell due under the window (3004) found the animation paused and FORGOT it: the first look after the
+// close took the same animation for a new one and the change came a whole loop later (5614). `hook: false` plays a
+// close the host does not announce (or announces before the pause is lifted): the change then comes with the next
+// 500 ms look (3504), late as any late callback is, and not a loop later.
+function pause({ hook }) {
+	let clock = 0, seq = 0, running = true, frozen = 0, resumedAt = 0;
+	const timers = new Map(), switches = [], attrs = new Map(), listeners = [], restFns = [];
+	const setTimeout = (cb, ms) => { const id = ++seq; timers.set(id, { at: clock + Math.max(0, ms), cb }); return id; };
+	const clearTimeout = (id) => timers.delete(id);
+	const local = () => (running ? frozen + (clock - resumedAt) : frozen);
+	const animation = { animationName: 'ss-breathe', get playState() { return running ? 'running' : 'paused'; }, playbackRate: 1,
+		effect: { getComputedTiming: () => { const lt = local(); return { localTime: lt, duration: 2200, delay: 800, currentIteration: lt < 800 ? null : Math.floor((lt - 800) / 2200) }; } } };
+	const b = {
+		getAttribute: (n) => attrs.get(n) ?? null,
+		setAttribute: (n, v) => { attrs.set(n, v); if (n === 'data-flow') switches.push({ at: clock, to: v, phase: (local() - 800) % 2200 }); },
+		querySelector: () => ({ getAnimations: () => [animation] })
+	};
+	const window = { PM56_HOST: { resting: () => !running, onRest: (fn) => restFns.push(fn) } };
+	const document = { head: {}, documentElement: { getAttribute: () => null }, querySelector: () => b, addEventListener: (n) => listeners.push(n) };
+	class MutationObserver { constructor(cb) { this.cb = cb; } observe() { this.active = true; } disconnect() { this.active = false; } }
+	window.MutationObserver = MutationObserver;
+	vm.runInNewContext(src, { window, document, performance: { now: () => clock }, setTimeout, clearTimeout, MutationObserver });
+	const api = window.PM56_SENDSTOP;
+	api.token();
+	for (const m of api.html({ busy: true, text: '', qlen: 0, tid: 'one' }).matchAll(/(data-[\w-]+)="([^"]*)"/g)) attrs.set(m[1], m[2]);
+	const events = [
+		[2990, () => { frozen = local(); running = false; if (hook) restFns.forEach((fn) => fn(true)); }],
+		[3400, () => { resumedAt = clock; running = true; if (hook) restFns.forEach((fn) => fn(false)); }]
+	];
+	for (let guard = 0; guard < 200 && !switches.length; guard++) {
+		const next = [...timers].sort((x, y) => x[1].at - y[1].at)[0], ev = events[0];
+		if (ev && (!next || ev[0] <= next[1].at)) { events.shift(); clock = ev[0]; ev[1](); continue; }
+		if (!next || next[1].at > 12000) break;
+		timers.delete(next[0]); clock = next[1].at; next[1].cb();
+	}
+	assert.ok(!listeners.includes('animationiteration'), 'no document iteration listener');
+	assert.equal(switches.length, 1, 'one cadence change');
+	return switches[0];
+}
 let failed = 0;
 const cases = [
 	['unchanged timing', {}, 3000],
@@ -143,5 +187,14 @@ for (const [gap, why] of relays) {
 		assert.ok(got.phase >= 0 && got.phase <= 32, `phase ${got.phase} ms`);
 	} catch (e) { failed++; console.log(`FAIL ${name}: ${e.message}`); }
 }
-console.log(`${cases.length + relays.length - failed} passed, ${failed} failed`);
+const pauses = [['the onboarding window opens just before a boundary and closes after it was due; the host announces the close', { hook: true }, 3410, 16], ['the same, the close not announced: the next look changes it', { hook: false }, 3410, 100]];
+for (const [name, options, boundary, late] of pauses) {
+	try {
+		const got = pause(options);
+		console.log(`${got.to === 'waiting' && got.at >= boundary && got.at <= boundary + late ? 'PASS' : 'FAIL'} ${name}: ${JSON.stringify(got)}; boundary ${boundary} ms`);
+		assert.equal(got.to, 'waiting');
+		assert.ok(got.at >= boundary && got.at <= boundary + late, `change at ${got.at}, expected the boundary after the close ${boundary} (+<=${late} ms)`);
+	} catch (e) { failed++; console.log(`FAIL ${name}: ${e.message}`); }
+}
+console.log(`${cases.length + relays.length + pauses.length - failed} passed, ${failed} failed`);
 process.exitCode = failed ? 1 : 0;

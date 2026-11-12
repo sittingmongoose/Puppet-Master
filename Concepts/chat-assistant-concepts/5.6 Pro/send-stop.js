@@ -146,7 +146,12 @@
   var beatT = 0, beatAnim = null, beatIter = -1, beatTiming = null, beatMO = null;
   /* Settings rescales the live CSS animation without replacing it. Observe its override sheet only while Stop is
      present, so a pending boundary timer can follow that change before its old deadline. No iteration listener. */
+  var beatHost = false;
   function watchBeat() {
+    /* (hosted: the onboarding window has gone and the app's animations run again; the timer is armed anew from the
+       loop as it now stands, so the boundary after the pause is met on time and not at the next 500 ms look) */
+    var H = window.PM56_HOST;
+    if (!beatHost && H && H.onRest) { beatHost = true; H.onRest(function (on) { if (!on && beatT) { clearTimeout(beatT); beat(); } }); }
     if (beatMO || !window.MutationObserver || !document.head) return;
     beatMO = new MutationObserver(function (records) {
       var changed = records.some(function (r) {
@@ -174,8 +179,12 @@
     watchBeat();
     var a = breath(b), t = a && a.playState === 'running' && a.effect ? a.effect.getComputedTiming() : null;
     var rate = a && a.playbackRate;
-    /* not styled yet, hidden or under reduced motion: no loop to follow, so look again later */
-    if (!t || typeof t.localTime !== 'number' || !(t.duration > 0) || !(rate > 0)) { beatAnim = null; beatT = setTimeout(beat, 500); return; }
+    /* not styled yet, hidden, under reduced motion or paused: no running loop to follow, so look again later. The SAME
+       animation found paused (PMConcept7's onboarding window pauses the app's animations while it is open) is not
+       forgotten: it goes on from where it stood, and a boundary it crosses after the pause is a boundary of the loop
+       this timer followed. Forgotten, the first look after the close took it for a new animation and the change came
+       a whole loop late (R8-1). */
+    if (!t || typeof t.localTime !== 'number' || !(t.duration > 0) || !(rate > 0)) { if (!a || a !== beatAnim) beatAnim = null; beatT = setTimeout(beat, 500); return; }
     /* the loop's start delay (--ss-ld) still running: look again as it ends */
     if (t.currentIteration == null) { beatAnim = null; beatT = setTimeout(beat, Math.max(16, (t.delay - t.localTime) / rate + 4)); return; }
     var same = a === beatAnim && beatTiming && t.duration === beatTiming.duration && t.delay === beatTiming.delay && rate === beatTiming.rate;
