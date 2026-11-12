@@ -1989,7 +1989,7 @@ def main():
         assert cp['additionalProperties'] is False and cp['properties']['consumer_id']['const'] == c['consumer']
         row = next(v for v in value_registry['families'] if v['value_schema_ref'] == c['checkpoint_schema_ref'])
         assert row['key_shape'] == c['checkpoint_key'] and row['value_schema'] == cp
-        assert row['retention_policy_ref'] == c['checkpoint_retention_policy_ref'] == 'PENDING_RETENTION_DECISION'
+        assert row['retention_policy_ref'] == c['checkpoint_retention_policy_ref'] == 'RP-PROJECTION-3GEN'
         profile = value_registry['storage_profile']['family_profiles'][row['family_id']]
         assert profile['redb_file'] == 'derived' and profile['encoding_target'] == 'messagepack_canonical'
         assert 1 <= profile['max_value_bytes'] <= 16384

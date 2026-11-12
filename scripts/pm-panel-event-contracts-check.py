@@ -288,7 +288,7 @@ def main():
             row = next(row for row in registry['families'] if row['family_id'] == fid)
             shared.check_schema(row['value_schema'])
             assert row['value_schema'] == {k: v for k, v in value_schema.items() if k != '$schema'}
-            assert row['retention_policy_ref'] == 'PENDING_RETENTION_DECISION'
+            assert row['retention_policy_ref'] == ('RP-PROJECTION-3GEN' if key == 'checkpoint' else 'RP-OPERATIONAL-2555D')
             assert not shared.profile_errors(registry, fid, row['storage_kind'], 'settings_and_layout' if key == 'operation' else 'event_log')
             count += 1
         checkpoint = fixture['checkpoint']
