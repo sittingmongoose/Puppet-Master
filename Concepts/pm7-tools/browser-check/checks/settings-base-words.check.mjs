@@ -40,13 +40,19 @@ async function go(t, f, domain, ws) {
    no aria-label of its own, and the row attribute the checker read sat on the field. The tree read here is the same
    one a screen reader gets. `selector` must match exactly one element in the app's frame. */
 async function axRead(cdp, selector) {
-	const obj = await cdp.send('Runtime.evaluate', { expression: `document.querySelector(${JSON.stringify(selector)})`, objectGroup: 'fo134' });
+	return axReadExpr(cdp, `document.querySelector(${JSON.stringify(selector)})`);
+}
+/* The same read for an expression the caller builds: an element found and read without an attribute being set on it,
+   which a re-render would drop between the two calls. */
+async function axReadExpr(cdp, expression) {
+	const obj = await cdp.send('Runtime.evaluate', { expression, objectGroup: 'fo134' });
 	if (!obj.result || !obj.result.objectId) return null;
-	/* the element's backend node id, the way the round-3 review's focused script read this stack */
+	/* the element's backend node id, the way the round-3 review's focused script read this stack; the object is
+	   released only after the tree has been read from it */
 	const node = (await cdp.send('DOM.describeNode', { objectId: obj.result.objectId })).node;
-	await cdp.send('Runtime.releaseObject', { objectId: obj.result.objectId }).catch(() => {});
-	if (!node || !node.backendNodeId) return null;
+	if (!node || !node.backendNodeId) { await cdp.send('Runtime.releaseObject', { objectId: obj.result.objectId }).catch(() => {}); return null; }
 	const nodes = (await cdp.send('Accessibility.getPartialAXTree', { backendNodeId: node.backendNodeId, fetchRelatives: false })).nodes;
+	await cdp.send('Runtime.releaseObject', { objectId: obj.result.objectId }).catch(() => {});
 	const ax = nodes && nodes[0];
 	return ax ? { name: String((ax.name && ax.name.value) || ''), role: String((ax.role && ax.role.value) || ''), ignored: !!ax.ignored } : null;
 }
@@ -75,7 +81,7 @@ for (const surface of ['normal', 'sandbox']) {
 				/* the control a person works is the themed trigger of an upgraded select; the native select it hides
 				   behind is out of the tree */
 				const vis = ctl.matches('.pm51-dd-native') ? ctl.closest('.pm51-dd').querySelector('.pm51-dd-trigger') : ctl.closest('[aria-label]');
-				if (!vis) continue;
+				if (!vis || !vis.checkVisibility({ visibilityProperty: true, contentVisibilityAuto: true })) continue;
 				vis.setAttribute('data-fo134-row', String(++n));
 				out.push({ mark: n, id: row.dataset.settingId || row.id, own });
 			}
@@ -131,22 +137,24 @@ for (const surface of ['normal', 'sandbox']) {
 				x.ignored = ax ? ax.ignored : true;
 				/* A node Chrome ignores is not exposed at all, so it has no name to get wrong; a value control that is
 				   ignored has been taken out of the tree a screen reader reads, which is its own failure. */
-				x.ok = x.ignored ? !x.widget : (!!x.name && (x.expected === 'any' || x.name.toLowerCase().includes(x.label.toLowerCase())));
+				/* an ignored node has no name to get wrong when it is painted out or inert; an ignored control that the
+				   page is showing has been taken out of the tree a screen reader reads, which is its own failure */
+				x.ok = x.ignored ? (x.faded || !x.widget) : (!!x.name && (x.expected === 'any' || x.name.toLowerCase().includes(x.label.toLowerCase())));
 			}
 			return cands;
 		};
-		await f.evaluate(() => {
-			window.__fo134 = {
-				VALUE: 'a[href], button, [role="button"], [role="radio"], [role="checkbox"], input:not([type="hidden"]), textarea, select, [role="switch"], [role="slider"], [role="combobox"], .pm51-dd-trigger, [role="radiogroup"], [role="group"], [role="spinbutton"], [role="textbox"], [tabindex]:not([tabindex="-1"]), [contenteditable="true"]',
-			};
-		});
-		/* The page pass: what a row or field holds, marked for the Accessibility read. Nothing here decides a name. */
+		/* The page pass: what a row or field holds, marked for the Accessibility read. Nothing here decides a name.
+		   The page is loaded again for each workspace state, so the selector and the helpers are installed here, on
+		   every pass, and never read from a global a reload has dropped. */
 		const READ = () => {
-			const VALUE = window.__fo134.VALUE;
+			/* the kinds a row's value controls come in; inlined because this function is evaluated in the page */
+			const VALUE = 'a[href], button, [role="button"], [role="radio"], [role="checkbox"], input:not([type="hidden"]), textarea, select, [role="switch"], [role="slider"], [role="combobox"], .pm51-dd-trigger, [role="radiogroup"], [role="group"], [role="spinbutton"], [role="textbox"], [tabindex]:not([tabindex="-1"]), [contenteditable="true"]';
 			const own = (lab) => lab ? [...lab.childNodes].filter((n) => n.nodeType === 3).map((n) => n.textContent).join('').replace(/\s+/g, ' ').trim() : '';
 			const kind = (e) => (e.getAttribute('role') || e.tagName.toLowerCase()) + (e.type && e.tagName === 'INPUT' ? ':' + e.type : '');
 			/* a widget is a control the browser must expose: a native control, a link, or an ARIA widget role */
 			const widget = (e) => e.matches('input, select, textarea, button, a[href]') || /^(button|switch|slider|combobox|spinbutton|textbox|checkbox|radio|radiogroup|group|listbox)$/.test(e.getAttribute('role') || '');
+			/* painted out (opacity 0) or inert: Chrome leaves it out of the tree, so there is no name to get wrong */
+			const faded = (e) => !!e.closest('[inert]') || !e.checkVisibility({ opacityProperty: true, visibilityProperty: true, contentVisibilityAuto: true });
 			document.querySelectorAll('[data-fo134-el]').forEach((e) => e.removeAttribute('data-fo134-el'));
 			let mark = 0;
 			const out = [];
@@ -165,14 +173,15 @@ for (const surface of ['normal', 'sandbox']) {
 				if (!expected.length && row.dataset.o55Kind && row.dataset.o55Kind !== 'status') out.push({ id, label, kind: 'coverage', index: -1, name: 'value row has no control', ok: false });
 				for (const e of box.querySelectorAll(VALUE)) {
 					if (e.closest('[aria-hidden="true"]') || (e.tagName === 'INPUT' && /^hidden$/.test(e.type))) continue;
+					if (!e.checkVisibility({ visibilityProperty: true, contentVisibilityAuto: true })) continue;   /* not rendered: nowhere in the tree, nothing to name */
 					if (e.closest('.setting-row, .o55-field') !== row) continue;   /* a row nested inside this one names its own */
 					if (e.matches('[role="option"], [role="menuitem"]')) continue;
 					if (e.matches('.details-btn, [data-action="setting-details"]')) continue;
 					e.setAttribute('data-fo134-el', String(++mark));
-					out.push({ mark, id, label, kind: kind(e), widget: widget(e), index: [...box.querySelectorAll(VALUE)].indexOf(e), expected: 'label' });
+					out.push({ mark, id, label, kind: kind(e), widget: widget(e), faded: faded(e), index: [...box.querySelectorAll(VALUE)].indexOf(e), expected: 'label' });
 				}
 			}
-			window.__fo134 = { VALUE, own, kind, widget };
+			window.__fo134 = { VALUE, own, kind, widget, faded };
 			return out;
 		};
 		const take = async (where) => {
@@ -202,20 +211,22 @@ for (const surface of ['normal', 'sandbox']) {
 					for (const e of field.querySelectorAll(S.VALUE)) {
 						if (e.closest('.pm51-field, .o55-field, .form-field') !== field) continue;
 						if (e.closest('[aria-hidden="true"]') || (e.tagName === 'INPUT' && /^hidden$/.test(e.type))) continue;
+						if (!e.checkVisibility({ visibilityProperty: true, contentVisibilityAuto: true })) continue;
 						if (e.matches('[role="option"], [role="menuitem"], .details-btn, [data-action="setting-details"]')) continue;
 						/* a field's value controls are named by it; a button in the field (Play, Browse…) names its own action */
 						const value = e.matches('input, textarea, select, .pm51-dd-trigger, [role="combobox"], [role="slider"], [role="spinbutton"], [role="radiogroup"], [role="group"], [role="switch"]');
 						e.setAttribute('data-fo134-el', String(++mark));
-						out.push({ mark, id: `panel:${where}:${label}`, label, kind: S.kind(e), widget: S.widget(e), expected: value ? 'label' : 'any' });
+						out.push({ mark, id: `panel:${where}:${label}`, label, kind: S.kind(e), widget: S.widget(e), faded: S.faded(e), expected: value ? 'label' : 'any' });
 					}
 				}
 				for (const e of root.querySelectorAll(S.VALUE)) {
 					if (e.closest('.pm51-field, .o55-field, .form-field') || e.closest('[aria-hidden="true"]') || (e.tagName === 'INPUT' && /^hidden$/.test(e.type))) continue;
+					if (!e.checkVisibility({ visibilityProperty: true, contentVisibilityAuto: true })) continue;
 					if (e.matches('[role="option"], [role="menuitem"], .details-btn, [data-action="setting-details"], [data-action="close-overlay"], .pm51-panel-close')) continue;
 					/* a container of named controls (a picker row, a step rail) is not a field: its own controls carry names */
 					if (e.matches('[role="group"], [role="radiogroup"], [role="listbox"], [role="list"]')) continue;
 					e.setAttribute('data-fo134-el', String(++mark));
-					out.push({ mark, id: `panel:${where}:`, label: '', kind: S.kind(e), widget: S.widget(e), expected: 'any' });
+					out.push({ mark, id: `panel:${where}:`, label: '', kind: S.kind(e), widget: S.widget(e), faded: S.faded(e), expected: 'any' });
 				}
 			}
 			return out;
@@ -273,6 +284,7 @@ for (const surface of ['normal', 'sandbox']) {
 		const PROBE = /^(1|true|yes|on)$/i.test(String(t.args.openersProbe || ''));
 		const PROBE_SKIP = /(delete|remove|sign-?out|disconnect|clear|reset|rotate|reencrypt|uninstall)/;
 		const probeResult = {};
+		const pressedIn = new Set();
 		const openPanels = async (d, ws, tab) => {
 			if (/^(0|false|no|off)$/i.test(String(t.args.panels || ''))) return;
 			const body = (s) => `[data-continuous-workspace-body="${ws}"]${s ? ' ' + s : ''}`;
@@ -306,11 +318,13 @@ for (const surface of ['normal', 'sandbox']) {
 				const press = PROBE ? actions.filter((a) => !PROBE_SKIP.test(a)) : actions.filter((a) => OPENS.has(a));
 				for (const action of press) {
 					/* the probe asks each action once, in the first state it shows in: what is wanted is whether pressing it
-					   opens an editor at all, not every place it appears */
+					   opens an editor at all, not every place it appears. The walk reads each panel once per workspace,
+					   keyed by the opener: a panel's fields are its own, not the selected row's. */
 					if (PROBE && probeResult[action]) continue;
+					if (!PROBE && pressedIn.has(`${ws}|${action}`)) continue;
 					const pressed = await f.evaluate(([sel, a]) => { const e = [...document.querySelectorAll(sel)].find((x) => x.dataset.action === a && x.getClientRects().length); if (!e) return false; e.click(); return true; }, [body('[data-action]'), action]).catch(() => false);
 					if (!pressed) continue;
-					if (!PROBE) pressedOpeners.add(action);
+					if (!PROBE) { pressedOpeners.add(action); pressedIn.add(`${ws}|${action}`); }
 					const showed = await f.waitForFunction(() => [...document.querySelectorAll('.pm51-drawer-wrap.is-open .pm51-panel, .o55g-win, .overlay .dialog[role="dialog"]')].some((e) => e.getClientRects().length), null, { timeout: PROBE ? 900 : 2500 }).then(() => true).catch(() => false);
 					if (showed) { panelsOpened++; openedBy[action] = true; }
 					if (PROBE) probeResult[action] = { opened: (probeResult[action] && probeResult[action].opened) || showed, where: where0 };
@@ -339,33 +353,44 @@ for (const surface of ['normal', 'sandbox']) {
 				}
 			}
 		};
+		/* Every workspace state is read on a page it reached without an earlier press having touched it. A Settings
+		   page keeps one demo-state object, and pressing an opener changes what later pages draw (a service switched
+		   on, a row removed), so a walk that reads on through those presses reports a different census every run. The
+		   page is reloaded for each state instead; presses still run in that state, and each opener is pressed once per
+		   workspace. */
+		const loadState = async (d, ws, tab) => {
+			await settings(t, surface);
+			await f.evaluate(([dd, w]) => PM51.go(dd, w), [d, ws]);
+			await f.waitForSelector(`[data-continuous-workspace-body="${ws}"][data-workspace-mounted="true"]`, { timeout: 15000 });
+			await t.settle();
+			if (!tab) return;
+			await f.evaluate(([w, tb]) => {
+				const old = document.querySelector(`[data-continuous-workspace-body="${w}"] .pm51-mgr > .manager-body:not(.o55-leaving)`);
+				if (old) old.setAttribute('data-fo134-old-body', 'true');
+				PM51.switchTab(w, tb);
+			}, [ws, tab]);
+			// Tab content is replaced after a presented frame; sandbox frames can take longer than 700 ms.
+			// Wait for the old body to leave instead of moving on and cancelling the pending switch.
+			await f.waitForFunction(([w, tb]) => {
+				const b = document.querySelector(`[data-continuous-workspace-body="${w}"]`);
+				return b && !b.querySelector('[data-fo134-old-body]') && b.querySelector(`.manager-tab.active[data-tab="${tb}"]`);
+			}, [ws, tab], { timeout: 15000 }).catch(() => {});
+			await t.settle();
+		};
 		for (const d of domains) {
-			await ensureSettings();
+			await settings(t, surface);
 			await f.locator(`#pm-settings-root [data-action="navigate-domain"][data-domain="${d}"]`).first().click({ timeout: 10000 });
 			await f.waitForSelector(`#pm-settings-root .domain-link.active[data-domain="${d}"]`, { timeout: 15000 });
 			await t.settle();
 			const wss = await f.evaluate(() => [...document.querySelectorAll('[data-continuous-workspace-body]')].map((b) => b.dataset.continuousWorkspaceBody));
 			for (const ws of wss) {
-				await f.evaluate(([dd, w]) => PM51.go(dd, w), [d, ws]);
-				await f.waitForSelector(`[data-continuous-workspace-body="${ws}"][data-workspace-mounted="true"]`, { timeout: 15000 });
-				await t.settle();
-				await take(`${d}/${ws}`);
+				await loadState(d, ws, null);
 				const active = await f.evaluate((w) => (document.querySelector(`[data-continuous-workspace-body="${w}"] .manager-tab.active[data-tab]`) || { dataset: {} }).dataset.tab || '', ws);
-				await openPanels(d, ws, active);
 				const tabs = await f.evaluate((w) => [...document.querySelectorAll(`[data-continuous-workspace-body="${w}"] .pm51-tabs .manager-tab[data-tab]`)].map((b) => b.dataset.tab), ws);
+				await take(`${d}/${ws}`);
+				await openPanels(d, ws, active);
 				for (const tab of tabs) {
-					await f.evaluate(([w, tb]) => {
-						const old = document.querySelector(`[data-continuous-workspace-body="${w}"] .pm51-mgr > .manager-body:not(.o55-leaving)`);
-						if (old) old.setAttribute('data-fo134-old-body', 'true');
-						PM51.switchTab(w, tb);
-					}, [ws, tab]);
-					// Tab content is replaced after a presented frame; sandbox frames can take longer than 700 ms.
-					// Wait for the old body to leave instead of moving on and cancelling the pending switch.
-					await f.waitForFunction(([w, tb]) => {
-						const b = document.querySelector(`[data-continuous-workspace-body="${w}"]`);
-						return b && !b.querySelector('[data-fo134-old-body]') && b.querySelector(`.manager-tab.active[data-tab="${tb}"]`);
-					}, [ws, tab], { timeout: 15000 });
-					await t.settle();
+					await loadState(d, ws, tab);
 					await take(`${d}/${ws}/${tab}`);
 					await openPanels(d, ws, tab);
 				}
@@ -446,8 +471,6 @@ for (const surface of ['normal', 'sandbox']) {
 			const re = new RegExp(banned, 'i'), vis = (e) => e.getClientRects().length;
 			let roots = [...document.querySelectorAll('#pm-settings-portals, .drawer-wrap, aside.drawer, [role="dialog"], .o55g-win, .o55g-layer')].filter(vis);
 			if (only) { const hit = [...document.querySelectorAll('aside.drawer, [role="dialog"], .drawer-wrap')].filter((r) => vis(r) && r.textContent.includes(only)); roots = hit.length ? [hit[hit.length - 1]] : []; }
-			document.querySelectorAll('[data-fo131-sel], [data-fo131-trig]').forEach((e) => { e.removeAttribute('data-fo131-sel'); e.removeAttribute('data-fo131-trig'); });
-			window.__fo131 = window.__fo131 || { n: 0 };
 			const hits = [], pickers = [];
 			for (const r of roots) {
 				for (const e of r.querySelectorAll('.pm51-field-label, .pm51-ps-title, .pm51-pc-head, .pm51-kv-row > span:first-child, dt, th, .o55g-lead, p, .pm51-fact-label, [class*="fact"] span, h2, h3, h4')) if (vis(e) && re.test(e.textContent)) hits.push(e.textContent.trim().slice(0, 80));
@@ -455,14 +478,11 @@ for (const surface of ['normal', 'sandbox']) {
 				for (const sel of r.querySelectorAll('select')) {
 					const opts = [...sel.options].map((o) => o.textContent.trim());
 					if (!opts.includes('This project') || !opts.includes('Every project')) continue;
-					/* FO-134 round 4 (sol-recheck-fo134r3 K2): note where the picker is; its name is read from Chrome's
-					   accessibility tree once this scan returns, never from an attribute. The native select is a
-					   dropdown's hidden twin (aria-hidden, tabindex -1) and has no name to check. */
-					const trig = sel.parentElement && sel.parentElement.querySelector('.pm51-dd-trigger');
-					const mid = String(++window.__fo131.n);
-					sel.setAttribute('data-fo131-sel', mid);
-					if (trig) trig.setAttribute('data-fo131-trig', mid);
-					pickers.push({ mid, trigger: !!trig });
+					/* FO-134 round 4 (sol-recheck-fo134r3 K2): note which picker this is; its name is read from Chrome's
+					   accessibility tree once this scan returns, and the picker is found again by this key for the read, so
+					   nothing depends on an attribute surviving between the two. The native select is a dropdown's hidden
+					   twin (aria-hidden, tabindex -1) and has no name to check. */
+					pickers.push({ key: [(sel.dataset.action || ''), (sel.dataset.field || ''), (typeof sel.className === 'string' ? sel.className : '')].join('\u0001'), trigger: !!(sel.parentElement && sel.parentElement.querySelector('.pm51-dd-trigger')) });
 				}
 			}
 			return { where, roots: roots.length, hits: [...new Set(hits)], pickers };
@@ -477,10 +497,11 @@ for (const surface of ['normal', 'sandbox']) {
 			const cdp131 = await t.page.context().newCDPSession(f);
 			const got = [];
 			for (const p of r.pickers) {
-				if (!p.mid) { got.push({ diag: p.diag }); continue; }
-				const trig = await axRead(cdp131, `[data-fo131-trig="${p.mid}"]`).catch(() => null);
-				const sel = await axRead(cdp131, `[data-fo131-sel="${p.mid}"]`).catch(() => null);
-				got.push({ mid: p.mid, trigger: trig, select: sel });
+				if (!p.key) { got.push({ diag: p.diag }); continue; }
+				const find = (part) => `(() => { const all = [...document.querySelectorAll('#pm-settings-portals select, .drawer-wrap select, aside.drawer select, [role="dialog"] select, .o55g-win select')].filter((s) => s.options.length > 1); const sel = all.find((s) => ${JSON.stringify(p.key)} === [(s.dataset.action || ''), (s.dataset.field || ''), (typeof s.className === 'string' ? s.className : '')].join('\\u0001')); if (!sel) return null; return ${part}; })()`;
+				const trig = await axReadExpr(cdp131, find("sel.parentElement && sel.parentElement.querySelector('.pm51-dd-trigger')")).catch(() => null);
+				const sel = await axReadExpr(cdp131, find('sel')).catch(() => null);
+				got.push({ key: p.key, trigger: trig, select: sel });
 			}
 			await cdp131.detach().catch(() => {});
 			const ok = got.length > 0 && got.every((x) => x.trigger && !x.trigger.ignored && x.trigger.name === 'Where it’s available' && (!x.select || x.select.ignored));
