@@ -369,7 +369,7 @@
     var classes = 'pmt-bglayer pmt-bg-' + (bg.kind || 'theme') + (bg.cat ? ' pmt-bg-' + bg.cat : '') + (bg.custom ? ' pmt-bg-custom' : '') + (bg.motion ? ' pmt-bg-moving' : '');
     if (L.className !== classes) L.className = classes;
     var mv = this.bgMove, moving = !!(bg.motion && G);
-    if (!moving) { if (mv.hidden !== true) mv.hidden = true; mv.style.cssText = ''; mv.removeAttribute('data-anim'); }
+    if (!moving) { if (mv.hidden !== true) mv.hidden = true; if (mv.getAttribute('style') !== '') mv.style.cssText = ''; mv.removeAttribute('data-anim'); }
     if ((bg.paint || moving) && G && th) {
       var r = this.bodyEl.getBoundingClientRect(), w = r.width || 960, h = r.height || 600;
       this._bgKey = sizeStep(w) + 'x' + sizeStep(h);
