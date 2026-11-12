@@ -268,7 +268,7 @@ function itemBody(it, o) {
 /* the status line under an item's title: letter, glyph + word, diff */
 function subLine(it, extra) {
   const kids = [];
-  if (it.letter) kids.push(h('span.pmr-b-letterword', PMR.letterEl(it.letter, it.status && it.status.state), it.status ? h('span', { 'data-state': it.status.state, text: it.status.word }) : null));
+  if (it.letter) kids.push(h('span.pmr-b-letterword', PMR.letterEl(it.letter, it.status && it.status.state), it.status ? h('span', { class: 'pmr-part-text', 'data-state': it.status.state, text: it.status.word }) : null));
   else if (it.status) kids.push(PMR.statusEl(it.status));
   if (it.diff) kids.push(diffEl(it.diff));
   asList(extra).forEach(x => x && kids.push(x));

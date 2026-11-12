@@ -18,8 +18,8 @@ const common={h,PMR:{hover(){},actionAttrs:()=>({})},cx:(...xs)=>xs.flat().filte
 const a=vm.createContext({...common,inst:{open:new Map()},item:{id:'fixture',name:'Fixture',actions:[]}});
 vm.runInContext(['row','hasDetail','primaryOf','nameEl','diffEl'].map(n=>fn(src('a'),n)).join('\n'),a);
 const ar=vm.runInContext('row(inst,item,{flat:true,l2:()=>[]})',a);
-const b=vm.createContext(common);vm.runInContext(fn(src('b'),'row'),b);
-const br=vm.runInContext('row({key:"fixture",name:"Fixture",meta:["One fact"],selected:true})',b);
+const b=vm.createContext({...common,PMR:{...common.PMR,letterEl:()=>null}});vm.runInContext(fn(src('b'),'row')+'\n'+fn(src('b'),'subLine'),b);
+const br=vm.runInContext('row({key:"fixture",name:"Fixture",meta:["One fact"],selected:true,extra:subLine({letter:"M",status:{word:"Modified",state:"changed"}})})',b);
 const cs=read('../../../leftrail-redesign/src/concepts/c/08-panel.js');const c=vm.createContext({...common,P:{sel:'fixture',viewId:'fixture',reg(){}},panel:{id:'fixture'}});
 vm.runInContext(cs.match(/  P\.row = o => {[^]*?\n  };/)[0],c);
 const cr=vm.runInContext('P.row({key:"fixture",name:"Fixture"})',c);
