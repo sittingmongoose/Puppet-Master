@@ -1,0 +1,354 @@
+{
+  "audit_id": "audit-20260615-001-part-3-fable-cleanup",
+  "closures": [
+    {
+      "appended_matrix_line": 1,
+      "appended_matrix_sha256": "b8a57d6ea9cfcb8048394592aa2ad13ed41bc462af2e673ccc42c64bd009b043",
+      "appended_registry_line": 1111,
+      "appended_registry_sha256": "201c29ff06a1b8eb847f529e78f28ee19a1b07bfab277460ca2c7dd9b8199086",
+      "closes": {
+        "source_artifact": "semantic_risks.jsonl",
+        "source_row": 1
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/Project_Output_Artifacts.md#unit=POA-046": "06863d062d9a81180d0e6228b7040bb2d29861e3973a531cb528d2d1751c6fae",
+        "Plans/Runtime_Artifacts_Panel.md#unit=RAP-026": "597dcd025819cb3b82628cb7403f41aeef575c93a6e094d61acc7cded0357dbf"
+      },
+      "finding_key": "sfk-9f255cbee868aacd1379a5fa",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "fb441b27fd75440e14115fb382b15a5258ad7ea3",
+      "ref_source": "audit_report_recorded_range",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260615-001-part-3-fable-cleanup-semantic-risks-jsonl-1",
+      "reviews": {
+        "astra": {
+          "batch": "S01",
+          "file": "supplemental/batches/S01/review-astra-r1.jsonl",
+          "packet_row_digest": "5527b1b2b374dd3e8c7f6b990ac1086ff67ca000a9e18d37b833808c3b6bb248",
+          "reason": "RAP-026 and POA-046 retain the exact artifacts_index.v1:{project_id}:{artifact_id} Project-row identity and prohibit dropping artifact_id or collapsing to a project-only key. The older colon shorthand is expressly lineage-only; the new application-scoped extension does not replace the Project key.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "S01",
+          "file": "supplemental/batches/S01/review-sol-r1.jsonl",
+          "packet_row_digest": "5527b1b2b374dd3e8c7f6b990ac1086ff67ca000a9e18d37b833808c3b6bb248",
+          "reason": "RAP-026 and POA-046 preserve the storage-owned artifacts_index.v1:{project_id}:{artifact_id} row key and explicitly prohibit losing artifact_id identity. The colon-only project shorthand is marked source-lineage-only, and the later app-scope addition keeps original Project rows exact.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    },
+    {
+      "appended_matrix_line": 2,
+      "appended_matrix_sha256": "e762d487add8d9a4fd2b37c04676dd2e1e2b80509d6fa4382056a0a20e3ee7cf",
+      "appended_registry_line": 1112,
+      "appended_registry_sha256": "d63839c015be44ba727ae53b2bbf425f4b899f20afef321a82bebeedfbd230a7",
+      "closes": {
+        "plan_unit_id": "CRAU-041",
+        "source_artifact": "semantic_risks.jsonl",
+        "source_row": 2
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/Containers_Registry_and_Unraid.md#unit=CRAU-041": "f541997cab3faaa076e857a36c6c2bb0e778be18fa5e686e4bbd2bc35df8b5ae",
+        "Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup/records/design_atoms.jsonl#jsonl=atom_id=atom-0027": "590fc2ce286b60faaaa9239711ea6c87842f76457bcdd1db0a4b3891cb00fe7b",
+        "Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup/records/design_atoms.jsonl#jsonl=atom_id=atom-0028": "8099ef4c39db69711421356d3a4c9e86a0be0cd2bdd60b31e98fff74c46810f1",
+        "Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup/records/design_atoms.jsonl#jsonl=atom_id=atom-0046": "0091c47cf2946914b5ddcf18e2c65c322248656a6ba3f33b2fdf21eb31513e20"
+      },
+      "finding_key": "sfk-3c7d70380860b54976464222",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "fb441b27fd75440e14115fb382b15a5258ad7ea3",
+      "ref_source": "audit_report_recorded_range",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260615-001-part-3-fable-cleanup-semantic-risks-jsonl-2",
+      "reviews": {
+        "astra": {
+          "batch": "S01",
+          "file": "supplemental/batches/S01/review-astra-r1.jsonl",
+          "packet_row_digest": "7e2f8161b79427839ec3a071ffe85482a40aaf80bdca28b21e6d5fdcfd3560b1",
+          "reason": "CRAU-041 now has fresh Part 3 ledger lineage supporting the promotion to active Docker Manager requirements, including atom-0027 and the later detailed operation atoms. Atom-0028 is superseded lineage, but atom-0046 and the active payload requirements preserve the accepted design rather than relying on the old migration span alone.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "S01",
+          "file": "supplemental/batches/S01/review-sol-r1.jsonl",
+          "packet_row_digest": "7e2f8161b79427839ec3a071ffe85482a40aaf80bdca28b21e6d5fdcfd3560b1",
+          "reason": "CRAU-041 remains an accepted active requirement and now carries fresh Part 3 lineage for the promotion and its specific Docker Manager areas. Atom-0028 expressly records the correction from future-scope placeholders to active design, so the old migration span is no longer the sole provenance.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    },
+    {
+      "appended_matrix_line": 3,
+      "appended_matrix_sha256": "d5a71daadeac1bc8a9ba51df0830123fc061f717154892e4f6a7b66adb6a5964",
+      "appended_registry_line": 1113,
+      "appended_registry_sha256": "dc3933938a22a8289dce1e2e036edde2b2123bad900dc547781b5358816a494a",
+      "closes": {
+        "source_artifact": "semantic_risks.jsonl",
+        "source_row": 6
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/Permissions_System.md#unit=PS-113": "5da1d008cdab5eafa0e340e8437ee8829299e9dcfc5ec0a202fc13da38cbc11e",
+        "Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup/records/design_atoms.jsonl#jsonl=atom_id=atom-0032": "ebbe8c00e2fcd8f1d0ca0b0661d73e86f05e385150157ddb0ae8b8667fbba7cc",
+        "Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup/records/design_atoms.jsonl#jsonl=atom_id=atom-0048": "665dc190aa69413e35cbb30494ae73ca24e3175d98ddcc4d79cf0f8edb60022b"
+      },
+      "finding_key": "sfk-dd86a97a0d21d1054657ab68",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "fb441b27fd75440e14115fb382b15a5258ad7ea3",
+      "ref_source": "audit_report_recorded_range",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260615-001-part-3-fable-cleanup-semantic-risks-jsonl-6",
+      "reviews": {
+        "astra": {
+          "batch": "S01",
+          "file": "supplemental/batches/S01/review-astra-r1.jsonl",
+          "packet_row_digest": "9ea0590d36a852bdf83095b6666aa660188f6005b15f393c16b9037a9dfb6f2f",
+          "reason": "PS-113 retains approval_scope_level in acceptance criteria and explicitly includes project among the boundaries requiring scoped permission. Its negative constraint forbids implicit cross-project carryover, while the current prose limits deliberate cross-project grants to recorded PS-145 exceptions.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "S01",
+          "file": "supplemental/batches/S01/review-sol-r1.jsonl",
+          "packet_row_digest": "9ea0590d36a852bdf83095b6666aa660188f6005b15f393c16b9037a9dfb6f2f",
+          "reason": "PS-113 restores approval_scope_level and the explicit project boundary in normative acceptance criteria and forbids implicit cross-project carryover. Its later PS-145 exception text preserves deliberate, recorded grants rather than reopening implicit reuse.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    },
+    {
+      "appended_matrix_line": 4,
+      "appended_matrix_sha256": "322f0cb8adc894b56628fb2af9a37ee6dd1234072831e89cf991b5418600286b",
+      "appended_registry_line": 1114,
+      "appended_registry_sha256": "54e0069e31ee397ca994fed10096f51a48921c5da0bd8a2fc3d386fc480a132f",
+      "closes": {
+        "source_artifact": "semantic_risks.jsonl",
+        "source_row": 7
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/Containers_Registry_and_Unraid.md#unit=CRAU-085": "a3e648f415f2afaa7f845fb554fb0566f86c7a58a88b889d6658310d83aaa702"
+      },
+      "finding_key": "sfk-d40d36166ce2177e52858f18",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "fb441b27fd75440e14115fb382b15a5258ad7ea3",
+      "ref_source": "audit_report_recorded_range",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260615-001-part-3-fable-cleanup-semantic-risks-jsonl-7",
+      "reviews": {
+        "astra": {
+          "batch": "S01",
+          "file": "supplemental/batches/S01/review-astra-r1.jsonl",
+          "packet_row_digest": "5f4e434193bce7d8fc5b6b2c04a82415d0479a1875fe17817e67460dfacbc174",
+          "reason": "CRAU-085 now states the complete review_payload and failure_payload field lists in both canonical text and acceptance criteria. It also requires recorded review decisions/transitions and structured retryability, addressing the original payload-field loss.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "S01",
+          "file": "supplemental/batches/S01/review-sol-r1.jsonl",
+          "packet_row_digest": "5f4e434193bce7d8fc5b6b2c04a82415d0479a1875fe17817e67460dfacbc174",
+          "reason": "CRAU-085 now defines every cited review and failure payload field in both canonical_text and acceptance criteria. The review transition guards and direct lineage to atoms 0064/0065/0067/0068 preserve the required meaning.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    },
+    {
+      "appended_matrix_line": 5,
+      "appended_matrix_sha256": "53408220c3689e8424db10d2d11084b1dba029c522011ade5979ea1d1039e0fd",
+      "appended_registry_line": 1115,
+      "appended_registry_sha256": "f782edb11cbd009abaeabc228ee440185bae548b50ff10eb9e0a14bb63565392",
+      "closes": {
+        "source_artifact": "semantic_risks.jsonl",
+        "source_row": 8
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/Containers_Registry_and_Unraid.md#unit=CRAU-087": "d004dff90def0c28fb5fb28190a62d28978942b4426e14b3633e992f1e77ecab"
+      },
+      "finding_key": "sfk-3fc2feff4e0ccf218b6e0faa",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "fb441b27fd75440e14115fb382b15a5258ad7ea3",
+      "ref_source": "audit_report_recorded_range",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260615-001-part-3-fable-cleanup-semantic-risks-jsonl-8",
+      "reviews": {
+        "astra": {
+          "batch": "S01",
+          "file": "supplemental/batches/S01/review-astra-r1.jsonl",
+          "packet_row_digest": "28adc3791b29c8b9d747afddc3e8974338d588721216cd33d09a7064c3573db3",
+          "reason": "CRAU-087 explicitly restores detection source/timestamp, policy impact, acknowledgement/suppression scope and promotion/rollback linkage in canonical text and acceptance criteria. Its structured-action and freshness constraints preserve the meaning of atoms 0073/0074.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "S01",
+          "file": "supplemental/batches/S01/review-sol-r1.jsonl",
+          "packet_row_digest": "28adc3791b29c8b9d747afddc3e8974338d588721216cd33d09a7064c3573db3",
+          "reason": "CRAU-087 explicitly restores detection source/timestamp, policy impact, acknowledgement/suppression scope and promotion/rollback linkage in the drift payload and acceptance criteria. It retains both relevant source atoms and permission-aware action guards.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    },
+    {
+      "appended_matrix_line": 6,
+      "appended_matrix_sha256": "2f24aabe06172df6acaf5bc389430ea40470c13c086cf3e2eca8e12747cf5963",
+      "appended_registry_line": 1116,
+      "appended_registry_sha256": "11abb2c00e16b492f816e682f4d4ba299a619aca8d25a0a9e991197bc878065e",
+      "closes": {
+        "source_artifact": "semantic_risks.jsonl",
+        "source_row": 9
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/Containers_Registry_and_Unraid.md#unit=CRAU-088": "98657b25ec4db1a3fc4c3d59fb62c0d6ecb624bd681a0df095c4455ba9875449"
+      },
+      "finding_key": "sfk-6185c5dbba6db82bb56c449f",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "fb441b27fd75440e14115fb382b15a5258ad7ea3",
+      "ref_source": "audit_report_recorded_range",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260615-001-part-3-fable-cleanup-semantic-risks-jsonl-9",
+      "reviews": {
+        "astra": {
+          "batch": "S01",
+          "file": "supplemental/batches/S01/review-astra-r1.jsonl",
+          "packet_row_digest": "095400391e3d536573d9a8789d942bbfcf44f2d1a594007fc44a741006ad1f83",
+          "reason": "CRAU-088 restores credential/secret boundary, risk classification, recommended action, audit provenance and revocation/approval path in canonical text and acceptance criteria. The active access-intelligence contract derives actions from those structured inputs.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "S01",
+          "file": "supplemental/batches/S01/review-sol-r1.jsonl",
+          "packet_row_digest": "095400391e3d536573d9a8789d942bbfcf44f2d1a594007fc44a741006ad1f83",
+          "reason": "CRAU-088 restores all five omitted access-intelligence field groups in normative prose and acceptance criteria, with atoms 0076/0077 retained as source lineage. The payload remains structured enough to control revocation, approval and remediation actions.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    },
+    {
+      "appended_matrix_line": 7,
+      "appended_matrix_sha256": "e0b44c291cfdd9aabb94c212390e42d64dbf28f5a5684d44ac44f92635bafe91",
+      "appended_registry_line": 1117,
+      "appended_registry_sha256": "29caab1c93c2b71a212865d11720b8954e8843e6ad974f546630841585af5c72",
+      "closes": {
+        "source_artifact": "semantic_risks.jsonl",
+        "source_row": 10
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/Containers_Registry_and_Unraid.md#unit=CRAU-089": "aa71a45737bc26461f17e6657685bc0ee75600b2522ed4e04d4a0814b37ecec1"
+      },
+      "finding_key": "sfk-0f1012928e850c1ae4f80446",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "fb441b27fd75440e14115fb382b15a5258ad7ea3",
+      "ref_source": "audit_report_recorded_range",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260615-001-part-3-fable-cleanup-semantic-risks-jsonl-10",
+      "reviews": {
+        "astra": {
+          "batch": "S01",
+          "file": "supplemental/batches/S01/review-astra-r1.jsonl",
+          "packet_row_digest": "7715b59f7dcb43a3b92c67f0e0560a82222c1f2dbece11361ed602f40ea3d0b7",
+          "reason": "CRAU-089 restores actor/runtime identity, permission boundary, rollout/rollback path, health/status refs, cross-link navigation state and registry/promotion/drift refs. Those fields are substantive linkage requirements, with acceptance coverage and direct source lineage.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "S01",
+          "file": "supplemental/batches/S01/review-sol-r1.jsonl",
+          "packet_row_digest": "7715b59f7dcb43a3b92c67f0e0560a82222c1f2dbece11361ed602f40ea3d0b7",
+          "reason": "CRAU-089 now requires all six omitted Kubernetes-linkage field groups, including actor identity, permission, rollout/rollback, health, navigation and registry/promotion/drift references. Canonical_text, acceptance criteria and atom-0079/0080 lineage agree.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    },
+    {
+      "appended_matrix_line": 8,
+      "appended_matrix_sha256": "d9aadf260e9d333f90ce64f78e4ad55f27569e00e3e028fc1009defc2020833d",
+      "appended_registry_line": 1118,
+      "appended_registry_sha256": "32756ef4105f7bce5580a0f0e118a707a98362d1f1c43b9a1ca491b73c973238",
+      "closes": {
+        "source_artifact": "semantic_risks.jsonl",
+        "source_row": 11
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/FileManager.md#unit=F-069": "94feae6110684678d65685ade6b9c256595429dd55a6a36043c1376724e03d2a"
+      },
+      "finding_key": "sfk-8e31ba500d9f1a965acd4e9f",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "fb441b27fd75440e14115fb382b15a5258ad7ea3",
+      "ref_source": "audit_report_recorded_range",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260615-001-part-3-fable-cleanup-semantic-risks-jsonl-11",
+      "reviews": {
+        "astra": {
+          "batch": "S01",
+          "file": "supplemental/batches/S01/review-astra-r1.jsonl",
+          "packet_row_digest": "1aa2d5ab8cdf765f4aaa4dde92ed074837667a43efc386de4ca9801eb40273bd",
+          "reason": "F-069 now has the required eight operation types, five conflict policies and eight lifecycle states in substantive text and acceptance criteria. Compare remains a read-only comparison session, so the originally substituted mutation/lifecycle enum is repaired.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "S01",
+          "file": "supplemental/batches/S01/review-sol-r1.jsonl",
+          "packet_row_digest": "1aa2d5ab8cdf765f4aaa4dde92ed074837667a43efc386de4ca9801eb40273bd",
+          "reason": "F-069 restores the complete operation_type, conflict_policy and status value sets in canonical_text and acceptance criteria, retaining atoms 0085/0086. Compare is explicitly a read-only linked comparison session rather than a mutating operation.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    }
+  ],
+  "decision": {
+    "decision_record": "Plans/Decision_Log.md#DL-334",
+    "owner_unit": "Plans/Planning_Ledger_System.md#PLS-026",
+    "route": "new_registry_row",
+    "source": "Jared, \"approve all\", T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521, 2026-11-05T02:48:03Z (stream C question 7, option (a)); extended to the other June audits with uncovered rows by pm7-build's relay of the same approved option (pm-mail 1105030457-ade2, 2026-11-05)"
+  },
+  "matrix": {
+    "original_rows": 0,
+    "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "path": "repair_closure_matrix.jsonl"
+  },
+  "pass_id": "audit-20260615-001-part-3-fable-cleanup-supplemental-20261111",
+  "reviews": "Sol and Astra blind reviews are listed on each closures entry (verdict, your_verdict, your_status, packet_row_digest, batch file)",
+  "schema_id": "pm.audit_supplemental_closure_pass.v1"
+}

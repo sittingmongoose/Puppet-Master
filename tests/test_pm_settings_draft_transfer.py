@@ -111,8 +111,23 @@ class SettingsLayeringRefreshTests(unittest.TestCase):
     def test_complete_reviewed_corpus_and_semantic_expectations(self):
         errors, counts = self.check()
         self.assertEqual(errors, [])
-        self.assertEqual(counts['rows'], 1017)
+        self.assertEqual(counts['rows'], 1024)
         self.assertGreater(counts['semantic_cases'], 30)
+
+    def test_placement_preset_override_resolves_before_computer_selection(self):
+        row = self.rows['code.execution.auto-preset']
+        self.assertEqual(self.resolve(row, {'everywhere': 'balanced', 'project': 'fastest'}), 'fastest')
+        self.assertEqual(self.resolve(row, {'everywhere': 'balanced'}), 'balanced')
+        for forbidden in ('computer', 'device'):
+            with self.subTest(level=forbidden), self.assertRaises(ValueError):
+                self.resolve(row, {forbidden: 'fastest'})
+
+    def test_placement_levels_are_host_specific_and_not_project_overrides(self):
+        row = self.rows['code.execution.computer-level']
+        self.assertEqual(row['layering']['computer_key'], 'execution_host')
+        self.assertEqual(self.resolve(row, {'computer': 'less_often'}), 'less_often')
+        with self.assertRaises(ValueError):
+            self.resolve(row, {'project': 'prefer'})
 
     def test_device_cannot_set_work_computer_behavior(self):
         case = copy.deepcopy(next(c['record'] for c in PACK['projects_refresh_cases'] if c['case_id'] == 'fd-settings-device'))

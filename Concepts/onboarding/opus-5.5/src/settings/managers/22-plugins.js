@@ -41,6 +41,7 @@
   ];
   const catalogItem = id => CATALOG.find(c => c.id === id);
   const onList = c => plugins().some(p => (p.id === c.id || p.name === c.name) && installed(p));
+  const offOnList = c => plugins().find(p => (p.id === c.id || p.name === c.name) && installed(p) && !p.enabled && !p.locked) || null;
   const configText = (p, f) => { const v = (p.config || {})[f.key]; return f.kind === 'secret' ? (v ? 'Saved in the keychain' : 'Not set') : f.kind === 'signin' ? (v ? `Signed in · ${v}` : 'Not signed in') : (v || 'Not set'); };
 
   PM51.style(`
@@ -119,6 +120,15 @@
   }
 
   PM51.on('plugins-open', el => openPlugin(ds(el, 'id')));
+  /* the catalog's card for a plugin on the list but switched off: it is switched on, and the add window closes on the
+     list, where it now shows */
+  PM51.on('plugins-catalog-on', el => {
+    const p = byId(ds(el, 'id')); if (!p || p.locked || !installed(p) || p.enabled) return;
+    p.enabled = true; p.state = stateFor(p);
+    const map = PM51.value(S.onoff); commitSettingValue(S.onoff, Object.assign({}, map && typeof map === 'object' && !Array.isArray(map) ? map : {}, { [p.id]: 'on' }));
+    saveState(); closeOverlay(); PM51.refresh(ID, { swap: false });
+    PM51.toast(`${p.name} is on`, 'It was on your list, switched off. Its tools are available again.', 'success');
+  });
   PM51.on('plugins-toggle', el => {
     const p = byId(ds(el, 'id')); if (!p || p.locked || !installed(p)) return;
     p.enabled = !p.enabled; p.state = stateFor(p); delete p.justAdded;
@@ -158,7 +168,11 @@
   function pluginWizard(pick, { install } = {}) {
     const existing = install ? byId(install) : null;
     const steps = [];
-    if (!pick && !existing) steps.push({ label: 'Find', title: 'What should the assistant be able to use?', lead: 'Plugins bundle tools and connections. Search, or pick one below.', render: d => `<div class="o55-plg-search">${PM51.input('', { placeholder: 'Search plugins', type: 'search', cls: 'o55-plg-q', label: 'Search plugins' })}</div>` + PM51.tiles(CATALOG.map(c => ({ title: c.name, text: c.what, meta: c.local ? 'Unsigned · your own' : `${c.publisher} · ${c.tools} tools`, icon: c.icon, selected: d.pick === c.id, done: !c.local && onList(c), doneReason: `${c.name} is already installed.`, data: { pick: c.id } })), { action: 'pm51-plugins-pick' }), check: d => d.pick ? '' : 'Pick a plugin to go on.', onShow: wrap => { const q = wrap.querySelector('.o55-plg-q'); if (q) q.addEventListener('input', () => { const s = q.value.trim().toLowerCase(); wrap.querySelectorAll('.o55g-card').forEach(t => { t.hidden = !!s && !t.textContent.toLowerCase().includes(s); }); }); } });
+    if (!pick && !existing) steps.push({ label: 'Find', title: 'What should the assistant be able to use?', lead: 'Plugins bundle tools and connections. Search, or pick one below.', render: d => `<div class="o55-plg-search">${PM51.input('', { placeholder: 'Search plugins', type: 'search', cls: 'o55-plg-q', label: 'Search plugins' })}</div>` + PM51.tiles(CATALOG.map(c => { const off = !c.local && offOnList(c); return off
+        /* on the list but switched off, so "Active only" hides it there: the card says so and switches it on (it was a
+           dead "Already on your list" card while the list said "hidden by Show", lane-code 2026-11-11) */
+        ? { title: c.name, text: c.what, meta: 'On your list · switched off. Choose it to switch it on.', icon: c.icon, action: 'pm51-plugins-catalog-on', data: { id: off.id } }
+        : { title: c.name, text: c.what, meta: c.local ? 'Unsigned · your own' : `${c.publisher} · ${c.tools} tools`, icon: c.icon, selected: d.pick === c.id, done: !c.local && onList(c), doneReason: `${c.name} is already installed.`, data: { pick: c.id } }; }), { action: 'pm51-plugins-pick' }), check: d => d.pick ? '' : 'Pick a plugin to go on.', onShow: wrap => { const q = wrap.querySelector('.o55-plg-q'); if (q) q.addEventListener('input', () => { const s = q.value.trim().toLowerCase(); wrap.querySelectorAll('.o55g-card').forEach(t => { t.hidden = !!s && !t.textContent.toLowerCase().includes(s); }); }); } });
     steps.push({ label: 'Review', icon: 'shield', title: 'Is this what you expect?', lead: 'What it adds, and everything it may reach. It never gets more without asking you.', recap: d => d.name ? `${d.publisher || 'You'} · ${d.version}` : '', render: reviewStep, collect: (wrap, d) => { const f = wrap.querySelector('.o55-plg-folder'); if (f) d.folder = f.value.trim(); }, check: d => d.local && !d.name ? 'Pick the folder and read it first.' : '' });
     steps.push({ label: 'Set up', icon: 'sliders', title: 'A few details so it can work', lead: 'Anything it needs from you. Keys go to your server\'s keychain and are never shown again.', render: d => setupFields(d) + PM51.rows([{ label: 'Turn it on after installing', help: 'Off installs it but keeps its tools away until you switch it on.', control: `<span class="o55-plg-on-wrap">${PM51.toggle(d.turnOn, { action: 'pm51-plugins-wtoggle', label: 'Turn it on after installing', cls: 'o55-plg-on' }).replace('class="toggle pm51-toggle', 'class="toggle pm51-toggle o55-plg-on')}</span>` }]), collect: collectSetup, check: checkSetup });
     const c = pick ? catalogItem(pick) : existing ? (catalogItem(existing.id) || { id: existing.id, name: existing.name, what: 'Listed but not installed yet.', publisher: sourceLabel(existing.source), version: existing.version || '1.0.0', tools: existing.tools, hooks: existing.hooks, permissions: existing.permissions, setup: [] }) : null;

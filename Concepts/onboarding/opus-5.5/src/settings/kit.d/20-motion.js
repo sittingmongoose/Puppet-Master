@@ -152,7 +152,8 @@ moveTabInks = function () {
       if (!ink) { ink = document.createElement('span'); ink.className = 'tab-ink'; ink.setAttribute('aria-hidden', 'true'); }
       /* Left/width transitions relaid out the document during every ink frame. Set the destination once and carry
          the same slide and stretch by transform. Retargeting starts from the actually drawn transform, read above. */
-      ink.style.transition = o55Still() ? 'none' : 'opacity 160ms ease';
+      /* an inline time is none of the override sheet's rules: it takes Animation speed itself (FO-153) */
+      ink.style.transition = o55Still() ? 'none' : `opacity ${Math.round(160 * (typeof o55SpeedFactor === 'number' ? o55SpeedFactor : 1))}ms ease`;
       ink.style.transformOrigin = '0 0';
       const previous = o55InkMoves.get(ink);
       if (previous && (row.changed || o55Still())) { previous.cancel(); o55InkMoves.delete(ink); }
@@ -162,7 +163,9 @@ moveTabInks = function () {
       if (row.from && row.from.width > 0 && row.width > 0) {
         const from = row.from, dy = row.manager ? from.top - row.top : 0, sy = row.manager && row.height ? from.height / row.height : 1;
         const move = ink.animate([{ transform: `translate(${from.left - row.left}px, ${dy}px) scale(${from.width / row.width}, ${sy})` }, { transform: 'none' }],
-          { duration: (row.manager ? 420 : 320) * (typeof o55SpeedFactor === 'number' ? o55SpeedFactor : 1), easing: row.ease });
+          /* Element.animate already takes Animation speed (17-look.js): multiplying here too played it at the speed
+             squared, 2.56 times as long in Cinematic (FO-153) */
+          { duration: row.manager ? 420 : 320, easing: row.ease });
         o55InkMoves.set(ink, move);
         const done = () => { if (o55InkMoves.get(ink) === move) o55InkMoves.delete(ink); };
         move.finished.then(done, done);

@@ -1358,7 +1358,10 @@
     emit('chat.card', { threadId: 'th-main', card: { type: 'web_operation', op: op } });
     if (op.state === 'completed') {
       pushWebArtifact(op, silent);
-      if (!silent) say('Research run complete — ' + op.citations.length + ' citations from ' + op.source_total + ' read sources');
+      /* a run in the main chat finishing is a notice from the chat, with its source line, that joins the inbox; a quiet
+         string toast read as the answer to whatever was just pressed (B11 codework D7, notify 9: "Research run complete"
+         when unrelated panels closed) */
+      if (!silent) { try { if (window.toast) window.toast({ title: 'Research finished: ' + op.citations.length + ' citations from ' + op.source_total + ' sources', body: 'Chat · the research run in your main chat', severity: 'success', kind: 'advisory', important: true }); } catch (e) {} }
     }
   };
   var WEB_BEATS = [

@@ -4,7 +4,7 @@ Source: `Plans/00-plans-index.md`
 
 Source lines: L448-L806
 
-Source SHA256: `5466826b89fbf926dc6617fdc15e90402df21ad440998f2c2329ca3ce506b4aa`
+Source SHA256: `c306c44aa0e561c7768e4661d95b1a9fafe19159026bf6d1e69cdec9a9e336bb`
 
 ---
 
@@ -293,7 +293,7 @@ PROC-008 is closed only by the exact owner text and machine contracts cited abov
 | `assistant-chat-design.md` | Assistant/Chat UX and modes | Canonical for chat/thread/session navigation, PM-native Ask/Plan semantics, slash-command behavior, shared question flows, activity transparency, `/web`, `/skill`, and plan/TODO semantics. |
 | `assistant-memory-subsystem.md` | Assistant-only memory continuity subsystem | Canonical SSOT for Assistant memory boundary, per-project memory stores (`assistant_memory.redb` + lexical/semantic indexes), decay scoring, capsule/retrieval budgets, and maintenance operations. Explicitly separate from rules pipeline contracts. |
 | `FinalGUISpec.md` | Shared GUI contract (Slint desktop, Leptos web) and theme contract | Canonical UI source for application shell/layout/view placement, shared theme palettes/tokens (one design-token source generating Slint theme globals and CSS custom properties), the Skia renderer extensions (F3-582), the Leptos web client (F3-583), provider-neutral Actions & Pipelines, Backup/Recovery and PM-connector projections, chat widgets/activity cards/plan tracker, Agent Config placement, browser/terminal surfaces, and Expert/ELI5 presentation. Domain owners retain runtime truth; `Settings_System.md` owns the Settings shell and routing. Also storage health and last-verified-backup display (F3-457, F3-528), the record inspector (F3-666) and chat load-older paging (F3-667). |
-| `Settings_System.md` | Canonical Settings System | Sole owner for exact K3 Tome Tabs Settings geometry, project-bound ordinary-setting persistence, 1010-ID inventory consumption, search/facets/virtualization, atomic mutation/default restore, detached Project transfer, manager grammar, and provider/backup/connector owner projections. Retained domain owners keep runtime truth. |
+| `Settings_System.md` | Canonical Settings System | Sole owner for exact K3 Tome Tabs Settings geometry, project-bound ordinary-setting persistence, live inventory consumption from `Plans/settings_inventory.json`, search/facets/virtualization, atomic mutation/default restore, detached Project transfer, manager grammar, and provider/backup/connector owner projections. Retained domain owners keep runtime truth. |
 | `Project_System.md` | Project identity and lifecycle | Owns Project registration, create/open/archive/remove/restore/delete-data boundaries, typed Project records, and Project-facing backup/history/restore-as-new consumption; it does not own source-control engines, Vault movement, or backup execution. |
 | `Server_System.md` | Server identity, catalog, trust, pairing, endpoints, and lifecycle | Sole Server identity and trust owner, including backup-continuity and remote-endpoint provenance consumption; discovery never implies consent or trust. |
 | `Remote_Access_System.md` | Remote route policy and continuity | Owns private/public route configuration, the PM-owned Go tsnet connector, durable connector authorization, availability, migration, testing, and exact-return continuity while Server System retains identity/trust. |

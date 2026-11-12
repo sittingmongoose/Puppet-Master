@@ -2,9 +2,9 @@
 
 Source: `Plans/Shared_Integration_Runtime.md`
 
-Source lines: L1308-L1576
+Source lines: L1308-L1572
 
-Source SHA256: `bb9f233ffd1699001f2844d3b00ebda83049f6c86d3489a4e899d4e5ec416c12`
+Source SHA256: `ff840c5d2b888750a4b55fb1cd65fcb077a72c155434a39ca91b156f182c6306`
 
 ---
 
@@ -189,23 +189,18 @@ plan_unit_id: SIR-026
 unit_type: command_contract
 status: accepted
 owner_doc: Plans/Shared_Integration_Runtime.md
-canonical_text: >-
-  ProjectHostBinding and SourceLocationRegistry own the eight exact Project topology operations in the
-  inventory. Home Server, execution Host, execution policy, and Source Location are separate typed
-  bindings; changing one does not silently change routes, move a Project, delete external source payloads,
-  or select another binding. Repointing a Project after its folder was moved outside Puppet Master uses
-  cmd.project.source_location.test then cmd.project.source_location.update with verified stable identity;
-  it moves no content. Moving content uses PSB-005 cmd.project.move.preflight and cmd.project.move.start
-  with verified copy/cutover/rollback; app chat transfer consumes PSB-007. Read-only repository inspection
-  consumes this topology and stays with Source Control, never the topology owner.
+canonical_text: |-
+  ProjectHostBinding and SourceLocationRegistry own the eight exact Project topology operations in the inventory. Home Server, execution Host, execution policy, and Source Location are separate typed bindings; changing one does not silently change routes, move a Project, delete external source payloads, or select another binding. Repointing a Project after its folder was moved outside Puppet Master uses cmd.project.source_location.test then cmd.project.source_location.update with verified stable identity; it moves no content. Moving content uses PSB-005 cmd.project.move.preflight and cmd.project.move.start with verified copy/cutover/rollback; app chat transfer consumes PSB-007. Read-only repository inspection consumes this topology and stays with Source Control, never the topology owner.
+
+  SIR-056 owns the one placement policy consumed by cmd.project.execution_policy.set, cmd.project.execution_host.select and cmd.execution_host.*. ExecutionTopologyRegistry and ProjectHostBinding keep the sole policy/default/allowed-set state; Settings is a reviewed editing surface, not a second store or scheduler. A policy or pin mutation uses expected policy/topology generations and actor precedence; a stale pin/dispatch race refuses or reevaluates before effects. Existing native-handler evidence gates still apply.
 gui_related: true
 depends_on: [SIR-004, SIR-015, SIR-025]
 unblocks: []
 acceptance_criteria:
-  - All eight commands use ProjectTopology request/result/error/availability/permission contracts and the sole handlers listed above.
-  - Add/update/remove/set-primary/test settle exact Project and Source Location identities under current generations.
-  - Removing a binding never implies deletion of the external source payload.
-  - Every command remains handler_unavailable until its exact native handler has evidence.
+- All eight commands use ProjectTopology request/result/error/availability/permission contracts and the sole handlers listed above.
+- Add/update/remove/set-primary/test settle exact Project and Source Location identities under current generations.
+- Removing a binding never implies deletion of the external source payload.
+- Every command remains handler_unavailable until its exact native handler has evidence.
 validation_surfaces: [Plans/shared_integration_runtime_expansion_contracts.schema.json, Plans/shared_integration_runtime_expansion_fixtures.json, focused SIR expansion validator]
 risk_class: project_topology_binding_or_external_data_loss
 reasoning_tier: high
@@ -213,10 +208,11 @@ context_scope: project_topology_commands
 implementation_surfaces: [Plans/Shared_Integration_Runtime.md, future ProjectHostBinding and SourceLocationRegistry]
 node_compile_hint: {mode: shared_runtime_static_contract_only, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - "server-command-gap-adjudication rows 106-108 and 122-127"
-  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
-  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
-  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
+- "share/puppet-master/2026-11-09-settings-feedback/BRIEF-plans-where-work-runs.md; Jared 2026-11-09"
+- "server-command-gap-adjudication rows 106-108 and 122-127"
+- "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+- "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+- "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 negative_constraints: [No implicit Project Move., No implicit route change., No external payload deletion.]
 ```
 
