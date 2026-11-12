@@ -37,12 +37,55 @@ import zlib from 'node:zlib';
 const LAYER = '#pm-o55-onboarding .o55-layer:not(.o55-out)';
 const on = (mode, fn) => (t) => (t.app.surfaces().includes(mode) ? fn(t, mode) : t.check(`not run: --set sandbox picks the other surface than ${mode}`, true));
 const want = (t, g) => !t.args.only || t.args.only.split(',').includes(g);
+// A hit is already decided by the original sampler. Capture it while that scene is still painted,
+// and await the binding before resetLayout; do not re-judge it or change the route's waits.
+const nativeContexts = new WeakMap();
+let nativeBindingId = 0;
+async function nativeCell(t, f, label) {
+ let context = nativeContexts.get(t);
+ if (!context) {
+  context = { binding: `__pm7KeepoffNative${++nativeBindingId}`, cells: new Map(), frames: new WeakMap(), next: 0 };
+  nativeContexts.set(t, context);
+  await t.window.exposeBinding(context.binding, async (_source, hit) => {
+   const cell = context.cells.get(hit.cell);
+   if (!cell) return;
+   const saved = await t.failEvidence(`${cell.label}: ${hit.screen} ${hit.kind}`);
+   cell.evidence.push(...saved);
+   const observedAfter = await _source.frame.evaluate(() => ({screen:window.O55?.S?.sess?.screen,stage:document.querySelector('#pm-o55-onboarding .o55-stage')?.__pipStage?.lastScreen})).catch(e => ({error:String(e)}));
+   cell.hits.push({...hit, evidence:saved, unavailable:saved.length === 0, observedAfter});
+  });
+ }
+ const cell = {id: ++context.next, label, evidence: [], hits: []};
+ context.cells.set(cell.id, cell); context.frames.set(f, cell);
+ return {binding:context.binding,cell:cell.id};
+}
+
 
 // the per-frame sampler, in the app's frame. It reads at the end of each frame, after every animation-frame callback (the
 // rig's render included) and the frame's layout, just before paint: a ResizeObserver on a 1 px element whose width an
 // animation frame toggles (a plain animation-frame read can see a state the rig rewrites before the frame is painted)
 function sampler(options) {
 	const S0 = window.__sk = { frames: 0, hits: [], rings: 0, ringOut: [], leaving: 0, blocks: 0, covered: 0, shunted: 0, eps: new Map(), shunts: new Map(), anchors: new Map(), lines: new Map() };
+
+ // Native notifications start only after an existing failure push. Their promises are drained
+ // after the original result snapshot and before navigation/reset; no passing frame is captured.
+ const nativePending = window.__skNativePending = [];
+ const nativeSeen = new Set();
+ for (const kind of ['hits','ringOut']) {
+  const list = S0[kind];
+  list.push = function (...items) {
+   const length = Array.prototype.push.apply(this, items);
+   if (options?.nativeBinding && typeof window[options.nativeBinding] === 'function') {
+    const screen = window.O55?.S?.sess?.screen || 'unknown';
+    const key = `${kind}|${screen}`;
+    if (!nativeSeen.has(key)) {
+     nativeSeen.add(key);
+     nativePending.push(window[options.nativeBinding]({cell:options.nativeCell,screen,kind,items,at:performance.now()}).catch(() => {}));
+    }
+   }
+   return length;
+  };
+ }
 	S0.trace=options?.trace?[]:null;S0.meta={mode:options?.mode,size:[innerWidth,innerHeight],start:performance.now(),timeOrigin:performance.timeOrigin};
 	const R = (e) => { const r = e.getBoundingClientRect(); return [r.left, r.top, r.right, r.bottom]; };
 	const meet = (a, b) => a[0] < b[2] - 0.5 && a[2] > b[0] + 0.5 && a[1] < b[3] - 0.5 && a[3] > b[1] + 0.5;
@@ -229,7 +272,8 @@ async function openAt(t, mode, look, [w, h], screen) {
 	await f.evaluate(([a, b]) => window.O55.ui.applyLook(a, b), [fam, scheme]);
 	await f.waitForTimeout(4500);
 	t.mark(`${mode} ${look} ${w}x${h} ${screen}`);
-	await f.evaluate(sampler,{trace:!!t.args.frames,mode,negative:t.args.negative||null});
+	const native = await nativeCell(t, f, `${mode} ${look} ${w}x${h} ${screen}`);
+	await f.evaluate(sampler,{trace:!!t.args.frames,mode,negative:t.args.negative||null,nativeBinding:native.binding,nativeCell:native.cell});
 	return f;
 }
 // a control of the current screen, by its action, through the real pointer (the sandbox fills the window)
@@ -254,7 +298,23 @@ async function nameIt(t, f) {
 }
 // what the sampler saw; and a clean store for the next case's fresh load (a normal page keeps the session in localStorage:
 // Safe's online copy, set below, left the next case's Review unable to create)
-const result = async (t, f) => { if (t.args.placementLog) { const log = await f.evaluate(() => window.__bubblePlacementLog || []); fs.appendFileSync(path.join(t.run.dir, 'bubble-placement.jsonl'), JSON.stringify(log) + '\n'); } const S = await f.evaluate(() => { const S = window.__sk; window.__sk = null; S.finish(); return { frames: S.frames, hits: S.hits, rings: S.rings, ringOut: S.ringOut, leaving: S.leaving, blocks: S.blocks, covered: S.covered, shunted: S.shunted,meta:S.meta,trace:S.trace }; }); if(S.trace)fs.appendFileSync(path.join(t.run.dir,'keepoff-trace.jsonl.gz'),zlib.gzipSync(JSON.stringify(S)+'\n')); await t.app.resetLayout(t); return S; };
+const result = async (t, f) => {
+	if (t.args.placementLog) {
+		const log = await f.evaluate(() => window.__bubblePlacementLog || []);
+		fs.appendFileSync(path.join(t.run.dir, 'bubble-placement.jsonl'), JSON.stringify(log) + '\n');
+	}
+	const S = await f.evaluate(() => {
+		const S = window.__sk; window.__sk = null; S.finish();
+		return { frames: S.frames, hits: S.hits, rings: S.rings, ringOut: S.ringOut, leaving: S.leaving, blocks: S.blocks, covered: S.covered, shunted: S.shunted,meta:S.meta,trace:S.trace };
+	});
+	if (S.trace) fs.appendFileSync(path.join(t.run.dir, 'keepoff-trace.jsonl.gz'), zlib.gzipSync(JSON.stringify(S) + '\n'));
+	await f.evaluate(() => Promise.all(window.__skNativePending || []));
+	const cell = nativeContexts.get(t)?.frames.get(f);
+	S.evidence = cell?.evidence || [];
+	fs.appendFileSync(path.join(t.run.dir, 'keepoff-findings.jsonl'), JSON.stringify({label:cell?.label,meta:S.meta,hits:S.hits,ringOut:S.ringOut,native:cell?.hits || []}) + '\n');
+	await t.app.resetLayout(t);
+	return S;
+};
 
 async function nier(t, mode) {
 	for (const look of ['nier-light', 'nier-dark']) {
@@ -268,13 +328,13 @@ async function nier(t, mode) {
 		await f.evaluate(() => { const d = window.O55.S.sess.drafts.main; d.online_mode = 'new'; d.forge = 'github'; window.O55.ui.go('safe', { noHistory: true }); });
 		await f.waitForTimeout(3500);
 		let S = await result(t, f);
-		await t.check(`${tag}: Safe's Add one, Back and the settled cloud: no prop under the box or the PIP tab`, S.frames > 200 && S.leaving > 0 && S.hits.length === 0, `${S.frames} frames, ${S.leaving} leaving samples, ${S.hits.length} overlaps (${S.covered} frames of props passing behind a still bubble, allowed, ${S.shunted} of them a claim-shunted settled prop making way): ${S.hits.slice(0, 3).join(' ; ')}`);
+		await t.check(`${tag}: Safe's Add one, Back and the settled cloud: no prop under the box or the PIP tab`, S.frames > 200 && S.leaving > 0 && S.hits.length === 0, `${S.frames} frames, ${S.leaving} leaving samples, ${S.hits.length} overlaps (${S.covered} frames of props passing behind a still bubble, allowed, ${S.shunted} of them a claim-shunted settled prop making way): ${S.hits.slice(0, 3).join(' ; ')}`, {evidence:S.evidence});
 		f = await openAt(t, mode, look, [740, 768], 'name');
 		await nameIt(t, f);
 		const reached = (await next(t, f, 'review')) && (await next(t, f, 'creating'));
 		await f.waitForTimeout(8000);
 		S = await result(t, f);
-		await t.check(`${tag}: Creating lowers its blocks clear of the box and the PIP tab`, reached && S.blocks > 0 && S.hits.length === 0, `${reached ? 'creating' : 'did not reach Creating'}, ${S.frames} frames, ${S.blocks} block samples, ${S.hits.length} overlaps (${S.covered} frames of props passing behind a still bubble, allowed, ${S.shunted} of them a claim-shunted settled prop making way): ${S.hits.slice(0, 3).join(' ; ')}`);
+		await t.check(`${tag}: Creating lowers its blocks clear of the box and the PIP tab`, reached && S.blocks > 0 && S.hits.length === 0, `${reached ? 'creating' : 'did not reach Creating'}, ${S.frames} frames, ${S.blocks} block samples, ${S.hits.length} overlaps (${S.covered} frames of props passing behind a still bubble, allowed, ${S.shunted} of them a claim-shunted settled prop making way): ${S.hits.slice(0, 3).join(' ; ')}`, {evidence:S.evidence});
 		// Creating with four blocks: an online copy, signed in by the concept's stand-in owner (no real account), the whole
 		// route sampled, then the settled stack measured (the onb lane's carried 'box over the top block by 5-7 px')
 		f = await openAt(t, mode, look, [740, 768], 'name');
@@ -292,8 +352,8 @@ async function nier(t, mode) {
 			return { n: blocks.length, top, bottom, left: Math.min(box.left, tb.left) };
 		});
 		S = await result(t, f);
-		await t.check(`${tag}: Creating with an online copy (four blocks) lowers them clear of the box and the PIP tab`, ok4 && set.n >= 4 && S.hits.length === 0, `${ok4 ? 'creating' : 'the online-copy route did not reach Creating'}, ${set.n} blocks, ${S.frames} frames, ${S.hits.length} overlaps (${S.covered} frames of props passing behind a still bubble, allowed, ${S.shunted} of them a claim-shunted settled prop making way): ${S.hits.slice(0, 3).join(' ; ')}`);
-		await t.check(`${tag}: the settled four-block stack stands below the box and its tab`, set.n >= 4 && set.top >= set.bottom - 0.5, `top block at ${set.top == null ? '-' : Math.round(set.top)} px, box and tab end at ${Math.round(set.bottom)} px`);
+		await t.check(`${tag}: Creating with an online copy (four blocks) lowers them clear of the box and the PIP tab`, ok4 && set.n >= 4 && S.hits.length === 0, `${ok4 ? 'creating' : 'the online-copy route did not reach Creating'}, ${set.n} blocks, ${S.frames} frames, ${S.hits.length} overlaps (${S.covered} frames of props passing behind a still bubble, allowed, ${S.shunted} of them a claim-shunted settled prop making way): ${S.hits.slice(0, 3).join(' ; ')}`, {evidence:S.evidence});
+		await t.check(`${tag}: the settled four-block stack stands below the box and its tab`, set.n >= 4 && set.top >= set.bottom - 0.5, `top block at ${set.top == null ? '-' : Math.round(set.top)} px, box and tab end at ${Math.round(set.bottom)} px`, {evidence:S.evidence});
 	}
 }
 
@@ -306,7 +366,7 @@ async function leave(t, mode) {
 		await point(t, f, mode, 'online'); await point(t, f, mode, 'back');
 		await next(t, f, 'review'); await f.waitForTimeout(1500);
 		const S = await result(t, f);
-		await t.check(`${tag}: Name > Safe > Add one > Back > Review: no prop under the bubble`, ok && S.frames > 200 && S.leaving > 0 && S.hits.length === 0, `${ok ? '' : 'did not reach Safe; '}${S.frames} frames, ${S.leaving} leaving samples, ${S.hits.length} overlaps (${S.covered} frames of props passing behind a still bubble, allowed, ${S.shunted} of them a claim-shunted settled prop making way): ${S.hits.slice(0, 3).join(' ; ')}`);
+		await t.check(`${tag}: Name > Safe > Add one > Back > Review: no prop under the bubble`, ok && S.frames > 200 && S.leaving > 0 && S.hits.length === 0, `${ok ? '' : 'did not reach Safe; '}${S.frames} frames, ${S.leaving} leaving samples, ${S.hits.length} overlaps (${S.covered} frames of props passing behind a still bubble, allowed, ${S.shunted} of them a claim-shunted settled prop making way): ${S.hits.slice(0, 3).join(' ; ')}`, {evidence:S.evidence});
 	}
 }
 
@@ -318,7 +378,7 @@ async function begin(t, mode) {
 		await point(t, f, mode, 'pick', 'new'); await point(t, f, mode, 'pick', 'existing'); await point(t, f, mode, 'pick', 'new');
 		await t.page.mouse.move(4, 4, { steps: 3 }); await f.waitForTimeout(1500);
 		const S = await result(t, f);
-		await t.check(`${tag}: Begins as, folder <> New: no prop under the bubble`, S.frames > 200 && S.leaving > 0 && S.hits.length === 0, `${S.frames} frames, ${S.leaving} leaving samples, ${S.hits.length} overlaps (${S.covered} frames of props passing behind a still bubble, allowed, ${S.shunted} of them a claim-shunted settled prop making way): ${S.hits.slice(0, 3).join(' ; ')}`);
+		await t.check(`${tag}: Begins as, folder <> New: no prop under the bubble`, S.frames > 200 && S.leaving > 0 && S.hits.length === 0, `${S.frames} frames, ${S.leaving} leaving samples, ${S.hits.length} overlaps (${S.covered} frames of props passing behind a still bubble, allowed, ${S.shunted} of them a claim-shunted settled prop making way): ${S.hits.slice(0, 3).join(' ; ')}`, {evidence:S.evidence});
 	}
 }
 
@@ -329,7 +389,7 @@ async function ring(t, mode) {
 		await point(t, f, mode, 'pick', 'anywhere'); await f.waitForTimeout(800);
 		await point(t, f, mode, 'pick', 'home'); await point(t, f, mode, 'pick', 'anywhere'); await f.waitForTimeout(1200);
 		const S = await result(t, f);
-		await t.check(`${tag}: Away's choices: Basic's badge and its ring stay inside the visible stage`, S.rings > 0 && S.ringOut.length === 0, `${S.frames} frames, ${S.rings} ring samples, ${S.ringOut.length} outside: ${S.ringOut.slice(0, 3).join(' ; ')}`);
+		await t.check(`${tag}: Away's choices: Basic's badge and its ring stay inside the visible stage`, S.rings > 0 && S.ringOut.length === 0, `${S.frames} frames, ${S.rings} ring samples, ${S.ringOut.length} outside: ${S.ringOut.slice(0, 3).join(' ; ')}`, {evidence:S.evidence});
 	}
 }
 

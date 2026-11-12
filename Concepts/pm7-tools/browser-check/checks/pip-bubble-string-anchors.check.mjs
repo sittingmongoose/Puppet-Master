@@ -248,6 +248,8 @@ export default async function (t) {
 	await f.waitForTimeout(1100); await wake(); await f.waitForTimeout(1200);
 
 	const bad4 = [], bad6 = [], badDest = [], noHelper = [], diagnostics = [], notOpened = [];
+	const cellEvidence = { bad4: [], bad6: [], badDest: [], notOpened: [] };
+	const sceneInventory = [];
 	let scenes = 0, lines = 0, strings = 0, dests = 0;
 	const judge = (look, screen, frames) => {
 		const fr = frames.filter((x) => !x.none);
@@ -303,10 +305,27 @@ export default async function (t) {
 				await f.waitForTimeout(dwell);
 				const frames = await f.evaluate(() => { const S = window.__qbs; S.on = false; S.cells?.forEach(e=>{e.style.background='#808080';}); const r = S.frames; S.frames = []; return r; });
 				if(t.args.frames) fs.appendFileSync(path.join(t.run.dir, 'anchors-frames.jsonl.gz'), zlib.gzipSync(JSON.stringify({look,screen,frames})+'\n'));
+				const before = { bad4: bad4.length, bad6: bad6.length, badDest: badDest.length };
 				const at = await f.evaluate(() => window.O55.S.sess.screen);
-				if (at !== screen) { unreached.push(`${screen} (at ${at})`); continue; }
+				if (at !== screen) { unreached.push(`${screen} (at ${at})`); cellEvidence.notOpened.push(...await t.failEvidence(`${look} ${screen}: requested screen not opened (at ${at})`)); continue; }
 				judge(look, screen, frames);
+				// Retain this native cell before the route advances; deferred checks below keep their predicates.
+				const changed = Object.keys(before).filter(key => ({bad4,bad6,badDest})[key].length > before[key]);
+				if (changed.length) {
+					const saved = await t.failEvidence(`${look} ${screen}: ${changed.join(", ")}`);
+					for (const key of changed) cellEvidence[key].push(...saved);
+				}
+				// Reuse the collected frames to prove exposure even when this sentence has no finding.
+				// This reads no new page geometry and does not participate in any verdict.
+				const observed = new Map();
+				for (const frame of frames) if (!frame.none && frame.bub?.shown) {
+					const text = frame.bub.text;
+					const line = observed.get(text) || {text,frames:0,first:frame.t,last:frame.t};
+					line.frames++; line.last = frame.t; observed.set(text,line);
+				}
+				sceneInventory.push({look,screen,at,frames:frames.filter(frame=>!frame.none).length,lines:[...observed.values()]});
 			} catch (e) {
+				cellEvidence.notOpened.push(...await t.failEvidence(`${look} ${screen}: scene threw`));
 				// a screen whose jump throws in the page (a NAS step without its state) must not end the whole route
 				unreached.push(`${screen} (threw: ${String(e && e.message || e).slice(0, 80)})`);
 				await f.evaluate(() => { const S = window.__qbs; if (S) { S.on = false; S.frames = []; } }).catch(() => {});
@@ -318,9 +337,10 @@ export default async function (t) {
 		t.log(`${look}: ${screens.length - unreached.length}/${screens.length} screens opened${unreached.length ? '; not opened: ' + unreached.join(', ') : ''}`);
 	}
 	if (noHelper.length) t.log(`no restPose destination: ${noHelper.slice(0, 6).join('; ')}${noHelper.length > 6 ? ` (+${noHelper.length - 6} more)` : ''}`);
-	await t.check('every requested screen opened with its owner fixture',notOpened.length===0,notOpened.join('; '));
+	fs.writeFileSync(path.join(t.run.dir, 'anchors-findings.json'), JSON.stringify({bad4,bad6,badDest,noHelper,notOpened,scenes,lines,strings,dests,sceneInventory}, null, 2) + '\n');
+	await t.check('every requested screen opened with its owner fixture',notOpened.length===0,notOpened.join('; '), {evidence:cellEvidence.notOpened});
 	if(t.args.diagnostics) fs.writeFileSync(path.join(t.run.dir,'anchors-diagnostics.json.gz'),zlib.gzipSync(JSON.stringify(diagnostics)));
-	await t.check(`QA-4: each line's bubble sits on its first shown frame within 1 px of where it settles and never strays further (${scenes} scenes, ${lines} lines)`, scenes > 0 && lines > 0 && bad4.length === 0, `${bad4.length} line(s): ` + bad4.slice(0, 8).join('; ') + (bad4.length > 8 ? ` (+${bad4.length - 8} more)` : ''));
-	await t.check(`QA-6: every string hangs from its rest anchor, its top moving only as the swing explains (${strings} strings)`, strings > 0 && bad6.length === 0, bad6.slice(0, 8).join('; ') + (bad6.length > 8 ? ` (+${bad6.length - 8} more)` : ''));
-	await t.check(`QA-4b: no prop's destination refits within a scene (${dests} destinations${noHelper.length ? '; a page with no rest destination has none to judge, QA-6 above is its measure' : ''})`, badDest.length === 0, badDest.slice(0, 8).join('; ') + (badDest.length > 8 ? ` (+${badDest.length - 8} more)` : ''));
+	await t.check(`QA-4: each line's bubble sits on its first shown frame within 1 px of where it settles and never strays further (${scenes} scenes, ${lines} lines)`, scenes > 0 && lines > 0 && bad4.length === 0, `${bad4.length} line(s): ` + bad4.slice(0, 8).join('; ') + (bad4.length > 8 ? ` (+${bad4.length - 8} more)` : ''), {evidence:cellEvidence.bad4});
+	await t.check(`QA-6: every string hangs from its rest anchor, its top moving only as the swing explains (${strings} strings)`, strings > 0 && bad6.length === 0, bad6.slice(0, 8).join('; ') + (bad6.length > 8 ? ` (+${bad6.length - 8} more)` : ''), {evidence:cellEvidence.bad6});
+	await t.check(`QA-4b: no prop's destination refits within a scene (${dests} destinations${noHelper.length ? '; a page with no rest destination has none to judge, QA-6 above is its measure' : ''})`, badDest.length === 0, badDest.slice(0, 8).join('; ') + (badDest.length > 8 ? ` (+${badDest.length - 8} more)` : ''), {evidence:cellEvidence.badDest});
 }
