@@ -8028,7 +8028,7 @@ acceptance_criteria:
   - Recoverable blockers name the user, Settings, worktree, or approval action needed to proceed.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
-  - future GoalRun permission/blocker review
+  - future Goal permission/blocker review
 risk_class: goalrun_write_authority_drift
 reasoning_tier: high
 context_scope: goalrun_permissions
