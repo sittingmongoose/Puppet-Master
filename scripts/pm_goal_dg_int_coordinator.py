@@ -693,6 +693,41 @@ class Coordinator(W.Coordinator):
             return out
 
 
+    def _retained_response(self,request,method):
+        """Passive classification plus every named method result in its own realm."""
+        w=self.world
+        declaration=next(m for m in F.METHODS['methods'] if m['method']==method)
+        require('int/retained/arguments',len(declaration['arguments'])==1 and declaration['arguments'][0]['name']=='request')
+        arg=declaration['arguments'][0]
+        w.realm.validate(arg['realm'],arg['schema_ref'],request,'int/retained/request')
+        before=w.storage.observe()
+        classified=super().recover_original(request)
+        outcome=classified['outcome']
+        if outcome=='original_complete':
+            from pm_goal_dg_int_certified_reader import Consumer
+            source=Consumer(w.registry,w).retained_sources(request['scope'],request['operation_id'],stage='recover_original')
+            target=classified['authority']['event_phase']['event_id']
+            results=dict(retained=classified,native_retained_metadata=source['retained']['native'],
+                standard_retained_metadata=source['receipt']['value']['original_certification'],
+                standard_capture_origin=source['origin']['value'],
+                original_event_custody=w.storage.first_custody(target),
+                original_event_full_value_result=w.storage.full_value_result(target))
+        else:results=dict(classification=classified)
+        variant=next(v for v in declaration['return_variants'] if v['outcome']==outcome)
+        require('int/retained/complete_results',set(results)=={r['name'] for r in variant['results']})
+        for row in variant['results']:
+            w.realm.validate(row['realm'],row['schema_ref'],results[row['name']],'int/retained/'+row['name'])
+        require('int/retained/no_effect',w.storage.observe()==before)
+        self.last_retained_results=results
+        return dict(outcome=outcome,**results)
+
+    def recover_original(self,request):
+        return self._retained_response(request,'owner.workflow.certified_event.recover_original.v1')
+
+    def read_retained(self,request):
+        return self._retained_response(request,'owner.workflow.certified_event.read_retained.v1')
+
+
 class Identity(F.WholeIdentityOwner):
     def derive(self,scope,handles,**kw):
         w=self.world

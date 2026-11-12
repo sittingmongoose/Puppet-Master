@@ -242,10 +242,24 @@ class Consumer(RR.Consumer):
         eq('goal/c3_event_audit',ge['payload']['source_audit_sha256'],physical_sha256(audit))
 
 
+def current_projection_sources(projector):
+    """Reopen the actual immutable-revision pointers, as well as retained cells."""
+    out=RP.Projector.current_sources(projector)
+    w=projector.world
+    native=w.start_world.owners['native'].current()
+    for name,stored in [('body',w.body2),('control',w.control2)]:
+        guard('current/native_'+name,A.same(native[name],stored.wrapper))
+    executor=w.current_executor()
+    guard('current/d01_head',A.same(executor['workflow']['head'],w.cancellation['original_d01_head'].wrapper['record']))
+    return out
+
+
 class Projector(RP.ProjectorV7):
     def __init__(self,world):
         super().__init__(world)
         self.consumer=Consumer(world)
+
+    def current_sources(self):return current_projection_sources(self)
 
 
 class PackOwner(RW.PhysOwner):
@@ -277,7 +291,8 @@ class CancelWorld(IW.S1CancelWorld):
         self.goal_bridge=v.goal_bridge
         self.goal_bridge.cancel_world=self
         self.edition='native_v7'
-        self.roots=IR.Roots.get()
+        from pm_goal_dg_int_schema_cache import Roots as SchemaRoots
+        self.roots=SchemaRoots(IR.Roots.get())
         self.seeder=RW.Seeder(self.roots)
         self.clock=RW.Clock(self.storage)
         self.sid=self.storage.storage_instance_id

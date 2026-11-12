@@ -34,9 +34,9 @@ class Run:
         print(name,row['status'],row.get('got'),flush=True)
 
 
-def world():
+def world(**kwargs):
     BASE.mkdir(parents=True,exist_ok=True)
-    return V.World(Path(tempfile.mkdtemp(prefix='dgint-v7-oracle-',dir=BASE)))
+    return V.World(Path(tempfile.mkdtemp(prefix='dgint-v7-oracle-',dir=BASE)),**kwargs)
 
 
 def snapshot(w):
@@ -140,12 +140,54 @@ def boundaries(run):
     boundary(run,'after_helper:current','epoch','current_final/issuer_epoch/native')
 
 
+def retention(run):
+    def survivor():
+        w=world(segment_target_bytes=6000);ctx=C.build_context(w);G.QueuedGoal(w).freeze();C.run(w,ctx)
+        start=w.original_start['original_append']['event'];target=w.storage.read_event(ctx['identity']['event_id'])
+        generation=w.storage.events[start['event_id']]['segment_generation']
+        A.require('survivor/target_survives',generation!=w.storage.events[target['event_id']]['segment_generation'])
+        disposition=w.storage.retire_segment(generation,S.RetentionOwner(w.storage))
+        consumer=Reducer.IntConsumer(w);scope=Reducer.run_scope(w)
+        src=Reducer.LegacySources(w.storage,scope,consumer.controls);before=snapshot(w)
+        result=Reducer.reduce_prefix(src.generic,scope,src.cells)
+        A.require('survivor/read_effect',snapshot(w)==before)
+        A.require('survivor/exact',result['complete'] and result['halt'] is None and result['status']=='certified' and
+            result['record']['original_event']==target and bool(result['gaps']))
+        return dict(start_revision=start['payload']['goal_run_revision'],
+            native_before=target['payload']['expected_goal_run_revision'],
+            gap_frames=disposition['frame_count'],gaps=result['gaps'])
+    run.case('CF10-P4/authentic_expired_Start_survivor_and_nonadjacent_native_revisions',survivor)
+
+
+def prefix_faults(run):
+    for kind in ('goal_run.started','goal_run.blocked','goal_run.stopped','goal_run.replanned','goal_run.cancelled','unknown.off_run'):
+        def case(kind=kind):
+            w=world();ctx=C.build_context(w);C.run(w,ctx)
+            consumer=Reducer.IntConsumer(w);scope=Reducer.run_scope(w)
+            before=Reducer.LegacySources(w.storage,scope,consumer.controls)
+            good=Reducer.reduce_prefix(before.generic,scope,before.cells)
+            A.require('prefix/base',good['complete'] and good['status']=='certified')
+            candidate=S.producer25(w.original_start['original_append']['event'])
+            candidate.update(event_id='TEST_ONLY:fault:'+kind,idempotency_key='TEST_ONLY:fault:'+kind,event_type=kind)
+            registered=GS.event_family_registration()[0]
+            if kind=='unknown.off_run':candidate.update(project_id='TEST_ONLY:offrun',payload_schema_id='TEST_ONLY:unregistered')
+            else:candidate['payload_schema_id']=next(schema for event,scope_kind,schema in registered if event==kind)
+            w.appender.append_original('TEST_ONLY:prefix-fault:'+kind,dict(kind=kind),[candidate],durability_class='barrier')
+            src=Reducer.LegacySources(w.storage,scope,consumer.controls);state=snapshot(w)
+            result=Reducer.reduce_prefix(src.generic,scope,src.cells)
+            A.require('prefix/fault_effect',snapshot(w)==state)
+            A.require('prefix/no_frontier_advance',not result['complete'] and result['halt'] is not None and
+                result['through']==good['through'] and result['record']==good['record'])
+            return dict(halt=result['halt'],through=result['through'])
+        run.case('CF10-P4/full_prefix_halts/'+kind,case)
+
+
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--groups',default='CERT,BOUNDS');parser.add_argument('--output',required=True)
     args=parser.parse_args();run=Run()
     for group_name in args.groups.split(','):
-        {'CERT':certified,'BOUNDS':boundaries}[group_name](run)
+        {'CERT':certified,'BOUNDS':boundaries,'RETENTION':retention,'PREFIX':prefix_faults}[group_name](run)
     failures=[r for r in run.rows if r['status']!='pass']
     result=dict(qualification='TEST_ONLY',native=V.NATIVE_LINE,status='pass' if not failures else 'fail',
         positives=sum(r['kind']=='positive' for r in run.rows),negatives=sum(r['kind']=='negative' for r in run.rows),

@@ -40,7 +40,8 @@ same=A.same
 class SharedWorld(O.World):
     def __init__(self,sw):
         self.shared=O.Shared.get()
-        self.roots,self.codec=self.shared.roots,self.shared.codec
+        from pm_goal_dg_int_schema_cache import Roots as SchemaRoots
+        self.roots,self.codec=SchemaRoots(self.shared.roots),self.shared.codec
         self.storage=sw.storage
         self.registry,self.recorder=sw.registry,sw.recorder
         self.storage_id=self.storage.storage_instance_id
@@ -254,6 +255,78 @@ class Route(C3.WorkflowCancel):
             out['run']=A.observation_digest([sw.storage.cell('workflow_goal_run_current',sw.owners['native'].current_key()),
                                             self.world.native.run.owner_epoch])
         return out
+
+
+
+    def capture_source(self, request=None, sir_handle=None):
+        w, n = (self.world, self.world.native)
+        request = C3.copy.deepcopy(self.request if request is None else request)
+        sir_handle = self.sir_handle if sir_handle is None else sir_handle
+        with self.call('capture_source', dict(request=request)) as slot:
+            entry = self.observe_sources()
+            self.check('GoalCancelRequestV2', request)
+            ref, accepted = C3.A.acquire(w.registry, w.sir.owner_id, 'sir', sir_handle)
+            C3.require('C3/capture_source/accepted_dispatch', C3.same(accepted['request'], request))
+            C3.require('C3/capture_source/accepted_custody', C3.same(w.sir.stored(request['command_instance_id']), accepted))
+            C3.require('C3/capture_source/accepted_operation', accepted['identity']['operation_id'] == self.operation_id)
+            C3.require('C3/capture_source/sir_epoch', accepted['owner_epoch'] == w.sir.owner_epoch)
+            existing = w.value('goal_cancel_source_audit', self.key('goal_cancel_source_audit'))
+            if existing is not None:
+                C3.require('C3/capture_source/retry_conflict', C3.same(existing['record']['request'], request))
+                slot.set(dict(replay=True))
+                return C3.copy.deepcopy(existing['record'])
+            C3.require('C3/capture_source/writer_cutoff', w.binding.domain_withdrawn is False)
+            C3.require('C3/capture_source/permission', w.permissions.allowed(request['permission_snapshot_ref'], request['actor_ref'], 'goal.cancel'))
+            snapshot = w.goal.snapshot(self.scope)
+            body = snapshot['body']
+            control_cell = w.goal.control(self.scope)
+            control = control_cell['value']['record']
+            C3.require('C3/capture_source/scope', all((request[k] == self.scope[k] for k in ('project_id', 'thread_id', 'goal_id'))))
+            C3.require('C3/capture_source/legal_state', body['state'] in C3.C1.LEGAL_STATES)
+            C3.require('C3/capture_source/not_cancelled', control['cancellation_receipt_ref'] is None)
+            C3.require('C3/capture_source/not_pending_cancel', control['cancellation_pending'] is None)
+            C3.require('C3/capture_source/expected_revision', request['expected_revision'] == body['revision'])
+            C3.require('C3/capture_source/expected_currentness', request['expected_currentness_hash'] == body['currentness_hash'])
+            C3.require('C3/capture_source/pending_unresolved', control['pending'] is None)
+            read = w.binding.read_current(self.scope)
+            self.at('capture_source', 'after_binding_read')
+            self.recheck('capture_source', 'after_binding_read', entry)
+            assoc = self.workflow_association(read)
+            C3.require('C3/capture_source/binding_pending', read['control']['value']['record']['pending'] is None)
+            native = self.before_stop_native('capture_source')
+            self.at('capture_source', 'after_native_read')
+            self.recheck('capture_source', 'after_native_read', entry)
+            C3.require('C3/capture_source/current_start_run', self.start_scope(native['current_start'])['goal_run_id'] == assoc['active_run_ref'])
+            stop = w.host_stop.record(self.scope)
+            self.at('capture_source', 'after_stop_read')
+            self.recheck('capture_source', 'after_stop_read', entry)
+            history = w.goal.history_cells(self.scope)
+            inventory = [dict(revision_key=w.goal.keys(self.scope, int(k))['revision'], revision_outer_sha256=C3.row_sha(c[0]['value']), origin_key=w.goal.keys(self.scope, int(k))['origin'], origin_outer_sha256=C3.row_sha(c[1]['value'])) for k, c in sorted(history.items(), key=lambda x: int(x[0]))]
+            gk = w.goal.keys(self.scope)
+            selection_key = self.key('goal_cancel_binding_selection')
+            binding = self.check('ExecutionBinding', dict(kind='no_bound_plan', active_run_ref=assoc['active_run_ref'], goal_plan_binding_ref=None, goal_plan_binding_sha256=None, assistant_plan_id=None, plan_run_id=None, plan_version=None, plan_hash=None, execution_owner_ref=assoc['execution_owner_ref'], original_binding_source_ref=selection_key))
+            body_selection = self.check('BodySelection', {**self.scope, 'body_key': gk['body'], 'body_outer_sha256': C3.row_sha(w.goal.body_cell(self.scope)['value']), 'body_semantic_sha256': control['body_sha256'], 'revision': body['revision'], 'currentness_hash': body['currentness_hash'], 'control_key': gk['control'], 'control_outer_sha256': C3.row_sha(control_cell['value']), 'control_epoch': control['control_epoch'], 'latest_objective_revision': control['latest_objective_revision'], 'latest_revision_hash': control['latest_revision_hash'], 'origin_key': control['origin_key'], 'complete_history_origin_inventory_sha256': self.h(inventory), 'state': body['state'], 'active_run_ref': body['active_run_ref']})
+            self.event_id, self.event_key = C3.recipe('goal.cancelled', {**self.scope, 'command_id': C3.C1.COMMAND, 'command_instance_id': request['command_instance_id'], 'operation_id': self.operation_id})
+            metadata = self.check('ProducerMetadata', dict(schema_id='pm.event.v0', schema_version='2.0.0', scope_kind='project', event_id=self.event_id, event_type='goal.cancelled', project_id=self.scope['project_id'], thread_id=self.scope['thread_id'], run_id=None, node_id=None, attempt_id=None, actor_ref=request['actor_ref'], requested_account_ref=None, effective_account_ref=None, occurred_at_utc=w.sir.clock.now(), producer_sequence_id=None, correlation_id=accepted['dispatch_id'], causation_event_id=None, parent_event_id=None, idempotency_key=self.event_key, payload_schema_id=C3.PAYLOAD_SCHEMA, payload_ref=None, redaction_profile='no_secrets', replay_policy='dedupe_by_idempotency_key', migration=dict(migrated_from_schema_id=None, migrated_from_schema_version=None, migration_id=None, compatibility_event_type=None)))
+            source = self.check('SourceAudit', dict(schema_id='pm.goal.cancel.source_audit.v1', schema_version='1.0.0', **self.scope, request=request, normalized_identity=accepted['identity'], dispatch_id=accepted['dispatch_id'], command_outcome_ref=accepted['command_outcome_ref'], nonterminal_outcome=accepted['nonterminal'], original_user_cancel_acceptance_ref=accepted['acceptance_ref'], source_authority_ref=accepted['source_authority_ref'], source_authority_epoch=accepted['owner_epoch'], original_body=body_selection, original_execution_binding=binding, original_stop_control_sha256=C3.row_sha(w.host_stop.current(self.scope)['value']), captured_user_stop_epoch=stop['user_stop_epoch'], captured_continuation_epoch=stop['continuation_epoch'], producer_metadata=metadata, captured_at=w.goal.clock.now()))
+            source_w = self.wrap('StorageSourceAudit', source)
+            self.gcheck(C3.GA + 'WorkflowSourceAudit', source_w)
+            progress = self.check('Progress', dict(schema_id='pm.goal.cancel.progress.v2', schema_version='2.0.0', **self.scope, operation_id=self.operation_id, source_audit_sha256=C3.row_sha(source_w), progress_epoch=0, phase='source_admitted', stop_intent=None, stop_receipt=None, reservation_sha256=None, cancellation_receipt=None, owner_settlement=None, producer_input=None, publication=None, control_publication=None, resolution_owner_ref=self.coordinator_id))
+            reader = C3.transaction_record(w.binding, 'owner.goal.execution_binding.read_current_for_cancel.v1', self.operation_id, w.permissions.selection(self.cancel_decision), C3.uid('TEST_ONLY:binding-read-tx'), selection_key)
+            bsel = lambda family, cell: dict(family_id=family, physical_key=cell['value']['physical_key'], schema_id=cell['value']['schema_id'], schema_version=cell['value']['schema_version'], codec_id='pm.storage.canonical_msgpack.v1', complete_value_sha256=C3.row_sha(cell['value']))
+            hkey = 'goal_execution_writer_domain_head.v1:' + w.binding.storage_key()
+            selection = w.roots.check('goal', C3.BINDING + '#/$defs/BindingSelection', dict(scope=C3.copy.deepcopy(self.scope), operation_id=self.operation_id, original_command_instance_id=request['command_instance_id'], original_dispatch_id=accepted['dispatch_id'], binding_control=bsel(w.binding.CONTROL, read['control']), binding_revision=bsel(w.binding.REVISION, read['revision']), binding_origin=bsel(w.binding.ORIGIN, read['origin']), writer_domain_head=bsel(w.binding.HEAD, w.cell(w.binding.HEAD, hkey)), writer_domain=read['domain_selection'], original_goal_body_sha256=body_selection['body_outer_sha256'], original_goal_control_sha256=body_selection['control_outer_sha256'], original_stop_control_sha256=source['original_stop_control_sha256'], actual_active_run_ref=assoc['active_run_ref'], original_pending_binding_operation_id=None, original_pending_binding_candidate_sha256=None, association_count=1, disposition='workflow_requires_owner_disposition', original_reader=reader))
+            selection_w = C3.gwrap(w, C3.BINDING, 'StorageBindingSelection', selection, selection_key)
+            goal_entry = self.gcheck(C3.GA + 'SourceCaptureEntry', dict(request=request, normalized_identity=accepted['identity'], original_nonterminal_outcome=accepted['nonterminal'], producer_metadata=metadata, current_goal=self.current_goal(), binding_selection_candidate=selection_w))
+            head = self._head(0, progress)
+            self.at('capture_source', 'final')
+            self.recheck('capture_source', 'final', entry)
+            writes = [w.put('goal_cancel_source_audit', self.key('goal_cancel_source_audit'), source_w), w.put('goal_cancel_progress', self.progress_key(0), self.wrap('StorageProgress', progress)), w.put('goal_cancel_progress', self.key('goal_cancel_progress') + ':head', self.wrap('StorageProgress', head)), w.put('goal_cancel_binding_selection', selection_key, selection_w)]
+            tx = w.write(writes)
+            self.source, self.progress = (source, progress)
+            self.capture_args = dict(goal_sha256=self.h_arg(goal_entry), native_sha256=self.h_arg(native))
+            slot.set(dict(tx=tx['tx_id']))
+            return C3.copy.deepcopy(source)
 
     def start_scope(self,value):
         if value['kind']=='original_started':return value['value']['commit']['record']['scope']

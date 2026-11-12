@@ -47,11 +47,16 @@ class Originals(F.IssuingOwner):
         # the original readers still acquire each actual owner independently.
         roster=[dict(owner_id=oid,role=role,owner_epoch=self.actual.registry._owners[oid].owner_epoch)
                 for oid,role in sorted(self.actual.registry.roster().items())]
+        self.roster=copy.deepcopy(roster)
         self.registration=self._whole('source_owner_registrations',roster)
         self.originals=[self._whole('original_'+name,value) for name,value in values.items()]
         self.disclosure=self._whole('current_disclosure_controls',disclosure)
 
     def read(self,values,disclosure,snapshot):
+        for row in self.roster:
+            owner=self.actual.registry._owners.get(row['owner_id'])
+            A.require('int/consumer/source_owner_current',owner is not None and
+                owner.role==row['role'] and owner.owner_epoch==row['owner_epoch'])
         A.require('int/consumer/original_sources_changed',values==self.values)
         A.require('int/consumer/disclosure_changed',disclosure==self.permission)
         for node in [self.registration,self.disclosure]+self.originals:

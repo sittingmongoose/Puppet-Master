@@ -126,7 +126,8 @@ class World(C.CancelWorld):
         native=sw._owner('native',Native);native.bridge=self.goal_bridge
         sw.integrated=types.SimpleNamespace(launch_source_authorities={})
         self.edition='original_profile'
-        self.roots=Roots.get()
+        from pm_goal_dg_int_schema_cache import Roots as SchemaRoots
+        self.roots=SchemaRoots(Roots.get())
         self.seeder=RW.Seeder(self.roots)
         self.clock=RW.Clock(self.storage)
         self.sid=self.storage.storage_instance_id
@@ -149,6 +150,8 @@ class Projector(C.RP.Projector):
     def __init__(self,world):
         super().__init__(world)
         self.consumer=C.Consumer(world)
+
+    def current_sources(self):return C.current_projection_sources(self)
 
 
 World.projector_class=Projector

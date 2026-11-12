@@ -16,7 +16,7 @@
       ],
       "properties": {
         "scope": {
-          "$ref": "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/Scope"
+          "$ref": "https://puppetmaster.local/proposals/dg_int_old_cancel_positive_safestop.v1.schema.json#/$defs/Scope"
         },
         "operation_id": {
           "type": "string",
@@ -50,7 +50,7 @@
       ],
       "properties": {
         "d06": {
-          "$ref": "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/AdmittedInput"
+          "$ref": "https://puppetmaster.local/proposals/dg_int_old_cancel_positive_safestop.v1.schema.json#/$defs/AdmittedInput"
         },
         "current_start": {
           "$ref": "https://puppetmaster.local/proposals/dg_int_old_safestop_start_arguments.v1.schema.json#/$defs/CurrentStartArgument"
@@ -70,7 +70,7 @@
       ],
       "properties": {
         "d06": {
-          "$ref": "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/PreparedMutation"
+          "$ref": "https://puppetmaster.local/proposals/dg_int_old_cancel_positive_safestop.v1.schema.json#/$defs/PreparedMutation"
         },
         "current_start": {
           "$ref": "https://puppetmaster.local/proposals/dg_int_old_safestop_start_arguments.v1.schema.json#/$defs/CurrentStartArgument"
@@ -90,7 +90,7 @@
       ],
       "properties": {
         "d06_current": {
-          "$ref": "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/CurrentSource"
+          "$ref": "https://puppetmaster.local/proposals/dg_int_old_cancel_positive_safestop.v1.schema.json#/$defs/CurrentSource"
         },
         "whole_safe_stop": {
           "$ref": "https://puppetmaster.local/proposals/dg_int_old_safestop_source.v1.schema.json#/$defs/SuccessfulReadback"
@@ -109,7 +109,7 @@
       ],
       "properties": {
         "d06_readback": {
-          "$ref": "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/SuccessfulReadback"
+          "$ref": "https://puppetmaster.local/proposals/dg_int_old_cancel_positive_safestop.v1.schema.json#/$defs/SuccessfulReadback"
         },
         "current_start": {
           "$ref": "https://puppetmaster.local/proposals/dg_int_old_safestop_start_arguments.v1.schema.json#/$defs/CurrentStartArgument"

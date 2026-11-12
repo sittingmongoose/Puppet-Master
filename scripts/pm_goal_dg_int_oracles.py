@@ -457,13 +457,13 @@ def p4_cases(run):
         c = IR.IntConsumer(w)
         return c.rebuild(IR.run_scope(w))
     run.case(g, 'P4/r2_goal_cancelled_v1_event_is_unregistered', 'negative',
-             with_world(lambda: P7.cancelled_world({}, base=BASE), unregistered_goal_event),
+             with_world(lambda: RW.CancelWorld({}, base=BASE).build(), unregistered_goal_event),
              'advance/halt/reducer/unregistered_record')
 
 
 def note_event(w):
     ev = unrelated_event(w)
-    ev.update(event_id='TEST_ONLY:note:' + w.sid[:8], event_type='run.started', payload_schema_id='https://puppetmaster.local/schemas/pm/run_started.schema.json',
+    ev.update(event_id='TEST_ONLY:note:' + w.sid[:8], event_type='run.started', payload_schema_id='https://puppetmaster.local/schemas/event_payloads/run_started/2.0.0',
               idempotency_key='TEST_ONLY:note:' + w.sid[:8], project_id=w.scope['project_id'])
     return ev
 
@@ -475,7 +475,7 @@ def unrelated_event(w):
                 actor_ref='TEST_ONLY:actor:unrelated', requested_account_ref=None, effective_account_ref=None,
                 occurred_at_utc=w.clock.now(), producer_sequence_id=None, correlation_id='TEST_ONLY:correlation:unrelated',
                 causation_event_id=None, parent_event_id=None, idempotency_key='TEST_ONLY:unrelated:' + w.sid[:8],
-                payload_schema_id='https://puppetmaster.local/schemas/pm/run_started.schema.json', payload=dict(qualification=QUALIFICATION), payload_ref=None,
+                payload_schema_id='https://puppetmaster.local/schemas/event_payloads/run_started/2.0.0', payload=dict(qualification=QUALIFICATION), payload_ref=None,
                 redaction_profile='no_secrets', replay_policy='dedupe_by_idempotency_key',
                 migration=dict(migrated_from_schema_id=None, migrated_from_schema_version=None, migration_id=None,
                                compatibility_event_type=None))

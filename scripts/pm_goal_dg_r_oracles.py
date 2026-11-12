@@ -693,10 +693,26 @@ def off_run_event(w, kind='goal_run.started', same_run=False, pending=False, ext
 def projector_case(cfg, steps, check=None):
     """Build a world, then run projector steps; each step is fn(world, projector)."""
     def run():
-        w = W.CancelWorld(cfg, base=BASE)
+        options=dict(cfg)
+        # Current-reader counterexamples mutate the acquired read argument,
+        # after genuine C3 settlement has established a valid original.
+        knobs=dict(options.get('knobs',{}))
+        late={k:knobs.pop(k) for k in list(knobs) if k in
+              ('readback_edit','safe_readback_edit','current_start_edit','current_read_edit','current_goal_edit')}
+        options['knobs']=knobs
+        legacy=options.pop('legacy_goal_v1',False)
+        if legacy:
+            w=W.CancelWorld(options,base=BASE)
+        elif options.get('edition')=='native_v7' or options.get('start')=='no_start':
+            from pm_goal_dg_int_cancel import CancelWorld
+            w=CancelWorld(options,base=BASE)
+        else:
+            from pm_goal_dg_int_old import World
+            w=World(options,base=BASE)
         try:
             w.build()
-            p = P.Projector(w)
+            w.knobs.update(late)
+            p = getattr(w,'projector_class',P.Projector)(w)
             value = None
             for step in steps:
                 value = step(w, p)
@@ -744,12 +760,13 @@ def r5_cases():
     out = []
 
     def form(w, p, v):
-        return dict(kind=v['row']['content']['kind'], record=v['row']['content'].get('record', {}).get(
+        content=v['row'].get('content',dict(kind='inline',record=v['row'].get('record',{})))
+        return dict(kind=content['kind'], record=content.get('record', {}).get(
             'status_at_original_event'), frontier=w.storage.last_sequence)
     # The retained v1 Goal event remains unregistered; explicitly prove quarantine.
     for name, cfg in (('started', S0), ('no_start', N0)):
         run_case(out, 'R5/unregistered_goal_cancelled_v1_' + name, 'R5', 'negative',
-                 projector_case(cfg, [must_unavailable(None)]),
+                 projector_case(dict(cfg,legacy_goal_v1=True), [must_unavailable(None)]),
                  'unavailable/UNSUPPORTED_RELEVANT_EVENT/reducer/unregistered_record')
 
     run_case(out, 'R5/positive/started_then_cancelled_combined', 'R5', 'positive', projector_case(S0, [publish], form))
@@ -769,7 +786,7 @@ def r5_cases():
 
     def deterministic(w, p):
         first = must_publish(w, p)
-        again = P.Projector(w).project()
+        again = getattr(w,'projector_class',P.Projector)(w).project()
         W.guard('determinism/replay', again.get('replay') is True and A.same(again['row'], first['row']))
         return dict(row_sha256=W.physical_sha256(first['row']))
     run_case(out, 'R5/positive/deterministic_reprocessing_same_row', 'R5', 'positive', projector_case(S0, [deterministic]))
@@ -1297,15 +1314,16 @@ def r4_v7_cases():
 
     def v7_case(cfg, read):
         def run():
-            w = W.CancelWorld(cfg, base=BASE)
+            from pm_goal_dg_int_cancel import CancelWorld,Consumer,Projector
+            w = CancelWorld(cfg, base=BASE)
             try:
                 w.build()
                 if read in ('retained', 'inspect'):
-                    c = R.Consumer(w)
+                    c = Consumer(w)
                     out_ = c.inspect_original(request_of(w), R.Presentation(w)) if read == 'inspect' else \
                         c.read_retained_native(request_of(w), R.Presentation(w))
                     return dict(edition=w.edition, d01_version=(out_.get('native_cancellation') or out_)['original_d01_update']['schema_version'])
-                p = P.ProjectorV7(w)
+                p = Projector(w)
                 must_publish(w, p)
                 p.cutover()
                 before = w.recorder.snapshot()
@@ -1365,12 +1383,11 @@ def r4_v7_cases():
         run_case(out, 'R4/' + name, 'R4', 'negative', fn, expected)
 
     rows = [
-        ('v7_inline_row_oversize', knob(V7, event_payload=LONG_ACTOR(5000)), [lambda w, p: P.ProjectorV7(w).project()],
+        ('v7_inline_row_oversize', knob(V7, event_payload=LONG_ACTOR(5000)), [lambda w, p: p.project()],
          'representation/inline_oversize'),
         ('v7_current_readback_prior_body', knob(V7, readback_edit=lambda v: v['d06_readback']['native_after'].update(
             body=copy.deepcopy(W.World.CURRENT.body1.wrapper), body_selection=W.World.CURRENT.body1.selector())),
-         [lambda w, p: (P.ProjectorV7(w).project(), None)[1],
-          lambda w, p: (setattr(w, '_p7', P.ProjectorV7(w)), w._p7.cutover(), w._p7.read_current_cancelled())],
+         [publish, cutover, lambda w,p:p.read_current_cancelled()],
          'current/readback_native'),
     ]
     for name, cfg, steps, expected in rows:

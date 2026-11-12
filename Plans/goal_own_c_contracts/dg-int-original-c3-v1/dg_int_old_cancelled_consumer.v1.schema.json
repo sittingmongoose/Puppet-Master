@@ -965,7 +965,7 @@
     "TypedCancelledEvent": {
       "allOf": [
         {
-          "$ref": "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/NativeEvent"
+          "$ref": "https://puppetmaster.local/proposals/dg_int_old_cancel_positive_safestop.v1.schema.json#/$defs/NativeEvent"
         },
         {
           "properties": {
