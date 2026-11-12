@@ -80,8 +80,8 @@
       "dg_ca_group_closure": {
         "C1": "COMPLETE",
         "C2": "COMPLETE",
-        "C3": "ASSIGNED_TO_DG_CA3",
-        "C4": "NOT_COMPLETE_ASSIGNMENT_ADMISSION_COMPLETE"
+        "C3": "COMPLETE_BY_DG_CA3",
+        "C4": "COMPLETE_BY_DG_CA3"
       },
       "dg_ca_assignment_successor": "Plans/goal_own_c_contracts/dg-ca-assignment-successor-v1/selection.v1.json",
       "dg_cb_corpus": "Plans/goal_own_c_contracts/dg-cb-corpus-v1/coverage.json",
@@ -91,7 +91,14 @@
         "C5": "COMPLETE",
         "C6": "COMPLETE"
       },
-      "dg_cb_test_only_sources": "Plans/goal_own_c_contracts/dg-cb-migration-v1/test-only-sources.v1.schema.json"
+      "dg_cb_test_only_sources": "Plans/goal_own_c_contracts/dg-cb-migration-v1/test-only-sources.v1.schema.json",
+      "dg_ca3_oracle": "python3 scripts/pm_goal_dg_ca3_oracles.py",
+      "dg_ca3_group_closure": {
+        "C3": "COMPLETE",
+        "C4": "COMPLETE"
+      },
+      "dg_ca3_native_owners": "scripts/pm_goal_dg_ca3_native.py",
+      "dg_ca3_index_read_source": "scripts/pm_goal_dg_ca3_index.py (lane-local TEST_ONLY SP-278 read source; adapter batch)"
     },
     {
       "event_type": "goal_run.started",
