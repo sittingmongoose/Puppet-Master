@@ -31557,3 +31557,120 @@ preserved_exact_tokens:
 owner_hints:
 - Plans/Planning_Ledger_System.md
 ```
+
+
+### DL-473 - Auto Placement And Person-Allowed Project Computers
+
+```yaml
+plan_unit_id: DL-473
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: |-
+  Jared's decisions, verbatim (2026-11-09):
+  - Who wins: "Person's pin wins".
+  - A build's computers: "Any allowed computer. It should work similar to the way T3 does it where we have a number of parameters to give certain devices priority. Like ram, cpu or storage. We would need to talk through that priority system."
+  - Offline mid-task: "Wait, then safe retry".
+  - No-project chats: "Keep the computer you're on".
+  - Controls: "Presets + Advanced (Recommended)".
+  - Measures in Balanced: "Free CPU and memory (Recommended), Free disk space, Queued work (Recommended)".
+  - A computer in use: "Yes, count it as Less often (Recommended)".
+  - Levels: "As proposed (Recommended)".
+
+  Each Project has a default Computer and new Project work defaults to Auto. SIR-056 owns the single placement policy: must-haves gate before ranking; levels Prefer/Normal/Less often/Only when I choose it; Balanced default, Fastest and Keep my computer free presets; Everywhere weights and optional Project preset override. Tasks add only minimums, never priority. Keyboard activity or battery power demotes to Less often by default, with an off setting. Has the files already was not chosen for Balanced; it exists only as an Advanced slider with default 0. Tie-break is Project default Computer then stable execution_host_id order, unchanged by rename. Why this computer accompanies Auto → <Computer> or Chosen: <Computer> with chooser and requested/effective differences.
+
+  A person's pin binds agents unless the person lets them choose. Agents may pin one task or choose Auto only within allowed Computers; they never change Project/Everywhere defaults. PS-147/148 grants authorize the Project's current person-allowed Computers, including a Computer the person allows later, while each dispatch freezes one exact selection and rechecks authority. A new Computer/device identity still asks even in YOLO. Started work waits/resumes on its Computer; only a safe checkpoint, reconciliation and old-owner fencing permit retry elsewhere. Unstarted independent work may use Auto elsewhere. Home Server remains the records home and never automatically fails over. SRV-017 and general.interaction.no-project-default-computer remain unchanged.
+
+  The must-haves are answering/trusted identity, Project allowance, files or permission to fetch, actual-worker sign-ins/tools, task minimums and not drained. Absolute memory/disk floors in GB, running-task reservations and leased browsers/recordings/phones/exclusive GPU slots remain governor gates. Quota belongs to an account, not a Computer. Related chains, fair caps, measured file latency/health, timing-sensitive versus heavy work, OS-correct memory and durable-runner/restart risk feed existing admission and truthful explanation; none widens authority. Precise scoring calibration and governed grant/context/typed-command successors remain implementation prerequisites, not fabricated native support. Prose precedes inventory/schema/fixture companions; no governance reseal is authorized.
+gui_related: true
+gui_classification_reason: Defines visible placement choices, controls and explanations.
+depends_on: [SRV-006, SIR-056, PS-147, PS-148, SSYS-059, PJCT-012]
+unblocks: []
+acceptance_criteria:
+- "Accepted Jared quotes remain verbatim and each owner preserves the human pin, allowed-set and no-project boundaries."
+- "Owner prose and companion records do not claim native placement, grant migration or governance readiness."
+validation_surfaces: [future placement gate/ranking/pin/recovery fixtures, scripts/pm-plan-index.py]
+risk_class: placement_authority_and_duplicate_effects
+reasoning_tier: high
+context_scope: project_work_placement
+implementation_surfaces: [Plans/Decision_Log.md]
+node_compile_hint: {mode: owner_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+- "share/puppet-master/2026-11-09-settings-feedback/BRIEF-plans-where-work-runs.md; Jared 2026-11-09"
+preserved_exact_tokens: ["Person's pin wins", "Wait, then safe retry", "Keep the computer you're on", "Presets + Advanced (Recommended)", "Why this computer"]
+negative_constraints:
+- No placement widens authority or changes the Project Home Server.
+- No native readiness or governance seal is inferred from accepted prose.
+```
+
+### DL-474 - Settings Admission, Free Persona Tags And Truthful Service Readiness
+
+```yaml
+plan_unit_id: DL-474
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: |-
+  Jared answered Q2, Q3 and Q4 on 2026-11-11 at 17:08:56 UTC. Each signed answer records choice ["A"] and an empty note. The selected card labels, verbatim, are:
+  - Q2: "Make them real settings".
+  - Q3: "Free tags, with suggestions".
+  - Q4: "Keep 'Needs attention'".
+
+  Q2 approves making Prefer pinned memories, When memories disagree, Crews can read project memories, the four memory source switches (Project files, Plans, Tool output and Manager records), a new Goal's Persona, a new Goal's Crew, Run test profile and Ask me to confirm searchable, explainable and resettable Settings choices. Admission must carry the semantic owner's actual values, default, scope and offered levels through SSYS-004/059 and the existing writer. The answer supplies no missing value/default/level rules and cannot by itself invent them or override AMS-026/054 memory isolation or Goal V2 ownership. Owner gaps must be adjudicated before the affected rows are registered; demo defaults and page-local state are source lineage only. Chat history already has memory.retention.history-retention and is not a fifth new source row.
+
+  Q2 disposition in this batch: 0 Q2 rows admitted. Approved but unregistered, pending these owner questions:
+  - Prefer pinned memories: whether AMS-020's pinned ranking boost may be switched off at all, the off and on scoring meaning, default and offered levels.
+  - When memories disagree: a retrieval-time disagreement policy, its values, default and offered levels; per-capture Teach resolution is not that policy.
+  - Crews can read project memories: an owner-approved successor to AMS-026/054 naming exactly what a Crew may read and what stays private, with values, default, levels and the command and storage contract.
+  - Project files, Plans, Tool output and Manager records source switches: whether each gates retrieval, capture or evidence use, with default and levels, without letting required context or verification evidence go missing.
+  - A new Goal's Persona and a new Goal's Crew: inherit the ordinary thread choice or seed a distinct preference; reference, default, none and inherit meaning, and levels, without adding GoalRecordV2 fields or starting collaboration by setting alone.
+  - Run test profile: a test-profile record and selection contract, default and levels, and absence and deletion behavior for completion evidence.
+  - Ask me to confirm: whether and how a human completion confirmation joins caller evidence, default and levels, and approval, cancellation and replay behavior.
+
+  Q3 follows Personas P-010: personas.library.persona-tags is a free string tag input with suggested kinds phase, task, subtask, iteration, cross-phase, language, domain and framework, plus arbitrary freeform tags. The inventory's old seam/package/lane/node/cross-seam choices are replaced as suggestions, not migrated into a closed enum or used to rewrite existing free tags. Persona-owned scope, default empty list and existing layering remain.
+
+  Q4 keeps Needs attention for AI roster services with no model chosen. F3-108 and SSYS-026 consume actual owner readiness; this records the existing behavior rather than introducing a second status engine or a new setting.
+
+  The How runs pause option is labelled Without pausing; its stored value hands-off, default and behavior remain. The Hands-off development permission profile keeps its distinct name. Current census prose refers to the unique live IDs in Plans/settings_inventory.json; historical admission counts remain lineage.
+gui_related: true
+gui_classification_reason: Records Settings search/reset admission, free tag input and visible roster/option labels.
+depends_on: [SSYS-004, SSYS-059, P-010, F3-108, SSYS-026]
+unblocks: []
+acceptance_criteria:
+- The signed A choices and exact selected labels are preserved with source hashes.
+- Inventory admission uses owner-defined values/defaults/levels; unresolved owners do not acquire invented policy.
+- This batch admits 0 Q2 rows and lists each pending owner question; a later decision admits each row only after its question is answered.
+- Persona tags remain free input with the owner suggestions and existing record ownership.
+- No chosen model renders Needs attention from owner readiness.
+- Without pausing retains the stored value hands-off and does not rename the permission profile.
+validation_surfaces:
+- scripts/pm-settings-layering-check.py
+- scripts/pm7-build-check.py
+- scripts/pm7-canon-check.py
+- future native Settings/owner search, Details, Reset and readiness evidence; not_run
+risk_class: settings_owner_default_scope_and_presentation_drift
+reasoning_tier: high
+context_scope: settings_canon_batch_20261111
+implementation_surfaces: [Plans/settings_inventory.json, Plans/Settings_System.md, Plans/Personas.md, Plans/FinalGUISpec.md]
+node_compile_hint: {mode: owner_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+- "/mnt/Cursor/agent-reports/v1/answers/vm.pm7-build--Q2.json; SHA-256 c06a7ce177aa44ede2f3b875bf2b7462815558344a34c33f6a85290875336950; answered 2026-11-11T17:08:56.662Z; choice A"
+- "/mnt/Cursor/agent-reports/v1/writers/vm.pm7-build/cards/vm.pm7-build--Q2.json; SHA-256 09f6c10d2b01830210cb3e635fd5dbca911ca76a8df1b415487db2f412763afe; selected label: Make them real settings"
+- "/mnt/Cursor/agent-reports/v1/answers/vm.pm7-build--Q3.json; SHA-256 3da29e33a83120b34ab8c3509372e2eb27f7d89b9d55f1ec63774f58653e6d76; answered 2026-11-11T17:08:56.685Z; choice A"
+- "/mnt/Cursor/agent-reports/v1/writers/vm.pm7-build/cards/vm.pm7-build--Q3.json; SHA-256 4fbdf63b756d689e3c19a62f1e8ea0e1050f97a383617cb1fed224e2997b200d; selected label: Free tags, with suggestions"
+- "/mnt/Cursor/agent-reports/v1/answers/vm.pm7-build--Q4.json; SHA-256 c645fa80be83f6013d0e52dbc79b845c39a354149bc0a764962088ea9067d36f; answered 2026-11-11T17:08:56.754Z; choice A"
+- "/mnt/Cursor/agent-reports/v1/writers/vm.pm7-build/cards/vm.pm7-build--Q4.json; SHA-256 13eb1adbd7b3a66da20cd406e5e2bbce067687e57453d46bb60842a9a0a68265; selected label: Keep 'Needs attention'"
+- "share/puppet-master/2026-11-09-settings-feedback/BRIEF-plans-settings-canon-batch.md"
+preserved_exact_tokens:
+- Make them real settings
+- Free tags, with suggestions
+- Keep 'Needs attention'
+- personas.library.persona-tags
+- Without pausing
+- hands-off
+negative_constraints:
+- Do not derive owner policy or offered levels from concept demo defaults.
+- Do not expand Crew memory access, Goal V2 fields or runtime authority from Settings admission intent.
+- Do not infer native implementation, readiness or a governance seal from this decision.
+owner_hints: [Plans/Settings_System.md, Plans/assistant-memory-subsystem.md, Plans/Goal_Runtime_System.md, Plans/Personas.md, Plans/FinalGUISpec.md]
+```
