@@ -77,13 +77,15 @@ export default async function (t) {
 			const mover = host.querySelector('svg.nx-st-spin') || host.querySelector('.nx-p');
 			const list = mover.getAnimations().filter((a) => a.playState === 'running');
 			const timing = list.map((a) => ({ name: a.animationName, ...a.effect.getTiming() }));
+			// CSSAnimation reports the effect's easing as linear; CSS applies its timing function to the keyframes.
+			const easing = getComputedStyle(mover).animationTimingFunction;
 			await Promise.race([Promise.all(list.map((a) => a.finished)), new Promise((r) => setTimeout(r, 3000))]);
 			await new Promise(requestAnimationFrame);
-			return { timing, resting: host.getAnimations({ subtree: true }).every((a) => a.playState !== 'running'), transform: getComputedStyle(mover).transform };
+			return { timing, easing, resting: host.getAnimations({ subtree: true }).every((a) => a.playState !== 'running'), transform: getComputedStyle(mover).transform };
 		} finally { host.remove(); }
 	});
 	t.log(`still working entrance: ${JSON.stringify(entrance)}`);
-	await t.check('still Working: one finite entrance runs on the moving element immediately after mount', entrance.timing.length === 1 && entrance.timing[0].name === 'nx-st-working-0A' && entrance.timing[0].iterations === 1 && entrance.timing[0].duration === 440 && entrance.timing[0].fill === 'backwards' && entrance.timing[0].easing.replaceAll(' ', '') === 'cubic-bezier(0.2,0.75,0.25,1)', JSON.stringify(entrance.timing));
+	await t.check('still Working: one finite entrance runs on the moving element immediately after mount', entrance.timing.length === 1 && entrance.timing[0].name === 'nx-st-working-0A' && entrance.timing[0].iterations === 1 && entrance.timing[0].duration === 440 && entrance.timing[0].fill === 'backwards' && entrance.easing.replaceAll(' ', '') === 'cubic-bezier(0.2,0.75,0.25,1)', JSON.stringify(entrance));
 	await t.check('still Working: the entrance ends at rest', entrance.resting && ['none', 'matrix(1, 0, 0, 1, 0, 0)'].includes(entrance.transform), JSON.stringify(entrance));
 	if (String(t.args.entranceOnly || '0') === '1') return;
 	const snaps = t.args.snaps ? path.resolve(String(t.args.snaps)) : null;

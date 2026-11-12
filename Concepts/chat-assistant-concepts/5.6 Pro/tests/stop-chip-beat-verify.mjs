@@ -8,14 +8,14 @@ import { execFileSync } from 'node:child_process';
 const ref = process.argv.indexOf('--ref');
 const src = ref < 0 ? readFileSync(new URL('../send-stop.js', import.meta.url), 'utf8') : execFileSync('git', ['show', `${process.argv[ref + 1]}:Concepts/chat-assistant-concepts/5.6 Pro/send-stop.js`], { encoding: 'utf8' });
 
-function chip({ change, notify = true, stall = false } = {}) {
-	let clock = 0, seq = 0, duration = 2200, delay = 800, rate = 1, origin = 0, localOrigin = 0;
+function chip({ change, notify = true, stall = false, cadence = 'flowing' } = {}) {
+	let clock = 0, seq = 0, duration = cadence === 'flowing' ? 2200 : 3200, delay = 800, rate = 1, origin = 0, localOrigin = 0;
 	const timers = new Map(), observers = [], switches = [], listeners = [];
 	const setTimeout = (cb, ms) => { const id = ++seq; timers.set(id, { at: clock + Math.max(0, ms), cb }); return id; };
 	const clearTimeout = (id) => timers.delete(id);
 	const local = () => localOrigin + (clock - origin) * rate;
 	const timing = () => ({ localTime: local(), duration, delay, currentIteration: local() < delay ? null : Math.floor((local() - delay) / duration) });
-	const newAnimation = () => ({ animationName: 'ss-breathe', playState: 'running', get playbackRate() { return rate; }, effect: { getComputedTiming: timing } });
+	const newAnimation = () => ({ animationName: cadence === 'flowing' ? 'ss-breathe' : 'ss-breathe-w', playState: 'running', get playbackRate() { return rate; }, effect: { getComputedTiming: timing } });
 	let animation = newAnimation();
 	const attrs = new Map();
 	const b = {
@@ -32,7 +32,8 @@ function chip({ change, notify = true, stall = false } = {}) {
 	}
 	window.MutationObserver = MutationObserver;
 	vm.runInNewContext(src, { window, document, performance: { now: () => clock }, setTimeout, clearTimeout, MutationObserver });
-	window.PM56_SENDSTOP.token();
+	if (cadence === 'flowing') window.PM56_SENDSTOP.token();
+	else for (let at = 1100; at <= 5500; at += 100) setTimeout(() => window.PM56_SENDSTOP.token(), at);
 	const html = window.PM56_SENDSTOP.html({ busy: true, text: '', qlen: 0, tid: 'one' });
 	for (const m of html.matchAll(/(data-[\w-]+)="([^"]*)"/g)) attrs.set(m[1], m[2]);
 	let changed = false, stalled = false;
@@ -41,7 +42,7 @@ function chip({ change, notify = true, stall = false } = {}) {
 		if (!next) break;
 		if (change && !changed && next[1].at >= 1000) {
 			clock = 1000; changed = true;
-			if (change === 'fast') duration = 1320;
+			if (change === 'fast') duration = cadence === 'flowing' ? 1320 : 1920;
 			if (change === 'slow') duration = 3520;
 			if (change === 'delay') delay = 1200;
 			if (change === 'rate') { localOrigin = local(); origin = clock; rate = 2; }
@@ -62,6 +63,7 @@ let failed = 0;
 const cases = [
 	['unchanged timing', {}, 3000],
 	['Fast at t=1000 (R4 trigger)', { change: 'fast' }, 2120],
+	['waiting Fast at t=1000 with words arriving (browser path)', { change: 'fast', cadence: 'waiting' }, 2720],
 	['Cinematic at t=1000', { change: 'slow' }, 4320],
 	['delay changes at t=1000', { change: 'delay' }, 3400],
 	['playback rate doubles at t=1000', { change: 'rate' }, 2000],
