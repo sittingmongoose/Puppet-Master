@@ -32974,3 +32974,425 @@ negative_constraints:
 owner_hints:
 - Plans/Contracts_V0.md
 ```
+
+### CV-680 - alert.acknowledged exact payload and storage route
+
+```yaml
+plan_unit_id: CV-680
+unit_type: contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: alert.acknowledged 1.0.0 uses only Plans/event_payloads/attention/alert_acknowledged.schema.json,
+  schema id pm.attention_event.alert_acknowledged.schema.v1. Root and nested field closure, required fields and
+  enums are binding. Semantic currentness, Project/actor/identity joins, result revision succession, exact original
+  retry, SP-286/CV-339 full-value custody, SP-278/DL-076 history and withdrawal are individually specified in Plans/storage-plan.md#SP-660;
+  Plans/FinalGUISpec.md#F3-700 owns the visible action. These routes grant no admission; retention_policy_ref PENDING_RETENTION_DECISION.
+  Current semantic numbers follow CV-1100 and SP-1100, beside the CV-317, CV-339, SP-278 and SP-286 profile owners, as
+  exact JSON integer tokens parsed by loads_current_json and admitted by current_integer at each schema integer slot within
+  that field's own schema bounds, with no lane-wide cap. Refuse floats (including integral/exponent spellings), Boolean values,
+  negative-zero tokens and leading zeros before schema/semantic use, identity hashing or retry comparison; never coerce
+  retained originals, whose write-time recipe SP-1101 selects. Storage-assigned sequence/frontier fields retain their u64
+  physical domain (SP-1100), with the same exact integer representation. Timestamps follow CV-1101 through the shared date_time predicate with the owner profile of each field. Payload,
+  state and record date-time fields, EventRecord occurred_at_utc and the first-receipt acknowledged_at_utc take the
+  EventRecord profile (RFC 3339 with T or t, Z, z or a signed offset, real calendar and offset ranges, a legitimate
+  offset-adjusted leap second, year 0000 and any number of fractional digits; a missing zone, space separator,
+  trailing LF or illegitimate second 60 refuses), and the two Storage-assigned EventRecord instants that CV-253
+  binds take its storage_utc_z profile. Strings are never rewritten; instants compare exactly with offsets applied, every
+  fractional digit kept and a leap second ordered within its minute. Enforce date-time and UUID formats without
+  optional package dependencies.
+  The family-specific input-domain and guard oracle is scripts/pm-dg6a-domain-check.py alongside its full family checker.
+gui_related: false
+gui_classification_reason: Storage/event contract, no new UI.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- alert.acknowledged is denied until its own admission; exact identity, custody, recovery and negative paths are
+  checked.
+- Retention remains PENDING_RETENTION_DECISION; native execution NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm-alert-event-contracts-check.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: alert_acknowledged
+implementation_surfaces:
+- Plans/event_payloads/attention/alert_acknowledged.schema.json
+- Plans/storage-plan.md#SP-660
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/FinalGUISpec.md#F3-453
+preserved_exact_tokens:
+- alert.acknowledged
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- No append, native activation, checkpoint advance or admission from this preparation.
+```
+
+### CV-681 - alert.dismissed exact payload and storage route
+
+```yaml
+plan_unit_id: CV-681
+unit_type: contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: alert.dismissed 1.0.0 uses only Plans/event_payloads/attention/alert_dismissed.schema.json, schema
+  id pm.attention_event.alert_dismissed.schema.v1. Root and nested field closure, required fields and enums are
+  binding. Semantic currentness, Project/actor/identity joins, result revision succession, exact original retry,
+  SP-286/CV-339 full-value custody, SP-278/DL-076 history and withdrawal are individually specified in Plans/storage-plan.md#SP-661;
+  Plans/FinalGUISpec.md#F3-701 owns the visible action. These routes grant no admission; retention_policy_ref PENDING_RETENTION_DECISION.
+  Current semantic numbers follow CV-1100 and SP-1100, beside the CV-317, CV-339, SP-278 and SP-286 profile owners, as
+  exact JSON integer tokens parsed by loads_current_json and admitted by current_integer at each schema integer slot within
+  that field's own schema bounds, with no lane-wide cap. Refuse floats (including integral/exponent spellings), Boolean values,
+  negative-zero tokens and leading zeros before schema/semantic use, identity hashing or retry comparison; never coerce
+  retained originals, whose write-time recipe SP-1101 selects. Storage-assigned sequence/frontier fields retain their u64
+  physical domain (SP-1100), with the same exact integer representation. Timestamps follow CV-1101 through the shared date_time predicate with the owner profile of each field. Payload,
+  state and record date-time fields, EventRecord occurred_at_utc and the first-receipt acknowledged_at_utc take the
+  EventRecord profile (RFC 3339 with T or t, Z, z or a signed offset, real calendar and offset ranges, a legitimate
+  offset-adjusted leap second, year 0000 and any number of fractional digits; a missing zone, space separator,
+  trailing LF or illegitimate second 60 refuses), and the two Storage-assigned EventRecord instants that CV-253
+  binds take its storage_utc_z profile. Strings are never rewritten; instants compare exactly with offsets applied, every
+  fractional digit kept and a leap second ordered within its minute. Enforce date-time and UUID formats without
+  optional package dependencies.
+  The family-specific input-domain and guard oracle is scripts/pm-dg6a-domain-check.py alongside its full family checker.
+gui_related: false
+gui_classification_reason: Storage/event contract, no new UI.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- alert.dismissed is denied until its own admission; exact identity, custody, recovery and negative paths are checked.
+- Retention remains PENDING_RETENTION_DECISION; native execution NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm-alert-event-contracts-check.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: alert_dismissed
+implementation_surfaces:
+- Plans/event_payloads/attention/alert_dismissed.schema.json
+- Plans/storage-plan.md#SP-661
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/FinalGUISpec.md#F3-453
+preserved_exact_tokens:
+- alert.dismissed
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- No append, native activation, checkpoint advance or admission from this preparation.
+```
+
+### CV-682 - alert.rule_muted exact payload and storage route
+
+```yaml
+plan_unit_id: CV-682
+unit_type: contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: alert.rule_muted 1.0.0 uses only Plans/event_payloads/attention/alert_rule_muted.schema.json, schema
+  id pm.attention_event.alert_rule_muted.schema.v1. Root and nested field closure, required fields and enums are
+  binding. Semantic currentness, Project/actor/identity joins, result revision succession, exact original retry,
+  SP-286/CV-339 full-value custody, SP-278/DL-076 history and withdrawal are individually specified in Plans/storage-plan.md#SP-662;
+  Plans/FinalGUISpec.md#F3-702 owns the visible action. These routes grant no admission; retention_policy_ref PENDING_RETENTION_DECISION.
+  Current semantic numbers follow CV-1100 and SP-1100, beside the CV-317, CV-339, SP-278 and SP-286 profile owners, as
+  exact JSON integer tokens parsed by loads_current_json and admitted by current_integer at each schema integer slot within
+  that field's own schema bounds, with no lane-wide cap. Refuse floats (including integral/exponent spellings), Boolean values,
+  negative-zero tokens and leading zeros before schema/semantic use, identity hashing or retry comparison; never coerce
+  retained originals, whose write-time recipe SP-1101 selects. Storage-assigned sequence/frontier fields retain their u64
+  physical domain (SP-1100), with the same exact integer representation. Timestamps follow CV-1101 through the shared date_time predicate with the owner profile of each field. Payload,
+  state and record date-time fields, EventRecord occurred_at_utc and the first-receipt acknowledged_at_utc take the
+  EventRecord profile (RFC 3339 with T or t, Z, z or a signed offset, real calendar and offset ranges, a legitimate
+  offset-adjusted leap second, year 0000 and any number of fractional digits; a missing zone, space separator,
+  trailing LF or illegitimate second 60 refuses), and the two Storage-assigned EventRecord instants that CV-253
+  binds take its storage_utc_z profile. Strings are never rewritten; instants compare exactly with offsets applied, every
+  fractional digit kept and a leap second ordered within its minute. Enforce date-time and UUID formats without
+  optional package dependencies.
+  The family-specific input-domain and guard oracle is scripts/pm-dg6a-domain-check.py alongside its full family checker.
+gui_related: false
+gui_classification_reason: Storage/event contract, no new UI.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- alert.rule_muted is denied until its own admission; exact identity, custody, recovery and negative paths are checked.
+- Retention remains PENDING_RETENTION_DECISION; native execution NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm-alert-event-contracts-check.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: alert_rule_muted
+implementation_surfaces:
+- Plans/event_payloads/attention/alert_rule_muted.schema.json
+- Plans/storage-plan.md#SP-662
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/FinalGUISpec.md#F3-453
+preserved_exact_tokens:
+- alert.rule_muted
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- No append, native activation, checkpoint advance or admission from this preparation.
+```
+
+### CV-683 - alert.snoozed exact payload and storage route
+
+```yaml
+plan_unit_id: CV-683
+unit_type: contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: alert.snoozed 1.0.0 uses only Plans/event_payloads/attention/alert_snoozed.schema.json, schema id
+  pm.attention_event.alert_snoozed.schema.v1. Root and nested field closure, required fields and enums are binding.
+  Semantic currentness, Project/actor/identity joins, result revision succession, exact original retry, SP-286/CV-339
+  full-value custody, SP-278/DL-076 history and withdrawal are individually specified in Plans/storage-plan.md#SP-663;
+  Plans/FinalGUISpec.md#F3-703 owns the visible action. These routes grant no admission; retention_policy_ref PENDING_RETENTION_DECISION.
+  Current semantic numbers follow CV-1100 and SP-1100, beside the CV-317, CV-339, SP-278 and SP-286 profile owners, as
+  exact JSON integer tokens parsed by loads_current_json and admitted by current_integer at each schema integer slot within
+  that field's own schema bounds, with no lane-wide cap. Refuse floats (including integral/exponent spellings), Boolean values,
+  negative-zero tokens and leading zeros before schema/semantic use, identity hashing or retry comparison; never coerce
+  retained originals, whose write-time recipe SP-1101 selects. Storage-assigned sequence/frontier fields retain their u64
+  physical domain (SP-1100), with the same exact integer representation. Timestamps follow CV-1101 through the shared date_time predicate with the owner profile of each field. Payload,
+  state and record date-time fields, EventRecord occurred_at_utc and the first-receipt acknowledged_at_utc take the
+  EventRecord profile (RFC 3339 with T or t, Z, z or a signed offset, real calendar and offset ranges, a legitimate
+  offset-adjusted leap second, year 0000 and any number of fractional digits; a missing zone, space separator,
+  trailing LF or illegitimate second 60 refuses), and the two Storage-assigned EventRecord instants that CV-253
+  binds take its storage_utc_z profile. Strings are never rewritten; instants compare exactly with offsets applied, every
+  fractional digit kept and a leap second ordered within its minute. Enforce date-time and UUID formats without
+  optional package dependencies.
+  The family-specific input-domain and guard oracle is scripts/pm-dg6a-domain-check.py alongside its full family checker.
+gui_related: false
+gui_classification_reason: Storage/event contract, no new UI.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- alert.snoozed is denied until its own admission; exact identity, custody, recovery and negative paths are checked.
+- Retention remains PENDING_RETENTION_DECISION; native execution NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm-alert-event-contracts-check.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: alert_snoozed
+implementation_surfaces:
+- Plans/event_payloads/attention/alert_snoozed.schema.json
+- Plans/storage-plan.md#SP-663
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/FinalGUISpec.md#F3-453
+preserved_exact_tokens:
+- alert.snoozed
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- No append, native activation, checkpoint advance or admission from this preparation.
+```
+
+### CV-684 - panel.redocked current payload and historical reader
+
+```yaml
+plan_unit_id: CV-684
+unit_type: contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: panel.redocked current payload 2.0.0 is the closed Plans/event_payloads/panel_redocked_v2.schema.json
+  (pm.event.panel_redocked.v2). Only cmd.panel.redock/panel_id=chat is valid. Current receipts audit a settled transient
+  host observation, host_state_persisted=false, co-emission=false, no Home revision. Immutable v1 schema stays historical-only
+  and dispatches by its own stored schema id/version. The complete independent producer, original receipt/identity/custody,
+  SP-286 full-value recovery, SP-278 bounded History, withdrawal and retention-pending contract is SP-664; semantic
+  owner F3-704. No admission or native proof.
+  Current semantic numbers follow CV-1100 and SP-1100, beside the CV-317, CV-339, SP-278 and SP-286 profile owners, as
+  exact JSON integer tokens parsed by loads_current_json and admitted by current_integer at each schema integer slot within
+  that field's own schema bounds, with no lane-wide cap. Refuse floats (including integral/exponent spellings), Boolean values,
+  negative-zero tokens and leading zeros before schema/semantic use, identity hashing or retry comparison; never coerce
+  retained originals, whose write-time recipe SP-1101 selects. Storage-assigned sequence/frontier fields retain their u64
+  physical domain (SP-1100), with the same exact integer representation. Timestamps follow CV-1101 through the shared date_time predicate with the owner profile of each field. Payload,
+  state and record date-time fields, EventRecord occurred_at_utc and the first-receipt acknowledged_at_utc take the
+  EventRecord profile (RFC 3339 with T or t, Z, z or a signed offset, real calendar and offset ranges, a legitimate
+  offset-adjusted leap second, year 0000 and any number of fractional digits; a missing zone, space separator,
+  trailing LF or illegitimate second 60 refuses), and the two Storage-assigned EventRecord instants that CV-253
+  binds take its storage_utc_z profile. Strings are never rewritten; instants compare exactly with offsets applied, every
+  fractional digit kept and a leap second ordered within its minute. Enforce date-time and UUID formats without
+  optional package dependencies.
+  The family-specific input-domain and guard oracle is scripts/pm-dg6a-domain-check.py alongside its full family checker.
+gui_related: false
+gui_classification_reason: Event custody and validation, no new UI.
+split_recommended: false
+depends_on:
+- SP-664
+- CV-361
+unblocks: []
+acceptance_criteria:
+- CV-684 binds only its explicitly named exact family, prepared without admission; native execution NOT_RUN.
+- Exact event admission precedes effects; retention remains PENDING_RETENTION_DECISION.
+validation_surfaces:
+- python3 scripts/pm-panel-event-contracts-check.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: chat_panel_event_authority
+implementation_surfaces:
+- Plans/Contracts_V0.md
+- Plans/panel_event_contracts/
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/Contracts_V0.md#CV-361
+- Plans/storage-plan.md#SP-330
+preserved_exact_tokens:
+- PENDING_RETENTION_DECISION
+- SP-278
+- SP-286
+negative_constraints:
+- No event admission, saved pop-out host, Home revision advance, replayed OS window effect, retention decision or
+  native execution proof.
+```
+
+### CV-685 - panel.undocked current payload and historical reader
+
+```yaml
+plan_unit_id: CV-685
+unit_type: contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: panel.undocked current payload 2.0.0 is the closed Plans/event_payloads/panel_undocked_v2.schema.json
+  (pm.event.panel_undocked.v2). Only cmd.panel.undock/panel_id=chat is valid. Current receipts audit a settled transient
+  host observation, host_state_persisted=false, co-emission=false, no Home revision. Immutable v1 schema stays historical-only
+  and dispatches by its own stored schema id/version. The complete independent producer, original receipt/identity/custody,
+  SP-286 full-value recovery, SP-278 bounded History, withdrawal and retention-pending contract is SP-665; semantic
+  owner F3-705. No admission or native proof.
+  Current semantic numbers follow CV-1100 and SP-1100, beside the CV-317, CV-339, SP-278 and SP-286 profile owners, as
+  exact JSON integer tokens parsed by loads_current_json and admitted by current_integer at each schema integer slot within
+  that field's own schema bounds, with no lane-wide cap. Refuse floats (including integral/exponent spellings), Boolean values,
+  negative-zero tokens and leading zeros before schema/semantic use, identity hashing or retry comparison; never coerce
+  retained originals, whose write-time recipe SP-1101 selects. Storage-assigned sequence/frontier fields retain their u64
+  physical domain (SP-1100), with the same exact integer representation. Timestamps follow CV-1101 through the shared date_time predicate with the owner profile of each field. Payload,
+  state and record date-time fields, EventRecord occurred_at_utc and the first-receipt acknowledged_at_utc take the
+  EventRecord profile (RFC 3339 with T or t, Z, z or a signed offset, real calendar and offset ranges, a legitimate
+  offset-adjusted leap second, year 0000 and any number of fractional digits; a missing zone, space separator,
+  trailing LF or illegitimate second 60 refuses), and the two Storage-assigned EventRecord instants that CV-253
+  binds take its storage_utc_z profile. Strings are never rewritten; instants compare exactly with offsets applied, every
+  fractional digit kept and a leap second ordered within its minute. Enforce date-time and UUID formats without
+  optional package dependencies.
+  The family-specific input-domain and guard oracle is scripts/pm-dg6a-domain-check.py alongside its full family checker.
+gui_related: false
+gui_classification_reason: Event custody and validation, no new UI.
+split_recommended: false
+depends_on:
+- SP-665
+- CV-361
+unblocks: []
+acceptance_criteria:
+- CV-685 binds only its explicitly named exact family, prepared without admission; native execution NOT_RUN.
+- Exact event admission precedes effects; retention remains PENDING_RETENTION_DECISION.
+validation_surfaces:
+- python3 scripts/pm-panel-event-contracts-check.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: chat_panel_event_authority
+implementation_surfaces:
+- Plans/Contracts_V0.md
+- Plans/panel_event_contracts/
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/Contracts_V0.md#CV-361
+- Plans/storage-plan.md#SP-330
+preserved_exact_tokens:
+- PENDING_RETENTION_DECISION
+- SP-278
+- SP-286
+negative_constraints:
+- No event admission, saved pop-out host, Home revision advance, replayed OS window effect, retention decision or
+  native execution proof.
+```
+
+### CV-686 - concern.created closed current payload and authority route
+
+```yaml
+plan_unit_id: CV-686
+unit_type: contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: concern.created current 1.0.0 selects the existing closed Plans/event_payloads/concern/concern_created.schema.json,
+  pm.concern_event.concern_created.schema.v1. OP-002/OP-004 and Executor_Protocol authorize only runtime, package
+  overseer, seam overseer, corroboration outcome and graph-patch logic; workers nominate. Owner-kind User/External
+  Resource/Recovery labels confer no creator grant. Absent -> active, revision one, creator separate from owner/resolver,
+  source event distinct from canonical record and projection. Semantic owner remains Orchestrator_Page; SP-666 is
+  the independently authored full original command/identity/digest/producer ordering/SP-286 full-value receipt/custody/SP-278
+  consumer/checkpoint/replay/withdrawal/physical-value contract. The complete digest binds original_command, candidate_payload
+  and candidate_record without omissions. Record body summary/title and evidence stay authenticated immutable refs
+  with SP-337 addressing for large detail. Project-only EventRecord 2.0.0 and encoded project~ partition; dedupe_by_idempotency_key
+  current append/retry, projector_replay_only refuses replay_only_not_appendable. No additional direct creator,
+  confirmation policy, sibling concern action, admission, retention assignment or native execution proof is authorized.
+  Event membership ABSENT; event/operation/checkpoint retention PENDING_RETENTION_DECISION. Static positive and
+  negative oracles are independently python3 scripts/pm-concern-created-contracts-check.py and this family's fixture;
+  native execution NOT_RUN.
+  Current semantic numbers follow CV-1100 and SP-1100, beside the CV-317, CV-339, SP-278 and SP-286 profile owners, as
+  exact JSON integer tokens parsed by loads_current_json and admitted by current_integer at each schema integer slot within
+  that field's own schema bounds, with no lane-wide cap. Refuse floats (including integral/exponent spellings), Boolean values,
+  negative-zero tokens and leading zeros before schema/semantic use, identity hashing or retry comparison; never coerce
+  retained originals, whose write-time recipe SP-1101 selects. Storage-assigned sequence/frontier fields retain their u64
+  physical domain (SP-1100), with the same exact integer representation. Timestamps follow CV-1101 through the shared date_time predicate with the owner profile of each field. Payload,
+  state and record date-time fields, EventRecord occurred_at_utc and the first-receipt acknowledged_at_utc take the
+  EventRecord profile (RFC 3339 with T or t, Z, z or a signed offset, real calendar and offset ranges, a legitimate
+  offset-adjusted leap second, year 0000 and any number of fractional digits; a missing zone, space separator,
+  trailing LF or illegitimate second 60 refuses), and the two Storage-assigned EventRecord instants that CV-253
+  binds take its storage_utc_z profile. Strings are never rewritten; instants compare exactly with offsets applied, every
+  fractional digit kept and a leap second ordered within its minute. Enforce date-time and UUID formats without
+  optional package dependencies.
+  The family-specific input-domain and guard oracle is scripts/pm-dg6a-domain-check.py alongside its full family checker.
+gui_related: false
+gui_classification_reason: Event identity, authority, custody and storage contract; existing GUI action model is
+  preserved.
+split_recommended: false
+depends_on:
+- OP-004
+- SP-666
+unblocks: []
+acceptance_criteria:
+- concern.created is prepared without admission; no writer/checkpoint/effect while absent.
+- No additional creator or sibling action authority; retention pending and native execution NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm-concern-created-contracts-check.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: concern_created
+implementation_surfaces:
+- Plans/concern_created_contracts/
+- Plans/event_payloads/concern/concern_created.schema.json
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/Orchestrator_Page.md#OP-002
+- Plans/Orchestrator_Page.md#OP-004
+- Plans/Executor_Protocol.md
+- Plans/UI_Command_Catalog.md#UCC-147
+preserved_exact_tokens:
+- concern.created
+- SP-278
+- SP-286
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- No creator expansion, worker direct creation, admission, sibling action grants, retention decision or native proof.
+```

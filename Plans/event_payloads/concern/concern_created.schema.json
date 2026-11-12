@@ -17,7 +17,7 @@
     "schema_version": {"const": "1.0.0"},
     "project_id": {"$ref": "#/$defs/non_empty_id"},
     "concern_id": {"$ref": "#/$defs/non_empty_id"},
-    "concern_revision": {"const": 1},
+    "concern_revision": {"type": "integer", "const": 1},
     "concern_record_ref": {"$ref": "#/$defs/non_secret_ref"},
     "actor_ref": {"$ref": "#/$defs/non_secret_ref"},
     "created_by_ref": {"$ref": "#/$defs/non_secret_ref"},
@@ -40,9 +40,9 @@
     "ts": {"type": "string", "format": "date-time"}
   },
   "$defs": {
-    "non_empty_id": {"type": "string", "minLength": 1, "maxLength": 200, "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"},
-    "non_secret_ref": {"type": "string", "minLength": 8, "maxLength": 320, "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$"},
-    "reason_code": {"type": "string", "minLength": 1, "maxLength": 96, "pattern": "^[a-z][a-z0-9_]*$"},
+    "non_empty_id": {"type": "string", "minLength": 1, "maxLength": 200, "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$(?![\\s\\S])"},
+    "non_secret_ref": {"type": "string", "minLength": 8, "maxLength": 320, "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$(?![\\s\\S])"},
+    "reason_code": {"type": "string", "minLength": 1, "maxLength": 96, "pattern": "^[a-z][a-z0-9_]*$(?![\\s\\S])"},
     "origin": {"enum": ["orchestrator", "concern_center", "dashboard", "api"]},
     "owner_kind": {"enum": ["Runtime", "Package Overseer", "Seam Overseer", "Corroboration", "Graph Patch", "Recovery", "User", "External Resource"]},
     "ref_array": {"type": "array", "items": {"$ref": "#/$defs/non_secret_ref"}, "maxItems": 64, "uniqueItems": true},
