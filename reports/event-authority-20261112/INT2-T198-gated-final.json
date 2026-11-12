@@ -1,0 +1,223 @@
+{
+  "status": "PASS_STOP_T198_CLOSED",
+  "source_parent": "7b51beeb464509f68e139f0cd5fc4461a2b90a18",
+  "source_candidate_tree_before_result_metadata": "91f8d601f3001386551985ec7e84c717ba880ef7",
+  "gated_adoption": {
+    "approved_head": "f304bfaf64334fe5255ce49a295f4ae5cec443d6",
+    "status": "VERIFIED",
+    "reviews": [
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/NUMRULE-NESTED/gpt-6.1-sol-max.md",
+        "sha256": "05bdeddc5a836964878739f499fb43f58ee9cf038466dd0ba5b48cd6d2699276",
+        "blind_caught": 20,
+        "blind_total": 20,
+        "verdict": "GATED"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/NUMRULE-NESTED/gpt-6-astra-max.md",
+        "sha256": "5250c88d2b3775da57f59de220a4f46c25f56ed053828480cb88c5a4656a7cb7",
+        "blind_caught": 19,
+        "blind_total": 20,
+        "verdict": "GATED"
+      }
+    ],
+    "T207": "A16 removes a redundant uppercase-Z pattern diagnostic; full format validation still rejects the committed suffix input. Nonblocking diagnostic-only tool-batch item; no acceptance false pass.",
+    "dry_landing_before_merge": false,
+    "required_reruns": [
+      "scope-all self-test",
+      "inventory gate",
+      "datetime_validator"
+    ],
+    "rerun_status": "PASS",
+    "merge_commit": "eb9618b2cf4b65ea10af89478052d9fee6c086db",
+    "parent": "f9a49734f1d92197b0cbc4d57cbf7e4c68dc4253",
+    "changed_paths": [
+      "scripts/pm_event_datetime_inventory.py",
+      "scripts/pm_event_datetime_mutations.json",
+      "scripts/pm_event_datetime_nested_resources.json",
+      "scripts/pm_event_datetime_selfcheck.py"
+    ],
+    "reruns": {
+      "SHARED-datetime-inventory": {
+        "label": "SHARED-datetime-inventory",
+        "mode": "capped2G",
+        "exit": 0,
+        "seconds": 96,
+        "max_rss_kb": 978196,
+        "log": "/home/sittingmongoose/pm-scratch/ea-int2/checks/t198-gated-rerun-1/SHARED-datetime-inventory.log",
+        "sha256": "aea67d829783ea2e8191dfa5e41c9c7df068ec3d14483c3cfc0ff5bb19b096e4"
+      },
+      "SHARED-datetime-runtime": {
+        "label": "SHARED-datetime-runtime",
+        "mode": "capped2G",
+        "exit": 0,
+        "seconds": 10,
+        "max_rss_kb": 119832,
+        "log": "/home/sittingmongoose/pm-scratch/ea-int2/checks/t198-gated-rerun-1/SHARED-datetime-runtime.log",
+        "sha256": "3b2c1ad054eb03de8743d13e38ff6e4fa3e4f690a5c56fef410d22e9fd64bc5a"
+      },
+      "SHARED-numbers-all": {
+        "label": "SHARED-numbers-all",
+        "mode": "capped2G",
+        "exit": 0,
+        "seconds": 676,
+        "max_rss_kb": 1147748,
+        "log": "/home/sittingmongoose/pm-scratch/ea-int2/checks/t198-gated-rerun-1/SHARED-numbers-all.log",
+        "sha256": "5f8ac03d616f91f25a96ce1724458946010238a975904f7c03cdf0de2a2cfd09"
+      }
+    },
+    "six_DCH_nodes": {
+      "datetime_node_402b80377457": true,
+      "datetime_node_48e8e05a3597": true,
+      "datetime_node_f19950f195f2": true,
+      "datetime_node_ad9814f1ed36": true,
+      "datetime_node_8b9436ec910b": true,
+      "datetime_node_e311335df73f": true
+    }
+  },
+  "scope_all": {
+    "exit": 0,
+    "case_passes": 13626,
+    "corpus_cases": 13626,
+    "positives": 6939,
+    "negatives": 6687,
+    "owner_checks": 1276,
+    "owner_checks_passed": 1276,
+    "failures": [],
+    "six_previously_failed_nodes": {
+      "datetime_node_402b80377457": true,
+      "datetime_node_48e8e05a3597": true,
+      "datetime_node_f19950f195f2": true,
+      "datetime_node_ad9814f1ed36": true,
+      "datetime_node_8b9436ec910b": true,
+      "datetime_node_e311335df73f": true
+    }
+  },
+  "inventory": {
+    "status": "pass",
+    "nodes": 254,
+    "storage_nodes": 141,
+    "other_owner_nodes": 102,
+    "wildcard_non_timestamp_nodes": 3,
+    "wildcard_non_timestamp_role_nodes": 8,
+    "unclassified_nodes": 0,
+    "failures": []
+  },
+  "datetime_validator": {
+    "constructor": "datetime_validator(EventRecord schema, profile=EVENT_RECORD)",
+    "baseline": true,
+    "cv253": [
+      {
+        "field": "occurred_at_utc",
+        "input": "2026-11-12T01:02:03+00:00",
+        "raw_schema_accepts": true,
+        "datetime_validator_accepts": true,
+        "expected": true,
+        "errors": []
+      },
+      {
+        "field": "observed_at_utc",
+        "input": "2026-11-12T01:02:03+00:00",
+        "raw_schema_accepts": true,
+        "datetime_validator_accepts": false,
+        "expected": false,
+        "errors": [
+          {
+            "message": "'2026-11-12T01:02:03+00:00' does not match 'Z(?![\\\\s\\\\S])'",
+            "cause": null
+          }
+        ]
+      },
+      {
+        "field": "persisted_at_utc",
+        "input": "2026-11-12T01:02:03+00:00",
+        "raw_schema_accepts": true,
+        "datetime_validator_accepts": false,
+        "expected": false,
+        "errors": [
+          {
+            "message": "'2026-11-12T01:02:03+00:00' does not match 'Z(?![\\\\s\\\\S])'",
+            "cause": null
+          }
+        ]
+      }
+    ]
+  },
+  "refresh": {
+    "root": "/home/sittingmongoose/pm-scratch/ea-int2/clean",
+    "rows_changed": 0,
+    "by_kind": {},
+    "rows": [],
+    "storage_pointer_citation_changes": [],
+    "validation_errors_after_projection": [],
+    "inventory_self_pin": {
+      "before": "3a3b6d33291f64893eb259779f9fba8c45b2de80a08c95485dc2f182d94c8a11",
+      "after": "3a3b6d33291f64893eb259779f9fba8c45b2de80a08c95485dc2f182d94c8a11"
+    },
+    "scan": {
+      "nodes": 254,
+      "errors": [],
+      "unclassified": [],
+      "missing": []
+    }
+  },
+  "exclusion_changes": {
+    "before": 640,
+    "removed": 0,
+    "added": 19,
+    "after": 659
+  },
+  "obsolete_exclusions_pruned": 19,
+  "file_sha256": {
+    "Plans/event_datetime_inventory.json": "8e285a102105d3e055fa377251c723c16571f368b5d56b58d1038a5f840b6ccb",
+    "scripts/pm_event_datetime_exclusions.json": "f966386ef526f57d6cd589675b8114f7c647c804adcf50bd46048704dde7761b",
+    "scripts/pm_event_datetime_roles.json": "44ab6f4046133ff2d54fa01e935df48a12d991b0d7904382b23bc540ca98a279",
+    "scripts/pm_event_datetime_mutations.json": "3d146db3854d35f170e22795c1b5e976011d43c1c867db5b8e40b2f04c434f95",
+    "scripts/pm_event_datetime_node_controls.json": "97fdd69a8001a41f6b4fd0098b0b08d22ebe155ba6342e60965b77a12745e1f2",
+    "scripts/pm_event_datetime_inventory.py": "bf987821c143b004bdd422ceba99631a5600b2a4662a2280cef16ced7d7a013f",
+    "scripts/pm_event_datetime_selfcheck.py": "7881ae9c2b36985199a1dcbd412c8c510c3e383936d29dccc6548cd688266be2",
+    "scripts/pm_event_datetime_nested_resources.json": "52896247a15322cdb7825e2b1b157946311dd49e0f46267ed29847f8f7ffd2aa",
+    "Plans/storage_value_registry.json": "7a046f5c594c7eca40fec58a6daa27e0528b8291b43e4181a9cccb22e02d1f96",
+    "Plans/dch_retained_recipes.json": "619a069ee7c78b8fba1c37b4e4b93285d2912165ad5196811a8a32cae84370d1"
+  },
+  "historic_failure_preserved": {
+    "exit": 1,
+    "case_passes": 13626,
+    "corpus_cases": 13626,
+    "inventory": {
+      "failures": [],
+      "nodes": 254,
+      "other_owner_nodes": 102,
+      "status": "pass",
+      "storage_nodes": 141,
+      "unclassified_nodes": 0,
+      "wildcard_non_timestamp_nodes": 3,
+      "wildcard_non_timestamp_role_nodes": 8
+    },
+    "failures": [
+      {
+        "integration_check": "datetime_node_402b80377457"
+      },
+      {
+        "integration_check": "datetime_node_48e8e05a3597"
+      },
+      {
+        "integration_check": "datetime_node_f19950f195f2"
+      },
+      {
+        "integration_check": "datetime_node_ad9814f1ed36"
+      },
+      {
+        "integration_check": "datetime_node_8b9436ec910b"
+      },
+      {
+        "integration_check": "datetime_node_e311335df73f"
+      }
+    ],
+    "log": "/home/sittingmongoose/pm-scratch/ea-int2/checks/final-85/SHARED-numbers-all.log",
+    "sha256": "dd5c6fe845a3c050c2cc70fba916c5b73e158a8af40a90fec0beecdda0c53592"
+  },
+  "source_scope": "Exact tracked candidate in full clean worktree;ignored binary audit PNGs in full landing int2 remain the separately reported T1 limitation.",
+  "no_hand_edited_NUMRULE_source": true,
+  "native_execution": "NOT_RUN"
+}
