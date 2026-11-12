@@ -397,7 +397,10 @@ for (const surface of ['normal', 'sandbox']) {
 			await rest();
 			const sheet = await f.evaluate(PAINT, '.pm7-mem-layer:not([hidden]) .pm7-mem-sheet');
 			const diff = [];
-			for (const k of Object.keys(page)) { if (!page[k] || !sheet[k]) { diff.push(`${k}: missing (page ${!!page[k]}, sheet ${!!sheet[k]})`); continue; } for (const f2 of Object.keys(page[k])) if (page[k][f2] !== sheet[k][f2]) diff.push(`${k}.${f2}: page ${page[k][f2].slice(0, 80)} / sheet ${String(sheet[k][f2]).slice(0, 80)}`); }
+			// Glass by design: a card on the wallpaper takes Liquid Glass's card tint, a card inside a frosted sheet (the sheet is a
+			// data-lg-surface="menu") the plain inner fill (glass.css, Settings' "inside a sheet" rule), so the card's fill is left out there
+			const skip = look.startsWith('glass') ? new Set(['card.bg']) : new Set();
+			for (const k of Object.keys(page)) { if (!page[k] || !sheet[k]) { diff.push(`${k}: missing (page ${!!page[k]}, sheet ${!!sheet[k]})`); continue; } for (const f2 of Object.keys(page[k])) if (!skip.has(`${k}.${f2}`) && page[k][f2] !== sheet[k][f2]) diff.push(`${k}.${f2}: page ${page[k][f2].slice(0, 80)} / sheet ${String(sheet[k][f2]).slice(0, 80)}`); }
 			await t.check(`${look}: the sheet's switch, knob, card, Add button, search box and note words paint like the Settings page's`, diff.length === 0, diff.join(' | ') || 'same');
 			await t.page.keyboard.press('Escape');
 			await t.app.resetLayout();
