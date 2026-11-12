@@ -438,7 +438,7 @@
 #panel-settings .badge.purple { color: var(--k3-accent); border-color: rgba(var(--accent-primary-rgb),.28); background: var(--k3-accent-soft); }
 
 /* Settings home */
-#panel-settings .home-page { height: 100%; overflow-y: auto; padding: 31px clamp(24px, 4%, 62px) 60px; scrollbar-gutter: stable; }
+#panel-settings .home-page { height: 100%; overflow-y: auto; padding: 31px clamp(20px, 3%, 40px) 60px; scrollbar-gutter: stable; }
 #panel-settings .home-hero { max-width: 980px; margin: 0 auto; }
 #panel-settings .home-eyebrow { color: var(--k3-accent-2); font-size: 11px; font-weight: 760; letter-spacing: .09em; text-transform: uppercase; }
 #panel-settings .home-title { margin: 8px 0 6px; font-size: clamp(29px, 3%, 42px); line-height: 1.12; letter-spacing: -.038em; }
@@ -473,8 +473,11 @@
 #panel-settings .setup-copy { min-width: 0; flex: 1; }
 #panel-settings .setup-label { font-size: 11.5px; font-weight: 670; color: var(--k3-text-1); }
 #panel-settings .setup-meta { margin-top: 3px; color: var(--k3-text-3); font-size: 11px; }
-#panel-settings .domain-directory { max-width: 980px; margin: 15px auto 0; display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 9px; }
-#panel-settings .domain-card { min-height: 105px; padding: 13px; border: 1px solid var(--k3-line); border-radius: 12px; background: var(--k3-surface-1); text-align: left; color: var(--k3-text-2); cursor: pointer; transition: transform 200ms var(--k3-ease-out), border-color 180ms ease, background 180ms ease; }
+/* FO-159 round 3: a domain card's description needs ~380 px of card at 11 px to keep the line it drew at
+   10.5 px ('Driver.', 'safety.'); the card's inset and the directory gap give it that room at every look, and
+   the home page's own side padding gives the row more width. */
+#panel-settings .domain-directory { max-width: 980px; margin: 15px auto 0; display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 4px; }
+#panel-settings .domain-card { min-height: 105px; padding: 6px; border: 1px solid var(--k3-line); border-radius: 12px; background: var(--k3-surface-1); text-align: left; color: var(--k3-text-2); cursor: pointer; transition: transform 200ms var(--k3-ease-out), border-color 180ms ease, background 180ms ease; }
 #panel-settings .domain-card:hover { transform: translateY(-2px); border-color: var(--k3-line-strong); background: var(--k3-surface-3); }
 #panel-settings .domain-card-icon { width: 28px; height: 28px; display: grid; place-items: center; border: 1px solid rgba(var(--accent-primary-rgb),.20); border-radius: var(--k3-radius-sm); background: var(--k3-accent-soft); color: var(--k3-accent); }
 #panel-settings .domain-card-label { margin-top: 11px; color: var(--k3-text-1); font-size: 11.5px; font-weight: 690; }
@@ -743,7 +746,10 @@
 #panel-settings .panel-subtitle, #panel-settings .panel-head-kicker { color: var(--k3-text-3); font-size: 11px; }
 #panel-settings .panel-head-kicker { color: var(--k3-accent-2); font-weight: 750; letter-spacing: .07em; text-transform: uppercase; }
 #panel-settings .panel-head-meta { margin-left: auto; color: var(--k3-text-3); font-size: 10px; }
-#panel-settings .info-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 8px 16px; }
+/* FO-159 round 3: a two-column metadata grid needs ~400 px per column for an 11 px value and its 105 px key
+   (the label/value pair reads on one line); narrower than that it drops to one column, and the same rule holds
+   inside a card grid at every look and size rather than at one breakpoint. */
+#panel-settings .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 8px 16px; }
 #panel-settings .info-row { display: flex; align-items: flex-start; gap: 12px; min-width: 0; }
 #panel-settings .info-key { min-width: 105px; color: var(--k3-text-3); font-size: 11px; }
 #panel-settings .info-value { flex: 1; color: var(--k3-text-2); font-size: 11px; text-align: right; word-break: break-word; }
@@ -944,14 +950,6 @@
    inset gives it back: no card, column or control moves. */
 @container settings-host (max-width: 900px) {
   #panel-settings .setup-row, #panel-settings .attention-row { padding-left: 10px; padding-right: 10px; gap: 9px; }
-}
-
-/* FO-159 round 2: below this width the two-column metadata grid leaves each column about 232 px, so a value
-   that filled its one line at 10.5 px wraps to a second at 11 px (Code & Tools › Testing & Debug › History,
-   "None introduced · validation receipt on file"). One column gives each value the row's own width and the line
-   count it drew before. Only the columns change: no text gets smaller and nothing is spaced tighter. */
-@container settings-host (max-width: 900px) {
-  #panel-settings .info-grid { grid-template-columns: 1fr; }
 }
 
 @container settings-host (max-width: 720px) {
