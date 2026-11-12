@@ -6,6 +6,7 @@ const a = src.indexOf('function restyled('), b = src.indexOf('// in the page: ma
 assert.ok(a >= 0 && b > a, 'pure-function boundaries exist');
 const { restyled, median } = new Function(src.slice(a, b) + '\nreturn {restyled, median};')();
 const marks = Array.from({ length: 4 }, (_, i) => ({ cat: 'blink.user_timing', name: 'jr:test:' + i, ts: i * 100000, pid: 1, tid: 1 }));
+marks.push(...Array.from({ length: 4 }, (_, i) => ({ name: 'RunTask', ph: 'X', ts: i * 100000, dur: 20000, pid: 1, tid: 1 })));
 const recalc = { name: 'UpdateLayoutTree', ph: 'X', ts: 310000, dur: 1000, pid: 1, tid: 1, args: { elementCount: 10 } };
 const counts = restyled([...marks, recalc], 'jr:test:');
 console.log('review input:', JSON.stringify(counts), 'median:', median(counts, 4));

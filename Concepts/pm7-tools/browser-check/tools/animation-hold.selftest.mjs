@@ -24,6 +24,7 @@ const { restyled, median } = new Function(source.slice(start, end) + '\nreturn {
 const bounds = new Function(source.match(/const BOUND = \{[^;]+;/)[0] + '\nreturn BOUND;')();
 assert.deepEqual(bounds, { usage: 190, files: 160, rail: 180, titlebar: 180, tab: 400, notify: 300, press: 150 }, 'no budget changes');
 const events = Array.from({ length: 4 }, (_, i) => [
+ { name: 'RunTask', ph: 'X', ts: i * 100000, dur: 10000, pid: 1, tid: 1 },
  { cat: 'blink.user_timing', name: `jr:subtree:${i}`, ts: i * 100000, pid: 1, tid: 1 },
  { name: 'UpdateLayoutTree', ph: 'X', ts: i * 100000 + 1000, dur: 1000, pid: 1, tid: 1, args: { elementCount: 640 } }
 ]).flat();

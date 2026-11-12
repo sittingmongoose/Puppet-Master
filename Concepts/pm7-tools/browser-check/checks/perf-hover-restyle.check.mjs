@@ -11,8 +11,11 @@
 // menu, onto and off a title-bar control; a Home panel tab switch (click); a notification arriving; and, with the
 // onboarding window open, a press on one of its buttons (:active is set on the whole ancestor chain of what is pressed).
 // Each change is marked from inside its own input task (a capture listener on pointermove / pointerdown / click; the
-// notification marks just before it is posted) and traced; the elements it restyled are the largest UpdateLayoutTree
-// elementCount within 60 ms of the mark. DevTools holds the animation clock at playback rate 0 during each trace,
+// notification marks just before it is posted) and traced. Count the largest UpdateLayoutTree elementCount
+// from the start of the renderer RunTask containing that mark through 60ms after it. Native hover processing can
+// resolve style before any JavaScript event listener, so post-mark-only counting misses real input work. The exact
+// containing task supplies the start, never a guessed look-back; missing task coverage is unjudgeable.
+// DevTools holds the animation clock at playback rate 0 during each trace,
 // then restores 1: existing loader/icon animation work cannot answer a question about this input. The input's selector
 // changes and a transition's first restyle still happen at the held time (perf-hover-hold proves both). This never
 // calls WAAPI pause/play, which would override the still page's CSS play state on Chrome 157. The median must stay under the bound,
@@ -78,7 +81,13 @@ function restyled(events, prefix) {
 		const same = (e) => e.pid === m.pid && e.tid === m.tid;
 		const ult = [];
 		const open = [];
+		const tasks = [], taskOpen = [];
 		for (const e of events) {
+			if (e.name === 'RunTask' && same(e)) {
+				if (e.ph === 'X') tasks.push({ start: e.ts, end: e.ts + (e.dur || 0) });
+				else if (e.ph === 'B') taskOpen.push(e);
+				else if (e.ph === 'E') { const st = taskOpen.pop(); if (st) tasks.push({ start: st.ts, end: e.ts }); }
+			}
 			if (e.name !== 'UpdateLayoutTree' || !same(e)) continue;
 			if (e.ph === 'X') ult.push({ ts: e.ts, end: e.ts + (e.dur || 0), n: e.args?.elementCount ?? e.args?.endData?.elementCount ?? null });
 			else if (e.ph === 'B') open.push(e);
@@ -86,7 +95,9 @@ function restyled(events, prefix) {
 		}
 		// The animation clock is held before tracing. Keep the largest input recalc in the existing 60ms window,
 		// including the first recalc of a transition the input starts; never subtract elements by a heuristic.
-		const win = ult.filter((u) => u.ts >= m.ts && u.ts <= m.ts + 60000 && validCount(u.n));
+		const task = tasks.filter((t) => t.start <= m.ts && t.end >= m.ts).sort((a,b) => b.start-a.start)[0];
+		if (!task) { out.push(null); continue; }
+		const win = ult.filter((u) => u.ts >= task.start && u.ts <= m.ts + 60000 && validCount(u.n));
 		out.push(win.length ? Math.max(...win.map((u) => u.n)) : null);
 	}
 	return out;
