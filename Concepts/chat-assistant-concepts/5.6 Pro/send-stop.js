@@ -180,9 +180,14 @@
     if (t.currentIteration == null) { beatAnim = null; beatT = setTimeout(beat, Math.max(16, (t.delay - t.localTime) / rate + 4)); return; }
     var same = a === beatAnim && beatTiming && t.duration === beatTiming.duration && t.delay === beatTiming.delay && rate === beatTiming.rate;
     var phase = t.localTime - t.delay - t.currentIteration * t.duration;
-    /* A late task, a seek or a timing change can have crossed an iteration far from its boundary. Never treat
-       "iteration advanced" alone as permission to change cadence; re-arm from the timing read in this callback. */
-    if (same && t.currentIteration > beatIter && phase >= 0 && phase / rate <= 32) {
+    /* The cadence changes when a loop boundary has gone by on the timing this timer was armed with (same): on time
+       that is 4 ms after it, and a callback the main thread ran late changes it when it runs, as the animationiteration
+       event did when its frame came late. Not when the animation or its timing was changed underneath (not same: a
+       speed change the observer above did not announce, a replaced animation): then "iteration advanced" says nothing
+       of where this loop is, so nothing changes and the timer is armed for the next real boundary from the timing read
+       here. (c7fc6dd7a3 also refused any callback more than 32 ms after its boundary: one late timer put the change off
+       a whole loop, and a main thread that ran each of them late never changed cadence at all: R7-1.) */
+    if (same && t.currentIteration > beatIter && phase >= 0) {
       var want = now() - lastTok < 900 ? 'flowing' : 'waiting';
       if (want !== flow) {
         flow = want; flowed = true;

@@ -8,7 +8,7 @@ import { execFileSync } from 'node:child_process';
 const ref = process.argv.indexOf('--ref');
 const src = ref < 0 ? readFileSync(new URL('../send-stop.js', import.meta.url), 'utf8') : execFileSync('git', ['show', `${process.argv[ref + 1]}:Concepts/chat-assistant-concepts/5.6 Pro/send-stop.js`], { encoding: 'utf8' });
 
-function chip({ change, notify = true, stall = false, cadence = 'flowing' } = {}) {
+function chip({ change, notify = true, stall = false, lateEvery = 0, cadence = 'flowing' } = {}) {
 	let clock = 0, seq = 0, duration = cadence === 'flowing' ? 2200 : 3200, delay = 800, rate = 1, origin = 0, localOrigin = 0;
 	const timers = new Map(), observers = [], switches = [], listeners = [];
 	const setTimeout = (cb, ms) => { const id = ++seq; timers.set(id, { at: clock + Math.max(0, ms), cb }); return id; };
@@ -53,6 +53,9 @@ function chip({ change, notify = true, stall = false, cadence = 'flowing' } = {}
 		timers.delete(next[0]);
 		clock = next[1].at;
 		if (stall && !stalled && clock >= 2900) { clock = 3500; stalled = true; }
+		/* a main thread that runs every boundary timer late (R7-1) */
+		if (lateEvery && clock >= 3000) clock += lateEvery;
+		if (clock > 20000) break;
 		next[1].cb();
 	}
 	assert.ok(!listeners.includes('animationiteration'), 'no document iteration listener');
@@ -114,14 +117,19 @@ const cases = [
 	['playback rate doubles at t=1000', { change: 'rate' }, 2000],
 	['animation identity changes', { change: 'identity' }, 3000],
 	['unannounced duration change cannot switch mid-loop', { change: 'fast', notify: false }, 3440],
-	['late timer cannot switch mid-loop', { stall: true }, 5200]
+	/* R7-1 (the Sol max review of c7fc6dd7a3): a boundary callback that runs late changes the cadence when it runs, as
+	   main's late animationiteration event does (main: 3044 ms in the second case). c7fc6dd7a3 let a change be made only
+	   within 32 ms of a boundary: one late timer put it off a whole loop (5200 ms), and a main thread that ran every
+	   boundary timer 40 ms late never changed cadence at all. [name, options, boundary, how late the change may be] */
+	['one late timer: the change comes when it runs, not a loop later', { stall: true }, 3000, 500],
+	['every boundary timer 40 ms late: the change still comes, at the first one', { lateEvery: 40 }, 3000, 44]
 ];
-for (const [name, options, boundary] of cases) {
+for (const [name, options, boundary, late = 16] of cases) {
 	try {
 		const got = chip(options);
-		console.log(`${got.at >= boundary && got.at <= boundary + 16 && got.phase <= 32 ? 'PASS' : 'FAIL'} ${name}: ${JSON.stringify(got)}; boundary ${boundary} ms`);
-		assert.ok(got.at >= boundary && got.at <= boundary + 16, `change at ${got.at}, expected boundary ${boundary} (+<=16 ms)`);
-		assert.ok(got.phase >= 0 && got.phase <= 32, `phase ${got.phase} ms`);
+		console.log(`${got.at >= boundary && got.at <= boundary + late && got.phase <= Math.max(32, late) ? 'PASS' : 'FAIL'} ${name}: ${JSON.stringify(got)}; boundary ${boundary} ms`);
+		assert.ok(got.at >= boundary && got.at <= boundary + late, `change at ${got.at}, expected boundary ${boundary} (+<=${late} ms)`);
+		assert.ok(got.phase >= 0 && got.phase <= Math.max(32, late), `phase ${got.phase} ms`);
 	} catch (e) { failed++; console.log(`FAIL ${name}: ${e.message}`); }
 }
 const relays = [[20, 'the old timer is due after the new chip\'s first boundary'], [96, 'the same'], [150, 'the same'], [300, 'control: the old timer is due before that boundary']];
