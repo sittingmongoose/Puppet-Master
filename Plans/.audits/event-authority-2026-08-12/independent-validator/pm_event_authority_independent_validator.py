@@ -13,7 +13,11 @@ from __future__ import annotations
 
 import hashlib
 import json
+import math
+import os
+import subprocess
 import re
+import unicodedata
 from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
@@ -94,6 +98,22 @@ POST_AUGUST_REQUIRED = (
 )
 HEX64 = re.compile(r"[0-9a-f]{64}")
 
+# DL-412 (Jared, 2026-11-04, E-CARDS-1 item 4c, option B): the third receipted
+# change. A record may describe a truthful registry step that added several
+# families at once (registry_step_event_types); every family of that step still
+# needs its own complete record naming the same step. Everything else as DL-077.
+MULTI_FAMILY_RECEIPT = "reports/event-authority-20261104/seal-check-multifamily-step-receipt.json"
+MULTI_FAMILY_AUTHORITY = "Plans/Decision_Log.md#DL-412"
+MULTI_FAMILY_RECEIPT_SCHEMA = "pm.assurance.event_authority.multi_family_step_change.v1"
+MULTI_FAMILY_AUTHOR = "claude-opus-5.5:ea-ca-seal-20261104"
+MULTI_FAMILY_REQUIRED = (
+    b"approve all except 4c B",
+    b"a truthful step that added several families at once",
+    b"Each family still needs its own record",
+    b"578a6774525bc474ce7ee36da2bd22fae52520aaf940d33c99d0a3aeeb58d696",
+)
+STEP_FIELD = "registry_step_event_types"
+
 
 def holding_authority_bytes(path: Path) -> bytes:
     """Pin only the canonical DL-039 body, not unrelated Decision Log edits."""
@@ -150,7 +170,7 @@ def canonical_json_sha256(value) -> str:
 
 
 def post_august_receipt_state():
-    """DL-077's receipt must pin DL-077, the current validator bytes and the Step 3 chain."""
+    """DL-077's original receipt judgment, with its frozen validator-byte observer."""
     path = REPO / POST_AUGUST_RECEIPT
     receipt = load_json(path)
     step3 = load_json(REPO / HOLDING_RECEIPT)
@@ -162,7 +182,7 @@ def post_august_receipt_state():
             or receipt.get("authority_ref") != POST_AUGUST_AUTHORITY
             or receipt.get("authority_section_sha256") != section_hash
             or receipt.get("validator_before_sha256") != step3.get("validator_after_sha256")
-            or receipt.get("validator_after_sha256") != sha256_file(Path(__file__))
+            or receipt.get("validator_after_sha256") != post_august_validator_pin()
             or receipt.get("record_dir") != POST_AUGUST_RECORD_DIR
             or receipt.get("record_schema_id") != POST_AUGUST_RECORD_SCHEMA
             or receipt.get("author_task") != POST_AUGUST_AUTHOR
@@ -187,13 +207,236 @@ def holding_validator_pin() -> str:
     return sha256_file(Path(__file__))
 
 
+def multi_family_receipt_state():
+    """DL-412's receipt must pin DL-412, the current validator bytes and the DL-077 chain."""
+    path = REPO / MULTI_FAMILY_RECEIPT
+    receipt = load_json(path)
+    dl077 = load_json(REPO / POST_AUGUST_RECEIPT)
+    section_hash = hashlib.sha256(
+        decision_section_bytes(ROOT / "Decision_Log.md", "DL-412", MULTI_FAMILY_REQUIRED)
+    ).hexdigest()
+    lander = receipt.get("lander_task") if isinstance(receipt, dict) else None
+    prior = receipt.get("prior_receipt") if isinstance(receipt, dict) else None
+    if (not isinstance(receipt, dict) or not isinstance(dl077, dict)
+            or receipt.get("schema_id") != MULTI_FAMILY_RECEIPT_SCHEMA
+            or receipt.get("authority_ref") != MULTI_FAMILY_AUTHORITY
+            or receipt.get("authority_section_sha256") != section_hash
+            or receipt.get("validator_before_sha256") != dl077.get("validator_after_sha256")
+            or receipt.get("validator_after_sha256") != third_change_validator_pin()
+            or not isinstance(prior, dict)
+            or prior.get("path") != POST_AUGUST_RECEIPT
+            or prior.get("sha256") != sha256_file(REPO / POST_AUGUST_RECEIPT)
+            or receipt.get("record_dir") != POST_AUGUST_RECORD_DIR
+            or receipt.get("record_schema_id") != POST_AUGUST_RECORD_SCHEMA
+            or receipt.get("author_task") != MULTI_FAMILY_AUTHOR
+            or not isinstance(lander, str) or not lander.strip()
+            or receipt.get("seal_applier_forbidden_tasks") != sorted({MULTI_FAMILY_AUTHOR, lander})
+            or receipt.get("seal_authorized") is not False
+            or receipt.get("admission_authorized") is not False
+            or receipt.get("contract_depth_complete") is not False):
+        raise ValueError("multi-family step amendment receipt identity, authority or hash mismatch")
+    return receipt, sha256_file(path)
+
+
+def post_august_validator_pin() -> str:
+    """Bridge live bytes to DL-077 through the Spec Lock-pinned DL-412 receipt.
+
+    These are byte-integrity conditions outside DL-077's original predicate.
+    Full DL-412 authority and receipt semantics are checked separately for steps.
+    A missing, ambiguous or broken byte anchor exposes the live hash to DL-077.
+    """
+    def strict_bridge_object(source):
+        def unique_pairs(items):
+            result = {}
+            for key, value in items:
+                if key in result:
+                    raise ValueError("duplicate bridge JSON key: " + key)
+                result[key] = value
+            return result
+
+        def reject_constant(token):
+            raise ValueError("non-JSON bridge constant: " + token)
+
+        value = json.loads(source.read_text("utf-8"), object_pairs_hook=unique_pairs,
+                           parse_constant=reject_constant)
+        if type(value) is not dict:
+            raise ValueError("bridge input must be an object")
+        return value
+
+    live_hash = third_change_validator_pin()
+    try:
+        path = REPO / MULTI_FAMILY_RECEIPT
+        receipt = strict_bridge_object(path)
+        dl077 = load_json(REPO / POST_AUGUST_RECEIPT)
+        lock = strict_bridge_object(ROOT / "Spec_Lock.json")
+        ssot = lock.get("canonical_ssot_hashes") if type(lock) is dict else None
+        files = ssot.get("files") if type(ssot) is dict else None
+        anchors = [entry for entry in files
+                   if type(entry) is dict and entry.get("path") == MULTI_FAMILY_RECEIPT
+                   ] if type(files) is list else []
+        if (isinstance(receipt, dict) and isinstance(dl077, dict)
+                and receipt.get("validator_after_sha256") == live_hash
+                and len(anchors) == 1
+                and type(anchors[0].get("sha256")) is str
+                and HEX64.fullmatch(anchors[0]["sha256"])
+                and anchors[0].get("sha256") == sha256_file(path)
+                and receipt.get("validator_before_sha256") == dl077.get("validator_after_sha256")):
+            return "190a86f23e06362bdb98e27eb23268c9691db46cc41bc9f97e1fbb6bde1abc20"
+    except (OSError, ValueError, TypeError, RecursionError):
+        pass
+    return live_hash
+
+def registry_step_shape_ok(step, event_type) -> bool:
+    """DL-412: a multi-family step lists two or more distinct event types, sorted, including its own."""
+    return (isinstance(step, list) and len(step) >= 2
+            and all(isinstance(e, str) and e for e in step)
+            and step == sorted(set(step)) and event_type in step)
+
+
+def registry_step_states(record):
+    """The (revision, sha256, family_count) before and after a record's step, or None if malformed."""
+    sides = []
+    for side in ("registry_before", "registry_after"):
+        value = record.get(side)
+        if (not isinstance(value, dict)
+                or not isinstance(value.get("revision"), str) or not value["revision"]
+                or type(value.get("sha256")) is not str
+                or not HEX64.fullmatch(value["sha256"])
+                or type(value.get("family_count")) is not int):
+            return None
+        sides.append((value["revision"], value["sha256"], value["family_count"]))
+    return tuple(sides)
+
+
+def strict_step_record(path):
+    """DL-412 only: never collapse duplicate keys or coerce registry state types."""
+    def pairs(items):
+        out = {}
+        for key, value in items:
+            if key in out:
+                raise ValueError("duplicate JSON key: " + key)
+            out[key] = value
+        return out
+
+    def constant(value):
+        raise ValueError("non-JSON constant: " + value)
+
+    def inspect(value, root=False):
+        if isinstance(value, dict):
+            for key, child in value.items():
+                if not root and key in ("registry_before", "registry_after"):
+                    sha = child.get("sha256") if type(child) is dict else None
+                    if type(sha) is not str or not HEX64.fullmatch(sha):
+                        raise ValueError("noncanonical nested " + key + ".sha256")
+                inspect(child)
+        elif isinstance(value, list):
+            for child in value:
+                inspect(child)
+
+    class ExactNumber(float):
+        # Equality stays compatible with load_json's values for the own-file
+        # exemption; claim discovery sees the exact digits, even after overflow.
+        def __new__(cls, token):
+            value = super().__new__(cls, token)
+            value.token = token
+            return value
+
+        def __str__(self):
+            return self.token
+
+    record = json.loads(path.read_text("utf-8"), object_pairs_hook=pairs,
+                        parse_constant=constant, parse_float=ExactNumber)
+    inspect(record, True)
+    if type(record) is not dict:
+        raise ValueError("record must be an object")
+    if registry_step_states(record) is None:
+        raise ValueError("registry states require string revisions, lowercase 64-hex string SHA-256 and integer counts")
+    return record
+
+
+def registry_step_claim(record, hashes):
+    """Either step digest anywhere in keys/values, nested containers or scalar text.
+
+    Normalization is for conservative claim discovery only, never acceptance.
+    Malformed JSON/types/hashes are rejected independently by strict_step_record.
+    """
+    if isinstance(record, dict):
+        return any(registry_step_claim(k, hashes) or registry_step_claim(v, hashes)
+                   for k, v in record.items())
+    if isinstance(record, list):
+        return any(registry_step_claim(v, hashes) for v in record)
+    text = unicodedata.normalize("NFKC", str(record)).lower()
+    text = "".join(str(unicodedata.decimal(c)) if c.isdecimal() else c
+                   for c in text if not c.isspace())
+    return any(sha in text for sha in hashes)
+
+
+def registry_step_record_scan(record_dir):
+    """Read every directory entry; an uninspectable entry could touch any step."""
+    out = {}
+    try:
+        paths = sorted(record_dir.iterdir()) if record_dir.is_dir() else []
+    except OSError as exc:
+        return {str(record_dir): (None, str(exc))}
+    for path in paths:
+        try:
+            out[path.name] = (strict_step_record(path), None)
+        except (OSError, ValueError, TypeError, RecursionError) as exc:
+            out[path.name] = (None, str(exc))
+    return out
+
+
+def registry_step_problems(records, own, beyond, scanned) -> dict:
+    """Strict, fail-closed whole-step judgment; never add a legacy record problem.
+
+    Any uninspectable/noncanonical file could touch every step. A strictly read
+    foreign file touching either digest anywhere fails that step. A listed own
+    file is exempt only when its strict record equals the record being judged.
+    """
+    states = {et: registry_step_states(r) for et, r in records.items()}
+    multi = {et: r for et, r in records.items()
+             if STEP_FIELD in r and registry_step_shape_ok(r.get(STEP_FIELD), et) and states[et]}
+    out = {et: ["registry_step_partial:" + et + ".json"]
+           for et, r in records.items() if STEP_FIELD in r
+           and scanned.get(et + ".json", (None, "missing"))[1] is not None}
+    for et, record in sorted(multi.items()):
+        if et not in own:
+            continue
+        step = record[STEP_FIELD]
+        mismatched = {m + ".json" for m in step if m not in beyond or m not in multi
+                      or multi[m][STEP_FIELD] != step or states[m] != states[et]}
+        hashes = (states[et][0][1], states[et][1][1])
+        for name, (candidate, error) in scanned.items():
+            member = name[:-5] if name.endswith(".json") else None
+            if error is not None:
+                mismatched.add(name)
+            elif member in step and candidate == records.get(member):
+                continue
+            else:
+                try:
+                    touches = registry_step_claim(candidate, hashes)
+                except RecursionError:
+                    touches = True  # Too deep to disambiguate: fail this step closed.
+                if touches:
+                    mismatched.add(name)
+        if mismatched:
+            out.setdefault(et, []).append("registry_step_partial:" + ",".join(sorted(mismatched)))
+            continue
+        failing = sorted(m for m in step if m != et and own.get(m))
+        if failing:
+            out.setdefault(et, []).append("registry_step_member_incomplete:" + ",".join(failing))
+    return out
+
+
 def admission_record_problems(record, family) -> list:
     """Every problem with one DL-077 admission record; empty means complete."""
     problems = []
     event_type = record.get("event_type")
     if record.get("schema_id") != POST_AUGUST_RECORD_SCHEMA:
         problems.append("schema_id")
-    if record.get("implementation_receipt_sha256") != sha256_file(REPO / POST_AUGUST_RECEIPT):
+    multi = STEP_FIELD in record
+    receipt_path = REPO / (MULTI_FAMILY_RECEIPT if multi else POST_AUGUST_RECEIPT)
+    if record.get("implementation_receipt_sha256") != sha256_file(receipt_path):
         problems.append("implementation_receipt_sha256")
     if record.get("family_id") != family.get("family_id"):
         problems.append("family_id")
@@ -207,19 +450,30 @@ def admission_record_problems(record, family) -> list:
         named = re.search(rb"(?<![A-Za-z0-9_.])" + re.escape(str(event_type)).encode() + rb"(?![A-Za-z0-9_]|\.[A-Za-z0-9_])", section)
         if match.group(1) in ("DL-077", "DL-078") or not named:
             problems.append("decision_ref_not_for_family")
+        elif multi and match.group(1) == "DL-412":
+            problems.append("decision_ref_not_for_family")
     sides_ok = True
     for side in ("registry_before", "registry_after"):
         value = record.get(side)
         if (not isinstance(value, dict)
                 or not isinstance(value.get("revision"), str) or not value["revision"]
+                or (multi and type(value.get("sha256")) is not str)
                 or not HEX64.fullmatch(str(value.get("sha256", "")))
                 or type(value.get("family_count")) is not int):
             problems.append(side)
             sides_ok = False
-    if sides_ok:
+    step = record.get(STEP_FIELD)
+    step_ok = not multi or registry_step_shape_ok(step, event_type)
+    if not step_ok:
+        problems.append(STEP_FIELD)
+    if sides_ok and not multi:
         before, after = record["registry_before"], record["registry_after"]
         if after["family_count"] != before["family_count"] + 1 or after["sha256"] == before["sha256"]:
             problems.append("registry_before_after_not_exactly_one_family")
+    elif sides_ok and step_ok:
+        before, after = record["registry_before"], record["registry_after"]
+        if after["family_count"] != before["family_count"] + len(step) or str(after["sha256"]) == str(before["sha256"]):
+            problems.append("registry_before_after_not_exactly_step_families")
     if record.get("registry_row_sha256") != canonical_json_sha256(family):
         problems.append("registry_row_sha256")
     depth = record.get("depth_assessment")
@@ -264,7 +518,7 @@ def validate_post_august_admissions(registry, known37):
         _, receipt_sha = post_august_receipt_state()
     except (OSError, ValueError, TypeError, KeyError, AttributeError) as exc:
         return set(), ["post-August amendment receipt invalid: " + str(exc)], None
-    admitted, issues, records = set(), [], {}
+    admitted, issues, records, rejected = set(), [], {}, {}
     record_dir = REPO / POST_AUGUST_RECORD_DIR
     for path in (sorted(record_dir.glob("*.json")) if record_dir.is_dir() else []):
         try:
@@ -275,17 +529,37 @@ def validate_post_august_admissions(registry, known37):
         event_type = record.get("event_type") if isinstance(record, dict) else None
         if not isinstance(event_type, str) or path.name != event_type + ".json" or event_type in records:
             issues.append(path.name + ": admission record name, event type or uniqueness mismatch")
+            if isinstance(record, dict):
+                rejected[path.name] = record
             continue
         records[event_type] = record
+    own = {}
     for event_type in sorted(beyond):
         record = records.get(event_type)
         if record is None:
-            issues.append(event_type + ": no admission record")
             continue
         try:
-            problems = admission_record_problems(record, live[event_type])
+            own[event_type] = admission_record_problems(record, live[event_type])
         except (OSError, ValueError, TypeError, KeyError, AttributeError) as exc:
-            problems = ["malformed: " + str(exc)]
+            own[event_type] = ["malformed: " + str(exc)]
+    try:
+        steps = (registry_step_problems(records, own, beyond,
+                                        registry_step_record_scan(record_dir))
+                 if any(STEP_FIELD in r for r in records.values()) else {})
+    except (OSError, ValueError, TypeError, KeyError, AttributeError) as exc:
+        steps = {et: ["registry_step_malformed: " + str(exc)] for et, r in records.items() if STEP_FIELD in r}
+    if any(STEP_FIELD in r for r in records.values()):
+        try:
+            multi_family_receipt_state()
+        except (OSError, ValueError, TypeError, KeyError, AttributeError) as exc:
+            for et, record in records.items():
+                if STEP_FIELD in record:
+                    steps.setdefault(et, []).insert(0, "multi-family step amendment receipt invalid: " + str(exc))
+    for event_type in sorted(beyond):
+        if event_type not in own:
+            issues.append(event_type + ": no admission record")
+            continue
+        problems = own[event_type] + steps.get(event_type, [])
         if problems:
             issues.extend(event_type + ": " + p for p in problems)
         else:
@@ -517,6 +791,305 @@ def cell_ok_pass(cell) -> bool:
         return False
     cit = cell.get("citation")
     return isinstance(cit, str) and cit.startswith("Plans/") and len(cit) > 8
+
+
+# DL-451 adds a separate input, never a replacement August fingerprint.
+RECOUNT_RECEIPT = "reports/event-authority-20261104/census-recount-20261104/RECEIPT.json"
+RECOUNT_LIST = "reports/event-authority-20261104/census-recount-20261104/NEW-LIST.json"
+RECOUNT_RECEIPT_SHA = "1d0ef48f472f2a6c521c6879e4c0b6ab0da98467dfe5b1a7546b3dbcef09a709"
+RECOUNT_LIST_SHA = "2515ae5af31178a7d7a93581e982977bfb803d4494d779c72bebad9e7700376c"
+RECOUNT_REVISION = "16acf7594a3fe8559af89491b895f440b314b99e"
+RECOUNT_RECEIPT_REVISION = "c53e4199ae94ca853a197354f3f9e7f296cf1efc"
+# Revision-qualified history; the working-tree receipt path is runtime output.
+AUGUST_RECEIPT_PATH = "Plans/.audits/event-authority-2026-08-12/independent-validator/receipts/event_authority_validator_receipt.json"
+AUGUST_RECEIPT_REVISION = "17c842445a2623bb0334ba8d6932e7a6bf088967"
+AUGUST_RECEIPT_SHA = "9c75a19775c29ef64cd49084543e11a1a706fcda376b2b176a905928b6fae38e"
+RECOUNT_CHANGE = "reports/event-authority-20261105/seal-check-recount-receipt.json"
+RECOUNT_AUTHOR = "codex:CA-SEAL2-20261105"
+RECOUNT_BEFORE_SHA = "319f6bffddb07a36e633fd949146e4ce9149819ea5e817b13897a74314163a91"
+RECOUNT_OUTCOMES = HOME / "recount" / "OUTCOMES.json"
+VALIDATOR_RELATIVE = "Plans/.audits/event-authority-2026-08-12/independent-validator/pm_event_authority_independent_validator.py"
+
+
+def recount_json(raw, expected_type):
+    """FIX8 parsing, including overflow-to-infinity and exact selected types."""
+    def pairs(items):
+        obj = {}
+        for key, value in items:
+            if key in obj:
+                raise ValueError("duplicate recount JSON key: " + key)
+            obj[key] = value
+        return obj
+
+    def constant(token):
+        raise ValueError("non-finite recount number: " + token)
+
+    def finite_float(token):
+        value = float(token)
+        if not math.isfinite(value):
+            raise ValueError("non-finite recount number: " + token)
+        return value
+
+    value = json.loads(raw.decode("utf-8"), object_pairs_hook=pairs,
+                       parse_constant=constant, parse_float=finite_float)
+    if type(value) is not expected_type:
+        raise ValueError("wrong recount JSON root type")
+    return value
+
+
+def recount_object(path):
+    return recount_json(path.read_bytes(), dict)
+
+
+def recount_anchor(path):
+    lock = recount_object(ROOT / "Spec_Lock.json")
+    ssot = lock.get("canonical_ssot_hashes")
+    files = ssot.get("files") if type(ssot) is dict else None
+    if type(files) is not list:
+        return False
+    entries = [v for v in files if type(v) is dict and v.get("path") == path]
+    return (len(entries) == 1 and type(entries[0].get("sha256")) is str
+            and HEX64.fullmatch(entries[0]["sha256"]) is not None
+            and entries[0]["sha256"] == sha256_file(REPO / path))
+
+
+def third_change_validator_pin():
+    """Only the anchored fourth byte link may expose the third frozen hash."""
+    live = sha256_file(Path(__file__))
+    try:
+        receipt = recount_object(REPO / RECOUNT_CHANGE)
+        third = recount_object(REPO / MULTI_FAMILY_RECEIPT)
+        if (recount_anchor(RECOUNT_CHANGE)
+                and receipt.get("validator_after_sha256") == live
+                and receipt.get("validator_before_sha256") == RECOUNT_BEFORE_SHA
+                and third.get("validator_after_sha256") == RECOUNT_BEFORE_SHA):
+            return RECOUNT_BEFORE_SHA
+    except (OSError, ValueError, TypeError, KeyError, UnicodeError):
+        pass
+    return live
+
+
+def recount_change_state():
+    path = REPO / RECOUNT_CHANGE
+    receipt = recount_object(path)
+    authority = decision_section_bytes(ROOT / "Decision_Log.md", "DL-451", (
+        b"i approve all of it", b"Approve a fourth recorded change",
+        b"Keep every per-name decision", b"6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30",
+    ))
+    lander = receipt.get("lander_task")
+    expected = {
+        "schema_id": "pm.assurance.event_authority.recount_change.v1",
+        "authority_ref": "Plans/Decision_Log.md#DL-451",
+        "authority_section_sha256": hashlib.sha256(authority).hexdigest(),
+        "validator_path": VALIDATOR_RELATIVE,
+        "validator_id": "pm.plans.audits.event_authority.independent_validator",
+        "validator_before_sha256": RECOUNT_BEFORE_SHA,
+        "validator_after_sha256": sha256_file(Path(__file__)),
+        "prior_receipt": {"path": MULTI_FAMILY_RECEIPT, "sha256": sha256_file(REPO / MULTI_FAMILY_RECEIPT)},
+        "recount_receipt": {"path": RECOUNT_RECEIPT, "sha256": RECOUNT_RECEIPT_SHA},
+        "recount_list": {"path": RECOUNT_LIST, "sha256": RECOUNT_LIST_SHA},
+        "certification_scope": "august_and_recount_in_one_run",
+        "author_task": RECOUNT_AUTHOR,
+    }
+    if (any(type(receipt.get(k)) is not type(v) or receipt.get(k) != v for k, v in expected.items())
+            or type(lander) is not str or not lander.strip()
+            or receipt.get("seal_applier_forbidden_tasks") != sorted({RECOUNT_AUTHOR, lander})
+            or any(receipt.get(k) is not False for k in (
+                "seal_authorized", "admission_authorized", "definition_writing_authorized",
+                "app_recording_authorized", "contract_depth_complete"))
+            or not recount_anchor(RECOUNT_CHANGE)
+            or third_change_validator_pin() != RECOUNT_BEFORE_SHA):
+        raise ValueError("fourth amendment identity, authority, byte link or anchor mismatch")
+    return receipt, sha256_file(path)
+
+
+def recount_relative(value):
+    if (type(value) is not str or not value or "\\" in value or ":" in value
+            or any(ord(c) < 32 or ord(c) == 127 for c in value) or value.startswith("/")
+            or any(p in ("", ".", "..") for p in value.split("/"))):
+        raise ValueError("unsafe recount source path")
+    return value
+
+
+def recount_source_bytes(name, revision, locations):
+    if name in locations:
+        path = locations[name]
+        if type(path) is not str or not Path(path).is_absolute():
+            raise ValueError("source location must be an explicit absolute path")
+        return Path(path).read_bytes()
+    if name.startswith("/"):
+        return Path(name).read_bytes()
+    if name.startswith("git:"):
+        _, revision, name = name.split(":", 2)
+    if not re.fullmatch(r"[0-9a-f]{40}", revision):
+        raise ValueError("noncanonical frozen source revision")
+    recount_relative(name)
+    return subprocess.check_output(["git", "-C", str(REPO), "cat-file", "blob", revision + ":" + name],
+                                   stderr=subprocess.PIPE, timeout=30)
+
+
+def recount_frozen_inputs():
+    receipt_raw = (REPO / RECOUNT_RECEIPT).read_bytes()
+    list_raw = (REPO / RECOUNT_LIST).read_bytes()
+    if hashlib.sha256(receipt_raw).hexdigest() != RECOUNT_RECEIPT_SHA:
+        raise ValueError("recount receipt byte fingerprint mismatch")
+    if hashlib.sha256(list_raw).hexdigest() != RECOUNT_LIST_SHA:
+        raise ValueError("recount list byte fingerprint mismatch")
+    receipt = recount_json(receipt_raw, dict)
+    rows = recount_json(list_raw, list)
+    if (receipt.get("schema_id") != "pm.event_authority.census_recount_receipt.v1"
+            or receipt.get("main_sha") != RECOUNT_REVISION
+            or receipt.get("new_list_sha256") != RECOUNT_LIST_SHA
+            or receipt.get("new_list_bytes") != len(list_raw)
+            or type(receipt.get("new_list_bytes")) is not int
+            or type(receipt.get("outputs")) is not dict
+            or receipt["outputs"].get("NEW-LIST.json") != RECOUNT_LIST_SHA
+            or receipt.get("closure_claim") is not False):
+        raise ValueError("recount receipt snapshot identity mismatch")
+    if len(rows) != 249 or any(type(row) is not dict for row in rows):
+        raise ValueError("recount list must contain exactly 249 objects")
+    names = [row.get("name") for row in rows]
+    if (any(type(n) is not str or not re.fullmatch(r"[A-Za-z0-9_]+(?:\.[A-Za-z0-9_]+)+", n) for n in names)
+            or names != sorted(set(names))
+            or any(row.get("in_august_ledger") is not False or row.get("in_live_registry") is not False
+                   or row.get("classification") != "persisted_event_candidate" for row in rows)
+            or Counter(row.get("bucket") for row in rows) != {"b": 51, "c": 18, "d": 32, "e": 148}):
+        raise ValueError("recount membership malformed or mixed with August")
+    inputs = receipt.get("inputs")
+    if type(inputs) is not dict or len(inputs) != 597:
+        raise ValueError("recount input fingerprint set incomplete")
+    locations = {}
+    location_pin = None
+    location_path = os.environ.get("PM_EA_RECOUNT_SOURCE_MAP")
+    if location_path is not None:
+        raw = Path(location_path).read_bytes()
+        doc = recount_json(raw, dict)
+        if (set(doc) != {"schema_id", "locations"} or doc.get("schema_id") != "pm.event_authority.recount_source_locations.v1"
+                or type(doc.get("locations")) is not dict or set(doc["locations"]) - set(inputs)):
+            raise ValueError("invalid explicit recount source locations")
+        locations = doc["locations"]
+        location_pin = {"path": location_path, "sha256": hashlib.sha256(raw).hexdigest(), "locations": locations}
+    verified = []
+    issues = []
+    for name, pin in inputs.items():
+        try:
+            if (type(pin) is not dict or set(pin) != {"sha256", "bytes"}
+                    or type(pin.get("sha256")) is not str or not HEX64.fullmatch(pin["sha256"])
+                    or type(pin.get("bytes")) is not int or pin["bytes"] < 0):
+                raise ValueError("missing or noncanonical source fingerprint")
+            raw = recount_source_bytes(name, RECOUNT_REVISION, locations)
+            if hashlib.sha256(raw).hexdigest() != pin["sha256"] or len(raw) != pin["bytes"]:
+                raise ValueError("source fingerprint mismatch")
+            verified.append(name)
+        except (OSError, ValueError, TypeError, subprocess.SubprocessError) as exc:
+            issues.append({"source": name, "error": str(exc)})
+    if issues:
+        raise ValueError("recount source custody failed: " + json.dumps(issues, sort_keys=True))
+    return names, {"receipt_sha256": RECOUNT_RECEIPT_SHA, "list_sha256": RECOUNT_LIST_SHA,
+                   "source_revision": RECOUNT_REVISION, "verified_sources": len(verified), "source_locations": location_pin}
+
+
+def recount_outcomes(names, admitted):
+    doc = recount_object(RECOUNT_OUTCOMES)
+    if (doc.get("schema_id") != "pm.assurance.event_authority.recount_outcomes.v1"
+            or doc.get("recount_receipt_sha256") != RECOUNT_RECEIPT_SHA
+            or doc.get("recount_list_sha256") != RECOUNT_LIST_SHA
+            or type(doc.get("rows")) is not list):
+        raise ValueError("recount outcomes snapshot identity mismatch")
+    rows = doc["rows"]
+    if (any(type(row) is not dict for row in rows)
+            or [r.get("event_type") for r in rows] != names):
+        raise ValueError("recount outcomes must name each exact member once in sorted order")
+    cards = []
+    for row in rows:
+        name = row["event_type"]
+        outcome = row.get("outcome")
+        if outcome == "registered":
+            if set(row) != {"event_type", "outcome"} or name not in admitted:
+                raise ValueError("recount family lacks a complete original admission record: " + name)
+        elif outcome == "excluded":
+            if (set(row) != {"event_type", "outcome", "disposition", "decision_ref", "decision_section_sha256", "rationale", "source_citations"}
+                    or row.get("disposition") != "RECLASSIFY_TO_EXCLUDED" or name in admitted
+                    or type(row.get("rationale")) is not str or not row["rationale"].strip()):
+                raise ValueError("incomplete or contradictory recount exclusion: " + name)
+            ref = row.get("decision_ref")
+            if type(ref) is not str or not re.fullmatch(r"Plans/Decision_Log\.md#DL-\d{3}", ref):
+                raise ValueError("recount exclusion decision missing: " + name)
+            section = decision_section_bytes(ROOT / "Decision_Log.md", ref.split("#")[1])
+            if (hashlib.sha256(section).hexdigest() != row.get("decision_section_sha256")
+                    or not re.search(rb"(?<![A-Za-z0-9_.])" + re.escape(name.encode()) + rb"(?![A-Za-z0-9_.])", section)):
+                raise ValueError("recount exclusion decision fingerprint/name mismatch: " + name)
+            citations = row.get("source_citations")
+            if type(citations) is not list or not citations:
+                raise ValueError("recount exclusion evidence missing: " + name)
+            for cite in citations:
+                if type(cite) is not dict or set(cite) != {"path", "sha256", "line_start", "line_end"}:
+                    raise ValueError("malformed recount exclusion citation: " + name)
+                relative = recount_relative(cite["path"])
+                if not relative.startswith("Plans/"):
+                    raise ValueError("recount exclusion evidence must cite Plans: " + name)
+                path = (REPO / relative).resolve(strict=True)
+                if not path.is_relative_to(ROOT.resolve()):
+                    raise ValueError("recount exclusion evidence escapes Plans")
+                raw = path.read_bytes()
+                start, end = cite["line_start"], cite["line_end"]
+                lines = raw.decode("utf-8").splitlines()
+                if (type(start) is not int or type(end) is not int or not 1 <= start <= end <= len(lines)
+                        or hashlib.sha256(raw).hexdigest() != cite["sha256"]
+                        or not re.search(r"(?<![A-Za-z0-9_.])" + re.escape(name) + r"(?![A-Za-z0-9_.])",
+                                         "\n".join(lines[start-1:end]))):
+                    raise ValueError("recount exclusion evidence fingerprint/span mismatch: " + name)
+        elif outcome == "decision_card":
+            if set(row) != {"event_type", "outcome", "card"} or type(row.get("card")) is not dict:
+                raise ValueError("recount decision card incomplete: " + name)
+            pin = row["card"]
+            path = recount_relative(pin.get("path"))
+            if not path.startswith("reports/") or set(pin) != {"path", "sha256"}:
+                raise ValueError("recount decision card path invalid: " + name)
+            raw = (REPO / path).read_bytes()
+            if hashlib.sha256(raw).hexdigest() != pin["sha256"] or name.encode() not in raw:
+                raise ValueError("recount decision card fingerprint/name mismatch: " + name)
+            cards.append(name)
+        else:
+            raise ValueError("unknown recount outcome: " + name)
+    if cards:
+        raise ValueError("recount decision cards unresolved: " + json.dumps(cards))
+    return {"complete": True, "names": len(names), "outcomes_sha256": sha256_file(RECOUNT_OUTCOMES)}
+
+
+def recount_validation(admitted):
+    state = {"complete": False, "diagnostic_only": True}
+    issues = []
+    # Run custody even when the pending landing receipt is invalid; neither earns approval alone.
+    try:
+        _, state["change_receipt_sha256"] = recount_change_state()
+    except (OSError, ValueError, TypeError, KeyError, UnicodeError) as exc:
+        issues.append({"error": "recount_change_receipt_invalid", "detail": str(exc)})
+    try:
+        names, custody = recount_frozen_inputs()
+        state["custody"] = custody
+        state["outcomes"] = recount_outcomes(names, admitted)
+    except (OSError, ValueError, TypeError, KeyError, UnicodeError, subprocess.SubprocessError) as exc:
+        issues.append({"error": "recount_input_or_outcome_invalid", "detail": str(exc)})
+    state["complete"] = not issues
+    return state, issues
+
+
+def recount_snapshot_pins():
+    def observed(path):
+        return sha256_file(path) if path.is_file() else None
+    return {
+        "august": {"receipt_path": AUGUST_RECEIPT_PATH,
+                   "receipt_revision": AUGUST_RECEIPT_REVISION, "receipt_sha256": AUGUST_RECEIPT_SHA,
+                   "inventory_sha256": observed(CENSUS / "CURRENT_SOURCE_INVENTORY.json"),
+                   "denominator_sha256": observed(DENOM)},
+        "recount": {"receipt_path": RECOUNT_RECEIPT, "receipt_revision": RECOUNT_RECEIPT_REVISION,
+                    "receipt_sha256": RECOUNT_RECEIPT_SHA,
+                    "observed_receipt_sha256": observed(REPO / RECOUNT_RECEIPT),
+                    "expected_receipt_sha256": RECOUNT_RECEIPT_SHA,
+                    "list_path": RECOUNT_LIST, "list_sha256": observed(REPO / RECOUNT_LIST),
+                    "expected_list_sha256": RECOUNT_LIST_SHA},
+    }
 
 
 def main() -> int:
@@ -1658,6 +2231,24 @@ def main() -> int:
     if failures:
         overall_pass = False
 
+    # The original August computation above is preserved. Final approval is one
+    # combined run; source custody or a single snapshot can never certify it.
+    named["august_result_before_recount"] = {
+        "pass": overall_pass, "complete_denominator_known": complete_denominator_known,
+        "contract_depth_complete": contract_depth_complete,
+        "seal_prerequisites_met": named.get("seal_prerequisites_met"),
+    }
+    recount_state, recount_issues = recount_validation(post_august_admitted)
+    named["recount"] = recount_state
+    failures.extend(recount_issues)
+    complete_denominator_known = complete_denominator_known and recount_state["complete"]
+    contract_depth_complete = contract_depth_complete and recount_state["complete"]
+    overall_pass = overall_pass and recount_state["complete"]
+    named["seal_prerequisites_met"] = named["seal_prerequisites_met"] and recount_state["complete"]
+    named["seal_prerequisites_blocking_errors"] = sorted(set(named["seal_prerequisites_blocking_errors"])
+                                                      | {f["error"] for f in recount_issues})
+    fail_errors = {f.get("error") for f in failures}
+
     counts = {
         "live_registry_rows": len(live),
         "known37": len(known37),
@@ -1680,10 +2271,15 @@ def main() -> int:
         "by_bucket": dict(Counter(r.get("bucket") for r in ledger)),
         "by_disposition": dict(Counter(r.get("disposition") for r in ledger)),
     }
+    try:
+        _, multi_family_receipt_sha = multi_family_receipt_state()
+    except (OSError, ValueError, TypeError, KeyError, AttributeError):
+        multi_family_receipt_sha = None
     pins = {
         "holding_bucket_change_receipt_sha256": sha256_file(REPO / HOLDING_RECEIPT) if (REPO / HOLDING_RECEIPT).exists() else None,
         "holding_authority_source_sha256": sha256_file(ROOT / "Decision_Log.md") if (ROOT / "Decision_Log.md").exists() else None,
         "post_august_admission_receipt_sha256": post_august_receipt_sha,
+        "multi_family_step_receipt_sha256": multi_family_receipt_sha,
         "known37_sha256": sha256_file(K37),
         "cohort_pins_sha256": sha256_file(COHORT),
         "denominator_sha256": sha256_file(DENOM),
@@ -1721,6 +2317,16 @@ def main() -> int:
 def build_receipt(denom, depth, failures, counts, pins, named, overall_pass=None):
     if overall_pass is None:
         overall_pass = bool(denom and depth and not failures)
+    # A caller supplying only one snapshot cannot manufacture final approval.
+    overall_pass = bool(overall_pass and denom is True and depth is True and not failures
+                        and type(named.get("recount")) is dict
+                        and named["recount"].get("complete") is True
+                        and type(named.get("august_result_before_recount")) is dict
+                        and named["august_result_before_recount"].get("pass") is True)
+    pins = dict(pins)
+    pins["snapshots"] = recount_snapshot_pins()
+    named = dict(named)
+    named["certification_scope"] = "august_and_recount_in_one_run"
     return {
         "schema_id": "pm.assurance.event_authority.independent_validation_receipt.v1",
         "schema_version": "1.0.0",

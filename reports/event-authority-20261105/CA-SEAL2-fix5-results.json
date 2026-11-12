@@ -1,0 +1,427 @@
+{
+  "tested_head": "661e2ce1397c8537d9c687e74b7f2855e8f53f74",
+  "validator_sha256": "3e98a1651ec84de58bd101d8a45319fb6b1101598a144a08f4b4cb965ea48e72",
+  "corpus": {
+    "checks": 140,
+    "passed": 140,
+    "recorded_refusals": 112,
+    "verified_sources": 597,
+    "prior_complete_records_unchanged": 134,
+    "restoration_identical": true
+  },
+  "original_survivor_rows": 84,
+  "outcomes": {
+    "same-predicate duplicate": 5,
+    "implied": 16,
+    "structural": 13,
+    "negative added": 28,
+    "frozen-input only": 22
+  },
+  "removal": {
+    "variants": 182,
+    "test_failures": 126,
+    "all_tests_pass": 54,
+    "crashes": 2,
+    "crash_labels": [
+      "I004_L851_recount_anchor",
+      "I014_L895_recount_change_state"
+    ],
+    "outcome_classified": 56,
+    "unclassified": 0
+  },
+  "mandatory_isolation": [
+    {
+      "guard": "span_order",
+      "negative": "negative_exclusion_line_end_negative",
+      "baseline": {
+        "name": "negative_exclusion_line_end_negative",
+        "pass": true,
+        "refusal": "recount exclusion evidence fingerprint/span mismatch: artifacts.capture_provenance.inspected"
+      },
+      "mutant": {
+        "name": "negative_exclusion_line_end_negative",
+        "pass": false,
+        "error": "negative was accepted"
+      },
+      "unchanged_peer_records": 139,
+      "unchanged_peer_refusals": 111
+    },
+    {
+      "guard": "I094_L1043_recount_outcomes",
+      "negative": "negative_card_extra_row_key",
+      "baseline": {
+        "name": "negative_card_extra_row_key",
+        "pass": true,
+        "refusal": "recount decision card incomplete: artifacts.capture_provenance.inspected"
+      },
+      "mutant": {
+        "name": "negative_card_extra_row_key",
+        "pass": false,
+        "error": "recount decision cards unresolved: [\"artifacts.capture_provenance.inspected\"]"
+      },
+      "unchanged_peer_records": 139,
+      "unchanged_peer_refusals": 111
+    },
+    {
+      "guard": "I096_L1047_recount_outcomes",
+      "negative": "negative_card_Plans_symlink_path",
+      "baseline": {
+        "name": "negative_card_Plans_symlink_path",
+        "pass": true,
+        "refusal": "recount decision card path invalid: artifacts.capture_provenance.inspected"
+      },
+      "mutant": {
+        "name": "negative_card_Plans_symlink_path",
+        "pass": false,
+        "error": "recount decision cards unresolved: [\"artifacts.capture_provenance.inspected\"]"
+      },
+      "unchanged_peer_records": 139,
+      "unchanged_peer_refusals": 111
+    },
+    {
+      "guard": "I097_L1047_recount_outcomes",
+      "negative": "negative_card_extra_pin_key",
+      "baseline": {
+        "name": "negative_card_extra_pin_key",
+        "pass": true,
+        "refusal": "recount decision card path invalid: artifacts.capture_provenance.inspected"
+      },
+      "mutant": {
+        "name": "negative_card_extra_pin_key",
+        "pass": false,
+        "error": "recount decision cards unresolved: [\"artifacts.capture_provenance.inspected\"]"
+      },
+      "unchanged_peer_records": 139,
+      "unchanged_peer_refusals": 111
+    },
+    {
+      "guard": "I099_L1050_recount_outcomes",
+      "negative": "negative_card_missing_event_name",
+      "baseline": {
+        "name": "negative_card_missing_event_name",
+        "pass": true,
+        "refusal": "recount decision card fingerprint/name mismatch: artifacts.capture_provenance.inspected"
+      },
+      "mutant": {
+        "name": "negative_card_missing_event_name",
+        "pass": false,
+        "error": "recount decision cards unresolved: [\"artifacts.capture_provenance.inspected\"]"
+      },
+      "unchanged_peer_records": 139,
+      "unchanged_peer_refusals": 111
+    },
+    {
+      "guard": "I100_L2321_build_receipt",
+      "negative": "negative_builder_explicit_overall_false",
+      "baseline": {
+        "name": "negative_builder_explicit_overall_false",
+        "pass": true,
+        "refusal": "builder false pass"
+      },
+      "mutant": {
+        "name": "negative_builder_explicit_overall_false",
+        "pass": false,
+        "error": "negative was accepted"
+      },
+      "unchanged_peer_records": 139,
+      "unchanged_peer_refusals": 111
+    },
+    {
+      "guard": "I102_L2321_build_receipt",
+      "negative": "negative_builder_depth_false",
+      "baseline": {
+        "name": "negative_builder_depth_false",
+        "pass": true,
+        "refusal": "builder false pass"
+      },
+      "mutant": {
+        "name": "negative_builder_depth_false",
+        "pass": false,
+        "error": "negative was accepted"
+      },
+      "unchanged_peer_records": 139,
+      "unchanged_peer_refusals": 111
+    },
+    {
+      "guard": "I105_L2323_build_receipt",
+      "negative": "negative_builder_recount_false",
+      "baseline": {
+        "name": "negative_builder_recount_false",
+        "pass": true,
+        "refusal": "builder false pass"
+      },
+      "mutant": {
+        "name": "negative_builder_recount_false",
+        "pass": false,
+        "error": "negative was accepted"
+      },
+      "unchanged_peer_records": 139,
+      "unchanged_peer_refusals": 111
+    },
+    {
+      "guard": "I107_L2325_build_receipt",
+      "negative": "negative_builder_August_false",
+      "baseline": {
+        "name": "negative_builder_August_false",
+        "pass": true,
+        "refusal": "builder false pass"
+      },
+      "mutant": {
+        "name": "negative_builder_August_false",
+        "pass": false,
+        "error": "negative was accepted"
+      },
+      "unchanged_peer_records": 139,
+      "unchanged_peer_refusals": 111
+    },
+    {
+      "guard": "I080_L1016_recount_outcomes",
+      "negative": "negative_exclusion_decision_ref_grammar",
+      "baseline": {
+        "name": "negative_exclusion_decision_ref_grammar",
+        "pass": true,
+        "refusal": "recount exclusion decision missing: artifacts.capture_provenance.inspected"
+      },
+      "mutant": {
+        "name": "negative_exclusion_decision_ref_grammar",
+        "pass": false,
+        "error": "negative was accepted"
+      },
+      "unchanged_peer_records": 139,
+      "unchanged_peer_refusals": 111
+    },
+    {
+      "guard": "I087_L1029_recount_outcomes",
+      "negative": "negative_exclusion_lexical_Plans_prefix",
+      "baseline": {
+        "name": "negative_exclusion_lexical_Plans_prefix",
+        "pass": true,
+        "refusal": "recount exclusion evidence must cite Plans: artifacts.capture_provenance.inspected"
+      },
+      "mutant": {
+        "name": "negative_exclusion_lexical_Plans_prefix",
+        "pass": false,
+        "error": "negative was accepted"
+      },
+      "unchanged_peer_records": 139,
+      "unchanged_peer_refusals": 111
+    },
+    {
+      "guard": "I090_L1037_recount_outcomes",
+      "negative": "negative_exclusion_line_end_boolean",
+      "baseline": {
+        "name": "negative_exclusion_line_end_boolean",
+        "pass": true,
+        "refusal": "recount exclusion evidence fingerprint/span mismatch: artifacts.capture_provenance.inspected"
+      },
+      "mutant": {
+        "name": "negative_exclusion_line_end_boolean",
+        "pass": false,
+        "error": "negative was accepted"
+      },
+      "unchanged_peer_records": 139,
+      "unchanged_peer_refusals": 111
+    },
+    {
+      "guard": "span_lower_bound",
+      "negative": "negative_exclusion_line_start_zero",
+      "baseline": {
+        "name": "negative_exclusion_line_start_zero",
+        "pass": true,
+        "refusal": "recount exclusion evidence fingerprint/span mismatch: artifacts.capture_provenance.inspected"
+      },
+      "mutant": {
+        "name": "negative_exclusion_line_start_zero",
+        "pass": false,
+        "error": "negative was accepted"
+      },
+      "unchanged_peer_records": 139,
+      "unchanged_peer_refusals": 111
+    },
+    {
+      "guard": "I053_L967_recount_frozen_inputs",
+      "negative": "negative_source_map_extra_root_key",
+      "baseline": {
+        "name": "negative_source_map_extra_root_key",
+        "pass": true,
+        "refusal": "invalid explicit recount source locations"
+      },
+      "mutant": {
+        "name": "negative_source_map_extra_root_key",
+        "pass": false,
+        "error": "negative was accepted"
+      },
+      "unchanged_peer_records": 139,
+      "unchanged_peer_refusals": 111
+    },
+    {
+      "guard": "I054_L967_recount_frozen_inputs",
+      "negative": "negative_source_map_wrong_schema",
+      "baseline": {
+        "name": "negative_source_map_wrong_schema",
+        "pass": true,
+        "refusal": "invalid explicit recount source locations"
+      },
+      "mutant": {
+        "name": "negative_source_map_wrong_schema",
+        "pass": false,
+        "error": "negative was accepted"
+      },
+      "unchanged_peer_records": 139,
+      "unchanged_peer_refusals": 111
+    },
+    {
+      "guard": "I030_L917_recount_source_bytes",
+      "negative": "negative_source_map_relative_location",
+      "baseline": {
+        "name": "negative_source_map_relative_location",
+        "pass": true,
+        "refusal": "recount source custody failed: [{\"error\": \"source location must be an explicit absolute path\", \"source\": \"/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/BRIEF-DRAFT.md\"}]"
+      },
+      "mutant": {
+        "name": "negative_source_map_relative_location",
+        "pass": false,
+        "error": "negative was accepted"
+      },
+      "unchanged_peer_records": 139,
+      "unchanged_peer_refusals": 111
+    }
+  ],
+  "implications": {
+    "field_wrong_type_inputs": 60,
+    "aggregate_I012_witnesses": 60,
+    "reused_cycle5_labels": [
+      "I006",
+      "I021",
+      "I026"
+    ],
+    "definition": "same field, same defect, logical implication and single/two-site witness, regardless of order; lead ruling 2026-11-05 10:25Z"
+  },
+  "span_parent_negative_diff": [
+    [
+      [
+        "rows",
+        0,
+        "source_citations",
+        0,
+        "line_end"
+      ],
+      1,
+      -1
+    ]
+  ],
+  "evidence": [
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix5/baseline.json",
+      "sha256": "cb1efc064c3a1897996c12606315f82c562a55d6df8f44296021c530ab530730"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix5/restored.json",
+      "sha256": "cb1efc064c3a1897996c12606315f82c562a55d6df8f44296021c530ab530730"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix5/removal-summary.json",
+      "sha256": "9b29747eca7edf2022d2ec1f3c27c001097ec3d5d994a5ef7a28d3b0fdda8415"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix5/supplemental-summary.json",
+      "sha256": "268aa723d0fdd0b86d185c7beea40266ef96db1ad23560fde0d1bab4fdbc3a1c"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix5/adversarial.json",
+      "sha256": "d005b808e10462b27446d525bc02b631ed523ad03bd4c04bd08ed1056023a8e0"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL2/fix5/survivor-summary.json",
+      "sha256": "61e89cdb0b393b114d92b6692215c470351c8703746b68494b2107edbd30b969"
+    }
+  ],
+  "review_evidence": [
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/cycle5/adversarial.json",
+      "sha256": "bea189387b0d91b165edb6cea39b6257cc6637567fe6cb7259d016666b42b557"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/cycle5/survivor-proofs.json",
+      "sha256": "e08049c7cb1451a1916008010e11dffd20f04275831f96973faec2a023cdeb1b"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/cycle5/audit-summary.json",
+      "sha256": "86c65b985ac451cf6cbe0837cf28df621c6665f2e65143bf7c34cf0b982e2599"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/cycle5/removal-summary.json",
+      "sha256": "10334f23932ee492c0f8c0f367a94cd3b26b66baef1d93c7674de214ef4ea6b3"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL2-sol/cycle5/supplemental-summary.json",
+      "sha256": "e02f7909f14287872a32295c8a3b3f3f622c53daa3cfd8b0d52f37c94de1e59e"
+    }
+  ],
+  "lead_ruling": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/CA-SEAL2-FIX5.md",
+    "sha256": "9159b06efd0e94a8a8682601018165ab97c1669061668f0ca13a3402717b2d7e",
+    "attribution": "pm7-build, 2026-11-05 10:25Z; proof classification only"
+  },
+  "shard-check": {
+    "exit": 0,
+    "status": "pass"
+  },
+  "index-comparison": {
+    "baseline": "/home/sittingmongoose/PM-Experiments/ca-seal2-fix5-replay/index-reviewed-base.json",
+    "baseline_head": "213087612a73068a126e17d3dfbbea941d943bf2",
+    "tested_head": "661e2ce1397c8537d9c687e74b7f2855e8f53f74",
+    "origin_main": "e115946ba1681af9111acb5eb469099321ef0657",
+    "old_status": "fail",
+    "new_status": "fail",
+    "failure_count": 30,
+    "failure_arrays_identical": true,
+    "historical_round4_failure_count": 24,
+    "upstream_main_additions_since_round4": [
+      {
+        "baseline_ref": "origin/main",
+        "error": "plan_unit_removed_without_ledger_decision",
+        "owner_doc": "Plans/Decision_Log.md",
+        "path": "Plans/Decision_Log.md",
+        "plan_unit_id": "DL-330"
+      },
+      {
+        "baseline_ref": "origin/main",
+        "error": "plan_unit_removed_without_ledger_decision",
+        "owner_doc": "Plans/Decision_Log.md",
+        "path": "Plans/Decision_Log.md",
+        "plan_unit_id": "DL-331"
+      },
+      {
+        "baseline_ref": "origin/main",
+        "error": "plan_unit_removed_without_ledger_decision",
+        "owner_doc": "Plans/Decision_Log.md",
+        "path": "Plans/Decision_Log.md",
+        "plan_unit_id": "DL-332"
+      },
+      {
+        "baseline_ref": "origin/main",
+        "error": "plan_unit_removed_without_ledger_decision",
+        "owner_doc": "Plans/Decision_Policy.md",
+        "path": "Plans/Decision_Policy.md",
+        "plan_unit_id": "DP-064"
+      },
+      {
+        "baseline_ref": "origin/main",
+        "error": "plan_unit_removed_without_ledger_decision",
+        "owner_doc": "Plans/Decision_Policy.md",
+        "path": "Plans/Decision_Policy.md",
+        "plan_unit_id": "DP-066"
+      },
+      {
+        "baseline_ref": "origin/main",
+        "error": "plan_unit_removed_without_ledger_decision",
+        "owner_doc": "Plans/Planning_Wizard.md",
+        "path": "Plans/Planning_Wizard.md",
+        "plan_unit_id": "PWIZ-038"
+      }
+    ],
+    "canonical_checker_inputs_byte_identical": true,
+    "restored_test_code_sha256": "8507e6f3bc23720b66f58239040cfa06890e99e311dc40d86fc40eb5414bdbf3"
+  }
+}
