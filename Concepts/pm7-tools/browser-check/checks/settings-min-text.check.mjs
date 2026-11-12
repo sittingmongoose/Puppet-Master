@@ -280,12 +280,12 @@ const settle = (t, ms = 350) => t.page.waitForTimeout(ms);
    live on General, and the walk above ends on whichever chapter it visited last. */
 async function setLookBySetting(t, f, look) {
 	const [family, mode] = look.split('-');
-	const general = f.locator('#pm-settings-root [data-action="navigate-domain"][data-domain="general"]').first();
-	if (await general.count()) {
-		await general.click().catch(() => {});
-		await f.waitForFunction(() => !!document.querySelector('select[data-setting="general.visual.theme"]'), null, { timeout: 15000 }).catch(() => {});
-		await t.page.waitForTimeout(600);
-	}
+	/* General holds the Theme and Light or dark rows. It is opened by its own id: below a 720 px host the rail is an
+	   off-canvas drawer, so a press on its chapter link is swallowed and the look never changed (the 740 px cells
+	   painted basic-dark under every name). */
+	await f.evaluate(() => window.PM51.go('general', 'app-input'));
+	await f.waitForFunction(() => !!document.querySelector('select[data-setting="general.visual.theme"]'), null, { timeout: 15000 }).catch(() => {});
+	await t.page.waitForTimeout(600);
 	for (const [setting, value] of [
 		['general.visual.theme', family === 'nier' ? 'NieR' : family[0].toUpperCase() + family.slice(1)],
 		['general.visual.theme-mode', mode === 'light' ? 'Light' : 'Dark'],
@@ -356,7 +356,10 @@ async function walkSettings(t, f, visit) {
 	for (const domain of [...new Set(domains)]) {
 		const link = f.locator(`#pm-settings-root .domain-link[data-domain="${domain}"]`).first();
 		if (!(await link.count())) continue;
-		await link.click().catch(() => {});
+		/* The chapter is opened by its own id, not by a press: below a 720 px host the rail is an off-canvas drawer
+		   and the press is swallowed, which left the 740 px cells measuring one chapter's workspaces under the
+		   next chapter's name. */
+		await f.evaluate((d) => window.PM51.go(d, '__domain__'), domain);
 		await settle(t, 300);
 		const label = ((await link.innerText().catch(() => '')) || '').replace(/\s+/g, ' ').trim().slice(0, 28) || domain;
 		const workspaces = await f.evaluate(() => [...document.querySelectorAll('#pm-settings-root .workspace-tab[data-workspace]')].map((el) => ({ id: el.getAttribute('data-workspace'), label: el.textContent.trim() })));
@@ -545,6 +548,10 @@ for (const surface of ['normal', 'sandbox']) {
 					await t.viewport(w, h);
 					await settle(t, 350);
 					const ok = await guardLook(t, f, look, `${look} ${w}x${h}`);
+					/* The page must really be laid out at the cell's size: a sandbox wrapper that keeps an older frame size
+					   measures a narrower page than the cell names, and every width below is then about that page. */
+					const vp = await f.evaluate(() => ({ iw: window.innerWidth, ih: window.innerHeight, frame: window.frameElement ? [window.frameElement.clientWidth, window.frameElement.clientHeight] : null }));
+					await t.check(`${look} ${w}x${h}: the page is laid out at ${w}x${h}`, Math.abs(vp.iw - w) <= 2 && Math.abs(vp.ih - h) <= 2, `inner ${vp.iw}x${vp.ih}${vp.frame ? `, frame ${vp.frame.join('x')}` : ''}`);
 					await f.evaluate(LAYOUT_ALL);
 					const id = key(surface, look, [w, h]);
 					const states = await walkSettings(t, f, async (where, ws) => {
