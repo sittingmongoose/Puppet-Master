@@ -1,0 +1,323 @@
+{
+  "audit_id": "audit-20260617-005-orchestrator-goal-runtime-flow-semantic-fidelity",
+  "closures": [
+    {
+      "appended_matrix_line": 1,
+      "appended_matrix_sha256": "f21a553a16d894adc9abe841a7bdf69abe9e16f765d990df89c2768d407ffe9b",
+      "appended_registry_line": 1164,
+      "appended_registry_sha256": "45c5e3e948b0265d032c404b70b30f8d38cf05abb1712fc7f7c235638dab2bfc",
+      "closes": {
+        "source_artifact": "atom_fidelity_matrix.jsonl",
+        "source_row": 24
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/Orchestrator_Page.md#section=Projection trust and action gating": "233bdbc0c8a7a676acd183ffb6148ed5d2161489a568aeeed47c5ee612b81914",
+        "Plans/Orchestrator_Page.md#unit=OP-022": "601dddb429e0919be41d42f8a14831330e6add5fcedb9688bb9ec1ed88cc8f0a",
+        "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/records/design_atoms.jsonl#jsonl=atom_id=atom-0024": "8ecf268074bfbb836766a29a59fbafba3e51614b4afcb185a8d6778b4ce37b80"
+      },
+      "finding_key": "sfk-e917377f2542e11a9a18ad71",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "fb441b27fd75440e14115fb382b15a5258ad7ea3",
+      "ref_source": "audit_report.current_ref",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260617-005-orchestrator-goal-runtime-flow-semantic-fidelity-atom-fidelity-matrix-jsonl-24",
+      "reviews": {
+        "astra": {
+          "batch": "S07",
+          "file": "supplemental/batches/S07/review-astra-r1.jsonl",
+          "packet_row_digest": "ad90288b9e800a0516fdb889afdb0127061a89e4f799b4752a954def826cd883",
+          "reason": "The same owner document expressly defines all five projection-trust states and their sensitive-action gate in its governed Projection trust and action gating section. OP-022 applies the current/direct-revalidation rule, so its shorter summary does not leave the product contract missing.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "false_positive",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "S07",
+          "file": "supplemental/batches/S07/review-sol-r1.jsonl",
+          "packet_row_digest": "ad90288b9e800a0516fdb889afdb0127061a89e4f799b4752a954def826cd883",
+          "reason": "The Orchestrator owner prose already defines all five projection states and requires current data or direct canonical revalidation for sensitive actions. OP-022 retains that gate, so the matrix's narrower compiled-unit token check does not identify a missing product contract.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "false_positive",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    },
+    {
+      "appended_matrix_line": 2,
+      "appended_matrix_sha256": "c9da9c2d25519c9b9de2f14a8aa533e5f91746c63302348935f4ea10379eae71",
+      "appended_registry_line": 1165,
+      "appended_registry_sha256": "6f0fe3a00fa867c2783e1f07ce3cbdf15c9dc36a69a4e2bac34571a830c0cf63",
+      "closes": {
+        "source_artifact": "atom_fidelity_matrix.jsonl",
+        "source_row": 34
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/Models_System.md#unit=MS-109": "9b9198405fd985350f78916fa4130a336966573b6b99904abf0eab6e22b9bfe4",
+        "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/records/design_atoms.jsonl#jsonl=atom_id=atom-0034": "03bd2df11f705709c0f7e4e63186ecb4ae3a41f5066aa8137c5c42f76e205f50",
+        "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/capability_lane_binding_policy.json#json=/lanes": "dfdcbef5b021f3706d407925a8fab1d3e6368c0c2c1e62b4bddb3061b0b5c63a"
+      },
+      "finding_key": "sfk-15515df88e1dacaab60cf482",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "fb441b27fd75440e14115fb382b15a5258ad7ea3",
+      "ref_source": "audit_report.current_ref",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260617-005-orchestrator-goal-runtime-flow-semantic-fidelity-atom-fidelity-matrix-jsonl-34",
+      "reviews": {
+        "astra": {
+          "batch": "S07",
+          "file": "supplemental/batches/S07/review-astra-r1.jsonl",
+          "packet_row_digest": "7db85f2c21ee79cc9f2d769a3838d4faf66f57d66cb312f74e57bc53e13208aa",
+          "reason": "Atom-0034 expressly permits equivalent project-owned lane names rather than requiring a separate governance enum member. The accepted lane policy assigns governance to high_reasoning_orchestrator, and MS-109 preserves the corresponding low-cost, standard-review, orchestration, verification, adjudication and certification roles.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "false_positive",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "S07",
+          "file": "supplemental/batches/S07/review-sol-r1.jsonl",
+          "packet_row_digest": "7db85f2c21ee79cc9f2d769a3838d4faf66f57d66cb312f74e57bc53e13208aa",
+          "reason": "Atom-0034 expressly permits equivalent project-owned lane names. The accepted lane policy assigns governance to high_reasoning_orchestrator, and MS-109 requires the executor/reviewer/orchestrator/verifier/adjudicator/certifier roles, so the lack of a separately named governance lane is not a defect.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "false_positive",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    },
+    {
+      "appended_matrix_line": 3,
+      "appended_matrix_sha256": "459cc2f59c93049d0d8fe706e8dacf621d6db1b076c410ba58d09a9e435867db",
+      "appended_registry_line": 1166,
+      "appended_registry_sha256": "3bb5690acfbc548274fd5eaa8640513febabdd8cf7f942149c972eb4e34fdb95",
+      "closes": {
+        "plan_unit_id": "GRS-027",
+        "source_artifact": "planunit_source_claims.jsonl",
+        "source_row": 4
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/Goal_Runtime_System.md#section=Retired Goal structure and negative ownership": "90cf54857da2fedadc3a129595c8a3e6b6a271c33ca43237c8f5fa4fbf6417e9",
+        "Plans/Goal_Runtime_System.md#unit=GRS-027": "56d4d5ffa81b932ef7fc3cdd2a6a59f440ff399d0ffe17c0704b890afe71b85f",
+        "Plans/Goal_Runtime_System.md#unit=GRS-053": "c4ef09014af4add172888e6645240ea5363a3fd4959083328cce2690fd0cb140"
+      },
+      "finding_key": "sfk-ac488331b0d185fcd6a75e11",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "fb441b27fd75440e14115fb382b15a5258ad7ea3",
+      "ref_source": "audit_report.current_ref",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260617-005-orchestrator-goal-runtime-flow-semantic-fidelity-planunit-source-claims-jsonl-4",
+      "reviews": {
+        "astra": {
+          "batch": "S08",
+          "file": "supplemental/batches/S08/review-astra-r1.jsonl",
+          "packet_row_digest": "91dfca5a812226c3c4070ad3a594bbd1786061e81687440aa78dea3981a3c282",
+          "reason": "GRS-027 explicitly retires the Goal-owned verification/repair loop, marks its retained text as non-active lineage, and is superseded by GRS-053. The retirement policy and GRS-053 keep workflow state and verification with the workflow owners, so this retired unit's former reciprocal-lineage warning closes as stale_retired.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "stale_retired",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "S08",
+          "file": "supplemental/batches/S08/review-sol-r1.jsonl",
+          "packet_row_digest": "91dfca5a812226c3c4070ad3a594bbd1786061e81687440aa78dea3981a3c282",
+          "reason": "GRS-027 is explicitly superseded by GRS-053, and its canonical_text forbids accepting or indexing its retained body as active product truth. The current retirement rules remove the Goal-owned role cast and child-Goal structure; GRS-053 instead keeps workflow state with the caller, so this finding concerns a deliberately retired unit.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "stale_retired",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    },
+    {
+      "appended_matrix_line": 4,
+      "appended_matrix_sha256": "e38a0a05ceb478443bbaabdd97ddf599010769dbef773cfcef3e80f1527af03a",
+      "appended_registry_line": 1167,
+      "appended_registry_sha256": "43d8a61418e1d19bc5af4cb53e305c76194fabf64b7927ab28d687897df0c7b3",
+      "closes": {
+        "plan_unit_id": "CW-008",
+        "source_artifact": "planunit_source_claims.jsonl",
+        "source_row": 13
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/chain-wizard.md#section=Canon Status (2026-06-21)": "04e27804f4dfa3109a4a76de9f925270e674b28d37a34dc0f42470ed876f7960",
+        "Plans/chain-wizard.md#unit=CW-008": "de95dc33025556b6be996fb0f92575c224c9230795bb1d762342f4ba4f9fd574"
+      },
+      "finding_key": "sfk-093ed0c155467fc9122d3791",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "fb441b27fd75440e14115fb382b15a5258ad7ea3",
+      "ref_source": "audit_report.current_ref",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260617-005-orchestrator-goal-runtime-flow-semantic-fidelity-planunit-source-claims-jsonl-13",
+      "reviews": {
+        "astra": {
+          "batch": "S08",
+          "file": "supplemental/batches/S08/review-astra-r1.jsonl",
+          "packet_row_digest": "4e154bb3966b389a1658137b327e0dd5ec699be1c701452cd9e6151674937f96",
+          "reason": "CW-008 is retired, and the dated Canon Status section explicitly retires every CW-* unit from active product canon. Current PRD Builder and Planning Wizard authority does not reactivate this historical unit, so its old reciprocal-lineage gap closes as stale_retired.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "stale_retired",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "S08",
+          "file": "supplemental/batches/S08/review-sol-r1.jsonl",
+          "packet_row_digest": "4e154bb3966b389a1658137b327e0dd5ec699be1c701452cd9e6151674937f96",
+          "reason": "CW-008 has status retired, and its owner's Canon Status section retires every CW-* unit from accepted or indexed active product truth. The legacy builder handoff is retained for compatibility and source lineage, so the historical backlink gap is closable as stale_retired.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "stale_retired",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    },
+    {
+      "appended_matrix_line": 5,
+      "appended_matrix_sha256": "58281e0ff3e9cd02828e10c4cc31c8c7455b7646a9a95ccaa3764801d9385e88",
+      "appended_registry_line": 1168,
+      "appended_registry_sha256": "ce0c56d23827d96ff0ecc8ed3625b9f77771b2751a1eb6abdea997f6cbd37b01",
+      "closes": {
+        "plan_unit_id": "CWF-151",
+        "source_artifact": "planunit_source_claims.jsonl",
+        "source_row": 14
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/chain-wizard-flexibility.md#section=Change Summary": "1068d39e4924922392276ffa166521b29b5b9ea12d0430c86eb51276dcbe12e9",
+        "Plans/chain-wizard-flexibility.md#unit=CWF-151": "781b2a310115f346d5f398da2abd0127d386d1989644acbe306bb0487d92c6f4"
+      },
+      "finding_key": "sfk-0f9ed36b77025b1cc883cbef",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "fb441b27fd75440e14115fb382b15a5258ad7ea3",
+      "ref_source": "audit_report.current_ref",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260617-005-orchestrator-goal-runtime-flow-semantic-fidelity-planunit-source-claims-jsonl-14",
+      "reviews": {
+        "astra": {
+          "batch": "S08",
+          "file": "supplemental/batches/S08/review-astra-r1.jsonl",
+          "packet_row_digest": "c4921a84745a28f4aace3efdb8f16a758b7040054bdf0c1c2b0627974a4c345f",
+          "reason": "CWF-151 is retired, and the 2026-06-21 document retirement explicitly excludes all CWF-* units from accepted/indexed active product truth. Its migrated PRD Builder wording remains historical source lineage, so this unit's reciprocal-lineage warning closes as stale_retired.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "stale_retired",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "S08",
+          "file": "supplemental/batches/S08/review-sol-r1.jsonl",
+          "packet_row_digest": "c4921a84745a28f4aace3efdb8f16a758b7040054bdf0c1c2b0627974a4c345f",
+          "reason": "CWF-151 has status retired, and the owner's 2026-06-21 Change Summary retires all CWF-* PlanUnits from active product truth. Its retained PRD Builder handoff text is historical compatibility/source lineage, so the old reciprocal gap concerns a deliberately retired unit.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "stale_retired",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    },
+    {
+      "appended_matrix_line": 6,
+      "appended_matrix_sha256": "6c322db5d83df0515e4de6bc5d0c4f4c1e8815ebf1769dfba8e62179bb0dd5bf",
+      "appended_registry_line": 1196,
+      "appended_registry_sha256": "bb75a0da030d2579836dea2475ba36e407ed3da9db6368f92cbb9c389416dad3",
+      "closes": {
+        "source_artifact": "semantic_risks.jsonl",
+        "source_row": 8
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/Executor_Protocol.md#unit=EP-098": "ca143b3b15aa3f4060c94180bc9e7704c4a2e0a5c0f0ab780b013f80d84dab8b",
+        "Plans/Goal_Runtime_System.md#section=1. Ownership And Consumers": "b9f0cc8d1c9c240cd66d1a09fb590ba7e679833261c4d784e54e324f68134764",
+        "Plans/Goal_Runtime_System.md#section=Retired Goal structure and negative ownership": "90cf54857da2fedadc3a129595c8a3e6b6a271c33ca43237c8f5fa4fbf6417e9",
+        "Plans/Goal_Runtime_System.md#unit=GRS-026": "5c1e5dcd81c5c49c41d1b257b63a3088905da6886dee8aedb0d1a1fe01c6acf7"
+      },
+      "finding_key": "sfk-c0e86ce5439f6582ab523fb9",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "77bae0c63605d0a6f643aa3f1d8c51c2f3bb7947",
+      "ref_source": "audit_report.current_ref",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260617-005-orchestrator-goal-runtime-flow-semantic-fidelity-semantic-risks-jsonl-8",
+      "reviews": {
+        "astra": {
+          "batch": "SF1",
+          "file": "supplemental/batches/SF1/review-astra-max-r1.jsonl",
+          "packet_row_digest": "791547140547f56421d1f094660e4a3ab369d2c887347183fbc4d9260d174099",
+          "reason": "The broad scheduling-ownership sentence is gone, and Goal_Runtime_System now excludes Orchestrator scheduling and execution-window/quota-resume ownership. GRS-026 and EP-098 continue to assign concrete readiness, backoff, capacity, wakeups, and dispatch to Executor, so the specific owner ambiguity is repaired.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "SF1",
+          "file": "supplemental/batches/SF1/review-sol-max-r1.jsonl",
+          "packet_row_digest": "791547140547f56421d1f094660e4a3ab369d2c887347183fbc4d9260d174099",
+          "reason": "The Goal ownership section now enumerates Goal records and continuation rather than claiming scheduling generally, and the negative-ownership section expressly excludes Orchestrator scheduling. GRS-026 and EP-098 leave readiness, retry/backoff, capacity, wakeups and WorkNode dispatch with Executor.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    },
+    {
+      "appended_matrix_line": 7,
+      "appended_matrix_sha256": "993384c6cdbbccfa9f902194571bc21f70af4ea7ee3e544781caa94b81c2a2ae",
+      "appended_registry_line": 1197,
+      "appended_registry_sha256": "827d58d249f21f3caa5ddcc9120e7e2bb98b36c99b7f04cfa3bbf3243492c82d",
+      "closes": {
+        "source_artifact": "semantic_risks.jsonl",
+        "source_row": 10
+      },
+      "evidence_hashes_at_observation": {
+        "Plans/.audits/_semantic_closure_registry.jsonl#jsonl=closure_id=closure-fable-20260706-contract-runtime-core-tier-policy-001": "bce31acd9fc977c723a25d6ef59d89362f25e6cdc1955dbace1f4a6fa5a05344",
+        "Plans/orchestrator-subagent-integration.md#section=Compatibility Tier-Level Subagent Strategy": "17652e4f471db03f9ce96113c8e910b313479f0b80097e486be5edd3a06df07c",
+        "Plans/orchestrator-subagent-integration.md#unit=OSI-425": "64b5ccbe05c5b79eebe4759702b006bb68a0bf41738739c55147de1eeded2287",
+        "Plans/orchestrator-subagent-integration.md#unit=OSI-428": "866fdffefbaf60e3a10567b2ce47786b52908169fe744c8eee382c15c3bfa66b"
+      },
+      "finding_key": "sfk-d87846234621743dd0983ee6",
+      "observation_commit": "5e4fc2fc5a2b5e051c016d8df63f41ae9463536a",
+      "record_observation_commit": "77bae0c63605d0a6f643aa3f1d8c51c2f3bb7947",
+      "ref_source": "audit_report.current_ref",
+      "registry_closure_id": "closure-supplemental-20261111-audit-20260617-005-orchestrator-goal-runtime-flow-semantic-fidelity-semantic-risks-jsonl-10",
+      "reviews": {
+        "astra": {
+          "batch": "SF1",
+          "file": "supplemental/batches/SF1/review-astra-max-r1.jsonl",
+          "packet_row_digest": "eb012b41029fcb91c32a8953abc05793da87ab32c9eb652a8ac5b130bddab330",
+          "reason": "OSI-425 now labels the recovered configuration as compatibility import/export and requires SubagentPolicy normalization before runtime admission. Its negative constraint and the surrounding compatibility-tier section prevent enable_tier_subagents/tier_overrides from regaining active runtime authority, consistently with OSI-428.",
+          "reviewer": "astra",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        },
+        "sol": {
+          "batch": "SF1",
+          "file": "supplemental/batches/SF1/review-sol-max-r1.jsonl",
+          "packet_row_digest": "eb012b41029fcb91c32a8953abc05793da87ab32c9eb652a8ac5b130bddab330",
+          "reason": "OSI-425 now defines the old configuration keys as compatibility import/export aliases and requires normalization through SubagentPolicy before runtime admission. The compatibility strategy section and OSI-428 likewise prohibit using tier-era labels as active runtime semantics.",
+          "reviewer": "sol",
+          "verdict": "agree",
+          "your_status": "repaired",
+          "your_verdict": "close"
+        }
+      },
+      "route": "new_registry_row"
+    }
+  ],
+  "decision": {
+    "decision_record": "Plans/Decision_Log.md#DL-334",
+    "owner_unit": "Plans/Planning_Ledger_System.md#PLS-026",
+    "route": "new_registry_row",
+    "source": "Jared, \"approve all\", T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521, 2026-11-05T02:48:03Z (stream C question 7, option (a)); extended to the other June audits with uncovered rows by pm7-build's relay of the same approved option (pm-mail 1105030457-ade2, 2026-11-05)"
+  },
+  "matrix": {
+    "original_rows": 0,
+    "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "path": "repair_closure_matrix.jsonl"
+  },
+  "pass_id": "audit-20260617-005-orchestrator-goal-runtime-flow-semantic-fidelity-supplemental-20261111",
+  "reviews": "Sol and Astra blind reviews are listed on each closures entry (verdict, your_verdict, your_status, packet_row_digest, batch file)",
+  "schema_id": "pm.audit_supplemental_closure_pass.v1"
+}
