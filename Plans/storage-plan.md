@@ -33156,3 +33156,3957 @@ source_lineage:
 ```
 
 ContractRef: ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/dt_event_contracts.json, ContractName:Plans/dt_event_contracts.schema.json#/$defs/worktree_deleted, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
+
+
+### SP-610 — bundle.selection_forward_blocked
+
+Newly authored persistence/read contract for `bundle.selection_forward_blocked` 1.0.0 under DL-045, adopting ACD-610 and CV-630. Exact operating consumer `reader.chat.bundle_selection_forward_blocked@1.0.0` serves Review handoff audit and pending-chip status. Reuse exact projector `projector.storage.event_record_index@1.0.0` and checkpoint `event_record_index_checkpoint.v1:{storage_instance_id}`, schema `Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint`, version 1.0.0. Explicitly adopt SP-278 including DL-076 nine-field durable read token and current full-index generation/frontier validation; no persisted redb_snapshot_id. This consumer is an on-demand, exact-event filtered read of the generic index, not an independently advancing persistent filtered projection. SP-278 performs predecessor-frontier CAS with index rows atomically, complete captured coverage, source selection and current publication validation. Each read uses the actual live transaction token, full scope and canonical source/payload joins and current permissions; a stale, unsupported or unavailable token cannot publish a result. The generic checkpoint retains RP-PROJECTION-3GEN@1.0.0, without extending the source event lifetime. No new stored family/key/value is created by this reader, so no storage registry row is invented. Existing render pages, Tantivy and worktree binding projections remain their owner-defined stores and must be rebuilt under their own current checkpoints, not by adopting this audit reader as a new mutation path. Replay of this event through `reader.chat.bundle_selection_forward_blocked@1.0.0` returns original outcome evidence only: no git, API, test, send, chip creation, thread creation, notification, billing or deletion side effect. retention_policy_ref = PENDING_RETENTION_DECISION. Candidates: Case L-3 Chat content (thread lifetime, 250,000/thread) versus audit authority (indefinite, no count eviction); classification belongs to RT/Jared. No expiry/count deletion is authorized by this draft. Original source intent, canonical outcome/body and first receipt remain with Document review selection-forward handler, under SP-286/CV-339; coherent backup/restore includes those dependencies and deletion records before any visible read. Missing originals are unavailable, never recaptured. Stored excerpts, command strings, errors, branch/path/PR text must be scrubbed before append; no credentials, inline message body or raw tool output. Every referenced body requires current authorization, deletion/hold checks and exact source Computer/root; retained audit metadata grants no access. This event adds no hold or purge exemption. Withdrawal cuts off this exact family before new operations; fence `reader.chat.bundle_selection_forward_blocked@1.0.0` and any affected domain projection, retain supported original-version historical lookup under current permissions, then rebuild a separately versioned successor from retained canonical sources and a fresh SP-278 token before publication. Never reset a cursor to zero as current, remint events, or delete seglog as withdrawal. No admission or native execution proof is implied.
+
+
+
+**bundle.selection_forward_blocked domain projection binding (newly authored owner contract).** Exact domain projector `projector.chat.bundle_selection_forward_blocked@1.0.0` 1.0.0 and operating consumer `reader.chat.bundle_selection_forward_blocked@1.0.0` explicitly adopt SP-278 and the same verified full-index source path. The family's separate checkpoint is `projector.checkpoint.dch.bundle_selection_forward_blocked.v1:{storage_instance_id}:{scope_partition}`, stored family `dch_bundle_selection_forward_blocked_checkpoint`, closed schema `Plans/dch_event_payloads/dch_bundle_selection_forward_blocked_checkpoint.schema.json#`, schema_id `pm.storage_value.dch_bundle_selection_forward_blocked_checkpoint.v1` 1.0.0. The nine-field durable token is copied exactly from SP-278/DL-076 without redb_snapshot_id. Consumer/projector versions are the suffixes in their stored constant IDs; no version is inferred from the payload. `last_sequence_id` and `last_event_id` identify the last applied exact-family EventRecord; `source_token` identifies complete inspected source coverage including nonmatching events. Publication identity is fresh entropy for a new shadow generation and frozen on retries; revision increments exactly once on successful CAS. The key joins storage_instance_id and scope_partition exactly. Application partition app is also bound to its source token's Server/instance and the event's Computer/thread, never to every null Project. The projector processes this family's records in verified source sequence order and performs only the transition of ACD-610. For `chat.message`, resolve and authorize its canonical typed message and build SP-338 pages and Tantivy fields once keyed by (thread_id,message_id); never reopen a deleted/superseded message. For thread lifecycle, take current lifecycle from the canonical revision and tombstone rather than treating an old historical event as current. Worktree fields update only the existing owner-defined binding/reverse/worktree projections, with old/new identity checks; no git effect is replayed. Selection events attach only existing authorized outcome/provenance refs to audit/pending-chip status; never create a chip or repeat a send during replay. Failure events retain actual original error evidence and cannot imply a successful outcome.
+
+For this exact family, publish projection mutation and checkpoint revision together in one redb transaction with predecessor revision/publication_id CAS. Where the target is Tantivy or the SP-338 page payload store, first durably stage and read back an immutable shadow commit, put its exact reference in projection_refs, then CAS-publish the pointer and checkpoint together. Readers serve only targets named by the current checkpoint's refs and same publication_id; old/partial targets never become visible by newest-file inference. Existing canonical thread/worktree state is not rewritten by a derived rebuild. Rebuild any shared target from all its admitted family sources in global source order into one shadow, never by replaying a whole bound family after an unbound family. A required unadmitted counterpart fences that target, not an inferred admission. Re-read canonical state/tombstones and current grants before publication. On source-generation change or failed CAS, discard unpublished target or retry from the unchanged verified prefix; never reuse a stale token. Missing or malformed derived bytes enter Q-DERIVED and governed rebuild, not source repair. Source loss requires canonical backup recovery.
+
+The checkpoint is MessagePack canonical, max 16 KiB under SP-340; oversized values use existing SP-337 reference storage, never an exemption. The closed history array stores at most two full prior checkpoint generations with first retired_at_utc and state retired; current fields name the selected generation. Reserve staged slots through the existing maintenance intent before source staging; a staged candidate counts against three even before it is visible in history. Retain at most three publication generations per exact key under RP-PROJECTION-3GEN@1.0.0; retirement starts at first committed replacement, retries do not reset it, 604800 seconds for eligible retired generations only, with holds/current/staged/live-ref protection. Reserve the slot first or disclose rebuild unavailability. Source events keep PENDING_RETENTION_DECISION; the checkpoint gives no source keepalive. Backup restores canonical source/custody/tombstones first; derived target/checkpoint is rebuilt and validated against the current full-index token before read. Withdrawal fences this projector and its domain readers in addition to the passive reader, sets checkpoint state withdrawn by CAS, and refuses all ordinary advances. Retained historical lookup uses original schema and current access checks; successor publication requires a separately versioned, complete shadow rebuild. Unsupported versions are unavailable, never rewritten in place.
+
+Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236 canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes, not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref, with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`. The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack. Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance, Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack bytes and index entry and verified readback before the referencing append can be acknowledged or its first receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed. Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants no new retention exemption.
+
+Checkpoint acceptance compares original source facts independently of the candidate: the outer storage_instance_id, durable-token storage_instance_id, source_selection storage_instance_id and actual source/root instance must be identical. Resolve the token checkpoint_key in the actual full-index root, its uniquely current generation JSON Pointer checkpoint_ref and exact same-instance event_record_index.v2@generation dataset. Require exact generation anchor, current frontier revision/digest and all source_selection fields against current synchronized source, including nonmatching same-generation appends; a shape-valid stale token cannot publish. The domain checkpoint key binds this instance and exact scope_partition. last_event_id/last_sequence_id join the actual exact-family EventRecord and its full-index row and source-value commitment; actual source Computer/thread/scope also join the published projection. Publication_id, revision, projection_refs and the full durable source token match the actual staged/read-back publication selected by the atomic checkpoint/pointer CAS. Independent source, token, selection, key/ref, event, dataset, publication and current-frontier mismatches refuse publication. Static fixture adapters model these joins; they do not prove native full-index coverage, redb transactions, CRC, source locks or durability.
+
+For bundle.selection_forward_blocked, the complete encoded checkpoint includes every retained history entry and projection reference. Measure that entire SP-236 value at the 16384-byte SP-340 boundary: 16384 bytes may be inline, 16385 bytes may not. A larger logical checkpoint keeps the same closed schema and bounds and uses SP-337; measure the stored reference/pointer too. Resolve the exact complete bytes through their BLAKE3/size/media-type reference and same-instance, exact-key/scope/family payload-pack index, with current authorization/deletion/hold access, durable bytes/index and verified readback before checkpoint publication. Externalizing the event body does not externalize this checkpoint. Every Storage-assigned identity and metadata field is checked against the original Storage record for the actual instance; no fixture/default instance supplies authority. Checkpoint source lookup resolves inline or referenced originals, validates the supported original envelope and Project/application payload edition, verifies their exact original source commitment and current access/withdrawal status, and then joins their source facts. Retained compatibility-reader originals, including projector_replay_only, remain readable after later live-state changes; only a new append/retry uses the current-writer policy. Unsupported, withdrawn, forged or foreign originals cannot publish. Newly written integer and boolean slots require their exact types before comparison or arithmetic; string numbers/booleans, null, arrays and nested objects confer no numeric or access authority. Current physical commitment/reference encoding canonicalizes integral numeric aliases and signed zero to the same shortest integer bytes; retained bytes retain their protected original recipe below. These are refinements of this family's existing SP-236/SP-278/SP-337/SP-340 contract, not a new retention or product decision.
+
+Before any source resolution or identity hashing, validate every Storage-instance context against Storage's own UUID descriptor in Plans/event_record_index_checkpoint.schema.json, including exact primitive type and UUID format. Empty, malformed, overlong, newline-suffixed and non-string instances refuse even when dependent IDs, keys and source commitments agree. Compare candidate, token, source-selection, payload-pack and index context against the independently read actual Storage record; a caller context, default instance or coherent forged context supplies no authority. Verify Storage-assigned sequence and timestamp fields against that exact original record commitment before reading. A retained original remains governed by its supported edition and current custody, not later lifecycle state.
+
+For new writes and current identity/idempotency inputs, this family selects strict-v4 exact integer types with the owner-declared domain of each field. Storage sequence_id and its last_sequence_id copies, frontier_revision, selected_segment_generation, manifest_generation, recovery_epoch and pack byte_size retain exact uint64 values 0 through 18446744073709551615; no 2^53 ceiling applies to Storage metadata. Publication revision and logical payload integers retain their existing owner minima and maxima, with no invented DCH safe-integer cap. Declared integer slots reject runtime float/string/bool/null/array/object substitutes except explicitly nullable slots. Storage metadata is excluded from the producer-semantic projection as already specified. The producer route is the CV-1100 qualified RFC 8785 encoding of the unchanged CV-317 producer projection (shared producer_semantic_bytes/producer_semantic_digest); an unsupported exact producer input is a structured route refusal, without narrowing its logical owner domain, rounding or stringification. Physical bytes follow SP-236 through the shared SP-1100 codec (storage_value_bytes, EVENT_VALUE profile): float type, minimal exact float width and signed zero are preserved, so a lexical alias never shares an integer's bytes, and the exact integer slots refuse every alias; invalid JSON 01 refuses under the CV-1100 current parser. Retained-recipe dispatch composes the shared SP-1101 RetainedDispatcher and timestamps use the shared CV-1101 check, as the retained-original and format paragraphs state. Test Storage write/retry inputs at 2^53, 2^60 and uint64 maximum, and refuse overflow, negative and wrong-type metadata independently.
+
+Retained and compatibility originals use the schema, numeric domain, runtime type policy, format validator and physical encoder in force when written. The single selector record_number_rule() owns this dispatch on passive history, SP-337 materialization/reference verification, full-index source/checkpoint validation, checkpoint physical storage, saved-original retry comparison and terminal retained-start lookup. New/current inputs select strict-v4. For retained sources, independently read protected Storage write-receipt provenance binds actual storage_instance_id, exact original source-value SHA-256 and recipe_id; it is committed with the original write and survives restore with that source. Candidate fields, caller version/recipe flags, mutable live state and payload content cannot select or enroll an earlier recipe. Verify any claim against that independently authenticated provenance, then verify the exact original bytes with the selected recipe. Missing earlier provenance is unavailable under that earlier recipe, never a guessed downgrade: an original of a Store outside the sealed write custody refuses as unavailable and a receipt naming a recipe with no installed frozen verifier refuses as unsupported, with no fallback to another recipe; within a custody Store an original without a legacy receipt was written by the current strict-v4 writer. Each retained read composes the shared SP-1101 RetainedDispatcher once: one owner selection, no caller override and no current-then-legacy probing, and the installed frozen verifier of that exact recipe tuple (pinned to the recipe's recorded original schema hashes) checks the original. Preserve raw-v1 (d36809af original MessagePack numeric types), normalized-v2 (a785466d normalized integral floats with the original uncapped integer domain), and strict-v3 (c21fa62e safe integers; its original checker skipped date-time and URI formats); Plans/dch_retained_recipes.json pins their exact original schemas and source revisions. A skipped format check never authenticates invalid history (CV-1101, SP-1101): frozen validators apply the shared date-time predicate and CV-253 to the recipe's pinned original resources, so a retained timestamp CV-1101 refuses is owner-invalid and refuses, while owner-valid lowercase, leap-second and long-fraction history stays readable with its exact spelling; the skipped URI check is preserved. Never re-encode raw-v1 bytes under a later normalization to verify their commitment. Plans/dch_write_recipe_receipts.json is an independent synthetic Storage receipt adapter, not native authentication evidence. Every earlier-valid retained numeric or format record stays readable with current authorization, deletion/hold access, withdrawal and actual-source identity checks. A forged source or recipe selection still refuses. Current derived checkpoints may copy an old event sequence into their exact new integer representation; the original retained event/index sequence and commitment remain unchanged. A retry verifies its saved original through the same historical schema/byte/custody reader before comparison; its incoming input stays strict-v4, and a replay-only compatibility original still cannot authorize a current append or retry. Different earlier semantic values conflict without sending an out-of-current-domain original through the current RFC 8785 encoder. A retained checkpoint, including its history and physical payload pack, uses its own original write provenance separately from its referenced event.
+
+The strict-v4 format validators are mandatory and installed explicitly, never through optional jsonschema plugins. Timestamps adopt the shared CV-1101 check: every current and frozen DCH validator is pm_event_datetime.datetime_validator over the complete outer schema, so the registered RFC 3339 predicate runs through the validator. occurred_at_utc keeps the EventRecord profile (T or t, Z/z or a signed offset, any fraction length, year 0000 and legitimate offset-adjusted leap seconds); observed_at_utc and persisted_at_utc keep CV-253's storage_utc_z profile through the inventory-classified envelope; the family ts and populated checkpoint retired_at_utc take the same predicate with their unchanged owner-schema terminal uppercase-Z pattern. A missing zone, space or wrong separator, invalid calendar field, hour 24, minute 60, false leap second, empty fraction and trailing LF refuse. Timestamp strings are never rewritten and are compared only as exact strings; no DCH-local timestamp grammar remains. PR URLs where declared fully match RFC 3986 HTTPS syntax, including valid percent escapes, reg-name or bracketed IPv6/IPvFuture host, numeric port and path/query/fragment grammar. Malformed brackets/hosts/escapes and whitespace refuse. No PR-host allowlist or new provider behavior is introduced. UUID contexts keep Storage's enforced descriptor. Both payload editions, all three EventRecord timestamps and populated checkpoint retirement times have isolated format negatives; applicable PR payloads cover every malformed URL form.
+
+```yaml
+plan_unit_id: SP-610
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: '### SP-610 — bundle.selection_forward_blocked
+
+
+  Newly authored persistence/read contract for `bundle.selection_forward_blocked` 1.0.0 under DL-045, adopting
+  ACD-610 and CV-630. Exact operating consumer `reader.chat.bundle_selection_forward_blocked@1.0.0` serves
+  Review handoff audit and pending-chip status. Reuse exact projector `projector.storage.event_record_index@1.0.0`
+  and checkpoint `event_record_index_checkpoint.v1:{storage_instance_id}`, schema `Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint`,
+  version 1.0.0. Explicitly adopt SP-278 including DL-076 nine-field durable read token and current full-index
+  generation/frontier validation; no persisted redb_snapshot_id. This consumer is an on-demand, exact-event
+  filtered read of the generic index, not an independently advancing persistent filtered projection. SP-278
+  performs predecessor-frontier CAS with index rows atomically, complete captured coverage, source selection
+  and current publication validation. Each read uses the actual live transaction token, full scope and canonical
+  source/payload joins and current permissions; a stale, unsupported or unavailable token cannot publish a
+  result. The generic checkpoint retains RP-PROJECTION-3GEN@1.0.0, without extending the source event lifetime.
+  No new stored family/key/value is created by this reader, so no storage registry row is invented. Existing
+  render pages, Tantivy and worktree binding projections remain their owner-defined stores and must be rebuilt
+  under their own current checkpoints, not by adopting this audit reader as a new mutation path. Replay of
+  this event through `reader.chat.bundle_selection_forward_blocked@1.0.0` returns original outcome evidence
+  only: no git, API, test, send, chip creation, thread creation, notification, billing or deletion side effect.
+  retention_policy_ref = PENDING_RETENTION_DECISION. Candidates: Case L-3 Chat content (thread lifetime, 250,000/thread)
+  versus audit authority (indefinite, no count eviction); classification belongs to RT/Jared. No expiry/count
+  deletion is authorized by this draft. Original source intent, canonical outcome/body and first receipt remain
+  with Document review selection-forward handler, under SP-286/CV-339; coherent backup/restore includes those
+  dependencies and deletion records before any visible read. Missing originals are unavailable, never recaptured.
+  Stored excerpts, command strings, errors, branch/path/PR text must be scrubbed before append; no credentials,
+  inline message body or raw tool output. Every referenced body requires current authorization, deletion/hold
+  checks and exact source Computer/root; retained audit metadata grants no access. This event adds no hold
+  or purge exemption. Withdrawal cuts off this exact family before new operations; fence `reader.chat.bundle_selection_forward_blocked@1.0.0`
+  and any affected domain projection, retain supported original-version historical lookup under current permissions,
+  then rebuild a separately versioned successor from retained canonical sources and a fresh SP-278 token before
+  publication. Never reset a cursor to zero as current, remint events, or delete seglog as withdrawal. No admission
+  or native execution proof is implied.
+
+
+
+
+  **bundle.selection_forward_blocked domain projection binding (newly authored owner contract).** Exact domain
+  projector `projector.chat.bundle_selection_forward_blocked@1.0.0` 1.0.0 and operating consumer `reader.chat.bundle_selection_forward_blocked@1.0.0`
+  explicitly adopt SP-278 and the same verified full-index source path. The family''s separate checkpoint is
+  `projector.checkpoint.dch.bundle_selection_forward_blocked.v1:{storage_instance_id}:{scope_partition}`, stored
+  family `dch_bundle_selection_forward_blocked_checkpoint`, closed schema `Plans/dch_event_payloads/dch_bundle_selection_forward_blocked_checkpoint.schema.json#`,
+  schema_id `pm.storage_value.dch_bundle_selection_forward_blocked_checkpoint.v1` 1.0.0. The nine-field durable
+  token is copied exactly from SP-278/DL-076 without redb_snapshot_id. Consumer/projector versions are the
+  suffixes in their stored constant IDs; no version is inferred from the payload. `last_sequence_id` and `last_event_id`
+  identify the last applied exact-family EventRecord; `source_token` identifies complete inspected source coverage
+  including nonmatching events. Publication identity is fresh entropy for a new shadow generation and frozen
+  on retries; revision increments exactly once on successful CAS. The key joins storage_instance_id and scope_partition
+  exactly. Application partition app is also bound to its source token''s Server/instance and the event''s
+  Computer/thread, never to every null Project. The projector processes this family''s records in verified
+  source sequence order and performs only the transition of ACD-610. For `chat.message`, resolve and authorize
+  its canonical typed message and build SP-338 pages and Tantivy fields once keyed by (thread_id,message_id);
+  never reopen a deleted/superseded message. For thread lifecycle, take current lifecycle from the canonical
+  revision and tombstone rather than treating an old historical event as current. Worktree fields update only
+  the existing owner-defined binding/reverse/worktree projections, with old/new identity checks; no git effect
+  is replayed. Selection events attach only existing authorized outcome/provenance refs to audit/pending-chip
+  status; never create a chip or repeat a send during replay. Failure events retain actual original error evidence
+  and cannot imply a successful outcome.
+
+
+  For this exact family, publish projection mutation and checkpoint revision together in one redb transaction
+  with predecessor revision/publication_id CAS. Where the target is Tantivy or the SP-338 page payload store,
+  first durably stage and read back an immutable shadow commit, put its exact reference in projection_refs,
+  then CAS-publish the pointer and checkpoint together. Readers serve only targets named by the current checkpoint''s
+  refs and same publication_id; old/partial targets never become visible by newest-file inference. Existing
+  canonical thread/worktree state is not rewritten by a derived rebuild. Rebuild any shared target from all
+  its admitted family sources in global source order into one shadow, never by replaying a whole bound family
+  after an unbound family. A required unadmitted counterpart fences that target, not an inferred admission.
+  Re-read canonical state/tombstones and current grants before publication. On source-generation change or
+  failed CAS, discard unpublished target or retry from the unchanged verified prefix; never reuse a stale token.
+  Missing or malformed derived bytes enter Q-DERIVED and governed rebuild, not source repair. Source loss requires
+  canonical backup recovery.
+
+
+  The checkpoint is MessagePack canonical, max 16 KiB under SP-340; oversized values use existing SP-337 reference
+  storage, never an exemption. The closed history array stores at most two full prior checkpoint generations
+  with first retired_at_utc and state retired; current fields name the selected generation. Reserve staged
+  slots through the existing maintenance intent before source staging; a staged candidate counts against three
+  even before it is visible in history. Retain at most three publication generations per exact key under RP-PROJECTION-3GEN@1.0.0;
+  retirement starts at first committed replacement, retries do not reset it, 604800 seconds for eligible retired
+  generations only, with holds/current/staged/live-ref protection. Reserve the slot first or disclose rebuild
+  unavailability. Source events keep PENDING_RETENTION_DECISION; the checkpoint gives no source keepalive.
+  Backup restores canonical source/custody/tombstones first; derived target/checkpoint is rebuilt and validated
+  against the current full-index token before read. Withdrawal fences this projector and its domain readers
+  in addition to the passive reader, sets checkpoint state withdrawn by CAS, and refuses all ordinary advances.
+  Retained historical lookup uses original schema and current access checks; successor publication requires
+  a separately versioned, complete shadow rebuild. Unsupported versions are unavailable, never rewritten in
+  place.
+
+
+  Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application
+  payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236
+  canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes,
+  not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized
+  inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored
+  string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref,
+  with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`.
+  The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack.
+  Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time
+  join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance,
+  Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack
+  bytes and index entry and verified readback before the referencing append can be acknowledged or its first
+  receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence
+  refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed.
+  Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants
+  no new retention exemption.
+
+
+  Checkpoint acceptance compares original source facts independently of the candidate: the outer storage_instance_id,
+  durable-token storage_instance_id, source_selection storage_instance_id and actual source/root instance must
+  be identical. Resolve the token checkpoint_key in the actual full-index root, its uniquely current generation
+  JSON Pointer checkpoint_ref and exact same-instance event_record_index.v2@generation dataset. Require exact
+  generation anchor, current frontier revision/digest and all source_selection fields against current synchronized
+  source, including nonmatching same-generation appends; a shape-valid stale token cannot publish. The domain
+  checkpoint key binds this instance and exact scope_partition. last_event_id/last_sequence_id join the actual
+  exact-family EventRecord and its full-index row and source-value commitment; actual source Computer/thread/scope
+  also join the published projection. Publication_id, revision, projection_refs and the full durable source
+  token match the actual staged/read-back publication selected by the atomic checkpoint/pointer CAS. Independent
+  source, token, selection, key/ref, event, dataset, publication and current-frontier mismatches refuse publication.
+  Static fixture adapters model these joins; they do not prove native full-index coverage, redb transactions,
+  CRC, source locks or durability.
+
+
+  For bundle.selection_forward_blocked, the complete encoded checkpoint includes every retained history
+  entry and projection reference. Measure that entire SP-236 value at the 16384-byte SP-340 boundary:
+  16384 bytes may be inline, 16385 bytes may not. A larger logical checkpoint keeps the same closed schema
+  and bounds and uses SP-337; measure the stored reference/pointer too. Resolve the exact complete bytes
+  through their BLAKE3/size/media-type reference and same-instance, exact-key/scope/family payload-pack
+  index, with current authorization/deletion/hold access, durable bytes/index and verified readback before
+  checkpoint publication. Externalizing the event body does not externalize this checkpoint. Every Storage-assigned
+  identity and metadata field is checked against the original Storage record for the actual instance;
+  no fixture/default instance supplies authority. Checkpoint source lookup resolves inline or referenced
+  originals, validates the supported original envelope and Project/application payload edition, verifies
+  their exact original source commitment and current access/withdrawal status, and then joins their source
+  facts. Retained compatibility-reader originals, including projector_replay_only, remain readable after
+  later live-state changes; only a new append/retry uses the current-writer policy. Unsupported, withdrawn,
+  forged or foreign originals cannot publish. Newly written integer and boolean slots require their exact types before comparison or arithmetic; string numbers/booleans, null, arrays and nested objects confer no
+  numeric or access authority. Current physical commitment/reference encoding canonicalizes integral numeric aliases and signed zero to the same shortest integer bytes; retained bytes retain their protected original recipe below. These are refinements of this family''s existing SP-236/SP-278/SP-337/SP-340 contract, not
+  a new retention or product decision.
+
+
+  Before any source resolution or identity hashing, validate every Storage-instance context against Storage''s own UUID descriptor in Plans/event_record_index_checkpoint.schema.json, including exact primitive type and UUID format. Empty, malformed, overlong, newline-suffixed and non-string instances refuse even when dependent IDs, keys and source commitments agree. Compare candidate, token, source-selection, payload-pack and index context against the independently read actual Storage record; a caller context, default instance or coherent forged context supplies no authority. Verify Storage-assigned sequence and timestamp fields against that exact original record commitment before reading. A retained original remains governed by its supported edition and current custody, not later lifecycle state.
+
+
+  For new writes and current identity/idempotency inputs, this family selects strict-v4 exact integer types with the owner-declared domain of each field. Storage sequence_id and its last_sequence_id copies, frontier_revision, selected_segment_generation, manifest_generation, recovery_epoch and pack byte_size retain exact uint64 values 0 through 18446744073709551615; no 2^53 ceiling applies to Storage metadata. Publication revision and logical payload integers retain their existing owner minima and maxima, with no invented DCH safe-integer cap. Declared integer slots reject runtime float/string/bool/null/array/object substitutes except explicitly nullable slots. Storage metadata is excluded from the producer-semantic projection as already specified. The producer route is the CV-1100 qualified RFC 8785 encoding of the unchanged CV-317 producer projection (shared producer_semantic_bytes/producer_semantic_digest); an unsupported exact producer input is a structured route refusal, without narrowing its logical owner domain, rounding or stringification. Physical bytes follow SP-236 through the shared SP-1100 codec (storage_value_bytes, EVENT_VALUE profile): float type, minimal exact float width and signed zero are preserved, so a lexical alias never shares an integer''s bytes, and the exact integer slots refuse every alias; invalid JSON 01 refuses under the CV-1100 current parser. Retained-recipe dispatch composes the shared SP-1101 RetainedDispatcher and timestamps use the shared CV-1101 check, as the retained-original and format paragraphs state. Test Storage write/retry inputs at 2^53, 2^60 and uint64 maximum, and refuse overflow, negative and wrong-type metadata independently.
+
+
+  Retained and compatibility originals use the schema, numeric domain, runtime type policy, format validator and physical encoder in force when written. The single selector record_number_rule() owns this dispatch on passive history, SP-337 materialization/reference verification, full-index source/checkpoint validation, checkpoint physical storage, saved-original retry comparison and terminal retained-start lookup. New/current inputs select strict-v4. For retained sources, independently read protected Storage write-receipt provenance binds actual storage_instance_id, exact original source-value SHA-256 and recipe_id; it is committed with the original write and survives restore with that source. Candidate fields, caller version/recipe flags, mutable live state and payload content cannot select or enroll an earlier recipe. Verify any claim against that independently authenticated provenance, then verify the exact original bytes with the selected recipe. Missing earlier provenance is unavailable under that earlier recipe, never a guessed downgrade: an original of a Store outside the sealed write custody refuses as unavailable and a receipt naming a recipe with no installed frozen verifier refuses as unsupported, with no fallback to another recipe; within a custody Store an original without a legacy receipt was written by the current strict-v4 writer. Each retained read composes the shared SP-1101 RetainedDispatcher once: one owner selection, no caller override and no current-then-legacy probing, and the installed frozen verifier of that exact recipe tuple (pinned to the recipe''s recorded original schema hashes) checks the original. Preserve raw-v1 (d36809af original MessagePack numeric types), normalized-v2 (a785466d normalized integral floats with the original uncapped integer domain), and strict-v3 (c21fa62e safe integers; its original checker skipped date-time and URI formats); Plans/dch_retained_recipes.json pins their exact original schemas and source revisions. A skipped format check never authenticates invalid history (CV-1101, SP-1101): frozen validators apply the shared date-time predicate and CV-253 to the recipe''s pinned original resources, so a retained timestamp CV-1101 refuses is owner-invalid and refuses, while owner-valid lowercase, leap-second and long-fraction history stays readable with its exact spelling; the skipped URI check is preserved. Never re-encode raw-v1 bytes under a later normalization to verify their commitment. Plans/dch_write_recipe_receipts.json is an independent synthetic Storage receipt adapter, not native authentication evidence. Every earlier-valid retained numeric or format record stays readable with current authorization, deletion/hold access, withdrawal and actual-source identity checks. A forged source or recipe selection still refuses. Current derived checkpoints may copy an old event sequence into their exact new integer representation; the original retained event/index sequence and commitment remain unchanged. A retry verifies its saved original through the same historical schema/byte/custody reader before comparison; its incoming input stays strict-v4, and a replay-only compatibility original still cannot authorize a current append or retry. Different earlier semantic values conflict without sending an out-of-current-domain original through the current RFC 8785 encoder. A retained checkpoint, including its history and physical payload pack, uses its own original write provenance separately from its referenced event.
+
+
+  The strict-v4 format validators are mandatory and installed explicitly, never through optional jsonschema plugins. Timestamps adopt the shared CV-1101 check: every current and frozen DCH validator is pm_event_datetime.datetime_validator over the complete outer schema, so the registered RFC 3339 predicate runs through the validator. occurred_at_utc keeps the EventRecord profile (T or t, Z/z or a signed offset, any fraction length, year 0000 and legitimate offset-adjusted leap seconds); observed_at_utc and persisted_at_utc keep CV-253''s storage_utc_z profile through the inventory-classified envelope; the family ts and populated checkpoint retired_at_utc take the same predicate with their unchanged owner-schema terminal uppercase-Z pattern. A missing zone, space or wrong separator, invalid calendar field, hour 24, minute 60, false leap second, empty fraction and trailing LF refuse. Timestamp strings are never rewritten and are compared only as exact strings; no DCH-local timestamp grammar remains. PR URLs where declared fully match RFC 3986 HTTPS syntax, including valid percent escapes, reg-name or bracketed IPv6/IPvFuture host, numeric port and path/query/fragment grammar. Malformed brackets/hosts/escapes and whitespace refuse. No PR-host allowlist or new provider behavior is introduced. UUID contexts keep Storage''s enforced descriptor. Both payload editions, all three EventRecord timestamps and populated checkpoint retirement times have isolated format negatives; applicable PR payloads cover every malformed URL form.'
+gui_related: false
+gui_classification_reason: Owns event data and persistence contract.
+depends_on:
+- ACD-610
+- CV-630
+- SP-278
+- SP-286
+- SP-337
+unblocks: []
+acceptance_criteria:
+- Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership remains
+  absent.
+- Review-round-2 acceptance rejects the independently mutated forbidden policy, body, retry, source and outcome
+  cases applicable to this exact family; native evidence remains NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm_dch_events.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: event_authority_dch
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- DL-045; WAVE2 DCH 2026-11-04
+preserved_exact_tokens:
+- bundle.selection_forward_blocked
+- PENDING_RETENTION_DECISION
+- SP-278
+- SP-286
+negative_constraints:
+- No event admission or native execution proof; no retention choice.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+
+### SP-611 — bundle.selection_sent_to_chat
+
+Newly authored persistence/read contract for `bundle.selection_sent_to_chat` 1.0.0 under DL-045, adopting ACD-611 and CV-631. Exact operating consumer `reader.chat.bundle_selection_sent_to_chat@1.0.0` serves Chat pending Context tray, prompt assembly provenance and review audit. Reuse exact projector `projector.storage.event_record_index@1.0.0` and checkpoint `event_record_index_checkpoint.v1:{storage_instance_id}`, schema `Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint`, version 1.0.0. Explicitly adopt SP-278 including DL-076 nine-field durable read token and current full-index generation/frontier validation; no persisted redb_snapshot_id. This consumer is an on-demand, exact-event filtered read of the generic index, not an independently advancing persistent filtered projection. SP-278 performs predecessor-frontier CAS with index rows atomically, complete captured coverage, source selection and current publication validation. Each read uses the actual live transaction token, full scope and canonical source/payload joins and current permissions; a stale, unsupported or unavailable token cannot publish a result. The generic checkpoint retains RP-PROJECTION-3GEN@1.0.0, without extending the source event lifetime. No new stored family/key/value is created by this reader, so no storage registry row is invented. Existing render pages, Tantivy and worktree binding projections remain their owner-defined stores and must be rebuilt under their own current checkpoints, not by adopting this audit reader as a new mutation path. Replay of this event through `reader.chat.bundle_selection_sent_to_chat@1.0.0` returns original outcome evidence only: no git, API, test, send, chip creation, thread creation, notification, billing or deletion side effect. retention_policy_ref = PENDING_RETENTION_DECISION. Candidates: Case L-3 Chat content (thread lifetime, 250,000/thread) versus audit authority (indefinite, no count eviction); classification belongs to RT/Jared. No expiry/count deletion is authorized by this draft. Original source intent, canonical outcome/body and first receipt remain with Document review selection-to-chat handler, under SP-286/CV-339; coherent backup/restore includes those dependencies and deletion records before any visible read. Missing originals are unavailable, never recaptured. Stored excerpts, command strings, errors, branch/path/PR text must be scrubbed before append; no credentials, inline message body or raw tool output. Every referenced body requires current authorization, deletion/hold checks and exact source Computer/root; retained audit metadata grants no access. This event adds no hold or purge exemption. Withdrawal cuts off this exact family before new operations; fence `reader.chat.bundle_selection_sent_to_chat@1.0.0` and any affected domain projection, retain supported original-version historical lookup under current permissions, then rebuild a separately versioned successor from retained canonical sources and a fresh SP-278 token before publication. Never reset a cursor to zero as current, remint events, or delete seglog as withdrawal. No admission or native execution proof is implied.
+
+
+
+**bundle.selection_sent_to_chat domain projection binding (newly authored owner contract).** Exact domain projector `projector.chat.bundle_selection_sent_to_chat@1.0.0` 1.0.0 and operating consumer `reader.chat.bundle_selection_sent_to_chat@1.0.0` explicitly adopt SP-278 and the same verified full-index source path. The family's separate checkpoint is `projector.checkpoint.dch.bundle_selection_sent_to_chat.v1:{storage_instance_id}:{scope_partition}`, stored family `dch_bundle_selection_sent_to_chat_checkpoint`, closed schema `Plans/dch_event_payloads/dch_bundle_selection_sent_to_chat_checkpoint.schema.json#`, schema_id `pm.storage_value.dch_bundle_selection_sent_to_chat_checkpoint.v1` 1.0.0. The nine-field durable token is copied exactly from SP-278/DL-076 without redb_snapshot_id. Consumer/projector versions are the suffixes in their stored constant IDs; no version is inferred from the payload. `last_sequence_id` and `last_event_id` identify the last applied exact-family EventRecord; `source_token` identifies complete inspected source coverage including nonmatching events. Publication identity is fresh entropy for a new shadow generation and frozen on retries; revision increments exactly once on successful CAS. The key joins storage_instance_id and scope_partition exactly. Application partition app is also bound to its source token's Server/instance and the event's Computer/thread, never to every null Project. The projector processes this family's records in verified source sequence order and performs only the transition of ACD-611. For `chat.message`, resolve and authorize its canonical typed message and build SP-338 pages and Tantivy fields once keyed by (thread_id,message_id); never reopen a deleted/superseded message. For thread lifecycle, take current lifecycle from the canonical revision and tombstone rather than treating an old historical event as current. Worktree fields update only the existing owner-defined binding/reverse/worktree projections, with old/new identity checks; no git effect is replayed. Selection events attach only existing authorized outcome/provenance refs to audit/pending-chip status; never create a chip or repeat a send during replay. Failure events retain actual original error evidence and cannot imply a successful outcome.
+
+For this exact family, publish projection mutation and checkpoint revision together in one redb transaction with predecessor revision/publication_id CAS. Where the target is Tantivy or the SP-338 page payload store, first durably stage and read back an immutable shadow commit, put its exact reference in projection_refs, then CAS-publish the pointer and checkpoint together. Readers serve only targets named by the current checkpoint's refs and same publication_id; old/partial targets never become visible by newest-file inference. Existing canonical thread/worktree state is not rewritten by a derived rebuild. Rebuild any shared target from all its admitted family sources in global source order into one shadow, never by replaying a whole bound family after an unbound family. A required unadmitted counterpart fences that target, not an inferred admission. Re-read canonical state/tombstones and current grants before publication. On source-generation change or failed CAS, discard unpublished target or retry from the unchanged verified prefix; never reuse a stale token. Missing or malformed derived bytes enter Q-DERIVED and governed rebuild, not source repair. Source loss requires canonical backup recovery.
+
+The checkpoint is MessagePack canonical, max 16 KiB under SP-340; oversized values use existing SP-337 reference storage, never an exemption. The closed history array stores at most two full prior checkpoint generations with first retired_at_utc and state retired; current fields name the selected generation. Reserve staged slots through the existing maintenance intent before source staging; a staged candidate counts against three even before it is visible in history. Retain at most three publication generations per exact key under RP-PROJECTION-3GEN@1.0.0; retirement starts at first committed replacement, retries do not reset it, 604800 seconds for eligible retired generations only, with holds/current/staged/live-ref protection. Reserve the slot first or disclose rebuild unavailability. Source events keep PENDING_RETENTION_DECISION; the checkpoint gives no source keepalive. Backup restores canonical source/custody/tombstones first; derived target/checkpoint is rebuilt and validated against the current full-index token before read. Withdrawal fences this projector and its domain readers in addition to the passive reader, sets checkpoint state withdrawn by CAS, and refuses all ordinary advances. Retained historical lookup uses original schema and current access checks; successor publication requires a separately versioned, complete shadow rebuild. Unsupported versions are unavailable, never rewritten in place.
+
+Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236 canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes, not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref, with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`. The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack. Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance, Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack bytes and index entry and verified readback before the referencing append can be acknowledged or its first receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed. Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants no new retention exemption.
+
+Checkpoint acceptance compares original source facts independently of the candidate: the outer storage_instance_id, durable-token storage_instance_id, source_selection storage_instance_id and actual source/root instance must be identical. Resolve the token checkpoint_key in the actual full-index root, its uniquely current generation JSON Pointer checkpoint_ref and exact same-instance event_record_index.v2@generation dataset. Require exact generation anchor, current frontier revision/digest and all source_selection fields against current synchronized source, including nonmatching same-generation appends; a shape-valid stale token cannot publish. The domain checkpoint key binds this instance and exact scope_partition. last_event_id/last_sequence_id join the actual exact-family EventRecord and its full-index row and source-value commitment; actual source Computer/thread/scope also join the published projection. Publication_id, revision, projection_refs and the full durable source token match the actual staged/read-back publication selected by the atomic checkpoint/pointer CAS. Independent source, token, selection, key/ref, event, dataset, publication and current-frontier mismatches refuse publication. Static fixture adapters model these joins; they do not prove native full-index coverage, redb transactions, CRC, source locks or durability.
+
+For bundle.selection_sent_to_chat, the complete encoded checkpoint includes every retained history entry and projection reference. Measure that entire SP-236 value at the 16384-byte SP-340 boundary: 16384 bytes may be inline, 16385 bytes may not. A larger logical checkpoint keeps the same closed schema and bounds and uses SP-337; measure the stored reference/pointer too. Resolve the exact complete bytes through their BLAKE3/size/media-type reference and same-instance, exact-key/scope/family payload-pack index, with current authorization/deletion/hold access, durable bytes/index and verified readback before checkpoint publication. Externalizing the event body does not externalize this checkpoint. Every Storage-assigned identity and metadata field is checked against the original Storage record for the actual instance; no fixture/default instance supplies authority. Checkpoint source lookup resolves inline or referenced originals, validates the supported original envelope and Project/application payload edition, verifies their exact original source commitment and current access/withdrawal status, and then joins their source facts. Retained compatibility-reader originals, including projector_replay_only, remain readable after later live-state changes; only a new append/retry uses the current-writer policy. Unsupported, withdrawn, forged or foreign originals cannot publish. Newly written integer and boolean slots require their exact types before comparison or arithmetic; string numbers/booleans, null, arrays and nested objects confer no numeric or access authority. Current physical commitment/reference encoding canonicalizes integral numeric aliases and signed zero to the same shortest integer bytes; retained bytes retain their protected original recipe below. These are refinements of this family's existing SP-236/SP-278/SP-337/SP-340 contract, not a new retention or product decision.
+
+Before any source resolution or identity hashing, validate every Storage-instance context against Storage's own UUID descriptor in Plans/event_record_index_checkpoint.schema.json, including exact primitive type and UUID format. Empty, malformed, overlong, newline-suffixed and non-string instances refuse even when dependent IDs, keys and source commitments agree. Compare candidate, token, source-selection, payload-pack and index context against the independently read actual Storage record; a caller context, default instance or coherent forged context supplies no authority. Verify Storage-assigned sequence and timestamp fields against that exact original record commitment before reading. A retained original remains governed by its supported edition and current custody, not later lifecycle state.
+
+For new writes and current identity/idempotency inputs, this family selects strict-v4 exact integer types with the owner-declared domain of each field. Storage sequence_id and its last_sequence_id copies, frontier_revision, selected_segment_generation, manifest_generation, recovery_epoch and pack byte_size retain exact uint64 values 0 through 18446744073709551615; no 2^53 ceiling applies to Storage metadata. Publication revision and logical payload integers retain their existing owner minima and maxima, with no invented DCH safe-integer cap. Declared integer slots reject runtime float/string/bool/null/array/object substitutes except explicitly nullable slots. Storage metadata is excluded from the producer-semantic projection as already specified. The producer route is the CV-1100 qualified RFC 8785 encoding of the unchanged CV-317 producer projection (shared producer_semantic_bytes/producer_semantic_digest); an unsupported exact producer input is a structured route refusal, without narrowing its logical owner domain, rounding or stringification. Physical bytes follow SP-236 through the shared SP-1100 codec (storage_value_bytes, EVENT_VALUE profile): float type, minimal exact float width and signed zero are preserved, so a lexical alias never shares an integer's bytes, and the exact integer slots refuse every alias; invalid JSON 01 refuses under the CV-1100 current parser. Retained-recipe dispatch composes the shared SP-1101 RetainedDispatcher and timestamps use the shared CV-1101 check, as the retained-original and format paragraphs state. Test Storage write/retry inputs at 2^53, 2^60 and uint64 maximum, and refuse overflow, negative and wrong-type metadata independently.
+
+Retained and compatibility originals use the schema, numeric domain, runtime type policy, format validator and physical encoder in force when written. The single selector record_number_rule() owns this dispatch on passive history, SP-337 materialization/reference verification, full-index source/checkpoint validation, checkpoint physical storage, saved-original retry comparison and terminal retained-start lookup. New/current inputs select strict-v4. For retained sources, independently read protected Storage write-receipt provenance binds actual storage_instance_id, exact original source-value SHA-256 and recipe_id; it is committed with the original write and survives restore with that source. Candidate fields, caller version/recipe flags, mutable live state and payload content cannot select or enroll an earlier recipe. Verify any claim against that independently authenticated provenance, then verify the exact original bytes with the selected recipe. Missing earlier provenance is unavailable under that earlier recipe, never a guessed downgrade: an original of a Store outside the sealed write custody refuses as unavailable and a receipt naming a recipe with no installed frozen verifier refuses as unsupported, with no fallback to another recipe; within a custody Store an original without a legacy receipt was written by the current strict-v4 writer. Each retained read composes the shared SP-1101 RetainedDispatcher once: one owner selection, no caller override and no current-then-legacy probing, and the installed frozen verifier of that exact recipe tuple (pinned to the recipe's recorded original schema hashes) checks the original. Preserve raw-v1 (d36809af original MessagePack numeric types), normalized-v2 (a785466d normalized integral floats with the original uncapped integer domain), and strict-v3 (c21fa62e safe integers; its original checker skipped date-time and URI formats); Plans/dch_retained_recipes.json pins their exact original schemas and source revisions. A skipped format check never authenticates invalid history (CV-1101, SP-1101): frozen validators apply the shared date-time predicate and CV-253 to the recipe's pinned original resources, so a retained timestamp CV-1101 refuses is owner-invalid and refuses, while owner-valid lowercase, leap-second and long-fraction history stays readable with its exact spelling; the skipped URI check is preserved. Never re-encode raw-v1 bytes under a later normalization to verify their commitment. Plans/dch_write_recipe_receipts.json is an independent synthetic Storage receipt adapter, not native authentication evidence. Every earlier-valid retained numeric or format record stays readable with current authorization, deletion/hold access, withdrawal and actual-source identity checks. A forged source or recipe selection still refuses. Current derived checkpoints may copy an old event sequence into their exact new integer representation; the original retained event/index sequence and commitment remain unchanged. A retry verifies its saved original through the same historical schema/byte/custody reader before comparison; its incoming input stays strict-v4, and a replay-only compatibility original still cannot authorize a current append or retry. Different earlier semantic values conflict without sending an out-of-current-domain original through the current RFC 8785 encoder. A retained checkpoint, including its history and physical payload pack, uses its own original write provenance separately from its referenced event.
+
+The strict-v4 format validators are mandatory and installed explicitly, never through optional jsonschema plugins. Timestamps adopt the shared CV-1101 check: every current and frozen DCH validator is pm_event_datetime.datetime_validator over the complete outer schema, so the registered RFC 3339 predicate runs through the validator. occurred_at_utc keeps the EventRecord profile (T or t, Z/z or a signed offset, any fraction length, year 0000 and legitimate offset-adjusted leap seconds); observed_at_utc and persisted_at_utc keep CV-253's storage_utc_z profile through the inventory-classified envelope; the family ts and populated checkpoint retired_at_utc take the same predicate with their unchanged owner-schema terminal uppercase-Z pattern. A missing zone, space or wrong separator, invalid calendar field, hour 24, minute 60, false leap second, empty fraction and trailing LF refuse. Timestamp strings are never rewritten and are compared only as exact strings; no DCH-local timestamp grammar remains. PR URLs where declared fully match RFC 3986 HTTPS syntax, including valid percent escapes, reg-name or bracketed IPv6/IPvFuture host, numeric port and path/query/fragment grammar. Malformed brackets/hosts/escapes and whitespace refuse. No PR-host allowlist or new provider behavior is introduced. UUID contexts keep Storage's enforced descriptor. Both payload editions, all three EventRecord timestamps and populated checkpoint retirement times have isolated format negatives; applicable PR payloads cover every malformed URL form.
+
+```yaml
+plan_unit_id: SP-611
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: '### SP-611 — bundle.selection_sent_to_chat
+
+
+  Newly authored persistence/read contract for `bundle.selection_sent_to_chat` 1.0.0 under DL-045, adopting
+  ACD-611 and CV-631. Exact operating consumer `reader.chat.bundle_selection_sent_to_chat@1.0.0` serves Chat
+  pending Context tray, prompt assembly provenance and review audit. Reuse exact projector `projector.storage.event_record_index@1.0.0`
+  and checkpoint `event_record_index_checkpoint.v1:{storage_instance_id}`, schema `Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint`,
+  version 1.0.0. Explicitly adopt SP-278 including DL-076 nine-field durable read token and current full-index
+  generation/frontier validation; no persisted redb_snapshot_id. This consumer is an on-demand, exact-event
+  filtered read of the generic index, not an independently advancing persistent filtered projection. SP-278
+  performs predecessor-frontier CAS with index rows atomically, complete captured coverage, source selection
+  and current publication validation. Each read uses the actual live transaction token, full scope and canonical
+  source/payload joins and current permissions; a stale, unsupported or unavailable token cannot publish a
+  result. The generic checkpoint retains RP-PROJECTION-3GEN@1.0.0, without extending the source event lifetime.
+  No new stored family/key/value is created by this reader, so no storage registry row is invented. Existing
+  render pages, Tantivy and worktree binding projections remain their owner-defined stores and must be rebuilt
+  under their own current checkpoints, not by adopting this audit reader as a new mutation path. Replay of
+  this event through `reader.chat.bundle_selection_sent_to_chat@1.0.0` returns original outcome evidence only:
+  no git, API, test, send, chip creation, thread creation, notification, billing or deletion side effect. retention_policy_ref
+  = PENDING_RETENTION_DECISION. Candidates: Case L-3 Chat content (thread lifetime, 250,000/thread) versus
+  audit authority (indefinite, no count eviction); classification belongs to RT/Jared. No expiry/count deletion
+  is authorized by this draft. Original source intent, canonical outcome/body and first receipt remain with
+  Document review selection-to-chat handler, under SP-286/CV-339; coherent backup/restore includes those dependencies
+  and deletion records before any visible read. Missing originals are unavailable, never recaptured. Stored
+  excerpts, command strings, errors, branch/path/PR text must be scrubbed before append; no credentials, inline
+  message body or raw tool output. Every referenced body requires current authorization, deletion/hold checks
+  and exact source Computer/root; retained audit metadata grants no access. This event adds no hold or purge
+  exemption. Withdrawal cuts off this exact family before new operations; fence `reader.chat.bundle_selection_sent_to_chat@1.0.0`
+  and any affected domain projection, retain supported original-version historical lookup under current permissions,
+  then rebuild a separately versioned successor from retained canonical sources and a fresh SP-278 token before
+  publication. Never reset a cursor to zero as current, remint events, or delete seglog as withdrawal. No admission
+  or native execution proof is implied.
+
+
+
+
+  **bundle.selection_sent_to_chat domain projection binding (newly authored owner contract).** Exact domain
+  projector `projector.chat.bundle_selection_sent_to_chat@1.0.0` 1.0.0 and operating consumer `reader.chat.bundle_selection_sent_to_chat@1.0.0`
+  explicitly adopt SP-278 and the same verified full-index source path. The family''s separate checkpoint is
+  `projector.checkpoint.dch.bundle_selection_sent_to_chat.v1:{storage_instance_id}:{scope_partition}`, stored
+  family `dch_bundle_selection_sent_to_chat_checkpoint`, closed schema `Plans/dch_event_payloads/dch_bundle_selection_sent_to_chat_checkpoint.schema.json#`,
+  schema_id `pm.storage_value.dch_bundle_selection_sent_to_chat_checkpoint.v1` 1.0.0. The nine-field durable
+  token is copied exactly from SP-278/DL-076 without redb_snapshot_id. Consumer/projector versions are the
+  suffixes in their stored constant IDs; no version is inferred from the payload. `last_sequence_id` and `last_event_id`
+  identify the last applied exact-family EventRecord; `source_token` identifies complete inspected source coverage
+  including nonmatching events. Publication identity is fresh entropy for a new shadow generation and frozen
+  on retries; revision increments exactly once on successful CAS. The key joins storage_instance_id and scope_partition
+  exactly. Application partition app is also bound to its source token''s Server/instance and the event''s
+  Computer/thread, never to every null Project. The projector processes this family''s records in verified
+  source sequence order and performs only the transition of ACD-611. For `chat.message`, resolve and authorize
+  its canonical typed message and build SP-338 pages and Tantivy fields once keyed by (thread_id,message_id);
+  never reopen a deleted/superseded message. For thread lifecycle, take current lifecycle from the canonical
+  revision and tombstone rather than treating an old historical event as current. Worktree fields update only
+  the existing owner-defined binding/reverse/worktree projections, with old/new identity checks; no git effect
+  is replayed. Selection events attach only existing authorized outcome/provenance refs to audit/pending-chip
+  status; never create a chip or repeat a send during replay. Failure events retain actual original error evidence
+  and cannot imply a successful outcome.
+
+
+  For this exact family, publish projection mutation and checkpoint revision together in one redb transaction
+  with predecessor revision/publication_id CAS. Where the target is Tantivy or the SP-338 page payload store,
+  first durably stage and read back an immutable shadow commit, put its exact reference in projection_refs,
+  then CAS-publish the pointer and checkpoint together. Readers serve only targets named by the current checkpoint''s
+  refs and same publication_id; old/partial targets never become visible by newest-file inference. Existing
+  canonical thread/worktree state is not rewritten by a derived rebuild. Rebuild any shared target from all
+  its admitted family sources in global source order into one shadow, never by replaying a whole bound family
+  after an unbound family. A required unadmitted counterpart fences that target, not an inferred admission.
+  Re-read canonical state/tombstones and current grants before publication. On source-generation change or
+  failed CAS, discard unpublished target or retry from the unchanged verified prefix; never reuse a stale token.
+  Missing or malformed derived bytes enter Q-DERIVED and governed rebuild, not source repair. Source loss requires
+  canonical backup recovery.
+
+
+  The checkpoint is MessagePack canonical, max 16 KiB under SP-340; oversized values use existing SP-337 reference
+  storage, never an exemption. The closed history array stores at most two full prior checkpoint generations
+  with first retired_at_utc and state retired; current fields name the selected generation. Reserve staged
+  slots through the existing maintenance intent before source staging; a staged candidate counts against three
+  even before it is visible in history. Retain at most three publication generations per exact key under RP-PROJECTION-3GEN@1.0.0;
+  retirement starts at first committed replacement, retries do not reset it, 604800 seconds for eligible retired
+  generations only, with holds/current/staged/live-ref protection. Reserve the slot first or disclose rebuild
+  unavailability. Source events keep PENDING_RETENTION_DECISION; the checkpoint gives no source keepalive.
+  Backup restores canonical source/custody/tombstones first; derived target/checkpoint is rebuilt and validated
+  against the current full-index token before read. Withdrawal fences this projector and its domain readers
+  in addition to the passive reader, sets checkpoint state withdrawn by CAS, and refuses all ordinary advances.
+  Retained historical lookup uses original schema and current access checks; successor publication requires
+  a separately versioned, complete shadow rebuild. Unsupported versions are unavailable, never rewritten in
+  place.
+
+
+  Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application
+  payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236
+  canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes,
+  not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized
+  inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored
+  string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref,
+  with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`.
+  The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack.
+  Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time
+  join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance,
+  Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack
+  bytes and index entry and verified readback before the referencing append can be acknowledged or its first
+  receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence
+  refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed.
+  Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants
+  no new retention exemption.
+
+
+  Checkpoint acceptance compares original source facts independently of the candidate: the outer storage_instance_id,
+  durable-token storage_instance_id, source_selection storage_instance_id and actual source/root instance must
+  be identical. Resolve the token checkpoint_key in the actual full-index root, its uniquely current generation
+  JSON Pointer checkpoint_ref and exact same-instance event_record_index.v2@generation dataset. Require exact
+  generation anchor, current frontier revision/digest and all source_selection fields against current synchronized
+  source, including nonmatching same-generation appends; a shape-valid stale token cannot publish. The domain
+  checkpoint key binds this instance and exact scope_partition. last_event_id/last_sequence_id join the actual
+  exact-family EventRecord and its full-index row and source-value commitment; actual source Computer/thread/scope
+  also join the published projection. Publication_id, revision, projection_refs and the full durable source
+  token match the actual staged/read-back publication selected by the atomic checkpoint/pointer CAS. Independent
+  source, token, selection, key/ref, event, dataset, publication and current-frontier mismatches refuse publication.
+  Static fixture adapters model these joins; they do not prove native full-index coverage, redb transactions,
+  CRC, source locks or durability.
+
+
+  For bundle.selection_sent_to_chat, the complete encoded checkpoint includes every retained history entry
+  and projection reference. Measure that entire SP-236 value at the 16384-byte SP-340 boundary: 16384
+  bytes may be inline, 16385 bytes may not. A larger logical checkpoint keeps the same closed schema and
+  bounds and uses SP-337; measure the stored reference/pointer too. Resolve the exact complete bytes through
+  their BLAKE3/size/media-type reference and same-instance, exact-key/scope/family payload-pack index,
+  with current authorization/deletion/hold access, durable bytes/index and verified readback before checkpoint
+  publication. Externalizing the event body does not externalize this checkpoint. Every Storage-assigned
+  identity and metadata field is checked against the original Storage record for the actual instance;
+  no fixture/default instance supplies authority. Checkpoint source lookup resolves inline or referenced
+  originals, validates the supported original envelope and Project/application payload edition, verifies
+  their exact original source commitment and current access/withdrawal status, and then joins their source
+  facts. Retained compatibility-reader originals, including projector_replay_only, remain readable after
+  later live-state changes; only a new append/retry uses the current-writer policy. Unsupported, withdrawn,
+  forged or foreign originals cannot publish. Newly written integer and boolean slots require their exact types before comparison or arithmetic; string numbers/booleans, null, arrays and nested objects confer no
+  numeric or access authority. Current physical commitment/reference encoding canonicalizes integral numeric aliases and signed zero to the same shortest integer bytes; retained bytes retain their protected original recipe below. These are refinements of this family''s existing SP-236/SP-278/SP-337/SP-340 contract, not
+  a new retention or product decision.
+
+
+  Before any source resolution or identity hashing, validate every Storage-instance context against Storage''s own UUID descriptor in Plans/event_record_index_checkpoint.schema.json, including exact primitive type and UUID format. Empty, malformed, overlong, newline-suffixed and non-string instances refuse even when dependent IDs, keys and source commitments agree. Compare candidate, token, source-selection, payload-pack and index context against the independently read actual Storage record; a caller context, default instance or coherent forged context supplies no authority. Verify Storage-assigned sequence and timestamp fields against that exact original record commitment before reading. A retained original remains governed by its supported edition and current custody, not later lifecycle state.
+
+
+  For new writes and current identity/idempotency inputs, this family selects strict-v4 exact integer types with the owner-declared domain of each field. Storage sequence_id and its last_sequence_id copies, frontier_revision, selected_segment_generation, manifest_generation, recovery_epoch and pack byte_size retain exact uint64 values 0 through 18446744073709551615; no 2^53 ceiling applies to Storage metadata. Publication revision and logical payload integers retain their existing owner minima and maxima, with no invented DCH safe-integer cap. Declared integer slots reject runtime float/string/bool/null/array/object substitutes except explicitly nullable slots. Storage metadata is excluded from the producer-semantic projection as already specified. The producer route is the CV-1100 qualified RFC 8785 encoding of the unchanged CV-317 producer projection (shared producer_semantic_bytes/producer_semantic_digest); an unsupported exact producer input is a structured route refusal, without narrowing its logical owner domain, rounding or stringification. Physical bytes follow SP-236 through the shared SP-1100 codec (storage_value_bytes, EVENT_VALUE profile): float type, minimal exact float width and signed zero are preserved, so a lexical alias never shares an integer''s bytes, and the exact integer slots refuse every alias; invalid JSON 01 refuses under the CV-1100 current parser. Retained-recipe dispatch composes the shared SP-1101 RetainedDispatcher and timestamps use the shared CV-1101 check, as the retained-original and format paragraphs state. Test Storage write/retry inputs at 2^53, 2^60 and uint64 maximum, and refuse overflow, negative and wrong-type metadata independently.
+
+
+  Retained and compatibility originals use the schema, numeric domain, runtime type policy, format validator and physical encoder in force when written. The single selector record_number_rule() owns this dispatch on passive history, SP-337 materialization/reference verification, full-index source/checkpoint validation, checkpoint physical storage, saved-original retry comparison and terminal retained-start lookup. New/current inputs select strict-v4. For retained sources, independently read protected Storage write-receipt provenance binds actual storage_instance_id, exact original source-value SHA-256 and recipe_id; it is committed with the original write and survives restore with that source. Candidate fields, caller version/recipe flags, mutable live state and payload content cannot select or enroll an earlier recipe. Verify any claim against that independently authenticated provenance, then verify the exact original bytes with the selected recipe. Missing earlier provenance is unavailable under that earlier recipe, never a guessed downgrade: an original of a Store outside the sealed write custody refuses as unavailable and a receipt naming a recipe with no installed frozen verifier refuses as unsupported, with no fallback to another recipe; within a custody Store an original without a legacy receipt was written by the current strict-v4 writer. Each retained read composes the shared SP-1101 RetainedDispatcher once: one owner selection, no caller override and no current-then-legacy probing, and the installed frozen verifier of that exact recipe tuple (pinned to the recipe''s recorded original schema hashes) checks the original. Preserve raw-v1 (d36809af original MessagePack numeric types), normalized-v2 (a785466d normalized integral floats with the original uncapped integer domain), and strict-v3 (c21fa62e safe integers; its original checker skipped date-time and URI formats); Plans/dch_retained_recipes.json pins their exact original schemas and source revisions. A skipped format check never authenticates invalid history (CV-1101, SP-1101): frozen validators apply the shared date-time predicate and CV-253 to the recipe''s pinned original resources, so a retained timestamp CV-1101 refuses is owner-invalid and refuses, while owner-valid lowercase, leap-second and long-fraction history stays readable with its exact spelling; the skipped URI check is preserved. Never re-encode raw-v1 bytes under a later normalization to verify their commitment. Plans/dch_write_recipe_receipts.json is an independent synthetic Storage receipt adapter, not native authentication evidence. Every earlier-valid retained numeric or format record stays readable with current authorization, deletion/hold access, withdrawal and actual-source identity checks. A forged source or recipe selection still refuses. Current derived checkpoints may copy an old event sequence into their exact new integer representation; the original retained event/index sequence and commitment remain unchanged. A retry verifies its saved original through the same historical schema/byte/custody reader before comparison; its incoming input stays strict-v4, and a replay-only compatibility original still cannot authorize a current append or retry. Different earlier semantic values conflict without sending an out-of-current-domain original through the current RFC 8785 encoder. A retained checkpoint, including its history and physical payload pack, uses its own original write provenance separately from its referenced event.
+
+
+  The strict-v4 format validators are mandatory and installed explicitly, never through optional jsonschema plugins. Timestamps adopt the shared CV-1101 check: every current and frozen DCH validator is pm_event_datetime.datetime_validator over the complete outer schema, so the registered RFC 3339 predicate runs through the validator. occurred_at_utc keeps the EventRecord profile (T or t, Z/z or a signed offset, any fraction length, year 0000 and legitimate offset-adjusted leap seconds); observed_at_utc and persisted_at_utc keep CV-253''s storage_utc_z profile through the inventory-classified envelope; the family ts and populated checkpoint retired_at_utc take the same predicate with their unchanged owner-schema terminal uppercase-Z pattern. A missing zone, space or wrong separator, invalid calendar field, hour 24, minute 60, false leap second, empty fraction and trailing LF refuse. Timestamp strings are never rewritten and are compared only as exact strings; no DCH-local timestamp grammar remains. PR URLs where declared fully match RFC 3986 HTTPS syntax, including valid percent escapes, reg-name or bracketed IPv6/IPvFuture host, numeric port and path/query/fragment grammar. Malformed brackets/hosts/escapes and whitespace refuse. No PR-host allowlist or new provider behavior is introduced. UUID contexts keep Storage''s enforced descriptor. Both payload editions, all three EventRecord timestamps and populated checkpoint retirement times have isolated format negatives; applicable PR payloads cover every malformed URL form.'
+gui_related: false
+gui_classification_reason: Owns event data and persistence contract.
+depends_on:
+- ACD-611
+- CV-631
+- SP-278
+- SP-286
+- SP-337
+unblocks: []
+acceptance_criteria:
+- Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership remains
+  absent.
+- Review-round-2 acceptance rejects the independently mutated forbidden policy, body, retry, source and outcome
+  cases applicable to this exact family; native evidence remains NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm_dch_events.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: event_authority_dch
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- DL-045; WAVE2 DCH 2026-11-04
+preserved_exact_tokens:
+- bundle.selection_sent_to_chat
+- PENDING_RETENTION_DECISION
+- SP-278
+- SP-286
+negative_constraints:
+- No event admission or native execution proof; no retention choice.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+
+### SP-612 — chat.message
+
+Newly authored persistence/read contract for `chat.message` 1.0.0 under DL-045, adopting ACD-612 and CV-632. Exact operating consumer `reader.chat.chat_message@1.0.0` serves SP-338 render pages, Tantivy chat search and ACD-062 AgentChatHistorySearch. Reuse exact projector `projector.storage.event_record_index@1.0.0` and checkpoint `event_record_index_checkpoint.v1:{storage_instance_id}`, schema `Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint`, version 1.0.0. Explicitly adopt SP-278 including DL-076 nine-field durable read token and current full-index generation/frontier validation; no persisted redb_snapshot_id. This consumer is an on-demand, exact-event filtered read of the generic index, not an independently advancing persistent filtered projection. SP-278 performs predecessor-frontier CAS with index rows atomically, complete captured coverage, source selection and current publication validation. Each read uses the actual live transaction token, full scope and canonical source/payload joins and current permissions; a stale, unsupported or unavailable token cannot publish a result. The generic checkpoint retains RP-PROJECTION-3GEN@1.0.0, without extending the source event lifetime. No new stored family/key/value is created by this reader, so no storage registry row is invented. Existing render pages, Tantivy and worktree binding projections remain their owner-defined stores and must be rebuilt under their own current checkpoints, not by adopting this audit reader as a new mutation path. Replay of this event through `reader.chat.chat_message@1.0.0` returns original outcome evidence only: no git, API, test, send, chip creation, thread creation, notification, billing or deletion side effect. retention_policy_ref = PENDING_RETENTION_DECISION. Case L-3 explicitly classifies Chat content: retain while its thread exists, at 250,000/thread roll a linked successor and never silently evict content (Storage Case L-3, row Chat content). This family binds that existing class; PENDING_RETENTION_DECISION reserves only the structured policy object assignment for RT, not a new choice between chat content and indefinite audit retention. Thread deletion follows the existing 24-hour purge, hold and 30-day backup bounds; no newly invented audit exemption applies. No expiry/count deletion is authorized by this draft. Chat content is the exact semantic class; RT must materialize its structured policy object without substituting RP-GOAL-THREAD-LIFETIME, which omits the 250,000/thread rollover rule. Original source intent, canonical outcome/body and first receipt remain with Assistant Chat transcript commit handler, under SP-286/CV-339; coherent backup/restore includes those dependencies and deletion records before any visible read. Missing originals are unavailable, never recaptured. Stored excerpts, command strings, errors, branch/path/PR text must be scrubbed before append; no credentials, inline message body or raw tool output. Every referenced body requires current authorization, deletion/hold checks and exact source Computer/root; retained audit metadata grants no access. This event adds no hold or purge exemption. Withdrawal cuts off this exact family before new operations; fence `reader.chat.chat_message@1.0.0` and any affected domain projection, retain supported original-version historical lookup under current permissions, then rebuild a separately versioned successor from retained canonical sources and a fresh SP-278 token before publication. Never reset a cursor to zero as current, remint events, or delete seglog as withdrawal. No admission or native execution proof is implied.
+
+
+
+**chat.message domain projection binding (newly authored owner contract).** Exact domain projector `projector.chat.chat_message@1.0.0` 1.0.0 and operating consumer `reader.chat.chat_message@1.0.0` explicitly adopt SP-278 and the same verified full-index source path. The family's separate checkpoint is `projector.checkpoint.dch.chat_message.v1:{storage_instance_id}:{scope_partition}`, stored family `dch_chat_message_checkpoint`, closed schema `Plans/dch_event_payloads/dch_chat_message_checkpoint.schema.json#`, schema_id `pm.storage_value.dch_chat_message_checkpoint.v1` 1.0.0. The nine-field durable token is copied exactly from SP-278/DL-076 without redb_snapshot_id. Consumer/projector versions are the suffixes in their stored constant IDs; no version is inferred from the payload. `last_sequence_id` and `last_event_id` identify the last applied exact-family EventRecord; `source_token` identifies complete inspected source coverage including nonmatching events. Publication identity is fresh entropy for a new shadow generation and frozen on retries; revision increments exactly once on successful CAS. The key joins storage_instance_id and scope_partition exactly. Application partition app is also bound to its source token's Server/instance and the event's Computer/thread, never to every null Project. The projector processes this family's records in verified source sequence order and performs only the transition of ACD-612. For `chat.message`, resolve and authorize its canonical typed message and build SP-338 pages and Tantivy fields once keyed by (thread_id,message_id); never reopen a deleted/superseded message. For thread lifecycle, take current lifecycle from the canonical revision and tombstone rather than treating an old historical event as current. Worktree fields update only the existing owner-defined binding/reverse/worktree projections, with old/new identity checks; no git effect is replayed. Selection events attach only existing authorized outcome/provenance refs to audit/pending-chip status; never create a chip or repeat a send during replay. Failure events retain actual original error evidence and cannot imply a successful outcome.
+
+For this exact family, publish projection mutation and checkpoint revision together in one redb transaction with predecessor revision/publication_id CAS. Where the target is Tantivy or the SP-338 page payload store, first durably stage and read back an immutable shadow commit, put its exact reference in projection_refs, then CAS-publish the pointer and checkpoint together. Readers serve only targets named by the current checkpoint's refs and same publication_id; old/partial targets never become visible by newest-file inference. Existing canonical thread/worktree state is not rewritten by a derived rebuild. Rebuild any shared target from all its admitted family sources in global source order into one shadow, never by replaying a whole bound family after an unbound family. A required unadmitted counterpart fences that target, not an inferred admission. Re-read canonical state/tombstones and current grants before publication. On source-generation change or failed CAS, discard unpublished target or retry from the unchanged verified prefix; never reuse a stale token. Missing or malformed derived bytes enter Q-DERIVED and governed rebuild, not source repair. Source loss requires canonical backup recovery.
+
+The checkpoint is MessagePack canonical, max 16 KiB under SP-340; oversized values use existing SP-337 reference storage, never an exemption. The closed history array stores at most two full prior checkpoint generations with first retired_at_utc and state retired; current fields name the selected generation. Reserve staged slots through the existing maintenance intent before source staging; a staged candidate counts against three even before it is visible in history. Retain at most three publication generations per exact key under RP-PROJECTION-3GEN@1.0.0; retirement starts at first committed replacement, retries do not reset it, 604800 seconds for eligible retired generations only, with holds/current/staged/live-ref protection. Reserve the slot first or disclose rebuild unavailability. Source events keep PENDING_RETENTION_DECISION; the checkpoint gives no source keepalive. Backup restores canonical source/custody/tombstones first; derived target/checkpoint is rebuilt and validated against the current full-index token before read. Withdrawal fences this projector and its domain readers in addition to the passive reader, sets checkpoint state withdrawn by CAS, and refuses all ordinary advances. Retained historical lookup uses original schema and current access checks; successor publication requires a separately versioned, complete shadow rebuild. Unsupported versions are unavailable, never rewritten in place.
+
+Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236 canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes, not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref, with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`. The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack. Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance, Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack bytes and index entry and verified readback before the referencing append can be acknowledged or its first receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed. Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants no new retention exemption.
+
+Checkpoint acceptance compares original source facts independently of the candidate: the outer storage_instance_id, durable-token storage_instance_id, source_selection storage_instance_id and actual source/root instance must be identical. Resolve the token checkpoint_key in the actual full-index root, its uniquely current generation JSON Pointer checkpoint_ref and exact same-instance event_record_index.v2@generation dataset. Require exact generation anchor, current frontier revision/digest and all source_selection fields against current synchronized source, including nonmatching same-generation appends; a shape-valid stale token cannot publish. The domain checkpoint key binds this instance and exact scope_partition. last_event_id/last_sequence_id join the actual exact-family EventRecord and its full-index row and source-value commitment; actual source Computer/thread/scope also join the published projection. Publication_id, revision, projection_refs and the full durable source token match the actual staged/read-back publication selected by the atomic checkpoint/pointer CAS. Independent source, token, selection, key/ref, event, dataset, publication and current-frontier mismatches refuse publication. Static fixture adapters model these joins; they do not prove native full-index coverage, redb transactions, CRC, source locks or durability.
+
+For chat.message, the complete encoded checkpoint includes every retained history entry and projection reference. Measure that entire SP-236 value at the 16384-byte SP-340 boundary: 16384 bytes may be inline, 16385 bytes may not. A larger logical checkpoint keeps the same closed schema and bounds and uses SP-337; measure the stored reference/pointer too. Resolve the exact complete bytes through their BLAKE3/size/media-type reference and same-instance, exact-key/scope/family payload-pack index, with current authorization/deletion/hold access, durable bytes/index and verified readback before checkpoint publication. Externalizing the event body does not externalize this checkpoint. Every Storage-assigned identity and metadata field is checked against the original Storage record for the actual instance; no fixture/default instance supplies authority. Checkpoint source lookup resolves inline or referenced originals, validates the supported original envelope and Project/application payload edition, verifies their exact original source commitment and current access/withdrawal status, and then joins their source facts. Retained compatibility-reader originals, including projector_replay_only, remain readable after later live-state changes; only a new append/retry uses the current-writer policy. Unsupported, withdrawn, forged or foreign originals cannot publish. Newly written integer and boolean slots require their exact types before comparison or arithmetic; string numbers/booleans, null, arrays and nested objects confer no numeric or access authority. Current physical commitment/reference encoding canonicalizes integral numeric aliases and signed zero to the same shortest integer bytes; retained bytes retain their protected original recipe below. These are refinements of this family's existing SP-236/SP-278/SP-337/SP-340 contract, not a new retention or product decision.
+
+Before any source resolution or identity hashing, validate every Storage-instance context against Storage's own UUID descriptor in Plans/event_record_index_checkpoint.schema.json, including exact primitive type and UUID format. Empty, malformed, overlong, newline-suffixed and non-string instances refuse even when dependent IDs, keys and source commitments agree. Compare candidate, token, source-selection, payload-pack and index context against the independently read actual Storage record; a caller context, default instance or coherent forged context supplies no authority. Verify Storage-assigned sequence and timestamp fields against that exact original record commitment before reading. A retained original remains governed by its supported edition and current custody, not later lifecycle state.
+
+For new writes and current identity/idempotency inputs, this family selects strict-v4 exact integer types with the owner-declared domain of each field. Storage sequence_id and its last_sequence_id copies, frontier_revision, selected_segment_generation, manifest_generation, recovery_epoch and pack byte_size retain exact uint64 values 0 through 18446744073709551615; no 2^53 ceiling applies to Storage metadata. Publication revision and logical payload integers retain their existing owner minima and maxima, with no invented DCH safe-integer cap. Declared integer slots reject runtime float/string/bool/null/array/object substitutes except explicitly nullable slots. Storage metadata is excluded from the producer-semantic projection as already specified. The producer route is the CV-1100 qualified RFC 8785 encoding of the unchanged CV-317 producer projection (shared producer_semantic_bytes/producer_semantic_digest); an unsupported exact producer input is a structured route refusal, without narrowing its logical owner domain, rounding or stringification. Physical bytes follow SP-236 through the shared SP-1100 codec (storage_value_bytes, EVENT_VALUE profile): float type, minimal exact float width and signed zero are preserved, so a lexical alias never shares an integer's bytes, and the exact integer slots refuse every alias; invalid JSON 01 refuses under the CV-1100 current parser. Retained-recipe dispatch composes the shared SP-1101 RetainedDispatcher and timestamps use the shared CV-1101 check, as the retained-original and format paragraphs state. Test Storage write/retry inputs at 2^53, 2^60 and uint64 maximum, and refuse overflow, negative and wrong-type metadata independently.
+
+Retained and compatibility originals use the schema, numeric domain, runtime type policy, format validator and physical encoder in force when written. The single selector record_number_rule() owns this dispatch on passive history, SP-337 materialization/reference verification, full-index source/checkpoint validation, checkpoint physical storage, saved-original retry comparison and terminal retained-start lookup. New/current inputs select strict-v4. For retained sources, independently read protected Storage write-receipt provenance binds actual storage_instance_id, exact original source-value SHA-256 and recipe_id; it is committed with the original write and survives restore with that source. Candidate fields, caller version/recipe flags, mutable live state and payload content cannot select or enroll an earlier recipe. Verify any claim against that independently authenticated provenance, then verify the exact original bytes with the selected recipe. Missing earlier provenance is unavailable under that earlier recipe, never a guessed downgrade: an original of a Store outside the sealed write custody refuses as unavailable and a receipt naming a recipe with no installed frozen verifier refuses as unsupported, with no fallback to another recipe; within a custody Store an original without a legacy receipt was written by the current strict-v4 writer. Each retained read composes the shared SP-1101 RetainedDispatcher once: one owner selection, no caller override and no current-then-legacy probing, and the installed frozen verifier of that exact recipe tuple (pinned to the recipe's recorded original schema hashes) checks the original. Preserve raw-v1 (d36809af original MessagePack numeric types), normalized-v2 (a785466d normalized integral floats with the original uncapped integer domain), and strict-v3 (c21fa62e safe integers; its original checker skipped date-time and URI formats); Plans/dch_retained_recipes.json pins their exact original schemas and source revisions. A skipped format check never authenticates invalid history (CV-1101, SP-1101): frozen validators apply the shared date-time predicate and CV-253 to the recipe's pinned original resources, so a retained timestamp CV-1101 refuses is owner-invalid and refuses, while owner-valid lowercase, leap-second and long-fraction history stays readable with its exact spelling; the skipped URI check is preserved. Never re-encode raw-v1 bytes under a later normalization to verify their commitment. Plans/dch_write_recipe_receipts.json is an independent synthetic Storage receipt adapter, not native authentication evidence. Every earlier-valid retained numeric or format record stays readable with current authorization, deletion/hold access, withdrawal and actual-source identity checks. A forged source or recipe selection still refuses. Current derived checkpoints may copy an old event sequence into their exact new integer representation; the original retained event/index sequence and commitment remain unchanged. A retry verifies its saved original through the same historical schema/byte/custody reader before comparison; its incoming input stays strict-v4, and a replay-only compatibility original still cannot authorize a current append or retry. Different earlier semantic values conflict without sending an out-of-current-domain original through the current RFC 8785 encoder. A retained checkpoint, including its history and physical payload pack, uses its own original write provenance separately from its referenced event.
+
+The strict-v4 format validators are mandatory and installed explicitly, never through optional jsonschema plugins. Timestamps adopt the shared CV-1101 check: every current and frozen DCH validator is pm_event_datetime.datetime_validator over the complete outer schema, so the registered RFC 3339 predicate runs through the validator. occurred_at_utc keeps the EventRecord profile (T or t, Z/z or a signed offset, any fraction length, year 0000 and legitimate offset-adjusted leap seconds); observed_at_utc and persisted_at_utc keep CV-253's storage_utc_z profile through the inventory-classified envelope; the family ts and populated checkpoint retired_at_utc take the same predicate with their unchanged owner-schema terminal uppercase-Z pattern. A missing zone, space or wrong separator, invalid calendar field, hour 24, minute 60, false leap second, empty fraction and trailing LF refuse. Timestamp strings are never rewritten and are compared only as exact strings; no DCH-local timestamp grammar remains. PR URLs where declared fully match RFC 3986 HTTPS syntax, including valid percent escapes, reg-name or bracketed IPv6/IPvFuture host, numeric port and path/query/fragment grammar. Malformed brackets/hosts/escapes and whitespace refuse. No PR-host allowlist or new provider behavior is introduced. UUID contexts keep Storage's enforced descriptor. Both payload editions, all three EventRecord timestamps and populated checkpoint retirement times have isolated format negatives; applicable PR payloads cover every malformed URL form.
+
+```yaml
+plan_unit_id: SP-612
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: '### SP-612 — chat.message
+
+
+  Newly authored persistence/read contract for `chat.message` 1.0.0 under DL-045, adopting ACD-612 and CV-632.
+  Exact operating consumer `reader.chat.chat_message@1.0.0` serves SP-338 render pages, Tantivy chat search
+  and ACD-062 AgentChatHistorySearch. Reuse exact projector `projector.storage.event_record_index@1.0.0` and
+  checkpoint `event_record_index_checkpoint.v1:{storage_instance_id}`, schema `Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint`,
+  version 1.0.0. Explicitly adopt SP-278 including DL-076 nine-field durable read token and current full-index
+  generation/frontier validation; no persisted redb_snapshot_id. This consumer is an on-demand, exact-event
+  filtered read of the generic index, not an independently advancing persistent filtered projection. SP-278
+  performs predecessor-frontier CAS with index rows atomically, complete captured coverage, source selection
+  and current publication validation. Each read uses the actual live transaction token, full scope and canonical
+  source/payload joins and current permissions; a stale, unsupported or unavailable token cannot publish a
+  result. The generic checkpoint retains RP-PROJECTION-3GEN@1.0.0, without extending the source event lifetime.
+  No new stored family/key/value is created by this reader, so no storage registry row is invented. Existing
+  render pages, Tantivy and worktree binding projections remain their owner-defined stores and must be rebuilt
+  under their own current checkpoints, not by adopting this audit reader as a new mutation path. Replay of
+  this event through `reader.chat.chat_message@1.0.0` returns original outcome evidence only: no git, API,
+  test, send, chip creation, thread creation, notification, billing or deletion side effect. retention_policy_ref
+  = PENDING_RETENTION_DECISION. Case L-3 explicitly classifies Chat content: retain while its thread exists,
+  at 250,000/thread roll a linked successor and never silently evict content (Storage Case L-3, row Chat content).
+  This family binds that existing class; PENDING_RETENTION_DECISION reserves only the structured policy object
+  assignment for RT, not a new choice between chat content and indefinite audit retention. Thread deletion
+  follows the existing 24-hour purge, hold and 30-day backup bounds; no newly invented audit exemption applies.
+  No expiry/count deletion is authorized by this draft. Chat content is the exact semantic class; RT must materialize
+  its structured policy object without substituting RP-GOAL-THREAD-LIFETIME, which omits the 250,000/thread
+  rollover rule. Original source intent, canonical outcome/body and first receipt remain with Assistant Chat
+  transcript commit handler, under SP-286/CV-339; coherent backup/restore includes those dependencies and deletion
+  records before any visible read. Missing originals are unavailable, never recaptured. Stored excerpts, command
+  strings, errors, branch/path/PR text must be scrubbed before append; no credentials, inline message body
+  or raw tool output. Every referenced body requires current authorization, deletion/hold checks and exact
+  source Computer/root; retained audit metadata grants no access. This event adds no hold or purge exemption.
+  Withdrawal cuts off this exact family before new operations; fence `reader.chat.chat_message@1.0.0` and any
+  affected domain projection, retain supported original-version historical lookup under current permissions,
+  then rebuild a separately versioned successor from retained canonical sources and a fresh SP-278 token before
+  publication. Never reset a cursor to zero as current, remint events, or delete seglog as withdrawal. No admission
+  or native execution proof is implied.
+
+
+
+
+  **chat.message domain projection binding (newly authored owner contract).** Exact domain projector `projector.chat.chat_message@1.0.0`
+  1.0.0 and operating consumer `reader.chat.chat_message@1.0.0` explicitly adopt SP-278 and the same verified
+  full-index source path. The family''s separate checkpoint is `projector.checkpoint.dch.chat_message.v1:{storage_instance_id}:{scope_partition}`,
+  stored family `dch_chat_message_checkpoint`, closed schema `Plans/dch_event_payloads/dch_chat_message_checkpoint.schema.json#`,
+  schema_id `pm.storage_value.dch_chat_message_checkpoint.v1` 1.0.0. The nine-field durable token is copied
+  exactly from SP-278/DL-076 without redb_snapshot_id. Consumer/projector versions are the suffixes in their
+  stored constant IDs; no version is inferred from the payload. `last_sequence_id` and `last_event_id` identify
+  the last applied exact-family EventRecord; `source_token` identifies complete inspected source coverage including
+  nonmatching events. Publication identity is fresh entropy for a new shadow generation and frozen on retries;
+  revision increments exactly once on successful CAS. The key joins storage_instance_id and scope_partition
+  exactly. Application partition app is also bound to its source token''s Server/instance and the event''s
+  Computer/thread, never to every null Project. The projector processes this family''s records in verified
+  source sequence order and performs only the transition of ACD-612. For `chat.message`, resolve and authorize
+  its canonical typed message and build SP-338 pages and Tantivy fields once keyed by (thread_id,message_id);
+  never reopen a deleted/superseded message. For thread lifecycle, take current lifecycle from the canonical
+  revision and tombstone rather than treating an old historical event as current. Worktree fields update only
+  the existing owner-defined binding/reverse/worktree projections, with old/new identity checks; no git effect
+  is replayed. Selection events attach only existing authorized outcome/provenance refs to audit/pending-chip
+  status; never create a chip or repeat a send during replay. Failure events retain actual original error evidence
+  and cannot imply a successful outcome.
+
+
+  For this exact family, publish projection mutation and checkpoint revision together in one redb transaction
+  with predecessor revision/publication_id CAS. Where the target is Tantivy or the SP-338 page payload store,
+  first durably stage and read back an immutable shadow commit, put its exact reference in projection_refs,
+  then CAS-publish the pointer and checkpoint together. Readers serve only targets named by the current checkpoint''s
+  refs and same publication_id; old/partial targets never become visible by newest-file inference. Existing
+  canonical thread/worktree state is not rewritten by a derived rebuild. Rebuild any shared target from all
+  its admitted family sources in global source order into one shadow, never by replaying a whole bound family
+  after an unbound family. A required unadmitted counterpart fences that target, not an inferred admission.
+  Re-read canonical state/tombstones and current grants before publication. On source-generation change or
+  failed CAS, discard unpublished target or retry from the unchanged verified prefix; never reuse a stale token.
+  Missing or malformed derived bytes enter Q-DERIVED and governed rebuild, not source repair. Source loss requires
+  canonical backup recovery.
+
+
+  The checkpoint is MessagePack canonical, max 16 KiB under SP-340; oversized values use existing SP-337 reference
+  storage, never an exemption. The closed history array stores at most two full prior checkpoint generations
+  with first retired_at_utc and state retired; current fields name the selected generation. Reserve staged
+  slots through the existing maintenance intent before source staging; a staged candidate counts against three
+  even before it is visible in history. Retain at most three publication generations per exact key under RP-PROJECTION-3GEN@1.0.0;
+  retirement starts at first committed replacement, retries do not reset it, 604800 seconds for eligible retired
+  generations only, with holds/current/staged/live-ref protection. Reserve the slot first or disclose rebuild
+  unavailability. Source events keep PENDING_RETENTION_DECISION; the checkpoint gives no source keepalive.
+  Backup restores canonical source/custody/tombstones first; derived target/checkpoint is rebuilt and validated
+  against the current full-index token before read. Withdrawal fences this projector and its domain readers
+  in addition to the passive reader, sets checkpoint state withdrawn by CAS, and refuses all ordinary advances.
+  Retained historical lookup uses original schema and current access checks; successor publication requires
+  a separately versioned, complete shadow rebuild. Unsupported versions are unavailable, never rewritten in
+  place.
+
+
+  Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application
+  payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236
+  canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes,
+  not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized
+  inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored
+  string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref,
+  with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`.
+  The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack.
+  Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time
+  join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance,
+  Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack
+  bytes and index entry and verified readback before the referencing append can be acknowledged or its first
+  receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence
+  refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed.
+  Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants
+  no new retention exemption.
+
+
+  Checkpoint acceptance compares original source facts independently of the candidate: the outer storage_instance_id,
+  durable-token storage_instance_id, source_selection storage_instance_id and actual source/root instance must
+  be identical. Resolve the token checkpoint_key in the actual full-index root, its uniquely current generation
+  JSON Pointer checkpoint_ref and exact same-instance event_record_index.v2@generation dataset. Require exact
+  generation anchor, current frontier revision/digest and all source_selection fields against current synchronized
+  source, including nonmatching same-generation appends; a shape-valid stale token cannot publish. The domain
+  checkpoint key binds this instance and exact scope_partition. last_event_id/last_sequence_id join the actual
+  exact-family EventRecord and its full-index row and source-value commitment; actual source Computer/thread/scope
+  also join the published projection. Publication_id, revision, projection_refs and the full durable source
+  token match the actual staged/read-back publication selected by the atomic checkpoint/pointer CAS. Independent
+  source, token, selection, key/ref, event, dataset, publication and current-frontier mismatches refuse publication.
+  Static fixture adapters model these joins; they do not prove native full-index coverage, redb transactions,
+  CRC, source locks or durability.
+
+
+  For chat.message, the complete encoded checkpoint includes every retained history entry and projection
+  reference. Measure that entire SP-236 value at the 16384-byte SP-340 boundary: 16384 bytes may be inline,
+  16385 bytes may not. A larger logical checkpoint keeps the same closed schema and bounds and uses SP-337;
+  measure the stored reference/pointer too. Resolve the exact complete bytes through their BLAKE3/size/media-type
+  reference and same-instance, exact-key/scope/family payload-pack index, with current authorization/deletion/hold
+  access, durable bytes/index and verified readback before checkpoint publication. Externalizing the event
+  body does not externalize this checkpoint. Every Storage-assigned identity and metadata field is checked
+  against the original Storage record for the actual instance; no fixture/default instance supplies authority.
+  Checkpoint source lookup resolves inline or referenced originals, validates the supported original envelope
+  and Project/application payload edition, verifies their exact original source commitment and current
+  access/withdrawal status, and then joins their source facts. Retained compatibility-reader originals,
+  including projector_replay_only, remain readable after later live-state changes; only a new append/retry
+  uses the current-writer policy. Unsupported, withdrawn, forged or foreign originals cannot publish.
+  Newly written integer and boolean slots require their exact types before comparison or arithmetic; string
+  numbers/booleans, null, arrays and nested objects confer no numeric or access authority. Current physical commitment/reference encoding canonicalizes integral numeric aliases and signed zero to the same shortest integer bytes; retained bytes retain their protected original recipe below. These are refinements of this family''s
+  existing SP-236/SP-278/SP-337/SP-340 contract, not a new retention or product decision.
+
+
+  Before any source resolution or identity hashing, validate every Storage-instance context against Storage''s own UUID descriptor in Plans/event_record_index_checkpoint.schema.json, including exact primitive type and UUID format. Empty, malformed, overlong, newline-suffixed and non-string instances refuse even when dependent IDs, keys and source commitments agree. Compare candidate, token, source-selection, payload-pack and index context against the independently read actual Storage record; a caller context, default instance or coherent forged context supplies no authority. Verify Storage-assigned sequence and timestamp fields against that exact original record commitment before reading. A retained original remains governed by its supported edition and current custody, not later lifecycle state.
+
+
+  For new writes and current identity/idempotency inputs, this family selects strict-v4 exact integer types with the owner-declared domain of each field. Storage sequence_id and its last_sequence_id copies, frontier_revision, selected_segment_generation, manifest_generation, recovery_epoch and pack byte_size retain exact uint64 values 0 through 18446744073709551615; no 2^53 ceiling applies to Storage metadata. Publication revision and logical payload integers retain their existing owner minima and maxima, with no invented DCH safe-integer cap. Declared integer slots reject runtime float/string/bool/null/array/object substitutes except explicitly nullable slots. Storage metadata is excluded from the producer-semantic projection as already specified. The producer route is the CV-1100 qualified RFC 8785 encoding of the unchanged CV-317 producer projection (shared producer_semantic_bytes/producer_semantic_digest); an unsupported exact producer input is a structured route refusal, without narrowing its logical owner domain, rounding or stringification. Physical bytes follow SP-236 through the shared SP-1100 codec (storage_value_bytes, EVENT_VALUE profile): float type, minimal exact float width and signed zero are preserved, so a lexical alias never shares an integer''s bytes, and the exact integer slots refuse every alias; invalid JSON 01 refuses under the CV-1100 current parser. Retained-recipe dispatch composes the shared SP-1101 RetainedDispatcher and timestamps use the shared CV-1101 check, as the retained-original and format paragraphs state. Test Storage write/retry inputs at 2^53, 2^60 and uint64 maximum, and refuse overflow, negative and wrong-type metadata independently.
+
+
+  Retained and compatibility originals use the schema, numeric domain, runtime type policy, format validator and physical encoder in force when written. The single selector record_number_rule() owns this dispatch on passive history, SP-337 materialization/reference verification, full-index source/checkpoint validation, checkpoint physical storage, saved-original retry comparison and terminal retained-start lookup. New/current inputs select strict-v4. For retained sources, independently read protected Storage write-receipt provenance binds actual storage_instance_id, exact original source-value SHA-256 and recipe_id; it is committed with the original write and survives restore with that source. Candidate fields, caller version/recipe flags, mutable live state and payload content cannot select or enroll an earlier recipe. Verify any claim against that independently authenticated provenance, then verify the exact original bytes with the selected recipe. Missing earlier provenance is unavailable under that earlier recipe, never a guessed downgrade: an original of a Store outside the sealed write custody refuses as unavailable and a receipt naming a recipe with no installed frozen verifier refuses as unsupported, with no fallback to another recipe; within a custody Store an original without a legacy receipt was written by the current strict-v4 writer. Each retained read composes the shared SP-1101 RetainedDispatcher once: one owner selection, no caller override and no current-then-legacy probing, and the installed frozen verifier of that exact recipe tuple (pinned to the recipe''s recorded original schema hashes) checks the original. Preserve raw-v1 (d36809af original MessagePack numeric types), normalized-v2 (a785466d normalized integral floats with the original uncapped integer domain), and strict-v3 (c21fa62e safe integers; its original checker skipped date-time and URI formats); Plans/dch_retained_recipes.json pins their exact original schemas and source revisions. A skipped format check never authenticates invalid history (CV-1101, SP-1101): frozen validators apply the shared date-time predicate and CV-253 to the recipe''s pinned original resources, so a retained timestamp CV-1101 refuses is owner-invalid and refuses, while owner-valid lowercase, leap-second and long-fraction history stays readable with its exact spelling; the skipped URI check is preserved. Never re-encode raw-v1 bytes under a later normalization to verify their commitment. Plans/dch_write_recipe_receipts.json is an independent synthetic Storage receipt adapter, not native authentication evidence. Every earlier-valid retained numeric or format record stays readable with current authorization, deletion/hold access, withdrawal and actual-source identity checks. A forged source or recipe selection still refuses. Current derived checkpoints may copy an old event sequence into their exact new integer representation; the original retained event/index sequence and commitment remain unchanged. A retry verifies its saved original through the same historical schema/byte/custody reader before comparison; its incoming input stays strict-v4, and a replay-only compatibility original still cannot authorize a current append or retry. Different earlier semantic values conflict without sending an out-of-current-domain original through the current RFC 8785 encoder. A retained checkpoint, including its history and physical payload pack, uses its own original write provenance separately from its referenced event.
+
+
+  The strict-v4 format validators are mandatory and installed explicitly, never through optional jsonschema plugins. Timestamps adopt the shared CV-1101 check: every current and frozen DCH validator is pm_event_datetime.datetime_validator over the complete outer schema, so the registered RFC 3339 predicate runs through the validator. occurred_at_utc keeps the EventRecord profile (T or t, Z/z or a signed offset, any fraction length, year 0000 and legitimate offset-adjusted leap seconds); observed_at_utc and persisted_at_utc keep CV-253''s storage_utc_z profile through the inventory-classified envelope; the family ts and populated checkpoint retired_at_utc take the same predicate with their unchanged owner-schema terminal uppercase-Z pattern. A missing zone, space or wrong separator, invalid calendar field, hour 24, minute 60, false leap second, empty fraction and trailing LF refuse. Timestamp strings are never rewritten and are compared only as exact strings; no DCH-local timestamp grammar remains. PR URLs where declared fully match RFC 3986 HTTPS syntax, including valid percent escapes, reg-name or bracketed IPv6/IPvFuture host, numeric port and path/query/fragment grammar. Malformed brackets/hosts/escapes and whitespace refuse. No PR-host allowlist or new provider behavior is introduced. UUID contexts keep Storage''s enforced descriptor. Both payload editions, all three EventRecord timestamps and populated checkpoint retirement times have isolated format negatives; applicable PR payloads cover every malformed URL form.'
+gui_related: false
+gui_classification_reason: Owns event data and persistence contract.
+depends_on:
+- ACD-612
+- CV-632
+- SP-278
+- SP-286
+- SP-337
+unblocks: []
+acceptance_criteria:
+- Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership remains
+  absent.
+- Review-round-2 acceptance rejects the independently mutated forbidden policy, body, retry, source and outcome
+  cases applicable to this exact family; native evidence remains NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm_dch_events.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: event_authority_dch
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- DL-045; WAVE2 DCH 2026-11-04
+preserved_exact_tokens:
+- chat.message
+- PENDING_RETENTION_DECISION
+- SP-278
+- SP-286
+negative_constraints:
+- No event admission or native execution proof; no retention choice.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+
+### SP-614 — chat.thread_created
+
+Newly authored persistence/read contract for `chat.thread_created` 1.0.0 under DL-045, adopting ACD-614 and CV-634. Exact operating consumer `reader.chat.chat_thread_created@1.0.0` serves Thread shell/navigation, SP-338 render-page builder and audit. Reuse exact projector `projector.storage.event_record_index@1.0.0` and checkpoint `event_record_index_checkpoint.v1:{storage_instance_id}`, schema `Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint`, version 1.0.0. Explicitly adopt SP-278 including DL-076 nine-field durable read token and current full-index generation/frontier validation; no persisted redb_snapshot_id. This consumer is an on-demand, exact-event filtered read of the generic index, not an independently advancing persistent filtered projection. SP-278 performs predecessor-frontier CAS with index rows atomically, complete captured coverage, source selection and current publication validation. Each read uses the actual live transaction token, full scope and canonical source/payload joins and current permissions; a stale, unsupported or unavailable token cannot publish a result. The generic checkpoint retains RP-PROJECTION-3GEN@1.0.0, without extending the source event lifetime. No new stored family/key/value is created by this reader, so no storage registry row is invented. Existing render pages, Tantivy and worktree binding projections remain their owner-defined stores and must be rebuilt under their own current checkpoints, not by adopting this audit reader as a new mutation path. Replay of this event through `reader.chat.chat_thread_created@1.0.0` returns original outcome evidence only: no git, API, test, send, chip creation, thread creation, notification, billing or deletion side effect. retention_policy_ref = PENDING_RETENTION_DECISION. Candidates: Case L-3 Chat content (thread lifetime, 250,000/thread) versus audit authority (indefinite, no count eviction); classification belongs to RT/Jared. No expiry/count deletion is authorized by this draft. Original source intent, canonical outcome/body and first receipt remain with cmd.chat.thread.commit_first_message handler, under SP-286/CV-339; coherent backup/restore includes those dependencies and deletion records before any visible read. Missing originals are unavailable, never recaptured. Stored excerpts, command strings, errors, branch/path/PR text must be scrubbed before append; no credentials, inline message body or raw tool output. Every referenced body requires current authorization, deletion/hold checks and exact source Computer/root; retained audit metadata grants no access. This event adds no hold or purge exemption. Withdrawal cuts off this exact family before new operations; fence `reader.chat.chat_thread_created@1.0.0` and any affected domain projection, retain supported original-version historical lookup under current permissions, then rebuild a separately versioned successor from retained canonical sources and a fresh SP-278 token before publication. Never reset a cursor to zero as current, remint events, or delete seglog as withdrawal. No admission or native execution proof is implied.
+
+
+
+**chat.thread_created domain projection binding (newly authored owner contract).** Exact domain projector `projector.chat.chat_thread_created@1.0.0` 1.0.0 and operating consumer `reader.chat.chat_thread_created@1.0.0` explicitly adopt SP-278 and the same verified full-index source path. The family's separate checkpoint is `projector.checkpoint.dch.chat_thread_created.v1:{storage_instance_id}:{scope_partition}`, stored family `dch_chat_thread_created_checkpoint`, closed schema `Plans/dch_event_payloads/dch_chat_thread_created_checkpoint.schema.json#`, schema_id `pm.storage_value.dch_chat_thread_created_checkpoint.v1` 1.0.0. The nine-field durable token is copied exactly from SP-278/DL-076 without redb_snapshot_id. Consumer/projector versions are the suffixes in their stored constant IDs; no version is inferred from the payload. `last_sequence_id` and `last_event_id` identify the last applied exact-family EventRecord; `source_token` identifies complete inspected source coverage including nonmatching events. Publication identity is fresh entropy for a new shadow generation and frozen on retries; revision increments exactly once on successful CAS. The key joins storage_instance_id and scope_partition exactly. Application partition app is also bound to its source token's Server/instance and the event's Computer/thread, never to every null Project. The projector processes this family's records in verified source sequence order and performs only the transition of ACD-614. For `chat.message`, resolve and authorize its canonical typed message and build SP-338 pages and Tantivy fields once keyed by (thread_id,message_id); never reopen a deleted/superseded message. For thread lifecycle, take current lifecycle from the canonical revision and tombstone rather than treating an old historical event as current. Worktree fields update only the existing owner-defined binding/reverse/worktree projections, with old/new identity checks; no git effect is replayed. Selection events attach only existing authorized outcome/provenance refs to audit/pending-chip status; never create a chip or repeat a send during replay. Failure events retain actual original error evidence and cannot imply a successful outcome.
+
+For this exact family, publish projection mutation and checkpoint revision together in one redb transaction with predecessor revision/publication_id CAS. Where the target is Tantivy or the SP-338 page payload store, first durably stage and read back an immutable shadow commit, put its exact reference in projection_refs, then CAS-publish the pointer and checkpoint together. Readers serve only targets named by the current checkpoint's refs and same publication_id; old/partial targets never become visible by newest-file inference. Existing canonical thread/worktree state is not rewritten by a derived rebuild. Rebuild any shared target from all its admitted family sources in global source order into one shadow, never by replaying a whole bound family after an unbound family. A required unadmitted counterpart fences that target, not an inferred admission. Re-read canonical state/tombstones and current grants before publication. On source-generation change or failed CAS, discard unpublished target or retry from the unchanged verified prefix; never reuse a stale token. Missing or malformed derived bytes enter Q-DERIVED and governed rebuild, not source repair. Source loss requires canonical backup recovery.
+
+The checkpoint is MessagePack canonical, max 16 KiB under SP-340; oversized values use existing SP-337 reference storage, never an exemption. The closed history array stores at most two full prior checkpoint generations with first retired_at_utc and state retired; current fields name the selected generation. Reserve staged slots through the existing maintenance intent before source staging; a staged candidate counts against three even before it is visible in history. Retain at most three publication generations per exact key under RP-PROJECTION-3GEN@1.0.0; retirement starts at first committed replacement, retries do not reset it, 604800 seconds for eligible retired generations only, with holds/current/staged/live-ref protection. Reserve the slot first or disclose rebuild unavailability. Source events keep PENDING_RETENTION_DECISION; the checkpoint gives no source keepalive. Backup restores canonical source/custody/tombstones first; derived target/checkpoint is rebuilt and validated against the current full-index token before read. Withdrawal fences this projector and its domain readers in addition to the passive reader, sets checkpoint state withdrawn by CAS, and refuses all ordinary advances. Retained historical lookup uses original schema and current access checks; successor publication requires a separately versioned, complete shadow rebuild. Unsupported versions are unavailable, never rewritten in place.
+
+Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236 canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes, not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref, with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`. The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack. Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance, Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack bytes and index entry and verified readback before the referencing append can be acknowledged or its first receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed. Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants no new retention exemption.
+
+Checkpoint acceptance compares original source facts independently of the candidate: the outer storage_instance_id, durable-token storage_instance_id, source_selection storage_instance_id and actual source/root instance must be identical. Resolve the token checkpoint_key in the actual full-index root, its uniquely current generation JSON Pointer checkpoint_ref and exact same-instance event_record_index.v2@generation dataset. Require exact generation anchor, current frontier revision/digest and all source_selection fields against current synchronized source, including nonmatching same-generation appends; a shape-valid stale token cannot publish. The domain checkpoint key binds this instance and exact scope_partition. last_event_id/last_sequence_id join the actual exact-family EventRecord and its full-index row and source-value commitment; actual source Computer/thread/scope also join the published projection. Publication_id, revision, projection_refs and the full durable source token match the actual staged/read-back publication selected by the atomic checkpoint/pointer CAS. Independent source, token, selection, key/ref, event, dataset, publication and current-frontier mismatches refuse publication. Static fixture adapters model these joins; they do not prove native full-index coverage, redb transactions, CRC, source locks or durability.
+
+For chat.thread_created, the complete encoded checkpoint includes every retained history entry and projection reference. Measure that entire SP-236 value at the 16384-byte SP-340 boundary: 16384 bytes may be inline, 16385 bytes may not. A larger logical checkpoint keeps the same closed schema and bounds and uses SP-337; measure the stored reference/pointer too. Resolve the exact complete bytes through their BLAKE3/size/media-type reference and same-instance, exact-key/scope/family payload-pack index, with current authorization/deletion/hold access, durable bytes/index and verified readback before checkpoint publication. Externalizing the event body does not externalize this checkpoint. Every Storage-assigned identity and metadata field is checked against the original Storage record for the actual instance; no fixture/default instance supplies authority. Checkpoint source lookup resolves inline or referenced originals, validates the supported original envelope and Project/application payload edition, verifies their exact original source commitment and current access/withdrawal status, and then joins their source facts. Retained compatibility-reader originals, including projector_replay_only, remain readable after later live-state changes; only a new append/retry uses the current-writer policy. Unsupported, withdrawn, forged or foreign originals cannot publish. Newly written integer and boolean slots require their exact types before comparison or arithmetic; string numbers/booleans, null, arrays and nested objects confer no numeric or access authority. Current physical commitment/reference encoding canonicalizes integral numeric aliases and signed zero to the same shortest integer bytes; retained bytes retain their protected original recipe below. These are refinements of this family's existing SP-236/SP-278/SP-337/SP-340 contract, not a new retention or product decision.
+
+Before any source resolution or identity hashing, validate every Storage-instance context against Storage's own UUID descriptor in Plans/event_record_index_checkpoint.schema.json, including exact primitive type and UUID format. Empty, malformed, overlong, newline-suffixed and non-string instances refuse even when dependent IDs, keys and source commitments agree. Compare candidate, token, source-selection, payload-pack and index context against the independently read actual Storage record; a caller context, default instance or coherent forged context supplies no authority. Verify Storage-assigned sequence and timestamp fields against that exact original record commitment before reading. A retained original remains governed by its supported edition and current custody, not later lifecycle state.
+
+For new writes and current identity/idempotency inputs, this family selects strict-v4 exact integer types with the owner-declared domain of each field. Storage sequence_id and its last_sequence_id copies, frontier_revision, selected_segment_generation, manifest_generation, recovery_epoch and pack byte_size retain exact uint64 values 0 through 18446744073709551615; no 2^53 ceiling applies to Storage metadata. Publication revision and logical payload integers retain their existing owner minima and maxima, with no invented DCH safe-integer cap. Declared integer slots reject runtime float/string/bool/null/array/object substitutes except explicitly nullable slots. Storage metadata is excluded from the producer-semantic projection as already specified. The producer route is the CV-1100 qualified RFC 8785 encoding of the unchanged CV-317 producer projection (shared producer_semantic_bytes/producer_semantic_digest); an unsupported exact producer input is a structured route refusal, without narrowing its logical owner domain, rounding or stringification. Physical bytes follow SP-236 through the shared SP-1100 codec (storage_value_bytes, EVENT_VALUE profile): float type, minimal exact float width and signed zero are preserved, so a lexical alias never shares an integer's bytes, and the exact integer slots refuse every alias; invalid JSON 01 refuses under the CV-1100 current parser. Retained-recipe dispatch composes the shared SP-1101 RetainedDispatcher and timestamps use the shared CV-1101 check, as the retained-original and format paragraphs state. Test Storage write/retry inputs at 2^53, 2^60 and uint64 maximum, and refuse overflow, negative and wrong-type metadata independently.
+
+Retained and compatibility originals use the schema, numeric domain, runtime type policy, format validator and physical encoder in force when written. The single selector record_number_rule() owns this dispatch on passive history, SP-337 materialization/reference verification, full-index source/checkpoint validation, checkpoint physical storage, saved-original retry comparison and terminal retained-start lookup. New/current inputs select strict-v4. For retained sources, independently read protected Storage write-receipt provenance binds actual storage_instance_id, exact original source-value SHA-256 and recipe_id; it is committed with the original write and survives restore with that source. Candidate fields, caller version/recipe flags, mutable live state and payload content cannot select or enroll an earlier recipe. Verify any claim against that independently authenticated provenance, then verify the exact original bytes with the selected recipe. Missing earlier provenance is unavailable under that earlier recipe, never a guessed downgrade: an original of a Store outside the sealed write custody refuses as unavailable and a receipt naming a recipe with no installed frozen verifier refuses as unsupported, with no fallback to another recipe; within a custody Store an original without a legacy receipt was written by the current strict-v4 writer. Each retained read composes the shared SP-1101 RetainedDispatcher once: one owner selection, no caller override and no current-then-legacy probing, and the installed frozen verifier of that exact recipe tuple (pinned to the recipe's recorded original schema hashes) checks the original. Preserve raw-v1 (d36809af original MessagePack numeric types), normalized-v2 (a785466d normalized integral floats with the original uncapped integer domain), and strict-v3 (c21fa62e safe integers; its original checker skipped date-time and URI formats); Plans/dch_retained_recipes.json pins their exact original schemas and source revisions. A skipped format check never authenticates invalid history (CV-1101, SP-1101): frozen validators apply the shared date-time predicate and CV-253 to the recipe's pinned original resources, so a retained timestamp CV-1101 refuses is owner-invalid and refuses, while owner-valid lowercase, leap-second and long-fraction history stays readable with its exact spelling; the skipped URI check is preserved. Never re-encode raw-v1 bytes under a later normalization to verify their commitment. Plans/dch_write_recipe_receipts.json is an independent synthetic Storage receipt adapter, not native authentication evidence. Every earlier-valid retained numeric or format record stays readable with current authorization, deletion/hold access, withdrawal and actual-source identity checks. A forged source or recipe selection still refuses. Current derived checkpoints may copy an old event sequence into their exact new integer representation; the original retained event/index sequence and commitment remain unchanged. A retry verifies its saved original through the same historical schema/byte/custody reader before comparison; its incoming input stays strict-v4, and a replay-only compatibility original still cannot authorize a current append or retry. Different earlier semantic values conflict without sending an out-of-current-domain original through the current RFC 8785 encoder. A retained checkpoint, including its history and physical payload pack, uses its own original write provenance separately from its referenced event.
+
+The strict-v4 format validators are mandatory and installed explicitly, never through optional jsonschema plugins. Timestamps adopt the shared CV-1101 check: every current and frozen DCH validator is pm_event_datetime.datetime_validator over the complete outer schema, so the registered RFC 3339 predicate runs through the validator. occurred_at_utc keeps the EventRecord profile (T or t, Z/z or a signed offset, any fraction length, year 0000 and legitimate offset-adjusted leap seconds); observed_at_utc and persisted_at_utc keep CV-253's storage_utc_z profile through the inventory-classified envelope; the family ts and populated checkpoint retired_at_utc take the same predicate with their unchanged owner-schema terminal uppercase-Z pattern. A missing zone, space or wrong separator, invalid calendar field, hour 24, minute 60, false leap second, empty fraction and trailing LF refuse. Timestamp strings are never rewritten and are compared only as exact strings; no DCH-local timestamp grammar remains. PR URLs where declared fully match RFC 3986 HTTPS syntax, including valid percent escapes, reg-name or bracketed IPv6/IPvFuture host, numeric port and path/query/fragment grammar. Malformed brackets/hosts/escapes and whitespace refuse. No PR-host allowlist or new provider behavior is introduced. UUID contexts keep Storage's enforced descriptor. Both payload editions, all three EventRecord timestamps and populated checkpoint retirement times have isolated format negatives; applicable PR payloads cover every malformed URL form.
+
+```yaml
+plan_unit_id: SP-614
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: '### SP-614 — chat.thread_created
+
+
+  Newly authored persistence/read contract for `chat.thread_created` 1.0.0 under DL-045, adopting ACD-614 and
+  CV-634. Exact operating consumer `reader.chat.chat_thread_created@1.0.0` serves Thread shell/navigation,
+  SP-338 render-page builder and audit. Reuse exact projector `projector.storage.event_record_index@1.0.0`
+  and checkpoint `event_record_index_checkpoint.v1:{storage_instance_id}`, schema `Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint`,
+  version 1.0.0. Explicitly adopt SP-278 including DL-076 nine-field durable read token and current full-index
+  generation/frontier validation; no persisted redb_snapshot_id. This consumer is an on-demand, exact-event
+  filtered read of the generic index, not an independently advancing persistent filtered projection. SP-278
+  performs predecessor-frontier CAS with index rows atomically, complete captured coverage, source selection
+  and current publication validation. Each read uses the actual live transaction token, full scope and canonical
+  source/payload joins and current permissions; a stale, unsupported or unavailable token cannot publish a
+  result. The generic checkpoint retains RP-PROJECTION-3GEN@1.0.0, without extending the source event lifetime.
+  No new stored family/key/value is created by this reader, so no storage registry row is invented. Existing
+  render pages, Tantivy and worktree binding projections remain their owner-defined stores and must be rebuilt
+  under their own current checkpoints, not by adopting this audit reader as a new mutation path. Replay of
+  this event through `reader.chat.chat_thread_created@1.0.0` returns original outcome evidence only: no git,
+  API, test, send, chip creation, thread creation, notification, billing or deletion side effect. retention_policy_ref
+  = PENDING_RETENTION_DECISION. Candidates: Case L-3 Chat content (thread lifetime, 250,000/thread) versus
+  audit authority (indefinite, no count eviction); classification belongs to RT/Jared. No expiry/count deletion
+  is authorized by this draft. Original source intent, canonical outcome/body and first receipt remain with
+  cmd.chat.thread.commit_first_message handler, under SP-286/CV-339; coherent backup/restore includes those
+  dependencies and deletion records before any visible read. Missing originals are unavailable, never recaptured.
+  Stored excerpts, command strings, errors, branch/path/PR text must be scrubbed before append; no credentials,
+  inline message body or raw tool output. Every referenced body requires current authorization, deletion/hold
+  checks and exact source Computer/root; retained audit metadata grants no access. This event adds no hold
+  or purge exemption. Withdrawal cuts off this exact family before new operations; fence `reader.chat.chat_thread_created@1.0.0`
+  and any affected domain projection, retain supported original-version historical lookup under current permissions,
+  then rebuild a separately versioned successor from retained canonical sources and a fresh SP-278 token before
+  publication. Never reset a cursor to zero as current, remint events, or delete seglog as withdrawal. No admission
+  or native execution proof is implied.
+
+
+
+
+  **chat.thread_created domain projection binding (newly authored owner contract).** Exact domain projector
+  `projector.chat.chat_thread_created@1.0.0` 1.0.0 and operating consumer `reader.chat.chat_thread_created@1.0.0`
+  explicitly adopt SP-278 and the same verified full-index source path. The family''s separate checkpoint is
+  `projector.checkpoint.dch.chat_thread_created.v1:{storage_instance_id}:{scope_partition}`, stored family
+  `dch_chat_thread_created_checkpoint`, closed schema `Plans/dch_event_payloads/dch_chat_thread_created_checkpoint.schema.json#`,
+  schema_id `pm.storage_value.dch_chat_thread_created_checkpoint.v1` 1.0.0. The nine-field durable token is
+  copied exactly from SP-278/DL-076 without redb_snapshot_id. Consumer/projector versions are the suffixes
+  in their stored constant IDs; no version is inferred from the payload. `last_sequence_id` and `last_event_id`
+  identify the last applied exact-family EventRecord; `source_token` identifies complete inspected source coverage
+  including nonmatching events. Publication identity is fresh entropy for a new shadow generation and frozen
+  on retries; revision increments exactly once on successful CAS. The key joins storage_instance_id and scope_partition
+  exactly. Application partition app is also bound to its source token''s Server/instance and the event''s
+  Computer/thread, never to every null Project. The projector processes this family''s records in verified
+  source sequence order and performs only the transition of ACD-614. For `chat.message`, resolve and authorize
+  its canonical typed message and build SP-338 pages and Tantivy fields once keyed by (thread_id,message_id);
+  never reopen a deleted/superseded message. For thread lifecycle, take current lifecycle from the canonical
+  revision and tombstone rather than treating an old historical event as current. Worktree fields update only
+  the existing owner-defined binding/reverse/worktree projections, with old/new identity checks; no git effect
+  is replayed. Selection events attach only existing authorized outcome/provenance refs to audit/pending-chip
+  status; never create a chip or repeat a send during replay. Failure events retain actual original error evidence
+  and cannot imply a successful outcome.
+
+
+  For this exact family, publish projection mutation and checkpoint revision together in one redb transaction
+  with predecessor revision/publication_id CAS. Where the target is Tantivy or the SP-338 page payload store,
+  first durably stage and read back an immutable shadow commit, put its exact reference in projection_refs,
+  then CAS-publish the pointer and checkpoint together. Readers serve only targets named by the current checkpoint''s
+  refs and same publication_id; old/partial targets never become visible by newest-file inference. Existing
+  canonical thread/worktree state is not rewritten by a derived rebuild. Rebuild any shared target from all
+  its admitted family sources in global source order into one shadow, never by replaying a whole bound family
+  after an unbound family. A required unadmitted counterpart fences that target, not an inferred admission.
+  Re-read canonical state/tombstones and current grants before publication. On source-generation change or
+  failed CAS, discard unpublished target or retry from the unchanged verified prefix; never reuse a stale token.
+  Missing or malformed derived bytes enter Q-DERIVED and governed rebuild, not source repair. Source loss requires
+  canonical backup recovery.
+
+
+  The checkpoint is MessagePack canonical, max 16 KiB under SP-340; oversized values use existing SP-337 reference
+  storage, never an exemption. The closed history array stores at most two full prior checkpoint generations
+  with first retired_at_utc and state retired; current fields name the selected generation. Reserve staged
+  slots through the existing maintenance intent before source staging; a staged candidate counts against three
+  even before it is visible in history. Retain at most three publication generations per exact key under RP-PROJECTION-3GEN@1.0.0;
+  retirement starts at first committed replacement, retries do not reset it, 604800 seconds for eligible retired
+  generations only, with holds/current/staged/live-ref protection. Reserve the slot first or disclose rebuild
+  unavailability. Source events keep PENDING_RETENTION_DECISION; the checkpoint gives no source keepalive.
+  Backup restores canonical source/custody/tombstones first; derived target/checkpoint is rebuilt and validated
+  against the current full-index token before read. Withdrawal fences this projector and its domain readers
+  in addition to the passive reader, sets checkpoint state withdrawn by CAS, and refuses all ordinary advances.
+  Retained historical lookup uses original schema and current access checks; successor publication requires
+  a separately versioned, complete shadow rebuild. Unsupported versions are unavailable, never rewritten in
+  place.
+
+
+  Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application
+  payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236
+  canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes,
+  not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized
+  inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored
+  string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref,
+  with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`.
+  The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack.
+  Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time
+  join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance,
+  Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack
+  bytes and index entry and verified readback before the referencing append can be acknowledged or its first
+  receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence
+  refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed.
+  Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants
+  no new retention exemption.
+
+
+  Checkpoint acceptance compares original source facts independently of the candidate: the outer storage_instance_id,
+  durable-token storage_instance_id, source_selection storage_instance_id and actual source/root instance must
+  be identical. Resolve the token checkpoint_key in the actual full-index root, its uniquely current generation
+  JSON Pointer checkpoint_ref and exact same-instance event_record_index.v2@generation dataset. Require exact
+  generation anchor, current frontier revision/digest and all source_selection fields against current synchronized
+  source, including nonmatching same-generation appends; a shape-valid stale token cannot publish. The domain
+  checkpoint key binds this instance and exact scope_partition. last_event_id/last_sequence_id join the actual
+  exact-family EventRecord and its full-index row and source-value commitment; actual source Computer/thread/scope
+  also join the published projection. Publication_id, revision, projection_refs and the full durable source
+  token match the actual staged/read-back publication selected by the atomic checkpoint/pointer CAS. Independent
+  source, token, selection, key/ref, event, dataset, publication and current-frontier mismatches refuse publication.
+  Static fixture adapters model these joins; they do not prove native full-index coverage, redb transactions,
+  CRC, source locks or durability.
+
+
+  For chat.thread_created, the complete encoded checkpoint includes every retained history entry and projection
+  reference. Measure that entire SP-236 value at the 16384-byte SP-340 boundary: 16384 bytes may be inline,
+  16385 bytes may not. A larger logical checkpoint keeps the same closed schema and bounds and uses SP-337;
+  measure the stored reference/pointer too. Resolve the exact complete bytes through their BLAKE3/size/media-type
+  reference and same-instance, exact-key/scope/family payload-pack index, with current authorization/deletion/hold
+  access, durable bytes/index and verified readback before checkpoint publication. Externalizing the event
+  body does not externalize this checkpoint. Every Storage-assigned identity and metadata field is checked
+  against the original Storage record for the actual instance; no fixture/default instance supplies authority.
+  Checkpoint source lookup resolves inline or referenced originals, validates the supported original envelope
+  and Project/application payload edition, verifies their exact original source commitment and current
+  access/withdrawal status, and then joins their source facts. Retained compatibility-reader originals,
+  including projector_replay_only, remain readable after later live-state changes; only a new append/retry
+  uses the current-writer policy. Unsupported, withdrawn, forged or foreign originals cannot publish.
+  Newly written integer and boolean slots require their exact types before comparison or arithmetic; string
+  numbers/booleans, null, arrays and nested objects confer no numeric or access authority. Current physical commitment/reference encoding canonicalizes integral numeric aliases and signed zero to the same shortest integer bytes; retained bytes retain their protected original recipe below. These are refinements of this family''s
+  existing SP-236/SP-278/SP-337/SP-340 contract, not a new retention or product decision.
+
+
+  Before any source resolution or identity hashing, validate every Storage-instance context against Storage''s own UUID descriptor in Plans/event_record_index_checkpoint.schema.json, including exact primitive type and UUID format. Empty, malformed, overlong, newline-suffixed and non-string instances refuse even when dependent IDs, keys and source commitments agree. Compare candidate, token, source-selection, payload-pack and index context against the independently read actual Storage record; a caller context, default instance or coherent forged context supplies no authority. Verify Storage-assigned sequence and timestamp fields against that exact original record commitment before reading. A retained original remains governed by its supported edition and current custody, not later lifecycle state.
+
+
+  For new writes and current identity/idempotency inputs, this family selects strict-v4 exact integer types with the owner-declared domain of each field. Storage sequence_id and its last_sequence_id copies, frontier_revision, selected_segment_generation, manifest_generation, recovery_epoch and pack byte_size retain exact uint64 values 0 through 18446744073709551615; no 2^53 ceiling applies to Storage metadata. Publication revision and logical payload integers retain their existing owner minima and maxima, with no invented DCH safe-integer cap. Declared integer slots reject runtime float/string/bool/null/array/object substitutes except explicitly nullable slots. Storage metadata is excluded from the producer-semantic projection as already specified. The producer route is the CV-1100 qualified RFC 8785 encoding of the unchanged CV-317 producer projection (shared producer_semantic_bytes/producer_semantic_digest); an unsupported exact producer input is a structured route refusal, without narrowing its logical owner domain, rounding or stringification. Physical bytes follow SP-236 through the shared SP-1100 codec (storage_value_bytes, EVENT_VALUE profile): float type, minimal exact float width and signed zero are preserved, so a lexical alias never shares an integer''s bytes, and the exact integer slots refuse every alias; invalid JSON 01 refuses under the CV-1100 current parser. Retained-recipe dispatch composes the shared SP-1101 RetainedDispatcher and timestamps use the shared CV-1101 check, as the retained-original and format paragraphs state. Test Storage write/retry inputs at 2^53, 2^60 and uint64 maximum, and refuse overflow, negative and wrong-type metadata independently.
+
+
+  Retained and compatibility originals use the schema, numeric domain, runtime type policy, format validator and physical encoder in force when written. The single selector record_number_rule() owns this dispatch on passive history, SP-337 materialization/reference verification, full-index source/checkpoint validation, checkpoint physical storage, saved-original retry comparison and terminal retained-start lookup. New/current inputs select strict-v4. For retained sources, independently read protected Storage write-receipt provenance binds actual storage_instance_id, exact original source-value SHA-256 and recipe_id; it is committed with the original write and survives restore with that source. Candidate fields, caller version/recipe flags, mutable live state and payload content cannot select or enroll an earlier recipe. Verify any claim against that independently authenticated provenance, then verify the exact original bytes with the selected recipe. Missing earlier provenance is unavailable under that earlier recipe, never a guessed downgrade: an original of a Store outside the sealed write custody refuses as unavailable and a receipt naming a recipe with no installed frozen verifier refuses as unsupported, with no fallback to another recipe; within a custody Store an original without a legacy receipt was written by the current strict-v4 writer. Each retained read composes the shared SP-1101 RetainedDispatcher once: one owner selection, no caller override and no current-then-legacy probing, and the installed frozen verifier of that exact recipe tuple (pinned to the recipe''s recorded original schema hashes) checks the original. Preserve raw-v1 (d36809af original MessagePack numeric types), normalized-v2 (a785466d normalized integral floats with the original uncapped integer domain), and strict-v3 (c21fa62e safe integers; its original checker skipped date-time and URI formats); Plans/dch_retained_recipes.json pins their exact original schemas and source revisions. A skipped format check never authenticates invalid history (CV-1101, SP-1101): frozen validators apply the shared date-time predicate and CV-253 to the recipe''s pinned original resources, so a retained timestamp CV-1101 refuses is owner-invalid and refuses, while owner-valid lowercase, leap-second and long-fraction history stays readable with its exact spelling; the skipped URI check is preserved. Never re-encode raw-v1 bytes under a later normalization to verify their commitment. Plans/dch_write_recipe_receipts.json is an independent synthetic Storage receipt adapter, not native authentication evidence. Every earlier-valid retained numeric or format record stays readable with current authorization, deletion/hold access, withdrawal and actual-source identity checks. A forged source or recipe selection still refuses. Current derived checkpoints may copy an old event sequence into their exact new integer representation; the original retained event/index sequence and commitment remain unchanged. A retry verifies its saved original through the same historical schema/byte/custody reader before comparison; its incoming input stays strict-v4, and a replay-only compatibility original still cannot authorize a current append or retry. Different earlier semantic values conflict without sending an out-of-current-domain original through the current RFC 8785 encoder. A retained checkpoint, including its history and physical payload pack, uses its own original write provenance separately from its referenced event.
+
+
+  The strict-v4 format validators are mandatory and installed explicitly, never through optional jsonschema plugins. Timestamps adopt the shared CV-1101 check: every current and frozen DCH validator is pm_event_datetime.datetime_validator over the complete outer schema, so the registered RFC 3339 predicate runs through the validator. occurred_at_utc keeps the EventRecord profile (T or t, Z/z or a signed offset, any fraction length, year 0000 and legitimate offset-adjusted leap seconds); observed_at_utc and persisted_at_utc keep CV-253''s storage_utc_z profile through the inventory-classified envelope; the family ts and populated checkpoint retired_at_utc take the same predicate with their unchanged owner-schema terminal uppercase-Z pattern. A missing zone, space or wrong separator, invalid calendar field, hour 24, minute 60, false leap second, empty fraction and trailing LF refuse. Timestamp strings are never rewritten and are compared only as exact strings; no DCH-local timestamp grammar remains. PR URLs where declared fully match RFC 3986 HTTPS syntax, including valid percent escapes, reg-name or bracketed IPv6/IPvFuture host, numeric port and path/query/fragment grammar. Malformed brackets/hosts/escapes and whitespace refuse. No PR-host allowlist or new provider behavior is introduced. UUID contexts keep Storage''s enforced descriptor. Both payload editions, all three EventRecord timestamps and populated checkpoint retirement times have isolated format negatives; applicable PR payloads cover every malformed URL form.'
+gui_related: false
+gui_classification_reason: Owns event data and persistence contract.
+depends_on:
+- ACD-614
+- CV-634
+- SP-278
+- SP-286
+- SP-337
+unblocks: []
+acceptance_criteria:
+- Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership remains
+  absent.
+- Review-round-2 acceptance rejects the independently mutated forbidden policy, body, retry, source and outcome
+  cases applicable to this exact family; native evidence remains NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm_dch_events.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: event_authority_dch
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- DL-045; WAVE2 DCH 2026-11-04
+preserved_exact_tokens:
+- chat.thread_created
+- PENDING_RETENTION_DECISION
+- SP-278
+- SP-286
+negative_constraints:
+- No event admission or native execution proof; no retention choice.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+
+### SP-615 — chat.thread_deleted
+
+Newly authored persistence/read contract for `chat.thread_deleted` 1.0.0 under DL-045, adopting ACD-615 and CV-635. Exact operating consumer `reader.chat.chat_thread_deleted@1.0.0` serves Deletion-filtered thread navigation, search, context, export and audit. Reuse exact projector `projector.storage.event_record_index@1.0.0` and checkpoint `event_record_index_checkpoint.v1:{storage_instance_id}`, schema `Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint`, version 1.0.0. Explicitly adopt SP-278 including DL-076 nine-field durable read token and current full-index generation/frontier validation; no persisted redb_snapshot_id. This consumer is an on-demand, exact-event filtered read of the generic index, not an independently advancing persistent filtered projection. SP-278 performs predecessor-frontier CAS with index rows atomically, complete captured coverage, source selection and current publication validation. Each read uses the actual live transaction token, full scope and canonical source/payload joins and current permissions; a stale, unsupported or unavailable token cannot publish a result. The generic checkpoint retains RP-PROJECTION-3GEN@1.0.0, without extending the source event lifetime. No new stored family/key/value is created by this reader, so no storage registry row is invented. Existing render pages, Tantivy and worktree binding projections remain their owner-defined stores and must be rebuilt under their own current checkpoints, not by adopting this audit reader as a new mutation path. Replay of this event through `reader.chat.chat_thread_deleted@1.0.0` returns original outcome evidence only: no git, API, test, send, chip creation, thread creation, notification, billing or deletion side effect. retention_policy_ref = PENDING_RETENTION_DECISION. Candidates: Case L-3 Chat content (thread lifetime, 250,000/thread) versus audit authority (indefinite, no count eviction); classification belongs to RT/Jared. No expiry/count deletion is authorized by this draft. The content-free deletion tombstone itself already remains indefinite under ACD lifecycle; that does not assign retention to this distinct event. Original source intent, canonical outcome/body and first receipt remain with cmd.chat.thread.delete handler, under SP-286/CV-339; coherent backup/restore includes those dependencies and deletion records before any visible read. Missing originals are unavailable, never recaptured. Stored excerpts, command strings, errors, branch/path/PR text must be scrubbed before append; no credentials, inline message body or raw tool output. Every referenced body requires current authorization, deletion/hold checks and exact source Computer/root; retained audit metadata grants no access. This event adds no hold or purge exemption. Withdrawal cuts off this exact family before new operations; fence `reader.chat.chat_thread_deleted@1.0.0` and any affected domain projection, retain supported original-version historical lookup under current permissions, then rebuild a separately versioned successor from retained canonical sources and a fresh SP-278 token before publication. Never reset a cursor to zero as current, remint events, or delete seglog as withdrawal. No admission or native execution proof is implied.
+
+
+
+**chat.thread_deleted domain projection binding (newly authored owner contract).** Exact domain projector `projector.chat.chat_thread_deleted@1.0.0` 1.0.0 and operating consumer `reader.chat.chat_thread_deleted@1.0.0` explicitly adopt SP-278 and the same verified full-index source path. The family's separate checkpoint is `projector.checkpoint.dch.chat_thread_deleted.v1:{storage_instance_id}:{scope_partition}`, stored family `dch_chat_thread_deleted_checkpoint`, closed schema `Plans/dch_event_payloads/dch_chat_thread_deleted_checkpoint.schema.json#`, schema_id `pm.storage_value.dch_chat_thread_deleted_checkpoint.v1` 1.0.0. The nine-field durable token is copied exactly from SP-278/DL-076 without redb_snapshot_id. Consumer/projector versions are the suffixes in their stored constant IDs; no version is inferred from the payload. `last_sequence_id` and `last_event_id` identify the last applied exact-family EventRecord; `source_token` identifies complete inspected source coverage including nonmatching events. Publication identity is fresh entropy for a new shadow generation and frozen on retries; revision increments exactly once on successful CAS. The key joins storage_instance_id and scope_partition exactly. Application partition app is also bound to its source token's Server/instance and the event's Computer/thread, never to every null Project. The projector processes this family's records in verified source sequence order and performs only the transition of ACD-615. For `chat.message`, resolve and authorize its canonical typed message and build SP-338 pages and Tantivy fields once keyed by (thread_id,message_id); never reopen a deleted/superseded message. For thread lifecycle, take current lifecycle from the canonical revision and tombstone rather than treating an old historical event as current. Worktree fields update only the existing owner-defined binding/reverse/worktree projections, with old/new identity checks; no git effect is replayed. Selection events attach only existing authorized outcome/provenance refs to audit/pending-chip status; never create a chip or repeat a send during replay. Failure events retain actual original error evidence and cannot imply a successful outcome.
+
+For this exact family, publish projection mutation and checkpoint revision together in one redb transaction with predecessor revision/publication_id CAS. Where the target is Tantivy or the SP-338 page payload store, first durably stage and read back an immutable shadow commit, put its exact reference in projection_refs, then CAS-publish the pointer and checkpoint together. Readers serve only targets named by the current checkpoint's refs and same publication_id; old/partial targets never become visible by newest-file inference. Existing canonical thread/worktree state is not rewritten by a derived rebuild. Rebuild any shared target from all its admitted family sources in global source order into one shadow, never by replaying a whole bound family after an unbound family. A required unadmitted counterpart fences that target, not an inferred admission. Re-read canonical state/tombstones and current grants before publication. On source-generation change or failed CAS, discard unpublished target or retry from the unchanged verified prefix; never reuse a stale token. Missing or malformed derived bytes enter Q-DERIVED and governed rebuild, not source repair. Source loss requires canonical backup recovery.
+
+The checkpoint is MessagePack canonical, max 16 KiB under SP-340; oversized values use existing SP-337 reference storage, never an exemption. The closed history array stores at most two full prior checkpoint generations with first retired_at_utc and state retired; current fields name the selected generation. Reserve staged slots through the existing maintenance intent before source staging; a staged candidate counts against three even before it is visible in history. Retain at most three publication generations per exact key under RP-PROJECTION-3GEN@1.0.0; retirement starts at first committed replacement, retries do not reset it, 604800 seconds for eligible retired generations only, with holds/current/staged/live-ref protection. Reserve the slot first or disclose rebuild unavailability. Source events keep PENDING_RETENTION_DECISION; the checkpoint gives no source keepalive. Backup restores canonical source/custody/tombstones first; derived target/checkpoint is rebuilt and validated against the current full-index token before read. Withdrawal fences this projector and its domain readers in addition to the passive reader, sets checkpoint state withdrawn by CAS, and refuses all ordinary advances. Retained historical lookup uses original schema and current access checks; successor publication requires a separately versioned, complete shadow rebuild. Unsupported versions are unavailable, never rewritten in place.
+
+Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236 canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes, not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref, with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`. The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack. Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance, Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack bytes and index entry and verified readback before the referencing append can be acknowledged or its first receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed. Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants no new retention exemption.
+
+Checkpoint acceptance compares original source facts independently of the candidate: the outer storage_instance_id, durable-token storage_instance_id, source_selection storage_instance_id and actual source/root instance must be identical. Resolve the token checkpoint_key in the actual full-index root, its uniquely current generation JSON Pointer checkpoint_ref and exact same-instance event_record_index.v2@generation dataset. Require exact generation anchor, current frontier revision/digest and all source_selection fields against current synchronized source, including nonmatching same-generation appends; a shape-valid stale token cannot publish. The domain checkpoint key binds this instance and exact scope_partition. last_event_id/last_sequence_id join the actual exact-family EventRecord and its full-index row and source-value commitment; actual source Computer/thread/scope also join the published projection. Publication_id, revision, projection_refs and the full durable source token match the actual staged/read-back publication selected by the atomic checkpoint/pointer CAS. Independent source, token, selection, key/ref, event, dataset, publication and current-frontier mismatches refuse publication. Static fixture adapters model these joins; they do not prove native full-index coverage, redb transactions, CRC, source locks or durability.
+
+For chat.thread_deleted, the complete encoded checkpoint includes every retained history entry and projection reference. Measure that entire SP-236 value at the 16384-byte SP-340 boundary: 16384 bytes may be inline, 16385 bytes may not. A larger logical checkpoint keeps the same closed schema and bounds and uses SP-337; measure the stored reference/pointer too. Resolve the exact complete bytes through their BLAKE3/size/media-type reference and same-instance, exact-key/scope/family payload-pack index, with current authorization/deletion/hold access, durable bytes/index and verified readback before checkpoint publication. Externalizing the event body does not externalize this checkpoint. Every Storage-assigned identity and metadata field is checked against the original Storage record for the actual instance; no fixture/default instance supplies authority. Checkpoint source lookup resolves inline or referenced originals, validates the supported original envelope and Project/application payload edition, verifies their exact original source commitment and current access/withdrawal status, and then joins their source facts. Retained compatibility-reader originals, including projector_replay_only, remain readable after later live-state changes; only a new append/retry uses the current-writer policy. Unsupported, withdrawn, forged or foreign originals cannot publish. Newly written integer and boolean slots require their exact types before comparison or arithmetic; string numbers/booleans, null, arrays and nested objects confer no numeric or access authority. Current physical commitment/reference encoding canonicalizes integral numeric aliases and signed zero to the same shortest integer bytes; retained bytes retain their protected original recipe below. These are refinements of this family's existing SP-236/SP-278/SP-337/SP-340 contract, not a new retention or product decision.
+
+Before any source resolution or identity hashing, validate every Storage-instance context against Storage's own UUID descriptor in Plans/event_record_index_checkpoint.schema.json, including exact primitive type and UUID format. Empty, malformed, overlong, newline-suffixed and non-string instances refuse even when dependent IDs, keys and source commitments agree. Compare candidate, token, source-selection, payload-pack and index context against the independently read actual Storage record; a caller context, default instance or coherent forged context supplies no authority. Verify Storage-assigned sequence and timestamp fields against that exact original record commitment before reading. A retained original remains governed by its supported edition and current custody, not later lifecycle state.
+
+For new writes and current identity/idempotency inputs, this family selects strict-v4 exact integer types with the owner-declared domain of each field. Storage sequence_id and its last_sequence_id copies, frontier_revision, selected_segment_generation, manifest_generation, recovery_epoch and pack byte_size retain exact uint64 values 0 through 18446744073709551615; no 2^53 ceiling applies to Storage metadata. Publication revision and logical payload integers retain their existing owner minima and maxima, with no invented DCH safe-integer cap. Declared integer slots reject runtime float/string/bool/null/array/object substitutes except explicitly nullable slots. Storage metadata is excluded from the producer-semantic projection as already specified. The producer route is the CV-1100 qualified RFC 8785 encoding of the unchanged CV-317 producer projection (shared producer_semantic_bytes/producer_semantic_digest); an unsupported exact producer input is a structured route refusal, without narrowing its logical owner domain, rounding or stringification. Physical bytes follow SP-236 through the shared SP-1100 codec (storage_value_bytes, EVENT_VALUE profile): float type, minimal exact float width and signed zero are preserved, so a lexical alias never shares an integer's bytes, and the exact integer slots refuse every alias; invalid JSON 01 refuses under the CV-1100 current parser. Retained-recipe dispatch composes the shared SP-1101 RetainedDispatcher and timestamps use the shared CV-1101 check, as the retained-original and format paragraphs state. Test Storage write/retry inputs at 2^53, 2^60 and uint64 maximum, and refuse overflow, negative and wrong-type metadata independently.
+
+Retained and compatibility originals use the schema, numeric domain, runtime type policy, format validator and physical encoder in force when written. The single selector record_number_rule() owns this dispatch on passive history, SP-337 materialization/reference verification, full-index source/checkpoint validation, checkpoint physical storage, saved-original retry comparison and terminal retained-start lookup. New/current inputs select strict-v4. For retained sources, independently read protected Storage write-receipt provenance binds actual storage_instance_id, exact original source-value SHA-256 and recipe_id; it is committed with the original write and survives restore with that source. Candidate fields, caller version/recipe flags, mutable live state and payload content cannot select or enroll an earlier recipe. Verify any claim against that independently authenticated provenance, then verify the exact original bytes with the selected recipe. Missing earlier provenance is unavailable under that earlier recipe, never a guessed downgrade: an original of a Store outside the sealed write custody refuses as unavailable and a receipt naming a recipe with no installed frozen verifier refuses as unsupported, with no fallback to another recipe; within a custody Store an original without a legacy receipt was written by the current strict-v4 writer. Each retained read composes the shared SP-1101 RetainedDispatcher once: one owner selection, no caller override and no current-then-legacy probing, and the installed frozen verifier of that exact recipe tuple (pinned to the recipe's recorded original schema hashes) checks the original. Preserve raw-v1 (d36809af original MessagePack numeric types), normalized-v2 (a785466d normalized integral floats with the original uncapped integer domain), and strict-v3 (c21fa62e safe integers; its original checker skipped date-time and URI formats); Plans/dch_retained_recipes.json pins their exact original schemas and source revisions. A skipped format check never authenticates invalid history (CV-1101, SP-1101): frozen validators apply the shared date-time predicate and CV-253 to the recipe's pinned original resources, so a retained timestamp CV-1101 refuses is owner-invalid and refuses, while owner-valid lowercase, leap-second and long-fraction history stays readable with its exact spelling; the skipped URI check is preserved. Never re-encode raw-v1 bytes under a later normalization to verify their commitment. Plans/dch_write_recipe_receipts.json is an independent synthetic Storage receipt adapter, not native authentication evidence. Every earlier-valid retained numeric or format record stays readable with current authorization, deletion/hold access, withdrawal and actual-source identity checks. A forged source or recipe selection still refuses. Current derived checkpoints may copy an old event sequence into their exact new integer representation; the original retained event/index sequence and commitment remain unchanged. A retry verifies its saved original through the same historical schema/byte/custody reader before comparison; its incoming input stays strict-v4, and a replay-only compatibility original still cannot authorize a current append or retry. Different earlier semantic values conflict without sending an out-of-current-domain original through the current RFC 8785 encoder. A retained checkpoint, including its history and physical payload pack, uses its own original write provenance separately from its referenced event.
+
+The strict-v4 format validators are mandatory and installed explicitly, never through optional jsonschema plugins. Timestamps adopt the shared CV-1101 check: every current and frozen DCH validator is pm_event_datetime.datetime_validator over the complete outer schema, so the registered RFC 3339 predicate runs through the validator. occurred_at_utc keeps the EventRecord profile (T or t, Z/z or a signed offset, any fraction length, year 0000 and legitimate offset-adjusted leap seconds); observed_at_utc and persisted_at_utc keep CV-253's storage_utc_z profile through the inventory-classified envelope; the family ts and populated checkpoint retired_at_utc take the same predicate with their unchanged owner-schema terminal uppercase-Z pattern. A missing zone, space or wrong separator, invalid calendar field, hour 24, minute 60, false leap second, empty fraction and trailing LF refuse. Timestamp strings are never rewritten and are compared only as exact strings; no DCH-local timestamp grammar remains. PR URLs where declared fully match RFC 3986 HTTPS syntax, including valid percent escapes, reg-name or bracketed IPv6/IPvFuture host, numeric port and path/query/fragment grammar. Malformed brackets/hosts/escapes and whitespace refuse. No PR-host allowlist or new provider behavior is introduced. UUID contexts keep Storage's enforced descriptor. Both payload editions, all three EventRecord timestamps and populated checkpoint retirement times have isolated format negatives; applicable PR payloads cover every malformed URL form.
+
+```yaml
+plan_unit_id: SP-615
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: '### SP-615 — chat.thread_deleted
+
+
+  Newly authored persistence/read contract for `chat.thread_deleted` 1.0.0 under DL-045, adopting ACD-615 and
+  CV-635. Exact operating consumer `reader.chat.chat_thread_deleted@1.0.0` serves Deletion-filtered thread
+  navigation, search, context, export and audit. Reuse exact projector `projector.storage.event_record_index@1.0.0`
+  and checkpoint `event_record_index_checkpoint.v1:{storage_instance_id}`, schema `Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint`,
+  version 1.0.0. Explicitly adopt SP-278 including DL-076 nine-field durable read token and current full-index
+  generation/frontier validation; no persisted redb_snapshot_id. This consumer is an on-demand, exact-event
+  filtered read of the generic index, not an independently advancing persistent filtered projection. SP-278
+  performs predecessor-frontier CAS with index rows atomically, complete captured coverage, source selection
+  and current publication validation. Each read uses the actual live transaction token, full scope and canonical
+  source/payload joins and current permissions; a stale, unsupported or unavailable token cannot publish a
+  result. The generic checkpoint retains RP-PROJECTION-3GEN@1.0.0, without extending the source event lifetime.
+  No new stored family/key/value is created by this reader, so no storage registry row is invented. Existing
+  render pages, Tantivy and worktree binding projections remain their owner-defined stores and must be rebuilt
+  under their own current checkpoints, not by adopting this audit reader as a new mutation path. Replay of
+  this event through `reader.chat.chat_thread_deleted@1.0.0` returns original outcome evidence only: no git,
+  API, test, send, chip creation, thread creation, notification, billing or deletion side effect. retention_policy_ref
+  = PENDING_RETENTION_DECISION. Candidates: Case L-3 Chat content (thread lifetime, 250,000/thread) versus
+  audit authority (indefinite, no count eviction); classification belongs to RT/Jared. No expiry/count deletion
+  is authorized by this draft. The content-free deletion tombstone itself already remains indefinite under
+  ACD lifecycle; that does not assign retention to this distinct event. Original source intent, canonical outcome/body
+  and first receipt remain with cmd.chat.thread.delete handler, under SP-286/CV-339; coherent backup/restore
+  includes those dependencies and deletion records before any visible read. Missing originals are unavailable,
+  never recaptured. Stored excerpts, command strings, errors, branch/path/PR text must be scrubbed before append;
+  no credentials, inline message body or raw tool output. Every referenced body requires current authorization,
+  deletion/hold checks and exact source Computer/root; retained audit metadata grants no access. This event
+  adds no hold or purge exemption. Withdrawal cuts off this exact family before new operations; fence `reader.chat.chat_thread_deleted@1.0.0`
+  and any affected domain projection, retain supported original-version historical lookup under current permissions,
+  then rebuild a separately versioned successor from retained canonical sources and a fresh SP-278 token before
+  publication. Never reset a cursor to zero as current, remint events, or delete seglog as withdrawal. No admission
+  or native execution proof is implied.
+
+
+
+
+  **chat.thread_deleted domain projection binding (newly authored owner contract).** Exact domain projector
+  `projector.chat.chat_thread_deleted@1.0.0` 1.0.0 and operating consumer `reader.chat.chat_thread_deleted@1.0.0`
+  explicitly adopt SP-278 and the same verified full-index source path. The family''s separate checkpoint is
+  `projector.checkpoint.dch.chat_thread_deleted.v1:{storage_instance_id}:{scope_partition}`, stored family
+  `dch_chat_thread_deleted_checkpoint`, closed schema `Plans/dch_event_payloads/dch_chat_thread_deleted_checkpoint.schema.json#`,
+  schema_id `pm.storage_value.dch_chat_thread_deleted_checkpoint.v1` 1.0.0. The nine-field durable token is
+  copied exactly from SP-278/DL-076 without redb_snapshot_id. Consumer/projector versions are the suffixes
+  in their stored constant IDs; no version is inferred from the payload. `last_sequence_id` and `last_event_id`
+  identify the last applied exact-family EventRecord; `source_token` identifies complete inspected source coverage
+  including nonmatching events. Publication identity is fresh entropy for a new shadow generation and frozen
+  on retries; revision increments exactly once on successful CAS. The key joins storage_instance_id and scope_partition
+  exactly. Application partition app is also bound to its source token''s Server/instance and the event''s
+  Computer/thread, never to every null Project. The projector processes this family''s records in verified
+  source sequence order and performs only the transition of ACD-615. For `chat.message`, resolve and authorize
+  its canonical typed message and build SP-338 pages and Tantivy fields once keyed by (thread_id,message_id);
+  never reopen a deleted/superseded message. For thread lifecycle, take current lifecycle from the canonical
+  revision and tombstone rather than treating an old historical event as current. Worktree fields update only
+  the existing owner-defined binding/reverse/worktree projections, with old/new identity checks; no git effect
+  is replayed. Selection events attach only existing authorized outcome/provenance refs to audit/pending-chip
+  status; never create a chip or repeat a send during replay. Failure events retain actual original error evidence
+  and cannot imply a successful outcome.
+
+
+  For this exact family, publish projection mutation and checkpoint revision together in one redb transaction
+  with predecessor revision/publication_id CAS. Where the target is Tantivy or the SP-338 page payload store,
+  first durably stage and read back an immutable shadow commit, put its exact reference in projection_refs,
+  then CAS-publish the pointer and checkpoint together. Readers serve only targets named by the current checkpoint''s
+  refs and same publication_id; old/partial targets never become visible by newest-file inference. Existing
+  canonical thread/worktree state is not rewritten by a derived rebuild. Rebuild any shared target from all
+  its admitted family sources in global source order into one shadow, never by replaying a whole bound family
+  after an unbound family. A required unadmitted counterpart fences that target, not an inferred admission.
+  Re-read canonical state/tombstones and current grants before publication. On source-generation change or
+  failed CAS, discard unpublished target or retry from the unchanged verified prefix; never reuse a stale token.
+  Missing or malformed derived bytes enter Q-DERIVED and governed rebuild, not source repair. Source loss requires
+  canonical backup recovery.
+
+
+  The checkpoint is MessagePack canonical, max 16 KiB under SP-340; oversized values use existing SP-337 reference
+  storage, never an exemption. The closed history array stores at most two full prior checkpoint generations
+  with first retired_at_utc and state retired; current fields name the selected generation. Reserve staged
+  slots through the existing maintenance intent before source staging; a staged candidate counts against three
+  even before it is visible in history. Retain at most three publication generations per exact key under RP-PROJECTION-3GEN@1.0.0;
+  retirement starts at first committed replacement, retries do not reset it, 604800 seconds for eligible retired
+  generations only, with holds/current/staged/live-ref protection. Reserve the slot first or disclose rebuild
+  unavailability. Source events keep PENDING_RETENTION_DECISION; the checkpoint gives no source keepalive.
+  Backup restores canonical source/custody/tombstones first; derived target/checkpoint is rebuilt and validated
+  against the current full-index token before read. Withdrawal fences this projector and its domain readers
+  in addition to the passive reader, sets checkpoint state withdrawn by CAS, and refuses all ordinary advances.
+  Retained historical lookup uses original schema and current access checks; successor publication requires
+  a separately versioned, complete shadow rebuild. Unsupported versions are unavailable, never rewritten in
+  place.
+
+
+  Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application
+  payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236
+  canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes,
+  not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized
+  inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored
+  string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref,
+  with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`.
+  The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack.
+  Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time
+  join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance,
+  Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack
+  bytes and index entry and verified readback before the referencing append can be acknowledged or its first
+  receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence
+  refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed.
+  Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants
+  no new retention exemption.
+
+
+  Checkpoint acceptance compares original source facts independently of the candidate: the outer storage_instance_id,
+  durable-token storage_instance_id, source_selection storage_instance_id and actual source/root instance must
+  be identical. Resolve the token checkpoint_key in the actual full-index root, its uniquely current generation
+  JSON Pointer checkpoint_ref and exact same-instance event_record_index.v2@generation dataset. Require exact
+  generation anchor, current frontier revision/digest and all source_selection fields against current synchronized
+  source, including nonmatching same-generation appends; a shape-valid stale token cannot publish. The domain
+  checkpoint key binds this instance and exact scope_partition. last_event_id/last_sequence_id join the actual
+  exact-family EventRecord and its full-index row and source-value commitment; actual source Computer/thread/scope
+  also join the published projection. Publication_id, revision, projection_refs and the full durable source
+  token match the actual staged/read-back publication selected by the atomic checkpoint/pointer CAS. Independent
+  source, token, selection, key/ref, event, dataset, publication and current-frontier mismatches refuse publication.
+  Static fixture adapters model these joins; they do not prove native full-index coverage, redb transactions,
+  CRC, source locks or durability.
+
+
+  For chat.thread_deleted, the complete encoded checkpoint includes every retained history entry and projection
+  reference. Measure that entire SP-236 value at the 16384-byte SP-340 boundary: 16384 bytes may be inline,
+  16385 bytes may not. A larger logical checkpoint keeps the same closed schema and bounds and uses SP-337;
+  measure the stored reference/pointer too. Resolve the exact complete bytes through their BLAKE3/size/media-type
+  reference and same-instance, exact-key/scope/family payload-pack index, with current authorization/deletion/hold
+  access, durable bytes/index and verified readback before checkpoint publication. Externalizing the event
+  body does not externalize this checkpoint. Every Storage-assigned identity and metadata field is checked
+  against the original Storage record for the actual instance; no fixture/default instance supplies authority.
+  Checkpoint source lookup resolves inline or referenced originals, validates the supported original envelope
+  and Project/application payload edition, verifies their exact original source commitment and current
+  access/withdrawal status, and then joins their source facts. Retained compatibility-reader originals,
+  including projector_replay_only, remain readable after later live-state changes; only a new append/retry
+  uses the current-writer policy. Unsupported, withdrawn, forged or foreign originals cannot publish.
+  Newly written integer and boolean slots require their exact types before comparison or arithmetic; string
+  numbers/booleans, null, arrays and nested objects confer no numeric or access authority. Current physical commitment/reference encoding canonicalizes integral numeric aliases and signed zero to the same shortest integer bytes; retained bytes retain their protected original recipe below. These are refinements of this family''s
+  existing SP-236/SP-278/SP-337/SP-340 contract, not a new retention or product decision.
+
+
+  Before any source resolution or identity hashing, validate every Storage-instance context against Storage''s own UUID descriptor in Plans/event_record_index_checkpoint.schema.json, including exact primitive type and UUID format. Empty, malformed, overlong, newline-suffixed and non-string instances refuse even when dependent IDs, keys and source commitments agree. Compare candidate, token, source-selection, payload-pack and index context against the independently read actual Storage record; a caller context, default instance or coherent forged context supplies no authority. Verify Storage-assigned sequence and timestamp fields against that exact original record commitment before reading. A retained original remains governed by its supported edition and current custody, not later lifecycle state.
+
+
+  For new writes and current identity/idempotency inputs, this family selects strict-v4 exact integer types with the owner-declared domain of each field. Storage sequence_id and its last_sequence_id copies, frontier_revision, selected_segment_generation, manifest_generation, recovery_epoch and pack byte_size retain exact uint64 values 0 through 18446744073709551615; no 2^53 ceiling applies to Storage metadata. Publication revision and logical payload integers retain their existing owner minima and maxima, with no invented DCH safe-integer cap. Declared integer slots reject runtime float/string/bool/null/array/object substitutes except explicitly nullable slots. Storage metadata is excluded from the producer-semantic projection as already specified. The producer route is the CV-1100 qualified RFC 8785 encoding of the unchanged CV-317 producer projection (shared producer_semantic_bytes/producer_semantic_digest); an unsupported exact producer input is a structured route refusal, without narrowing its logical owner domain, rounding or stringification. Physical bytes follow SP-236 through the shared SP-1100 codec (storage_value_bytes, EVENT_VALUE profile): float type, minimal exact float width and signed zero are preserved, so a lexical alias never shares an integer''s bytes, and the exact integer slots refuse every alias; invalid JSON 01 refuses under the CV-1100 current parser. Retained-recipe dispatch composes the shared SP-1101 RetainedDispatcher and timestamps use the shared CV-1101 check, as the retained-original and format paragraphs state. Test Storage write/retry inputs at 2^53, 2^60 and uint64 maximum, and refuse overflow, negative and wrong-type metadata independently.
+
+
+  Retained and compatibility originals use the schema, numeric domain, runtime type policy, format validator and physical encoder in force when written. The single selector record_number_rule() owns this dispatch on passive history, SP-337 materialization/reference verification, full-index source/checkpoint validation, checkpoint physical storage, saved-original retry comparison and terminal retained-start lookup. New/current inputs select strict-v4. For retained sources, independently read protected Storage write-receipt provenance binds actual storage_instance_id, exact original source-value SHA-256 and recipe_id; it is committed with the original write and survives restore with that source. Candidate fields, caller version/recipe flags, mutable live state and payload content cannot select or enroll an earlier recipe. Verify any claim against that independently authenticated provenance, then verify the exact original bytes with the selected recipe. Missing earlier provenance is unavailable under that earlier recipe, never a guessed downgrade: an original of a Store outside the sealed write custody refuses as unavailable and a receipt naming a recipe with no installed frozen verifier refuses as unsupported, with no fallback to another recipe; within a custody Store an original without a legacy receipt was written by the current strict-v4 writer. Each retained read composes the shared SP-1101 RetainedDispatcher once: one owner selection, no caller override and no current-then-legacy probing, and the installed frozen verifier of that exact recipe tuple (pinned to the recipe''s recorded original schema hashes) checks the original. Preserve raw-v1 (d36809af original MessagePack numeric types), normalized-v2 (a785466d normalized integral floats with the original uncapped integer domain), and strict-v3 (c21fa62e safe integers; its original checker skipped date-time and URI formats); Plans/dch_retained_recipes.json pins their exact original schemas and source revisions. A skipped format check never authenticates invalid history (CV-1101, SP-1101): frozen validators apply the shared date-time predicate and CV-253 to the recipe''s pinned original resources, so a retained timestamp CV-1101 refuses is owner-invalid and refuses, while owner-valid lowercase, leap-second and long-fraction history stays readable with its exact spelling; the skipped URI check is preserved. Never re-encode raw-v1 bytes under a later normalization to verify their commitment. Plans/dch_write_recipe_receipts.json is an independent synthetic Storage receipt adapter, not native authentication evidence. Every earlier-valid retained numeric or format record stays readable with current authorization, deletion/hold access, withdrawal and actual-source identity checks. A forged source or recipe selection still refuses. Current derived checkpoints may copy an old event sequence into their exact new integer representation; the original retained event/index sequence and commitment remain unchanged. A retry verifies its saved original through the same historical schema/byte/custody reader before comparison; its incoming input stays strict-v4, and a replay-only compatibility original still cannot authorize a current append or retry. Different earlier semantic values conflict without sending an out-of-current-domain original through the current RFC 8785 encoder. A retained checkpoint, including its history and physical payload pack, uses its own original write provenance separately from its referenced event.
+
+
+  The strict-v4 format validators are mandatory and installed explicitly, never through optional jsonschema plugins. Timestamps adopt the shared CV-1101 check: every current and frozen DCH validator is pm_event_datetime.datetime_validator over the complete outer schema, so the registered RFC 3339 predicate runs through the validator. occurred_at_utc keeps the EventRecord profile (T or t, Z/z or a signed offset, any fraction length, year 0000 and legitimate offset-adjusted leap seconds); observed_at_utc and persisted_at_utc keep CV-253''s storage_utc_z profile through the inventory-classified envelope; the family ts and populated checkpoint retired_at_utc take the same predicate with their unchanged owner-schema terminal uppercase-Z pattern. A missing zone, space or wrong separator, invalid calendar field, hour 24, minute 60, false leap second, empty fraction and trailing LF refuse. Timestamp strings are never rewritten and are compared only as exact strings; no DCH-local timestamp grammar remains. PR URLs where declared fully match RFC 3986 HTTPS syntax, including valid percent escapes, reg-name or bracketed IPv6/IPvFuture host, numeric port and path/query/fragment grammar. Malformed brackets/hosts/escapes and whitespace refuse. No PR-host allowlist or new provider behavior is introduced. UUID contexts keep Storage''s enforced descriptor. Both payload editions, all three EventRecord timestamps and populated checkpoint retirement times have isolated format negatives; applicable PR payloads cover every malformed URL form.'
+gui_related: false
+gui_classification_reason: Owns event data and persistence contract.
+depends_on:
+- ACD-615
+- CV-635
+- SP-278
+- SP-286
+- SP-337
+unblocks: []
+acceptance_criteria:
+- Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership remains
+  absent.
+- Review-round-2 acceptance rejects the independently mutated forbidden policy, body, retry, source and outcome
+  cases applicable to this exact family; native evidence remains NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm_dch_events.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: event_authority_dch
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- DL-045; WAVE2 DCH 2026-11-04
+preserved_exact_tokens:
+- chat.thread_deleted
+- PENDING_RETENTION_DECISION
+- SP-278
+- SP-286
+negative_constraints:
+- No event admission or native execution proof; no retention choice.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+
+### SP-616 — chat.thread_worktree_bound
+
+Newly authored persistence/read contract for `chat.thread_worktree_bound` 1.0.0 under DL-045, adopting ACD-616 and CV-636. Exact operating consumer `reader.chat.chat_thread_worktree_bound@1.0.0` serves Chat header, thread selector and worktree binding/reverse projection. Reuse exact projector `projector.storage.event_record_index@1.0.0` and checkpoint `event_record_index_checkpoint.v1:{storage_instance_id}`, schema `Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint`, version 1.0.0. Explicitly adopt SP-278 including DL-076 nine-field durable read token and current full-index generation/frontier validation; no persisted redb_snapshot_id. This consumer is an on-demand, exact-event filtered read of the generic index, not an independently advancing persistent filtered projection. SP-278 performs predecessor-frontier CAS with index rows atomically, complete captured coverage, source selection and current publication validation. Each read uses the actual live transaction token, full scope and canonical source/payload joins and current permissions; a stale, unsupported or unavailable token cannot publish a result. The generic checkpoint retains RP-PROJECTION-3GEN@1.0.0, without extending the source event lifetime. No new stored family/key/value is created by this reader, so no storage registry row is invented. Existing render pages, Tantivy and worktree binding projections remain their owner-defined stores and must be rebuilt under their own current checkpoints, not by adopting this audit reader as a new mutation path. Replay of this event through `reader.chat.chat_thread_worktree_bound@1.0.0` returns original outcome evidence only: no git, API, test, send, chip creation, thread creation, notification, billing or deletion side effect. retention_policy_ref = PENDING_RETENTION_DECISION. Candidates: Case L-3 Chat content (thread lifetime, 250,000/thread) versus audit authority (indefinite, no count eviction); classification belongs to RT/Jared. No expiry/count deletion is authorized by this draft. Original source intent, canonical outcome/body and first receipt remain with Assistant Chat WorktreeManager create/bind completion handler, under SP-286/CV-339; coherent backup/restore includes those dependencies and deletion records before any visible read. Missing originals are unavailable, never recaptured. Stored excerpts, command strings, errors, branch/path/PR text must be scrubbed before append; no credentials, inline message body or raw tool output. Every referenced body requires current authorization, deletion/hold checks and exact source Computer/root; retained audit metadata grants no access. This event adds no hold or purge exemption. Withdrawal cuts off this exact family before new operations; fence `reader.chat.chat_thread_worktree_bound@1.0.0` and any affected domain projection, retain supported original-version historical lookup under current permissions, then rebuild a separately versioned successor from retained canonical sources and a fresh SP-278 token before publication. Never reset a cursor to zero as current, remint events, or delete seglog as withdrawal. No admission or native execution proof is implied.
+
+
+
+**chat.thread_worktree_bound domain projection binding (newly authored owner contract).** Exact domain projector `projector.chat.chat_thread_worktree_bound@1.0.0` 1.0.0 and operating consumer `reader.chat.chat_thread_worktree_bound@1.0.0` explicitly adopt SP-278 and the same verified full-index source path. The family's separate checkpoint is `projector.checkpoint.dch.chat_thread_worktree_bound.v1:{storage_instance_id}:{scope_partition}`, stored family `dch_chat_thread_worktree_bound_checkpoint`, closed schema `Plans/dch_event_payloads/dch_chat_thread_worktree_bound_checkpoint.schema.json#`, schema_id `pm.storage_value.dch_chat_thread_worktree_bound_checkpoint.v1` 1.0.0. The nine-field durable token is copied exactly from SP-278/DL-076 without redb_snapshot_id. Consumer/projector versions are the suffixes in their stored constant IDs; no version is inferred from the payload. `last_sequence_id` and `last_event_id` identify the last applied exact-family EventRecord; `source_token` identifies complete inspected source coverage including nonmatching events. Publication identity is fresh entropy for a new shadow generation and frozen on retries; revision increments exactly once on successful CAS. The key joins storage_instance_id and scope_partition exactly. Application partition app is also bound to its source token's Server/instance and the event's Computer/thread, never to every null Project. The projector processes this family's records in verified source sequence order and performs only the transition of ACD-616. For `chat.message`, resolve and authorize its canonical typed message and build SP-338 pages and Tantivy fields once keyed by (thread_id,message_id); never reopen a deleted/superseded message. For thread lifecycle, take current lifecycle from the canonical revision and tombstone rather than treating an old historical event as current. Worktree fields update only the existing owner-defined binding/reverse/worktree projections, with old/new identity checks; no git effect is replayed. Selection events attach only existing authorized outcome/provenance refs to audit/pending-chip status; never create a chip or repeat a send during replay. Failure events retain actual original error evidence and cannot imply a successful outcome.
+
+For this exact family, publish projection mutation and checkpoint revision together in one redb transaction with predecessor revision/publication_id CAS. Where the target is Tantivy or the SP-338 page payload store, first durably stage and read back an immutable shadow commit, put its exact reference in projection_refs, then CAS-publish the pointer and checkpoint together. Readers serve only targets named by the current checkpoint's refs and same publication_id; old/partial targets never become visible by newest-file inference. Existing canonical thread/worktree state is not rewritten by a derived rebuild. Rebuild any shared target from all its admitted family sources in global source order into one shadow, never by replaying a whole bound family after an unbound family. A required unadmitted counterpart fences that target, not an inferred admission. Re-read canonical state/tombstones and current grants before publication. On source-generation change or failed CAS, discard unpublished target or retry from the unchanged verified prefix; never reuse a stale token. Missing or malformed derived bytes enter Q-DERIVED and governed rebuild, not source repair. Source loss requires canonical backup recovery.
+
+The checkpoint is MessagePack canonical, max 16 KiB under SP-340; oversized values use existing SP-337 reference storage, never an exemption. The closed history array stores at most two full prior checkpoint generations with first retired_at_utc and state retired; current fields name the selected generation. Reserve staged slots through the existing maintenance intent before source staging; a staged candidate counts against three even before it is visible in history. Retain at most three publication generations per exact key under RP-PROJECTION-3GEN@1.0.0; retirement starts at first committed replacement, retries do not reset it, 604800 seconds for eligible retired generations only, with holds/current/staged/live-ref protection. Reserve the slot first or disclose rebuild unavailability. Source events keep PENDING_RETENTION_DECISION; the checkpoint gives no source keepalive. Backup restores canonical source/custody/tombstones first; derived target/checkpoint is rebuilt and validated against the current full-index token before read. Withdrawal fences this projector and its domain readers in addition to the passive reader, sets checkpoint state withdrawn by CAS, and refuses all ordinary advances. Retained historical lookup uses original schema and current access checks; successor publication requires a separately versioned, complete shadow rebuild. Unsupported versions are unavailable, never rewritten in place.
+
+Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236 canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes, not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref, with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`. The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack. Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance, Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack bytes and index entry and verified readback before the referencing append can be acknowledged or its first receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed. Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants no new retention exemption.
+
+Checkpoint acceptance compares original source facts independently of the candidate: the outer storage_instance_id, durable-token storage_instance_id, source_selection storage_instance_id and actual source/root instance must be identical. Resolve the token checkpoint_key in the actual full-index root, its uniquely current generation JSON Pointer checkpoint_ref and exact same-instance event_record_index.v2@generation dataset. Require exact generation anchor, current frontier revision/digest and all source_selection fields against current synchronized source, including nonmatching same-generation appends; a shape-valid stale token cannot publish. The domain checkpoint key binds this instance and exact scope_partition. last_event_id/last_sequence_id join the actual exact-family EventRecord and its full-index row and source-value commitment; actual source Computer/thread/scope also join the published projection. Publication_id, revision, projection_refs and the full durable source token match the actual staged/read-back publication selected by the atomic checkpoint/pointer CAS. Independent source, token, selection, key/ref, event, dataset, publication and current-frontier mismatches refuse publication. Static fixture adapters model these joins; they do not prove native full-index coverage, redb transactions, CRC, source locks or durability.
+
+For chat.thread_worktree_bound, the complete encoded checkpoint includes every retained history entry and projection reference. Measure that entire SP-236 value at the 16384-byte SP-340 boundary: 16384 bytes may be inline, 16385 bytes may not. A larger logical checkpoint keeps the same closed schema and bounds and uses SP-337; measure the stored reference/pointer too. Resolve the exact complete bytes through their BLAKE3/size/media-type reference and same-instance, exact-key/scope/family payload-pack index, with current authorization/deletion/hold access, durable bytes/index and verified readback before checkpoint publication. Externalizing the event body does not externalize this checkpoint. Every Storage-assigned identity and metadata field is checked against the original Storage record for the actual instance; no fixture/default instance supplies authority. Checkpoint source lookup resolves inline or referenced originals, validates the supported original envelope and Project/application payload edition, verifies their exact original source commitment and current access/withdrawal status, and then joins their source facts. Retained compatibility-reader originals, including projector_replay_only, remain readable after later live-state changes; only a new append/retry uses the current-writer policy. Unsupported, withdrawn, forged or foreign originals cannot publish. Newly written integer and boolean slots require their exact types before comparison or arithmetic; string numbers/booleans, null, arrays and nested objects confer no numeric or access authority. Current physical commitment/reference encoding canonicalizes integral numeric aliases and signed zero to the same shortest integer bytes; retained bytes retain their protected original recipe below. These are refinements of this family's existing SP-236/SP-278/SP-337/SP-340 contract, not a new retention or product decision.
+
+Before any source resolution or identity hashing, validate every Storage-instance context against Storage's own UUID descriptor in Plans/event_record_index_checkpoint.schema.json, including exact primitive type and UUID format. Empty, malformed, overlong, newline-suffixed and non-string instances refuse even when dependent IDs, keys and source commitments agree. Compare candidate, token, source-selection, payload-pack and index context against the independently read actual Storage record; a caller context, default instance or coherent forged context supplies no authority. Verify Storage-assigned sequence and timestamp fields against that exact original record commitment before reading. A retained original remains governed by its supported edition and current custody, not later lifecycle state.
+
+For new writes and current identity/idempotency inputs, this family selects strict-v4 exact integer types with the owner-declared domain of each field. Storage sequence_id and its last_sequence_id copies, frontier_revision, selected_segment_generation, manifest_generation, recovery_epoch and pack byte_size retain exact uint64 values 0 through 18446744073709551615; no 2^53 ceiling applies to Storage metadata. Publication revision and logical payload integers retain their existing owner minima and maxima, with no invented DCH safe-integer cap. Declared integer slots reject runtime float/string/bool/null/array/object substitutes except explicitly nullable slots. Storage metadata is excluded from the producer-semantic projection as already specified. The producer route is the CV-1100 qualified RFC 8785 encoding of the unchanged CV-317 producer projection (shared producer_semantic_bytes/producer_semantic_digest); an unsupported exact producer input is a structured route refusal, without narrowing its logical owner domain, rounding or stringification. Physical bytes follow SP-236 through the shared SP-1100 codec (storage_value_bytes, EVENT_VALUE profile): float type, minimal exact float width and signed zero are preserved, so a lexical alias never shares an integer's bytes, and the exact integer slots refuse every alias; invalid JSON 01 refuses under the CV-1100 current parser. Retained-recipe dispatch composes the shared SP-1101 RetainedDispatcher and timestamps use the shared CV-1101 check, as the retained-original and format paragraphs state. Test Storage write/retry inputs at 2^53, 2^60 and uint64 maximum, and refuse overflow, negative and wrong-type metadata independently.
+
+Retained and compatibility originals use the schema, numeric domain, runtime type policy, format validator and physical encoder in force when written. The single selector record_number_rule() owns this dispatch on passive history, SP-337 materialization/reference verification, full-index source/checkpoint validation, checkpoint physical storage, saved-original retry comparison and terminal retained-start lookup. New/current inputs select strict-v4. For retained sources, independently read protected Storage write-receipt provenance binds actual storage_instance_id, exact original source-value SHA-256 and recipe_id; it is committed with the original write and survives restore with that source. Candidate fields, caller version/recipe flags, mutable live state and payload content cannot select or enroll an earlier recipe. Verify any claim against that independently authenticated provenance, then verify the exact original bytes with the selected recipe. Missing earlier provenance is unavailable under that earlier recipe, never a guessed downgrade: an original of a Store outside the sealed write custody refuses as unavailable and a receipt naming a recipe with no installed frozen verifier refuses as unsupported, with no fallback to another recipe; within a custody Store an original without a legacy receipt was written by the current strict-v4 writer. Each retained read composes the shared SP-1101 RetainedDispatcher once: one owner selection, no caller override and no current-then-legacy probing, and the installed frozen verifier of that exact recipe tuple (pinned to the recipe's recorded original schema hashes) checks the original. Preserve raw-v1 (d36809af original MessagePack numeric types), normalized-v2 (a785466d normalized integral floats with the original uncapped integer domain), and strict-v3 (c21fa62e safe integers; its original checker skipped date-time and URI formats); Plans/dch_retained_recipes.json pins their exact original schemas and source revisions. A skipped format check never authenticates invalid history (CV-1101, SP-1101): frozen validators apply the shared date-time predicate and CV-253 to the recipe's pinned original resources, so a retained timestamp CV-1101 refuses is owner-invalid and refuses, while owner-valid lowercase, leap-second and long-fraction history stays readable with its exact spelling; the skipped URI check is preserved. Never re-encode raw-v1 bytes under a later normalization to verify their commitment. Plans/dch_write_recipe_receipts.json is an independent synthetic Storage receipt adapter, not native authentication evidence. Every earlier-valid retained numeric or format record stays readable with current authorization, deletion/hold access, withdrawal and actual-source identity checks. A forged source or recipe selection still refuses. Current derived checkpoints may copy an old event sequence into their exact new integer representation; the original retained event/index sequence and commitment remain unchanged. A retry verifies its saved original through the same historical schema/byte/custody reader before comparison; its incoming input stays strict-v4, and a replay-only compatibility original still cannot authorize a current append or retry. Different earlier semantic values conflict without sending an out-of-current-domain original through the current RFC 8785 encoder. A retained checkpoint, including its history and physical payload pack, uses its own original write provenance separately from its referenced event.
+
+The strict-v4 format validators are mandatory and installed explicitly, never through optional jsonschema plugins. Timestamps adopt the shared CV-1101 check: every current and frozen DCH validator is pm_event_datetime.datetime_validator over the complete outer schema, so the registered RFC 3339 predicate runs through the validator. occurred_at_utc keeps the EventRecord profile (T or t, Z/z or a signed offset, any fraction length, year 0000 and legitimate offset-adjusted leap seconds); observed_at_utc and persisted_at_utc keep CV-253's storage_utc_z profile through the inventory-classified envelope; the family ts and populated checkpoint retired_at_utc take the same predicate with their unchanged owner-schema terminal uppercase-Z pattern. A missing zone, space or wrong separator, invalid calendar field, hour 24, minute 60, false leap second, empty fraction and trailing LF refuse. Timestamp strings are never rewritten and are compared only as exact strings; no DCH-local timestamp grammar remains. PR URLs where declared fully match RFC 3986 HTTPS syntax, including valid percent escapes, reg-name or bracketed IPv6/IPvFuture host, numeric port and path/query/fragment grammar. Malformed brackets/hosts/escapes and whitespace refuse. No PR-host allowlist or new provider behavior is introduced. UUID contexts keep Storage's enforced descriptor. Both payload editions, all three EventRecord timestamps and populated checkpoint retirement times have isolated format negatives; applicable PR payloads cover every malformed URL form.
+
+```yaml
+plan_unit_id: SP-616
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: '### SP-616 — chat.thread_worktree_bound
+
+
+  Newly authored persistence/read contract for `chat.thread_worktree_bound` 1.0.0 under DL-045, adopting ACD-616
+  and CV-636. Exact operating consumer `reader.chat.chat_thread_worktree_bound@1.0.0` serves Chat header, thread
+  selector and worktree binding/reverse projection. Reuse exact projector `projector.storage.event_record_index@1.0.0`
+  and checkpoint `event_record_index_checkpoint.v1:{storage_instance_id}`, schema `Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint`,
+  version 1.0.0. Explicitly adopt SP-278 including DL-076 nine-field durable read token and current full-index
+  generation/frontier validation; no persisted redb_snapshot_id. This consumer is an on-demand, exact-event
+  filtered read of the generic index, not an independently advancing persistent filtered projection. SP-278
+  performs predecessor-frontier CAS with index rows atomically, complete captured coverage, source selection
+  and current publication validation. Each read uses the actual live transaction token, full scope and canonical
+  source/payload joins and current permissions; a stale, unsupported or unavailable token cannot publish a
+  result. The generic checkpoint retains RP-PROJECTION-3GEN@1.0.0, without extending the source event lifetime.
+  No new stored family/key/value is created by this reader, so no storage registry row is invented. Existing
+  render pages, Tantivy and worktree binding projections remain their owner-defined stores and must be rebuilt
+  under their own current checkpoints, not by adopting this audit reader as a new mutation path. Replay of
+  this event through `reader.chat.chat_thread_worktree_bound@1.0.0` returns original outcome evidence only:
+  no git, API, test, send, chip creation, thread creation, notification, billing or deletion side effect. retention_policy_ref
+  = PENDING_RETENTION_DECISION. Candidates: Case L-3 Chat content (thread lifetime, 250,000/thread) versus
+  audit authority (indefinite, no count eviction); classification belongs to RT/Jared. No expiry/count deletion
+  is authorized by this draft. Original source intent, canonical outcome/body and first receipt remain with
+  Assistant Chat WorktreeManager create/bind completion handler, under SP-286/CV-339; coherent backup/restore
+  includes those dependencies and deletion records before any visible read. Missing originals are unavailable,
+  never recaptured. Stored excerpts, command strings, errors, branch/path/PR text must be scrubbed before append;
+  no credentials, inline message body or raw tool output. Every referenced body requires current authorization,
+  deletion/hold checks and exact source Computer/root; retained audit metadata grants no access. This event
+  adds no hold or purge exemption. Withdrawal cuts off this exact family before new operations; fence `reader.chat.chat_thread_worktree_bound@1.0.0`
+  and any affected domain projection, retain supported original-version historical lookup under current permissions,
+  then rebuild a separately versioned successor from retained canonical sources and a fresh SP-278 token before
+  publication. Never reset a cursor to zero as current, remint events, or delete seglog as withdrawal. No admission
+  or native execution proof is implied.
+
+
+
+
+  **chat.thread_worktree_bound domain projection binding (newly authored owner contract).** Exact domain projector
+  `projector.chat.chat_thread_worktree_bound@1.0.0` 1.0.0 and operating consumer `reader.chat.chat_thread_worktree_bound@1.0.0`
+  explicitly adopt SP-278 and the same verified full-index source path. The family''s separate checkpoint is
+  `projector.checkpoint.dch.chat_thread_worktree_bound.v1:{storage_instance_id}:{scope_partition}`, stored
+  family `dch_chat_thread_worktree_bound_checkpoint`, closed schema `Plans/dch_event_payloads/dch_chat_thread_worktree_bound_checkpoint.schema.json#`,
+  schema_id `pm.storage_value.dch_chat_thread_worktree_bound_checkpoint.v1` 1.0.0. The nine-field durable token
+  is copied exactly from SP-278/DL-076 without redb_snapshot_id. Consumer/projector versions are the suffixes
+  in their stored constant IDs; no version is inferred from the payload. `last_sequence_id` and `last_event_id`
+  identify the last applied exact-family EventRecord; `source_token` identifies complete inspected source coverage
+  including nonmatching events. Publication identity is fresh entropy for a new shadow generation and frozen
+  on retries; revision increments exactly once on successful CAS. The key joins storage_instance_id and scope_partition
+  exactly. Application partition app is also bound to its source token''s Server/instance and the event''s
+  Computer/thread, never to every null Project. The projector processes this family''s records in verified
+  source sequence order and performs only the transition of ACD-616. For `chat.message`, resolve and authorize
+  its canonical typed message and build SP-338 pages and Tantivy fields once keyed by (thread_id,message_id);
+  never reopen a deleted/superseded message. For thread lifecycle, take current lifecycle from the canonical
+  revision and tombstone rather than treating an old historical event as current. Worktree fields update only
+  the existing owner-defined binding/reverse/worktree projections, with old/new identity checks; no git effect
+  is replayed. Selection events attach only existing authorized outcome/provenance refs to audit/pending-chip
+  status; never create a chip or repeat a send during replay. Failure events retain actual original error evidence
+  and cannot imply a successful outcome.
+
+
+  For this exact family, publish projection mutation and checkpoint revision together in one redb transaction
+  with predecessor revision/publication_id CAS. Where the target is Tantivy or the SP-338 page payload store,
+  first durably stage and read back an immutable shadow commit, put its exact reference in projection_refs,
+  then CAS-publish the pointer and checkpoint together. Readers serve only targets named by the current checkpoint''s
+  refs and same publication_id; old/partial targets never become visible by newest-file inference. Existing
+  canonical thread/worktree state is not rewritten by a derived rebuild. Rebuild any shared target from all
+  its admitted family sources in global source order into one shadow, never by replaying a whole bound family
+  after an unbound family. A required unadmitted counterpart fences that target, not an inferred admission.
+  Re-read canonical state/tombstones and current grants before publication. On source-generation change or
+  failed CAS, discard unpublished target or retry from the unchanged verified prefix; never reuse a stale token.
+  Missing or malformed derived bytes enter Q-DERIVED and governed rebuild, not source repair. Source loss requires
+  canonical backup recovery.
+
+
+  The checkpoint is MessagePack canonical, max 16 KiB under SP-340; oversized values use existing SP-337 reference
+  storage, never an exemption. The closed history array stores at most two full prior checkpoint generations
+  with first retired_at_utc and state retired; current fields name the selected generation. Reserve staged
+  slots through the existing maintenance intent before source staging; a staged candidate counts against three
+  even before it is visible in history. Retain at most three publication generations per exact key under RP-PROJECTION-3GEN@1.0.0;
+  retirement starts at first committed replacement, retries do not reset it, 604800 seconds for eligible retired
+  generations only, with holds/current/staged/live-ref protection. Reserve the slot first or disclose rebuild
+  unavailability. Source events keep PENDING_RETENTION_DECISION; the checkpoint gives no source keepalive.
+  Backup restores canonical source/custody/tombstones first; derived target/checkpoint is rebuilt and validated
+  against the current full-index token before read. Withdrawal fences this projector and its domain readers
+  in addition to the passive reader, sets checkpoint state withdrawn by CAS, and refuses all ordinary advances.
+  Retained historical lookup uses original schema and current access checks; successor publication requires
+  a separately versioned, complete shadow rebuild. Unsupported versions are unavailable, never rewritten in
+  place.
+
+
+  Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application
+  payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236
+  canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes,
+  not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized
+  inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored
+  string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref,
+  with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`.
+  The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack.
+  Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time
+  join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance,
+  Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack
+  bytes and index entry and verified readback before the referencing append can be acknowledged or its first
+  receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence
+  refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed.
+  Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants
+  no new retention exemption.
+
+
+  Checkpoint acceptance compares original source facts independently of the candidate: the outer storage_instance_id,
+  durable-token storage_instance_id, source_selection storage_instance_id and actual source/root instance must
+  be identical. Resolve the token checkpoint_key in the actual full-index root, its uniquely current generation
+  JSON Pointer checkpoint_ref and exact same-instance event_record_index.v2@generation dataset. Require exact
+  generation anchor, current frontier revision/digest and all source_selection fields against current synchronized
+  source, including nonmatching same-generation appends; a shape-valid stale token cannot publish. The domain
+  checkpoint key binds this instance and exact scope_partition. last_event_id/last_sequence_id join the actual
+  exact-family EventRecord and its full-index row and source-value commitment; actual source Computer/thread/scope
+  also join the published projection. Publication_id, revision, projection_refs and the full durable source
+  token match the actual staged/read-back publication selected by the atomic checkpoint/pointer CAS. Independent
+  source, token, selection, key/ref, event, dataset, publication and current-frontier mismatches refuse publication.
+  Static fixture adapters model these joins; they do not prove native full-index coverage, redb transactions,
+  CRC, source locks or durability.
+
+
+  For chat.thread_worktree_bound, the complete encoded checkpoint includes every retained history entry
+  and projection reference. Measure that entire SP-236 value at the 16384-byte SP-340 boundary: 16384
+  bytes may be inline, 16385 bytes may not. A larger logical checkpoint keeps the same closed schema and
+  bounds and uses SP-337; measure the stored reference/pointer too. Resolve the exact complete bytes through
+  their BLAKE3/size/media-type reference and same-instance, exact-key/scope/family payload-pack index,
+  with current authorization/deletion/hold access, durable bytes/index and verified readback before checkpoint
+  publication. Externalizing the event body does not externalize this checkpoint. Every Storage-assigned
+  identity and metadata field is checked against the original Storage record for the actual instance;
+  no fixture/default instance supplies authority. Checkpoint source lookup resolves inline or referenced
+  originals, validates the supported original envelope and Project/application payload edition, verifies
+  their exact original source commitment and current access/withdrawal status, and then joins their source
+  facts. Retained compatibility-reader originals, including projector_replay_only, remain readable after
+  later live-state changes; only a new append/retry uses the current-writer policy. Unsupported, withdrawn,
+  forged or foreign originals cannot publish. Newly written integer and boolean slots require their exact types before comparison or arithmetic; string numbers/booleans, null, arrays and nested objects confer no
+  numeric or access authority. Current physical commitment/reference encoding canonicalizes integral numeric aliases and signed zero to the same shortest integer bytes; retained bytes retain their protected original recipe below. These are refinements of this family''s existing SP-236/SP-278/SP-337/SP-340 contract, not
+  a new retention or product decision.
+
+
+  Before any source resolution or identity hashing, validate every Storage-instance context against Storage''s own UUID descriptor in Plans/event_record_index_checkpoint.schema.json, including exact primitive type and UUID format. Empty, malformed, overlong, newline-suffixed and non-string instances refuse even when dependent IDs, keys and source commitments agree. Compare candidate, token, source-selection, payload-pack and index context against the independently read actual Storage record; a caller context, default instance or coherent forged context supplies no authority. Verify Storage-assigned sequence and timestamp fields against that exact original record commitment before reading. A retained original remains governed by its supported edition and current custody, not later lifecycle state.
+
+
+  For new writes and current identity/idempotency inputs, this family selects strict-v4 exact integer types with the owner-declared domain of each field. Storage sequence_id and its last_sequence_id copies, frontier_revision, selected_segment_generation, manifest_generation, recovery_epoch and pack byte_size retain exact uint64 values 0 through 18446744073709551615; no 2^53 ceiling applies to Storage metadata. Publication revision and logical payload integers retain their existing owner minima and maxima, with no invented DCH safe-integer cap. Declared integer slots reject runtime float/string/bool/null/array/object substitutes except explicitly nullable slots. Storage metadata is excluded from the producer-semantic projection as already specified. The producer route is the CV-1100 qualified RFC 8785 encoding of the unchanged CV-317 producer projection (shared producer_semantic_bytes/producer_semantic_digest); an unsupported exact producer input is a structured route refusal, without narrowing its logical owner domain, rounding or stringification. Physical bytes follow SP-236 through the shared SP-1100 codec (storage_value_bytes, EVENT_VALUE profile): float type, minimal exact float width and signed zero are preserved, so a lexical alias never shares an integer''s bytes, and the exact integer slots refuse every alias; invalid JSON 01 refuses under the CV-1100 current parser. Retained-recipe dispatch composes the shared SP-1101 RetainedDispatcher and timestamps use the shared CV-1101 check, as the retained-original and format paragraphs state. Test Storage write/retry inputs at 2^53, 2^60 and uint64 maximum, and refuse overflow, negative and wrong-type metadata independently.
+
+
+  Retained and compatibility originals use the schema, numeric domain, runtime type policy, format validator and physical encoder in force when written. The single selector record_number_rule() owns this dispatch on passive history, SP-337 materialization/reference verification, full-index source/checkpoint validation, checkpoint physical storage, saved-original retry comparison and terminal retained-start lookup. New/current inputs select strict-v4. For retained sources, independently read protected Storage write-receipt provenance binds actual storage_instance_id, exact original source-value SHA-256 and recipe_id; it is committed with the original write and survives restore with that source. Candidate fields, caller version/recipe flags, mutable live state and payload content cannot select or enroll an earlier recipe. Verify any claim against that independently authenticated provenance, then verify the exact original bytes with the selected recipe. Missing earlier provenance is unavailable under that earlier recipe, never a guessed downgrade: an original of a Store outside the sealed write custody refuses as unavailable and a receipt naming a recipe with no installed frozen verifier refuses as unsupported, with no fallback to another recipe; within a custody Store an original without a legacy receipt was written by the current strict-v4 writer. Each retained read composes the shared SP-1101 RetainedDispatcher once: one owner selection, no caller override and no current-then-legacy probing, and the installed frozen verifier of that exact recipe tuple (pinned to the recipe''s recorded original schema hashes) checks the original. Preserve raw-v1 (d36809af original MessagePack numeric types), normalized-v2 (a785466d normalized integral floats with the original uncapped integer domain), and strict-v3 (c21fa62e safe integers; its original checker skipped date-time and URI formats); Plans/dch_retained_recipes.json pins their exact original schemas and source revisions. A skipped format check never authenticates invalid history (CV-1101, SP-1101): frozen validators apply the shared date-time predicate and CV-253 to the recipe''s pinned original resources, so a retained timestamp CV-1101 refuses is owner-invalid and refuses, while owner-valid lowercase, leap-second and long-fraction history stays readable with its exact spelling; the skipped URI check is preserved. Never re-encode raw-v1 bytes under a later normalization to verify their commitment. Plans/dch_write_recipe_receipts.json is an independent synthetic Storage receipt adapter, not native authentication evidence. Every earlier-valid retained numeric or format record stays readable with current authorization, deletion/hold access, withdrawal and actual-source identity checks. A forged source or recipe selection still refuses. Current derived checkpoints may copy an old event sequence into their exact new integer representation; the original retained event/index sequence and commitment remain unchanged. A retry verifies its saved original through the same historical schema/byte/custody reader before comparison; its incoming input stays strict-v4, and a replay-only compatibility original still cannot authorize a current append or retry. Different earlier semantic values conflict without sending an out-of-current-domain original through the current RFC 8785 encoder. A retained checkpoint, including its history and physical payload pack, uses its own original write provenance separately from its referenced event.
+
+
+  The strict-v4 format validators are mandatory and installed explicitly, never through optional jsonschema plugins. Timestamps adopt the shared CV-1101 check: every current and frozen DCH validator is pm_event_datetime.datetime_validator over the complete outer schema, so the registered RFC 3339 predicate runs through the validator. occurred_at_utc keeps the EventRecord profile (T or t, Z/z or a signed offset, any fraction length, year 0000 and legitimate offset-adjusted leap seconds); observed_at_utc and persisted_at_utc keep CV-253''s storage_utc_z profile through the inventory-classified envelope; the family ts and populated checkpoint retired_at_utc take the same predicate with their unchanged owner-schema terminal uppercase-Z pattern. A missing zone, space or wrong separator, invalid calendar field, hour 24, minute 60, false leap second, empty fraction and trailing LF refuse. Timestamp strings are never rewritten and are compared only as exact strings; no DCH-local timestamp grammar remains. PR URLs where declared fully match RFC 3986 HTTPS syntax, including valid percent escapes, reg-name or bracketed IPv6/IPvFuture host, numeric port and path/query/fragment grammar. Malformed brackets/hosts/escapes and whitespace refuse. No PR-host allowlist or new provider behavior is introduced. UUID contexts keep Storage''s enforced descriptor. Both payload editions, all three EventRecord timestamps and populated checkpoint retirement times have isolated format negatives; applicable PR payloads cover every malformed URL form.'
+gui_related: false
+gui_classification_reason: Owns event data and persistence contract.
+depends_on:
+- ACD-616
+- CV-636
+- SP-278
+- SP-286
+- SP-337
+unblocks: []
+acceptance_criteria:
+- Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership remains
+  absent.
+- Review-round-2 acceptance rejects the independently mutated forbidden policy, body, retry, source and outcome
+  cases applicable to this exact family; native evidence remains NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm_dch_events.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: event_authority_dch
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- DL-045; WAVE2 DCH 2026-11-04
+preserved_exact_tokens:
+- chat.thread_worktree_bound
+- PENDING_RETENTION_DECISION
+- SP-278
+- SP-286
+negative_constraints:
+- No event admission or native execution proof; no retention choice.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+
+### SP-617 — chat.thread_worktree_create_failed
+
+Newly authored persistence/read contract for `chat.thread_worktree_create_failed` 1.0.0 under DL-045, adopting ACD-617 and CV-637. Exact operating consumer `reader.chat.chat_thread_worktree_create_failed@1.0.0` serves Creation error presentation and worktree audit. Reuse exact projector `projector.storage.event_record_index@1.0.0` and checkpoint `event_record_index_checkpoint.v1:{storage_instance_id}`, schema `Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint`, version 1.0.0. Explicitly adopt SP-278 including DL-076 nine-field durable read token and current full-index generation/frontier validation; no persisted redb_snapshot_id. This consumer is an on-demand, exact-event filtered read of the generic index, not an independently advancing persistent filtered projection. SP-278 performs predecessor-frontier CAS with index rows atomically, complete captured coverage, source selection and current publication validation. Each read uses the actual live transaction token, full scope and canonical source/payload joins and current permissions; a stale, unsupported or unavailable token cannot publish a result. The generic checkpoint retains RP-PROJECTION-3GEN@1.0.0, without extending the source event lifetime. No new stored family/key/value is created by this reader, so no storage registry row is invented. Existing render pages, Tantivy and worktree binding projections remain their owner-defined stores and must be rebuilt under their own current checkpoints, not by adopting this audit reader as a new mutation path. Replay of this event through `reader.chat.chat_thread_worktree_create_failed@1.0.0` returns original outcome evidence only: no git, API, test, send, chip creation, thread creation, notification, billing or deletion side effect. retention_policy_ref = PENDING_RETENTION_DECISION. Candidates: Case L-3 Chat content (thread lifetime, 250,000/thread) versus audit authority (indefinite, no count eviction); classification belongs to RT/Jared. No expiry/count deletion is authorized by this draft. Original source intent, canonical outcome/body and first receipt remain with Assistant Chat WorktreeManager create failure handler, under SP-286/CV-339; coherent backup/restore includes those dependencies and deletion records before any visible read. Missing originals are unavailable, never recaptured. Stored excerpts, command strings, errors, branch/path/PR text must be scrubbed before append; no credentials, inline message body or raw tool output. Every referenced body requires current authorization, deletion/hold checks and exact source Computer/root; retained audit metadata grants no access. This event adds no hold or purge exemption. Withdrawal cuts off this exact family before new operations; fence `reader.chat.chat_thread_worktree_create_failed@1.0.0` and any affected domain projection, retain supported original-version historical lookup under current permissions, then rebuild a separately versioned successor from retained canonical sources and a fresh SP-278 token before publication. Never reset a cursor to zero as current, remint events, or delete seglog as withdrawal. No admission or native execution proof is implied.
+
+
+
+**chat.thread_worktree_create_failed domain projection binding (newly authored owner contract).** Exact domain projector `projector.chat.chat_thread_worktree_create_failed@1.0.0` 1.0.0 and operating consumer `reader.chat.chat_thread_worktree_create_failed@1.0.0` explicitly adopt SP-278 and the same verified full-index source path. The family's separate checkpoint is `projector.checkpoint.dch.chat_thread_worktree_create_failed.v1:{storage_instance_id}:{scope_partition}`, stored family `dch_chat_thread_worktree_create_failed_checkpoint`, closed schema `Plans/dch_event_payloads/dch_chat_thread_worktree_create_failed_checkpoint.schema.json#`, schema_id `pm.storage_value.dch_chat_thread_worktree_create_failed_checkpoint.v1` 1.0.0. The nine-field durable token is copied exactly from SP-278/DL-076 without redb_snapshot_id. Consumer/projector versions are the suffixes in their stored constant IDs; no version is inferred from the payload. `last_sequence_id` and `last_event_id` identify the last applied exact-family EventRecord; `source_token` identifies complete inspected source coverage including nonmatching events. Publication identity is fresh entropy for a new shadow generation and frozen on retries; revision increments exactly once on successful CAS. The key joins storage_instance_id and scope_partition exactly. Application partition app is also bound to its source token's Server/instance and the event's Computer/thread, never to every null Project. The projector processes this family's records in verified source sequence order and performs only the transition of ACD-617. For `chat.message`, resolve and authorize its canonical typed message and build SP-338 pages and Tantivy fields once keyed by (thread_id,message_id); never reopen a deleted/superseded message. For thread lifecycle, take current lifecycle from the canonical revision and tombstone rather than treating an old historical event as current. Worktree fields update only the existing owner-defined binding/reverse/worktree projections, with old/new identity checks; no git effect is replayed. Selection events attach only existing authorized outcome/provenance refs to audit/pending-chip status; never create a chip or repeat a send during replay. Failure events retain actual original error evidence and cannot imply a successful outcome.
+
+For this exact family, publish projection mutation and checkpoint revision together in one redb transaction with predecessor revision/publication_id CAS. Where the target is Tantivy or the SP-338 page payload store, first durably stage and read back an immutable shadow commit, put its exact reference in projection_refs, then CAS-publish the pointer and checkpoint together. Readers serve only targets named by the current checkpoint's refs and same publication_id; old/partial targets never become visible by newest-file inference. Existing canonical thread/worktree state is not rewritten by a derived rebuild. Rebuild any shared target from all its admitted family sources in global source order into one shadow, never by replaying a whole bound family after an unbound family. A required unadmitted counterpart fences that target, not an inferred admission. Re-read canonical state/tombstones and current grants before publication. On source-generation change or failed CAS, discard unpublished target or retry from the unchanged verified prefix; never reuse a stale token. Missing or malformed derived bytes enter Q-DERIVED and governed rebuild, not source repair. Source loss requires canonical backup recovery.
+
+The checkpoint is MessagePack canonical, max 16 KiB under SP-340; oversized values use existing SP-337 reference storage, never an exemption. The closed history array stores at most two full prior checkpoint generations with first retired_at_utc and state retired; current fields name the selected generation. Reserve staged slots through the existing maintenance intent before source staging; a staged candidate counts against three even before it is visible in history. Retain at most three publication generations per exact key under RP-PROJECTION-3GEN@1.0.0; retirement starts at first committed replacement, retries do not reset it, 604800 seconds for eligible retired generations only, with holds/current/staged/live-ref protection. Reserve the slot first or disclose rebuild unavailability. Source events keep PENDING_RETENTION_DECISION; the checkpoint gives no source keepalive. Backup restores canonical source/custody/tombstones first; derived target/checkpoint is rebuilt and validated against the current full-index token before read. Withdrawal fences this projector and its domain readers in addition to the passive reader, sets checkpoint state withdrawn by CAS, and refuses all ordinary advances. Retained historical lookup uses original schema and current access checks; successor publication requires a separately versioned, complete shadow rebuild. Unsupported versions are unavailable, never rewritten in place.
+
+Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236 canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes, not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref, with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`. The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack. Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance, Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack bytes and index entry and verified readback before the referencing append can be acknowledged or its first receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed. Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants no new retention exemption.
+
+Checkpoint acceptance compares original source facts independently of the candidate: the outer storage_instance_id, durable-token storage_instance_id, source_selection storage_instance_id and actual source/root instance must be identical. Resolve the token checkpoint_key in the actual full-index root, its uniquely current generation JSON Pointer checkpoint_ref and exact same-instance event_record_index.v2@generation dataset. Require exact generation anchor, current frontier revision/digest and all source_selection fields against current synchronized source, including nonmatching same-generation appends; a shape-valid stale token cannot publish. The domain checkpoint key binds this instance and exact scope_partition. last_event_id/last_sequence_id join the actual exact-family EventRecord and its full-index row and source-value commitment; actual source Computer/thread/scope also join the published projection. Publication_id, revision, projection_refs and the full durable source token match the actual staged/read-back publication selected by the atomic checkpoint/pointer CAS. Independent source, token, selection, key/ref, event, dataset, publication and current-frontier mismatches refuse publication. Static fixture adapters model these joins; they do not prove native full-index coverage, redb transactions, CRC, source locks or durability.
+
+For chat.thread_worktree_create_failed, the complete encoded checkpoint includes every retained history entry and projection reference. Measure that entire SP-236 value at the 16384-byte SP-340 boundary: 16384 bytes may be inline, 16385 bytes may not. A larger logical checkpoint keeps the same closed schema and bounds and uses SP-337; measure the stored reference/pointer too. Resolve the exact complete bytes through their BLAKE3/size/media-type reference and same-instance, exact-key/scope/family payload-pack index, with current authorization/deletion/hold access, durable bytes/index and verified readback before checkpoint publication. Externalizing the event body does not externalize this checkpoint. Every Storage-assigned identity and metadata field is checked against the original Storage record for the actual instance; no fixture/default instance supplies authority. Checkpoint source lookup resolves inline or referenced originals, validates the supported original envelope and Project/application payload edition, verifies their exact original source commitment and current access/withdrawal status, and then joins their source facts. Retained compatibility-reader originals, including projector_replay_only, remain readable after later live-state changes; only a new append/retry uses the current-writer policy. Unsupported, withdrawn, forged or foreign originals cannot publish. Newly written integer and boolean slots require their exact types before comparison or arithmetic; string numbers/booleans, null, arrays and nested objects confer no numeric or access authority. Current physical commitment/reference encoding canonicalizes integral numeric aliases and signed zero to the same shortest integer bytes; retained bytes retain their protected original recipe below. These are refinements of this family's existing SP-236/SP-278/SP-337/SP-340 contract, not a new retention or product decision.
+
+Before any source resolution or identity hashing, validate every Storage-instance context against Storage's own UUID descriptor in Plans/event_record_index_checkpoint.schema.json, including exact primitive type and UUID format. Empty, malformed, overlong, newline-suffixed and non-string instances refuse even when dependent IDs, keys and source commitments agree. Compare candidate, token, source-selection, payload-pack and index context against the independently read actual Storage record; a caller context, default instance or coherent forged context supplies no authority. Verify Storage-assigned sequence and timestamp fields against that exact original record commitment before reading. A retained original remains governed by its supported edition and current custody, not later lifecycle state.
+
+For new writes and current identity/idempotency inputs, this family selects strict-v4 exact integer types with the owner-declared domain of each field. Storage sequence_id and its last_sequence_id copies, frontier_revision, selected_segment_generation, manifest_generation, recovery_epoch and pack byte_size retain exact uint64 values 0 through 18446744073709551615; no 2^53 ceiling applies to Storage metadata. Publication revision and logical payload integers retain their existing owner minima and maxima, with no invented DCH safe-integer cap. Declared integer slots reject runtime float/string/bool/null/array/object substitutes except explicitly nullable slots. Storage metadata is excluded from the producer-semantic projection as already specified. The producer route is the CV-1100 qualified RFC 8785 encoding of the unchanged CV-317 producer projection (shared producer_semantic_bytes/producer_semantic_digest); an unsupported exact producer input is a structured route refusal, without narrowing its logical owner domain, rounding or stringification. Physical bytes follow SP-236 through the shared SP-1100 codec (storage_value_bytes, EVENT_VALUE profile): float type, minimal exact float width and signed zero are preserved, so a lexical alias never shares an integer's bytes, and the exact integer slots refuse every alias; invalid JSON 01 refuses under the CV-1100 current parser. Retained-recipe dispatch composes the shared SP-1101 RetainedDispatcher and timestamps use the shared CV-1101 check, as the retained-original and format paragraphs state. Test Storage write/retry inputs at 2^53, 2^60 and uint64 maximum, and refuse overflow, negative and wrong-type metadata independently.
+
+Retained and compatibility originals use the schema, numeric domain, runtime type policy, format validator and physical encoder in force when written. The single selector record_number_rule() owns this dispatch on passive history, SP-337 materialization/reference verification, full-index source/checkpoint validation, checkpoint physical storage, saved-original retry comparison and terminal retained-start lookup. New/current inputs select strict-v4. For retained sources, independently read protected Storage write-receipt provenance binds actual storage_instance_id, exact original source-value SHA-256 and recipe_id; it is committed with the original write and survives restore with that source. Candidate fields, caller version/recipe flags, mutable live state and payload content cannot select or enroll an earlier recipe. Verify any claim against that independently authenticated provenance, then verify the exact original bytes with the selected recipe. Missing earlier provenance is unavailable under that earlier recipe, never a guessed downgrade: an original of a Store outside the sealed write custody refuses as unavailable and a receipt naming a recipe with no installed frozen verifier refuses as unsupported, with no fallback to another recipe; within a custody Store an original without a legacy receipt was written by the current strict-v4 writer. Each retained read composes the shared SP-1101 RetainedDispatcher once: one owner selection, no caller override and no current-then-legacy probing, and the installed frozen verifier of that exact recipe tuple (pinned to the recipe's recorded original schema hashes) checks the original. Preserve raw-v1 (d36809af original MessagePack numeric types), normalized-v2 (a785466d normalized integral floats with the original uncapped integer domain), and strict-v3 (c21fa62e safe integers; its original checker skipped date-time and URI formats); Plans/dch_retained_recipes.json pins their exact original schemas and source revisions. A skipped format check never authenticates invalid history (CV-1101, SP-1101): frozen validators apply the shared date-time predicate and CV-253 to the recipe's pinned original resources, so a retained timestamp CV-1101 refuses is owner-invalid and refuses, while owner-valid lowercase, leap-second and long-fraction history stays readable with its exact spelling; the skipped URI check is preserved. Never re-encode raw-v1 bytes under a later normalization to verify their commitment. Plans/dch_write_recipe_receipts.json is an independent synthetic Storage receipt adapter, not native authentication evidence. Every earlier-valid retained numeric or format record stays readable with current authorization, deletion/hold access, withdrawal and actual-source identity checks. A forged source or recipe selection still refuses. Current derived checkpoints may copy an old event sequence into their exact new integer representation; the original retained event/index sequence and commitment remain unchanged. A retry verifies its saved original through the same historical schema/byte/custody reader before comparison; its incoming input stays strict-v4, and a replay-only compatibility original still cannot authorize a current append or retry. Different earlier semantic values conflict without sending an out-of-current-domain original through the current RFC 8785 encoder. A retained checkpoint, including its history and physical payload pack, uses its own original write provenance separately from its referenced event.
+
+The strict-v4 format validators are mandatory and installed explicitly, never through optional jsonschema plugins. Timestamps adopt the shared CV-1101 check: every current and frozen DCH validator is pm_event_datetime.datetime_validator over the complete outer schema, so the registered RFC 3339 predicate runs through the validator. occurred_at_utc keeps the EventRecord profile (T or t, Z/z or a signed offset, any fraction length, year 0000 and legitimate offset-adjusted leap seconds); observed_at_utc and persisted_at_utc keep CV-253's storage_utc_z profile through the inventory-classified envelope; the family ts and populated checkpoint retired_at_utc take the same predicate with their unchanged owner-schema terminal uppercase-Z pattern. A missing zone, space or wrong separator, invalid calendar field, hour 24, minute 60, false leap second, empty fraction and trailing LF refuse. Timestamp strings are never rewritten and are compared only as exact strings; no DCH-local timestamp grammar remains. PR URLs where declared fully match RFC 3986 HTTPS syntax, including valid percent escapes, reg-name or bracketed IPv6/IPvFuture host, numeric port and path/query/fragment grammar. Malformed brackets/hosts/escapes and whitespace refuse. No PR-host allowlist or new provider behavior is introduced. UUID contexts keep Storage's enforced descriptor. Both payload editions, all three EventRecord timestamps and populated checkpoint retirement times have isolated format negatives; applicable PR payloads cover every malformed URL form.
+
+```yaml
+plan_unit_id: SP-617
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: '### SP-617 — chat.thread_worktree_create_failed
+
+
+  Newly authored persistence/read contract for `chat.thread_worktree_create_failed` 1.0.0 under DL-045, adopting
+  ACD-617 and CV-637. Exact operating consumer `reader.chat.chat_thread_worktree_create_failed@1.0.0` serves
+  Creation error presentation and worktree audit. Reuse exact projector `projector.storage.event_record_index@1.0.0`
+  and checkpoint `event_record_index_checkpoint.v1:{storage_instance_id}`, schema `Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint`,
+  version 1.0.0. Explicitly adopt SP-278 including DL-076 nine-field durable read token and current full-index
+  generation/frontier validation; no persisted redb_snapshot_id. This consumer is an on-demand, exact-event
+  filtered read of the generic index, not an independently advancing persistent filtered projection. SP-278
+  performs predecessor-frontier CAS with index rows atomically, complete captured coverage, source selection
+  and current publication validation. Each read uses the actual live transaction token, full scope and canonical
+  source/payload joins and current permissions; a stale, unsupported or unavailable token cannot publish a
+  result. The generic checkpoint retains RP-PROJECTION-3GEN@1.0.0, without extending the source event lifetime.
+  No new stored family/key/value is created by this reader, so no storage registry row is invented. Existing
+  render pages, Tantivy and worktree binding projections remain their owner-defined stores and must be rebuilt
+  under their own current checkpoints, not by adopting this audit reader as a new mutation path. Replay of
+  this event through `reader.chat.chat_thread_worktree_create_failed@1.0.0` returns original outcome evidence
+  only: no git, API, test, send, chip creation, thread creation, notification, billing or deletion side effect.
+  retention_policy_ref = PENDING_RETENTION_DECISION. Candidates: Case L-3 Chat content (thread lifetime, 250,000/thread)
+  versus audit authority (indefinite, no count eviction); classification belongs to RT/Jared. No expiry/count
+  deletion is authorized by this draft. Original source intent, canonical outcome/body and first receipt remain
+  with Assistant Chat WorktreeManager create failure handler, under SP-286/CV-339; coherent backup/restore
+  includes those dependencies and deletion records before any visible read. Missing originals are unavailable,
+  never recaptured. Stored excerpts, command strings, errors, branch/path/PR text must be scrubbed before append;
+  no credentials, inline message body or raw tool output. Every referenced body requires current authorization,
+  deletion/hold checks and exact source Computer/root; retained audit metadata grants no access. This event
+  adds no hold or purge exemption. Withdrawal cuts off this exact family before new operations; fence `reader.chat.chat_thread_worktree_create_failed@1.0.0`
+  and any affected domain projection, retain supported original-version historical lookup under current permissions,
+  then rebuild a separately versioned successor from retained canonical sources and a fresh SP-278 token before
+  publication. Never reset a cursor to zero as current, remint events, or delete seglog as withdrawal. No admission
+  or native execution proof is implied.
+
+
+
+
+  **chat.thread_worktree_create_failed domain projection binding (newly authored owner contract).** Exact domain
+  projector `projector.chat.chat_thread_worktree_create_failed@1.0.0` 1.0.0 and operating consumer `reader.chat.chat_thread_worktree_create_failed@1.0.0`
+  explicitly adopt SP-278 and the same verified full-index source path. The family''s separate checkpoint is
+  `projector.checkpoint.dch.chat_thread_worktree_create_failed.v1:{storage_instance_id}:{scope_partition}`,
+  stored family `dch_chat_thread_worktree_create_failed_checkpoint`, closed schema `Plans/dch_event_payloads/dch_chat_thread_worktree_create_failed_checkpoint.schema.json#`,
+  schema_id `pm.storage_value.dch_chat_thread_worktree_create_failed_checkpoint.v1` 1.0.0. The nine-field durable
+  token is copied exactly from SP-278/DL-076 without redb_snapshot_id. Consumer/projector versions are the
+  suffixes in their stored constant IDs; no version is inferred from the payload. `last_sequence_id` and `last_event_id`
+  identify the last applied exact-family EventRecord; `source_token` identifies complete inspected source coverage
+  including nonmatching events. Publication identity is fresh entropy for a new shadow generation and frozen
+  on retries; revision increments exactly once on successful CAS. The key joins storage_instance_id and scope_partition
+  exactly. Application partition app is also bound to its source token''s Server/instance and the event''s
+  Computer/thread, never to every null Project. The projector processes this family''s records in verified
+  source sequence order and performs only the transition of ACD-617. For `chat.message`, resolve and authorize
+  its canonical typed message and build SP-338 pages and Tantivy fields once keyed by (thread_id,message_id);
+  never reopen a deleted/superseded message. For thread lifecycle, take current lifecycle from the canonical
+  revision and tombstone rather than treating an old historical event as current. Worktree fields update only
+  the existing owner-defined binding/reverse/worktree projections, with old/new identity checks; no git effect
+  is replayed. Selection events attach only existing authorized outcome/provenance refs to audit/pending-chip
+  status; never create a chip or repeat a send during replay. Failure events retain actual original error evidence
+  and cannot imply a successful outcome.
+
+
+  For this exact family, publish projection mutation and checkpoint revision together in one redb transaction
+  with predecessor revision/publication_id CAS. Where the target is Tantivy or the SP-338 page payload store,
+  first durably stage and read back an immutable shadow commit, put its exact reference in projection_refs,
+  then CAS-publish the pointer and checkpoint together. Readers serve only targets named by the current checkpoint''s
+  refs and same publication_id; old/partial targets never become visible by newest-file inference. Existing
+  canonical thread/worktree state is not rewritten by a derived rebuild. Rebuild any shared target from all
+  its admitted family sources in global source order into one shadow, never by replaying a whole bound family
+  after an unbound family. A required unadmitted counterpart fences that target, not an inferred admission.
+  Re-read canonical state/tombstones and current grants before publication. On source-generation change or
+  failed CAS, discard unpublished target or retry from the unchanged verified prefix; never reuse a stale token.
+  Missing or malformed derived bytes enter Q-DERIVED and governed rebuild, not source repair. Source loss requires
+  canonical backup recovery.
+
+
+  The checkpoint is MessagePack canonical, max 16 KiB under SP-340; oversized values use existing SP-337 reference
+  storage, never an exemption. The closed history array stores at most two full prior checkpoint generations
+  with first retired_at_utc and state retired; current fields name the selected generation. Reserve staged
+  slots through the existing maintenance intent before source staging; a staged candidate counts against three
+  even before it is visible in history. Retain at most three publication generations per exact key under RP-PROJECTION-3GEN@1.0.0;
+  retirement starts at first committed replacement, retries do not reset it, 604800 seconds for eligible retired
+  generations only, with holds/current/staged/live-ref protection. Reserve the slot first or disclose rebuild
+  unavailability. Source events keep PENDING_RETENTION_DECISION; the checkpoint gives no source keepalive.
+  Backup restores canonical source/custody/tombstones first; derived target/checkpoint is rebuilt and validated
+  against the current full-index token before read. Withdrawal fences this projector and its domain readers
+  in addition to the passive reader, sets checkpoint state withdrawn by CAS, and refuses all ordinary advances.
+  Retained historical lookup uses original schema and current access checks; successor publication requires
+  a separately versioned, complete shadow rebuild. Unsupported versions are unavailable, never rewritten in
+  place.
+
+
+  Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application
+  payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236
+  canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes,
+  not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized
+  inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored
+  string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref,
+  with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`.
+  The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack.
+  Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time
+  join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance,
+  Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack
+  bytes and index entry and verified readback before the referencing append can be acknowledged or its first
+  receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence
+  refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed.
+  Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants
+  no new retention exemption.
+
+
+  Checkpoint acceptance compares original source facts independently of the candidate: the outer storage_instance_id,
+  durable-token storage_instance_id, source_selection storage_instance_id and actual source/root instance must
+  be identical. Resolve the token checkpoint_key in the actual full-index root, its uniquely current generation
+  JSON Pointer checkpoint_ref and exact same-instance event_record_index.v2@generation dataset. Require exact
+  generation anchor, current frontier revision/digest and all source_selection fields against current synchronized
+  source, including nonmatching same-generation appends; a shape-valid stale token cannot publish. The domain
+  checkpoint key binds this instance and exact scope_partition. last_event_id/last_sequence_id join the actual
+  exact-family EventRecord and its full-index row and source-value commitment; actual source Computer/thread/scope
+  also join the published projection. Publication_id, revision, projection_refs and the full durable source
+  token match the actual staged/read-back publication selected by the atomic checkpoint/pointer CAS. Independent
+  source, token, selection, key/ref, event, dataset, publication and current-frontier mismatches refuse publication.
+  Static fixture adapters model these joins; they do not prove native full-index coverage, redb transactions,
+  CRC, source locks or durability.
+
+
+  For chat.thread_worktree_create_failed, the complete encoded checkpoint includes every retained history
+  entry and projection reference. Measure that entire SP-236 value at the 16384-byte SP-340 boundary:
+  16384 bytes may be inline, 16385 bytes may not. A larger logical checkpoint keeps the same closed schema
+  and bounds and uses SP-337; measure the stored reference/pointer too. Resolve the exact complete bytes
+  through their BLAKE3/size/media-type reference and same-instance, exact-key/scope/family payload-pack
+  index, with current authorization/deletion/hold access, durable bytes/index and verified readback before
+  checkpoint publication. Externalizing the event body does not externalize this checkpoint. Every Storage-assigned
+  identity and metadata field is checked against the original Storage record for the actual instance;
+  no fixture/default instance supplies authority. Checkpoint source lookup resolves inline or referenced
+  originals, validates the supported original envelope and Project/application payload edition, verifies
+  their exact original source commitment and current access/withdrawal status, and then joins their source
+  facts. Retained compatibility-reader originals, including projector_replay_only, remain readable after
+  later live-state changes; only a new append/retry uses the current-writer policy. Unsupported, withdrawn,
+  forged or foreign originals cannot publish. Newly written integer and boolean slots require their exact types before comparison or arithmetic; string numbers/booleans, null, arrays and nested objects confer no
+  numeric or access authority. Current physical commitment/reference encoding canonicalizes integral numeric aliases and signed zero to the same shortest integer bytes; retained bytes retain their protected original recipe below. These are refinements of this family''s existing SP-236/SP-278/SP-337/SP-340 contract, not
+  a new retention or product decision.
+
+
+  Before any source resolution or identity hashing, validate every Storage-instance context against Storage''s own UUID descriptor in Plans/event_record_index_checkpoint.schema.json, including exact primitive type and UUID format. Empty, malformed, overlong, newline-suffixed and non-string instances refuse even when dependent IDs, keys and source commitments agree. Compare candidate, token, source-selection, payload-pack and index context against the independently read actual Storage record; a caller context, default instance or coherent forged context supplies no authority. Verify Storage-assigned sequence and timestamp fields against that exact original record commitment before reading. A retained original remains governed by its supported edition and current custody, not later lifecycle state.
+
+
+  For new writes and current identity/idempotency inputs, this family selects strict-v4 exact integer types with the owner-declared domain of each field. Storage sequence_id and its last_sequence_id copies, frontier_revision, selected_segment_generation, manifest_generation, recovery_epoch and pack byte_size retain exact uint64 values 0 through 18446744073709551615; no 2^53 ceiling applies to Storage metadata. Publication revision and logical payload integers retain their existing owner minima and maxima, with no invented DCH safe-integer cap. Declared integer slots reject runtime float/string/bool/null/array/object substitutes except explicitly nullable slots. Storage metadata is excluded from the producer-semantic projection as already specified. The producer route is the CV-1100 qualified RFC 8785 encoding of the unchanged CV-317 producer projection (shared producer_semantic_bytes/producer_semantic_digest); an unsupported exact producer input is a structured route refusal, without narrowing its logical owner domain, rounding or stringification. Physical bytes follow SP-236 through the shared SP-1100 codec (storage_value_bytes, EVENT_VALUE profile): float type, minimal exact float width and signed zero are preserved, so a lexical alias never shares an integer''s bytes, and the exact integer slots refuse every alias; invalid JSON 01 refuses under the CV-1100 current parser. Retained-recipe dispatch composes the shared SP-1101 RetainedDispatcher and timestamps use the shared CV-1101 check, as the retained-original and format paragraphs state. Test Storage write/retry inputs at 2^53, 2^60 and uint64 maximum, and refuse overflow, negative and wrong-type metadata independently.
+
+
+  Retained and compatibility originals use the schema, numeric domain, runtime type policy, format validator and physical encoder in force when written. The single selector record_number_rule() owns this dispatch on passive history, SP-337 materialization/reference verification, full-index source/checkpoint validation, checkpoint physical storage, saved-original retry comparison and terminal retained-start lookup. New/current inputs select strict-v4. For retained sources, independently read protected Storage write-receipt provenance binds actual storage_instance_id, exact original source-value SHA-256 and recipe_id; it is committed with the original write and survives restore with that source. Candidate fields, caller version/recipe flags, mutable live state and payload content cannot select or enroll an earlier recipe. Verify any claim against that independently authenticated provenance, then verify the exact original bytes with the selected recipe. Missing earlier provenance is unavailable under that earlier recipe, never a guessed downgrade: an original of a Store outside the sealed write custody refuses as unavailable and a receipt naming a recipe with no installed frozen verifier refuses as unsupported, with no fallback to another recipe; within a custody Store an original without a legacy receipt was written by the current strict-v4 writer. Each retained read composes the shared SP-1101 RetainedDispatcher once: one owner selection, no caller override and no current-then-legacy probing, and the installed frozen verifier of that exact recipe tuple (pinned to the recipe''s recorded original schema hashes) checks the original. Preserve raw-v1 (d36809af original MessagePack numeric types), normalized-v2 (a785466d normalized integral floats with the original uncapped integer domain), and strict-v3 (c21fa62e safe integers; its original checker skipped date-time and URI formats); Plans/dch_retained_recipes.json pins their exact original schemas and source revisions. A skipped format check never authenticates invalid history (CV-1101, SP-1101): frozen validators apply the shared date-time predicate and CV-253 to the recipe''s pinned original resources, so a retained timestamp CV-1101 refuses is owner-invalid and refuses, while owner-valid lowercase, leap-second and long-fraction history stays readable with its exact spelling; the skipped URI check is preserved. Never re-encode raw-v1 bytes under a later normalization to verify their commitment. Plans/dch_write_recipe_receipts.json is an independent synthetic Storage receipt adapter, not native authentication evidence. Every earlier-valid retained numeric or format record stays readable with current authorization, deletion/hold access, withdrawal and actual-source identity checks. A forged source or recipe selection still refuses. Current derived checkpoints may copy an old event sequence into their exact new integer representation; the original retained event/index sequence and commitment remain unchanged. A retry verifies its saved original through the same historical schema/byte/custody reader before comparison; its incoming input stays strict-v4, and a replay-only compatibility original still cannot authorize a current append or retry. Different earlier semantic values conflict without sending an out-of-current-domain original through the current RFC 8785 encoder. A retained checkpoint, including its history and physical payload pack, uses its own original write provenance separately from its referenced event.
+
+
+  The strict-v4 format validators are mandatory and installed explicitly, never through optional jsonschema plugins. Timestamps adopt the shared CV-1101 check: every current and frozen DCH validator is pm_event_datetime.datetime_validator over the complete outer schema, so the registered RFC 3339 predicate runs through the validator. occurred_at_utc keeps the EventRecord profile (T or t, Z/z or a signed offset, any fraction length, year 0000 and legitimate offset-adjusted leap seconds); observed_at_utc and persisted_at_utc keep CV-253''s storage_utc_z profile through the inventory-classified envelope; the family ts and populated checkpoint retired_at_utc take the same predicate with their unchanged owner-schema terminal uppercase-Z pattern. A missing zone, space or wrong separator, invalid calendar field, hour 24, minute 60, false leap second, empty fraction and trailing LF refuse. Timestamp strings are never rewritten and are compared only as exact strings; no DCH-local timestamp grammar remains. PR URLs where declared fully match RFC 3986 HTTPS syntax, including valid percent escapes, reg-name or bracketed IPv6/IPvFuture host, numeric port and path/query/fragment grammar. Malformed brackets/hosts/escapes and whitespace refuse. No PR-host allowlist or new provider behavior is introduced. UUID contexts keep Storage''s enforced descriptor. Both payload editions, all three EventRecord timestamps and populated checkpoint retirement times have isolated format negatives; applicable PR payloads cover every malformed URL form.'
+gui_related: false
+gui_classification_reason: Owns event data and persistence contract.
+depends_on:
+- ACD-617
+- CV-637
+- SP-278
+- SP-286
+- SP-337
+unblocks: []
+acceptance_criteria:
+- Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership remains
+  absent.
+- Review-round-2 acceptance rejects the independently mutated forbidden policy, body, retry, source and outcome
+  cases applicable to this exact family; native evidence remains NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm_dch_events.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: event_authority_dch
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- DL-045; WAVE2 DCH 2026-11-04
+preserved_exact_tokens:
+- chat.thread_worktree_create_failed
+- PENDING_RETENTION_DECISION
+- SP-278
+- SP-286
+negative_constraints:
+- No event admission or native execution proof; no retention choice.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+
+### SP-618 — chat.thread_worktree_merge_failed
+
+Newly authored persistence/read contract for `chat.thread_worktree_merge_failed` 1.0.0 under DL-045, adopting ACD-618 and CV-638. Exact operating consumer `reader.chat.chat_thread_worktree_merge_failed@1.0.0` serves Merge result/error presentation, conflict assistant route and audit. Reuse exact projector `projector.storage.event_record_index@1.0.0` and checkpoint `event_record_index_checkpoint.v1:{storage_instance_id}`, schema `Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint`, version 1.0.0. Explicitly adopt SP-278 including DL-076 nine-field durable read token and current full-index generation/frontier validation; no persisted redb_snapshot_id. This consumer is an on-demand, exact-event filtered read of the generic index, not an independently advancing persistent filtered projection. SP-278 performs predecessor-frontier CAS with index rows atomically, complete captured coverage, source selection and current publication validation. Each read uses the actual live transaction token, full scope and canonical source/payload joins and current permissions; a stale, unsupported or unavailable token cannot publish a result. The generic checkpoint retains RP-PROJECTION-3GEN@1.0.0, without extending the source event lifetime. No new stored family/key/value is created by this reader, so no storage registry row is invented. Existing render pages, Tantivy and worktree binding projections remain their owner-defined stores and must be rebuilt under their own current checkpoints, not by adopting this audit reader as a new mutation path. Replay of this event through `reader.chat.chat_thread_worktree_merge_failed@1.0.0` returns original outcome evidence only: no git, API, test, send, chip creation, thread creation, notification, billing or deletion side effect. retention_policy_ref = PENDING_RETENTION_DECISION. Candidates: Case L-3 Chat content (thread lifetime, 250,000/thread) versus audit authority (indefinite, no count eviction); classification belongs to RT/Jared. No expiry/count deletion is authorized by this draft. Original source intent, canonical outcome/body and first receipt remain with cmd.chat.worktree.merge failure completion handler, under SP-286/CV-339; coherent backup/restore includes those dependencies and deletion records before any visible read. Missing originals are unavailable, never recaptured. Stored excerpts, command strings, errors, branch/path/PR text must be scrubbed before append; no credentials, inline message body or raw tool output. Every referenced body requires current authorization, deletion/hold checks and exact source Computer/root; retained audit metadata grants no access. This event adds no hold or purge exemption. Withdrawal cuts off this exact family before new operations; fence `reader.chat.chat_thread_worktree_merge_failed@1.0.0` and any affected domain projection, retain supported original-version historical lookup under current permissions, then rebuild a separately versioned successor from retained canonical sources and a fresh SP-278 token before publication. Never reset a cursor to zero as current, remint events, or delete seglog as withdrawal. No admission or native execution proof is implied.
+
+
+
+**chat.thread_worktree_merge_failed domain projection binding (newly authored owner contract).** Exact domain projector `projector.chat.chat_thread_worktree_merge_failed@1.0.0` 1.0.0 and operating consumer `reader.chat.chat_thread_worktree_merge_failed@1.0.0` explicitly adopt SP-278 and the same verified full-index source path. The family's separate checkpoint is `projector.checkpoint.dch.chat_thread_worktree_merge_failed.v1:{storage_instance_id}:{scope_partition}`, stored family `dch_chat_thread_worktree_merge_failed_checkpoint`, closed schema `Plans/dch_event_payloads/dch_chat_thread_worktree_merge_failed_checkpoint.schema.json#`, schema_id `pm.storage_value.dch_chat_thread_worktree_merge_failed_checkpoint.v1` 1.0.0. The nine-field durable token is copied exactly from SP-278/DL-076 without redb_snapshot_id. Consumer/projector versions are the suffixes in their stored constant IDs; no version is inferred from the payload. `last_sequence_id` and `last_event_id` identify the last applied exact-family EventRecord; `source_token` identifies complete inspected source coverage including nonmatching events. Publication identity is fresh entropy for a new shadow generation and frozen on retries; revision increments exactly once on successful CAS. The key joins storage_instance_id and scope_partition exactly. Application partition app is also bound to its source token's Server/instance and the event's Computer/thread, never to every null Project. The projector processes this family's records in verified source sequence order and performs only the transition of ACD-618. For `chat.message`, resolve and authorize its canonical typed message and build SP-338 pages and Tantivy fields once keyed by (thread_id,message_id); never reopen a deleted/superseded message. For thread lifecycle, take current lifecycle from the canonical revision and tombstone rather than treating an old historical event as current. Worktree fields update only the existing owner-defined binding/reverse/worktree projections, with old/new identity checks; no git effect is replayed. Selection events attach only existing authorized outcome/provenance refs to audit/pending-chip status; never create a chip or repeat a send during replay. Failure events retain actual original error evidence and cannot imply a successful outcome.
+
+For this exact family, publish projection mutation and checkpoint revision together in one redb transaction with predecessor revision/publication_id CAS. Where the target is Tantivy or the SP-338 page payload store, first durably stage and read back an immutable shadow commit, put its exact reference in projection_refs, then CAS-publish the pointer and checkpoint together. Readers serve only targets named by the current checkpoint's refs and same publication_id; old/partial targets never become visible by newest-file inference. Existing canonical thread/worktree state is not rewritten by a derived rebuild. Rebuild any shared target from all its admitted family sources in global source order into one shadow, never by replaying a whole bound family after an unbound family. A required unadmitted counterpart fences that target, not an inferred admission. Re-read canonical state/tombstones and current grants before publication. On source-generation change or failed CAS, discard unpublished target or retry from the unchanged verified prefix; never reuse a stale token. Missing or malformed derived bytes enter Q-DERIVED and governed rebuild, not source repair. Source loss requires canonical backup recovery.
+
+The checkpoint is MessagePack canonical, max 16 KiB under SP-340; oversized values use existing SP-337 reference storage, never an exemption. The closed history array stores at most two full prior checkpoint generations with first retired_at_utc and state retired; current fields name the selected generation. Reserve staged slots through the existing maintenance intent before source staging; a staged candidate counts against three even before it is visible in history. Retain at most three publication generations per exact key under RP-PROJECTION-3GEN@1.0.0; retirement starts at first committed replacement, retries do not reset it, 604800 seconds for eligible retired generations only, with holds/current/staged/live-ref protection. Reserve the slot first or disclose rebuild unavailability. Source events keep PENDING_RETENTION_DECISION; the checkpoint gives no source keepalive. Backup restores canonical source/custody/tombstones first; derived target/checkpoint is rebuilt and validated against the current full-index token before read. Withdrawal fences this projector and its domain readers in addition to the passive reader, sets checkpoint state withdrawn by CAS, and refuses all ordinary advances. Retained historical lookup uses original schema and current access checks; successor publication requires a separately versioned, complete shadow rebuild. Unsupported versions are unavailable, never rewritten in place.
+
+Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236 canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes, not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref, with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`. The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack. Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance, Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack bytes and index entry and verified readback before the referencing append can be acknowledged or its first receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed. Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants no new retention exemption.
+
+Checkpoint acceptance compares original source facts independently of the candidate: the outer storage_instance_id, durable-token storage_instance_id, source_selection storage_instance_id and actual source/root instance must be identical. Resolve the token checkpoint_key in the actual full-index root, its uniquely current generation JSON Pointer checkpoint_ref and exact same-instance event_record_index.v2@generation dataset. Require exact generation anchor, current frontier revision/digest and all source_selection fields against current synchronized source, including nonmatching same-generation appends; a shape-valid stale token cannot publish. The domain checkpoint key binds this instance and exact scope_partition. last_event_id/last_sequence_id join the actual exact-family EventRecord and its full-index row and source-value commitment; actual source Computer/thread/scope also join the published projection. Publication_id, revision, projection_refs and the full durable source token match the actual staged/read-back publication selected by the atomic checkpoint/pointer CAS. Independent source, token, selection, key/ref, event, dataset, publication and current-frontier mismatches refuse publication. Static fixture adapters model these joins; they do not prove native full-index coverage, redb transactions, CRC, source locks or durability.
+
+For chat.thread_worktree_merge_failed, the complete encoded checkpoint includes every retained history entry and projection reference. Measure that entire SP-236 value at the 16384-byte SP-340 boundary: 16384 bytes may be inline, 16385 bytes may not. A larger logical checkpoint keeps the same closed schema and bounds and uses SP-337; measure the stored reference/pointer too. Resolve the exact complete bytes through their BLAKE3/size/media-type reference and same-instance, exact-key/scope/family payload-pack index, with current authorization/deletion/hold access, durable bytes/index and verified readback before checkpoint publication. Externalizing the event body does not externalize this checkpoint. Every Storage-assigned identity and metadata field is checked against the original Storage record for the actual instance; no fixture/default instance supplies authority. Checkpoint source lookup resolves inline or referenced originals, validates the supported original envelope and Project/application payload edition, verifies their exact original source commitment and current access/withdrawal status, and then joins their source facts. Retained compatibility-reader originals, including projector_replay_only, remain readable after later live-state changes; only a new append/retry uses the current-writer policy. Unsupported, withdrawn, forged or foreign originals cannot publish. Newly written integer and boolean slots require their exact types before comparison or arithmetic; string numbers/booleans, null, arrays and nested objects confer no numeric or access authority. Current physical commitment/reference encoding canonicalizes integral numeric aliases and signed zero to the same shortest integer bytes; retained bytes retain their protected original recipe below. These are refinements of this family's existing SP-236/SP-278/SP-337/SP-340 contract, not a new retention or product decision.
+
+Before any source resolution or identity hashing, validate every Storage-instance context against Storage's own UUID descriptor in Plans/event_record_index_checkpoint.schema.json, including exact primitive type and UUID format. Empty, malformed, overlong, newline-suffixed and non-string instances refuse even when dependent IDs, keys and source commitments agree. Compare candidate, token, source-selection, payload-pack and index context against the independently read actual Storage record; a caller context, default instance or coherent forged context supplies no authority. Verify Storage-assigned sequence and timestamp fields against that exact original record commitment before reading. A retained original remains governed by its supported edition and current custody, not later lifecycle state.
+
+For new writes and current identity/idempotency inputs, this family selects strict-v4 exact integer types with the owner-declared domain of each field. Storage sequence_id and its last_sequence_id copies, frontier_revision, selected_segment_generation, manifest_generation, recovery_epoch and pack byte_size retain exact uint64 values 0 through 18446744073709551615; no 2^53 ceiling applies to Storage metadata. Publication revision and logical payload integers retain their existing owner minima and maxima, with no invented DCH safe-integer cap. Declared integer slots reject runtime float/string/bool/null/array/object substitutes except explicitly nullable slots. Storage metadata is excluded from the producer-semantic projection as already specified. The producer route is the CV-1100 qualified RFC 8785 encoding of the unchanged CV-317 producer projection (shared producer_semantic_bytes/producer_semantic_digest); an unsupported exact producer input is a structured route refusal, without narrowing its logical owner domain, rounding or stringification. Physical bytes follow SP-236 through the shared SP-1100 codec (storage_value_bytes, EVENT_VALUE profile): float type, minimal exact float width and signed zero are preserved, so a lexical alias never shares an integer's bytes, and the exact integer slots refuse every alias; invalid JSON 01 refuses under the CV-1100 current parser. Retained-recipe dispatch composes the shared SP-1101 RetainedDispatcher and timestamps use the shared CV-1101 check, as the retained-original and format paragraphs state. Test Storage write/retry inputs at 2^53, 2^60 and uint64 maximum, and refuse overflow, negative and wrong-type metadata independently.
+
+Retained and compatibility originals use the schema, numeric domain, runtime type policy, format validator and physical encoder in force when written. The single selector record_number_rule() owns this dispatch on passive history, SP-337 materialization/reference verification, full-index source/checkpoint validation, checkpoint physical storage, saved-original retry comparison and terminal retained-start lookup. New/current inputs select strict-v4. For retained sources, independently read protected Storage write-receipt provenance binds actual storage_instance_id, exact original source-value SHA-256 and recipe_id; it is committed with the original write and survives restore with that source. Candidate fields, caller version/recipe flags, mutable live state and payload content cannot select or enroll an earlier recipe. Verify any claim against that independently authenticated provenance, then verify the exact original bytes with the selected recipe. Missing earlier provenance is unavailable under that earlier recipe, never a guessed downgrade: an original of a Store outside the sealed write custody refuses as unavailable and a receipt naming a recipe with no installed frozen verifier refuses as unsupported, with no fallback to another recipe; within a custody Store an original without a legacy receipt was written by the current strict-v4 writer. Each retained read composes the shared SP-1101 RetainedDispatcher once: one owner selection, no caller override and no current-then-legacy probing, and the installed frozen verifier of that exact recipe tuple (pinned to the recipe's recorded original schema hashes) checks the original. Preserve raw-v1 (d36809af original MessagePack numeric types), normalized-v2 (a785466d normalized integral floats with the original uncapped integer domain), and strict-v3 (c21fa62e safe integers; its original checker skipped date-time and URI formats); Plans/dch_retained_recipes.json pins their exact original schemas and source revisions. A skipped format check never authenticates invalid history (CV-1101, SP-1101): frozen validators apply the shared date-time predicate and CV-253 to the recipe's pinned original resources, so a retained timestamp CV-1101 refuses is owner-invalid and refuses, while owner-valid lowercase, leap-second and long-fraction history stays readable with its exact spelling; the skipped URI check is preserved. Never re-encode raw-v1 bytes under a later normalization to verify their commitment. Plans/dch_write_recipe_receipts.json is an independent synthetic Storage receipt adapter, not native authentication evidence. Every earlier-valid retained numeric or format record stays readable with current authorization, deletion/hold access, withdrawal and actual-source identity checks. A forged source or recipe selection still refuses. Current derived checkpoints may copy an old event sequence into their exact new integer representation; the original retained event/index sequence and commitment remain unchanged. A retry verifies its saved original through the same historical schema/byte/custody reader before comparison; its incoming input stays strict-v4, and a replay-only compatibility original still cannot authorize a current append or retry. Different earlier semantic values conflict without sending an out-of-current-domain original through the current RFC 8785 encoder. A retained checkpoint, including its history and physical payload pack, uses its own original write provenance separately from its referenced event.
+
+The strict-v4 format validators are mandatory and installed explicitly, never through optional jsonschema plugins. Timestamps adopt the shared CV-1101 check: every current and frozen DCH validator is pm_event_datetime.datetime_validator over the complete outer schema, so the registered RFC 3339 predicate runs through the validator. occurred_at_utc keeps the EventRecord profile (T or t, Z/z or a signed offset, any fraction length, year 0000 and legitimate offset-adjusted leap seconds); observed_at_utc and persisted_at_utc keep CV-253's storage_utc_z profile through the inventory-classified envelope; the family ts and populated checkpoint retired_at_utc take the same predicate with their unchanged owner-schema terminal uppercase-Z pattern. A missing zone, space or wrong separator, invalid calendar field, hour 24, minute 60, false leap second, empty fraction and trailing LF refuse. Timestamp strings are never rewritten and are compared only as exact strings; no DCH-local timestamp grammar remains. PR URLs where declared fully match RFC 3986 HTTPS syntax, including valid percent escapes, reg-name or bracketed IPv6/IPvFuture host, numeric port and path/query/fragment grammar. Malformed brackets/hosts/escapes and whitespace refuse. No PR-host allowlist or new provider behavior is introduced. UUID contexts keep Storage's enforced descriptor. Both payload editions, all three EventRecord timestamps and populated checkpoint retirement times have isolated format negatives; applicable PR payloads cover every malformed URL form.
+
+```yaml
+plan_unit_id: SP-618
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: '### SP-618 — chat.thread_worktree_merge_failed
+
+
+  Newly authored persistence/read contract for `chat.thread_worktree_merge_failed` 1.0.0 under DL-045, adopting
+  ACD-618 and CV-638. Exact operating consumer `reader.chat.chat_thread_worktree_merge_failed@1.0.0` serves
+  Merge result/error presentation, conflict assistant route and audit. Reuse exact projector `projector.storage.event_record_index@1.0.0`
+  and checkpoint `event_record_index_checkpoint.v1:{storage_instance_id}`, schema `Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint`,
+  version 1.0.0. Explicitly adopt SP-278 including DL-076 nine-field durable read token and current full-index
+  generation/frontier validation; no persisted redb_snapshot_id. This consumer is an on-demand, exact-event
+  filtered read of the generic index, not an independently advancing persistent filtered projection. SP-278
+  performs predecessor-frontier CAS with index rows atomically, complete captured coverage, source selection
+  and current publication validation. Each read uses the actual live transaction token, full scope and canonical
+  source/payload joins and current permissions; a stale, unsupported or unavailable token cannot publish a
+  result. The generic checkpoint retains RP-PROJECTION-3GEN@1.0.0, without extending the source event lifetime.
+  No new stored family/key/value is created by this reader, so no storage registry row is invented. Existing
+  render pages, Tantivy and worktree binding projections remain their owner-defined stores and must be rebuilt
+  under their own current checkpoints, not by adopting this audit reader as a new mutation path. Replay of
+  this event through `reader.chat.chat_thread_worktree_merge_failed@1.0.0` returns original outcome evidence
+  only: no git, API, test, send, chip creation, thread creation, notification, billing or deletion side effect.
+  retention_policy_ref = PENDING_RETENTION_DECISION. Candidates: Case L-3 Chat content (thread lifetime, 250,000/thread)
+  versus audit authority (indefinite, no count eviction); classification belongs to RT/Jared. No expiry/count
+  deletion is authorized by this draft. Original source intent, canonical outcome/body and first receipt remain
+  with cmd.chat.worktree.merge failure completion handler, under SP-286/CV-339; coherent backup/restore includes
+  those dependencies and deletion records before any visible read. Missing originals are unavailable, never
+  recaptured. Stored excerpts, command strings, errors, branch/path/PR text must be scrubbed before append;
+  no credentials, inline message body or raw tool output. Every referenced body requires current authorization,
+  deletion/hold checks and exact source Computer/root; retained audit metadata grants no access. This event
+  adds no hold or purge exemption. Withdrawal cuts off this exact family before new operations; fence `reader.chat.chat_thread_worktree_merge_failed@1.0.0`
+  and any affected domain projection, retain supported original-version historical lookup under current permissions,
+  then rebuild a separately versioned successor from retained canonical sources and a fresh SP-278 token before
+  publication. Never reset a cursor to zero as current, remint events, or delete seglog as withdrawal. No admission
+  or native execution proof is implied.
+
+
+
+
+  **chat.thread_worktree_merge_failed domain projection binding (newly authored owner contract).** Exact domain
+  projector `projector.chat.chat_thread_worktree_merge_failed@1.0.0` 1.0.0 and operating consumer `reader.chat.chat_thread_worktree_merge_failed@1.0.0`
+  explicitly adopt SP-278 and the same verified full-index source path. The family''s separate checkpoint is
+  `projector.checkpoint.dch.chat_thread_worktree_merge_failed.v1:{storage_instance_id}:{scope_partition}`,
+  stored family `dch_chat_thread_worktree_merge_failed_checkpoint`, closed schema `Plans/dch_event_payloads/dch_chat_thread_worktree_merge_failed_checkpoint.schema.json#`,
+  schema_id `pm.storage_value.dch_chat_thread_worktree_merge_failed_checkpoint.v1` 1.0.0. The nine-field durable
+  token is copied exactly from SP-278/DL-076 without redb_snapshot_id. Consumer/projector versions are the
+  suffixes in their stored constant IDs; no version is inferred from the payload. `last_sequence_id` and `last_event_id`
+  identify the last applied exact-family EventRecord; `source_token` identifies complete inspected source coverage
+  including nonmatching events. Publication identity is fresh entropy for a new shadow generation and frozen
+  on retries; revision increments exactly once on successful CAS. The key joins storage_instance_id and scope_partition
+  exactly. Application partition app is also bound to its source token''s Server/instance and the event''s
+  Computer/thread, never to every null Project. The projector processes this family''s records in verified
+  source sequence order and performs only the transition of ACD-618. For `chat.message`, resolve and authorize
+  its canonical typed message and build SP-338 pages and Tantivy fields once keyed by (thread_id,message_id);
+  never reopen a deleted/superseded message. For thread lifecycle, take current lifecycle from the canonical
+  revision and tombstone rather than treating an old historical event as current. Worktree fields update only
+  the existing owner-defined binding/reverse/worktree projections, with old/new identity checks; no git effect
+  is replayed. Selection events attach only existing authorized outcome/provenance refs to audit/pending-chip
+  status; never create a chip or repeat a send during replay. Failure events retain actual original error evidence
+  and cannot imply a successful outcome.
+
+
+  For this exact family, publish projection mutation and checkpoint revision together in one redb transaction
+  with predecessor revision/publication_id CAS. Where the target is Tantivy or the SP-338 page payload store,
+  first durably stage and read back an immutable shadow commit, put its exact reference in projection_refs,
+  then CAS-publish the pointer and checkpoint together. Readers serve only targets named by the current checkpoint''s
+  refs and same publication_id; old/partial targets never become visible by newest-file inference. Existing
+  canonical thread/worktree state is not rewritten by a derived rebuild. Rebuild any shared target from all
+  its admitted family sources in global source order into one shadow, never by replaying a whole bound family
+  after an unbound family. A required unadmitted counterpart fences that target, not an inferred admission.
+  Re-read canonical state/tombstones and current grants before publication. On source-generation change or
+  failed CAS, discard unpublished target or retry from the unchanged verified prefix; never reuse a stale token.
+  Missing or malformed derived bytes enter Q-DERIVED and governed rebuild, not source repair. Source loss requires
+  canonical backup recovery.
+
+
+  The checkpoint is MessagePack canonical, max 16 KiB under SP-340; oversized values use existing SP-337 reference
+  storage, never an exemption. The closed history array stores at most two full prior checkpoint generations
+  with first retired_at_utc and state retired; current fields name the selected generation. Reserve staged
+  slots through the existing maintenance intent before source staging; a staged candidate counts against three
+  even before it is visible in history. Retain at most three publication generations per exact key under RP-PROJECTION-3GEN@1.0.0;
+  retirement starts at first committed replacement, retries do not reset it, 604800 seconds for eligible retired
+  generations only, with holds/current/staged/live-ref protection. Reserve the slot first or disclose rebuild
+  unavailability. Source events keep PENDING_RETENTION_DECISION; the checkpoint gives no source keepalive.
+  Backup restores canonical source/custody/tombstones first; derived target/checkpoint is rebuilt and validated
+  against the current full-index token before read. Withdrawal fences this projector and its domain readers
+  in addition to the passive reader, sets checkpoint state withdrawn by CAS, and refuses all ordinary advances.
+  Retained historical lookup uses original schema and current access checks; successor publication requires
+  a separately versioned, complete shadow rebuild. Unsupported versions are unavailable, never rewritten in
+  place.
+
+
+  Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application
+  payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236
+  canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes,
+  not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized
+  inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored
+  string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref,
+  with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`.
+  The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack.
+  Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time
+  join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance,
+  Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack
+  bytes and index entry and verified readback before the referencing append can be acknowledged or its first
+  receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence
+  refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed.
+  Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants
+  no new retention exemption.
+
+
+  Checkpoint acceptance compares original source facts independently of the candidate: the outer storage_instance_id,
+  durable-token storage_instance_id, source_selection storage_instance_id and actual source/root instance must
+  be identical. Resolve the token checkpoint_key in the actual full-index root, its uniquely current generation
+  JSON Pointer checkpoint_ref and exact same-instance event_record_index.v2@generation dataset. Require exact
+  generation anchor, current frontier revision/digest and all source_selection fields against current synchronized
+  source, including nonmatching same-generation appends; a shape-valid stale token cannot publish. The domain
+  checkpoint key binds this instance and exact scope_partition. last_event_id/last_sequence_id join the actual
+  exact-family EventRecord and its full-index row and source-value commitment; actual source Computer/thread/scope
+  also join the published projection. Publication_id, revision, projection_refs and the full durable source
+  token match the actual staged/read-back publication selected by the atomic checkpoint/pointer CAS. Independent
+  source, token, selection, key/ref, event, dataset, publication and current-frontier mismatches refuse publication.
+  Static fixture adapters model these joins; they do not prove native full-index coverage, redb transactions,
+  CRC, source locks or durability.
+
+
+  For chat.thread_worktree_merge_failed, the complete encoded checkpoint includes every retained history
+  entry and projection reference. Measure that entire SP-236 value at the 16384-byte SP-340 boundary:
+  16384 bytes may be inline, 16385 bytes may not. A larger logical checkpoint keeps the same closed schema
+  and bounds and uses SP-337; measure the stored reference/pointer too. Resolve the exact complete bytes
+  through their BLAKE3/size/media-type reference and same-instance, exact-key/scope/family payload-pack
+  index, with current authorization/deletion/hold access, durable bytes/index and verified readback before
+  checkpoint publication. Externalizing the event body does not externalize this checkpoint. Every Storage-assigned
+  identity and metadata field is checked against the original Storage record for the actual instance;
+  no fixture/default instance supplies authority. Checkpoint source lookup resolves inline or referenced
+  originals, validates the supported original envelope and Project/application payload edition, verifies
+  their exact original source commitment and current access/withdrawal status, and then joins their source
+  facts. Retained compatibility-reader originals, including projector_replay_only, remain readable after
+  later live-state changes; only a new append/retry uses the current-writer policy. Unsupported, withdrawn,
+  forged or foreign originals cannot publish. Newly written integer and boolean slots require their exact types before comparison or arithmetic; string numbers/booleans, null, arrays and nested objects confer no
+  numeric or access authority. Current physical commitment/reference encoding canonicalizes integral numeric aliases and signed zero to the same shortest integer bytes; retained bytes retain their protected original recipe below. These are refinements of this family''s existing SP-236/SP-278/SP-337/SP-340 contract, not
+  a new retention or product decision.
+
+
+  Before any source resolution or identity hashing, validate every Storage-instance context against Storage''s own UUID descriptor in Plans/event_record_index_checkpoint.schema.json, including exact primitive type and UUID format. Empty, malformed, overlong, newline-suffixed and non-string instances refuse even when dependent IDs, keys and source commitments agree. Compare candidate, token, source-selection, payload-pack and index context against the independently read actual Storage record; a caller context, default instance or coherent forged context supplies no authority. Verify Storage-assigned sequence and timestamp fields against that exact original record commitment before reading. A retained original remains governed by its supported edition and current custody, not later lifecycle state.
+
+
+  For new writes and current identity/idempotency inputs, this family selects strict-v4 exact integer types with the owner-declared domain of each field. Storage sequence_id and its last_sequence_id copies, frontier_revision, selected_segment_generation, manifest_generation, recovery_epoch and pack byte_size retain exact uint64 values 0 through 18446744073709551615; no 2^53 ceiling applies to Storage metadata. Publication revision and logical payload integers retain their existing owner minima and maxima, with no invented DCH safe-integer cap. Declared integer slots reject runtime float/string/bool/null/array/object substitutes except explicitly nullable slots. Storage metadata is excluded from the producer-semantic projection as already specified. The producer route is the CV-1100 qualified RFC 8785 encoding of the unchanged CV-317 producer projection (shared producer_semantic_bytes/producer_semantic_digest); an unsupported exact producer input is a structured route refusal, without narrowing its logical owner domain, rounding or stringification. Physical bytes follow SP-236 through the shared SP-1100 codec (storage_value_bytes, EVENT_VALUE profile): float type, minimal exact float width and signed zero are preserved, so a lexical alias never shares an integer''s bytes, and the exact integer slots refuse every alias; invalid JSON 01 refuses under the CV-1100 current parser. Retained-recipe dispatch composes the shared SP-1101 RetainedDispatcher and timestamps use the shared CV-1101 check, as the retained-original and format paragraphs state. Test Storage write/retry inputs at 2^53, 2^60 and uint64 maximum, and refuse overflow, negative and wrong-type metadata independently.
+
+
+  Retained and compatibility originals use the schema, numeric domain, runtime type policy, format validator and physical encoder in force when written. The single selector record_number_rule() owns this dispatch on passive history, SP-337 materialization/reference verification, full-index source/checkpoint validation, checkpoint physical storage, saved-original retry comparison and terminal retained-start lookup. New/current inputs select strict-v4. For retained sources, independently read protected Storage write-receipt provenance binds actual storage_instance_id, exact original source-value SHA-256 and recipe_id; it is committed with the original write and survives restore with that source. Candidate fields, caller version/recipe flags, mutable live state and payload content cannot select or enroll an earlier recipe. Verify any claim against that independently authenticated provenance, then verify the exact original bytes with the selected recipe. Missing earlier provenance is unavailable under that earlier recipe, never a guessed downgrade: an original of a Store outside the sealed write custody refuses as unavailable and a receipt naming a recipe with no installed frozen verifier refuses as unsupported, with no fallback to another recipe; within a custody Store an original without a legacy receipt was written by the current strict-v4 writer. Each retained read composes the shared SP-1101 RetainedDispatcher once: one owner selection, no caller override and no current-then-legacy probing, and the installed frozen verifier of that exact recipe tuple (pinned to the recipe''s recorded original schema hashes) checks the original. Preserve raw-v1 (d36809af original MessagePack numeric types), normalized-v2 (a785466d normalized integral floats with the original uncapped integer domain), and strict-v3 (c21fa62e safe integers; its original checker skipped date-time and URI formats); Plans/dch_retained_recipes.json pins their exact original schemas and source revisions. A skipped format check never authenticates invalid history (CV-1101, SP-1101): frozen validators apply the shared date-time predicate and CV-253 to the recipe''s pinned original resources, so a retained timestamp CV-1101 refuses is owner-invalid and refuses, while owner-valid lowercase, leap-second and long-fraction history stays readable with its exact spelling; the skipped URI check is preserved. Never re-encode raw-v1 bytes under a later normalization to verify their commitment. Plans/dch_write_recipe_receipts.json is an independent synthetic Storage receipt adapter, not native authentication evidence. Every earlier-valid retained numeric or format record stays readable with current authorization, deletion/hold access, withdrawal and actual-source identity checks. A forged source or recipe selection still refuses. Current derived checkpoints may copy an old event sequence into their exact new integer representation; the original retained event/index sequence and commitment remain unchanged. A retry verifies its saved original through the same historical schema/byte/custody reader before comparison; its incoming input stays strict-v4, and a replay-only compatibility original still cannot authorize a current append or retry. Different earlier semantic values conflict without sending an out-of-current-domain original through the current RFC 8785 encoder. A retained checkpoint, including its history and physical payload pack, uses its own original write provenance separately from its referenced event.
+
+
+  The strict-v4 format validators are mandatory and installed explicitly, never through optional jsonschema plugins. Timestamps adopt the shared CV-1101 check: every current and frozen DCH validator is pm_event_datetime.datetime_validator over the complete outer schema, so the registered RFC 3339 predicate runs through the validator. occurred_at_utc keeps the EventRecord profile (T or t, Z/z or a signed offset, any fraction length, year 0000 and legitimate offset-adjusted leap seconds); observed_at_utc and persisted_at_utc keep CV-253''s storage_utc_z profile through the inventory-classified envelope; the family ts and populated checkpoint retired_at_utc take the same predicate with their unchanged owner-schema terminal uppercase-Z pattern. A missing zone, space or wrong separator, invalid calendar field, hour 24, minute 60, false leap second, empty fraction and trailing LF refuse. Timestamp strings are never rewritten and are compared only as exact strings; no DCH-local timestamp grammar remains. PR URLs where declared fully match RFC 3986 HTTPS syntax, including valid percent escapes, reg-name or bracketed IPv6/IPvFuture host, numeric port and path/query/fragment grammar. Malformed brackets/hosts/escapes and whitespace refuse. No PR-host allowlist or new provider behavior is introduced. UUID contexts keep Storage''s enforced descriptor. Both payload editions, all three EventRecord timestamps and populated checkpoint retirement times have isolated format negatives; applicable PR payloads cover every malformed URL form.'
+gui_related: false
+gui_classification_reason: Owns event data and persistence contract.
+depends_on:
+- ACD-618
+- CV-638
+- SP-278
+- SP-286
+- SP-337
+unblocks: []
+acceptance_criteria:
+- Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership remains
+  absent.
+- Review-round-2 acceptance rejects the independently mutated forbidden policy, body, retry, source and outcome
+  cases applicable to this exact family; native evidence remains NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm_dch_events.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: event_authority_dch
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- DL-045; WAVE2 DCH 2026-11-04
+preserved_exact_tokens:
+- chat.thread_worktree_merge_failed
+- PENDING_RETENTION_DECISION
+- SP-278
+- SP-286
+negative_constraints:
+- No event admission or native execution proof; no retention choice.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+
+### SP-619 — chat.thread_worktree_merged
+
+Newly authored persistence/read contract for `chat.thread_worktree_merged` 1.0.0 under DL-045, adopting ACD-619 and CV-639. Exact operating consumer `reader.chat.chat_thread_worktree_merged@1.0.0` serves Merge completion dialog and worktree history. Reuse exact projector `projector.storage.event_record_index@1.0.0` and checkpoint `event_record_index_checkpoint.v1:{storage_instance_id}`, schema `Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint`, version 1.0.0. Explicitly adopt SP-278 including DL-076 nine-field durable read token and current full-index generation/frontier validation; no persisted redb_snapshot_id. This consumer is an on-demand, exact-event filtered read of the generic index, not an independently advancing persistent filtered projection. SP-278 performs predecessor-frontier CAS with index rows atomically, complete captured coverage, source selection and current publication validation. Each read uses the actual live transaction token, full scope and canonical source/payload joins and current permissions; a stale, unsupported or unavailable token cannot publish a result. The generic checkpoint retains RP-PROJECTION-3GEN@1.0.0, without extending the source event lifetime. No new stored family/key/value is created by this reader, so no storage registry row is invented. Existing render pages, Tantivy and worktree binding projections remain their owner-defined stores and must be rebuilt under their own current checkpoints, not by adopting this audit reader as a new mutation path. Replay of this event through `reader.chat.chat_thread_worktree_merged@1.0.0` returns original outcome evidence only: no git, API, test, send, chip creation, thread creation, notification, billing or deletion side effect. retention_policy_ref = PENDING_RETENTION_DECISION. Candidates: Case L-3 Chat content (thread lifetime, 250,000/thread) versus audit authority (indefinite, no count eviction); classification belongs to RT/Jared. No expiry/count deletion is authorized by this draft. Original source intent, canonical outcome/body and first receipt remain with cmd.chat.worktree.merge success completion handler, under SP-286/CV-339; coherent backup/restore includes those dependencies and deletion records before any visible read. Missing originals are unavailable, never recaptured. Stored excerpts, command strings, errors, branch/path/PR text must be scrubbed before append; no credentials, inline message body or raw tool output. Every referenced body requires current authorization, deletion/hold checks and exact source Computer/root; retained audit metadata grants no access. This event adds no hold or purge exemption. Withdrawal cuts off this exact family before new operations; fence `reader.chat.chat_thread_worktree_merged@1.0.0` and any affected domain projection, retain supported original-version historical lookup under current permissions, then rebuild a separately versioned successor from retained canonical sources and a fresh SP-278 token before publication. Never reset a cursor to zero as current, remint events, or delete seglog as withdrawal. No admission or native execution proof is implied.
+
+
+
+**chat.thread_worktree_merged domain projection binding (newly authored owner contract).** Exact domain projector `projector.chat.chat_thread_worktree_merged@1.0.0` 1.0.0 and operating consumer `reader.chat.chat_thread_worktree_merged@1.0.0` explicitly adopt SP-278 and the same verified full-index source path. The family's separate checkpoint is `projector.checkpoint.dch.chat_thread_worktree_merged.v1:{storage_instance_id}:{scope_partition}`, stored family `dch_chat_thread_worktree_merged_checkpoint`, closed schema `Plans/dch_event_payloads/dch_chat_thread_worktree_merged_checkpoint.schema.json#`, schema_id `pm.storage_value.dch_chat_thread_worktree_merged_checkpoint.v1` 1.0.0. The nine-field durable token is copied exactly from SP-278/DL-076 without redb_snapshot_id. Consumer/projector versions are the suffixes in their stored constant IDs; no version is inferred from the payload. `last_sequence_id` and `last_event_id` identify the last applied exact-family EventRecord; `source_token` identifies complete inspected source coverage including nonmatching events. Publication identity is fresh entropy for a new shadow generation and frozen on retries; revision increments exactly once on successful CAS. The key joins storage_instance_id and scope_partition exactly. Application partition app is also bound to its source token's Server/instance and the event's Computer/thread, never to every null Project. The projector processes this family's records in verified source sequence order and performs only the transition of ACD-619. For `chat.message`, resolve and authorize its canonical typed message and build SP-338 pages and Tantivy fields once keyed by (thread_id,message_id); never reopen a deleted/superseded message. For thread lifecycle, take current lifecycle from the canonical revision and tombstone rather than treating an old historical event as current. Worktree fields update only the existing owner-defined binding/reverse/worktree projections, with old/new identity checks; no git effect is replayed. Selection events attach only existing authorized outcome/provenance refs to audit/pending-chip status; never create a chip or repeat a send during replay. Failure events retain actual original error evidence and cannot imply a successful outcome.
+
+For this exact family, publish projection mutation and checkpoint revision together in one redb transaction with predecessor revision/publication_id CAS. Where the target is Tantivy or the SP-338 page payload store, first durably stage and read back an immutable shadow commit, put its exact reference in projection_refs, then CAS-publish the pointer and checkpoint together. Readers serve only targets named by the current checkpoint's refs and same publication_id; old/partial targets never become visible by newest-file inference. Existing canonical thread/worktree state is not rewritten by a derived rebuild. Rebuild any shared target from all its admitted family sources in global source order into one shadow, never by replaying a whole bound family after an unbound family. A required unadmitted counterpart fences that target, not an inferred admission. Re-read canonical state/tombstones and current grants before publication. On source-generation change or failed CAS, discard unpublished target or retry from the unchanged verified prefix; never reuse a stale token. Missing or malformed derived bytes enter Q-DERIVED and governed rebuild, not source repair. Source loss requires canonical backup recovery.
+
+The checkpoint is MessagePack canonical, max 16 KiB under SP-340; oversized values use existing SP-337 reference storage, never an exemption. The closed history array stores at most two full prior checkpoint generations with first retired_at_utc and state retired; current fields name the selected generation. Reserve staged slots through the existing maintenance intent before source staging; a staged candidate counts against three even before it is visible in history. Retain at most three publication generations per exact key under RP-PROJECTION-3GEN@1.0.0; retirement starts at first committed replacement, retries do not reset it, 604800 seconds for eligible retired generations only, with holds/current/staged/live-ref protection. Reserve the slot first or disclose rebuild unavailability. Source events keep PENDING_RETENTION_DECISION; the checkpoint gives no source keepalive. Backup restores canonical source/custody/tombstones first; derived target/checkpoint is rebuilt and validated against the current full-index token before read. Withdrawal fences this projector and its domain readers in addition to the passive reader, sets checkpoint state withdrawn by CAS, and refuses all ordinary advances. Retained historical lookup uses original schema and current access checks; successor publication requires a separately versioned, complete shadow rebuild. Unsupported versions are unavailable, never rewritten in place.
+
+Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236 canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes, not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref, with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`. The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack. Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance, Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack bytes and index entry and verified readback before the referencing append can be acknowledged or its first receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed. Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants no new retention exemption.
+
+Checkpoint acceptance compares original source facts independently of the candidate: the outer storage_instance_id, durable-token storage_instance_id, source_selection storage_instance_id and actual source/root instance must be identical. Resolve the token checkpoint_key in the actual full-index root, its uniquely current generation JSON Pointer checkpoint_ref and exact same-instance event_record_index.v2@generation dataset. Require exact generation anchor, current frontier revision/digest and all source_selection fields against current synchronized source, including nonmatching same-generation appends; a shape-valid stale token cannot publish. The domain checkpoint key binds this instance and exact scope_partition. last_event_id/last_sequence_id join the actual exact-family EventRecord and its full-index row and source-value commitment; actual source Computer/thread/scope also join the published projection. Publication_id, revision, projection_refs and the full durable source token match the actual staged/read-back publication selected by the atomic checkpoint/pointer CAS. Independent source, token, selection, key/ref, event, dataset, publication and current-frontier mismatches refuse publication. Static fixture adapters model these joins; they do not prove native full-index coverage, redb transactions, CRC, source locks or durability.
+
+For chat.thread_worktree_merged, the complete encoded checkpoint includes every retained history entry and projection reference. Measure that entire SP-236 value at the 16384-byte SP-340 boundary: 16384 bytes may be inline, 16385 bytes may not. A larger logical checkpoint keeps the same closed schema and bounds and uses SP-337; measure the stored reference/pointer too. Resolve the exact complete bytes through their BLAKE3/size/media-type reference and same-instance, exact-key/scope/family payload-pack index, with current authorization/deletion/hold access, durable bytes/index and verified readback before checkpoint publication. Externalizing the event body does not externalize this checkpoint. Every Storage-assigned identity and metadata field is checked against the original Storage record for the actual instance; no fixture/default instance supplies authority. Checkpoint source lookup resolves inline or referenced originals, validates the supported original envelope and Project/application payload edition, verifies their exact original source commitment and current access/withdrawal status, and then joins their source facts. Retained compatibility-reader originals, including projector_replay_only, remain readable after later live-state changes; only a new append/retry uses the current-writer policy. Unsupported, withdrawn, forged or foreign originals cannot publish. Newly written integer and boolean slots require their exact types before comparison or arithmetic; string numbers/booleans, null, arrays and nested objects confer no numeric or access authority. Current physical commitment/reference encoding canonicalizes integral numeric aliases and signed zero to the same shortest integer bytes; retained bytes retain their protected original recipe below. These are refinements of this family's existing SP-236/SP-278/SP-337/SP-340 contract, not a new retention or product decision.
+
+Before any source resolution or identity hashing, validate every Storage-instance context against Storage's own UUID descriptor in Plans/event_record_index_checkpoint.schema.json, including exact primitive type and UUID format. Empty, malformed, overlong, newline-suffixed and non-string instances refuse even when dependent IDs, keys and source commitments agree. Compare candidate, token, source-selection, payload-pack and index context against the independently read actual Storage record; a caller context, default instance or coherent forged context supplies no authority. Verify Storage-assigned sequence and timestamp fields against that exact original record commitment before reading. A retained original remains governed by its supported edition and current custody, not later lifecycle state.
+
+For new writes and current identity/idempotency inputs, this family selects strict-v4 exact integer types with the owner-declared domain of each field. Storage sequence_id and its last_sequence_id copies, frontier_revision, selected_segment_generation, manifest_generation, recovery_epoch and pack byte_size retain exact uint64 values 0 through 18446744073709551615; no 2^53 ceiling applies to Storage metadata. Publication revision and logical payload integers retain their existing owner minima and maxima, with no invented DCH safe-integer cap. Declared integer slots reject runtime float/string/bool/null/array/object substitutes except explicitly nullable slots. Storage metadata is excluded from the producer-semantic projection as already specified. The producer route is the CV-1100 qualified RFC 8785 encoding of the unchanged CV-317 producer projection (shared producer_semantic_bytes/producer_semantic_digest); an unsupported exact producer input is a structured route refusal, without narrowing its logical owner domain, rounding or stringification. Physical bytes follow SP-236 through the shared SP-1100 codec (storage_value_bytes, EVENT_VALUE profile): float type, minimal exact float width and signed zero are preserved, so a lexical alias never shares an integer's bytes, and the exact integer slots refuse every alias; invalid JSON 01 refuses under the CV-1100 current parser. Retained-recipe dispatch composes the shared SP-1101 RetainedDispatcher and timestamps use the shared CV-1101 check, as the retained-original and format paragraphs state. Test Storage write/retry inputs at 2^53, 2^60 and uint64 maximum, and refuse overflow, negative and wrong-type metadata independently.
+
+Retained and compatibility originals use the schema, numeric domain, runtime type policy, format validator and physical encoder in force when written. The single selector record_number_rule() owns this dispatch on passive history, SP-337 materialization/reference verification, full-index source/checkpoint validation, checkpoint physical storage, saved-original retry comparison and terminal retained-start lookup. New/current inputs select strict-v4. For retained sources, independently read protected Storage write-receipt provenance binds actual storage_instance_id, exact original source-value SHA-256 and recipe_id; it is committed with the original write and survives restore with that source. Candidate fields, caller version/recipe flags, mutable live state and payload content cannot select or enroll an earlier recipe. Verify any claim against that independently authenticated provenance, then verify the exact original bytes with the selected recipe. Missing earlier provenance is unavailable under that earlier recipe, never a guessed downgrade: an original of a Store outside the sealed write custody refuses as unavailable and a receipt naming a recipe with no installed frozen verifier refuses as unsupported, with no fallback to another recipe; within a custody Store an original without a legacy receipt was written by the current strict-v4 writer. Each retained read composes the shared SP-1101 RetainedDispatcher once: one owner selection, no caller override and no current-then-legacy probing, and the installed frozen verifier of that exact recipe tuple (pinned to the recipe's recorded original schema hashes) checks the original. Preserve raw-v1 (d36809af original MessagePack numeric types), normalized-v2 (a785466d normalized integral floats with the original uncapped integer domain), and strict-v3 (c21fa62e safe integers; its original checker skipped date-time and URI formats); Plans/dch_retained_recipes.json pins their exact original schemas and source revisions. A skipped format check never authenticates invalid history (CV-1101, SP-1101): frozen validators apply the shared date-time predicate and CV-253 to the recipe's pinned original resources, so a retained timestamp CV-1101 refuses is owner-invalid and refuses, while owner-valid lowercase, leap-second and long-fraction history stays readable with its exact spelling; the skipped URI check is preserved. Never re-encode raw-v1 bytes under a later normalization to verify their commitment. Plans/dch_write_recipe_receipts.json is an independent synthetic Storage receipt adapter, not native authentication evidence. Every earlier-valid retained numeric or format record stays readable with current authorization, deletion/hold access, withdrawal and actual-source identity checks. A forged source or recipe selection still refuses. Current derived checkpoints may copy an old event sequence into their exact new integer representation; the original retained event/index sequence and commitment remain unchanged. A retry verifies its saved original through the same historical schema/byte/custody reader before comparison; its incoming input stays strict-v4, and a replay-only compatibility original still cannot authorize a current append or retry. Different earlier semantic values conflict without sending an out-of-current-domain original through the current RFC 8785 encoder. A retained checkpoint, including its history and physical payload pack, uses its own original write provenance separately from its referenced event.
+
+The strict-v4 format validators are mandatory and installed explicitly, never through optional jsonschema plugins. Timestamps adopt the shared CV-1101 check: every current and frozen DCH validator is pm_event_datetime.datetime_validator over the complete outer schema, so the registered RFC 3339 predicate runs through the validator. occurred_at_utc keeps the EventRecord profile (T or t, Z/z or a signed offset, any fraction length, year 0000 and legitimate offset-adjusted leap seconds); observed_at_utc and persisted_at_utc keep CV-253's storage_utc_z profile through the inventory-classified envelope; the family ts and populated checkpoint retired_at_utc take the same predicate with their unchanged owner-schema terminal uppercase-Z pattern. A missing zone, space or wrong separator, invalid calendar field, hour 24, minute 60, false leap second, empty fraction and trailing LF refuse. Timestamp strings are never rewritten and are compared only as exact strings; no DCH-local timestamp grammar remains. PR URLs where declared fully match RFC 3986 HTTPS syntax, including valid percent escapes, reg-name or bracketed IPv6/IPvFuture host, numeric port and path/query/fragment grammar. Malformed brackets/hosts/escapes and whitespace refuse. No PR-host allowlist or new provider behavior is introduced. UUID contexts keep Storage's enforced descriptor. Both payload editions, all three EventRecord timestamps and populated checkpoint retirement times have isolated format negatives; applicable PR payloads cover every malformed URL form.
+
+```yaml
+plan_unit_id: SP-619
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: '### SP-619 — chat.thread_worktree_merged
+
+
+  Newly authored persistence/read contract for `chat.thread_worktree_merged` 1.0.0 under DL-045, adopting ACD-619
+  and CV-639. Exact operating consumer `reader.chat.chat_thread_worktree_merged@1.0.0` serves Merge completion
+  dialog and worktree history. Reuse exact projector `projector.storage.event_record_index@1.0.0` and checkpoint
+  `event_record_index_checkpoint.v1:{storage_instance_id}`, schema `Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint`,
+  version 1.0.0. Explicitly adopt SP-278 including DL-076 nine-field durable read token and current full-index
+  generation/frontier validation; no persisted redb_snapshot_id. This consumer is an on-demand, exact-event
+  filtered read of the generic index, not an independently advancing persistent filtered projection. SP-278
+  performs predecessor-frontier CAS with index rows atomically, complete captured coverage, source selection
+  and current publication validation. Each read uses the actual live transaction token, full scope and canonical
+  source/payload joins and current permissions; a stale, unsupported or unavailable token cannot publish a
+  result. The generic checkpoint retains RP-PROJECTION-3GEN@1.0.0, without extending the source event lifetime.
+  No new stored family/key/value is created by this reader, so no storage registry row is invented. Existing
+  render pages, Tantivy and worktree binding projections remain their owner-defined stores and must be rebuilt
+  under their own current checkpoints, not by adopting this audit reader as a new mutation path. Replay of
+  this event through `reader.chat.chat_thread_worktree_merged@1.0.0` returns original outcome evidence only:
+  no git, API, test, send, chip creation, thread creation, notification, billing or deletion side effect. retention_policy_ref
+  = PENDING_RETENTION_DECISION. Candidates: Case L-3 Chat content (thread lifetime, 250,000/thread) versus
+  audit authority (indefinite, no count eviction); classification belongs to RT/Jared. No expiry/count deletion
+  is authorized by this draft. Original source intent, canonical outcome/body and first receipt remain with
+  cmd.chat.worktree.merge success completion handler, under SP-286/CV-339; coherent backup/restore includes
+  those dependencies and deletion records before any visible read. Missing originals are unavailable, never
+  recaptured. Stored excerpts, command strings, errors, branch/path/PR text must be scrubbed before append;
+  no credentials, inline message body or raw tool output. Every referenced body requires current authorization,
+  deletion/hold checks and exact source Computer/root; retained audit metadata grants no access. This event
+  adds no hold or purge exemption. Withdrawal cuts off this exact family before new operations; fence `reader.chat.chat_thread_worktree_merged@1.0.0`
+  and any affected domain projection, retain supported original-version historical lookup under current permissions,
+  then rebuild a separately versioned successor from retained canonical sources and a fresh SP-278 token before
+  publication. Never reset a cursor to zero as current, remint events, or delete seglog as withdrawal. No admission
+  or native execution proof is implied.
+
+
+
+
+  **chat.thread_worktree_merged domain projection binding (newly authored owner contract).** Exact domain projector
+  `projector.chat.chat_thread_worktree_merged@1.0.0` 1.0.0 and operating consumer `reader.chat.chat_thread_worktree_merged@1.0.0`
+  explicitly adopt SP-278 and the same verified full-index source path. The family''s separate checkpoint is
+  `projector.checkpoint.dch.chat_thread_worktree_merged.v1:{storage_instance_id}:{scope_partition}`, stored
+  family `dch_chat_thread_worktree_merged_checkpoint`, closed schema `Plans/dch_event_payloads/dch_chat_thread_worktree_merged_checkpoint.schema.json#`,
+  schema_id `pm.storage_value.dch_chat_thread_worktree_merged_checkpoint.v1` 1.0.0. The nine-field durable
+  token is copied exactly from SP-278/DL-076 without redb_snapshot_id. Consumer/projector versions are the
+  suffixes in their stored constant IDs; no version is inferred from the payload. `last_sequence_id` and `last_event_id`
+  identify the last applied exact-family EventRecord; `source_token` identifies complete inspected source coverage
+  including nonmatching events. Publication identity is fresh entropy for a new shadow generation and frozen
+  on retries; revision increments exactly once on successful CAS. The key joins storage_instance_id and scope_partition
+  exactly. Application partition app is also bound to its source token''s Server/instance and the event''s
+  Computer/thread, never to every null Project. The projector processes this family''s records in verified
+  source sequence order and performs only the transition of ACD-619. For `chat.message`, resolve and authorize
+  its canonical typed message and build SP-338 pages and Tantivy fields once keyed by (thread_id,message_id);
+  never reopen a deleted/superseded message. For thread lifecycle, take current lifecycle from the canonical
+  revision and tombstone rather than treating an old historical event as current. Worktree fields update only
+  the existing owner-defined binding/reverse/worktree projections, with old/new identity checks; no git effect
+  is replayed. Selection events attach only existing authorized outcome/provenance refs to audit/pending-chip
+  status; never create a chip or repeat a send during replay. Failure events retain actual original error evidence
+  and cannot imply a successful outcome.
+
+
+  For this exact family, publish projection mutation and checkpoint revision together in one redb transaction
+  with predecessor revision/publication_id CAS. Where the target is Tantivy or the SP-338 page payload store,
+  first durably stage and read back an immutable shadow commit, put its exact reference in projection_refs,
+  then CAS-publish the pointer and checkpoint together. Readers serve only targets named by the current checkpoint''s
+  refs and same publication_id; old/partial targets never become visible by newest-file inference. Existing
+  canonical thread/worktree state is not rewritten by a derived rebuild. Rebuild any shared target from all
+  its admitted family sources in global source order into one shadow, never by replaying a whole bound family
+  after an unbound family. A required unadmitted counterpart fences that target, not an inferred admission.
+  Re-read canonical state/tombstones and current grants before publication. On source-generation change or
+  failed CAS, discard unpublished target or retry from the unchanged verified prefix; never reuse a stale token.
+  Missing or malformed derived bytes enter Q-DERIVED and governed rebuild, not source repair. Source loss requires
+  canonical backup recovery.
+
+
+  The checkpoint is MessagePack canonical, max 16 KiB under SP-340; oversized values use existing SP-337 reference
+  storage, never an exemption. The closed history array stores at most two full prior checkpoint generations
+  with first retired_at_utc and state retired; current fields name the selected generation. Reserve staged
+  slots through the existing maintenance intent before source staging; a staged candidate counts against three
+  even before it is visible in history. Retain at most three publication generations per exact key under RP-PROJECTION-3GEN@1.0.0;
+  retirement starts at first committed replacement, retries do not reset it, 604800 seconds for eligible retired
+  generations only, with holds/current/staged/live-ref protection. Reserve the slot first or disclose rebuild
+  unavailability. Source events keep PENDING_RETENTION_DECISION; the checkpoint gives no source keepalive.
+  Backup restores canonical source/custody/tombstones first; derived target/checkpoint is rebuilt and validated
+  against the current full-index token before read. Withdrawal fences this projector and its domain readers
+  in addition to the passive reader, sets checkpoint state withdrawn by CAS, and refuses all ordinary advances.
+  Retained historical lookup uses original schema and current access checks; successor publication requires
+  a separately versioned, complete shadow rebuild. Unsupported versions are unavailable, never rewritten in
+  place.
+
+
+  Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application
+  payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236
+  canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes,
+  not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized
+  inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored
+  string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref,
+  with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`.
+  The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack.
+  Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time
+  join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance,
+  Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack
+  bytes and index entry and verified readback before the referencing append can be acknowledged or its first
+  receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence
+  refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed.
+  Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants
+  no new retention exemption.
+
+
+  Checkpoint acceptance compares original source facts independently of the candidate: the outer storage_instance_id,
+  durable-token storage_instance_id, source_selection storage_instance_id and actual source/root instance must
+  be identical. Resolve the token checkpoint_key in the actual full-index root, its uniquely current generation
+  JSON Pointer checkpoint_ref and exact same-instance event_record_index.v2@generation dataset. Require exact
+  generation anchor, current frontier revision/digest and all source_selection fields against current synchronized
+  source, including nonmatching same-generation appends; a shape-valid stale token cannot publish. The domain
+  checkpoint key binds this instance and exact scope_partition. last_event_id/last_sequence_id join the actual
+  exact-family EventRecord and its full-index row and source-value commitment; actual source Computer/thread/scope
+  also join the published projection. Publication_id, revision, projection_refs and the full durable source
+  token match the actual staged/read-back publication selected by the atomic checkpoint/pointer CAS. Independent
+  source, token, selection, key/ref, event, dataset, publication and current-frontier mismatches refuse publication.
+  Static fixture adapters model these joins; they do not prove native full-index coverage, redb transactions,
+  CRC, source locks or durability.
+
+
+  For chat.thread_worktree_merged, the complete encoded checkpoint includes every retained history entry
+  and projection reference. Measure that entire SP-236 value at the 16384-byte SP-340 boundary: 16384
+  bytes may be inline, 16385 bytes may not. A larger logical checkpoint keeps the same closed schema and
+  bounds and uses SP-337; measure the stored reference/pointer too. Resolve the exact complete bytes through
+  their BLAKE3/size/media-type reference and same-instance, exact-key/scope/family payload-pack index,
+  with current authorization/deletion/hold access, durable bytes/index and verified readback before checkpoint
+  publication. Externalizing the event body does not externalize this checkpoint. Every Storage-assigned
+  identity and metadata field is checked against the original Storage record for the actual instance;
+  no fixture/default instance supplies authority. Checkpoint source lookup resolves inline or referenced
+  originals, validates the supported original envelope and Project/application payload edition, verifies
+  their exact original source commitment and current access/withdrawal status, and then joins their source
+  facts. Retained compatibility-reader originals, including projector_replay_only, remain readable after
+  later live-state changes; only a new append/retry uses the current-writer policy. Unsupported, withdrawn,
+  forged or foreign originals cannot publish. Newly written integer and boolean slots require their exact types before comparison or arithmetic; string numbers/booleans, null, arrays and nested objects confer no
+  numeric or access authority. Current physical commitment/reference encoding canonicalizes integral numeric aliases and signed zero to the same shortest integer bytes; retained bytes retain their protected original recipe below. These are refinements of this family''s existing SP-236/SP-278/SP-337/SP-340 contract, not
+  a new retention or product decision.
+
+
+  Before any source resolution or identity hashing, validate every Storage-instance context against Storage''s own UUID descriptor in Plans/event_record_index_checkpoint.schema.json, including exact primitive type and UUID format. Empty, malformed, overlong, newline-suffixed and non-string instances refuse even when dependent IDs, keys and source commitments agree. Compare candidate, token, source-selection, payload-pack and index context against the independently read actual Storage record; a caller context, default instance or coherent forged context supplies no authority. Verify Storage-assigned sequence and timestamp fields against that exact original record commitment before reading. A retained original remains governed by its supported edition and current custody, not later lifecycle state.
+
+
+  For new writes and current identity/idempotency inputs, this family selects strict-v4 exact integer types with the owner-declared domain of each field. Storage sequence_id and its last_sequence_id copies, frontier_revision, selected_segment_generation, manifest_generation, recovery_epoch and pack byte_size retain exact uint64 values 0 through 18446744073709551615; no 2^53 ceiling applies to Storage metadata. Publication revision and logical payload integers retain their existing owner minima and maxima, with no invented DCH safe-integer cap. Declared integer slots reject runtime float/string/bool/null/array/object substitutes except explicitly nullable slots. Storage metadata is excluded from the producer-semantic projection as already specified. The producer route is the CV-1100 qualified RFC 8785 encoding of the unchanged CV-317 producer projection (shared producer_semantic_bytes/producer_semantic_digest); an unsupported exact producer input is a structured route refusal, without narrowing its logical owner domain, rounding or stringification. Physical bytes follow SP-236 through the shared SP-1100 codec (storage_value_bytes, EVENT_VALUE profile): float type, minimal exact float width and signed zero are preserved, so a lexical alias never shares an integer''s bytes, and the exact integer slots refuse every alias; invalid JSON 01 refuses under the CV-1100 current parser. Retained-recipe dispatch composes the shared SP-1101 RetainedDispatcher and timestamps use the shared CV-1101 check, as the retained-original and format paragraphs state. Test Storage write/retry inputs at 2^53, 2^60 and uint64 maximum, and refuse overflow, negative and wrong-type metadata independently.
+
+
+  Retained and compatibility originals use the schema, numeric domain, runtime type policy, format validator and physical encoder in force when written. The single selector record_number_rule() owns this dispatch on passive history, SP-337 materialization/reference verification, full-index source/checkpoint validation, checkpoint physical storage, saved-original retry comparison and terminal retained-start lookup. New/current inputs select strict-v4. For retained sources, independently read protected Storage write-receipt provenance binds actual storage_instance_id, exact original source-value SHA-256 and recipe_id; it is committed with the original write and survives restore with that source. Candidate fields, caller version/recipe flags, mutable live state and payload content cannot select or enroll an earlier recipe. Verify any claim against that independently authenticated provenance, then verify the exact original bytes with the selected recipe. Missing earlier provenance is unavailable under that earlier recipe, never a guessed downgrade: an original of a Store outside the sealed write custody refuses as unavailable and a receipt naming a recipe with no installed frozen verifier refuses as unsupported, with no fallback to another recipe; within a custody Store an original without a legacy receipt was written by the current strict-v4 writer. Each retained read composes the shared SP-1101 RetainedDispatcher once: one owner selection, no caller override and no current-then-legacy probing, and the installed frozen verifier of that exact recipe tuple (pinned to the recipe''s recorded original schema hashes) checks the original. Preserve raw-v1 (d36809af original MessagePack numeric types), normalized-v2 (a785466d normalized integral floats with the original uncapped integer domain), and strict-v3 (c21fa62e safe integers; its original checker skipped date-time and URI formats); Plans/dch_retained_recipes.json pins their exact original schemas and source revisions. A skipped format check never authenticates invalid history (CV-1101, SP-1101): frozen validators apply the shared date-time predicate and CV-253 to the recipe''s pinned original resources, so a retained timestamp CV-1101 refuses is owner-invalid and refuses, while owner-valid lowercase, leap-second and long-fraction history stays readable with its exact spelling; the skipped URI check is preserved. Never re-encode raw-v1 bytes under a later normalization to verify their commitment. Plans/dch_write_recipe_receipts.json is an independent synthetic Storage receipt adapter, not native authentication evidence. Every earlier-valid retained numeric or format record stays readable with current authorization, deletion/hold access, withdrawal and actual-source identity checks. A forged source or recipe selection still refuses. Current derived checkpoints may copy an old event sequence into their exact new integer representation; the original retained event/index sequence and commitment remain unchanged. A retry verifies its saved original through the same historical schema/byte/custody reader before comparison; its incoming input stays strict-v4, and a replay-only compatibility original still cannot authorize a current append or retry. Different earlier semantic values conflict without sending an out-of-current-domain original through the current RFC 8785 encoder. A retained checkpoint, including its history and physical payload pack, uses its own original write provenance separately from its referenced event.
+
+
+  The strict-v4 format validators are mandatory and installed explicitly, never through optional jsonschema plugins. Timestamps adopt the shared CV-1101 check: every current and frozen DCH validator is pm_event_datetime.datetime_validator over the complete outer schema, so the registered RFC 3339 predicate runs through the validator. occurred_at_utc keeps the EventRecord profile (T or t, Z/z or a signed offset, any fraction length, year 0000 and legitimate offset-adjusted leap seconds); observed_at_utc and persisted_at_utc keep CV-253''s storage_utc_z profile through the inventory-classified envelope; the family ts and populated checkpoint retired_at_utc take the same predicate with their unchanged owner-schema terminal uppercase-Z pattern. A missing zone, space or wrong separator, invalid calendar field, hour 24, minute 60, false leap second, empty fraction and trailing LF refuse. Timestamp strings are never rewritten and are compared only as exact strings; no DCH-local timestamp grammar remains. PR URLs where declared fully match RFC 3986 HTTPS syntax, including valid percent escapes, reg-name or bracketed IPv6/IPvFuture host, numeric port and path/query/fragment grammar. Malformed brackets/hosts/escapes and whitespace refuse. No PR-host allowlist or new provider behavior is introduced. UUID contexts keep Storage''s enforced descriptor. Both payload editions, all three EventRecord timestamps and populated checkpoint retirement times have isolated format negatives; applicable PR payloads cover every malformed URL form.'
+gui_related: false
+gui_classification_reason: Owns event data and persistence contract.
+depends_on:
+- ACD-619
+- CV-639
+- SP-278
+- SP-286
+- SP-337
+unblocks: []
+acceptance_criteria:
+- Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership remains
+  absent.
+- Review-round-2 acceptance rejects the independently mutated forbidden policy, body, retry, source and outcome
+  cases applicable to this exact family; native evidence remains NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm_dch_events.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: event_authority_dch
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- DL-045; WAVE2 DCH 2026-11-04
+preserved_exact_tokens:
+- chat.thread_worktree_merged
+- PENDING_RETENTION_DECISION
+- SP-278
+- SP-286
+negative_constraints:
+- No event admission or native execution proof; no retention choice.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+
+### SP-620 — chat.thread_worktree_pr_created
+
+Newly authored persistence/read contract for `chat.thread_worktree_pr_created` 1.0.0 under DL-045, adopting ACD-620 and CV-640. Exact operating consumer `reader.chat.chat_thread_worktree_pr_created@1.0.0` serves PR panel and worktree audit. Reuse exact projector `projector.storage.event_record_index@1.0.0` and checkpoint `event_record_index_checkpoint.v1:{storage_instance_id}`, schema `Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint`, version 1.0.0. Explicitly adopt SP-278 including DL-076 nine-field durable read token and current full-index generation/frontier validation; no persisted redb_snapshot_id. This consumer is an on-demand, exact-event filtered read of the generic index, not an independently advancing persistent filtered projection. SP-278 performs predecessor-frontier CAS with index rows atomically, complete captured coverage, source selection and current publication validation. Each read uses the actual live transaction token, full scope and canonical source/payload joins and current permissions; a stale, unsupported or unavailable token cannot publish a result. The generic checkpoint retains RP-PROJECTION-3GEN@1.0.0, without extending the source event lifetime. No new stored family/key/value is created by this reader, so no storage registry row is invented. Existing render pages, Tantivy and worktree binding projections remain their owner-defined stores and must be rebuilt under their own current checkpoints, not by adopting this audit reader as a new mutation path. Replay of this event through `reader.chat.chat_thread_worktree_pr_created@1.0.0` returns original outcome evidence only: no git, API, test, send, chip creation, thread creation, notification, billing or deletion side effect. retention_policy_ref = PENDING_RETENTION_DECISION. Candidates: Case L-3 Chat content (thread lifetime, 250,000/thread) versus audit authority (indefinite, no count eviction); classification belongs to RT/Jared. No expiry/count deletion is authorized by this draft. Original source intent, canonical outcome/body and first receipt remain with Assistant Chat Create PR API success handler, under SP-286/CV-339; coherent backup/restore includes those dependencies and deletion records before any visible read. Missing originals are unavailable, never recaptured. Stored excerpts, command strings, errors, branch/path/PR text must be scrubbed before append; no credentials, inline message body or raw tool output. Every referenced body requires current authorization, deletion/hold checks and exact source Computer/root; retained audit metadata grants no access. This event adds no hold or purge exemption. Withdrawal cuts off this exact family before new operations; fence `reader.chat.chat_thread_worktree_pr_created@1.0.0` and any affected domain projection, retain supported original-version historical lookup under current permissions, then rebuild a separately versioned successor from retained canonical sources and a fresh SP-278 token before publication. Never reset a cursor to zero as current, remint events, or delete seglog as withdrawal. No admission or native execution proof is implied.
+
+
+
+**chat.thread_worktree_pr_created domain projection binding (newly authored owner contract).** Exact domain projector `projector.chat.chat_thread_worktree_pr_created@1.0.0` 1.0.0 and operating consumer `reader.chat.chat_thread_worktree_pr_created@1.0.0` explicitly adopt SP-278 and the same verified full-index source path. The family's separate checkpoint is `projector.checkpoint.dch.chat_thread_worktree_pr_created.v1:{storage_instance_id}:{scope_partition}`, stored family `dch_chat_thread_worktree_pr_created_checkpoint`, closed schema `Plans/dch_event_payloads/dch_chat_thread_worktree_pr_created_checkpoint.schema.json#`, schema_id `pm.storage_value.dch_chat_thread_worktree_pr_created_checkpoint.v1` 1.0.0. The nine-field durable token is copied exactly from SP-278/DL-076 without redb_snapshot_id. Consumer/projector versions are the suffixes in their stored constant IDs; no version is inferred from the payload. `last_sequence_id` and `last_event_id` identify the last applied exact-family EventRecord; `source_token` identifies complete inspected source coverage including nonmatching events. Publication identity is fresh entropy for a new shadow generation and frozen on retries; revision increments exactly once on successful CAS. The key joins storage_instance_id and scope_partition exactly. Application partition app is also bound to its source token's Server/instance and the event's Computer/thread, never to every null Project. The projector processes this family's records in verified source sequence order and performs only the transition of ACD-620. For `chat.message`, resolve and authorize its canonical typed message and build SP-338 pages and Tantivy fields once keyed by (thread_id,message_id); never reopen a deleted/superseded message. For thread lifecycle, take current lifecycle from the canonical revision and tombstone rather than treating an old historical event as current. Worktree fields update only the existing owner-defined binding/reverse/worktree projections, with old/new identity checks; no git effect is replayed. Selection events attach only existing authorized outcome/provenance refs to audit/pending-chip status; never create a chip or repeat a send during replay. Failure events retain actual original error evidence and cannot imply a successful outcome.
+
+For this exact family, publish projection mutation and checkpoint revision together in one redb transaction with predecessor revision/publication_id CAS. Where the target is Tantivy or the SP-338 page payload store, first durably stage and read back an immutable shadow commit, put its exact reference in projection_refs, then CAS-publish the pointer and checkpoint together. Readers serve only targets named by the current checkpoint's refs and same publication_id; old/partial targets never become visible by newest-file inference. Existing canonical thread/worktree state is not rewritten by a derived rebuild. Rebuild any shared target from all its admitted family sources in global source order into one shadow, never by replaying a whole bound family after an unbound family. A required unadmitted counterpart fences that target, not an inferred admission. Re-read canonical state/tombstones and current grants before publication. On source-generation change or failed CAS, discard unpublished target or retry from the unchanged verified prefix; never reuse a stale token. Missing or malformed derived bytes enter Q-DERIVED and governed rebuild, not source repair. Source loss requires canonical backup recovery.
+
+The checkpoint is MessagePack canonical, max 16 KiB under SP-340; oversized values use existing SP-337 reference storage, never an exemption. The closed history array stores at most two full prior checkpoint generations with first retired_at_utc and state retired; current fields name the selected generation. Reserve staged slots through the existing maintenance intent before source staging; a staged candidate counts against three even before it is visible in history. Retain at most three publication generations per exact key under RP-PROJECTION-3GEN@1.0.0; retirement starts at first committed replacement, retries do not reset it, 604800 seconds for eligible retired generations only, with holds/current/staged/live-ref protection. Reserve the slot first or disclose rebuild unavailability. Source events keep PENDING_RETENTION_DECISION; the checkpoint gives no source keepalive. Backup restores canonical source/custody/tombstones first; derived target/checkpoint is rebuilt and validated against the current full-index token before read. Withdrawal fences this projector and its domain readers in addition to the passive reader, sets checkpoint state withdrawn by CAS, and refuses all ordinary advances. Retained historical lookup uses original schema and current access checks; successor publication requires a separately versioned, complete shadow rebuild. Unsupported versions are unavailable, never rewritten in place.
+
+Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236 canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes, not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref, with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`. The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack. Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance, Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack bytes and index entry and verified readback before the referencing append can be acknowledged or its first receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed. Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants no new retention exemption.
+
+Checkpoint acceptance compares original source facts independently of the candidate: the outer storage_instance_id, durable-token storage_instance_id, source_selection storage_instance_id and actual source/root instance must be identical. Resolve the token checkpoint_key in the actual full-index root, its uniquely current generation JSON Pointer checkpoint_ref and exact same-instance event_record_index.v2@generation dataset. Require exact generation anchor, current frontier revision/digest and all source_selection fields against current synchronized source, including nonmatching same-generation appends; a shape-valid stale token cannot publish. The domain checkpoint key binds this instance and exact scope_partition. last_event_id/last_sequence_id join the actual exact-family EventRecord and its full-index row and source-value commitment; actual source Computer/thread/scope also join the published projection. Publication_id, revision, projection_refs and the full durable source token match the actual staged/read-back publication selected by the atomic checkpoint/pointer CAS. Independent source, token, selection, key/ref, event, dataset, publication and current-frontier mismatches refuse publication. Static fixture adapters model these joins; they do not prove native full-index coverage, redb transactions, CRC, source locks or durability.
+
+For chat.thread_worktree_pr_created, the complete encoded checkpoint includes every retained history entry and projection reference. Measure that entire SP-236 value at the 16384-byte SP-340 boundary: 16384 bytes may be inline, 16385 bytes may not. A larger logical checkpoint keeps the same closed schema and bounds and uses SP-337; measure the stored reference/pointer too. Resolve the exact complete bytes through their BLAKE3/size/media-type reference and same-instance, exact-key/scope/family payload-pack index, with current authorization/deletion/hold access, durable bytes/index and verified readback before checkpoint publication. Externalizing the event body does not externalize this checkpoint. Every Storage-assigned identity and metadata field is checked against the original Storage record for the actual instance; no fixture/default instance supplies authority. Checkpoint source lookup resolves inline or referenced originals, validates the supported original envelope and Project/application payload edition, verifies their exact original source commitment and current access/withdrawal status, and then joins their source facts. Retained compatibility-reader originals, including projector_replay_only, remain readable after later live-state changes; only a new append/retry uses the current-writer policy. Unsupported, withdrawn, forged or foreign originals cannot publish. Newly written integer and boolean slots require their exact types before comparison or arithmetic; string numbers/booleans, null, arrays and nested objects confer no numeric or access authority. Current physical commitment/reference encoding canonicalizes integral numeric aliases and signed zero to the same shortest integer bytes; retained bytes retain their protected original recipe below. These are refinements of this family's existing SP-236/SP-278/SP-337/SP-340 contract, not a new retention or product decision.
+
+Before any source resolution or identity hashing, validate every Storage-instance context against Storage's own UUID descriptor in Plans/event_record_index_checkpoint.schema.json, including exact primitive type and UUID format. Empty, malformed, overlong, newline-suffixed and non-string instances refuse even when dependent IDs, keys and source commitments agree. Compare candidate, token, source-selection, payload-pack and index context against the independently read actual Storage record; a caller context, default instance or coherent forged context supplies no authority. Verify Storage-assigned sequence and timestamp fields against that exact original record commitment before reading. A retained original remains governed by its supported edition and current custody, not later lifecycle state.
+
+For new writes and current identity/idempotency inputs, this family selects strict-v4 exact integer types with the owner-declared domain of each field. Storage sequence_id and its last_sequence_id copies, frontier_revision, selected_segment_generation, manifest_generation, recovery_epoch and pack byte_size retain exact uint64 values 0 through 18446744073709551615; no 2^53 ceiling applies to Storage metadata. Publication revision and logical payload integers retain their existing owner minima and maxima, with no invented DCH safe-integer cap. Declared integer slots reject runtime float/string/bool/null/array/object substitutes except explicitly nullable slots. Storage metadata is excluded from the producer-semantic projection as already specified. The producer route is the CV-1100 qualified RFC 8785 encoding of the unchanged CV-317 producer projection (shared producer_semantic_bytes/producer_semantic_digest); an unsupported exact producer input is a structured route refusal, without narrowing its logical owner domain, rounding or stringification. Physical bytes follow SP-236 through the shared SP-1100 codec (storage_value_bytes, EVENT_VALUE profile): float type, minimal exact float width and signed zero are preserved, so a lexical alias never shares an integer's bytes, and the exact integer slots refuse every alias; invalid JSON 01 refuses under the CV-1100 current parser. Retained-recipe dispatch composes the shared SP-1101 RetainedDispatcher and timestamps use the shared CV-1101 check, as the retained-original and format paragraphs state. Test Storage write/retry inputs at 2^53, 2^60 and uint64 maximum, and refuse overflow, negative and wrong-type metadata independently.
+
+Retained and compatibility originals use the schema, numeric domain, runtime type policy, format validator and physical encoder in force when written. The single selector record_number_rule() owns this dispatch on passive history, SP-337 materialization/reference verification, full-index source/checkpoint validation, checkpoint physical storage, saved-original retry comparison and terminal retained-start lookup. New/current inputs select strict-v4. For retained sources, independently read protected Storage write-receipt provenance binds actual storage_instance_id, exact original source-value SHA-256 and recipe_id; it is committed with the original write and survives restore with that source. Candidate fields, caller version/recipe flags, mutable live state and payload content cannot select or enroll an earlier recipe. Verify any claim against that independently authenticated provenance, then verify the exact original bytes with the selected recipe. Missing earlier provenance is unavailable under that earlier recipe, never a guessed downgrade: an original of a Store outside the sealed write custody refuses as unavailable and a receipt naming a recipe with no installed frozen verifier refuses as unsupported, with no fallback to another recipe; within a custody Store an original without a legacy receipt was written by the current strict-v4 writer. Each retained read composes the shared SP-1101 RetainedDispatcher once: one owner selection, no caller override and no current-then-legacy probing, and the installed frozen verifier of that exact recipe tuple (pinned to the recipe's recorded original schema hashes) checks the original. Preserve raw-v1 (d36809af original MessagePack numeric types), normalized-v2 (a785466d normalized integral floats with the original uncapped integer domain), and strict-v3 (c21fa62e safe integers; its original checker skipped date-time and URI formats); Plans/dch_retained_recipes.json pins their exact original schemas and source revisions. A skipped format check never authenticates invalid history (CV-1101, SP-1101): frozen validators apply the shared date-time predicate and CV-253 to the recipe's pinned original resources, so a retained timestamp CV-1101 refuses is owner-invalid and refuses, while owner-valid lowercase, leap-second and long-fraction history stays readable with its exact spelling; the skipped URI check is preserved. Never re-encode raw-v1 bytes under a later normalization to verify their commitment. Plans/dch_write_recipe_receipts.json is an independent synthetic Storage receipt adapter, not native authentication evidence. Every earlier-valid retained numeric or format record stays readable with current authorization, deletion/hold access, withdrawal and actual-source identity checks. A forged source or recipe selection still refuses. Current derived checkpoints may copy an old event sequence into their exact new integer representation; the original retained event/index sequence and commitment remain unchanged. A retry verifies its saved original through the same historical schema/byte/custody reader before comparison; its incoming input stays strict-v4, and a replay-only compatibility original still cannot authorize a current append or retry. Different earlier semantic values conflict without sending an out-of-current-domain original through the current RFC 8785 encoder. A retained checkpoint, including its history and physical payload pack, uses its own original write provenance separately from its referenced event.
+
+The strict-v4 format validators are mandatory and installed explicitly, never through optional jsonschema plugins. Timestamps adopt the shared CV-1101 check: every current and frozen DCH validator is pm_event_datetime.datetime_validator over the complete outer schema, so the registered RFC 3339 predicate runs through the validator. occurred_at_utc keeps the EventRecord profile (T or t, Z/z or a signed offset, any fraction length, year 0000 and legitimate offset-adjusted leap seconds); observed_at_utc and persisted_at_utc keep CV-253's storage_utc_z profile through the inventory-classified envelope; the family ts and populated checkpoint retired_at_utc take the same predicate with their unchanged owner-schema terminal uppercase-Z pattern. A missing zone, space or wrong separator, invalid calendar field, hour 24, minute 60, false leap second, empty fraction and trailing LF refuse. Timestamp strings are never rewritten and are compared only as exact strings; no DCH-local timestamp grammar remains. PR URLs where declared fully match RFC 3986 HTTPS syntax, including valid percent escapes, reg-name or bracketed IPv6/IPvFuture host, numeric port and path/query/fragment grammar. Malformed brackets/hosts/escapes and whitespace refuse. No PR-host allowlist or new provider behavior is introduced. UUID contexts keep Storage's enforced descriptor. Both payload editions, all three EventRecord timestamps and populated checkpoint retirement times have isolated format negatives; applicable PR payloads cover every malformed URL form.
+
+```yaml
+plan_unit_id: SP-620
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: '### SP-620 — chat.thread_worktree_pr_created
+
+
+  Newly authored persistence/read contract for `chat.thread_worktree_pr_created` 1.0.0 under DL-045, adopting
+  ACD-620 and CV-640. Exact operating consumer `reader.chat.chat_thread_worktree_pr_created@1.0.0` serves PR
+  panel and worktree audit. Reuse exact projector `projector.storage.event_record_index@1.0.0` and checkpoint
+  `event_record_index_checkpoint.v1:{storage_instance_id}`, schema `Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint`,
+  version 1.0.0. Explicitly adopt SP-278 including DL-076 nine-field durable read token and current full-index
+  generation/frontier validation; no persisted redb_snapshot_id. This consumer is an on-demand, exact-event
+  filtered read of the generic index, not an independently advancing persistent filtered projection. SP-278
+  performs predecessor-frontier CAS with index rows atomically, complete captured coverage, source selection
+  and current publication validation. Each read uses the actual live transaction token, full scope and canonical
+  source/payload joins and current permissions; a stale, unsupported or unavailable token cannot publish a
+  result. The generic checkpoint retains RP-PROJECTION-3GEN@1.0.0, without extending the source event lifetime.
+  No new stored family/key/value is created by this reader, so no storage registry row is invented. Existing
+  render pages, Tantivy and worktree binding projections remain their owner-defined stores and must be rebuilt
+  under their own current checkpoints, not by adopting this audit reader as a new mutation path. Replay of
+  this event through `reader.chat.chat_thread_worktree_pr_created@1.0.0` returns original outcome evidence
+  only: no git, API, test, send, chip creation, thread creation, notification, billing or deletion side effect.
+  retention_policy_ref = PENDING_RETENTION_DECISION. Candidates: Case L-3 Chat content (thread lifetime, 250,000/thread)
+  versus audit authority (indefinite, no count eviction); classification belongs to RT/Jared. No expiry/count
+  deletion is authorized by this draft. Original source intent, canonical outcome/body and first receipt remain
+  with Assistant Chat Create PR API success handler, under SP-286/CV-339; coherent backup/restore includes
+  those dependencies and deletion records before any visible read. Missing originals are unavailable, never
+  recaptured. Stored excerpts, command strings, errors, branch/path/PR text must be scrubbed before append;
+  no credentials, inline message body or raw tool output. Every referenced body requires current authorization,
+  deletion/hold checks and exact source Computer/root; retained audit metadata grants no access. This event
+  adds no hold or purge exemption. Withdrawal cuts off this exact family before new operations; fence `reader.chat.chat_thread_worktree_pr_created@1.0.0`
+  and any affected domain projection, retain supported original-version historical lookup under current permissions,
+  then rebuild a separately versioned successor from retained canonical sources and a fresh SP-278 token before
+  publication. Never reset a cursor to zero as current, remint events, or delete seglog as withdrawal. No admission
+  or native execution proof is implied.
+
+
+
+
+  **chat.thread_worktree_pr_created domain projection binding (newly authored owner contract).** Exact domain
+  projector `projector.chat.chat_thread_worktree_pr_created@1.0.0` 1.0.0 and operating consumer `reader.chat.chat_thread_worktree_pr_created@1.0.0`
+  explicitly adopt SP-278 and the same verified full-index source path. The family''s separate checkpoint is
+  `projector.checkpoint.dch.chat_thread_worktree_pr_created.v1:{storage_instance_id}:{scope_partition}`, stored
+  family `dch_chat_thread_worktree_pr_created_checkpoint`, closed schema `Plans/dch_event_payloads/dch_chat_thread_worktree_pr_created_checkpoint.schema.json#`,
+  schema_id `pm.storage_value.dch_chat_thread_worktree_pr_created_checkpoint.v1` 1.0.0. The nine-field durable
+  token is copied exactly from SP-278/DL-076 without redb_snapshot_id. Consumer/projector versions are the
+  suffixes in their stored constant IDs; no version is inferred from the payload. `last_sequence_id` and `last_event_id`
+  identify the last applied exact-family EventRecord; `source_token` identifies complete inspected source coverage
+  including nonmatching events. Publication identity is fresh entropy for a new shadow generation and frozen
+  on retries; revision increments exactly once on successful CAS. The key joins storage_instance_id and scope_partition
+  exactly. Application partition app is also bound to its source token''s Server/instance and the event''s
+  Computer/thread, never to every null Project. The projector processes this family''s records in verified
+  source sequence order and performs only the transition of ACD-620. For `chat.message`, resolve and authorize
+  its canonical typed message and build SP-338 pages and Tantivy fields once keyed by (thread_id,message_id);
+  never reopen a deleted/superseded message. For thread lifecycle, take current lifecycle from the canonical
+  revision and tombstone rather than treating an old historical event as current. Worktree fields update only
+  the existing owner-defined binding/reverse/worktree projections, with old/new identity checks; no git effect
+  is replayed. Selection events attach only existing authorized outcome/provenance refs to audit/pending-chip
+  status; never create a chip or repeat a send during replay. Failure events retain actual original error evidence
+  and cannot imply a successful outcome.
+
+
+  For this exact family, publish projection mutation and checkpoint revision together in one redb transaction
+  with predecessor revision/publication_id CAS. Where the target is Tantivy or the SP-338 page payload store,
+  first durably stage and read back an immutable shadow commit, put its exact reference in projection_refs,
+  then CAS-publish the pointer and checkpoint together. Readers serve only targets named by the current checkpoint''s
+  refs and same publication_id; old/partial targets never become visible by newest-file inference. Existing
+  canonical thread/worktree state is not rewritten by a derived rebuild. Rebuild any shared target from all
+  its admitted family sources in global source order into one shadow, never by replaying a whole bound family
+  after an unbound family. A required unadmitted counterpart fences that target, not an inferred admission.
+  Re-read canonical state/tombstones and current grants before publication. On source-generation change or
+  failed CAS, discard unpublished target or retry from the unchanged verified prefix; never reuse a stale token.
+  Missing or malformed derived bytes enter Q-DERIVED and governed rebuild, not source repair. Source loss requires
+  canonical backup recovery.
+
+
+  The checkpoint is MessagePack canonical, max 16 KiB under SP-340; oversized values use existing SP-337 reference
+  storage, never an exemption. The closed history array stores at most two full prior checkpoint generations
+  with first retired_at_utc and state retired; current fields name the selected generation. Reserve staged
+  slots through the existing maintenance intent before source staging; a staged candidate counts against three
+  even before it is visible in history. Retain at most three publication generations per exact key under RP-PROJECTION-3GEN@1.0.0;
+  retirement starts at first committed replacement, retries do not reset it, 604800 seconds for eligible retired
+  generations only, with holds/current/staged/live-ref protection. Reserve the slot first or disclose rebuild
+  unavailability. Source events keep PENDING_RETENTION_DECISION; the checkpoint gives no source keepalive.
+  Backup restores canonical source/custody/tombstones first; derived target/checkpoint is rebuilt and validated
+  against the current full-index token before read. Withdrawal fences this projector and its domain readers
+  in addition to the passive reader, sets checkpoint state withdrawn by CAS, and refuses all ordinary advances.
+  Retained historical lookup uses original schema and current access checks; successor publication requires
+  a separately versioned, complete shadow rebuild. Unsupported versions are unavailable, never rewritten in
+  place.
+
+
+  Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application
+  payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236
+  canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes,
+  not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized
+  inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored
+  string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref,
+  with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`.
+  The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack.
+  Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time
+  join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance,
+  Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack
+  bytes and index entry and verified readback before the referencing append can be acknowledged or its first
+  receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence
+  refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed.
+  Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants
+  no new retention exemption.
+
+
+  Checkpoint acceptance compares original source facts independently of the candidate: the outer storage_instance_id,
+  durable-token storage_instance_id, source_selection storage_instance_id and actual source/root instance must
+  be identical. Resolve the token checkpoint_key in the actual full-index root, its uniquely current generation
+  JSON Pointer checkpoint_ref and exact same-instance event_record_index.v2@generation dataset. Require exact
+  generation anchor, current frontier revision/digest and all source_selection fields against current synchronized
+  source, including nonmatching same-generation appends; a shape-valid stale token cannot publish. The domain
+  checkpoint key binds this instance and exact scope_partition. last_event_id/last_sequence_id join the actual
+  exact-family EventRecord and its full-index row and source-value commitment; actual source Computer/thread/scope
+  also join the published projection. Publication_id, revision, projection_refs and the full durable source
+  token match the actual staged/read-back publication selected by the atomic checkpoint/pointer CAS. Independent
+  source, token, selection, key/ref, event, dataset, publication and current-frontier mismatches refuse publication.
+  Static fixture adapters model these joins; they do not prove native full-index coverage, redb transactions,
+  CRC, source locks or durability.
+
+
+  For chat.thread_worktree_pr_created, the complete encoded checkpoint includes every retained history
+  entry and projection reference. Measure that entire SP-236 value at the 16384-byte SP-340 boundary:
+  16384 bytes may be inline, 16385 bytes may not. A larger logical checkpoint keeps the same closed schema
+  and bounds and uses SP-337; measure the stored reference/pointer too. Resolve the exact complete bytes
+  through their BLAKE3/size/media-type reference and same-instance, exact-key/scope/family payload-pack
+  index, with current authorization/deletion/hold access, durable bytes/index and verified readback before
+  checkpoint publication. Externalizing the event body does not externalize this checkpoint. Every Storage-assigned
+  identity and metadata field is checked against the original Storage record for the actual instance;
+  no fixture/default instance supplies authority. Checkpoint source lookup resolves inline or referenced
+  originals, validates the supported original envelope and Project/application payload edition, verifies
+  their exact original source commitment and current access/withdrawal status, and then joins their source
+  facts. Retained compatibility-reader originals, including projector_replay_only, remain readable after
+  later live-state changes; only a new append/retry uses the current-writer policy. Unsupported, withdrawn,
+  forged or foreign originals cannot publish. Newly written integer and boolean slots require their exact types before comparison or arithmetic; string numbers/booleans, null, arrays and nested objects confer no
+  numeric or access authority. Current physical commitment/reference encoding canonicalizes integral numeric aliases and signed zero to the same shortest integer bytes; retained bytes retain their protected original recipe below. These are refinements of this family''s existing SP-236/SP-278/SP-337/SP-340 contract, not
+  a new retention or product decision.
+
+
+  Before any source resolution or identity hashing, validate every Storage-instance context against Storage''s own UUID descriptor in Plans/event_record_index_checkpoint.schema.json, including exact primitive type and UUID format. Empty, malformed, overlong, newline-suffixed and non-string instances refuse even when dependent IDs, keys and source commitments agree. Compare candidate, token, source-selection, payload-pack and index context against the independently read actual Storage record; a caller context, default instance or coherent forged context supplies no authority. Verify Storage-assigned sequence and timestamp fields against that exact original record commitment before reading. A retained original remains governed by its supported edition and current custody, not later lifecycle state.
+
+
+  For new writes and current identity/idempotency inputs, this family selects strict-v4 exact integer types with the owner-declared domain of each field. Storage sequence_id and its last_sequence_id copies, frontier_revision, selected_segment_generation, manifest_generation, recovery_epoch and pack byte_size retain exact uint64 values 0 through 18446744073709551615; no 2^53 ceiling applies to Storage metadata. Publication revision and logical payload integers retain their existing owner minima and maxima, with no invented DCH safe-integer cap. Declared integer slots reject runtime float/string/bool/null/array/object substitutes except explicitly nullable slots. Storage metadata is excluded from the producer-semantic projection as already specified. The producer route is the CV-1100 qualified RFC 8785 encoding of the unchanged CV-317 producer projection (shared producer_semantic_bytes/producer_semantic_digest); an unsupported exact producer input is a structured route refusal, without narrowing its logical owner domain, rounding or stringification. Physical bytes follow SP-236 through the shared SP-1100 codec (storage_value_bytes, EVENT_VALUE profile): float type, minimal exact float width and signed zero are preserved, so a lexical alias never shares an integer''s bytes, and the exact integer slots refuse every alias; invalid JSON 01 refuses under the CV-1100 current parser. Retained-recipe dispatch composes the shared SP-1101 RetainedDispatcher and timestamps use the shared CV-1101 check, as the retained-original and format paragraphs state. Test Storage write/retry inputs at 2^53, 2^60 and uint64 maximum, and refuse overflow, negative and wrong-type metadata independently.
+
+
+  Retained and compatibility originals use the schema, numeric domain, runtime type policy, format validator and physical encoder in force when written. The single selector record_number_rule() owns this dispatch on passive history, SP-337 materialization/reference verification, full-index source/checkpoint validation, checkpoint physical storage, saved-original retry comparison and terminal retained-start lookup. New/current inputs select strict-v4. For retained sources, independently read protected Storage write-receipt provenance binds actual storage_instance_id, exact original source-value SHA-256 and recipe_id; it is committed with the original write and survives restore with that source. Candidate fields, caller version/recipe flags, mutable live state and payload content cannot select or enroll an earlier recipe. Verify any claim against that independently authenticated provenance, then verify the exact original bytes with the selected recipe. Missing earlier provenance is unavailable under that earlier recipe, never a guessed downgrade: an original of a Store outside the sealed write custody refuses as unavailable and a receipt naming a recipe with no installed frozen verifier refuses as unsupported, with no fallback to another recipe; within a custody Store an original without a legacy receipt was written by the current strict-v4 writer. Each retained read composes the shared SP-1101 RetainedDispatcher once: one owner selection, no caller override and no current-then-legacy probing, and the installed frozen verifier of that exact recipe tuple (pinned to the recipe''s recorded original schema hashes) checks the original. Preserve raw-v1 (d36809af original MessagePack numeric types), normalized-v2 (a785466d normalized integral floats with the original uncapped integer domain), and strict-v3 (c21fa62e safe integers; its original checker skipped date-time and URI formats); Plans/dch_retained_recipes.json pins their exact original schemas and source revisions. A skipped format check never authenticates invalid history (CV-1101, SP-1101): frozen validators apply the shared date-time predicate and CV-253 to the recipe''s pinned original resources, so a retained timestamp CV-1101 refuses is owner-invalid and refuses, while owner-valid lowercase, leap-second and long-fraction history stays readable with its exact spelling; the skipped URI check is preserved. Never re-encode raw-v1 bytes under a later normalization to verify their commitment. Plans/dch_write_recipe_receipts.json is an independent synthetic Storage receipt adapter, not native authentication evidence. Every earlier-valid retained numeric or format record stays readable with current authorization, deletion/hold access, withdrawal and actual-source identity checks. A forged source or recipe selection still refuses. Current derived checkpoints may copy an old event sequence into their exact new integer representation; the original retained event/index sequence and commitment remain unchanged. A retry verifies its saved original through the same historical schema/byte/custody reader before comparison; its incoming input stays strict-v4, and a replay-only compatibility original still cannot authorize a current append or retry. Different earlier semantic values conflict without sending an out-of-current-domain original through the current RFC 8785 encoder. A retained checkpoint, including its history and physical payload pack, uses its own original write provenance separately from its referenced event.
+
+
+  The strict-v4 format validators are mandatory and installed explicitly, never through optional jsonschema plugins. Timestamps adopt the shared CV-1101 check: every current and frozen DCH validator is pm_event_datetime.datetime_validator over the complete outer schema, so the registered RFC 3339 predicate runs through the validator. occurred_at_utc keeps the EventRecord profile (T or t, Z/z or a signed offset, any fraction length, year 0000 and legitimate offset-adjusted leap seconds); observed_at_utc and persisted_at_utc keep CV-253''s storage_utc_z profile through the inventory-classified envelope; the family ts and populated checkpoint retired_at_utc take the same predicate with their unchanged owner-schema terminal uppercase-Z pattern. A missing zone, space or wrong separator, invalid calendar field, hour 24, minute 60, false leap second, empty fraction and trailing LF refuse. Timestamp strings are never rewritten and are compared only as exact strings; no DCH-local timestamp grammar remains. PR URLs where declared fully match RFC 3986 HTTPS syntax, including valid percent escapes, reg-name or bracketed IPv6/IPvFuture host, numeric port and path/query/fragment grammar. Malformed brackets/hosts/escapes and whitespace refuse. No PR-host allowlist or new provider behavior is introduced. UUID contexts keep Storage''s enforced descriptor. Both payload editions, all three EventRecord timestamps and populated checkpoint retirement times have isolated format negatives; applicable PR payloads cover every malformed URL form.'
+gui_related: false
+gui_classification_reason: Owns event data and persistence contract.
+depends_on:
+- ACD-620
+- CV-640
+- SP-278
+- SP-286
+- SP-337
+unblocks: []
+acceptance_criteria:
+- Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership remains
+  absent.
+- Review-round-2 acceptance rejects the independently mutated forbidden policy, body, retry, source and outcome
+  cases applicable to this exact family; native evidence remains NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm_dch_events.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: event_authority_dch
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- DL-045; WAVE2 DCH 2026-11-04
+preserved_exact_tokens:
+- chat.thread_worktree_pr_created
+- PENDING_RETENTION_DECISION
+- SP-278
+- SP-286
+negative_constraints:
+- No event admission or native execution proof; no retention choice.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+
+### SP-621 — chat.thread_worktree_pr_failed
+
+Newly authored persistence/read contract for `chat.thread_worktree_pr_failed` 1.0.0 under DL-045, adopting ACD-621 and CV-641. Exact operating consumer `reader.chat.chat_thread_worktree_pr_failed@1.0.0` serves PR failure toast and worktree audit. Reuse exact projector `projector.storage.event_record_index@1.0.0` and checkpoint `event_record_index_checkpoint.v1:{storage_instance_id}`, schema `Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint`, version 1.0.0. Explicitly adopt SP-278 including DL-076 nine-field durable read token and current full-index generation/frontier validation; no persisted redb_snapshot_id. This consumer is an on-demand, exact-event filtered read of the generic index, not an independently advancing persistent filtered projection. SP-278 performs predecessor-frontier CAS with index rows atomically, complete captured coverage, source selection and current publication validation. Each read uses the actual live transaction token, full scope and canonical source/payload joins and current permissions; a stale, unsupported or unavailable token cannot publish a result. The generic checkpoint retains RP-PROJECTION-3GEN@1.0.0, without extending the source event lifetime. No new stored family/key/value is created by this reader, so no storage registry row is invented. Existing render pages, Tantivy and worktree binding projections remain their owner-defined stores and must be rebuilt under their own current checkpoints, not by adopting this audit reader as a new mutation path. Replay of this event through `reader.chat.chat_thread_worktree_pr_failed@1.0.0` returns original outcome evidence only: no git, API, test, send, chip creation, thread creation, notification, billing or deletion side effect. retention_policy_ref = PENDING_RETENTION_DECISION. Candidates: Case L-3 Chat content (thread lifetime, 250,000/thread) versus audit authority (indefinite, no count eviction); classification belongs to RT/Jared. No expiry/count deletion is authorized by this draft. Original source intent, canonical outcome/body and first receipt remain with Assistant Chat Create PR failure handler, under SP-286/CV-339; coherent backup/restore includes those dependencies and deletion records before any visible read. Missing originals are unavailable, never recaptured. Stored excerpts, command strings, errors, branch/path/PR text must be scrubbed before append; no credentials, inline message body or raw tool output. Every referenced body requires current authorization, deletion/hold checks and exact source Computer/root; retained audit metadata grants no access. This event adds no hold or purge exemption. Withdrawal cuts off this exact family before new operations; fence `reader.chat.chat_thread_worktree_pr_failed@1.0.0` and any affected domain projection, retain supported original-version historical lookup under current permissions, then rebuild a separately versioned successor from retained canonical sources and a fresh SP-278 token before publication. Never reset a cursor to zero as current, remint events, or delete seglog as withdrawal. No admission or native execution proof is implied.
+
+
+
+**chat.thread_worktree_pr_failed domain projection binding (newly authored owner contract).** Exact domain projector `projector.chat.chat_thread_worktree_pr_failed@1.0.0` 1.0.0 and operating consumer `reader.chat.chat_thread_worktree_pr_failed@1.0.0` explicitly adopt SP-278 and the same verified full-index source path. The family's separate checkpoint is `projector.checkpoint.dch.chat_thread_worktree_pr_failed.v1:{storage_instance_id}:{scope_partition}`, stored family `dch_chat_thread_worktree_pr_failed_checkpoint`, closed schema `Plans/dch_event_payloads/dch_chat_thread_worktree_pr_failed_checkpoint.schema.json#`, schema_id `pm.storage_value.dch_chat_thread_worktree_pr_failed_checkpoint.v1` 1.0.0. The nine-field durable token is copied exactly from SP-278/DL-076 without redb_snapshot_id. Consumer/projector versions are the suffixes in their stored constant IDs; no version is inferred from the payload. `last_sequence_id` and `last_event_id` identify the last applied exact-family EventRecord; `source_token` identifies complete inspected source coverage including nonmatching events. Publication identity is fresh entropy for a new shadow generation and frozen on retries; revision increments exactly once on successful CAS. The key joins storage_instance_id and scope_partition exactly. Application partition app is also bound to its source token's Server/instance and the event's Computer/thread, never to every null Project. The projector processes this family's records in verified source sequence order and performs only the transition of ACD-621. For `chat.message`, resolve and authorize its canonical typed message and build SP-338 pages and Tantivy fields once keyed by (thread_id,message_id); never reopen a deleted/superseded message. For thread lifecycle, take current lifecycle from the canonical revision and tombstone rather than treating an old historical event as current. Worktree fields update only the existing owner-defined binding/reverse/worktree projections, with old/new identity checks; no git effect is replayed. Selection events attach only existing authorized outcome/provenance refs to audit/pending-chip status; never create a chip or repeat a send during replay. Failure events retain actual original error evidence and cannot imply a successful outcome.
+
+For this exact family, publish projection mutation and checkpoint revision together in one redb transaction with predecessor revision/publication_id CAS. Where the target is Tantivy or the SP-338 page payload store, first durably stage and read back an immutable shadow commit, put its exact reference in projection_refs, then CAS-publish the pointer and checkpoint together. Readers serve only targets named by the current checkpoint's refs and same publication_id; old/partial targets never become visible by newest-file inference. Existing canonical thread/worktree state is not rewritten by a derived rebuild. Rebuild any shared target from all its admitted family sources in global source order into one shadow, never by replaying a whole bound family after an unbound family. A required unadmitted counterpart fences that target, not an inferred admission. Re-read canonical state/tombstones and current grants before publication. On source-generation change or failed CAS, discard unpublished target or retry from the unchanged verified prefix; never reuse a stale token. Missing or malformed derived bytes enter Q-DERIVED and governed rebuild, not source repair. Source loss requires canonical backup recovery.
+
+The checkpoint is MessagePack canonical, max 16 KiB under SP-340; oversized values use existing SP-337 reference storage, never an exemption. The closed history array stores at most two full prior checkpoint generations with first retired_at_utc and state retired; current fields name the selected generation. Reserve staged slots through the existing maintenance intent before source staging; a staged candidate counts against three even before it is visible in history. Retain at most three publication generations per exact key under RP-PROJECTION-3GEN@1.0.0; retirement starts at first committed replacement, retries do not reset it, 604800 seconds for eligible retired generations only, with holds/current/staged/live-ref protection. Reserve the slot first or disclose rebuild unavailability. Source events keep PENDING_RETENTION_DECISION; the checkpoint gives no source keepalive. Backup restores canonical source/custody/tombstones first; derived target/checkpoint is rebuilt and validated against the current full-index token before read. Withdrawal fences this projector and its domain readers in addition to the passive reader, sets checkpoint state withdrawn by CAS, and refuses all ordinary advances. Retained historical lookup uses original schema and current access checks; successor publication requires a separately versioned, complete shadow rebuild. Unsupported versions are unavailable, never rewritten in place.
+
+Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236 canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes, not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref, with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`. The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack. Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance, Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack bytes and index entry and verified readback before the referencing append can be acknowledged or its first receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed. Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants no new retention exemption.
+
+Checkpoint acceptance compares original source facts independently of the candidate: the outer storage_instance_id, durable-token storage_instance_id, source_selection storage_instance_id and actual source/root instance must be identical. Resolve the token checkpoint_key in the actual full-index root, its uniquely current generation JSON Pointer checkpoint_ref and exact same-instance event_record_index.v2@generation dataset. Require exact generation anchor, current frontier revision/digest and all source_selection fields against current synchronized source, including nonmatching same-generation appends; a shape-valid stale token cannot publish. The domain checkpoint key binds this instance and exact scope_partition. last_event_id/last_sequence_id join the actual exact-family EventRecord and its full-index row and source-value commitment; actual source Computer/thread/scope also join the published projection. Publication_id, revision, projection_refs and the full durable source token match the actual staged/read-back publication selected by the atomic checkpoint/pointer CAS. Independent source, token, selection, key/ref, event, dataset, publication and current-frontier mismatches refuse publication. Static fixture adapters model these joins; they do not prove native full-index coverage, redb transactions, CRC, source locks or durability.
+
+For chat.thread_worktree_pr_failed, the complete encoded checkpoint includes every retained history entry and projection reference. Measure that entire SP-236 value at the 16384-byte SP-340 boundary: 16384 bytes may be inline, 16385 bytes may not. A larger logical checkpoint keeps the same closed schema and bounds and uses SP-337; measure the stored reference/pointer too. Resolve the exact complete bytes through their BLAKE3/size/media-type reference and same-instance, exact-key/scope/family payload-pack index, with current authorization/deletion/hold access, durable bytes/index and verified readback before checkpoint publication. Externalizing the event body does not externalize this checkpoint. Every Storage-assigned identity and metadata field is checked against the original Storage record for the actual instance; no fixture/default instance supplies authority. Checkpoint source lookup resolves inline or referenced originals, validates the supported original envelope and Project/application payload edition, verifies their exact original source commitment and current access/withdrawal status, and then joins their source facts. Retained compatibility-reader originals, including projector_replay_only, remain readable after later live-state changes; only a new append/retry uses the current-writer policy. Unsupported, withdrawn, forged or foreign originals cannot publish. Newly written integer and boolean slots require their exact types before comparison or arithmetic; string numbers/booleans, null, arrays and nested objects confer no numeric or access authority. Current physical commitment/reference encoding canonicalizes integral numeric aliases and signed zero to the same shortest integer bytes; retained bytes retain their protected original recipe below. These are refinements of this family's existing SP-236/SP-278/SP-337/SP-340 contract, not a new retention or product decision.
+
+Before any source resolution or identity hashing, validate every Storage-instance context against Storage's own UUID descriptor in Plans/event_record_index_checkpoint.schema.json, including exact primitive type and UUID format. Empty, malformed, overlong, newline-suffixed and non-string instances refuse even when dependent IDs, keys and source commitments agree. Compare candidate, token, source-selection, payload-pack and index context against the independently read actual Storage record; a caller context, default instance or coherent forged context supplies no authority. Verify Storage-assigned sequence and timestamp fields against that exact original record commitment before reading. A retained original remains governed by its supported edition and current custody, not later lifecycle state.
+
+For new writes and current identity/idempotency inputs, this family selects strict-v4 exact integer types with the owner-declared domain of each field. Storage sequence_id and its last_sequence_id copies, frontier_revision, selected_segment_generation, manifest_generation, recovery_epoch and pack byte_size retain exact uint64 values 0 through 18446744073709551615; no 2^53 ceiling applies to Storage metadata. Publication revision and logical payload integers retain their existing owner minima and maxima, with no invented DCH safe-integer cap. Declared integer slots reject runtime float/string/bool/null/array/object substitutes except explicitly nullable slots. Storage metadata is excluded from the producer-semantic projection as already specified. The producer route is the CV-1100 qualified RFC 8785 encoding of the unchanged CV-317 producer projection (shared producer_semantic_bytes/producer_semantic_digest); an unsupported exact producer input is a structured route refusal, without narrowing its logical owner domain, rounding or stringification. Physical bytes follow SP-236 through the shared SP-1100 codec (storage_value_bytes, EVENT_VALUE profile): float type, minimal exact float width and signed zero are preserved, so a lexical alias never shares an integer's bytes, and the exact integer slots refuse every alias; invalid JSON 01 refuses under the CV-1100 current parser. Retained-recipe dispatch composes the shared SP-1101 RetainedDispatcher and timestamps use the shared CV-1101 check, as the retained-original and format paragraphs state. Test Storage write/retry inputs at 2^53, 2^60 and uint64 maximum, and refuse overflow, negative and wrong-type metadata independently.
+
+Retained and compatibility originals use the schema, numeric domain, runtime type policy, format validator and physical encoder in force when written. The single selector record_number_rule() owns this dispatch on passive history, SP-337 materialization/reference verification, full-index source/checkpoint validation, checkpoint physical storage, saved-original retry comparison and terminal retained-start lookup. New/current inputs select strict-v4. For retained sources, independently read protected Storage write-receipt provenance binds actual storage_instance_id, exact original source-value SHA-256 and recipe_id; it is committed with the original write and survives restore with that source. Candidate fields, caller version/recipe flags, mutable live state and payload content cannot select or enroll an earlier recipe. Verify any claim against that independently authenticated provenance, then verify the exact original bytes with the selected recipe. Missing earlier provenance is unavailable under that earlier recipe, never a guessed downgrade: an original of a Store outside the sealed write custody refuses as unavailable and a receipt naming a recipe with no installed frozen verifier refuses as unsupported, with no fallback to another recipe; within a custody Store an original without a legacy receipt was written by the current strict-v4 writer. Each retained read composes the shared SP-1101 RetainedDispatcher once: one owner selection, no caller override and no current-then-legacy probing, and the installed frozen verifier of that exact recipe tuple (pinned to the recipe's recorded original schema hashes) checks the original. Preserve raw-v1 (d36809af original MessagePack numeric types), normalized-v2 (a785466d normalized integral floats with the original uncapped integer domain), and strict-v3 (c21fa62e safe integers; its original checker skipped date-time and URI formats); Plans/dch_retained_recipes.json pins their exact original schemas and source revisions. A skipped format check never authenticates invalid history (CV-1101, SP-1101): frozen validators apply the shared date-time predicate and CV-253 to the recipe's pinned original resources, so a retained timestamp CV-1101 refuses is owner-invalid and refuses, while owner-valid lowercase, leap-second and long-fraction history stays readable with its exact spelling; the skipped URI check is preserved. Never re-encode raw-v1 bytes under a later normalization to verify their commitment. Plans/dch_write_recipe_receipts.json is an independent synthetic Storage receipt adapter, not native authentication evidence. Every earlier-valid retained numeric or format record stays readable with current authorization, deletion/hold access, withdrawal and actual-source identity checks. A forged source or recipe selection still refuses. Current derived checkpoints may copy an old event sequence into their exact new integer representation; the original retained event/index sequence and commitment remain unchanged. A retry verifies its saved original through the same historical schema/byte/custody reader before comparison; its incoming input stays strict-v4, and a replay-only compatibility original still cannot authorize a current append or retry. Different earlier semantic values conflict without sending an out-of-current-domain original through the current RFC 8785 encoder. A retained checkpoint, including its history and physical payload pack, uses its own original write provenance separately from its referenced event.
+
+The strict-v4 format validators are mandatory and installed explicitly, never through optional jsonschema plugins. Timestamps adopt the shared CV-1101 check: every current and frozen DCH validator is pm_event_datetime.datetime_validator over the complete outer schema, so the registered RFC 3339 predicate runs through the validator. occurred_at_utc keeps the EventRecord profile (T or t, Z/z or a signed offset, any fraction length, year 0000 and legitimate offset-adjusted leap seconds); observed_at_utc and persisted_at_utc keep CV-253's storage_utc_z profile through the inventory-classified envelope; the family ts and populated checkpoint retired_at_utc take the same predicate with their unchanged owner-schema terminal uppercase-Z pattern. A missing zone, space or wrong separator, invalid calendar field, hour 24, minute 60, false leap second, empty fraction and trailing LF refuse. Timestamp strings are never rewritten and are compared only as exact strings; no DCH-local timestamp grammar remains. PR URLs where declared fully match RFC 3986 HTTPS syntax, including valid percent escapes, reg-name or bracketed IPv6/IPvFuture host, numeric port and path/query/fragment grammar. Malformed brackets/hosts/escapes and whitespace refuse. No PR-host allowlist or new provider behavior is introduced. UUID contexts keep Storage's enforced descriptor. Both payload editions, all three EventRecord timestamps and populated checkpoint retirement times have isolated format negatives; applicable PR payloads cover every malformed URL form.
+
+```yaml
+plan_unit_id: SP-621
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: '### SP-621 — chat.thread_worktree_pr_failed
+
+
+  Newly authored persistence/read contract for `chat.thread_worktree_pr_failed` 1.0.0 under DL-045, adopting
+  ACD-621 and CV-641. Exact operating consumer `reader.chat.chat_thread_worktree_pr_failed@1.0.0` serves PR
+  failure toast and worktree audit. Reuse exact projector `projector.storage.event_record_index@1.0.0` and
+  checkpoint `event_record_index_checkpoint.v1:{storage_instance_id}`, schema `Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint`,
+  version 1.0.0. Explicitly adopt SP-278 including DL-076 nine-field durable read token and current full-index
+  generation/frontier validation; no persisted redb_snapshot_id. This consumer is an on-demand, exact-event
+  filtered read of the generic index, not an independently advancing persistent filtered projection. SP-278
+  performs predecessor-frontier CAS with index rows atomically, complete captured coverage, source selection
+  and current publication validation. Each read uses the actual live transaction token, full scope and canonical
+  source/payload joins and current permissions; a stale, unsupported or unavailable token cannot publish a
+  result. The generic checkpoint retains RP-PROJECTION-3GEN@1.0.0, without extending the source event lifetime.
+  No new stored family/key/value is created by this reader, so no storage registry row is invented. Existing
+  render pages, Tantivy and worktree binding projections remain their owner-defined stores and must be rebuilt
+  under their own current checkpoints, not by adopting this audit reader as a new mutation path. Replay of
+  this event through `reader.chat.chat_thread_worktree_pr_failed@1.0.0` returns original outcome evidence only:
+  no git, API, test, send, chip creation, thread creation, notification, billing or deletion side effect. retention_policy_ref
+  = PENDING_RETENTION_DECISION. Candidates: Case L-3 Chat content (thread lifetime, 250,000/thread) versus
+  audit authority (indefinite, no count eviction); classification belongs to RT/Jared. No expiry/count deletion
+  is authorized by this draft. Original source intent, canonical outcome/body and first receipt remain with
+  Assistant Chat Create PR failure handler, under SP-286/CV-339; coherent backup/restore includes those dependencies
+  and deletion records before any visible read. Missing originals are unavailable, never recaptured. Stored
+  excerpts, command strings, errors, branch/path/PR text must be scrubbed before append; no credentials, inline
+  message body or raw tool output. Every referenced body requires current authorization, deletion/hold checks
+  and exact source Computer/root; retained audit metadata grants no access. This event adds no hold or purge
+  exemption. Withdrawal cuts off this exact family before new operations; fence `reader.chat.chat_thread_worktree_pr_failed@1.0.0`
+  and any affected domain projection, retain supported original-version historical lookup under current permissions,
+  then rebuild a separately versioned successor from retained canonical sources and a fresh SP-278 token before
+  publication. Never reset a cursor to zero as current, remint events, or delete seglog as withdrawal. No admission
+  or native execution proof is implied.
+
+
+
+
+  **chat.thread_worktree_pr_failed domain projection binding (newly authored owner contract).** Exact domain
+  projector `projector.chat.chat_thread_worktree_pr_failed@1.0.0` 1.0.0 and operating consumer `reader.chat.chat_thread_worktree_pr_failed@1.0.0`
+  explicitly adopt SP-278 and the same verified full-index source path. The family''s separate checkpoint is
+  `projector.checkpoint.dch.chat_thread_worktree_pr_failed.v1:{storage_instance_id}:{scope_partition}`, stored
+  family `dch_chat_thread_worktree_pr_failed_checkpoint`, closed schema `Plans/dch_event_payloads/dch_chat_thread_worktree_pr_failed_checkpoint.schema.json#`,
+  schema_id `pm.storage_value.dch_chat_thread_worktree_pr_failed_checkpoint.v1` 1.0.0. The nine-field durable
+  token is copied exactly from SP-278/DL-076 without redb_snapshot_id. Consumer/projector versions are the
+  suffixes in their stored constant IDs; no version is inferred from the payload. `last_sequence_id` and `last_event_id`
+  identify the last applied exact-family EventRecord; `source_token` identifies complete inspected source coverage
+  including nonmatching events. Publication identity is fresh entropy for a new shadow generation and frozen
+  on retries; revision increments exactly once on successful CAS. The key joins storage_instance_id and scope_partition
+  exactly. Application partition app is also bound to its source token''s Server/instance and the event''s
+  Computer/thread, never to every null Project. The projector processes this family''s records in verified
+  source sequence order and performs only the transition of ACD-621. For `chat.message`, resolve and authorize
+  its canonical typed message and build SP-338 pages and Tantivy fields once keyed by (thread_id,message_id);
+  never reopen a deleted/superseded message. For thread lifecycle, take current lifecycle from the canonical
+  revision and tombstone rather than treating an old historical event as current. Worktree fields update only
+  the existing owner-defined binding/reverse/worktree projections, with old/new identity checks; no git effect
+  is replayed. Selection events attach only existing authorized outcome/provenance refs to audit/pending-chip
+  status; never create a chip or repeat a send during replay. Failure events retain actual original error evidence
+  and cannot imply a successful outcome.
+
+
+  For this exact family, publish projection mutation and checkpoint revision together in one redb transaction
+  with predecessor revision/publication_id CAS. Where the target is Tantivy or the SP-338 page payload store,
+  first durably stage and read back an immutable shadow commit, put its exact reference in projection_refs,
+  then CAS-publish the pointer and checkpoint together. Readers serve only targets named by the current checkpoint''s
+  refs and same publication_id; old/partial targets never become visible by newest-file inference. Existing
+  canonical thread/worktree state is not rewritten by a derived rebuild. Rebuild any shared target from all
+  its admitted family sources in global source order into one shadow, never by replaying a whole bound family
+  after an unbound family. A required unadmitted counterpart fences that target, not an inferred admission.
+  Re-read canonical state/tombstones and current grants before publication. On source-generation change or
+  failed CAS, discard unpublished target or retry from the unchanged verified prefix; never reuse a stale token.
+  Missing or malformed derived bytes enter Q-DERIVED and governed rebuild, not source repair. Source loss requires
+  canonical backup recovery.
+
+
+  The checkpoint is MessagePack canonical, max 16 KiB under SP-340; oversized values use existing SP-337 reference
+  storage, never an exemption. The closed history array stores at most two full prior checkpoint generations
+  with first retired_at_utc and state retired; current fields name the selected generation. Reserve staged
+  slots through the existing maintenance intent before source staging; a staged candidate counts against three
+  even before it is visible in history. Retain at most three publication generations per exact key under RP-PROJECTION-3GEN@1.0.0;
+  retirement starts at first committed replacement, retries do not reset it, 604800 seconds for eligible retired
+  generations only, with holds/current/staged/live-ref protection. Reserve the slot first or disclose rebuild
+  unavailability. Source events keep PENDING_RETENTION_DECISION; the checkpoint gives no source keepalive.
+  Backup restores canonical source/custody/tombstones first; derived target/checkpoint is rebuilt and validated
+  against the current full-index token before read. Withdrawal fences this projector and its domain readers
+  in addition to the passive reader, sets checkpoint state withdrawn by CAS, and refuses all ordinary advances.
+  Retained historical lookup uses original schema and current access checks; successor publication requires
+  a separately versioned, complete shadow rebuild. Unsupported versions are unavailable, never rewritten in
+  place.
+
+
+  Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application
+  payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236
+  canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes,
+  not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized
+  inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored
+  string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref,
+  with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`.
+  The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack.
+  Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time
+  join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance,
+  Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack
+  bytes and index entry and verified readback before the referencing append can be acknowledged or its first
+  receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence
+  refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed.
+  Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants
+  no new retention exemption.
+
+
+  Checkpoint acceptance compares original source facts independently of the candidate: the outer storage_instance_id,
+  durable-token storage_instance_id, source_selection storage_instance_id and actual source/root instance must
+  be identical. Resolve the token checkpoint_key in the actual full-index root, its uniquely current generation
+  JSON Pointer checkpoint_ref and exact same-instance event_record_index.v2@generation dataset. Require exact
+  generation anchor, current frontier revision/digest and all source_selection fields against current synchronized
+  source, including nonmatching same-generation appends; a shape-valid stale token cannot publish. The domain
+  checkpoint key binds this instance and exact scope_partition. last_event_id/last_sequence_id join the actual
+  exact-family EventRecord and its full-index row and source-value commitment; actual source Computer/thread/scope
+  also join the published projection. Publication_id, revision, projection_refs and the full durable source
+  token match the actual staged/read-back publication selected by the atomic checkpoint/pointer CAS. Independent
+  source, token, selection, key/ref, event, dataset, publication and current-frontier mismatches refuse publication.
+  Static fixture adapters model these joins; they do not prove native full-index coverage, redb transactions,
+  CRC, source locks or durability.
+
+
+  For chat.thread_worktree_pr_failed, the complete encoded checkpoint includes every retained history
+  entry and projection reference. Measure that entire SP-236 value at the 16384-byte SP-340 boundary:
+  16384 bytes may be inline, 16385 bytes may not. A larger logical checkpoint keeps the same closed schema
+  and bounds and uses SP-337; measure the stored reference/pointer too. Resolve the exact complete bytes
+  through their BLAKE3/size/media-type reference and same-instance, exact-key/scope/family payload-pack
+  index, with current authorization/deletion/hold access, durable bytes/index and verified readback before
+  checkpoint publication. Externalizing the event body does not externalize this checkpoint. Every Storage-assigned
+  identity and metadata field is checked against the original Storage record for the actual instance;
+  no fixture/default instance supplies authority. Checkpoint source lookup resolves inline or referenced
+  originals, validates the supported original envelope and Project/application payload edition, verifies
+  their exact original source commitment and current access/withdrawal status, and then joins their source
+  facts. Retained compatibility-reader originals, including projector_replay_only, remain readable after
+  later live-state changes; only a new append/retry uses the current-writer policy. Unsupported, withdrawn,
+  forged or foreign originals cannot publish. Newly written integer and boolean slots require their exact types before comparison or arithmetic; string numbers/booleans, null, arrays and nested objects confer no
+  numeric or access authority. Current physical commitment/reference encoding canonicalizes integral numeric aliases and signed zero to the same shortest integer bytes; retained bytes retain their protected original recipe below. These are refinements of this family''s existing SP-236/SP-278/SP-337/SP-340 contract, not
+  a new retention or product decision.
+
+
+  Before any source resolution or identity hashing, validate every Storage-instance context against Storage''s own UUID descriptor in Plans/event_record_index_checkpoint.schema.json, including exact primitive type and UUID format. Empty, malformed, overlong, newline-suffixed and non-string instances refuse even when dependent IDs, keys and source commitments agree. Compare candidate, token, source-selection, payload-pack and index context against the independently read actual Storage record; a caller context, default instance or coherent forged context supplies no authority. Verify Storage-assigned sequence and timestamp fields against that exact original record commitment before reading. A retained original remains governed by its supported edition and current custody, not later lifecycle state.
+
+
+  For new writes and current identity/idempotency inputs, this family selects strict-v4 exact integer types with the owner-declared domain of each field. Storage sequence_id and its last_sequence_id copies, frontier_revision, selected_segment_generation, manifest_generation, recovery_epoch and pack byte_size retain exact uint64 values 0 through 18446744073709551615; no 2^53 ceiling applies to Storage metadata. Publication revision and logical payload integers retain their existing owner minima and maxima, with no invented DCH safe-integer cap. Declared integer slots reject runtime float/string/bool/null/array/object substitutes except explicitly nullable slots. Storage metadata is excluded from the producer-semantic projection as already specified. The producer route is the CV-1100 qualified RFC 8785 encoding of the unchanged CV-317 producer projection (shared producer_semantic_bytes/producer_semantic_digest); an unsupported exact producer input is a structured route refusal, without narrowing its logical owner domain, rounding or stringification. Physical bytes follow SP-236 through the shared SP-1100 codec (storage_value_bytes, EVENT_VALUE profile): float type, minimal exact float width and signed zero are preserved, so a lexical alias never shares an integer''s bytes, and the exact integer slots refuse every alias; invalid JSON 01 refuses under the CV-1100 current parser. Retained-recipe dispatch composes the shared SP-1101 RetainedDispatcher and timestamps use the shared CV-1101 check, as the retained-original and format paragraphs state. Test Storage write/retry inputs at 2^53, 2^60 and uint64 maximum, and refuse overflow, negative and wrong-type metadata independently.
+
+
+  Retained and compatibility originals use the schema, numeric domain, runtime type policy, format validator and physical encoder in force when written. The single selector record_number_rule() owns this dispatch on passive history, SP-337 materialization/reference verification, full-index source/checkpoint validation, checkpoint physical storage, saved-original retry comparison and terminal retained-start lookup. New/current inputs select strict-v4. For retained sources, independently read protected Storage write-receipt provenance binds actual storage_instance_id, exact original source-value SHA-256 and recipe_id; it is committed with the original write and survives restore with that source. Candidate fields, caller version/recipe flags, mutable live state and payload content cannot select or enroll an earlier recipe. Verify any claim against that independently authenticated provenance, then verify the exact original bytes with the selected recipe. Missing earlier provenance is unavailable under that earlier recipe, never a guessed downgrade: an original of a Store outside the sealed write custody refuses as unavailable and a receipt naming a recipe with no installed frozen verifier refuses as unsupported, with no fallback to another recipe; within a custody Store an original without a legacy receipt was written by the current strict-v4 writer. Each retained read composes the shared SP-1101 RetainedDispatcher once: one owner selection, no caller override and no current-then-legacy probing, and the installed frozen verifier of that exact recipe tuple (pinned to the recipe''s recorded original schema hashes) checks the original. Preserve raw-v1 (d36809af original MessagePack numeric types), normalized-v2 (a785466d normalized integral floats with the original uncapped integer domain), and strict-v3 (c21fa62e safe integers; its original checker skipped date-time and URI formats); Plans/dch_retained_recipes.json pins their exact original schemas and source revisions. A skipped format check never authenticates invalid history (CV-1101, SP-1101): frozen validators apply the shared date-time predicate and CV-253 to the recipe''s pinned original resources, so a retained timestamp CV-1101 refuses is owner-invalid and refuses, while owner-valid lowercase, leap-second and long-fraction history stays readable with its exact spelling; the skipped URI check is preserved. Never re-encode raw-v1 bytes under a later normalization to verify their commitment. Plans/dch_write_recipe_receipts.json is an independent synthetic Storage receipt adapter, not native authentication evidence. Every earlier-valid retained numeric or format record stays readable with current authorization, deletion/hold access, withdrawal and actual-source identity checks. A forged source or recipe selection still refuses. Current derived checkpoints may copy an old event sequence into their exact new integer representation; the original retained event/index sequence and commitment remain unchanged. A retry verifies its saved original through the same historical schema/byte/custody reader before comparison; its incoming input stays strict-v4, and a replay-only compatibility original still cannot authorize a current append or retry. Different earlier semantic values conflict without sending an out-of-current-domain original through the current RFC 8785 encoder. A retained checkpoint, including its history and physical payload pack, uses its own original write provenance separately from its referenced event.
+
+
+  The strict-v4 format validators are mandatory and installed explicitly, never through optional jsonschema plugins. Timestamps adopt the shared CV-1101 check: every current and frozen DCH validator is pm_event_datetime.datetime_validator over the complete outer schema, so the registered RFC 3339 predicate runs through the validator. occurred_at_utc keeps the EventRecord profile (T or t, Z/z or a signed offset, any fraction length, year 0000 and legitimate offset-adjusted leap seconds); observed_at_utc and persisted_at_utc keep CV-253''s storage_utc_z profile through the inventory-classified envelope; the family ts and populated checkpoint retired_at_utc take the same predicate with their unchanged owner-schema terminal uppercase-Z pattern. A missing zone, space or wrong separator, invalid calendar field, hour 24, minute 60, false leap second, empty fraction and trailing LF refuse. Timestamp strings are never rewritten and are compared only as exact strings; no DCH-local timestamp grammar remains. PR URLs where declared fully match RFC 3986 HTTPS syntax, including valid percent escapes, reg-name or bracketed IPv6/IPvFuture host, numeric port and path/query/fragment grammar. Malformed brackets/hosts/escapes and whitespace refuse. No PR-host allowlist or new provider behavior is introduced. UUID contexts keep Storage''s enforced descriptor. Both payload editions, all three EventRecord timestamps and populated checkpoint retirement times have isolated format negatives; applicable PR payloads cover every malformed URL form.'
+gui_related: false
+gui_classification_reason: Owns event data and persistence contract.
+depends_on:
+- ACD-621
+- CV-641
+- SP-278
+- SP-286
+- SP-337
+unblocks: []
+acceptance_criteria:
+- Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership remains
+  absent.
+- Review-round-2 acceptance rejects the independently mutated forbidden policy, body, retry, source and outcome
+  cases applicable to this exact family; native evidence remains NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm_dch_events.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: event_authority_dch
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- DL-045; WAVE2 DCH 2026-11-04
+preserved_exact_tokens:
+- chat.thread_worktree_pr_failed
+- PENDING_RETENTION_DECISION
+- SP-278
+- SP-286
+negative_constraints:
+- No event admission or native execution proof; no retention choice.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+
+### SP-622 — chat.thread_worktree_pre_merge_test_failed
+
+Newly authored persistence/read contract for `chat.thread_worktree_pre_merge_test_failed` 1.0.0 under DL-045, adopting ACD-622 and CV-642. Exact operating consumer `reader.chat.chat_thread_worktree_pre_merge_test_failed@1.0.0` serves Pre-merge test gate, failure presentation and audit. Reuse exact projector `projector.storage.event_record_index@1.0.0` and checkpoint `event_record_index_checkpoint.v1:{storage_instance_id}`, schema `Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint`, version 1.0.0. Explicitly adopt SP-278 including DL-076 nine-field durable read token and current full-index generation/frontier validation; no persisted redb_snapshot_id. This consumer is an on-demand, exact-event filtered read of the generic index, not an independently advancing persistent filtered projection. SP-278 performs predecessor-frontier CAS with index rows atomically, complete captured coverage, source selection and current publication validation. Each read uses the actual live transaction token, full scope and canonical source/payload joins and current permissions; a stale, unsupported or unavailable token cannot publish a result. The generic checkpoint retains RP-PROJECTION-3GEN@1.0.0, without extending the source event lifetime. No new stored family/key/value is created by this reader, so no storage registry row is invented. Existing render pages, Tantivy and worktree binding projections remain their owner-defined stores and must be rebuilt under their own current checkpoints, not by adopting this audit reader as a new mutation path. Replay of this event through `reader.chat.chat_thread_worktree_pre_merge_test_failed@1.0.0` returns original outcome evidence only: no git, API, test, send, chip creation, thread creation, notification, billing or deletion side effect. retention_policy_ref = PENDING_RETENTION_DECISION. Candidates: Case L-3 Chat content (thread lifetime, 250,000/thread) versus audit authority (indefinite, no count eviction); classification belongs to RT/Jared. No expiry/count deletion is authorized by this draft. Original source intent, canonical outcome/body and first receipt remain with Assistant Chat pre-merge test completion handler, under SP-286/CV-339; coherent backup/restore includes those dependencies and deletion records before any visible read. Missing originals are unavailable, never recaptured. Stored excerpts, command strings, errors, branch/path/PR text must be scrubbed before append; no credentials, inline message body or raw tool output. Every referenced body requires current authorization, deletion/hold checks and exact source Computer/root; retained audit metadata grants no access. This event adds no hold or purge exemption. Withdrawal cuts off this exact family before new operations; fence `reader.chat.chat_thread_worktree_pre_merge_test_failed@1.0.0` and any affected domain projection, retain supported original-version historical lookup under current permissions, then rebuild a separately versioned successor from retained canonical sources and a fresh SP-278 token before publication. Never reset a cursor to zero as current, remint events, or delete seglog as withdrawal. No admission or native execution proof is implied.
+
+
+
+**chat.thread_worktree_pre_merge_test_failed domain projection binding (newly authored owner contract).** Exact domain projector `projector.chat.chat_thread_worktree_pre_merge_test_failed@1.0.0` 1.0.0 and operating consumer `reader.chat.chat_thread_worktree_pre_merge_test_failed@1.0.0` explicitly adopt SP-278 and the same verified full-index source path. The family's separate checkpoint is `projector.checkpoint.dch.chat_thread_worktree_pre_merge_test_failed.v1:{storage_instance_id}:{scope_partition}`, stored family `dch_chat_thread_worktree_pre_merge_test_failed_checkpoint`, closed schema `Plans/dch_event_payloads/dch_chat_thread_worktree_pre_merge_test_failed_checkpoint.schema.json#`, schema_id `pm.storage_value.dch_chat_thread_worktree_pre_merge_test_failed_checkpoint.v1` 1.0.0. The nine-field durable token is copied exactly from SP-278/DL-076 without redb_snapshot_id. Consumer/projector versions are the suffixes in their stored constant IDs; no version is inferred from the payload. `last_sequence_id` and `last_event_id` identify the last applied exact-family EventRecord; `source_token` identifies complete inspected source coverage including nonmatching events. Publication identity is fresh entropy for a new shadow generation and frozen on retries; revision increments exactly once on successful CAS. The key joins storage_instance_id and scope_partition exactly. Application partition app is also bound to its source token's Server/instance and the event's Computer/thread, never to every null Project. The projector processes this family's records in verified source sequence order and performs only the transition of ACD-622. For `chat.message`, resolve and authorize its canonical typed message and build SP-338 pages and Tantivy fields once keyed by (thread_id,message_id); never reopen a deleted/superseded message. For thread lifecycle, take current lifecycle from the canonical revision and tombstone rather than treating an old historical event as current. Worktree fields update only the existing owner-defined binding/reverse/worktree projections, with old/new identity checks; no git effect is replayed. Selection events attach only existing authorized outcome/provenance refs to audit/pending-chip status; never create a chip or repeat a send during replay. Failure events retain actual original error evidence and cannot imply a successful outcome.
+
+For this exact family, publish projection mutation and checkpoint revision together in one redb transaction with predecessor revision/publication_id CAS. Where the target is Tantivy or the SP-338 page payload store, first durably stage and read back an immutable shadow commit, put its exact reference in projection_refs, then CAS-publish the pointer and checkpoint together. Readers serve only targets named by the current checkpoint's refs and same publication_id; old/partial targets never become visible by newest-file inference. Existing canonical thread/worktree state is not rewritten by a derived rebuild. Rebuild any shared target from all its admitted family sources in global source order into one shadow, never by replaying a whole bound family after an unbound family. A required unadmitted counterpart fences that target, not an inferred admission. Re-read canonical state/tombstones and current grants before publication. On source-generation change or failed CAS, discard unpublished target or retry from the unchanged verified prefix; never reuse a stale token. Missing or malformed derived bytes enter Q-DERIVED and governed rebuild, not source repair. Source loss requires canonical backup recovery.
+
+The checkpoint is MessagePack canonical, max 16 KiB under SP-340; oversized values use existing SP-337 reference storage, never an exemption. The closed history array stores at most two full prior checkpoint generations with first retired_at_utc and state retired; current fields name the selected generation. Reserve staged slots through the existing maintenance intent before source staging; a staged candidate counts against three even before it is visible in history. Retain at most three publication generations per exact key under RP-PROJECTION-3GEN@1.0.0; retirement starts at first committed replacement, retries do not reset it, 604800 seconds for eligible retired generations only, with holds/current/staged/live-ref protection. Reserve the slot first or disclose rebuild unavailability. Source events keep PENDING_RETENTION_DECISION; the checkpoint gives no source keepalive. Backup restores canonical source/custody/tombstones first; derived target/checkpoint is rebuilt and validated against the current full-index token before read. Withdrawal fences this projector and its domain readers in addition to the passive reader, sets checkpoint state withdrawn by CAS, and refuses all ordinary advances. Retained historical lookup uses original schema and current access checks; successor publication requires a separately versioned, complete shadow rebuild. Unsupported versions are unavailable, never rewritten in place.
+
+Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236 canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes, not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref, with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`. The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack. Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance, Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack bytes and index entry and verified readback before the referencing append can be acknowledged or its first receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed. Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants no new retention exemption.
+
+Checkpoint acceptance compares original source facts independently of the candidate: the outer storage_instance_id, durable-token storage_instance_id, source_selection storage_instance_id and actual source/root instance must be identical. Resolve the token checkpoint_key in the actual full-index root, its uniquely current generation JSON Pointer checkpoint_ref and exact same-instance event_record_index.v2@generation dataset. Require exact generation anchor, current frontier revision/digest and all source_selection fields against current synchronized source, including nonmatching same-generation appends; a shape-valid stale token cannot publish. The domain checkpoint key binds this instance and exact scope_partition. last_event_id/last_sequence_id join the actual exact-family EventRecord and its full-index row and source-value commitment; actual source Computer/thread/scope also join the published projection. Publication_id, revision, projection_refs and the full durable source token match the actual staged/read-back publication selected by the atomic checkpoint/pointer CAS. Independent source, token, selection, key/ref, event, dataset, publication and current-frontier mismatches refuse publication. Static fixture adapters model these joins; they do not prove native full-index coverage, redb transactions, CRC, source locks or durability.
+
+For chat.thread_worktree_pre_merge_test_failed, the complete encoded checkpoint includes every retained history entry and projection reference. Measure that entire SP-236 value at the 16384-byte SP-340 boundary: 16384 bytes may be inline, 16385 bytes may not. A larger logical checkpoint keeps the same closed schema and bounds and uses SP-337; measure the stored reference/pointer too. Resolve the exact complete bytes through their BLAKE3/size/media-type reference and same-instance, exact-key/scope/family payload-pack index, with current authorization/deletion/hold access, durable bytes/index and verified readback before checkpoint publication. Externalizing the event body does not externalize this checkpoint. Every Storage-assigned identity and metadata field is checked against the original Storage record for the actual instance; no fixture/default instance supplies authority. Checkpoint source lookup resolves inline or referenced originals, validates the supported original envelope and Project/application payload edition, verifies their exact original source commitment and current access/withdrawal status, and then joins their source facts. Retained compatibility-reader originals, including projector_replay_only, remain readable after later live-state changes; only a new append/retry uses the current-writer policy. Unsupported, withdrawn, forged or foreign originals cannot publish. Newly written integer and boolean slots require their exact types before comparison or arithmetic; string numbers/booleans, null, arrays and nested objects confer no numeric or access authority. Current physical commitment/reference encoding canonicalizes integral numeric aliases and signed zero to the same shortest integer bytes; retained bytes retain their protected original recipe below. These are refinements of this family's existing SP-236/SP-278/SP-337/SP-340 contract, not a new retention or product decision.
+
+Before any source resolution or identity hashing, validate every Storage-instance context against Storage's own UUID descriptor in Plans/event_record_index_checkpoint.schema.json, including exact primitive type and UUID format. Empty, malformed, overlong, newline-suffixed and non-string instances refuse even when dependent IDs, keys and source commitments agree. Compare candidate, token, source-selection, payload-pack and index context against the independently read actual Storage record; a caller context, default instance or coherent forged context supplies no authority. Verify Storage-assigned sequence and timestamp fields against that exact original record commitment before reading. A retained original remains governed by its supported edition and current custody, not later lifecycle state.
+
+For new writes and current identity/idempotency inputs, this family selects strict-v4 exact integer types with the owner-declared domain of each field. Storage sequence_id and its last_sequence_id copies, frontier_revision, selected_segment_generation, manifest_generation, recovery_epoch and pack byte_size retain exact uint64 values 0 through 18446744073709551615; no 2^53 ceiling applies to Storage metadata. Publication revision and logical payload integers retain their existing owner minima and maxima, with no invented DCH safe-integer cap. Declared integer slots reject runtime float/string/bool/null/array/object substitutes except explicitly nullable slots. Storage metadata is excluded from the producer-semantic projection as already specified. The producer route is the CV-1100 qualified RFC 8785 encoding of the unchanged CV-317 producer projection (shared producer_semantic_bytes/producer_semantic_digest); an unsupported exact producer input is a structured route refusal, without narrowing its logical owner domain, rounding or stringification. Physical bytes follow SP-236 through the shared SP-1100 codec (storage_value_bytes, EVENT_VALUE profile): float type, minimal exact float width and signed zero are preserved, so a lexical alias never shares an integer's bytes, and the exact integer slots refuse every alias; invalid JSON 01 refuses under the CV-1100 current parser. Retained-recipe dispatch composes the shared SP-1101 RetainedDispatcher and timestamps use the shared CV-1101 check, as the retained-original and format paragraphs state. Test Storage write/retry inputs at 2^53, 2^60 and uint64 maximum, and refuse overflow, negative and wrong-type metadata independently.
+
+Retained and compatibility originals use the schema, numeric domain, runtime type policy, format validator and physical encoder in force when written. The single selector record_number_rule() owns this dispatch on passive history, SP-337 materialization/reference verification, full-index source/checkpoint validation, checkpoint physical storage, saved-original retry comparison and terminal retained-start lookup. New/current inputs select strict-v4. For retained sources, independently read protected Storage write-receipt provenance binds actual storage_instance_id, exact original source-value SHA-256 and recipe_id; it is committed with the original write and survives restore with that source. Candidate fields, caller version/recipe flags, mutable live state and payload content cannot select or enroll an earlier recipe. Verify any claim against that independently authenticated provenance, then verify the exact original bytes with the selected recipe. Missing earlier provenance is unavailable under that earlier recipe, never a guessed downgrade: an original of a Store outside the sealed write custody refuses as unavailable and a receipt naming a recipe with no installed frozen verifier refuses as unsupported, with no fallback to another recipe; within a custody Store an original without a legacy receipt was written by the current strict-v4 writer. Each retained read composes the shared SP-1101 RetainedDispatcher once: one owner selection, no caller override and no current-then-legacy probing, and the installed frozen verifier of that exact recipe tuple (pinned to the recipe's recorded original schema hashes) checks the original. Preserve raw-v1 (d36809af original MessagePack numeric types), normalized-v2 (a785466d normalized integral floats with the original uncapped integer domain), and strict-v3 (c21fa62e safe integers; its original checker skipped date-time and URI formats); Plans/dch_retained_recipes.json pins their exact original schemas and source revisions. A skipped format check never authenticates invalid history (CV-1101, SP-1101): frozen validators apply the shared date-time predicate and CV-253 to the recipe's pinned original resources, so a retained timestamp CV-1101 refuses is owner-invalid and refuses, while owner-valid lowercase, leap-second and long-fraction history stays readable with its exact spelling; the skipped URI check is preserved. Never re-encode raw-v1 bytes under a later normalization to verify their commitment. Plans/dch_write_recipe_receipts.json is an independent synthetic Storage receipt adapter, not native authentication evidence. Every earlier-valid retained numeric or format record stays readable with current authorization, deletion/hold access, withdrawal and actual-source identity checks. A forged source or recipe selection still refuses. Current derived checkpoints may copy an old event sequence into their exact new integer representation; the original retained event/index sequence and commitment remain unchanged. A retry verifies its saved original through the same historical schema/byte/custody reader before comparison; its incoming input stays strict-v4, and a replay-only compatibility original still cannot authorize a current append or retry. Different earlier semantic values conflict without sending an out-of-current-domain original through the current RFC 8785 encoder. A retained checkpoint, including its history and physical payload pack, uses its own original write provenance separately from its referenced event.
+
+The strict-v4 format validators are mandatory and installed explicitly, never through optional jsonschema plugins. Timestamps adopt the shared CV-1101 check: every current and frozen DCH validator is pm_event_datetime.datetime_validator over the complete outer schema, so the registered RFC 3339 predicate runs through the validator. occurred_at_utc keeps the EventRecord profile (T or t, Z/z or a signed offset, any fraction length, year 0000 and legitimate offset-adjusted leap seconds); observed_at_utc and persisted_at_utc keep CV-253's storage_utc_z profile through the inventory-classified envelope; the family ts and populated checkpoint retired_at_utc take the same predicate with their unchanged owner-schema terminal uppercase-Z pattern. A missing zone, space or wrong separator, invalid calendar field, hour 24, minute 60, false leap second, empty fraction and trailing LF refuse. Timestamp strings are never rewritten and are compared only as exact strings; no DCH-local timestamp grammar remains. PR URLs where declared fully match RFC 3986 HTTPS syntax, including valid percent escapes, reg-name or bracketed IPv6/IPvFuture host, numeric port and path/query/fragment grammar. Malformed brackets/hosts/escapes and whitespace refuse. No PR-host allowlist or new provider behavior is introduced. UUID contexts keep Storage's enforced descriptor. Both payload editions, all three EventRecord timestamps and populated checkpoint retirement times have isolated format negatives; applicable PR payloads cover every malformed URL form.
+
+```yaml
+plan_unit_id: SP-622
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: '### SP-622 — chat.thread_worktree_pre_merge_test_failed
+
+
+  Newly authored persistence/read contract for `chat.thread_worktree_pre_merge_test_failed` 1.0.0 under DL-045,
+  adopting ACD-622 and CV-642. Exact operating consumer `reader.chat.chat_thread_worktree_pre_merge_test_failed@1.0.0`
+  serves Pre-merge test gate, failure presentation and audit. Reuse exact projector `projector.storage.event_record_index@1.0.0`
+  and checkpoint `event_record_index_checkpoint.v1:{storage_instance_id}`, schema `Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint`,
+  version 1.0.0. Explicitly adopt SP-278 including DL-076 nine-field durable read token and current full-index
+  generation/frontier validation; no persisted redb_snapshot_id. This consumer is an on-demand, exact-event
+  filtered read of the generic index, not an independently advancing persistent filtered projection. SP-278
+  performs predecessor-frontier CAS with index rows atomically, complete captured coverage, source selection
+  and current publication validation. Each read uses the actual live transaction token, full scope and canonical
+  source/payload joins and current permissions; a stale, unsupported or unavailable token cannot publish a
+  result. The generic checkpoint retains RP-PROJECTION-3GEN@1.0.0, without extending the source event lifetime.
+  No new stored family/key/value is created by this reader, so no storage registry row is invented. Existing
+  render pages, Tantivy and worktree binding projections remain their owner-defined stores and must be rebuilt
+  under their own current checkpoints, not by adopting this audit reader as a new mutation path. Replay of
+  this event through `reader.chat.chat_thread_worktree_pre_merge_test_failed@1.0.0` returns original outcome
+  evidence only: no git, API, test, send, chip creation, thread creation, notification, billing or deletion
+  side effect. retention_policy_ref = PENDING_RETENTION_DECISION. Candidates: Case L-3 Chat content (thread
+  lifetime, 250,000/thread) versus audit authority (indefinite, no count eviction); classification belongs
+  to RT/Jared. No expiry/count deletion is authorized by this draft. Original source intent, canonical outcome/body
+  and first receipt remain with Assistant Chat pre-merge test completion handler, under SP-286/CV-339; coherent
+  backup/restore includes those dependencies and deletion records before any visible read. Missing originals
+  are unavailable, never recaptured. Stored excerpts, command strings, errors, branch/path/PR text must be
+  scrubbed before append; no credentials, inline message body or raw tool output. Every referenced body requires
+  current authorization, deletion/hold checks and exact source Computer/root; retained audit metadata grants
+  no access. This event adds no hold or purge exemption. Withdrawal cuts off this exact family before new operations;
+  fence `reader.chat.chat_thread_worktree_pre_merge_test_failed@1.0.0` and any affected domain projection,
+  retain supported original-version historical lookup under current permissions, then rebuild a separately
+  versioned successor from retained canonical sources and a fresh SP-278 token before publication. Never reset
+  a cursor to zero as current, remint events, or delete seglog as withdrawal. No admission or native execution
+  proof is implied.
+
+
+
+
+  **chat.thread_worktree_pre_merge_test_failed domain projection binding (newly authored owner contract).**
+  Exact domain projector `projector.chat.chat_thread_worktree_pre_merge_test_failed@1.0.0` 1.0.0 and operating
+  consumer `reader.chat.chat_thread_worktree_pre_merge_test_failed@1.0.0` explicitly adopt SP-278 and the same
+  verified full-index source path. The family''s separate checkpoint is `projector.checkpoint.dch.chat_thread_worktree_pre_merge_test_failed.v1:{storage_instance_id}:{scope_partition}`,
+  stored family `dch_chat_thread_worktree_pre_merge_test_failed_checkpoint`, closed schema `Plans/dch_event_payloads/dch_chat_thread_worktree_pre_merge_test_failed_checkpoint.schema.json#`,
+  schema_id `pm.storage_value.dch_chat_thread_worktree_pre_merge_test_failed_checkpoint.v1` 1.0.0. The nine-field
+  durable token is copied exactly from SP-278/DL-076 without redb_snapshot_id. Consumer/projector versions
+  are the suffixes in their stored constant IDs; no version is inferred from the payload. `last_sequence_id`
+  and `last_event_id` identify the last applied exact-family EventRecord; `source_token` identifies complete
+  inspected source coverage including nonmatching events. Publication identity is fresh entropy for a new shadow
+  generation and frozen on retries; revision increments exactly once on successful CAS. The key joins storage_instance_id
+  and scope_partition exactly. Application partition app is also bound to its source token''s Server/instance
+  and the event''s Computer/thread, never to every null Project. The projector processes this family''s records
+  in verified source sequence order and performs only the transition of ACD-622. For `chat.message`, resolve
+  and authorize its canonical typed message and build SP-338 pages and Tantivy fields once keyed by (thread_id,message_id);
+  never reopen a deleted/superseded message. For thread lifecycle, take current lifecycle from the canonical
+  revision and tombstone rather than treating an old historical event as current. Worktree fields update only
+  the existing owner-defined binding/reverse/worktree projections, with old/new identity checks; no git effect
+  is replayed. Selection events attach only existing authorized outcome/provenance refs to audit/pending-chip
+  status; never create a chip or repeat a send during replay. Failure events retain actual original error evidence
+  and cannot imply a successful outcome.
+
+
+  For this exact family, publish projection mutation and checkpoint revision together in one redb transaction
+  with predecessor revision/publication_id CAS. Where the target is Tantivy or the SP-338 page payload store,
+  first durably stage and read back an immutable shadow commit, put its exact reference in projection_refs,
+  then CAS-publish the pointer and checkpoint together. Readers serve only targets named by the current checkpoint''s
+  refs and same publication_id; old/partial targets never become visible by newest-file inference. Existing
+  canonical thread/worktree state is not rewritten by a derived rebuild. Rebuild any shared target from all
+  its admitted family sources in global source order into one shadow, never by replaying a whole bound family
+  after an unbound family. A required unadmitted counterpart fences that target, not an inferred admission.
+  Re-read canonical state/tombstones and current grants before publication. On source-generation change or
+  failed CAS, discard unpublished target or retry from the unchanged verified prefix; never reuse a stale token.
+  Missing or malformed derived bytes enter Q-DERIVED and governed rebuild, not source repair. Source loss requires
+  canonical backup recovery.
+
+
+  The checkpoint is MessagePack canonical, max 16 KiB under SP-340; oversized values use existing SP-337 reference
+  storage, never an exemption. The closed history array stores at most two full prior checkpoint generations
+  with first retired_at_utc and state retired; current fields name the selected generation. Reserve staged
+  slots through the existing maintenance intent before source staging; a staged candidate counts against three
+  even before it is visible in history. Retain at most three publication generations per exact key under RP-PROJECTION-3GEN@1.0.0;
+  retirement starts at first committed replacement, retries do not reset it, 604800 seconds for eligible retired
+  generations only, with holds/current/staged/live-ref protection. Reserve the slot first or disclose rebuild
+  unavailability. Source events keep PENDING_RETENTION_DECISION; the checkpoint gives no source keepalive.
+  Backup restores canonical source/custody/tombstones first; derived target/checkpoint is rebuilt and validated
+  against the current full-index token before read. Withdrawal fences this projector and its domain readers
+  in addition to the passive reader, sets checkpoint state withdrawn by CAS, and refuses all ordinary advances.
+  Retained historical lookup uses original schema and current access checks; successor publication requires
+  a separately versioned, complete shadow rebuild. Unsupported versions are unavailable, never rewritten in
+  place.
+
+
+  Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application
+  payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236
+  canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes,
+  not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized
+  inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored
+  string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref,
+  with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`.
+  The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack.
+  Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time
+  join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance,
+  Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack
+  bytes and index entry and verified readback before the referencing append can be acknowledged or its first
+  receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence
+  refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed.
+  Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants
+  no new retention exemption.
+
+
+  Checkpoint acceptance compares original source facts independently of the candidate: the outer storage_instance_id,
+  durable-token storage_instance_id, source_selection storage_instance_id and actual source/root instance must
+  be identical. Resolve the token checkpoint_key in the actual full-index root, its uniquely current generation
+  JSON Pointer checkpoint_ref and exact same-instance event_record_index.v2@generation dataset. Require exact
+  generation anchor, current frontier revision/digest and all source_selection fields against current synchronized
+  source, including nonmatching same-generation appends; a shape-valid stale token cannot publish. The domain
+  checkpoint key binds this instance and exact scope_partition. last_event_id/last_sequence_id join the actual
+  exact-family EventRecord and its full-index row and source-value commitment; actual source Computer/thread/scope
+  also join the published projection. Publication_id, revision, projection_refs and the full durable source
+  token match the actual staged/read-back publication selected by the atomic checkpoint/pointer CAS. Independent
+  source, token, selection, key/ref, event, dataset, publication and current-frontier mismatches refuse publication.
+  Static fixture adapters model these joins; they do not prove native full-index coverage, redb transactions,
+  CRC, source locks or durability.
+
+
+  For chat.thread_worktree_pre_merge_test_failed, the complete encoded checkpoint includes every retained
+  history entry and projection reference. Measure that entire SP-236 value at the 16384-byte SP-340 boundary:
+  16384 bytes may be inline, 16385 bytes may not. A larger logical checkpoint keeps the same closed schema
+  and bounds and uses SP-337; measure the stored reference/pointer too. Resolve the exact complete bytes
+  through their BLAKE3/size/media-type reference and same-instance, exact-key/scope/family payload-pack
+  index, with current authorization/deletion/hold access, durable bytes/index and verified readback before
+  checkpoint publication. Externalizing the event body does not externalize this checkpoint. Every Storage-assigned
+  identity and metadata field is checked against the original Storage record for the actual instance;
+  no fixture/default instance supplies authority. Checkpoint source lookup resolves inline or referenced
+  originals, validates the supported original envelope and Project/application payload edition, verifies
+  their exact original source commitment and current access/withdrawal status, and then joins their source
+  facts. Retained compatibility-reader originals, including projector_replay_only, remain readable after
+  later live-state changes; only a new append/retry uses the current-writer policy. Unsupported, withdrawn,
+  forged or foreign originals cannot publish. Newly written integer and boolean slots require their exact types before comparison or arithmetic; string numbers/booleans, null, arrays and nested objects confer no
+  numeric or access authority. Current physical commitment/reference encoding canonicalizes integral numeric aliases and signed zero to the same shortest integer bytes; retained bytes retain their protected original recipe below. These are refinements of this family''s existing SP-236/SP-278/SP-337/SP-340 contract, not
+  a new retention or product decision.
+
+
+  Before any source resolution or identity hashing, validate every Storage-instance context against Storage''s own UUID descriptor in Plans/event_record_index_checkpoint.schema.json, including exact primitive type and UUID format. Empty, malformed, overlong, newline-suffixed and non-string instances refuse even when dependent IDs, keys and source commitments agree. Compare candidate, token, source-selection, payload-pack and index context against the independently read actual Storage record; a caller context, default instance or coherent forged context supplies no authority. Verify Storage-assigned sequence and timestamp fields against that exact original record commitment before reading. A retained original remains governed by its supported edition and current custody, not later lifecycle state.
+
+
+  For new writes and current identity/idempotency inputs, this family selects strict-v4 exact integer types with the owner-declared domain of each field. Storage sequence_id and its last_sequence_id copies, frontier_revision, selected_segment_generation, manifest_generation, recovery_epoch and pack byte_size retain exact uint64 values 0 through 18446744073709551615; no 2^53 ceiling applies to Storage metadata. Publication revision and logical payload integers retain their existing owner minima and maxima, with no invented DCH safe-integer cap. Declared integer slots reject runtime float/string/bool/null/array/object substitutes except explicitly nullable slots. Storage metadata is excluded from the producer-semantic projection as already specified. The producer route is the CV-1100 qualified RFC 8785 encoding of the unchanged CV-317 producer projection (shared producer_semantic_bytes/producer_semantic_digest); an unsupported exact producer input is a structured route refusal, without narrowing its logical owner domain, rounding or stringification. Physical bytes follow SP-236 through the shared SP-1100 codec (storage_value_bytes, EVENT_VALUE profile): float type, minimal exact float width and signed zero are preserved, so a lexical alias never shares an integer''s bytes, and the exact integer slots refuse every alias; invalid JSON 01 refuses under the CV-1100 current parser. Retained-recipe dispatch composes the shared SP-1101 RetainedDispatcher and timestamps use the shared CV-1101 check, as the retained-original and format paragraphs state. Test Storage write/retry inputs at 2^53, 2^60 and uint64 maximum, and refuse overflow, negative and wrong-type metadata independently.
+
+
+  Retained and compatibility originals use the schema, numeric domain, runtime type policy, format validator and physical encoder in force when written. The single selector record_number_rule() owns this dispatch on passive history, SP-337 materialization/reference verification, full-index source/checkpoint validation, checkpoint physical storage, saved-original retry comparison and terminal retained-start lookup. New/current inputs select strict-v4. For retained sources, independently read protected Storage write-receipt provenance binds actual storage_instance_id, exact original source-value SHA-256 and recipe_id; it is committed with the original write and survives restore with that source. Candidate fields, caller version/recipe flags, mutable live state and payload content cannot select or enroll an earlier recipe. Verify any claim against that independently authenticated provenance, then verify the exact original bytes with the selected recipe. Missing earlier provenance is unavailable under that earlier recipe, never a guessed downgrade: an original of a Store outside the sealed write custody refuses as unavailable and a receipt naming a recipe with no installed frozen verifier refuses as unsupported, with no fallback to another recipe; within a custody Store an original without a legacy receipt was written by the current strict-v4 writer. Each retained read composes the shared SP-1101 RetainedDispatcher once: one owner selection, no caller override and no current-then-legacy probing, and the installed frozen verifier of that exact recipe tuple (pinned to the recipe''s recorded original schema hashes) checks the original. Preserve raw-v1 (d36809af original MessagePack numeric types), normalized-v2 (a785466d normalized integral floats with the original uncapped integer domain), and strict-v3 (c21fa62e safe integers; its original checker skipped date-time and URI formats); Plans/dch_retained_recipes.json pins their exact original schemas and source revisions. A skipped format check never authenticates invalid history (CV-1101, SP-1101): frozen validators apply the shared date-time predicate and CV-253 to the recipe''s pinned original resources, so a retained timestamp CV-1101 refuses is owner-invalid and refuses, while owner-valid lowercase, leap-second and long-fraction history stays readable with its exact spelling; the skipped URI check is preserved. Never re-encode raw-v1 bytes under a later normalization to verify their commitment. Plans/dch_write_recipe_receipts.json is an independent synthetic Storage receipt adapter, not native authentication evidence. Every earlier-valid retained numeric or format record stays readable with current authorization, deletion/hold access, withdrawal and actual-source identity checks. A forged source or recipe selection still refuses. Current derived checkpoints may copy an old event sequence into their exact new integer representation; the original retained event/index sequence and commitment remain unchanged. A retry verifies its saved original through the same historical schema/byte/custody reader before comparison; its incoming input stays strict-v4, and a replay-only compatibility original still cannot authorize a current append or retry. Different earlier semantic values conflict without sending an out-of-current-domain original through the current RFC 8785 encoder. A retained checkpoint, including its history and physical payload pack, uses its own original write provenance separately from its referenced event.
+
+
+  The strict-v4 format validators are mandatory and installed explicitly, never through optional jsonschema plugins. Timestamps adopt the shared CV-1101 check: every current and frozen DCH validator is pm_event_datetime.datetime_validator over the complete outer schema, so the registered RFC 3339 predicate runs through the validator. occurred_at_utc keeps the EventRecord profile (T or t, Z/z or a signed offset, any fraction length, year 0000 and legitimate offset-adjusted leap seconds); observed_at_utc and persisted_at_utc keep CV-253''s storage_utc_z profile through the inventory-classified envelope; the family ts and populated checkpoint retired_at_utc take the same predicate with their unchanged owner-schema terminal uppercase-Z pattern. A missing zone, space or wrong separator, invalid calendar field, hour 24, minute 60, false leap second, empty fraction and trailing LF refuse. Timestamp strings are never rewritten and are compared only as exact strings; no DCH-local timestamp grammar remains. PR URLs where declared fully match RFC 3986 HTTPS syntax, including valid percent escapes, reg-name or bracketed IPv6/IPvFuture host, numeric port and path/query/fragment grammar. Malformed brackets/hosts/escapes and whitespace refuse. No PR-host allowlist or new provider behavior is introduced. UUID contexts keep Storage''s enforced descriptor. Both payload editions, all three EventRecord timestamps and populated checkpoint retirement times have isolated format negatives; applicable PR payloads cover every malformed URL form.'
+gui_related: false
+gui_classification_reason: Owns event data and persistence contract.
+depends_on:
+- ACD-622
+- CV-642
+- SP-278
+- SP-286
+- SP-337
+unblocks: []
+acceptance_criteria:
+- Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership remains
+  absent.
+- Review-round-2 acceptance rejects the independently mutated forbidden policy, body, retry, source and outcome
+  cases applicable to this exact family; native evidence remains NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm_dch_events.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: event_authority_dch
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- DL-045; WAVE2 DCH 2026-11-04
+preserved_exact_tokens:
+- chat.thread_worktree_pre_merge_test_failed
+- PENDING_RETENTION_DECISION
+- SP-278
+- SP-286
+negative_constraints:
+- No event admission or native execution proof; no retention choice.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+
+### SP-623 — chat.thread_worktree_pre_merge_test_passed
+
+Newly authored persistence/read contract for `chat.thread_worktree_pre_merge_test_passed` 1.0.0 under DL-045, adopting ACD-623 and CV-643. Exact operating consumer `reader.chat.chat_thread_worktree_pre_merge_test_passed@1.0.0` serves Pre-merge test gate and audit. Reuse exact projector `projector.storage.event_record_index@1.0.0` and checkpoint `event_record_index_checkpoint.v1:{storage_instance_id}`, schema `Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint`, version 1.0.0. Explicitly adopt SP-278 including DL-076 nine-field durable read token and current full-index generation/frontier validation; no persisted redb_snapshot_id. This consumer is an on-demand, exact-event filtered read of the generic index, not an independently advancing persistent filtered projection. SP-278 performs predecessor-frontier CAS with index rows atomically, complete captured coverage, source selection and current publication validation. Each read uses the actual live transaction token, full scope and canonical source/payload joins and current permissions; a stale, unsupported or unavailable token cannot publish a result. The generic checkpoint retains RP-PROJECTION-3GEN@1.0.0, without extending the source event lifetime. No new stored family/key/value is created by this reader, so no storage registry row is invented. Existing render pages, Tantivy and worktree binding projections remain their owner-defined stores and must be rebuilt under their own current checkpoints, not by adopting this audit reader as a new mutation path. Replay of this event through `reader.chat.chat_thread_worktree_pre_merge_test_passed@1.0.0` returns original outcome evidence only: no git, API, test, send, chip creation, thread creation, notification, billing or deletion side effect. retention_policy_ref = PENDING_RETENTION_DECISION. Candidates: Case L-3 Chat content (thread lifetime, 250,000/thread) versus audit authority (indefinite, no count eviction); classification belongs to RT/Jared. No expiry/count deletion is authorized by this draft. Original source intent, canonical outcome/body and first receipt remain with Assistant Chat pre-merge test completion handler, under SP-286/CV-339; coherent backup/restore includes those dependencies and deletion records before any visible read. Missing originals are unavailable, never recaptured. Stored excerpts, command strings, errors, branch/path/PR text must be scrubbed before append; no credentials, inline message body or raw tool output. Every referenced body requires current authorization, deletion/hold checks and exact source Computer/root; retained audit metadata grants no access. This event adds no hold or purge exemption. Withdrawal cuts off this exact family before new operations; fence `reader.chat.chat_thread_worktree_pre_merge_test_passed@1.0.0` and any affected domain projection, retain supported original-version historical lookup under current permissions, then rebuild a separately versioned successor from retained canonical sources and a fresh SP-278 token before publication. Never reset a cursor to zero as current, remint events, or delete seglog as withdrawal. No admission or native execution proof is implied.
+
+
+
+**chat.thread_worktree_pre_merge_test_passed domain projection binding (newly authored owner contract).** Exact domain projector `projector.chat.chat_thread_worktree_pre_merge_test_passed@1.0.0` 1.0.0 and operating consumer `reader.chat.chat_thread_worktree_pre_merge_test_passed@1.0.0` explicitly adopt SP-278 and the same verified full-index source path. The family's separate checkpoint is `projector.checkpoint.dch.chat_thread_worktree_pre_merge_test_passed.v1:{storage_instance_id}:{scope_partition}`, stored family `dch_chat_thread_worktree_pre_merge_test_passed_checkpoint`, closed schema `Plans/dch_event_payloads/dch_chat_thread_worktree_pre_merge_test_passed_checkpoint.schema.json#`, schema_id `pm.storage_value.dch_chat_thread_worktree_pre_merge_test_passed_checkpoint.v1` 1.0.0. The nine-field durable token is copied exactly from SP-278/DL-076 without redb_snapshot_id. Consumer/projector versions are the suffixes in their stored constant IDs; no version is inferred from the payload. `last_sequence_id` and `last_event_id` identify the last applied exact-family EventRecord; `source_token` identifies complete inspected source coverage including nonmatching events. Publication identity is fresh entropy for a new shadow generation and frozen on retries; revision increments exactly once on successful CAS. The key joins storage_instance_id and scope_partition exactly. Application partition app is also bound to its source token's Server/instance and the event's Computer/thread, never to every null Project. The projector processes this family's records in verified source sequence order and performs only the transition of ACD-623. For `chat.message`, resolve and authorize its canonical typed message and build SP-338 pages and Tantivy fields once keyed by (thread_id,message_id); never reopen a deleted/superseded message. For thread lifecycle, take current lifecycle from the canonical revision and tombstone rather than treating an old historical event as current. Worktree fields update only the existing owner-defined binding/reverse/worktree projections, with old/new identity checks; no git effect is replayed. Selection events attach only existing authorized outcome/provenance refs to audit/pending-chip status; never create a chip or repeat a send during replay. Failure events retain actual original error evidence and cannot imply a successful outcome.
+
+For this exact family, publish projection mutation and checkpoint revision together in one redb transaction with predecessor revision/publication_id CAS. Where the target is Tantivy or the SP-338 page payload store, first durably stage and read back an immutable shadow commit, put its exact reference in projection_refs, then CAS-publish the pointer and checkpoint together. Readers serve only targets named by the current checkpoint's refs and same publication_id; old/partial targets never become visible by newest-file inference. Existing canonical thread/worktree state is not rewritten by a derived rebuild. Rebuild any shared target from all its admitted family sources in global source order into one shadow, never by replaying a whole bound family after an unbound family. A required unadmitted counterpart fences that target, not an inferred admission. Re-read canonical state/tombstones and current grants before publication. On source-generation change or failed CAS, discard unpublished target or retry from the unchanged verified prefix; never reuse a stale token. Missing or malformed derived bytes enter Q-DERIVED and governed rebuild, not source repair. Source loss requires canonical backup recovery.
+
+The checkpoint is MessagePack canonical, max 16 KiB under SP-340; oversized values use existing SP-337 reference storage, never an exemption. The closed history array stores at most two full prior checkpoint generations with first retired_at_utc and state retired; current fields name the selected generation. Reserve staged slots through the existing maintenance intent before source staging; a staged candidate counts against three even before it is visible in history. Retain at most three publication generations per exact key under RP-PROJECTION-3GEN@1.0.0; retirement starts at first committed replacement, retries do not reset it, 604800 seconds for eligible retired generations only, with holds/current/staged/live-ref protection. Reserve the slot first or disclose rebuild unavailability. Source events keep PENDING_RETENTION_DECISION; the checkpoint gives no source keepalive. Backup restores canonical source/custody/tombstones first; derived target/checkpoint is rebuilt and validated against the current full-index token before read. Withdrawal fences this projector and its domain readers in addition to the passive reader, sets checkpoint state withdrawn by CAS, and refuses all ordinary advances. Retained historical lookup uses original schema and current access checks; successor publication requires a separately versioned, complete shadow rebuild. Unsupported versions are unavailable, never rewritten in place.
+
+Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236 canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes, not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref, with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`. The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack. Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance, Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack bytes and index entry and verified readback before the referencing append can be acknowledged or its first receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed. Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants no new retention exemption.
+
+Checkpoint acceptance compares original source facts independently of the candidate: the outer storage_instance_id, durable-token storage_instance_id, source_selection storage_instance_id and actual source/root instance must be identical. Resolve the token checkpoint_key in the actual full-index root, its uniquely current generation JSON Pointer checkpoint_ref and exact same-instance event_record_index.v2@generation dataset. Require exact generation anchor, current frontier revision/digest and all source_selection fields against current synchronized source, including nonmatching same-generation appends; a shape-valid stale token cannot publish. The domain checkpoint key binds this instance and exact scope_partition. last_event_id/last_sequence_id join the actual exact-family EventRecord and its full-index row and source-value commitment; actual source Computer/thread/scope also join the published projection. Publication_id, revision, projection_refs and the full durable source token match the actual staged/read-back publication selected by the atomic checkpoint/pointer CAS. Independent source, token, selection, key/ref, event, dataset, publication and current-frontier mismatches refuse publication. Static fixture adapters model these joins; they do not prove native full-index coverage, redb transactions, CRC, source locks or durability.
+
+For chat.thread_worktree_pre_merge_test_passed, the complete encoded checkpoint includes every retained history entry and projection reference. Measure that entire SP-236 value at the 16384-byte SP-340 boundary: 16384 bytes may be inline, 16385 bytes may not. A larger logical checkpoint keeps the same closed schema and bounds and uses SP-337; measure the stored reference/pointer too. Resolve the exact complete bytes through their BLAKE3/size/media-type reference and same-instance, exact-key/scope/family payload-pack index, with current authorization/deletion/hold access, durable bytes/index and verified readback before checkpoint publication. Externalizing the event body does not externalize this checkpoint. Every Storage-assigned identity and metadata field is checked against the original Storage record for the actual instance; no fixture/default instance supplies authority. Checkpoint source lookup resolves inline or referenced originals, validates the supported original envelope and Project/application payload edition, verifies their exact original source commitment and current access/withdrawal status, and then joins their source facts. Retained compatibility-reader originals, including projector_replay_only, remain readable after later live-state changes; only a new append/retry uses the current-writer policy. Unsupported, withdrawn, forged or foreign originals cannot publish. Newly written integer and boolean slots require their exact types before comparison or arithmetic; string numbers/booleans, null, arrays and nested objects confer no numeric or access authority. Current physical commitment/reference encoding canonicalizes integral numeric aliases and signed zero to the same shortest integer bytes; retained bytes retain their protected original recipe below. These are refinements of this family's existing SP-236/SP-278/SP-337/SP-340 contract, not a new retention or product decision.
+
+Before any source resolution or identity hashing, validate every Storage-instance context against Storage's own UUID descriptor in Plans/event_record_index_checkpoint.schema.json, including exact primitive type and UUID format. Empty, malformed, overlong, newline-suffixed and non-string instances refuse even when dependent IDs, keys and source commitments agree. Compare candidate, token, source-selection, payload-pack and index context against the independently read actual Storage record; a caller context, default instance or coherent forged context supplies no authority. Verify Storage-assigned sequence and timestamp fields against that exact original record commitment before reading. A retained original remains governed by its supported edition and current custody, not later lifecycle state.
+
+For new writes and current identity/idempotency inputs, this family selects strict-v4 exact integer types with the owner-declared domain of each field. Storage sequence_id and its last_sequence_id copies, frontier_revision, selected_segment_generation, manifest_generation, recovery_epoch and pack byte_size retain exact uint64 values 0 through 18446744073709551615; no 2^53 ceiling applies to Storage metadata. Publication revision and logical payload integers retain their existing owner minima and maxima, with no invented DCH safe-integer cap. Declared integer slots reject runtime float/string/bool/null/array/object substitutes except explicitly nullable slots. Storage metadata is excluded from the producer-semantic projection as already specified. The producer route is the CV-1100 qualified RFC 8785 encoding of the unchanged CV-317 producer projection (shared producer_semantic_bytes/producer_semantic_digest); an unsupported exact producer input is a structured route refusal, without narrowing its logical owner domain, rounding or stringification. Physical bytes follow SP-236 through the shared SP-1100 codec (storage_value_bytes, EVENT_VALUE profile): float type, minimal exact float width and signed zero are preserved, so a lexical alias never shares an integer's bytes, and the exact integer slots refuse every alias; invalid JSON 01 refuses under the CV-1100 current parser. Retained-recipe dispatch composes the shared SP-1101 RetainedDispatcher and timestamps use the shared CV-1101 check, as the retained-original and format paragraphs state. Test Storage write/retry inputs at 2^53, 2^60 and uint64 maximum, and refuse overflow, negative and wrong-type metadata independently.
+
+Retained and compatibility originals use the schema, numeric domain, runtime type policy, format validator and physical encoder in force when written. The single selector record_number_rule() owns this dispatch on passive history, SP-337 materialization/reference verification, full-index source/checkpoint validation, checkpoint physical storage, saved-original retry comparison and terminal retained-start lookup. New/current inputs select strict-v4. For retained sources, independently read protected Storage write-receipt provenance binds actual storage_instance_id, exact original source-value SHA-256 and recipe_id; it is committed with the original write and survives restore with that source. Candidate fields, caller version/recipe flags, mutable live state and payload content cannot select or enroll an earlier recipe. Verify any claim against that independently authenticated provenance, then verify the exact original bytes with the selected recipe. Missing earlier provenance is unavailable under that earlier recipe, never a guessed downgrade: an original of a Store outside the sealed write custody refuses as unavailable and a receipt naming a recipe with no installed frozen verifier refuses as unsupported, with no fallback to another recipe; within a custody Store an original without a legacy receipt was written by the current strict-v4 writer. Each retained read composes the shared SP-1101 RetainedDispatcher once: one owner selection, no caller override and no current-then-legacy probing, and the installed frozen verifier of that exact recipe tuple (pinned to the recipe's recorded original schema hashes) checks the original. Preserve raw-v1 (d36809af original MessagePack numeric types), normalized-v2 (a785466d normalized integral floats with the original uncapped integer domain), and strict-v3 (c21fa62e safe integers; its original checker skipped date-time and URI formats); Plans/dch_retained_recipes.json pins their exact original schemas and source revisions. A skipped format check never authenticates invalid history (CV-1101, SP-1101): frozen validators apply the shared date-time predicate and CV-253 to the recipe's pinned original resources, so a retained timestamp CV-1101 refuses is owner-invalid and refuses, while owner-valid lowercase, leap-second and long-fraction history stays readable with its exact spelling; the skipped URI check is preserved. Never re-encode raw-v1 bytes under a later normalization to verify their commitment. Plans/dch_write_recipe_receipts.json is an independent synthetic Storage receipt adapter, not native authentication evidence. Every earlier-valid retained numeric or format record stays readable with current authorization, deletion/hold access, withdrawal and actual-source identity checks. A forged source or recipe selection still refuses. Current derived checkpoints may copy an old event sequence into their exact new integer representation; the original retained event/index sequence and commitment remain unchanged. A retry verifies its saved original through the same historical schema/byte/custody reader before comparison; its incoming input stays strict-v4, and a replay-only compatibility original still cannot authorize a current append or retry. Different earlier semantic values conflict without sending an out-of-current-domain original through the current RFC 8785 encoder. A retained checkpoint, including its history and physical payload pack, uses its own original write provenance separately from its referenced event.
+
+The strict-v4 format validators are mandatory and installed explicitly, never through optional jsonschema plugins. Timestamps adopt the shared CV-1101 check: every current and frozen DCH validator is pm_event_datetime.datetime_validator over the complete outer schema, so the registered RFC 3339 predicate runs through the validator. occurred_at_utc keeps the EventRecord profile (T or t, Z/z or a signed offset, any fraction length, year 0000 and legitimate offset-adjusted leap seconds); observed_at_utc and persisted_at_utc keep CV-253's storage_utc_z profile through the inventory-classified envelope; the family ts and populated checkpoint retired_at_utc take the same predicate with their unchanged owner-schema terminal uppercase-Z pattern. A missing zone, space or wrong separator, invalid calendar field, hour 24, minute 60, false leap second, empty fraction and trailing LF refuse. Timestamp strings are never rewritten and are compared only as exact strings; no DCH-local timestamp grammar remains. PR URLs where declared fully match RFC 3986 HTTPS syntax, including valid percent escapes, reg-name or bracketed IPv6/IPvFuture host, numeric port and path/query/fragment grammar. Malformed brackets/hosts/escapes and whitespace refuse. No PR-host allowlist or new provider behavior is introduced. UUID contexts keep Storage's enforced descriptor. Both payload editions, all three EventRecord timestamps and populated checkpoint retirement times have isolated format negatives; applicable PR payloads cover every malformed URL form.
+
+```yaml
+plan_unit_id: SP-623
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: '### SP-623 — chat.thread_worktree_pre_merge_test_passed
+
+
+  Newly authored persistence/read contract for `chat.thread_worktree_pre_merge_test_passed` 1.0.0 under DL-045,
+  adopting ACD-623 and CV-643. Exact operating consumer `reader.chat.chat_thread_worktree_pre_merge_test_passed@1.0.0`
+  serves Pre-merge test gate and audit. Reuse exact projector `projector.storage.event_record_index@1.0.0`
+  and checkpoint `event_record_index_checkpoint.v1:{storage_instance_id}`, schema `Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint`,
+  version 1.0.0. Explicitly adopt SP-278 including DL-076 nine-field durable read token and current full-index
+  generation/frontier validation; no persisted redb_snapshot_id. This consumer is an on-demand, exact-event
+  filtered read of the generic index, not an independently advancing persistent filtered projection. SP-278
+  performs predecessor-frontier CAS with index rows atomically, complete captured coverage, source selection
+  and current publication validation. Each read uses the actual live transaction token, full scope and canonical
+  source/payload joins and current permissions; a stale, unsupported or unavailable token cannot publish a
+  result. The generic checkpoint retains RP-PROJECTION-3GEN@1.0.0, without extending the source event lifetime.
+  No new stored family/key/value is created by this reader, so no storage registry row is invented. Existing
+  render pages, Tantivy and worktree binding projections remain their owner-defined stores and must be rebuilt
+  under their own current checkpoints, not by adopting this audit reader as a new mutation path. Replay of
+  this event through `reader.chat.chat_thread_worktree_pre_merge_test_passed@1.0.0` returns original outcome
+  evidence only: no git, API, test, send, chip creation, thread creation, notification, billing or deletion
+  side effect. retention_policy_ref = PENDING_RETENTION_DECISION. Candidates: Case L-3 Chat content (thread
+  lifetime, 250,000/thread) versus audit authority (indefinite, no count eviction); classification belongs
+  to RT/Jared. No expiry/count deletion is authorized by this draft. Original source intent, canonical outcome/body
+  and first receipt remain with Assistant Chat pre-merge test completion handler, under SP-286/CV-339; coherent
+  backup/restore includes those dependencies and deletion records before any visible read. Missing originals
+  are unavailable, never recaptured. Stored excerpts, command strings, errors, branch/path/PR text must be
+  scrubbed before append; no credentials, inline message body or raw tool output. Every referenced body requires
+  current authorization, deletion/hold checks and exact source Computer/root; retained audit metadata grants
+  no access. This event adds no hold or purge exemption. Withdrawal cuts off this exact family before new operations;
+  fence `reader.chat.chat_thread_worktree_pre_merge_test_passed@1.0.0` and any affected domain projection,
+  retain supported original-version historical lookup under current permissions, then rebuild a separately
+  versioned successor from retained canonical sources and a fresh SP-278 token before publication. Never reset
+  a cursor to zero as current, remint events, or delete seglog as withdrawal. No admission or native execution
+  proof is implied.
+
+
+
+
+  **chat.thread_worktree_pre_merge_test_passed domain projection binding (newly authored owner contract).**
+  Exact domain projector `projector.chat.chat_thread_worktree_pre_merge_test_passed@1.0.0` 1.0.0 and operating
+  consumer `reader.chat.chat_thread_worktree_pre_merge_test_passed@1.0.0` explicitly adopt SP-278 and the same
+  verified full-index source path. The family''s separate checkpoint is `projector.checkpoint.dch.chat_thread_worktree_pre_merge_test_passed.v1:{storage_instance_id}:{scope_partition}`,
+  stored family `dch_chat_thread_worktree_pre_merge_test_passed_checkpoint`, closed schema `Plans/dch_event_payloads/dch_chat_thread_worktree_pre_merge_test_passed_checkpoint.schema.json#`,
+  schema_id `pm.storage_value.dch_chat_thread_worktree_pre_merge_test_passed_checkpoint.v1` 1.0.0. The nine-field
+  durable token is copied exactly from SP-278/DL-076 without redb_snapshot_id. Consumer/projector versions
+  are the suffixes in their stored constant IDs; no version is inferred from the payload. `last_sequence_id`
+  and `last_event_id` identify the last applied exact-family EventRecord; `source_token` identifies complete
+  inspected source coverage including nonmatching events. Publication identity is fresh entropy for a new shadow
+  generation and frozen on retries; revision increments exactly once on successful CAS. The key joins storage_instance_id
+  and scope_partition exactly. Application partition app is also bound to its source token''s Server/instance
+  and the event''s Computer/thread, never to every null Project. The projector processes this family''s records
+  in verified source sequence order and performs only the transition of ACD-623. For `chat.message`, resolve
+  and authorize its canonical typed message and build SP-338 pages and Tantivy fields once keyed by (thread_id,message_id);
+  never reopen a deleted/superseded message. For thread lifecycle, take current lifecycle from the canonical
+  revision and tombstone rather than treating an old historical event as current. Worktree fields update only
+  the existing owner-defined binding/reverse/worktree projections, with old/new identity checks; no git effect
+  is replayed. Selection events attach only existing authorized outcome/provenance refs to audit/pending-chip
+  status; never create a chip or repeat a send during replay. Failure events retain actual original error evidence
+  and cannot imply a successful outcome.
+
+
+  For this exact family, publish projection mutation and checkpoint revision together in one redb transaction
+  with predecessor revision/publication_id CAS. Where the target is Tantivy or the SP-338 page payload store,
+  first durably stage and read back an immutable shadow commit, put its exact reference in projection_refs,
+  then CAS-publish the pointer and checkpoint together. Readers serve only targets named by the current checkpoint''s
+  refs and same publication_id; old/partial targets never become visible by newest-file inference. Existing
+  canonical thread/worktree state is not rewritten by a derived rebuild. Rebuild any shared target from all
+  its admitted family sources in global source order into one shadow, never by replaying a whole bound family
+  after an unbound family. A required unadmitted counterpart fences that target, not an inferred admission.
+  Re-read canonical state/tombstones and current grants before publication. On source-generation change or
+  failed CAS, discard unpublished target or retry from the unchanged verified prefix; never reuse a stale token.
+  Missing or malformed derived bytes enter Q-DERIVED and governed rebuild, not source repair. Source loss requires
+  canonical backup recovery.
+
+
+  The checkpoint is MessagePack canonical, max 16 KiB under SP-340; oversized values use existing SP-337 reference
+  storage, never an exemption. The closed history array stores at most two full prior checkpoint generations
+  with first retired_at_utc and state retired; current fields name the selected generation. Reserve staged
+  slots through the existing maintenance intent before source staging; a staged candidate counts against three
+  even before it is visible in history. Retain at most three publication generations per exact key under RP-PROJECTION-3GEN@1.0.0;
+  retirement starts at first committed replacement, retries do not reset it, 604800 seconds for eligible retired
+  generations only, with holds/current/staged/live-ref protection. Reserve the slot first or disclose rebuild
+  unavailability. Source events keep PENDING_RETENTION_DECISION; the checkpoint gives no source keepalive.
+  Backup restores canonical source/custody/tombstones first; derived target/checkpoint is rebuilt and validated
+  against the current full-index token before read. Withdrawal fences this projector and its domain readers
+  in addition to the passive reader, sets checkpoint state withdrawn by CAS, and refuses all ordinary advances.
+  Retained historical lookup uses original schema and current access checks; successor publication requires
+  a separately versioned, complete shadow rebuild. Unsupported versions are unavailable, never rewritten in
+  place.
+
+
+  Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application
+  payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236
+  canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes,
+  not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized
+  inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored
+  string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref,
+  with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`.
+  The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack.
+  Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time
+  join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance,
+  Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack
+  bytes and index entry and verified readback before the referencing append can be acknowledged or its first
+  receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence
+  refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed.
+  Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants
+  no new retention exemption.
+
+
+  Checkpoint acceptance compares original source facts independently of the candidate: the outer storage_instance_id,
+  durable-token storage_instance_id, source_selection storage_instance_id and actual source/root instance must
+  be identical. Resolve the token checkpoint_key in the actual full-index root, its uniquely current generation
+  JSON Pointer checkpoint_ref and exact same-instance event_record_index.v2@generation dataset. Require exact
+  generation anchor, current frontier revision/digest and all source_selection fields against current synchronized
+  source, including nonmatching same-generation appends; a shape-valid stale token cannot publish. The domain
+  checkpoint key binds this instance and exact scope_partition. last_event_id/last_sequence_id join the actual
+  exact-family EventRecord and its full-index row and source-value commitment; actual source Computer/thread/scope
+  also join the published projection. Publication_id, revision, projection_refs and the full durable source
+  token match the actual staged/read-back publication selected by the atomic checkpoint/pointer CAS. Independent
+  source, token, selection, key/ref, event, dataset, publication and current-frontier mismatches refuse publication.
+  Static fixture adapters model these joins; they do not prove native full-index coverage, redb transactions,
+  CRC, source locks or durability.
+
+
+  For chat.thread_worktree_pre_merge_test_passed, the complete encoded checkpoint includes every retained
+  history entry and projection reference. Measure that entire SP-236 value at the 16384-byte SP-340 boundary:
+  16384 bytes may be inline, 16385 bytes may not. A larger logical checkpoint keeps the same closed schema
+  and bounds and uses SP-337; measure the stored reference/pointer too. Resolve the exact complete bytes
+  through their BLAKE3/size/media-type reference and same-instance, exact-key/scope/family payload-pack
+  index, with current authorization/deletion/hold access, durable bytes/index and verified readback before
+  checkpoint publication. Externalizing the event body does not externalize this checkpoint. Every Storage-assigned
+  identity and metadata field is checked against the original Storage record for the actual instance;
+  no fixture/default instance supplies authority. Checkpoint source lookup resolves inline or referenced
+  originals, validates the supported original envelope and Project/application payload edition, verifies
+  their exact original source commitment and current access/withdrawal status, and then joins their source
+  facts. Retained compatibility-reader originals, including projector_replay_only, remain readable after
+  later live-state changes; only a new append/retry uses the current-writer policy. Unsupported, withdrawn,
+  forged or foreign originals cannot publish. Newly written integer and boolean slots require their exact types before comparison or arithmetic; string numbers/booleans, null, arrays and nested objects confer no
+  numeric or access authority. Current physical commitment/reference encoding canonicalizes integral numeric aliases and signed zero to the same shortest integer bytes; retained bytes retain their protected original recipe below. These are refinements of this family''s existing SP-236/SP-278/SP-337/SP-340 contract, not
+  a new retention or product decision.
+
+
+  Before any source resolution or identity hashing, validate every Storage-instance context against Storage''s own UUID descriptor in Plans/event_record_index_checkpoint.schema.json, including exact primitive type and UUID format. Empty, malformed, overlong, newline-suffixed and non-string instances refuse even when dependent IDs, keys and source commitments agree. Compare candidate, token, source-selection, payload-pack and index context against the independently read actual Storage record; a caller context, default instance or coherent forged context supplies no authority. Verify Storage-assigned sequence and timestamp fields against that exact original record commitment before reading. A retained original remains governed by its supported edition and current custody, not later lifecycle state.
+
+
+  For new writes and current identity/idempotency inputs, this family selects strict-v4 exact integer types with the owner-declared domain of each field. Storage sequence_id and its last_sequence_id copies, frontier_revision, selected_segment_generation, manifest_generation, recovery_epoch and pack byte_size retain exact uint64 values 0 through 18446744073709551615; no 2^53 ceiling applies to Storage metadata. Publication revision and logical payload integers retain their existing owner minima and maxima, with no invented DCH safe-integer cap. Declared integer slots reject runtime float/string/bool/null/array/object substitutes except explicitly nullable slots. Storage metadata is excluded from the producer-semantic projection as already specified. The producer route is the CV-1100 qualified RFC 8785 encoding of the unchanged CV-317 producer projection (shared producer_semantic_bytes/producer_semantic_digest); an unsupported exact producer input is a structured route refusal, without narrowing its logical owner domain, rounding or stringification. Physical bytes follow SP-236 through the shared SP-1100 codec (storage_value_bytes, EVENT_VALUE profile): float type, minimal exact float width and signed zero are preserved, so a lexical alias never shares an integer''s bytes, and the exact integer slots refuse every alias; invalid JSON 01 refuses under the CV-1100 current parser. Retained-recipe dispatch composes the shared SP-1101 RetainedDispatcher and timestamps use the shared CV-1101 check, as the retained-original and format paragraphs state. Test Storage write/retry inputs at 2^53, 2^60 and uint64 maximum, and refuse overflow, negative and wrong-type metadata independently.
+
+
+  Retained and compatibility originals use the schema, numeric domain, runtime type policy, format validator and physical encoder in force when written. The single selector record_number_rule() owns this dispatch on passive history, SP-337 materialization/reference verification, full-index source/checkpoint validation, checkpoint physical storage, saved-original retry comparison and terminal retained-start lookup. New/current inputs select strict-v4. For retained sources, independently read protected Storage write-receipt provenance binds actual storage_instance_id, exact original source-value SHA-256 and recipe_id; it is committed with the original write and survives restore with that source. Candidate fields, caller version/recipe flags, mutable live state and payload content cannot select or enroll an earlier recipe. Verify any claim against that independently authenticated provenance, then verify the exact original bytes with the selected recipe. Missing earlier provenance is unavailable under that earlier recipe, never a guessed downgrade: an original of a Store outside the sealed write custody refuses as unavailable and a receipt naming a recipe with no installed frozen verifier refuses as unsupported, with no fallback to another recipe; within a custody Store an original without a legacy receipt was written by the current strict-v4 writer. Each retained read composes the shared SP-1101 RetainedDispatcher once: one owner selection, no caller override and no current-then-legacy probing, and the installed frozen verifier of that exact recipe tuple (pinned to the recipe''s recorded original schema hashes) checks the original. Preserve raw-v1 (d36809af original MessagePack numeric types), normalized-v2 (a785466d normalized integral floats with the original uncapped integer domain), and strict-v3 (c21fa62e safe integers; its original checker skipped date-time and URI formats); Plans/dch_retained_recipes.json pins their exact original schemas and source revisions. A skipped format check never authenticates invalid history (CV-1101, SP-1101): frozen validators apply the shared date-time predicate and CV-253 to the recipe''s pinned original resources, so a retained timestamp CV-1101 refuses is owner-invalid and refuses, while owner-valid lowercase, leap-second and long-fraction history stays readable with its exact spelling; the skipped URI check is preserved. Never re-encode raw-v1 bytes under a later normalization to verify their commitment. Plans/dch_write_recipe_receipts.json is an independent synthetic Storage receipt adapter, not native authentication evidence. Every earlier-valid retained numeric or format record stays readable with current authorization, deletion/hold access, withdrawal and actual-source identity checks. A forged source or recipe selection still refuses. Current derived checkpoints may copy an old event sequence into their exact new integer representation; the original retained event/index sequence and commitment remain unchanged. A retry verifies its saved original through the same historical schema/byte/custody reader before comparison; its incoming input stays strict-v4, and a replay-only compatibility original still cannot authorize a current append or retry. Different earlier semantic values conflict without sending an out-of-current-domain original through the current RFC 8785 encoder. A retained checkpoint, including its history and physical payload pack, uses its own original write provenance separately from its referenced event.
+
+
+  The strict-v4 format validators are mandatory and installed explicitly, never through optional jsonschema plugins. Timestamps adopt the shared CV-1101 check: every current and frozen DCH validator is pm_event_datetime.datetime_validator over the complete outer schema, so the registered RFC 3339 predicate runs through the validator. occurred_at_utc keeps the EventRecord profile (T or t, Z/z or a signed offset, any fraction length, year 0000 and legitimate offset-adjusted leap seconds); observed_at_utc and persisted_at_utc keep CV-253''s storage_utc_z profile through the inventory-classified envelope; the family ts and populated checkpoint retired_at_utc take the same predicate with their unchanged owner-schema terminal uppercase-Z pattern. A missing zone, space or wrong separator, invalid calendar field, hour 24, minute 60, false leap second, empty fraction and trailing LF refuse. Timestamp strings are never rewritten and are compared only as exact strings; no DCH-local timestamp grammar remains. PR URLs where declared fully match RFC 3986 HTTPS syntax, including valid percent escapes, reg-name or bracketed IPv6/IPvFuture host, numeric port and path/query/fragment grammar. Malformed brackets/hosts/escapes and whitespace refuse. No PR-host allowlist or new provider behavior is introduced. UUID contexts keep Storage''s enforced descriptor. Both payload editions, all three EventRecord timestamps and populated checkpoint retirement times have isolated format negatives; applicable PR payloads cover every malformed URL form.'
+gui_related: false
+gui_classification_reason: Owns event data and persistence contract.
+depends_on:
+- ACD-623
+- CV-643
+- SP-278
+- SP-286
+- SP-337
+unblocks: []
+acceptance_criteria:
+- Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership remains
+  absent.
+- Review-round-2 acceptance rejects the independently mutated forbidden policy, body, retry, source and outcome
+  cases applicable to this exact family; native evidence remains NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm_dch_events.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: event_authority_dch
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- DL-045; WAVE2 DCH 2026-11-04
+preserved_exact_tokens:
+- chat.thread_worktree_pre_merge_test_passed
+- PENDING_RETENTION_DECISION
+- SP-278
+- SP-286
+negative_constraints:
+- No event admission or native execution proof; no retention choice.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+
+### SP-624 — chat.thread_worktree_pre_merge_test_started
+
+Newly authored persistence/read contract for `chat.thread_worktree_pre_merge_test_started` 1.0.0 under DL-045, adopting ACD-624 and CV-644. Exact operating consumer `reader.chat.chat_thread_worktree_pre_merge_test_started@1.0.0` serves Pre-merge progress/gate and audit. Reuse exact projector `projector.storage.event_record_index@1.0.0` and checkpoint `event_record_index_checkpoint.v1:{storage_instance_id}`, schema `Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint`, version 1.0.0. Explicitly adopt SP-278 including DL-076 nine-field durable read token and current full-index generation/frontier validation; no persisted redb_snapshot_id. This consumer is an on-demand, exact-event filtered read of the generic index, not an independently advancing persistent filtered projection. SP-278 performs predecessor-frontier CAS with index rows atomically, complete captured coverage, source selection and current publication validation. Each read uses the actual live transaction token, full scope and canonical source/payload joins and current permissions; a stale, unsupported or unavailable token cannot publish a result. The generic checkpoint retains RP-PROJECTION-3GEN@1.0.0, without extending the source event lifetime. No new stored family/key/value is created by this reader, so no storage registry row is invented. Existing render pages, Tantivy and worktree binding projections remain their owner-defined stores and must be rebuilt under their own current checkpoints, not by adopting this audit reader as a new mutation path. Replay of this event through `reader.chat.chat_thread_worktree_pre_merge_test_started@1.0.0` returns original outcome evidence only: no git, API, test, send, chip creation, thread creation, notification, billing or deletion side effect. retention_policy_ref = PENDING_RETENTION_DECISION. Candidates: Case L-3 Chat content (thread lifetime, 250,000/thread) versus audit authority (indefinite, no count eviction); classification belongs to RT/Jared. No expiry/count deletion is authorized by this draft. Original source intent, canonical outcome/body and first receipt remain with Assistant Chat pre-merge test launch handler, under SP-286/CV-339; coherent backup/restore includes those dependencies and deletion records before any visible read. Missing originals are unavailable, never recaptured. Stored excerpts, command strings, errors, branch/path/PR text must be scrubbed before append; no credentials, inline message body or raw tool output. Every referenced body requires current authorization, deletion/hold checks and exact source Computer/root; retained audit metadata grants no access. This event adds no hold or purge exemption. Withdrawal cuts off this exact family before new operations; fence `reader.chat.chat_thread_worktree_pre_merge_test_started@1.0.0` and any affected domain projection, retain supported original-version historical lookup under current permissions, then rebuild a separately versioned successor from retained canonical sources and a fresh SP-278 token before publication. Never reset a cursor to zero as current, remint events, or delete seglog as withdrawal. No admission or native execution proof is implied.
+
+
+
+**chat.thread_worktree_pre_merge_test_started domain projection binding (newly authored owner contract).** Exact domain projector `projector.chat.chat_thread_worktree_pre_merge_test_started@1.0.0` 1.0.0 and operating consumer `reader.chat.chat_thread_worktree_pre_merge_test_started@1.0.0` explicitly adopt SP-278 and the same verified full-index source path. The family's separate checkpoint is `projector.checkpoint.dch.chat_thread_worktree_pre_merge_test_started.v1:{storage_instance_id}:{scope_partition}`, stored family `dch_chat_thread_worktree_pre_merge_test_started_checkpoint`, closed schema `Plans/dch_event_payloads/dch_chat_thread_worktree_pre_merge_test_started_checkpoint.schema.json#`, schema_id `pm.storage_value.dch_chat_thread_worktree_pre_merge_test_started_checkpoint.v1` 1.0.0. The nine-field durable token is copied exactly from SP-278/DL-076 without redb_snapshot_id. Consumer/projector versions are the suffixes in their stored constant IDs; no version is inferred from the payload. `last_sequence_id` and `last_event_id` identify the last applied exact-family EventRecord; `source_token` identifies complete inspected source coverage including nonmatching events. Publication identity is fresh entropy for a new shadow generation and frozen on retries; revision increments exactly once on successful CAS. The key joins storage_instance_id and scope_partition exactly. Application partition app is also bound to its source token's Server/instance and the event's Computer/thread, never to every null Project. The projector processes this family's records in verified source sequence order and performs only the transition of ACD-624. For `chat.message`, resolve and authorize its canonical typed message and build SP-338 pages and Tantivy fields once keyed by (thread_id,message_id); never reopen a deleted/superseded message. For thread lifecycle, take current lifecycle from the canonical revision and tombstone rather than treating an old historical event as current. Worktree fields update only the existing owner-defined binding/reverse/worktree projections, with old/new identity checks; no git effect is replayed. Selection events attach only existing authorized outcome/provenance refs to audit/pending-chip status; never create a chip or repeat a send during replay. Failure events retain actual original error evidence and cannot imply a successful outcome.
+
+For this exact family, publish projection mutation and checkpoint revision together in one redb transaction with predecessor revision/publication_id CAS. Where the target is Tantivy or the SP-338 page payload store, first durably stage and read back an immutable shadow commit, put its exact reference in projection_refs, then CAS-publish the pointer and checkpoint together. Readers serve only targets named by the current checkpoint's refs and same publication_id; old/partial targets never become visible by newest-file inference. Existing canonical thread/worktree state is not rewritten by a derived rebuild. Rebuild any shared target from all its admitted family sources in global source order into one shadow, never by replaying a whole bound family after an unbound family. A required unadmitted counterpart fences that target, not an inferred admission. Re-read canonical state/tombstones and current grants before publication. On source-generation change or failed CAS, discard unpublished target or retry from the unchanged verified prefix; never reuse a stale token. Missing or malformed derived bytes enter Q-DERIVED and governed rebuild, not source repair. Source loss requires canonical backup recovery.
+
+The checkpoint is MessagePack canonical, max 16 KiB under SP-340; oversized values use existing SP-337 reference storage, never an exemption. The closed history array stores at most two full prior checkpoint generations with first retired_at_utc and state retired; current fields name the selected generation. Reserve staged slots through the existing maintenance intent before source staging; a staged candidate counts against three even before it is visible in history. Retain at most three publication generations per exact key under RP-PROJECTION-3GEN@1.0.0; retirement starts at first committed replacement, retries do not reset it, 604800 seconds for eligible retired generations only, with holds/current/staged/live-ref protection. Reserve the slot first or disclose rebuild unavailability. Source events keep PENDING_RETENTION_DECISION; the checkpoint gives no source keepalive. Backup restores canonical source/custody/tombstones first; derived target/checkpoint is rebuilt and validated against the current full-index token before read. Withdrawal fences this projector and its domain readers in addition to the passive reader, sets checkpoint state withdrawn by CAS, and refuses all ordinary advances. Retained historical lookup uses original schema and current access checks; successor publication requires a separately versioned, complete shadow rebuild. Unsupported versions are unavailable, never rewritten in place.
+
+Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236 canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes, not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref, with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`. The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack. Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance, Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack bytes and index entry and verified readback before the referencing append can be acknowledged or its first receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed. Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants no new retention exemption.
+
+Checkpoint acceptance compares original source facts independently of the candidate: the outer storage_instance_id, durable-token storage_instance_id, source_selection storage_instance_id and actual source/root instance must be identical. Resolve the token checkpoint_key in the actual full-index root, its uniquely current generation JSON Pointer checkpoint_ref and exact same-instance event_record_index.v2@generation dataset. Require exact generation anchor, current frontier revision/digest and all source_selection fields against current synchronized source, including nonmatching same-generation appends; a shape-valid stale token cannot publish. The domain checkpoint key binds this instance and exact scope_partition. last_event_id/last_sequence_id join the actual exact-family EventRecord and its full-index row and source-value commitment; actual source Computer/thread/scope also join the published projection. Publication_id, revision, projection_refs and the full durable source token match the actual staged/read-back publication selected by the atomic checkpoint/pointer CAS. Independent source, token, selection, key/ref, event, dataset, publication and current-frontier mismatches refuse publication. Static fixture adapters model these joins; they do not prove native full-index coverage, redb transactions, CRC, source locks or durability.
+
+For chat.thread_worktree_pre_merge_test_started, the complete encoded checkpoint includes every retained history entry and projection reference. Measure that entire SP-236 value at the 16384-byte SP-340 boundary: 16384 bytes may be inline, 16385 bytes may not. A larger logical checkpoint keeps the same closed schema and bounds and uses SP-337; measure the stored reference/pointer too. Resolve the exact complete bytes through their BLAKE3/size/media-type reference and same-instance, exact-key/scope/family payload-pack index, with current authorization/deletion/hold access, durable bytes/index and verified readback before checkpoint publication. Externalizing the event body does not externalize this checkpoint. Every Storage-assigned identity and metadata field is checked against the original Storage record for the actual instance; no fixture/default instance supplies authority. Checkpoint source lookup resolves inline or referenced originals, validates the supported original envelope and Project/application payload edition, verifies their exact original source commitment and current access/withdrawal status, and then joins their source facts. Retained compatibility-reader originals, including projector_replay_only, remain readable after later live-state changes; only a new append/retry uses the current-writer policy. Unsupported, withdrawn, forged or foreign originals cannot publish. Newly written integer and boolean slots require their exact types before comparison or arithmetic; string numbers/booleans, null, arrays and nested objects confer no numeric or access authority. Current physical commitment/reference encoding canonicalizes integral numeric aliases and signed zero to the same shortest integer bytes; retained bytes retain their protected original recipe below. These are refinements of this family's existing SP-236/SP-278/SP-337/SP-340 contract, not a new retention or product decision.
+
+Before any source resolution or identity hashing, validate every Storage-instance context against Storage's own UUID descriptor in Plans/event_record_index_checkpoint.schema.json, including exact primitive type and UUID format. Empty, malformed, overlong, newline-suffixed and non-string instances refuse even when dependent IDs, keys and source commitments agree. Compare candidate, token, source-selection, payload-pack and index context against the independently read actual Storage record; a caller context, default instance or coherent forged context supplies no authority. Verify Storage-assigned sequence and timestamp fields against that exact original record commitment before reading. A retained original remains governed by its supported edition and current custody, not later lifecycle state.
+
+For new writes and current identity/idempotency inputs, this family selects strict-v4 exact integer types with the owner-declared domain of each field. Storage sequence_id and its last_sequence_id copies, frontier_revision, selected_segment_generation, manifest_generation, recovery_epoch and pack byte_size retain exact uint64 values 0 through 18446744073709551615; no 2^53 ceiling applies to Storage metadata. Publication revision and logical payload integers retain their existing owner minima and maxima, with no invented DCH safe-integer cap. Declared integer slots reject runtime float/string/bool/null/array/object substitutes except explicitly nullable slots. Storage metadata is excluded from the producer-semantic projection as already specified. The producer route is the CV-1100 qualified RFC 8785 encoding of the unchanged CV-317 producer projection (shared producer_semantic_bytes/producer_semantic_digest); an unsupported exact producer input is a structured route refusal, without narrowing its logical owner domain, rounding or stringification. Physical bytes follow SP-236 through the shared SP-1100 codec (storage_value_bytes, EVENT_VALUE profile): float type, minimal exact float width and signed zero are preserved, so a lexical alias never shares an integer's bytes, and the exact integer slots refuse every alias; invalid JSON 01 refuses under the CV-1100 current parser. Retained-recipe dispatch composes the shared SP-1101 RetainedDispatcher and timestamps use the shared CV-1101 check, as the retained-original and format paragraphs state. Test Storage write/retry inputs at 2^53, 2^60 and uint64 maximum, and refuse overflow, negative and wrong-type metadata independently.
+
+Retained and compatibility originals use the schema, numeric domain, runtime type policy, format validator and physical encoder in force when written. The single selector record_number_rule() owns this dispatch on passive history, SP-337 materialization/reference verification, full-index source/checkpoint validation, checkpoint physical storage, saved-original retry comparison and terminal retained-start lookup. New/current inputs select strict-v4. For retained sources, independently read protected Storage write-receipt provenance binds actual storage_instance_id, exact original source-value SHA-256 and recipe_id; it is committed with the original write and survives restore with that source. Candidate fields, caller version/recipe flags, mutable live state and payload content cannot select or enroll an earlier recipe. Verify any claim against that independently authenticated provenance, then verify the exact original bytes with the selected recipe. Missing earlier provenance is unavailable under that earlier recipe, never a guessed downgrade: an original of a Store outside the sealed write custody refuses as unavailable and a receipt naming a recipe with no installed frozen verifier refuses as unsupported, with no fallback to another recipe; within a custody Store an original without a legacy receipt was written by the current strict-v4 writer. Each retained read composes the shared SP-1101 RetainedDispatcher once: one owner selection, no caller override and no current-then-legacy probing, and the installed frozen verifier of that exact recipe tuple (pinned to the recipe's recorded original schema hashes) checks the original. Preserve raw-v1 (d36809af original MessagePack numeric types), normalized-v2 (a785466d normalized integral floats with the original uncapped integer domain), and strict-v3 (c21fa62e safe integers; its original checker skipped date-time and URI formats); Plans/dch_retained_recipes.json pins their exact original schemas and source revisions. A skipped format check never authenticates invalid history (CV-1101, SP-1101): frozen validators apply the shared date-time predicate and CV-253 to the recipe's pinned original resources, so a retained timestamp CV-1101 refuses is owner-invalid and refuses, while owner-valid lowercase, leap-second and long-fraction history stays readable with its exact spelling; the skipped URI check is preserved. Never re-encode raw-v1 bytes under a later normalization to verify their commitment. Plans/dch_write_recipe_receipts.json is an independent synthetic Storage receipt adapter, not native authentication evidence. Every earlier-valid retained numeric or format record stays readable with current authorization, deletion/hold access, withdrawal and actual-source identity checks. A forged source or recipe selection still refuses. Current derived checkpoints may copy an old event sequence into their exact new integer representation; the original retained event/index sequence and commitment remain unchanged. A retry verifies its saved original through the same historical schema/byte/custody reader before comparison; its incoming input stays strict-v4, and a replay-only compatibility original still cannot authorize a current append or retry. Different earlier semantic values conflict without sending an out-of-current-domain original through the current RFC 8785 encoder. A retained checkpoint, including its history and physical payload pack, uses its own original write provenance separately from its referenced event.
+
+The strict-v4 format validators are mandatory and installed explicitly, never through optional jsonschema plugins. Timestamps adopt the shared CV-1101 check: every current and frozen DCH validator is pm_event_datetime.datetime_validator over the complete outer schema, so the registered RFC 3339 predicate runs through the validator. occurred_at_utc keeps the EventRecord profile (T or t, Z/z or a signed offset, any fraction length, year 0000 and legitimate offset-adjusted leap seconds); observed_at_utc and persisted_at_utc keep CV-253's storage_utc_z profile through the inventory-classified envelope; the family ts and populated checkpoint retired_at_utc take the same predicate with their unchanged owner-schema terminal uppercase-Z pattern. A missing zone, space or wrong separator, invalid calendar field, hour 24, minute 60, false leap second, empty fraction and trailing LF refuse. Timestamp strings are never rewritten and are compared only as exact strings; no DCH-local timestamp grammar remains. PR URLs where declared fully match RFC 3986 HTTPS syntax, including valid percent escapes, reg-name or bracketed IPv6/IPvFuture host, numeric port and path/query/fragment grammar. Malformed brackets/hosts/escapes and whitespace refuse. No PR-host allowlist or new provider behavior is introduced. UUID contexts keep Storage's enforced descriptor. Both payload editions, all three EventRecord timestamps and populated checkpoint retirement times have isolated format negatives; applicable PR payloads cover every malformed URL form.
+
+The terminal-to-started join first resolves the retained started EventRecord in its independently read actual Storage instance, validates its supported original envelope and Project/application payload edition, and verifies the exact original Storage commitment and current retention, authorization, deletion, hold and withdrawal facts. Resolve inline or verified SP-337 referenced bodies before comparing operation, scope, Computer, thread, worktree, command, strategy and actual outcome. Accept starts that were valid when written, including retained projector_replay_only compatibility history and a valid second Storage instance after live-state changes; a current-writer guard must never gate this historical original. Forged, withdrawn, foreign, unsupported or unavailable starts refuse. No caller-supplied started payload or fixture default supplies authority.
+
+```yaml
+plan_unit_id: SP-624
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: '### SP-624 — chat.thread_worktree_pre_merge_test_started
+
+
+  Newly authored persistence/read contract for `chat.thread_worktree_pre_merge_test_started` 1.0.0 under DL-045,
+  adopting ACD-624 and CV-644. Exact operating consumer `reader.chat.chat_thread_worktree_pre_merge_test_started@1.0.0`
+  serves Pre-merge progress/gate and audit. Reuse exact projector `projector.storage.event_record_index@1.0.0`
+  and checkpoint `event_record_index_checkpoint.v1:{storage_instance_id}`, schema `Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint`,
+  version 1.0.0. Explicitly adopt SP-278 including DL-076 nine-field durable read token and current full-index
+  generation/frontier validation; no persisted redb_snapshot_id. This consumer is an on-demand, exact-event
+  filtered read of the generic index, not an independently advancing persistent filtered projection. SP-278
+  performs predecessor-frontier CAS with index rows atomically, complete captured coverage, source selection
+  and current publication validation. Each read uses the actual live transaction token, full scope and canonical
+  source/payload joins and current permissions; a stale, unsupported or unavailable token cannot publish a
+  result. The generic checkpoint retains RP-PROJECTION-3GEN@1.0.0, without extending the source event lifetime.
+  No new stored family/key/value is created by this reader, so no storage registry row is invented. Existing
+  render pages, Tantivy and worktree binding projections remain their owner-defined stores and must be rebuilt
+  under their own current checkpoints, not by adopting this audit reader as a new mutation path. Replay of
+  this event through `reader.chat.chat_thread_worktree_pre_merge_test_started@1.0.0` returns original outcome
+  evidence only: no git, API, test, send, chip creation, thread creation, notification, billing or deletion
+  side effect. retention_policy_ref = PENDING_RETENTION_DECISION. Candidates: Case L-3 Chat content (thread
+  lifetime, 250,000/thread) versus audit authority (indefinite, no count eviction); classification belongs
+  to RT/Jared. No expiry/count deletion is authorized by this draft. Original source intent, canonical outcome/body
+  and first receipt remain with Assistant Chat pre-merge test launch handler, under SP-286/CV-339; coherent
+  backup/restore includes those dependencies and deletion records before any visible read. Missing originals
+  are unavailable, never recaptured. Stored excerpts, command strings, errors, branch/path/PR text must be
+  scrubbed before append; no credentials, inline message body or raw tool output. Every referenced body requires
+  current authorization, deletion/hold checks and exact source Computer/root; retained audit metadata grants
+  no access. This event adds no hold or purge exemption. Withdrawal cuts off this exact family before new operations;
+  fence `reader.chat.chat_thread_worktree_pre_merge_test_started@1.0.0` and any affected domain projection,
+  retain supported original-version historical lookup under current permissions, then rebuild a separately
+  versioned successor from retained canonical sources and a fresh SP-278 token before publication. Never reset
+  a cursor to zero as current, remint events, or delete seglog as withdrawal. No admission or native execution
+  proof is implied.
+
+
+
+
+  **chat.thread_worktree_pre_merge_test_started domain projection binding (newly authored owner contract).**
+  Exact domain projector `projector.chat.chat_thread_worktree_pre_merge_test_started@1.0.0` 1.0.0 and operating
+  consumer `reader.chat.chat_thread_worktree_pre_merge_test_started@1.0.0` explicitly adopt SP-278 and the
+  same verified full-index source path. The family''s separate checkpoint is `projector.checkpoint.dch.chat_thread_worktree_pre_merge_test_started.v1:{storage_instance_id}:{scope_partition}`,
+  stored family `dch_chat_thread_worktree_pre_merge_test_started_checkpoint`, closed schema `Plans/dch_event_payloads/dch_chat_thread_worktree_pre_merge_test_started_checkpoint.schema.json#`,
+  schema_id `pm.storage_value.dch_chat_thread_worktree_pre_merge_test_started_checkpoint.v1` 1.0.0. The nine-field
+  durable token is copied exactly from SP-278/DL-076 without redb_snapshot_id. Consumer/projector versions
+  are the suffixes in their stored constant IDs; no version is inferred from the payload. `last_sequence_id`
+  and `last_event_id` identify the last applied exact-family EventRecord; `source_token` identifies complete
+  inspected source coverage including nonmatching events. Publication identity is fresh entropy for a new shadow
+  generation and frozen on retries; revision increments exactly once on successful CAS. The key joins storage_instance_id
+  and scope_partition exactly. Application partition app is also bound to its source token''s Server/instance
+  and the event''s Computer/thread, never to every null Project. The projector processes this family''s records
+  in verified source sequence order and performs only the transition of ACD-624. For `chat.message`, resolve
+  and authorize its canonical typed message and build SP-338 pages and Tantivy fields once keyed by (thread_id,message_id);
+  never reopen a deleted/superseded message. For thread lifecycle, take current lifecycle from the canonical
+  revision and tombstone rather than treating an old historical event as current. Worktree fields update only
+  the existing owner-defined binding/reverse/worktree projections, with old/new identity checks; no git effect
+  is replayed. Selection events attach only existing authorized outcome/provenance refs to audit/pending-chip
+  status; never create a chip or repeat a send during replay. Failure events retain actual original error evidence
+  and cannot imply a successful outcome.
+
+
+  For this exact family, publish projection mutation and checkpoint revision together in one redb transaction
+  with predecessor revision/publication_id CAS. Where the target is Tantivy or the SP-338 page payload store,
+  first durably stage and read back an immutable shadow commit, put its exact reference in projection_refs,
+  then CAS-publish the pointer and checkpoint together. Readers serve only targets named by the current checkpoint''s
+  refs and same publication_id; old/partial targets never become visible by newest-file inference. Existing
+  canonical thread/worktree state is not rewritten by a derived rebuild. Rebuild any shared target from all
+  its admitted family sources in global source order into one shadow, never by replaying a whole bound family
+  after an unbound family. A required unadmitted counterpart fences that target, not an inferred admission.
+  Re-read canonical state/tombstones and current grants before publication. On source-generation change or
+  failed CAS, discard unpublished target or retry from the unchanged verified prefix; never reuse a stale token.
+  Missing or malformed derived bytes enter Q-DERIVED and governed rebuild, not source repair. Source loss requires
+  canonical backup recovery.
+
+
+  The checkpoint is MessagePack canonical, max 16 KiB under SP-340; oversized values use existing SP-337 reference
+  storage, never an exemption. The closed history array stores at most two full prior checkpoint generations
+  with first retired_at_utc and state retired; current fields name the selected generation. Reserve staged
+  slots through the existing maintenance intent before source staging; a staged candidate counts against three
+  even before it is visible in history. Retain at most three publication generations per exact key under RP-PROJECTION-3GEN@1.0.0;
+  retirement starts at first committed replacement, retries do not reset it, 604800 seconds for eligible retired
+  generations only, with holds/current/staged/live-ref protection. Reserve the slot first or disclose rebuild
+  unavailability. Source events keep PENDING_RETENTION_DECISION; the checkpoint gives no source keepalive.
+  Backup restores canonical source/custody/tombstones first; derived target/checkpoint is rebuilt and validated
+  against the current full-index token before read. Withdrawal fences this projector and its domain readers
+  in addition to the passive reader, sets checkpoint state withdrawn by CAS, and refuses all ordinary advances.
+  Retained historical lookup uses original schema and current access checks; successor publication requires
+  a separately versioned, complete shadow rebuild. Unsupported versions are unavailable, never rewritten in
+  place.
+
+
+  Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application
+  payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236
+  canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes,
+  not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized
+  inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored
+  string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref,
+  with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`.
+  The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack.
+  Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time
+  join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance,
+  Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack
+  bytes and index entry and verified readback before the referencing append can be acknowledged or its first
+  receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence
+  refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed.
+  Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants
+  no new retention exemption.
+
+
+  Checkpoint acceptance compares original source facts independently of the candidate: the outer storage_instance_id,
+  durable-token storage_instance_id, source_selection storage_instance_id and actual source/root instance must
+  be identical. Resolve the token checkpoint_key in the actual full-index root, its uniquely current generation
+  JSON Pointer checkpoint_ref and exact same-instance event_record_index.v2@generation dataset. Require exact
+  generation anchor, current frontier revision/digest and all source_selection fields against current synchronized
+  source, including nonmatching same-generation appends; a shape-valid stale token cannot publish. The domain
+  checkpoint key binds this instance and exact scope_partition. last_event_id/last_sequence_id join the actual
+  exact-family EventRecord and its full-index row and source-value commitment; actual source Computer/thread/scope
+  also join the published projection. Publication_id, revision, projection_refs and the full durable source
+  token match the actual staged/read-back publication selected by the atomic checkpoint/pointer CAS. Independent
+  source, token, selection, key/ref, event, dataset, publication and current-frontier mismatches refuse publication.
+  Static fixture adapters model these joins; they do not prove native full-index coverage, redb transactions,
+  CRC, source locks or durability.
+
+
+  For chat.thread_worktree_pre_merge_test_started, the complete encoded checkpoint includes every retained
+  history entry and projection reference. Measure that entire SP-236 value at the 16384-byte SP-340 boundary:
+  16384 bytes may be inline, 16385 bytes may not. A larger logical checkpoint keeps the same closed schema
+  and bounds and uses SP-337; measure the stored reference/pointer too. Resolve the exact complete bytes
+  through their BLAKE3/size/media-type reference and same-instance, exact-key/scope/family payload-pack
+  index, with current authorization/deletion/hold access, durable bytes/index and verified readback before
+  checkpoint publication. Externalizing the event body does not externalize this checkpoint. Every Storage-assigned
+  identity and metadata field is checked against the original Storage record for the actual instance;
+  no fixture/default instance supplies authority. Checkpoint source lookup resolves inline or referenced
+  originals, validates the supported original envelope and Project/application payload edition, verifies
+  their exact original source commitment and current access/withdrawal status, and then joins their source
+  facts. Retained compatibility-reader originals, including projector_replay_only, remain readable after
+  later live-state changes; only a new append/retry uses the current-writer policy. Unsupported, withdrawn,
+  forged or foreign originals cannot publish. Newly written integer and boolean slots require their exact types before comparison or arithmetic; string numbers/booleans, null, arrays and nested objects confer no
+  numeric or access authority. Current physical commitment/reference encoding canonicalizes integral numeric aliases and signed zero to the same shortest integer bytes; retained bytes retain their protected original recipe below. These are refinements of this family''s existing SP-236/SP-278/SP-337/SP-340 contract, not
+  a new retention or product decision.
+
+
+  Before any source resolution or identity hashing, validate every Storage-instance context against Storage''s own UUID descriptor in Plans/event_record_index_checkpoint.schema.json, including exact primitive type and UUID format. Empty, malformed, overlong, newline-suffixed and non-string instances refuse even when dependent IDs, keys and source commitments agree. Compare candidate, token, source-selection, payload-pack and index context against the independently read actual Storage record; a caller context, default instance or coherent forged context supplies no authority. Verify Storage-assigned sequence and timestamp fields against that exact original record commitment before reading. A retained original remains governed by its supported edition and current custody, not later lifecycle state.
+
+
+  For new writes and current identity/idempotency inputs, this family selects strict-v4 exact integer types with the owner-declared domain of each field. Storage sequence_id and its last_sequence_id copies, frontier_revision, selected_segment_generation, manifest_generation, recovery_epoch and pack byte_size retain exact uint64 values 0 through 18446744073709551615; no 2^53 ceiling applies to Storage metadata. Publication revision and logical payload integers retain their existing owner minima and maxima, with no invented DCH safe-integer cap. Declared integer slots reject runtime float/string/bool/null/array/object substitutes except explicitly nullable slots. Storage metadata is excluded from the producer-semantic projection as already specified. The producer route is the CV-1100 qualified RFC 8785 encoding of the unchanged CV-317 producer projection (shared producer_semantic_bytes/producer_semantic_digest); an unsupported exact producer input is a structured route refusal, without narrowing its logical owner domain, rounding or stringification. Physical bytes follow SP-236 through the shared SP-1100 codec (storage_value_bytes, EVENT_VALUE profile): float type, minimal exact float width and signed zero are preserved, so a lexical alias never shares an integer''s bytes, and the exact integer slots refuse every alias; invalid JSON 01 refuses under the CV-1100 current parser. Retained-recipe dispatch composes the shared SP-1101 RetainedDispatcher and timestamps use the shared CV-1101 check, as the retained-original and format paragraphs state. Test Storage write/retry inputs at 2^53, 2^60 and uint64 maximum, and refuse overflow, negative and wrong-type metadata independently.
+
+
+  Retained and compatibility originals use the schema, numeric domain, runtime type policy, format validator and physical encoder in force when written. The single selector record_number_rule() owns this dispatch on passive history, SP-337 materialization/reference verification, full-index source/checkpoint validation, checkpoint physical storage, saved-original retry comparison and terminal retained-start lookup. New/current inputs select strict-v4. For retained sources, independently read protected Storage write-receipt provenance binds actual storage_instance_id, exact original source-value SHA-256 and recipe_id; it is committed with the original write and survives restore with that source. Candidate fields, caller version/recipe flags, mutable live state and payload content cannot select or enroll an earlier recipe. Verify any claim against that independently authenticated provenance, then verify the exact original bytes with the selected recipe. Missing earlier provenance is unavailable under that earlier recipe, never a guessed downgrade: an original of a Store outside the sealed write custody refuses as unavailable and a receipt naming a recipe with no installed frozen verifier refuses as unsupported, with no fallback to another recipe; within a custody Store an original without a legacy receipt was written by the current strict-v4 writer. Each retained read composes the shared SP-1101 RetainedDispatcher once: one owner selection, no caller override and no current-then-legacy probing, and the installed frozen verifier of that exact recipe tuple (pinned to the recipe''s recorded original schema hashes) checks the original. Preserve raw-v1 (d36809af original MessagePack numeric types), normalized-v2 (a785466d normalized integral floats with the original uncapped integer domain), and strict-v3 (c21fa62e safe integers; its original checker skipped date-time and URI formats); Plans/dch_retained_recipes.json pins their exact original schemas and source revisions. A skipped format check never authenticates invalid history (CV-1101, SP-1101): frozen validators apply the shared date-time predicate and CV-253 to the recipe''s pinned original resources, so a retained timestamp CV-1101 refuses is owner-invalid and refuses, while owner-valid lowercase, leap-second and long-fraction history stays readable with its exact spelling; the skipped URI check is preserved. Never re-encode raw-v1 bytes under a later normalization to verify their commitment. Plans/dch_write_recipe_receipts.json is an independent synthetic Storage receipt adapter, not native authentication evidence. Every earlier-valid retained numeric or format record stays readable with current authorization, deletion/hold access, withdrawal and actual-source identity checks. A forged source or recipe selection still refuses. Current derived checkpoints may copy an old event sequence into their exact new integer representation; the original retained event/index sequence and commitment remain unchanged. A retry verifies its saved original through the same historical schema/byte/custody reader before comparison; its incoming input stays strict-v4, and a replay-only compatibility original still cannot authorize a current append or retry. Different earlier semantic values conflict without sending an out-of-current-domain original through the current RFC 8785 encoder. A retained checkpoint, including its history and physical payload pack, uses its own original write provenance separately from its referenced event.
+
+
+  The strict-v4 format validators are mandatory and installed explicitly, never through optional jsonschema plugins. Timestamps adopt the shared CV-1101 check: every current and frozen DCH validator is pm_event_datetime.datetime_validator over the complete outer schema, so the registered RFC 3339 predicate runs through the validator. occurred_at_utc keeps the EventRecord profile (T or t, Z/z or a signed offset, any fraction length, year 0000 and legitimate offset-adjusted leap seconds); observed_at_utc and persisted_at_utc keep CV-253''s storage_utc_z profile through the inventory-classified envelope; the family ts and populated checkpoint retired_at_utc take the same predicate with their unchanged owner-schema terminal uppercase-Z pattern. A missing zone, space or wrong separator, invalid calendar field, hour 24, minute 60, false leap second, empty fraction and trailing LF refuse. Timestamp strings are never rewritten and are compared only as exact strings; no DCH-local timestamp grammar remains. PR URLs where declared fully match RFC 3986 HTTPS syntax, including valid percent escapes, reg-name or bracketed IPv6/IPvFuture host, numeric port and path/query/fragment grammar. Malformed brackets/hosts/escapes and whitespace refuse. No PR-host allowlist or new provider behavior is introduced. UUID contexts keep Storage''s enforced descriptor. Both payload editions, all three EventRecord timestamps and populated checkpoint retirement times have isolated format negatives; applicable PR payloads cover every malformed URL form.
+
+
+  The terminal-to-started join first resolves the retained started EventRecord in its independently read actual Storage instance, validates its supported original envelope and Project/application payload edition, and verifies the exact original Storage commitment and current retention, authorization, deletion, hold and withdrawal facts. Resolve inline or verified SP-337 referenced bodies before comparing operation, scope, Computer, thread, worktree, command, strategy and actual outcome. Accept starts that were valid when written, including retained projector_replay_only compatibility history and a valid second Storage instance after live-state changes; a current-writer guard must never gate this historical original. Forged, withdrawn, foreign, unsupported or unavailable starts refuse. No caller-supplied started payload or fixture default supplies authority.'
+gui_related: false
+gui_classification_reason: Owns event data and persistence contract.
+depends_on:
+- ACD-624
+- CV-644
+- SP-278
+- SP-286
+- SP-337
+unblocks: []
+acceptance_criteria:
+- Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership remains
+  absent.
+- Review-round-2 acceptance rejects the independently mutated forbidden policy, body, retry, source and outcome
+  cases applicable to this exact family; native evidence remains NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm_dch_events.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: event_authority_dch
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- DL-045; WAVE2 DCH 2026-11-04
+preserved_exact_tokens:
+- chat.thread_worktree_pre_merge_test_started
+- PENDING_RETENTION_DECISION
+- SP-278
+- SP-286
+negative_constraints:
+- No event admission or native execution proof; no retention choice.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+
+### SP-625 — chat.thread_worktree_renamed
+
+Newly authored persistence/read contract for `chat.thread_worktree_renamed` 1.0.0 under DL-045, adopting ACD-625 and CV-645. Exact operating consumer `reader.chat.chat_thread_worktree_renamed@1.0.0` serves Chat header/selector and Source Control worktree label. Reuse exact projector `projector.storage.event_record_index@1.0.0` and checkpoint `event_record_index_checkpoint.v1:{storage_instance_id}`, schema `Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint`, version 1.0.0. Explicitly adopt SP-278 including DL-076 nine-field durable read token and current full-index generation/frontier validation; no persisted redb_snapshot_id. This consumer is an on-demand, exact-event filtered read of the generic index, not an independently advancing persistent filtered projection. SP-278 performs predecessor-frontier CAS with index rows atomically, complete captured coverage, source selection and current publication validation. Each read uses the actual live transaction token, full scope and canonical source/payload joins and current permissions; a stale, unsupported or unavailable token cannot publish a result. The generic checkpoint retains RP-PROJECTION-3GEN@1.0.0, without extending the source event lifetime. No new stored family/key/value is created by this reader, so no storage registry row is invented. Existing render pages, Tantivy and worktree binding projections remain their owner-defined stores and must be rebuilt under their own current checkpoints, not by adopting this audit reader as a new mutation path. Replay of this event through `reader.chat.chat_thread_worktree_renamed@1.0.0` returns original outcome evidence only: no git, API, test, send, chip creation, thread creation, notification, billing or deletion side effect. retention_policy_ref = PENDING_RETENTION_DECISION. Candidates: Case L-3 Chat content (thread lifetime, 250,000/thread) versus audit authority (indefinite, no count eviction); classification belongs to RT/Jared. No expiry/count deletion is authorized by this draft. Original source intent, canonical outcome/body and first receipt remain with Assistant Chat title-generated worktree rename completion handler, under SP-286/CV-339; coherent backup/restore includes those dependencies and deletion records before any visible read. Missing originals are unavailable, never recaptured. Stored excerpts, command strings, errors, branch/path/PR text must be scrubbed before append; no credentials, inline message body or raw tool output. Every referenced body requires current authorization, deletion/hold checks and exact source Computer/root; retained audit metadata grants no access. This event adds no hold or purge exemption. Withdrawal cuts off this exact family before new operations; fence `reader.chat.chat_thread_worktree_renamed@1.0.0` and any affected domain projection, retain supported original-version historical lookup under current permissions, then rebuild a separately versioned successor from retained canonical sources and a fresh SP-278 token before publication. Never reset a cursor to zero as current, remint events, or delete seglog as withdrawal. No admission or native execution proof is implied.
+
+
+
+**chat.thread_worktree_renamed domain projection binding (newly authored owner contract).** Exact domain projector `projector.chat.chat_thread_worktree_renamed@1.0.0` 1.0.0 and operating consumer `reader.chat.chat_thread_worktree_renamed@1.0.0` explicitly adopt SP-278 and the same verified full-index source path. The family's separate checkpoint is `projector.checkpoint.dch.chat_thread_worktree_renamed.v1:{storage_instance_id}:{scope_partition}`, stored family `dch_chat_thread_worktree_renamed_checkpoint`, closed schema `Plans/dch_event_payloads/dch_chat_thread_worktree_renamed_checkpoint.schema.json#`, schema_id `pm.storage_value.dch_chat_thread_worktree_renamed_checkpoint.v1` 1.0.0. The nine-field durable token is copied exactly from SP-278/DL-076 without redb_snapshot_id. Consumer/projector versions are the suffixes in their stored constant IDs; no version is inferred from the payload. `last_sequence_id` and `last_event_id` identify the last applied exact-family EventRecord; `source_token` identifies complete inspected source coverage including nonmatching events. Publication identity is fresh entropy for a new shadow generation and frozen on retries; revision increments exactly once on successful CAS. The key joins storage_instance_id and scope_partition exactly. Application partition app is also bound to its source token's Server/instance and the event's Computer/thread, never to every null Project. The projector processes this family's records in verified source sequence order and performs only the transition of ACD-625. For `chat.message`, resolve and authorize its canonical typed message and build SP-338 pages and Tantivy fields once keyed by (thread_id,message_id); never reopen a deleted/superseded message. For thread lifecycle, take current lifecycle from the canonical revision and tombstone rather than treating an old historical event as current. Worktree fields update only the existing owner-defined binding/reverse/worktree projections, with old/new identity checks; no git effect is replayed. Selection events attach only existing authorized outcome/provenance refs to audit/pending-chip status; never create a chip or repeat a send during replay. Failure events retain actual original error evidence and cannot imply a successful outcome.
+
+For this exact family, publish projection mutation and checkpoint revision together in one redb transaction with predecessor revision/publication_id CAS. Where the target is Tantivy or the SP-338 page payload store, first durably stage and read back an immutable shadow commit, put its exact reference in projection_refs, then CAS-publish the pointer and checkpoint together. Readers serve only targets named by the current checkpoint's refs and same publication_id; old/partial targets never become visible by newest-file inference. Existing canonical thread/worktree state is not rewritten by a derived rebuild. Rebuild any shared target from all its admitted family sources in global source order into one shadow, never by replaying a whole bound family after an unbound family. A required unadmitted counterpart fences that target, not an inferred admission. Re-read canonical state/tombstones and current grants before publication. On source-generation change or failed CAS, discard unpublished target or retry from the unchanged verified prefix; never reuse a stale token. Missing or malformed derived bytes enter Q-DERIVED and governed rebuild, not source repair. Source loss requires canonical backup recovery.
+
+The checkpoint is MessagePack canonical, max 16 KiB under SP-340; oversized values use existing SP-337 reference storage, never an exemption. The closed history array stores at most two full prior checkpoint generations with first retired_at_utc and state retired; current fields name the selected generation. Reserve staged slots through the existing maintenance intent before source staging; a staged candidate counts against three even before it is visible in history. Retain at most three publication generations per exact key under RP-PROJECTION-3GEN@1.0.0; retirement starts at first committed replacement, retries do not reset it, 604800 seconds for eligible retired generations only, with holds/current/staged/live-ref protection. Reserve the slot first or disclose rebuild unavailability. Source events keep PENDING_RETENTION_DECISION; the checkpoint gives no source keepalive. Backup restores canonical source/custody/tombstones first; derived target/checkpoint is rebuilt and validated against the current full-index token before read. Withdrawal fences this projector and its domain readers in addition to the passive reader, sets checkpoint state withdrawn by CAS, and refuses all ordinary advances. Retained historical lookup uses original schema and current access checks; successor publication requires a separately versioned, complete shadow rebuild. Unsupported versions are unavailable, never rewritten in place.
+
+Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236 canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes, not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref, with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`. The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack. Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance, Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack bytes and index entry and verified readback before the referencing append can be acknowledged or its first receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed. Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants no new retention exemption.
+
+Checkpoint acceptance compares original source facts independently of the candidate: the outer storage_instance_id, durable-token storage_instance_id, source_selection storage_instance_id and actual source/root instance must be identical. Resolve the token checkpoint_key in the actual full-index root, its uniquely current generation JSON Pointer checkpoint_ref and exact same-instance event_record_index.v2@generation dataset. Require exact generation anchor, current frontier revision/digest and all source_selection fields against current synchronized source, including nonmatching same-generation appends; a shape-valid stale token cannot publish. The domain checkpoint key binds this instance and exact scope_partition. last_event_id/last_sequence_id join the actual exact-family EventRecord and its full-index row and source-value commitment; actual source Computer/thread/scope also join the published projection. Publication_id, revision, projection_refs and the full durable source token match the actual staged/read-back publication selected by the atomic checkpoint/pointer CAS. Independent source, token, selection, key/ref, event, dataset, publication and current-frontier mismatches refuse publication. Static fixture adapters model these joins; they do not prove native full-index coverage, redb transactions, CRC, source locks or durability.
+
+For chat.thread_worktree_renamed, the complete encoded checkpoint includes every retained history entry and projection reference. Measure that entire SP-236 value at the 16384-byte SP-340 boundary: 16384 bytes may be inline, 16385 bytes may not. A larger logical checkpoint keeps the same closed schema and bounds and uses SP-337; measure the stored reference/pointer too. Resolve the exact complete bytes through their BLAKE3/size/media-type reference and same-instance, exact-key/scope/family payload-pack index, with current authorization/deletion/hold access, durable bytes/index and verified readback before checkpoint publication. Externalizing the event body does not externalize this checkpoint. Every Storage-assigned identity and metadata field is checked against the original Storage record for the actual instance; no fixture/default instance supplies authority. Checkpoint source lookup resolves inline or referenced originals, validates the supported original envelope and Project/application payload edition, verifies their exact original source commitment and current access/withdrawal status, and then joins their source facts. Retained compatibility-reader originals, including projector_replay_only, remain readable after later live-state changes; only a new append/retry uses the current-writer policy. Unsupported, withdrawn, forged or foreign originals cannot publish. Newly written integer and boolean slots require their exact types before comparison or arithmetic; string numbers/booleans, null, arrays and nested objects confer no numeric or access authority. Current physical commitment/reference encoding canonicalizes integral numeric aliases and signed zero to the same shortest integer bytes; retained bytes retain their protected original recipe below. These are refinements of this family's existing SP-236/SP-278/SP-337/SP-340 contract, not a new retention or product decision.
+
+Before any source resolution or identity hashing, validate every Storage-instance context against Storage's own UUID descriptor in Plans/event_record_index_checkpoint.schema.json, including exact primitive type and UUID format. Empty, malformed, overlong, newline-suffixed and non-string instances refuse even when dependent IDs, keys and source commitments agree. Compare candidate, token, source-selection, payload-pack and index context against the independently read actual Storage record; a caller context, default instance or coherent forged context supplies no authority. Verify Storage-assigned sequence and timestamp fields against that exact original record commitment before reading. A retained original remains governed by its supported edition and current custody, not later lifecycle state.
+
+For new writes and current identity/idempotency inputs, this family selects strict-v4 exact integer types with the owner-declared domain of each field. Storage sequence_id and its last_sequence_id copies, frontier_revision, selected_segment_generation, manifest_generation, recovery_epoch and pack byte_size retain exact uint64 values 0 through 18446744073709551615; no 2^53 ceiling applies to Storage metadata. Publication revision and logical payload integers retain their existing owner minima and maxima, with no invented DCH safe-integer cap. Declared integer slots reject runtime float/string/bool/null/array/object substitutes except explicitly nullable slots. Storage metadata is excluded from the producer-semantic projection as already specified. The producer route is the CV-1100 qualified RFC 8785 encoding of the unchanged CV-317 producer projection (shared producer_semantic_bytes/producer_semantic_digest); an unsupported exact producer input is a structured route refusal, without narrowing its logical owner domain, rounding or stringification. Physical bytes follow SP-236 through the shared SP-1100 codec (storage_value_bytes, EVENT_VALUE profile): float type, minimal exact float width and signed zero are preserved, so a lexical alias never shares an integer's bytes, and the exact integer slots refuse every alias; invalid JSON 01 refuses under the CV-1100 current parser. Retained-recipe dispatch composes the shared SP-1101 RetainedDispatcher and timestamps use the shared CV-1101 check, as the retained-original and format paragraphs state. Test Storage write/retry inputs at 2^53, 2^60 and uint64 maximum, and refuse overflow, negative and wrong-type metadata independently.
+
+Retained and compatibility originals use the schema, numeric domain, runtime type policy, format validator and physical encoder in force when written. The single selector record_number_rule() owns this dispatch on passive history, SP-337 materialization/reference verification, full-index source/checkpoint validation, checkpoint physical storage, saved-original retry comparison and terminal retained-start lookup. New/current inputs select strict-v4. For retained sources, independently read protected Storage write-receipt provenance binds actual storage_instance_id, exact original source-value SHA-256 and recipe_id; it is committed with the original write and survives restore with that source. Candidate fields, caller version/recipe flags, mutable live state and payload content cannot select or enroll an earlier recipe. Verify any claim against that independently authenticated provenance, then verify the exact original bytes with the selected recipe. Missing earlier provenance is unavailable under that earlier recipe, never a guessed downgrade: an original of a Store outside the sealed write custody refuses as unavailable and a receipt naming a recipe with no installed frozen verifier refuses as unsupported, with no fallback to another recipe; within a custody Store an original without a legacy receipt was written by the current strict-v4 writer. Each retained read composes the shared SP-1101 RetainedDispatcher once: one owner selection, no caller override and no current-then-legacy probing, and the installed frozen verifier of that exact recipe tuple (pinned to the recipe's recorded original schema hashes) checks the original. Preserve raw-v1 (d36809af original MessagePack numeric types), normalized-v2 (a785466d normalized integral floats with the original uncapped integer domain), and strict-v3 (c21fa62e safe integers; its original checker skipped date-time and URI formats); Plans/dch_retained_recipes.json pins their exact original schemas and source revisions. A skipped format check never authenticates invalid history (CV-1101, SP-1101): frozen validators apply the shared date-time predicate and CV-253 to the recipe's pinned original resources, so a retained timestamp CV-1101 refuses is owner-invalid and refuses, while owner-valid lowercase, leap-second and long-fraction history stays readable with its exact spelling; the skipped URI check is preserved. Never re-encode raw-v1 bytes under a later normalization to verify their commitment. Plans/dch_write_recipe_receipts.json is an independent synthetic Storage receipt adapter, not native authentication evidence. Every earlier-valid retained numeric or format record stays readable with current authorization, deletion/hold access, withdrawal and actual-source identity checks. A forged source or recipe selection still refuses. Current derived checkpoints may copy an old event sequence into their exact new integer representation; the original retained event/index sequence and commitment remain unchanged. A retry verifies its saved original through the same historical schema/byte/custody reader before comparison; its incoming input stays strict-v4, and a replay-only compatibility original still cannot authorize a current append or retry. Different earlier semantic values conflict without sending an out-of-current-domain original through the current RFC 8785 encoder. A retained checkpoint, including its history and physical payload pack, uses its own original write provenance separately from its referenced event.
+
+The strict-v4 format validators are mandatory and installed explicitly, never through optional jsonschema plugins. Timestamps adopt the shared CV-1101 check: every current and frozen DCH validator is pm_event_datetime.datetime_validator over the complete outer schema, so the registered RFC 3339 predicate runs through the validator. occurred_at_utc keeps the EventRecord profile (T or t, Z/z or a signed offset, any fraction length, year 0000 and legitimate offset-adjusted leap seconds); observed_at_utc and persisted_at_utc keep CV-253's storage_utc_z profile through the inventory-classified envelope; the family ts and populated checkpoint retired_at_utc take the same predicate with their unchanged owner-schema terminal uppercase-Z pattern. A missing zone, space or wrong separator, invalid calendar field, hour 24, minute 60, false leap second, empty fraction and trailing LF refuse. Timestamp strings are never rewritten and are compared only as exact strings; no DCH-local timestamp grammar remains. PR URLs where declared fully match RFC 3986 HTTPS syntax, including valid percent escapes, reg-name or bracketed IPv6/IPvFuture host, numeric port and path/query/fragment grammar. Malformed brackets/hosts/escapes and whitespace refuse. No PR-host allowlist or new provider behavior is introduced. UUID contexts keep Storage's enforced descriptor. Both payload editions, all three EventRecord timestamps and populated checkpoint retirement times have isolated format negatives; applicable PR payloads cover every malformed URL form.
+
+```yaml
+plan_unit_id: SP-625
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: '### SP-625 — chat.thread_worktree_renamed
+
+
+  Newly authored persistence/read contract for `chat.thread_worktree_renamed` 1.0.0 under DL-045, adopting
+  ACD-625 and CV-645. Exact operating consumer `reader.chat.chat_thread_worktree_renamed@1.0.0` serves Chat
+  header/selector and Source Control worktree label. Reuse exact projector `projector.storage.event_record_index@1.0.0`
+  and checkpoint `event_record_index_checkpoint.v1:{storage_instance_id}`, schema `Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint`,
+  version 1.0.0. Explicitly adopt SP-278 including DL-076 nine-field durable read token and current full-index
+  generation/frontier validation; no persisted redb_snapshot_id. This consumer is an on-demand, exact-event
+  filtered read of the generic index, not an independently advancing persistent filtered projection. SP-278
+  performs predecessor-frontier CAS with index rows atomically, complete captured coverage, source selection
+  and current publication validation. Each read uses the actual live transaction token, full scope and canonical
+  source/payload joins and current permissions; a stale, unsupported or unavailable token cannot publish a
+  result. The generic checkpoint retains RP-PROJECTION-3GEN@1.0.0, without extending the source event lifetime.
+  No new stored family/key/value is created by this reader, so no storage registry row is invented. Existing
+  render pages, Tantivy and worktree binding projections remain their owner-defined stores and must be rebuilt
+  under their own current checkpoints, not by adopting this audit reader as a new mutation path. Replay of
+  this event through `reader.chat.chat_thread_worktree_renamed@1.0.0` returns original outcome evidence only:
+  no git, API, test, send, chip creation, thread creation, notification, billing or deletion side effect. retention_policy_ref
+  = PENDING_RETENTION_DECISION. Candidates: Case L-3 Chat content (thread lifetime, 250,000/thread) versus
+  audit authority (indefinite, no count eviction); classification belongs to RT/Jared. No expiry/count deletion
+  is authorized by this draft. Original source intent, canonical outcome/body and first receipt remain with
+  Assistant Chat title-generated worktree rename completion handler, under SP-286/CV-339; coherent backup/restore
+  includes those dependencies and deletion records before any visible read. Missing originals are unavailable,
+  never recaptured. Stored excerpts, command strings, errors, branch/path/PR text must be scrubbed before append;
+  no credentials, inline message body or raw tool output. Every referenced body requires current authorization,
+  deletion/hold checks and exact source Computer/root; retained audit metadata grants no access. This event
+  adds no hold or purge exemption. Withdrawal cuts off this exact family before new operations; fence `reader.chat.chat_thread_worktree_renamed@1.0.0`
+  and any affected domain projection, retain supported original-version historical lookup under current permissions,
+  then rebuild a separately versioned successor from retained canonical sources and a fresh SP-278 token before
+  publication. Never reset a cursor to zero as current, remint events, or delete seglog as withdrawal. No admission
+  or native execution proof is implied.
+
+
+
+
+  **chat.thread_worktree_renamed domain projection binding (newly authored owner contract).** Exact domain
+  projector `projector.chat.chat_thread_worktree_renamed@1.0.0` 1.0.0 and operating consumer `reader.chat.chat_thread_worktree_renamed@1.0.0`
+  explicitly adopt SP-278 and the same verified full-index source path. The family''s separate checkpoint is
+  `projector.checkpoint.dch.chat_thread_worktree_renamed.v1:{storage_instance_id}:{scope_partition}`, stored
+  family `dch_chat_thread_worktree_renamed_checkpoint`, closed schema `Plans/dch_event_payloads/dch_chat_thread_worktree_renamed_checkpoint.schema.json#`,
+  schema_id `pm.storage_value.dch_chat_thread_worktree_renamed_checkpoint.v1` 1.0.0. The nine-field durable
+  token is copied exactly from SP-278/DL-076 without redb_snapshot_id. Consumer/projector versions are the
+  suffixes in their stored constant IDs; no version is inferred from the payload. `last_sequence_id` and `last_event_id`
+  identify the last applied exact-family EventRecord; `source_token` identifies complete inspected source coverage
+  including nonmatching events. Publication identity is fresh entropy for a new shadow generation and frozen
+  on retries; revision increments exactly once on successful CAS. The key joins storage_instance_id and scope_partition
+  exactly. Application partition app is also bound to its source token''s Server/instance and the event''s
+  Computer/thread, never to every null Project. The projector processes this family''s records in verified
+  source sequence order and performs only the transition of ACD-625. For `chat.message`, resolve and authorize
+  its canonical typed message and build SP-338 pages and Tantivy fields once keyed by (thread_id,message_id);
+  never reopen a deleted/superseded message. For thread lifecycle, take current lifecycle from the canonical
+  revision and tombstone rather than treating an old historical event as current. Worktree fields update only
+  the existing owner-defined binding/reverse/worktree projections, with old/new identity checks; no git effect
+  is replayed. Selection events attach only existing authorized outcome/provenance refs to audit/pending-chip
+  status; never create a chip or repeat a send during replay. Failure events retain actual original error evidence
+  and cannot imply a successful outcome.
+
+
+  For this exact family, publish projection mutation and checkpoint revision together in one redb transaction
+  with predecessor revision/publication_id CAS. Where the target is Tantivy or the SP-338 page payload store,
+  first durably stage and read back an immutable shadow commit, put its exact reference in projection_refs,
+  then CAS-publish the pointer and checkpoint together. Readers serve only targets named by the current checkpoint''s
+  refs and same publication_id; old/partial targets never become visible by newest-file inference. Existing
+  canonical thread/worktree state is not rewritten by a derived rebuild. Rebuild any shared target from all
+  its admitted family sources in global source order into one shadow, never by replaying a whole bound family
+  after an unbound family. A required unadmitted counterpart fences that target, not an inferred admission.
+  Re-read canonical state/tombstones and current grants before publication. On source-generation change or
+  failed CAS, discard unpublished target or retry from the unchanged verified prefix; never reuse a stale token.
+  Missing or malformed derived bytes enter Q-DERIVED and governed rebuild, not source repair. Source loss requires
+  canonical backup recovery.
+
+
+  The checkpoint is MessagePack canonical, max 16 KiB under SP-340; oversized values use existing SP-337 reference
+  storage, never an exemption. The closed history array stores at most two full prior checkpoint generations
+  with first retired_at_utc and state retired; current fields name the selected generation. Reserve staged
+  slots through the existing maintenance intent before source staging; a staged candidate counts against three
+  even before it is visible in history. Retain at most three publication generations per exact key under RP-PROJECTION-3GEN@1.0.0;
+  retirement starts at first committed replacement, retries do not reset it, 604800 seconds for eligible retired
+  generations only, with holds/current/staged/live-ref protection. Reserve the slot first or disclose rebuild
+  unavailability. Source events keep PENDING_RETENTION_DECISION; the checkpoint gives no source keepalive.
+  Backup restores canonical source/custody/tombstones first; derived target/checkpoint is rebuilt and validated
+  against the current full-index token before read. Withdrawal fences this projector and its domain readers
+  in addition to the passive reader, sets checkpoint state withdrawn by CAS, and refuses all ordinary advances.
+  Retained historical lookup uses original schema and current access checks; successor publication requires
+  a separately versioned, complete shadow rebuild. Unsupported versions are unavailable, never rewritten in
+  place.
+
+
+  Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application
+  payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236
+  canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes,
+  not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized
+  inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored
+  string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref,
+  with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`.
+  The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack.
+  Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time
+  join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance,
+  Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack
+  bytes and index entry and verified readback before the referencing append can be acknowledged or its first
+  receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence
+  refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed.
+  Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants
+  no new retention exemption.
+
+
+  Checkpoint acceptance compares original source facts independently of the candidate: the outer storage_instance_id,
+  durable-token storage_instance_id, source_selection storage_instance_id and actual source/root instance must
+  be identical. Resolve the token checkpoint_key in the actual full-index root, its uniquely current generation
+  JSON Pointer checkpoint_ref and exact same-instance event_record_index.v2@generation dataset. Require exact
+  generation anchor, current frontier revision/digest and all source_selection fields against current synchronized
+  source, including nonmatching same-generation appends; a shape-valid stale token cannot publish. The domain
+  checkpoint key binds this instance and exact scope_partition. last_event_id/last_sequence_id join the actual
+  exact-family EventRecord and its full-index row and source-value commitment; actual source Computer/thread/scope
+  also join the published projection. Publication_id, revision, projection_refs and the full durable source
+  token match the actual staged/read-back publication selected by the atomic checkpoint/pointer CAS. Independent
+  source, token, selection, key/ref, event, dataset, publication and current-frontier mismatches refuse publication.
+  Static fixture adapters model these joins; they do not prove native full-index coverage, redb transactions,
+  CRC, source locks or durability.
+
+
+  For chat.thread_worktree_renamed, the complete encoded checkpoint includes every retained history entry
+  and projection reference. Measure that entire SP-236 value at the 16384-byte SP-340 boundary: 16384
+  bytes may be inline, 16385 bytes may not. A larger logical checkpoint keeps the same closed schema and
+  bounds and uses SP-337; measure the stored reference/pointer too. Resolve the exact complete bytes through
+  their BLAKE3/size/media-type reference and same-instance, exact-key/scope/family payload-pack index,
+  with current authorization/deletion/hold access, durable bytes/index and verified readback before checkpoint
+  publication. Externalizing the event body does not externalize this checkpoint. Every Storage-assigned
+  identity and metadata field is checked against the original Storage record for the actual instance;
+  no fixture/default instance supplies authority. Checkpoint source lookup resolves inline or referenced
+  originals, validates the supported original envelope and Project/application payload edition, verifies
+  their exact original source commitment and current access/withdrawal status, and then joins their source
+  facts. Retained compatibility-reader originals, including projector_replay_only, remain readable after
+  later live-state changes; only a new append/retry uses the current-writer policy. Unsupported, withdrawn,
+  forged or foreign originals cannot publish. Newly written integer and boolean slots require their exact types before comparison or arithmetic; string numbers/booleans, null, arrays and nested objects confer no
+  numeric or access authority. Current physical commitment/reference encoding canonicalizes integral numeric aliases and signed zero to the same shortest integer bytes; retained bytes retain their protected original recipe below. These are refinements of this family''s existing SP-236/SP-278/SP-337/SP-340 contract, not
+  a new retention or product decision.
+
+
+  Before any source resolution or identity hashing, validate every Storage-instance context against Storage''s own UUID descriptor in Plans/event_record_index_checkpoint.schema.json, including exact primitive type and UUID format. Empty, malformed, overlong, newline-suffixed and non-string instances refuse even when dependent IDs, keys and source commitments agree. Compare candidate, token, source-selection, payload-pack and index context against the independently read actual Storage record; a caller context, default instance or coherent forged context supplies no authority. Verify Storage-assigned sequence and timestamp fields against that exact original record commitment before reading. A retained original remains governed by its supported edition and current custody, not later lifecycle state.
+
+
+  For new writes and current identity/idempotency inputs, this family selects strict-v4 exact integer types with the owner-declared domain of each field. Storage sequence_id and its last_sequence_id copies, frontier_revision, selected_segment_generation, manifest_generation, recovery_epoch and pack byte_size retain exact uint64 values 0 through 18446744073709551615; no 2^53 ceiling applies to Storage metadata. Publication revision and logical payload integers retain their existing owner minima and maxima, with no invented DCH safe-integer cap. Declared integer slots reject runtime float/string/bool/null/array/object substitutes except explicitly nullable slots. Storage metadata is excluded from the producer-semantic projection as already specified. The producer route is the CV-1100 qualified RFC 8785 encoding of the unchanged CV-317 producer projection (shared producer_semantic_bytes/producer_semantic_digest); an unsupported exact producer input is a structured route refusal, without narrowing its logical owner domain, rounding or stringification. Physical bytes follow SP-236 through the shared SP-1100 codec (storage_value_bytes, EVENT_VALUE profile): float type, minimal exact float width and signed zero are preserved, so a lexical alias never shares an integer''s bytes, and the exact integer slots refuse every alias; invalid JSON 01 refuses under the CV-1100 current parser. Retained-recipe dispatch composes the shared SP-1101 RetainedDispatcher and timestamps use the shared CV-1101 check, as the retained-original and format paragraphs state. Test Storage write/retry inputs at 2^53, 2^60 and uint64 maximum, and refuse overflow, negative and wrong-type metadata independently.
+
+
+  Retained and compatibility originals use the schema, numeric domain, runtime type policy, format validator and physical encoder in force when written. The single selector record_number_rule() owns this dispatch on passive history, SP-337 materialization/reference verification, full-index source/checkpoint validation, checkpoint physical storage, saved-original retry comparison and terminal retained-start lookup. New/current inputs select strict-v4. For retained sources, independently read protected Storage write-receipt provenance binds actual storage_instance_id, exact original source-value SHA-256 and recipe_id; it is committed with the original write and survives restore with that source. Candidate fields, caller version/recipe flags, mutable live state and payload content cannot select or enroll an earlier recipe. Verify any claim against that independently authenticated provenance, then verify the exact original bytes with the selected recipe. Missing earlier provenance is unavailable under that earlier recipe, never a guessed downgrade: an original of a Store outside the sealed write custody refuses as unavailable and a receipt naming a recipe with no installed frozen verifier refuses as unsupported, with no fallback to another recipe; within a custody Store an original without a legacy receipt was written by the current strict-v4 writer. Each retained read composes the shared SP-1101 RetainedDispatcher once: one owner selection, no caller override and no current-then-legacy probing, and the installed frozen verifier of that exact recipe tuple (pinned to the recipe''s recorded original schema hashes) checks the original. Preserve raw-v1 (d36809af original MessagePack numeric types), normalized-v2 (a785466d normalized integral floats with the original uncapped integer domain), and strict-v3 (c21fa62e safe integers; its original checker skipped date-time and URI formats); Plans/dch_retained_recipes.json pins their exact original schemas and source revisions. A skipped format check never authenticates invalid history (CV-1101, SP-1101): frozen validators apply the shared date-time predicate and CV-253 to the recipe''s pinned original resources, so a retained timestamp CV-1101 refuses is owner-invalid and refuses, while owner-valid lowercase, leap-second and long-fraction history stays readable with its exact spelling; the skipped URI check is preserved. Never re-encode raw-v1 bytes under a later normalization to verify their commitment. Plans/dch_write_recipe_receipts.json is an independent synthetic Storage receipt adapter, not native authentication evidence. Every earlier-valid retained numeric or format record stays readable with current authorization, deletion/hold access, withdrawal and actual-source identity checks. A forged source or recipe selection still refuses. Current derived checkpoints may copy an old event sequence into their exact new integer representation; the original retained event/index sequence and commitment remain unchanged. A retry verifies its saved original through the same historical schema/byte/custody reader before comparison; its incoming input stays strict-v4, and a replay-only compatibility original still cannot authorize a current append or retry. Different earlier semantic values conflict without sending an out-of-current-domain original through the current RFC 8785 encoder. A retained checkpoint, including its history and physical payload pack, uses its own original write provenance separately from its referenced event.
+
+
+  The strict-v4 format validators are mandatory and installed explicitly, never through optional jsonschema plugins. Timestamps adopt the shared CV-1101 check: every current and frozen DCH validator is pm_event_datetime.datetime_validator over the complete outer schema, so the registered RFC 3339 predicate runs through the validator. occurred_at_utc keeps the EventRecord profile (T or t, Z/z or a signed offset, any fraction length, year 0000 and legitimate offset-adjusted leap seconds); observed_at_utc and persisted_at_utc keep CV-253''s storage_utc_z profile through the inventory-classified envelope; the family ts and populated checkpoint retired_at_utc take the same predicate with their unchanged owner-schema terminal uppercase-Z pattern. A missing zone, space or wrong separator, invalid calendar field, hour 24, minute 60, false leap second, empty fraction and trailing LF refuse. Timestamp strings are never rewritten and are compared only as exact strings; no DCH-local timestamp grammar remains. PR URLs where declared fully match RFC 3986 HTTPS syntax, including valid percent escapes, reg-name or bracketed IPv6/IPvFuture host, numeric port and path/query/fragment grammar. Malformed brackets/hosts/escapes and whitespace refuse. No PR-host allowlist or new provider behavior is introduced. UUID contexts keep Storage''s enforced descriptor. Both payload editions, all three EventRecord timestamps and populated checkpoint retirement times have isolated format negatives; applicable PR payloads cover every malformed URL form.'
+gui_related: false
+gui_classification_reason: Owns event data and persistence contract.
+depends_on:
+- ACD-625
+- CV-645
+- SP-278
+- SP-286
+- SP-337
+unblocks: []
+acceptance_criteria:
+- Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership remains
+  absent.
+- Review-round-2 acceptance rejects the independently mutated forbidden policy, body, retry, source and outcome
+  cases applicable to this exact family; native evidence remains NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm_dch_events.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: event_authority_dch
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- DL-045; WAVE2 DCH 2026-11-04
+preserved_exact_tokens:
+- chat.thread_worktree_renamed
+- PENDING_RETENTION_DECISION
+- SP-278
+- SP-286
+negative_constraints:
+- No event admission or native execution proof; no retention choice.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+
+### SP-626 — chat.thread_worktree_unbound
+
+Newly authored persistence/read contract for `chat.thread_worktree_unbound` 1.0.0 under DL-045, adopting ACD-626 and CV-646. Exact operating consumer `reader.chat.chat_thread_worktree_unbound@1.0.0` serves Chat header/selector and binding/reverse rebuild. Reuse exact projector `projector.storage.event_record_index@1.0.0` and checkpoint `event_record_index_checkpoint.v1:{storage_instance_id}`, schema `Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint`, version 1.0.0. Explicitly adopt SP-278 including DL-076 nine-field durable read token and current full-index generation/frontier validation; no persisted redb_snapshot_id. This consumer is an on-demand, exact-event filtered read of the generic index, not an independently advancing persistent filtered projection. SP-278 performs predecessor-frontier CAS with index rows atomically, complete captured coverage, source selection and current publication validation. Each read uses the actual live transaction token, full scope and canonical source/payload joins and current permissions; a stale, unsupported or unavailable token cannot publish a result. The generic checkpoint retains RP-PROJECTION-3GEN@1.0.0, without extending the source event lifetime. No new stored family/key/value is created by this reader, so no storage registry row is invented. Existing render pages, Tantivy and worktree binding projections remain their owner-defined stores and must be rebuilt under their own current checkpoints, not by adopting this audit reader as a new mutation path. Replay of this event through `reader.chat.chat_thread_worktree_unbound@1.0.0` returns original outcome evidence only: no git, API, test, send, chip creation, thread creation, notification, billing or deletion side effect. retention_policy_ref = PENDING_RETENTION_DECISION. Candidates: Case L-3 Chat content (thread lifetime, 250,000/thread) versus audit authority (indefinite, no count eviction); classification belongs to RT/Jared. No expiry/count deletion is authorized by this draft. Original source intent, canonical outcome/body and first receipt remain with Assistant Chat unbind/remove/delete cleanup or lazy path revalidation handler, under SP-286/CV-339; coherent backup/restore includes those dependencies and deletion records before any visible read. Missing originals are unavailable, never recaptured. Stored excerpts, command strings, errors, branch/path/PR text must be scrubbed before append; no credentials, inline message body or raw tool output. Every referenced body requires current authorization, deletion/hold checks and exact source Computer/root; retained audit metadata grants no access. This event adds no hold or purge exemption. Withdrawal cuts off this exact family before new operations; fence `reader.chat.chat_thread_worktree_unbound@1.0.0` and any affected domain projection, retain supported original-version historical lookup under current permissions, then rebuild a separately versioned successor from retained canonical sources and a fresh SP-278 token before publication. Never reset a cursor to zero as current, remint events, or delete seglog as withdrawal. No admission or native execution proof is implied.
+
+
+
+**chat.thread_worktree_unbound domain projection binding (newly authored owner contract).** Exact domain projector `projector.chat.chat_thread_worktree_unbound@1.0.0` 1.0.0 and operating consumer `reader.chat.chat_thread_worktree_unbound@1.0.0` explicitly adopt SP-278 and the same verified full-index source path. The family's separate checkpoint is `projector.checkpoint.dch.chat_thread_worktree_unbound.v1:{storage_instance_id}:{scope_partition}`, stored family `dch_chat_thread_worktree_unbound_checkpoint`, closed schema `Plans/dch_event_payloads/dch_chat_thread_worktree_unbound_checkpoint.schema.json#`, schema_id `pm.storage_value.dch_chat_thread_worktree_unbound_checkpoint.v1` 1.0.0. The nine-field durable token is copied exactly from SP-278/DL-076 without redb_snapshot_id. Consumer/projector versions are the suffixes in their stored constant IDs; no version is inferred from the payload. `last_sequence_id` and `last_event_id` identify the last applied exact-family EventRecord; `source_token` identifies complete inspected source coverage including nonmatching events. Publication identity is fresh entropy for a new shadow generation and frozen on retries; revision increments exactly once on successful CAS. The key joins storage_instance_id and scope_partition exactly. Application partition app is also bound to its source token's Server/instance and the event's Computer/thread, never to every null Project. The projector processes this family's records in verified source sequence order and performs only the transition of ACD-626. For `chat.message`, resolve and authorize its canonical typed message and build SP-338 pages and Tantivy fields once keyed by (thread_id,message_id); never reopen a deleted/superseded message. For thread lifecycle, take current lifecycle from the canonical revision and tombstone rather than treating an old historical event as current. Worktree fields update only the existing owner-defined binding/reverse/worktree projections, with old/new identity checks; no git effect is replayed. Selection events attach only existing authorized outcome/provenance refs to audit/pending-chip status; never create a chip or repeat a send during replay. Failure events retain actual original error evidence and cannot imply a successful outcome.
+
+For this exact family, publish projection mutation and checkpoint revision together in one redb transaction with predecessor revision/publication_id CAS. Where the target is Tantivy or the SP-338 page payload store, first durably stage and read back an immutable shadow commit, put its exact reference in projection_refs, then CAS-publish the pointer and checkpoint together. Readers serve only targets named by the current checkpoint's refs and same publication_id; old/partial targets never become visible by newest-file inference. Existing canonical thread/worktree state is not rewritten by a derived rebuild. Rebuild any shared target from all its admitted family sources in global source order into one shadow, never by replaying a whole bound family after an unbound family. A required unadmitted counterpart fences that target, not an inferred admission. Re-read canonical state/tombstones and current grants before publication. On source-generation change or failed CAS, discard unpublished target or retry from the unchanged verified prefix; never reuse a stale token. Missing or malformed derived bytes enter Q-DERIVED and governed rebuild, not source repair. Source loss requires canonical backup recovery.
+
+The checkpoint is MessagePack canonical, max 16 KiB under SP-340; oversized values use existing SP-337 reference storage, never an exemption. The closed history array stores at most two full prior checkpoint generations with first retired_at_utc and state retired; current fields name the selected generation. Reserve staged slots through the existing maintenance intent before source staging; a staged candidate counts against three even before it is visible in history. Retain at most three publication generations per exact key under RP-PROJECTION-3GEN@1.0.0; retirement starts at first committed replacement, retries do not reset it, 604800 seconds for eligible retired generations only, with holds/current/staged/live-ref protection. Reserve the slot first or disclose rebuild unavailability. Source events keep PENDING_RETENTION_DECISION; the checkpoint gives no source keepalive. Backup restores canonical source/custody/tombstones first; derived target/checkpoint is rebuilt and validated against the current full-index token before read. Withdrawal fences this projector and its domain readers in addition to the passive reader, sets checkpoint state withdrawn by CAS, and refuses all ordinary advances. Retained historical lookup uses original schema and current access checks; successor publication requires a separately versioned, complete shadow rebuild. Unsupported versions are unavailable, never rewritten in place.
+
+Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236 canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes, not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref, with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`. The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack. Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance, Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack bytes and index entry and verified readback before the referencing append can be acknowledged or its first receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed. Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants no new retention exemption.
+
+Checkpoint acceptance compares original source facts independently of the candidate: the outer storage_instance_id, durable-token storage_instance_id, source_selection storage_instance_id and actual source/root instance must be identical. Resolve the token checkpoint_key in the actual full-index root, its uniquely current generation JSON Pointer checkpoint_ref and exact same-instance event_record_index.v2@generation dataset. Require exact generation anchor, current frontier revision/digest and all source_selection fields against current synchronized source, including nonmatching same-generation appends; a shape-valid stale token cannot publish. The domain checkpoint key binds this instance and exact scope_partition. last_event_id/last_sequence_id join the actual exact-family EventRecord and its full-index row and source-value commitment; actual source Computer/thread/scope also join the published projection. Publication_id, revision, projection_refs and the full durable source token match the actual staged/read-back publication selected by the atomic checkpoint/pointer CAS. Independent source, token, selection, key/ref, event, dataset, publication and current-frontier mismatches refuse publication. Static fixture adapters model these joins; they do not prove native full-index coverage, redb transactions, CRC, source locks or durability.
+
+For chat.thread_worktree_unbound, the complete encoded checkpoint includes every retained history entry and projection reference. Measure that entire SP-236 value at the 16384-byte SP-340 boundary: 16384 bytes may be inline, 16385 bytes may not. A larger logical checkpoint keeps the same closed schema and bounds and uses SP-337; measure the stored reference/pointer too. Resolve the exact complete bytes through their BLAKE3/size/media-type reference and same-instance, exact-key/scope/family payload-pack index, with current authorization/deletion/hold access, durable bytes/index and verified readback before checkpoint publication. Externalizing the event body does not externalize this checkpoint. Every Storage-assigned identity and metadata field is checked against the original Storage record for the actual instance; no fixture/default instance supplies authority. Checkpoint source lookup resolves inline or referenced originals, validates the supported original envelope and Project/application payload edition, verifies their exact original source commitment and current access/withdrawal status, and then joins their source facts. Retained compatibility-reader originals, including projector_replay_only, remain readable after later live-state changes; only a new append/retry uses the current-writer policy. Unsupported, withdrawn, forged or foreign originals cannot publish. Newly written integer and boolean slots require their exact types before comparison or arithmetic; string numbers/booleans, null, arrays and nested objects confer no numeric or access authority. Current physical commitment/reference encoding canonicalizes integral numeric aliases and signed zero to the same shortest integer bytes; retained bytes retain their protected original recipe below. These are refinements of this family's existing SP-236/SP-278/SP-337/SP-340 contract, not a new retention or product decision.
+
+Before any source resolution or identity hashing, validate every Storage-instance context against Storage's own UUID descriptor in Plans/event_record_index_checkpoint.schema.json, including exact primitive type and UUID format. Empty, malformed, overlong, newline-suffixed and non-string instances refuse even when dependent IDs, keys and source commitments agree. Compare candidate, token, source-selection, payload-pack and index context against the independently read actual Storage record; a caller context, default instance or coherent forged context supplies no authority. Verify Storage-assigned sequence and timestamp fields against that exact original record commitment before reading. A retained original remains governed by its supported edition and current custody, not later lifecycle state.
+
+For new writes and current identity/idempotency inputs, this family selects strict-v4 exact integer types with the owner-declared domain of each field. Storage sequence_id and its last_sequence_id copies, frontier_revision, selected_segment_generation, manifest_generation, recovery_epoch and pack byte_size retain exact uint64 values 0 through 18446744073709551615; no 2^53 ceiling applies to Storage metadata. Publication revision and logical payload integers retain their existing owner minima and maxima, with no invented DCH safe-integer cap. Declared integer slots reject runtime float/string/bool/null/array/object substitutes except explicitly nullable slots. Storage metadata is excluded from the producer-semantic projection as already specified. The producer route is the CV-1100 qualified RFC 8785 encoding of the unchanged CV-317 producer projection (shared producer_semantic_bytes/producer_semantic_digest); an unsupported exact producer input is a structured route refusal, without narrowing its logical owner domain, rounding or stringification. Physical bytes follow SP-236 through the shared SP-1100 codec (storage_value_bytes, EVENT_VALUE profile): float type, minimal exact float width and signed zero are preserved, so a lexical alias never shares an integer's bytes, and the exact integer slots refuse every alias; invalid JSON 01 refuses under the CV-1100 current parser. Retained-recipe dispatch composes the shared SP-1101 RetainedDispatcher and timestamps use the shared CV-1101 check, as the retained-original and format paragraphs state. Test Storage write/retry inputs at 2^53, 2^60 and uint64 maximum, and refuse overflow, negative and wrong-type metadata independently.
+
+Retained and compatibility originals use the schema, numeric domain, runtime type policy, format validator and physical encoder in force when written. The single selector record_number_rule() owns this dispatch on passive history, SP-337 materialization/reference verification, full-index source/checkpoint validation, checkpoint physical storage, saved-original retry comparison and terminal retained-start lookup. New/current inputs select strict-v4. For retained sources, independently read protected Storage write-receipt provenance binds actual storage_instance_id, exact original source-value SHA-256 and recipe_id; it is committed with the original write and survives restore with that source. Candidate fields, caller version/recipe flags, mutable live state and payload content cannot select or enroll an earlier recipe. Verify any claim against that independently authenticated provenance, then verify the exact original bytes with the selected recipe. Missing earlier provenance is unavailable under that earlier recipe, never a guessed downgrade: an original of a Store outside the sealed write custody refuses as unavailable and a receipt naming a recipe with no installed frozen verifier refuses as unsupported, with no fallback to another recipe; within a custody Store an original without a legacy receipt was written by the current strict-v4 writer. Each retained read composes the shared SP-1101 RetainedDispatcher once: one owner selection, no caller override and no current-then-legacy probing, and the installed frozen verifier of that exact recipe tuple (pinned to the recipe's recorded original schema hashes) checks the original. Preserve raw-v1 (d36809af original MessagePack numeric types), normalized-v2 (a785466d normalized integral floats with the original uncapped integer domain), and strict-v3 (c21fa62e safe integers; its original checker skipped date-time and URI formats); Plans/dch_retained_recipes.json pins their exact original schemas and source revisions. A skipped format check never authenticates invalid history (CV-1101, SP-1101): frozen validators apply the shared date-time predicate and CV-253 to the recipe's pinned original resources, so a retained timestamp CV-1101 refuses is owner-invalid and refuses, while owner-valid lowercase, leap-second and long-fraction history stays readable with its exact spelling; the skipped URI check is preserved. Never re-encode raw-v1 bytes under a later normalization to verify their commitment. Plans/dch_write_recipe_receipts.json is an independent synthetic Storage receipt adapter, not native authentication evidence. Every earlier-valid retained numeric or format record stays readable with current authorization, deletion/hold access, withdrawal and actual-source identity checks. A forged source or recipe selection still refuses. Current derived checkpoints may copy an old event sequence into their exact new integer representation; the original retained event/index sequence and commitment remain unchanged. A retry verifies its saved original through the same historical schema/byte/custody reader before comparison; its incoming input stays strict-v4, and a replay-only compatibility original still cannot authorize a current append or retry. Different earlier semantic values conflict without sending an out-of-current-domain original through the current RFC 8785 encoder. A retained checkpoint, including its history and physical payload pack, uses its own original write provenance separately from its referenced event.
+
+The strict-v4 format validators are mandatory and installed explicitly, never through optional jsonschema plugins. Timestamps adopt the shared CV-1101 check: every current and frozen DCH validator is pm_event_datetime.datetime_validator over the complete outer schema, so the registered RFC 3339 predicate runs through the validator. occurred_at_utc keeps the EventRecord profile (T or t, Z/z or a signed offset, any fraction length, year 0000 and legitimate offset-adjusted leap seconds); observed_at_utc and persisted_at_utc keep CV-253's storage_utc_z profile through the inventory-classified envelope; the family ts and populated checkpoint retired_at_utc take the same predicate with their unchanged owner-schema terminal uppercase-Z pattern. A missing zone, space or wrong separator, invalid calendar field, hour 24, minute 60, false leap second, empty fraction and trailing LF refuse. Timestamp strings are never rewritten and are compared only as exact strings; no DCH-local timestamp grammar remains. PR URLs where declared fully match RFC 3986 HTTPS syntax, including valid percent escapes, reg-name or bracketed IPv6/IPvFuture host, numeric port and path/query/fragment grammar. Malformed brackets/hosts/escapes and whitespace refuse. No PR-host allowlist or new provider behavior is introduced. UUID contexts keep Storage's enforced descriptor. Both payload editions, all three EventRecord timestamps and populated checkpoint retirement times have isolated format negatives; applicable PR payloads cover every malformed URL form.
+
+```yaml
+plan_unit_id: SP-626
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: '### SP-626 — chat.thread_worktree_unbound
+
+
+  Newly authored persistence/read contract for `chat.thread_worktree_unbound` 1.0.0 under DL-045, adopting
+  ACD-626 and CV-646. Exact operating consumer `reader.chat.chat_thread_worktree_unbound@1.0.0` serves Chat
+  header/selector and binding/reverse rebuild. Reuse exact projector `projector.storage.event_record_index@1.0.0`
+  and checkpoint `event_record_index_checkpoint.v1:{storage_instance_id}`, schema `Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint`,
+  version 1.0.0. Explicitly adopt SP-278 including DL-076 nine-field durable read token and current full-index
+  generation/frontier validation; no persisted redb_snapshot_id. This consumer is an on-demand, exact-event
+  filtered read of the generic index, not an independently advancing persistent filtered projection. SP-278
+  performs predecessor-frontier CAS with index rows atomically, complete captured coverage, source selection
+  and current publication validation. Each read uses the actual live transaction token, full scope and canonical
+  source/payload joins and current permissions; a stale, unsupported or unavailable token cannot publish a
+  result. The generic checkpoint retains RP-PROJECTION-3GEN@1.0.0, without extending the source event lifetime.
+  No new stored family/key/value is created by this reader, so no storage registry row is invented. Existing
+  render pages, Tantivy and worktree binding projections remain their owner-defined stores and must be rebuilt
+  under their own current checkpoints, not by adopting this audit reader as a new mutation path. Replay of
+  this event through `reader.chat.chat_thread_worktree_unbound@1.0.0` returns original outcome evidence only:
+  no git, API, test, send, chip creation, thread creation, notification, billing or deletion side effect. retention_policy_ref
+  = PENDING_RETENTION_DECISION. Candidates: Case L-3 Chat content (thread lifetime, 250,000/thread) versus
+  audit authority (indefinite, no count eviction); classification belongs to RT/Jared. No expiry/count deletion
+  is authorized by this draft. Original source intent, canonical outcome/body and first receipt remain with
+  Assistant Chat unbind/remove/delete cleanup or lazy path revalidation handler, under SP-286/CV-339; coherent
+  backup/restore includes those dependencies and deletion records before any visible read. Missing originals
+  are unavailable, never recaptured. Stored excerpts, command strings, errors, branch/path/PR text must be
+  scrubbed before append; no credentials, inline message body or raw tool output. Every referenced body requires
+  current authorization, deletion/hold checks and exact source Computer/root; retained audit metadata grants
+  no access. This event adds no hold or purge exemption. Withdrawal cuts off this exact family before new operations;
+  fence `reader.chat.chat_thread_worktree_unbound@1.0.0` and any affected domain projection, retain supported
+  original-version historical lookup under current permissions, then rebuild a separately versioned successor
+  from retained canonical sources and a fresh SP-278 token before publication. Never reset a cursor to zero
+  as current, remint events, or delete seglog as withdrawal. No admission or native execution proof is implied.
+
+
+
+
+  **chat.thread_worktree_unbound domain projection binding (newly authored owner contract).** Exact domain
+  projector `projector.chat.chat_thread_worktree_unbound@1.0.0` 1.0.0 and operating consumer `reader.chat.chat_thread_worktree_unbound@1.0.0`
+  explicitly adopt SP-278 and the same verified full-index source path. The family''s separate checkpoint is
+  `projector.checkpoint.dch.chat_thread_worktree_unbound.v1:{storage_instance_id}:{scope_partition}`, stored
+  family `dch_chat_thread_worktree_unbound_checkpoint`, closed schema `Plans/dch_event_payloads/dch_chat_thread_worktree_unbound_checkpoint.schema.json#`,
+  schema_id `pm.storage_value.dch_chat_thread_worktree_unbound_checkpoint.v1` 1.0.0. The nine-field durable
+  token is copied exactly from SP-278/DL-076 without redb_snapshot_id. Consumer/projector versions are the
+  suffixes in their stored constant IDs; no version is inferred from the payload. `last_sequence_id` and `last_event_id`
+  identify the last applied exact-family EventRecord; `source_token` identifies complete inspected source coverage
+  including nonmatching events. Publication identity is fresh entropy for a new shadow generation and frozen
+  on retries; revision increments exactly once on successful CAS. The key joins storage_instance_id and scope_partition
+  exactly. Application partition app is also bound to its source token''s Server/instance and the event''s
+  Computer/thread, never to every null Project. The projector processes this family''s records in verified
+  source sequence order and performs only the transition of ACD-626. For `chat.message`, resolve and authorize
+  its canonical typed message and build SP-338 pages and Tantivy fields once keyed by (thread_id,message_id);
+  never reopen a deleted/superseded message. For thread lifecycle, take current lifecycle from the canonical
+  revision and tombstone rather than treating an old historical event as current. Worktree fields update only
+  the existing owner-defined binding/reverse/worktree projections, with old/new identity checks; no git effect
+  is replayed. Selection events attach only existing authorized outcome/provenance refs to audit/pending-chip
+  status; never create a chip or repeat a send during replay. Failure events retain actual original error evidence
+  and cannot imply a successful outcome.
+
+
+  For this exact family, publish projection mutation and checkpoint revision together in one redb transaction
+  with predecessor revision/publication_id CAS. Where the target is Tantivy or the SP-338 page payload store,
+  first durably stage and read back an immutable shadow commit, put its exact reference in projection_refs,
+  then CAS-publish the pointer and checkpoint together. Readers serve only targets named by the current checkpoint''s
+  refs and same publication_id; old/partial targets never become visible by newest-file inference. Existing
+  canonical thread/worktree state is not rewritten by a derived rebuild. Rebuild any shared target from all
+  its admitted family sources in global source order into one shadow, never by replaying a whole bound family
+  after an unbound family. A required unadmitted counterpart fences that target, not an inferred admission.
+  Re-read canonical state/tombstones and current grants before publication. On source-generation change or
+  failed CAS, discard unpublished target or retry from the unchanged verified prefix; never reuse a stale token.
+  Missing or malformed derived bytes enter Q-DERIVED and governed rebuild, not source repair. Source loss requires
+  canonical backup recovery.
+
+
+  The checkpoint is MessagePack canonical, max 16 KiB under SP-340; oversized values use existing SP-337 reference
+  storage, never an exemption. The closed history array stores at most two full prior checkpoint generations
+  with first retired_at_utc and state retired; current fields name the selected generation. Reserve staged
+  slots through the existing maintenance intent before source staging; a staged candidate counts against three
+  even before it is visible in history. Retain at most three publication generations per exact key under RP-PROJECTION-3GEN@1.0.0;
+  retirement starts at first committed replacement, retries do not reset it, 604800 seconds for eligible retired
+  generations only, with holds/current/staged/live-ref protection. Reserve the slot first or disclose rebuild
+  unavailability. Source events keep PENDING_RETENTION_DECISION; the checkpoint gives no source keepalive.
+  Backup restores canonical source/custody/tombstones first; derived target/checkpoint is rebuilt and validated
+  against the current full-index token before read. Withdrawal fences this projector and its domain readers
+  in addition to the passive reader, sets checkpoint state withdrawn by CAS, and refuses all ordinary advances.
+  Retained historical lookup uses original schema and current access checks; successor publication requires
+  a separately versioned, complete shadow rebuild. Unsupported versions are unavailable, never rewritten in
+  place.
+
+
+  Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application
+  payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236
+  canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes,
+  not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized
+  inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored
+  string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref,
+  with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`.
+  The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack.
+  Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time
+  join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance,
+  Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack
+  bytes and index entry and verified readback before the referencing append can be acknowledged or its first
+  receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence
+  refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed.
+  Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants
+  no new retention exemption.
+
+
+  Checkpoint acceptance compares original source facts independently of the candidate: the outer storage_instance_id,
+  durable-token storage_instance_id, source_selection storage_instance_id and actual source/root instance must
+  be identical. Resolve the token checkpoint_key in the actual full-index root, its uniquely current generation
+  JSON Pointer checkpoint_ref and exact same-instance event_record_index.v2@generation dataset. Require exact
+  generation anchor, current frontier revision/digest and all source_selection fields against current synchronized
+  source, including nonmatching same-generation appends; a shape-valid stale token cannot publish. The domain
+  checkpoint key binds this instance and exact scope_partition. last_event_id/last_sequence_id join the actual
+  exact-family EventRecord and its full-index row and source-value commitment; actual source Computer/thread/scope
+  also join the published projection. Publication_id, revision, projection_refs and the full durable source
+  token match the actual staged/read-back publication selected by the atomic checkpoint/pointer CAS. Independent
+  source, token, selection, key/ref, event, dataset, publication and current-frontier mismatches refuse publication.
+  Static fixture adapters model these joins; they do not prove native full-index coverage, redb transactions,
+  CRC, source locks or durability.
+
+
+  For chat.thread_worktree_unbound, the complete encoded checkpoint includes every retained history entry
+  and projection reference. Measure that entire SP-236 value at the 16384-byte SP-340 boundary: 16384
+  bytes may be inline, 16385 bytes may not. A larger logical checkpoint keeps the same closed schema and
+  bounds and uses SP-337; measure the stored reference/pointer too. Resolve the exact complete bytes through
+  their BLAKE3/size/media-type reference and same-instance, exact-key/scope/family payload-pack index,
+  with current authorization/deletion/hold access, durable bytes/index and verified readback before checkpoint
+  publication. Externalizing the event body does not externalize this checkpoint. Every Storage-assigned
+  identity and metadata field is checked against the original Storage record for the actual instance;
+  no fixture/default instance supplies authority. Checkpoint source lookup resolves inline or referenced
+  originals, validates the supported original envelope and Project/application payload edition, verifies
+  their exact original source commitment and current access/withdrawal status, and then joins their source
+  facts. Retained compatibility-reader originals, including projector_replay_only, remain readable after
+  later live-state changes; only a new append/retry uses the current-writer policy. Unsupported, withdrawn,
+  forged or foreign originals cannot publish. Newly written integer and boolean slots require their exact types before comparison or arithmetic; string numbers/booleans, null, arrays and nested objects confer no
+  numeric or access authority. Current physical commitment/reference encoding canonicalizes integral numeric aliases and signed zero to the same shortest integer bytes; retained bytes retain their protected original recipe below. These are refinements of this family''s existing SP-236/SP-278/SP-337/SP-340 contract, not
+  a new retention or product decision.
+
+
+  Before any source resolution or identity hashing, validate every Storage-instance context against Storage''s own UUID descriptor in Plans/event_record_index_checkpoint.schema.json, including exact primitive type and UUID format. Empty, malformed, overlong, newline-suffixed and non-string instances refuse even when dependent IDs, keys and source commitments agree. Compare candidate, token, source-selection, payload-pack and index context against the independently read actual Storage record; a caller context, default instance or coherent forged context supplies no authority. Verify Storage-assigned sequence and timestamp fields against that exact original record commitment before reading. A retained original remains governed by its supported edition and current custody, not later lifecycle state.
+
+
+  For new writes and current identity/idempotency inputs, this family selects strict-v4 exact integer types with the owner-declared domain of each field. Storage sequence_id and its last_sequence_id copies, frontier_revision, selected_segment_generation, manifest_generation, recovery_epoch and pack byte_size retain exact uint64 values 0 through 18446744073709551615; no 2^53 ceiling applies to Storage metadata. Publication revision and logical payload integers retain their existing owner minima and maxima, with no invented DCH safe-integer cap. Declared integer slots reject runtime float/string/bool/null/array/object substitutes except explicitly nullable slots. Storage metadata is excluded from the producer-semantic projection as already specified. The producer route is the CV-1100 qualified RFC 8785 encoding of the unchanged CV-317 producer projection (shared producer_semantic_bytes/producer_semantic_digest); an unsupported exact producer input is a structured route refusal, without narrowing its logical owner domain, rounding or stringification. Physical bytes follow SP-236 through the shared SP-1100 codec (storage_value_bytes, EVENT_VALUE profile): float type, minimal exact float width and signed zero are preserved, so a lexical alias never shares an integer''s bytes, and the exact integer slots refuse every alias; invalid JSON 01 refuses under the CV-1100 current parser. Retained-recipe dispatch composes the shared SP-1101 RetainedDispatcher and timestamps use the shared CV-1101 check, as the retained-original and format paragraphs state. Test Storage write/retry inputs at 2^53, 2^60 and uint64 maximum, and refuse overflow, negative and wrong-type metadata independently.
+
+
+  Retained and compatibility originals use the schema, numeric domain, runtime type policy, format validator and physical encoder in force when written. The single selector record_number_rule() owns this dispatch on passive history, SP-337 materialization/reference verification, full-index source/checkpoint validation, checkpoint physical storage, saved-original retry comparison and terminal retained-start lookup. New/current inputs select strict-v4. For retained sources, independently read protected Storage write-receipt provenance binds actual storage_instance_id, exact original source-value SHA-256 and recipe_id; it is committed with the original write and survives restore with that source. Candidate fields, caller version/recipe flags, mutable live state and payload content cannot select or enroll an earlier recipe. Verify any claim against that independently authenticated provenance, then verify the exact original bytes with the selected recipe. Missing earlier provenance is unavailable under that earlier recipe, never a guessed downgrade: an original of a Store outside the sealed write custody refuses as unavailable and a receipt naming a recipe with no installed frozen verifier refuses as unsupported, with no fallback to another recipe; within a custody Store an original without a legacy receipt was written by the current strict-v4 writer. Each retained read composes the shared SP-1101 RetainedDispatcher once: one owner selection, no caller override and no current-then-legacy probing, and the installed frozen verifier of that exact recipe tuple (pinned to the recipe''s recorded original schema hashes) checks the original. Preserve raw-v1 (d36809af original MessagePack numeric types), normalized-v2 (a785466d normalized integral floats with the original uncapped integer domain), and strict-v3 (c21fa62e safe integers; its original checker skipped date-time and URI formats); Plans/dch_retained_recipes.json pins their exact original schemas and source revisions. A skipped format check never authenticates invalid history (CV-1101, SP-1101): frozen validators apply the shared date-time predicate and CV-253 to the recipe''s pinned original resources, so a retained timestamp CV-1101 refuses is owner-invalid and refuses, while owner-valid lowercase, leap-second and long-fraction history stays readable with its exact spelling; the skipped URI check is preserved. Never re-encode raw-v1 bytes under a later normalization to verify their commitment. Plans/dch_write_recipe_receipts.json is an independent synthetic Storage receipt adapter, not native authentication evidence. Every earlier-valid retained numeric or format record stays readable with current authorization, deletion/hold access, withdrawal and actual-source identity checks. A forged source or recipe selection still refuses. Current derived checkpoints may copy an old event sequence into their exact new integer representation; the original retained event/index sequence and commitment remain unchanged. A retry verifies its saved original through the same historical schema/byte/custody reader before comparison; its incoming input stays strict-v4, and a replay-only compatibility original still cannot authorize a current append or retry. Different earlier semantic values conflict without sending an out-of-current-domain original through the current RFC 8785 encoder. A retained checkpoint, including its history and physical payload pack, uses its own original write provenance separately from its referenced event.
+
+
+  The strict-v4 format validators are mandatory and installed explicitly, never through optional jsonschema plugins. Timestamps adopt the shared CV-1101 check: every current and frozen DCH validator is pm_event_datetime.datetime_validator over the complete outer schema, so the registered RFC 3339 predicate runs through the validator. occurred_at_utc keeps the EventRecord profile (T or t, Z/z or a signed offset, any fraction length, year 0000 and legitimate offset-adjusted leap seconds); observed_at_utc and persisted_at_utc keep CV-253''s storage_utc_z profile through the inventory-classified envelope; the family ts and populated checkpoint retired_at_utc take the same predicate with their unchanged owner-schema terminal uppercase-Z pattern. A missing zone, space or wrong separator, invalid calendar field, hour 24, minute 60, false leap second, empty fraction and trailing LF refuse. Timestamp strings are never rewritten and are compared only as exact strings; no DCH-local timestamp grammar remains. PR URLs where declared fully match RFC 3986 HTTPS syntax, including valid percent escapes, reg-name or bracketed IPv6/IPvFuture host, numeric port and path/query/fragment grammar. Malformed brackets/hosts/escapes and whitespace refuse. No PR-host allowlist or new provider behavior is introduced. UUID contexts keep Storage''s enforced descriptor. Both payload editions, all three EventRecord timestamps and populated checkpoint retirement times have isolated format negatives; applicable PR payloads cover every malformed URL form.'
+gui_related: false
+gui_classification_reason: Owns event data and persistence contract.
+depends_on:
+- ACD-626
+- CV-646
+- SP-278
+- SP-286
+- SP-337
+unblocks: []
+acceptance_criteria:
+- Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership remains
+  absent.
+- Review-round-2 acceptance rejects the independently mutated forbidden policy, body, retry, source and outcome
+  cases applicable to this exact family; native evidence remains NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm_dch_events.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: event_authority_dch
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- DL-045; WAVE2 DCH 2026-11-04
+preserved_exact_tokens:
+- chat.thread_worktree_unbound
+- PENDING_RETENTION_DECISION
+- SP-278
+- SP-286
+negative_constraints:
+- No event admission or native execution proof; no retention choice.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+
+### SP-613 — chat.thread_archived
+
+Newly authored persistence/read contract for `chat.thread_archived` 1.0.0 under DL-045, adopting ACD-613 and CV-633. Exact operating consumer `reader.chat.chat_thread_archived@1.0.0` serves Thread shell/navigation, SP-338 render-page builder and audit. Reuse exact projector `projector.storage.event_record_index@1.0.0` and checkpoint `event_record_index_checkpoint.v1:{storage_instance_id}`, schema `Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint`, version 1.0.0. Explicitly adopt SP-278 including DL-076 nine-field durable read token and current full-index generation/frontier validation; no persisted redb_snapshot_id. This consumer is an on-demand, exact-event filtered read of the generic index, not an independently advancing persistent filtered projection. SP-278 performs predecessor-frontier CAS with index rows atomically, complete captured coverage, source selection and current publication validation. Each read uses the actual live transaction token, full scope and canonical source/payload joins and current permissions; a stale, unsupported or unavailable token cannot publish a result. The generic checkpoint retains RP-PROJECTION-3GEN@1.0.0, without extending the source event lifetime. No new stored family/key/value is created by this reader, so no storage registry row is invented. Existing render pages, Tantivy and worktree binding projections remain their owner-defined stores and must be rebuilt under their own current checkpoints, not by adopting this audit reader as a new mutation path. Replay of this event through `reader.chat.chat_thread_archived@1.0.0` returns original outcome evidence only: no git, API, test, send, chip creation, archive transition, notification, billing or deletion side effect. retention_policy_ref = PENDING_RETENTION_DECISION. Candidates: Case L-3 Chat content (thread lifetime, 250,000/thread) versus audit authority (indefinite, no count eviction); classification belongs to RT/Jared. No expiry/count deletion is authorized by this draft. Original source intent, canonical outcome/body and first receipt remain with cmd.chat.thread.archive lifecycle handler, under SP-286/CV-339; coherent backup/restore includes those dependencies and deletion records before any visible read. Missing originals are unavailable, never recaptured. Stored excerpts, command strings, errors, branch/path/PR text must be scrubbed before append; no credentials, inline message body or raw tool output. Every referenced body requires current authorization, deletion/hold checks and exact source Computer/root; retained audit metadata grants no access. This event adds no hold or purge exemption. Withdrawal cuts off this exact family before new operations; fence `reader.chat.chat_thread_archived@1.0.0` and any affected domain projection, retain supported original-version historical lookup under current permissions, then rebuild a separately versioned successor from retained canonical sources and a fresh SP-278 token before publication. Never reset a cursor to zero as current, remint events, or delete seglog as withdrawal. No admission or native execution proof is implied.
+
+
+
+**chat.thread_archived domain projection binding (newly authored owner contract).** Exact domain projector `projector.chat.chat_thread_archived@1.0.0` 1.0.0 and operating consumer `reader.chat.chat_thread_archived@1.0.0` explicitly adopt SP-278 and the same verified full-index source path. The family's separate checkpoint is `projector.checkpoint.dch.chat_thread_archived.v1:{storage_instance_id}:{scope_partition}`, stored family `dch_chat_thread_archived_checkpoint`, closed schema `Plans/dch_event_payloads/dch_chat_thread_archived_checkpoint.schema.json#`, schema_id `pm.storage_value.dch_chat_thread_archived_checkpoint.v1` 1.0.0. The nine-field durable token is copied exactly from SP-278/DL-076 without redb_snapshot_id. Consumer/projector versions are the suffixes in their stored constant IDs; no version is inferred from the payload. `last_sequence_id` and `last_event_id` identify the last applied exact-family EventRecord; `source_token` identifies complete inspected source coverage including nonmatching events. Publication identity is fresh entropy for a new shadow generation and frozen on retries; revision increments exactly once on successful CAS. The key joins storage_instance_id and scope_partition exactly. Application partition app is also bound to its source token's Server/instance and the event's Computer/thread, never to every null Project. The projector processes only chat.thread_archived in verified source sequence order and applies the ACD-613 manual lifecycle transition once. Resolve thread_record_ref against the original committed archived revision and exact scope/Server/Computer/thread before accepting evidence. Build the existing lifecycle/navigation/search visibility projections from current canonical thread state and tombstones. A later unarchive or deletion wins over historical archived evidence; never force current state back to archived. Preserve existing transcript/lineage/attachment/folder/worktree identities, and never call Archive, create a folder, perform Git cleanup, delete content or send notifications during replay. No automatic archive or source expiry follows from this checkpoint. Rebuild shared lifecycle targets in global source order with every required admitted lifecycle source and current canonical joins; a missing counterpart fences publication.
+
+For this exact family, publish projection mutation and checkpoint revision together in one redb transaction with predecessor revision/publication_id CAS. Where the target is Tantivy or the SP-338 page payload store, first durably stage and read back an immutable shadow commit, put its exact reference in projection_refs, then CAS-publish the pointer and checkpoint together. Readers serve only targets named by the current checkpoint's refs and same publication_id; old/partial targets never become visible by newest-file inference. Existing canonical thread/worktree state is not rewritten by a derived rebuild. Rebuild any shared target from all its admitted family sources in global source order into one shadow, never by replaying a whole bound family after an unbound family. A required unadmitted counterpart fences that target, not an inferred admission. Re-read canonical state/tombstones and current grants before publication. On source-generation change or failed CAS, discard unpublished target or retry from the unchanged verified prefix; never reuse a stale token. Missing or malformed derived bytes enter Q-DERIVED and governed rebuild, not source repair. Source loss requires canonical backup recovery.
+
+The checkpoint is MessagePack canonical, max 16 KiB under SP-340; oversized values use existing SP-337 reference storage, never an exemption. The closed history array stores at most two full prior checkpoint generations with first retired_at_utc and state retired; current fields name the selected generation. Reserve staged slots through the existing maintenance intent before source staging; a staged candidate counts against three even before it is visible in history. Retain at most three publication generations per exact key under RP-PROJECTION-3GEN@1.0.0; retirement starts at first committed replacement, retries do not reset it, 604800 seconds for eligible retired generations only, with holds/current/staged/live-ref protection. Reserve the slot first or disclose rebuild unavailability. Source events keep PENDING_RETENTION_DECISION; the checkpoint gives no source keepalive. Backup restores canonical source/custody/tombstones first; derived target/checkpoint is rebuilt and validated against the current full-index token before read. Withdrawal fences this projector and its domain readers in addition to the passive reader, sets checkpoint state withdrawn by CAS, and refuses all ordinary advances. Retained historical lookup uses original schema and current access checks; successor publication requires a separately versioned, complete shadow rebuild. Unsupported versions are unavailable, never rewritten in place.
+
+Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236 canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes, not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref, with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`. The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack. Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance, Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack bytes and index entry and verified readback before the referencing append can be acknowledged or its first receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed. Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants no new retention exemption.
+
+Checkpoint acceptance compares original source facts independently of the candidate: the outer storage_instance_id, durable-token storage_instance_id, source_selection storage_instance_id and actual source/root instance must be identical. Resolve the token checkpoint_key in the actual full-index root, its uniquely current generation JSON Pointer checkpoint_ref and exact same-instance event_record_index.v2@generation dataset. Require exact generation anchor, current frontier revision/digest and all source_selection fields against current synchronized source, including nonmatching same-generation appends; a shape-valid stale token cannot publish. The domain checkpoint key binds this instance and exact scope_partition. last_event_id/last_sequence_id join the actual exact-family EventRecord and its full-index row and source-value commitment; actual source Computer/thread/scope also join the published projection. Publication_id, revision, projection_refs and the full durable source token match the actual staged/read-back publication selected by the atomic checkpoint/pointer CAS. Independent source, token, selection, key/ref, event, dataset, publication and current-frontier mismatches refuse publication. Static fixture adapters model these joins; they do not prove native full-index coverage, redb transactions, CRC, source locks or durability.
+
+For chat.thread_archived, the complete encoded checkpoint includes every retained history entry and projection reference. Measure that entire SP-236 value at the 16384-byte SP-340 boundary: 16384 bytes may be inline, 16385 bytes may not. A larger logical checkpoint keeps the same closed schema and bounds and uses SP-337; measure the stored reference/pointer too. Resolve the exact complete bytes through their BLAKE3/size/media-type reference and same-instance, exact-key/scope/family payload-pack index, with current authorization/deletion/hold access, durable bytes/index and verified readback before checkpoint publication. Externalizing the event body does not externalize this checkpoint. Every Storage-assigned identity and metadata field is checked against the original Storage record for the actual instance; no fixture/default instance supplies authority. Checkpoint source lookup resolves inline or referenced originals, validates the supported original envelope and Project/application payload edition, verifies their exact original source commitment and current access/withdrawal status, and then joins their source facts. Retained compatibility-reader originals, including projector_replay_only, remain readable after later live-state changes; only a new append/retry uses the current-writer policy. Unsupported, withdrawn, forged or foreign originals cannot publish. Newly written integer and boolean slots require their exact types before comparison or arithmetic; string numbers/booleans, null, arrays and nested objects confer no numeric or access authority. Current physical commitment/reference encoding canonicalizes integral numeric aliases and signed zero to the same shortest integer bytes; retained bytes retain their protected original recipe below. These are refinements of this family's existing SP-236/SP-278/SP-337/SP-340 contract, not a new retention or product decision.
+
+Before any source resolution or identity hashing, validate every Storage-instance context against Storage's own UUID descriptor in Plans/event_record_index_checkpoint.schema.json, including exact primitive type and UUID format. Empty, malformed, overlong, newline-suffixed and non-string instances refuse even when dependent IDs, keys and source commitments agree. Compare candidate, token, source-selection, payload-pack and index context against the independently read actual Storage record; a caller context, default instance or coherent forged context supplies no authority. Verify Storage-assigned sequence and timestamp fields against that exact original record commitment before reading. A retained original remains governed by its supported edition and current custody, not later lifecycle state.
+
+For new writes and current identity/idempotency inputs, this family selects strict-v4 exact integer types with the owner-declared domain of each field. Storage sequence_id and its last_sequence_id copies, frontier_revision, selected_segment_generation, manifest_generation, recovery_epoch and pack byte_size retain exact uint64 values 0 through 18446744073709551615; no 2^53 ceiling applies to Storage metadata. Publication revision and logical payload integers retain their existing owner minima and maxima, with no invented DCH safe-integer cap. Declared integer slots reject runtime float/string/bool/null/array/object substitutes except explicitly nullable slots. Storage metadata is excluded from the producer-semantic projection as already specified. The producer route is the CV-1100 qualified RFC 8785 encoding of the unchanged CV-317 producer projection (shared producer_semantic_bytes/producer_semantic_digest); an unsupported exact producer input is a structured route refusal, without narrowing its logical owner domain, rounding or stringification. Physical bytes follow SP-236 through the shared SP-1100 codec (storage_value_bytes, EVENT_VALUE profile): float type, minimal exact float width and signed zero are preserved, so a lexical alias never shares an integer's bytes, and the exact integer slots refuse every alias; invalid JSON 01 refuses under the CV-1100 current parser. Retained-recipe dispatch composes the shared SP-1101 RetainedDispatcher and timestamps use the shared CV-1101 check, as the retained-original and format paragraphs state. Test Storage write/retry inputs at 2^53, 2^60 and uint64 maximum, and refuse overflow, negative and wrong-type metadata independently.
+
+Retained and compatibility originals use the schema, numeric domain, runtime type policy, format validator and physical encoder in force when written. The single selector record_number_rule() owns this dispatch on passive history, SP-337 materialization/reference verification, full-index source/checkpoint validation, checkpoint physical storage, saved-original retry comparison and terminal retained-start lookup. New/current inputs select strict-v4. For retained sources, independently read protected Storage write-receipt provenance binds actual storage_instance_id, exact original source-value SHA-256 and recipe_id; it is committed with the original write and survives restore with that source. Candidate fields, caller version/recipe flags, mutable live state and payload content cannot select or enroll an earlier recipe. Verify any claim against that independently authenticated provenance, then verify the exact original bytes with the selected recipe. Missing earlier provenance is unavailable under that earlier recipe, never a guessed downgrade: an original of a Store outside the sealed write custody refuses as unavailable and a receipt naming a recipe with no installed frozen verifier refuses as unsupported, with no fallback to another recipe; within a custody Store an original without a legacy receipt was written by the current strict-v4 writer. Each retained read composes the shared SP-1101 RetainedDispatcher once: one owner selection, no caller override and no current-then-legacy probing, and the installed frozen verifier of that exact recipe tuple (pinned to the recipe's recorded original schema hashes) checks the original. Preserve raw-v1 (d36809af original MessagePack numeric types), normalized-v2 (a785466d normalized integral floats with the original uncapped integer domain), and strict-v3 (c21fa62e safe integers; its original checker skipped date-time and URI formats); Plans/dch_retained_recipes.json pins their exact original schemas and source revisions. A skipped format check never authenticates invalid history (CV-1101, SP-1101): frozen validators apply the shared date-time predicate and CV-253 to the recipe's pinned original resources, so a retained timestamp CV-1101 refuses is owner-invalid and refuses, while owner-valid lowercase, leap-second and long-fraction history stays readable with its exact spelling; the skipped URI check is preserved. Never re-encode raw-v1 bytes under a later normalization to verify their commitment. Plans/dch_write_recipe_receipts.json is an independent synthetic Storage receipt adapter, not native authentication evidence. Every earlier-valid retained numeric or format record stays readable with current authorization, deletion/hold access, withdrawal and actual-source identity checks. A forged source or recipe selection still refuses. Current derived checkpoints may copy an old event sequence into their exact new integer representation; the original retained event/index sequence and commitment remain unchanged. A retry verifies its saved original through the same historical schema/byte/custody reader before comparison; its incoming input stays strict-v4, and a replay-only compatibility original still cannot authorize a current append or retry. Different earlier semantic values conflict without sending an out-of-current-domain original through the current RFC 8785 encoder. A retained checkpoint, including its history and physical payload pack, uses its own original write provenance separately from its referenced event.
+
+The strict-v4 format validators are mandatory and installed explicitly, never through optional jsonschema plugins. Timestamps adopt the shared CV-1101 check: every current and frozen DCH validator is pm_event_datetime.datetime_validator over the complete outer schema, so the registered RFC 3339 predicate runs through the validator. occurred_at_utc keeps the EventRecord profile (T or t, Z/z or a signed offset, any fraction length, year 0000 and legitimate offset-adjusted leap seconds); observed_at_utc and persisted_at_utc keep CV-253's storage_utc_z profile through the inventory-classified envelope; the family ts and populated checkpoint retired_at_utc take the same predicate with their unchanged owner-schema terminal uppercase-Z pattern. A missing zone, space or wrong separator, invalid calendar field, hour 24, minute 60, false leap second, empty fraction and trailing LF refuse. Timestamp strings are never rewritten and are compared only as exact strings; no DCH-local timestamp grammar remains. PR URLs where declared fully match RFC 3986 HTTPS syntax, including valid percent escapes, reg-name or bracketed IPv6/IPvFuture host, numeric port and path/query/fragment grammar. Malformed brackets/hosts/escapes and whitespace refuse. No PR-host allowlist or new provider behavior is introduced. UUID contexts keep Storage's enforced descriptor. Both payload editions, all three EventRecord timestamps and populated checkpoint retirement times have isolated format negatives; applicable PR payloads cover every malformed URL form.
+
+```yaml
+plan_unit_id: SP-613
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: '### SP-613 — chat.thread_archived
+
+
+  Newly authored persistence/read contract for `chat.thread_archived` 1.0.0 under DL-045, adopting ACD-613
+  and CV-633. Exact operating consumer `reader.chat.chat_thread_archived@1.0.0` serves Thread shell/navigation,
+  SP-338 render-page builder and audit. Reuse exact projector `projector.storage.event_record_index@1.0.0`
+  and checkpoint `event_record_index_checkpoint.v1:{storage_instance_id}`, schema `Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint`,
+  version 1.0.0. Explicitly adopt SP-278 including DL-076 nine-field durable read token and current full-index
+  generation/frontier validation; no persisted redb_snapshot_id. This consumer is an on-demand, exact-event
+  filtered read of the generic index, not an independently advancing persistent filtered projection. SP-278
+  performs predecessor-frontier CAS with index rows atomically, complete captured coverage, source selection
+  and current publication validation. Each read uses the actual live transaction token, full scope and canonical
+  source/payload joins and current permissions; a stale, unsupported or unavailable token cannot publish a
+  result. The generic checkpoint retains RP-PROJECTION-3GEN@1.0.0, without extending the source event lifetime.
+  No new stored family/key/value is created by this reader, so no storage registry row is invented. Existing
+  render pages, Tantivy and worktree binding projections remain their owner-defined stores and must be rebuilt
+  under their own current checkpoints, not by adopting this audit reader as a new mutation path. Replay of
+  this event through `reader.chat.chat_thread_archived@1.0.0` returns original outcome evidence only: no git,
+  API, test, send, chip creation, archive transition, notification, billing or deletion side effect. retention_policy_ref
+  = PENDING_RETENTION_DECISION. Candidates: Case L-3 Chat content (thread lifetime, 250,000/thread) versus
+  audit authority (indefinite, no count eviction); classification belongs to RT/Jared. No expiry/count deletion
+  is authorized by this draft. Original source intent, canonical outcome/body and first receipt remain with
+  cmd.chat.thread.archive lifecycle handler, under SP-286/CV-339; coherent backup/restore includes those dependencies
+  and deletion records before any visible read. Missing originals are unavailable, never recaptured. Stored
+  excerpts, command strings, errors, branch/path/PR text must be scrubbed before append; no credentials, inline
+  message body or raw tool output. Every referenced body requires current authorization, deletion/hold checks
+  and exact source Computer/root; retained audit metadata grants no access. This event adds no hold or purge
+  exemption. Withdrawal cuts off this exact family before new operations; fence `reader.chat.chat_thread_archived@1.0.0`
+  and any affected domain projection, retain supported original-version historical lookup under current permissions,
+  then rebuild a separately versioned successor from retained canonical sources and a fresh SP-278 token before
+  publication. Never reset a cursor to zero as current, remint events, or delete seglog as withdrawal. No admission
+  or native execution proof is implied.
+
+
+
+
+  **chat.thread_archived domain projection binding (newly authored owner contract).** Exact domain projector
+  `projector.chat.chat_thread_archived@1.0.0` 1.0.0 and operating consumer `reader.chat.chat_thread_archived@1.0.0`
+  explicitly adopt SP-278 and the same verified full-index source path. The family''s separate checkpoint is
+  `projector.checkpoint.dch.chat_thread_archived.v1:{storage_instance_id}:{scope_partition}`, stored family
+  `dch_chat_thread_archived_checkpoint`, closed schema `Plans/dch_event_payloads/dch_chat_thread_archived_checkpoint.schema.json#`,
+  schema_id `pm.storage_value.dch_chat_thread_archived_checkpoint.v1` 1.0.0. The nine-field durable token is
+  copied exactly from SP-278/DL-076 without redb_snapshot_id. Consumer/projector versions are the suffixes
+  in their stored constant IDs; no version is inferred from the payload. `last_sequence_id` and `last_event_id`
+  identify the last applied exact-family EventRecord; `source_token` identifies complete inspected source coverage
+  including nonmatching events. Publication identity is fresh entropy for a new shadow generation and frozen
+  on retries; revision increments exactly once on successful CAS. The key joins storage_instance_id and scope_partition
+  exactly. Application partition app is also bound to its source token''s Server/instance and the event''s
+  Computer/thread, never to every null Project. The projector processes only chat.thread_archived in verified
+  source sequence order and applies the ACD-613 manual lifecycle transition once. Resolve thread_record_ref
+  against the original committed archived revision and exact scope/Server/Computer/thread before accepting
+  evidence. Build the existing lifecycle/navigation/search visibility projections from current canonical thread
+  state and tombstones. A later unarchive or deletion wins over historical archived evidence; never force current
+  state back to archived. Preserve existing transcript/lineage/attachment/folder/worktree identities, and never
+  call Archive, create a folder, perform Git cleanup, delete content or send notifications during replay. No
+  automatic archive or source expiry follows from this checkpoint. Rebuild shared lifecycle targets in global
+  source order with every required admitted lifecycle source and current canonical joins; a missing counterpart
+  fences publication.
+
+
+  For this exact family, publish projection mutation and checkpoint revision together in one redb transaction
+  with predecessor revision/publication_id CAS. Where the target is Tantivy or the SP-338 page payload store,
+  first durably stage and read back an immutable shadow commit, put its exact reference in projection_refs,
+  then CAS-publish the pointer and checkpoint together. Readers serve only targets named by the current checkpoint''s
+  refs and same publication_id; old/partial targets never become visible by newest-file inference. Existing
+  canonical thread/worktree state is not rewritten by a derived rebuild. Rebuild any shared target from all
+  its admitted family sources in global source order into one shadow, never by replaying a whole bound family
+  after an unbound family. A required unadmitted counterpart fences that target, not an inferred admission.
+  Re-read canonical state/tombstones and current grants before publication. On source-generation change or
+  failed CAS, discard unpublished target or retry from the unchanged verified prefix; never reuse a stale token.
+  Missing or malformed derived bytes enter Q-DERIVED and governed rebuild, not source repair. Source loss requires
+  canonical backup recovery.
+
+
+  The checkpoint is MessagePack canonical, max 16 KiB under SP-340; oversized values use existing SP-337 reference
+  storage, never an exemption. The closed history array stores at most two full prior checkpoint generations
+  with first retired_at_utc and state retired; current fields name the selected generation. Reserve staged
+  slots through the existing maintenance intent before source staging; a staged candidate counts against three
+  even before it is visible in history. Retain at most three publication generations per exact key under RP-PROJECTION-3GEN@1.0.0;
+  retirement starts at first committed replacement, retries do not reset it, 604800 seconds for eligible retired
+  generations only, with holds/current/staged/live-ref protection. Reserve the slot first or disclose rebuild
+  unavailability. Source events keep PENDING_RETENTION_DECISION; the checkpoint gives no source keepalive.
+  Backup restores canonical source/custody/tombstones first; derived target/checkpoint is rebuilt and validated
+  against the current full-index token before read. Withdrawal fences this projector and its domain readers
+  in addition to the passive reader, sets checkpoint state withdrawn by CAS, and refuses all ordinary advances.
+  Retained historical lookup uses original schema and current access checks; successor publication requires
+  a separately versioned, complete shadow rebuild. Unsupported versions are unavailable, never rewritten in
+  place.
+
+
+  Adopt SP-337 for this exact event body. The logical body remains the selected closed Project/application
+  payload edition, with its existing field and array bounds unchanged. Encode that complete body as SP-236
+  canonical MessagePack (recursive exact UTF-8 map-key order and shortest encodings); measure encoded bytes,
+  not JSON characters or the envelope. At most 16384 bytes may be inline with payload_ref=null. An oversized
+  inline body is refused before append. Larger or separately governed bodies use payload={} and the newly authored
+  string binding `payload:v1:{lowercase_blake3_64}:{decimal_byte_size}:application/msgpack` in EventRecord.payload_ref,
+  with canonical unsigned decimal size, selecting the existing payload-pack index key `payload:v1:{lowercase_blake3_64}`.
+  The reference commits to the BLAKE3 of the exact complete encoded body, exact byte size and media type application/msgpack.
+  Resolve and decode that original body, validate its exact schema/edition and every scope/identity/actor/time
+  join as for inline bodies; a reference is never an empty semantic body. Require actual original Storage instance,
+  Server/scope/Computer/thread custody, current authorization/deletion/hold access checks, durable exact pack
+  bytes and index entry and verified readback before the referencing append can be acknowledged or its first
+  receipt/result published. Missing, changed, unauthorized, deleted, wrong-store or unreadable body/index evidence
+  refuses publication; no base64 body, truncated body, alternate-source reconstruction or rerun is allowed.
+  Pack durability, reference counts, holds, backups and deletion deadlines remain SP-337; this binding grants
+  no new retention exemption.
+
+
+  Checkpoint acceptance compares original source facts independently of the candidate: the outer storage_instance_id,
+  durable-token storage_instance_id, source_selection storage_instance_id and actual source/root instance must
+  be identical. Resolve the token checkpoint_key in the actual full-index root, its uniquely current generation
+  JSON Pointer checkpoint_ref and exact same-instance event_record_index.v2@generation dataset. Require exact
+  generation anchor, current frontier revision/digest and all source_selection fields against current synchronized
+  source, including nonmatching same-generation appends; a shape-valid stale token cannot publish. The domain
+  checkpoint key binds this instance and exact scope_partition. last_event_id/last_sequence_id join the actual
+  exact-family EventRecord and its full-index row and source-value commitment; actual source Computer/thread/scope
+  also join the published projection. Publication_id, revision, projection_refs and the full durable source
+  token match the actual staged/read-back publication selected by the atomic checkpoint/pointer CAS. Independent
+  source, token, selection, key/ref, event, dataset, publication and current-frontier mismatches refuse publication.
+  Static fixture adapters model these joins; they do not prove native full-index coverage, redb transactions,
+  CRC, source locks or durability.
+
+
+  For chat.thread_archived, the complete encoded checkpoint includes every retained history entry and
+  projection reference. Measure that entire SP-236 value at the 16384-byte SP-340 boundary: 16384 bytes
+  may be inline, 16385 bytes may not. A larger logical checkpoint keeps the same closed schema and bounds
+  and uses SP-337; measure the stored reference/pointer too. Resolve the exact complete bytes through
+  their BLAKE3/size/media-type reference and same-instance, exact-key/scope/family payload-pack index,
+  with current authorization/deletion/hold access, durable bytes/index and verified readback before checkpoint
+  publication. Externalizing the event body does not externalize this checkpoint. Every Storage-assigned
+  identity and metadata field is checked against the original Storage record for the actual instance;
+  no fixture/default instance supplies authority. Checkpoint source lookup resolves inline or referenced
+  originals, validates the supported original envelope and Project/application payload edition, verifies
+  their exact original source commitment and current access/withdrawal status, and then joins their source
+  facts. Retained compatibility-reader originals, including projector_replay_only, remain readable after
+  later live-state changes; only a new append/retry uses the current-writer policy. Unsupported, withdrawn,
+  forged or foreign originals cannot publish. Newly written integer and boolean slots require their exact types before comparison or arithmetic; string numbers/booleans, null, arrays and nested objects confer no
+  numeric or access authority. Current physical commitment/reference encoding canonicalizes integral numeric aliases and signed zero to the same shortest integer bytes; retained bytes retain their protected original recipe below. These are refinements of this family''s existing SP-236/SP-278/SP-337/SP-340 contract, not
+  a new retention or product decision.
+
+
+  Before any source resolution or identity hashing, validate every Storage-instance context against Storage''s own UUID descriptor in Plans/event_record_index_checkpoint.schema.json, including exact primitive type and UUID format. Empty, malformed, overlong, newline-suffixed and non-string instances refuse even when dependent IDs, keys and source commitments agree. Compare candidate, token, source-selection, payload-pack and index context against the independently read actual Storage record; a caller context, default instance or coherent forged context supplies no authority. Verify Storage-assigned sequence and timestamp fields against that exact original record commitment before reading. A retained original remains governed by its supported edition and current custody, not later lifecycle state.
+
+
+  For new writes and current identity/idempotency inputs, this family selects strict-v4 exact integer types with the owner-declared domain of each field. Storage sequence_id and its last_sequence_id copies, frontier_revision, selected_segment_generation, manifest_generation, recovery_epoch and pack byte_size retain exact uint64 values 0 through 18446744073709551615; no 2^53 ceiling applies to Storage metadata. Publication revision and logical payload integers retain their existing owner minima and maxima, with no invented DCH safe-integer cap. Declared integer slots reject runtime float/string/bool/null/array/object substitutes except explicitly nullable slots. Storage metadata is excluded from the producer-semantic projection as already specified. The producer route is the CV-1100 qualified RFC 8785 encoding of the unchanged CV-317 producer projection (shared producer_semantic_bytes/producer_semantic_digest); an unsupported exact producer input is a structured route refusal, without narrowing its logical owner domain, rounding or stringification. Physical bytes follow SP-236 through the shared SP-1100 codec (storage_value_bytes, EVENT_VALUE profile): float type, minimal exact float width and signed zero are preserved, so a lexical alias never shares an integer''s bytes, and the exact integer slots refuse every alias; invalid JSON 01 refuses under the CV-1100 current parser. Retained-recipe dispatch composes the shared SP-1101 RetainedDispatcher and timestamps use the shared CV-1101 check, as the retained-original and format paragraphs state. Test Storage write/retry inputs at 2^53, 2^60 and uint64 maximum, and refuse overflow, negative and wrong-type metadata independently.
+
+
+  Retained and compatibility originals use the schema, numeric domain, runtime type policy, format validator and physical encoder in force when written. The single selector record_number_rule() owns this dispatch on passive history, SP-337 materialization/reference verification, full-index source/checkpoint validation, checkpoint physical storage, saved-original retry comparison and terminal retained-start lookup. New/current inputs select strict-v4. For retained sources, independently read protected Storage write-receipt provenance binds actual storage_instance_id, exact original source-value SHA-256 and recipe_id; it is committed with the original write and survives restore with that source. Candidate fields, caller version/recipe flags, mutable live state and payload content cannot select or enroll an earlier recipe. Verify any claim against that independently authenticated provenance, then verify the exact original bytes with the selected recipe. Missing earlier provenance is unavailable under that earlier recipe, never a guessed downgrade: an original of a Store outside the sealed write custody refuses as unavailable and a receipt naming a recipe with no installed frozen verifier refuses as unsupported, with no fallback to another recipe; within a custody Store an original without a legacy receipt was written by the current strict-v4 writer. Each retained read composes the shared SP-1101 RetainedDispatcher once: one owner selection, no caller override and no current-then-legacy probing, and the installed frozen verifier of that exact recipe tuple (pinned to the recipe''s recorded original schema hashes) checks the original. Preserve raw-v1 (d36809af original MessagePack numeric types), normalized-v2 (a785466d normalized integral floats with the original uncapped integer domain), and strict-v3 (c21fa62e safe integers; its original checker skipped date-time and URI formats); Plans/dch_retained_recipes.json pins their exact original schemas and source revisions. A skipped format check never authenticates invalid history (CV-1101, SP-1101): frozen validators apply the shared date-time predicate and CV-253 to the recipe''s pinned original resources, so a retained timestamp CV-1101 refuses is owner-invalid and refuses, while owner-valid lowercase, leap-second and long-fraction history stays readable with its exact spelling; the skipped URI check is preserved. Never re-encode raw-v1 bytes under a later normalization to verify their commitment. Plans/dch_write_recipe_receipts.json is an independent synthetic Storage receipt adapter, not native authentication evidence. Every earlier-valid retained numeric or format record stays readable with current authorization, deletion/hold access, withdrawal and actual-source identity checks. A forged source or recipe selection still refuses. Current derived checkpoints may copy an old event sequence into their exact new integer representation; the original retained event/index sequence and commitment remain unchanged. A retry verifies its saved original through the same historical schema/byte/custody reader before comparison; its incoming input stays strict-v4, and a replay-only compatibility original still cannot authorize a current append or retry. Different earlier semantic values conflict without sending an out-of-current-domain original through the current RFC 8785 encoder. A retained checkpoint, including its history and physical payload pack, uses its own original write provenance separately from its referenced event.
+
+
+  The strict-v4 format validators are mandatory and installed explicitly, never through optional jsonschema plugins. Timestamps adopt the shared CV-1101 check: every current and frozen DCH validator is pm_event_datetime.datetime_validator over the complete outer schema, so the registered RFC 3339 predicate runs through the validator. occurred_at_utc keeps the EventRecord profile (T or t, Z/z or a signed offset, any fraction length, year 0000 and legitimate offset-adjusted leap seconds); observed_at_utc and persisted_at_utc keep CV-253''s storage_utc_z profile through the inventory-classified envelope; the family ts and populated checkpoint retired_at_utc take the same predicate with their unchanged owner-schema terminal uppercase-Z pattern. A missing zone, space or wrong separator, invalid calendar field, hour 24, minute 60, false leap second, empty fraction and trailing LF refuse. Timestamp strings are never rewritten and are compared only as exact strings; no DCH-local timestamp grammar remains. PR URLs where declared fully match RFC 3986 HTTPS syntax, including valid percent escapes, reg-name or bracketed IPv6/IPvFuture host, numeric port and path/query/fragment grammar. Malformed brackets/hosts/escapes and whitespace refuse. No PR-host allowlist or new provider behavior is introduced. UUID contexts keep Storage''s enforced descriptor. Both payload editions, all three EventRecord timestamps and populated checkpoint retirement times have isolated format negatives; applicable PR payloads cover every malformed URL form.'
+gui_related: false
+gui_classification_reason: Owns event data and persistence contract.
+depends_on:
+- ACD-613
+- CV-633
+- SP-278
+- SP-286
+- SP-337
+unblocks: []
+acceptance_criteria:
+- Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership remains
+  absent.
+- Review-round-2 acceptance rejects the independently mutated forbidden policy, body, retry, source and outcome
+  cases applicable to this exact family; native evidence remains NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm_dch_events.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: event_authority_dch
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- DL-045; WAVE2 DCH 2026-11-04
+- Review round 1 F3; DL-280/DL-287 current premise verified 2026-11-04
+preserved_exact_tokens:
+- chat.thread_archived
+- PENDING_RETENTION_DECISION
+- SP-278
+- SP-286
+negative_constraints:
+- No event admission or native execution proof; no retention choice.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+
+### SP-627 — Stop request and canonical assistant-turn result custody
+
+Newly authored persistence contract under DL-045, DL-406 and DL-427 for chat.response_stop_requested and its assistant turn's own saved outcome (ACD-627/628, CV-647). Event history uses the existing canonical EventRecord/seglog path, SP-236 physical encoding, SP-286/CV-339 full-value first-AppendReceipt custody and SP-337 verified complete-body references. The actual accepted Stop intent freezes the request, original assistant turn/work leases, cancellation start/deadline and first receipt before effects. Its actual owning Server/Storage instance holds this original graph; Client focus, a default instance, run:<run_id> compatibility alias, projection or delivery outbox supplies no substitute authority. Compare Storage-assigned event sequence/timestamps against independently read exact original Storage record commitments. Validate actual Storage contexts with the existing event_record_index_checkpoint.schema.json UUID descriptor before hashing or resolving. Backup/restore must recover canonical request bytes, original pending intent/deadline, first receipt, original turn/work refs, any payload packs/index, saved outcome and deletion/hold records coherently before visible reads. Unresolved canonical custody is unavailable and blocks queue advancement, never reconstructed from an event/display or a fresh work run.
+
+The new canonical_non_rebuildable redb family assistant_turn_stop_outcome uses key assistant_turn_stop_outcome.v1:{storage_instance_id}:{stop_request_event_id}, using the existing exact UUID and globally unique request EventRecord identity. The key is fixed in size; Server, scope, Computer, thread, assistant turn and exact work remain mandatory value-to-original-request/source joins, without encoding those potentially larger values into the physical key or inventing an ID-length cap. Every component joins the actual record and original request/source; the Storage instance is independently read. The two closed value editions in Plans/dch_stop_outcome.schema.json contain only the ACD-628 fields. The logical schema is not a new physical serializer: adopt existing SP-236/CV-366 encoding, SP-340's 16 KiB whole-value limit and SP-337 verified reference route for a larger complete value; measure the physical pointer too and enforce same exact-key/instance/scope/family pack custody, access, durable index/bytes and readback. No second outcome-history event is written. Original request/body/first receipt commit precedes cancellation; absent-to-present result CAS and durable readback precede any queue release. A same-value retry returns the original result; a different value conflicts. An interrupted result save reconciles original durable value/intent, never treats absence or a delivery receipt as success. Restart retains the original grace deadline; a committed result survives restart/restore exactly. A prepared/uncommitted value cannot release the queue. The source storage family is specified but not materialized into storage_value_registry while its retention decision is open; actual writes remain fenced until its complete storage binding and event admission exist.
+
+The exact passive operating consumer is reader.chat.response_stop_requested@1.0.0 for chat Stop history and original-request lookup. It explicitly adopts projector.storage.event_record_index@1.0.0, checkpoint event_record_index_checkpoint.v1:{storage_instance_id}, Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint 1.0.0, SP-278 and DL-076's nine-field durable read token with no persisted redb_snapshot_id. It is an on-demand exact-family filter of the complete generic index, with no separate filtered cursor or stored projection. SP-278 owns source-order advance, complete captured coverage and frontier/predecessor CAS with index rows atomically; the exact actual source/token/selection/generation/frontier/dataset must agree before a read. Changed current source fences publication. The generic checkpoint remains RP-PROJECTION-3GEN@1.0.0 with current/staged/held/live-ref protections; it never extends source lifetime. Queue/result readers fetch the canonical saved outcome through exact-key current custody, never derive it from this index. Rebuild regenerates only the generic index from retained authentic sources, with a fresh complete token, and never cancellation, outcomes or queue actions. Withdrawal fences reader/index publication, retains original-schema historical lookup and current access checks, and requires separately versioned successor rebuild; unknown, withdrawn, forged or foreign inputs cannot publish.
+
+Request retention is already decided by DL-401 G15: retention_policy_ref = RP-CHAT-THREAD-LIFETIME, version 1.0.0, as materialized on origin/plans/ea-retention-cards2-20261105 in Storage Case L-3 and storage_value_registry. It lasts with the thread named in the request, in Project and application chats alike, sharing 250000 records per thread and linked-successor rollover without silent eviction. Chat deletion hides it immediately and purges unheld active bytes within 24 hours and backup bytes within 30 days; holds delay purge but never restore visibility. Referenced work and independent receipts keep their own policies and grant no access. This draft neither imports changes to the seventeen prepared families nor widens the named group. The newly authorized saved result is not named by G15 and no existing group decides its separate record lifetime: retention_policy_ref = PENDING_RETENTION_DECISION. Exact question: Should the saved assistant-turn Stop outcome be kept and deleted with its chat under RP-CHAT-THREAD-LIFETIME@1.0.0, or have a separate lifetime? If separate, what window, count bucket, deletion behavior and hold rules apply in Project and application chats? No expiry, count eviction, lifetime transfer, new hold or purge exemption is authorized for that record. Until its exact assignment/materialization is complete, its writes and retirement cutover remain unavailable.
+
+```yaml
+plan_unit_id: SP-627
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: '### SP-627 — Stop request and canonical assistant-turn result custody
+
+
+  Newly authored persistence contract under DL-045, DL-406 and DL-427 for chat.response_stop_requested and its assistant
+  turn''s own saved outcome (ACD-627/628, CV-647). Event history uses the existing canonical EventRecord/seglog
+  path, SP-236 physical encoding, SP-286/CV-339 full-value first-AppendReceipt custody and SP-337 verified complete-body
+  references. The actual accepted Stop intent freezes the request, original assistant turn/work leases, cancellation
+  start/deadline and first receipt before effects. Its actual owning Server/Storage instance holds this original
+  graph; Client focus, a default instance, run:<run_id> compatibility alias, projection or delivery outbox supplies
+  no substitute authority. Compare Storage-assigned event sequence/timestamps against independently read exact original
+  Storage record commitments. Validate actual Storage contexts with the existing event_record_index_checkpoint.schema.json
+  UUID descriptor before hashing or resolving. Backup/restore must recover canonical request bytes, original pending
+  intent/deadline, first receipt, original turn/work refs, any payload packs/index, saved outcome and deletion/hold
+  records coherently before visible reads. Unresolved canonical custody is unavailable and blocks queue advancement,
+  never reconstructed from an event/display or a fresh work run.
+
+
+  The new canonical_non_rebuildable redb family assistant_turn_stop_outcome uses key assistant_turn_stop_outcome.v1:{storage_instance_id}:{stop_request_event_id},
+  using the existing exact UUID and globally unique request EventRecord identity. The key is fixed in size; Server,
+  scope, Computer, thread, assistant turn and exact work remain mandatory value-to-original-request/source joins,
+  without encoding those potentially larger values into the physical key or inventing an ID-length cap. Every component
+  joins the actual record and original request/source; the Storage instance is independently read. The two closed
+  value editions in Plans/dch_stop_outcome.schema.json contain only the ACD-628 fields. The logical schema is not
+  a new physical serializer: adopt existing SP-236/CV-366 encoding, SP-340''s 16 KiB whole-value limit and SP-337
+  verified reference route for a larger complete value; measure the physical pointer too and enforce same exact-key/instance/scope/family
+  pack custody, access, durable index/bytes and readback. No second outcome-history event is written. Original request/body/first
+  receipt commit precedes cancellation; absent-to-present result CAS and durable readback precede any queue release.
+  A same-value retry returns the original result; a different value conflicts. An interrupted result save reconciles
+  original durable value/intent, never treats absence or a delivery receipt as success. Restart retains the original
+  grace deadline; a committed result survives restart/restore exactly. A prepared/uncommitted value cannot release
+  the queue. The source storage family is specified but not materialized into storage_value_registry while its retention
+  decision is open; actual writes remain fenced until its complete storage binding and event admission exist.
+
+
+  The exact passive operating consumer is reader.chat.response_stop_requested@1.0.0 for chat Stop history and original-request
+  lookup. It explicitly adopts projector.storage.event_record_index@1.0.0, checkpoint event_record_index_checkpoint.v1:{storage_instance_id},
+  Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint 1.0.0, SP-278 and DL-076''s nine-field durable
+  read token with no persisted redb_snapshot_id. It is an on-demand exact-family filter of the complete generic
+  index, with no separate filtered cursor or stored projection. SP-278 owns source-order advance, complete captured
+  coverage and frontier/predecessor CAS with index rows atomically; the exact actual source/token/selection/generation/frontier/dataset
+  must agree before a read. Changed current source fences publication. The generic checkpoint remains RP-PROJECTION-3GEN@1.0.0
+  with current/staged/held/live-ref protections; it never extends source lifetime. Queue/result readers fetch the
+  canonical saved outcome through exact-key current custody, never derive it from this index. Rebuild regenerates
+  only the generic index from retained authentic sources, with a fresh complete token, and never cancellation, outcomes
+  or queue actions. Withdrawal fences reader/index publication, retains original-schema historical lookup and current
+  access checks, and requires separately versioned successor rebuild; unknown, withdrawn, forged or foreign inputs
+  cannot publish.
+
+
+  Request retention is already decided by DL-401 G15: retention_policy_ref = RP-CHAT-THREAD-LIFETIME, version 1.0.0,
+  as materialized on origin/plans/ea-retention-cards2-20261105 in Storage Case L-3 and storage_value_registry. It
+  lasts with the thread named in the request, in Project and application chats alike, sharing 250000 records per
+  thread and linked-successor rollover without silent eviction. Chat deletion hides it immediately and purges unheld
+  active bytes within 24 hours and backup bytes within 30 days; holds delay purge but never restore visibility.
+  Referenced work and independent receipts keep their own policies and grant no access. This draft neither imports
+  changes to the seventeen prepared families nor widens the named group. The newly authorized saved result is not
+  named by G15 and no existing group decides its separate record lifetime: retention_policy_ref = PENDING_RETENTION_DECISION.
+  Exact question: Should the saved assistant-turn Stop outcome be kept and deleted with its chat under RP-CHAT-THREAD-LIFETIME@1.0.0,
+  or have a separate lifetime? If separate, what window, count bucket, deletion behavior and hold rules apply in
+  Project and application chats? No expiry, count eviction, lifetime transfer, new hold or purge exemption is authorized
+  for that record. Until its exact assignment/materialization is complete, its writes and retirement cutover remain
+  unavailable.'
+gui_related: false
+gui_classification_reason: Persistence, contract or verification of the existing Stop behavior.
+depends_on:
+- DL-045
+unblocks: []
+acceptance_criteria:
+- The exact Stop request, saved outcome, custody, queue barriers and conditional retirements follow DL-406/DL-427;
+  unresolved retention and native verification remain explicit.
+validation_surfaces:
+- python3 scripts/pm_dch_stop.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: event_authority_dch_stop
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- DL-406 on origin/plans/ea-cards1-answers-20261104
+- DL-427 on origin/plans/ea-cards2-answers-20261105; E-CARDS-2 item 3.a option A
+preserved_exact_tokens:
+- chat.response_stop_requested
+- DL-406
+- DL-427
+negative_constraints:
+- No event admission, Decision Log entry or native durability claim.
+- No new retention policy or automatic queue release.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+
+### SP-628 — DL-406/DL-427 conditional retirement of three chat_run names
+
+Apply DL-406 and DL-427 individually: chat_run.cancel_requested is the retired request spelling replaced by the one catalog-named chat.response_stop_requested; chat_run.cancelled is the old cancellation-outcome event requirement replaced by ACD-628's saved outcome=cancelled; chat_run.cancel_timeout is the old timeout-outcome event requirement replaced by ACD-628's saved outcome=timeout. These are three separate exclusion/retirement records, not aliases or admissions. The implementation cutover is conditional: the replacement record must be completely specified/materialized and verified to survive restart AND recovery, with the one request path, original three-second grace, saved-outcome barrier and separate ACD-471 user action intact. A prepared schema or static model alone does not satisfy native durability. reports/event-authority-20261104/DCH-stop-retirement-application.json records all three applications as retirement_specified_cutover_pending; native restart/recovery verification is NOT_RUN, so no applied runtime cutoff is claimed. The open saved-record retention/materialization also fences that cutover. No outcome history may be dropped while those conditions are unresolved, and none of these unregistered names acquires permission to append from this draft.
+
+At verified cutover, forbid new writes of each exact old name and retain original already-written bytes/identity/schema/meaning under their write-time recipe and original retention/deletion/access rules. Historical compatibility lookup remains read-only and must refuse forged/withdrawn/foreign evidence; later live state cannot invalidate an otherwise retained authentic old record. Never rewrite or remint old bytes as the new request or result, infer that old cancelled means timeout, or manufacture a saved outcome from missing history. This specifies exclusion from future producer requirements and keeps old bytes readable; denominator/registry bookkeeping and any actual native cutover receipt belong to integration, without a Decision Log entry or event-family registry append here.
+
+```yaml
+plan_unit_id: SP-628
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: '### SP-628 — DL-406/DL-427 conditional retirement of three chat_run names
+
+
+  Apply DL-406 and DL-427 individually: chat_run.cancel_requested is the retired request spelling replaced by the
+  one catalog-named chat.response_stop_requested; chat_run.cancelled is the old cancellation-outcome event requirement
+  replaced by ACD-628''s saved outcome=cancelled; chat_run.cancel_timeout is the old timeout-outcome event requirement
+  replaced by ACD-628''s saved outcome=timeout. These are three separate exclusion/retirement records, not aliases
+  or admissions. The implementation cutover is conditional: the replacement record must be completely specified/materialized
+  and verified to survive restart AND recovery, with the one request path, original three-second grace, saved-outcome
+  barrier and separate ACD-471 user action intact. A prepared schema or static model alone does not satisfy native
+  durability. reports/event-authority-20261104/DCH-stop-retirement-application.json records all three applications
+  as retirement_specified_cutover_pending; native restart/recovery verification is NOT_RUN, so no applied runtime
+  cutoff is claimed. The open saved-record retention/materialization also fences that cutover. No outcome history
+  may be dropped while those conditions are unresolved, and none of these unregistered names acquires permission
+  to append from this draft.
+
+
+  At verified cutover, forbid new writes of each exact old name and retain original already-written bytes/identity/schema/meaning
+  under their write-time recipe and original retention/deletion/access rules. Historical compatibility lookup remains
+  read-only and must refuse forged/withdrawn/foreign evidence; later live state cannot invalidate an otherwise retained
+  authentic old record. Never rewrite or remint old bytes as the new request or result, infer that old cancelled
+  means timeout, or manufacture a saved outcome from missing history. This specifies exclusion from future producer
+  requirements and keeps old bytes readable; denominator/registry bookkeeping and any actual native cutover receipt
+  belong to integration, without a Decision Log entry or event-family registry append here.'
+gui_related: false
+gui_classification_reason: Persistence, contract or verification of the existing Stop behavior.
+depends_on:
+- DL-045
+unblocks: []
+acceptance_criteria:
+- The exact Stop request, saved outcome, custody, queue barriers and conditional retirements follow DL-406/DL-427;
+  unresolved retention and native verification remain explicit.
+validation_surfaces:
+- python3 scripts/pm_dch_stop.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: event_authority_dch_stop
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- DL-406 on origin/plans/ea-cards1-answers-20261104
+- DL-427 on origin/plans/ea-cards2-answers-20261105; E-CARDS-2 item 3.a option A
+preserved_exact_tokens:
+- chat.response_stop_requested
+- DL-406
+- DL-427
+negative_constraints:
+- No event admission, Decision Log entry or native durability claim.
+- No new retention policy or automatic queue release.
+owner_hints:
+- Plans/storage-plan.md
+```
