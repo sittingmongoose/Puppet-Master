@@ -264,6 +264,7 @@ for (const surface of ['normal', 'sandbox']) {
 		const OTHER = new Set(Array.isArray(OPENER_DOC.other) ? OPENER_DOC.other : Object.keys(OPENER_DOC.other || {}));
 		const unclassified = new Set();
 		const pressedOpeners = new Set();
+		const openedBy = {};
 		const observedActions = {};
 		/* --set openersProbe=1: the evidence run that classifies the census. Every action a button carries is pressed
 		   once (bar the ones that destroy a fixture row or sign something out) and whether an editor opened is
@@ -311,7 +312,7 @@ for (const surface of ['normal', 'sandbox']) {
 					if (!pressed) continue;
 					if (!PROBE) pressedOpeners.add(action);
 					const showed = await f.waitForFunction(() => [...document.querySelectorAll('.pm51-drawer-wrap.is-open .pm51-panel, .o55g-win, .overlay .dialog[role="dialog"]')].some((e) => e.getClientRects().length), null, { timeout: PROBE ? 900 : 2500 }).then(() => true).catch(() => false);
-					if (showed) panelsOpened++;
+					if (showed) { panelsOpened++; openedBy[action] = true; }
 					if (PROBE) probeResult[action] = { opened: (probeResult[action] && probeResult[action].opened) || showed, where: where0 };
 					await t.settle().catch(() => {});
 					await panelTake(action);
@@ -394,12 +395,14 @@ for (const surface of ['normal', 'sandbox']) {
 			await t.check(`every manager's inner editor panels open and their fields are read (${panelsOpened} panels, ${inPanels.length} controls)`, !t.args.chapters ? panelsOpened >= 20 && inPanels.length >= 40 : panelsOpened >= 1, `${panelsOpened} panels, ${inPanels.length} controls`);
 		const ignored = all.filter((x) => x.ignored);
 		t.log(`Chrome ignored ${ignored.length} of ${all.length} (none of them a value control: ${ignored.filter((x) => x.widget).length} were)`);
+		const quiet = [...pressedOpeners].filter((a) => !openedBy[a]);
+		if (quiet.length) t.log(`known openers that opened no panel in this walk (check the census): ${quiet.join(', ')}`);
 		/* The positive opener census (round 4). A page action in neither list is a control this walk did not open,
 		   so it fails here by name instead of being passed over. */
 		if (!panelsOff && !PROBE) await t.check(`every Settings page action is a known opener or a known non-opener (${OPENS.size} openers)`,
 			unclassified.size === 0, unclassified.size ? `${unclassified.size} unclassified: ${[...unclassified].slice(0, 12).join('; ')}` : `${pressedOpeners.size} openers pressed of ${OPENS.size} known`);
-		if (bad.length) t.log('unnamed or misnamed: ' + JSON.stringify(bad.map((x) => `${x.where} ${x.id} ${x.kind} "${x.name}" vs "${x.label}"`)));
-		await t.check(`every placed value control on every Settings page is named by its row (${all.length} controls)`, (t.args.chapters ? all.length > 0 : all.length >= 778) && bad.length === 0, `${bad.length} not: ` + bad.slice(0, 8).map((x) => `${x.id} ${x.kind} "${x.name}" vs "${x.label}"`).join('; '));
+		if (bad.length) t.log('unnamed or misnamed: ' + JSON.stringify(bad.map((x) => `${x.where} ${x.id} ${x.kind} "${x.name}" vs "${x.label}"${x.ignored ? ' (ignored by Chrome)' : ''}`)));
+		await t.check(`every placed value control on every Settings page is named by its row (${all.length} controls)`, (t.args.chapters ? all.length > 0 : all.length >= 778) && bad.length === 0, `${bad.length} not: ` + bad.slice(0, 20).map((x) => `${x.id} ${x.kind} "${x.name}" vs "${x.label}"${x.ignored ? ' (ignored)' : ''}`).join('; '));
 	};
 
 	tests[`FO-135 no rail project line (${surface})`] = async (t) => {
