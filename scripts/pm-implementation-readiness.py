@@ -180,8 +180,6 @@ REQUIRED_PNC019_STORAGE_FAMILIES = [
     "blocked_projection",
     "goal_receipt",
 ]
-# goal_completion_receipt is no longer required: DL-478 (Jared, 2026-11-12, "Sweep and retire all")
-# retired the Goal-owned GoalCompletionReceipt and handoff row H-018.
 REQUIRED_PLANCOMPILE_ARTIFACT_KINDS = [
     "approved_plan_pack",
     "plan_compile_run",
@@ -190,6 +188,7 @@ REQUIRED_PLANCOMPILE_ARTIFACT_KINDS = [
     "worknode_request",
     "executor_intake_report",
     "test_run_receipt",
+    "goal_completion_receipt",
 ]
 REQUIRED_PROVIDER_STREAM_EVENT_KINDS = [
     "request_started",

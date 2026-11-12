@@ -1953,11 +1953,10 @@ def iter_schema_dicts(value: Any, path: str = "$") -> list[tuple[str, dict[str, 
     return found
 
 
-# DL-478 (Jared, 2026-11-12, "Sweep and retire all"): the Goal-owned GoalCompletionReceipt and
-# its handoff row H-018 are retired. The handoff schema may keep the kind's reference identity
-# and discriminator branch, but its $defs entry must reject every payload (`"not": {}`), and no
-# live handoff matrix row may name it. The live matrix is H-001..H-017.
-RETIRED_HANDOFF_ARTIFACT_KINDS = {"goal_completion_receipt"}
+# DL-478 (Jared, 2026-11-12, "Sweep and retire all"): H-018's Goal V2 handoff ("All terminal
+# receipts to GoalCompletionReceipt", Goal Runtime certifier) is retired, so the live handoff matrix
+# is H-001..H-017. The goal_completion_receipt payload itself stays live and strict for the
+# Original Standard route (GRS-064 keeps it unchanged).
 HANDOFF_MATRIX_ROW_IDS = [f"H-{index:03d}" for index in range(1, 18)]
 
 
@@ -2019,6 +2018,7 @@ def cmd_validate_plans_to_code_handoff_schema(args: argparse.Namespace) -> dict[
         "source_control_finalization_receipt",
         "model_resolution_receipt",
         "executor_intake_report",
+        "goal_completion_receipt",
     }
     for kind in sorted(expected_kinds - set(kinds)):
         failures.append({"path": rel(schema_path), "error": "missing_expected_artifact_kind", "artifact_kind": kind})
@@ -2041,21 +2041,6 @@ def cmd_validate_plans_to_code_handoff_schema(args: argparse.Namespace) -> dict[
             failures.append({"path": rel(schema_path), "error": "missing_payload_def", "artifact_kind": kind})
             continue
         payload_def = defs[kind]
-        if kind in RETIRED_HANDOFF_ARTIFACT_KINDS:
-            # DL-478: a retired kind is not a strict payload; it must reject every payload.
-            if not isinstance(payload_def, dict) or payload_def.get("not") != {}:
-                failures.append({"path": rel(schema_path), "error": "retired_payload_def_not_rejecting", "artifact_kind": kind})
-            if branch_map.get(kind) != f"#/$defs/{kind}":
-                failures.append(
-                    {
-                        "path": rel(schema_path),
-                        "error": "missing_or_bad_discriminator_branch",
-                        "artifact_kind": kind,
-                        "expected_ref": f"#/$defs/{kind}",
-                        "actual_ref": branch_map.get(kind),
-                    }
-                )
-            continue
         if not isinstance(payload_def, dict) or payload_def.get("type") != "object":
             failures.append({"path": rel(schema_path), "error": "payload_def_not_object", "artifact_kind": kind})
             continue
@@ -2136,6 +2121,7 @@ def cmd_validate_plans_to_code_handoff_schema(args: argparse.Namespace) -> dict[
         "source_control_finalization_receipt",
         "model_resolution_receipt",
         "executor_intake_report",
+        "goal_completion_receipt",
     ]:
         if "handoff" not in defs.get(kind, {}).get("required", []):
             failures.append({"path": rel(schema_path), "error": "receipt_payload_missing_handoff_key", "artifact_kind": kind})
@@ -2663,6 +2649,12 @@ def cmd_validate_plans_to_code_handoff_schema(args: argparse.Namespace) -> dict[
     expect_array_items_ref("auditor_cycle_report", "repairs_applied", "#/$defs/repair_record", "auditor_repairs_not_strict")
     expect_prop_ref("repair_attempt_receipt", "repair_strategy", "#/$defs/repair_strategy", "repair_strategy_not_strict")
     expect_array_items_ref("executor_intake_report", "blockers", "#/$defs/blocker", "executor_intake_blockers_not_strict")
+    expect_array_items_ref("goal_completion_receipt", "validator_outcomes", "#/$defs/validator_outcome", "goal_validator_outcomes_not_strict")
+    expect_array_items_ref("goal_completion_receipt", "unresolved_risks", "#/$defs/risk_record", "goal_unresolved_risks_not_strict")
+    require_schema_keys("goal_completion_receipt", ["final_source_control_context"], "goal_completion_missing_final_source_control_context")
+    expect_prop_ref("goal_completion_receipt", "final_source_control_context", "#/$defs/source_control_context", "goal_final_source_control_context_not_strict")
+    if "unknown" in def_props("goal_completion_receipt").get("final_source_state", {}).get("enum", []):
+        failures.append({"path": rel(schema_path), "error": "goal_completion_final_source_state_allows_unknown"})
 
     handoff_row_props = def_props("handoff_row")
     if handoff_row_props.get("row_id", {}).get("$ref") != "#/$defs/handoff_row_id":
@@ -2713,15 +2705,6 @@ def cmd_validate_plans_to_code_handoff_schema(args: argparse.Namespace) -> dict[
         if not payload_tokens:
             failures.append({"path": rel(matrix_path), "error": "handoff_matrix_row_missing_schema_payload", "row_id": row["row_id"]})
         for token in payload_tokens:
-            if token in RETIRED_HANDOFF_ARTIFACT_KINDS:
-                failures.append(
-                    {
-                        "path": rel(matrix_path),
-                        "error": "handoff_matrix_row_uses_retired_payload",
-                        "row_id": row["row_id"],
-                        "schema_payload": token,
-                    }
-                )
             if token not in schema_payload_defs:
                 failures.append(
                     {
