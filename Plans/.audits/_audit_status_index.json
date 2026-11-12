@@ -12,6 +12,28 @@
     },
     {
       "audit_ids": [
+        "audit-20260617-007-semantic-closure-registry-post-repair-fidelity",
+        "closure-reaudit-20261104"
+      ],
+      "closure_id": "closure-reaudit-20261104--closure-audit-20260617-007-semantic-closure-registry-post-repair-fidelity-001",
+      "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Lead reconcile (pm-closure-lead, pm7-build decision 1112002103-d9d5): supported, as both blind max reviews judged this row at R 77bae0c636. Sol 6.1 max: The original defect was accepting previously closed findings without current owner and closure evidence checks, and both groups are still checked. PLS-025 now renews changed evidence through bound append-only re-audits; the old refresh/correction wording does not license restamping. Astra max: The finding was that stale current evidence could still pass validation and be reused as previously_closed. Current hash validation detects mismatches, and PLS-025 permits suppressing a stale predecessor only through a validated re-audit successor; this claim does not depend on the withdrawn refresh-hashes writer. The worker's and the cheap recheck's not_supported reading (renewal by restamping is withdrawn by DL-039 and PLS-025) is not adopted: both checks the original defect lacked are still enforced, and renewal now runs through PLS-025 re-audit rows, which this closure does not contradict. The not_supported fix is dropped. Evidence: the max reviewers' quotes first, then the worker's quotes, all verbatim at R; dependencies and stale-ref dispositions are the worker's, which cover exactly the stale set at R. | Lead: adopted the verdict both fresh max reviews (FU-01 rfu) agree on, per pm7-build 1112013508-4999.",
+      "finding_key": "sfk-22c5cd3ccf834ffd403199c8",
+      "line": 1202
+    },
+    {
+      "audit_ids": [
+        "audit-20260617-012-plans-to-code-handoff-deep-fidelity",
+        "audit-20260618-003-plans-to-code-implementation-readiness-fidelity-repair",
+        "audit-20260618-004-plans-to-code-currentness-compatibility-repair",
+        "closure-reaudit-20261104"
+      ],
+      "closure_id": "closure-reaudit-20261104--closure-reaudit-20261104--closure-audit-20260617-012-plans-to-code-handoff-deep-fidelity-023",
+      "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Delta at 77bae0c63605d0a6f643aa3f1d8c51c2f3bb7947: base verdict supported; changed: none. No dependency anchor moved. The exact tokens all WorkNodes terminal and all automated tests passed remain in the canonical_text of EP-103, GRS-030, POA-048 and RAP-029 (RAP-029 as projections of owner receipts). Do not accept worker says done as code completion remains a negative constraint of EP-103, GRS-030 and POA-048. The stale ref is now the EP-103 unit. The exact-token body proof holds. | Lead: adopted the verdict both fresh max reviews (FU-01 rfu) agree on, per pm7-build 1112013508-4999.",
+      "finding_key": "sfk-2498233b7721649d04d1222a",
+      "line": 1206
+    },
+    {
+      "audit_ids": [
         "audit-20260628-001-feature-intake-closed-world-semantic-fidelity",
         "closure-reaudit-20261104"
       ],
@@ -39,6 +61,16 @@
       "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Delta at 77bae0c63605d0a6f643aa3f1d8c51c2f3bb7947: base verdict not_supported; changed: scripts/pm-audit-closure.py#pydef=validate_audit_dir, scripts/pm-audit-closure.py#pydef=actionable_json_rows. validate_audit_dir now applies an audit-correction pass, and actionable_json_rows also treats validator invalid_invocations, finding_level error or blocker, and side-effect fields as actionable. The quoted registry-link error is still in validate_audit_dir, and the twelve Doctor/onboarding closure rows and their registry links quoted at stage 2 are still present. validator_results.json for that audit has no invalid_invocations entry; its only non-passing results remain the two blocker rows the matrix already closes, both with empty side-effect lists. The widened actionable test therefore does not open a new uncovered source row here. The closure as written is still not backed, because it also credits refreshing stale registry hashes, and cmd_refresh_hashes still refuses to write under DL-039 while PLS-025 still forbids a restamp without a re-audit. The whole script is the stale ref at this commit. The row stays not_supported, in_stream.",
       "finding_key": "sfk-4295336d87f4f0b9df21a400",
       "line": 1103
+    },
+    {
+      "audit_ids": [
+        "audit-20260617-008-semantic-closure-registry-repair-fidelity",
+        "closure-reaudit-20261104"
+      ],
+      "closure_id": "closure-reaudit-20261104--closure-audit-20260617-008-semantic-closure-registry-repair-fidelity-012",
+      "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Lead reconcile (pm-closure-lead, FU-BRIEF item 3): not_supported, as Sol 6.1 max judged at R 77bae0c636; the worker, the cheap recheck and Astra max had said supported. Sol 6.1 max: The live registry has the corrected PDS/PLS owners, but the same finding also covered the original matrix, whose rows still declare owner_docs as scripts/pm-audit-closure.py and Plans/.audits/_semantic_closure_registry.jsonl. Their finding_keys remain sfk-8e82e431df11de56f61cbea0 and sfk-0ffa1faea828f2ca3d91480d, disagreeing with the corrected registry; current validate_audit_dir reports both linkage errors. The owner-routing repair therefore remains incomplete rather than fully closed. At R, `python3 scripts/pm-audit-closure.py validate --audit-dir Plans/.audits/audit-20260617-006-semantic-closure-registry-fidelity --require-closure-matrix` reports repair_closure_matrix.jsonl:22 and :23: \"registry row finding_key does not match matrix finding_key\". The live registry rows 22/23 name PDS/PLS owners, but the frozen matrix rows still declare scripts/pm-audit-closure.py and the registry path as owner_docs, with keys that disagree. PLS-026 freezes historical matrix rows and keeps a registry link that does not hold as an error, so the frozen-row rule does not excuse it. Added anchors: the two matrix rows and validate_audit_dir that Sol named, and PLS-026 for the frozen-row rule.",
+      "finding_key": "sfk-4ba329ca6a30e090a2dc305b",
+      "line": 1203
     },
     {
       "audit_ids": [
@@ -162,7 +194,7 @@
       "line": 1095
     }
   ],
-  "generated_at_utc": "2026-11-12T02:12:03Z",
+  "generated_at_utc": "2026-11-12T07:07:24Z",
   "reports": [
     {
       "audit_id": "audit-20260615-001-part-3-fable-cleanup",
@@ -459,9 +491,9 @@
           "explicitly_deferred": 2,
           "not_for_plan": 6,
           "repaired": 37,
-          "source_lineage_only": 24
+          "source_lineage_only": 26
         },
-        "matching_rows": 69,
+        "matching_rows": 71,
         "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
       },
       "current_blocker": false,
@@ -480,10 +512,11 @@
         "closure_status_counts": {
           "explicitly_deferred": 2,
           "not_for_plan": 9,
+          "reopened": 1,
           "repaired": 38,
-          "source_lineage_only": 28
+          "source_lineage_only": 30
         },
-        "matching_rows": 77,
+        "matching_rows": 80,
         "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
       },
       "current_blocker": false,
@@ -502,10 +535,11 @@
         "closure_status_counts": {
           "explicitly_deferred": 1,
           "not_for_plan": 5,
+          "reopened": 1,
           "repaired": 15,
           "source_lineage_only": 12
         },
-        "matching_rows": 33,
+        "matching_rows": 34,
         "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
       },
       "current_blocker": false,
@@ -573,10 +607,10 @@
       "closure_registry_basis": {
         "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
         "closure_status_counts": {
-          "reopened": 2,
-          "repaired": 93
+          "reopened": 3,
+          "repaired": 96
         },
-        "matching_rows": 95,
+        "matching_rows": 99,
         "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
       },
       "current_blocker": false,
@@ -665,11 +699,11 @@
         "closure_status_counts": {
           "explicitly_deferred": 4,
           "not_for_plan": 6,
-          "reopened": 1,
-          "repaired": 80,
+          "reopened": 2,
+          "repaired": 83,
           "source_lineage_only": 24
         },
-        "matching_rows": 115,
+        "matching_rows": 119,
         "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
       },
       "current_blocker": false,
@@ -686,10 +720,11 @@
       "closure_registry_basis": {
         "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
         "closure_status_counts": {
-          "repaired": 51,
+          "reopened": 1,
+          "repaired": 52,
           "source_lineage_only": 36
         },
-        "matching_rows": 87,
+        "matching_rows": 89,
         "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
       },
       "current_blocker": false,
@@ -845,10 +880,10 @@
       "closure_registry_basis": {
         "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
         "closure_status_counts": {
-          "repaired": 42,
+          "repaired": 43,
           "source_lineage_only": 6
         },
-        "matching_rows": 48,
+        "matching_rows": 49,
         "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
       },
       "current_blocker": false,
@@ -866,9 +901,9 @@
         "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
         "closure_status_counts": {
           "false_positive": 3,
-          "repaired": 57
+          "repaired": 58
         },
-        "matching_rows": 60,
+        "matching_rows": 61,
         "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
       },
       "current_blocker": false,
@@ -886,9 +921,9 @@
         "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
         "closure_status_counts": {
           "false_positive": 3,
-          "repaired": 45
+          "repaired": 46
         },
-        "matching_rows": 48,
+        "matching_rows": 49,
         "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
       },
       "current_blocker": false,
@@ -922,10 +957,10 @@
       "closure_registry_basis": {
         "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
         "closure_status_counts": {
-          "repaired": 9,
+          "repaired": 10,
           "stale_retired": 3
         },
-        "matching_rows": 12,
+        "matching_rows": 13,
         "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
       },
       "current_blocker": false,
@@ -1301,9 +1336,9 @@
         "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
         "closure_status_counts": {
           "reopened": 1,
-          "repaired": 17
+          "repaired": 18
         },
-        "matching_rows": 18,
+        "matching_rows": 19,
         "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
       },
       "current_blocker": false,
@@ -1513,9 +1548,9 @@
     "reports_glob": "Plans/.audits/audit-*/FINAL_REPORT.md"
   },
   "summary": {
-    "closure_registry_row_count": 1201,
-    "current_blocker_count": 16,
-    "current_reopened_finding_count": 16,
+    "closure_registry_row_count": 1214,
+    "current_blocker_count": 19,
+    "current_reopened_finding_count": 19,
     "current_report_blocker_count": 0,
     "historical_blocked_or_fail_report_count": 25,
     "report_count": 71,
