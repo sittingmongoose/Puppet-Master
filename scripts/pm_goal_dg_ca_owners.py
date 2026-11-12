@@ -92,6 +92,11 @@ def uid(kind):
     return '%s:%s' % (kind, uuid.uuid4())
 
 
+def short_id(kind):
+    """Owner-minted identifier of realistic length: its own 80 random bits, TEST_ONLY-tagged."""
+    return 'TO-%s-%s' % (kind, uuid.uuid4().hex[:20])
+
+
 class Shared:
     """Load-once immutable selections: realm banks, codec editions, method maps."""
     _instance = None
@@ -657,7 +662,7 @@ class SIROwner(WorldOwner):
                 require('sir/dispatch_conflict', same(existing['request'], request))
                 slot.set(dict(replay=True))
                 return existing['handle'], copy.deepcopy(existing['record'])
-            operation_id = uid('TEST_ONLY:cancel-operation')
+            operation_id = short_id('op')
             frame = uid('TEST_ONLY:dispatch-frame')
             owner_identity = self.identity_envelope(request, operation_id)
             request_ref = uid('TEST_ONLY:request')

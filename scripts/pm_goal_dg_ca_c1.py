@@ -32,7 +32,7 @@ import pm_goal_test_numrule as NR
 import pm_goal_test_storage as S
 import pm_goal_test_owner_adapters as A
 from pm_goal_current_writer_oracles import recipe
-from pm_goal_dg_ca_owners import (World, require, exact_numbers, Refusal, uid, row_sha, packed, same, sha, scoped_key, CANCEL, BINDING,
+from pm_goal_dg_ca_owners import (World, require, exact_numbers, short_id, Refusal, uid, row_sha, packed, same, sha, scoped_key, CANCEL, BINDING,
                                   BODY, APPEND, QUALIFICATION, NATIVE_LINE, transaction_record)
 
 LEGAL_STATES = ('active', 'paused', 'blocked')
@@ -141,8 +141,8 @@ class NoAssociationCancel(Route):
         with self.call('birth_none') as slot:
             sel = w.binding.require_writer('goal_birth')
             require('C1/birth_none/permission', w.permissions.allowed(decision, self.actor_ref, 'goal.create'))
-            scope = dict(storage_instance_id=w.storage_id, project_id=uid('TEST_ONLY-project'), thread_id=uid('TEST_ONLY:thread'),
-                         goal_id=uid('TEST_ONLY:goal'))
+            scope = dict(storage_instance_id=w.storage_id, project_id=short_id('proj'), thread_id=short_id('thr'),
+                         goal_id=short_id('goal'))
             operation = uid('TEST_ONLY:goal-birth-operation')
             message = uid('TEST_ONLY:message')
             values = w.goal.birth_values(scope, objective, message, uid('TEST_ONLY:context-manifest'))
@@ -260,7 +260,7 @@ class NoAssociationCancel(Route):
         """The user's explicit Cancel request as the surface submits it."""
         body = self.world.goal.body_cell(self.scope)['value']['record']
         request = dict(schema_id='pm.goal.cancel.request.v2', schema_version='2.0.0', command_id=COMMAND,
-                       command_instance_id=uid('TEST_ONLY:command-instance'), project_id=self.scope['project_id'],
+                       command_instance_id=short_id('cmd'), project_id=self.scope['project_id'],
                        thread_id=self.scope['thread_id'], goal_id=self.scope['goal_id'], expected_revision=body['revision'],
                        expected_currentness_hash=body['currentness_hash'], actor_ref=self.actor_ref,
                        permission_snapshot_ref=self.cancel_decision, idempotency_key=uid('TEST_ONLY:sir-idempotency'),
