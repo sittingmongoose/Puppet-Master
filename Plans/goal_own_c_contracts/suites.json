@@ -83,7 +83,15 @@
         "C3": "ASSIGNED_TO_DG_CA3",
         "C4": "NOT_COMPLETE_ASSIGNMENT_ADMISSION_COMPLETE"
       },
-      "dg_ca_assignment_successor": "Plans/goal_own_c_contracts/dg-ca-assignment-successor-v1/selection.v1.json"
+      "dg_ca_assignment_successor": "Plans/goal_own_c_contracts/dg-ca-assignment-successor-v1/selection.v1.json",
+      "dg_cb_corpus": "Plans/goal_own_c_contracts/dg-cb-corpus-v1/coverage.json",
+      "dg_cb_oracle": "python3 scripts/pm_goal_dg_cb_oracles.py",
+      "dg_cb_crash_matrix": "python3 scripts/pm_goal_dg_cb_crash.py matrix",
+      "dg_cb_group_closure": {
+        "C5": "COMPLETE",
+        "C6": "COMPLETE"
+      },
+      "dg_cb_test_only_sources": "Plans/goal_own_c_contracts/dg-cb-migration-v1/test-only-sources.v1.schema.json"
     },
     {
       "event_type": "goal_run.started",
