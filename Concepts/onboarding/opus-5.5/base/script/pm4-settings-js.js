@@ -12331,7 +12331,7 @@ window.PM51 = PM51;
 #panel-settings .form-help.is-error, #panel-settings .pm51-field-help.is-error { color: var(--k3-red); }
 #panel-settings .form-input[aria-invalid="true"], #panel-settings .form-textarea[aria-invalid="true"] { border-color: var(--k3-red); }
 #panel-settings .pm51-commands-ph { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 6px; color: var(--k3-text-2); }
-#panel-settings .pm51-commands-ph code { font-family: var(--mono-font, ui-monospace, monospace); font-size: 10.5px; padding: 0 5px; border: 1px solid var(--k3-line); border-radius: 4px; background: var(--k3-bg-2); color: var(--k3-text-1); }
+#panel-settings .pm51-commands-ph code { font-family: var(--mono-font, ui-monospace, monospace); font-size: 11px; padding: 0 5px; border: 1px solid var(--k3-line); border-radius: 4px; background: var(--k3-bg-2); color: var(--k3-text-1); }
 #panel-settings .pm51-commands-ph-sep { color: var(--k3-text-3); }
 #panel-settings .pm51-commands-ph.pm51-field-help { display: flex; }
 #panel-settings .pm51-dialog-group { border: 1px solid var(--k3-line); border-radius: 10px; background: var(--k3-bg-2); }
