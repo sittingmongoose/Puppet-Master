@@ -129,7 +129,8 @@
     const advanced = PM51.advanced([
       PM51.section({ title: 'Storage use', body: PM51.kv([['Sessions and chats', '38 MB'], ['Artifacts', '48.4 MB'], ['Recordings', '1.8 GB'], ['Temporary files', '214 MB']]) }),
       PM51.section({ title: 'Holds', help: 'Things cleanup never touches.', body: PM51.kv([['Active Goal artifacts', 'Protected while the Goal runs'], ['Pinned items', 'Kept until you unpin them'], ['Latest backup receipts', 'Kept with the backup']]) + PM51.bound.rows([V.holds]) }),
-      PM51.section({ title: 'Recently removed', help: 'Items you deleted wait here for 7 days before they are gone for good.', body: removed.length ? PM51.kv(removed.map(q => [q.title, `${q.meta} · restore until ${q.until}`])) : PM51.note('Nothing removed recently.', 'info') })
+      /* R8: what the note promises ("bring them back until then") is here, one Bring back for each item */
+      PM51.section({ title: 'Recently removed', help: 'Items you deleted wait here for 7 days before they are gone for good. Bring one back to undo the delete.', body: removed.length ? PM51.list(removed.map((q, i) => ({ title: q.title, meta: `${q.meta} · gone for good ${q.until}`, avatar: icon('trash'), end: (q.item || q.group) ? PM51.btn({ label: 'Bring back', small: true, icon: 'restore', action: 'pm51-history-restore', data: { i } }) : '' })), { cls: 'o55-history-removed' }) : PM51.note('Nothing removed recently.', 'info') })
     ].join(''));
     return PM51.slot() + files + review + advanced;
   }
@@ -194,7 +195,7 @@
     const body = groups.length ? PM51.panelSection('Ready to remove', PM51.list(groups.map(g => ({
       title: g.title, meta: g.meta, avatar: icon('trash'),
       end: PM51.btn({ label: 'Keep', small: true, action: 'pm51-history-cleanup-keep', data: { id: g.id } }) + PM51.btn({ label: 'Delete', small: true, danger: true, action: 'pm51-history-cleanup-delete', data: { id: g.id } })
-    })))) + PM51.note('Deleted items wait in quarantine for 7 days. You can bring them back until then.', 'info') : PM51.empty('Nothing to clean up', 'Come back when items have aged past their keep-for time.');
+    })))) + PM51.note('Deleted items wait under Recently removed (More options) for 7 days. You can bring them back from there until then.', 'info') : PM51.empty('Nothing to clean up', 'Come back when items have aged past their keep-for time.');
     PM51.panel({ title: 'Cleanup review', subtitle: `${cleanupCount()} items ready. Nothing is removed until you choose Delete.`, body });
   }
 
@@ -234,7 +235,7 @@
   PM51.onChange('history-artifact-keep', el => { const a = ph().artifacts.find(x => x.id === ds(el, 'id')); if (a) { a.retention = el.value === 'Keep indefinitely' ? 'Keep' : el.value; saveState(); } });
   PM51.on('history-artifact-open', el => { const a = ph().artifacts.find(x => x.id === ds(el, 'id')); if (a) PM51.toast('Opens in the workspace', `Example data only. ${a.name} would open in its viewer.`, 'info'); });
   PM51.on('history-artifact-download', el => { const a = ph().artifacts.find(x => x.id === ds(el, 'id')); if (a) PM51.toast('Download prepared', `Example data only. ${a.name} (${a.size}) would be saved to your Downloads folder.`, 'info'); });
-  PM51.on('history-artifact-delete', el => { const P = ph(), a = P.artifacts.find(x => x.id === ds(el, 'id')); if (!a) return; PM51.confirm(`Delete ${a.name}?`, 'It waits in quarantine for 7 days, then it is gone for good.', 'Delete', () => { P.artifacts = P.artifacts.filter(x => x.id !== a.id); const s = PM51.s(); s.historyQuarantine = s.historyQuarantine || []; s.historyQuarantine.unshift({ title: a.name, meta: a.size, until: 'in 7 days' }); closeOverlay(); refresh(); }, true); });
+  PM51.on('history-artifact-delete', el => { const P = ph(), a = P.artifacts.find(x => x.id === ds(el, 'id')); if (!a) return; PM51.confirm(`Delete ${a.name}?`, 'It waits under Recently removed for 7 days, then it is gone for good. You can bring it back until then.', 'Delete', () => { P.artifacts = P.artifacts.filter(x => x.id !== a.id); const s = PM51.s(); s.historyQuarantine = s.historyQuarantine || []; s.historyQuarantine.unshift({ title: a.name, meta: a.size, until: 'in 7 days', item: clone(a) }); closeOverlay(); refresh(); }, true); });
   PM51.on('history-location-add', () => openDialog({ title: 'Add storage location', subtitle: 'Where new artifacts of a kind should be stored.', body: PM51.form([
     { label: 'Name', name: 'name', value: '', placeholder: 'Large recordings', autofocus: true },
     { label: 'Folder', name: 'path', value: '', placeholder: '/mnt/media/puppet-master' }
@@ -242,7 +243,15 @@
   PM51.onChange('history-keep', el => { ph().retention[ds(el, 'key')] = el.value; saveState(); });
   PM51.on('history-cleanup-review', cleanupPanel);
   PM51.on('history-cleanup-keep', el => { const s = PM51.s(); s.historyCleanup = cleanupGroups().filter(g => g.id !== ds(el, 'id')); saveState(); closeOverlay(); refresh(); PM51.toast('Kept', 'Those items stay until the next review.', 'info'); });
-  PM51.on('history-cleanup-delete', el => { const g = cleanupGroups().find(x => x.id === ds(el, 'id')); if (!g) return; PM51.confirm(`Delete ${g.title.toLowerCase()}?`, `${g.meta}. They wait in quarantine for 7 days first.`, 'Delete', () => { const s = PM51.s(); s.historyCleanup = cleanupGroups().filter(x => x.id !== g.id); s.historyQuarantine = s.historyQuarantine || []; s.historyQuarantine.unshift({ title: g.title, meta: g.meta, until: 'in 7 days' }); closeOverlay(); refresh(); }, true); });
+  PM51.on('history-cleanup-delete', el => { const g = cleanupGroups().find(x => x.id === ds(el, 'id')); if (!g) return; PM51.confirm(`Delete ${g.title.toLowerCase()}?`, `${g.meta}. They wait under Recently removed for 7 days first, and you can bring them back until then.`, 'Delete', () => { const s = PM51.s(); s.historyCleanup = cleanupGroups().filter(x => x.id !== g.id); s.historyQuarantine = s.historyQuarantine || []; s.historyQuarantine.unshift({ title: g.title, meta: g.meta, until: 'in 7 days', group: clone(g) }); closeOverlay(); refresh(); }, true); });
+  /* Bring back: an artifact returns to Artifacts, a cleanup group to the Cleanup review list */
+  PM51.on('history-restore', el => {
+    const s = PM51.s(), Q = s.historyQuarantine || [], q = Q[Number(ds(el, 'i'))]; if (!q || !(q.item || q.group)) return;
+    if (q.item) { const P = ph(); if (!P.artifacts.some(x => x.id === q.item.id)) P.artifacts.push(q.item); }
+    else s.historyCleanup = cleanupGroups().concat(cleanupGroups().some(x => x.id === q.group.id) ? [] : [q.group]);
+    s.historyQuarantine = Q.filter(x => x !== q); saveState(); refresh();
+    PM51.toast('Brought back', q.item ? `${q.title} is back in Artifacts.` : `${q.title} is back in the cleanup review.`, 'success');
+  });
   PM51.on('history-reveal', el => { if (PM51.revealSetting) PM51.revealSetting(ds(el, 'setting')); });
   PM51.on('history-compare', el => {
     const H = hs(); const i = el && el.dataset && el.dataset.index != null ? Number(el.dataset.index) : -1; const t = H.timeline[i];

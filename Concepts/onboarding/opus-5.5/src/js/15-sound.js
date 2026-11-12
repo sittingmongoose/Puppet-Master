@@ -2167,7 +2167,9 @@
            cuts the last one.
        hush()                     stops the line now
        timing(text, o)            -> { ms, cps }, never sounds
-       vocal(name, o) -> bool     a scripted non-verbal sound: wake, sleep, think, happy, wink, alert, cheer, crew
+       vocal(name, o) -> bool     a scripted non-verbal sound: wake, sleep, think, happy, wink, alert, cheer, crew;
+                                  o.sample: a click asked for this one to hear it (Customize Pip's "Hear Pip's chirp",
+                                  B-12): the sound switch and the holds still decide, the part it previews does not
        voiceOf(look?)             -> the voice id for a look (default: the painted one, PMLogo.look())
        allowed(where?)            -> may Pip sound there now (switch, gesture, part, holds)
        hold(name, on) / held()    a named extra mute for Pip's voice, kits and music
@@ -2545,7 +2547,7 @@
     }
     function vocal(name, opts) {
       const o = opts || {}, vk = o.voice && VOX[o.voice] ? o.voice : voiceOf(o.look);
-      if (!VS[name] || !allowed(o.where)) return false;
+      if (!VS[name] || !(o.sample ? soundOn() : allowed(o.where))) return false;
       hush();
       return speak(() => scriptFor(vk, name), vk, name, o);
     }

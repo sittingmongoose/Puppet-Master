@@ -1,0 +1,269 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/work_placement_policy/1.0.0/work_placement_policy.schema.json",
+  "title": "SIR-056 placement policy values (static shape only)",
+  "$comment": "Owner: Plans/Shared_Integration_Runtime.md#SIR-056; decision DL-473. This closes values only, not a command, grant, execution context, receipt, storage family, scheduler or native authority path. Dynamic grant/context/command successors, scoring normalization and runtime source/currentness joins remain required. A valid Project policy still needs owner verification of allowed/default membership and complete registration. Historical v1 grants and execution_unit_context 1.0.0 are unchanged.",
+  "$defs": {
+    "placement_mode": {
+      "enum": [
+        "auto",
+        "chosen"
+      ]
+    },
+    "auto_preset": {
+      "enum": [
+        "balanced",
+        "fastest",
+        "keep_my_computer_free"
+      ]
+    },
+    "computer_level": {
+      "enum": [
+        "prefer",
+        "normal",
+        "less_often",
+        "only_when_i_choose_it"
+      ]
+    },
+    "auto_weights": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "free_cpu",
+        "free_memory_gb",
+        "free_disk_gb",
+        "queued_work",
+        "gpu_headroom",
+        "has_the_files_already",
+        "file_route_speed"
+      ],
+      "properties": {
+        "free_cpu": {
+          "type": "number",
+          "minimum": 0
+        },
+        "free_memory_gb": {
+          "type": "number",
+          "minimum": 0
+        },
+        "free_disk_gb": {
+          "type": "number",
+          "minimum": 0
+        },
+        "queued_work": {
+          "type": "number",
+          "minimum": 0
+        },
+        "gpu_headroom": {
+          "type": "number",
+          "minimum": 0
+        },
+        "has_the_files_already": {
+          "type": "number",
+          "minimum": 0
+        },
+        "file_route_speed": {
+          "type": "number",
+          "minimum": 0
+        }
+      },
+      "default": {
+        "free_cpu": 1,
+        "free_memory_gb": 1,
+        "free_disk_gb": 1,
+        "queued_work": 1,
+        "gpu_headroom": 0,
+        "has_the_files_already": 0,
+        "file_route_speed": 0
+      },
+      "description": "Relative Advanced weights; equal nonzero Balanced defaults for CPU, memory, disk and queue, zero for the other measures. Higher queued work scores lower. Preset calibration and score normalization must be versioned before native use; weights never disable gates."
+    },
+    "placement_choice": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mode",
+        "execution_host_id"
+      ],
+      "properties": {
+        "mode": {
+          "$ref": "#/$defs/placement_mode"
+        },
+        "execution_host_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "mode": {
+                "const": "auto"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "execution_host_id": {
+                "const": null
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "execution_host_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              }
+            }
+          }
+        }
+      ]
+    },
+    "project_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "requested_mode",
+        "default_computer",
+        "allowed_computers",
+        "preset_override"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.work_placement.project_policy.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "requested_mode": {
+          "$ref": "#/$defs/placement_mode"
+        },
+        "default_computer": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "allowed_computers": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "uniqueItems": true,
+          "maxItems": 1024
+        },
+        "preset_override": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/auto_preset"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "requested_mode": {
+                "const": "chosen"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "default_computer": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "allowed_computers": {
+                "minItems": 1
+              }
+            }
+          }
+        }
+      ],
+      "description": "Pending registration may have null default and empty allowed set. Executable Project work requires a person-reviewed default inside the current person-allowed set. This value shape does not prove permission, membership, trust or a person decision."
+    },
+    "task_minimums": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "minimum_memory_gb",
+        "minimum_disk_gb"
+      ],
+      "properties": {
+        "minimum_memory_gb": {
+          "type": "number",
+          "minimum": 0
+        },
+        "minimum_disk_gb": {
+          "type": "number",
+          "minimum": 0
+        },
+        "os": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "linux",
+              "macos",
+              "windows"
+            ]
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "gpu_capability_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "required_slot_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "uniqueItems": true
+        },
+        "work_family_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      },
+      "description": "Task minimums constrain eligibility; tasks cannot supply levels, presets or priority weights. Resource observations, floors, leases and evidence remain governor-owned."
+    }
+  }
+}
