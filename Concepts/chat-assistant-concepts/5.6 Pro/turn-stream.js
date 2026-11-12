@@ -936,7 +936,9 @@
     try { C().followIfSticky(); } catch (e) { }
     if (room.rel && room.lg) lgMark(inner);
     if (still) return;
-    room.raf = requestAnimationFrame(roomTick);
+    /* An expiring hold calls releaseRoom above, whose wake already queued the next frame. Keep that one chain;
+       releaseRoom must still wake a sleeping room when called outside roomFrame. */
+    if (!room.raf) room.raf = requestAnimationFrame(roomTick);
   }
 
   /* ================================================================ 6 directors
