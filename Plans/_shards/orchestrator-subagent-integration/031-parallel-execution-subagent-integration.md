@@ -4,7 +4,7 @@ Source: `Plans/orchestrator-subagent-integration.md`
 
 Source lines: L3627-L5705
 
-Source SHA256: `616cbe23d48d805551604246760f8aba7a2d896db26bb7df5e1efcbe24a0987f`
+Source SHA256: `96030d7a723763c9cd67d5537b586d4f007bf751b1c27b13e4b91c041d29a6fa`
 
 ---
 
@@ -350,7 +350,7 @@ owner_hints: [Plans/orchestrator-subagent-integration.md, Plans/Contracts_V0.md,
 
 ### OSI-650 - Answered coordination heartbeat threshold
 
-For `coordination.agent_crashed`, the Orchestrator runtime policy value `coordination_heartbeat_expiry_ms` is **300000** under Jared's DL-095 answer (recorded in the landed `Plans/Decision_Log.md`; at drafting time on branch `plans/ea-s09-decisions-hb-scope-20261104`). This amendment supersedes OSI-438's pending-card, no-number and no-inference wording only. The current premise survives: Gap #30 and OSI-438 still use 30-second runtime liveness, four crash reasons and the same crash detector. No answer is extended to other policy values or application admission. A silent live agent is eligible for `heartbeat_expired` only when its observed age is strictly greater than 300000 ms; equality is insufficient. The payload keeps observed `heartbeat_age_ms`, not the threshold. The age is a CV-1100 integer token with no encoding cap; 300000 remains the policy comparison, not a numeric maximum. Process exit, verified process loss and deleted worktree evidence remain independent. Computer-sleep handling remains technical work and is not decided here. This owner edit must land with or after the recorded answer and before or with this family's admission.
+For `coordination.agent_crashed`, the Orchestrator runtime policy value `coordination_heartbeat_expiry_ms` is **300000** under Jared's DL-095 answer (recorded in the landed `Plans/Decision_Log.md`; at drafting time on branch `plans/ea-s09-decisions-hb-scope-20261104`). This amendment supersedes OSI-438's pending-card, no-number and no-inference wording only. The current premise survives: Gap #30 and OSI-438 still use 30-second runtime liveness, four crash reasons and the same crash detector. No answer is extended to other policy values or application admission. A silent live agent is eligible for `heartbeat_expired` only when its observed age is strictly greater than 300000 ms; equality is insufficient. The payload keeps observed `heartbeat_age_ms`, not the threshold. The age is a CV-1100 integer token with no encoding cap; 300000 remains the policy comparison, not a numeric maximum. Process exit, verified process loss and deleted worktree evidence remain independent. Computer-sleep handling remains technical work and is not decided here. This owner edit must land with or after the recorded answer and before or with this family's admission. Under CV-1101 the shared `date_time` predicate checks `detected_at_utc` and the projection copies with `coordination_utc_z`, the EventRecord `occurred_at_utc` with `event_record`, and the Storage-assigned `observed_at_utc` and `persisted_at_utc` with `storage_utc_z`; the observed heartbeat age is not a timestamp field.
 
 ```yaml
 plan_unit_id: OSI-650
