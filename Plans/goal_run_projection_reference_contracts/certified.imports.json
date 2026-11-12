@@ -1,0 +1,461 @@
+{
+  "status": "NEWLY_AUTHORED_LOCATION_SCOPED_DERIVED_RESOURCE_IMPORTS",
+  "nested_resolution": "target original realm; no merge or fallback",
+  "imports": [
+    {
+      "from_realm": "consumer",
+      "from_whole_schema": "Plans/goal_run_projection_reference_contracts/certified.v1.schema.json",
+      "from_whole_sha256": "0f52bad2f3c57a90b75581aef1ce8fc4f9cab7ebec07700d087e1fbca2c3e501",
+      "from_schema_location": "/$defs/StartedMetadata/properties/scope/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/Projection/properties/scope",
+      "to_realm": "cancelled_native_consumer",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json",
+      "whole_source": {
+        "path": "Plans/goal_run_cancelled_consumer_contracts/consumer.schema.json",
+        "sha256": "c70802660380caaada24dcb0a39ab0ea39170d1dd244cc6207e6d7ee445d5a9f"
+      }
+    },
+    {
+      "from_realm": "consumer",
+      "from_whole_schema": "Plans/goal_run_projection_reference_contracts/certified.v1.schema.json",
+      "from_whole_sha256": "0f52bad2f3c57a90b75581aef1ce8fc4f9cab7ebec07700d087e1fbca2c3e501",
+      "from_schema_location": "/$defs/StartedMetadata/properties/status_at_original_event/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/Projection/properties/status_at_original_event",
+      "to_realm": "cancelled_native_consumer",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json",
+      "whole_source": {
+        "path": "Plans/goal_run_cancelled_consumer_contracts/consumer.schema.json",
+        "sha256": "c70802660380caaada24dcb0a39ab0ea39170d1dd244cc6207e6d7ee445d5a9f"
+      }
+    },
+    {
+      "from_realm": "consumer",
+      "from_whole_schema": "Plans/goal_run_projection_reference_contracts/certified.v1.schema.json",
+      "from_whole_sha256": "0f52bad2f3c57a90b75581aef1ce8fc4f9cab7ebec07700d087e1fbca2c3e501",
+      "from_schema_location": "/$defs/StartedMetadata/properties/activation_at_original_event/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/Projection/properties/activation_at_original_event",
+      "to_realm": "cancelled_native_consumer",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json",
+      "whole_source": {
+        "path": "Plans/goal_run_cancelled_consumer_contracts/consumer.schema.json",
+        "sha256": "c70802660380caaada24dcb0a39ab0ea39170d1dd244cc6207e6d7ee445d5a9f"
+      }
+    },
+    {
+      "from_realm": "consumer",
+      "from_whole_schema": "Plans/goal_run_projection_reference_contracts/certified.v1.schema.json",
+      "from_whole_sha256": "0f52bad2f3c57a90b75581aef1ce8fc4f9cab7ebec07700d087e1fbca2c3e501",
+      "from_schema_location": "/$defs/StartedMetadata/properties/native_after_commitment/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/Projection/properties/native_after_commitment",
+      "to_realm": "cancelled_native_consumer",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json",
+      "whole_source": {
+        "path": "Plans/goal_run_cancelled_consumer_contracts/consumer.schema.json",
+        "sha256": "c70802660380caaada24dcb0a39ab0ea39170d1dd244cc6207e6d7ee445d5a9f"
+      }
+    },
+    {
+      "from_realm": "consumer",
+      "from_whole_schema": "Plans/goal_run_projection_reference_contracts/certified.v1.schema.json",
+      "from_whole_sha256": "0f52bad2f3c57a90b75581aef1ce8fc4f9cab7ebec07700d087e1fbca2c3e501",
+      "from_schema_location": "/$defs/StartedMetadata/properties/captured_goal_context/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/Projection/properties/captured_goal_context",
+      "to_realm": "cancelled_native_consumer",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json",
+      "whole_source": {
+        "path": "Plans/goal_run_cancelled_consumer_contracts/consumer.schema.json",
+        "sha256": "c70802660380caaada24dcb0a39ab0ea39170d1dd244cc6207e6d7ee445d5a9f"
+      }
+    },
+    {
+      "from_realm": "consumer",
+      "from_whole_schema": "Plans/goal_run_projection_reference_contracts/certified.v1.schema.json",
+      "from_whole_sha256": "0f52bad2f3c57a90b75581aef1ce8fc4f9cab7ebec07700d087e1fbca2c3e501",
+      "from_schema_location": "/$defs/StartedMetadata/properties/original_commit/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/Projection/properties/original_commit",
+      "to_realm": "cancelled_native_consumer",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json",
+      "whole_source": {
+        "path": "Plans/goal_run_cancelled_consumer_contracts/consumer.schema.json",
+        "sha256": "c70802660380caaada24dcb0a39ab0ea39170d1dd244cc6207e6d7ee445d5a9f"
+      }
+    },
+    {
+      "from_realm": "consumer",
+      "from_whole_schema": "Plans/goal_run_projection_reference_contracts/certified.v1.schema.json",
+      "from_whole_sha256": "0f52bad2f3c57a90b75581aef1ce8fc4f9cab7ebec07700d087e1fbca2c3e501",
+      "from_schema_location": "/$defs/StartedMetadata/properties/original_origin/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/Projection/properties/original_origin",
+      "to_realm": "cancelled_native_consumer",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json",
+      "whole_source": {
+        "path": "Plans/goal_run_cancelled_consumer_contracts/consumer.schema.json",
+        "sha256": "c70802660380caaada24dcb0a39ab0ea39170d1dd244cc6207e6d7ee445d5a9f"
+      }
+    },
+    {
+      "from_realm": "consumer",
+      "from_whole_schema": "Plans/goal_run_projection_reference_contracts/certified.v1.schema.json",
+      "from_whole_sha256": "0f52bad2f3c57a90b75581aef1ce8fc4f9cab7ebec07700d087e1fbca2c3e501",
+      "from_schema_location": "/$defs/StartedMetadata/properties/original_d01_update/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/Projection/properties/original_d01_update",
+      "to_realm": "cancelled_native_consumer",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json",
+      "whole_source": {
+        "path": "Plans/goal_run_cancelled_consumer_contracts/consumer.schema.json",
+        "sha256": "c70802660380caaada24dcb0a39ab0ea39170d1dd244cc6207e6d7ee445d5a9f"
+      }
+    },
+    {
+      "from_realm": "consumer",
+      "from_whole_schema": "Plans/goal_run_projection_reference_contracts/certified.v1.schema.json",
+      "from_whole_sha256": "0f52bad2f3c57a90b75581aef1ce8fc4f9cab7ebec07700d087e1fbca2c3e501",
+      "from_schema_location": "/$defs/StartedMetadata/properties/original_d01_origin/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/Projection/properties/original_d01_origin",
+      "to_realm": "cancelled_native_consumer",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json",
+      "whole_source": {
+        "path": "Plans/goal_run_cancelled_consumer_contracts/consumer.schema.json",
+        "sha256": "c70802660380caaada24dcb0a39ab0ea39170d1dd244cc6207e6d7ee445d5a9f"
+      }
+    },
+    {
+      "from_realm": "consumer",
+      "from_whole_schema": "Plans/goal_run_projection_reference_contracts/certified.v1.schema.json",
+      "from_whole_sha256": "0f52bad2f3c57a90b75581aef1ce8fc4f9cab7ebec07700d087e1fbca2c3e501",
+      "from_schema_location": "/$defs/StartedMetadata/properties/original_event_value_commitment/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/Projection/properties/original_event_value_commitment",
+      "to_realm": "cancelled_native_consumer",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json",
+      "whole_source": {
+        "path": "Plans/goal_run_cancelled_consumer_contracts/consumer.schema.json",
+        "sha256": "c70802660380caaada24dcb0a39ab0ea39170d1dd244cc6207e6d7ee445d5a9f"
+      }
+    },
+    {
+      "from_realm": "consumer",
+      "from_whole_schema": "Plans/goal_run_projection_reference_contracts/certified.v1.schema.json",
+      "from_whole_sha256": "0f52bad2f3c57a90b75581aef1ce8fc4f9cab7ebec07700d087e1fbca2c3e501",
+      "from_schema_location": "/$defs/StartedMetadata/properties/producer_semantic_digest/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/Projection/properties/producer_semantic_digest",
+      "to_realm": "cancelled_native_consumer",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json",
+      "whole_source": {
+        "path": "Plans/goal_run_cancelled_consumer_contracts/consumer.schema.json",
+        "sha256": "c70802660380caaada24dcb0a39ab0ea39170d1dd244cc6207e6d7ee445d5a9f"
+      }
+    },
+    {
+      "from_realm": "consumer",
+      "from_whole_schema": "Plans/goal_run_projection_reference_contracts/certified.v1.schema.json",
+      "from_whole_sha256": "0f52bad2f3c57a90b75581aef1ce8fc4f9cab7ebec07700d087e1fbca2c3e501",
+      "from_schema_location": "/$defs/StartedMetadata/properties/first_append_receipt/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/Projection/properties/first_append_receipt",
+      "to_realm": "cancelled_native_consumer",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json",
+      "whole_source": {
+        "path": "Plans/goal_run_cancelled_consumer_contracts/consumer.schema.json",
+        "sha256": "c70802660380caaada24dcb0a39ab0ea39170d1dd244cc6207e6d7ee445d5a9f"
+      }
+    },
+    {
+      "from_realm": "consumer",
+      "from_whole_schema": "Plans/goal_run_projection_reference_contracts/certified.v1.schema.json",
+      "from_whole_sha256": "0f52bad2f3c57a90b75581aef1ce8fc4f9cab7ebec07700d087e1fbca2c3e501",
+      "from_schema_location": "/$defs/StartedMetadata/properties/action_authority/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/Projection/properties/action_authority",
+      "to_realm": "cancelled_native_consumer",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json",
+      "whole_source": {
+        "path": "Plans/goal_run_cancelled_consumer_contracts/consumer.schema.json",
+        "sha256": "c70802660380caaada24dcb0a39ab0ea39170d1dd244cc6207e6d7ee445d5a9f"
+      }
+    },
+    {
+      "from_realm": "consumer",
+      "from_whole_schema": "Plans/goal_run_projection_reference_contracts/certified.v1.schema.json",
+      "from_whole_sha256": "0f52bad2f3c57a90b75581aef1ce8fc4f9cab7ebec07700d087e1fbca2c3e501",
+      "from_schema_location": "/$defs/StartedEvent/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/Projection/properties/original_event",
+      "to_realm": "cancelled_native_consumer",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json",
+      "whole_source": {
+        "path": "Plans/goal_run_cancelled_consumer_contracts/consumer.schema.json",
+        "sha256": "c70802660380caaada24dcb0a39ab0ea39170d1dd244cc6207e6d7ee445d5a9f"
+      }
+    },
+    {
+      "from_realm": "consumer",
+      "from_whole_schema": "Plans/goal_run_projection_reference_contracts/certified.v1.schema.json",
+      "from_whole_sha256": "0f52bad2f3c57a90b75581aef1ce8fc4f9cab7ebec07700d087e1fbca2c3e501",
+      "from_schema_location": "/$defs/CancelledMetadata/properties/scope/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/CancelledProjection/properties/scope",
+      "to_realm": "cancelled_native_consumer",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json",
+      "whole_source": {
+        "path": "Plans/goal_run_cancelled_consumer_contracts/consumer.schema.json",
+        "sha256": "c70802660380caaada24dcb0a39ab0ea39170d1dd244cc6207e6d7ee445d5a9f"
+      }
+    },
+    {
+      "from_realm": "consumer",
+      "from_whole_schema": "Plans/goal_run_projection_reference_contracts/certified.v1.schema.json",
+      "from_whole_sha256": "0f52bad2f3c57a90b75581aef1ce8fc4f9cab7ebec07700d087e1fbca2c3e501",
+      "from_schema_location": "/$defs/CancelledMetadata/properties/status_at_original_event/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/CancelledProjection/properties/status_at_original_event",
+      "to_realm": "cancelled_native_consumer",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json",
+      "whole_source": {
+        "path": "Plans/goal_run_cancelled_consumer_contracts/consumer.schema.json",
+        "sha256": "c70802660380caaada24dcb0a39ab0ea39170d1dd244cc6207e6d7ee445d5a9f"
+      }
+    },
+    {
+      "from_realm": "consumer",
+      "from_whole_schema": "Plans/goal_run_projection_reference_contracts/certified.v1.schema.json",
+      "from_whole_sha256": "0f52bad2f3c57a90b75581aef1ce8fc4f9cab7ebec07700d087e1fbca2c3e501",
+      "from_schema_location": "/$defs/CancelledMetadata/properties/activation_at_original_event/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/CancelledProjection/properties/activation_at_original_event",
+      "to_realm": "cancelled_native_consumer",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json",
+      "whole_source": {
+        "path": "Plans/goal_run_cancelled_consumer_contracts/consumer.schema.json",
+        "sha256": "c70802660380caaada24dcb0a39ab0ea39170d1dd244cc6207e6d7ee445d5a9f"
+      }
+    },
+    {
+      "from_realm": "consumer",
+      "from_whole_schema": "Plans/goal_run_projection_reference_contracts/certified.v1.schema.json",
+      "from_whole_sha256": "0f52bad2f3c57a90b75581aef1ce8fc4f9cab7ebec07700d087e1fbca2c3e501",
+      "from_schema_location": "/$defs/CancelledMetadata/properties/native_before_commitment/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/CancelledProjection/properties/native_before_commitment",
+      "to_realm": "cancelled_native_consumer",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json",
+      "whole_source": {
+        "path": "Plans/goal_run_cancelled_consumer_contracts/consumer.schema.json",
+        "sha256": "c70802660380caaada24dcb0a39ab0ea39170d1dd244cc6207e6d7ee445d5a9f"
+      }
+    },
+    {
+      "from_realm": "consumer",
+      "from_whole_schema": "Plans/goal_run_projection_reference_contracts/certified.v1.schema.json",
+      "from_whole_sha256": "0f52bad2f3c57a90b75581aef1ce8fc4f9cab7ebec07700d087e1fbca2c3e501",
+      "from_schema_location": "/$defs/CancelledMetadata/properties/native_after_commitment/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/CancelledProjection/properties/native_after_commitment",
+      "to_realm": "cancelled_native_consumer",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json",
+      "whole_source": {
+        "path": "Plans/goal_run_cancelled_consumer_contracts/consumer.schema.json",
+        "sha256": "c70802660380caaada24dcb0a39ab0ea39170d1dd244cc6207e6d7ee445d5a9f"
+      }
+    },
+    {
+      "from_realm": "consumer",
+      "from_whole_schema": "Plans/goal_run_projection_reference_contracts/certified.v1.schema.json",
+      "from_whole_sha256": "0f52bad2f3c57a90b75581aef1ce8fc4f9cab7ebec07700d087e1fbca2c3e501",
+      "from_schema_location": "/$defs/CancelledMetadata/properties/original_candidate/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/CancelledProjection/properties/original_candidate",
+      "to_realm": "cancelled_native_consumer",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json",
+      "whole_source": {
+        "path": "Plans/goal_run_cancelled_consumer_contracts/consumer.schema.json",
+        "sha256": "c70802660380caaada24dcb0a39ab0ea39170d1dd244cc6207e6d7ee445d5a9f"
+      }
+    },
+    {
+      "from_realm": "consumer",
+      "from_whole_schema": "Plans/goal_run_projection_reference_contracts/certified.v1.schema.json",
+      "from_whole_sha256": "0f52bad2f3c57a90b75581aef1ce8fc4f9cab7ebec07700d087e1fbca2c3e501",
+      "from_schema_location": "/$defs/CancelledMetadata/properties/original_intent/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/CancelledProjection/properties/original_intent",
+      "to_realm": "cancelled_native_consumer",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json",
+      "whole_source": {
+        "path": "Plans/goal_run_cancelled_consumer_contracts/consumer.schema.json",
+        "sha256": "c70802660380caaada24dcb0a39ab0ea39170d1dd244cc6207e6d7ee445d5a9f"
+      }
+    },
+    {
+      "from_realm": "consumer",
+      "from_whole_schema": "Plans/goal_run_projection_reference_contracts/certified.v1.schema.json",
+      "from_whole_sha256": "0f52bad2f3c57a90b75581aef1ce8fc4f9cab7ebec07700d087e1fbca2c3e501",
+      "from_schema_location": "/$defs/CancelledMetadata/properties/original_result/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/CancelledProjection/properties/original_result",
+      "to_realm": "cancelled_native_consumer",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json",
+      "whole_source": {
+        "path": "Plans/goal_run_cancelled_consumer_contracts/consumer.schema.json",
+        "sha256": "c70802660380caaada24dcb0a39ab0ea39170d1dd244cc6207e6d7ee445d5a9f"
+      }
+    },
+    {
+      "from_realm": "consumer",
+      "from_whole_schema": "Plans/goal_run_projection_reference_contracts/certified.v1.schema.json",
+      "from_whole_sha256": "0f52bad2f3c57a90b75581aef1ce8fc4f9cab7ebec07700d087e1fbca2c3e501",
+      "from_schema_location": "/$defs/CancelledMetadata/properties/original_prepare_origin/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/CancelledProjection/properties/original_prepare_origin",
+      "to_realm": "cancelled_native_consumer",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json",
+      "whole_source": {
+        "path": "Plans/goal_run_cancelled_consumer_contracts/consumer.schema.json",
+        "sha256": "c70802660380caaada24dcb0a39ab0ea39170d1dd244cc6207e6d7ee445d5a9f"
+      }
+    },
+    {
+      "from_realm": "consumer",
+      "from_whole_schema": "Plans/goal_run_projection_reference_contracts/certified.v1.schema.json",
+      "from_whole_sha256": "0f52bad2f3c57a90b75581aef1ce8fc4f9cab7ebec07700d087e1fbca2c3e501",
+      "from_schema_location": "/$defs/CancelledMetadata/properties/original_publish_origin/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/CancelledProjection/properties/original_publish_origin",
+      "to_realm": "cancelled_native_consumer",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json",
+      "whole_source": {
+        "path": "Plans/goal_run_cancelled_consumer_contracts/consumer.schema.json",
+        "sha256": "c70802660380caaada24dcb0a39ab0ea39170d1dd244cc6207e6d7ee445d5a9f"
+      }
+    },
+    {
+      "from_realm": "consumer",
+      "from_whole_schema": "Plans/goal_run_projection_reference_contracts/certified.v1.schema.json",
+      "from_whole_sha256": "0f52bad2f3c57a90b75581aef1ce8fc4f9cab7ebec07700d087e1fbca2c3e501",
+      "from_schema_location": "/$defs/CancelledMetadata/properties/original_d01_update/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/CancelledProjection/properties/original_d01_update",
+      "to_realm": "cancelled_native_consumer",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json",
+      "whole_source": {
+        "path": "Plans/goal_run_cancelled_consumer_contracts/consumer.schema.json",
+        "sha256": "c70802660380caaada24dcb0a39ab0ea39170d1dd244cc6207e6d7ee445d5a9f"
+      }
+    },
+    {
+      "from_realm": "consumer",
+      "from_whole_schema": "Plans/goal_run_projection_reference_contracts/certified.v1.schema.json",
+      "from_whole_sha256": "0f52bad2f3c57a90b75581aef1ce8fc4f9cab7ebec07700d087e1fbca2c3e501",
+      "from_schema_location": "/$defs/CancelledMetadata/properties/original_d01_origin/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/CancelledProjection/properties/original_d01_origin",
+      "to_realm": "cancelled_native_consumer",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json",
+      "whole_source": {
+        "path": "Plans/goal_run_cancelled_consumer_contracts/consumer.schema.json",
+        "sha256": "c70802660380caaada24dcb0a39ab0ea39170d1dd244cc6207e6d7ee445d5a9f"
+      }
+    },
+    {
+      "from_realm": "consumer",
+      "from_whole_schema": "Plans/goal_run_projection_reference_contracts/certified.v1.schema.json",
+      "from_whole_sha256": "0f52bad2f3c57a90b75581aef1ce8fc4f9cab7ebec07700d087e1fbca2c3e501",
+      "from_schema_location": "/$defs/CancelledMetadata/properties/original_d01_head/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/CancelledProjection/properties/original_d01_head",
+      "to_realm": "cancelled_native_consumer",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json",
+      "whole_source": {
+        "path": "Plans/goal_run_cancelled_consumer_contracts/consumer.schema.json",
+        "sha256": "c70802660380caaada24dcb0a39ab0ea39170d1dd244cc6207e6d7ee445d5a9f"
+      }
+    },
+    {
+      "from_realm": "consumer",
+      "from_whole_schema": "Plans/goal_run_projection_reference_contracts/certified.v1.schema.json",
+      "from_whole_sha256": "0f52bad2f3c57a90b75581aef1ce8fc4f9cab7ebec07700d087e1fbca2c3e501",
+      "from_schema_location": "/$defs/CancelledMetadata/properties/original_d05_result/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/CancelledProjection/properties/original_d05_result",
+      "to_realm": "cancelled_native_consumer",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json",
+      "whole_source": {
+        "path": "Plans/goal_run_cancelled_consumer_contracts/consumer.schema.json",
+        "sha256": "c70802660380caaada24dcb0a39ab0ea39170d1dd244cc6207e6d7ee445d5a9f"
+      }
+    },
+    {
+      "from_realm": "consumer",
+      "from_whole_schema": "Plans/goal_run_projection_reference_contracts/certified.v1.schema.json",
+      "from_whole_sha256": "0f52bad2f3c57a90b75581aef1ce8fc4f9cab7ebec07700d087e1fbca2c3e501",
+      "from_schema_location": "/$defs/CancelledMetadata/properties/original_d05_origin/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/CancelledProjection/properties/original_d05_origin",
+      "to_realm": "cancelled_native_consumer",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json",
+      "whole_source": {
+        "path": "Plans/goal_run_cancelled_consumer_contracts/consumer.schema.json",
+        "sha256": "c70802660380caaada24dcb0a39ab0ea39170d1dd244cc6207e6d7ee445d5a9f"
+      }
+    },
+    {
+      "from_realm": "consumer",
+      "from_whole_schema": "Plans/goal_run_projection_reference_contracts/certified.v1.schema.json",
+      "from_whole_sha256": "0f52bad2f3c57a90b75581aef1ce8fc4f9cab7ebec07700d087e1fbca2c3e501",
+      "from_schema_location": "/$defs/CancelledMetadata/properties/original_start_cause/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/CancelledProjection/properties/original_start_cause",
+      "to_realm": "cancelled_native_consumer",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json",
+      "whole_source": {
+        "path": "Plans/goal_run_cancelled_consumer_contracts/consumer.schema.json",
+        "sha256": "c70802660380caaada24dcb0a39ab0ea39170d1dd244cc6207e6d7ee445d5a9f"
+      }
+    },
+    {
+      "from_realm": "consumer",
+      "from_whole_schema": "Plans/goal_run_projection_reference_contracts/certified.v1.schema.json",
+      "from_whole_sha256": "0f52bad2f3c57a90b75581aef1ce8fc4f9cab7ebec07700d087e1fbca2c3e501",
+      "from_schema_location": "/$defs/CancelledMetadata/properties/original_event_value_commitment/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/CancelledProjection/properties/original_event_value_commitment",
+      "to_realm": "cancelled_native_consumer",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json",
+      "whole_source": {
+        "path": "Plans/goal_run_cancelled_consumer_contracts/consumer.schema.json",
+        "sha256": "c70802660380caaada24dcb0a39ab0ea39170d1dd244cc6207e6d7ee445d5a9f"
+      }
+    },
+    {
+      "from_realm": "consumer",
+      "from_whole_schema": "Plans/goal_run_projection_reference_contracts/certified.v1.schema.json",
+      "from_whole_sha256": "0f52bad2f3c57a90b75581aef1ce8fc4f9cab7ebec07700d087e1fbca2c3e501",
+      "from_schema_location": "/$defs/CancelledMetadata/properties/producer_semantic_digest/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/CancelledProjection/properties/producer_semantic_digest",
+      "to_realm": "cancelled_native_consumer",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json",
+      "whole_source": {
+        "path": "Plans/goal_run_cancelled_consumer_contracts/consumer.schema.json",
+        "sha256": "c70802660380caaada24dcb0a39ab0ea39170d1dd244cc6207e6d7ee445d5a9f"
+      }
+    },
+    {
+      "from_realm": "consumer",
+      "from_whole_schema": "Plans/goal_run_projection_reference_contracts/certified.v1.schema.json",
+      "from_whole_sha256": "0f52bad2f3c57a90b75581aef1ce8fc4f9cab7ebec07700d087e1fbca2c3e501",
+      "from_schema_location": "/$defs/CancelledMetadata/properties/first_append_receipt/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/CancelledProjection/properties/first_append_receipt",
+      "to_realm": "cancelled_native_consumer",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json",
+      "whole_source": {
+        "path": "Plans/goal_run_cancelled_consumer_contracts/consumer.schema.json",
+        "sha256": "c70802660380caaada24dcb0a39ab0ea39170d1dd244cc6207e6d7ee445d5a9f"
+      }
+    },
+    {
+      "from_realm": "consumer",
+      "from_whole_schema": "Plans/goal_run_projection_reference_contracts/certified.v1.schema.json",
+      "from_whole_sha256": "0f52bad2f3c57a90b75581aef1ce8fc4f9cab7ebec07700d087e1fbca2c3e501",
+      "from_schema_location": "/$defs/CancelledMetadata/properties/action_authority/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/CancelledProjection/properties/action_authority",
+      "to_realm": "cancelled_native_consumer",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json",
+      "whole_source": {
+        "path": "Plans/goal_run_cancelled_consumer_contracts/consumer.schema.json",
+        "sha256": "c70802660380caaada24dcb0a39ab0ea39170d1dd244cc6207e6d7ee445d5a9f"
+      }
+    },
+    {
+      "from_realm": "consumer",
+      "from_whole_schema": "Plans/goal_run_projection_reference_contracts/certified.v1.schema.json",
+      "from_whole_sha256": "0f52bad2f3c57a90b75581aef1ce8fc4f9cab7ebec07700d087e1fbca2c3e501",
+      "from_schema_location": "/$defs/CancelledEvent/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json#/$defs/CancelledProjection/properties/original_event",
+      "to_realm": "cancelled_native_consumer",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/goal_run_started_cancelled_consumer.v1.schema.json",
+      "whole_source": {
+        "path": "Plans/goal_run_cancelled_consumer_contracts/consumer.schema.json",
+        "sha256": "c70802660380caaada24dcb0a39ab0ea39170d1dd244cc6207e6d7ee445d5a9f"
+      }
+    }
+  ]
+}

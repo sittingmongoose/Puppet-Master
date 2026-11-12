@@ -1,0 +1,1654 @@
+{
+  "qualification": "TEST_ONLY_REPRESENTATION_COMPONENT_ONLY_NO_ORIGINAL_ISSUANCE_OR_CF_P_SEMANTIC_TUPLES",
+  "complete_original_tuple_coverage": "NOT_COMPLETE",
+  "runtime_component_guards": {
+    "join/physical_key": [
+      "ROW-physical_key"
+    ],
+    "join/dataset": [
+      "ROW-dataset_name"
+    ],
+    "join/storage": [
+      "ROW-storage_instance_id"
+    ],
+    "join/event_identity": [
+      "IDENTITY-event_id",
+      "IDENTITY-event_type",
+      "IDENTITY-sequence_id",
+      "IDENTITY-idempotency_key"
+    ],
+    "join/wrapper_commitment": [
+      "ROW-COMMITMENT"
+    ],
+    "join/complete_original_record": [
+      "WHOLE-RECORD"
+    ],
+    "representation/first_fitting_form": [
+      "NONDETERMINISTIC-FORM"
+    ],
+    "join/original_commitment": [
+      "ORIGINAL-COMMITMENT"
+    ],
+    "pack/byte_size": [
+      "PACK-byte_size"
+    ],
+    "pack/media_type": [
+      "PACK-media_type"
+    ],
+    "pack/available": [
+      "PACK-blake3"
+    ],
+    "pack/byte_size_type": [
+      "PACK-SIZE-TYPE-bool",
+      "PACK-SIZE-TYPE-str",
+      "PACK-SIZE-TYPE-NoneType",
+      "PACK-SIZE-TYPE-list",
+      "PACK-SIZE-TYPE-dict"
+    ],
+    "pack/durable": [
+      "PACK-CUSTODY-durable"
+    ],
+    "pack/storage": [
+      "PACK-CUSTODY-storage"
+    ],
+    "pack/access": [
+      "PACK-ACCESS"
+    ],
+    "pack/blake3": [
+      "PACK-CORRUPT"
+    ],
+    "pack/canonical_decode": [
+      "PACK-TRAILING"
+    ],
+    "size/complete_projection_operation": [
+      "OPERATION-COMPACT-OVERFLOW"
+    ],
+    "size/complete_checkpoint_operation": [
+      "CHECKPOINT-OPERATION-OVERFLOW"
+    ],
+    "checkpoint/key": [
+      "CHECKPOINT-KEY"
+    ],
+    "checkpoint/storage": [
+      "CHECKPOINT-STORAGE"
+    ],
+    "checkpoint/complete_logical_value": [
+      "CHECKPOINT-WHOLE"
+    ],
+    "checkpoint/first_fitting_form": [
+      "CHECKPOINT-NONDETERMINISTIC-FORM"
+    ],
+    "key/type": [
+      "KEY-WRONG-TYPE"
+    ]
+  },
+  "whole_root_schema_seams": [
+    {
+      "id": "SCHEMA-PayloadRef-blake3-missing",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/PayloadRef",
+      "mutation_field": "blake3",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [],
+          "schema_path": [
+            "required"
+          ],
+          "keyword": "required"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-PayloadRef-blake3-wrong_type",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/PayloadRef",
+      "mutation_field": "blake3",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [
+            "blake3"
+          ],
+          "schema_path": [
+            "properties",
+            "blake3",
+            "type"
+          ],
+          "keyword": "type"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-PayloadRef-byte_size-missing",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/PayloadRef",
+      "mutation_field": "byte_size",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [],
+          "schema_path": [
+            "required"
+          ],
+          "keyword": "required"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-PayloadRef-byte_size-wrong_type",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/PayloadRef",
+      "mutation_field": "byte_size",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [
+            "byte_size"
+          ],
+          "schema_path": [
+            "properties",
+            "byte_size",
+            "type"
+          ],
+          "keyword": "type"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-PayloadRef-media_type-missing",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/PayloadRef",
+      "mutation_field": "media_type",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [],
+          "schema_path": [
+            "required"
+          ],
+          "keyword": "required"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-PayloadRef-media_type-wrong_type",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/PayloadRef",
+      "mutation_field": "media_type",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [
+            "media_type"
+          ],
+          "schema_path": [
+            "properties",
+            "media_type",
+            "const"
+          ],
+          "keyword": "const"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-PayloadRef-TEST_ONLY_unexpected_extension-extension",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/PayloadRef",
+      "mutation_field": "TEST_ONLY_unexpected_extension",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [],
+          "schema_path": [
+            "additionalProperties"
+          ],
+          "keyword": "additionalProperties"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-PayloadRef-blake3-trailing_LF",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/PayloadRef",
+      "mutation_field": "blake3",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [
+            "blake3"
+          ],
+          "schema_path": [
+            "properties",
+            "blake3",
+            "maxLength"
+          ],
+          "keyword": "maxLength"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-EventIdentity-storage_instance_id-missing",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/EventIdentity",
+      "mutation_field": "storage_instance_id",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [],
+          "schema_path": [
+            "required"
+          ],
+          "keyword": "required"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-EventIdentity-storage_instance_id-wrong_type",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/EventIdentity",
+      "mutation_field": "storage_instance_id",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [
+            "storage_instance_id"
+          ],
+          "schema_path": [
+            "properties",
+            "storage_instance_id",
+            "type"
+          ],
+          "keyword": "type"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-EventIdentity-scope-missing",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/EventIdentity",
+      "mutation_field": "scope",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [],
+          "schema_path": [
+            "required"
+          ],
+          "keyword": "required"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-EventIdentity-scope-wrong_type",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/EventIdentity",
+      "mutation_field": "scope",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [
+            "scope"
+          ],
+          "schema_path": [
+            "properties",
+            "scope",
+            "type"
+          ],
+          "keyword": "type"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-EventIdentity-event_id-missing",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/EventIdentity",
+      "mutation_field": "event_id",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [],
+          "schema_path": [
+            "required"
+          ],
+          "keyword": "required"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-EventIdentity-event_id-wrong_type",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/EventIdentity",
+      "mutation_field": "event_id",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [
+            "event_id"
+          ],
+          "schema_path": [
+            "properties",
+            "event_id",
+            "type"
+          ],
+          "keyword": "type"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-EventIdentity-event_type-missing",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/EventIdentity",
+      "mutation_field": "event_type",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [],
+          "schema_path": [
+            "required"
+          ],
+          "keyword": "required"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-EventIdentity-event_type-wrong_type",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/EventIdentity",
+      "mutation_field": "event_type",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [
+            "event_type"
+          ],
+          "schema_path": [
+            "properties",
+            "event_type",
+            "enum"
+          ],
+          "keyword": "enum"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-EventIdentity-sequence_id-missing",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/EventIdentity",
+      "mutation_field": "sequence_id",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [],
+          "schema_path": [
+            "required"
+          ],
+          "keyword": "required"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-EventIdentity-sequence_id-wrong_type",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/EventIdentity",
+      "mutation_field": "sequence_id",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [
+            "sequence_id"
+          ],
+          "schema_path": [
+            "properties",
+            "sequence_id",
+            "type"
+          ],
+          "keyword": "type"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-EventIdentity-idempotency_key-missing",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/EventIdentity",
+      "mutation_field": "idempotency_key",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [],
+          "schema_path": [
+            "required"
+          ],
+          "keyword": "required"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-EventIdentity-idempotency_key-wrong_type",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/EventIdentity",
+      "mutation_field": "idempotency_key",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [
+            "idempotency_key"
+          ],
+          "schema_path": [
+            "properties",
+            "idempotency_key",
+            "type"
+          ],
+          "keyword": "type"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-EventIdentity-TEST_ONLY_unexpected_extension-extension",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/EventIdentity",
+      "mutation_field": "TEST_ONLY_unexpected_extension",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [],
+          "schema_path": [
+            "additionalProperties"
+          ],
+          "keyword": "additionalProperties"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-EventIdentity-storage_instance_id-trailing_LF",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/EventIdentity",
+      "mutation_field": "storage_instance_id",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [
+            "storage_instance_id"
+          ],
+          "schema_path": [
+            "properties",
+            "storage_instance_id",
+            "format"
+          ],
+          "keyword": "format"
+        },
+        {
+          "instance_path": [
+            "storage_instance_id"
+          ],
+          "schema_path": [
+            "properties",
+            "storage_instance_id",
+            "maxLength"
+          ],
+          "keyword": "maxLength"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-StorageProjection-schema_id-missing",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/StorageProjection",
+      "mutation_field": "schema_id",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [],
+          "schema_path": [
+            "required"
+          ],
+          "keyword": "required"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-StorageProjection-schema_id-wrong_type",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/StorageProjection",
+      "mutation_field": "schema_id",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [
+            "schema_id"
+          ],
+          "schema_path": [
+            "properties",
+            "schema_id",
+            "const"
+          ],
+          "keyword": "const"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-StorageProjection-schema_version-missing",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/StorageProjection",
+      "mutation_field": "schema_version",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [],
+          "schema_path": [
+            "required"
+          ],
+          "keyword": "required"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-StorageProjection-schema_version-wrong_type",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/StorageProjection",
+      "mutation_field": "schema_version",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [
+            "schema_version"
+          ],
+          "schema_path": [
+            "properties",
+            "schema_version",
+            "const"
+          ],
+          "keyword": "const"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-StorageProjection-storage_instance_id-missing",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/StorageProjection",
+      "mutation_field": "storage_instance_id",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [],
+          "schema_path": [
+            "required"
+          ],
+          "keyword": "required"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-StorageProjection-storage_instance_id-wrong_type",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/StorageProjection",
+      "mutation_field": "storage_instance_id",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [
+            "storage_instance_id"
+          ],
+          "schema_path": [
+            "properties",
+            "storage_instance_id",
+            "type"
+          ],
+          "keyword": "type"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-StorageProjection-physical_key-missing",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/StorageProjection",
+      "mutation_field": "physical_key",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [],
+          "schema_path": [
+            "required"
+          ],
+          "keyword": "required"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-StorageProjection-physical_key-wrong_type",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/StorageProjection",
+      "mutation_field": "physical_key",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [
+            "physical_key"
+          ],
+          "schema_path": [
+            "properties",
+            "physical_key",
+            "type"
+          ],
+          "keyword": "type"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-StorageProjection-dataset_name-missing",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/StorageProjection",
+      "mutation_field": "dataset_name",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [],
+          "schema_path": [
+            "required"
+          ],
+          "keyword": "required"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-StorageProjection-dataset_name-wrong_type",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/StorageProjection",
+      "mutation_field": "dataset_name",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [
+            "dataset_name"
+          ],
+          "schema_path": [
+            "properties",
+            "dataset_name",
+            "type"
+          ],
+          "keyword": "type"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-StorageProjection-event_identity-missing",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/StorageProjection",
+      "mutation_field": "event_identity",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [],
+          "schema_path": [
+            "required"
+          ],
+          "keyword": "required"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-StorageProjection-event_identity-wrong_type",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/StorageProjection",
+      "mutation_field": "event_identity",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [
+            "event_identity"
+          ],
+          "schema_path": [
+            "properties",
+            "event_identity",
+            "type"
+          ],
+          "keyword": "type"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-StorageProjection-original_event_value_commitment-missing",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/StorageProjection",
+      "mutation_field": "original_event_value_commitment",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [],
+          "schema_path": [
+            "required"
+          ],
+          "keyword": "required"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-StorageProjection-original_event_value_commitment-wrong_type",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/StorageProjection",
+      "mutation_field": "original_event_value_commitment",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [
+            "original_event_value_commitment"
+          ],
+          "schema_path": [
+            "properties",
+            "original_event_value_commitment",
+            "type"
+          ],
+          "keyword": "type"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-StorageProjection-content-missing",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/StorageProjection",
+      "mutation_field": "content",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [],
+          "schema_path": [
+            "required"
+          ],
+          "keyword": "required"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-StorageProjection-content-wrong_type",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/StorageProjection",
+      "mutation_field": "content",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [
+            "content"
+          ],
+          "schema_path": [
+            "properties",
+            "content",
+            "oneOf"
+          ],
+          "keyword": "oneOf"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-StorageProjection-TEST_ONLY_unexpected_extension-extension",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/StorageProjection",
+      "mutation_field": "TEST_ONLY_unexpected_extension",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [],
+          "schema_path": [
+            "additionalProperties"
+          ],
+          "keyword": "additionalProperties"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-StorageProjection-storage_instance_id-trailing_LF",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/StorageProjection",
+      "mutation_field": "storage_instance_id",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [
+            "storage_instance_id"
+          ],
+          "schema_path": [
+            "properties",
+            "storage_instance_id",
+            "format"
+          ],
+          "keyword": "format"
+        },
+        {
+          "instance_path": [
+            "storage_instance_id"
+          ],
+          "schema_path": [
+            "properties",
+            "storage_instance_id",
+            "maxLength"
+          ],
+          "keyword": "maxLength"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-LogicalCheckpoint-schema_id-missing",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/LogicalCheckpoint",
+      "mutation_field": "schema_id",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [],
+          "schema_path": [
+            "required"
+          ],
+          "keyword": "required"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-LogicalCheckpoint-schema_id-wrong_type",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/LogicalCheckpoint",
+      "mutation_field": "schema_id",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [
+            "schema_id"
+          ],
+          "schema_path": [
+            "properties",
+            "schema_id",
+            "const"
+          ],
+          "keyword": "const"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-LogicalCheckpoint-schema_version-missing",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/LogicalCheckpoint",
+      "mutation_field": "schema_version",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [],
+          "schema_path": [
+            "required"
+          ],
+          "keyword": "required"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-LogicalCheckpoint-schema_version-wrong_type",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/LogicalCheckpoint",
+      "mutation_field": "schema_version",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [
+            "schema_version"
+          ],
+          "schema_path": [
+            "properties",
+            "schema_version",
+            "const"
+          ],
+          "keyword": "const"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-LogicalCheckpoint-storage_instance_id-missing",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/LogicalCheckpoint",
+      "mutation_field": "storage_instance_id",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [],
+          "schema_path": [
+            "required"
+          ],
+          "keyword": "required"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-LogicalCheckpoint-storage_instance_id-wrong_type",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/LogicalCheckpoint",
+      "mutation_field": "storage_instance_id",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [
+            "storage_instance_id"
+          ],
+          "schema_path": [
+            "properties",
+            "storage_instance_id",
+            "type"
+          ],
+          "keyword": "type"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-LogicalCheckpoint-scope-missing",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/LogicalCheckpoint",
+      "mutation_field": "scope",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [],
+          "schema_path": [
+            "required"
+          ],
+          "keyword": "required"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-LogicalCheckpoint-scope-wrong_type",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/LogicalCheckpoint",
+      "mutation_field": "scope",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [
+            "scope"
+          ],
+          "schema_path": [
+            "properties",
+            "scope",
+            "type"
+          ],
+          "keyword": "type"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-LogicalCheckpoint-physical_key-missing",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/LogicalCheckpoint",
+      "mutation_field": "physical_key",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [],
+          "schema_path": [
+            "required"
+          ],
+          "keyword": "required"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-LogicalCheckpoint-physical_key-wrong_type",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/LogicalCheckpoint",
+      "mutation_field": "physical_key",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [
+            "physical_key"
+          ],
+          "schema_path": [
+            "properties",
+            "physical_key",
+            "type"
+          ],
+          "keyword": "type"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-LogicalCheckpoint-current_generation_id-missing",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/LogicalCheckpoint",
+      "mutation_field": "current_generation_id",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [],
+          "schema_path": [
+            "required"
+          ],
+          "keyword": "required"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-LogicalCheckpoint-current_generation_id-wrong_type",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/LogicalCheckpoint",
+      "mutation_field": "current_generation_id",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [
+            "current_generation_id"
+          ],
+          "schema_path": [
+            "properties",
+            "current_generation_id",
+            "anyOf"
+          ],
+          "keyword": "anyOf"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-LogicalCheckpoint-generations-missing",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/LogicalCheckpoint",
+      "mutation_field": "generations",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [],
+          "schema_path": [
+            "required"
+          ],
+          "keyword": "required"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-LogicalCheckpoint-generations-wrong_type",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/LogicalCheckpoint",
+      "mutation_field": "generations",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [
+            "generations"
+          ],
+          "schema_path": [
+            "properties",
+            "generations",
+            "type"
+          ],
+          "keyword": "type"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-LogicalCheckpoint-root_revision-missing",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/LogicalCheckpoint",
+      "mutation_field": "root_revision",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [],
+          "schema_path": [
+            "required"
+          ],
+          "keyword": "required"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-LogicalCheckpoint-root_revision-wrong_type",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/LogicalCheckpoint",
+      "mutation_field": "root_revision",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [
+            "root_revision"
+          ],
+          "schema_path": [
+            "properties",
+            "root_revision",
+            "type"
+          ],
+          "keyword": "type"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-LogicalCheckpoint-last_transaction_id-missing",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/LogicalCheckpoint",
+      "mutation_field": "last_transaction_id",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [],
+          "schema_path": [
+            "required"
+          ],
+          "keyword": "required"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-LogicalCheckpoint-last_transaction_id-wrong_type",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/LogicalCheckpoint",
+      "mutation_field": "last_transaction_id",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [
+            "last_transaction_id"
+          ],
+          "schema_path": [
+            "properties",
+            "last_transaction_id",
+            "type"
+          ],
+          "keyword": "type"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-LogicalCheckpoint-TEST_ONLY_unexpected_extension-extension",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/LogicalCheckpoint",
+      "mutation_field": "TEST_ONLY_unexpected_extension",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [],
+          "schema_path": [
+            "additionalProperties"
+          ],
+          "keyword": "additionalProperties"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-StorageCheckpoint-schema_id-missing",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/StorageCheckpoint",
+      "mutation_field": "schema_id",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [],
+          "schema_path": [
+            "required"
+          ],
+          "keyword": "required"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-StorageCheckpoint-schema_id-wrong_type",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/StorageCheckpoint",
+      "mutation_field": "schema_id",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [
+            "schema_id"
+          ],
+          "schema_path": [
+            "properties",
+            "schema_id",
+            "const"
+          ],
+          "keyword": "const"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-StorageCheckpoint-schema_version-missing",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/StorageCheckpoint",
+      "mutation_field": "schema_version",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [],
+          "schema_path": [
+            "required"
+          ],
+          "keyword": "required"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-StorageCheckpoint-schema_version-wrong_type",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/StorageCheckpoint",
+      "mutation_field": "schema_version",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [
+            "schema_version"
+          ],
+          "schema_path": [
+            "properties",
+            "schema_version",
+            "const"
+          ],
+          "keyword": "const"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-StorageCheckpoint-storage_instance_id-missing",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/StorageCheckpoint",
+      "mutation_field": "storage_instance_id",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [],
+          "schema_path": [
+            "required"
+          ],
+          "keyword": "required"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-StorageCheckpoint-storage_instance_id-wrong_type",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/StorageCheckpoint",
+      "mutation_field": "storage_instance_id",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [
+            "storage_instance_id"
+          ],
+          "schema_path": [
+            "properties",
+            "storage_instance_id",
+            "type"
+          ],
+          "keyword": "type"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-StorageCheckpoint-physical_key-missing",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/StorageCheckpoint",
+      "mutation_field": "physical_key",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [],
+          "schema_path": [
+            "required"
+          ],
+          "keyword": "required"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-StorageCheckpoint-physical_key-wrong_type",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/StorageCheckpoint",
+      "mutation_field": "physical_key",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [
+            "physical_key"
+          ],
+          "schema_path": [
+            "properties",
+            "physical_key",
+            "type"
+          ],
+          "keyword": "type"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-StorageCheckpoint-content-missing",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/StorageCheckpoint",
+      "mutation_field": "content",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [],
+          "schema_path": [
+            "required"
+          ],
+          "keyword": "required"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-StorageCheckpoint-content-wrong_type",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/StorageCheckpoint",
+      "mutation_field": "content",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [
+            "content"
+          ],
+          "schema_path": [
+            "properties",
+            "content",
+            "oneOf"
+          ],
+          "keyword": "oneOf"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-StorageCheckpoint-TEST_ONLY_unexpected_extension-extension",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/StorageCheckpoint",
+      "mutation_field": "TEST_ONLY_unexpected_extension",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [],
+          "schema_path": [
+            "additionalProperties"
+          ],
+          "keyword": "additionalProperties"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-StorageCheckpoint-storage_instance_id-trailing_LF",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/StorageCheckpoint",
+      "mutation_field": "storage_instance_id",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [
+            "storage_instance_id"
+          ],
+          "schema_path": [
+            "properties",
+            "storage_instance_id",
+            "format"
+          ],
+          "keyword": "format"
+        },
+        {
+          "instance_path": [
+            "storage_instance_id"
+          ],
+          "schema_path": [
+            "properties",
+            "storage_instance_id",
+            "maxLength"
+          ],
+          "keyword": "maxLength"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-ProjectionOperation-table-missing",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/ProjectionOperation",
+      "mutation_field": "table",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [],
+          "schema_path": [
+            "required"
+          ],
+          "keyword": "required"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-ProjectionOperation-table-wrong_type",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/ProjectionOperation",
+      "mutation_field": "table",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [
+            "table"
+          ],
+          "schema_path": [
+            "properties",
+            "table",
+            "type"
+          ],
+          "keyword": "type"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-ProjectionOperation-key-missing",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/ProjectionOperation",
+      "mutation_field": "key",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [],
+          "schema_path": [
+            "required"
+          ],
+          "keyword": "required"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-ProjectionOperation-key-wrong_type",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/ProjectionOperation",
+      "mutation_field": "key",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [
+            "key"
+          ],
+          "schema_path": [
+            "properties",
+            "key",
+            "type"
+          ],
+          "keyword": "type"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-ProjectionOperation-value-missing",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/ProjectionOperation",
+      "mutation_field": "value",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [],
+          "schema_path": [
+            "required"
+          ],
+          "keyword": "required"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-ProjectionOperation-value-wrong_type",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/ProjectionOperation",
+      "mutation_field": "value",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [
+            "value"
+          ],
+          "schema_path": [
+            "properties",
+            "value",
+            "type"
+          ],
+          "keyword": "type"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-ProjectionOperation-TEST_ONLY_unexpected_extension-extension",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/ProjectionOperation",
+      "mutation_field": "TEST_ONLY_unexpected_extension",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [],
+          "schema_path": [
+            "additionalProperties"
+          ],
+          "keyword": "additionalProperties"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-CheckpointOperation-table-missing",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/CheckpointOperation",
+      "mutation_field": "table",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [],
+          "schema_path": [
+            "required"
+          ],
+          "keyword": "required"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-CheckpointOperation-table-wrong_type",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/CheckpointOperation",
+      "mutation_field": "table",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [
+            "table"
+          ],
+          "schema_path": [
+            "properties",
+            "table",
+            "const"
+          ],
+          "keyword": "const"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-CheckpointOperation-key-missing",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/CheckpointOperation",
+      "mutation_field": "key",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [],
+          "schema_path": [
+            "required"
+          ],
+          "keyword": "required"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-CheckpointOperation-key-wrong_type",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/CheckpointOperation",
+      "mutation_field": "key",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [
+            "key"
+          ],
+          "schema_path": [
+            "properties",
+            "key",
+            "type"
+          ],
+          "keyword": "type"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-CheckpointOperation-value-missing",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/CheckpointOperation",
+      "mutation_field": "value",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [],
+          "schema_path": [
+            "required"
+          ],
+          "keyword": "required"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-CheckpointOperation-value-wrong_type",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/CheckpointOperation",
+      "mutation_field": "value",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [
+            "value"
+          ],
+          "schema_path": [
+            "properties",
+            "value",
+            "type"
+          ],
+          "keyword": "type"
+        }
+      ]
+    },
+    {
+      "id": "SCHEMA-CheckpointOperation-TEST_ONLY_unexpected_extension-extension",
+      "root": "https://puppetmaster.local/schemas/goal_run_projection_reference/certified/1.0.0#/$defs/CheckpointOperation",
+      "mutation_field": "TEST_ONLY_unexpected_extension",
+      "expected": "REFUSE",
+      "status": "PASS",
+      "errors": [
+        {
+          "instance_path": [],
+          "schema_path": [
+            "additionalProperties"
+          ],
+          "keyword": "additionalProperties"
+        }
+      ]
+    }
+  ],
+  "schema_positive_roots": [
+    "PayloadRef",
+    "EventIdentity",
+    "StorageProjection",
+    "LogicalCheckpoint",
+    "StorageCheckpoint",
+    "ProjectionOperation",
+    "CheckpointOperation"
+  ],
+  "unproved_scope": "This is an inventory for the shared tool, not a guard-removal proof. Complete CF/P guards and complete original-path positives/negatives remain unimplemented. Static selection/profile/hash predicates are checked against actual selected files, but have no per-predicate mutation corpus here. No blanket check-11 PASS."
+}

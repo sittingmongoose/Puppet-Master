@@ -1,0 +1,41 @@
+{
+  "status": "NEWLY_AUTHORED_EXPLICIT_DERIVED_SELECTION",
+  "edition": "pm.goal_run_certified.projection.reference.v1",
+  "installed_profile": {
+    "path": "Plans/goal_run_projection_reference_contracts/certified.installed-profile.json",
+    "sha256": "d53e4703ce7487efdef71aaf5ff8f7976c5a1748f486c287a34619bdd819dbc2",
+    "bytes": 2566
+  },
+  "installed_profile_logical_sha256": "1550f70a291d7379cf155f235766e770ea4acdd40accc9105b8873c928aebd89",
+  "source_package_selection": {
+    "path": "Plans/goal_run_certified_consumer_contracts/source-package.v2/selection.json",
+    "sha256": "da84ffb39a990021c49bbcd11ae9cbc700bdcf679ea285a4a65eaba40e4265d7",
+    "bytes": 1366
+  },
+  "methods": {
+    "path": "Plans/goal_run_projection_reference_contracts/certified.methods.json",
+    "sha256": "25b5ce8da4d9dbe0929bd85cf05d2c50f6d836528a485a82b47078b74c76d63b",
+    "bytes": 91353
+  },
+  "resources": {
+    "path": "Plans/goal_run_projection_reference_contracts/certified.resources.json",
+    "sha256": "5d533383965c4ea54bf9f73e75f5fd503ee6d8d5d732a48d1643f67897c6198b",
+    "bytes": 1541
+  },
+  "physical": {
+    "path": "Plans/goal_run_projection_reference_contracts/certified.physical.json",
+    "sha256": "93913e0b47eeb040069b86d2e8cdebf790674bdee43f493e06d388dec3acf89c",
+    "bytes": 2839
+  },
+  "protocol": {
+    "path": "Plans/goal_run_projection_reference_contracts/certified.md",
+    "sha256": "4a2f95b6b0a8608cd577bdaf7512e6a306e82093de5a21421651dfa2b5ee37a5",
+    "bytes": 15339
+  },
+  "historical_predecessor_physical": {
+    "path": "Plans/goal_run_certified_consumer_contracts/physical-retention-install.json",
+    "sha256": "8f5bfb1e0348ecb4d0e119bdc84d2a74bd54a1d34345ff8a47f8a017c16bf129",
+    "bytes": 4313
+  },
+  "native_execution": "NOT_RUN"
+}

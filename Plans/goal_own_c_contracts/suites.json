@@ -196,15 +196,16 @@
       "protocol_section": "W5",
       "own_whole_root_documents": [
         "Plans/goal_certified_event_coordinator_contracts/schemas/coordinator.v1.schema.json",
-        "Plans/goal_run_certified_consumer_contracts/schemas/consumer.v1.schema.json"
+        "Plans/goal_run_certified_consumer_contracts/schemas/consumer.v1.schema.json",
+        "Plans/goal_run_projection_reference_contracts/certified.v1.schema.json"
       ],
       "original_isolated_resource_banks": [
         "Plans/goal_certified_event_coordinator_contracts/resource-realms.json",
-        "Plans/goal_run_certified_consumer_contracts/resource-realms.json"
+        "Plans/goal_run_certified_consumer_contracts/source-package.v2/resource-realms.json"
       ],
       "whole_method_maps": [
         "Plans/goal_certified_event_coordinator_contracts/methods.json",
-        "Plans/goal_run_certified_consumer_contracts/methods.json"
+        "Plans/goal_run_projection_reference_contracts/certified.methods.json"
       ],
       "independent_boundaries": [
         "original_entry",
@@ -216,7 +217,50 @@
       "inherited_full_tuple_coverage": "PARTIAL",
       "native_execution": "NOT_RUN",
       "part2_whole_tuple_coverage": "PARTIAL_NOT_CLOSED",
-      "part2_component_witnesses": []
+      "part2_component_witnesses": [],
+      "c3_w5_part2": {
+        "selected_source_package": "Plans/goal_run_certified_consumer_contracts/source-package.v2/selection.json",
+        "source_package_edition": "pm.goal_run_certified.consumer_source.v2",
+        "predecessor_history": [
+          "Plans/goal_run_certified_consumer_contracts/imports.json",
+          "Plans/goal_run_certified_consumer_contracts/resource-realms.json",
+          "Plans/goal_run_certified_consumer_contracts/methods.json",
+          "Plans/goal_run_certified_consumer_contracts/installed-profile.json"
+        ],
+        "reference_closure": "COMPLETE_LITERAL_SCHEMA_REFERENCES_ONLY",
+        "whole_tuple_closure": "BLOCKED",
+        "technical_blocker": "W5-STORAGE-PROJECTION-NO-REFERENCE-EDITION",
+        "precondition_oracle": "scripts/pm_goal_own_c3_w5_successor_oracles.py",
+        "native_execution": "NOT_RUN"
+      },
+      "c3_w5_part3": {
+        "projection_selection": "Plans/goal_run_projection_reference_contracts/certified.selection.json",
+        "source_package_selection": "Plans/goal_run_certified_consumer_contracts/source-package.v2/selection.json",
+        "projection_edition": "pm.goal_run_certified.projection.reference.v1",
+        "supersedes_part2_representation_blocker": true,
+        "whole_tuple_closure": "NOT_COMPLETE",
+        "component_oracle": "scripts/pm_goal_own_c3_w5_projection_oracles.py",
+        "native_execution": "NOT_RUN"
+      },
+      "dg_cf1": {
+        "groups": [
+          "CF-01",
+          "CF-02",
+          "CF-03",
+          "CF-04",
+          "CF-05"
+        ],
+        "selection": "Plans/goal_own_c_contracts/protocol.md#dg-cf1-complete-original-path-oracles-goal_runcertified-cf-01-cf-02-cf-03-cf-04-cf-05-2026-11-11",
+        "oracle": "scripts/pm_goal_dg_cf1_oracles.py",
+        "world": [
+          "scripts/pm_goal_dg_cf1_world.py",
+          "scripts/pm_goal_dg_cf1_compose.py"
+        ],
+        "adopted_demonstration": "scripts/pm_goal_test_demo_cf01.py",
+        "adapters": "Plans/goal_own_c_contracts/protocol.md#shared-test_only-owner-adapters-2026-11-11",
+        "qualification": "TEST_ONLY",
+        "native_execution": "NOT_RUN"
+      }
     }
   ]
 }
