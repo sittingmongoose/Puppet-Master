@@ -2,9 +2,9 @@
 
 Source: `Plans/Prompt_Pipeline.md`
 
-Source lines: L4144-L4204
+Source lines: L4164-L4234
 
-Source SHA256: `2896b4e4980fd55255a59c9aa16ca36480fe9be538138f3a4c0a6ac5bd010ede`
+Source SHA256: `c4989e6b7fe9049b7a7f890296422a27be887e3426b45b43202eefa2b83c367b`
 
 ---
 
@@ -20,16 +20,24 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Prompt_Pipeline.md
 canonical_text: >-
-  ContextEpoch records and compaction projections expose context_estimate, input_total, input_non_cached, cache_read, cache_write, cache_write_1h or TTL-specific cache writes, output_visible, reasoning/thoughts, provider_total, counting_semantics, hidden/background contribution refs, and source_confidence to GUI consumers through UsageRecord/context projections. Compact Now creates a new context epoch or compaction receipt according to chat command rules; it does not rewrite historical UsageRecord totals, erase partial/aborted usage, or convert context_estimate into provider billing authority.
+  ContextEpoch records and compaction projections expose context_estimate, input_total,
+  input_non_cached, cache_read, cache_write, cache_write_1h or TTL-specific cache writes,
+  output_visible, reasoning/thoughts, provider_total, counting_semantics, and source_confidence to
+  GUI consumers through UsageRecord/context projections. Hidden/background contribution refs and
+  source attribution remain internal for accounting and debugging; chat receives truthful aggregate
+  usage/cost and useful compaction status without source breakdowns or inclusion receipts. Compact
+  Now creates a new context epoch or compaction receipt according to chat command rules; it does not
+  rewrite historical UsageRecord totals, erase partial/aborted usage, or convert context_estimate
+  into provider billing authority.
 gui_related: true
 gui_classification_reason: Context epoch and compaction projections feed the visible chat context circle and Context Detail Pane.
 depends_on: [PP-072, UF-087, UF-088, ACD-434]
 unblocks: []
 acceptance_criteria:
-  - Context Detail Pane fixtures show context_estimate as local context pressure only, not billing or quota authority.
-  - Compact Now fixtures preserve previous UsageRecord identity and create a new context epoch/receipt without recalculating settled historical costs.
-  - Cache fixtures distinguish cache_read = 0 from cache unsupported/not_exposed/unknown and respect provider counting_semantics.
-  - Hidden/background contribution refs remain visible in context breakdowns instead of being silently folded into user-message totals.
+  - "Context Detail Pane fixtures show context_estimate as local context pressure only, not billing or quota authority."
+  - "Compact Now fixtures preserve previous UsageRecord identity and create a new context epoch/receipt without recalculating settled historical costs."
+  - "Cache fixtures distinguish cache_read = 0 from cache unsupported/not_exposed/unknown and respect provider counting_semantics."
+  - "Hidden/background contribution identity remains attributable internally; chat totals stay truthful without a source breakdown or per-run inclusion receipt."
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-plans-verify.py run-gates
@@ -51,6 +59,7 @@ source_lineage:
   - "Plans/usage-feature.md:156-194"
   - "Plans/usage-feature.md:5412-5605"
   - "uploaded:opencode-dev/packages/app/src/components/session-context-usage.tsx"
+  - "DL-475; settings batch 2 round r2 complete context-inspection sweep, 2026-11-12"
 preserved_exact_tokens:
   - ContextEpoch
   - Compact Now
@@ -64,6 +73,7 @@ negative_constraints:
   - Do not convert context_estimate into billing, cost, quota, or provider authority.
   - Do not rewrite historical UsageRecord totals during compaction.
   - Do not render cache unsupported/not_exposed/unknown as cache zero.
+  - "Do not restore user-facing context source inspection or per-run inclusion receipts through a legacy title, preserved token, shared projection or saved view state."
 owner_hints:
   - Plans/Prompt_Pipeline.md
   - Plans/assistant-chat-design.md

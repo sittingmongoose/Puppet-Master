@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L5446-L27017
+Source lines: L5446-L27022
 
-Source SHA256: `5368dfb2e801d2b0f7b323ccddc23d97370abdaeb017f6b785a7f0780fade9dd`
+Source SHA256: `b1f46e0b411a11f49fb05bc9501dab29f9b82874e63a99617a7301bfba229b64`
 
 ---
 
@@ -7372,25 +7372,28 @@ plan_unit_id: F3-132
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: 'Thread headers expose context indicators, usage/status detail, compact-now intent, thread-scoped
-  context detail tabs, curated/raw views, under-message actions, and info-popovers that follow Assistant
-  Chat and Contracts label rules, including visible progress and failure/degraded feedback for explicit
-  Compact Now actions plus already-running, cancelled, no-op, unavailable, retry, reload, completed, and
-  failed command-result states. Amended 2026-10-09 (DL-180): the thread-scoped context detail tab is the
-  context tab kind (`context:<threadId>`, F3-635), opened and placed by F3-634 in a home panel. DL-475
-  keeps basic on-demand capacity/cost/model facts and Squeeze now, but moves assembled-source charts,
-  raw memory data and memory-selection explanations to internal debugging. Curated/raw source-family inspection
-  is no ordinary user surface.'
+canonical_text: >-
+  Thread headers expose context indicators, usage/status detail, compact-now intent, thread-scoped
+  context detail tabs, basic capacity/cost/model and useful compaction status, under-message
+  actions, and info-popovers that follow Assistant Chat and Contracts label rules, including visible
+  progress and failure/degraded feedback for explicit Compact Now actions plus already-running,
+  cancelled, no-op, unavailable, retry, reload, completed, and failed command-result states. Amended
+  2026-10-09 (DL-180): the thread-scoped context detail tab is the context tab kind
+  (`context:<threadId>`, F3-635), opened and placed by F3-634 in a home panel. DL-475 keeps basic
+  on-demand capacity/cost/model facts and Squeeze now, but moves assembled-source charts, raw memory
+  data and memory-selection explanations to internal debugging. Curated/raw source-family inspection
+  is no ordinary user surface.
 gui_related: true
 gui_classification_reason: This unit defines visible thread context, message details, action rows, and popovers.
 split_recommended: false
 depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
-- "The covered source span remains losslessly available for exact-text audit."
-- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
-- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+  - "The covered source span remains losslessly available for exact-text audit."
+  - "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+  - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+  - "Thread context/message surfaces expose no source-composition, Curated/Raw source inspection or per-run inclusion receipt; source accounting stays internal."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -7407,6 +7410,7 @@ source_lineage:
 - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/compaction_compile_readiness_matrix.json:cmp-automated-testing-acceptance
 - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0094
 - DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
+- "DL-475; settings batch 2 round r2 complete context-inspection sweep, 2026-11-12"
 preserved_exact_tokens:
 - "More Details"
 - "Compact Now"
@@ -7424,6 +7428,7 @@ negative_constraints:
 - "Compact Now must not dispatch compaction until the user chooses that action."
 - "Compact Now failure must not be silent or logs-only."
 - "The preserved context.compaction.failed token is historical source lineage; visible failure comes from the command result/receipt projection and no context.compaction.failed or completion EventRecord is emitted for that failed outcome."
+- "Do not restore user-facing context source inspection or per-run inclusion receipts through a legacy title, preserved token, shared projection or saved view state."
 compatibility_only_notes: []
 stale_retired_dispositions:
 - "The former context.compaction.failed event implication remains retired; completion-only admission under ACD-461 / SP-259 does not authorize a failed event or a completion event for failure."

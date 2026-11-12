@@ -271,7 +271,7 @@
         "Plans/orchestrator-subagent-integration.md",
         "future application rules pipeline"
       ],
-      "line_count": 2441,
+      "line_count": 2456,
       "path": "Plans/agent-rules-context.md",
       "plan_unit_count": 37,
       "plan_unit_ids": [
@@ -356,7 +356,7 @@
         "two_durable_rule_scopes",
         "visibility_rules"
       ],
-      "sha256": "f1fcf46dfb4409ccfc30d507abf111d30631f8dbacfb9a44f5234344db24aa49",
+      "sha256": "212cf76ee5e4a1c283b0d769c6a03a740e09169e4f0b29c03edfbf8d7c095c02",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 37
@@ -637,7 +637,7 @@
         "future composer",
         "future run status UI"
       ],
-      "line_count": 31662,
+      "line_count": 31677,
       "path": "Plans/assistant-chat-design.md",
       "plan_unit_count": 499,
       "plan_unit_ids": [
@@ -1498,7 +1498,7 @@
         "worktree_storage",
         "wrong_chat_owner_or_unproved_dispatch"
       ],
-      "sha256": "40e1fcb9c6709721c656701b4b8a742906ef179b6955f83acac8f8a901d6fb93",
+      "sha256": "b4d0a4d8ff0879dc647c9d6989ddfc930317d1880d11b8e99d9862e330f0de7a",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 496,
@@ -4605,7 +4605,7 @@
         "scripts/pm-new-contracts-verify.py",
         "scripts/pm-plans-verify.py"
       ],
-      "line_count": 24647,
+      "line_count": 24664,
       "path": "Plans/Contracts_V0.md",
       "plan_unit_count": 362,
       "plan_unit_ids": [
@@ -5332,7 +5332,7 @@
         "worktree_lane_context_loss",
         "worktree_lifecycle_record_loss"
       ],
-      "sha256": "974b4a737050357f760deafa8f6247c7679b93d6352a1c45684f72d219510105",
+      "sha256": "4b70f80fd8b3fd121e33fa29ddb9f8828ad20d3063407af3393b2445bbf53296",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 361,
@@ -8107,7 +8107,7 @@
         "tests/fixtures/pm7_shared",
         "tests/fixtures/usage_gui"
       ],
-      "line_count": 52120,
+      "line_count": 52150,
       "path": "Plans/FinalGUISpec.md",
       "plan_unit_count": 665,
       "plan_unit_ids": [
@@ -8922,7 +8922,7 @@
         "wand_sheet_presentation_drift",
         "web_client_stack_or_parity_drift"
       ],
-      "sha256": "5368dfb2e801d2b0f7b323ccddc23d97370abdaeb017f6b785a7f0780fade9dd",
+      "sha256": "b1f46e0b411a11f49fb05bc9501dab29f9b82874e63a99617a7301bfba229b64",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 656,
@@ -10148,7 +10148,7 @@
         "Plans/Runtime_Artifacts_Panel.md",
         "Plans/usage-feature.md"
       ],
-      "line_count": 2288,
+      "line_count": 2293,
       "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
       "plan_unit_count": 34,
       "plan_unit_ids": [
@@ -10200,7 +10200,7 @@
         "migration_lineage",
         "owner_drift"
       ],
-      "sha256": "95709e08e3ce916e938e8982a88b1ceb518b746c65f68be4f6c32d4b60b38543",
+      "sha256": "c2fb730c57e1a122bc4f80813e833a45287bd5f77199026663042324d3db5ae0",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 34
@@ -11277,7 +11277,7 @@
         "future Teacher thread model chips",
         "future model route resolver"
       ],
-      "line_count": 9904,
+      "line_count": 9911,
       "path": "Plans/Models_System.md",
       "plan_unit_count": 139,
       "plan_unit_ids": [
@@ -11558,7 +11558,7 @@
         "webresearch_tiering_automation_session_boundary",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "98cedbe72059189d8dedef8480350441120a92631e6e4ef4f973487aefcf68c4",
+      "sha256": "34ea4b6c2934cb4e6aaf64baa418c10460c117e15e78acb895b7187bf3a79a75",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 139
@@ -15743,8 +15743,8 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 68,
-        "True": 23
+        "False": 69,
+        "True": 22
       },
       "heading_count": 153,
       "implementation_surfaces": [
@@ -15778,7 +15778,7 @@
         "future prompt assembly",
         "future prompt compiler and capability registry"
       ],
-      "line_count": 6050,
+      "line_count": 6082,
       "path": "Plans/Prompt_Pipeline.md",
       "plan_unit_count": 91,
       "plan_unit_ids": [
@@ -15917,7 +15917,7 @@
         "vision_prompt_injection_or_guessing",
         "widget_owner_boundary_drift"
       ],
-      "sha256": "2896b4e4980fd55255a59c9aa16ca36480fe9be538138f3a4c0a6ac5bd010ede",
+      "sha256": "c4989e6b7fe9049b7a7f890296422a27be887e3426b45b43202eefa2b83c367b",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 90,
@@ -15947,6 +15947,7 @@
         "Identical screenshots are referenced by hash across checkpoints",
         "Import cycles block or cap safely",
         "InstructionSetEpoch includes source path, encoding status, parse status, precedence, hash, loaded scope, and denial reason.",
+        "Internal catalog-budget/omission records and selected-skill progressive loading.",
         "Invalid UTF-8 or unreadable instruction files generate user-visible warnings and do not silently drop rules.",
         "JSON tool args followed by reasoning text recovered or rejected deterministically",
         "Length-truncated tool call cannot be persisted as success",
@@ -15966,8 +15967,6 @@
         "Provider-native reasoning signatures/item ids/cache keys/tool histories are retained only when compatible",
         "Replay uses artifact refs instead of repeated by-value embedding",
         "Resume/fork/import preserves or intentionally re-resolves instruction scope with a receipt.",
-        "Selected skill loads full instructions only when chosen.",
-        "Skill list cannot crowd out run context; omitted skills/tools are visible in context inspector with reason.",
         "Two identical tasks show stable prefix preserved.",
         "UI and usage explain cache lineage effect",
         "adapter fixtures cover OpenAI, Anthropic/Bedrock/Vertex, Gemini, Alibaba/Qwen, and OpenCode bridge evidence.",
@@ -16727,7 +16726,7 @@
         "Plans/usage-feature.md",
         "future run-mode resolver"
       ],
-      "line_count": 1983,
+      "line_count": 1985,
       "path": "Plans/Run_Modes.md",
       "plan_unit_count": 53,
       "plan_unit_ids": [
@@ -16841,7 +16840,7 @@
         "worktree_binding_drift",
         "worktree_gui_affordance_drift"
       ],
-      "sha256": "e24e05db972c0d74f8a4b89be76874ccb166d60bce526da3da00793ba5aa8d2b",
+      "sha256": "66aee00d7a0cff60dfe50f13afebd4d88f344f1fa6d0012f790bce1488da636d",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 52,
@@ -20278,7 +20277,7 @@
         "scripts/pm-command-payload-defs-check.py",
         "scripts/pm-prd-planning-runtime-validate.py"
       ],
-      "line_count": 21951,
+      "line_count": 21960,
       "path": "Plans/UI_Command_Catalog.md",
       "plan_unit_count": 199,
       "plan_unit_ids": [
@@ -20565,7 +20564,7 @@
         "wand_module_surface_drift",
         "wrong_git_target_or_phantom_handler"
       ],
-      "sha256": "6a47fdb9c47465c13af30325ac62ddabc67642b8fa0deb16df65c79f7534029d",
+      "sha256": "740c9dff359d2e96666f5868957a6881a7f7861c4fe133359a4b29192e2203de",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 197,
@@ -20911,7 +20910,7 @@
         "Plans/usage_run_estimate_contracts.schema.json",
         "future usage events"
       ],
-      "line_count": 7665,
+      "line_count": 7685,
       "path": "Plans/usage-feature.md",
       "plan_unit_count": 108,
       "plan_unit_ids": [
@@ -21066,7 +21065,7 @@
         "usage_workspace_state_orphan_or_preview_persistence",
         "vision_usage_attribution_gap"
       ],
-      "sha256": "3f1df103feb5a8f801edf9d6f18d457a3d6a2bd748903470cee6e037d3be5dbd",
+      "sha256": "3fe9cb5e5bef8706451b8fa41734ff0843f170762c7f79507889d688533a3ae4",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 108
@@ -21770,7 +21769,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-12T07:11:52Z",
+  "generated_at_utc": "2026-11-12T07:44:06Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -21778,8 +21777,8 @@
     "docs_with_plan_units": 96,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3687,
-      "True": 3843
+      "False": 3688,
+      "True": 3842
     },
     "plan_unit_count": 7530,
     "source_preserving_unit_count": 0,

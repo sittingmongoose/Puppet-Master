@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L35780-L36267
+Source lines: L35808-L36305
 
-Source SHA256: `5368dfb2e801d2b0f7b323ccddc23d97370abdaeb017f6b785a7f0780fade9dd`
+Source SHA256: `b1f46e0b411a11f49fb05bc9501dab29f9b82874e63a99617a7301bfba229b64`
 
 ---
 
@@ -89,41 +89,47 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  PMConcept7 Usage projects the thirteen canonical rooms and the exact At a glance, Detailed, and Diagnostics
-  disclosure ladder from the Usage owner into a balanced widget workspace whose track count follows the board's
-  measured width on the 12, 20, 24 and 30 track ladder of UF-094, which replaces the earlier fixed twelve-track
-  board (DL-176). Default boards use many narrow widgets, every widget kind has narrow widths that show the same
-  information, every size preset shows a complete content tier, and facts a size cannot show fold behind "N more"
-  with hover and Details rather than being dropped (UF-096). Curated defaults,
-  provider-heavy narrow-and-tall cards, partial-row alignment, semantic size identities, complete-or-hidden
-  content tiers, chart and meter lanes, source-confidence copy, Raw versus Curated views, Context details, and
-  humanized Ledger labels must remain readable at supported sizes. Wider or taller widgets earn their footprint
-  with additional columns, facts, or rows; routine internal body scrolling, clipped labels, partial next-tier
-  content, and empty decorative width are not accepted product states. Content tiers respond to the widget body's
-  measured rendered width rather than nominal grid spans, and reorder placeholders use the measured physical
-  width and height without persisting those preview spans. Vertical charts reserve a measured in-plot label
-  region and paint exactly one visible value for every painted bar, including zero bars, while keeping every
-  label inside the plot and collision-free. Labels remain horizontally associated with their own bars and may
-  use measured vertical lanes when direct-above placement would collide; no datum is suppressed. Tiny charts
-  retain the complete ordered series in accessible text. Chart values use the metric's declared
-  display unit and formatter, including currency formatting for attempt-charge integer cents, and the chart title
-  plus Latest and distinct peak facts remain complete in one row or a narrow two-row composition. An active
-  reorder ghost stays visibly above the workspace until cleanup.
-  Every room remains reachable at every supported width, and Source authority mounts 7/8/9 cards (amended 2026-10-17, DL-228; earlier exactly 4/6/8; DL-230: a Usage widget is a card) for
-  At a glance/Detailed/Diagnostics. A route blocked on provider setup renders
-  the exact `Provider Setup Required` state with explicit `Host/Environment`, preserves operation and continuation
-  identity, and reuses `cmd.settings.open` with the typed Settings target
-  `target_type=setting`, `setting_id=ai.accounts.provider-connections`; UF-090, UF-092, and CBP-028 retain policy ownership, so installation and
-  authentication remain separate and the GUI starts no automatic acquisition or silent reroute.
-  PMConcept7 Ledger attempt controls dispatch `cmd.nav.open_usage_subject` only with stable `attempt_id` and
-  `usage_event_ref`, normalize to `route_target.object_kind = usage_attempt` plus `object_id = attempt_id`, keep
-  the event/provider/account/runtime identities as correlation, and carry no `OpenSubject`. Event-primary callers
-  retain usage_event/usage_event_ref. Aggregate provider, account, and panel cards open their existing local
-  inspector with no route command, receipt, or domain event. The Accounts room's explicit in-place controls are the
-  one exception, and only as UF-093 and UF-107 set out: Use this account dispatches cmd.account.select_profile, and
-  a provider's Auto-switch toggle and switch level, and each account's own switch level (D43, 2026-10-10), are
-  bound Settings controls committed through the Settings owner's transaction; opening a card or its Details stays local. The redesigned page's look, its move and resize
-  previews, its menus, marks, heroes, charts and motion are owned by F3-628.
+  PMConcept7 Usage projects the thirteen canonical rooms and the exact At a glance, Detailed, and
+  Diagnostics disclosure ladder from the Usage owner into a balanced widget workspace whose track
+  count follows the board's measured width on the 12, 20, 24 and 30 track ladder of UF-094, which
+  replaces the earlier fixed twelve-track board (DL-176). Default boards use many narrow widgets,
+  every widget kind has narrow widths that show the same information, every size preset shows a
+  complete content tier, and facts a size cannot show fold behind "N more" with hover and Details
+  rather than being dropped (UF-096). Curated defaults, provider-heavy narrow-and-tall cards,
+  partial-row alignment, semantic size identities, complete-or-hidden content tiers, chart and meter
+  lanes, source-confidence copy, non-chat diagnostic Raw versus Curated views, basic chat
+  capacity/cost/model details, and humanized Ledger labels must remain readable at supported sizes.
+  Wider or taller widgets earn their footprint with additional columns, facts, or rows; routine
+  internal body scrolling, clipped labels, partial next-tier content, and empty decorative width are
+  not accepted product states. Content tiers respond to the widget body's measured rendered width
+  rather than nominal grid spans, and reorder placeholders use the measured physical width and
+  height without persisting those preview spans. Vertical charts reserve a measured in-plot label
+  region and paint exactly one visible value for every painted bar, including zero bars, while
+  keeping every label inside the plot and collision-free. Labels remain horizontally associated with
+  their own bars and may use measured vertical lanes when direct-above placement would collide; no
+  datum is suppressed. Tiny charts retain the complete ordered series in accessible text. Chart
+  values use the metric's declared display unit and formatter, including currency formatting for
+  attempt-charge integer cents, and the chart title plus Latest and distinct peak facts remain
+  complete in one row or a narrow two-row composition. An active reorder ghost stays visibly above
+  the workspace until cleanup. Every room remains reachable at every supported width, and Source
+  authority mounts 7/8/9 cards (amended 2026-10-17, DL-228; earlier exactly 4/6/8; DL-230: a Usage
+  widget is a card) for At a glance/Detailed/Diagnostics. A route blocked on provider setup renders
+  the exact `Provider Setup Required` state with explicit `Host/Environment`, preserves operation
+  and continuation identity, and reuses `cmd.settings.open` with the typed Settings target
+  `target_type=setting`, `setting_id=ai.accounts.provider-connections`; UF-090, UF-092, and CBP-028
+  retain policy ownership, so installation and authentication remain separate and the GUI starts no
+  automatic acquisition or silent reroute. PMConcept7 Ledger attempt controls dispatch
+  `cmd.nav.open_usage_subject` only with stable `attempt_id` and `usage_event_ref`, normalize to
+  `route_target.object_kind = usage_attempt` plus `object_id = attempt_id`, keep the
+  event/provider/account/runtime identities as correlation, and carry no `OpenSubject`.
+  Event-primary callers retain usage_event/usage_event_ref. Aggregate provider, account, and panel
+  cards open their existing local inspector with no route command, receipt, or domain event. The
+  Accounts room's explicit in-place controls are the one exception, and only as UF-093 and UF-107
+  set out: Use this account dispatches cmd.account.select_profile, and a provider's Auto-switch
+  toggle and switch level, and each account's own switch level (D43, 2026-10-10), are bound Settings
+  controls committed through the Settings owner's transaction; opening a card or its Details stays
+  local. The redesigned page's look, its move and resize previews, its menus, marks, heroes, charts
+  and motion are owned by F3-628.
 gui_related: true
 gui_classification_reason: This unit governs the visible Usage room, widget, chart, meter, Context, and Ledger presentation.
 split_recommended: false
@@ -135,7 +141,8 @@ acceptance_criteria:
   - "The board's track count follows its measured width on the 12, 20, 24 and 30 track ladder; every size preset of every widget kind shows a complete content tier, and facts a size cannot show fold behind N more with hover and Details."
   - "Each semantic size presents a complete tier or hides the tier entirely, chooses that tier from measured rendered width, and larger sizes reveal additional useful facts, rows, columns, or plots rather than blank area; reorder placeholders use measured rendered width and height rather than stale nominal spans, preview spans do not become settled layout fields, and supported curated sizes have no routine widget-body scrolling, clipped corners, value collisions, partial bars, bottom-content peeking, or partially exposed next-tier content."
   - "Every painted vertical bar, including a zero bar, has exactly one visible label inside the plot; labels remain horizontally associated with their own bars, measured direct or vertical-lane placement prevents clipping and pair overlap without suppressing data, accessible text retains the complete ordered series, values use the declared metric formatter and display unit, attempt-charge integer cents render with exactly two currency decimals rather than raw cents, and the title plus Latest and distinct peak remain complete in one row or a narrow two-row composition; reorder ghosts remain above cards until cleanup."
-  - "Source authority/confidence, unknown versus zero, Raw/Curated redaction, Context composition, and humanized Ledger attempt labels remain semantically truthful and visually legible; a PMConcept7 Ledger attempt routes by attempt_id as object_kind usage_attempt, preserves usage_event_ref plus provider/account/runtime correlation, and carries no OpenSubject, while provider/account/panel aggregate detail cards remain local inspectors and leave route-command, command-receipt, and domain-event counts unchanged; only the Accounts room's Use this account and provider auto-switch controls dispatch, each through its existing owner."
+  - "Source authority/confidence, unknown versus zero, non-chat diagnostic Raw/Curated redaction and Context composition, and humanized Ledger attempt labels remain semantically truthful and visually legible; a PMConcept7 Ledger attempt routes by attempt_id as object_kind usage_attempt, preserves usage_event_ref plus provider/account/runtime correlation, and carries no OpenSubject, while provider/account/panel aggregate detail cards remain local inspectors and leave route-command, command-receipt, and domain-event counts unchanged; only the Accounts room's Use this account and provider auto-switch controls dispatch, each through its existing owner."
+  - "Shared fixture coverage verifies that non-chat diagnostics retain their redaction contract while chat context/message surfaces expose no source-composition, raw/curated source-inspection view or per-run inclusion receipt."
 validation_surfaces:
   - "python3 scripts/pm-plan-index.py validate"
   - "python3 scripts/pm-plans-verify.py validate-usage-gui-fixtures"
@@ -161,6 +168,7 @@ source_lineage:
   - Plans/usage-feature.md#uf-093---usage-rooms-disclosure-and-local-projection-state
   - Plans/Widget_System.md#ws-017---kind-aware-curated-size-and-adaptive-content-contract
   - "Concepts/usage-redesign/src/js/40-board.js and 42-cards.js (the redesigned board's width classes, narrow tiers and size presets; source-lineage-only)"
+  - "DL-475; settings batch 2 round r2 complete context-inspection sweep, 2026-11-12"
 preserved_exact_tokens: [Overview, Plans & limits, Costs, Accounts, Free models, Context, Analytics, Ledger, Attention, Prompt cache, Tools, Signals, Source authority, At a glance, Detailed, Diagnostics, Provider Setup Required, Host/Environment, cmd.settings.open, ai, ai.accounts.provider-connections, twelve-track, complete-or-hidden, Raw, Curated, N more]
 negative_constraints:
   - "Do not revive Essen, Std, Adv, essentials, standard, or advanced as user-facing disclosure labels."
@@ -169,6 +177,8 @@ negative_constraints:
   - "Do not bundle installation with authentication, start automatic acquisition, or silently reroute from Provider Setup Required."
   - "Do not route a provider/account/panel presentation ID, use usage_event_ref as the PMConcept7 Ledger attempt object_id, invent an unregistered aggregate-card object kind, or attach OpenSubject to either cmd.nav.open_usage_subject selector branch."
 owner_hints: [Plans/FinalGUISpec.md, Plans/usage-feature.md, Plans/Widget_System.md]
+owner_boundary_notes:
+  - "Raw/Curated redaction and source-level inspection in this shared contract apply only to existing non-chat Usage/Ledger and expert diagnostic surfaces, not the chat context ring, Context Detail Pane or message-info UI. Chat keeps normalized capacity/cost/model/settlement facts and useful compaction status; source accounting and raw references remain internal."
 ```
 
 ### F3-515 - Settled Interaction Event And Persistence Boundary

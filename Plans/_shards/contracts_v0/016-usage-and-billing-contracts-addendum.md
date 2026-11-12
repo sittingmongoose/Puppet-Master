@@ -4,7 +4,7 @@ Source: `Plans/Contracts_V0.md`
 
 Source lines: L2293-L2409
 
-Source SHA256: `974b4a737050357f760deafa8f6247c7679b93d6352a1c45684f72d219510105`
+Source SHA256: `4b70f80fd8b3fd121e33fa29ddb9f8828ad20d3063407af3393b2445bbf53296`
 
 ---
 
@@ -23,7 +23,7 @@ Assistant chat-thread usage surfaces use a shared context-detail contract instea
 
 The compact-row schema for the under-message summary and the `Messages` tab is closed to role, worker type, mode, model, time or `/duration`, total tokens, and cost. `Messages` renders one expandable row per message. The expanded message info-popover uses the closed Assistant Chat field list and label rules for `Mode`, `Provider`, `Model`, `Effort`, `Persona`, `Worker`, `Tokens`, and `Context`; expanded detail rows may add token breakdown, context usage, cost, relevant requested `/effective` deltas, and notable tool `/part` summary. `Resend` remains the message action that retries the most recent user message and discards later history or work.
 
-The context-detail editor-tab has top-level `Curated` and `/raw` inspection paths. `Curated` contains Overview, Breakdown, and Messages. `/raw` may expose serialized payloads, provider metadata blobs, and path/runtime data for `/log`, `/detail`, and `/debugging` without making those lower-level fields chat-facing labels. Deep Plan remains a distinct `/workflow` identity and display label rather than being collapsed into generic plan mode.
+The context-detail editor tab keeps basic capacity/cost/effective-model information and useful compaction/transition status. DL-475 retires its top-level `Curated` and `/raw` source-inspection paths, source Breakdown and per-run inclusion receipts. Serialized payloads, provider metadata and path/runtime records remain internal for enforcement/debugging. Deep Plan remains a distinct `/workflow` identity and display label.
 
 Thread cost labels are `Estimated Cost` unless PM has provider-authoritative cost semantics for that value. The estimated-cost baseline may use the OpenCode-style normalization formula, but contracts must preserve provider-reported buckets, provider-sensitive cache normalization caveats, and over-200k pricing tier selection where available. Raw/log/debug paths preserve the normalization path and raw bucket values for audit.
 

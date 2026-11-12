@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L16866-L18134
+Source lines: L16866-L18143
 
-Source SHA256: `6a47fdb9c47465c13af30325ac62ddabc67642b8fa0deb16df65c79f7534029d`
+Source SHA256: `740c9dff359d2e96666f5868957a6881a7f7861c4fe133359a4b29192e2203de`
 
 ---
 
@@ -117,17 +117,13 @@ unblocks:
 - UCC-172
 - CS-086
 acceptance_criteria:
-- The Plan card and schedule manager are admitted producers of cmd.execution_window.cancel, with unchanged
-  cancellation custody.
-- Each surface in the two tables appears in the production wiring surface list of every row it names, and in
-  no other row because of this addendum.
-- run_dock never produces cmd.runtime.approve, cmd.runtime.decline or cmd.permissions.review_request.
-- Build With Crew mode dispatches cmd.chat.plan.build_with_crew and never cmd.collaboration.start.
-- cmd.chat.revert has no kept outcome and is dispatched only from revert_confirm.
-- BrainStorm Answer now renders disabled with command_not_registered while the questionnaire family is candidate_not_registered.
-- Validate application versus actual Project-target cases, original exact Project replay, stale scope/preview/permission/Stop/return
-  refusal and the exact command/local/tool binding from UCC-218; no native/event/governance proof follows from
-  static closure.
+  - "The Plan card and schedule manager are admitted producers of cmd.execution_window.cancel, with unchanged cancellation custody."
+  - "Every current producer in the current tables appears in the production wiring surface list of its owner row. Retired compatibility rows admit no ordinary producer, source preview, memory-use decoration or verification/pinning control."
+  - "run_dock never produces cmd.runtime.approve, cmd.runtime.decline or cmd.permissions.review_request."
+  - "Build With Crew mode dispatches cmd.chat.plan.build_with_crew and never cmd.collaboration.start."
+  - "cmd.chat.revert has no kept outcome and is dispatched only from revert_confirm."
+  - "BrainStorm Answer now renders disabled with command_not_registered while the questionnaire family is candidate_not_registered."
+  - "Validate application versus actual Project-target cases, original exact Project replay, stale scope/preview/permission/Stop/return refusal and the exact command/local/tool binding from UCC-218; no native/event/governance proof follows from static closure."
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
 - python3 scripts/pm-plan-index.py validate
@@ -152,6 +148,7 @@ source_lineage:
 - Plans/ledgers/v2/pldg-20260927-006-wand-command-census/records/design_atoms.jsonl
 - source_ref:chat:2026-11-03-projects-pass2-approved
 - DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
+- "DL-475; settings batch 2 round r2 complete context-inspection sweep, 2026-11-12"
 preserved_exact_tokens:
 - cmd.execution_window.cancel
 - plan_card
@@ -191,6 +188,7 @@ negative_constraints:
   receipt surfaces; UCC-172, UCC-173 and UCC-175 carry the owner's answers and the lead's rulings on these.
 - Do not replace a required real target with focus, a synthetic Project, an empty identity or borrowed app/source
   authority.
+- "Do not restore user-facing context source inspection or per-run inclusion receipts through a legacy title, preserved token, shared projection or saved view state."
 owner_hints:
 - Plans/UI_Command_Catalog.md
 - Plans/Wiring_Matrix.md
@@ -429,9 +427,20 @@ A row may list several controls, and then it gives each its disposition. The Sur
 | Turn back on (automations paused by you) | New, `cmd.runtime.automation_pause.set` with paused false (UCC-174, DL-136). This and the switch are the only controls that clear the pause. | `schedule_manager` |
 | Done in the manager | View | `schedule_manager` |
 
-**Memory (11)**
+**Memory (current, DL-475)**
 
 | Control | Disposition | Surfaces |
+|---|---|---|
+| Wand Memory, chat-header Memory and successful Saved to memory · View | Existing cmd.chat.teach.open_memory; the same page/sheet, selecting the saved note for View | wand, chat_header, memory_save_receipt |
+| On/off | Existing Settings-bound memory.retention.enabled through the Settings owner | memory_sheet |
+| Search, This project / Every project, list selection and Archived | Local view state in the same Memory page/sheet | memory_sheet |
+| Add, Edit, Delete | Existing cmd.chat.memory.add, cmd.chat.memory.edit, cmd.chat.memory.delete with their typed scope/revision/commit contracts | memory_sheet |
+
+**Retired Memory mapping (compatibility only; no ordinary UI producers)**
+
+Every row below preserves historical command/surface vocabulary only. None produces an ordinary GUI control, receipt or preview, and none overrides the current table or UCC-169/171 under DL-475. Existing support/compatibility codecs remain subject to their owners.
+
+| Historical control | Historical disposition (not a current producer) | Historical surface |
 |---|---|---|
 | Wand "Memory…", chat-header Memory button and Saved to memory · View | Command, `cmd.chat.teach.open_memory` | `wand`, `chat_header`, `memory_save_receipt` |
 | Tabs, filter, selecting a row | View | `memory_sheet` |
@@ -454,7 +463,7 @@ A row may list several controls, and then it gives each its disposition. The Sur
 | Save rule; Save and replace; Save as version 2 | Command, `cmd.chat.teach.confirm` | `teach_capture` |
 | Cancel, ×, Escape, scrim | Command, `cmd.chat.teach.cancel` | `teach_capture` |
 | Receipt "Rule saved · View" | Existing Instructions navigation; separate from the saved-note Memory page (DL-475) | `teach_receipt` |
-| "See what your next message will include" in the taught-rules document | Command, `cmd.chat.memory.preview_capsule` | `teach_document` |
+| "See what your next message will include" in the taught-rules document | Retired by DL-475; no ordinary producer. cmd.chat.memory.preview_capsule is internal compatibility/support only. | — |
 | Edit a rule | Command, `cmd.chat.teach.capture` with mode correct | `teach_document`, `memory_sheet` |
 | Lock, Unlock | New, `cmd.chat.teach.set_lock` (UCC-171) | `teach_document` |
 | Turn off, and its confirmation "Keep it" or "Turn off" | New, `cmd.chat.teach.revoke` (UCC-171). Keep it is View. | `teach_document`, `memory_sheet` |

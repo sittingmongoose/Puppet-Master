@@ -12807,25 +12807,28 @@ plan_unit_id: F3-132
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: 'Thread headers expose context indicators, usage/status detail, compact-now intent, thread-scoped
-  context detail tabs, curated/raw views, under-message actions, and info-popovers that follow Assistant
-  Chat and Contracts label rules, including visible progress and failure/degraded feedback for explicit
-  Compact Now actions plus already-running, cancelled, no-op, unavailable, retry, reload, completed, and
-  failed command-result states. Amended 2026-10-09 (DL-180): the thread-scoped context detail tab is the
-  context tab kind (`context:<threadId>`, F3-635), opened and placed by F3-634 in a home panel. DL-475
-  keeps basic on-demand capacity/cost/model facts and Squeeze now, but moves assembled-source charts,
-  raw memory data and memory-selection explanations to internal debugging. Curated/raw source-family inspection
-  is no ordinary user surface.'
+canonical_text: >-
+  Thread headers expose context indicators, usage/status detail, compact-now intent, thread-scoped
+  context detail tabs, basic capacity/cost/model and useful compaction status, under-message
+  actions, and info-popovers that follow Assistant Chat and Contracts label rules, including visible
+  progress and failure/degraded feedback for explicit Compact Now actions plus already-running,
+  cancelled, no-op, unavailable, retry, reload, completed, and failed command-result states. Amended
+  2026-10-09 (DL-180): the thread-scoped context detail tab is the context tab kind
+  (`context:<threadId>`, F3-635), opened and placed by F3-634 in a home panel. DL-475 keeps basic
+  on-demand capacity/cost/model facts and Squeeze now, but moves assembled-source charts, raw memory
+  data and memory-selection explanations to internal debugging. Curated/raw source-family inspection
+  is no ordinary user surface.
 gui_related: true
 gui_classification_reason: This unit defines visible thread context, message details, action rows, and popovers.
 split_recommended: false
 depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
-- "The covered source span remains losslessly available for exact-text audit."
-- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
-- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+  - "The covered source span remains losslessly available for exact-text audit."
+  - "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+  - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+  - "Thread context/message surfaces expose no source-composition, Curated/Raw source inspection or per-run inclusion receipt; source accounting stays internal."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -12842,6 +12845,7 @@ source_lineage:
 - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/compaction_compile_readiness_matrix.json:cmp-automated-testing-acceptance
 - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0094
 - DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
+- "DL-475; settings batch 2 round r2 complete context-inspection sweep, 2026-11-12"
 preserved_exact_tokens:
 - "More Details"
 - "Compact Now"
@@ -12859,6 +12863,7 @@ negative_constraints:
 - "Compact Now must not dispatch compaction until the user chooses that action."
 - "Compact Now failure must not be silent or logs-only."
 - "The preserved context.compaction.failed token is historical source lineage; visible failure comes from the command result/receipt projection and no context.compaction.failed or completion EventRecord is emitted for that failed outcome."
+- "Do not restore user-facing context source inspection or per-run inclusion receipts through a legacy title, preserved token, shared projection or saved view state."
 compatibility_only_notes: []
 stale_retired_dispositions:
 - "The former context.compaction.failed event implication remains retired; completion-only admission under ACD-461 / SP-259 does not authorize a failed event or a completion event for failure."
@@ -29758,7 +29763,26 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Every visible Usage, Ledger, Dashboard-hosted Usage widget, chat context summary, Context Detail Pane, Runtime Artifacts drill-through, provider/settings row, model row, Run Graph usage overlay, and Orchestrator usage/cost row renders UsageRecord projections through a shared value-state matrix. A numeric cell is not only a number: it carries value, value_state, source_class, source_confidence, source_authority, settlement_status, projection_freshness, projection_health, last_updated or observed_at_utc, reason, and raw/debug redaction availability where relevant. UsageRecord and usage_event_ref remain the accounting and rollup identity. Event-primary navigation uses usage_event/usage_event_ref; a PMConcept7 Ledger attempt row uses usage_attempt/attempt_id and retains usage_event_ref as correlation. Thread_id, tier_id, timestamp, and run_id are filters or narrowing context only. GUI copy for Antigravity CLI uses provider_id `antigravity_cli` and route `agy`; missing `/stats`, `/usage`, `/quota`, or `/credits` and disabled buckets render as unavailable/unknown/not_exposed/disabled states, while G1 credits remain credits and never become tokens, cost, quota, or provider_total. Amended 2026-10-31 (DL-270, UF-108): every surface above reads redb rollups that update as each usage.event lands and never scans raw usage events; a single usage_event_ref or attempt_id drill-through is a keyed lookup, and the Parquet archive is queried only on demand (SP-341). Raw/debug affordances resolve raw_payload_ref through the payload store (SP-337) and will open the record inspector (F3-666) once their own production wiring rows land. This unit adds no retention control: the existing Keep usage history for setting is unchanged, and daily usage totals are kept whatever it says.
+  Every visible Usage, Ledger, Dashboard-hosted Usage widget, chat context summary, Context Detail
+  Pane, Runtime Artifacts drill-through, provider/settings row, model row, Run Graph usage overlay,
+  and Orchestrator usage/cost row renders UsageRecord projections through a shared value-state
+  matrix. A numeric cell is not only a number: it carries value, value_state, source_class,
+  source_confidence, source_authority, settlement_status, projection_freshness, projection_health,
+  last_updated or observed_at_utc, reason, and raw/debug redaction availability only on existing
+  non-chat diagnostic surfaces. UsageRecord and usage_event_ref remain the accounting and rollup
+  identity. Event-primary navigation uses usage_event/usage_event_ref; a PMConcept7 Ledger attempt
+  row uses usage_attempt/attempt_id and retains usage_event_ref as correlation. Thread_id, tier_id,
+  timestamp, and run_id are filters or narrowing context only. GUI copy for Antigravity CLI uses
+  provider_id `antigravity_cli` and route `agy`; missing `/stats`, `/usage`, `/quota`, or `/credits`
+  and disabled buckets render as unavailable/unknown/not_exposed/disabled states, while G1 credits
+  remain credits and never become tokens, cost, quota, or provider_total. Amended 2026-10-31
+  (DL-270, UF-108): every surface above reads redb rollups that update as each usage.event lands and
+  never scans raw usage events; a single usage_event_ref or attempt_id drill-through is a keyed
+  lookup, and the Parquet archive is queried only on demand (SP-341). On existing non-chat
+  Usage/Ledger and expert diagnostic surfaces only, Raw/debug affordances resolve raw_payload_ref
+  through the payload store (SP-337) and will open the record inspector (F3-666) once their own
+  production wiring rows land. This unit adds no retention control: the existing Keep usage history
+  for setting is unchanged, and daily usage totals are kept whatever it says.
 gui_related: true
 gui_classification_reason: Defines visible Usage, Dashboard, settings, graph, orchestrator, and artifact rendering behavior.
 depends_on: [UF-085, UF-086, UF-087, CBP-027, RAP-043]
@@ -29772,6 +29796,7 @@ acceptance_criteria:
   - Provider/settings and model rows show Antigravity CLI `antigravity_cli`/`agy` usage, quota, credits, statusline, disabled bucket, and G1 credit states without inferring counters from model names or login status.
   - Raw/debug affordances show redaction_status, provider_payload_hash, raw_payload_ref, omitted count, and permissioned-unavailable state rather than unredacted payload content; a raw_payload_ref resolves through the payload store (SP-337) and will open the record inspector (F3-666) once its own production wiring row lands.
   - No Usage page, Ledger room, Dashboard-hosted Usage widget or chat context summary scans raw usage events; per-event drill-through is a keyed lookup.
+  - "Shared fixture coverage verifies that non-chat diagnostics retain their redaction contract while chat context/message surfaces expose no source-composition, raw/curated source-inspection view or per-run inclusion receipt."
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-shard-plans.py --check
@@ -29801,6 +29826,7 @@ source_lineage:
   - "https://github.com/anomalyco/opencode/issues/30649"
   - "https://github.com/cline/cline/issues/11037"
   - "https://github.com/google-antigravity/antigravity-cli/issues/46"
+  - "DL-475; settings batch 2 round r2 complete context-inspection sweep, 2026-11-12"
 preserved_exact_tokens:
   - value_state
   - source_class
@@ -29826,6 +29852,8 @@ owner_hints:
   - Plans/usage-feature.md
   - Plans/Widget_System.md
   - Plans/Runtime_Artifacts_Panel.md
+owner_boundary_notes:
+  - "Raw/Curated redaction and source-level inspection in this shared contract apply only to existing non-chat Usage/Ledger and expert diagnostic surfaces, not the chat context ring, Context Detail Pane or message-info UI. Chat keeps normalized capacity/cost/model/settlement facts and useful compaction status; source accounting and raw references remain internal."
 ```
 
 ## PMConcept6 Concept Promotion Addendum - 2026-07-11
@@ -35858,41 +35886,47 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  PMConcept7 Usage projects the thirteen canonical rooms and the exact At a glance, Detailed, and Diagnostics
-  disclosure ladder from the Usage owner into a balanced widget workspace whose track count follows the board's
-  measured width on the 12, 20, 24 and 30 track ladder of UF-094, which replaces the earlier fixed twelve-track
-  board (DL-176). Default boards use many narrow widgets, every widget kind has narrow widths that show the same
-  information, every size preset shows a complete content tier, and facts a size cannot show fold behind "N more"
-  with hover and Details rather than being dropped (UF-096). Curated defaults,
-  provider-heavy narrow-and-tall cards, partial-row alignment, semantic size identities, complete-or-hidden
-  content tiers, chart and meter lanes, source-confidence copy, Raw versus Curated views, Context details, and
-  humanized Ledger labels must remain readable at supported sizes. Wider or taller widgets earn their footprint
-  with additional columns, facts, or rows; routine internal body scrolling, clipped labels, partial next-tier
-  content, and empty decorative width are not accepted product states. Content tiers respond to the widget body's
-  measured rendered width rather than nominal grid spans, and reorder placeholders use the measured physical
-  width and height without persisting those preview spans. Vertical charts reserve a measured in-plot label
-  region and paint exactly one visible value for every painted bar, including zero bars, while keeping every
-  label inside the plot and collision-free. Labels remain horizontally associated with their own bars and may
-  use measured vertical lanes when direct-above placement would collide; no datum is suppressed. Tiny charts
-  retain the complete ordered series in accessible text. Chart values use the metric's declared
-  display unit and formatter, including currency formatting for attempt-charge integer cents, and the chart title
-  plus Latest and distinct peak facts remain complete in one row or a narrow two-row composition. An active
-  reorder ghost stays visibly above the workspace until cleanup.
-  Every room remains reachable at every supported width, and Source authority mounts 7/8/9 cards (amended 2026-10-17, DL-228; earlier exactly 4/6/8; DL-230: a Usage widget is a card) for
-  At a glance/Detailed/Diagnostics. A route blocked on provider setup renders
-  the exact `Provider Setup Required` state with explicit `Host/Environment`, preserves operation and continuation
-  identity, and reuses `cmd.settings.open` with the typed Settings target
-  `target_type=setting`, `setting_id=ai.accounts.provider-connections`; UF-090, UF-092, and CBP-028 retain policy ownership, so installation and
-  authentication remain separate and the GUI starts no automatic acquisition or silent reroute.
-  PMConcept7 Ledger attempt controls dispatch `cmd.nav.open_usage_subject` only with stable `attempt_id` and
-  `usage_event_ref`, normalize to `route_target.object_kind = usage_attempt` plus `object_id = attempt_id`, keep
-  the event/provider/account/runtime identities as correlation, and carry no `OpenSubject`. Event-primary callers
-  retain usage_event/usage_event_ref. Aggregate provider, account, and panel cards open their existing local
-  inspector with no route command, receipt, or domain event. The Accounts room's explicit in-place controls are the
-  one exception, and only as UF-093 and UF-107 set out: Use this account dispatches cmd.account.select_profile, and
-  a provider's Auto-switch toggle and switch level, and each account's own switch level (D43, 2026-10-10), are
-  bound Settings controls committed through the Settings owner's transaction; opening a card or its Details stays local. The redesigned page's look, its move and resize
-  previews, its menus, marks, heroes, charts and motion are owned by F3-628.
+  PMConcept7 Usage projects the thirteen canonical rooms and the exact At a glance, Detailed, and
+  Diagnostics disclosure ladder from the Usage owner into a balanced widget workspace whose track
+  count follows the board's measured width on the 12, 20, 24 and 30 track ladder of UF-094, which
+  replaces the earlier fixed twelve-track board (DL-176). Default boards use many narrow widgets,
+  every widget kind has narrow widths that show the same information, every size preset shows a
+  complete content tier, and facts a size cannot show fold behind "N more" with hover and Details
+  rather than being dropped (UF-096). Curated defaults, provider-heavy narrow-and-tall cards,
+  partial-row alignment, semantic size identities, complete-or-hidden content tiers, chart and meter
+  lanes, source-confidence copy, non-chat diagnostic Raw versus Curated views, basic chat
+  capacity/cost/model details, and humanized Ledger labels must remain readable at supported sizes.
+  Wider or taller widgets earn their footprint with additional columns, facts, or rows; routine
+  internal body scrolling, clipped labels, partial next-tier content, and empty decorative width are
+  not accepted product states. Content tiers respond to the widget body's measured rendered width
+  rather than nominal grid spans, and reorder placeholders use the measured physical width and
+  height without persisting those preview spans. Vertical charts reserve a measured in-plot label
+  region and paint exactly one visible value for every painted bar, including zero bars, while
+  keeping every label inside the plot and collision-free. Labels remain horizontally associated with
+  their own bars and may use measured vertical lanes when direct-above placement would collide; no
+  datum is suppressed. Tiny charts retain the complete ordered series in accessible text. Chart
+  values use the metric's declared display unit and formatter, including currency formatting for
+  attempt-charge integer cents, and the chart title plus Latest and distinct peak facts remain
+  complete in one row or a narrow two-row composition. An active reorder ghost stays visibly above
+  the workspace until cleanup. Every room remains reachable at every supported width, and Source
+  authority mounts 7/8/9 cards (amended 2026-10-17, DL-228; earlier exactly 4/6/8; DL-230: a Usage
+  widget is a card) for At a glance/Detailed/Diagnostics. A route blocked on provider setup renders
+  the exact `Provider Setup Required` state with explicit `Host/Environment`, preserves operation
+  and continuation identity, and reuses `cmd.settings.open` with the typed Settings target
+  `target_type=setting`, `setting_id=ai.accounts.provider-connections`; UF-090, UF-092, and CBP-028
+  retain policy ownership, so installation and authentication remain separate and the GUI starts no
+  automatic acquisition or silent reroute. PMConcept7 Ledger attempt controls dispatch
+  `cmd.nav.open_usage_subject` only with stable `attempt_id` and `usage_event_ref`, normalize to
+  `route_target.object_kind = usage_attempt` plus `object_id = attempt_id`, keep the
+  event/provider/account/runtime identities as correlation, and carry no `OpenSubject`.
+  Event-primary callers retain usage_event/usage_event_ref. Aggregate provider, account, and panel
+  cards open their existing local inspector with no route command, receipt, or domain event. The
+  Accounts room's explicit in-place controls are the one exception, and only as UF-093 and UF-107
+  set out: Use this account dispatches cmd.account.select_profile, and a provider's Auto-switch
+  toggle and switch level, and each account's own switch level (D43, 2026-10-10), are bound Settings
+  controls committed through the Settings owner's transaction; opening a card or its Details stays
+  local. The redesigned page's look, its move and resize previews, its menus, marks, heroes, charts
+  and motion are owned by F3-628.
 gui_related: true
 gui_classification_reason: This unit governs the visible Usage room, widget, chart, meter, Context, and Ledger presentation.
 split_recommended: false
@@ -35904,7 +35938,8 @@ acceptance_criteria:
   - "The board's track count follows its measured width on the 12, 20, 24 and 30 track ladder; every size preset of every widget kind shows a complete content tier, and facts a size cannot show fold behind N more with hover and Details."
   - "Each semantic size presents a complete tier or hides the tier entirely, chooses that tier from measured rendered width, and larger sizes reveal additional useful facts, rows, columns, or plots rather than blank area; reorder placeholders use measured rendered width and height rather than stale nominal spans, preview spans do not become settled layout fields, and supported curated sizes have no routine widget-body scrolling, clipped corners, value collisions, partial bars, bottom-content peeking, or partially exposed next-tier content."
   - "Every painted vertical bar, including a zero bar, has exactly one visible label inside the plot; labels remain horizontally associated with their own bars, measured direct or vertical-lane placement prevents clipping and pair overlap without suppressing data, accessible text retains the complete ordered series, values use the declared metric formatter and display unit, attempt-charge integer cents render with exactly two currency decimals rather than raw cents, and the title plus Latest and distinct peak remain complete in one row or a narrow two-row composition; reorder ghosts remain above cards until cleanup."
-  - "Source authority/confidence, unknown versus zero, Raw/Curated redaction, Context composition, and humanized Ledger attempt labels remain semantically truthful and visually legible; a PMConcept7 Ledger attempt routes by attempt_id as object_kind usage_attempt, preserves usage_event_ref plus provider/account/runtime correlation, and carries no OpenSubject, while provider/account/panel aggregate detail cards remain local inspectors and leave route-command, command-receipt, and domain-event counts unchanged; only the Accounts room's Use this account and provider auto-switch controls dispatch, each through its existing owner."
+  - "Source authority/confidence, unknown versus zero, non-chat diagnostic Raw/Curated redaction and Context composition, and humanized Ledger attempt labels remain semantically truthful and visually legible; a PMConcept7 Ledger attempt routes by attempt_id as object_kind usage_attempt, preserves usage_event_ref plus provider/account/runtime correlation, and carries no OpenSubject, while provider/account/panel aggregate detail cards remain local inspectors and leave route-command, command-receipt, and domain-event counts unchanged; only the Accounts room's Use this account and provider auto-switch controls dispatch, each through its existing owner."
+  - "Shared fixture coverage verifies that non-chat diagnostics retain their redaction contract while chat context/message surfaces expose no source-composition, raw/curated source-inspection view or per-run inclusion receipt."
 validation_surfaces:
   - "python3 scripts/pm-plan-index.py validate"
   - "python3 scripts/pm-plans-verify.py validate-usage-gui-fixtures"
@@ -35930,6 +35965,7 @@ source_lineage:
   - Plans/usage-feature.md#uf-093---usage-rooms-disclosure-and-local-projection-state
   - Plans/Widget_System.md#ws-017---kind-aware-curated-size-and-adaptive-content-contract
   - "Concepts/usage-redesign/src/js/40-board.js and 42-cards.js (the redesigned board's width classes, narrow tiers and size presets; source-lineage-only)"
+  - "DL-475; settings batch 2 round r2 complete context-inspection sweep, 2026-11-12"
 preserved_exact_tokens: [Overview, Plans & limits, Costs, Accounts, Free models, Context, Analytics, Ledger, Attention, Prompt cache, Tools, Signals, Source authority, At a glance, Detailed, Diagnostics, Provider Setup Required, Host/Environment, cmd.settings.open, ai, ai.accounts.provider-connections, twelve-track, complete-or-hidden, Raw, Curated, N more]
 negative_constraints:
   - "Do not revive Essen, Std, Adv, essentials, standard, or advanced as user-facing disclosure labels."
@@ -35938,6 +35974,8 @@ negative_constraints:
   - "Do not bundle installation with authentication, start automatic acquisition, or silently reroute from Provider Setup Required."
   - "Do not route a provider/account/panel presentation ID, use usage_event_ref as the PMConcept7 Ledger attempt object_id, invent an unregistered aggregate-card object kind, or attach OpenSubject to either cmd.nav.open_usage_subject selector branch."
 owner_hints: [Plans/FinalGUISpec.md, Plans/usage-feature.md, Plans/Widget_System.md]
+owner_boundary_notes:
+  - "Raw/Curated redaction and source-level inspection in this shared contract apply only to existing non-chat Usage/Ledger and expert diagnostic surfaces, not the chat context ring, Context Detail Pane or message-info UI. Chat keeps normalized capacity/cost/model/settlement facts and useful compaction status; source accounting and raw references remain internal."
 ```
 
 ### F3-515 - Settled Interaction Event And Persistence Boundary
@@ -38576,9 +38614,9 @@ invariants.
   over messages or get clipped by header container boundaries.
 - **Concise Context More Details (APR-009, APR-061):** The initial view of Context More Details
   presents a concise, high-signal information hierarchy: active context window usage, current
-  token counts, pinned sources, and high-level Back Seat Driver (BSD) status. Detailed inspection
-  (e.g., full prompt breakdown, BSD sensitivity, catch-up configuration, and stage bindings) is
-  placed behind intentional disclosure toggles. Back Seat Driver's section is three plain facts and
+  token counts, effective model/cost, useful compaction status and high-level Back Seat Driver (BSD) status.
+  Pinned-source lists and full prompt/source breakdowns are retired from this context surface (DL-475);
+  source accounting stays internal. Existing BSD configuration stays with its owner. Back Seat Driver's section is three plain facts and
   three native disclosures with no metric-card grid (DL-122, F3-580).
 
 Amended 2026-10-10 (lead ruling L21): the ban on side stripes is now shell-wide (DR-069); the structural rails of working activities stay as its carve-out.
@@ -38914,20 +38952,22 @@ unit_type: gui_requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The Context Lens dropdown occupies a true in-flow layout row between the chat header and the transcript.
-  Context More Details presents a compact first view with deeper BSD and token diagnostics placed behind
-  intentional disclosures. Decorative left-edge accent bars, stripes, and pseudo-elements are strictly
-  prohibited across all Assistant and Settings surfaces, preserving only functional diff gutters, tree
-  connectors, and working structural rails.
+  The Context Lens dropdown occupies a true in-flow row between the chat header and transcript.
+  Context More Details keeps a compact first view of basic capacity/token/cost/effective-model
+  facts, useful compaction/transition status and existing high-level BSD status. Source composition,
+  pinned-source lists, full prompt breakdowns and raw/curated source inspection stay internal, with
+  no per-run inclusion receipt; BSD configuration retains its existing owner. Decorative left-edge
+  accents remain prohibited across Assistant and Settings surfaces, preserving functional diff
+  gutters, tree connectors and working structural rails.
 gui_related: true
 gui_classification_reason: Governs Context Lens in-flow placement, concise More Details hierarchy, and the complete elimination of decorative left stripes.
 depends_on: [F3-531, F3-534]
 unblocks: []
 acceptance_criteria:
-  - Context Lens renders in flow between header and transcript without clipping.
-  - Context More Details first view is compact with advanced BSD data behind disclosures.
-  - No decorative left stripes or pseudo-elements exist on Assistant or Settings cards.
-  - Functional tree connectors, diff gutters, and working activity rails are preserved.
+  - "Context Lens renders in flow between header and transcript without clipping."
+  - "Context More Details is compact and retains basic capacity/cost/model, useful compaction/transition and existing BSD status without pinned-source lists, prompt/source inspection or per-run inclusion receipts; source records remain internal."
+  - "No decorative left stripes or pseudo-elements exist on Assistant or Settings cards."
+  - "Functional tree connectors, diff gutters and working activity rails remain."
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py run-gates
 risk_class: lens_clipping_or_decorative_stripe_reintroduction
@@ -38945,6 +38985,7 @@ source_lineage:
   - APR-033
   - APR-034
   - APR-061
+  - "DL-475; settings batch 2 round r2 complete context-inspection sweep, 2026-11-12"
 preserved_exact_tokens:
   - "Context Lens"
   - "More Details"
@@ -38952,6 +38993,7 @@ preserved_exact_tokens:
 negative_constraints:
   - Do not render decorative left-edge accent bars or stripes.
   - Do not float Context Lens over transcript content.
+  - "Do not restore user-facing context source inspection or per-run inclusion receipts through a legacy title, preserved token, shared projection or saved view state."
 owner_hints:
   - Plans/FinalGUISpec.md
 ```
@@ -46019,14 +46061,15 @@ canonical_text: 'Every tab in the home centre is one of fifteen kinds (DL-180, D
   ticks every 1 s for Working, Retrying, Fallback route and Waiting, and live breathe is 1.6 s or a 1-1.2 s stepped Retro/NieR
   blink. Step discs hide below 420 px, model below 700 px, Parent below 560 px, Read-only · live words below 440 px (the
   lock stays), and agent name below 360 px. Transcript saves agent reference, follow, open stretches and scroll top.
-  Context columns cap at 720 px, 960 px from a 960 px body; Source composition and Context growth appear side by side
-  and start open at that width until the reader toggles them. Hero numbers are 32 px, bars 6 px, disclosures 34 px; tiles
+  Context columns cap at 720 px, 960 px from a 960 px body; basic capacity/cost/model facts and useful context
+  growth/compaction status adapt to that width without a Source composition or source-inspection section. Hero numbers are 32 px, bars 6 px, disclosures 34 px; tiles
   use 3 columns from 360 px and 1 below; four-tile groups use 4 from 600 px, 2 below and 1 below 300 px. Plan-limit rows
   have name, bar and a 128 px figure, with the bar on its own line below 460 px; the usage fact hides below 380 px. Growth
   charts are 168 px high; the source''s 131,000-token-limit fixture uses an axis to 140,000, gridlines at 0/50K/100K,
   ceiling 131,000 and turns 1/5/9. Limit tone is ok below 70 %, warn from 70 % and bad from 90 %. Context saves thread
-  reference, curated/raw view, open sections (null while width decides) and scroll top; sections are tokens, sources,
-  growth, route, limits, caps, cost and compaction. The six categorical colours are dark #3987e5 #d95926 #199e70 #c98500
+  reference, open sections (null while width decides) and scroll top; sections are tokens, growth, model/route,
+  limits, caps, cost and compaction. Old curated/raw selection and sources-section state are ignored on read,
+  never used to restore retired source composition, prompt inspection or per-run inclusion receipts. The six categorical colours are dark #3987e5 #d95926 #199e70 #c98500
   #d55181 #008300 and light #2a78d6 #eb6834 #1baf7a #eda100 #e87ba4 #008300; NieR''s charts part uses ink at .92/.72/.56/.42/.30/.20
   with hatching on even segments. Record columns cap at 960 px; results have 10 px padding; tables scroll sideways with
   nowrap cells and notes at least 160 px. A search query label longer than 28 characters is cut at 27 plus an ellipsis;
@@ -46096,37 +46139,22 @@ unblocks:
 - G-030
 - ATS-075
 acceptance_criteria:
-- Opening an id with a known prefix lands in that kind; an unknown prefix opens no tab; two kinds claiming one prefix
-  fail at start-up.
-- Moving, collapsing, maximizing, hiding or restoring a tab never changes its domain reference, and no tab, panel or
-  session id appears as text.
-- Each kind's content minimum is as stated and a panel's minimum is the largest of its tabs' minimums.
-- A restored background tab is mounted only when first shown; serialized state above 16 KB is refused.
-- No tab body reads the window's size; each responds to its own width and height and gets a final size call after a drag
-  or animation settles.
-- Every kind with a control row uses the shared header row with the stated heights, targets, text sizes, label threshold
-  and hide threshold.
-- Every menu, list, ghost and preview opens in the one overlay root in the stated order, and no kind appends its own
-  overlay.
-- Every key in the desktop map works while focus is in the centre, none uses Ctrl+K or Ctrl+1..9 or a bare letter or
-  digit, and in a web browser Alt+T, Alt+W, Alt+Shift+T, Alt+` and Alt+PgDn/PgUp replace the browser-owned chords Ctrl+T,
-  Ctrl+W, Ctrl+Shift+T, Ctrl+Tab and Ctrl+PgDn/PgUp with every label showing the key that works.
-- No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created
-  by this unit.
-- Output has id output and switches channel as view state; Open in new tab produces output:<channel> showing only that
-  channel.
-- The Debug Console is one tab per workspace, debug-console, with a sub-tab per debug session; choosing a sub-tab dispatches
-  nothing, and an older debug-console:<session> id opens, restores or reopens as that tab with that session shown.
-- Each kind may fold older id forms into one tab and may add rows to the tab menu after a hairline, through its registration.
-- Typing fields pass host navigation keys after the tab declines them, with the Mac typing rule and IME composition respected;
-  F6 reaches the chat composer from every region.
-- Exactly the fifteen registered kinds and their stated identity prefixes are admitted; Goal, Activity Detail and setup
-  sheets are not centre-tab kinds.
-- 'DL-259 FX-1 final, 2026-10-31: an export/print attempt that fails before producing a PDF closes any unusable temporary
-  print window and says plainly in its result/receipt and visible failure notice that no PDF was made. Opening the print
-  flow alone is not proof that a file was created. A receipt records only the artifact owner’s actual result and never
-  claims a successful PDF that was not made; failure or cancellation leaves the exact Plan revision unchanged. This is
-  an outcome/feedback rule, not a new export command, receipt family or platform-detection mechanism.'
+  - "Opening an id with a known prefix lands in that kind; an unknown prefix opens no tab; two kinds claiming one prefix fail at start-up."
+  - "Moving, collapsing, maximizing, hiding or restoring a tab never changes its domain reference, and no tab, panel or session id appears as text."
+  - "Each kind's content minimum is as stated and a panel's minimum is the largest of its tabs' minimums."
+  - "A restored background tab is mounted only when first shown; serialized state above 16 KB is refused."
+  - "No tab body reads the window's size; each responds to its own width and height and gets a final size call after a drag or animation settles."
+  - "Every kind with a control row uses the shared header row with the stated heights, targets, text sizes, label threshold and hide threshold."
+  - "Every menu, list, ghost and preview opens in the one overlay root in the stated order, and no kind appends its own overlay."
+  - "Every key in the desktop map works while focus is in the centre, none uses Ctrl+K or Ctrl+1..9 or a bare letter or digit, and in a web browser Alt+T, Alt+W, Alt+Shift+T, Alt+` and Alt+PgDn/PgUp replace the browser-owned chords Ctrl+T, Ctrl+W, Ctrl+Shift+T, Ctrl+Tab and Ctrl+PgDn/PgUp with every label showing the key that works."
+  - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+  - "Output has id output and switches channel as view state; Open in new tab produces output:<channel> showing only that channel."
+  - "The Debug Console is one tab per workspace, debug-console, with a sub-tab per debug session; choosing a sub-tab dispatches nothing, and an older debug-console:<session> id opens, restores or reopens as that tab with that session shown."
+  - "Each kind may fold older id forms into one tab and may add rows to the tab menu after a hairline, through its registration."
+  - "Typing fields pass host navigation keys after the tab declines them, with the Mac typing rule and IME composition respected; F6 reaches the chat composer from every region."
+  - "Exactly the fifteen registered kinds and their stated identity prefixes are admitted; Goal, Activity Detail and setup sheets are not centre-tab kinds."
+  - "DL-259 FX-1 final, 2026-10-31: an export/print attempt that fails before producing a PDF closes any unusable temporary print window and says plainly in its result/receipt and visible failure notice that no PDF was made. Opening the print flow alone is not proof that a file was created. A receipt records only the artifact owner’s actual result and never claims a successful PDF that was not made; failure or cancellation leaves the exact Plan revision unchanged. This is an outcome/feedback rule, not a new export command, receipt family or platform-detection mechanism."
+  - "The thread Context tab retains basic capacity/cost/model and useful growth/compaction status, with no source composition, Curated/Raw source-inspection view or per-run inclusion receipt. Restoring old curated/raw or sources-section view state cannot restore those retired surfaces."
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
 - python3 scripts/pm-plan-index.py validate
@@ -46174,6 +46202,7 @@ source_lineage:
   (source lineage; not native certification)
 - 'PM7 foundations FX-1 final d8df03ac1820a7cb68d0d1b4897eeb03fa228a6b: plans.js PDF export outcome/error cleanup; lead
   1031173939-a128. Source implementation/preview mechanics do not become product requirements.'
+- "DL-475; settings batch 2 round r2 complete context-inspection sweep, 2026-11-12"
 preserved_exact_tokens:
 - Open in new tab
 - output:<channel>
@@ -46208,6 +46237,7 @@ negative_constraints:
 - Do not show a tab, panel or session id in the interface.
 - Do not bind a panel action to Ctrl+K, a Ctrl+K chord, Ctrl+1..9 or a bare letter or digit.
 - Do not let a tab kind append its own overlay outside the one overlay root.
+- "Do not restore user-facing context source inspection or per-run inclusion receipts through a legacy title, preserved token, shared projection or saved view state."
 compatibility_only_notes:
 - The concept's registration call, host API names, container name and z-index values are concept lineage; the
   stacking order is canon, its numbers are not.

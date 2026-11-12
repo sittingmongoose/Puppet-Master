@@ -422,9 +422,9 @@ ContractRef: ContractName:Plans/Run_Modes.md
 
 <a id="GUI"></a>
 
-The GUI MUST expose:
-- An "Injected Context" breakdown per run/turn (paths + byte counts; truncation reason)
-- A safe preview of the compiled prompt (or its major sections) for transparency and debugging
+The GUI keeps basic capacity/cost/model information and useful compaction/truncation status (DL-475).
+- Injected Context paths, byte counts, inclusion/omission and truncation reasons remain internal for enforcement and debugging.
+- Compiled prompt/section previews stay internal; no user-facing source-composition, raw/curated prompt inspection or per-run inclusion receipt is exposed.
 
 ContractRef: ContractName:Plans/FinalGUISpec.md
 
@@ -1303,8 +1303,10 @@ status: accepted
 owner_doc: Plans/Prompt_Pipeline.md
 canonical_text: >-
   The compiled prompt includes an Instruction Bundle with active execution context, requested/effective overlay, Persona IDs, rules context, tool policy, Injected Context breakdown, and active Investigation Context summary when applicable.
-gui_related: true
-gui_classification_reason: This unit includes user-visible Injected Context and Debug investigation bundle surfaces.
+gui_related: false
+gui_classification_reason: >-
+  Internal Instruction Bundle assembly and enforcement; the separate Debug Investigation Context
+  presentation remains with its existing GUI owner.
 split_recommended: false
 depends_on:
   - "PP-008"
@@ -1327,6 +1329,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0012
+  - "DL-475; settings batch 2 round r2 complete context-inspection sweep, 2026-11-12"
 preserved_exact_tokens:
   - "INSTRUCTION-BUNDLE"
   - "InstructionBundleAssembly"
@@ -1340,7 +1343,8 @@ preserved_exact_tokens:
   - "tool-policy snapshot"
   - "Injected Context breakdown"
   - "active Investigation Context summary"
-negative_constraints: []
+negative_constraints:
+  - "Do not restore user-facing context source inspection or per-run inclusion receipts through a legacy title, preserved token, shared projection or saved view state."
 preserved_contractrefs:
   - "ContractRef: ContractName:Plans/Contracts_V0.md#InstructionBundleAssembly, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-chat-design.md"
 owner_hints:
@@ -1967,18 +1971,23 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Prompt_Pipeline.md
 canonical_text: >-
-  The GUI exposes an Injected Context breakdown per run or turn, including paths, byte counts, truncation reason, and a safe preview of compiled prompt sections for transparency and debugging.
+  Injected Context paths/byte counts, inclusion/omission and truncation records and compiled
+  prompt/section previews remain internal for enforcement and debugging. Chat context surfaces show
+  capacity, cost, effective model information and useful compaction/transition status. Source
+  composition, Curated/Raw source inspection, raw source payloads and per-run inclusion receipts
+  remain internal for enforcement/debugging and are not user-facing.
 gui_related: true
-gui_classification_reason: This unit defines GUI inspection and user-visible prompt transparency behavior.
+gui_classification_reason: >-
+  Defines the user-facing status versus internal compiled-context diagnostics boundary.
 split_recommended: false
 depends_on:
   - "PP-014"
   - "PP-024"
 unblocks: []
 acceptance_criteria:
-  - "GUI Injected Context Transparency remains addressable as a fine-grained Prompt Pipeline PlanUnit."
-  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
-  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+  - "Basic capacity/cost/effective-model facts and useful compaction/truncation status remain available on demand."
+  - "Internal records preserve source paths, inclusion/byte counts, truncation reason/order and permissioned compiled prompt diagnostics."
+  - "The GUI exposes no source-composition chart, safe/raw/curated compiled prompt preview or per-run/turn inclusion receipt; the historical unit title supplies no GUI obligation."
 validation_surfaces:
   - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
   - "python3 scripts/pm-plan-index.py validate"
@@ -1992,6 +2001,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
   - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0021"
+  - "DL-475; settings batch 2 round r2 complete context-inspection sweep, 2026-11-12"
 preserved_exact_tokens:
   - "GUI"
   - "Injected Context"
@@ -1999,7 +2009,8 @@ preserved_exact_tokens:
   - "truncation reason"
   - "safe preview"
   - "compiled prompt"
-negative_constraints: []
+negative_constraints:
+  - "Do not restore user-facing context source inspection or per-run inclusion receipts through a legacy title, preserved token, shared projection or saved view state."
 preserved_contractrefs:
   - "ContractRef: ContractName:Plans/FinalGUISpec.md"
 owner_hints:
@@ -4068,22 +4079,26 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Prompt_Pipeline.md
 canonical_text: >-
-  P1-CONTEXT-SKILL-BUDGETS (P1) is compiled as canonical Puppet Master intent for Skill/context catalog progressive disclosure: Add ContextCatalogBudget for skills, MCP tools, provider models, memories, and terminal transcript summaries. The preserved PM gap/delta is: Need explicit skill/tool/catalog listing budgets and omission warnings in GUI. The observed external-repo signal remains source-lineage evidence: Codex official skills docs use progressive disclosure and cap initial skill listing at 2% context or 8k chars; Cline/Agent Zero/Pi all hit compaction/context/provider issues.
+  P1-CONTEXT-SKILL-BUDGETS retains internal ContextCatalogBudget enforcement for skills, MCP tools,
+  provider models, memories and terminal transcript summaries. Catalog listings cannot crowd out run
+  context, selected skills load full instructions only when chosen, and omission/defer reasons
+  remain internal for enforcement/debugging. Chat retains basic capacity/cost/model and useful
+  compaction status without a context source inspector or per-run inclusion/omission receipt.
 gui_related: true
-gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
+gui_classification_reason: >-
+  Defines retained context-budget enforcement and removal of ordinary source/omission inspection.
 depends_on:
 - PDS-003
 - PNC-001
 unblocks: []
 acceptance_criteria:
-- Skill list cannot crowd out run context; omitted skills/tools are visible in context inspector with reason.
-- Selected skill loads full instructions only when chosen.
-- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+  - "Skill/tool/catalog budgets prevent crowding out run context; omission/defer reasons remain internally attributable, with no user-facing context inspector or inclusion receipt."
+  - "Selected skill loads full instructions only when chosen."
+  - "No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created."
 validation_surfaces:
-- python3 scripts/pm-plan-index.py validate
-- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
-- Skill list cannot crowd out run context; omitted skills/tools are visible in context inspector with reason.
-- Selected skill loads full instructions only when chosen.
+  - "python3 scripts/pm-plan-index.py validate"
+  - "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake"
+  - "Internal catalog-budget/omission records and selected-skill progressive loading."
 risk_class: p1_context_cache_hardening
 reasoning_tier: standard
 context_scope: context_cache
@@ -4105,6 +4120,7 @@ source_lineage:
 - Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
 - Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_external_repo_action_backlog_2026-07-03.jsonl:14
 - Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md:833-1329
+- "DL-475; settings batch 2 round r2 complete context-inspection sweep, 2026-11-12"
 source_atom_ids:
 - atom-0018
 external_atom_id: extrepo-20260703-0014
@@ -4133,10 +4149,14 @@ preserved_exact_tokens:
 - openai/codex
 - cline/cline
 - earendil-works/pi
-negative_constraints: []
+negative_constraints:
+  - "Do not restore user-facing context source inspection or per-run inclusion receipts through a legacy title, preserved token, shared projection or saved view state."
 observed_signal: Codex official skills docs use progressive disclosure and cap initial skill listing at 2% context or 8k chars; Cline/Agent Zero/Pi all hit compaction/context/provider issues.
 pm_current_coverage: PM Prompt Pipeline owns skill bundling and compaction algorithms.
-pm_gap_or_delta: Need explicit skill/tool/catalog listing budgets and omission warnings in GUI.
+pm_gap_or_delta: >-
+  Historical imported GUI-omission-warning delta; DL-475 retains skill/tool/catalog listing budgets
+  and omission reasons internally, with ordinary chat showing basic capacity/cost/model and useful
+  compaction status only.
 proposal_or_recommendation: Add ContextCatalogBudget for skills, MCP tools, provider models, memories, and terminal transcript summaries.
 compile_disposition: create_new_planunit
 ```
@@ -4153,16 +4173,24 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Prompt_Pipeline.md
 canonical_text: >-
-  ContextEpoch records and compaction projections expose context_estimate, input_total, input_non_cached, cache_read, cache_write, cache_write_1h or TTL-specific cache writes, output_visible, reasoning/thoughts, provider_total, counting_semantics, hidden/background contribution refs, and source_confidence to GUI consumers through UsageRecord/context projections. Compact Now creates a new context epoch or compaction receipt according to chat command rules; it does not rewrite historical UsageRecord totals, erase partial/aborted usage, or convert context_estimate into provider billing authority.
+  ContextEpoch records and compaction projections expose context_estimate, input_total,
+  input_non_cached, cache_read, cache_write, cache_write_1h or TTL-specific cache writes,
+  output_visible, reasoning/thoughts, provider_total, counting_semantics, and source_confidence to
+  GUI consumers through UsageRecord/context projections. Hidden/background contribution refs and
+  source attribution remain internal for accounting and debugging; chat receives truthful aggregate
+  usage/cost and useful compaction status without source breakdowns or inclusion receipts. Compact
+  Now creates a new context epoch or compaction receipt according to chat command rules; it does not
+  rewrite historical UsageRecord totals, erase partial/aborted usage, or convert context_estimate
+  into provider billing authority.
 gui_related: true
 gui_classification_reason: Context epoch and compaction projections feed the visible chat context circle and Context Detail Pane.
 depends_on: [PP-072, UF-087, UF-088, ACD-434]
 unblocks: []
 acceptance_criteria:
-  - Context Detail Pane fixtures show context_estimate as local context pressure only, not billing or quota authority.
-  - Compact Now fixtures preserve previous UsageRecord identity and create a new context epoch/receipt without recalculating settled historical costs.
-  - Cache fixtures distinguish cache_read = 0 from cache unsupported/not_exposed/unknown and respect provider counting_semantics.
-  - Hidden/background contribution refs remain visible in context breakdowns instead of being silently folded into user-message totals.
+  - "Context Detail Pane fixtures show context_estimate as local context pressure only, not billing or quota authority."
+  - "Compact Now fixtures preserve previous UsageRecord identity and create a new context epoch/receipt without recalculating settled historical costs."
+  - "Cache fixtures distinguish cache_read = 0 from cache unsupported/not_exposed/unknown and respect provider counting_semantics."
+  - "Hidden/background contribution identity remains attributable internally; chat totals stay truthful without a source breakdown or per-run inclusion receipt."
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-plans-verify.py run-gates
@@ -4184,6 +4212,7 @@ source_lineage:
   - "Plans/usage-feature.md:156-194"
   - "Plans/usage-feature.md:5412-5605"
   - "uploaded:opencode-dev/packages/app/src/components/session-context-usage.tsx"
+  - "DL-475; settings batch 2 round r2 complete context-inspection sweep, 2026-11-12"
 preserved_exact_tokens:
   - ContextEpoch
   - Compact Now
@@ -4197,6 +4226,7 @@ negative_constraints:
   - Do not convert context_estimate into billing, cost, quota, or provider authority.
   - Do not rewrite historical UsageRecord totals during compaction.
   - Do not render cache unsupported/not_exposed/unknown as cache zero.
+  - "Do not restore user-facing context source inspection or per-run inclusion receipts through a legacy title, preserved token, shared projection or saved view state."
 owner_hints:
   - Plans/Prompt_Pipeline.md
   - Plans/assistant-chat-design.md
@@ -5957,9 +5987,9 @@ gui_classification_reason: Shaping policy is pipeline/tool-boundary behavior, no
 depends_on: [PP-084]
 unblocks: []
 acceptance_criteria:
-  - Replayed history shows the same effective shaping with visible policy provenance.
-  - Original canonical tool history remains intact behind shaped model-visible output.
-  - Source class, identity, derivation, and visibility are inspectable for notebook/history material.
+  - "Replay/recovery retains the same effective shaping policy and internal diagnostic provenance."
+  - "Original canonical tool history remains intact behind shaped model-visible output."
+  - "Source class, identity, derivation and visibility remain inspectable internally for notebook/history material, with no ordinary user source-inspection view."
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py run-gates
 risk_class: replay_drift
@@ -5971,10 +6001,12 @@ source_lineage:
 - source_packet:PM-WNC-2026-09-05-v1:WNC-C13
 - source_packet:PM-WNC-2026-09-05-v1:WNC-H06
 - DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
+- "DL-475; settings batch 2 round r2 complete context-inspection sweep, 2026-11-12"
 preserved_exact_tokens: ["policy snapshot", "original artifact refs", "explicit context source classes"]
 negative_constraints:
   - Do not overwrite canonical tool history with shaped summaries.
   - Do not let huge results bypass context caps.
+  - "Do not restore user-facing context source inspection or per-run inclusion receipts through a legacy title, preserved token, shared projection or saved view state."
 owner_hints: [Plans/Prompt_Pipeline.md, Plans/Tools.md]
 ```
 

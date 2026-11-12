@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L3802-L22993
+Source lines: L3802-L22997
 
-Source SHA256: `40e1fcb9c6709721c656701b4b8a742906ef179b6955f83acac8f8a901d6fb93`
+Source SHA256: `b4d0a4d8ff0879dc647c9d6989ddfc930317d1880d11b8e99d9862e330f0de7a`
 
 ---
 
@@ -4521,7 +4521,9 @@ canonical_text: Internal context records retain instruction/message/attachment/t
   No assembled-source chart, raw memory detail or selection explanation is a user-facing memory surface;
   basic capacity/cost information remains on demand.
 gui_related: true
-gui_classification_reason: Breakdown rows and source groups are visible in the Context Detail Pane.
+gui_classification_reason: >-
+  Keeps basic visible context status while source groups and source-level breakdowns remain internal
+  accounting.
 depends_on: [ACD-092]
 unblocks: [ACD-094, ACD-095]
 acceptance_criteria:
@@ -4545,12 +4547,14 @@ node_compile_hint:
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0060
 - DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
+- "DL-475; settings batch 2 round r2 complete context-inspection sweep, 2026-11-12"
 preserved_exact_tokens:
   - "usage.event"
   - "run.completed.usage"
   - "Investigation Context"
 negative_constraints:
 - Do not expose retired memory-use, verification or rule-check receipt UI.
+- "Do not restore user-facing context source inspection or per-run inclusion receipts through a legacy title, preserved token, shared projection or saved view state."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/Prompt_Pipeline.md
