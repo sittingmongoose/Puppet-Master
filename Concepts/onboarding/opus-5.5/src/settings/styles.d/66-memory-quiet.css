@@ -85,6 +85,14 @@
   #panel-settings .mm-archived-hint { display: none; }
 }
 
+/* Desktop page spacing from the approved mock. The phone and chat sheet keep their compact spacing. */
+@container settings-host (min-width: 601px) {
+  #panel-settings .mm-mount[data-mm-place="page"] .mm-intro .setting-row { padding-top: 10px; padding-bottom: 10px; }
+  #panel-settings .mm-mount[data-mm-place="page"] .mm-share-line { margin-top: 10px; line-height: 1.5; }
+  #panel-settings .mm-mount[data-mm-place="page"] > .mm-toolbar,
+  #panel-settings .mm-mount[data-mm-place="page"] > .mm-list { margin-top: 16px; }
+}
+
 /* ---- the level pickers' popovers (in <body>): each choice says who uses it on a line of its own (mock 04) --------- */
 .pm51-popout.pm51-dd-list.mm-pop .pm51-popout-item { display: grid; grid-template-columns: minmax(0, 1fr) 14px; column-gap: 10px; row-gap: 2px; align-items: start; }
 .pm51-popout.pm51-dd-list.mm-pop .pm51-popout-label { grid-column: 1; grid-row: 1; white-space: normal; }
@@ -92,7 +100,7 @@
 .pm51-popout.pm51-dd-list.mm-pop .pm51-popout-check { grid-column: 2; grid-row: 1; margin-top: 2px; }
 
 /* ---- the dialogs: Add, Edit and Delete ------------------------------------------------------------------------- */
-#panel-settings .dialog.mm-dialog { width: min(520px, 100%); }
+#panel-settings .dialog.mm-dialog { width: min(620px, 100%); }
 #panel-settings .mm-dialog .mm-field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
 #panel-settings .mm-dialog .mm-field:last-child { margin-bottom: 0; }
 #panel-settings .mm-dialog .form-textarea { min-height: 96px; font: inherit; font-size: 13px; }
