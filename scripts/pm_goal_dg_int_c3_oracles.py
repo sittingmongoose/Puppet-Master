@@ -113,6 +113,30 @@ def terminal_preserved():
         goal_event=w.goal_event['event_id'],native_cancelled_events=0)
 
 
+def started_current(run):
+    """Both complete started-current tuples, including the actual v7 guard."""
+    for profile in ('original_profile','native_v7'):
+        w=P7.started_world(dict(edition=profile),base=BASE)
+        current=P7.LegacyConsumer(w,'started')
+        def positive():
+            current.publish();before=snapshot(w);out=current.read_current()
+            arguments=sorted(current.last_arguments)
+            A.require('started/current_kind',out['kind']=='native_verified_running_as_of_same_snapshot')
+            A.require('started/whole_arguments',len(arguments)==(16 if profile=='native_v7' else 14))
+            history=current.read_historical()
+            A.require('started/history_kind',history['kind']=='original_started')
+            A.require('started/read_effect',snapshot(w)==before)
+            return dict(arguments=arguments,current=out['kind'],history=history['kind'])
+        run.case('P7/'+profile+'/whole_current_started_and_history',positive)
+        def source_epoch_after_helpers():
+            before=snapshot(w)
+            def restart(world):current.source_owner.owner_epoch+=1
+            try:return current.read_current(hooks=dict(after_helpers=restart))
+            finally:A.require('started/source_epoch_effect',snapshot(w)==before)
+        run.case('P7/'+profile+'/started_source_owner_restarted_after_helpers',source_epoch_after_helpers,
+                 'int/consumer/source_owner_current')
+
+
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--groups',default='V7,OLD,NOSTART,UNKNOWN,TERMINAL')
@@ -125,6 +149,7 @@ def main():
             elif name=='NOSTART':qualify(run,'native_v7','no_start')
             elif name=='MUTATION':qualify(run,'native_v7',effects='mutation')
             elif name=='TERMINAL':run.case('R2/genuine_certified_terminal_preserved_without_cancelled_Event',terminal_preserved)
+            elif name=='STARTED':started_current(run)
             elif name=='UNKNOWN':
                 for point in ('prepare','native','append'):unknown(run,point)
             else:raise ValueError(name)
