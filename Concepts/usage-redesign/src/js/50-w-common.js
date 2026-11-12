@@ -1482,7 +1482,7 @@
       rows0.slice(0, k1.length - 1).forEach(function (r, j) {
         var d = drows[j + 1]; if (!d || r.innerHTML === d.innerHTML) return;
         r.innerHTML = d.innerHTML;
-        ['data-pm-hover-label', 'data-pm-hover-detail', 'data-tone'].forEach(function (a) { if (d.hasAttribute(a)) r.setAttribute(a, d.getAttribute(a)); else r.removeAttribute(a); });
+        ['data-pm-hover-label', 'data-pm-hover-detail', 'data-tone'].forEach(function (a) { var value = d.getAttribute(a); if (r.getAttribute(a) !== value) { if (value === null) r.removeAttribute(a); else r.setAttribute(a, value); } });
       });
       var m0 = list.querySelector(':scope > .pmu-more'), m1 = dl.querySelector(':scope > .pmu-more');
       if (m0 && m1) { m0.textContent = m1.textContent; ['data-pm-hover-label', 'data-pm-hover-detail'].forEach(function (a) { if (m1.hasAttribute(a)) m0.setAttribute(a, m1.getAttribute(a)); }); }
