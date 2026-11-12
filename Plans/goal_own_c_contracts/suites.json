@@ -69,10 +69,11 @@
       "dg_ca_oracle": "python3 scripts/pm_goal_dg_ca_oracles.py",
       "dg_ca_group_closure": {
         "C1": "COMPLETE",
-        "C2": "NOT_COMPLETE",
-        "C3": "NOT_COMPLETE",
-        "C4": "NOT_COMPLETE"
-      }
+        "C2": "COMPLETE",
+        "C3": "ASSIGNED_TO_DG_CA3",
+        "C4": "NOT_COMPLETE_ASSIGNMENT_ADMISSION_COMPLETE"
+      },
+      "dg_ca_assignment_successor": "Plans/goal_own_c_contracts/dg-ca-assignment-successor-v1/selection.v1.json"
     },
     {
       "event_type": "goal_run.started",
