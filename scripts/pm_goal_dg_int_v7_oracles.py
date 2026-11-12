@@ -20,8 +20,9 @@ BASE=Path('/home/sittingmongoose/pm-scratch/dg-int/tmp')
 
 
 class Run:
-    def __init__(self):self.rows=[]
+    def __init__(self,only=None):self.rows=[];self.only=only
     def case(self,name,fn,expected=None):
+        if self.only and self.only not in name:return
         start=time.monotonic();row=dict(id=name,kind='positive' if expected is None else 'negative',expected=expected)
         try:
             result=fn()
@@ -135,7 +136,10 @@ def boundaries(run):
                         ('after_helper:f5d','f5d_final'),('after_helper:commit','commit_final'),
                         ('after_helper:release','release_final'),('after_helper:current','current_final')]:
         for fact,code in [('permission','permission'),('stop','goal_current')]:
-            boundary(run,point,fact,stage+'/'+code)
+            # These protected writes invalidate the held current-read fence
+            # before its subsequent individual permission/Stop comparison.
+            expected='current_final/guard_stale' if stage=='current_final' else stage+'/'+code
+            boundary(run,point,fact,expected)
     boundary(run,'after_helper:append_outer','withdraw','original/withdrawn')
     boundary(run,'after_helper:current','epoch','current_final/issuer_epoch/native')
 
@@ -185,10 +189,12 @@ def prefix_faults(run):
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--groups',default='CERT,BOUNDS');parser.add_argument('--output',required=True)
-    args=parser.parse_args();run=Run()
+    parser.add_argument('--filter')
+    args=parser.parse_args();run=Run(args.filter)
     for group_name in args.groups.split(','):
         {'CERT':certified,'BOUNDS':boundaries,'RETENTION':retention,'PREFIX':prefix_faults}[group_name](run)
     failures=[r for r in run.rows if r['status']!='pass']
+    if not run.rows:raise ValueError('No matching oracle cases')
     result=dict(qualification='TEST_ONLY',native=V.NATIVE_LINE,status='pass' if not failures else 'fail',
         positives=sum(r['kind']=='positive' for r in run.rows),negatives=sum(r['kind']=='negative' for r in run.rows),
         failures=failures,cases=run.rows)

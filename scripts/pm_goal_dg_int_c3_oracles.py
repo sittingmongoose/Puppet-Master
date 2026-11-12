@@ -67,6 +67,13 @@ def qualify(run,profile,start='started',effects='none'):
         try:return reader.inspect_original(request(w),bad)
         finally:A.require('c3/transport_effect',snapshot(w)==before)
     run.case('R2/'+tag+'/transport_result',transport,'original/handle_type')
+    def source_epoch_after_helpers():
+        before=snapshot(w)
+        def restart(world):current.source_owner.owner_epoch+=1
+        try:return current.read_current(hooks=dict(after_helpers=restart))
+        finally:A.require('c3/source_epoch_effect',snapshot(w)==before)
+    run.case('P7/'+tag+'/source_owner_restarted_after_helpers',source_epoch_after_helpers,
+             'int/consumer/source_owner_current')
 
 
 def unknown(run,point):
