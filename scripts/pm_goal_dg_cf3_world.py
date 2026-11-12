@@ -133,6 +133,11 @@ def resolve(cells, selector, storage_instance_id, *, where):
     return value, cell
 
 
+def substituted(selector):
+    """One coherent defect: a selector naming a different stored value."""
+    return dict(selector, physical_value_sha256=sha256(b'TEST_ONLY:substituted:' + selector['physical_key'].encode()))
+
+
 def tx_number(tx_id):
     return int(tx_id.rsplit(':', 1)[1])
 
@@ -273,7 +278,7 @@ class NativeOwner(StorageCellOwner):
                     workflow_owner_epoch=body['workflow_owner_epoch'])
 
     def publish_writes(self, scope, status, *, activation_state=None, rule, operation_id, tx_ref, rev_offset=0,
-                       head_status=None, d01_tx_ref=None):
+                       head_status=None, d01_tx_ref=None, after_edit=None, update_edit=None):
         """Native body CAS + D01 update/origin/head for one native publication."""
         sid = self.storage.storage_instance_id
         pointer, cell = self.current(scope)
@@ -290,10 +295,15 @@ class NativeOwner(StorageCellOwner):
         if rev_offset:  # substituted commitment copies (one coherent defect for negatives)
             before_c['body_revision'] += rev_offset
             after_c['body_revision'] += rev_offset
+        if after_edit:
+            after_edit(after_c)
         update_key, origin_key, head_key = (run_key(scope, 'd01_update:%d' % rev), run_key(scope, 'd01_origin:%d' % rev),
                                             run_key(scope, 'd01_head:%d' % rev))
         update = record(F['d01_update'], scope=copy.deepcopy(scope), rule=rule, operation_id=operation_id,
-                        before=before_c, after=after_c, transaction_ref=d01_tx_ref or tx_ref)
+                        before=copy.deepcopy(before_c), after=copy.deepcopy(after_c),
+                        transaction_ref=d01_tx_ref or tx_ref)
+        if update_edit:
+            update_edit(update)
         origin = record(F['d01_origin'], update=selector_for(sid, F['d01_update'], update_key, update),
                         operation_id=operation_id, transaction_ref=tx_ref)
         head_after = copy.deepcopy(after_c)
@@ -321,19 +331,23 @@ class NativeOwner(StorageCellOwner):
 class LaneStandardOwner(C.StandardOwner):
     """Durable Standard receipt + capture origin in one Storage transaction."""
 
-    def capture(self, goal_run_id, decision, *, scope=None, exception=False):
+    def capture(self, goal_run_id, decision, *, scope=None, exception=False, defects=()):
         sid = self.storage.storage_instance_id
         key = 'TEST_ONLY:standard:' + (run_key(scope, 'standard') if scope else K(sid) + ':' + K(goal_run_id))
         row = record(F['standard_receipt'], goal_run_id=goal_run_id, final_certifier_decision=decision,
                      tier='standard', unresolved_risk_refs=[],
                      exception_refs=['TEST_ONLY:approved-exception:1'] if exception else [], approval_refs=[])
-        origin = record(F['standard_capture_origin'], receipt=selector_for(sid, F['standard_receipt'], key, row),
+        rsel = selector_for(sid, F['standard_receipt'], key, row)
+        origin = record(F['standard_capture_origin'],
+                        receipt=substituted(rsel) if 'capture_origin_substituted' in defects else rsel,
                         operation_id='TEST_ONLY:operation:standard:' + K(goal_run_id))
         tx = self.storage.transact([dict(table=F['standard_receipt'], key=key, expected=None, value=row),
                                     dict(table=F['standard_capture_origin'], key=key + ':origin', expected=None,
                                          value=origin)])
         rec = dict(qualification=QUALIFICATION, goal_run_id=goal_run_id, final_certifier_decision=decision,
-                   receipt_ref='TEST_ONLY:standard-receipt:' + tx['tx_id'], storage_key=key, tx_id=tx['tx_id'],
+                   receipt_ref='TEST_ONLY:standard-receipt:' + (tx['tx_id'] if 'standard_receipt_ref' not in defects
+                                                                else 'TEST_ONLY:tx:other'),
+                   storage_key=key, tx_id=tx['tx_id'],
                    receipt_selector=selector_for(sid, F['standard_receipt'], key, row),
                    capture_origin_selector=selector_for(sid, F['standard_capture_origin'], key + ':origin', origin))
         return self.issue(None, rec, kind='standard_receipt')
@@ -386,18 +400,20 @@ class StartOwner(StorageCellOwner):
     DG-S's; this owner issues the Start the combined consumer reduces."""
     role = 'start'
 
-    def start(self, world, scope, goal, *, publish=True, tag=None, defects=()):
+    def start(self, world, scope, goal, *, publish=True, tag=None, defects=(), check_state=True):
         sid = self.storage.storage_instance_id
         pointer, cell = world.native.current(scope)
         before = cell['value']
-        require('start/state', before['status'] == 'ready' and before['activation_state'] == 'activation_pending')
+        require('start/state', not check_state or
+                (before['status'] == 'ready' and before['activation_state'] == 'activation_pending'))
         occurred = self.storage.now()
         event_id, key = lane_identity('started' if tag is None else 'started-' + tag, scope, before['body_revision'] + 1)
         if tag is not None:
             event_id = 'goal_run.started.v3:' + event_id.split(':', 1)[1]
         offset = 94 if 'start_revision_offset' in defects else 0
+        ev_offset = offset + (3 if 'start_event_revision_offset' in defects else 0)
         payload = payload_common('goal_run.started', STARTED_PAYLOAD, occurred, scope, goal,
-                                 before['body_revision'] + offset, before['body_revision'] + 1 + offset, key,
+                                 before['body_revision'] + ev_offset, before['body_revision'] + 1 + ev_offset, key,
                                  'runtime_controller')
         payload['payload'] = dict(goal_run_id=scope['goal_run_id'], workgraph_ref=before['identity']['workgraph_ref'],
                                   activation_receipt_ref='TEST_ONLY:activation-receipt:' + K(scope['goal_run_id'])[:48],
@@ -418,23 +434,31 @@ class StartOwner(StorageCellOwner):
         def build(tx_id):
             writes, before_c, after_c, sels = world.native.publish_writes(
                 scope, 'running', activation_state='active', rule='TEST_ONLY:start',
-                operation_id='TEST_ONLY:operation:start:' + event_id, tx_ref=tx_id, rev_offset=offset)
+                operation_id='TEST_ONLY:operation:start:' + event_id, tx_ref=tx_id, rev_offset=offset,
+                head_status='ready' if 'start_head_status' in defects else None)
             cand_key, commit_key, origin_key = run_key(scope, 'start_candidate'), run_key(scope, 'start_commit'), run_key(scope, 'start_origin')
             cand = record(F['start_candidate'], scope=copy.deepcopy(scope), event_id=event_id,
-                          producer_semantic_digest=receipt['producer_semantic_digest'], before=before_c)
+                          producer_semantic_digest=sha256(b'TEST_ONLY:other-producer')
+                          if 'start_candidate_digest' in defects else receipt['producer_semantic_digest'],
+                          before=before_c)
+            first = receipt['first_append_receipt']
             commit = record(F['start_commit'], scope=copy.deepcopy(scope), event_id=event_id,
-                            sequence_id=receipt['first_append_receipt']['sequence_id'],
-                            first_receipt_sha256=value_sha(receipt['first_append_receipt']),
+                            sequence_id=first['sequence_id'] + (1 if 'start_commit_sequence' in defects else 0),
+                            first_receipt_sha256=value_sha(dict(first, durability_state='pending')
+                                                           if 'start_first_receipt' in defects else first),
                             candidate=self.sel(F['start_candidate'], cand_key, cand),
                             d01_update=sels['d01_update'], d01_origin=sels['d01_origin'], d01_head=sels['d01_head'],
                             goal_context=copy.deepcopy(goal['selectors']),
                             goal_revision=goal['goal_revision'] + (1 if 'start_goal_revision' in defects else 0),
                             transaction_ref=tx_id)
-            origin = record(F['start_origin'], commit=self.sel(F['start_commit'], commit_key, commit),
+            csel = self.sel(F['start_commit'], commit_key, commit)
+            origin = record(F['start_origin'], commit=substituted(csel) if 'start_origin_selector' in defects else csel,
                             operation_id='TEST_ONLY:operation:start:' + event_id, transaction_ref=tx_id)
-            return writes + [self.write(F['start_candidate'], cand_key, cand),
-                             self.write(F['start_commit'], commit_key, commit),
-                             self.write(F['start_origin'], origin_key, origin)]
+            out = writes + [self.write(F['start_candidate'], cand_key, cand),
+                            self.write(F['start_commit'], commit_key, commit)]
+            if 'start_no_origin' not in defects:
+                out.append(self.write(F['start_origin'], origin_key, origin))
+            return out
         tx, tx_id = self.storage.stamped(build)
         return dict(event_id=event_id, sequence_id=receipt['first_append_receipt']['sequence_id'], tx=tx_id)
 
@@ -454,7 +478,8 @@ class CancelOwner(StorageCellOwner):
         d05_key = run_key(scope, 'd05_result')
         d05 = record(F['d05_result'], scope=copy.deepcopy(scope),
                      outcome='failed' if 'd05_failed' in defects else 'success', effects=[], mutation_started=False)
-        d05_origin = record(F['d05_origin'], result=self.sel(F['d05_result'], d05_key, d05),
+        d05sel = self.sel(F['d05_result'], d05_key, d05)
+        d05_origin = record(F['d05_origin'], result=substituted(d05sel) if 'd05_origin_selector' in defects else d05sel,
                             operation_id='TEST_ONLY:operation:d05:' + K(scope['goal_run_id'])[:48])
         if self.storage.cell(F['d05_result'], d05_key) is None:
             self.storage.transact([self.write(F['d05_result'], d05_key, d05),
@@ -464,10 +489,12 @@ class CancelOwner(StorageCellOwner):
         occurred = self.storage.now()
         event_id, key = lane_identity('cancelled' if tag is None else 'cancelled-' + tag, scope,
                                       before['body_revision'] + 1)
+        ev_offset = 3 if 'cancel_event_revision_offset' in defects else 0
         if tag is not None:
             event_id = 'goal_run.cancelled.v3:' + event_id.split(':', 1)[1]
         payload = payload_common('goal_run.cancelled', CANCELLED_PAYLOAD, occurred, scope, goal,
-                                 before['body_revision'], before['body_revision'] + 1, key, 'runtime_controller')
+                                 before['body_revision'] + ev_offset, before['body_revision'] + 1 + ev_offset, key,
+                                 'runtime_controller')
         payload['payload'] = dict(goal_run_id=scope['goal_run_id'], cancel_reason='user_cancelled',
                                   mutation_started=False, settlement_refs=[])
         world.payload_bank.validate(CANCELLED_PAYLOAD, payload, 'cancel/payload')
@@ -484,9 +511,13 @@ class CancelOwner(StorageCellOwner):
                         started=started)
 
         def build(tx_id):
+            def update_edit(update):
+                update['after']['workflow_owner_epoch'] += 1
             writes, before_c, after_c, sels = world.native.publish_writes(
-                scope, 'cancelled', activation_state=None if started else 'cancelled_before_mutation',
-                rule='TEST_ONLY:d06', operation_id='TEST_ONLY:operation:d06:' + event_id, tx_ref=tx_id)
+                scope, 'stopped' if 'cancel_status_stopped' in defects else 'cancelled',
+                activation_state=None if started else 'cancelled_before_mutation',
+                rule='TEST_ONLY:d06', operation_id='TEST_ONLY:operation:d06:' + event_id, tx_ref=tx_id,
+                update_edit=update_edit if 'cancel_update_edit' in defects else None)
             names = {}
             out = list(writes)
             base = dict(scope=copy.deepcopy(scope), event_id=event_id, before=before_c, after=after_c,
@@ -494,10 +525,15 @@ class CancelOwner(StorageCellOwner):
             for name in ('d06_candidate', 'd06_intent', 'd06_result'):
                 value = record(F[name], **base, first_receipt_sha256=value_sha(receipt['first_append_receipt']),
                                d05=self.sel(F['d05_result'], d05_key, d05), d01=sels)
+                if ('d06_result_event' in defects and name == 'd06_result') or \
+                        ('d06_candidate_event' in defects and name == 'd06_candidate') or \
+                        ('d06_intent_event' in defects and name == 'd06_intent'):
+                    value['event_id'] = event_id + ':substituted'
                 names[name] = (run_key(scope, name), value)
                 out.append(self.write(F[name], *names[name]))
             for name in ('d06_prepare_origin', 'd06_publish_origin'):
-                value = record(F[name], result=self.sel(F['d06_result'], *names['d06_result']),
+                rsel = self.sel(F['d06_result'], *names['d06_result'])
+                value = record(F[name], result=substituted(rsel) if name + '_selector' in defects else rsel,
                                operation_id='TEST_ONLY:operation:d06:' + event_id, transaction_ref=tx_id)
                 out.append(self.write(F[name], run_key(scope, name), value))
             return out
@@ -518,40 +554,53 @@ class CoordinatorOwner(StorageCellOwner):
             writes, before_c, after_c, sels = world.native.publish_writes(
                 scope, 'certified', rule='TEST_ONLY:certify', operation_id='TEST_ONLY:operation:certify:' + event_id,
                 tx_ref=tx_id, head_status='verifying' if 'd01_head_after' in defects else None,
-                d01_tx_ref='TEST_ONLY:tx:%s:0' % sid if 'd01_other_transaction' in defects else None)
+                d01_tx_ref='TEST_ONLY:tx:%s:0' % sid if 'd01_other_transaction' in defects else None,
+                after_edit=(lambda c: c.update(workflow_owner_epoch=c['workflow_owner_epoch'] + 1))
+                if 'after_owner_epoch' in defects else None)
             res_key, org_key = run_key(scope, 'native_result'), run_key(scope, 'native_origin')
             result = record(F['native_result'], scope=copy.deepcopy(scope),
                             event_id=event_id + (':substituted' if 'result_event' in defects else ''),
                             decision='certified',
                             before=before_c, after=after_c, standard=standard['receipt_selector'],
                             transaction_ref=tx_id)
-            origin = record(F['native_origin'], result=self.sel(F['native_result'], res_key, result),
+            rsel = self.sel(F['native_result'], res_key, result)
+            origin = record(F['native_origin'], result=substituted(rsel) if 'native_origin_selector' in defects else rsel,
                             operation_id='TEST_ONLY:operation:certify:' + event_id, transaction_ref=tx_id)
-            commit = record(F['coordinator_commit'], scope=copy.deepcopy(scope), event_id=event_id,
+            commit = record(F['coordinator_commit'], scope=copy.deepcopy(scope),
+                            event_id=event_id + (':substituted' if 'commit_event' in defects else ''),
                             first_receipt_sha256=value_sha(dict(receipt['first_append_receipt'], durability_state='pending')
                                                            if 'commit_first_receipt' in defects
                                                            else receipt['first_append_receipt']),
-                            value_commitment_sha256=receipt['original_event_value_commitment']['sha256'],
-                            producer_semantic_digest=receipt['producer_semantic_digest'],
+                            value_commitment_sha256=sha256(b'TEST_ONLY:other-commitment')
+                            if 'commit_value_commitment' in defects
+                            else receipt['original_event_value_commitment']['sha256'],
+                            producer_semantic_digest=sha256(b'TEST_ONLY:other-producer')
+                            if 'commit_producer_digest' in defects else receipt['producer_semantic_digest'],
                             native_result=self.sel(F['native_result'], res_key, result),
                             native_origin=self.sel(F['native_origin'], org_key, origin),
                             d01_update=sels['d01_update'], d01_origin=sels['d01_origin'], d01_head=sels['d01_head'],
                             standard_receipt=standard['receipt_selector'],
                             standard_capture_origin=standard['capture_origin_selector'], transaction_ref=tx_id)
-            corigin = record(F['coordinator_origin'],
-                             commit=self.sel(F['coordinator_commit'], run_key(scope, 'coordinator_commit'), commit),
+            csel = self.sel(F['coordinator_commit'], run_key(scope, 'coordinator_commit'), commit)
+            corigin = record(F['coordinator_origin'], commit=substituted(csel) if 'origin_selector' in defects else csel,
                              operation_id='TEST_ONLY:operation:certify:' + event_id, transaction_ref=tx_id)
-            return writes + [self.write(F['native_result'], res_key, result),
-                             self.write(F['native_origin'], org_key, origin),
-                             self.write(F['coordinator_commit'], run_key(scope, 'coordinator_commit'), commit),
-                             self.write(F['coordinator_origin'], run_key(scope, 'coordinator_origin'), corigin)]
+            out = writes + [self.write(F['native_result'], res_key, result),
+                            self.write(F['native_origin'], org_key, origin),
+                            self.write(F['coordinator_commit'], run_key(scope, 'coordinator_commit'), commit),
+                            self.write(F['coordinator_origin'], run_key(scope, 'coordinator_origin'), corigin)]
+            if 'release_same_transaction' in defects:
+                out.append(self.write(F['coordinator_release'], run_key(scope, 'coordinator_release'), record(
+                    F['coordinator_release'], commit=csel, commit_transaction=tx_id, readback=True, event_id=event_id)))
+            return out
         _, commit_tx = self.storage.stamped(build)
+        if 'release_same_transaction' in defects:
+            return dict(commit_tx=commit_tx, release_tx=commit_tx)
         if not release:
             return dict(commit_tx=commit_tx, release_tx=None)
         commit_cell = self.storage.cell(F['coordinator_commit'], run_key(scope, 'coordinator_commit'))
         require('release/readback', commit_cell is not None and commit_cell['tx'] == commit_tx)
-        rel = record(F['coordinator_release'],
-                     commit=self.sel(F['coordinator_commit'], run_key(scope, 'coordinator_commit'), commit_cell['value']),
+        csel = self.sel(F['coordinator_commit'], run_key(scope, 'coordinator_commit'), commit_cell['value'])
+        rel = record(F['coordinator_release'], commit=substituted(csel) if 'release_selector' in defects else csel,
                      commit_transaction=commit_tx if 'release_commit_transaction' not in defects else 'TEST_ONLY:tx:other',
                      readback=True, event_id=event_id)
         tx = self.storage.transact([self.write(F['coordinator_release'], run_key(scope, 'coordinator_release'), rel)])
@@ -653,7 +702,9 @@ class World:
         run = scope['goal_run_id']
         native_src = dict(qualification=QUALIFICATION, goal_run_id=run, goal_id=scope['goal_id'],
                           project_id=scope['project_id'], work_graph_id=body['identity']['workgraph_id'],
-                          status=body['status'], revision=body['body_revision'], final_certifier_decision='certified',
+                          status=body['status'],
+                          revision=body['body_revision'] + (3 if 'event_revision_offset' in defects else 0),
+                          final_certifier_decision='certified',
                           decided_at_utc=decided,
                           validator_outputs=[dict(validator_id='TEST_ONLY:validator:%d' % i, outcome='passed',
                                                   evidence_ref='TEST_ONLY:evidence:%d' % i) for i in range(validators)],
@@ -676,7 +727,8 @@ class World:
         h['native'] = (src['native_source'].owner_id, src['native_source'].issue(None, native_src,
                                                                                  kind='native_certification_source'))
         h['standard'] = (self.standard.owner_id, self.standard.capture(run, 'certified', scope=scope,
-                                                                       exception='standard_exception' in defects))
+                                                                       exception='standard_exception' in defects,
+                                                                       defects=defects))
         h['goal'] = (src['goal_source'].owner_id, src['goal_source'].issue(None, dict(
             qualification=QUALIFICATION, goal_id=scope['goal_id'], project_id=scope['project_id'],
             goal_revision=goal['goal_revision'], thread_id=goal['thread_id']), kind='current_goal'))

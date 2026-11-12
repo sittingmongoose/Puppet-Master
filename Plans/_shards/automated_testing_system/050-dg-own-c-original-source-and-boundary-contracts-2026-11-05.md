@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L7479-L7706
+Source lines: L7479-L7708
 
-Source SHA256: `a35b2430726e936bca5ca7807a12c92e9b85edc6af7b4fdec9bf5839e27cbc15`
+Source SHA256: `5b8a93eeb49f430c0344bdc45eb335c70dd12ef00ae78626c7b5673f985245ed`
 
 ---
 
@@ -234,5 +234,7 @@ negative_constraints:
   or governance seal.
 - No full oracle PASS from schema, size or source-shaped component controls.
 ```
+
+DG-CF3 amendment (2026-11-11, newly authored, TEST_ONLY): for exactly F0, CF-10, CF-11, CF-12, P4, P5, P6 and P8 this unit also selects `scripts/pm_goal_dg_cf3_oracles.py` with its owner world `scripts/pm_goal_dg_cf3_world.py`, combined consumer and lower Storage publisher `scripts/pm_goal_dg_cf3_projector.py` and backup/restore driver `scripts/pm_goal_dg_cf3_restore.py`, on the shared TEST_ONLY adapters and this explicit successor. Registered test owners issue the started, positive cancelled and certified originals (certified identity and producer through the adapter CF-01 owners, barrier first custody, joint native/D01/coordinator commit, later Release); Storage assigns sequences, times, seeds, transaction ids and first custody. The bounded reducer validates every frame, custody row and registered family of the whole global prefix before any off-run no-op, applies the started/cancelled/certified branch predicates against the exact stored originals of the same snapshot, halts before unsupported same-run rows, second terminals, Start after terminal and certification without a scanned Start or an authenticated expired-Start survivor gap. The lower publisher alone rederives every row form, key (K(s) unpadded base64url), anchor, frontier, coverage and lifecycle change with the Storage-issued transaction id and time, verifies every pack, reruns its final predicate after the last helper and commits row plus checkpoint in one Storage transaction; real child-process cuts and fresh-process re-entry cover stage, advance, pack ordering and cutover. RP-PROJECTION-3GEN is enforced with actual hold authority, and restore authenticates one coherent original-authority unit, enforces current tombstones and rebuilds derived state from retained source under BRS-031. Each negative changes one thing with coherent copies and refuses with its own code; guards and their negatives are exported for the shared isolation sweep. Native, D01, Standard and coordinator records here are compact TEST_ONLY owner records whose whole roots are composed by the sibling CF-02/CF-03/CF-07 owners at the DG merge. native evidence stays NOT_RUN and is a separate claim; a planning PASS must never read as native proof.
 
 ContractRef: ContractName:Plans/goal_run_projection_reference_contracts/certified.md

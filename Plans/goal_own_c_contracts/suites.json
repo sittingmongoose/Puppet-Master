@@ -155,6 +155,18 @@
         "whole_tuple_closure": "NOT_COMPLETE",
         "component_oracle": "scripts/pm_goal_own_c3_w5_projection_oracles.py",
         "native_execution": "NOT_RUN"
+      },
+      "dg_cf3": {
+        "lane": "DG-CF3",
+        "groups": ["F0", "CF-10", "CF-11", "CF-12", "P4", "P5", "P6", "P8"],
+        "adapters": "plans/ea-goal-adapter-20261111@62e61fe59a",
+        "projection_selection": "Plans/goal_run_projection_reference_contracts/certified.selection.json",
+        "oracle": "scripts/pm_goal_dg_cf3_oracles.py",
+        "owner_world": "scripts/pm_goal_dg_cf3_world.py",
+        "consumer_and_lower_publisher": "scripts/pm_goal_dg_cf3_projector.py",
+        "backup_restore_driver": "scripts/pm_goal_dg_cf3_restore.py",
+        "qualification": "TEST_ONLY",
+        "native_execution": "NOT_RUN"
       }
     }
   ]

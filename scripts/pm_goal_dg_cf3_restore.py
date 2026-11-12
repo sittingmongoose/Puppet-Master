@@ -163,7 +163,10 @@ class RestoreDriver(A.TestOwner):
             before_events, before_custody = len(storage.events), len(storage.custody)
             entries = tombstones.entries()
             for ref, entry in extra_entries:
-                entries.append((ref, tombstones.authenticate(ref, entry)))
+                try:
+                    entries.append((ref, tombstones.authenticate(ref, entry)))
+                except A.AdapterRefusal:
+                    raise W.LaneRefusal('restore/tombstone_authority') from None
             retention = S.RetentionOwner(storage)
             applied = []
             for ref, entry in entries:

@@ -257,7 +257,12 @@ def edit_logical(c, fn, refrontier=True):
             g = logical['generations'][gid]
             g['frontier_sha256'] = P.frontier_of(g['anchor_sha256'], g['frontier_revision'], g['prior_frontier_sha256'],
                                                  g['processed'], g['last_transaction_id'])
-        candidate['after']['checkpoint'] = c.lower.rep.encode_checkpoint(logical, publish=False)
+        # Build the caller's StorageCheckpoint directly (no oracle-side validation):
+        # the lower publisher is the boundary under test.
+        candidate['after']['checkpoint'] = dict(
+            schema_id='pm.goal_run_started_cancelled_certified_checkpoint.reference.v1.storage', schema_version='1.0.0',
+            storage_instance_id=c.storage.storage_instance_id, physical_key=logical['physical_key'],
+            content=dict(kind='inline', checkpoint=logical))
         return candidate
     return edit
 
@@ -780,6 +785,16 @@ def group_cf11_p5_p6(cpu):
         cp['generations'][gid]['processed']['generic_token']['snapshot_id'] = 'TEST_ONLY:snapshot:persisted'
     def token_stale(cp, gid, st):
         cp['generations'][gid]['processed']['generic_token']['frontier_revision'] -= 1
+    def map_key(cp, gid, st):
+        cp['generations']['grsccg_' + 'e' * 64] = cp['generations'].pop(gid)
+        return 'grsccg_' + 'e' * 64
+    def wrong_storage(cp, gid, st):
+        cp['storage_instance_id'] = '22222222-2222-4222-8222-222222222222'
+    def seed_altered(cp, gid, st):
+        g = cp['generations'][gid]
+        g['seed_hex'] = st.new_seed()
+        g['anchor_sha256'] = P.anchor_of(st.storage_instance_id, g['scope'], g['profile_digest'], g['seed_hex'],
+                                         g['source_token_at_birth'])
     for cid, group, fn, code in [
             ('P5-N01', 'P5', tx_synthetic, 'publish/candidate_mismatch'),
             ('P5-N02', 'P5', anchor_profile, 'publish/candidate_mismatch'),
@@ -793,8 +808,11 @@ def group_cf11_p5_p6(cpu):
             ('P5-N10', 'P5', dangling, 'publish/candidate_mismatch'),
             ('P5-N11', 'P5', root_skip, 'publish/candidate_mismatch'),
             ('P8-N01', 'P8', fake_hold, 'publish/candidate_mismatch'),
-            ('P5-N12', 'P5', snapshot_persisted, 'schema/LogicalCheckpoint'),
-            ('P5-N13', 'P5', token_stale, 'publish/candidate_mismatch')]:
+            ('P5-N12', 'P5', snapshot_persisted, 'schema/ProjectionCandidate'),
+            ('P5-N13', 'P5', token_stale, 'publish/candidate_mismatch'),
+            ('P5-N16', 'P5', map_key, 'publish/candidate_mismatch'),
+            ('P5-N17', 'P5', wrong_storage, 'publish/candidate_mismatch'),
+            ('P5-N18', 'P5', seed_altered, 'publish/candidate_mismatch')]:
         cpu.negative(cid, group, code, cand_neg(cid.lower(), fn), 'lower publish rederives the afterimage')
 
     def refreshed_retirement():
@@ -812,7 +830,31 @@ def group_cf11_p5_p6(cpu):
         finally:
             check(st.cell(P.CHECKPOINT_TABLE, P.checkpoint_key(scope)) == before, 'nothing written')
     cpu.negative('P8-N02', 'P8', 'publish/candidate_mismatch', refreshed_retirement,
-                 'refreshed immutable lifecycle time')
+                 'refreshed immutable first-preparation time')
+
+    def lifecycle_edit(tag, fn):
+        def run():
+            d, st, c, sc = cpu.clone('main', tag)
+            scope = sc['r1']
+            g1 = c.rebuild(scope)
+            g2 = c.rebuild(scope)
+            g3 = stage(c, scope)
+            full_advance(c, scope, g3)
+            before = copy.deepcopy(st.cell(P.CHECKPOINT_TABLE, P.checkpoint_key(scope)))
+            try:
+                cutover(c, scope, g3, edit=edit_logical(c, lambda cp: fn(cp, g1, g2, g3), refrontier=False))
+            finally:
+                check(st.cell(P.CHECKPOINT_TABLE, P.checkpoint_key(scope)) == before, 'nothing written')
+        return run
+
+    def refresh_retired(cp, g1, g2, g3):
+        cp['generations'][g1]['retired_at_utc'] = cp['generations'][g3]['activated_at_utc']
+    def duplicate_current(cp, g1, g2, g3):
+        cp['generations'][g2].update(state='current', retired_at_utc=None, successor_generation_id=None)
+    cpu.negative('P8-N12', 'P8', 'publish/candidate_mismatch', lifecycle_edit('p8-refresh-retired', refresh_retired),
+                 'refreshed retirement time')
+    cpu.negative('P5-N19', 'P5', 'publish/candidate_mismatch', lifecycle_edit('p5-dupcurrent', duplicate_current),
+                 'duplicate current generation')
 
     def row_altered():
         d, st, c, scope, gid = staged_case('p6-rowaltered', rows=1)
@@ -1300,7 +1342,7 @@ def group_cf12_p8(cpu):
         entry = dict(qualification=QUALIFICATION, kind='segment', storage_instance_id=st.storage_instance_id, target=1,
                      deleted_at_utc=st.now(), owner_id=tombs.owner_id)
         return [('TEST_ONLY:original:forged-tombstone', entry)]
-    cpu.negative('CF12-N06', 'CF-12', 'original/unissued', restore_neg('cf12-forgedtomb', forged_tomb),
+    cpu.negative('CF12-N06', 'CF-12', 'restore/tombstone_authority', restore_neg('cf12-forgedtomb', forged_tomb),
                  'tombstone entry not issued by the tombstone owner')
 
     def held():
@@ -1362,6 +1404,276 @@ def group_cf12_p8(cpu):
         c.reader.hooks = dict(after_helpers=lambda reader: c.controls.set(pack_access_revoked=False))
     cpu.negative('P8-N11', 'P8', 'read/final/controls', reader_neg('p8-readdrift', drift),
                  'control change after the reader helper')
+
+
+def group_guard_negatives(cpu):
+    """One-defect negatives for every reachable product guard not exercised above."""
+    def halted_world(tag, build, expected, group, cid, boundary):
+        def fn():
+            d, w = cpu.fresh(tag)
+            scope = build(w)
+            c = P.Consumer(w.storage)
+            gid = stage(c, scope)
+            before = c.checkpoint(scope)['generations'][gid]['processed']
+            try:
+                advance(c, scope, gid, 1000)
+            finally:
+                check(c.checkpoint(scope)['generations'][gid]['processed'] == before, 'refused batch wrote nothing')
+        cpu.negative(cid, group, 'advance/halt/' + expected, fn, boundary)
+
+    def certified(defects=(), **kw):
+        def build(w):
+            s = w.scope(PA, GOAL, 'TEST_ONLY:run:g')
+            w.certified_run(s, defects=defects, **kw)
+            return s
+        return build
+    for cid, defect, code, boundary in [
+            ('CF10-N32', 'commit_event', 'certified/commit_event', 'Commit names another Event'),
+            ('CF10-N33', 'commit_value_commitment', 'certified/commit_value_commitment', 'Commit value commitment'),
+            ('CF10-N34', 'commit_producer_digest', 'certified/commit_producer_digest', 'Commit producer digest'),
+            ('CF10-N35', 'release_selector', 'certified/release_selects_commit', 'Release selects another Commit'),
+            ('CF10-N36', 'release_same_transaction', 'certified/release_after_commit', 'Release coissued with Commit'),
+            ('CF10-N37', 'origin_selector', 'certified/coordinator_origin', 'coordinator Origin selects another Commit'),
+            ('CF10-N38', 'native_origin_selector', 'certified/native_origin_join', 'native origin selects another result'),
+            ('CF10-N39', 'after_owner_epoch', 'certified/native_protected', 'protected native field changed'),
+            ('CF10-N40', 'event_revision_offset', 'certified/revisions', 'Event revisions differ from native'),
+            ('CF10-N41', 'capture_origin_substituted', 'certified/standard_capture_join', 'capture origin substituted'),
+            ('CF10-N42', 'standard_receipt_ref', 'certified/standard_receipt_ref', 'Event names another Standard receipt')]:
+        halted_world(cid.lower(), certified((defect,)), code, 'CF-10', cid, boundary)
+
+    def uncommitted(w):
+        s = w.scope(PA, GOAL, 'TEST_ONLY:run:uc')
+        w.birth(s); w.start(s)
+        w.native.advance(s, 'provisional_success'); w.native.advance(s, 'verifying')
+        w.certify(s, commit=False)
+        return s
+    halted_world('uncommitted', uncommitted, 'certified/commit_unavailable', 'CF-10', 'CF10-N31',
+                 'Event-only certification (no joint commit)')
+
+    def started(defects=(), pre=None):
+        def build(w):
+            s = w.scope(PA, GOAL, 'TEST_ONLY:run:s')
+            w.birth(s)
+            if pre:
+                pre(w, s)
+            w.start(s, defects=defects, check_state=pre is None)
+            return s
+        return build
+    for cid, defect, code, boundary in [
+            ('CF10-N43', 'start_commit_sequence', 'start/commit_event', 'Start commit names another sequence'),
+            ('CF10-N44', 'start_first_receipt', 'start/first_receipt', 'Start commit substituted first receipt'),
+            ('CF10-N45', 'start_candidate_digest', 'start/candidate_event', 'Start candidate producer digest'),
+            ('CF10-N46', 'start_head_status', 'start/d01_join', 'Start D01 head mismatched'),
+            ('CF10-N48', 'start_event_revision_offset', 'start/revisions', 'Start Event revisions differ'),
+            ('CF10-N49', 'start_no_origin', 'start/origin_unavailable', 'Start origin missing'),
+            ('CF10-N50', 'start_origin_selector', 'start/origin_join', 'Start origin selects another commit')]:
+        halted_world(cid.lower(), started((defect,)), code, 'CF-10', cid, boundary)
+    halted_world('startrunning', started((), pre=lambda w, s: w.native.advance(s, 'running')),
+                 'start/native_transition', 'CF-10', 'CF10-N47', 'Start from a non-ready native state')
+
+    def cancelled(defects=(), start=True):
+        def build(w):
+            s = w.scope(PA, GOAL, 'TEST_ONLY:run:x')
+            w.birth(s)
+            if start:
+                w.start(s)
+            w.cancel(s, defects=defects)
+            return s
+        return build
+    for cid, defect, code, boundary in [
+            ('CF10-N51', 'd06_result_event', 'cancel/d06_event', 'D06 result names another Event'),
+            ('CF10-N52', 'd06_candidate_event', 'cancel/d06_candidate_join', 'D06 candidate names another Event'),
+            ('CF10-N62', 'd06_intent_event', 'cancel/d06_intent_join', 'D06 intent names another Event'),
+            ('CF10-N63', 'd06_prepare_origin_selector', 'cancel/d06_prepare_origin_join',
+             'D06 prepare origin selects another result'),
+            ('CF10-N64', 'd06_publish_origin_selector', 'cancel/d06_publish_origin_join',
+             'D06 publish origin selects another result'),
+            ('CF10-N53', 'd05_origin_selector', 'cancel/d05_origin', 'D05 origin selects another result'),
+            ('CF10-N54', 'cancel_update_edit', 'cancel/d01_join', 'D01 update differs from D06 after-state'),
+            ('CF10-N55', 'cancel_status_stopped', 'cancel/native_transition', 'native edge to stopped, not cancelled'),
+            ('CF10-N56', 'cancel_event_revision_offset', 'cancel/revisions', 'cancelled Event revisions differ')]:
+        halted_world(cid.lower(), cancelled((defect,)), code, 'CF-10', cid, boundary)
+
+    def phantom_start(w):
+        s = w.scope(PA, GOAL, 'TEST_ONLY:run:ph')
+        y = w.scope(PA, GOAL, 'TEST_ONLY:run:phy')
+        w.birth(y); w.start(y)
+        w.birth(s)
+        value = w.storage.cell(W.F['start_commit'], W.run_key(y, 'start_commit'))['value']
+        w.storage.transact([dict(table=W.F['start_commit'], key=W.run_key(s, 'start_commit'), expected=None,
+                                 value=value)])
+        w.cancel(s)
+        return s
+    halted_world('phantomstart', phantom_start, 'cancel/initialized_no_start', 'CF-10', 'CF10-N57',
+                 'initialized-no-start cancellation while a Start lineage record exists')
+
+    # lifecycle and publication boundaries ----------------------------------
+    def lower_case(tag, fn, code, group, cid, boundary, template='main', run='r1'):
+        def run_():
+            d, st, c, sc = cpu.clone(template, tag)
+            fn(d, st, c, sc[run])
+        cpu.negative(cid, group, code, run_, boundary)
+
+    lower_case('p6-retired-adv', lambda d, st, c, s: (c.rebuild(s), advance_retired(c, s, c.rebuild(s))),
+               'advance/generation_state', 'P6', 'P6-N15', 'advance on a retired generation')
+    lower_case('p6-unknown-adv', lambda d, st, c, s: c.projector.project_prefix(s, 'advance', request=dict(
+        operation='advance', generation_id='grsccg_' + 'f' * 64, expected_frontier_revision=0, batch_limit=1)),
+        'advance/unknown_generation', 'P6', 'P6-N16', 'advance on an unbound generation')
+    lower_case('p6-noprogress', lambda d, st, c, s: (lambda g: (full_advance(c, s, g), advance(c, s, g, 1)))(stage(c, s)),
+               'advance/no_progress', 'P6', 'P6-N17', 'empty advance')
+
+    def profile_changed(d, st, c, s):
+        g = stage(c, s)
+        saved = copy.deepcopy(P._BANK['profile'])
+        P._BANK['profile']['profile_digest'] = W.sha256(b'TEST_ONLY:reinstalled-profile')
+        try:
+            advance(c, s, g, 1)
+        finally:
+            P._BANK['profile'] = saved
+    lower_case('p5-profile', profile_changed, 'advance/profile', 'P5', 'P5-N20',
+               'installed derived profile changed under a generation')
+    lower_case('p6-cut-retired', lambda d, st, c, s: (lambda g1: (c.rebuild(s), c.projector.project_prefix(
+        s, 'cutover', request=dict(operation='cutover', generation_id=g1,
+                                   expected_frontier_revision=c.checkpoint(s)['generations'][g1]['frontier_revision']))))(
+        c.rebuild(s)), 'cutover/not_staged', 'P6', 'P6-N18', 'cutover of a retired generation')
+    lower_case('p6-cut-unknown', lambda d, st, c, s: c.projector.project_prefix(s, 'cutover', request=dict(
+        operation='cutover', generation_id='grsccg_' + 'f' * 64, expected_frontier_revision=0)),
+        'cutover/unknown_generation', 'P6', 'P6-N19', 'cutover of an unbound generation')
+
+    def row_binding(d, st, c, s):
+        g = stage(c, s)
+        full_advance(c, s, g)
+        cp = c.checkpoint(s)
+        gen = cp['generations'][g]
+        gen['processed']['row_sha256'] = W.sha256(b'TEST_ONLY:other-row')
+        gen['frontier_sha256'] = P.frontier_of(gen['anchor_sha256'], gen['frontier_revision'],
+                                               gen['prior_frontier_sha256'], gen['processed'],
+                                               gen['last_transaction_id'])
+        write_cell(st, P.CHECKPOINT_TABLE, P.checkpoint_key(s), c.lower.rep.encode_checkpoint(cp, publish=True))
+        cutover(c, s, g)
+    lower_case('p6-rowbinding', row_binding, 'cutover/row_binding', 'P6', 'P6-N20',
+               'staged root binds a row the originals do not derive')
+
+    def recovered(d, st, c, s):
+        g = stage(c, s)
+        full_advance(c, s, g)
+        active = st.segments[-1]
+        with open(st._segment_path(active['generation']), 'ab') as handle:
+            handle.write(b'TEST_ONLY torn tail')
+        st2 = W.LaneStorage.open(st.root)
+        cutover(P.Consumer(st2), s, g)
+    lower_case('p6-recovered', recovered, 'cutover/seglog_frontier', 'P6', 'P6-N21',
+               'generic frontier changed by recovery after the last advance (inadequate frontier)')
+    lower_case('p8-collect-unknown', lambda d, st, c, s: (c.rebuild(s), c.lower.collect(s, 'grsccg_' + 'f' * 64)),
+               'collect/unknown_generation', 'P8', 'P8-N13', 'collect an unbound generation')
+    lower_case('p8-collect-nocp', lambda d, st, c, s: c.lower.collect(s, 'grsccg_' + 'f' * 64),
+               'collect/checkpoint', 'P8', 'P8-N14', 'collect without a checkpoint')
+
+    def collect_hook(kind):
+        def fn(d, st, c, s):
+            g1 = c.rebuild(s)
+            c.rebuild(s)
+            st.advance_clock(P.RETIREMENT_SECONDS)
+            if kind == 'held':
+                hook = lambda lower: c.holds.hold(g1)
+            else:
+                hook = lambda lower: write_cell(st, P.CHECKPOINT_TABLE, P.checkpoint_key(s),
+                                                st.cell(P.CHECKPOINT_TABLE, P.checkpoint_key(s))['value'])
+            c.lower.collect(s, g1, hooks=dict(after_helpers=hook))
+        return fn
+    lower_case('p8-collect-held', collect_hook('held'), 'collect/final/held', 'P8', 'P8-N15',
+               'hold issued after the collection helper')
+    lower_case('p8-collect-root', collect_hook('root'), 'collect/final/checkpoint', 'P8', 'P8-N16',
+               'root changed after the collection helper')
+    lower_case('p6-candtype', lambda d, st, c, s: advance(c, s, stage(c, s), 1, edit=lambda cand: [cand]),
+               'publish/candidate_type', 'P6', 'P6-N22', 'candidate is not a whole object')
+    lower_case('p6-candop', lambda d, st, c, s: advance(c, s, stage(c, s), 1,
+                                                       edit=lambda cand: dict(cand, operation='cutover')),
+               'publish/operation', 'P6', 'P6-N23', 'candidate operation differs from the request')
+    lower_case('p5-seedtype', lambda d, st, c, s: c.projector.project_prefix(
+        s, 'stage', request_edit=lambda r: dict(r, seed_hex='zz')), 'stage/seed_type', 'P5', 'P5-N21',
+        'seed of the wrong type')
+
+    def other_checkpoint(d, st, c, s):
+        sc = cpu.templates['main'][1]
+        c.rebuild(s)
+        c.rebuild(sc['r2'])
+        write_cell(st, P.CHECKPOINT_TABLE, P.checkpoint_key(s),
+                   st.cell(P.CHECKPOINT_TABLE, P.checkpoint_key(sc['r2']))['value'])
+        c.reader.read(s)
+    lower_case('f0-cpkey', other_checkpoint, 'read/checkpoint_key', 'F0', 'F0-N14',
+               'root of another run substituted at this key')
+
+    def current_not_current(d, st, c, s):
+        g1 = c.rebuild(s)
+        c.rebuild(s)
+        cp = c.checkpoint(s)
+        cp['current_generation_id'] = g1
+        write_cell(st, P.CHECKPOINT_TABLE, P.checkpoint_key(s), c.lower.rep.encode_checkpoint(cp, publish=True))
+        c.reader.read(s)
+    lower_case('f0-curstate', current_not_current, 'read/current_state', 'F0', 'F0-N15',
+               'current selection names a retired generation')
+
+    def read_hook(kind):
+        def fn(d, st, c, s):
+            c.rebuild(s)
+            if kind == 'root':
+                c.reader.hooks = dict(after_helpers=lambda r: write_cell(
+                    st, P.CHECKPOINT_TABLE, P.checkpoint_key(s), st.cell(P.CHECKPOINT_TABLE, P.checkpoint_key(s))['value']))
+            else:
+                w = W.World(d / 'w', storage=st)
+                c.reader.hooks = dict(after_helpers=lambda r: w.notes.note(w, PB, tag='read-drift'))
+            c.reader.read(s)
+        return fn
+    lower_case('p8-readroot', read_hook('root'), 'read/final/checkpoint', 'P8', 'P8-N17',
+               'root changed after the reader helper')
+    lower_case('p8-readseglog', read_hook('seglog'), 'read/final/seglog', 'P8', 'P8-N18',
+               'generic frontier advanced after the reader helper')
+
+    def no_unit_file(d, st, c, s):
+        reg = A.OwnerRegistry()
+        backup, tombs, driver = R.BackupOwner(reg), R.TombstoneOwner(reg), R.RestoreDriver(reg)
+        handle, unit = backup.take(st, d / 'unit')
+        os.unlink(d / 'unit' / R.UNIT_FILE)
+        driver.restore(backup_owner=backup, handle=handle, unit_dir=d / 'unit', target=d / 'restored',
+                       tombstones=tombs, scopes=[s])
+    lower_case('cf12-nounit', no_unit_file, 'restore/unit_present', 'CF-12', 'CF12-N07', 'unit seal file missing')
+
+    # Storage transaction issuance and owner preconditions -------------------
+    def foreign_handle(d, st, c, s):
+        other = W.LaneStorage.create(d / 'other')
+        handle, _ = other.begin()
+        st.commit(handle, [dict(table='TEST_ONLY:t', key='k', expected=None, value=dict(q=QUALIFICATION))])
+    lower_case('p6-foreignhandle', foreign_handle, 'tx/handle_issuer', 'P6', 'P6-N24',
+               'transaction handle issued by another Storage')
+    lower_case('p6-dicthandle', lambda d, st, c, s: st.commit(dict(tx_id='TEST_ONLY:tx:x:1'), []),
+               'tx/handle_type', 'P6', 'P6-N25', 'transport-shaped transaction handle')
+
+    def owner_pre(kind):
+        def fn(d, st, c, s):
+            w = W.World(d / 'w', storage=st)
+            sc = cpu.templates['main'][1]
+            if kind == 'unborn':
+                w.start(w.scope(PA, GOAL, 'TEST_ONLY:run:unborn'))
+            elif kind == 'start_twice':
+                w.start(sc['r4'])
+            elif kind == 'cancel_twice':
+                w.cancel(sc['r2'])
+            else:
+                w.certify(sc['r4'])
+        return fn
+    lower_case('w-unborn', owner_pre('unborn'), 'native/unborn', 'CF-10', 'CF10-N58', 'Start on an unborn run')
+    lower_case('w-starttwice', owner_pre('start_twice'), 'start/state', 'CF-10', 'CF10-N59', 'second Start issuance')
+    lower_case('w-canceltwice', owner_pre('cancel_twice'), 'cancel/state', 'CF-10', 'CF10-N60',
+               'cancellation of a cancelled run')
+    lower_case('w-certrunning', owner_pre('certify'), 'certify/native_state', 'CF-10', 'CF10-N61',
+               'certification from running')
+
+
+def advance_retired(c, scope, current_gid):
+    cp = c.checkpoint(scope)
+    retired = [g for g, v in cp['generations'].items() if v['state'] == 'retired'][0]
+    return advance(c, scope, retired, 1)
 
 
 # ------------------------------------------------------------------ matrix
@@ -1494,7 +1806,8 @@ def run(work, output=None, only=None):
     cpu.template('expiring', build_expiring)
     cpu.template('large', build_large)
     cpu.template('long', build_long)
-    groups = dict(cf10=group_cf10_p4, cf11=group_cf11_p5_p6, f0=group_f0, cf12=group_cf12_p8, matrix=matrix)
+    groups = dict(cf10=group_cf10_p4, cf11=group_cf11_p5_p6, f0=group_f0, cf12=group_cf12_p8,
+                  guards=group_guard_negatives, matrix=matrix)
     for name, fn in groups.items():
         if only and name not in only:
             continue
