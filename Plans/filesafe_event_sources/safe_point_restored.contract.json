@@ -1,0 +1,214 @@
+{
+  "schema_id": "pm.filesafe.safe_point_restored.source_graph.v1",
+  "schema_version": "1.0.0",
+  "event_type": "safe_point.restored",
+  "owner_refs": [
+    "Plans/Contracts_V0.md#CV-558",
+    "Plans/storage-plan.md#SP-558",
+    "Plans/FileSafe.md#F2-213",
+    "Plans/Contracts_V0.md#CV-366"
+  ],
+  "producer": "FileSafe::restore_exact_replace -> reconcile_restore_transaction",
+  "resources": [
+    {
+      "path": "Plans/filesafe_event_sources/safe_point_restored.schema.json",
+      "uri": "https://puppetmaster.local/schemas/filesafe_event_sources/safe_point_restored/1.0.0",
+      "sha256": "302eb90884318ef6f33f255f0be80d4b00e32b1a59f4df2ad04d4ed104415f38"
+    },
+    {
+      "path": "Plans/event_payloads/safe_point_restored_v2.schema.json",
+      "uri": "https://puppetmaster.local/schemas/event_payloads/safe_point_restored/2.0.0",
+      "sha256": "2927466b546ae11a248472744fe13633dd8a477b449d66d40967e317e0f2fd44"
+    },
+    {
+      "path": "Plans/shared_integration_runtime.schema.json",
+      "uri": "pm.shared_integration_runtime.command_contracts.schema.v1",
+      "sha256": "0e41d89065463e0581357a514ad3d2510d6db8a3e9356dcd23f717f5db4118f5"
+    },
+    {
+      "path": "Plans/event_record.schema.json",
+      "uri": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json",
+      "sha256": "bda87b247d841e058758136731734e515ae947f2261b5f90370015603d3bd353"
+    },
+    {
+      "path": "Plans/event_append_receipt_contracts.schema.json",
+      "uri": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0",
+      "sha256": "2f41d829ac0697998a9774267d44ccb10673df6b6ec26c8a0bbd5f552abf2cf3"
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/original-safe-point-restore-transaction.v1.schema.json",
+      "uri": "https://puppetmaster.local/schemas/filesafe_event_sources/original-project/original-safe-point-restore-transaction.v1.schema.json",
+      "sha256": "b6d192c96c552880e7f5e8041c12888e2c3f016076c3aeaef7661c74dbca1e47"
+    },
+    {
+      "path": "Plans/shared_integration_runtime_expansion_contracts.schema.json",
+      "uri": "https://puppetmaster.local/schemas/shared_integration_runtime/expansion/1.0.0/shared_integration_runtime_expansion_contracts.schema.json",
+      "sha256": "5da19b80dc3ec29fc83e0bd03a450d8b195d83e321edfd8d7e7a471a22aa4d60"
+    }
+  ],
+  "methods": [
+    {
+      "interface_id": "owner.filesafe.safe_point_restored.original_source.project@1.0.0",
+      "component": "FileSafe::restore_exact_replace -> reconcile_restore_transaction",
+      "input_root_ref": "Plans/filesafe_event_sources/safe_point_restored.schema.json#/$defs/project_request",
+      "output_root_ref": "Plans/filesafe_event_sources/safe_point_restored.schema.json#/$defs/project_source",
+      "operations": [
+        "capture_at_original_commit",
+        "read_same_operation",
+        "recover_same_operation"
+      ],
+      "adoption_disposition": "specified_unimplemented",
+      "authority": "Private view over genuine original owner custody; caller event/payload/boolean cannot create original acceptance."
+    },
+    {
+      "interface_id": "owner.filesafe.safe_point_restored.original_source.application@1.0.0",
+      "component": "FileSafe::restore_exact_replace -> reconcile_restore_transaction",
+      "input_root_ref": "Plans/filesafe_event_sources/safe_point_restored.schema.json#/$defs/application_request",
+      "output_root_ref": "Plans/filesafe_event_sources/safe_point_restored.schema.json#/$defs/application_source",
+      "operations": [
+        "capture_at_original_commit",
+        "read_same_operation",
+        "recover_same_operation"
+      ],
+      "adoption_disposition": "specified_unimplemented",
+      "authority": "Private view over genuine original owner custody; caller event/payload/boolean cannot create original acceptance.",
+      "complete_original_records_root_ref": "Plans/filesafe_event_sources/safe_point_restored.schema.json#/$defs/application_records"
+    }
+  ],
+  "request_payload_joins": [
+    "restore_transaction_id",
+    "safe_point_id",
+    "run_id",
+    "node_id",
+    "attempt_id",
+    "target_state_sha256",
+    "pre_restore_state_sha256"
+  ],
+  "required_body_roles": [
+    "restore_request",
+    "safe_point_record",
+    "restore_transaction",
+    "equality_result"
+  ],
+  "ordered_stages": [
+    {
+      "ordinal": 0,
+      "role": "original_intent",
+      "barrier": "restore_prepared: admit actual owner operation; no native write unless exact family is independently admitted and retention is resolved"
+    },
+    {
+      "ordinal": 1,
+      "role": "body_commit",
+      "barrier": "outcome_committed: The original exact-replace journal and equality result own the outcome. restored_clean requires target=post; restore_failed/refused require pre=post; restore_skipped requires target=pre=post without mutation; restore_recovery_required retains its independent hold. Restart reconciles the same transaction before dispatch."
+    },
+    {
+      "ordinal": 2,
+      "role": "prepared_event",
+      "barrier": "Freeze the original semantic envelope after source/result commit; retain the same operation on retry"
+    },
+    {
+      "ordinal": 3,
+      "role": "append",
+      "barrier": "Ordinary SeglogFrameV2 barrier append; SP-026/SP-236 and SP-336/SP-347"
+    },
+    {
+      "ordinal": 4,
+      "role": "first_receipt",
+      "barrier": "SP-286/CV-339 strict full-value v2; resolve original issued value and all eleven receipt fields"
+    },
+    {
+      "ordinal": 5,
+      "role": "terminal_publication",
+      "barrier": "Publish original terminal/outbox only after full-value receipt custody; never repeat a domain effect"
+    },
+    {
+      "ordinal": 6,
+      "role": "history_read",
+      "barrier": "SP-278 verified CURRENT/index generation and fresh live token; passive consumer only"
+    },
+    {
+      "ordinal": 7,
+      "role": "backup_restore",
+      "barrier": "Original source/body/receipt/index selection share coherent backup/restore epoch; missing older-restored source fences"
+    },
+    {
+      "ordinal": 8,
+      "role": "withdrawal",
+      "barrier": "Stop new writer admissions; reconcile same pending originals, fence reader/index, then verified retained-survivor rebuild; no zero cursor"
+    },
+    {
+      "ordinal": 9,
+      "role": "retention_release",
+      "barrier": "DL-401 G28 Run year: real run completion + 365 days, 1,000,000 per run / applicable 5,000,000 per Project, linked successor, existing holds/protections. Original snapshots, bodies and journals retain their own lifetimes."
+    }
+  ],
+  "consumer_id": "storage.safe_point_restored_history_read.v1@1.0.0",
+  "family_checkpoint": "none_required",
+  "retention_policy_ref": "RP-RUNTIME-365D",
+  "native_admission": "unavailable_until_complete_owner_adoption",
+  "preserved_project_resources": [
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/filesafe-injective-key-sources.v1.schema.json",
+      "sha256": "8a42fa18bbe6ffb9d3a87f037b85c3fa380e0aae0269a0aa4aa9dd713f52eec0",
+      "use": "Original Project native source bytes retained; application source never null-widens this resource. Existing genuine Project source resolution is independently required."
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/original-safe-point.v1.schema.json",
+      "sha256": "062e302fe0805f330c99c470df5c20cc247de7032cb424eecca2844b1b2f700e",
+      "use": "Original Project native source bytes retained; application source never null-widens this resource. Existing genuine Project source resolution is independently required."
+    },
+    {
+      "path": "Plans/executor_cancellation_contracts/schemas/original-safe-point-restore-transaction.v1.schema.json",
+      "sha256": "b6d192c96c552880e7f5e8041c12888e2c3f016076c3aeaef7661c74dbca1e47",
+      "use": "Original Project native source bytes retained; application source never null-widens this resource. Existing genuine Project source resolution is independently required."
+    }
+  ],
+  "original_project_body_role": "restore_transaction",
+  "original_project_joins": [
+    "project_id",
+    "safe_point_id",
+    "run_id",
+    "node_id",
+    "attempt_id",
+    "restore_transaction_id",
+    "restore_outcome",
+    "target_state_sha256",
+    "pre_restore_state_sha256",
+    "post_restore_state_sha256",
+    "recovered_after_restart",
+    "conflict_reason_code"
+  ],
+  "graph_sha256": "37a76b386ab20b3de8d50591827cf4689d34454b2b23ffe618ed34a38bddfe4c",
+  "application_body_roots": {
+    "restore_request": "#/$defs/application_request",
+    "safe_point_record": "#/$defs/application_records/properties/safe_point_record",
+    "snapshot_manifest": "#/$defs/application_records/properties/snapshot_manifest",
+    "snapshot_blobs": "#/$defs/application_records/properties/snapshot_blobs",
+    "pre_restore_manifest": "#/$defs/application_records/properties/pre_restore_manifest",
+    "post_restore_manifest": "#/$defs/application_records/properties/post_restore_manifest",
+    "restore_transaction": "#/$defs/application_records/properties/restore_transaction",
+    "equality_result": "#/$defs/application_records/properties/equality_result"
+  },
+  "application_body_codecs": {
+    "restore_request": "pm.application.physical_messagepack.v1",
+    "safe_point_record": "pm.application.physical_messagepack.v1",
+    "snapshot_manifest": "RFC8785",
+    "snapshot_blobs": "pm.application.physical_messagepack.v1",
+    "pre_restore_manifest": "RFC8785",
+    "post_restore_manifest": "RFC8785",
+    "restore_transaction": "pm.application.physical_messagepack.v1",
+    "equality_result": "pm.application.physical_messagepack.v1"
+  },
+  "application_original_composition_root": "Plans/filesafe_event_sources/safe_point_restored.schema.json#/$defs/application_records",
+  "application_required_body_roles": [
+    "restore_request",
+    "safe_point_record",
+    "snapshot_manifest",
+    "snapshot_blobs",
+    "pre_restore_manifest",
+    "post_restore_manifest",
+    "restore_transaction",
+    "equality_result"
+  ],
+  "retention_decision_ref": "DL-401"
+}
