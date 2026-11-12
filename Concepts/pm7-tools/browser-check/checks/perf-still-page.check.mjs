@@ -43,8 +43,11 @@
 import { TRACE_CATEGORIES, summarise } from '../helpers/frame-trace.mjs';
 import { muteSound } from '../helpers/quiet-page.mjs';
 import { pageSource, blocksOf, blockAt } from '../helpers/built-source.mjs';
-import { writeFileSync } from 'node:fs';
+import { writeFileSync, mkdirSync } from 'node:fs';
+import { gzipSync } from 'node:zlib';
+import { join, dirname } from 'node:path';
 import { toggleCost } from '../helpers/still-toggle-cost.mjs';
+import { installUsageLiveWatch, usageWritesBeforeRecalc } from '../helpers/still-usage-live.mjs';
 
 const ALL = ['basic-light', 'basic-dark', 'friendly-light', 'friendly-dark', 'glass-light', 'glass-dark', 'retro-light', 'retro-dark', 'nier-light', 'nier-dark'];
 
@@ -86,8 +89,8 @@ const CENSUS = () => {
 };
 
 // One trace of `ms`, with what `during` does, summarised, plus the marks and the style recalcs of the page's renderer
-async function trace(cdp, { ms, during, url }) {
-	await cdp.send('Tracing.start', { categories: TRACE_CATEGORIES, transferMode: 'ReturnAsStream', bufferUsageReportingInterval: 0 });
+async function trace(cdp, { ms, during, url, keep, track = false }) {
+	await cdp.send('Tracing.start', { categories: TRACE_CATEGORIES + (track ? ',disabled-by-default-devtools.timeline.invalidationTracking,disabled-by-default-devtools.timeline.stack' : ''), transferMode: 'ReturnAsStream', bufferUsageReportingInterval: 0 });
 	const until = Date.now() + ms;
 	try { if (during) await during(); } finally { const left = until - Date.now(); if (left > 0) await new Promise((r) => setTimeout(r, left)); }
 	const complete = new Promise((resolve) => cdp.once('Tracing.tracingComplete', resolve));
@@ -96,7 +99,9 @@ async function trace(cdp, { ms, during, url }) {
 	const parts = [];
 	for (;;) { const r = await cdp.send('IO.read', { handle: stream, size: 1 << 22 }); parts.push(r.base64Encoded ? Buffer.from(r.data, 'base64').toString('utf8') : r.data); if (r.eof) break; }
 	await cdp.send('IO.close', { handle: stream });
-	const json = JSON.parse(parts.join(''));
+	const raw = parts.join('');
+	if (keep) { mkdirSync(dirname(keep), { recursive: true }); writeFileSync(keep, gzipSync(raw)); }
+	const json = JSON.parse(raw);
 	const sum = summarise(json, { url });
 	const events = json.traceEvents || json;
 	// the marks come from the page's own main thread: its style recalcs and main frames are those of the same thread
@@ -121,10 +126,10 @@ async function trace(cdp, { ms, during, url }) {
 		const big = ss.reduce((m, x) => (x.n > m.n ? x : m), ss[0]);
 		const fr = frames.find((f) => f.ts <= ss[0].ts && f.ts + f.dur * 1000 >= ss[0].ts);
 		const r2 = (x) => Math.round(x * 100) / 100;
-		return { found: true, steps: ss.length, max: big.n, maxMs: r2(big.dur), total: ss.reduce((t2, x) => t2 + x.n, 0), totalMs: r2(ss.reduce((t2, x) => t2 + x.dur, 0)), first: ss[0].n, firstFrameMs: fr ? r2(fr.dur) : null, done: b !== undefined };
+		return { found: true, steps: ss.length, max: big.n, maxMs: r2(big.dur), total: ss.reduce((t2, x) => t2 + x.n, 0), totalMs: r2(ss.reduce((t2, x) => t2 + x.dur, 0)), first: ss[0].n, firstFrameMs: fr ? r2(fr.dur) : null, markTs: a, recalcTs: ss[0].ts, recalcEndTs: ss[0].ts + ss[0].dur * 1000, traceFile: keep, done: b !== undefined };
 	};
 	const after = spread;
-	return { sum, after };
+	return { sum, after, marks };
 }
 
 // Marks the state's changes in the trace (a check-side observer: the product writes no marks)
@@ -168,13 +173,15 @@ export default async function (t) {
 	const drawnMax = Number(t.args.drawn || 15), mainMax = Number(t.args.main || 10), toggleMax = Number(t.args.toggle || 150);
 	const W = 1920, H = 1080;
 	const toggleRows = [];
+	let toggleTraceSeq = 0;
+	const toggleTraceOptions = (look, view, phase) => ({ track: String(t.args.toggleTrack || '0') === '1', keep: t.args.toggleTraceDir ? join(String(t.args.toggleTraceDir), `${look}-${view}-${phase}-${toggleTraceSeq++}.json.gz`) : null });
 	const recordToggle = (look, view, phase, recalc, state) => {
 		const animations = {};
 		for (const item of state.marked) for (const p of item.parts) for (const a of p.animations) animations[a.name] = (animations[a.name] || 0) + 1;
-		const row = { look, view, phase, restyled: recalc?.found ? recalc.first : null, markedElements: state.marks, heldAnimations: state.held, animations, marked: state.marked };
+		const row = { look, view, phase, restyled: recalc?.found ? recalc.first : null, markedElements: state.marks, heldAnimations: state.held, animations, marked: state.marked, traceFile: recalc?.traceFile, markTs: recalc?.markTs, recalcTs: recalc?.recalcTs, liveWrites: recalc?.liveWrites, liveWatchKnown: recalc?.liveWatchKnown };
 		row.cost = toggleCost(row.restyled, row.markedElements, toggleMax);
 		toggleRows.push(row);
-		t.log(`${look} ${view} TOGGLE ${phase}: ${JSON.stringify({ restyled: row.restyled, markedElements: row.markedElements, heldAnimations: row.heldAnimations, animations, cost: row.cost })}`);
+		t.log(`${look} ${view} TOGGLE ${phase}: ${JSON.stringify({ restyled: row.restyled, markedElements: row.markedElements, heldAnimations: row.heldAnimations, animations, cost: row.cost, liveWrites: row.liveWrites, liveWatchKnown: row.liveWatchKnown, traceFile: row.traceFile, markTs: row.markTs, recalcTs: row.recalcTs })}`);
 		return row.cost;
 	};
 	let px = 0; // the waking moves go to a new point each time, so each is a real move
@@ -199,6 +206,8 @@ export default async function (t) {
 	const f = await t.app.open({ query: `pm-warm=0&pm-still=${after}` });
 	await f.evaluate(() => document.fonts.ready.then(() => true));
 	await f.evaluate(MARKER);
+	const watchUsage = String(t.args.toggleWatchLive || '0') === '1';
+	if (watchUsage) await f.evaluate(installUsageLiveWatch);
 	// Diagnostic only: if a view cannot stay still, report its spontaneous inputs and the caller of .focus().
 	await f.evaluate(() => {
 		window.__stillInputs = [];
@@ -217,6 +226,21 @@ export default async function (t) {
 	});
 	const cdp = await t.page.context().newCDPSession(t.page);
 	const url = f.url();
+	const traceToggle = async (options, view) => {
+		const watching = watchUsage && view === 'usage';
+		if (watching) await f.evaluate(() => { const s = window.__stillUsageLive; s.observer.takeRecords(); s.records = []; s.error = null; s.active = true; });
+		let result, snapshot;
+		try { result = await trace(cdp, options); }
+		finally { if (watching) snapshot = await f.evaluate(() => { const s = window.__stillUsageLive; s.active = false; return { records: s.records, error: s.error }; }); }
+		const after = result.after;
+		result.after = (...args) => {
+			const x = after(...args); if (!x) return x;
+			x.liveWatchKnown = view !== 'usage' || (watching && !snapshot.error);
+			x.liveWrites = watching ? usageWritesBeforeRecalc(x.markTs, x.recalcTs, result.marks, snapshot.records) : [];
+			return x;
+		};
+		return result;
+	};
 	// the script blocks that draw while still, by the id the build gives each block
 	let blocks = []; try { blocks = blocksOf(await pageSource(t)); } catch (e) { t.log('NOTE the page source could not be read: drawing scripts are named by line only'); }
 	const named = (x) => (x.scripts || []).slice(0, 3).map((r) => { const m = /@(\d+):/.exec(r[0]); const blk = m && blockAt(blocks, Number(m[1])); return `${r[0]} ${blk ? '[' + blk.kind + '#' + (blk.id || '?') + '] ' : ''}${r[1]} ms/s`; }).join(', ');
@@ -257,7 +281,7 @@ export default async function (t) {
 
 			// going still, inside a trace: the toggle's style recalc
 			await t.page.waitForTimeout(Math.max(0, after - 400 - (Date.now() - t0)));
-			const tg = await trace(cdp, { ms: 1200, url });
+			const tg = await traceToggle({ ms: 1200, url, ...toggleTraceOptions(look, view, 'on') }, view);
 			const on = tg.after('pm-still:on', 'pm-still:on');
 
 			// (a) STILL_AFTER + 3 s
@@ -298,7 +322,7 @@ export default async function (t) {
 			// (c) one real move wakes it, and each held loop goes on from where it was
 			const wakePopulation = await f.evaluate(CENSUS);
 			const held = await f.evaluate(() => { const out = []; window.__stillKeep.forEach((an, i) => { if (an.playState === 'paused') out.push([i, an.currentTime]); }); window.__stillHeld = out; window.__stillWake = 0; window.addEventListener('pointermove', (e) => { if (!window.__stillWake) window.__stillWake = e.timeStamp; }, { capture: true, once: true }); return out.length; });
-			const wk = await trace(cdp, { ms: 900, url, during: async () => { await t.page.waitForTimeout(150); await move(); } });
+			const wk = await traceToggle({ ms: 900, url, ...toggleTraceOptions(look, view, 'off'), during: async () => { await t.page.waitForTimeout(150); await move(); } }, view);
 			const woke = await f.evaluate(() => new Promise((resolve) => {
 				const w = window.__stillWake;
 				const t1 = Math.max(0, w + 100 - performance.now());
