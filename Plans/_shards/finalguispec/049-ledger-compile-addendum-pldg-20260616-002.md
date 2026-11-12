@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L27426-L27661
+Source lines: L27448-L27682
 
-Source SHA256: `c5957077f2c168bc1f73c05b9ae87b863ea363be0a7b1c647e73ba278fbb7aea`
+Source SHA256: `faba71dc4ce3fe68b94ea0639e20e448c3f9f3c74a8343e647aa275704933a7a`
 
 ---
 
@@ -18,26 +18,25 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Settings must expose Orchestrator Goal Runtime policy controls without becoming the policy owner. Capability-lane bindings cover low_cost_executor, standard_reviewer, high_reasoning_orchestrator, verifier, adjudicator, and certifier, and each lane binds to configured providers, accounts, and model profiles rather than hardcoded defaults. Settings also exposes subagent policy controls for fanout thresholds, max parallel subagents, max cost per wave, bounded input limits, retry policy, and when subagents are mandatory; verification policy controls for verification strictness, validators by WorkNode type, independent review, evidence-span requirements, completion receipt requirements, repair-loop policy, and degraded-mode behavior; write policy controls for parent-only writer, patch-only subagents, isolated worktree, single-writer lease, protected/governance unlock, and approval boundary defaults; and Goal Mode policy controls for auto-resume, checkpoint cadence, replan behavior, user interruption handling, true-blocker escalation, evidence retention, and redaction. Missing required lane or policy configuration surfaces an unconfigured-lane or typed blocked state with recovery actions before a GoalRun can silently choose arbitrary runtime behavior.
+  Settings must expose Orchestrator Goal Runtime policy controls without becoming the policy owner. The one Default models list offers Planning and supervising, Everyday building, Easy, routine jobs, Design and layout, The hardest jobs and Checking finished work, resolved through Models_System MS-109 with configured providers, accounts and model profiles. A blank job names its inherited source and current model/depth; Easy, routine jobs follows Everyday building and never checks work. The old capability-lane binding editor and helper model/depth rows are retired. Settings also exposes subagent policy controls for fanout thresholds, max parallel subagents, max cost per wave, bounded input limits, retry policy, and when subagents are mandatory; verification policy controls for verification strictness, validators by WorkNode type, independent review, evidence-span requirements, completion receipt requirements, repair-loop policy, and degraded-mode behavior; write policy controls for parent-only writer, patch-only subagents, isolated worktree, single-writer lease, protected/governance unlock, and approval boundary defaults; and Goal Mode policy controls for auto-resume, checkpoint cadence, replan behavior, user interruption handling, true-blocker escalation, evidence retention, and redaction. A required job with no usable model after named inheritance, or a missing required policy, surfaces a typed blocked state with recovery actions before dispatch; no arbitrary runtime behavior is selected.
 gui_related: true
 gui_classification_reason: This unit defines visible Settings controls and blocked-state recovery for model/provider lane binding.
 depends_on:
-  - F3-393
-  - MS-109
-  - PS-115
-  - GRS-027
-  - OSI-428
-  - W-071
-  - RAP-027
+- MS-109
+- PS-115
+- GRS-049
+- OSI-428
+- W-071
+- RAP-027
 unblocks: []
 acceptance_criteria:
-  - Settings expose capability-lane bindings for low_cost_executor, standard_reviewer, high_reasoning_orchestrator, verifier, adjudicator, and certifier.
-  - Lane selectors bind to configured providers, accounts, and model profiles.
+  - Settings expose the six MS-109 job defaults, including Easy, routine jobs, with model/depth chosen in the shared overlay picker.
+  - Job selectors bind to configured providers, accounts and model profiles; blank rows disclose their named source and effective pair.
   - Settings expose subagent policy controls for fanout thresholds, max parallel subagents, max cost per wave, bounded input limits, retry policy, and mandatory subagent use.
   - Settings expose verification strictness, validators by WorkNode type, independent review, evidence-span, completion receipt, repair-loop policy, and degraded-mode controls.
   - Settings expose write-policy controls for parent-only writer, patch-only subagents, isolated worktree, single-writer lease, protected/governance unlock, and approval boundary defaults.
   - Settings expose Goal Mode policy controls for auto-resume, checkpoint cadence, replan behavior, user interruption handling, true-blocker escalation, evidence retention, and redaction.
-  - Missing required lanes surface an unconfigured-lane blocked state and recovery path.
+  - A required job with no usable model after inheritance surfaces a typed blocked state and recovery path.
   - The GUI does not imply provider-specific default models, own runtime policy semantics, or authorize arbitrary fallback selection.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
@@ -104,7 +103,7 @@ preserved_exact_tokens:
   - "redaction"
 negative_constraints:
   - Do not hardcode provider or model defaults.
-  - Do not silently select arbitrary models when a required lane is missing.
+  - Do not silently select arbitrary models when a required job has no usable model.
   - Do not let Settings replace Models, Permissions, Worktree, Goal Runtime, Subagent, or Runtime Artifacts policy authority.
 owner_hints:
   - Plans/FinalGUISpec.md

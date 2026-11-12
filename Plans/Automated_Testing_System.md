@@ -1059,13 +1059,16 @@ plan_unit_id: ATS-014
 unit_type: validation_criterion
 status: accepted
 owner_doc: Plans/Automated_Testing_System.md
-canonical_text: Teach/Teacher tests cover help icon launching a new Teacher thread with current-surface context,
-  /teach and natural-language summon/disambiguation, low-end model default and GUI setting states, requested/effective
-  model disclosure, PM knowledge source disclosure, missing coverage callout, guided overlay happy path and degraded
-  states, mutation confirmation, activity cards, memory capture save/cancel/scope/conflict/revoke/unlock, Teacher
-  handoff, responsive/overflow/keyboard/screen-reader behavior, Teach Help/Glossary coverage, and a PM knowledge
-  pressure test over PM concepts, workflows, settings, models, capabilities, permissions, history, artifacts, Personas,
-  skills/plugins, Orchestrator behavior, and Teach memory.
+canonical_text: >-
+  Teach/Teacher tests cover help icon launching a new Teacher thread with current-surface context,
+  /teach and natural-language summon/disambiguation, low-end model default and GUI setting states,
+  requested/effective model disclosure, PM knowledge source disclosure, missing coverage callout,
+  guided overlay happy path and degraded states, mutation confirmation, activity cards, explicit
+  saved-note capture save/cancel and the two allowed levels, Add/Edit/Delete/Archived, absence of
+  conflict/lock/rollback controls and memory-use decorations, Teacher handoff,
+  responsive/overflow/keyboard/screen-reader behavior, Teach Help/Glossary coverage, and a PM
+  knowledge pressure test over PM concepts, workflows, settings, models, capabilities, permissions,
+  history, artifacts, Personas, skills/plugins, Orchestrator behavior, and Teach memory.
 gui_related: true
 gui_classification_reason: Validates GUI/thread/help/source/model/memory/handoff behavior across Teach surfaces.
 depends_on:
@@ -1078,10 +1081,11 @@ depends_on:
 - UCC-102
 unblocks: []
 acceptance_criteria:
-- Live PlanUnit exists in the adjudicated owner doc with reciprocal ledger source_lineage.
-- Exact source tokens, negative constraints, owner hints, and user corrections are preserved in PlanUnit metadata.
-- No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks
-  are created by this compile.
+  - "Live PlanUnit exists in the adjudicated owner doc with reciprocal ledger source_lineage."
+  - "Exact source tokens, negative constraints, owner hints, and user corrections are preserved in PlanUnit metadata."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks are created by this compile."
+  - "Teach/Teacher saved-note cases reuse the one Memory page and AMS-141 owner at This project or Every project; legacy thread/private scopes and lock/conflict fields do not create UI controls."
+  - "Only a durable successful save may add Saved to memory · View to a reply; View opens the one Memory page as a sheet. No memory-use citation, receipt, tick, chip, count, source detail, verification or Followed/Missed decoration is shown."
 validation_surfaces:
 - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name
 - python3 scripts/pm-plan-index.py validate
@@ -1117,6 +1121,7 @@ source_lineage:
 - chat:work-through-teach-gaps
 - chat:collaboration-style-correction
 - Plans/Personas.md#P-040-teacher-core-persona
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 source_atom_ids:
 - atom-0101
 - atom-0110
@@ -6817,29 +6822,54 @@ plan_unit_id: ATS-080
 unit_type: acceptance_gate
 status: accepted
 owner_doc: Plans/Automated_Testing_System.md
-canonical_text: |-
-  Acceptance checks every live inventory row against SSYS-059's reviewed classification, offered-level/key/combine/atomic/not_offered contract and the actual census. Seven approved additions use their final canonical IDs in Plans/settings_inventory.json; 1010 is only the starting count, 12 categories and 38 managers remain. Test host paths versus Project-relative paths, no Computer+Device combination, declared scalar careful_order versus per_item maps, custom profile fallback, Computer ceilings, Managed limits, atomic theme_pair and Reduce motion plus OS. An Everywhere default may be loosened only where the owners allow it; a Computer safety answer/cap and parent mandatory ceiling still hold.
+canonical_text: 'Acceptance checks every live inventory row against SSYS-059''s reviewed classification, offered-level/key/combine/atomic/not_offered
+  contract and the actual census. Seven approved additions use their final canonical IDs in Plans/settings_inventory.json;
+  1010 is only the starting count, 12 categories and 38 managers remain. Test host paths versus Project-relative
+  paths, no Computer+Device combination, declared scalar careful_order versus per_item maps, custom profile
+  fallback, Computer ceilings, Managed limits, atomic theme_pair and Reduce motion plus OS. An Everywhere default
+  may be loosened only where the owners allow it; a Computer safety answer/cap and parent mandatory ceiling
+  still hold.
 
-  Test the single writer/home/mirror and per-setting CAS: independent edits succeed, same-setting/stale preview fails, offline writes queue nothing, join shows alternatives and supports 30-day Undo, home transfer requires old-writer fencing, and same raw IDs from different key domains never collide. Stale indexes disclose as-of rather than fabricating Varies. No credential/content leakage in mirrors/index/history/events/exports. Q5 keeps general.interaction.thread-archive-days zero as non-offered compatibility only, never an auto-archive offer. Retired Goal worker/verifier rows stay non-offered pending their explicit owner retirement. The five already missing branching.plan/deep-plan subgroup declarations are reported as a pre-existing census defect, not repaired by inventing another category or silently changing the denominator. Human origin edits, agent narrowest/mode handling and protected Always/source acceptance remain distinct.
 
-  Detached own_values/effective_values copy tests exact disjoint selectors, owner things/readback/eligible compensation, chosen account readiness and no install/trust/keys/paths/live-body transfer. New-registry draft rebind/listing and Later/connect-only exclusions use real owner joins. Same-Computer unchosen account never reuses sign-in. App auth keeps protected pre-identity and exact Client/Host/return.
+  Test the single writer/home/mirror and per-setting CAS: independent edits succeed, same-setting/stale preview
+  fails, offline writes queue nothing, join shows alternatives and supports 30-day Undo, home transfer requires
+  old-writer fencing, and same raw IDs from different key domains never collide. Stale indexes disclose as-of
+  rather than fabricating Varies. No credential/content leakage in mirrors/index/history/events/exports. Q5
+  keeps general.interaction.thread-archive-days zero as non-offered compatibility only, never an auto-archive
+  offer. Goal worker/verifier rows are retired under Models §2 and GRS-049, not pending independent defaults.
+  The five already missing branching.plan/deep-plan subgroup declarations are reported as a pre-existing census
+  defect, not repaired by inventing another category or silently changing the denominator. Human origin edits,
+  agent narrowest/mode handling and protected Always/source acceptance remain distinct.
 
-  Model acceptance uses Plans/Models_System.md's accepted scoped-owner chain and explicit tier edition: explicit, scoped owner, Persona, surface/stage, Project own, Computer own, Everywhere/factory, permitted last-used, provider. Standard uses 1–7, Aggressive 1–9, Conservative 1,2,5,6,7,9, explicitly excluding Persona and stage. Preserve historical audit tiers/bytes, account/capability clamps and owner merge semantics; no new model router follows.
+
+  Detached own_values/effective_values copy tests exact disjoint selectors, owner things/readback/eligible
+  compensation, chosen account readiness and no install/trust/keys/paths/live-body transfer. New-registry draft
+  rebind/listing and Later/connect-only exclusions use real owner joins. Same-Computer unchosen account never
+  reuses sign-in. App auth keeps protected pre-identity and exact Client/Host/return.
+
+
+  Current model acceptance follows Models §2’s fixed named-source order: explicit run model/depth, scoped owner
+  policy, surface/stage default, eligible manually selected account default, This project, Everywhere/factory.
+  Persona, command-saved model, Computer defaults, last-used state and provider defaults are not model selection
+  sources. Conservative/Standard/Aggressive cannot reorder or omit a current rung. Historical tier-version
+  bytes and V2 strategy_tier_allowed codec probes remain historical read compatibility only, never proof of
+  current routing. Preserve account/capability/authority clamps and owner merge semantics; no new model router
+  or native proof follows.'
 gui_related: false
-gui_classification_reason: This unit defines decision history, vocabulary, owner boundaries or data-contract acceptance,
-  not visual implementation.
+gui_classification_reason: This unit defines decision history, vocabulary, owner boundaries or data-contract
+  acceptance, not visual implementation.
 depends_on:
 - DR-084
 - DR-085
 - DR-089
 unblocks: []
 acceptance_criteria:
-- The owner/companion matrix includes meaningful successful and refusing app/Project joins, with original exact Project
-  fixtures unchanged.
-- Coverage reports distinguish missing/blocked/not_run and static/concept/native evidence instead of treating omitted
-  scenarios as pass.
-- Run the adopted static contract checks against the current owner and companion editions;
-  no new runtime proof follows from these checks.
+- The owner/companion matrix includes meaningful successful and refusing app/Project joins, with original exact
+  Project fixtures unchanged.
+- Coverage reports distinguish missing/blocked/not_run and static/concept/native evidence instead of treating
+  omitted scenarios as pass.
+- Run the adopted static contract checks against the current owner and companion editions; no new runtime proof
+  follows from these checks.
 validation_surfaces:
 - scripts/pm-projects-refresh-contracts.py
 risk_class: missing_scope_semantics_or_false_certification
@@ -6857,6 +6887,7 @@ node_compile_hint:
 source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#ATS-080
 - /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md#approved-2026-11-03
+- DL-476; settings batch3 fix round r1, 2026-11-12
 preserved_exact_tokens:
 - own_values
 - effective_values
@@ -6864,8 +6895,8 @@ preserved_exact_tokens:
 - 30-day
 - Conservative
 negative_constraints:
-- Do not relax historical codecs, infer native authority from fixtures, write raw captures into canon, excuse failures
-  by refreshing a baseline, or reseal governance in this pass.
+- Do not relax historical codecs, infer native authority from fixtures, write raw captures into canon, excuse
+  failures by refreshing a baseline, or reseal governance in this pass.
 owner_hints:
 - Plans/Settings_System.md#SSYS-059
 - Plans/Settings_System.md#SSYS-060
@@ -6873,6 +6904,9 @@ owner_hints:
 - Plans/Settings_System.md#SSYS-065
 - Plans/Models_System.md#MS-099
 - Plans/Multi-Account.md#MA-074
+compatibility_only_notes:
+- Conservative/Standard/Aggressive and the old scoped_owner_ladder_v2 numeric matrix survive only as historical
+  codecs; current model sources use Models §2.
 ```
 
 ContractRef: ContractName:Plans/Settings_System.md#SSYS-059, ContractName:Plans/Settings_System.md#SSYS-060, ContractName:Plans/Settings_System.md#SSYS-062, ContractName:Plans/Settings_System.md#SSYS-065, ContractName:Plans/Models_System.md#MS-099, ContractName:Plans/Multi-Account.md#MA-074

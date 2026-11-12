@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L29745-L29825
+Source lines: L29778-L29881
 
-Source SHA256: `c5957077f2c168bc1f73c05b9ae87b863ea363be0a7b1c647e73ba278fbb7aea`
+Source SHA256: `faba71dc4ce3fe68b94ea0639e20e448c3f9f3c74a8343e647aa275704933a7a`
 
 ---
 
@@ -20,7 +20,26 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Every visible Usage, Ledger, Dashboard-hosted Usage widget, chat context summary, Context Detail Pane, Runtime Artifacts drill-through, provider/settings row, model row, Run Graph usage overlay, and Orchestrator usage/cost row renders UsageRecord projections through a shared value-state matrix. A numeric cell is not only a number: it carries value, value_state, source_class, source_confidence, source_authority, settlement_status, projection_freshness, projection_health, last_updated or observed_at_utc, reason, and raw/debug redaction availability where relevant. UsageRecord and usage_event_ref remain the accounting and rollup identity. Event-primary navigation uses usage_event/usage_event_ref; a PMConcept7 Ledger attempt row uses usage_attempt/attempt_id and retains usage_event_ref as correlation. Thread_id, tier_id, timestamp, and run_id are filters or narrowing context only. GUI copy for Antigravity CLI uses provider_id `antigravity_cli` and route `agy`; missing `/stats`, `/usage`, `/quota`, or `/credits` and disabled buckets render as unavailable/unknown/not_exposed/disabled states, while G1 credits remain credits and never become tokens, cost, quota, or provider_total. Amended 2026-10-31 (DL-270, UF-108): every surface above reads redb rollups that update as each usage.event lands and never scans raw usage events; a single usage_event_ref or attempt_id drill-through is a keyed lookup, and the Parquet archive is queried only on demand (SP-341). Raw/debug affordances resolve raw_payload_ref through the payload store (SP-337) and will open the record inspector (F3-666) once their own production wiring rows land. This unit adds no retention control: the existing Keep usage history for setting is unchanged, and daily usage totals are kept whatever it says.
+  Every visible Usage, Ledger, Dashboard-hosted Usage widget, chat context summary, Context Detail
+  Pane, Runtime Artifacts drill-through, provider/settings row, model row, Run Graph usage overlay,
+  and Orchestrator usage/cost row renders UsageRecord projections through a shared value-state
+  matrix. A numeric cell is not only a number: it carries value, value_state, source_class,
+  source_confidence, source_authority, settlement_status, projection_freshness, projection_health,
+  last_updated or observed_at_utc, reason, and raw/debug redaction availability only on existing
+  non-chat diagnostic surfaces. UsageRecord and usage_event_ref remain the accounting and rollup
+  identity. Event-primary navigation uses usage_event/usage_event_ref; a PMConcept7 Ledger attempt
+  row uses usage_attempt/attempt_id and retains usage_event_ref as correlation. Thread_id, tier_id,
+  timestamp, and run_id are filters or narrowing context only. GUI copy for Antigravity CLI uses
+  provider_id `antigravity_cli` and route `agy`; missing `/stats`, `/usage`, `/quota`, or `/credits`
+  and disabled buckets render as unavailable/unknown/not_exposed/disabled states, while G1 credits
+  remain credits and never become tokens, cost, quota, or provider_total. Amended 2026-10-31
+  (DL-270, UF-108): every surface above reads redb rollups that update as each usage.event lands and
+  never scans raw usage events; a single usage_event_ref or attempt_id drill-through is a keyed
+  lookup, and the Parquet archive is queried only on demand (SP-341). On existing non-chat
+  Usage/Ledger and expert diagnostic surfaces only, Raw/debug affordances resolve raw_payload_ref
+  through the payload store (SP-337) and will open the record inspector (F3-666) once their own
+  production wiring rows land. This unit adds no retention control: the existing Keep usage history
+  for setting is unchanged, and daily usage totals are kept whatever it says.
 gui_related: true
 gui_classification_reason: Defines visible Usage, Dashboard, settings, graph, orchestrator, and artifact rendering behavior.
 depends_on: [UF-085, UF-086, UF-087, CBP-027, RAP-043]
@@ -34,6 +53,7 @@ acceptance_criteria:
   - Provider/settings and model rows show Antigravity CLI `antigravity_cli`/`agy` usage, quota, credits, statusline, disabled bucket, and G1 credit states without inferring counters from model names or login status.
   - Raw/debug affordances show redaction_status, provider_payload_hash, raw_payload_ref, omitted count, and permissioned-unavailable state rather than unredacted payload content; a raw_payload_ref resolves through the payload store (SP-337) and will open the record inspector (F3-666) once its own production wiring row lands.
   - No Usage page, Ledger room, Dashboard-hosted Usage widget or chat context summary scans raw usage events; per-event drill-through is a keyed lookup.
+  - "Shared fixture coverage verifies that non-chat diagnostics retain their redaction contract while chat context/message surfaces expose no source-composition, raw/curated source-inspection view or per-run inclusion receipt."
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-shard-plans.py --check
@@ -63,6 +83,7 @@ source_lineage:
   - "https://github.com/anomalyco/opencode/issues/30649"
   - "https://github.com/cline/cline/issues/11037"
   - "https://github.com/google-antigravity/antigravity-cli/issues/46"
+  - "DL-475; settings batch 2 round r2 complete context-inspection sweep, 2026-11-12"
 preserved_exact_tokens:
   - value_state
   - source_class
@@ -88,4 +109,6 @@ owner_hints:
   - Plans/usage-feature.md
   - Plans/Widget_System.md
   - Plans/Runtime_Artifacts_Panel.md
+owner_boundary_notes:
+  - "Raw/Curated redaction and source-level inspection in this shared contract apply only to existing non-chat Usage/Ledger and expert diagnostic surfaces, not the chat context ring, Context Detail Pane or message-info UI. Chat keeps normalized capacity/cost/model/settlement facts and useful compaction status; source accounting and raw references remain internal."
 ```

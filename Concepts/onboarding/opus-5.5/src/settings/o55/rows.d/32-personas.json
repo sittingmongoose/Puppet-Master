@@ -164,50 +164,6 @@
    "per": "persona",
    "perWhere": "Change it inside each persona: Memory & Automation › Personas & Crews › Personas."
   },
-  "personas.tuning.default-platform": {
-   "label": "Preferred AI service",
-   "options": {
-    "inherit": "Same as the project"
-   },
-   "choices": [
-    "inherit"
-   ],
-   "per": "persona",
-   "perWhere": "Change it inside each persona: Memory & Automation › Personas & Crews › Personas."
-  },
-  "personas.tuning.default-model": {
-   "label": "Preferred model",
-   "options": {
-    "inherit": "Same as the project"
-   },
-   "choices": [
-    "inherit"
-   ],
-   "per": "persona",
-   "perWhere": "Change it inside each persona: Memory & Automation › Personas & Crews › Personas."
-  },
-  "personas.tuning.default-variant": {
-   "label": "Faster or smarter edition",
-   "options": {
-    "inherit": "Same as the project",
-    "fast": "Faster",
-    "powerful": "Smarter"
-   },
-   "per": "persona",
-   "perWhere": "Change it inside each persona: Memory & Automation › Personas & Crews › Personas."
-  },
-  "personas.tuning.reasoning-effort": {
-   "label": "Thinking effort",
-   "options": {
-    "inherit": "Same as the project",
-    "minimal": "Minimal",
-    "low": "Low",
-    "medium": "Medium",
-    "high": "High"
-   },
-   "per": "persona",
-   "perWhere": "Change it inside each persona: Memory & Automation › Personas & Crews › Personas."
-  },
   "personas.tuning.cost-budget": {
    "label": "Spending cap",
    "help": "Over-budget models are skipped with a note. 0 = no cap.",

@@ -2,9 +2,9 @@
 
 Source: `Plans/Personas.md`
 
-Source lines: L3341-L3475
+Source lines: L3362-L3496
 
-Source SHA256: `4138e13128be18d02583c75f2b833991062cb86948b71a1ad700aa1a1c8cbd33`
+Source SHA256: `89f739fc13a4639be43f3ed8569d8e03342b4fd621622614ec8ab2b72e88f1b3`
 
 ---
 
@@ -65,6 +65,7 @@ source_lineage:
 - chat:work-through-teach-gaps
 - Plans/Personas.md#11.8-teacher
 - Plans/Personas.md#P-040-teacher-core-persona
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 source_atom_ids:
 - atom-0090
 - atom-0121
@@ -118,18 +119,17 @@ preserved_exact_tokens:
 - avoid guessing
 - handoff
 negative_constraints:
-- Do not introduce `requested_persona_id` or `effective_persona_id` as canonical fields; those are stale aliases
-  in Personas.md.
-- Do not make Teacher a hidden subagent for this feature; existing Plans say `teacher` is user-facing and not subagent-only.
-- Do not present Teacher as a separate feature detached from Teach.
-- Do not let Teacher claim authority without visible source/context disclosure.
-- Do not allow Teacher to perform unsafe mutations as teaching gestures.
-- Do not let Teacher quietly become a builder or auditor.
-- Do not silently switch Persona/model/tool path without disclosure.
-- Do not discard Teacher context during handoff.
-- Do not certify Teacher on a small happy-path chat only.
-- Do not let Teacher answer capability or settings questions without live/source-backed state.
-- Do not treat missing coverage as a passing answer unless it is visibly disclosed and routed.
+  - "Do not introduce `requested_persona_id` or `effective_persona_id` as canonical fields; those are stale aliases in Personas.md."
+  - "Do not make Teacher a hidden subagent for this feature; existing Plans say `teacher` is user-facing and not subagent-only."
+  - "Do not present Teacher as a separate feature detached from Teach."
+  - "Teacher must not invent PM authority or task evidence. Ordinary non-memory task citations and missing-coverage disclosure remain; saved-note sources and per-run context inclusion stay internal without a source inspector or memory-use receipt."
+  - "Do not allow Teacher to perform unsafe mutations as teaching gestures."
+  - "Do not let Teacher quietly become a builder or auditor."
+  - "Do not silently switch Persona/model/tool path without disclosure."
+  - "Do not discard Teacher context during handoff."
+  - "Do not certify Teacher on a small happy-path chat only."
+  - "Do not let Teacher answer capability or settings questions without live/source-backed state."
+  - "Do not treat missing coverage as a passing answer unless it is visibly disclosed and routed."
 owner_hints:
 - Plans/assistant-chat-design.md
 - Plans/Personas.md

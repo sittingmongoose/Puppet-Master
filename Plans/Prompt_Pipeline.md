@@ -422,9 +422,9 @@ ContractRef: ContractName:Plans/Run_Modes.md
 
 <a id="GUI"></a>
 
-The GUI MUST expose:
-- An "Injected Context" breakdown per run/turn (paths + byte counts; truncation reason)
-- A safe preview of the compiled prompt (or its major sections) for transparency and debugging
+The GUI keeps basic capacity/cost/model information and useful compaction/truncation status (DL-475).
+- Injected Context paths, byte counts, inclusion/omission and truncation reasons remain internal for enforcement and debugging.
+- Compiled prompt/section previews stay internal; no user-facing source-composition, raw/curated prompt inspection or per-run inclusion receipt is exposed.
 
 ContractRef: ContractName:Plans/FinalGUISpec.md
 
@@ -483,11 +483,12 @@ This flow is transport-agnostic. CLI-backed providers, direct providers, and ser
 - `manual_ui`
 - `surface_default`
 - `config_default`
-- `persona_preference`
+- `account_default` (only a manually selected account and no earlier model)
+- `scope_policy`
 - `auto_family_pool`
 - `fallback`
 
-The runtime MUST also persist a human-readable `selection_reason` suitable for detailed inspectors and audit history.
+The runtime MUST also persist a human-readable `selection_reason` suitable for detailed inspectors and audit history. Historical `persona_preference` and `provider_default` values remain read-only compatibility vocabulary; new model-resolution emits use Models §2 and never treat those tokens as candidates. Persona selection and surviving non-model Persona controls remain independently owned.
 
 ### 6.2.1 Canonical requested-Persona precedence
 
@@ -539,7 +540,7 @@ The shared identity envelope emitted before prompt assembly contains at least `r
 - The display grammar preserves requested versus effective values for provider, model, variant, auth mode, account identity, and worker policy.
 - Resolver inputs include Persona choice, run-envelope overrides, surface defaults, scope policy, capability snapshot, account/profile availability, worktree assignment, and execution-role context.
 - Assistant worktree execution remains cwd-based: prompt assembly may reference the canonical `execution_unit_context`, but it does not inject a separate worktree prompt block merely to make tools operate in the worktree. `working_directory`, FileSafe, tool `cwd`, and provider handoff carry the worktree context.
-- Deterministic resolver matrix order: explicit override -> scoped owner policy -> Persona preference -> surface/stage default -> project/global default -> last-used state when permitted -> provider default.
+- Deterministic model/depth resolver order is the versioned Models §2 order: explicit run model/depth override -> scoped build-owner policy -> surface/stage built-in default -> manually selected account default -> This project -> Everywhere/factory. The account default is eligible only for a manually account-directed run with no earlier model. Persona inputs affect only their surviving non-model controls; Persona preferences, command-saved models, last-used state and provider defaults never select a model. Old source tokens and source-order versions are inert historical reads, not current writer choices.
 - Resolver emit shape includes `requested_platform`, `effective_platform`, `requested_model`, `effective_model`, `requested_variant`, `effective_variant`, `requested_auth_mode`, `effective_auth_mode`, `requested_account_id`, `effective_account_id`, `execution_role`, `selection_reason`, `resolver_matrix_entry`, and `worker_policy_display`.
 
 ### P5 prompt/runtime identity recovery requirements
@@ -1303,8 +1304,10 @@ status: accepted
 owner_doc: Plans/Prompt_Pipeline.md
 canonical_text: >-
   The compiled prompt includes an Instruction Bundle with active execution context, requested/effective overlay, Persona IDs, rules context, tool policy, Injected Context breakdown, and active Investigation Context summary when applicable.
-gui_related: true
-gui_classification_reason: This unit includes user-visible Injected Context and Debug investigation bundle surfaces.
+gui_related: false
+gui_classification_reason: >-
+  Internal Instruction Bundle assembly and enforcement; the separate Debug Investigation Context
+  presentation remains with its existing GUI owner.
 split_recommended: false
 depends_on:
   - "PP-008"
@@ -1327,6 +1330,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0012
+  - "DL-475; settings batch 2 round r2 complete context-inspection sweep, 2026-11-12"
 preserved_exact_tokens:
   - "INSTRUCTION-BUNDLE"
   - "InstructionBundleAssembly"
@@ -1340,7 +1344,8 @@ preserved_exact_tokens:
   - "tool-policy snapshot"
   - "Injected Context breakdown"
   - "active Investigation Context summary"
-negative_constraints: []
+negative_constraints:
+  - "Do not restore user-facing context source inspection or per-run inclusion receipts through a legacy title, preserved token, shared projection or saved view state."
 preserved_contractrefs:
   - "ContractRef: ContractName:Plans/Contracts_V0.md#InstructionBundleAssembly, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-chat-design.md"
 owner_hints:
@@ -1967,18 +1972,23 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Prompt_Pipeline.md
 canonical_text: >-
-  The GUI exposes an Injected Context breakdown per run or turn, including paths, byte counts, truncation reason, and a safe preview of compiled prompt sections for transparency and debugging.
+  Injected Context paths/byte counts, inclusion/omission and truncation records and compiled
+  prompt/section previews remain internal for enforcement and debugging. Chat context surfaces show
+  capacity, cost, effective model information and useful compaction/transition status. Source
+  composition, Curated/Raw source inspection, raw source payloads and per-run inclusion receipts
+  remain internal for enforcement/debugging and are not user-facing.
 gui_related: true
-gui_classification_reason: This unit defines GUI inspection and user-visible prompt transparency behavior.
+gui_classification_reason: >-
+  Defines the user-facing status versus internal compiled-context diagnostics boundary.
 split_recommended: false
 depends_on:
   - "PP-014"
   - "PP-024"
 unblocks: []
 acceptance_criteria:
-  - "GUI Injected Context Transparency remains addressable as a fine-grained Prompt Pipeline PlanUnit."
-  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
-  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+  - "Basic capacity/cost/effective-model facts and useful compaction/truncation status remain available on demand."
+  - "Internal records preserve source paths, inclusion/byte counts, truncation reason/order and permissioned compiled prompt diagnostics."
+  - "The GUI exposes no source-composition chart, safe/raw/curated compiled prompt preview or per-run/turn inclusion receipt; the historical unit title supplies no GUI obligation."
 validation_surfaces:
   - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
   - "python3 scripts/pm-plan-index.py validate"
@@ -1992,6 +2002,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
   - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0021"
+  - "DL-475; settings batch 2 round r2 complete context-inspection sweep, 2026-11-12"
 preserved_exact_tokens:
   - "GUI"
   - "Injected Context"
@@ -1999,7 +2010,8 @@ preserved_exact_tokens:
   - "truncation reason"
   - "safe preview"
   - "compiled prompt"
-negative_constraints: []
+negative_constraints:
+  - "Do not restore user-facing context source inspection or per-run inclusion receipts through a legacy title, preserved token, shared projection or saved view state."
 preserved_contractrefs:
   - "ContractRef: ContractName:Plans/FinalGUISpec.md"
 owner_hints:
@@ -2166,45 +2178,52 @@ plan_unit_id: PP-031
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Prompt_Pipeline.md
-canonical_text: >-
-  Prompt Pipeline preserves persona_selection_source as the canonical requested-Persona source enum and adds runtime_selection_source plus a human-readable selection_reason for inspectors and audit history.
+canonical_text: Prompt Pipeline keeps persona_selection_source as the independent requested-Persona enum. Current
+  runtime_selection_source records model sources from Models §2, including a manually selected account_default
+  only when eligible; it preserves human-readable selection_reason. Historical persona_preference/provider_default
+  source tokens are inert reads, never current model selection candidates.
 gui_related: false
 gui_classification_reason: This unit defines resolver source metadata rather than visual presentation.
 split_recommended: false
 depends_on:
-  - "PP-029"
+- PP-029
 unblocks: []
 acceptance_criteria:
-  - "Selection Source And Reason Enumeration remains addressable as a fine-grained Prompt Pipeline PlanUnit."
-  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
-  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+- Selection Source And Reason Enumeration remains addressable as a fine-grained Prompt Pipeline PlanUnit.
+- ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions,
+  owner/consumer boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by
+  this PlanUnit.
 validation_surfaces:
-  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
-  - "python3 scripts/pm-plan-index.py validate"
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
 risk_class: prompt_pipeline_drift
 reasoning_tier: standard
 context_scope: prompt_pipeline
 implementation_surfaces:
-  - "Plans/Prompt_Pipeline.md"
+- Plans/Prompt_Pipeline.md
 node_compile_hint:
   mode: requirement
   create_worknodes: false
 source_lineage:
-  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0025"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0025
+- DL-476; settings batch3 fix round r1, 2026-11-12
 preserved_exact_tokens:
-  - "persona_selection_source"
-  - "runtime_selection_source"
-  - "manual_ui"
-  - "surface_default"
-  - "config_default"
-  - "persona_preference"
-  - "auto_family_pool"
-  - "fallback"
-  - "selection_reason"
+- persona_selection_source
+- runtime_selection_source
+- manual_ui
+- surface_default
+- config_default
+- persona_preference
+- auto_family_pool
+- fallback
+- selection_reason
 negative_constraints: []
 preserved_contractrefs: []
 owner_hints:
-  - "Plans/Prompt_Pipeline.md"
+- Plans/Prompt_Pipeline.md
+compatibility_only_notes:
+- The preserved persona_preference token is historical read vocabulary only, not a model-default source.
 ```
 
 ### PP-032 - Requested Persona Precedence Non-Rewrite
@@ -2419,56 +2438,73 @@ plan_unit_id: PP-036
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Prompt_Pipeline.md
-canonical_text: >-
-  The resolver uses the source/request/execution settings model, preserves requested versus effective display values, accepts Persona, override, default, policy, capability, account/profile, worktree, and execution-role inputs, follows the deterministic resolver matrix, and emits requested/effective platform, model, variant, auth mode, account, role, reason, matrix entry, and worker policy fields.
+canonical_text: 'The source/request/execution resolver preserves requested/effective runtime identity and follows
+  exactly Models §2 for model/depth: explicit run model/depth override -> scoped build-owner policy -> surface/stage
+  built-in default -> manually selected account default -> This project -> Everywhere/factory. Apply the account
+  default only when the person directed the run to that account and no earlier model was selected; automatic
+  rotation ignores it. Persona choice contributes only surviving non-model response/tool/permission controls,
+  never provider/model/preset/effort defaults. Last-used and provider-default model sources are retired. Preserve
+  capability, account binding, worktree and execution-role gates and all requested/effective emit fields; historical
+  source-order tokens are readable without becoming current resolver authority.'
 gui_related: false
 gui_classification_reason: This unit defines resolver mechanics and emitted fields rather than visual presentation.
 split_recommended: false
 depends_on:
-  - "PP-034"
+- PP-034
+- MS-005
+- MA-013
 unblocks: []
 acceptance_criteria:
-  - "Three Axis Resolver Emit Shape remains addressable as a fine-grained Prompt Pipeline PlanUnit."
-  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
-  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+- Three Axis Resolver Emit Shape remains addressable as a fine-grained Prompt Pipeline PlanUnit.
+- ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions,
+  owner/consumer boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by
+  this PlanUnit.
 validation_surfaces:
-  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
-  - "python3 scripts/pm-plan-index.py validate"
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
 risk_class: prompt_pipeline_drift
 reasoning_tier: standard
 context_scope: prompt_pipeline
 implementation_surfaces:
-  - "Plans/Prompt_Pipeline.md"
+- Plans/Prompt_Pipeline.md
 node_compile_hint:
   mode: requirement
   create_worknodes: false
 source_lineage:
-  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0028"
-  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0030"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0028
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0030
+- DL-476; settings batch3 fix round r1, 2026-11-12
 preserved_exact_tokens:
-  - "source"
-  - "request"
-  - "execution"
-  - "working_directory"
-  - "FileSafe"
-  - "tool cwd"
-  - "explicit override -> scoped owner policy -> Persona preference -> surface/stage default -> project/global default -> last-used state when permitted -> provider default"
-  - "requested_platform"
-  - "effective_platform"
-  - "requested_model"
-  - "effective_model"
-  - "requested_variant"
-  - "effective_variant"
-  - "requested_auth_mode"
-  - "effective_auth_mode"
-  - "resolver_matrix_entry"
-  - "worker_policy_display"
+- source
+- request
+- execution
+- working_directory
+- FileSafe
+- tool cwd
+- explicit override -> scoped owner policy -> Persona preference -> surface/stage default -> project/global
+  default -> last-used state when permitted -> provider default
+- requested_platform
+- effective_platform
+- requested_model
+- effective_model
+- requested_variant
+- effective_variant
+- requested_auth_mode
+- effective_auth_mode
+- resolver_matrix_entry
+- worker_policy_display
 negative_constraints:
-  - "Prompt assembly may reference execution_unit_context but does not inject a separate worktree prompt block merely to make tools operate in the worktree."
+- Prompt assembly may reference execution_unit_context but does not inject a separate worktree prompt block
+  merely to make tools operate in the worktree.
+- Do not admit a retired Persona, command, last-used or provider-default model source into the current resolver.
 preserved_contractrefs: []
 owner_hints:
-  - "Plans/Prompt_Pipeline.md"
-  - "Plans/FileSafe.md"
+- Plans/Prompt_Pipeline.md
+- Plans/FileSafe.md
+compatibility_only_notes:
+- The preserved exact-token chain containing Persona preference, last-used state when permitted and provider
+  default is historical inert source-lineage only; it must not drive current selection.
 ```
 
 ### PP-037 - P5 Export Resolver Gap Packet
@@ -3736,12 +3772,15 @@ plan_unit_id: PP-056
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Prompt_Pipeline.md
-canonical_text: 'Teacher answers draw from a live PM knowledge substrate in this order: current surface context,
-  canonical Plans, command catalog, GUI surface registry, model/capability/provider state, permission/policy state,
-  runtime artifacts/history, Help/Glossary entries, taught memory, then safe fallback or handoff. Teacher must cite
-  source groups or show missing coverage, expose source confidence/currentness states, avoid guessing about PM capabilities,
-  and choose handoff when the user asks beyond teaching/help scope, external research beyond sources, build work,
-  audit/repair, direct execution, or specialty tooling.'
+canonical_text: >-
+  Teacher answers draw from a live PM knowledge substrate in this order: current surface context,
+  canonical Plans, command catalog, GUI surface registry, model/capability/provider state,
+  permission/policy state, runtime artifacts/history, Help/Glossary entries, taught memory, then
+  safe fallback or handoff. Teacher may cite ordinary non-memory PM task evidence, explain its
+  confidence/currentness or show missing coverage. Saved-note sources and inclusion stay internal
+  and never generate memory-use citations or receipts. Teacher avoids guessing about PM capabilities
+  and chooses handoff when the user asks beyond teaching/help scope, external research beyond
+  sources, build work, audit/repair, direct execution, or specialty tooling.
 gui_related: false
 gui_classification_reason: Source ordering, confidence, and no-guessing are prompt/source behavior rather than visual
   presentation; GUI disclosure is owned elsewhere.
@@ -3751,10 +3790,10 @@ unblocks:
 - ACD-426
 - ATS-014
 acceptance_criteria:
-- Live PlanUnit exists in the adjudicated owner doc with reciprocal ledger source_lineage.
-- Exact source tokens, negative constraints, owner hints, and user corrections are preserved in PlanUnit metadata.
-- No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks
-  are created by this compile.
+  - "Live PlanUnit exists in the adjudicated owner doc with reciprocal ledger source_lineage."
+  - "Exact source tokens, negative constraints, owner hints, and user corrections are preserved in PlanUnit metadata."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks are created by this compile."
+  - "A Teacher answer informed by saved notes adds no memory-use citation or receipt; only a real durable save may show Saved to memory · View."
 validation_surfaces:
 - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name
 - python3 scripts/pm-plan-index.py validate
@@ -3796,6 +3835,8 @@ source_lineage:
 - Plans/assistant-chat-design.md#6-teach
 - Plans/Runtime_Artifacts_Panel.md#runtime-artifact-identity-index-and-preview-rules
 - Plans/Personas.md#P-040-teacher-core-persona
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 source_atom_ids:
 - atom-0095
 - atom-0105
@@ -4068,22 +4109,26 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Prompt_Pipeline.md
 canonical_text: >-
-  P1-CONTEXT-SKILL-BUDGETS (P1) is compiled as canonical Puppet Master intent for Skill/context catalog progressive disclosure: Add ContextCatalogBudget for skills, MCP tools, provider models, memories, and terminal transcript summaries. The preserved PM gap/delta is: Need explicit skill/tool/catalog listing budgets and omission warnings in GUI. The observed external-repo signal remains source-lineage evidence: Codex official skills docs use progressive disclosure and cap initial skill listing at 2% context or 8k chars; Cline/Agent Zero/Pi all hit compaction/context/provider issues.
+  P1-CONTEXT-SKILL-BUDGETS retains internal ContextCatalogBudget enforcement for skills, MCP tools,
+  provider models, memories and terminal transcript summaries. Catalog listings cannot crowd out run
+  context, selected skills load full instructions only when chosen, and omission/defer reasons
+  remain internal for enforcement/debugging. Chat retains basic capacity/cost/model and useful
+  compaction status without a context source inspector or per-run inclusion/omission receipt.
 gui_related: true
-gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
+gui_classification_reason: >-
+  Defines retained context-budget enforcement and removal of ordinary source/omission inspection.
 depends_on:
 - PDS-003
 - PNC-001
 unblocks: []
 acceptance_criteria:
-- Skill list cannot crowd out run context; omitted skills/tools are visible in context inspector with reason.
-- Selected skill loads full instructions only when chosen.
-- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+  - "Skill/tool/catalog budgets prevent crowding out run context; omission/defer reasons remain internally attributable, with no user-facing context inspector or inclusion receipt."
+  - "Selected skill loads full instructions only when chosen."
+  - "No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created."
 validation_surfaces:
-- python3 scripts/pm-plan-index.py validate
-- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
-- Skill list cannot crowd out run context; omitted skills/tools are visible in context inspector with reason.
-- Selected skill loads full instructions only when chosen.
+  - "python3 scripts/pm-plan-index.py validate"
+  - "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake"
+  - "Internal catalog-budget/omission records and selected-skill progressive loading."
 risk_class: p1_context_cache_hardening
 reasoning_tier: standard
 context_scope: context_cache
@@ -4105,6 +4150,7 @@ source_lineage:
 - Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
 - Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_external_repo_action_backlog_2026-07-03.jsonl:14
 - Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md:833-1329
+- "DL-475; settings batch 2 round r2 complete context-inspection sweep, 2026-11-12"
 source_atom_ids:
 - atom-0018
 external_atom_id: extrepo-20260703-0014
@@ -4133,10 +4179,14 @@ preserved_exact_tokens:
 - openai/codex
 - cline/cline
 - earendil-works/pi
-negative_constraints: []
+negative_constraints:
+  - "Do not restore user-facing context source inspection or per-run inclusion receipts through a legacy title, preserved token, shared projection or saved view state."
 observed_signal: Codex official skills docs use progressive disclosure and cap initial skill listing at 2% context or 8k chars; Cline/Agent Zero/Pi all hit compaction/context/provider issues.
 pm_current_coverage: PM Prompt Pipeline owns skill bundling and compaction algorithms.
-pm_gap_or_delta: Need explicit skill/tool/catalog listing budgets and omission warnings in GUI.
+pm_gap_or_delta: >-
+  Historical imported GUI-omission-warning delta; DL-475 retains skill/tool/catalog listing budgets
+  and omission reasons internally, with ordinary chat showing basic capacity/cost/model and useful
+  compaction status only.
 proposal_or_recommendation: Add ContextCatalogBudget for skills, MCP tools, provider models, memories, and terminal transcript summaries.
 compile_disposition: create_new_planunit
 ```
@@ -4153,16 +4203,24 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Prompt_Pipeline.md
 canonical_text: >-
-  ContextEpoch records and compaction projections expose context_estimate, input_total, input_non_cached, cache_read, cache_write, cache_write_1h or TTL-specific cache writes, output_visible, reasoning/thoughts, provider_total, counting_semantics, hidden/background contribution refs, and source_confidence to GUI consumers through UsageRecord/context projections. Compact Now creates a new context epoch or compaction receipt according to chat command rules; it does not rewrite historical UsageRecord totals, erase partial/aborted usage, or convert context_estimate into provider billing authority.
+  ContextEpoch records and compaction projections expose context_estimate, input_total,
+  input_non_cached, cache_read, cache_write, cache_write_1h or TTL-specific cache writes,
+  output_visible, reasoning/thoughts, provider_total, counting_semantics, and source_confidence to
+  GUI consumers through UsageRecord/context projections. Hidden/background contribution refs and
+  source attribution remain internal for accounting and debugging; chat receives truthful aggregate
+  usage/cost and useful compaction status without source breakdowns or inclusion receipts. Compact
+  Now creates a new context epoch or compaction receipt according to chat command rules; it does not
+  rewrite historical UsageRecord totals, erase partial/aborted usage, or convert context_estimate
+  into provider billing authority.
 gui_related: true
 gui_classification_reason: Context epoch and compaction projections feed the visible chat context circle and Context Detail Pane.
 depends_on: [PP-072, UF-087, UF-088, ACD-434]
 unblocks: []
 acceptance_criteria:
-  - Context Detail Pane fixtures show context_estimate as local context pressure only, not billing or quota authority.
-  - Compact Now fixtures preserve previous UsageRecord identity and create a new context epoch/receipt without recalculating settled historical costs.
-  - Cache fixtures distinguish cache_read = 0 from cache unsupported/not_exposed/unknown and respect provider counting_semantics.
-  - Hidden/background contribution refs remain visible in context breakdowns instead of being silently folded into user-message totals.
+  - "Context Detail Pane fixtures show context_estimate as local context pressure only, not billing or quota authority."
+  - "Compact Now fixtures preserve previous UsageRecord identity and create a new context epoch/receipt without recalculating settled historical costs."
+  - "Cache fixtures distinguish cache_read = 0 from cache unsupported/not_exposed/unknown and respect provider counting_semantics."
+  - "Hidden/background contribution identity remains attributable internally; chat totals stay truthful without a source breakdown or per-run inclusion receipt."
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-plans-verify.py run-gates
@@ -4184,6 +4242,7 @@ source_lineage:
   - "Plans/usage-feature.md:156-194"
   - "Plans/usage-feature.md:5412-5605"
   - "uploaded:opencode-dev/packages/app/src/components/session-context-usage.tsx"
+  - "DL-475; settings batch 2 round r2 complete context-inspection sweep, 2026-11-12"
 preserved_exact_tokens:
   - ContextEpoch
   - Compact Now
@@ -4197,6 +4256,7 @@ negative_constraints:
   - Do not convert context_estimate into billing, cost, quota, or provider authority.
   - Do not rewrite historical UsageRecord totals during compaction.
   - Do not render cache unsupported/not_exposed/unknown as cache zero.
+  - "Do not restore user-facing context source inspection or per-run inclusion receipts through a legacy title, preserved token, shared projection or saved view state."
 owner_hints:
   - Plans/Prompt_Pipeline.md
   - Plans/assistant-chat-design.md
@@ -5941,15 +6001,25 @@ plan_unit_id: PP-089
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Prompt_Pipeline.md
-canonical_text: "Tool-result shaping policy survives replay and recovery: the effective per-tool/per-MCP-tool output policy (full/summarize/meta_only/exclude, caps, truncation markers, original artifact refs) is snapshotted with the assembled context, and resume/replay retains the effective policy snapshot so truncation/shaping stays consistent and observable. Shaping separates execution output retention from model-visible output: original artifacts and tool/result causal relationships remain recoverable where retained, the canonical tool history is never overwritten by the summary, and huge results never bypass context caps. Retrieval and notebook material remain explicit context source classes inspectable by source type, identity, derivation, and visibility, never permanent memory or canonical source history by retrieval alone."
+canonical_text: 'Tool-result shaping policy survives replay and recovery: the effective per-tool/per-MCP-tool
+  output policy (full/summarize/meta_only/exclude, caps, truncation markers, original artifact refs) is
+  snapshotted with the assembled context, and resume/replay retains the effective policy snapshot so truncation/shaping
+  stays consistent and observable. Shaping separates execution output retention from model-visible output:
+  original artifacts and tool/result causal relationships remain recoverable where retained, the canonical
+  tool history is never overwritten by the summary, and huge results never bypass context caps. Retrieval
+  and notebook material remain explicit context source classes inspectable by source type, identity, derivation,
+  and visibility, never permanent memory or canonical source history by retrieval alone. DL-475 retains
+  these source/identity/derivation/visibility records internally for replay and correct permission enforcement.
+  Ordinary user context views keep basic capacity/cost facts, not assembled-source charts, raw memory
+  or memory-selection explanations.'
 gui_related: false
 gui_classification_reason: Shaping policy is pipeline/tool-boundary behavior, not GUI work.
 depends_on: [PP-084]
 unblocks: []
 acceptance_criteria:
-  - Replayed history shows the same effective shaping with visible policy provenance.
-  - Original canonical tool history remains intact behind shaped model-visible output.
-  - Source class, identity, derivation, and visibility are inspectable for notebook/history material.
+  - "Replay/recovery retains the same effective shaping policy and internal diagnostic provenance."
+  - "Original canonical tool history remains intact behind shaped model-visible output."
+  - "Source class, identity, derivation and visibility remain inspectable internally for notebook/history material, with no ordinary user source-inspection view."
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py run-gates
 risk_class: replay_drift
@@ -5958,12 +6028,15 @@ context_scope: context_pipeline
 implementation_surfaces: [Plans/Prompt_Pipeline.md, Plans/Tools.md, Plans/MCP_Integration.md]
 node_compile_hint: {mode: pipeline_policy_spec, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - source_packet:PM-WNC-2026-09-05-v1:WNC-C13
-  - source_packet:PM-WNC-2026-09-05-v1:WNC-H06
+- source_packet:PM-WNC-2026-09-05-v1:WNC-C13
+- source_packet:PM-WNC-2026-09-05-v1:WNC-H06
+- DL-475; Jared 2026-11-11, quiet Memory and Goals rulings, settings batch 2
+- "DL-475; settings batch 2 round r2 complete context-inspection sweep, 2026-11-12"
 preserved_exact_tokens: ["policy snapshot", "original artifact refs", "explicit context source classes"]
 negative_constraints:
   - Do not overwrite canonical tool history with shaped summaries.
   - Do not let huge results bypass context caps.
+  - "Do not restore user-facing context source inspection or per-run inclusion receipts through a legacy title, preserved token, shared projection or saved view state."
 owner_hints: [Plans/Prompt_Pipeline.md, Plans/Tools.md]
 ```
 

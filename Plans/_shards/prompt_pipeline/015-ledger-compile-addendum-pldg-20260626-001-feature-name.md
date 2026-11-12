@@ -2,9 +2,9 @@
 
 Source: `Plans/Prompt_Pipeline.md`
 
-Source lines: L3568-L3929
+Source lines: L3604-L3970
 
-Source SHA256: `86f90ffb90e7a36627ac597c83f64e1fbb1e31f0064d56eed4f7e4e54c16783d`
+Source SHA256: `98b14aa766512aa10031600a7555f0164bf580f4a0c038a0aeb10d9b666e7a48`
 
 ---
 
@@ -179,12 +179,15 @@ plan_unit_id: PP-056
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Prompt_Pipeline.md
-canonical_text: 'Teacher answers draw from a live PM knowledge substrate in this order: current surface context,
-  canonical Plans, command catalog, GUI surface registry, model/capability/provider state, permission/policy state,
-  runtime artifacts/history, Help/Glossary entries, taught memory, then safe fallback or handoff. Teacher must cite
-  source groups or show missing coverage, expose source confidence/currentness states, avoid guessing about PM capabilities,
-  and choose handoff when the user asks beyond teaching/help scope, external research beyond sources, build work,
-  audit/repair, direct execution, or specialty tooling.'
+canonical_text: >-
+  Teacher answers draw from a live PM knowledge substrate in this order: current surface context,
+  canonical Plans, command catalog, GUI surface registry, model/capability/provider state,
+  permission/policy state, runtime artifacts/history, Help/Glossary entries, taught memory, then
+  safe fallback or handoff. Teacher may cite ordinary non-memory PM task evidence, explain its
+  confidence/currentness or show missing coverage. Saved-note sources and inclusion stay internal
+  and never generate memory-use citations or receipts. Teacher avoids guessing about PM capabilities
+  and chooses handoff when the user asks beyond teaching/help scope, external research beyond
+  sources, build work, audit/repair, direct execution, or specialty tooling.
 gui_related: false
 gui_classification_reason: Source ordering, confidence, and no-guessing are prompt/source behavior rather than visual
   presentation; GUI disclosure is owned elsewhere.
@@ -194,10 +197,10 @@ unblocks:
 - ACD-426
 - ATS-014
 acceptance_criteria:
-- Live PlanUnit exists in the adjudicated owner doc with reciprocal ledger source_lineage.
-- Exact source tokens, negative constraints, owner hints, and user corrections are preserved in PlanUnit metadata.
-- No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks
-  are created by this compile.
+  - "Live PlanUnit exists in the adjudicated owner doc with reciprocal ledger source_lineage."
+  - "Exact source tokens, negative constraints, owner hints, and user corrections are preserved in PlanUnit metadata."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks are created by this compile."
+  - "A Teacher answer informed by saved notes adds no memory-use citation or receipt; only a real durable save may show Saved to memory · View."
 validation_surfaces:
 - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name
 - python3 scripts/pm-plan-index.py validate
@@ -239,6 +242,8 @@ source_lineage:
 - Plans/assistant-chat-design.md#6-teach
 - Plans/Runtime_Artifacts_Panel.md#runtime-artifact-identity-index-and-preview-rules
 - Plans/Personas.md#P-040-teacher-core-persona
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
+- "DL-475 follow-up; verified Ember Memory round, 2026-11-12"
 source_atom_ids:
 - atom-0095
 - atom-0105
