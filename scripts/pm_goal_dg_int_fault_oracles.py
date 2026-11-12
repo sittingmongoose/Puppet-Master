@@ -22,7 +22,13 @@ def child_run(work,cut):
     co=w.coordinator
     prepared=co.prepare(ctx)
     request=W.recovery_request(w,ctx,prepared['intent'])
-    (work/'recovery.json').write_text(json.dumps(dict(request=request,storage=str(w.storage.root),profile=w.profile_sha)))
+    def save_request(record):
+        request=W.recovery_request(w,ctx,record)
+        (work/'recovery.json').write_text(json.dumps(dict(request=request,storage=str(w.storage.root),profile=w.profile_sha)))
+    save_request(prepared['intent'])
+    # Arm assigns the actual transaction id after prepare's prospective id.
+    # Preserve the original issued Intent commitment before any crash cut.
+    w.hooks['arm_built']=lambda world,context:save_request(context['stored_intent']['record'])
     w.lane_cut=cut if cut in W.LANE_CUTS else None;w.lane_mode='exit'
     if cut in O.STORAGE_CUTS:
         w.hooks['preappend']=lambda w,ctx:setattr(w.storage,'faults',S.FaultPlan(cut=cut,mode='exit'))
