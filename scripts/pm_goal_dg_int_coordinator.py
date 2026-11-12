@@ -86,11 +86,14 @@ class Guard(W.GuardReader):
 class Coordinator(W.Coordinator):
     def current_sources(self,ctx,*,stage):
         w=self.world
+        require(stage+'/execution_owner_epoch',w.goal_bridge.world.native.run.owner_epoch==w.sw.ctx.workflow_owner['owner_epoch'])
         roles=dict(native='native_source',goal='goal',standard='standard',assignment='assignment',
                    invocation='invocation',resolver='resolver',references='references',causal='causality',
                    partition='storage_partition')
         for name,handle in ctx['handles'].items():
             if name not in roles:continue
+            issuer=w.registry.owner(handle[0],roles[name])
+            require(stage+'/issuer_epoch/'+name,issuer.custody(handle[1])['owner_epoch']==issuer.owner_epoch)
             original=A.acquire(w.registry,handle[0],roles[name],handle[1])[1]
             require(stage+'/original/'+name,A.same(original,ctx['src'][name]))
         candidate=A.acquire(w.registry,w.native.owner_id,'native',ctx['candidate_handle'])[1]

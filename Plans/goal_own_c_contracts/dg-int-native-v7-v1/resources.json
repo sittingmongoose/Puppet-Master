@@ -1,0 +1,2217 @@
+{
+  "qualification": "TEST_ONLY",
+  "native": "NOT_RUN",
+  "edition": "dg_int_native_v7_c3.v1",
+  "explanation": "Whole additive successor resources. Frozen predecessor bytes, literal ids and hashes remain unchanged. Canonical CA3 Goal selectors and actual native-v7 D01 sources replace the incompatible old D05 witness boundary.",
+  "uri_map": {
+    "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json",
+    "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json": "https://puppetmaster.local/proposals/dg_int_native_goal_witness.v1.schema.json",
+    "https://puppetmaster.local/proposals/workflow_cancel_positive_arguments.v2.schema.json": "https://puppetmaster.local/proposals/dg_int_cancel_positive_arguments.v1.schema.json",
+    "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v6.schema.json": "https://puppetmaster.local/proposals/dg_int_cancel_start_profile.v1.schema.json",
+    "https://puppetmaster.local/proposals/executor_safestop_start_arguments.v2.schema.json": "https://puppetmaster.local/proposals/dg_int_safestop_start_arguments.v1.schema.json"
+  },
+  "resources": [
+    {
+      "path": "Plans/goal_own_c_contracts/dg-int-native-v7-v1/dg_int_safestop_source.v1.schema.json",
+      "sha256": "1ab6121a64002c5041aa55e90185fe6159e819b9475bda1972f644497f53cce1",
+      "retrieval_uri": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json",
+      "predecessor_path": "Plans/executor_cancellation_contracts/schemas/safestop-original-start.v1.schema.json",
+      "predecessor_sha256": "a738fbb17ad658417a472a1d670205d2c401be236dd6865af5c5d5b4f797de18",
+      "predecessor_uri": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json",
+      "predecessor_realm": "native",
+      "changes": [
+        {
+          "location": "/$id",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json"
+        },
+        {
+          "location": "/$defs/OriginalBoundary/properties/principal/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Principal",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Principal"
+        },
+        {
+          "location": "/$defs/WriterRegistration/properties/principal/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Principal",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Principal"
+        },
+        {
+          "location": "/$defs/WriterRegistration/properties/original_registration_origin/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginLocator",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/OriginLocator"
+        },
+        {
+          "location": "/$defs/DomainBirth/properties/scope/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Scope",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Scope"
+        },
+        {
+          "location": "/$defs/DomainBirth/properties/native_boundary/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginalBoundary",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/OriginalBoundary"
+        },
+        {
+          "location": "/$defs/DomainBirth/properties/registered_writers/items/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/WriterRegistration",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/WriterRegistration"
+        },
+        {
+          "location": "/$defs/DomainBirth/properties/origin/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginLocator",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/OriginLocator"
+        },
+        {
+          "location": "/$defs/DomainBirth/properties/reservation_allocation/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Selector"
+        },
+        {
+          "location": "/$defs/DomainBirth/properties/native_allocation_identity/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/NativeAllocationIdentity",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/NativeAllocationIdentity"
+        },
+        {
+          "location": "/$defs/CapabilityBirth/properties/scope/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Scope",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Scope"
+        },
+        {
+          "location": "/$defs/CapabilityBirth/properties/domain_birth/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Selector"
+        },
+        {
+          "location": "/$defs/CapabilityBirth/properties/original_issue_boundary/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginalBoundary",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/OriginalBoundary"
+        },
+        {
+          "location": "/$defs/CapabilityBirth/properties/origin/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginLocator",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/OriginLocator"
+        },
+        {
+          "location": "/$defs/CapabilityDisposition/properties/capability_birth/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Selector"
+        },
+        {
+          "location": "/$defs/CapabilityDisposition/properties/original_boundary/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginalBoundary",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/OriginalBoundary"
+        },
+        {
+          "location": "/$defs/CapabilityDisposition/properties/previous_disposition/anyOf/0/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Selector"
+        },
+        {
+          "location": "/$defs/CapabilityDisposition/properties/origin/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginLocator",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/OriginLocator"
+        },
+        {
+          "location": "/$defs/CapabilityCurrent/properties/birth/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/CapabilityBirth",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/CapabilityBirth"
+        },
+        {
+          "location": "/$defs/CapabilityCurrent/properties/birth_source/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Selector"
+        },
+        {
+          "location": "/$defs/CapabilityCurrent/properties/disposition/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/CapabilityDisposition",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/CapabilityDisposition"
+        },
+        {
+          "location": "/$defs/CapabilityCurrent/properties/disposition_source/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Selector"
+        },
+        {
+          "location": "/$defs/ObligationBirth/properties/scope/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Scope",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Scope"
+        },
+        {
+          "location": "/$defs/ObligationBirth/properties/domain_birth/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Selector"
+        },
+        {
+          "location": "/$defs/ObligationBirth/properties/original_boundary/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginalBoundary",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/OriginalBoundary"
+        },
+        {
+          "location": "/$defs/ObligationBirth/properties/origin/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginLocator",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/OriginLocator"
+        },
+        {
+          "location": "/$defs/UnsupportedSource/properties/native_observation_boundary/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginalBoundary",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/OriginalBoundary"
+        },
+        {
+          "location": "/$defs/DomainCut/properties/scope/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Scope",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Scope"
+        },
+        {
+          "location": "/$defs/DomainCut/properties/domain_birth/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Selector"
+        },
+        {
+          "location": "/$defs/DomainCut/properties/previous_cut/anyOf/0/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Selector"
+        },
+        {
+          "location": "/$defs/DomainCut/properties/current_boundary/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginalBoundary",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/OriginalBoundary"
+        },
+        {
+          "location": "/$defs/DomainCut/properties/registered_writers/items/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/WriterRegistration",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/WriterRegistration"
+        },
+        {
+          "location": "/$defs/DomainCut/properties/capabilities/items/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/CapabilityCurrent",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/CapabilityCurrent"
+        },
+        {
+          "location": "/$defs/DomainCut/properties/obligations/items/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/ObligationBirth",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/ObligationBirth"
+        },
+        {
+          "location": "/$defs/DomainCut/properties/unsupported_sources/items/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/UnsupportedSource",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/UnsupportedSource"
+        },
+        {
+          "location": "/$defs/DomainCut/properties/origin/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginLocator",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/OriginLocator"
+        },
+        {
+          "location": "/$defs/DomainCut/properties/pre_attempt_effect_admissions/items/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Selector"
+        },
+        {
+          "location": "/$defs/CoreEventAdmission/properties/scope/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Scope",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Scope"
+        },
+        {
+          "location": "/$defs/CoreEventAdmission/properties/domain_birth/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Selector"
+        },
+        {
+          "location": "/$defs/CoreEventAdmission/properties/previous_admission/anyOf/0/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Selector"
+        },
+        {
+          "location": "/$defs/CoreEventAdmission/properties/original_boundary/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginalBoundary",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/OriginalBoundary"
+        },
+        {
+          "location": "/$defs/CoreEventAdmission/properties/origin/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginLocator",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/OriginLocator"
+        },
+        {
+          "location": "/$defs/CoreWriterCut/properties/scope/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Scope",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Scope"
+        },
+        {
+          "location": "/$defs/CoreWriterCut/properties/domain_birth/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Selector"
+        },
+        {
+          "location": "/$defs/CoreWriterCut/properties/capability_birth/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Selector"
+        },
+        {
+          "location": "/$defs/CoreWriterCut/properties/admission_head/anyOf/0/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Selector"
+        },
+        {
+          "location": "/$defs/CoreWriterCut/properties/admissions/items/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/CoreEventAdmission",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/CoreEventAdmission"
+        },
+        {
+          "location": "/$defs/CoreWriterCut/properties/original_boundary/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginalBoundary",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/OriginalBoundary"
+        },
+        {
+          "location": "/$defs/CoreWriterCut/properties/origin/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginLocator",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/OriginLocator"
+        },
+        {
+          "location": "/$defs/EventReadback/properties/admission/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/CoreEventAdmission",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/CoreEventAdmission"
+        },
+        {
+          "location": "/$defs/EventCommitment/properties/admission/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Selector"
+        },
+        {
+          "location": "/$defs/EventCommitment/properties/original_append_custody/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Selector"
+        },
+        {
+          "location": "/$defs/FinalFlushRecord/properties/scope/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Scope",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Scope"
+        },
+        {
+          "location": "/$defs/FinalFlushRecord/properties/domain_birth/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Selector"
+        },
+        {
+          "location": "/$defs/FinalFlushRecord/properties/obligation/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Selector"
+        },
+        {
+          "location": "/$defs/FinalFlushRecord/properties/original_boundary/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginalBoundary",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/OriginalBoundary"
+        },
+        {
+          "location": "/$defs/FinalFlushRecord/properties/writer_cuts/items/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Selector"
+        },
+        {
+          "location": "/$defs/FinalFlushRecord/properties/event_commitments/items/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/EventCommitment",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/EventCommitment"
+        },
+        {
+          "location": "/$defs/FinalFlushRecord/properties/unresolved_admissions/items/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Selector"
+        },
+        {
+          "location": "/$defs/FinalFlushRecord/properties/origin/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginLocator",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/OriginLocator"
+        },
+        {
+          "location": "/$defs/FinalFlushHistoryMember/properties/record/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/FinalFlushRecord",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/FinalFlushRecord"
+        },
+        {
+          "location": "/$defs/FinalFlushHistoryMember/properties/record_source/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Selector"
+        },
+        {
+          "location": "/$defs/FinalFlushHistoryMember/properties/original_origin/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Origin",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Origin"
+        },
+        {
+          "location": "/$defs/FinalFlushHistoryMember/properties/origin_source/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Selector"
+        },
+        {
+          "location": "/$defs/FinalFlushReadback/properties/record/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/FinalFlushRecord",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/FinalFlushRecord"
+        },
+        {
+          "location": "/$defs/FinalFlushReadback/properties/record_source/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Selector"
+        },
+        {
+          "location": "/$defs/FinalFlushReadback/properties/writer_cuts/items/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/CoreWriterCut",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/CoreWriterCut"
+        },
+        {
+          "location": "/$defs/FinalFlushReadback/properties/events/items/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/EventReadback",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/EventReadback"
+        },
+        {
+          "location": "/$defs/FinalFlushReadback/properties/origin/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Origin",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Origin"
+        },
+        {
+          "location": "/$defs/CheckpointAssessment/properties/obligation/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/ObligationBirth",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/ObligationBirth"
+        },
+        {
+          "location": "/$defs/CheckpointAssessment/properties/obligation_source/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Selector"
+        },
+        {
+          "location": "/$defs/SupportedProcessAssessment/allOf/0/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/ProcessAssessment",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/ProcessAssessment"
+        },
+        {
+          "location": "/$defs/InvocationPartition/properties/filesafe/items/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/FileSafeAssessment",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/FileSafeAssessment"
+        },
+        {
+          "location": "/$defs/InvocationPartition/properties/process_groups/items/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/SupportedProcessAssessment",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/SupportedProcessAssessment"
+        },
+        {
+          "location": "/$defs/InvocationPartition/properties/unsupported/items/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/UnsupportedSource",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/UnsupportedSource"
+        },
+        {
+          "location": "/$defs/GoalStopSources/properties/current_goal_controls/$ref",
+          "before": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/GoalControlWitness",
+          "after": "https://puppetmaster.local/proposals/dg_int_native_goal_witness.v1.schema.json#/$defs/GoalControlWitness"
+        },
+        {
+          "location": "/$defs/AggregateInput/properties/scope/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Scope",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Scope"
+        },
+        {
+          "location": "/$defs/AggregateInput/properties/goal_stop/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/GoalStopSources",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/GoalStopSources"
+        },
+        {
+          "location": "/$defs/AggregateInput/properties/current_executor/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/CorrectedCurrentSource",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/CorrectedCurrentSource"
+        },
+        {
+          "location": "/$defs/AggregateInput/properties/original_scheduler_stop/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginalSchedulerStop",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/OriginalSchedulerStop"
+        },
+        {
+          "location": "/$defs/AggregateInput/properties/domain_birth/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/DomainBirth",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/DomainBirth"
+        },
+        {
+          "location": "/$defs/AggregateInput/properties/domain_birth_source/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Selector"
+        },
+        {
+          "location": "/$defs/AggregateInput/properties/domain_cut/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/DomainCut",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/DomainCut"
+        },
+        {
+          "location": "/$defs/AggregateInput/properties/domain_cut_source/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Selector"
+        },
+        {
+          "location": "/$defs/AggregateInput/properties/partition/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/InvocationPartition",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/InvocationPartition"
+        },
+        {
+          "location": "/$defs/AggregateInput/properties/required_checkpoint_assessments/items/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/CheckpointAssessment",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/CheckpointAssessment"
+        },
+        {
+          "location": "/$defs/AggregateInput/properties/final_flush/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/FinalFlushReadback",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/FinalFlushReadback"
+        },
+        {
+          "location": "/$defs/AggregateInput/properties/required_final_flush_history/items/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/FinalFlushHistoryMember",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/FinalFlushHistoryMember"
+        },
+        {
+          "location": "/$defs/AggregateInput/properties/original_origins/items/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Origin",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Origin"
+        },
+        {
+          "location": "/$defs/AggregateInput/properties/reservation_lineage/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/ReservationLineage",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/ReservationLineage"
+        },
+        {
+          "location": "/$defs/AggregateInput/properties/pre_attempt_effect_history/items/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/PreAttemptEffectCurrent",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/PreAttemptEffectCurrent"
+        },
+        {
+          "location": "/$defs/SupportedInput/allOf/0/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/AggregateInput",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/AggregateInput"
+        },
+        {
+          "location": "/$defs/AggregateResult/properties/scope/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Scope",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Scope"
+        },
+        {
+          "location": "/$defs/AggregateResult/properties/domain_birth/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Selector"
+        },
+        {
+          "location": "/$defs/AggregateResult/properties/final_domain_cut/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Selector"
+        },
+        {
+          "location": "/$defs/AggregateResult/properties/original_final_flush/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Selector"
+        },
+        {
+          "location": "/$defs/AggregateResult/properties/required_checkpoint_set/items/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Selector"
+        },
+        {
+          "location": "/$defs/AggregateResult/properties/settlements/items/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/SettlementCommitment",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/SettlementCommitment"
+        },
+        {
+          "location": "/$defs/AggregateResult/properties/unresolved_sources/items/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/UnsupportedSource",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/UnsupportedSource"
+        },
+        {
+          "location": "/$defs/AggregateResult/properties/original_boundary/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginalBoundary",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/OriginalBoundary"
+        },
+        {
+          "location": "/$defs/AggregateResult/properties/origin/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginLocator",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/OriginLocator"
+        },
+        {
+          "location": "/$defs/AggregateResult/properties/reservation_allocation/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Selector"
+        },
+        {
+          "location": "/$defs/AggregateResult/properties/compile_reservation_join/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Selector"
+        },
+        {
+          "location": "/$defs/AggregateResult/properties/workflow_reservation_join/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Selector"
+        },
+        {
+          "location": "/$defs/ResolvedResult/allOf/0/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/AggregateResult",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/AggregateResult"
+        },
+        {
+          "location": "/$defs/Origin/properties/scope/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Scope",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Scope"
+        },
+        {
+          "location": "/$defs/Origin/properties/previous_origin/anyOf/0/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Selector"
+        },
+        {
+          "location": "/$defs/Origin/properties/native_boundary/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginalBoundary",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/OriginalBoundary"
+        },
+        {
+          "location": "/$defs/Origin/properties/issued_records/items/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Selector"
+        },
+        {
+          "location": "/$defs/AggregateHead/properties/scope/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Scope",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Scope"
+        },
+        {
+          "location": "/$defs/AggregateHead/properties/domain_birth/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Selector"
+        },
+        {
+          "location": "/$defs/AggregateHead/properties/latest_origin/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Selector"
+        },
+        {
+          "location": "/$defs/AggregateHead/properties/latest_domain_cut/anyOf/0/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Selector"
+        },
+        {
+          "location": "/$defs/AggregateHead/properties/required_final_flush_records/items/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Selector"
+        },
+        {
+          "location": "/$defs/AggregateHead/properties/original_result/anyOf/0/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Selector"
+        },
+        {
+          "location": "/$defs/AggregateHead/properties/recovery_source/anyOf/0/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Selector"
+        },
+        {
+          "location": "/$defs/AggregateHead/properties/principal/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Principal",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Principal"
+        },
+        {
+          "location": "/$defs/AggregateHead/properties/pre_attempt_effect_admissions/items/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Selector"
+        },
+        {
+          "location": "/$defs/AggregateHead/properties/reservation_allocation/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Selector"
+        },
+        {
+          "location": "/$defs/AggregateHead/properties/compile_reservation_join/anyOf/0/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Selector"
+        },
+        {
+          "location": "/$defs/AggregateHead/properties/workflow_reservation_join/anyOf/0/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Selector"
+        },
+        {
+          "location": "/$defs/CurrentBoundary/properties/scope/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Scope",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Scope"
+        },
+        {
+          "location": "/$defs/CurrentBoundary/properties/original_boundary/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginalBoundary",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/OriginalBoundary"
+        },
+        {
+          "location": "/$defs/CurrentBoundary/properties/head/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/AggregateHead",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/AggregateHead"
+        },
+        {
+          "location": "/$defs/CurrentBoundary/properties/head_source/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Selector"
+        },
+        {
+          "location": "/$defs/CurrentBoundary/properties/current_domain_cut/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/DomainCut",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/DomainCut"
+        },
+        {
+          "location": "/$defs/CurrentBoundary/properties/current_goal_stop/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/GoalStopSources",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/GoalStopSources"
+        },
+        {
+          "location": "/$defs/CurrentBoundary/properties/current_executor/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/CorrectedCurrentSource",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/CorrectedCurrentSource"
+        },
+        {
+          "location": "/$defs/CurrentBoundary/properties/current_scheduler_stop/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginalSchedulerStop",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/OriginalSchedulerStop"
+        },
+        {
+          "location": "/$defs/CurrentBoundary/properties/reservation_lineage/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/ReservationLineage",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/ReservationLineage"
+        },
+        {
+          "location": "/$defs/CurrentBoundary/properties/pre_attempt_effect_history/items/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/PreAttemptEffectCurrent",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/PreAttemptEffectCurrent"
+        },
+        {
+          "location": "/$defs/Recovery/properties/scope/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Scope",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Scope"
+        },
+        {
+          "location": "/$defs/Recovery/properties/original_result/anyOf/0/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Selector"
+        },
+        {
+          "location": "/$defs/Recovery/properties/original_boundary/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginalBoundary",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/OriginalBoundary"
+        },
+        {
+          "location": "/$defs/Recovery/properties/last_original_origin/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Selector"
+        },
+        {
+          "location": "/$defs/Recovery/properties/origin/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginLocator",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/OriginLocator"
+        },
+        {
+          "location": "/$defs/SuccessfulReadback/properties/scope/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Scope",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Scope"
+        },
+        {
+          "location": "/$defs/SuccessfulReadback/properties/source_readback/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/SupportedInput",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/SupportedInput"
+        },
+        {
+          "location": "/$defs/SuccessfulReadback/properties/original_result/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/ResolvedResult",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/ResolvedResult"
+        },
+        {
+          "location": "/$defs/SuccessfulReadback/properties/result_source/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Selector"
+        },
+        {
+          "location": "/$defs/SuccessfulReadback/properties/original_origin/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Origin",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Origin"
+        },
+        {
+          "location": "/$defs/SuccessfulReadback/properties/origin_source/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Selector"
+        },
+        {
+          "location": "/$defs/SuccessfulReadback/properties/current_boundary/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/CurrentBoundary",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/CurrentBoundary"
+        },
+        {
+          "location": "/$defs/SuccessfulReadback/properties/recovery/anyOf/1/allOf/0/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Recovery",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Recovery"
+        },
+        {
+          "location": "/$defs/Unavailable/properties/scope/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Scope",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Scope"
+        },
+        {
+          "location": "/$defs/Unavailable/properties/known_unresolved_sources/items/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/UnsupportedSource",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/UnsupportedSource"
+        },
+        {
+          "location": "/$defs/ReadResult/oneOf/0/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/SuccessfulReadback",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/SuccessfulReadback"
+        },
+        {
+          "location": "/$defs/ReadResult/oneOf/1/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Unavailable",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Unavailable"
+        },
+        {
+          "location": "/$defs/Request/properties/scope/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Scope",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Scope"
+        },
+        {
+          "location": "/$defs/NativeAllocationIdentity/properties/native_allocator/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Principal",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Principal"
+        },
+        {
+          "location": "/$defs/ReservationAllocation/properties/scope/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Scope",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Scope"
+        },
+        {
+          "location": "/$defs/ReservationAllocation/properties/identity/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/NativeAllocationIdentity",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/NativeAllocationIdentity"
+        },
+        {
+          "location": "/$defs/ReservationAllocation/properties/reservation/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/LaunchIdentityReservation",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/LaunchIdentityReservation"
+        },
+        {
+          "location": "/$defs/ReservationAllocation/properties/native_boundary/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginalBoundary",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/OriginalBoundary"
+        },
+        {
+          "location": "/$defs/ReservationAllocation/properties/origin/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginLocator",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/OriginLocator"
+        },
+        {
+          "location": "/$defs/AllocationCurrent/properties/allocation/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/ReservationAllocation",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/ReservationAllocation"
+        },
+        {
+          "location": "/$defs/AllocationCurrent/properties/allocation_source/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Selector"
+        },
+        {
+          "location": "/$defs/AllocationCurrent/properties/allocation_origin/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Origin",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Origin"
+        },
+        {
+          "location": "/$defs/AllocationCurrent/properties/allocation_origin_source/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Selector"
+        },
+        {
+          "location": "/$defs/AllocationCurrent/properties/native_current_allocator/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Principal",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Principal"
+        },
+        {
+          "location": "/$defs/AllocationCurrent/properties/current_boundary/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginalBoundary",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/OriginalBoundary"
+        },
+        {
+          "location": "/$defs/CompileReservationJoin/properties/scope/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Scope",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Scope"
+        },
+        {
+          "location": "/$defs/CompileReservationJoin/properties/allocation/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Selector"
+        },
+        {
+          "location": "/$defs/CompileReservationJoin/properties/reservation/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/LaunchIdentityReservation",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/LaunchIdentityReservation"
+        },
+        {
+          "location": "/$defs/CompileReservationJoin/properties/original_boundary/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginalBoundary",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/OriginalBoundary"
+        },
+        {
+          "location": "/$defs/CompileReservationJoin/properties/origin/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginLocator",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/OriginLocator"
+        },
+        {
+          "location": "/$defs/WorkflowReservationJoin/properties/scope/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Scope",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Scope"
+        },
+        {
+          "location": "/$defs/WorkflowReservationJoin/properties/allocation/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Selector"
+        },
+        {
+          "location": "/$defs/WorkflowReservationJoin/properties/compile_join/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Selector"
+        },
+        {
+          "location": "/$defs/WorkflowReservationJoin/properties/reservation/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/LaunchIdentityReservation",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/LaunchIdentityReservation"
+        },
+        {
+          "location": "/$defs/WorkflowReservationJoin/properties/original_boundary/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginalBoundary",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/OriginalBoundary"
+        },
+        {
+          "location": "/$defs/WorkflowReservationJoin/properties/origin/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginLocator",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/OriginLocator"
+        },
+        {
+          "location": "/$defs/ReservationLineage/properties/allocation/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/AllocationCurrent",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/AllocationCurrent"
+        },
+        {
+          "location": "/$defs/ReservationLineage/properties/compile_join/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/CompileReservationJoin",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/CompileReservationJoin"
+        },
+        {
+          "location": "/$defs/ReservationLineage/properties/compile_join_source/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Selector"
+        },
+        {
+          "location": "/$defs/ReservationLineage/properties/compile_join_origin/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Origin",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Origin"
+        },
+        {
+          "location": "/$defs/ReservationLineage/properties/compile_join_origin_source/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Selector"
+        },
+        {
+          "location": "/$defs/ReservationLineage/properties/workflow_join/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/WorkflowReservationJoin",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/WorkflowReservationJoin"
+        },
+        {
+          "location": "/$defs/ReservationLineage/properties/workflow_join_source/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Selector"
+        },
+        {
+          "location": "/$defs/ReservationLineage/properties/workflow_join_origin/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Origin",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Origin"
+        },
+        {
+          "location": "/$defs/ReservationLineage/properties/workflow_join_origin_source/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Selector"
+        },
+        {
+          "location": "/$defs/PreAttemptEffectAdmission/properties/scope/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Scope",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Scope"
+        },
+        {
+          "location": "/$defs/PreAttemptEffectAdmission/properties/domain_birth/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Selector"
+        },
+        {
+          "location": "/$defs/PreAttemptEffectAdmission/properties/allocation/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Selector"
+        },
+        {
+          "location": "/$defs/PreAttemptEffectAdmission/properties/previous_admission/anyOf/0/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Selector"
+        },
+        {
+          "location": "/$defs/PreAttemptEffectAdmission/properties/capability_birth/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Selector"
+        },
+        {
+          "location": "/$defs/PreAttemptEffectAdmission/properties/original_boundary/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginalBoundary",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/OriginalBoundary"
+        },
+        {
+          "location": "/$defs/PreAttemptEffectAdmission/properties/origin/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginLocator",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/OriginLocator"
+        },
+        {
+          "location": "/$defs/PreAttemptEffectCurrent/properties/admission/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/PreAttemptEffectAdmission",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/PreAttemptEffectAdmission"
+        },
+        {
+          "location": "/$defs/PreAttemptEffectCurrent/properties/admission_source/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Selector"
+        },
+        {
+          "location": "/$defs/PreAttemptEffectCurrent/properties/original_origin/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Origin",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Origin"
+        },
+        {
+          "location": "/$defs/PreAttemptEffectCurrent/properties/origin_source/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Selector"
+        },
+        {
+          "location": "/$defs/PreAttemptEffectCurrent/properties/current_boundary/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginalBoundary",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/OriginalBoundary"
+        },
+        {
+          "location": "/$defs/DomainBirthPhysical/properties/value/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/DomainBirth",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/DomainBirth"
+        },
+        {
+          "location": "/$defs/CapabilityBirthPhysical/properties/value/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/CapabilityBirth",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/CapabilityBirth"
+        },
+        {
+          "location": "/$defs/CapabilityDispositionPhysical/properties/value/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/CapabilityDisposition",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/CapabilityDisposition"
+        },
+        {
+          "location": "/$defs/ObligationBirthPhysical/properties/value/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/ObligationBirth",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/ObligationBirth"
+        },
+        {
+          "location": "/$defs/DomainCutPhysical/properties/value/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/DomainCut",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/DomainCut"
+        },
+        {
+          "location": "/$defs/CoreEventAdmissionPhysical/properties/value/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/CoreEventAdmission",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/CoreEventAdmission"
+        },
+        {
+          "location": "/$defs/CoreWriterCutPhysical/properties/value/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/CoreWriterCut",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/CoreWriterCut"
+        },
+        {
+          "location": "/$defs/FinalFlushRecordPhysical/properties/value/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/FinalFlushRecord",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/FinalFlushRecord"
+        },
+        {
+          "location": "/$defs/AggregateResultPhysical/properties/value/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/AggregateResult",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/AggregateResult"
+        },
+        {
+          "location": "/$defs/OriginPhysical/properties/value/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Origin",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Origin"
+        },
+        {
+          "location": "/$defs/AggregateHeadPhysical/properties/value/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/AggregateHead",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/AggregateHead"
+        },
+        {
+          "location": "/$defs/RecoveryPhysical/properties/value/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Recovery",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/Recovery"
+        },
+        {
+          "location": "/$defs/ReservationAllocationPhysical/properties/value/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/ReservationAllocation",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/ReservationAllocation"
+        },
+        {
+          "location": "/$defs/CompileReservationJoinPhysical/properties/value/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/CompileReservationJoin",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/CompileReservationJoin"
+        },
+        {
+          "location": "/$defs/WorkflowReservationJoinPhysical/properties/value/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/WorkflowReservationJoin",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/WorkflowReservationJoin"
+        },
+        {
+          "location": "/$defs/PreAttemptEffectAdmissionPhysical/properties/value/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/PreAttemptEffectAdmission",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/PreAttemptEffectAdmission"
+        },
+        {
+          "location": "/$defs/CorrectedCurrentSource/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/CurrentSource",
+          "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/CurrentSource"
+        },
+        {
+          "location": "/$defs/OriginalSchedulerStop/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/StopSource",
+          "after": "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/StopSource"
+        }
+      ]
+    },
+    {
+      "path": "Plans/goal_own_c_contracts/dg-int-native-v7-v1/dg_int_native_goal_witness.v1.schema.json",
+      "sha256": "11b6505b61a5436e369d3d1f59dd3fefaf66ab497330a17120d7c25d3749893c",
+      "retrieval_uri": "https://puppetmaster.local/proposals/dg_int_native_goal_witness.v1.schema.json",
+      "predecessor_path": "Plans/workflow_activation_contracts/schemas/native-worknode-current-activation.v1.schema.json",
+      "predecessor_sha256": "d1bc87d558af05c5645cd46cadf340dd7d4451732d6714abd711d0307780cd79",
+      "predecessor_uri": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json",
+      "predecessor_realm": "native",
+      "changes": [
+        {
+          "location": "/$id",
+          "before": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json",
+          "after": "https://puppetmaster.local/proposals/dg_int_native_goal_witness.v1.schema.json"
+        },
+        {
+          "location": "/$defs/GoalBodySelector/properties/family_id/const",
+          "before": "goal_body",
+          "after": "goal_body_record"
+        },
+        {
+          "location": "/$defs/GoalBodySelector/properties/schema_id/const",
+          "before": "pm.storage_value.goal_body.v1",
+          "after": "pm.storage_value.goal_body_record.v1"
+        }
+      ]
+    },
+    {
+      "path": "Plans/goal_own_c_contracts/dg-int-native-v7-v1/dg_int_cancel_positive_arguments.v1.schema.json",
+      "sha256": "a9561a88dd2b64a98a33154b28b443e1d18d59d51a503131aa0298136d3f3643",
+      "retrieval_uri": "https://puppetmaster.local/proposals/dg_int_cancel_positive_arguments.v1.schema.json",
+      "predecessor_path": "Plans/workflow_standard_source_contracts/native-v7/schemas/workflow-cancel-positive-arguments.v2.schema.json",
+      "predecessor_sha256": "ec8c346caffabb0bbb06285197e5ed04bfb44ffa8b6dfa02a038aef8a5b9bdd8",
+      "predecessor_uri": "https://puppetmaster.local/proposals/workflow_cancel_positive_arguments.v2.schema.json",
+      "predecessor_realm": "native",
+      "changes": [
+        {
+          "location": "/$id",
+          "before": "https://puppetmaster.local/proposals/workflow_cancel_positive_arguments.v2.schema.json",
+          "after": "https://puppetmaster.local/proposals/dg_int_cancel_positive_arguments.v1.schema.json"
+        },
+        {
+          "location": "/$defs/ControlPlaneAdmission/properties/scope/$ref",
+          "before": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v6.schema.json#/$defs/Scope",
+          "after": "https://puppetmaster.local/proposals/dg_int_cancel_start_profile.v1.schema.json#/$defs/Scope"
+        },
+        {
+          "location": "/$defs/ControlPlaneAdmission/properties/original_domain_birth/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/DomainBirth",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/DomainBirth"
+        },
+        {
+          "location": "/$defs/ControlPlaneAdmission/properties/registered_terminal_writer/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/WriterRegistration",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/WriterRegistration"
+        },
+        {
+          "location": "/$defs/ControlPlaneAdmission/properties/original_terminal_boundary/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginalBoundary",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/OriginalBoundary"
+        },
+        {
+          "location": "/$defs/OriginalAdmission/properties/d06/$ref",
+          "before": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v6.schema.json#/$defs/AdmittedInput",
+          "after": "https://puppetmaster.local/proposals/dg_int_cancel_start_profile.v1.schema.json#/$defs/AdmittedInput"
+        },
+        {
+          "location": "/$defs/OriginalAdmission/properties/current_start/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_start_arguments.v2.schema.json#/$defs/CurrentStartArgument",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_start_arguments.v1.schema.json#/$defs/CurrentStartArgument"
+        },
+        {
+          "location": "/$defs/OriginalAdmission/properties/control_plane/$ref",
+          "before": "https://puppetmaster.local/proposals/workflow_cancel_positive_arguments.v2.schema.json#/$defs/ControlPlaneAdmission",
+          "after": "https://puppetmaster.local/proposals/dg_int_cancel_positive_arguments.v1.schema.json#/$defs/ControlPlaneAdmission"
+        },
+        {
+          "location": "/$defs/OriginalPublication/properties/d06/$ref",
+          "before": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v6.schema.json#/$defs/PreparedMutation",
+          "after": "https://puppetmaster.local/proposals/dg_int_cancel_start_profile.v1.schema.json#/$defs/PreparedMutation"
+        },
+        {
+          "location": "/$defs/OriginalPublication/properties/current_start/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_start_arguments.v2.schema.json#/$defs/CurrentStartArgument",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_start_arguments.v1.schema.json#/$defs/CurrentStartArgument"
+        },
+        {
+          "location": "/$defs/OriginalPublication/properties/control_plane/$ref",
+          "before": "https://puppetmaster.local/proposals/workflow_cancel_positive_arguments.v2.schema.json#/$defs/ControlPlaneAdmission",
+          "after": "https://puppetmaster.local/proposals/dg_int_cancel_positive_arguments.v1.schema.json#/$defs/ControlPlaneAdmission"
+        },
+        {
+          "location": "/$defs/CurrentRead/properties/d06_current/$ref",
+          "before": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v6.schema.json#/$defs/CurrentSource",
+          "after": "https://puppetmaster.local/proposals/dg_int_cancel_start_profile.v1.schema.json#/$defs/CurrentSource"
+        },
+        {
+          "location": "/$defs/CurrentRead/properties/whole_safe_stop/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/SuccessfulReadback",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/SuccessfulReadback"
+        },
+        {
+          "location": "/$defs/CurrentRead/properties/current_start/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_start_arguments.v2.schema.json#/$defs/CurrentStartArgument",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_start_arguments.v1.schema.json#/$defs/CurrentStartArgument"
+        },
+        {
+          "location": "/$defs/CurrentSuccessfulReadback/properties/d06_readback/$ref",
+          "before": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v6.schema.json#/$defs/SuccessfulReadback",
+          "after": "https://puppetmaster.local/proposals/dg_int_cancel_start_profile.v1.schema.json#/$defs/SuccessfulReadback"
+        },
+        {
+          "location": "/$defs/CurrentSuccessfulReadback/properties/current_start/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_start_arguments.v2.schema.json#/$defs/CurrentStartArgument",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_start_arguments.v1.schema.json#/$defs/CurrentStartArgument"
+        },
+        {
+          "location": "/$defs/D01CoissuedPublication/properties/original_d06/$ref",
+          "before": "https://puppetmaster.local/proposals/workflow_cancel_positive_arguments.v2.schema.json#/$defs/OriginalPublication",
+          "after": "https://puppetmaster.local/proposals/dg_int_cancel_positive_arguments.v1.schema.json#/$defs/OriginalPublication"
+        }
+      ]
+    },
+    {
+      "path": "Plans/goal_own_c_contracts/dg-int-native-v7-v1/dg_int_cancel_start_profile.v1.schema.json",
+      "sha256": "7729c3bffcb75ffe61ed19282250705e4ae6b784c53c5de67da75951ba7d6f34",
+      "retrieval_uri": "https://puppetmaster.local/proposals/dg_int_cancel_start_profile.v1.schema.json",
+      "predecessor_path": "Plans/workflow_standard_source_contracts/native-v7/schemas/workflow-cancel-start-profile.v6.schema.json",
+      "predecessor_sha256": "747100bb06ed4c718f4f38a0fee7133b1e45d10a3c04c5d8f25a3bfd7683386c",
+      "predecessor_uri": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v6.schema.json",
+      "predecessor_realm": "native",
+      "changes": [
+        {
+          "location": "/$id",
+          "before": "https://puppetmaster.local/proposals/workflow_cancel_original_start_profile.v6.schema.json",
+          "after": "https://puppetmaster.local/proposals/dg_int_cancel_start_profile.v1.schema.json"
+        },
+        {
+          "location": "/$defs/Scope/$ref",
+          "before": "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope",
+          "after": "https://puppetmaster.local/proposals/dg_int_native_goal_witness.v1.schema.json#/$defs/RunScope"
+        },
+        {
+          "location": "/$defs/RequiredD05SafeStopSuccess/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/SuccessfulReadback",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/SuccessfulReadback"
+        }
+      ]
+    },
+    {
+      "path": "Plans/goal_own_c_contracts/dg-int-native-v7-v1/dg_int_safestop_start_arguments.v1.schema.json",
+      "sha256": "7cba56eb34948f970b1d3ed46ebb2a56468b55d328696efcc8b4385886dfc897",
+      "retrieval_uri": "https://puppetmaster.local/proposals/dg_int_safestop_start_arguments.v1.schema.json",
+      "predecessor_path": "Plans/workflow_standard_source_contracts/native-v7/schemas/safestop-start-arguments.v2.schema.json",
+      "predecessor_sha256": "5431b28e798b726aef7994ae46e51df164ed4c1719317f14bc2a07fda544f24a",
+      "predecessor_uri": "https://puppetmaster.local/proposals/executor_safestop_start_arguments.v2.schema.json",
+      "predecessor_realm": "native",
+      "changes": [
+        {
+          "location": "/$id",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_start_arguments.v2.schema.json",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_start_arguments.v1.schema.json"
+        },
+        {
+          "location": "/$defs/StoppedAggregateArgument/properties/aggregate_input/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/AggregateInput",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/AggregateInput"
+        },
+        {
+          "location": "/$defs/StoppedCurrentBoundaryArgument/properties/current_boundary/$ref",
+          "before": "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/CurrentBoundary",
+          "after": "https://puppetmaster.local/proposals/dg_int_safestop_source.v1.schema.json#/$defs/CurrentBoundary"
+        }
+      ]
+    }
+  ],
+  "imports": [
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "1ab6121a64002c5041aa55e90185fe6159e819b9475bda1972f644497f53cce1",
+      "from_schema_location": "/$defs/Scope/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json#/$defs/RunScope",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "1ab6121a64002c5041aa55e90185fe6159e819b9475bda1972f644497f53cce1",
+      "from_schema_location": "/$defs/CapabilityBirth/properties/bound_invocation/anyOf/0/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json#/$defs/DispatchInvocation",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "1ab6121a64002c5041aa55e90185fe6159e819b9475bda1972f644497f53cce1",
+      "from_schema_location": "/$defs/ObligationBirth/properties/original_trigger_source/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json#/$defs/Selector",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "1ab6121a64002c5041aa55e90185fe6159e819b9475bda1972f644497f53cce1",
+      "from_schema_location": "/$defs/ObligationBirth/properties/bound_invocation/anyOf/0/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json#/$defs/DispatchInvocation",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "1ab6121a64002c5041aa55e90185fe6159e819b9475bda1972f644497f53cce1",
+      "from_schema_location": "/$defs/UnsupportedSource/properties/invocation/anyOf/0/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json#/$defs/DispatchInvocation",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "1ab6121a64002c5041aa55e90185fe6159e819b9475bda1972f644497f53cce1",
+      "from_schema_location": "/$defs/UnsupportedSource/properties/original_source_locator/anyOf/0/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json#/$defs/Selector",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "1ab6121a64002c5041aa55e90185fe6159e819b9475bda1972f644497f53cce1",
+      "from_schema_location": "/$defs/DomainCut/properties/original_stop/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json#/$defs/Selector",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "1ab6121a64002c5041aa55e90185fe6159e819b9475bda1972f644497f53cce1",
+      "from_schema_location": "/$defs/DomainCut/properties/scheduler_stop/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json#/$defs/Selector",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "1ab6121a64002c5041aa55e90185fe6159e819b9475bda1972f644497f53cce1",
+      "from_schema_location": "/$defs/DomainCut/properties/inventory_cut/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json#/$defs/Selector",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "1ab6121a64002c5041aa55e90185fe6159e819b9475bda1972f644497f53cce1",
+      "from_schema_location": "/$defs/EventReadback/properties/event/$ref",
+      "literal_reference": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "1ab6121a64002c5041aa55e90185fe6159e819b9475bda1972f644497f53cce1",
+      "from_schema_location": "/$defs/EventReadback/properties/original_append_custody/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/OriginalAppendCustody",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "1ab6121a64002c5041aa55e90185fe6159e819b9475bda1972f644497f53cce1",
+      "from_schema_location": "/$defs/EventReadback/properties/original_full_value_result/$ref",
+      "literal_reference": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/full_value_result",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "1ab6121a64002c5041aa55e90185fe6159e819b9475bda1972f644497f53cce1",
+      "from_schema_location": "/$defs/EventReadback/properties/current_event_read_token/$ref",
+      "literal_reference": "https://puppetmaster.local/schemas/event_record_index_checkpoint/1.0.0/schema.json#/$defs/read_token",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/schemas/event_record_index_checkpoint/1.0.0/schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "1ab6121a64002c5041aa55e90185fe6159e819b9475bda1972f644497f53cce1",
+      "from_schema_location": "/$defs/EventCommitment/properties/original_full_value_result/$ref",
+      "literal_reference": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/full_value_result",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "1ab6121a64002c5041aa55e90185fe6159e819b9475bda1972f644497f53cce1",
+      "from_schema_location": "/$defs/FinalFlushReadback/properties/storage_boundary/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/SeglogFlushBoundary",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "1ab6121a64002c5041aa55e90185fe6159e819b9475bda1972f644497f53cce1",
+      "from_schema_location": "/$defs/CheckpointAssessment/properties/original_existing_checkpoint_locator/anyOf/0/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json#/$defs/Selector",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "1ab6121a64002c5041aa55e90185fe6159e819b9475bda1972f644497f53cce1",
+      "from_schema_location": "/$defs/FileSafeAssessment/properties/invocation/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeInvocation",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "1ab6121a64002c5041aa55e90185fe6159e819b9475bda1972f644497f53cce1",
+      "from_schema_location": "/$defs/FileSafeAssessment/properties/original_assessment/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeResolvedDisposition",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "1ab6121a64002c5041aa55e90185fe6159e819b9475bda1972f644497f53cce1",
+      "from_schema_location": "/$defs/ProcessAssessment/properties/covered_invocations/items/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/ProcessInvocation",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "1ab6121a64002c5041aa55e90185fe6159e819b9475bda1972f644497f53cce1",
+      "from_schema_location": "/$defs/ProcessAssessment/properties/original_assessment/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/ProcessShutdownAssessment",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "1ab6121a64002c5041aa55e90185fe6159e819b9475bda1972f644497f53cce1",
+      "from_schema_location": "/$defs/InvocationPartition/properties/unknown_or_pending/items/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json#/$defs/DispatchInvocation",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "1ab6121a64002c5041aa55e90185fe6159e819b9475bda1972f644497f53cce1",
+      "from_schema_location": "/$defs/GoalStopSources/properties/original_stop_intent/$ref",
+      "literal_reference": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopIntent",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "1ab6121a64002c5041aa55e90185fe6159e819b9475bda1972f644497f53cce1",
+      "from_schema_location": "/$defs/GoalStopSources/properties/original_stop_receipt/$ref",
+      "literal_reference": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopReceipt",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "1ab6121a64002c5041aa55e90185fe6159e819b9475bda1972f644497f53cce1",
+      "from_schema_location": "/$defs/GoalStopSources/properties/original_stop_receipt_selection/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json#/$defs/Selector",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "1ab6121a64002c5041aa55e90185fe6159e819b9475bda1972f644497f53cce1",
+      "from_schema_location": "/$defs/GoalStopSources/properties/original_source_audit_selection/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json#/$defs/Selector",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "1ab6121a64002c5041aa55e90185fe6159e819b9475bda1972f644497f53cce1",
+      "from_schema_location": "/$defs/CorrectedCurrentSource/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/CurrentSource",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "1ab6121a64002c5041aa55e90185fe6159e819b9475bda1972f644497f53cce1",
+      "from_schema_location": "/$defs/OriginalSchedulerStop/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/StopSource",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "1ab6121a64002c5041aa55e90185fe6159e819b9475bda1972f644497f53cce1",
+      "from_schema_location": "/$defs/SettlementCommitment/oneOf/0/properties/invocation/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeInvocation",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "1ab6121a64002c5041aa55e90185fe6159e819b9475bda1972f644497f53cce1",
+      "from_schema_location": "/$defs/SettlementCommitment/oneOf/0/properties/original_result/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/OriginSelector",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "1ab6121a64002c5041aa55e90185fe6159e819b9475bda1972f644497f53cce1",
+      "from_schema_location": "/$defs/SettlementCommitment/oneOf/0/properties/original_origin/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/OriginSelector",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "1ab6121a64002c5041aa55e90185fe6159e819b9475bda1972f644497f53cce1",
+      "from_schema_location": "/$defs/SettlementCommitment/oneOf/1/properties/invocation/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/ProcessInvocation",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "1ab6121a64002c5041aa55e90185fe6159e819b9475bda1972f644497f53cce1",
+      "from_schema_location": "/$defs/SettlementCommitment/oneOf/1/properties/original_result/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/Selector",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "1ab6121a64002c5041aa55e90185fe6159e819b9475bda1972f644497f53cce1",
+      "from_schema_location": "/$defs/SettlementCommitment/oneOf/1/properties/original_origin/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/Selector",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "1ab6121a64002c5041aa55e90185fe6159e819b9475bda1972f644497f53cce1",
+      "from_schema_location": "/$defs/AggregateResult/properties/goal_stop/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json#/$defs/Selector",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "1ab6121a64002c5041aa55e90185fe6159e819b9475bda1972f644497f53cce1",
+      "from_schema_location": "/$defs/AggregateResult/properties/scheduler_stop/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json#/$defs/Selector",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "1ab6121a64002c5041aa55e90185fe6159e819b9475bda1972f644497f53cce1",
+      "from_schema_location": "/$defs/AggregateResult/properties/inventory_cut/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json#/$defs/Selector",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "1ab6121a64002c5041aa55e90185fe6159e819b9475bda1972f644497f53cce1",
+      "from_schema_location": "/$defs/CurrentBoundary/properties/current_permission_snapshot/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/PermissionValue",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "1ab6121a64002c5041aa55e90185fe6159e819b9475bda1972f644497f53cce1",
+      "from_schema_location": "/$defs/Recovery/properties/last_durable_storage_boundary/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json#/$defs/SeglogFlushBoundary",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/executor_process_shutdown_sources.v1.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "1ab6121a64002c5041aa55e90185fe6159e819b9475bda1972f644497f53cce1",
+      "from_schema_location": "/$defs/SuccessfulReadback/properties/goal_stop/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json#/$defs/Selector",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "1ab6121a64002c5041aa55e90185fe6159e819b9475bda1972f644497f53cce1",
+      "from_schema_location": "/$defs/SuccessfulReadback/properties/scheduler_stop/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json#/$defs/Selector",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "1ab6121a64002c5041aa55e90185fe6159e819b9475bda1972f644497f53cce1",
+      "from_schema_location": "/$defs/SuccessfulReadback/properties/inventory_cut/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json#/$defs/Selector",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "1ab6121a64002c5041aa55e90185fe6159e819b9475bda1972f644497f53cce1",
+      "from_schema_location": "/$defs/Request/properties/expected_executor_owner/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json#/$defs/Owner",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "1ab6121a64002c5041aa55e90185fe6159e819b9475bda1972f644497f53cce1",
+      "from_schema_location": "/$defs/LaunchIdentityReservation/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/LaunchIdentityReservation",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "1ab6121a64002c5041aa55e90185fe6159e819b9475bda1972f644497f53cce1",
+      "from_schema_location": "/$defs/ReservationAllocation/properties/original_goal_control_source/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "1ab6121a64002c5041aa55e90185fe6159e819b9475bda1972f644497f53cce1",
+      "from_schema_location": "/$defs/ReservationAllocation/properties/original_stop_source/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "1ab6121a64002c5041aa55e90185fe6159e819b9475bda1972f644497f53cce1",
+      "from_schema_location": "/$defs/ReservationAllocation/properties/original_permission_source/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "1ab6121a64002c5041aa55e90185fe6159e819b9475bda1972f644497f53cce1",
+      "from_schema_location": "/$defs/CompileReservationJoin/properties/native_compile_source/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/OriginalSourceBinding",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "1ab6121a64002c5041aa55e90185fe6159e819b9475bda1972f644497f53cce1",
+      "from_schema_location": "/$defs/CompileReservationJoin/properties/native_compile_origin/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "1ab6121a64002c5041aa55e90185fe6159e819b9475bda1972f644497f53cce1",
+      "from_schema_location": "/$defs/WorkflowReservationJoin/properties/workflow_birth/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json#/$defs/Selector",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "1ab6121a64002c5041aa55e90185fe6159e819b9475bda1972f644497f53cce1",
+      "from_schema_location": "/$defs/WorkflowReservationJoin/properties/workflow_birth_origin/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json#/$defs/Selector",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/executor_workflow_source_closure.v2.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "1ab6121a64002c5041aa55e90185fe6159e819b9475bda1972f644497f53cce1",
+      "from_schema_location": "/$defs/ReservationLineage/properties/native_compile_source/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/NativeCompileSource",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "1ab6121a64002c5041aa55e90185fe6159e819b9475bda1972f644497f53cce1",
+      "from_schema_location": "/$defs/ReservationLineage/properties/native_compile_control/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/NativeSourceControl",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "1ab6121a64002c5041aa55e90185fe6159e819b9475bda1972f644497f53cce1",
+      "from_schema_location": "/$defs/ReservationLineage/properties/native_compile_origin/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/OwnerIssueOrigin",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "1ab6121a64002c5041aa55e90185fe6159e819b9475bda1972f644497f53cce1",
+      "from_schema_location": "/$defs/PreAttemptEffectAdmission/properties/original_native_input_source/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/OriginalSourceBinding",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "11b6505b61a5436e369d3d1f59dd3fefaf66ab497330a17120d7c25d3749893c",
+      "from_schema_location": "/$defs/SourceSelector/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "11b6505b61a5436e369d3d1f59dd3fefaf66ab497330a17120d7c25d3749893c",
+      "from_schema_location": "/$defs/OriginalSourceBinding/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/OriginalSourceBinding",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "11b6505b61a5436e369d3d1f59dd3fefaf66ab497330a17120d7c25d3749893c",
+      "from_schema_location": "/$defs/RunIdentity/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/RunIdentity",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "11b6505b61a5436e369d3d1f59dd3fefaf66ab497330a17120d7c25d3749893c",
+      "from_schema_location": "/$defs/WorkNodeRecord/properties/readiness_predicates/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/ReadinessSnapshot",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "11b6505b61a5436e369d3d1f59dd3fefaf66ab497330a17120d7c25d3749893c",
+      "from_schema_location": "/$defs/WorkNodeRecord/properties/authority/$ref",
+      "literal_reference": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/authority",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "11b6505b61a5436e369d3d1f59dd3fefaf66ab497330a17120d7c25d3749893c",
+      "from_schema_location": "/$defs/WorkNodeRecord/properties/model/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/ModelResolutionMetadata",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "11b6505b61a5436e369d3d1f59dd3fefaf66ab497330a17120d7c25d3749893c",
+      "from_schema_location": "/$defs/WorkNodeRecord/properties/tests/$ref",
+      "literal_reference": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json#/$defs/test_binding",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/schemas/plans_to_code_handoff.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "11b6505b61a5436e369d3d1f59dd3fefaf66ab497330a17120d7c25d3749893c",
+      "from_schema_location": "/$defs/WorkNodeRecord/properties/currentness/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/WorkNodeCurrentness",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "11b6505b61a5436e369d3d1f59dd3fefaf66ab497330a17120d7c25d3749893c",
+      "from_schema_location": "/$defs/OriginalVerifierResult/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/inputs/Plans/project_plan_node.schema.json#/properties/verifier_result",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/inputs/Plans/project_plan_node.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "11b6505b61a5436e369d3d1f59dd3fefaf66ab497330a17120d7c25d3749893c",
+      "from_schema_location": "/$defs/OriginalVerifierInput/properties/complete_evidence/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/inputs/Plans/evidence.schema.json",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/inputs/Plans/evidence.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "11b6505b61a5436e369d3d1f59dd3fefaf66ab497330a17120d7c25d3749893c",
+      "from_schema_location": "/$defs/OriginalCompletionInput/properties/receipt/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/inputs/Plans/plans_to_code_handoff.schema.json#/$defs/worknode_completion_receipt",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/inputs/Plans/plans_to_code_handoff.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "11b6505b61a5436e369d3d1f59dd3fefaf66ab497330a17120d7c25d3749893c",
+      "from_schema_location": "/$defs/OriginalCompletionInput/properties/dispatch/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/inputs/Plans/plans_to_code_handoff.schema.json#/$defs/worknode_dispatch_receipt",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/inputs/Plans/plans_to_code_handoff.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "11b6505b61a5436e369d3d1f59dd3fefaf66ab497330a17120d7c25d3749893c",
+      "from_schema_location": "/$defs/OriginalCompletionInput/properties/changes/items/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/inputs/Plans/plans_to_code_handoff.schema.json#/$defs/worknode_change_receipt",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/inputs/Plans/plans_to_code_handoff.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "11b6505b61a5436e369d3d1f59dd3fefaf66ab497330a17120d7c25d3749893c",
+      "from_schema_location": "/$defs/OriginalCompletionInput/properties/tests/items/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/inputs/Plans/plans_to_code_handoff.schema.json#/$defs/test_run_receipt",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/inputs/Plans/plans_to_code_handoff.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "11b6505b61a5436e369d3d1f59dd3fefaf66ab497330a17120d7c25d3749893c",
+      "from_schema_location": "/$defs/OriginalCompletionInput/properties/auditor/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/inputs/Plans/plans_to_code_handoff.schema.json#/$defs/auditor_verification_receipt",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/inputs/Plans/plans_to_code_handoff.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "11b6505b61a5436e369d3d1f59dd3fefaf66ab497330a17120d7c25d3749893c",
+      "from_schema_location": "/$defs/OriginalCompletionInput/properties/auditor_cycles/items/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/inputs/Plans/plans_to_code_handoff.schema.json#/$defs/auditor_cycle_report",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/inputs/Plans/plans_to_code_handoff.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "11b6505b61a5436e369d3d1f59dd3fefaf66ab497330a17120d7c25d3749893c",
+      "from_schema_location": "/$defs/OriginalCompletionInput/properties/source_control/items/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/inputs/Plans/plans_to_code_handoff.schema.json#/$defs/source_control_receipt",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/inputs/Plans/plans_to_code_handoff.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "11b6505b61a5436e369d3d1f59dd3fefaf66ab497330a17120d7c25d3749893c",
+      "from_schema_location": "/$defs/OriginalCompletionInput/properties/finalization/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/inputs/Plans/plans_to_code_handoff.schema.json#/$defs/source_control_finalization_receipt",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/inputs/Plans/plans_to_code_handoff.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "11b6505b61a5436e369d3d1f59dd3fefaf66ab497330a17120d7c25d3749893c",
+      "from_schema_location": "/$defs/OriginalCompletionInput/properties/validators/items/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/inputs/Plans/plans_to_code_handoff.schema.json#/$defs/validator_outcome",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/inputs/Plans/plans_to_code_handoff.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "11b6505b61a5436e369d3d1f59dd3fefaf66ab497330a17120d7c25d3749893c",
+      "from_schema_location": "/$defs/OriginalCompletionInput/properties/repairs/items/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/inputs/Plans/plans_to_code_handoff.schema.json#/$defs/repair_attempt_receipt",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/inputs/Plans/plans_to_code_handoff.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "11b6505b61a5436e369d3d1f59dd3fefaf66ab497330a17120d7c25d3749893c",
+      "from_schema_location": "/$defs/OriginalCompletionInput/properties/promotions/items/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/inputs/Plans/plans_to_code_handoff.schema.json#/$defs/merge_or_promotion_receipt",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/inputs/Plans/plans_to_code_handoff.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "11b6505b61a5436e369d3d1f59dd3fefaf66ab497330a17120d7c25d3749893c",
+      "from_schema_location": "/$defs/MaterializeCurrentInputs/properties/original_born_worknode/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/BornWorkNodeRecord",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "11b6505b61a5436e369d3d1f59dd3fefaf66ab497330a17120d7c25d3749893c",
+      "from_schema_location": "/$defs/MaterializeCurrentInputs/properties/original_materialization_receipt/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/WorkNodeMaterializationReceipt",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "11b6505b61a5436e369d3d1f59dd3fefaf66ab497330a17120d7c25d3749893c",
+      "from_schema_location": "/$defs/MaterializeCurrentInputs/properties/original_source_request/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/NativeRequestSource",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "11b6505b61a5436e369d3d1f59dd3fefaf66ab497330a17120d7c25d3749893c",
+      "from_schema_location": "/$defs/MaterializeCurrentInputs/properties/original_installed_graph/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/InstalledWorkGraph",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "11b6505b61a5436e369d3d1f59dd3fefaf66ab497330a17120d7c25d3749893c",
+      "from_schema_location": "/$defs/MaterializeCurrentInputs/properties/original_required_set/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/RequiredSet",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "11b6505b61a5436e369d3d1f59dd3fefaf66ab497330a17120d7c25d3749893c",
+      "from_schema_location": "/$defs/MaterializeCurrentInputs/properties/original_goal_run_body/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/GoalRunBody",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "11b6505b61a5436e369d3d1f59dd3fefaf66ab497330a17120d7c25d3749893c",
+      "from_schema_location": "/$defs/MaterializeCurrentInputs/properties/original_goal_run_control/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/GoalRunControl",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "11b6505b61a5436e369d3d1f59dd3fefaf66ab497330a17120d7c25d3749893c",
+      "from_schema_location": "/$defs/GoalControlWitness/properties/body/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/cancellation/inputs/Plans/goal_body_custody.schema.json#/$defs/body",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/cancellation/inputs/Plans/goal_body_custody.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "11b6505b61a5436e369d3d1f59dd3fefaf66ab497330a17120d7c25d3749893c",
+      "from_schema_location": "/$defs/GoalControlWitness/properties/control/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/cancellation/proposed/Plans/goal_cancel_command_custody.schema.json#/$defs/BodyControlV2",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/cancellation/proposed/Plans/goal_cancel_command_custody.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "11b6505b61a5436e369d3d1f59dd3fefaf66ab497330a17120d7c25d3749893c",
+      "from_schema_location": "/$defs/GoalControlWitness/properties/stop/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/cancellation/proposed/Plans/goal_cancel_command_custody.schema.json#/$defs/StopControl",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/cancellation/proposed/Plans/goal_cancel_command_custody.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "11b6505b61a5436e369d3d1f59dd3fefaf66ab497330a17120d7c25d3749893c",
+      "from_schema_location": "/$defs/GoalControlWitness/properties/goal_run_body/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/GoalRunBody",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "11b6505b61a5436e369d3d1f59dd3fefaf66ab497330a17120d7c25d3749893c",
+      "from_schema_location": "/$defs/GoalControlWitness/properties/goal_run_control/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/GoalRunControl",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "11b6505b61a5436e369d3d1f59dd3fefaf66ab497330a17120d7c25d3749893c",
+      "from_schema_location": "/$defs/NativeCurrentSnapshot/properties/execution_unit/anyOf/0/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/inputs/Plans/execution_unit_context.schema.json",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/operational_custody_resources/frozen/source-control/completion/inputs/Plans/execution_unit_context.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "a9561a88dd2b64a98a33154b28b443e1d18d59d51a503131aa0298136d3f3643",
+      "from_schema_location": "/$defs/D01CoissuedPublication/properties/d01_transition/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/WorkflowTransitionInput",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "7729c3bffcb75ffe61ed19282250705e4ae6b784c53c5de67da75951ba7d6f34",
+      "from_schema_location": "/$defs/Selector/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "7729c3bffcb75ffe61ed19282250705e4ae6b784c53c5de67da75951ba7d6f34",
+      "from_schema_location": "/$defs/WorkflowBody/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/GoalRunBody",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "7729c3bffcb75ffe61ed19282250705e4ae6b784c53c5de67da75951ba7d6f34",
+      "from_schema_location": "/$defs/WorkflowControl/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/GoalRunControl",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "7729c3bffcb75ffe61ed19282250705e4ae6b784c53c5de67da75951ba7d6f34",
+      "from_schema_location": "/$defs/CurrentSource/properties/executor/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/CurrentSource",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "7729c3bffcb75ffe61ed19282250705e4ae6b784c53c5de67da75951ba7d6f34",
+      "from_schema_location": "/$defs/CurrentSource/properties/scheduler_stop/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/StopSource",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "7729c3bffcb75ffe61ed19282250705e4ae6b784c53c5de67da75951ba7d6f34",
+      "from_schema_location": "/$defs/NativePreimage/properties/body/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/GoalRunBodyPhysical",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "7729c3bffcb75ffe61ed19282250705e4ae6b784c53c5de67da75951ba7d6f34",
+      "from_schema_location": "/$defs/NativePreimage/properties/control/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/GoalRunControlPhysical",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "7729c3bffcb75ffe61ed19282250705e4ae6b784c53c5de67da75951ba7d6f34",
+      "from_schema_location": "/$defs/NativePreimage/properties/lineage_head/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/WorkflowHead",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "7729c3bffcb75ffe61ed19282250705e4ae6b784c53c5de67da75951ba7d6f34",
+      "from_schema_location": "/$defs/NativePreimage/properties/lineage_update/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/WorkflowUpdate",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "7729c3bffcb75ffe61ed19282250705e4ae6b784c53c5de67da75951ba7d6f34",
+      "from_schema_location": "/$defs/NativePreimage/properties/lineage_origin/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/WorkflowMutationOrigin",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "7729c3bffcb75ffe61ed19282250705e4ae6b784c53c5de67da75951ba7d6f34",
+      "from_schema_location": "/$defs/NativeEvent/allOf/0/$ref",
+      "literal_reference": "file:///home/sittingmongoose/PM-Experiments/workflow-cancel-disposition-source-20260913/v2/frozen-current/event_record.schema.json",
+      "to_realm": "native",
+      "to_retrieval_uri": "file:///home/sittingmongoose/PM-Experiments/workflow-cancel-disposition-source-20260913/v2/frozen-current/event_record.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "7729c3bffcb75ffe61ed19282250705e4ae6b784c53c5de67da75951ba7d6f34",
+      "from_schema_location": "/$defs/NativeEvent/allOf/1/properties/payload/$ref",
+      "literal_reference": "file:///home/sittingmongoose/PM-Experiments/workflow-cancel-disposition-source-20260913/v2/goal_run_cancelled.v3.schema.json",
+      "to_realm": "native",
+      "to_retrieval_uri": "file:///home/sittingmongoose/PM-Experiments/workflow-cancel-disposition-source-20260913/v2/goal_run_cancelled.v3.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "7729c3bffcb75ffe61ed19282250705e4ae6b784c53c5de67da75951ba7d6f34",
+      "from_schema_location": "/$defs/EventReadback/properties/append/$ref",
+      "literal_reference": "file:///home/sittingmongoose/PM-Experiments/workflow-cancel-disposition-source-20260913/v2/frozen-current/event_append_receipt_contracts.schema.json#/$defs/full_value_result",
+      "to_realm": "native",
+      "to_retrieval_uri": "file:///home/sittingmongoose/PM-Experiments/workflow-cancel-disposition-source-20260913/v2/frozen-current/event_append_receipt_contracts.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "7729c3bffcb75ffe61ed19282250705e4ae6b784c53c5de67da75951ba7d6f34",
+      "from_schema_location": "/$defs/EventReadback/properties/custody/$ref",
+      "literal_reference": "file:///home/sittingmongoose/PM-Experiments/workflow-cancel-disposition-source-20260913/v2/frozen-current/event_append_receipt_contracts.schema.json#/$defs/custody_reader",
+      "to_realm": "native",
+      "to_retrieval_uri": "file:///home/sittingmongoose/PM-Experiments/workflow-cancel-disposition-source-20260913/v2/frozen-current/event_append_receipt_contracts.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "7729c3bffcb75ffe61ed19282250705e4ae6b784c53c5de67da75951ba7d6f34",
+      "from_schema_location": "/$defs/CancelledResult/properties/append_receipt/$ref",
+      "literal_reference": "file:///home/sittingmongoose/PM-Experiments/workflow-cancel-disposition-source-20260913/v2/frozen-current/event_append_receipt_contracts.schema.json#/$defs/AppendReceipt",
+      "to_realm": "native",
+      "to_retrieval_uri": "file:///home/sittingmongoose/PM-Experiments/workflow-cancel-disposition-source-20260913/v2/frozen-current/event_append_receipt_contracts.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "7729c3bffcb75ffe61ed19282250705e4ae6b784c53c5de67da75951ba7d6f34",
+      "from_schema_location": "/$defs/CancelledResult/properties/original_event_value/$ref",
+      "literal_reference": "file:///home/sittingmongoose/PM-Experiments/workflow-cancel-disposition-source-20260913/v2/frozen-current/event_append_receipt_contracts.schema.json#/$defs/original_event_value_commitment",
+      "to_realm": "native",
+      "to_retrieval_uri": "file:///home/sittingmongoose/PM-Experiments/workflow-cancel-disposition-source-20260913/v2/frozen-current/event_append_receipt_contracts.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "7729c3bffcb75ffe61ed19282250705e4ae6b784c53c5de67da75951ba7d6f34",
+      "from_schema_location": "/$defs/OriginalRevisionJoin/properties/original_append/$ref",
+      "literal_reference": "file:///home/sittingmongoose/PM-Experiments/workflow-cancel-disposition-source-20260913/v2/frozen-current/event_append_receipt_contracts.schema.json#/$defs/full_value_result",
+      "to_realm": "native",
+      "to_retrieval_uri": "file:///home/sittingmongoose/PM-Experiments/workflow-cancel-disposition-source-20260913/v2/frozen-current/event_append_receipt_contracts.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "7729c3bffcb75ffe61ed19282250705e4ae6b784c53c5de67da75951ba7d6f34",
+      "from_schema_location": "/$defs/OriginalRevisionJoin/properties/original_custody/$ref",
+      "literal_reference": "file:///home/sittingmongoose/PM-Experiments/workflow-cancel-disposition-source-20260913/v2/frozen-current/event_append_receipt_contracts.schema.json#/$defs/custody_reader",
+      "to_realm": "native",
+      "to_retrieval_uri": "file:///home/sittingmongoose/PM-Experiments/workflow-cancel-disposition-source-20260913/v2/frozen-current/event_append_receipt_contracts.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "7729c3bffcb75ffe61ed19282250705e4ae6b784c53c5de67da75951ba7d6f34",
+      "from_schema_location": "/$defs/OriginalRevisionJoin/properties/original_transition/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/StorageWorkflowUpdate",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "7729c3bffcb75ffe61ed19282250705e4ae6b784c53c5de67da75951ba7d6f34",
+      "from_schema_location": "/$defs/OriginalRevisionJoin/properties/original_transition_origin/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/StorageWorkflowMutationOrigin",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "7729c3bffcb75ffe61ed19282250705e4ae6b784c53c5de67da75951ba7d6f34",
+      "from_schema_location": "/$defs/PreparedRevisionContext/properties/original_producer_event_candidate/$ref",
+      "literal_reference": "file:///home/sittingmongoose/PM-Experiments/workflow-cancel-disposition-source-20260913/v3/producer-submission.schema.json",
+      "to_realm": "native",
+      "to_retrieval_uri": "file:///home/sittingmongoose/PM-Experiments/workflow-cancel-disposition-source-20260913/v3/producer-submission.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "7729c3bffcb75ffe61ed19282250705e4ae6b784c53c5de67da75951ba7d6f34",
+      "from_schema_location": "/$defs/OriginalD01Lineage/properties/update/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/StorageWorkflowUpdate",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "7729c3bffcb75ffe61ed19282250705e4ae6b784c53c5de67da75951ba7d6f34",
+      "from_schema_location": "/$defs/OriginalD01Lineage/properties/head/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/StorageWorkflowHead",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "7729c3bffcb75ffe61ed19282250705e4ae6b784c53c5de67da75951ba7d6f34",
+      "from_schema_location": "/$defs/OriginalD01Lineage/properties/pointer/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/StorageCurrentPointer",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "7729c3bffcb75ffe61ed19282250705e4ae6b784c53c5de67da75951ba7d6f34",
+      "from_schema_location": "/$defs/OriginalD01Lineage/properties/origin/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/StorageWorkflowMutationOrigin",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "7729c3bffcb75ffe61ed19282250705e4ae6b784c53c5de67da75951ba7d6f34",
+      "from_schema_location": "/$defs/EventCandidate/properties/producer_submission/$ref",
+      "literal_reference": "file:///home/sittingmongoose/PM-Experiments/workflow-cancel-disposition-source-20260913/v3/producer-submission.schema.json",
+      "to_realm": "native",
+      "to_retrieval_uri": "file:///home/sittingmongoose/PM-Experiments/workflow-cancel-disposition-source-20260913/v3/producer-submission.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "7cba56eb34948f970b1d3ed46ebb2a56468b55d328696efcc8b4385886dfc897",
+      "from_schema_location": "/$defs/OriginalStartArgument/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/workflow_start_original_custody.v6.schema.json#/$defs/OriginalCommitArgument",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/workflow_start_original_custody.v6.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "7cba56eb34948f970b1d3ed46ebb2a56468b55d328696efcc8b4385886dfc897",
+      "from_schema_location": "/$defs/BirthStartOutput/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/workflow_start_original_custody.v6.schema.json#/$defs/BirthControlPublication",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/workflow_start_original_custody.v6.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "7cba56eb34948f970b1d3ed46ebb2a56468b55d328696efcc8b4385886dfc897",
+      "from_schema_location": "/$defs/CurrentStartArgument/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/workflow_start_original_custody.v6.schema.json#/$defs/CurrentSourceArgument",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/workflow_start_original_custody.v6.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "7cba56eb34948f970b1d3ed46ebb2a56468b55d328696efcc8b4385886dfc897",
+      "from_schema_location": "/$defs/StoppedAggregateArgument/properties/current_start/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/workflow_start_original_custody.v6.schema.json#/$defs/CurrentSourceArgument",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/workflow_start_original_custody.v6.schema.json"
+    },
+    {
+      "from_realm": "integration_native",
+      "from_whole_sha256": "7cba56eb34948f970b1d3ed46ebb2a56468b55d328696efcc8b4385886dfc897",
+      "from_schema_location": "/$defs/StoppedCurrentBoundaryArgument/properties/current_start/$ref",
+      "literal_reference": "https://puppetmaster.local/proposals/workflow_start_original_custody.v6.schema.json#/$defs/CurrentSourceArgument",
+      "to_realm": "native",
+      "to_retrieval_uri": "https://puppetmaster.local/proposals/workflow_start_original_custody.v6.schema.json"
+    }
+  ]
+}
