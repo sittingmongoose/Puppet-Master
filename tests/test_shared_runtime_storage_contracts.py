@@ -226,13 +226,13 @@ class SharedRuntimeStorageContractsTest(unittest.TestCase):
         # Re-pinned on plans/ea-w2-orchestrator-20261104: SP-723/CV-740 adds crew_board_message_application_v2,
         # one materialized family, to main's 344. 321 materialized, 23 deferred, 1 alias: 345.
         # Re-pinned once at batch-2 integration from the merged registry, following the readiness census:
-        # main's 344 + 147 lane rows = 491; 460 materialized, 30 deferred, 1 alias.
-        self.assertEqual(len(self.registry["families"]), 491)
+        # main's 344 + 152 lane rows = 496; 465 materialized, 30 deferred, 1 alias.
+        self.assertEqual(len(self.registry["families"]), 496)
         self.assertEqual(
             Counter(row["status"] for row in self.registry["families"]),
             Counter(
                 {
-                    "materialized": 460,
+                    "materialized": 465,
                     "deferred_not_build_blocking": 30,
                     "compatibility_alias": 1,
                 }
