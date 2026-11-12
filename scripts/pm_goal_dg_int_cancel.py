@@ -263,12 +263,25 @@ def current_projection_sources(projector):
     return out
 
 
+def current_started_after_cancel(projector):
+    """A retained running revision cannot establish a current running view."""
+    w=projector.world
+    with w.recorder.call(projector.owner_id,
+            'owner.goal_run.started_cancelled.read_current_started.reference.v1',projector.request()):
+        guard('reader/withdrawn',not projector.reader_withdrawn)
+        native=w.start_world.owners['native'].current()
+        if native['body']['record']['status']!='running':return projector.unavailable('STALE_NATIVE')
+        raise RW.Refusal('current_started/not_in_scope')
+
+
 class Projector(RP.ProjectorV7):
     def __init__(self,world):
         super().__init__(world)
         self.consumer=Consumer(world)
 
     def current_sources(self):return current_projection_sources(self)
+
+    read_current_started=current_started_after_cancel
 
 
 class PackOwner(RW.PhysOwner):
