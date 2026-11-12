@@ -1427,6 +1427,35 @@ def coverage(suite):
                                   ('lower_d01_cause', 'lower/d01_cause', d01_cause)):
         lower(case_id, expected, fn)
 
+    neg('S1', 'producer_write_mode', 'producer/write_mode',
+        start_edits=sub_edit(lambda s: s['payload']['payload'].update(write_mode='proposal_only')))
+
+    def missing_selector_cell(w, h):
+        value = w.owners['input:native_compile'].resolve(h['input:native_compile'][1])[1]
+        path, sel = next(iter(W.walk_selectors(value)))
+        cell = w.storage.cell(sel['family_id'], sel['physical_key'])
+        w.storage.transact([dict(table=sel['family_id'], key=sel['physical_key'], expected=cell['version'],
+                                 delete=True)])
+    neg('S1', 'seven_input_selector_target_deleted', 'start/source_selector/input:native_compile/selector_unresolved',
+        pre=missing_selector_cell)
+    neg('S1', 'd01_head_selector_foreign_storage', 'start/d01_head_body/selector_storage',
+        edits=dict(d01_current=at(['workflow', 'head', 'current_body', 'storage_instance_id'],
+                                  '00000000-0000-4000-8000-000000000000')))
+
+    def native_current_deleted(w, h):
+        native = w.owners['native']
+        cell = w.storage.cell('workflow_goal_run_current', native.current_key())
+        w.storage.transact([dict(table='workflow_goal_run_current', key=native.current_key(), expected=cell['version'],
+                                 delete=True)])
+    neg('S1', 'native_current_pointer_deleted', 'native/current_unavailable', pre=native_current_deleted)
+
+    def d01_withdrawn():
+        world, handles, _ = started(suite)
+        projector, readers, gid = projected(world)
+        world.owners['d01'].withdraw(world.handles['d01_current'][1])
+        readers.read_current(sreq(world))
+    suite.negative('S4', 'd01_original_withdrawn_before_current_read', d01_withdrawn, 'd01/original_withdrawn')
+
     # readers, projector and checkpoint boundaries
     def unstarted_retained():
         world, handles = new_world(suite)
